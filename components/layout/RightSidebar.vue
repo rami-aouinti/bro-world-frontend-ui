@@ -66,20 +66,25 @@ const { tm } = useI18n();
 const weather = computed(() => tm("sidebar.weather") as SidebarWeatherContent);
 
 const leaderboard = computed(() => {
-  const raw = tm("sidebar.leaderboard") as SidebarLeaderboardContent;
+  const raw = tm("sidebar.leaderboard") as SidebarLeaderboardContent | undefined;
   const order: Array<keyof SidebarLeaderboardContent["participants"]> = [
     "first",
     "second",
     "third",
   ];
 
-  return {
-    title: raw.title,
-    live: raw.live,
-    participants: order.map((key, index) => ({
+  const participants = order
+    .map((key) => raw?.participants?.[key])
+    .filter((participant): participant is SidebarParticipant => Boolean(participant))
+    .map((participant, index) => ({
       position: index + 1,
-      ...raw.participants[key],
-    })),
+      ...participant,
+    }));
+
+  return {
+    title: raw?.title ?? "",
+    live: raw?.live ?? "",
+    participants,
   };
 });
 
