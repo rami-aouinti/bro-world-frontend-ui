@@ -46,7 +46,12 @@
             </template>
           </div>
 
-          <LayoutRightSidebar />
+          <RightSidebar
+              class="hidden lg:flex"
+              :title="sidebarContent.title"
+              :subtitle="sidebarContent.subtitle"
+              :widgets="sidebarContent.widgets"
+          />
         </div>
       </section>
     </div>
@@ -58,6 +63,7 @@ import { computed } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
+import type { SidebarWidgetData } from "~/components/blog/SidebarWidget.vue";
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
@@ -82,6 +88,44 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
 }));
 
 const { posts, pending, fetchPosts } = usePostsStore();
-
+const sidebarContent = computed(() => ({
+  title: t("blog.sidebar.title"),
+  subtitle: t("blog.sidebar.subtitle"),
+  widgets: [
+    {
+      id: "community",
+      icon: "🤝",
+      title: t("blog.sidebar.widgets.community.title"),
+      description: t("blog.sidebar.widgets.community.description"),
+      action: {
+        label: t("blog.sidebar.widgets.community.action"),
+        href: "https://discord.gg/broworld",
+        external: true,
+      },
+    },
+    {
+      id: "docs",
+      icon: "📘",
+      title: t("blog.sidebar.widgets.docs.title"),
+      description: t("blog.sidebar.widgets.docs.description"),
+      action: {
+        label: t("blog.sidebar.widgets.docs.action"),
+        href: "https://bro-world.com/docs",
+        external: true,
+      },
+    },
+    {
+      id: "contribute",
+      icon: "📝",
+      title: t("blog.sidebar.widgets.contribute.title"),
+      description: t("blog.sidebar.widgets.contribute.description"),
+      action: {
+        label: t("blog.sidebar.widgets.contribute.action"),
+        href: "https://bro-world.com/contact",
+        external: true,
+      },
+    },
+  ] satisfies SidebarWidgetData[],
+}));
 await callOnce(() => fetchPosts());
 </script>
