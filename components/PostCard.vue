@@ -1,11 +1,11 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/10 backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]"
+    class="group relative overflow-hidden rounded-[32px] border border-white/10 bg-slate-950/60 p-7 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.6)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_45px_75px_-35px_hsl(var(--primary)/0.55)] sm:p-10"
   >
     <div
-      class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-primary/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_hsla(var(--primary-hue,221),100%,72%,0.18),transparent_55%)] opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-100"
     />
-    <div class="relative flex flex-col gap-10 p-10 sm:p-12">
+    <div class="relative flex flex-col gap-12">
       <PostMeta
         :user="post.user"
         :default-avatar="defaultAvatar"
@@ -14,30 +14,33 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="space-y-5">
+      <div class="space-y-6">
         <h2
           class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
           {{ post.title }}
         </h2>
-        <p class="text-base text-slate-200/80">
+        <p class="text-base leading-relaxed text-slate-200/80">
           {{ post.summary }}
         </p>
       </div>
 
       <section
         v-if="hasCommentPreview"
-        class="rounded-2xl border border-white/10 bg-black/20 p-6 sm:p-7"
+        class="rounded-3xl border border-white/10 bg-white/10 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:p-7"
       >
-        <div class="flex items-center justify-between">
-          <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
-            {{ recentCommentsLabel }}
-          </p>
-          <p class="text-xs text-slate-400">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3 text-slate-200">
+            <span class="flex h-8 w-8 items-center justify-center rounded-2xl bg-primary/20 text-lg">💬</span>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">
+              {{ recentCommentsLabel }}
+            </p>
+          </div>
+          <p class="text-xs font-medium text-slate-400/90">
             {{ commentPreviewCountLabel }}
           </p>
         </div>
-        <div class="mt-5 space-y-5">
+        <div class="mt-6 space-y-5">
           <CommentCard
             v-for="comment in topComments"
             :key="comment.id"
@@ -48,16 +51,16 @@
 
       <footer
         v-if="hasReactionPreview"
-        class="flex flex-wrap items-center gap-4 text-sm"
+        class="flex flex-wrap items-center gap-4 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
       >
-        <span class="text-xs uppercase tracking-wide text-slate-400">
+        <span class="text-xs uppercase tracking-wide text-slate-300">
           {{ highlightedReactionsLabel }}
         </span>
         <div class="flex flex-wrap gap-4">
           <div
             v-for="reaction in topReactions"
             :key="reaction.id"
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-slate-200 shadow-sm"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-4 py-1.5 text-slate-100 shadow-[0_10px_25px_-15px_rgba(15,23,42,0.9)]"
           >
             <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
             <span
