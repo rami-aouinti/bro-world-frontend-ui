@@ -54,6 +54,18 @@
     "Register": "注册"
   },
   "blog": {
+    "hero": {
+      "eyebrow": "社区动态",
+      "title": "了解 BroWorld 的最新动态",
+      "description": "关注社区亮点，发现新资源，并随时掌握大家正在构建的内容。",
+      "primaryAction": "浏览最新帖子",
+      "secondaryAction": "查看文档",
+      "stats": {
+        "members": "活跃成员",
+        "reactions": "已分享的反应",
+        "comments": "发布的评论"
+      }
+    },
     "reactions": {
       "like": "点赞",
       "love": "喜爱",

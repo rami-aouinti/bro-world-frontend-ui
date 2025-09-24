@@ -54,6 +54,18 @@
     "Register": "Register"
   },
   "blog": {
+    "hero": {
+      "eyebrow": "Community feed",
+      "title": "See what's happening across BroWorld",
+      "description": "Follow community highlights, discover new resources, and keep up with what builders are shipping right now.",
+      "primaryAction": "Explore latest posts",
+      "secondaryAction": "Browse documentation",
+      "stats": {
+        "members": "Active members",
+        "reactions": "Reactions shared",
+        "comments": "Comments posted"
+      }
+    },
     "reactions": {
       "post": {
         "publishedOn": "Published on {date}",
