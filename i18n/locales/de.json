@@ -1,0 +1,55 @@
+{
+  "common": {
+    "InspiraUIPro": "Inspira UI Pro"
+  },
+  "banner": {
+    "Content": "Für die Tailwind CSS v3-Dokumentation [**hier klicken**](https://v1.inspira-ui.com)."
+  },
+  "nav": {
+    "Docs": "Dokumentation",
+    "GettingStarted": "Erste Schritte",
+    "GettingStartedDescription": "Einführung in Inspira UI und die wichtigsten Konzepte.",
+    "Installation": "Installation",
+    "InstallationDescription": "Folge der Schritt-für-Schritt-Anleitung, um Inspira UI in deinem Projekt zu installieren.",
+    "Components": "Komponenten",
+    "ComponentsDescription": "Entdecke alle verfügbaren Komponenten und ihre Verwendung.",
+    "V1DocsDescription": "Dokumentation zur Nutzung von Inspira UI mit Tailwind CSS v3.",
+    "Community": "Community",
+    "GitHubDescription": "Quellcode für Inspira UI.",
+    "DiscordDescription": "Vernetze dich mit der Community auf Discord",
+    "Forum": "Forum",
+    "ForumDiscord": "Dem Forum beitreten"
+  },
+  "toc": {
+    "title": "Auf dieser Seite",
+    "StarOnGitHub": "Auf GitHub markieren",
+    "CreateIssues": "Issues erstellen",
+    "JoinDiscord": "Discord beitreten",
+    "Forum": "Forum",
+    "FollowOnX": "Auf X folgen",
+    "FollowOnBluesky": "Auf Bluesky folgen"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "Unterstütze uns",
+      "AllComponents": "Alle Komponenten",
+      "OpenSourceComponentsToBuild": "Open-Source-Komponenten zum Erstellen",
+      "Stunning": "beeindruckende",
+      "Beautiful": "schöne",
+      "WebsitesUsingVueAndNuxt": "Websites mit Vue & Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Integriere dein bevorzugtes UI-Framework",
+      "Features": "Funktionen",
+      "CheckOutSomeExamples": "Sieh dir einige Beispiele an!",
+      "3DCardHoverEffect": "3D-Karten-Hover-Effekt",
+      "RadiantText": "Leuchtender Text",
+      "LovedByCommunity": "Geliebt von der Community",
+      "WhatAreYouWaitingFor": "Worauf wartest du?",
+      "GetStartedAndStartBuildingAwesomeUI": "Leg los und baue beeindruckende Benutzeroberflächen",
+      "GetStarted": "Jetzt starten"
+    }
+  },
+  "auth": {
+    "Login": "Anmelden",
+    "Register": "Registrieren"
+  }
+}

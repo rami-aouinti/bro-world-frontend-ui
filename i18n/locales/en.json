@@ -47,5 +47,9 @@
       "GetStartedAndStartBuildingAwesomeUI": "Get started and start building awesome UI",
       "GetStarted": "Get Started"
     }
+  },
+  "auth": {
+    "Login": "Log in",
+    "Register": "Register"
   }
 }
