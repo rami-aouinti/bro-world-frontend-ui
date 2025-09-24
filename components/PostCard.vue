@@ -5,7 +5,7 @@
     <div
       class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-primary/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
     />
-    <div class="relative flex flex-col gap-8 p-8 sm:p-10">
+    <div class="relative flex flex-col gap-10 p-10 sm:p-12">
       <PostMeta
         :user="post.user"
         :default-avatar="defaultAvatar"
@@ -14,7 +14,7 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="space-y-4">
+      <div class="space-y-5">
         <h2
           class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
@@ -27,7 +27,7 @@
 
       <section
         v-if="hasCommentPreview"
-        class="rounded-2xl border border-white/10 bg-black/20 p-6"
+        class="rounded-2xl border border-white/10 bg-black/20 p-6 sm:p-7"
       >
         <div class="flex items-center justify-between">
           <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
@@ -37,7 +37,7 @@
             {{ commentPreviewCountLabel }}
           </p>
         </div>
-        <div class="mt-4 space-y-4">
+        <div class="mt-5 space-y-5">
           <CommentCard
             v-for="comment in topComments"
             :key="comment.id"
@@ -48,12 +48,12 @@
 
       <footer
         v-if="hasReactionPreview"
-        class="flex flex-wrap items-center gap-3 text-sm"
+        class="flex flex-wrap items-center gap-4 text-sm"
       >
         <span class="text-xs uppercase tracking-wide text-slate-400">
           {{ highlightedReactionsLabel }}
         </span>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-4">
           <div
             v-for="reaction in topReactions"
             :key="reaction.id"

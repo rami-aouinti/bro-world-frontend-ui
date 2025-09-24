@@ -1,9 +1,9 @@
 <template>
   <div class="relative min-h-screen overflow-hidden bg-slate-950 text-slate-50">
-    <div class="py-6 space-y-6">
+    <div class="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8">
       <div
           v-if="pending"
-          class="grid gap-6 sm:grid-cols-2"
+          class="grid gap-8 sm:grid-cols-2"
       >
         <div
             v-for="index in 4"
@@ -30,14 +30,16 @@
       </div>
 
       <template v-else>
-        <PostCard
-            v-for="post in posts"
-            :key="post.id"
-            :post="post"
-            :default-avatar="defaultAvatar"
-            :reaction-emojis="reactionEmojis"
-            :reaction-labels="reactionLabels"
-        />
+        <div class="flex flex-col gap-8">
+          <PostCard
+              v-for="post in posts"
+              :key="post.id"
+              :post="post"
+              :default-avatar="defaultAvatar"
+              :reaction-emojis="reactionEmojis"
+              :reaction-labels="reactionLabels"
+          />
+        </div>
       </template>
     </div>
   </div>
