@@ -1,7 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import os from 'node:os'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
 import { aliases } from 'vuetify/iconsets/mdi'
+
+const osWithAvailableParallelism = os as typeof os & {
+  availableParallelism?: () => number
+}
+
+if (typeof osWithAvailableParallelism.availableParallelism !== 'function') {
+  Object.defineProperty(osWithAvailableParallelism, 'availableParallelism', {
+    configurable: true,
+    enumerable: false,
+    value: () => {
+      try {
+        const cpuInfo = os.cpus()
+        return Array.isArray(cpuInfo) && cpuInfo.length > 0 ? cpuInfo.length : 1
+      } catch {
+        return 1
+      }
+    },
+  })
+}
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
