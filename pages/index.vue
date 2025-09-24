@@ -128,7 +128,7 @@
                     {{ formatNumber(post.comments_preview.length) }} aperçus
                   </p>
                 </div>
-                <div class="mt-4 grid gap-4 md:grid-cols-2">
+                <div class="mt-4 space-y-4">
                   <article
                     v-for="comment in post.comments_preview.slice(0, 4)"
                     :key="comment.id"
