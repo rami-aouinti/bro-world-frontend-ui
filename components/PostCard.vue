@@ -6,42 +6,13 @@
       class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-primary/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
     />
     <div class="relative flex flex-col gap-8 p-8 sm:p-10">
-      <header class="flex flex-wrap items-center gap-6">
-        <div class="flex items-center gap-4">
-          <div
-            class="relative h-14 w-14 overflow-hidden rounded-2xl border border-white/20 bg-white/10"
-          >
-            <img
-              :src="post.user.photo ?? defaultAvatar"
-              :alt="`${post.user.firstName} ${post.user.lastName}`"
-              class="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div>
-            <p class="text-sm font-medium text-slate-200">
-              {{ post.user.firstName }} {{ post.user.lastName }}
-            </p>
-            <p class="text-xs text-slate-400">
-              {{ publishedLabel }}
-            </p>
-          </div>
-        </div>
-        <div class="ms-auto flex flex-wrap gap-3 text-sm text-slate-200">
-          <span
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
-          >
-            <span class="text-base">{{ reactionEmojis.like }}</span>
-            {{ reactionsLabel }}
-          </span>
-          <span
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
-          >
-            <span class="text-base">💬</span>
-            {{ commentsLabel }}
-          </span>
-        </div>
-      </header>
+      <PostMeta
+        :user="post.user"
+        :default-avatar="defaultAvatar"
+        :published-label="publishedLabel"
+        :reaction-badge="reactionBadge"
+        :comment-badge="commentBadge"
+      />
 
       <div class="space-y-4">
         <h2
@@ -104,6 +75,7 @@
 import { computed } from "vue";
 
 import CommentCard from "~/components/CommentCard.vue";
+import PostMeta from "~/components/blog/PostMeta.vue";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 const props = defineProps<{
@@ -130,17 +102,19 @@ const publishedLabel = computed(() =>
   t("blog.reactions.posts.publishedOn", { date: formatDateTime(props.post.publishedAt) }),
 );
 
-const reactionsLabel = computed(() =>
-  t("blog.reactions.posts.reactionCount", {
+const reactionBadge = computed(() => ({
+  icon: props.reactionEmojis.like,
+  display: t("blog.reactions.posts.reactionCount", {
     count: formatNumber(props.post.reactions_count),
   }),
-);
+}));
 
-const commentsLabel = computed(() =>
-  t("blog.reactions.posts.commentCount", {
+const commentBadge = computed(() => ({
+  icon: "💬",
+  display: t("blog.reactions.posts.commentCount", {
     count: formatNumber(props.post.totalComments),
   }),
-);
+}));
 
 const recentCommentsLabel = computed(() => t("blog.reactions.posts.recentComments"));
 
