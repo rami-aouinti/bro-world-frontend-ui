@@ -22,13 +22,19 @@
       {{ comment.content }}
     </p>
     <div class="mt-auto flex items-center justify-between text-xs text-slate-400">
-      <span class="inline-flex items-center gap-1 rounded-full bg-black/20 px-2 py-1">
-        <span class="text-base">{{ reactionEmojis.like }}</span>
-        {{ reactionsLabel }}
+      <span
+        :aria-label="reactionsAriaLabel"
+        class="inline-flex items-center gap-1 rounded-full bg-black/20 px-2 py-1"
+      >
+        <span aria-hidden="true" class="text-base">👍</span>
+        <span aria-hidden="true">{{ reactionsDisplay }}</span>
       </span>
-      <span class="inline-flex items-center gap-1 rounded-full bg-black/10 px-2 py-1">
-        <span class="text-base">💬</span>
-        {{ repliesLabel }}
+      <span
+        :aria-label="repliesAriaLabel"
+        class="inline-flex items-center gap-1 rounded-full bg-black/10 px-2 py-1"
+      >
+        <span aria-hidden="true" class="text-base">💬</span>
+        <span aria-hidden="true">{{ repliesDisplay }}</span>
       </span>
     </div>
   </article>
@@ -37,30 +43,39 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import type { BlogCommentPreview, ReactionType } from "~/lib/mock/blog";
+import type { BlogCommentPreview } from "~/lib/mock/blog";
 
-type FormatDateTime = (value: string) => string;
-type FormatNumber = (value: number | null | undefined) => string;
+const props = defineProps<{ comment: BlogCommentPreview }>();
 
-const props = defineProps<{
-  comment: BlogCommentPreview;
-  defaultAvatar: string;
-  reactionEmojis: Record<ReactionType, string>;
-  formatDateTime: FormatDateTime;
-  formatNumber: FormatNumber;
-}>();
+const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
-const { t } = useI18n();
+const { locale, t } = useI18n();
 
-const reactionsLabel = computed(() =>
+function formatDateTime(value: string) {
+  return new Intl.DateTimeFormat(locale.value ?? "fr-FR", {
+    dateStyle: "long",
+    timeStyle: "short",
+  }).format(new Date(value));
+}
+
+function formatNumber(value: number | null | undefined) {
+  return new Intl.NumberFormat(locale.value ?? "fr-FR").format(value ?? 0);
+}
+
+const reactionsDisplay = computed(() => formatNumber(props.comment.reactions_count));
+const repliesDisplay = computed(() => formatNumber(props.comment.totalComments));
+
+const reactionsAriaLabel = computed(() =>
   t("blog.reactions.comments.reactionCount", {
-    count: props.formatNumber(props.comment.reactions_count),
+    count: reactionsDisplay.value,
   }),
 );
 
-const repliesLabel = computed(() =>
+const repliesAriaLabel = computed(() =>
   t("blog.reactions.comments.replyCount", {
-    count: props.formatNumber(props.comment.totalComments),
+    count: repliesDisplay.value,
   }),
 );
+
+const comment = computed(() => props.comment);
 </script>

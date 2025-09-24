@@ -42,10 +42,6 @@
             v-for="comment in topComments"
             :key="comment.id"
             :comment="comment"
-            :default-avatar="defaultAvatar"
-            :reaction-emojis="reactionEmojis"
-            :format-date-time="formatDateTime"
-            :format-number="formatNumber"
           />
         </div>
       </section>
@@ -63,7 +59,12 @@
             :key="reaction.id"
             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-slate-200 shadow-sm"
           >
-            <span class="text-lg">{{ reactionEmojis[reaction.type] }}</span>
+            <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
+            <span
+              aria-hidden="true"
+              class="text-lg"
+              >{{ reactionEmojis[reaction.type] }}</span
+            >
           </div>
         </div>
       </footer>
@@ -104,14 +105,16 @@ const publishedLabel = computed(() =>
 
 const reactionBadge = computed(() => ({
   icon: props.reactionEmojis.like,
-  display: t("blog.reactions.posts.reactionCount", {
+  display: formatNumber(props.post.reactions_count),
+  ariaLabel: t("blog.reactions.posts.reactionCount", {
     count: formatNumber(props.post.reactions_count),
   }),
 }));
 
 const commentBadge = computed(() => ({
   icon: "💬",
-  display: t("blog.reactions.posts.commentCount", {
+  display: formatNumber(props.post.totalComments),
+  ariaLabel: t("blog.reactions.posts.commentCount", {
     count: formatNumber(props.post.totalComments),
   }),
 }));
