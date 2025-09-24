@@ -6,19 +6,20 @@
   <LayoutBanner v-if="config.banner.enable" />
   <LayoutHeader />
   <div
-    v-if="page && !page.fullpage"
+    v-if="page?.fullpage !== true"
     class="min-h-screen border-b"
   >
     <div
       class="flex-1 items-start px-4 md:grid md:gap-6 md:px-8 lg:gap-10"
       :class="[
         config.main.padded && 'container',
-        (page.aside ?? true) &&
-          'md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]',
+        (page?.aside ?? true)
+          ? 'md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]'
+          : null,
       ]"
     >
       <aside
-        v-if="page.aside ?? true"
+        v-if="page?.aside ?? true"
         class="fixed z-30 -ml-2 hidden w-full shrink-0 overflow-y-auto top-[102px] md:sticky md:block"
         :class="[
           config.aside.useLevel && config.aside.levelStyle === 'aside'
