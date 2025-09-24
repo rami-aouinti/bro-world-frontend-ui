@@ -33,12 +33,19 @@
                   variant="ghost"
                   size="icon"
                   class="flex gap-2"
+                  :aria-label="link?.label"
                 >
                   <SmartIcon
                     v-if="link.icon"
                     :name="link.icon"
                     :size="18"
                   />
+                  <span
+                    v-if="link?.label"
+                    class="sr-only"
+                  >
+                    {{ link.label }}
+                  </span>
                 </UiButton>
               </UiDropdownMenuTrigger>
               <UiDropdownMenuContent class="w-44">
@@ -67,12 +74,19 @@
                 variant="ghost"
                 size="icon"
                 class="flex gap-2"
+                :aria-label="link?.label"
               >
                 <SmartIcon
                   v-if="link?.icon"
                   :name="link.icon"
                   :size="18"
                 />
+                <span
+                  v-if="link?.label"
+                  class="sr-only"
+                >
+                  {{ link.label }}
+                </span>
               </UiButton>
             </NuxtLinkLocale>
           </template>
@@ -110,6 +124,7 @@ type HeaderLink = {
   icon?: string;
   to?: string;
   target?: string;
+  label?: string;
   menuItems?: HeaderLinkMenuItem[];
 };
 
