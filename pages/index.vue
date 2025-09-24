@@ -3,9 +3,9 @@
     class="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50"
   >
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl" />
+      <div class="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
       <div
-        class="absolute bottom-0 right-0 h-[28rem] w-[28rem] rounded-full bg-sky-500/10 blur-3xl"
+        class="absolute bottom-0 right-0 h-[28rem] w-[28rem] rounded-full bg-primary/10 blur-3xl"
       />
       <div
         class="absolute left-1/3 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/5 blur-2xl"
@@ -15,9 +15,9 @@
     <div class="relative z-10">
       <section class="mx-auto max-w-4xl px-6 pb-16 pt-20 text-center md:pt-28">
         <span
-          class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-1 text-sm font-medium text-emerald-200 ring-1 ring-inset ring-emerald-500/30"
+          class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary/80 ring-1 ring-inset ring-primary/30"
         >
-          <span class="h-2 w-2 rounded-full bg-emerald-400" />
+          <span class="h-2 w-2 rounded-full bg-primary" />
           Blog
         </span>
         <h1 class="mt-6 text-4xl font-semibold tracking-tight text-white md:text-5xl">
@@ -62,10 +62,10 @@
           <article
             v-for="post in posts"
             :key="post.id"
-            class="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/10 backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-emerald-400/50 hover:bg-white/15 hover:shadow-emerald-500/20"
+            class="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/10 backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]"
           >
             <div
-              class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-emerald-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-primary/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             />
             <div class="relative flex flex-col gap-8 p-8 sm:p-10">
               <header class="flex flex-wrap items-center gap-6">
@@ -107,7 +107,7 @@
 
               <div class="space-y-4">
                 <h2
-                  class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-emerald-200"
+                  class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
                 >
                   {{ post.title }}
                 </h2>
