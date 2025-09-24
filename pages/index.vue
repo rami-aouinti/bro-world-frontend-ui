@@ -1,140 +1,44 @@
 <template>
   <div class="relative min-h-screen overflow-hidden bg-slate-950 text-slate-50">
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-primary/30 via-slate-900/40 to-transparent" />
-    <div class="pointer-events-none absolute -top-20 left-1/2 hidden h-96 w-96 -translate-x-1/2 rounded-full bg-primary/30 blur-3xl lg:block" />
-    <div class="pointer-events-none absolute -right-32 bottom-0 hidden h-[420px] w-[420px] rounded-full bg-fuchsia-500/20 blur-3xl lg:block" />
-
-    <div class="relative mx-auto max-w-6xl px-4 pb-12 pt-24 sm:px-6 lg:px-8">
-      <section class="flex flex-col gap-8 text-center lg:text-left">
-        <span class="mx-auto inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary/80 lg:mx-0">
-          {{ heroContent.eyebrow }}
-        </span>
-        <div class="space-y-6">
-          <h1 class="text-4xl font-bold leading-tight text-white sm:text-5xl">
-            {{ heroContent.title }}
-          </h1>
-          <p class="mx-auto max-w-2xl text-base text-slate-300 lg:mx-0">
-            {{ heroContent.description }}
-          </p>
-        </div>
-        <div class="flex flex-wrap justify-center gap-4 lg:justify-start">
-          <NuxtLink
-            :href="heroContent.primary.href"
-            class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-primary/40 transition hover:bg-primary/90"
-          >
-            {{ heroContent.primary.label }}
-          </NuxtLink>
-          <NuxtLink
-            :href="heroContent.secondary.href"
-            class="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:border-white/30 hover:bg-white/10"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {{ heroContent.secondary.label }}
-            <span aria-hidden="true">→</span>
-          </NuxtLink>
-        </div>
-        <div class="grid gap-6 sm:grid-cols-3">
-          <div
-            v-for="stat in heroStats"
-            :key="stat.id"
-            class="rounded-2xl border border-white/10 bg-white/5 p-5 text-left backdrop-blur"
-          >
-            <p class="text-3xl font-semibold text-white">
-              {{ stat.value }}
-            </p>
-            <p class="mt-1 text-sm text-slate-400">
-              {{ stat.label }}
-            </p>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div
-      id="latest"
-      class="relative mx-auto mt-4 grid max-w-6xl gap-10 px-4 pb-24 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8"
-    >
-      <div class="space-y-6">
-        <div
+    <div class="py-6 space-y-6">
+      <div
           v-if="pending"
           class="grid gap-6 sm:grid-cols-2"
-        >
-          <div
+      >
+        <div
             v-for="index in 4"
             :key="index"
             class="flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-8 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.65)] backdrop-blur-xl"
-          >
-            <div class="flex items-center gap-4">
-              <div class="h-14 w-14 rounded-2xl bg-white/10" />
-              <div class="space-y-3">
-                <div class="h-3 w-32 rounded-full bg-white/10" />
-                <div class="h-3 w-24 rounded-full bg-white/10" />
-              </div>
-            </div>
+        >
+          <div class="flex items-center gap-4">
+            <div class="h-14 w-14 rounded-2xl bg-white/10" />
             <div class="space-y-3">
-              <div class="h-3 w-3/4 rounded-full bg-white/10" />
-              <div class="h-3 w-2/3 rounded-full bg-white/10" />
-              <div class="h-3 w-full rounded-full bg-white/10" />
-            </div>
-            <div class="mt-auto flex gap-3">
-              <div class="h-7 w-28 rounded-full bg-white/5" />
-              <div class="h-7 w-28 rounded-full bg-white/5" />
+              <div class="h-3 w-32 rounded-full bg-white/10" />
+              <div class="h-3 w-24 rounded-full bg-white/10" />
             </div>
           </div>
+          <div class="space-y-3">
+            <div class="h-3 w-3/4 rounded-full bg-white/10" />
+            <div class="h-3 w-2/3 rounded-full bg-white/10" />
+            <div class="h-3 w-full rounded-full bg-white/10" />
+          </div>
+          <div class="mt-auto flex gap-3">
+            <div class="h-7 w-28 rounded-full bg-white/5" />
+            <div class="h-7 w-28 rounded-full bg-white/5" />
+          </div>
         </div>
+      </div>
 
-        <template v-else>
-          <PostCard
+      <template v-else>
+        <PostCard
             v-for="post in posts"
             :key="post.id"
             :post="post"
             :default-avatar="defaultAvatar"
             :reaction-emojis="reactionEmojis"
             :reaction-labels="reactionLabels"
-          />
-        </template>
-      </div>
-
-      <div class="hidden lg:block">
-        <div class="sticky top-32 flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
-          <header class="space-y-2">
-            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
-              {{ sidebarContent.title }}
-            </p>
-            <h2 class="text-2xl font-semibold text-white">
-              {{ sidebarContent.subtitle }}
-            </h2>
-          </header>
-          <div class="space-y-4">
-            <SidebarWidget
-              v-for="widget in sidebarContent.widgets"
-              :key="widget.id"
-              :widget="widget"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mx-auto mb-16 mt-6 max-w-6xl px-4 sm:px-6 lg:hidden">
-      <div class="rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
-        <header class="space-y-2 text-center">
-          <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
-            {{ sidebarContent.title }}
-          </p>
-          <h2 class="text-2xl font-semibold text-white">
-            {{ sidebarContent.subtitle }}
-          </h2>
-        </header>
-        <div class="mt-6 grid gap-4 sm:grid-cols-2">
-          <SidebarWidget
-            v-for="widget in sidebarContent.widgets"
-            :key="widget.id"
-            :widget="widget"
-          />
-        </div>
-      </div>
+        />
+      </template>
     </div>
   </div>
 </template>
