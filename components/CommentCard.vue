@@ -1,7 +1,7 @@
 <template>
-  <article class="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/5 p-4">
-    <div class="flex items-center gap-3">
-      <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/10">
+  <article class="flex flex-col gap-4 rounded-2xl border border-white/5 bg-white/5 p-5 sm:p-6">
+    <div class="flex items-center gap-4">
+      <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:h-12 sm:w-12">
         <img
           :src="comment.user.photo ?? defaultAvatar"
           :alt="`${comment.user.firstName} ${comment.user.lastName}`"
@@ -24,14 +24,14 @@
     <div class="mt-auto flex items-center justify-between text-xs text-slate-400">
       <span
         :aria-label="reactionsAriaLabel"
-        class="inline-flex items-center gap-1 rounded-full bg-black/20 px-2 py-1"
+        class="inline-flex items-center gap-2 rounded-full bg-black/20 px-3 py-1.5"
       >
         <span aria-hidden="true" class="text-base">👍</span>
         <span aria-hidden="true">{{ reactionsDisplay }}</span>
       </span>
       <span
         :aria-label="repliesAriaLabel"
-        class="inline-flex items-center gap-1 rounded-full bg-black/10 px-2 py-1"
+        class="inline-flex items-center gap-2 rounded-full bg-black/10 px-3 py-1.5"
       >
         <span aria-hidden="true" class="text-base">💬</span>
         <span aria-hidden="true">{{ repliesDisplay }}</span>
