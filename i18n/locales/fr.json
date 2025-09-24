@@ -52,5 +52,48 @@
     "Account": "Compte",
     "Login": "Connexion",
     "Register": "Inscription"
+  },
+  "blog": {
+    "post": {
+      "publishedOn": "Publié le {date}",
+      "reactions": "{count} réactions",
+      "comments": "{count} commentaires",
+      "recentComments": "Commentaires récents",
+      "commentPreviews": "{count} aperçus",
+      "reactionSpotlight": "Réactions coup de cœur"
+    },
+    "comment": {
+      "reactions": "{count} réactions",
+      "replies": "{count} réponses"
+    },
+    "reactionTypes": {
+      "like": "J'aime",
+      "love": "J'adore",
+      "wow": "Waouh",
+      "haha": "Haha",
+      "sad": "Triste",
+      "angry": "En colère"
+    },
+    "sidebar": {
+      "title": "Restez connecté",
+      "subtitle": "Des ressources pour suivre la communauté BroWorld.",
+      "widgets": {
+        "community": {
+          "title": "Rejoignez la communauté",
+          "description": "Échangez avec d'autres créateurs, partagez vos idées et obtenez de l'aide rapidement.",
+          "action": "Ouvrir Discord"
+        },
+        "docs": {
+          "title": "Explorer la documentation",
+          "description": "Apprenez à tirer le meilleur parti des composants BroWorld dans vos projets.",
+          "action": "Lire la documentation"
+        },
+        "contribute": {
+          "title": "Contribuer un article",
+          "description": "Partagez vos connaissances avec la communauté et aidez les autres à progresser.",
+          "action": "Proposer du contenu"
+        }
+      }
+    }
   }
 }
