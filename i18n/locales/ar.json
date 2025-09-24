@@ -57,75 +57,95 @@
     "reactions": {
       "like": "إعجاب",
       "love": "محبة",
-    "post": {
-      "publishedOn": "نُشر في {date}",
-      "reactions": "{count} تفاعلات",
-      "comments": "{count} تعليقات",
-      "recentComments": "أحدث التعليقات",
-      "commentPreviews": "{count} معاينات",
-      "reactionSpotlight": "أبرز التفاعلات"
-    },
-    "comment": {
-      "reactions": "{count} تفاعلات",
-      "replies": "{count} ردود"
-    },
-    "reactionTypes": {
-      "like": "إعجاب",
-      "love": "حب",
-      "wow": "واو",
-      "haha": "هاها",
-      "sad": "حزين",
-      "angry": "غاضب"
-    },
-    "posts": {
-      "publishedOn": "نُشر في {date}",
-      "reactionCount": "{count} تفاعل",
-      "commentCount": "{count} تعليقًا",
-      "recentComments": "أحدث التعليقات",
-      "previewCount": "{count} معاينات",
-      "highlightedReactions": "أبرز التفاعلات"
-    },
-    "comments": {
-      "reactionCount": "{count} تفاعل",
-      "replyCount": "{count} ردًا"
-    }
-  },
-  "sidebar": {
-    "weather": {
-      "badge": "أخبار",
-      "title": "أمطار في الطريق",
-      "subtitle": "استعد ليوم ماطر مع رياح خفيفة.",
-      "icon": "🌧️",
-      "location": "برلين، ألمانيا",
-      "locationLabel": "الموقع",
-      "temperature": "18°م",
-      "temperatureLabel": "درجة الحرارة",
-      "tipLabel": "نصيحة",
-      "tip": "لا تنسَ مظلتك لتحافظ على جفافك."
-    },
-    "leaderboard": {
-      "title": "أفضل 3 في الاختبار",
-      "live": "مباشر",
-      "participants": {
-        "first": { "name": "Bro World", "role": "فريق المنتج", "score": "982 نقطة" },
-        "second": { "name": "Adam Don", "role": "المجتمع", "score": "953 نقطة" },
-        "third": { "name": "Nina Ko", "role": "التسويق", "score": "917 نقطة" }
-      }
-    },
-    "rating": {
-      "title": "نظرة عامة على التقييم",
-      "subtitle": "ملاحظات الأعضاء لهذا الأسبوع",
-      "average": "4.7",
-      "total": 5,
-      "icon": "⭐",
-      "stars": 5,
-      "categories": {
-        "engagement": { "label": "التفاعل", "value": 92 },
-        "content": { "label": "المحتوى", "value": 88 },
-        "responsiveness": { "label": "سرعة الاستجابة", "value": 84 }
+      "post": {
+        "publishedOn": "نُشر في {date}",
+        "reactions": "{count} تفاعلات",
+        "comments": "{count} تعليقات",
+        "recentComments": "أحدث التعليقات",
+        "commentPreviews": "{count} معاينات",
+        "reactionSpotlight": "أبرز التفاعلات"
+      },
+      "comment": {
+        "reactions": "{count} تفاعلات",
+        "replies": "{count} ردود"
+      },
+      "reactionTypes": {
+        "like": "إعجاب",
+        "love": "حب",
+        "wow": "واو",
+        "haha": "هاها",
+        "sad": "حزين",
+        "angry": "غاضب"
+      },
+      "posts": {
+        "publishedOn": "نُشر في {date}",
+        "reactionCount": "{count} تفاعل",
+        "commentCount": "{count} تعليقًا",
+        "recentComments": "أحدث التعليقات",
+        "previewCount": "{count} معاينات",
+        "highlightedReactions": "أبرز التفاعلات"
+      },
+      "comments": {
+        "reactionCount": "{count} تفاعل",
+        "replyCount": "{count} ردًا"
       }
     },
     "sidebar": {
+      "weather": {
+        "badge": "أخبار",
+        "title": "أمطار في الطريق",
+        "subtitle": "استعد ليوم ماطر مع رياح خفيفة.",
+        "icon": "🌧️",
+        "location": "برلين، ألمانيا",
+        "locationLabel": "الموقع",
+        "temperature": "18°م",
+        "temperatureLabel": "درجة الحرارة",
+        "tipLabel": "نصيحة",
+        "tip": "لا تنسَ مظلتك لتحافظ على جفافك."
+      },
+      "leaderboard": {
+        "title": "أفضل 3 في الاختبار",
+        "live": "مباشر",
+        "participants": {
+          "first": {
+            "name": "Bro World",
+            "role": "فريق المنتج",
+            "score": "982 نقطة"
+          },
+          "second": {
+            "name": "Adam Don",
+            "role": "المجتمع",
+            "score": "953 نقطة"
+          },
+          "third": {
+            "name": "Nina Ko",
+            "role": "التسويق",
+            "score": "917 نقطة"
+          }
+        }
+      },
+      "rating": {
+        "title": "نظرة عامة على التقييم",
+        "subtitle": "ملاحظات الأعضاء لهذا الأسبوع",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
+        "stars": 5,
+        "categories": {
+          "engagement": {
+            "label": "التفاعل",
+            "value": 92
+          },
+          "content": {
+            "label": "المحتوى",
+            "value": 88
+          },
+          "responsiveness": {
+            "label": "سرعة الاستجابة",
+            "value": 84
+          }
+        }
+      },
       "title": "ابقَ على تواصل",
       "subtitle": "موارد لمتابعة مجتمع برو وورلد.",
       "widgets": {
@@ -145,7 +165,6 @@
           "action": "إرسال محتوى"
         }
       }
-    }
     }
   }
 }
