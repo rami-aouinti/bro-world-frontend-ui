@@ -52,5 +52,63 @@
     "Account": "Konto",
     "Login": "Anmelden",
     "Register": "Registrieren"
+  },
+  "blog": {
+    "reactions": {
+      "like": "Gefällt mir",
+      "love": "Liebe",
+      "wow": "Wow",
+      "haha": "Haha",
+      "sad": "Traurig",
+      "angry": "Wütend"
+    },
+    "posts": {
+      "publishedOn": "Veröffentlicht am {date}",
+      "reactionCount": "{count} Reaktionen",
+      "commentCount": "{count} Kommentare",
+      "recentComments": "Aktuelle Kommentare",
+      "previewCount": "{count} Vorschauen",
+      "highlightedReactions": "Beliebte Reaktionen"
+    },
+    "comments": {
+      "reactionCount": "{count} Reaktionen",
+      "replyCount": "{count} Antworten"
+    }
+  },
+  "sidebar": {
+    "weather": {
+      "badge": "Neuigkeiten",
+      "title": "Regen in Sicht",
+      "subtitle": "Bereite dich auf einen regnerischen Tag mit leichtem Wind vor.",
+      "icon": "🌧️",
+      "location": "Berlin, Deutschland",
+      "locationLabel": "Ort",
+      "temperature": "18°C",
+      "temperatureLabel": "Temperatur",
+      "tipLabel": "Tipp",
+      "tip": "Vergiss deinen Regenschirm nicht, um trocken zu bleiben."
+    },
+    "leaderboard": {
+      "title": "Top 3 im Quiz",
+      "live": "live",
+      "participants": {
+        "first": { "name": "Bro World", "role": "Produktteam", "score": "982 Pkt" },
+        "second": { "name": "Adam Don", "role": "Community", "score": "953 Pkt" },
+        "third": { "name": "Nina Ko", "role": "Marketing", "score": "917 Pkt" }
+      }
+    },
+    "rating": {
+      "title": "Bewertungsübersicht",
+      "subtitle": "Rückmeldungen der Mitglieder dieser Woche",
+      "average": "4.7",
+      "total": 5,
+      "icon": "⭐",
+      "stars": 5,
+      "categories": {
+        "engagement": { "label": "Engagement", "value": 92 },
+        "content": { "label": "Inhalt", "value": 88 },
+        "responsiveness": { "label": "Reaktionsfähigkeit", "value": 84 }
+      }
+    }
   }
 }

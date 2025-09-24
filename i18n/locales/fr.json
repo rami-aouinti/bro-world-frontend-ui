@@ -52,5 +52,63 @@
     "Account": "Compte",
     "Login": "Connexion",
     "Register": "Inscription"
+  },
+  "blog": {
+    "reactions": {
+      "like": "J'aime",
+      "love": "J'adore",
+      "wow": "Waouh",
+      "haha": "Haha",
+      "sad": "Triste",
+      "angry": "En colère"
+    },
+    "posts": {
+      "publishedOn": "Publié le {date}",
+      "reactionCount": "{count} réactions",
+      "commentCount": "{count} commentaires",
+      "recentComments": "Commentaires récents",
+      "previewCount": "{count} aperçus",
+      "highlightedReactions": "Réactions coup de cœur"
+    },
+    "comments": {
+      "reactionCount": "{count} réactions",
+      "replyCount": "{count} réponses"
+    }
+  },
+  "sidebar": {
+    "weather": {
+      "badge": "Actualités",
+      "title": "Pluie en approche",
+      "subtitle": "Préparez-vous pour une journée humide avec des vents légers.",
+      "icon": "🌧️",
+      "location": "Berlin, Allemagne",
+      "locationLabel": "Localisation",
+      "temperature": "18°C",
+      "temperatureLabel": "Température",
+      "tipLabel": "Conseil",
+      "tip": "N'oubliez pas votre parapluie pour rester au sec."
+    },
+    "leaderboard": {
+      "title": "Top 3 du quiz",
+      "live": "en direct",
+      "participants": {
+        "first": { "name": "Bro World", "role": "Équipe produit", "score": "982 pts" },
+        "second": { "name": "Adam Don", "role": "Communauté", "score": "953 pts" },
+        "third": { "name": "Nina Ko", "role": "Marketing", "score": "917 pts" }
+      }
+    },
+    "rating": {
+      "title": "Vue d'ensemble des notes",
+      "subtitle": "Commentaires des membres cette semaine",
+      "average": "4.7",
+      "total": 5,
+      "icon": "⭐",
+      "stars": 5,
+      "categories": {
+        "engagement": { "label": "Engagement", "value": 92 },
+        "content": { "label": "Contenu", "value": 88 },
+        "responsiveness": { "label": "Réactivité", "value": 84 }
+      }
+    }
   }
 }

@@ -52,5 +52,63 @@
     "Account": "Account",
     "Login": "Log in",
     "Register": "Register"
+  },
+  "blog": {
+    "reactions": {
+      "like": "Like",
+      "love": "Love",
+      "wow": "Wow",
+      "haha": "Haha",
+      "sad": "Sad",
+      "angry": "Angry"
+    },
+    "posts": {
+      "publishedOn": "Published on {date}",
+      "reactionCount": "{count} reactions",
+      "commentCount": "{count} comments",
+      "recentComments": "Recent comments",
+      "previewCount": "{count} previews",
+      "highlightedReactions": "Fan favorite reactions"
+    },
+    "comments": {
+      "reactionCount": "{count} reactions",
+      "replyCount": "{count} replies"
+    }
+  },
+  "sidebar": {
+    "weather": {
+      "badge": "News",
+      "title": "Rain ahead",
+      "subtitle": "Get ready for a rainy day with light winds.",
+      "icon": "🌧️",
+      "location": "Berlin, Germany",
+      "locationLabel": "Location",
+      "temperature": "18°C",
+      "temperatureLabel": "Temperature",
+      "tipLabel": "Tip",
+      "tip": "Don't forget your umbrella to stay dry."
+    },
+    "leaderboard": {
+      "title": "Top 3 in Quiz",
+      "live": "live",
+      "participants": {
+        "first": { "name": "Bro World", "role": "Product Team", "score": "982 pts" },
+        "second": { "name": "Adam Don", "role": "Community", "score": "953 pts" },
+        "third": { "name": "Nina Ko", "role": "Marketing", "score": "917 pts" }
+      }
+    },
+    "rating": {
+      "title": "Rating overview",
+      "subtitle": "Member feedback for the week",
+      "average": "4.7",
+      "total": 5,
+      "icon": "⭐",
+      "stars": 5,
+      "categories": {
+        "engagement": { "label": "Engagement", "value": 92 },
+        "content": { "label": "Content", "value": 88 },
+        "responsiveness": { "label": "Responsiveness", "value": 84 }
+      }
+    }
   }
 }
