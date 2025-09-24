@@ -6,13 +6,13 @@
       class="h-full w-full overflow-hidden py-6 pr-2"
     >
       <div class="flex h-full flex-col gap-6 pr-4">
-        <LayoutSidebarWeatherCard :weather="weather" />
-        <LayoutSidebarLeaderboardCard
+        <SidebarWeatherCard :weather="weather" />
+        <SidebarLeaderboardCard
           :title="leaderboard.title"
           :live-label="leaderboard.live"
           :participants="leaderboard.participants"
         />
-        <LayoutSidebarRatingCard :rating="rating" />
+        <SidebarRatingCard :rating="rating" />
       </div>
     </UiScrollArea>
   </aside>
