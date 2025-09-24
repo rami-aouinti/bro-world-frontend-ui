@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import os from 'node:os'
-import { webcrypto } from 'node:crypto'
+import { randomFillSync, webcrypto } from 'node:crypto'
 import { Blob as NodeBlob, File as NodeFile } from 'node:buffer'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
@@ -13,7 +13,24 @@ const globalScope = globalThis as typeof globalThis & {
 }
 
 if (!globalScope.crypto || typeof globalScope.crypto.getRandomValues !== 'function') {
-  globalScope.crypto = webcrypto as Crypto
+  const fallbackCrypto = {
+    getRandomValues<T extends ArrayBufferView | null>(array: T): T {
+      if (!array) {
+        throw new TypeError('Expected input to be an array')
+      }
+
+      randomFillSync(array as ArrayBufferView)
+      return array
+    },
+  }
+
+  const nodeCrypto = webcrypto as Crypto | undefined
+  const cryptoWithRandomValues =
+    nodeCrypto && typeof nodeCrypto.getRandomValues === 'function'
+      ? nodeCrypto
+      : (fallbackCrypto as unknown as Crypto)
+
+  globalScope.crypto = cryptoWithRandomValues
 }
 
 if (typeof globalScope.Blob !== 'function') {
