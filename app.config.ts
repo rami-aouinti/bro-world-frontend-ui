@@ -6,7 +6,7 @@ import { $t } from "./i18n/locales";
 export default defineAppConfig({
   shadcnDocs: {
     site: {
-      name: "Inspira UI",
+      name: "BroWorld",
       description: "Build beautiful websites using Vue & Nuxt.",
       ogImage: "https://cdn.inspira-ui.com/og-image-v2.1.png",
     },
@@ -24,7 +24,7 @@ export default defineAppConfig({
       border: true,
     },
     header: {
-      title: "Inspira UI",
+      title: "BroWorld",
       showTitle: true,
       darkModeToggle: true,
       logo: {
