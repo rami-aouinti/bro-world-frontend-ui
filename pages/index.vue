@@ -79,12 +79,12 @@ const reactionEmojis: Record<ReactionType, string> = {
 const { t } = useI18n();
 
 const reactionLabels = computed<Record<ReactionType, string>>(() => ({
-  like: t("blog.reactions.like"),
-  love: t("blog.reactions.love"),
-  wow: t("blog.reactions.wow"),
-  haha: t("blog.reactions.haha"),
-  sad: t("blog.reactions.sad"),
-  angry: t("blog.reactions.angry"),
+  like: t("blog.reactions.reactionTypes.like"),
+  love: t("blog.reactions.reactionTypes.love"),
+  wow: t("blog.reactions.reactionTypes.wow"),
+  haha: t("blog.reactions.reactionTypes.haha"),
+  sad: t("blog.reactions.reactionTypes.sad"),
+  angry: t("blog.reactions.reactionTypes.angry"),
 }));
 
 const { posts, pending, fetchPosts } = usePostsStore();

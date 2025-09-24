@@ -131,30 +131,30 @@ function formatNumber(value: number | null | undefined) {
 }
 
 const publishedLabel = computed(() =>
-  t("blog.posts.publishedOn", { date: formatDateTime(props.post.publishedAt) }),
+  t("blog.reactions.posts.publishedOn", { date: formatDateTime(props.post.publishedAt) }),
 );
 
 const reactionsLabel = computed(() =>
-  t("blog.posts.reactionCount", {
+  t("blog.reactions.posts.reactionCount", {
     count: formatNumber(props.post.reactions_count),
   }),
 );
 
 const commentsLabel = computed(() =>
-  t("blog.posts.commentCount", {
+  t("blog.reactions.posts.commentCount", {
     count: formatNumber(props.post.totalComments),
   }),
 );
 
-const recentCommentsLabel = computed(() => t("blog.posts.recentComments"));
+const recentCommentsLabel = computed(() => t("blog.reactions.posts.recentComments"));
 
 const commentPreviewCountLabel = computed(() =>
-  t("blog.posts.previewCount", {
+  t("blog.reactions.posts.previewCount", {
     count: formatNumber(props.post.comments_preview.length),
   }),
 );
 
-const highlightedReactionsLabel = computed(() => t("blog.posts.highlightedReactions"));
+const highlightedReactionsLabel = computed(() => t("blog.reactions.posts.highlightedReactions"));
 
 const topComments = computed(() => props.post.comments_preview.slice(0, 4));
 const topReactions = computed(() => props.post.reactions_preview.slice(0, 4));
