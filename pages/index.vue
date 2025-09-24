@@ -1,5 +1,11 @@
 <template>
   <div class="relative min-h-screen overflow-hidden bg-transparent text-slate-50">
+    <div class="relative z-10">
+      <section class="mx-auto max-w-7xl px-6 pb-24">
+        <div
+          class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px] xl:grid-cols-[minmax(0,1fr)_280px]"
+        >
+          <div class="space-y-10">
     <section class="mx-auto max-w-7xl px-6 pb-24">
       <div
         class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]"
@@ -31,6 +37,17 @@
                 <div class="h-7 w-28 rounded-full bg-white/5" />
               </div>
             </div>
+
+            <template v-else>
+              <PostCard
+                v-for="post in posts"
+                :key="post.id"
+                :post="post"
+                :default-avatar="defaultAvatar"
+                :reaction-emojis="reactionEmojis"
+                :reaction-labels="reactionLabels"
+              />
+            </template>
           </div>
 
           <template v-else>
@@ -54,8 +71,33 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
+import type { ReactionType } from "~/lib/mock/blog";
+
+const defaultAvatar = "https://bro-world-space.com/img/person.png";
+
+const reactionEmojis: Record<ReactionType, string> = {
+  like: "👍",
+  love: "❤️",
+  wow: "😮",
+  haha: "😂",
+  sad: "😢",
+  angry: "😡",
+};
+
+const { t } = useI18n();
+
+const reactionLabels = computed<Record<ReactionType, string>>(() => ({
+  like: t("blog.reactions.like"),
+  love: t("blog.reactions.love"),
+  wow: t("blog.reactions.wow"),
+  haha: t("blog.reactions.haha"),
+  sad: t("blog.reactions.sad"),
+  angry: t("blog.reactions.angry"),
+}));
 import { computed } from "vue";
 import type { SidebarWidgetData } from "~/components/blog/SidebarWidget.vue";
 
