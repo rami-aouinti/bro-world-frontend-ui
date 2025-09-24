@@ -23,13 +23,15 @@
               {{ post.user.firstName }} {{ post.user.lastName }}
             </p>
             <p class="text-xs text-slate-400">
-              {{ t("blog.post.publishedOn", { date: formatDateTime(post.publishedAt) }) }}
+              {{ t("blog.reactions.post.publishedOn", { date: formatDateTime(post.publishedAt) }) }}
             </p>
           </div>
         </div>
         <div class="ms-auto flex flex-wrap gap-3 text-sm text-slate-200">
           <span
-            :aria-label="t('blog.post.reactions', { count: formatNumber(post.reactions_count) })"
+            :aria-label="
+              t('blog.reactions.post.reactions', { count: formatNumber(post.reactions_count) })
+            "
             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
           >
             <span
@@ -40,7 +42,9 @@
             <span aria-hidden="true">{{ formatNumber(post.reactions_count) }}</span>
           </span>
           <span
-            :aria-label="t('blog.post.comments', { count: formatNumber(post.totalComments) })"
+            :aria-label="
+              t('blog.reactions.post.comments', { count: formatNumber(post.totalComments) })
+            "
             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
           >
             <span
@@ -70,11 +74,13 @@
       >
         <div class="flex items-center justify-between">
           <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
-            {{ t("blog.post.recentComments") }}
+            {{ t("blog.reactions.post.recentComments") }}
           </p>
           <p class="text-xs text-slate-400">
             {{
-              t("blog.post.commentPreviews", { count: formatNumber(post.comments_preview.length) })
+              t("blog.reactions.post.commentPreviews", {
+                count: formatNumber(post.comments_preview.length),
+              })
             }}
           </p>
         </div>
@@ -92,7 +98,7 @@
         class="flex flex-wrap items-center gap-3 text-sm"
       >
         <span class="text-xs uppercase tracking-wide text-slate-400">
-          {{ t("blog.post.reactionSpotlight") }}
+          {{ t("blog.reactions.post.reactionSpotlight") }}
         </span>
         <div class="flex flex-wrap gap-3">
           <div
@@ -134,12 +140,12 @@ const reactionEmojis: Record<ReactionType, string> = {
 const { locale, t } = useI18n();
 
 const reactionLabels = computed<Record<ReactionType, string>>(() => ({
-  like: t("blog.reactionTypes.like"),
-  love: t("blog.reactionTypes.love"),
-  wow: t("blog.reactionTypes.wow"),
-  haha: t("blog.reactionTypes.haha"),
-  sad: t("blog.reactionTypes.sad"),
-  angry: t("blog.reactionTypes.angry"),
+  like: t("blog.reactions.reactionTypes.like"),
+  love: t("blog.reactions.reactionTypes.love"),
+  wow: t("blog.reactions.reactionTypes.wow"),
+  haha: t("blog.reactions.reactionTypes.haha"),
+  sad: t("blog.reactions.reactionTypes.sad"),
+  angry: t("blog.reactions.reactionTypes.angry"),
 }));
 
 function formatDateTime(value: string) {
