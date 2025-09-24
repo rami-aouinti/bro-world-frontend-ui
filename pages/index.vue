@@ -205,17 +205,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import {
-  blogSampleResponse,
-  type BlogApiResponse,
-  type BlogPost,
-  type ReactionType,
-} from "~/lib/mock/blog";
+import { callOnce } from "#imports";
+import { usePostsStore } from "~/composables/usePostsStore";
+import type { ReactionType } from "~/lib/mock/blog";
 
-const runtimeConfig = useRuntimeConfig();
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
-const fallbackPosts = blogSampleResponse.data;
 
 const reactionEmojis: Record<ReactionType, string> = {
   like: "👍",
@@ -246,27 +240,7 @@ function formatNumber(value: number | null | undefined) {
   return new Intl.NumberFormat("fr-FR").format(value ?? 0);
 }
 
-async function fetchPosts(): Promise<BlogPost[]> {
-  if (runtimeConfig.public.blogApiEndpoint) {
-    try {
-      const response = await $fetch<BlogApiResponse>(runtimeConfig.public.blogApiEndpoint, {
-        query: { limit: 10 },
-      });
+const { posts, pending, fetchPosts } = usePostsStore();
 
-      if (Array.isArray(response?.data) && response.data.length > 0) {
-        return response.data;
-      }
-    } catch (error) {
-      console.error("Impossible de charger les articles du blog", error);
-    }
-  }
-
-  return fallbackPosts;
-}
-
-const { data: postsData, pending } = await useAsyncData("blog-posts", fetchPosts, {
-  default: () => fallbackPosts,
-});
-
-const posts = computed(() => postsData.value ?? fallbackPosts);
+await callOnce(() => fetchPosts());
 </script>
