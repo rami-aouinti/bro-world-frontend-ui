@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Inspira UI
+  BroWorld
 </h1>
 <p align="center">
   <b>Build beautiful websites using Vue & Nuxt.</b><br>
@@ -30,16 +30,16 @@
 
 ---
 
-Welcome to [**Inspira UI**](https://inspira-ui.com), a community-driven project that brings the beauty and functionality of both [Aceternity UI](https://ui.aceternity.com) and [Magic UI](https://magicui.design) to the [Vue](https://vuejs.org) & [Nuxt](https://nuxt.com) ecosystem! While this project draws inspiration from these sources, it also includes unique custom components contributed by the community and created by us.
+Welcome to **BroWorld**, a community-driven project that brings the beauty and functionality of both [Aceternity UI](https://ui.aceternity.com) and [Magic UI](https://magicui.design) to the [Vue](https://vuejs.org) & [Nuxt](https://nuxt.com) ecosystem! While this project draws inspiration from these sources, it also includes unique custom components contributed by the community and created by us.
 For **Chinese version** visit [here](README_CN.md).
 
-## ✨ About Inspira UI
+## ✨ About BroWorld
 
-Inspira UI is a collection of elegant, ready-to-use Vue components designed to be flexible and easy to integrate. Rather than being a traditional component library, it allows you to pick, customize, and adapt components as needed, giving you the freedom to shape them to fit your unique project requirements.
+BroWorld is a collection of elegant, ready-to-use Vue components designed to be flexible and easy to integrate. Rather than being a traditional component library, it allows you to pick, customize, and adapt components as needed, giving you the freedom to shape them to fit your unique project requirements.
 
-## 🚀 Why Inspira UI?
+## 🚀 Why BroWorld?
 
-Inspira UI was created to fill a gap in the Vue community by providing a set of components with the aesthetics and functionality of both Aceternity UI and Magic UI. Our goal is to empower developers to build beautiful applications more efficiently while adding our own custom and community-driven designs.
+BroWorld was created to fill a gap in the Vue community by providing a set of components with the aesthetics and functionality of both Aceternity UI and Magic UI. Our goal is to empower developers to build beautiful applications more efficiently while adding our own custom and community-driven designs.
 
 ## 🎯 Key Features
 
@@ -51,7 +51,7 @@ Inspira UI was created to fill a gap in the Vue community by providing a set of 
 
 ## 📚 Documentation
 
-For full documentation and usage examples, visit [**Inspira UI Documentation**](https://inspira-ui.com).
+For full documentation and usage examples, visit the BroWorld documentation site.
 
 ## 🙏 Acknowledgments
 
@@ -64,7 +64,7 @@ A special thanks to:
 
 ## 👤 Author
 
-Hi, I'm [Rahul Vashishtha](https://rahulv.dev). I started Inspira UI to bring a similar experience to the Vue ecosystem, inspired by Aceternity UI, Magic UI, and community contributions. I'm continuously working on it to make it better. Feel free to check out my work on [GitHub](https://github.com/rahul-vashishtha) and join me on this journey [here](https://github.com/unovue/inspira-ui)!
+Hi, I'm Rami Aouinti. I started BroWorld to bring a similar experience to the Vue ecosystem, inspired by Aceternity UI, Magic UI, and community contributions. I'm continuously working on it to make it better. Feel free to join me on this journey!
 
 ## 🌟 Contribute
 

@@ -49,13 +49,13 @@ export default defineNuxtConfig({
     baseURL: process.env.NODE_ENV === "development" ? "/" : "/docs/",
   },
   llms: {
-    domain: "https://inspira-ui.com/",
-    title: "Inspira UI",
+    domain: "https://broworld.com/",
+    title: "BroWorld",
     description:
-      "Inspira UI is a free and open-source Vue.js component library that provides a collection of beautiful and customizable components for building modern web applications.",
+      "BroWorld is a free and open-source Vue.js component library that provides a collection of beautiful and customizable components for building modern web applications.",
     full: {
-      title: "Inspira UI Documentation",
-      description: "The complete Inspira UI documentation.",
+      title: "BroWorld Documentation",
+      description: "The complete BroWorld documentation.",
     },
   },
   i18n: {
