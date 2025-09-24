@@ -1,11 +1,11 @@
 import type { z } from "zod";
-import type { Registry, registryItemTypeSchema } from "../registry/schema";
+import type { Registry, registryItemTypeSchema } from "~/registry/schema";
 // @sts-nocheck
 import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
-import { registry } from "../registry";
+import { registry } from "~/registry";
 import { buildRegistry as crawlContent } from "./crawl-content";
-import { registryEntrySchema, registrySchema } from "../registry/schema";
+import { registryEntrySchema, registrySchema } from "~/registry/schema";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
 
