@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     public: {
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
-      blogApiEndpoint: process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "",
+      blogApiEndpoint: process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "http://localhost/public/post",
     },
   },
 
