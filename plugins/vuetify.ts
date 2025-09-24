@@ -1,5 +1,5 @@
 import type { IconProps } from 'vuetify'
-import { Icon } from '#components'
+import { h } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import { VDateInput } from 'vuetify/labs/VDateInput'
 import { useStorage } from '@vueuse/core'
@@ -47,14 +47,23 @@ export default defineNuxtPlugin((nuxtApp) => {
       },
     }
 
+    const nuxtIconComponent = nuxtApp.vueApp.component('Icon')
     vuetifyOptions.icons = {
       defaultSet: 'nuxtIcon',
       sets: {
         nuxtIcon: {
-          component: ({ icon, tag, ...rest }: IconProps) =>
-              h(tag, rest, [
-                h(Icon, { name: (aliases[icon as string] as string) ?? icon }),
-              ]),
+          component: ({ icon, tag, ...rest }: IconProps) => {
+            const resolvedIconName =
+              typeof icon === 'string'
+                ? (aliases[icon] as string | undefined) ?? icon
+                : icon
+
+            if (!nuxtIconComponent || typeof resolvedIconName !== 'string') {
+              return h(tag, rest)
+            }
+
+            return h(tag, rest, [h(nuxtIconComponent, { name: resolvedIconName })])
+          },
         },
       },
       aliases,
