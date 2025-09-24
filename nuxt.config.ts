@@ -1,8 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import './lib/setup-node-crypto'
+
 import http from 'node:http'
 import https from 'node:https'
 import os from 'node:os'
-import { randomFillSync, webcrypto } from 'node:crypto'
 import { Blob as NodeBlob, File as NodeFile } from 'node:buffer'
 import { URL } from 'node:url'
 import { createRequire } from 'node:module'
@@ -140,34 +141,12 @@ function createFetch() {
 }
 
 const globalScope = globalThis as typeof globalThis & {
-  crypto: Crypto | undefined
   Blob: typeof NodeBlob | undefined
   File: typeof NodeFile | undefined
   fetch: ReturnType<typeof createFetch> | undefined
   Headers: typeof SimpleHeaders | undefined
   Request: typeof SimpleRequest | undefined
   Response: typeof SimpleResponse | undefined
-}
-
-if (!globalScope.crypto || typeof globalScope.crypto.getRandomValues !== 'function') {
-  const fallbackCrypto = {
-    getRandomValues<T extends ArrayBufferView | null>(array: T): T {
-      if (!array) {
-        throw new TypeError('Expected input to be an array')
-      }
-
-      randomFillSync(array as ArrayBufferView)
-      return array
-    },
-  }
-
-  const nodeCrypto = webcrypto as Crypto | undefined
-  const cryptoWithRandomValues =
-    nodeCrypto && typeof nodeCrypto.getRandomValues === 'function'
-      ? nodeCrypto
-      : (fallbackCrypto as unknown as Crypto)
-
-  globalScope.crypto = cryptoWithRandomValues
 }
 
 if (typeof globalScope.Blob !== 'function') {
