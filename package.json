@@ -22,6 +22,7 @@
     "@nuxt/fonts": "^0.11.4",
     "@nuxt/image": "^1.11.0",
     "@nuxt/scripts": "0.11.13",
+    "@nuxtjs/i18n": "^9.5.6",
     "@splinetool/runtime": "^1.10.56",
     "@types/lodash.template": "^4.5.3",
     "@uiw/color-convert": "^2.8.0",

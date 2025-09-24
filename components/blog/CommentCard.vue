@@ -22,21 +22,27 @@
       {{ comment.content }}
     </p>
     <div class="mt-auto flex items-center justify-between text-xs text-slate-400">
-      <span class="inline-flex items-center gap-1 rounded-full bg-black/20 px-2 py-1">
+      <span
+        :aria-label="t('blog.comment.reactions', { count: formatNumber(comment.reactions_count) })"
+        class="inline-flex items-center gap-1 rounded-full bg-black/20 px-2 py-1"
+      >
         <span
           aria-hidden="true"
           class="text-base"
           >👍</span
         >
-        {{ t("blog.comment.reactions", { count: formatNumber(comment.reactions_count) }) }}
+        <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
       </span>
-      <span class="inline-flex items-center gap-1 rounded-full bg-black/10 px-2 py-1">
+      <span
+        :aria-label="t('blog.comment.replies', { count: formatNumber(comment.totalComments) })"
+        class="inline-flex items-center gap-1 rounded-full bg-black/10 px-2 py-1"
+      >
         <span
           aria-hidden="true"
           class="text-base"
           >💬</span
         >
-        {{ t("blog.comment.replies", { count: formatNumber(comment.totalComments) }) }}
+        <span aria-hidden="true">{{ formatNumber(comment.totalComments) }}</span>
       </span>
     </div>
   </article>

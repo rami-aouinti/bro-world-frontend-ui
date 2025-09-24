@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "motion-v/nuxt",
     "lenis/nuxt",
+    "@nuxtjs/i18n",
     "nuxt-llms",
   ],
 
