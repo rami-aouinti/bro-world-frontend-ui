@@ -1,5 +1,5 @@
 <template>
-  <article class="flex flex-col gap-4 rounded-2xl border border-white/5 bg-white/5 p-5 sm:p-6">
+  <article class="flex flex-col gap-4 rounded-2xl border border-white/5 bg-white/5 p-5 shadow-[0_18px_40px_-30px_rgba(15,23,42,0.9)] sm:p-6">
     <div class="flex items-center gap-4">
       <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:h-12 sm:w-12">
         <img
