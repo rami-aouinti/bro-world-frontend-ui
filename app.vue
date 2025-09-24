@@ -3,10 +3,14 @@
     :color="false"
     class="z-100 bg-primary/80"
   />
-  <NuxtLayout />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
 const config = useConfig();
 const route = useRoute();
 const { themeClass, radius } = useThemes();
