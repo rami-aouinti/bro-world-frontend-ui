@@ -58,75 +58,95 @@
       "like": "点赞",
       "love": "喜爱",
       "wow": "惊讶",
-    "post": {
-      "publishedOn": "发布于 {date}",
-      "reactions": "{count} 条互动",
-      "comments": "{count} 条评论",
-      "recentComments": "最新评论",
-      "commentPreviews": "{count} 条预览",
-      "reactionSpotlight": "精选互动"
-    },
-    "comment": {
-      "reactions": "{count} 条互动",
-      "replies": "{count} 条回复"
-    },
-    "reactionTypes": {
-      "like": "点赞",
-      "love": "喜爱",
-      "wow": "惊叹",
-      "haha": "哈哈",
-      "sad": "难过",
-      "angry": "生气"
-    },
-    "posts": {
-      "publishedOn": "发布于 {date}",
-      "reactionCount": "{count} 个反应",
-      "commentCount": "{count} 条评论",
-      "recentComments": "最新评论",
-      "previewCount": "{count} 条预览",
-      "highlightedReactions": "精选反应"
-    },
-    "comments": {
-      "reactionCount": "{count} 个反应",
-      "replyCount": "{count} 条回复"
-    }
-  },
-  "sidebar": {
-    "weather": {
-      "badge": "资讯",
-      "title": "即将降雨",
-      "subtitle": "准备迎接一个有小风的雨天。",
-      "icon": "🌧️",
-      "location": "德国柏林",
-      "locationLabel": "位置",
-      "temperature": "18°C",
-      "temperatureLabel": "气温",
-      "tipLabel": "提示",
-      "tip": "别忘了带伞保持干爽。"
-    },
-    "leaderboard": {
-      "title": "测验前三名",
-      "live": "实时",
-      "participants": {
-        "first": { "name": "Bro World", "role": "产品团队", "score": "982 分" },
-        "second": { "name": "Adam Don", "role": "社区", "score": "953 分" },
-        "third": { "name": "Nina Ko", "role": "市场", "score": "917 分" }
-      }
-    },
-    "rating": {
-      "title": "评分概览",
-      "subtitle": "本周会员反馈",
-      "average": "4.7",
-      "total": 5,
-      "icon": "⭐",
-      "stars": 5,
-      "categories": {
-        "engagement": { "label": "参与度", "value": 92 },
-        "content": { "label": "内容", "value": 88 },
-        "responsiveness": { "label": "响应速度", "value": 84 }
+      "post": {
+        "publishedOn": "发布于 {date}",
+        "reactions": "{count} 条互动",
+        "comments": "{count} 条评论",
+        "recentComments": "最新评论",
+        "commentPreviews": "{count} 条预览",
+        "reactionSpotlight": "精选互动"
+      },
+      "comment": {
+        "reactions": "{count} 条互动",
+        "replies": "{count} 条回复"
+      },
+      "reactionTypes": {
+        "like": "点赞",
+        "love": "喜爱",
+        "wow": "惊叹",
+        "haha": "哈哈",
+        "sad": "难过",
+        "angry": "生气"
+      },
+      "posts": {
+        "publishedOn": "发布于 {date}",
+        "reactionCount": "{count} 个反应",
+        "commentCount": "{count} 条评论",
+        "recentComments": "最新评论",
+        "previewCount": "{count} 条预览",
+        "highlightedReactions": "精选反应"
+      },
+      "comments": {
+        "reactionCount": "{count} 个反应",
+        "replyCount": "{count} 条回复"
       }
     },
     "sidebar": {
+      "weather": {
+        "badge": "资讯",
+        "title": "即将降雨",
+        "subtitle": "准备迎接一个有小风的雨天。",
+        "icon": "🌧️",
+        "location": "德国柏林",
+        "locationLabel": "位置",
+        "temperature": "18°C",
+        "temperatureLabel": "气温",
+        "tipLabel": "提示",
+        "tip": "别忘了带伞保持干爽。"
+      },
+      "leaderboard": {
+        "title": "测验前三名",
+        "live": "实时",
+        "participants": {
+          "first": {
+            "name": "Bro World",
+            "role": "产品团队",
+            "score": "982 分"
+          },
+          "second": {
+            "name": "Adam Don",
+            "role": "社区",
+            "score": "953 分"
+          },
+          "third": {
+            "name": "Nina Ko",
+            "role": "市场",
+            "score": "917 分"
+          }
+        }
+      },
+      "rating": {
+        "title": "评分概览",
+        "subtitle": "本周会员反馈",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
+        "stars": 5,
+        "categories": {
+          "engagement": {
+            "label": "参与度",
+            "value": 92
+          },
+          "content": {
+            "label": "内容",
+            "value": 88
+          },
+          "responsiveness": {
+            "label": "响应速度",
+            "value": 84
+          }
+        }
+      },
       "title": "保持联系",
       "subtitle": "帮助你紧跟 BroWorld 社区的最新动态。",
       "widgets": {
@@ -146,7 +166,6 @@
           "action": "提交内容"
         }
       }
-    }
     }
   }
 }
