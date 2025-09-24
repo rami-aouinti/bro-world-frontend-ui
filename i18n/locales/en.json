@@ -49,6 +49,7 @@
     }
   },
   "auth": {
+    "Account": "Account",
     "Login": "Log in",
     "Register": "Register"
   }

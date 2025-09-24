@@ -49,6 +49,7 @@
     }
   },
   "auth": {
+    "Account": "Compte",
     "Login": "Connexion",
     "Register": "Inscription"
   }
