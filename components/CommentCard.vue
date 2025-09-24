@@ -53,13 +53,13 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const reactionsLabel = computed(() =>
-  t("blog.comments.reactionCount", {
+  t("blog.reactions.comments.reactionCount", {
     count: props.formatNumber(props.comment.reactions_count),
   }),
 );
 
 const repliesLabel = computed(() =>
-  t("blog.comments.replyCount", {
+  t("blog.reactions.comments.replyCount", {
     count: props.formatNumber(props.comment.totalComments),
   }),
 );

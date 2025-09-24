@@ -23,7 +23,9 @@
     </p>
     <div class="mt-auto flex items-center justify-between text-xs text-slate-400">
       <span
-        :aria-label="t('blog.comment.reactions', { count: formatNumber(comment.reactions_count) })"
+        :aria-label="
+          t('blog.reactions.comment.reactions', { count: formatNumber(comment.reactions_count) })
+        "
         class="inline-flex items-center gap-1 rounded-full bg-black/20 px-2 py-1"
       >
         <span
@@ -34,7 +36,9 @@
         <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
       </span>
       <span
-        :aria-label="t('blog.comment.replies', { count: formatNumber(comment.totalComments) })"
+        :aria-label="
+          t('blog.reactions.comment.replies', { count: formatNumber(comment.totalComments) })
+        "
         class="inline-flex items-center gap-1 rounded-full bg-black/10 px-2 py-1"
       >
         <span
