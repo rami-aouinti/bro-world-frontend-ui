@@ -17,6 +17,15 @@
             loading="lazy"
           />
         </div>
+  <article class="flex flex-col gap-4 rounded-2xl border border-white/5 bg-white/5 p-5 shadow-[0_18px_40px_-30px_rgba(15,23,42,0.9)] sm:p-6">
+    <div class="flex items-center gap-4">
+      <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:h-12 sm:w-12">
+        <img
+          :src="comment.user.photo ?? defaultAvatar"
+          :alt="`${comment.user.firstName} ${comment.user.lastName}`"
+          class="h-full w-full object-cover"
+          loading="lazy"
+        />
       </div>
       <div class="flex-1">
         <p class="text-sm font-semibold text-white">
