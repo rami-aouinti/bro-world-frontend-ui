@@ -115,9 +115,17 @@ export default defineAppConfig({
       ],
       links: [
         {
-          icon: "lucide:github",
-          to: "https://github.com/bro-world",
-          target: "_blank",
+          icon: "lucide:user",
+          menuItems: [
+            {
+              title: $t("auth.Login"),
+              to: "/login",
+            },
+            {
+              title: $t("auth.Register"),
+              to: "/register",
+            },
+          ],
         },
       ],
     },

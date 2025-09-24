@@ -47,5 +47,9 @@
       "GetStartedAndStartBuildingAwesomeUI": "开始构建出色的 UI 吧",
       "GetStarted": "开始"
     }
+  },
+  "auth": {
+    "Login": "登录",
+    "Register": "注册"
   }
 }

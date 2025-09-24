@@ -61,6 +61,13 @@ export default defineNuxtConfig({
   },
   i18n: {
     defaultLocale: "en",
+    strategy: "prefix_except_default",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "i18n_redirected",
+      redirectOn: "root",
+      fallbackLocale: "en",
+    },
     locales: [
       {
         code: "en",
@@ -68,11 +75,22 @@ export default defineNuxtConfig({
         language: "en-US",
       },
       {
-        code: "zh-cn",
-        name: "中文简体",
-        language: "zh-CN",
+        code: "fr",
+        name: "Français",
+        language: "fr-FR",
+      },
+      {
+        code: "de",
+        name: "Deutsch",
+        language: "de-DE",
+      },
+      {
+        code: "ar",
+        name: "العربية",
+        language: "ar-SA",
       },
     ],
+    vueI18n: "./i18n/i18n.config.ts",
   },
   fonts: {
     processCSSVariables: true,

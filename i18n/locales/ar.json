@@ -1,0 +1,55 @@
+{
+  "common": {
+    "InspiraUIPro": "إنسبيرا UI برو"
+  },
+  "banner": {
+    "Content": "للاطلاع على توثيق Tailwind CSS v3، [**اضغط هنا**](https://v1.inspira-ui.com)."
+  },
+  "nav": {
+    "Docs": "التوثيق",
+    "GettingStarted": "البدء",
+    "GettingStartedDescription": "مقدمة عن Inspira UI وأهم مفاهيمه.",
+    "Installation": "التثبيت",
+    "InstallationDescription": "اتبع الدليل خطوة بخطوة لتثبيت Inspira UI في مشروعك.",
+    "Components": "المكوّنات",
+    "ComponentsDescription": "استكشف جميع المكوّنات المتاحة وكيفية استخدامها.",
+    "V1DocsDescription": "توثيق استخدام Inspira UI مع Tailwind CSS v3.",
+    "Community": "المجتمع",
+    "GitHubDescription": "الكود المصدري لـ Inspira UI.",
+    "DiscordDescription": "تواصل مع المجتمع عبر ديسكورد",
+    "Forum": "المنتدى",
+    "ForumDiscord": "انضم إلى المنتدى"
+  },
+  "toc": {
+    "title": "في هذه الصفحة",
+    "StarOnGitHub": "أضف نجمة على GitHub",
+    "CreateIssues": "أنشئ بلاغًا",
+    "JoinDiscord": "انضم إلى ديسكورد",
+    "Forum": "المنتدى",
+    "FollowOnX": "تابعنا على X",
+    "FollowOnBluesky": "تابعنا على Bluesky"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "ادعمنا",
+      "AllComponents": "جميع المكوّنات",
+      "OpenSourceComponentsToBuild": "مكوّنات مفتوحة المصدر لتبني بها",
+      "Stunning": "مذهلة",
+      "Beautiful": "جميلة",
+      "WebsitesUsingVueAndNuxt": "مواقع باستخدام Vue وNuxt",
+      "IntegrateWithYourFavouriteUIframework": "ادمج مع إطار الواجهة المفضل لديك",
+      "Features": "الميزات",
+      "CheckOutSomeExamples": "اطلع على بعض الأمثلة!",
+      "3DCardHoverEffect": "تأثير تحويم بطاقة ثلاثية الأبعاد",
+      "RadiantText": "نص متألق",
+      "LovedByCommunity": "محبوب من المجتمع",
+      "WhatAreYouWaitingFor": "ما الذي تنتظره؟",
+      "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
+      "GetStarted": "ابدأ الآن"
+    }
+  },
+  "auth": {
+    "Login": "تسجيل الدخول",
+    "Register": "إنشاء حساب"
+  }
+}

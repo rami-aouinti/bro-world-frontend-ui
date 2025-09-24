@@ -1,11 +1,17 @@
+import ar from "./locales/ar.json";
+import de from "./locales/de.json";
 import en from "./locales/en.json";
-import zhCn from "./locales/zh-cn.json";
+import fr from "./locales/fr.json";
 
 export default defineI18nConfig(() => ({
   legacy: false,
   locale: "en",
+  fallbackLocale: "en",
+  availableLocales: ["en", "fr", "de", "ar"],
   messages: {
-    en: en,
-    "zh-cn": zhCn,
+    en,
+    fr,
+    de,
+    ar,
   },
 }));
