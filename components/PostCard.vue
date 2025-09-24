@@ -93,10 +93,6 @@
             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-slate-200 shadow-sm"
           >
             <span class="text-lg">{{ reactionEmojis[reaction.type] }}</span>
-            <span class="text-sm font-medium">{{ reaction.user.firstName }}</span>
-            <span class="text-[11px] uppercase tracking-wide text-slate-400">
-              {{ reactionLabels[reaction.type] }}
-            </span>
           </div>
         </div>
       </footer>

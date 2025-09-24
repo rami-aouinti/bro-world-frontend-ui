@@ -16,12 +16,12 @@ export default defineAppConfig({
       radius: 0.75,
     },
     banner: {
-      enable: false,
-      showClose: false,
-      content: "",
-      to: "",
+      enable: true,
+      showClose: true,
+      content: "testing banner",
+      to: "raastack.com",
       target: "_self",
-      border: false,
+      border: true,
     },
     header: {
       title: "BroWorld",

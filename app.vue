@@ -3,7 +3,6 @@
     :color="false"
     class="z-100 bg-primary/80"
   />
-  <LayoutBanner v-if="config.banner.enable" />
   <LayoutHeader />
   <div
     v-if="page?.fullpage !== true"
