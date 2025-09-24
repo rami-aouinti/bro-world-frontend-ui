@@ -1,7 +1,7 @@
 <template>
   <div class="relative min-h-screen overflow-hidden bg-transparent text-slate-50">
     <div class="relative z-10">
-      <section class="mx-auto max-w-7xl px-6 pb-24">
+      <section class="mx-auto max-w-7xl px-2 py-4 pb-24">
         <div
           class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_340px]"
         >
