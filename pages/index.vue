@@ -1,59 +1,44 @@
 <template>
   <div class="relative min-h-screen overflow-hidden bg-transparent text-slate-50">
-    <div class="relative z-10">
-      <section class="mx-auto max-w-7xl px-2 py-4 pb-24">
+    <div class="py-2 space-y-10">
+      <div
+          v-if="pending"
+          class="grid gap-8 md:grid-cols-2"
+      >
         <div
-          class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_340px]"
+            v-for="index in 4"
+            :key="index"
+            class="flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-8 backdrop-blur-xl"
         >
-          <div class="space-y-10">
-            <div
-              v-if="pending"
-              class="grid gap-8 md:grid-cols-2"
-            >
-              <div
-                v-for="index in 4"
-                :key="index"
-                class="flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-8 backdrop-blur-xl"
-              >
-                <div class="flex items-center gap-4">
-                  <div class="h-14 w-14 rounded-2xl bg-white/10" />
-                  <div class="space-y-3">
-                    <div class="h-3 w-32 rounded-full bg-white/10" />
-                    <div class="h-3 w-24 rounded-full bg-white/10" />
-                  </div>
-                </div>
-                <div class="space-y-3">
-                  <div class="h-3 w-3/4 rounded-full bg-white/10" />
-                  <div class="h-3 w-2/3 rounded-full bg-white/10" />
-                  <div class="h-3 w-full rounded-full bg-white/10" />
-                </div>
-                <div class="mt-auto flex gap-3">
-                  <div class="h-7 w-28 rounded-full bg-white/5" />
-                  <div class="h-7 w-28 rounded-full bg-white/5" />
-                </div>
-              </div>
+          <div class="flex items-center gap-4">
+            <div class="h-14 w-14 rounded-2xl bg-white/10" />
+            <div class="space-y-3">
+              <div class="h-3 w-32 rounded-full bg-white/10" />
+              <div class="h-3 w-24 rounded-full bg-white/10" />
             </div>
-
-            <template v-else>
-              <PostCard
-                v-for="post in posts"
-                :key="post.id"
-                :post="post"
-                :default-avatar="defaultAvatar"
-                :reaction-emojis="reactionEmojis"
-                :reaction-labels="reactionLabels"
-              />
-            </template>
           </div>
-
-          <RightSidebar
-              class="hidden lg:flex"
-              :title="sidebarContent.title"
-              :subtitle="sidebarContent.subtitle"
-              :widgets="sidebarContent.widgets"
-          />
+          <div class="space-y-3">
+            <div class="h-3 w-3/4 rounded-full bg-white/10" />
+            <div class="h-3 w-2/3 rounded-full bg-white/10" />
+            <div class="h-3 w-full rounded-full bg-white/10" />
+          </div>
+          <div class="mt-auto flex gap-3">
+            <div class="h-7 w-28 rounded-full bg-white/5" />
+            <div class="h-7 w-28 rounded-full bg-white/5" />
+          </div>
         </div>
-      </section>
+      </div>
+
+      <template v-else>
+        <PostCard
+            v-for="post in posts"
+            :key="post.id"
+            :post="post"
+            :default-avatar="defaultAvatar"
+            :reaction-emojis="reactionEmojis"
+            :reaction-labels="reactionLabels"
+        />
+      </template>
     </div>
   </div>
 </template>
