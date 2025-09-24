@@ -54,6 +54,18 @@
     "Register": "Registrieren"
   },
   "blog": {
+    "hero": {
+      "eyebrow": "Community-Feed",
+      "title": "Erfahre, was in BroWorld passiert",
+      "description": "Verfolge Highlights der Community, entdecke neue Ressourcen und bleib über aktuelle Projekte informiert.",
+      "primaryAction": "Neueste Beiträge entdecken",
+      "secondaryAction": "Dokumentation ansehen",
+      "stats": {
+        "members": "Aktive Mitglieder",
+        "reactions": "Geteilte Reaktionen",
+        "comments": "Verfasste Kommentare"
+      }
+    },
     "reactions": {
       "post": {
         "publishedOn": "Veröffentlicht am {date}",
