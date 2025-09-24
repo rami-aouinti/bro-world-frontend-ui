@@ -121,6 +121,8 @@
         "engagement": { "label": "Engagement", "value": 92 },
         "content": { "label": "Contenu", "value": 88 },
         "responsiveness": { "label": "Réactivité", "value": 84 }
+      }
+    },
     "sidebar": {
       "title": "Restez connecté",
       "subtitle": "Des ressources pour suivre la communauté BroWorld.",
@@ -141,6 +143,7 @@
           "action": "Proposer du contenu"
         }
       }
+    }
     }
   }
 }

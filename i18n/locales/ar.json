@@ -123,6 +123,8 @@
         "engagement": { "label": "التفاعل", "value": 92 },
         "content": { "label": "المحتوى", "value": 88 },
         "responsiveness": { "label": "سرعة الاستجابة", "value": 84 }
+      }
+    },
     "sidebar": {
       "title": "ابقَ على تواصل",
       "subtitle": "موارد لمتابعة مجتمع برو وورلد.",
@@ -143,6 +145,7 @@
           "action": "إرسال محتوى"
         }
       }
+    }
     }
   }
 }
