@@ -1,15 +1,151 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import http from 'node:http'
+import https from 'node:https'
 import os from 'node:os'
 import { randomFillSync, webcrypto } from 'node:crypto'
 import { Blob as NodeBlob, File as NodeFile } from 'node:buffer'
+import { URL } from 'node:url'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
 import { aliases } from 'vuetify/iconsets/mdi'
+
+type FetchHeadersInit = Record<string, string | number | readonly string[]>
+
+type FetchRequestInit = {
+  method?: string
+  headers?: FetchHeadersInit
+  body?: string | Buffer
+}
+
+class SimpleHeaders {
+  private readonly headersMap = new Map<string, string>()
+
+  constructor(init?: FetchHeadersInit | http.IncomingHttpHeaders) {
+    if (!init) {
+      return
+    }
+
+    const entries = Array.isArray(init)
+      ? init
+      : Object.entries(init)
+
+    for (const [rawKey, rawValue] of entries) {
+      if (!rawKey || rawValue == null) {
+        continue
+      }
+
+      const key = String(rawKey).toLowerCase()
+      const value = Array.isArray(rawValue)
+        ? rawValue.filter(Boolean).join(', ')
+        : String(rawValue)
+
+      if (!value) {
+        continue
+      }
+
+      this.headersMap.set(key, value)
+    }
+  }
+
+  get(name: string): string | null {
+    return this.headersMap.get(name.toLowerCase()) ?? null
+  }
+
+  set(name: string, value: string): void {
+    this.headersMap.set(name.toLowerCase(), value)
+  }
+
+  entries(): IterableIterator<[string, string]> {
+    return this.headersMap.entries()
+  }
+
+  [Symbol.iterator](): IterableIterator<[string, string]> {
+    return this.entries()
+  }
+}
+
+class SimpleResponse {
+  readonly ok: boolean
+  readonly status: number
+  readonly statusText: string
+  readonly headers: SimpleHeaders
+
+  constructor(private readonly body: Buffer, res: http.IncomingMessage) {
+    this.status = res.statusCode ?? 0
+    this.statusText = res.statusMessage ?? ''
+    this.ok = this.status >= 200 && this.status < 300
+    this.headers = new SimpleHeaders(res.headers)
+  }
+
+  async arrayBuffer(): Promise<ArrayBuffer> {
+    const cloned = Buffer.from(this.body)
+    return cloned.buffer.slice(cloned.byteOffset, cloned.byteOffset + cloned.byteLength)
+  }
+
+  async text(): Promise<string> {
+    return this.body.toString('utf8')
+  }
+
+  async json(): Promise<unknown> {
+    const text = await this.text()
+    return JSON.parse(text)
+  }
+}
+
+class SimpleRequest {
+  readonly url: string
+  readonly method: string
+  readonly headers: SimpleHeaders
+  readonly body?: string | Buffer
+
+  constructor(input: string | URL, init?: FetchRequestInit) {
+    this.url = typeof input === 'string' ? input : input.toString()
+    this.method = init?.method ?? 'GET'
+    this.headers = new SimpleHeaders(init?.headers)
+    this.body = init?.body
+  }
+}
+
+function createFetch() {
+  return function nodeFetch(input: string | URL, init?: FetchRequestInit): Promise<SimpleResponse> {
+    const request = new SimpleRequest(input, init)
+    const url = new URL(request.url)
+    const client = url.protocol === 'https:' ? https : http
+
+    const requestOptions: http.RequestOptions = {
+      method: request.method,
+      headers: Object.fromEntries(request.headers),
+    }
+
+    return new Promise((resolve, reject) => {
+      const req = client.request(url, requestOptions, (res) => {
+        const chunks: Buffer[] = []
+
+        res.on('data', (chunk: Buffer) => chunks.push(chunk))
+        res.on('end', () => {
+          resolve(new SimpleResponse(Buffer.concat(chunks), res))
+        })
+      })
+
+      req.on('error', reject)
+
+      if (request.body) {
+        req.write(request.body)
+      }
+
+      req.end()
+    })
+  }
+}
 
 const globalScope = globalThis as typeof globalThis & {
   crypto: Crypto | undefined
   Blob: typeof NodeBlob | undefined
   File: typeof NodeFile | undefined
+  fetch: ReturnType<typeof createFetch> | undefined
+  Headers: typeof SimpleHeaders | undefined
+  Request: typeof SimpleRequest | undefined
+  Response: typeof SimpleResponse | undefined
 }
 
 if (!globalScope.crypto || typeof globalScope.crypto.getRandomValues !== 'function') {
@@ -41,6 +177,22 @@ if (typeof globalScope.File !== 'function') {
   globalScope.File = NodeFile
 }
 
+if (typeof globalScope.fetch !== 'function') {
+  globalScope.fetch = createFetch()
+}
+
+if (typeof globalScope.Headers !== 'function') {
+  globalScope.Headers = SimpleHeaders
+}
+
+if (typeof globalScope.Request !== 'function') {
+  globalScope.Request = SimpleRequest
+}
+
+if (typeof globalScope.Response !== 'function') {
+  globalScope.Response = SimpleResponse
+}
+
 const osWithAvailableParallelism = os as typeof os & {
   availableParallelism?: () => number
 }
@@ -62,7 +214,11 @@ if (typeof osWithAvailableParallelism.availableParallelism !== 'function') {
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  plugins: [{ src: "~/plugins/clarity.js", mode: "client" }, "~/plugins/vuetify"],
+  plugins: [
+    { src: "~/plugins/clarity.js", mode: "client" },
+    "~/plugins/vuetify",
+    "~/plugins/vuetify-i18n.ts",
+  ],
 
   css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css", "~/assets/styles/index.css"],
 
@@ -105,10 +261,7 @@ export default defineNuxtConfig({
       ignore: ["**/index.ts", "**/shaders.ts", "**/types.ts"],
     },
   ],
-  extends: ['@nuxt/ui-pro'],
-  plugins: [
-    '~/plugins/vuetify-i18n.ts'
-  ],
+  extends: ['@nuxt/ui-pro', 'shadcn-docs-nuxt'],
   sitemap: {
     siteUrl: 'https://bro-world-space.com',
     trailingSlash: false,
@@ -287,6 +440,5 @@ export default defineNuxtConfig({
       },
     ],
   },
-  extends: ["shadcn-docs-nuxt"],
   compatibilityDate: "2025-06-10",
 });
