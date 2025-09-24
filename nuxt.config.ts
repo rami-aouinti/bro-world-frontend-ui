@@ -1,8 +1,24 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import os from 'node:os'
+import { webcrypto } from 'node:crypto'
+import { fetch as undiciFetch, Headers, FormData, Request, Response, File, Blob } from 'undici'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
 import { aliases } from 'vuetify/iconsets/mdi'
+
+if (typeof globalThis.fetch !== 'function') {
+  globalThis.fetch = undiciFetch
+  globalThis.Headers = Headers
+  globalThis.FormData = FormData
+  globalThis.Request = Request
+  globalThis.Response = Response
+  globalThis.File = File
+  globalThis.Blob = Blob
+}
+
+if (!globalThis.crypto || typeof globalThis.crypto.getRandomValues !== 'function') {
+  globalThis.crypto = webcrypto as Crypto
+}
 
 const osWithAvailableParallelism = os as typeof os & {
   availableParallelism?: () => number
