@@ -1,0 +1,31 @@
+@use 'variables' as *;
+
+.switch {
+  .v-input--selection-controls__input {
+    margin: 0 !important;
+  }
+
+  .v-input--switch__thumb {
+    border: 1px solid $gray-400;
+  }
+
+  .v-input--switch__track {
+    opacity: 1;
+    color: $gray-400 !important;
+  }
+
+  &.v-input--is-label-active {
+    .v-input--switch__track {
+      color: $dark-gradient !important;
+    }
+
+    .v-input--switch__thumb {
+      border: 1px solid $dark-gradient;
+    }
+  }
+}
+
+.v-input--switch:not(.v-input--switch--flat):not(.v-input--switch--inset)
+  .v-input--switch__thumb {
+  box-shadow: $box-shadow;
+}

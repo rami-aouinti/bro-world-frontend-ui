@@ -1,0 +1,9 @@
+@use '../variables' as *;
+
+@mixin gradient-directional(
+  $start-color: $gray-700,
+  $end-color: $gray-800,
+  $deg: 45deg
+) {
+  background-image: linear-gradient($deg, $start-color, $end-color);
+}

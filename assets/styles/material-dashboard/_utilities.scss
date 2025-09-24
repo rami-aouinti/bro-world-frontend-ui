@@ -1,0 +1,110 @@
+@use 'sass:list';
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins/background' as *;
+
+@each $name, $val in $width {
+  .w-#{$name} {
+    width: $val !important;
+  }
+}
+
+@each $name, $val in $height {
+  .height-#{$name} {
+    height: $val !important;
+  }
+}
+
+@each $name, $val in $theme-colors {
+  .text-#{$name} {
+    color: $val !important;
+  }
+
+  .bg-#{$name} {
+    background-color: $val !important;
+  }
+
+  .border-#{$name} {
+    border-color: $val !important;
+  }
+}
+
+@each $name, $val in $colors-simple {
+  .text-#{$name} {
+    color: $val !important;
+  }
+}
+
+@each $name, $val in $opacity {
+  .opacity-#{$name} {
+    opacity: $val !important;
+  }
+}
+
+@each $name, $val in $opacity {
+  .opacity-#{$name} {
+    opacity: $val !important;
+  }
+}
+
+@each $name, $val in $min-height {
+  .min-height-#{$name} {
+    min-height: $val !important;
+  }
+}
+
+@each $name, $val in $theme-colors {
+  .badge-#{$name} {
+    @if $name == 'info' {
+      color: color.scale($val, $lightness: -8%) !important;
+    } @else if $name == 'success' {
+      color: color.scale($val, $lightness: -11%) !important;
+    } @else {
+      color: $val !important;
+    }
+  }
+}
+
+@each $name, $val in $letter-spacing {
+  .v-application .ls-#{$name} {
+    letter-spacing: $val !important;
+  }
+}
+
+@each $name, $val in $bg-gradient-variant {
+  .bg-gradient-#{$name} {
+    @include bg-gradient-variant(list.nth($val, 1), list.nth($val, -1));
+  }
+}
+
+.text-gradient {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  @each $name, $val in $bg-gradient-variant {
+    &.text-#{$name} {
+      @include bg-gradient-variant(list.nth($val, 1), list.nth($val, -1));
+    }
+  }
+}
+
+@each $name, $val in $colors-simple {
+  .bg-#{$name} {
+    background-color: $val !important;
+  }
+}
+
+.mb-30 {
+  margin-bottom: $mb-30 !important;
+}
+
+@each $name, $val in $section-height {
+  .min-vh-#{$name} {
+    min-height: $val !important;
+  }
+}
+
+@each $name, $val in $section-height {
+  .max-vh-#{$name} {
+    max-height: $val !important;
+  }
+}

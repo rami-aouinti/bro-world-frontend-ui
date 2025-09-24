@@ -1,0 +1,57 @@
+// =========================================================
+// * Vuetify Material Dashboard 2 PRO - v3.0.0
+// =========================================================
+
+// * Product Page:  https://www.creative-tim.com/product/vuetify-material-dashboard-pro
+// * Copyright 2022 Creative Tim (https://www.creative-tim.com)
+
+// Coded by www.creative-tim.com
+
+//  =========================================================
+
+// * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// Variables
+@use 'material-dashboard/variables';
+
+// Mixins
+@use 'material-dashboard/mixins/placeholder';
+@use 'material-dashboard/mixins/background';
+@use 'material-dashboard/mixins/gradients';
+
+// Utilities
+@use 'material-dashboard/utilities';
+
+// Nucleo Icons
+// @import "material-dashboard/nucleo-svg";
+@use 'material-dashboard/nucleo';
+
+// Components
+@use 'material-dashboard/drawer';
+@use 'material-dashboard/misc';
+@use 'material-dashboard/forms';
+@use 'material-dashboard/buttons';
+@use 'material-dashboard/app-bar';
+@use 'material-dashboard/breadcrumbs';
+@use 'material-dashboard/card';
+@use 'material-dashboard/typography';
+@use 'material-dashboard/checkbox';
+@use 'material-dashboard/progress';
+@use 'material-dashboard/avatar';
+@use 'material-dashboard/media';
+@use 'material-dashboard/table';
+@use 'material-dashboard/header';
+@use 'material-dashboard/separators';
+@use 'material-dashboard/alerts';
+@use 'material-dashboard/timeline';
+@use 'material-dashboard/switch';
+@use 'material-dashboard/pagination';
+@use 'material-dashboard/select';
+
+// Vendors
+@use 'material-dashboard/vendors/sweetalert2';
+@use 'material-dashboard/vendors/fullcalendar';
+@use 'material-dashboard/vendors/quill';
+@use 'material-dashboard/vendors/dropzone';
+@use 'material-dashboard/vendors/photoswipe';
+@use 'material-dashboard/vendors/kanban';

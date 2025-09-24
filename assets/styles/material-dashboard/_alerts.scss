@@ -1,0 +1,25 @@
+@use 'sass:list';
+@use 'variables' as *;
+@use 'mixins/gradients' as *;
+
+@each $state, $value in $theme-gradient-colors {
+  .v-alert.alert-#{$state} {
+    @include gradient-directional(
+      list.nth($value, 1) 0%,
+      list.nth($value, -1) 100%,
+      $deg: 195deg
+    );
+  }
+}
+
+.v-alert.alert-secondary .v-icon {
+  color: $dark;
+}
+
+.alert-notify {
+  color: rgba($white, 0.85);
+}
+
+.snackbar-shadow .v-snack__wrapper {
+  box-shadow: $snackbar-shadow !important;
+}

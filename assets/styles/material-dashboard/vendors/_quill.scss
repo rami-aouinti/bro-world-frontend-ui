@@ -1,0 +1,21 @@
+@use '../variables' as *;
+
+.ql-container.ql-snow,
+.ql-toolbar.ql-snow {
+  border-color: $gray-300 !important;
+}
+
+.ql-toolbar {
+  border-top-right-radius: $border-radius-md;
+  border-top-left-radius: $border-radius-md;
+}
+
+.ql-container {
+  border-bottom-right-radius: $border-radius-md;
+  border-bottom-left-radius: $border-radius-md;
+}
+
+.ql-editor {
+  color: $body-color;
+  font-size: $font-size-sm;
+}

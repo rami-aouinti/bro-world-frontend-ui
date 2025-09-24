@@ -1,0 +1,62 @@
+@use 'variables' as *;
+
+.card-shadow {
+  box-shadow: $card-box-shadow !important;
+}
+
+.card-stats-padding {
+  padding: $card-stats-padding;
+}
+
+.card-padding {
+  padding: $card-padding !important;
+}
+
+.card-header-padding {
+  padding: $card-header-padding;
+}
+
+.card-border-bottom {
+  border-bottom: 1px solid rgba($black, 0.05);
+}
+
+.card-border {
+  box-shadow: $card-border-with-box-shadow !important;
+}
+
+.card[data-animation='true'] {
+  .card-header {
+    transition: $card-animation-transition;
+  }
+  &:hover {
+    .card-header {
+      transform: $card-animation-transform;
+    }
+  }
+}
+
+.card-picker-custom {
+  .v-btn--icon .v-icon {
+    font-size: $card-datepicker-icon-size;
+    width: $card-datepicker-icon-size;
+    height: $card-datepicker-icon-size;
+  }
+
+  .v-date-picker-header__value button {
+    color: $body-color !important;
+  }
+}
+
+.move-on-hover {
+  transition: $move-transition;
+  overflow: $move-overflow;
+  transform-origin: $move-transform-origin;
+  transform: $move-transform;
+  -webkit-backface-visibility: $move-backface-visibility;
+  backface-visibility: $move-backface-visibility;
+  will-change: $move-will-change;
+  &:hover {
+    -webkit-transform: $move-hover-transform;
+    transform: $move-hover-transform;
+  }
+}

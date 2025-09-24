@@ -1,0 +1,27 @@
+@use 'variables' as *;
+
+.pagination {
+  .v-pagination__navigation,
+  .v-pagination__item:not(.v-pagination__item--active) {
+    box-shadow: none;
+    border: 1px solid $gray-300;
+    color: $gray-600;
+
+    &:hover {
+      background-color: $gray-300;
+    }
+  }
+
+  .v-pagination__navigation,
+  .v-pagination__item {
+    outline: none;
+  }
+
+  .v-pagination__navigation i {
+    color: $gray-600;
+  }
+
+  .v-pagination__item--active {
+    box-shadow: $btn-shadow-hover;
+  }
+}

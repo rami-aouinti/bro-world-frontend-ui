@@ -1,0 +1,64 @@
+@use 'variables' as *;
+
+@each $name, $val in $headings-display-typo {
+  .display-h-#{$name} {
+    font-size: $val !important;
+    line-height: $line-height-display;
+  }
+}
+
+.h1,
+.h2,
+.h3,
+h1,
+h2,
+h3 {
+  font-family: 'Roboto Slab', sans-serif;
+}
+.text-lg {
+  font-size: $font-size-lg !important;
+}
+.text-md {
+  font-size: $font-size-base !important;
+}
+.text-sm {
+  font-size: $font-size-sm !important;
+  line-height: $line-height-base;
+}
+.text-xs {
+  font-size: $font-size-xs !important;
+}
+.text-xxs {
+  font-size: $font-size-xxs !important;
+}
+
+.heading {
+  font-size: $heading-font-size;
+  letter-spacing: $heading-ls;
+}
+
+.heading-title {
+  font-size: $heading-title-font-size;
+  letter-spacing: $heading-ls;
+}
+
+.lead {
+  font-size: $lead-font-size;
+  line-height: $line-height-lg;
+}
+
+p {
+  line-height: $line-height-md;
+}
+
+.blockquote-footer {
+  color: $gray-600;
+
+  &:before {
+    content: '\2014\00A0';
+  }
+}
+
+.description {
+  color: $gray-500;
+}

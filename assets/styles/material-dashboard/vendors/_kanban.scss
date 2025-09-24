@@ -1,0 +1,40 @@
+//
+// Vue Kanban
+//
+@use '../variables' as *;
+.container .drag-container {
+  max-width: 100%;
+  .drag-column {
+    border-radius: $border-radius-lg;
+    background: $gray-200;
+    .drag-column-header {
+      padding: $card-header-padding 0;
+      padding-bottom: $kanban-padding;
+      h2 {
+        text-transform: capitalize;
+        color: $headings-color;
+        font-size: $font-size-base;
+      }
+    }
+    .drag-inner-list {
+      padding: 0 $kanban-padding;
+      padding-bottom: $kanban-padding;
+      .drag-item {
+        cursor: pointer;
+        background: $white;
+        color: $body-color;
+        border-radius: $border-radius-md;
+        height: auto;
+        &.is-moving {
+          transform: none !important;
+          background: rgba($white, 0.8);
+        }
+      }
+    }
+  }
+}
+
+.gu-mirror {
+  background: rgba($white, 0.8) !important;
+  border-radius: $border-radius-md;
+}

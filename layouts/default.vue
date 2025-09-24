@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LayoutHeader />
+    <Header />
     <div
       v-if="useStructuredLayout"
       class="min-h-screen border-b"
@@ -35,7 +35,7 @@
       <slot />
     </div>
     <Toaster />
-    <LayoutFooter />
+    <VFooter />
   </div>
 </template>
 
@@ -44,6 +44,7 @@ import { computed } from "vue";
 import Toaster from "shadcn-docs-nuxt/components/ui/toast/Toaster.vue";
 import Aside from "~/components/layout/Aside.vue";
 import LayoutRightSidebar from "~/components/layout/RightSidebar.vue";
+import Header from "~/components/layout/Header.vue";
 
 const { page } = useContent();
 const config = useConfig();

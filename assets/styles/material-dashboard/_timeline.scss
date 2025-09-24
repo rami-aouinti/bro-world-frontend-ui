@@ -1,0 +1,18 @@
+@use 'variables' as *;
+
+.timeline {
+  .v-timeline-item__dot {
+    box-shadow: none;
+  }
+
+  .v-card {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.timeline-line-color:before {
+  background: $gray-200 !important;
+}

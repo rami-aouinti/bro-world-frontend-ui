@@ -1,0 +1,657 @@
+@use 'sass:map';
+@use 'sass:color';
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #f0f2f5 !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+$dark: $gray-900 !default;
+
+$body-color: #7b809a !default;
+$body-bg: $white !default;
+$text-muted: $body-color !default;
+$font-size-base: 1rem !default;
+$link-hover-color: color.scale(#cb0c9f, $lightness: -15%) !default;
+$anchor-white-hover-color: #d9d9d9 !default;
+
+$default: #344767 !default;
+$primary: #e91e63 !default;
+$secondary: #7b809a !default;
+$info: #1a73e8 !default;
+$success: #4caf50 !default;
+$warning: #fb8c00 !default;
+$danger: #f44335 !default;
+$light: $gray-200 !default;
+$dark: #212529 !default;
+
+$theme-colors: () !default;
+$theme-colors: map.merge(
+  (
+    'default': #344767,
+    'pink': $primary,
+    'warning': $warning,
+    'danger': $danger,
+    'info': $info,
+    'success': $success,
+    'secondary': $secondary,
+    'light': $gray-200,
+    'neutral': $white,
+  ),
+  $theme-colors
+);
+
+$colors-simple: () !default;
+$colors-simple: map.merge(
+  (
+    'blue': #63b3ed,
+    'indigo': #596cff,
+    'purple': #6f42c1,
+    'pink': #d63384,
+    'red': #f56565,
+    'orange': #fd7e14,
+    'yellow': #fbd38d,
+    'green': #81e6d9,
+    'teal': #20c997,
+    'cyan': #0dcaf0,
+    'white': $white,
+    'gray': $gray-600,
+    'light': $gray-400,
+    'lighter': $gray-200,
+    'gray-dark': #344767,
+  ),
+  $colors-simple
+);
+
+// Gradient colors
+$primary-gradient: #ec407a !default;
+$primary-gradient-state: #d81b60 !default;
+
+$secondary-gradient: #747b8a !default;
+$secondary-gradient-state: #495361 !default;
+
+$info-gradient: #49a3f1 !default;
+$info-gradient-state: #1a73e8 !default;
+
+$success-gradient: #66bb6a !default;
+$success-gradient-state: #43a047 !default;
+
+$danger-gradient: #ef5350 !default;
+$danger-gradient-state: #e53935 !default;
+
+$warning-gradient: #ffa726 !default;
+$warning-gradient-state: #fb8c00 !default;
+
+$dark-gradient: #42424a !default;
+$dark-gradient-state: #191919 !default;
+
+$light-gradient: #ebeff4 !default;
+$light-gradient-state: #ced4da !default;
+
+// Gradient Colors map
+$theme-gradient-colors: (
+  'pink': (
+    $primary-gradient,
+    $primary-gradient-state,
+  ),
+  'secondary': (
+    $secondary-gradient,
+    $secondary-gradient-state,
+  ),
+  'success': (
+    $success-gradient,
+    $success-gradient-state,
+  ),
+  'info': (
+    $info-gradient,
+    $info-gradient-state,
+  ),
+  'warning': (
+    $warning-gradient,
+    $warning-gradient-state,
+  ),
+  'danger': (
+    $danger-gradient,
+    $danger-gradient-state,
+  ),
+  'light': (
+    $light-gradient,
+    $light-gradient-state,
+  ),
+  'dark': (
+    $dark-gradient,
+    $dark-gradient-state,
+  ),
+) !default;
+
+$bg-gradient-variant: () !default;
+$bg-gradient-variant: map.merge(
+  (
+    'default': (
+      $dark-gradient,
+      $dark-gradient-state,
+    ),
+    'pink': (
+      $primary-gradient,
+      $primary-gradient-state,
+    ),
+    'warning': (
+      $warning-gradient,
+      $warning-gradient-state,
+    ),
+    'danger': (
+      $danger-gradient $danger-gradient-state,
+    ),
+    'success': (
+      $success-gradient,
+      $success-gradient-state,
+    ),
+    'info': (
+      $info-gradient,
+      $info-gradient-state,
+    ),
+    'light': (
+      $light-gradient,
+      $light-gradient-state,
+    ),
+    'secondary': (
+      $secondary-gradient,
+      $secondary-gradient-state,
+    ),
+    'purple': (
+      $primary-gradient,
+      $primary-gradient-state,
+    ),
+    'yellow': (
+      $warning-gradient,
+      $warning-gradient-state,
+    ),
+    'neutral': (
+      $secondary-gradient,
+      $secondary-gradient-state,
+    ),
+  ),
+  $bg-gradient-variant
+);
+
+// Badge
+$badge-font-size: 0.75rem !default;
+
+// Sweet alert
+
+$swal2-width: 30em;
+$swal2-padding: 1.5rem;
+$swal2-title-font-size: 1.5rem;
+$swal2-content-font-size: 0.875rem;
+
+// Alerts
+$snackbar-shadow: 0 3px 10px rgb(0, 0, 0, 0.15) !default;
+
+// Header Auth
+$header-auth-pt: 10rem !default;
+$header-auth-pb: 8rem !default;
+
+// Separators
+$separator-height: 150px !default;
+$separator-skew-height: 60px !default;
+
+// Letter Spacing
+$letter-spacing: () !default;
+$letter-spacing: map.merge(
+  (
+    '0': unset,
+    '1': 0.0625rem,
+    '2': 0.125rem,
+  ),
+  $letter-spacing
+);
+
+// Headings
+$headings-display-typo: () !default;
+$headings-display-typo: map.merge(
+  (
+    '1': 5rem,
+    '2': 4.5rem,
+    '3': 4rem,
+    '4': 3.5rem,
+  ),
+  $headings-display-typo
+);
+$headings-color: #344767 !default;
+
+// Utilities Vars
+$width: () !default;
+$width: map.merge(
+  (
+    '5': 5%,
+    '10': 10%,
+    '15': 15%,
+    '20': 20%,
+    '30': 30%,
+    '40': 40%,
+    '50': 50%,
+    '60': 60%,
+    '70': 70%,
+    '75': 75%,
+    '80': 80%,
+    '90': 90%,
+    '100': 100%,
+  ),
+  $width
+);
+
+$height: (
+  '100': 100px,
+  '200': 200px,
+  '300': 300px,
+  '400': 400px,
+  '500': 500px,
+  '600': 600px,
+) !default;
+
+$opacity: () !default;
+$opacity: map.merge(
+  (
+    '1': 0.1,
+    '2': 0.2,
+    '3': 0.3,
+    '4': 0.4,
+    '5': 0.5,
+    '6': 0.6,
+    '7': 0.7,
+    '8': 0.8,
+    '9': 0.9,
+  ),
+  $opacity
+);
+
+$mb-30: 30px !default;
+
+// Typo
+$font-size-xxs: $font-size-base * 0.65 !default;
+$font-size-xs: $font-size-base * 0.75 !default;
+$font-size-sm: $font-size-base * 0.875 !default;
+$font-size-lg: $font-size-base * 1.125 !default;
+
+$heading-font-size: 0.95rem !default;
+$heading-ls: 0.025em !default;
+$heading-title-font-size: 1.375rem !default;
+$lead-font-size: 1.25rem !default;
+
+// Table
+$thead-th-p: 0.75rem !default;
+$thead-th-font-size: 0.65rem !default;
+$thead-th-ls: 0px !default;
+$table-border-dark-color: #1f3a68 !default;
+$table-bg-dark: #1c345d !default;
+$table-color-dark: #4d7bca !default;
+$table-sortable-icon-ml: 8px !default;
+
+// Progress
+$progress-shadow: inset 0 1px 2px rgb(0, 0, 0, 0.1) !default;
+
+// Icons
+
+$icon-size-normal: 3rem !default;
+$icon-size-xl: 5rem !default;
+$icon-size-lg: 4rem !default;
+$icon-size-sm: 2rem !default;
+$icon-size-xs: 1.25rem !default;
+
+// Line Height
+$line-height-base: 1.5;
+$line-height-md: 1.6;
+$line-height-lg: 2;
+$line-height-display: 1.2;
+
+// Buttons
+$btn-shadow:
+  0 4px 7px -1px rgb($black, 0.11),
+  0 2px 4px -1px rgb($black, 0.07);
+$btn-shadow-hover:
+  0 3px 5px -1px rgba($black, 9%),
+  0 2px 3px -1px rgba($black, 7%);
+
+$btn-hover-transform: scale(1.02) !default;
+$btn-outline-secondary: #4385b1 !default;
+$btn-ls: 0.025em !default;
+$btn-toggle-active-bg: #d2e3ee !default;
+$btn-icon-move-right-transition: all 0.2s cubic-bezier(0.34, 1.61, 0.7, 1.3) !default;
+$btn-icon-move-transform: translateX(5px) !default;
+
+// Border Radius
+$border-radius-xs: 0.1rem !default;
+$border-radius-sm: 0.125rem !default;
+$border-radius-md: 0.375rem !default;
+$border-radius-lg: 0.5rem !default;
+$border-radius-xl: 0.75rem !default;
+$border-radius-2xl: 1rem !default;
+
+// Card
+$card-box-shadow:
+  0 4px 6px -1px rgb(0 0 0 / 10%),
+  0 2px 4px -1px rgb(0 0 0 / 6%) !default;
+$card-stats-padding: 1rem 1.5rem !default;
+$card-padding: 1.5rem !default;
+$card-header-padding: 1.25rem 1.5rem !default;
+$card-border-with-box-shadow:
+  rgb(0 0 0 / 10%) 0 0 0 1px,
+  rgb(0 0 0 / 10%) 0 4px 16px;
+$card-dropdown-box-shadow:
+  0 50px 100px rgb(50, 50, 93, 0.1),
+  0 15px 35px rgb(50, 50, 93, 0.15),
+  0 5px 15px rgb(0, 0, 0, 0.1);
+$card-datepicker-icon-size: 12px !default;
+$move-hover-transform: perspective(999px) rotateX(7deg)
+  translate3d(0px, -4px, 5px) !default;
+$move-will-change: transform, box-shadow !default;
+$move-backface-visibility: hidden !default;
+$move-overflow: hidden !default;
+$move-transition: 0.2s ease-out !default;
+$move-transform-origin: 50% 0 !default;
+$move-transform: perspective(999px) rotateX(0deg) translate3d(0, 0, 0) !default;
+$card-animation-transform: translate3d(0, -50px, 0) !default;
+$card-animation-transition: all 0.3s cubic-bezier(0.34, 1.61, 0.7, 1) !default;
+
+// Fonts
+$font-weight-lighter: lighter !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 600 !default;
+$font-weight-bolder: 700 !default;
+$input-line-height: 1.4rem !default;
+
+// Checkbox
+$checkbox-font-size: 1rem !default;
+
+// Transitions
+$transition-general: all 0.15s ease;
+$transition-cubic-bezier: all 0.15s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+// Forms
+$search-input-focus-width: 380px !default;
+$search-input-width: 291px !default;
+$input-alternative-box-shadow:
+  0 1px 3px rgba(50, 50, 93, 0.15),
+  0 1px 0 rgba($black, 0.02);
+$input-placeholder-font-size: 14px !default;
+$input-icon-padding-x: 0.75rem !default;
+$input-icon-margin-top: 12px !default;
+$input-font-size: 12px !default;
+$input-dark-bg: rgba(23, 43, 77, 0.9) !default;
+$input-alternative-focused-box-shadow:
+  0 4px 6px rgba(50, 50, 93, 0.11),
+  0 1px 3px rgba(0, 0, 0, 0.08) !default;
+$input-focused-box-shadow: 0 0 0 2px #e9aede !default;
+$input-focused-border-color: #e293d3 !default;
+$input-padding-y: 0.5rem !default;
+$input-padding-x: 0.75rem !default;
+$input-line-height: 1.4rem !default;
+$input-border-color: #d2d6da !default;
+
+// Avatar
+$avatar-group-ml: 0.8rem !default;
+$avatar-group-border-width: 2px !default;
+
+// Media Comment
+$media-comment-text-p: 1rem 1.25rem 1rem 2.5rem !default;
+$media-comment-avatar-m: 1rem !default;
+
+//
+// Vuetify Vars
+//
+
+// Drawer
+$v-navigation-drawer-transition: all 0.2s ease-in-out !default;
+$v-navigation-drawer-box-shadow: 0 !default;
+$v-navigation-drawer-max-width: 15.625rem !default;
+$v-navigation-drawer-mini-max-width: 6rem !default;
+$v-navigation-drawer-brand-height: 78px !default;
+$v-navigation-drawer-vr-transform: scale(0.6) !default;
+$v-navigation-drawer-vr-margin-top: 1.5rem !default;
+$v-navigation-drawer-vr-left: 18% !default;
+$v-icon-drawer-min-width: 25px !default;
+$v-icon-drawer-margin-left: 16px !default;
+$v-list-item-icon-mr: 7px !default;
+$v-list-item-icon-padding: 10px !default;
+$v-list-item-icon-width: 32px !default;
+$v-list-item-icon-height: $v-list-item-icon-width !default;
+$v-list-item-mini-font-size: 0.875rem !default;
+$v-list-item-subitem-font-size: 0.8125rem !default;
+$v-list-item-mini-top: 14px !default;
+$v-list-item-title-color: #344767 !default;
+$v-list-item-title-hover-color: rgba(0, 0, 0, 0.7) !default;
+$v-list-item-content-border-radius: 1.5rem !default;
+$v-list-item-content-background-color: rgba(58, 65, 111, 0.5) !default;
+$v-list-item-active-content-background-color: rgba($gray-400, 0.7) !default;
+$v-list-item-active-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%) !default;
+$v-list-item-icon-active-color-primary: linear-gradient(
+  310deg,
+  #cb0c9f,
+  #cb0c9f
+) !default;
+$v-list-item-icon-active-color-info: linear-gradient(
+  310deg,
+  #17c1e8,
+  #17c1e8
+) !default;
+$v-list-item-icon-active-color-success: linear-gradient(
+  310deg,
+  #82d616,
+  #82d616
+) !default;
+$v-list-item-icon-active-color-default: linear-gradient(
+  310deg,
+  #344767,
+  #344767
+) !default;
+$v-list-item-icon-active-color-warning: linear-gradient(
+  310deg,
+  #fbcf33,
+  #fbcf33
+) !default;
+$v-list-item-icon-active-color-danger: linear-gradient(
+  310deg,
+  #ea0606,
+  #ea0606
+) !default;
+$v-list-item-icon-active-color-secondary: linear-gradient(
+  310deg,
+  #e9ecef,
+  #e9ecef
+) !default;
+
+$v-list-group-items-margin-left: 52px !default;
+
+$v-main-margin-left: 274px !default;
+$v-main-mini-margin-left: 120px !default;
+
+$drawer-toggler-line-height: 2px !default;
+$drawer-toggler-line-bg: rgba($black, 0.6) !default;
+$drawer-toggler-line-mb: 3px !default;
+$drawer-toggler-line-width: 18px !default;
+$drawer-toggler-line-active-width: 13px !default;
+$drawer-toggler-line-active-tranform: 5px !default;
+
+// Select
+$v-input-append-margin-top: 4px !default;
+
+// HR w/ opacity
+$hr-bg-color: transparent !default;
+$hr-width: 1px !default;
+$hr-margin: 0.75rem 0 !default;
+
+// Box Shadow
+$box-shadow-sm: 0 0.3125rem 0.625rem 0 rgba(0, 0, 0, 0.12) !default;
+$box-shadow:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06) !default;
+$box-shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05) !default;
+$box-shadow-xl:
+  0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04) !default;
+
+// Colored Shadows
+$box-shadow-primary:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 8px 8px -5px rgba(var(--v-theme-primary)) !default;
+$box-shadow-secondary:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 7px 10px -5px rgba(210, 210, 210, 0.4) !default;
+$box-shadow-info:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 7px 10px -5px rgba(0, 188, 212, 0.4) !default;
+$box-shadow-warning:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 7px 10px -5px rgba(255, 152, 0, 0.4) !default;
+$box-shadow-success:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 7px 10px -5px rgba(76, 175, 80, 0.4) !default;
+$box-shadow-danger:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 7px 10px -5px rgba(244, 67, 54, 0.4) !default;
+$box-shadow-dark:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 7px 10px -5px rgba(64, 64, 64, 0.4) !default;
+$box-shadow-light:
+  0 4px 20px 0 rgba(0, 0, 0, 0.14),
+  0 7px 10px -5px rgba(233, 30, 99, 0.4) !default;
+$colored-sadow-transform: scale(0.94) !default;
+$colored-sadow-top: 0.5% !default;
+$colored-sadow-filter: blur(12px) !default;
+
+// Full Calendar
+$fc-event-title-padding-y: 0.2rem !default;
+$fc-event-title-padding-x: 0.3rem !default;
+
+$fc-daygrid-event-border-radius: 0.35rem !default;
+
+// Blur effect variables
+$blur-border-radius-rounded: 40px !default;
+$blur-box-shadow:
+  inset 0 0 1px 1px hsla(0, 0%, 100%, 0.9),
+  0 20px 27px 0 rgba(0, 0, 0, 0.05) !default;
+$blur-backdrop-filter: saturate(200%) blur(30px) !default;
+$blur-backdrop-filter-less: saturate(20%) blur(30px) !default;
+$card-background-blur: rgba(255, 255, 255, 0.8) !default;
+
+$shadow-blur-box-shadow:
+  inset 0 0px 1px 1px rgba(254, 254, 254, 0.9),
+  0 20px 27px 0 rgba(0, 0, 0, 0.05) !default;
+
+// Min Height
+$min-height-100: 100px !default;
+$min-height-150: 150px !default;
+$min-height-160: 160px !default;
+$min-height-200: 200px !default;
+$min-height-250: 250px !default;
+$min-height-300: 300px !default;
+$min-height-400: 400px !default;
+$min-height-500: 500px !default;
+$min-height-600: 600px !default;
+
+$min-height: () !default;
+$min-height: map.merge(
+  (
+    '100': $min-height-100,
+    '150': $min-height-150,
+    '160': $min-height-160,
+    '200': $min-height-200,
+    '250': $min-height-250,
+    '300': $min-height-300,
+    '400': $min-height-400,
+    '500': $min-height-500,
+    '600': $min-height-600,
+  ),
+  $min-height
+);
+
+// Text Border
+$text-border-width: 30% !default;
+$text-border-height: 1px !default;
+$text-border-left: 0.5em !default;
+$text-border-margin-left: -50% !default;
+$text-border-before-background: linear-gradient(
+  90deg,
+  transparent,
+  rgba(117, 117, 117, 0.4),
+  rgba(117, 117, 117, 0.4)
+) !default;
+$text-border-after-background: linear-gradient(
+  90deg,
+  rgba(117, 117, 117, 0.4),
+  rgba(117, 117, 117, 0.4),
+  transparent
+) !default;
+
+// Sections Height Utilities
+$section-height-25-min-height: 25vh !default;
+$section-height-35-min-height: 35vh !default;
+$section-height-45-min-height: 45vh !default;
+$section-height-50-min-height: 50vh !default;
+$section-height-55-min-height: 55vh !default;
+$section-height-65-min-height: 65vh !default;
+$section-height-70-min-height: 70vh !default;
+$section-height-75-min-height: 75vh !default;
+$section-height-80-min-height: 80vh !default;
+$section-height-85-min-height: 85vh !default;
+$section-height-90-min-height: 90vh !default;
+$section-height-95-min-height: 95vh !default;
+$section-height-100-min-height: 100vh !default;
+
+$section-height: () !default;
+$section-height: map.merge(
+  (
+    '25': $section-height-25-min-height,
+    '35': $section-height-35-min-height,
+    '45': $section-height-45-min-height,
+    '50': $section-height-50-min-height,
+    '55': $section-height-55-min-height,
+    '65': $section-height-65-min-height,
+    '70': $section-height-70-min-height,
+    '75': $section-height-75-min-height,
+    '80': $section-height-80-min-height,
+    '85': $section-height-85-min-height,
+    '90': $section-height-90-min-height,
+    '95': $section-height-95-min-height,
+    '100': $section-height-100-min-height,
+  ),
+  $section-height
+);
+
+// Kanban
+$kanban-padding: 10px !default;
+
+$fixed-plugin-bottom: 10px !default;
+// Fixed Plugin
+$fixed-plugin-bottom-news: 30px !default;
+$fixed-plugin-bottom-photo: 90px !default;
+$fixed-plugin-bottom-corner: 150px !default;
+$fixed-plugin-bottom-interests: 210px !default;
+$fixed-plugin-bottom-language: 270px !default;
+$fixed-plugin-bottom-skills: 330px !default;
+$fixed-plugin-bottom-experience: 390px !default;
+$fixed-plugin-bottom-education: 450px !default;
+$fixed-plugin-right-news: $fixed-plugin-bottom !default;
+$fixed-plugin-bottom-theme: 90px !default;
+$fixed-plugin-right-theme: $fixed-plugin-bottom !default;
+$fixed-plugin-bottom-world: 150px !default;
+$fixed-plugin-right-world: $fixed-plugin-bottom !default;
+$fixed-plugin-bottom-media: 210px !default;
+$fixed-plugin-right-media: $fixed-plugin-bottom !default;
+$fixed-plugin-bottom-hobby: 270px !default;
+$fixed-plugin-right-hobby: $fixed-plugin-bottom !default;
+$fixed-plugin-z-index: 1021 !default;
+
+// Navbar vertical
+$navbar-vertical-hover-bg-color: rgba(199, 199, 199, 0.2) !default;
+
+$spacer: 4px !default;

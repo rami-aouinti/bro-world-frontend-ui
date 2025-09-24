@@ -1,0 +1,6 @@
+@use 'variables' as *;
+
+.header-auth {
+  padding-top: $header-auth-pt;
+  padding-bottom: $header-auth-pb;
+}

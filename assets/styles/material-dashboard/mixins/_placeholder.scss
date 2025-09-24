@@ -1,0 +1,55 @@
+@use '../variables' as *;
+
+@mixin placeholder($color, $isPlaceholderLg, $isPlaceholderSm) {
+  &::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: $color !important;
+
+    @if $isPlaceholderLg == true {
+      font-size: $font-size-base;
+    } @else if $isPlaceholderSm==true {
+      font-size: $font-size-base - 0.125;
+    } @else {
+      font-size: $input-placeholder-font-size;
+    }
+  }
+
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: $color !important;
+
+    @if $isPlaceholderLg==true {
+      font-size: $font-size-base;
+    } @else if $isPlaceholderSm==true {
+      font-size: $font-size-base - 0.125;
+    } @else {
+      font-size: $input-placeholder-font-size;
+    }
+  }
+
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: $color !important;
+
+    @if $isPlaceholderLg==true {
+      font-size: $font-size-base;
+    } @else if $isPlaceholderSm==true {
+      font-size: $font-size-base - 0.125;
+    } @else {
+      font-size: $input-placeholder-font-size;
+    }
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: $color !important;
+
+    @if $isPlaceholderLg==true {
+      font-size: $font-size-base;
+    } @else if $isPlaceholderSm==true {
+      font-size: $font-size-base - 0.125;
+    } @else {
+      font-size: $input-placeholder-font-size;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@forward 'vuetify/settings' with (
+  $utilities: true,
+  $color-pack: true,
+  $layers: true
+);
+
+@use 'variables/typography';
+@use 'variables/icons';
+@use 'variables/list-item';
+@use 'variables/forms';
+@use 'variables/buttons';
+@use 'variables/card';
+@use 'variables/light-theme';
+@use 'variables/border-radius';
+@use 'variables/alerts';
+@use 'variables/timeline';
+@use 'variables/switch';
+@use 'variables/pagination';
+@use 'variables/progress';
+@use 'variables/sliders';
+@use 'variables/stepper';

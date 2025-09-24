@@ -1,17 +1,31 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
+import compression from 'vite-plugin-compression'
+import { aliases } from 'vuetify/iconsets/mdi'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   plugins: [{ src: "~/plugins/clarity.js", mode: "client" }, "~/plugins/vuetify"],
 
-  css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css"],
+  css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css", "~/assets/styles/index.css"],
 
   build: {
     transpile: ["vuetify"],
   },
 
   vite: {
-    ssr: {
-      noExternal: ["vuetify"],
+    plugins: [
+      cssInjectedByJsPlugin(),
+      compression({ algorithm: 'brotliCompress' }),
+    ],
+    build: {
+      sourcemap: false,
+      optimizeCSS: true,
+      splitChunks: {
+        layouts: true,
+        pages: true,
+        commons: true
+      }
     },
   },
 
@@ -34,6 +48,127 @@ export default defineNuxtConfig({
       ignore: ["**/index.ts", "**/shaders.ts", "**/types.ts"],
     },
   ],
+  extends: ['@nuxt/ui-pro'],
+  plugins: [
+    '~/plugins/vuetify-i18n.ts'
+  ],
+  sitemap: {
+    siteUrl: 'https://bro-world-space.com',
+    trailingSlash: false,
+    gzip: true,
+  },
+
+  sourcemap: {
+    server: true,
+    client: true,
+  },
+
+  ui: {
+    icons: ["heroicons", "lucide"],
+    safelistColors: ['primary', 'red', 'orange', 'green'],
+  },
+
+  experimental: {
+    typedPages: true,
+    componentIslands: false,
+    payloadExtraction: true,
+  },
+
+  typescript: {
+    shim: false,
+    strict: true,
+  },
+
+  vue: {
+    propsDestructure: true,
+  },
+
+  vueuse: {
+    ssrHandlers: true,
+  },
+
+  i18n: {
+    lazy: true,
+    langDir: 'locales/',
+    defaultLocale: 'en',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      alwaysRedirect: true,
+      fallbackLocale: 'en',
+    },
+    locales: [
+      { code: 'en', name: 'English', iso: 'en-US', icon: 'fi-gb gb', file: 'en.json' },
+      { code: 'de', name: 'Deutsch', iso: 'de-DE', icon: 'fi-de de', file: 'de.json' },
+      { code: 'fr', name: 'Frensh', iso: 'fr-FR', icon: 'fi-fr fr', file: 'fr.json' },
+      { code: 'ar', name: 'Arabic', iso: 'tn-TN', icon: 'fi-tn tn', file: 'ar.json' },
+    ],
+    baseUrl: 'https://bro-world-space.com'
+  },
+
+  vuetify: {
+    moduleOptions: {
+      ssrClientHints: {
+        viewportSize: true,
+        prefersColorScheme: true,
+        prefersColorSchemeOptions: {},
+        reloadOnFirstRequest: true,
+      },
+    },
+  },
+
+  icon: {
+    clientBundle: {
+      icons: Object.values(aliases).map((v) => (v as string).replace(/^mdi-/, 'mdi:')),
+      scan: true,
+    },
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: './assets/icons',
+      },
+    ],
+  },
+
+  image: {
+    dir: 'public',
+    domains: ['images.unsplash.com'],
+    screens: {
+      sm: 320,
+      md: 640,
+      lg: 1024,
+      xl: 1280,
+    },
+    quality: 80,
+    ipx: {
+      dir: 'public',
+      allowFiles: true,
+      domains: [],
+    },
+    presets: {
+      lcp: {
+        modifiers: {
+          format: 'webp',
+          quality: 80,
+        },
+      },
+    },
+  },
+  echarts: {
+    charts: ['LineChart', 'BarChart', 'PieChart', 'RadarChart'],
+    renderer: 'svg',
+    components: [
+      'DataZoomComponent',
+      'LegendComponent',
+      'TooltipComponent',
+      'ToolboxComponent',
+      'GridComponent',
+      'TitleComponent',
+      'DatasetComponent',
+      'VisualMapComponent',
+    ],
+  },
 
   ignore: ["components/**/index.ts", "components/**/shaders.ts", "components/**/types.ts"],
 
@@ -71,39 +206,6 @@ export default defineNuxtConfig({
       title: "BroWorld Documentation",
       description: "The complete BroWorld documentation.",
     },
-  },
-  i18n: {
-    defaultLocale: "en",
-    strategy: "prefix_except_default",
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: "i18n_redirected",
-      redirectOn: "root",
-      fallbackLocale: "en",
-    },
-    locales: [
-      {
-        code: "en",
-        name: "English",
-        language: "en-US",
-      },
-      {
-        code: "fr",
-        name: "Français",
-        language: "fr-FR",
-      },
-      {
-        code: "de",
-        name: "Deutsch",
-        language: "de-DE",
-      },
-      {
-        code: "ar",
-        name: "العربية",
-        language: "ar-SA",
-      },
-    ],
-    vueI18n: "./i18n/i18n.config.ts",
   },
   fonts: {
     processCSSVariables: true,

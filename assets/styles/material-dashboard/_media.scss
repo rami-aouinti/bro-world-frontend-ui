@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+.media-comment-text {
+  position: relative;
+  padding: $media-comment-text-p;
+  background-color: $gray-100;
+}
+
+.media-comment-avatar {
+  z-index: 1;
+  margin-top: -$media-comment-avatar-m;
+  margin-right: -($media-comment-avatar-m + 1);
+  transition: $transition-general;
+  border: 4px solid $white;
+}
+
+.media-comment:hover .media-comment-avatar {
+  transform: scale(1.1);
+}
