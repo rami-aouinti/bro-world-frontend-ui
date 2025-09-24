@@ -6,56 +6,13 @@
       class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-primary/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
     />
     <div class="relative flex flex-col gap-8 p-8 sm:p-10">
-      <header class="flex flex-wrap items-center gap-6">
-        <div class="flex items-center gap-4">
-          <div
-            class="relative h-14 w-14 overflow-hidden rounded-2xl border border-white/20 bg-white/10"
-          >
-            <img
-              :src="post.user.photo ?? defaultAvatar"
-              :alt="`${post.user.firstName} ${post.user.lastName}`"
-              class="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div>
-            <p class="text-sm font-medium text-slate-200">
-              {{ post.user.firstName }} {{ post.user.lastName }}
-            </p>
-            <p class="text-xs text-slate-400">
-              {{ t("blog.reactions.post.publishedOn", { date: formatDateTime(post.publishedAt) }) }}
-            </p>
-          </div>
-        </div>
-        <div class="ms-auto flex flex-wrap gap-3 text-sm text-slate-200">
-          <span
-            :aria-label="
-              t('blog.reactions.post.reactions', { count: formatNumber(post.reactions_count) })
-            "
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
-          >
-            <span
-              aria-hidden="true"
-              class="text-base"
-              >{{ reactionEmojis.like }}</span
-            >
-            <span aria-hidden="true">{{ formatNumber(post.reactions_count) }}</span>
-          </span>
-          <span
-            :aria-label="
-              t('blog.reactions.post.comments', { count: formatNumber(post.totalComments) })
-            "
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
-          >
-            <span
-              aria-hidden="true"
-              class="text-base"
-              >💬</span
-            >
-            <span aria-hidden="true">{{ formatNumber(post.totalComments) }}</span>
-          </span>
-        </div>
-      </header>
+      <PostMeta
+        :user="post.user"
+        :default-avatar="defaultAvatar"
+        :published-label="publishedLabel"
+        :reaction-badge="reactionBadge"
+        :comment-badge="commentBadge"
+      />
 
       <div class="space-y-4">
         <h2
@@ -122,6 +79,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import CommentCard from "./CommentCard.vue";
+import PostMeta from "./PostMeta.vue";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 const props = defineProps<{ post: BlogPost }>();
@@ -158,6 +116,26 @@ function formatDateTime(value: string) {
 function formatNumber(value: number | null | undefined) {
   return new Intl.NumberFormat(locale.value).format(value ?? 0);
 }
+
+const publishedLabel = computed(() =>
+  t("blog.reactions.post.publishedOn", { date: formatDateTime(props.post.publishedAt) }),
+);
+
+const reactionBadge = computed(() => ({
+  icon: reactionEmojis.like,
+  display: formatNumber(props.post.reactions_count),
+  ariaLabel: t("blog.reactions.post.reactions", {
+    count: formatNumber(props.post.reactions_count),
+  }),
+}));
+
+const commentBadge = computed(() => ({
+  icon: "💬",
+  display: formatNumber(props.post.totalComments),
+  ariaLabel: t("blog.reactions.post.comments", {
+    count: formatNumber(props.post.totalComments),
+  }),
+}));
 
 const post = computed(() => props.post);
 </script>
