@@ -3,7 +3,7 @@
     <div class="relative z-10">
       <section class="mx-auto max-w-7xl px-6 pb-24">
         <div
-          class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px] xl:grid-cols-[minmax(0,1fr)_280px]"
+          class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_340px]"
         >
           <div class="space-y-10">
             <div
@@ -46,12 +46,7 @@
             </template>
           </div>
 
-          <RightSidebar
-            class="hidden lg:flex"
-            :title="sidebarContent.title"
-            :subtitle="sidebarContent.subtitle"
-            :widgets="sidebarContent.widgets"
-          />
+          <LayoutRightSidebar />
         </div>
       </section>
     </div>
@@ -60,7 +55,6 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import type { SidebarWidgetData } from "~/components/blog/SidebarWidget.vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
@@ -88,46 +82,6 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
 }));
 
 const { posts, pending, fetchPosts } = usePostsStore();
-
-const sidebarContent = computed(() => ({
-  title: t("blog.sidebar.title"),
-  subtitle: t("blog.sidebar.subtitle"),
-  widgets: [
-    {
-      id: "community",
-      icon: "🤝",
-      title: t("blog.sidebar.widgets.community.title"),
-      description: t("blog.sidebar.widgets.community.description"),
-      action: {
-        label: t("blog.sidebar.widgets.community.action"),
-        href: "https://discord.gg/broworld",
-        external: true,
-      },
-    },
-    {
-      id: "docs",
-      icon: "📘",
-      title: t("blog.sidebar.widgets.docs.title"),
-      description: t("blog.sidebar.widgets.docs.description"),
-      action: {
-        label: t("blog.sidebar.widgets.docs.action"),
-        href: "https://bro-world.com/docs",
-        external: true,
-      },
-    },
-    {
-      id: "contribute",
-      icon: "📝",
-      title: t("blog.sidebar.widgets.contribute.title"),
-      description: t("blog.sidebar.widgets.contribute.description"),
-      action: {
-        label: t("blog.sidebar.widgets.contribute.action"),
-        href: "https://bro-world.com/contact",
-        external: true,
-      },
-    },
-  ] satisfies SidebarWidgetData[],
-}));
 
 await callOnce(() => fetchPosts());
 </script>
