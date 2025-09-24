@@ -1,23 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import os from 'node:os'
 import { webcrypto } from 'node:crypto'
-import { fetch as undiciFetch, Headers, FormData, Request, Response, File, Blob } from 'undici'
+import { Blob as NodeBlob, File as NodeFile } from 'node:buffer'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
 import { aliases } from 'vuetify/iconsets/mdi'
 
-if (typeof globalThis.fetch !== 'function') {
-  globalThis.fetch = undiciFetch
-  globalThis.Headers = Headers
-  globalThis.FormData = FormData
-  globalThis.Request = Request
-  globalThis.Response = Response
-  globalThis.File = File
-  globalThis.Blob = Blob
+const globalScope = globalThis as typeof globalThis & {
+  crypto: Crypto | undefined
+  Blob: typeof NodeBlob | undefined
+  File: typeof NodeFile | undefined
 }
 
-if (!globalThis.crypto || typeof globalThis.crypto.getRandomValues !== 'function') {
-  globalThis.crypto = webcrypto as Crypto
+if (!globalScope.crypto || typeof globalScope.crypto.getRandomValues !== 'function') {
+  globalScope.crypto = webcrypto as Crypto
+}
+
+if (typeof globalScope.Blob !== 'function') {
+  globalScope.Blob = NodeBlob
+}
+
+if (typeof globalScope.File !== 'function') {
+  globalScope.File = NodeFile
 }
 
 const osWithAvailableParallelism = os as typeof os & {
