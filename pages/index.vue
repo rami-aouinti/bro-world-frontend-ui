@@ -37,24 +37,16 @@
                 <div class="h-7 w-28 rounded-full bg-white/5" />
               </div>
             </div>
+          </div>
 
-            <template v-else>
-              <PostCard
+          <template v-else>
+            <PostCard
                 v-for="post in posts"
                 :key="post.id"
                 :post="post"
                 :default-avatar="defaultAvatar"
                 :reaction-emojis="reactionEmojis"
                 :reaction-labels="reactionLabels"
-              />
-            </template>
-          </div>
-
-          <template v-else>
-            <PostCard
-              v-for="post in posts"
-              :key="post.id"
-              :post="post"
             />
           </template>
         </div>
@@ -67,6 +59,10 @@
         />
       </div>
     </section>
+  </div>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -98,10 +94,8 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
   sad: t("blog.reactions.sad"),
   angry: t("blog.reactions.angry"),
 }));
-import { computed } from "vue";
 import type { SidebarWidgetData } from "~/components/blog/SidebarWidget.vue";
 
-const { t } = useI18n();
 const { posts, pending, fetchPosts } = usePostsStore();
 
 const sidebarContent = computed(() => ({
