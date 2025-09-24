@@ -1,7 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  plugins: [{ src: "~/plugins/clarity.js", mode: "client" }],
+  plugins: [{ src: "~/plugins/clarity.js", mode: "client" }, "~/plugins/vuetify"],
+
+  css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css"],
+
+  build: {
+    transpile: ["vuetify"],
+  },
+
+  vite: {
+    ssr: {
+      noExternal: ["vuetify"],
+    },
+  },
 
   modules: [
     "@nuxt/fonts",
