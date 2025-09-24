@@ -1,4 +1,4 @@
-import type { Registry, RegistryFiles } from "../registry/schema";
+import type { Registry, RegistryFiles } from "~/registry/schema";
 import { readdir, readFile } from "node:fs/promises";
 import { parseSync } from "@oxc-parser/wasm";
 import { join, resolve } from "pathe";
