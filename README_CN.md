@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/unovue/inspira-ui">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui">
     <img src="./logo.png" alt="Logo" width="150" />
   </a>
 </p>
@@ -12,10 +12,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/unovue/inspira-ui/stargazers">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/unovue/inspira-ui?style=social">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui/stargazers">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/bro-world/bro-world-frontend-ui?style=social">
   </a>
-  <a href="https://github.com/unovue/inspira-ui/blob/main/LICENSE.md">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui/blob/main/LICENSE">
     <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg">
   </a>  
 </p>
@@ -42,7 +42,7 @@ Inspira UI 的出道旨在填补 Vue 社区生态的一个空白，它提供了�
 
 ## 🎯 关键特性
 
-- **免费且开源**: 完全于MIT协议开源于： [此处](https://github.com/unovue/inspira-ui)
+- **免费且开源**: 完全于MIT协议开源于： [此处](https://github.com/bro-world/bro-world-frontend-ui)
 - **高度个性化**: 根据您的具体设计需求设计组件。可参考我们的 [设计指南](/api/configuration).
 - **组件多样化**: 我们有来自于 Aceternity UI，Magic UI与社区贡献的许多 [组件](/components) 来帮助你实现你想呈现的内容
 - **移动端支持**: 我们的设计在移动端设备上依旧美观
@@ -63,11 +63,11 @@ Inspira UI 的出道旨在填补 Vue 社区生态的一个空白，它提供了�
 
 ## 👤 作者的话
 
-你好呀，这里是作者 [Rahul Vashishtha](https://rahulv.dev)。受Aceternity UI、Magic UI和社区贡献的启发，我创建了Inspira UI项目，为Vue生态系统带来类似的体验。 为了让这个项目越来越好，我正在努力地完善项目内容。如果你感兴趣的话，你可以在 [GitHub](https://github.com/rahul-vashishtha) 这里查看我的进度。有能力的话，你还可以选择在 [这里](https://github.com/unovue/inspira-ui) 加入我们共同的旅途。海内存知己，天涯若比邻。Coding的路上有你便不孤单。
+你好呀，这里是项目维护者 [BroWorld](https://github.com/bro-world)。受 Aceternity UI、Magic UI 和社区贡献的启发，我持续维护这个项目，为 Vue 生态系统带来类似的体验。为了让这个项目越来越好，我正在努力完善各项内容，欢迎你加入这个旅程，与我一起让 BroWorld 成长！
 
 ## 🌟 贡献
 
-我们接受任何形式的贡献！如果你想建议我们添加更多内容、报告bug、或帮助我们优化这个项目，请随时开一个issue或者提交任意Pull Request(PR)在 [这里](https://github.com/unovue/inspira-ui).
+我们接受任何形式的贡献！如果你想建议我们添加更多内容、报告 bug、或帮助我们优化这个项目，请随时开一个 issue 或者提交任意 Pull Request (PR) 在 [这里](https://github.com/bro-world/bro-world-frontend-ui)。
 
 为了保证项目的合理运行，请您在发布贡献时参照我们的 [贡献手册](https://inspira-ui.com/getting-started/contribution).
 
@@ -118,10 +118,5 @@ Inspira UI 的出道旨在填补 Vue 社区生态的一个空白，它提供了�
 
 如果您想支持我们的开发进程，您可以请我们喝杯咖啡：
 
-支持与赞助请访问 [此链接](https://github.com/sponsors/rahul-vashishtha) 。
+支持与赞助请访问 [此链接](https://github.com/sponsors/bro-world) 。
 
-## 感谢所有当前贡献者 🙏
-
-<a href="https://github.com/unovue/inspira-ui/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=unovue/inspira-ui" />
-</a>

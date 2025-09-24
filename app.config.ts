@@ -16,12 +16,12 @@ export default defineAppConfig({
       radius: 0.75,
     },
     banner: {
-      enable: true,
+      enable: false,
       showClose: false,
-      content: "For Tailwind CSS v3 docs, [**click here**](https://v1.inspira-ui.com).",
-      to: "https://v1.inspira-ui.com",
-      target: "_blank",
-      border: true,
+      content: "",
+      to: "",
+      target: "_self",
+      border: false,
     },
     header: {
       title: "BroWorld",
@@ -94,7 +94,7 @@ export default defineAppConfig({
           links: [
             {
               title: "GitHub",
-              to: "https://github.com/unovue/inspira-ui",
+              to: "https://github.com/bro-world/bro-world-frontend-ui",
               description: $t("nav.GitHubDescription"),
               target: "_blank",
             },
@@ -106,7 +106,7 @@ export default defineAppConfig({
             },
             {
               title: $t("nav.Forum"),
-              to: "https://github.com/unovue/inspira-ui/discussions",
+              to: "https://github.com/bro-world/bro-world-frontend-ui/discussions",
               target: "_blank",
               description: $t("nav.ForumDiscord"),
             },
@@ -116,22 +116,7 @@ export default defineAppConfig({
       links: [
         {
           icon: "lucide:github",
-          to: "https://github.com/unovue/inspira-ui",
-          target: "_blank",
-        },
-        {
-          icon: "prime:twitter",
-          to: "https://x.com/rahulv_dev",
-          target: "_blank",
-        },
-        {
-          icon: "ri:discord-line",
-          to: "https://discord.gg/Xbh5DwJRc9",
-          target: "_blank",
-        },
-        {
-          icon: "ri:bluesky-line",
-          to: "http://bsky.app/profile/inspira-ui.com",
+          to: "https://github.com/bro-world",
           target: "_blank",
         },
       ],
@@ -153,14 +138,14 @@ export default defineAppConfig({
       links: [
         {
           icon: "lucide:globe",
-          to: "https://rahulv.dev",
-          title: "Maintained by rahulv.dev",
+          to: "https://github.com/bro-world",
+          title: "Maintained by BroWorld",
           target: "_blank",
         },
         {
           icon: "lucide:github",
-          title: "Github",
-          to: "https://github.com/unovue/inspira-ui",
+          title: "GitHub",
+          to: "https://github.com/bro-world/bro-world-frontend-ui",
           target: "_blank",
         },
       ],
@@ -178,13 +163,13 @@ export default defineAppConfig({
         {
           title: $t("toc.StarOnGitHub"),
           icon: "lucide:star",
-          to: "https://github.com/unovue/inspira-ui",
+          to: "https://github.com/bro-world/bro-world-frontend-ui",
           target: "_blank",
         },
         {
           title: $t("toc.CreateIssues"),
           icon: "lucide:circle-dot",
-          to: "https://github.com/unovue/inspira-ui/issues",
+          to: "https://github.com/bro-world/bro-world-frontend-ui/issues",
           target: "_blank",
         },
         {
@@ -196,19 +181,7 @@ export default defineAppConfig({
         {
           title: $t("toc.Forum"),
           icon: "lucide:newspaper",
-          to: "https://github.com/unovue/inspira-ui/discussions",
-          target: "_blank",
-        },
-        {
-          title: $t("toc.FollowOnX"),
-          icon: "prime:twitter",
-          to: "https://x.com/rahulv_dev",
-          target: "_blank",
-        },
-        {
-          title: $t("toc.FollowOnBluesky"),
-          icon: "ri:bluesky-line",
-          to: "http://bsky.app/profile/inspira-ui.com",
+          to: "https://github.com/bro-world/bro-world-frontend-ui/discussions",
           target: "_blank",
         },
       ],

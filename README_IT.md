@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/unovue/inspira-ui">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui">
     <img src="./logo.png" alt="Logo" width="150" />
   </a>
 </p>
@@ -12,10 +12,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/unovue/inspira-ui/stargazers">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/unovue/inspira-ui?style=social">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui/stargazers">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/bro-world/bro-world-frontend-ui?style=social">
   </a>
-  <a href="https://github.com/unovue/inspira-ui/blob/main/LICENSE.md">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui/blob/main/LICENSE">
     <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg">
   </a>  
 </p>
@@ -48,7 +48,7 @@ Inspira UI è stato creato per colmare una lacuna nella comunità Vue fornendo u
 
 ## 🎯 Caratteristiche Principali
 
-- **Gratuito e Open Source**: Completamente [open source](https://github.com/unovue/inspira-ui) sotto licenza MIT.
+- **Gratuito e Open Source**: Completamente [open source](https://github.com/bro-world/bro-world-frontend-ui) sotto licenza MIT.
 - **Altamente Configurabile**: Adatta i componenti alle tue esigenze di design specifiche. Dai un'occhiata alla nostra [guida alla configurazione](/api/configuration).
 - **Ampia Gamma di Componenti**: Un'ampia selezione di [componenti](/components), ispirati a Aceternity UI, Magic UI e contributi personalizzati, per aiutarti a costruire tutto ciò che immagini.
 - **Ottimizzato per Dispositivi Mobili**: Progettato per avere un aspetto fantastico su tutti i dispositivi.
@@ -75,13 +75,13 @@ Un ringraziamento speciale a:
 
 ## 👤 Autore
 
-Ciao, sono [Rahul Vashishtha](https://rahulv.dev). Ho iniziato Inspira UI per portare un'esperienza simile nell'ecosistema Vue, ispirato da Aceternity UI, Magic UI e dai contributi della comunità. Sto lavorando continuamente per migliorarlo. Sentiti libero di dare un'occhiata al mio lavoro su [GitHub](https://github.com/rahul-vashishtha) e unisciti a me in questo viaggio [qui](https://github.com/unovue/inspira-ui)!
+Ciao, sono [BroWorld](https://github.com/bro-world). Mantengo questo progetto per offrire un'esperienza pronta all'uso nell'ecosistema Vue, ispirato da Aceternity UI, Magic UI e dai contributi della comunità. Sto lavorando continuamente per migliorarlo. Dai un'occhiata al mio lavoro su GitHub e unisciti a me in questo viaggio [qui](https://github.com/bro-world/bro-world-frontend-ui)!
 
 ---
 
 ## 🌟 Contribuisci
 
-Accogliamo con piacere i contributi! Se vuoi suggerire funzionalità, segnalare bug o aiutare a migliorare il progetto, sentiti libero di aprire un'issue o inviare una pull request su [GitHub](https://github.com/unovue/inspira-ui).
+Accogliamo con piacere i contributi! Se vuoi suggerire funzionalità, segnalare bug o aiutare a migliorare il progetto, sentiti libero di aprire un'issue o inviare una pull request su [GitHub](https://github.com/bro-world/bro-world-frontend-ui).
 
 Puoi anche seguire questa [Guida ai Contributi](https://inspira-ui.com/getting-started/contribution).
 
@@ -89,6 +89,6 @@ Puoi anche seguire questa [Guida ai Contributi](https://inspira-ui.com/getting-s
 
 ## 💖 Sponsorizzazioni
 
-Puoi anche supportare lo sviluppo del progetto sponsorizzando lo sviluppatore.
+Puoi anche supportare lo sviluppo del progetto sponsorizzando il manutentore.
 
-Sostieni e sponsorizza il manutentore qui: [Supporta Inspira UI](https://github.com/sponsors/rahul-vashishtha)
+Sostieni il progetto qui: [Supporta BroWorld](https://github.com/sponsors/bro-world)

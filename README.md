@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/unovue/inspira-ui">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui">
     <img src="./logo.png" alt="Logo" width="150" />
   </a>
 </p>
@@ -12,10 +12,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/unovue/inspira-ui/stargazers">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/unovue/inspira-ui?style=social">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui/stargazers">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/bro-world/bro-world-frontend-ui?style=social">
   </a>
-  <a href="https://github.com/unovue/inspira-ui/blob/main/LICENSE.md">
+  <a href="https://github.com/bro-world/bro-world-frontend-ui/blob/main/LICENSE">
     <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg">
   </a>  
 </p>
@@ -43,7 +43,7 @@ BroWorld was created to fill a gap in the Vue community by providing a set of co
 
 ## 🎯 Key Features
 
-- **Free and Open Source**: Completely [open source](https://github.com/unovue/inspira-ui) under the MIT license.
+- **Free and Open Source**: Completely [open source](https://github.com/bro-world/bro-world-frontend-ui) under the MIT license.
 - **Highly Configurable**: Tailor components to your specific design needs. Check out our [configuration guide](/api/configuration).
 - **Diverse Component Range**: A broad selection of [components](/components), inspired by Aceternity UI, Magic UI, and custom contributions, to help you build anything you imagine.
 - **Mobile Optimized**: Designed to look great on all devices.
@@ -64,24 +64,20 @@ A special thanks to:
 
 ## 👤 Author
 
-Hi, I'm Rami Aouinti. I started BroWorld to bring a similar experience to the Vue ecosystem, inspired by Aceternity UI, Magic UI, and community contributions. I'm continuously working on it to make it better. Feel free to join me on this journey!
+Hi, I'm **BroWorld**. I maintain this project to bring a polished, ready-to-use experience to the Vue ecosystem, inspired by Aceternity UI, Magic UI, and the creativity of the community. I'm continuously working on it to make it better. Feel free to join me on this journey and connect with me on [GitHub](https://github.com/bro-world)!
 
 ## 🌟 Contribute
 
-We welcome contributions! If you want to suggest features, report bugs, or help improve the project, feel free to open an issue or submit a pull request on [GitHub](https://github.com/unovue/inspira-ui).
+We welcome contributions! If you want to suggest features, report bugs, or help improve the project, feel free to open an issue or submit a pull request on [GitHub](https://github.com/bro-world/bro-world-frontend-ui).
 
 You can also follow this [Contribution Guide](https://inspira-ui.com/getting-started/contribution).
 
 ## Sponsorship
 
-You can also support the development of the project by sponsoring the developer.
+You can also support the development of the project by sponsoring the maintainer.
 
-Support and sponsor the maintainer here: [Support Inspira UI](https://github.com/sponsors/rahul-vashishtha)
+Support the project here: [Sponsor BroWorld](https://github.com/sponsors/bro-world)
 
 ## Repo Stats
 
 ![Repo Stats](https://repobeats.axiom.co/api/embed/da99e5e9c8ddaaff68b7f57b56ae21d5e0ea2ed2.svg "Repobeats analytics image")
-
-## Thanks to all the contributors 🙏
-
-[![Contributors](https://contrib.rocks/image?repo=unovue/inspira-ui)](https://github.com/unovue/inspira-ui/graphs/contributors)
