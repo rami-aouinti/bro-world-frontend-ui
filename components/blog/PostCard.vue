@@ -29,6 +29,7 @@
         </div>
         <div class="ms-auto flex flex-wrap gap-3 text-sm text-slate-200">
           <span
+            :aria-label="t('blog.post.reactions', { count: formatNumber(post.reactions_count) })"
             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
           >
             <span
@@ -36,9 +37,10 @@
               class="text-base"
               >{{ reactionEmojis.like }}</span
             >
-            {{ t("blog.post.reactions", { count: formatNumber(post.reactions_count) }) }}
+            <span aria-hidden="true">{{ formatNumber(post.reactions_count) }}</span>
           </span>
           <span
+            :aria-label="t('blog.post.comments', { count: formatNumber(post.totalComments) })"
             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1"
           >
             <span
@@ -46,7 +48,7 @@
               class="text-base"
               >💬</span
             >
-            {{ t("blog.post.comments", { count: formatNumber(post.totalComments) }) }}
+            <span aria-hidden="true">{{ formatNumber(post.totalComments) }}</span>
           </span>
         </div>
       </header>
@@ -98,15 +100,12 @@
             :key="reaction.id"
             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-slate-200 shadow-sm"
           >
+            <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
             <span
               aria-hidden="true"
               class="text-lg"
               >{{ reactionEmojis[reaction.type] }}</span
             >
-            <span class="text-sm font-medium">{{ reaction.user.firstName }}</span>
-            <span class="text-[11px] uppercase tracking-wide text-slate-400">
-              {{ reactionLabels[reaction.type] }}
-            </span>
           </div>
         </div>
       </footer>
