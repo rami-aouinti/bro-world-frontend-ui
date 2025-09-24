@@ -5,6 +5,7 @@ import os from 'node:os'
 import { randomFillSync, webcrypto } from 'node:crypto'
 import { Blob as NodeBlob, File as NodeFile } from 'node:buffer'
 import { URL } from 'node:url'
+import { createRequire } from 'node:module'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
 import { aliases } from 'vuetify/iconsets/mdi'
@@ -197,6 +198,19 @@ const osWithAvailableParallelism = os as typeof os & {
   availableParallelism?: () => number
 }
 
+const require = createRequire(import.meta.url)
+
+const nuxtLayers: string[] = ['shadcn-docs-nuxt']
+
+try {
+  require.resolve('@nuxt/ui-pro/nuxt.config')
+  nuxtLayers.unshift('@nuxt/ui-pro')
+} catch (error) {
+  console.warn(
+    `@nuxt/ui-pro layer skipped: ${(error as Error | undefined)?.message ?? 'Unknown error'}`,
+  )
+}
+
 if (typeof osWithAvailableParallelism.availableParallelism !== 'function') {
   Object.defineProperty(osWithAvailableParallelism, 'availableParallelism', {
     configurable: true,
@@ -261,7 +275,7 @@ export default defineNuxtConfig({
       ignore: ["**/index.ts", "**/shaders.ts", "**/types.ts"],
     },
   ],
-  extends: ['@nuxt/ui-pro', 'shadcn-docs-nuxt'],
+  extends: nuxtLayers,
   sitemap: {
     siteUrl: 'https://bro-world-space.com',
     trailingSlash: false,
