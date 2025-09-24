@@ -13,22 +13,6 @@
     </div>
 
     <div class="relative z-10">
-      <section class="mx-auto max-w-4xl px-6 pb-16 pt-20 text-center md:pt-28">
-        <span
-          class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary/80 ring-1 ring-inset ring-primary/30"
-        >
-          <span class="h-2 w-2 rounded-full bg-primary" />
-          Blog
-        </span>
-        <h1 class="mt-6 text-4xl font-semibold tracking-tight text-white md:text-5xl">
-          L'actualité de la communauté BroWorld
-        </h1>
-        <p class="mx-auto mt-4 max-w-2xl text-lg text-slate-300">
-          Explorez les dernières histoires, réactions et commentaires des membres de la communauté.
-          Chaque post révèle une énergie différente, prenez le temps de les découvrir.
-        </p>
-      </section>
-
       <section class="mx-auto max-w-7xl px-6 pb-24">
         <div
           class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]"
@@ -207,7 +191,7 @@
             </template>
           </div>
 
-          <LayoutRightSidebar class="hidden lg:flex" />
+          <RightSidebar class="hidden lg:flex" />
         </div>
       </section>
     </div>
