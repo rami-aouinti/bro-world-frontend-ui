@@ -58,6 +58,22 @@
       "like": "点赞",
       "love": "喜爱",
       "wow": "惊讶",
+    "post": {
+      "publishedOn": "发布于 {date}",
+      "reactions": "{count} 条互动",
+      "comments": "{count} 条评论",
+      "recentComments": "最新评论",
+      "commentPreviews": "{count} 条预览",
+      "reactionSpotlight": "精选互动"
+    },
+    "comment": {
+      "reactions": "{count} 条互动",
+      "replies": "{count} 条回复"
+    },
+    "reactionTypes": {
+      "like": "点赞",
+      "love": "喜爱",
+      "wow": "惊叹",
       "haha": "哈哈",
       "sad": "难过",
       "angry": "生气"
@@ -108,6 +124,25 @@
         "engagement": { "label": "参与度", "value": 92 },
         "content": { "label": "内容", "value": 88 },
         "responsiveness": { "label": "响应速度", "value": 84 }
+    "sidebar": {
+      "title": "保持联系",
+      "subtitle": "帮助你紧跟 BroWorld 社区的最新动态。",
+      "widgets": {
+        "community": {
+          "title": "加入社区",
+          "description": "与其他开发者交流，分享想法并获取即时帮助。",
+          "action": "打开 Discord"
+        },
+        "docs": {
+          "title": "浏览文档",
+          "description": "了解如何在项目中充分利用 BroWorld 组件。",
+          "action": "阅读文档"
+        },
+        "contribute": {
+          "title": "投稿文章",
+          "description": "与社区分享你的经验，帮助更多人进步。",
+          "action": "提交内容"
+        }
       }
     }
   }

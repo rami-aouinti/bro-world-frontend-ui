@@ -57,6 +57,21 @@
     "reactions": {
       "like": "إعجاب",
       "love": "محبة",
+    "post": {
+      "publishedOn": "نُشر في {date}",
+      "reactions": "{count} تفاعلات",
+      "comments": "{count} تعليقات",
+      "recentComments": "أحدث التعليقات",
+      "commentPreviews": "{count} معاينات",
+      "reactionSpotlight": "أبرز التفاعلات"
+    },
+    "comment": {
+      "reactions": "{count} تفاعلات",
+      "replies": "{count} ردود"
+    },
+    "reactionTypes": {
+      "like": "إعجاب",
+      "love": "حب",
       "wow": "واو",
       "haha": "هاها",
       "sad": "حزين",
@@ -108,6 +123,25 @@
         "engagement": { "label": "التفاعل", "value": 92 },
         "content": { "label": "المحتوى", "value": 88 },
         "responsiveness": { "label": "سرعة الاستجابة", "value": 84 }
+    "sidebar": {
+      "title": "ابقَ على تواصل",
+      "subtitle": "موارد لمتابعة مجتمع برو وورلد.",
+      "widgets": {
+        "community": {
+          "title": "انضم إلى المجتمع",
+          "description": "تحدّث مع صناع آخرين، شارك أفكارك، واحصل على المساعدة فورًا.",
+          "action": "فتح ديسكورد"
+        },
+        "docs": {
+          "title": "استكشف التوثيق",
+          "description": "تعرّف على كيفية الاستفادة القصوى من مكوّنات برو وورلد في مشاريعك.",
+          "action": "قراءة التوثيق"
+        },
+        "contribute": {
+          "title": "ساهم بمقال",
+          "description": "شارك خبراتك مع المجتمع وساعد الآخرين على التطور.",
+          "action": "إرسال محتوى"
+        }
       }
     }
   }
