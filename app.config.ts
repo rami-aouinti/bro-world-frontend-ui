@@ -116,6 +116,7 @@ export default defineAppConfig({
       links: [
         {
           icon: "lucide:user",
+          label: $t("auth.Account"),
           menuItems: [
             {
               title: $t("auth.Login"),
