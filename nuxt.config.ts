@@ -211,6 +211,14 @@ if (typeof osWithAvailableParallelism.availableParallelism !== 'function') {
   })
 }
 
+const rawBaseURL =
+  process.env.NUXT_APP_BASE_URL ??
+  process.env.NUXT_PUBLIC_APP_BASE_URL ??
+  (process.env.NODE_ENV === "development" ? "/" : "/")
+
+const normalizedBaseURL = rawBaseURL.startsWith("/") ? rawBaseURL : `/${rawBaseURL}`
+const baseURL = normalizedBaseURL.endsWith("/") ? normalizedBaseURL : `${normalizedBaseURL}/`
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   plugins: [
@@ -400,6 +408,7 @@ export default defineNuxtConfig({
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
       blogApiEndpoint: process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "http://localhost/public/post",
+      baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
     },
   },
 
@@ -418,7 +427,7 @@ export default defineNuxtConfig({
         },
       ],
     },
-    baseURL: process.env.NODE_ENV === "development" ? "/" : "/docs/",
+    baseURL,
   },
   llms: {
     domain: "https://broworld.com/",

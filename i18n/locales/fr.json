@@ -477,5 +477,183 @@
     "termsPoint2": "Vous pouvez modifier vos préférences de notification à tout moment.",
     "termsPoint3": "La suppression de votre compte entraîne l'effacement de vos données de nos systèmes actifs sous 30 jours.",
     "termsOutro": "Contactez notre équipe d'assistance si vous avez des questions sur la gestion de vos données."
+  },
+  "pages": {
+    "about": {
+      "title": "À propos",
+      "subtitle": "Qui nous sommes et ce que nous construisons",
+      "missionTitle": "Notre mission",
+      "missionBody": "Nous voulons rendre des briques d’interface de classe mondiale accessibles à chaque créateur. BroWorld rassemble les contributions de la communauté, des modèles soigneusement sélectionnés et des recommandations inclusives afin que les équipes puissent livrer plus vite ensemble.",
+      "missionPoints": {
+        "builders": {
+          "title": "Autonomiser chaque créateur",
+          "body": "Fournir des paramètres par défaut pertinents et des modèles accessibles pour des équipes de toute taille."
+        },
+        "community": {
+          "title": "Grandir avec la communauté",
+          "body": "Valoriser les contributions des mainteneurs de toutes les régions et célébrer une collaboration ouverte."
+        },
+        "iteration": {
+          "title": "Itérer de manière responsable",
+          "body": "Livrer des versions testées avec soin, des feuilles de route transparentes et un impact mesurable."
+        }
+      },
+      "teamTitle": "Notre équipe",
+      "teamBody": "BroWorld est animé par un collectif distribué de designers, d’ingénieurs et de conteurs qui pensent que l’open source doit être agréable.",
+      "teamMembers": {
+        "amina": {
+          "role": "Lead produit",
+          "bio": "Définit la vision produit et aligne la feuille de route sur les besoins de la communauté."
+        },
+        "lukas": {
+          "role": "Lead technique",
+          "bio": "Orchestre l’architecture et garantit des versions performantes, accessibles et bien testées."
+        },
+        "clara": {
+          "role": "DevRel",
+          "bio": "Transforme les retours en documentation actionnable et accompagne les nouveaux contributeurs."
+        },
+        "youssef": {
+          "role": "Animateur communauté",
+          "bio": "Organise les sessions communautaires, sélectionne les contributions et veille à des échanges inclusifs."
+        }
+      },
+      "techTitle": "Technologie",
+      "techBody": "Nous nous appuyons sur une stack Vue moderne pour garder la documentation et la production alignées.",
+      "techStack": {
+        "nuxt": "Expériences hybrides construites avec un routage basé sur les fichiers.",
+        "vuetify": "Composants accessibles avec un support RTL de premier plan.",
+        "typescript": "Typage robuste dans les composants, stores et utilitaires.",
+        "vitest": "Tests unitaires et composants rapides pour des releases fiables."
+      },
+      "timelineTitle": "Moments clés",
+      "timeline": {
+        "2023": {
+          "title": "Ouverture du premier lot de composants",
+          "description": "Publication des fondations de la bibliothèque et du guide d’onboarding."
+        },
+        "2024": {
+          "title": "Extension de la localisation",
+          "description": "Ajout de contenus multilingues, du support RTL et de workflows de traduction communautaires."
+        },
+        "2025": {
+          "title": "Lancement des workflows collaboratifs",
+          "description": "Introduction de modèles partagés, de boucles de retours intégrées et d’automatisations renforcées."
+        }
+      },
+      "linksTitle": "Explorer davantage",
+      "links": {
+        "github": "Dépôt GitHub",
+        "docs": "Documentation",
+        "community": "Forum communautaire",
+        "githubAria": "Ouvrir le dépôt GitHub dans un nouvel onglet",
+        "docsAria": "Lire la documentation dans un nouvel onglet",
+        "communityAria": "Rejoindre le forum communautaire dans un nouvel onglet"
+      }
+    },
+    "help": {
+      "title": "Aide",
+      "subtitle": "Trouvez des réponses et des ressources",
+      "faqTitle": "Questions fréquentes",
+      "searchPlaceholder": "Rechercher dans la FAQ…",
+      "quickLinksTitle": "Actions rapides",
+      "faqCountSingular": "résultat",
+      "faqCountPlural": "résultats",
+      "faqEmpty": "Aucun résultat pour cette recherche. Essayez un autre mot-clé.",
+      "actions": {
+        "reportBug": "Signaler un bug",
+        "reportBugDescription": "Partagez des étapes reproductibles pour nous aider à investiguer rapidement.",
+        "reportBugCta": "Créer un ticket",
+        "reportBugAria": "Créer un ticket GitHub dans un nouvel onglet",
+        "accountPrivacy": "Compte & confidentialité",
+        "accountPrivacyDescription": "Réinitialisez vos identifiants ou demandez des changements de compte depuis le tableau de bord.",
+        "accountPrivacyCta": "Gérer l’accès au compte",
+        "accountPrivacyAria": "Accéder à la page de récupération du compte",
+        "contactSupport": "Contacter le support",
+        "contactSupportDescription": "Échangez directement avec nos mainteneurs quand vous avez besoin d’un accompagnement humain.",
+        "contactSupportCta": "Écrire à l’équipe",
+        "contactSupportAria": "Ouvrir la page de contact"
+      },
+      "faq": {
+        "items": {
+          "gettingStarted": {
+            "question": "Comment commencer à utiliser les composants BroWorld ?",
+            "answer": "Installez le package, lancez le script de configuration et parcourez les modèles Starter pour voir les bonnes pratiques.",
+            "link": "Lire le guide de démarrage"
+          },
+          "localization": {
+            "question": "Quelles langues sont prises en charge ?",
+            "answer": "L’anglais, le français, l’arabe, l’allemand et d’autres traductions maintenues par notre communauté."
+          },
+          "components": {
+            "question": "Où trouver des exemples de composants en direct ?",
+            "answer": "Parcourez l’annuaire des composants pour voir des démonstrations interactives et copier les snippets de code.",
+            "link": "Explorer l’annuaire des composants"
+          },
+          "contributing": {
+            "question": "Comment contribuer ?",
+            "answer": "Consultez les règles de contribution, ouvrez une issue avec votre idée puis soumettez une pull request lorsque vous êtes prêt.",
+            "link": "Lire le guide de contribution"
+          },
+          "privacy": {
+            "question": "Comment traitez-vous les demandes liées à la confidentialité ?",
+            "answer": "Envoyez une demande via les outils de compte ou un e-mail à privacy@broworld.com et nous reviendrons vers vous sous 72 heures."
+          }
+        }
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Nous répondons généralement sous 1–2 jours ouvrés.",
+      "form": {
+        "name": "Votre nom",
+        "email": "Adresse e-mail",
+        "subject": "Sujet",
+        "message": "Message",
+        "submit": "Envoyer",
+        "sending": "Envoi…",
+        "success": "Merci ! Votre message a bien été envoyé.",
+        "error": "Désolé, une erreur s’est produite. Veuillez réessayer."
+      },
+      "validation": {
+        "required": "Ce champ est obligatoire",
+        "email": "Saisissez une adresse e-mail valide",
+        "minMessage": "Le message doit contenir au moins 10 caractères"
+      },
+      "details": {
+        "title": "Comment nous joindre",
+        "description": "Choisissez le canal le plus adapté à votre question.",
+        "email": "E-mail",
+        "emailDescription": "Écrivez à l’équipe cœur pour les sujets privés ou liés au compte.",
+        "emailCta": "Envoyer un e-mail",
+        "emailCtaLabel": "Composer un e-mail vers l’équipe BroWorld",
+        "community": "Discussions communautaires",
+        "communityDescription": "Partagez des idées, posez des questions ou signalez des bugs avec les autres créateurs.",
+        "communityCta": "Ouvrir les discussions",
+        "communityCtaLabel": "Ouvrir les discussions BroWorld dans un nouvel onglet",
+        "docs": "Documentation",
+        "docsDescription": "Consultez les guides de mise en œuvre et les références API pour des réponses rapides.",
+        "docsCta": "Lire la documentation",
+        "docsCtaLabel": "Lire la documentation BroWorld"
+      },
+      "availability": {
+        "title": "Disponibilité",
+        "body": "Notre équipe distribuée surveille les demandes du lundi au vendredi et assure une rotation le week-end pour les urgences."
+      }
+    }
+  },
+  "seo": {
+    "about": {
+      "title": "À propos",
+      "description": "Découvrez notre mission et notre équipe."
+    },
+    "help": {
+      "title": "Aide",
+      "description": "FAQ et ressources d’assistance."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contactez notre équipe."
+    }
   }
 }

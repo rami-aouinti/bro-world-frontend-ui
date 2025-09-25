@@ -477,5 +477,183 @@
     "termsPoint2": "You can update your notification preferences at any time.",
     "termsPoint3": "Deleting your account will remove your data from our active systems within 30 days.",
     "termsOutro": "Please contact our support team if you have any questions about how we handle your data."
+  },
+  "pages": {
+    "about": {
+      "title": "About",
+      "subtitle": "Who we are and what we’re building",
+      "missionTitle": "Our mission",
+      "missionBody": "We aim to make world-class UI primitives accessible to every builder. BroWorld gathers community contributions, curated patterns, and inclusive guidelines so teams can ship faster together.",
+      "missionPoints": {
+        "builders": {
+          "title": "Empower every builder",
+          "body": "Deliver opinionated defaults and accessible patterns for teams of any size."
+        },
+        "community": {
+          "title": "Grow with community",
+          "body": "Elevate contributions from maintainers across regions and celebrate open collaboration."
+        },
+        "iteration": {
+          "title": "Iterate responsibly",
+          "body": "Ship carefully tested releases with transparent roadmaps and measurable impact."
+        }
+      },
+      "teamTitle": "Our team",
+      "teamBody": "BroWorld is maintained by a distributed group of designers, engineers, and storytellers who believe that open tooling should feel delightful.",
+      "teamMembers": {
+        "amina": {
+          "role": "Product lead",
+          "bio": "Shapes the product vision and keeps the roadmap grounded in community needs."
+        },
+        "lukas": {
+          "role": "Engineering lead",
+          "bio": "Guides the architecture and ensures every release is performant, accessible, and well tested."
+        },
+        "clara": {
+          "role": "Developer advocate",
+          "bio": "Translates feedback into actionable docs and helps contributors feel welcome."
+        },
+        "youssef": {
+          "role": "Community steward",
+          "bio": "Hosts community sessions, curates contributions, and makes sure conversations stay inclusive."
+        }
+      },
+      "techTitle": "Technology",
+      "techBody": "We lean on a modern Vue stack to keep documentation and production surfaces in sync.",
+      "techStack": {
+        "nuxt": "Hybrid-rendered experiences powered by file-based routing.",
+        "vuetify": "Accessible design system primitives with first-class RTL support.",
+        "typescript": "Type-safe authoring across components, stores, and utilities.",
+        "vitest": "Fast unit and component testing for reliable releases."
+      },
+      "timelineTitle": "Milestones",
+      "timeline": {
+        "2023": {
+          "title": "Open-sourcing the first component set",
+          "description": "Published the initial library foundations and onboarding guide."
+        },
+        "2024": {
+          "title": "Expanding localization coverage",
+          "description": "Added multi-lingual content, RTL support, and community translation workflows."
+        },
+        "2025": {
+          "title": "Launching collaborative workflows",
+          "description": "Introduced shared templates, integrated feedback loops, and improved automation."
+        }
+      },
+      "linksTitle": "Explore more",
+      "links": {
+        "github": "GitHub repository",
+        "docs": "Documentation",
+        "community": "Community forum",
+        "githubAria": "Open the GitHub repository in a new tab",
+        "docsAria": "Read the documentation in a new tab",
+        "communityAria": "Join the community forum in a new tab"
+      }
+    },
+    "help": {
+      "title": "Help",
+      "subtitle": "Find answers and resources",
+      "faqTitle": "Frequently asked questions",
+      "searchPlaceholder": "Search the FAQ…",
+      "quickLinksTitle": "Quick actions",
+      "faqCountSingular": "result",
+      "faqCountPlural": "results",
+      "faqEmpty": "No FAQ entries match your search yet. Try a different keyword.",
+      "actions": {
+        "reportBug": "Report a bug",
+        "reportBugDescription": "Share reproducible steps so we can investigate quickly.",
+        "reportBugCta": "Create an issue",
+        "reportBugAria": "Create a new GitHub issue in a new tab",
+        "accountPrivacy": "Account & Privacy",
+        "accountPrivacyDescription": "Reset your credentials or request account changes from the dashboard.",
+        "accountPrivacyCta": "Manage account access",
+        "accountPrivacyAria": "Go to the account recovery page",
+        "contactSupport": "Contact support",
+        "contactSupportDescription": "Reach our maintainers directly when you need a human touch.",
+        "contactSupportCta": "Message the team",
+        "contactSupportAria": "Open the contact page"
+      },
+      "faq": {
+        "items": {
+          "gettingStarted": {
+            "question": "How do I start using BroWorld components?",
+            "answer": "Install the package, run the setup script, and explore the Starter templates to see best practices in action.",
+            "link": "Read the getting started guide"
+          },
+          "localization": {
+            "question": "Which languages are supported?",
+            "answer": "English, French, Arabic, German, and more translations are maintained by our community partners."
+          },
+          "components": {
+            "question": "Where can I find live component examples?",
+            "answer": "Browse the component directory to view interactive demos and copy-ready code snippets.",
+            "link": "Explore the component directory"
+          },
+          "contributing": {
+            "question": "How can I contribute?",
+            "answer": "Review the contribution guidelines, open an issue with your idea, and submit a pull request when you are ready.",
+            "link": "Read the contribution guide"
+          },
+          "privacy": {
+            "question": "How do you handle privacy requests?",
+            "answer": "Submit a request through the account tools or email privacy@broworld.com and we will follow up within 72 hours."
+          }
+        }
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "We usually reply within 1–2 business days.",
+      "form": {
+        "name": "Your name",
+        "email": "Email address",
+        "subject": "Subject",
+        "message": "Message",
+        "submit": "Send",
+        "sending": "Sending…",
+        "success": "Thanks! Your message has been sent.",
+        "error": "Sorry, something went wrong. Please try again."
+      },
+      "validation": {
+        "required": "This field is required",
+        "email": "Enter a valid email address",
+        "minMessage": "Message must be at least 10 characters"
+      },
+      "details": {
+        "title": "How to reach us",
+        "description": "Choose the channel that works best for your question.",
+        "email": "Email",
+        "emailDescription": "Message the core team for private or account-related topics.",
+        "emailCta": "Send us an email",
+        "emailCtaLabel": "Compose an email to the BroWorld team",
+        "community": "Community discussions",
+        "communityDescription": "Share ideas, ask questions, or report bugs alongside other builders.",
+        "communityCta": "Open discussions",
+        "communityCtaLabel": "Open the BroWorld community discussions in a new tab",
+        "docs": "Documentation",
+        "docsDescription": "Browse implementation guides and API references for quick answers.",
+        "docsCta": "Read the docs",
+        "docsCtaLabel": "Read the BroWorld documentation"
+      },
+      "availability": {
+        "title": "When we're online",
+        "body": "Our distributed team monitors requests Monday through Friday and rotates weekend coverage for urgent issues."
+      }
+    }
+  },
+  "seo": {
+    "about": {
+      "title": "About",
+      "description": "Learn about our mission and team."
+    },
+    "help": {
+      "title": "Help",
+      "description": "FAQ and support resources."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch with our team."
+    }
   }
 }
