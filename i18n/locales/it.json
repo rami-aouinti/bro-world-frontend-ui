@@ -1,0 +1,238 @@
+{
+  "common": {
+    "InspiraUIPro": "Inspira UI Pro"
+  },
+  "banner": {
+    "Content": "Per la documentazione di Tailwind CSS v3, [**clicca qui**](https://v1.inspira-ui.com)."
+  },
+  "nav": {
+    "Docs": "Documentazione",
+    "GettingStarted": "Guida introduttiva",
+    "GettingStartedDescription": "Introduzione a Inspira UI e ai suoi concetti fondamentali.",
+    "Installation": "Installazione",
+    "InstallationDescription": "Segui la guida passo passo per installare Inspira UI nel tuo progetto.",
+    "Components": "Componenti",
+    "ComponentsDescription": "Esplora tutti i componenti disponibili e come utilizzarli.",
+    "V1DocsDescription": "Documentazione per usare Inspira UI con Tailwind CSS v3.",
+    "Community": "Community",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Codice sorgente di Inspira UI.",
+    "Discord": "Discord",
+    "DiscordDescription": "Unisciti alla community su Discord",
+    "Forum": "Forum",
+    "ForumDiscord": "Entra nel forum"
+  },
+  "toc": {
+    "title": "In questa pagina",
+    "StarOnGitHub": "Metti una stella su GitHub",
+    "CreateIssues": "Crea issue",
+    "JoinDiscord": "Unisciti a Discord",
+    "Forum": "Forum",
+    "FollowOnX": "Seguici su X",
+    "FollowOnBluesky": "Seguici su Bluesky"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "Sostienici",
+      "AllComponents": "Tutti i componenti",
+      "OpenSourceComponentsToBuild": "Componenti open source per creare",
+      "Stunning": "straordinari",
+      "Beautiful": "bellissimi",
+      "WebsitesUsingVueAndNuxt": "siti web con Vue e Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Integra con il tuo framework UI preferito",
+      "Features": "Funzionalità",
+      "CheckOutSomeExamples": "Dai un'occhiata ad alcuni esempi!",
+      "3DCardHoverEffect": "Effetto hover carta 3D",
+      "RadiantText": "Testo radiante",
+      "LovedByCommunity": "Amato dalla community",
+      "WhatAreYouWaitingFor": "Cosa stai aspettando?",
+      "GetStartedAndStartBuildingAwesomeUI": "Inizia subito e crea interfacce straordinarie",
+      "GetStarted": "Inizia"
+    }
+  },
+  "auth": {
+    "Account": "Account",
+    "Login": "Accedi",
+    "Register": "Registrati",
+    "usernameOrEmail": "Indirizzo email o nome utente",
+    "password": "Password",
+    "signIn": "Accedi",
+    "signUpPrompt": "Non hai un account?",
+    "signUp": "Creane uno",
+    "forgotPassword": "Hai dimenticato la password?",
+    "requiredError": "Inserisci email e password.",
+    "invalidError": "Non siamo riusciti ad accedere con questi dati. Riprova.",
+    "successTitle": "Bentornato",
+    "success": "Accesso eseguito con successo.",
+    "errorGeneric": "Si è verificato un errore durante l'accesso.",
+    "socialTitle": "Accedi con il tuo provider preferito",
+    "socialSubtitle": "Ti reindirizzeremo per completare l'autenticazione.",
+    "social": {
+      "google": "Continua con Google",
+      "github": "Continua con GitHub",
+      "microsoft": "Continua con Microsoft"
+    },
+    "errorGeneric": "Si è verificato un errore durante l'accesso."
+  },
+  "blog": {
+    "hero": {
+      "eyebrow": "Feed della community",
+      "title": "Scopri cosa succede in BroWorld",
+      "description": "Segui i momenti salienti della community, scopri nuove risorse e resta aggiornato su ciò che i builder stanno lanciando ora.",
+      "primaryAction": "Esplora gli ultimi post",
+      "secondaryAction": "Consulta la documentazione",
+      "stats": {
+        "members": "Membri attivi",
+        "reactions": "Reazioni condivise",
+        "comments": "Commenti pubblicati"
+      }
+    },
+    "composer": {
+      "title": "Condividi qualcosa con la community",
+      "subtitle": "Avvia una conversazione e ispira gli altri builder.",
+      "label": "Il tuo messaggio",
+      "placeholder": "Di cosa ti piacerebbe parlare?",
+      "characterCount": "{count} caratteri",
+      "submit": "Pubblica post",
+      "submitting": "Pubblicazione...",
+      "success": "Il tuo post è stato pubblicato con successo!",
+      "error": "Non siamo riusciti a pubblicare il tuo post. Riprova.",
+      "validation": "Scrivi un messaggio prima di pubblicare."
+    },
+    "reactions": {
+      "post": {
+        "publishedOn": "Pubblicato il {date}",
+        "reactions": "{count} reazioni",
+        "comments": "{count} commenti",
+        "recentComments": "Commenti recenti",
+        "commentPreviews": "{count} anteprime",
+        "reactionSpotlight": "Reazioni in evidenza"
+      },
+      "comment": {
+        "reactions": "{count} reazioni",
+        "replies": "{count} risposte"
+      },
+      "reactionTypes": {
+        "like": "Mi piace",
+        "love": "Adoro",
+        "wow": "Wow",
+        "haha": "Ahah",
+        "sad": "Triste",
+        "angry": "Arrabbiato"
+      },
+      "posts": {
+        "publishedOn": "Pubblicato il {date}",
+        "reactionCount": "{count} reazioni",
+        "commentCount": "{count} commenti",
+        "recentComments": "Commenti recenti",
+        "previewCount": "{count} anteprime",
+        "highlightedReactions": "Reazioni preferite dai fan"
+      },
+      "comments": {
+        "reactionCount": "{count} reazioni",
+        "replyCount": "{count} risposte"
+      }
+    },
+    "sidebar": {
+      "weather": {
+        "badge": "Notizie",
+        "title": "Pioggia in arrivo",
+        "subtitle": "Preparati a una giornata piovosa con venti leggeri.",
+        "icon": "🌧️",
+        "location": "Berlino, Germania",
+        "locationLabel": "Posizione",
+        "temperature": "18°C",
+        "temperatureLabel": "Temperatura",
+        "tipLabel": "Consiglio",
+        "tip": "Non dimenticare l'ombrello per restare asciutto."
+      },
+      "leaderboard": {
+        "title": "Top 3 del quiz",
+        "live": "in diretta",
+        "participants": {
+          "first": {
+            "name": "Bro World",
+            "role": "Team prodotto",
+            "score": "982 pts"
+          },
+          "second": {
+            "name": "Adam Don",
+            "role": "Community",
+            "score": "953 pts"
+          },
+          "third": {
+            "name": "Nina Ko",
+            "role": "Marketing",
+            "score": "917 pts"
+          }
+        }
+      },
+      "rating": {
+        "title": "Panoramica delle valutazioni",
+        "subtitle": "Feedback dei membri della settimana",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
+        "stars": 5,
+        "categories": {
+          "engagement": {
+            "label": "Coinvolgimento",
+            "value": 92
+          },
+          "content": {
+            "label": "Contenuto",
+            "value": 88
+          },
+          "responsiveness": {
+            "label": "Reattività",
+            "value": 84
+          }
+        }
+      },
+      "title": "Resta connesso",
+      "subtitle": "Risorse per restare aggiornato sulla community di BroWorld.",
+      "widgets": {
+        "community": {
+          "title": "Unisciti alla community",
+          "description": "Chatta con altri builder, condividi idee e ottieni aiuto immediato.",
+          "action": "Apri Discord"
+        },
+        "docs": {
+          "title": "Sfoglia la documentazione",
+          "description": "Scopri come sfruttare al meglio i componenti BroWorld nei tuoi progetti.",
+          "action": "Leggi la documentazione"
+        },
+        "contribute": {
+          "title": "Contribuisci con un articolo",
+          "description": "Condividi le tue conoscenze con la community e aiuta gli altri a crescere.",
+          "action": "Invia contenuti"
+        }
+      }
+    }
+  },
+  "register": {
+    "email": "Indirizzo email",
+    "password": "Password",
+    "repeatPassword": "Conferma password",
+    "agree": "Accetto i",
+    "terms": "termini e condizioni",
+    "requirements": "Requisiti della password",
+    "requirement1": "Deve contenere almeno 8 caratteri.",
+    "requirement2": "Dovrebbe includere numeri o caratteri speciali per maggiore sicurezza.",
+    "signUp": "Crea account",
+    "haveAccount": "Hai già un account?",
+    "signIn": "Accedi",
+    "termsTitle": "Termini e condizioni",
+    "errorTerms": "Devi accettare i termini e le condizioni.",
+    "errorMissing": "Completa tutti i campi obbligatori.",
+    "errorMismatch": "Le password non coincidono.",
+    "errorGeneric": "Si è verificato un errore durante la creazione dell'account.",
+    "successTitle": "Account creato",
+    "success": "Il tuo account è stato creato con successo.",
+    "termsIntro": "Creando un account confermi di aver compreso e accettato le nostre policy.",
+    "termsPoint1": "Utilizziamo le tue informazioni solo per creare e proteggere il tuo account.",
+    "termsPoint2": "Puoi aggiornare le preferenze di notifica in qualsiasi momento.",
+    "termsPoint3": "Eliminando il tuo account, i tuoi dati verranno rimossi dai nostri sistemi attivi entro 30 giorni.",
+    "termsOutro": "Contatta il nostro team di supporto se hai domande su come gestiamo i tuoi dati."
+  }
+}
