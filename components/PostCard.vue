@@ -12,11 +12,12 @@
       />
 
       <div class="px-3 w-full max-w-2xl space-y-2">
-        <h4
-          class="text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
+        <RadiantText
+            class="inline-flex items-center justify-center px-2 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
+            :duration="5"
         >
-          {{ post.title }}
-        </h4>
+          <span class="text-xl font-bold">{{ post.title }}</span>
+        </RadiantText>
         <p class="text-base leading-relaxed text-slate-200/80">
           {{ post.summary }}
         </p>
