@@ -1,5 +1,5 @@
 <template>
-  <article class="flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/5 p-4">
+  <article class="flex flex-col gap-3 rounded-2xl mx-auto py-2 p-4">
     <div class="flex items-center gap-3">
       <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/10">
         <img
@@ -21,7 +21,7 @@
     <p class="text-sm leading-relaxed text-slate-200/80">
       {{ comment.content }}
     </p>
-    <div class="mt-auto flex items-center justify-between text-xs text-slate-400">
+    <div class="mt-auto flex items-center justify-between text-xs text-slate-400 mx-auto py-2">
       <span
           :aria-label="
           t('blog.reactions.comment.reactions', { count: formatNumber(comment.reactions_count) })

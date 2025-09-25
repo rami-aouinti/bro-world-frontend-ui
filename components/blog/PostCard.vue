@@ -14,12 +14,12 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="space-y-4">
-        <h2
-          class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
+      <div class="mx-auto py-4 space-y-2">
+        <h4
+          class="text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
           {{ post.title }}
-        </h2>
+        </h4>
         <p class="text-base text-slate-200/80">
           {{ post.summary }}
         </p>
@@ -29,7 +29,7 @@
         v-if="post.comments_preview.length"
         class="rounded-2xl border border-white/10 bg-black/20 p-6"
       >
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between mx-auto py-2">
           <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
             {{ t("blog.reactions.post.recentComments") }}
           </p>
@@ -41,7 +41,7 @@
             }}
           </p>
         </div>
-        <div class="mt-4 space-y-4">
+        <div class="mt-2 space-y-2 mx-auto py-2">
           <CommentCard
             v-for="comment in post.comments_preview.slice(0, 4)"
             :key="comment.id"
@@ -52,12 +52,12 @@
 
       <footer
         v-if="post.reactions_preview.length"
-        class="flex flex-wrap items-center gap-3 text-sm"
+        class="flex flex-wrap items-center gap-3 text-sm mx-auto py-2"
       >
         <span class="text-xs uppercase tracking-wide text-slate-400">
           {{ t("blog.reactions.post.reactionSpotlight") }}
         </span>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 mx-auto py-2">
           <div
             v-for="reaction in post.reactions_preview.slice(0, 4)"
             :key="reaction.id"

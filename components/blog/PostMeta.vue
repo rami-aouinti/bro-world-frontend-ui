@@ -1,5 +1,5 @@
 <template>
-  <header class="flex flex-wrap items-center gap-6">
+  <header class="flex flex-wrap items-center mx-auto py-4 gap-6">
     <div class="flex items-center gap-4">
       <div
         class="relative h-14 w-14 overflow-hidden rounded-2xl border border-white/20 bg-white/10"

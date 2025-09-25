@@ -1,10 +1,7 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/10 p-6 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.65)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
+    class="group relative overflow-hidden rounded-3xl p-6 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.65)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
   >
-    <div
-      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_hsla(var(--primary-hue,221),100%,72%,0.18),transparent_55%)] opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-100"
-    />
     <div class="relative flex flex-col gap-12">
       <PostMeta
         :user="post.user"
@@ -14,7 +11,7 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="space-y-6">
+      <div class="space-y-6 mx-auto py-2">
         <h2
           class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
