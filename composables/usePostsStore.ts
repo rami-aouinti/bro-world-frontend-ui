@@ -1,17 +1,7 @@
-import { computed } from "vue";
-import type { BlogApiResponse, BlogPost, ReactionType } from "~/lib/mock/blog";
-
-interface CreatePostPayload {
-  content: string;
-  title?: string;
-  summary?: string;
-}
-
-interface FetchOptions {
-  force?: boolean;
-}
+import { usePostsStore as usePostsPiniaStore } from "~/stores/posts";
 
 export function usePostsStore() {
+  return usePostsPiniaStore();
   const postsState = useState<BlogPost[]>("posts", () => []);
   const pendingState = useState<boolean>("posts-pending", () => false);
   const errorState = useState<string | null>("posts-error", () => null);

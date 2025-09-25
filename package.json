@@ -60,6 +60,7 @@
     "three-globe": "^2.44.0",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-css-injected-by-js": "^3.5.2",
+    "pinia": "^2.1.7",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1",
     "vue-use-spring": "^0.3.3",
