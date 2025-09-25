@@ -126,6 +126,27 @@ export default defineAppConfig({
       ],
       links: [
         {
+          icon: "lucide:github",
+          label: $t("nav.GitHub"),
+          to: "https://github.com/bro-world/bro-world-frontend-ui",
+          target: "_blank",
+          external: true,
+        },
+        {
+          icon: "ri:discord-line",
+          label: $t("nav.Discord"),
+          to: "https://discord.gg/Xbh5DwJRc9",
+          target: "_blank",
+          external: true,
+        },
+        {
+          icon: "lucide:messages-square",
+          label: $t("nav.Forum"),
+          to: "https://github.com/bro-world/bro-world-frontend-ui/discussions",
+          target: "_blank",
+          external: true,
+        },
+        {
           icon: "lucide:user",
           label: $t("auth.Account"),
           menuItems: [
