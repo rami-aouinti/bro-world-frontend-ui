@@ -105,10 +105,11 @@
         </form>
       </div>
 
-      <footer class="px-3 w-full max-w-2xl pt-1" aria-live="polite">
+      <footer class="px-3 w-full max-w-2xl pt-1">
         <div
           class="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-400"
           :aria-label="metaAriaLabel"
+          aria-live="polite"
           data-test="post-meta-bar"
         >
           <span class="inline-flex items-center gap-1">
