@@ -78,6 +78,7 @@
     "@iconify-json/vscode-icons": "^1.2.30",
     "@inspira-ui/plugins": "0.0.1",
     "@nuxt/content": "^3.7.1",
+    "@testing-library/vue": "^8.1.0",
     "@nuxt/eslint": "^1.9.0",
     "@testing-library/vue": "^8.1.0",
     "@types/canvas-confetti": "^1.9.0",
@@ -104,6 +105,7 @@
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.42.0",
+    "@vue/test-utils": "^2.4.6",
     "vitest": "^3.2.4"
   },
   "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
