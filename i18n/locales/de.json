@@ -424,6 +424,41 @@
         }
       }
     },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Überprüfen und verwalten Sie Ihre persönlichen Informationen.",
+      "sections": {
+        "contact": "Kontakt",
+        "profile": "Profil",
+        "social": "Soziales"
+      },
+      "labels": {
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "address": "Adresse",
+        "title": "Titel",
+        "gender": "Geschlecht",
+        "birthday": "Geburtstag",
+        "description": "Beschreibung",
+        "roles": "Rollen",
+        "friends": "Freunde",
+        "stories": "Stories",
+        "accountStatus": "Kontostatus"
+      },
+      "statuses": {
+        "enabled": "Aktiv",
+        "disabled": "Deaktiviert"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "Keine Stories"
+      },
+      "avatarAlt": "Profilbild von {name}",
+      "avatarAltFallback": "Platzhalter für Profilbild",
+      "stats": {
+        "title": "Schnelle Statistiken"
+      }
+    },
     "contact": {
       "title": "Kontakt",
       "subtitle": "Wir antworten in der Regel innerhalb von 1–2 Werktagen.",
@@ -658,6 +693,10 @@
     "contact": {
       "title": "Kontakt",
       "description": "Nimm Kontakt mit unserem Team auf."
+    },
+    "profile": {
+      "title": "Profil",
+      "description": "Sieh dir deine persönlichen Daten und Kontoaktivitäten an."
     }
   }
 }

@@ -426,6 +426,41 @@
         }
       }
     },
+    "profile": {
+      "title": "Profile",
+      "subtitle": "Review and manage your personal information.",
+      "sections": {
+        "contact": "Contact",
+        "profile": "Profile",
+        "social": "Social"
+      },
+      "labels": {
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "title": "Title",
+        "gender": "Gender",
+        "birthday": "Birthday",
+        "description": "Description",
+        "roles": "Roles",
+        "friends": "Friends",
+        "stories": "Stories",
+        "accountStatus": "Account status"
+      },
+      "statuses": {
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "No stories"
+      },
+      "avatarAlt": "Profile picture of {name}",
+      "avatarAltFallback": "Profile picture placeholder",
+      "stats": {
+        "title": "Quick stats"
+      }
+    },
     "contact": {
       "title": "اتصل بنا",
       "subtitle": "نرد عادة خلال ١–٢ يوم عمل.",
@@ -660,6 +695,10 @@
     "contact": {
       "title": "اتصل بنا",
       "description": "تواصل مع فريقنا."
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "View your personal details and account activity."
     }
   }
 }
