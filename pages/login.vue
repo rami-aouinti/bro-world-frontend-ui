@@ -1,65 +1,13 @@
 <template>
   <v-container class="py-12" style="margin-top: -70px;">
     <v-card-text class="text-medium-emphasis pa-1">
-      <form class="mx-auto max-w-xl" @submit.prevent="handleSubmit">
-        <div class="card-padding">
-          <v-text-field
-            v-model="username"
-            density="compact"
-            rounded="xl"
-            :label="t('auth.usernameOrEmail')"
-            required
-            class="font-size-input input-style"
-            append-inner-icon="mdi-account"
-            :disabled="loading"
-            :error="Boolean(error)"
-            :class="fieldAlignment"
-          />
-          <v-text-field
-            v-model="password"
-            density="compact"
-            rounded="xl"
-            :type="showPassword ? 'text' : 'password'"
-            :label="t('auth.password')"
-            required
-            class="font-size-input input-style"
-            :class="fieldAlignment"
-            :disabled="loading"
-            :error="Boolean(error)"
-            :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-            @click:append-inner="togglePassword"
-          />
-
-          <p v-if="error" class="mt-1 text-red text-caption d-flex justify-center">
-            {{ error }}
-          </p>
-
-          <button
-            :disabled="loading"
-            type="submit"
-            class="btn btn-outline-primary bg-primary rounded-xl text-decoration-none font-weight-bold text-uppercase py-2 px-6 me-2 mb-2 w-100"
-          >
-            <v-progress-circular v-if="loading" indeterminate size="20" />
-            <span v-else :class="fieldAlignment">{{ t('auth.signIn') }}</span>
-          </button>
-
-          <p class="text-sm text-body mt-3 mb-0 d-flex justify-center" :class="fieldAlignment">
-            {{ t('auth.signUpPrompt') }}
-            <NuxtLink
-              :to="localePath('/register')"
-              class="text-primary text-decoration-none font-weight-bolder px-1"
-              :class="fieldAlignment"
-            >
-              {{ t('auth.signUp') }}
-            </NuxtLink>
-          </p>
-        </div>
-      </form>
+      <AuthLoginForm />
     </v-card-text>
   </v-container>
 </template>
 
 <script setup lang="ts">
+import AuthLoginForm from "~/components/auth/LoginForm.vue";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
