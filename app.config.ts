@@ -38,22 +38,26 @@ export default defineAppConfig({
             {
               title: $t("nav.GettingStarted"),
               to: "/getting-started/introduction",
+              icon: "lucide:rocket",
               description: $t("nav.GettingStartedDescription"),
             },
             {
               title: $t("nav.Installation"),
               to: "/getting-started/installation",
+              icon: "lucide:plug",
               description: $t("nav.InstallationDescription"),
             },
             {
               title: $t("nav.Components"),
               to: "/components",
+              icon: "lucide:box",
               description: $t("nav.ComponentsDescription"),
               target: "_self",
             },
             {
               title: "Inspira UI v1",
               to: "https://v1.inspira-ui.com",
+              icon: "lucide:external-link",
               description: $t("nav.V1DocsDescription"),
               target: "_blank",
             },
@@ -65,6 +69,7 @@ export default defineAppConfig({
             {
               title: "Aceternity UI",
               to: "https://ui.aceternity.com/",
+              icon: "lucide:sparkles",
               description:
                 "For providing the inspiration and permission to adapt the original designs.",
               target: "_blank",
@@ -72,18 +77,21 @@ export default defineAppConfig({
             {
               title: "Magic UI",
               to: "https://magicui.design/",
+              icon: "lucide:wand-2",
               description: "For providing the inspiration for designs.",
               target: "_blank",
             },
             {
               title: "shadcn-vue",
               to: "https://www.shadcn-vue.com/",
+              icon: "lucide:library",
               description: "For the Vue port of shadcn-ui and contributions to some components",
               target: "_blank",
             },
             {
               title: "shadcn-docs-nuxt",
               to: "https://github.com/ZTL-UwU/shadcn-docs-nuxt",
+              icon: "lucide:file-text",
               description: "For the beautifully crafted Nuxt documentation site.",
               target: "_blank",
             },
@@ -95,18 +103,21 @@ export default defineAppConfig({
             {
               title: "GitHub",
               to: "https://github.com/bro-world/bro-world-frontend-ui",
+              icon: "lucide:github",
               description: $t("nav.GitHubDescription"),
               target: "_blank",
             },
             {
               title: "Discord",
               to: "https://discord.gg/Xbh5DwJRc9",
+              icon: "ri:discord-line",
               description: $t("nav.DiscordDescription"),
               target: "_blank",
             },
             {
               title: $t("nav.Forum"),
               to: "https://github.com/bro-world/bro-world-frontend-ui/discussions",
+              icon: "lucide:messages-square",
               target: "_blank",
               description: $t("nav.ForumDiscord"),
             },
