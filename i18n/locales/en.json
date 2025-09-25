@@ -125,12 +125,36 @@
         "commentCount": "{count} comments",
         "recentComments": "Recent comments",
         "previewCount": "{count} previews",
-        "highlightedReactions": "Fan favorite reactions"
+        "highlightedReactions": "Fan favorite reactions",
+        "reactLabel": "Add your reaction",
+        "reactionError": "We couldn't react to this post. Please try again."
       },
       "comments": {
         "reactionCount": "{count} reactions",
         "replyCount": "{count} replies"
       }
+    },
+    "comments": {
+      "label": "Join the discussion",
+      "placeholder": "Share your thoughts with the community...",
+      "characterCount": "{count} characters",
+      "submit": "Post comment",
+      "submitting": "Posting...",
+      "success": "Your comment has been added.",
+      "error": "We couldn't add your comment. Please try again.",
+      "validation": "Write a comment before posting.",
+      "empty": "No comments yet. Be the first to start the conversation!",
+      "reply": "Reply",
+      "replying": "Replying...",
+      "replyPlaceholder": "Write your reply...",
+      "replySubmit": "Send reply",
+      "replySuccess": "Your reply has been added.",
+      "replyError": "We couldn't publish your reply. Please try again.",
+      "replyValidation": "Write a reply before sending.",
+      "cancelReply": "Cancel",
+      "replyUnavailable": "Replying isn't available right now.",
+      "reactionUnavailable": "Reacting isn't available right now.",
+      "reactionError": "We couldn't react to this comment. Please try again."
     },
     "sidebar": {
       "weather": {

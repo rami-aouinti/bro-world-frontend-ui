@@ -125,12 +125,36 @@
         "commentCount": "{count} Kommentare",
         "recentComments": "Aktuelle Kommentare",
         "previewCount": "{count} Vorschauen",
-        "highlightedReactions": "Beliebte Reaktionen"
+        "highlightedReactions": "Beliebte Reaktionen",
+        "reactLabel": "Reagiere auf diesen Beitrag",
+        "reactionError": "Die Reaktion auf diesen Beitrag ist fehlgeschlagen. Bitte versuche es erneut."
       },
       "comments": {
         "reactionCount": "{count} Reaktionen",
         "replyCount": "{count} Antworten"
       }
+    },
+    "comments": {
+      "label": "Beteilige dich an der Diskussion",
+      "placeholder": "Teile deine Gedanken mit der Community...",
+      "characterCount": "{count} Zeichen",
+      "submit": "Kommentar veröffentlichen",
+      "submitting": "Wird veröffentlicht...",
+      "success": "Dein Kommentar wurde hinzugefügt.",
+      "error": "Dein Kommentar konnte nicht hinzugefügt werden. Bitte versuche es erneut.",
+      "validation": "Schreibe einen Kommentar, bevor du veröffentlichst.",
+      "empty": "Noch keine Kommentare. Starte die Unterhaltung!",
+      "reply": "Antworten",
+      "replying": "Antwort wird gesendet...",
+      "replyPlaceholder": "Schreibe deine Antwort...",
+      "replySubmit": "Antwort senden",
+      "replySuccess": "Deine Antwort wurde hinzugefügt.",
+      "replyError": "Deine Antwort konnte nicht veröffentlicht werden. Bitte versuche es erneut.",
+      "replyValidation": "Schreibe eine Antwort, bevor du sie sendest.",
+      "cancelReply": "Abbrechen",
+      "replyUnavailable": "Antworten sind derzeit nicht verfügbar.",
+      "reactionUnavailable": "Reaktionen sind derzeit nicht verfügbar.",
+      "reactionError": "Auf diesen Kommentar konnte nicht reagiert werden. Bitte versuche es erneut."
     },
     "sidebar": {
       "weather": {

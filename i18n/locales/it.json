@@ -126,12 +126,36 @@
         "commentCount": "{count} commenti",
         "recentComments": "Commenti recenti",
         "previewCount": "{count} anteprime",
-        "highlightedReactions": "Reazioni preferite dai fan"
+        "highlightedReactions": "Reazioni preferite dai fan",
+        "reactLabel": "Aggiungi la tua reazione",
+        "reactionError": "Non siamo riusciti a reagire a questo post. Riprova."
       },
       "comments": {
         "reactionCount": "{count} reazioni",
         "replyCount": "{count} risposte"
       }
+    },
+    "comments": {
+      "label": "Partecipa alla conversazione",
+      "placeholder": "Condividi i tuoi pensieri con la community...",
+      "characterCount": "{count} caratteri",
+      "submit": "Pubblica commento",
+      "submitting": "Pubblicazione...",
+      "success": "Il tuo commento è stato aggiunto.",
+      "error": "Non siamo riusciti ad aggiungere il tuo commento. Riprova.",
+      "validation": "Scrivi un commento prima di pubblicare.",
+      "empty": "Non ci sono ancora commenti. Inizia tu la conversazione!",
+      "reply": "Rispondi",
+      "replying": "Risposta in corso...",
+      "replyPlaceholder": "Scrivi la tua risposta...",
+      "replySubmit": "Invia risposta",
+      "replySuccess": "La tua risposta è stata aggiunta.",
+      "replyError": "Non siamo riusciti a pubblicare la tua risposta. Riprova.",
+      "replyValidation": "Scrivi una risposta prima di inviarla.",
+      "cancelReply": "Annulla",
+      "replyUnavailable": "Le risposte non sono disponibili al momento.",
+      "reactionUnavailable": "Le reazioni non sono disponibili al momento.",
+      "reactionError": "Non siamo riusciti a reagire a questo commento. Riprova."
     },
     "sidebar": {
       "weather": {

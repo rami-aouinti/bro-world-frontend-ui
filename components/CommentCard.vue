@@ -1,14 +1,17 @@
 <template>
   <article
-    class="px-3 my-4 py-2 flex flex-col gap-4 rounded-2xl bg-slate-950/40 backdrop-blur"
+    :class="[
+      'flex flex-col gap-4 rounded-2xl bg-slate-950/40 px-4 py-4 backdrop-blur transition-colors',
+      depth > 0 ? 'ml-6 border-l border-white/10 pl-5' : '',
+    ]"
   >
     <div class="flex items-center gap-3">
       <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/5">
         <img
-            :src="comment.user.photo ?? defaultAvatar"
-            :alt="`${comment.user.firstName} ${comment.user.lastName}`"
-            class="h-full w-full object-cover"
-            loading="lazy"
+          :src="comment.user.photo ?? avatarFallback"
+          :alt="`${comment.user.firstName} ${comment.user.lastName}`"
+          class="h-full w-full object-cover"
+          loading="lazy"
         />
       </div>
       <div>
@@ -20,52 +23,177 @@
         </p>
       </div>
     </div>
+
     <p class="text-sm leading-relaxed text-slate-200/90">
       {{ comment.content }}
     </p>
-    <div
-      class="mt-1 flex items-center justify-between gap-4 mx-3 text-xs text-slate-400"
-    >
-      <span
-          :aria-label="
-          t('blog.reactions.comment.reactions', { count: formatNumber(comment.reactions_count) })
-        "
-          class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-200 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
-      >
-        <span
-            aria-hidden="true"
-            class="text-base"
-        >👍</span
+
+    <div class="flex flex-col gap-3">
+      <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300">
+        <div class="flex flex-wrap items-center gap-2">
+          <button
+            v-for="type in reactionTypes"
+            :key="type"
+            type="button"
+            :aria-label="reactionLabels[type]"
+            class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-base text-slate-100 transition-colors hover:bg-white/10 disabled:opacity-60"
+            :disabled="!!reactingType"
+            @click="handleReact(type)"
+          >
+            <span aria-hidden="true">{{ reactionEmojis[type] }}</span>
+          </button>
+
+          <div
+            v-if="hasReactionPreview"
+            :aria-label="reactionCountLabel"
+            class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-100 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
+          >
+            <span v-for="reaction in comment.reactions_preview" :key="reaction.id" class="text-sm" aria-hidden="true">
+              {{ reactionEmojis[reaction.type] }}
+            </span>
+            <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <span
+            :aria-label="reactionCountLabel"
+            class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-100 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
+          >
+            <span aria-hidden="true">👍</span>
+            <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
+          </span>
+          <span
+            :aria-label="replyCountLabel"
+            class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-100 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
+          >
+            <span aria-hidden="true">💬</span>
+            <span aria-hidden="true">{{ formatNumber(comment.totalComments) }}</span>
+          </span>
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-full border border-white/10 bg-transparent px-4 py-1.5 font-semibold text-slate-100 transition-colors hover:border-primary/60 hover:text-primary disabled:opacity-60"
+            @click="toggleReply"
+          >
+            <span v-if="replying">{{ t('blog.comments.cancelReply') }}</span>
+            <span v-else>{{ t('blog.comments.reply') }}</span>
+          </button>
+        </div>
+      </div>
+
+      <p v-if="reactionError" class="text-xs text-rose-300">
+        {{ reactionError }}
+      </p>
+    </div>
+
+    <form v-if="replying" class="flex flex-col gap-3 rounded-2xl border border-white/5 bg-black/20 p-4" @submit.prevent="handleReplySubmit">
+      <label class="flex flex-col gap-2 text-xs text-slate-200">
+        <span class="sr-only">{{ t('blog.comments.replyPlaceholder') }}</span>
+        <textarea
+          v-model="replyContent"
+          class="min-h-[96px] w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+          :placeholder="t('blog.comments.replyPlaceholder')"
+        />
+      </label>
+      <div class="flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between">
+        <p
+          v-if="replyFeedback"
+          :class="replyFeedback.type === 'success' ? 'text-emerald-300' : 'text-rose-300'"
         >
-        <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
-      </span>
-      <span
-          :aria-label="
-          t('blog.reactions.comment.replies', { count: formatNumber(comment.totalComments) })
-        "
-          class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-200 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
-      >
-        <span
-            aria-hidden="true"
-            class="text-base"
-        >💬</span
-        >
-        <span aria-hidden="true">{{ formatNumber(comment.totalComments) }}</span>
-      </span>
+          {{ replyFeedback.message }}
+        </p>
+        <div class="flex items-center gap-2 sm:justify-end">
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-full border border-white/10 bg-transparent px-4 py-1.5 font-semibold text-slate-200 transition-colors hover:border-white/30 hover:text-slate-50"
+            @click="cancelReply"
+          >
+            {{ t('blog.comments.cancelReply') }}
+          </button>
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-1.5 font-semibold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+            :disabled="submittingReply"
+          >
+            <span v-if="submittingReply">{{ t('blog.comments.replying') }}</span>
+            <span v-else>{{ t('blog.comments.replySubmit') }}</span>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div v-if="hasChildren" class="space-y-3">
+      <CommentCard
+        v-for="child in childComments"
+        :key="child.id"
+        :comment="child"
+        :default-avatar="avatarFallback"
+        :reaction-emojis="reactionEmojis"
+        :reaction-labels="reactionLabels"
+        :react-to-comment="reactToComment"
+        :reply-to-comment="replyToComment"
+        :depth="depth + 1"
+      />
     </div>
   </article>
 </template>
 
 <script setup lang="ts">
-import type { BlogCommentPreview } from "~/lib/mock/blog";
+import { computed, ref, watch } from "vue";
+import type { BlogCommentWithReplies, ReactionType } from "~/lib/mock/blog";
 
-import { computed } from "vue";
+defineOptions({ name: "CommentCard" });
 
-const props = defineProps<{ comment: BlogCommentPreview }>();
+interface FeedbackState {
+  type: "success" | "error";
+  message: string;
+}
 
-const defaultAvatar = "https://bro-world-space.com/img/person.png";
+const props = defineProps<{
+  comment: BlogCommentWithReplies;
+  defaultAvatar: string;
+  reactionEmojis: Record<ReactionType, string>;
+  reactionLabels: Record<ReactionType, string>;
+  depth?: number;
+  reactToComment?: (commentId: string, reactionType: ReactionType) => Promise<void> | void;
+  replyToComment?: (commentId: string, content: string) => Promise<void> | void;
+}>();
 
 const { locale, t } = useI18n();
+
+const comment = computed(() => props.comment);
+const depth = computed(() => props.depth ?? 0);
+const avatarFallback = computed(() => props.defaultAvatar || "https://bro-world-space.com/img/person.png");
+const reactionTypes = computed(() => Object.keys(props.reactionEmojis) as ReactionType[]);
+const hasReactionPreview = computed(() => (comment.value.reactions_preview ?? []).length > 0);
+const childComments = computed(() => comment.value.comments ?? comment.value.replies ?? comment.value.children ?? []);
+const hasChildren = computed(() => childComments.value.length > 0);
+
+const reactingType = ref<ReactionType | null>(null);
+const reactionError = ref<string | null>(null);
+const replying = ref(false);
+const submittingReply = ref(false);
+const replyContent = ref("");
+const replyFeedback = ref<FeedbackState | null>(null);
+
+const reactionCountLabel = computed(() =>
+  t("blog.reactions.comment.reactions", { count: formatNumber(comment.value.reactions_count) }),
+);
+const replyCountLabel = computed(() =>
+  t("blog.reactions.comment.replies", { count: formatNumber(comment.value.totalComments) }),
+);
+
+watch(
+  () => comment.value.id,
+  () => {
+    replying.value = false;
+    submittingReply.value = false;
+    replyContent.value = "";
+    replyFeedback.value = null;
+    reactionError.value = null;
+    reactingType.value = null;
+  },
+);
 
 function formatDateTime(value: string) {
   return new Intl.DateTimeFormat(locale.value, {
@@ -78,5 +206,82 @@ function formatNumber(value: number | null | undefined) {
   return new Intl.NumberFormat(locale.value).format(value ?? 0);
 }
 
-const comment = computed(() => props.comment);
+function toggleReply() {
+  replying.value = !replying.value;
+
+  if (!replying.value) {
+    replyContent.value = "";
+    replyFeedback.value = null;
+  }
+}
+
+function cancelReply() {
+  replying.value = false;
+  replyContent.value = "";
+  replyFeedback.value = null;
+}
+
+async function handleReact(type: ReactionType) {
+  if (reactingType.value) {
+    return;
+  }
+
+  if (!props.reactToComment) {
+    reactionError.value = t("blog.comments.reactionUnavailable");
+    return;
+  }
+
+  reactingType.value = type;
+  reactionError.value = null;
+
+  try {
+    await props.reactToComment(comment.value.id, type);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "");
+    reactionError.value = message || t("blog.comments.reactionError");
+  } finally {
+    reactingType.value = null;
+  }
+}
+
+async function handleReplySubmit() {
+  replyFeedback.value = null;
+
+  const content = replyContent.value.trim();
+
+  if (!content) {
+    replyFeedback.value = {
+      type: "error",
+      message: t("blog.comments.replyValidation"),
+    };
+    return;
+  }
+
+  if (!props.replyToComment) {
+    replyFeedback.value = {
+      type: "error",
+      message: t("blog.comments.replyUnavailable"),
+    };
+    return;
+  }
+
+  submittingReply.value = true;
+
+  try {
+    await props.replyToComment(comment.value.id, content);
+    replyFeedback.value = {
+      type: "success",
+      message: t("blog.comments.replySuccess"),
+    };
+    replyContent.value = "";
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "");
+    replyFeedback.value = {
+      type: "error",
+      message: message || t("blog.comments.replyError"),
+    };
+  } finally {
+    submittingReply.value = false;
+  }
+}
 </script>
