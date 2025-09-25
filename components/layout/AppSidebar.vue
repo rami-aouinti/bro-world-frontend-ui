@@ -65,7 +65,8 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
 }
 
 .sidebar-item {
-  @apply flex items-center justify-between px-4 py-3 text-left transition;
+  @apply flex items-center justify-between text-left transition;
+  padding: 0.75rem 1rem;
   border-radius: calc(var(--radius) + 8px);
   @apply bg-white/70 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2;
 }
