@@ -30,15 +30,69 @@
       </div>
 
       <template v-else>
-        <div class="flex flex-col gap-4">
-          <PostCard
-              v-for="post in posts"
-              :key="post.id"
-              :post="post"
-              :default-avatar="defaultAvatar"
-              :reaction-emojis="reactionEmojis"
-              :reaction-labels="reactionLabels"
-          />
+        <div class="flex flex-col gap-6">
+          <form
+              class="flex flex-col gap-4 rounded-3xl border border-white/5 bg-white/5 p-6 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.65)] backdrop-blur-xl"
+              @submit.prevent="handleCreatePost"
+          >
+            <div class="flex flex-col gap-3">
+              <h2 class="text-lg font-semibold text-white">
+                {{ t("blog.composer.title") }}
+              </h2>
+              <p class="text-sm text-slate-300">
+                {{ t("blog.composer.subtitle") }}
+              </p>
+            </div>
+
+            <label class="flex flex-col gap-3 text-sm text-slate-200">
+              <span class="font-medium text-slate-100">
+                {{ t("blog.composer.label") }}
+              </span>
+              <textarea
+                  v-model="newPostContent"
+                  class="min-h-[140px] w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  :placeholder="t('blog.composer.placeholder')"
+              />
+            </label>
+
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p
+                  v-if="composerFeedback"
+                  :class="composerFeedback.type === 'success' ? 'text-emerald-300' : 'text-rose-300'"
+                  class="text-sm"
+              >
+                {{ composerFeedback.message }}
+              </p>
+              <div class="flex items-center gap-3 sm:justify-end">
+                <span class="text-xs text-slate-400">
+                  {{ characterCountLabel }}
+                </span>
+                <button
+                    type="submit"
+                    class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+                    :disabled="creating"
+                >
+                  <span v-if="creating">
+                    {{ t("blog.composer.submitting") }}
+                  </span>
+                  <span v-else>
+                    {{ t("blog.composer.submit") }}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="flex flex-col gap-4">
+            <PostCard
+                v-for="post in posts"
+                :key="post.id"
+                :post="post"
+                :default-avatar="defaultAvatar"
+                :reaction-emojis="reactionEmojis"
+                :reaction-labels="reactionLabels"
+            />
+          </div>
         </div>
       </template>
     </div>
@@ -46,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
@@ -75,7 +129,7 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
   angry: t("blog.reactions.reactionTypes.angry"),
 }));
 
-const { posts, pending, fetchPosts } = usePostsStore();
+const { posts, pending, fetchPosts, createPost, creating } = usePostsStore();
 const heroContent = computed(() => ({
   eyebrow: t("blog.hero.eyebrow"),
   title: t("blog.hero.title"),
@@ -158,4 +212,45 @@ function formatNumber(value: number | null | undefined) {
 }
 
 await callOnce(() => fetchPosts());
+
+const newPostContent = ref("");
+const composerFeedback = ref<{ type: "success" | "error"; message: string } | null>(null);
+
+const characterCountLabel = computed(() => {
+  const length = newPostContent.value.trim().length;
+  return t("blog.composer.characterCount", { count: formatNumber(length) });
+});
+
+async function handleCreatePost() {
+  composerFeedback.value = null;
+
+  const content = newPostContent.value.trim();
+
+  if (!content) {
+    composerFeedback.value = {
+      type: "error",
+      message: t("blog.composer.validation"),
+    };
+    return;
+  }
+
+  try {
+    await createPost({ content });
+    composerFeedback.value = {
+      type: "success",
+      message: t("blog.composer.success"),
+    };
+    newPostContent.value = "";
+  } catch (error) {
+    const message =
+      error instanceof Error && error.message
+        ? error.message
+        : t("blog.composer.error");
+
+    composerFeedback.value = {
+      type: "error",
+      message,
+    };
+  }
+}
 </script>

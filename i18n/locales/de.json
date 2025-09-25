@@ -66,6 +66,18 @@
         "comments": "Verfasste Kommentare"
       }
     },
+    "composer": {
+      "title": "Teile etwas mit der Community",
+      "subtitle": "Starte ein Gespräch und inspiriere andere Builder.",
+      "label": "Deine Nachricht",
+      "placeholder": "Worüber möchtest du sprechen?",
+      "characterCount": "{count} Zeichen",
+      "submit": "Beitrag veröffentlichen",
+      "submitting": "Veröffentlichen...",
+      "success": "Dein Beitrag wurde erfolgreich veröffentlicht!",
+      "error": "Dein Beitrag konnte nicht veröffentlicht werden. Bitte versuche es erneut.",
+      "validation": "Schreibe eine Nachricht, bevor du veröffentlichst."
+    },
     "reactions": {
       "post": {
         "publishedOn": "Veröffentlicht am {date}",

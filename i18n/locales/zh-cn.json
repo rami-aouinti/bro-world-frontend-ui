@@ -66,6 +66,18 @@
         "comments": "发布的评论"
       }
     },
+    "composer": {
+      "title": "与社区分享点什么",
+      "subtitle": "开启一段对话，激励其他创作者。",
+      "label": "你的消息",
+      "placeholder": "你想聊些什么？",
+      "characterCount": "{count} 个字符",
+      "submit": "发布帖子",
+      "submitting": "正在发布...",
+      "success": "你的帖子已成功发布！",
+      "error": "帖子发布失败，请重试。",
+      "validation": "发布前请先填写内容。"
+    },
     "reactions": {
       "like": "点赞",
       "love": "喜爱",

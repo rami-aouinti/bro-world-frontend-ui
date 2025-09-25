@@ -66,6 +66,18 @@
         "comments": "Comments posted"
       }
     },
+    "composer": {
+      "title": "Share something with the community",
+      "subtitle": "Start a conversation and inspire other builders.",
+      "label": "Your message",
+      "placeholder": "What would you like to talk about?",
+      "characterCount": "{count} characters",
+      "submit": "Publish post",
+      "submitting": "Publishing...",
+      "success": "Your post has been published successfully!",
+      "error": "We couldn't publish your post. Please try again.",
+      "validation": "Write a message before publishing."
+    },
     "reactions": {
       "post": {
         "publishedOn": "Published on {date}",
