@@ -33,7 +33,7 @@
     </v-navigation-drawer>
 
     <v-navigation-drawer
-      v-if="isMobile"
+      v-if="isMobile && showRightWidgets"
       v-model="rightDrawer"
       temporary
       location="end"
@@ -48,7 +48,10 @@
 
     <v-main class="app-surface">
       <div class="app-container">
-        <div class="layout-grid">
+        <div
+          class="layout-grid"
+          :class="{ 'layout-grid--no-right': !showRightWidgets }"
+        >
           <div class="hidden md:block">
             <AppSidebar
               :items="sidebarItems"
@@ -60,12 +63,18 @@
           <div class="content-area">
             <slot />
 
-            <div class="mt-6 hidden md:block xl:hidden">
+            <div
+              v-if="showRightWidgets"
+              class="mt-6 hidden md:block xl:hidden"
+            >
               <AppRightWidgets />
             </div>
           </div>
 
-          <div class="hidden xl:block">
+          <div
+            v-if="showRightWidgets"
+            class="hidden xl:block"
+          >
             <AppRightWidgets />
           </div>
         </div>
@@ -107,6 +116,7 @@ const isTablet = computed(() => display.mdAndUp.value && !display.lgAndUp.value)
 const isMobile = computed(() => !display.mdAndUp.value)
 
 const isDark = computed(() => theme.global.current.value.dark)
+const showRightWidgets = computed(() => route.meta?.showRightWidgets !== false)
 
 const cssVars = computed(() => ({
   '--app-bar-height': '72px',
@@ -152,6 +162,12 @@ watch(isMobile, (value) => {
   }
 })
 
+watch(showRightWidgets, (value) => {
+  if (!value) {
+    rightDrawer.value = false
+  }
+})
+
 watch(isDesktop, (value) => {
   if (value) {
     leftDrawer.value = false
@@ -174,6 +190,10 @@ function toggleLeftDrawer() {
 }
 
 function toggleRightDrawer() {
+  if (!showRightWidgets.value) {
+    return
+  }
+
   rightDrawer.value = !rightDrawer.value
 }
 
@@ -218,8 +238,16 @@ const currentYear = new Date().getFullYear()
   grid-template-columns: minmax(0, 1fr);
 }
 
+.layout-grid--no-right {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 @media (min-width: 768px) {
   .layout-grid {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+
+  .layout-grid--no-right {
     grid-template-columns: 320px minmax(0, 1fr);
   }
 }
@@ -228,6 +256,10 @@ const currentYear = new Date().getFullYear()
   .layout-grid {
     grid-template-columns: 320px minmax(0, 1fr) 360px;
   }
+
+  .layout-grid--no-right {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
 }
 
 .content-area {
@@ -235,5 +267,22 @@ const currentYear = new Date().getFullYear()
   border-radius: 32px;
   background: transparent;
   padding-top: 8px;
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .content-area {
+    grid-column: 2 / 3;
+  }
+
+  .layout-grid--no-right .content-area {
+    grid-column: 2 / 3;
+  }
+}
+
+@media (min-width: 1280px) {
+  .layout-grid--no-right .content-area {
+    grid-column: 2 / 3;
+  }
 }
 </style>
