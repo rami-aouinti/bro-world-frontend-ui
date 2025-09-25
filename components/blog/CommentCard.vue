@@ -1,7 +1,9 @@
 <template>
-  <article class="flex flex-col gap-3 rounded-2xl border border-white/10 bg-transparent p-4">
+  <article
+    class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-slate-950/40 p-5 shadow-[0_20px_45px_-35px_rgba(15,23,42,0.75)] backdrop-blur"
+  >
     <div class="flex items-center gap-3">
-      <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/10">
+      <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/5">
         <img
           :src="comment.user.photo ?? defaultAvatar"
           :alt="`${comment.user.firstName} ${comment.user.lastName}`"
@@ -10,7 +12,7 @@
         />
       </div>
       <div>
-        <p class="text-sm font-medium text-slate-200">
+        <p class="text-sm font-semibold text-slate-100">
           {{ comment.user.firstName }} {{ comment.user.lastName }}
         </p>
         <p class="text-[11px] uppercase tracking-wide text-slate-400">
@@ -18,15 +20,17 @@
         </p>
       </div>
     </div>
-    <p class="text-sm leading-relaxed text-slate-200/80">
+    <p class="text-sm leading-relaxed text-slate-200/90">
       {{ comment.content }}
     </p>
-    <div class="mt-auto flex items-center justify-between text-xs text-slate-400">
+    <div
+      class="mt-1 flex items-center justify-between gap-4 border-t border-white/10 pt-3 text-xs text-slate-400"
+    >
       <span
         :aria-label="
           t('blog.reactions.comment.reactions', { count: formatNumber(comment.reactions_count) })
         "
-        class="inline-flex items-center gap-1 rounded-full bg-black/20 px-2 py-1"
+        class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-200 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
       >
         <span
           aria-hidden="true"
@@ -39,7 +43,7 @@
         :aria-label="
           t('blog.reactions.comment.replies', { count: formatNumber(comment.totalComments) })
         "
-        class="inline-flex items-center gap-1 rounded-full bg-black/10 px-2 py-1"
+        class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-200 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
       >
         <span
           aria-hidden="true"

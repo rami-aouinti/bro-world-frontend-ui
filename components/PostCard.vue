@@ -11,7 +11,7 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="space-y-6 mx-auto py-2">
+      <div class="mx-auto w-full max-w-2xl space-y-6 py-2">
         <h2
           class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
@@ -37,7 +37,7 @@
             {{ commentPreviewCountLabel }}
           </p>
         </div>
-        <div class="mt-6 space-y-5 px-1.5 pt-1 sm:px-2">
+        <div class="mx-auto mt-6 w-full max-w-2xl space-y-5 px-1.5 pt-1 sm:px-2">
           <CommentCard
             v-for="comment in topComments"
             :key="comment.id"
