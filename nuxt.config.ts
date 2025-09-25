@@ -228,7 +228,13 @@ export default defineNuxtConfig({
     "~/plugins/vuetify-i18n.ts",
   ],
 
-  css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css", "~/assets/styles/index.css"],
+  css: [
+    "vuetify/styles",
+    "@mdi/font/css/materialdesignicons.css",
+    "flag-icons/css/flag-icons.min.css",
+    "~/assets/styles/material-dashboard.scss",
+    "~/assets/styles/index.css",
+  ],
 
   build: {
     transpile: ["vuetify"],
