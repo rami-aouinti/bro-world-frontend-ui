@@ -15,7 +15,8 @@
     "prepare": "husky",
     "dev:registry": "REGISTRY_URL=http://localhost:5173/r tsx ./scripts/build-registry.mts",
     "build:registry": "tsx ./scripts/build-registry.mts",
-    "build:copy": "cp public/_routes.json dist/_routes.json"
+    "build:copy": "cp public/_routes.json dist/_routes.json",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@date-io/date-fns": "^3.2.1",
@@ -93,7 +94,11 @@
     "tailwind-merge": "^3.3.1",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.42.0"
+    "typescript-eslint": "^8.42.0",
+    "@vitejs/plugin-vue": "^5.2.0",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.0",
+    "vitest": "^2.1.4"
   },
   "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }

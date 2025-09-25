@@ -10,8 +10,21 @@
         :user="post.user"
         :default-avatar="defaultAvatar"
         :published-label="publishedLabel"
-        :reaction-badge="reactionBadge"
-        :comment-badge="commentBadge"
+        :is-authenticated="isAuthenticated"
+        :is-author="isAuthor"
+        :is-following="isFollowing"
+        :follow-loading="followLoading"
+        :follow-label="followLabel"
+        :follow-loading-label="followLoadingLabel"
+        :follow-aria-label="followAriaLabel"
+        :following-label="followingLabel"
+        :following-aria-label="followingAriaLabel"
+        :actions-aria-label="actionsAriaLabel"
+        :edit-label="editLabel"
+        :delete-label="deleteLabel"
+        @follow="handleFollow"
+        @edit="openEdit"
+        @delete="openDelete"
       />
 
       <div class="mx-auto w-full max-w-2xl space-y-2 py-4">
@@ -23,6 +36,23 @@
         <p class="text-base text-slate-200/80">
           {{ post.summary }}
         </p>
+      </div>
+
+      <div class="mx-auto w-full max-w-2xl">
+        <div
+          class="flex items-center gap-2 text-sm text-slate-400"
+          :aria-label="metaAriaLabel"
+        >
+          <span class="inline-flex items-center gap-1">
+            <span aria-hidden="true">❤️</span>
+            <span>{{ reactionCountDisplay }}</span>
+          </span>
+          <span aria-hidden="true" class="text-slate-500">•</span>
+          <span class="inline-flex items-center gap-1">
+            <span aria-hidden="true">💬</span>
+            <span>{{ commentCountDisplay }}</span>
+          </span>
+        </div>
       </div>
 
       <div
@@ -121,21 +151,48 @@ const publishedLabel = computed(() =>
   t("blog.reactions.post.publishedOn", { date: formatDateTime(props.post.publishedAt) }),
 );
 
-const reactionBadge = computed(() => ({
-  icon: reactionEmojis.like,
-  display: formatNumber(props.post.reactions_count),
-  ariaLabel: t("blog.reactions.post.reactions", {
-    count: formatNumber(props.post.reactions_count),
-  }),
-}));
+const reactionCountDisplay = computed(() => formatNumber(props.post.reactions_count));
+const commentCountDisplay = computed(() => formatNumber(props.post.totalComments));
 
-const commentBadge = computed(() => ({
-  icon: "💬",
-  display: formatNumber(props.post.totalComments),
-  ariaLabel: t("blog.reactions.post.comments", {
-    count: formatNumber(props.post.totalComments),
+const followLabel = computed(() => t("blog.posts.actions.follow"));
+const followLoadingLabel = computed(() => t("blog.posts.actions.following"));
+const followAriaLabel = computed(() =>
+  t("blog.posts.actions.followAria", {
+    name: `${props.post.user.firstName} ${props.post.user.lastName}`,
   }),
-}));
+);
+const followingLabel = computed(() => t("blog.posts.actions.following"));
+const followingAriaLabel = computed(() =>
+  t("blog.posts.actions.followingAria", {
+    name: `${props.post.user.firstName} ${props.post.user.lastName}`,
+  }),
+);
+const actionsAriaLabel = computed(() => t("blog.posts.actions.openMenu"));
+const editLabel = computed(() => t("blog.posts.actions.edit"));
+const deleteLabel = computed(() => t("blog.posts.actions.delete"));
+
+const isAuthenticated = computed(() => false);
+const isAuthor = computed(() => false);
+const isFollowing = computed(() => false);
+const followLoading = computed(() => false);
+const metaAriaLabel = computed(() =>
+  t("blog.posts.actions.statistics", {
+    reactions: reactionCountDisplay.value,
+    comments: commentCountDisplay.value,
+  }),
+);
+
+function handleFollow() {
+  /* no-op for static cards */
+}
+
+function openEdit() {
+  /* no-op */
+}
+
+function openDelete() {
+  /* no-op */
+}
 
 const post = computed(() => props.post);
 </script>
