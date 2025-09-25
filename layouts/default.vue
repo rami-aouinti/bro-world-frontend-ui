@@ -23,17 +23,12 @@
         <div class="min-w-0">
           <slot />
         </div>
-        <div
-          v-if="showRightAside"
-          class="hidden w-full lg:block"
-        >
-          <LayoutRightSidebar />
-        </div>
       </div>
     </div>
     <div v-else>
       <slot />
     </div>
+    <LayoutRightSidebar v-if="showRightAside" />
     <Toaster />
     <VFooter />
   </div>
@@ -56,16 +51,8 @@ const showLeftAside = computed(() => hasContentPage.value && (page.value?.aside 
 const showRightAside = computed(() => hasContentPage.value && (page.value?.rightAside ?? true));
 
 const layoutColumns = computed(() => {
-  if (showLeftAside.value && showRightAside.value) {
-    return "md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)_320px]";
-  }
-
   if (showLeftAside.value) {
     return "md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]";
-  }
-
-  if (showRightAside.value) {
-    return "lg:grid-cols-[minmax(0,1fr)_320px]";
   }
 
   return null;

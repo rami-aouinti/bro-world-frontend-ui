@@ -1,17 +1,7 @@
-import { computed } from "vue";
-import type { BlogApiResponse, BlogPost, ReactionType } from "~/lib/mock/blog";
-
-interface CreatePostPayload {
-  content: string;
-  title?: string;
-  summary?: string;
-}
-
-interface FetchOptions {
-  force?: boolean;
-}
+import { usePostsStore as usePostsPiniaStore } from "~/stores/posts";
 
 export function usePostsStore() {
+  return usePostsPiniaStore();
   const postsState = useState<BlogPost[]>("posts", () => []);
   const pendingState = useState<boolean>("posts-pending", () => false);
   const errorState = useState<string | null>("posts-error", () => null);
@@ -89,6 +79,11 @@ export function usePostsStore() {
     }
   }
 
+  const updatePendingState = useState<Record<string, boolean>>("posts-update-pending", () => ({}));
+  const updateErrorState = useState<Record<string, string | null>>("posts-update-error", () => ({}));
+  const deletePendingState = useState<Record<string, boolean>>("posts-delete-pending", () => ({}));
+  const deleteErrorState = useState<Record<string, string | null>>("posts-delete-error", () => ({}));
+
   async function reactToPost(postId: string, reactionType: ReactionType) {
     const trimmedPostId = postId?.trim();
 
@@ -164,6 +159,114 @@ export function usePostsStore() {
     }
   }
 
+  async function updatePost(postId: string, payload: Partial<CreatePostPayload>) {
+    const trimmedPostId = postId?.trim();
+
+    if (!trimmedPostId) {
+      throw new Error("Post identifier is required.");
+    }
+
+    const sanitizedPayload: Partial<CreatePostPayload> = {};
+
+    if (typeof payload.content === "string") {
+      sanitizedPayload.content = payload.content.trim();
+    }
+
+    if (typeof payload.title === "string") {
+      sanitizedPayload.title = payload.title.trim();
+    }
+
+    if (typeof payload.summary === "string") {
+      sanitizedPayload.summary = payload.summary.trim();
+    }
+
+    if (!sanitizedPayload.content && !sanitizedPayload.title && !sanitizedPayload.summary) {
+      throw new Error("At least one field is required to update the post.");
+    }
+
+    updatePendingState.value = {
+      ...updatePendingState.value,
+      [trimmedPostId]: true,
+    };
+    updateErrorState.value = {
+      ...updateErrorState.value,
+      [trimmedPostId]: null,
+    };
+
+    try {
+      await $fetch(`/api/posts/${encodeURIComponent(trimmedPostId)}`, {
+        method: "PUT",
+        body: sanitizedPayload,
+      });
+
+      postsState.value = postsState.value.map((post) => {
+        if (post.id !== trimmedPostId) {
+          return post;
+        }
+
+        return {
+          ...post,
+          ...("title" in sanitizedPayload ? { title: sanitizedPayload.title ?? post.title } : {}),
+          ...("summary" in sanitizedPayload ? { summary: sanitizedPayload.summary ?? post.summary } : {}),
+          ...("content" in sanitizedPayload ? { content: sanitizedPayload.content ?? post.content } : {}),
+        };
+      });
+
+      return postsState.value.find((post) => post.id === trimmedPostId) ?? null;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error ?? "");
+
+      updateErrorState.value = {
+        ...updateErrorState.value,
+        [trimmedPostId]: message,
+      };
+
+      throw new Error(message || "Unable to update the post.");
+    } finally {
+      const { [trimmedPostId]: _, ...restPending } = updatePendingState.value;
+      updatePendingState.value = restPending;
+    }
+  }
+
+  async function deletePost(postId: string) {
+    const trimmedPostId = postId?.trim();
+
+    if (!trimmedPostId) {
+      throw new Error("Post identifier is required.");
+    }
+
+    deletePendingState.value = {
+      ...deletePendingState.value,
+      [trimmedPostId]: true,
+    };
+    deleteErrorState.value = {
+      ...deleteErrorState.value,
+      [trimmedPostId]: null,
+    };
+
+    try {
+      await $fetch(`/api/posts/${encodeURIComponent(trimmedPostId)}`, {
+        method: "DELETE",
+      });
+
+      postsState.value = postsState.value.filter((post) => post.id !== trimmedPostId);
+
+      return postsState.value;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error ?? "");
+
+      deleteErrorState.value = {
+        ...deleteErrorState.value,
+        [trimmedPostId]: message,
+      };
+
+      throw new Error(message || "Unable to delete the post.");
+    } finally {
+      const { [trimmedPostId]: _, ...restPending } = deletePendingState.value;
+      deletePendingState.value = restPending;
+    }
+  }
+
   return {
     posts: computed(() => postsState.value),
     pending: computed(() => pendingState.value),
@@ -176,5 +279,11 @@ export function usePostsStore() {
     reactToPost,
     addComment,
     reactToComment,
+    updatePost,
+    deletePost,
+    updatePending: computed(() => updatePendingState.value),
+    updateError: computed(() => updateErrorState.value),
+    deletePending: computed(() => deletePendingState.value),
+    deleteError: computed(() => deleteErrorState.value),
   };
 }
