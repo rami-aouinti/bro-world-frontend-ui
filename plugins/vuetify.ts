@@ -7,10 +7,10 @@ import { aliases } from 'vuetify/iconsets/mdi'
 
 import { useNuxtApp } from '#app'
 import DateFnsAdapter from '@date-io/date-fns'
-import enUS from 'date-fns/locale/en-US'
-import frFR from 'date-fns/locale/fr'
-import deDE from 'date-fns/locale/de'
-import arSA from 'date-fns/locale/ar-SA'
+import enUSLocale from 'date-fns/locale/en-US'
+import frLocale from 'date-fns/locale/fr'
+import deLocale from 'date-fns/locale/de'
+import arLocale from 'date-fns/locale/ar-SA'
 import { en, fr, de, ar } from 'vuetify/locale'
 
 import '@/assets/styles/material-dashboard.scss'
@@ -27,10 +27,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     vuetifyOptions.date = {
       adapter: DateFnsAdapter,
       locale: {
-        en: enUS,
-        fr: frFR,
-        de: deDE,
-        ar: arSA,
+        en: enUSLocale,
+        fr: frLocale,
+        de: deLocale,
+        ar: arLocale,
       },
     }
 
