@@ -1,6 +1,5 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-[32px] border border-white/10 bg-slate-950/60 p-7 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.6)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_45px_75px_-35px_hsl(var(--primary)/0.55)] sm:p-10"
     class="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/10 p-6 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.65)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
   >
     <div
@@ -38,6 +37,8 @@
             </p>
           </div>
           <p class="text-xs font-medium text-slate-400/90">
+          </p>
+        </div>
         <div class="flex flex-wrap items-center justify-between gap-2">
           <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
             {{ recentCommentsLabel }}
