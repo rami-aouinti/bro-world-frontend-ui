@@ -72,6 +72,7 @@
       "github": "Continue with GitHub",
       "microsoft": "Continue with Microsoft"
     }
+    "errorGeneric": "Something went wrong while signing you in."
   },
   "blog": {
     "hero": {

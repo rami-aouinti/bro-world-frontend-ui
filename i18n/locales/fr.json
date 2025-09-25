@@ -72,6 +72,7 @@
       "github": "Continuer avec GitHub",
       "microsoft": "Continuer avec Microsoft"
     }
+    "errorGeneric": "Une erreur est survenue lors de la connexion."
   },
   "blog": {
     "hero": {

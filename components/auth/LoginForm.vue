@@ -40,7 +40,6 @@
           {{ t('auth.forgotPassword') }}
         </NuxtLink>
       </div>
-
       <button
         :disabled="loading"
         type="submit"
