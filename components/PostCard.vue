@@ -1,6 +1,6 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-3xl p-6 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.65)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
+    class="group relative overflow-hidden rounded-3xl p-6  shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
   >
     <div class="relative flex flex-col gap-2">
       <PostMeta
@@ -43,19 +43,9 @@
       </footer>
       <section
         v-if="hasCommentPreview"
-        class="rounded-3xl p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:p-7"
+        class="rounded-3xl p-6 sm:p-7"
       >
-        <div class="flex flex-wrap items-center justify-between gap-4 mx-4 py-2 pb-4">
-          <div class="flex items-center gap-3 text-slate-200">
-            <span class="flex h-8 w-8 items-center justify-center rounded-2xl bg-primary/20 text-lg">💬</span>
-            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">
-              {{ recentCommentsLabel }}
-            </p>
-          </div>
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-400/90">
-            {{ commentPreviewCountLabel }}
-          </p>
-        </div>
+
         <div class="w-full max-w-2xl space-y-5 px-1.5 pt-1 sm:px-2 px-2">
           <CommentCard
             v-for="comment in topComments"
@@ -66,6 +56,12 @@
         </div>
       </section>
     </div>
+    <BorderBeam
+        :size="250"
+        :duration="12"
+        :delay="9"
+        :border-width="2"
+    />
   </article>
 </template>
 
