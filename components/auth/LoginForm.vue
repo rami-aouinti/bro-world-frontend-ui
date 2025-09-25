@@ -16,7 +16,7 @@
         {{ sessionMessage }}
       </v-alert>
 
-      <v-text-field
+      <IInput
         v-model="username"
         density="compact"
         rounded="xl"
@@ -29,7 +29,7 @@
         :class="fieldAlignment"
         @update:model-value="handleFieldInput"
       />
-      <v-text-field
+      <IInput
         v-model="password"
         density="compact"
         rounded="xl"
@@ -57,14 +57,14 @@
           {{ t('auth.forgotPassword') }}
         </NuxtLink>
       </div>
-      <button
-        :disabled="loading"
+      <GradientButton
+          :disabled="loading"
         type="submit"
         class="btn btn-outline-primary bg-primary rounded-xl text-decoration-none font-weight-bold text-uppercase py-2 px-6 me-2 mb-2 w-100"
       >
         <v-progress-circular v-if="loading" indeterminate size="20" />
         <span v-else :class="fieldAlignment">{{ t('auth.signIn') }}</span>
-      </button>
+      </GradientButton >
 
       <p class="text-sm text-body mt-3 mb-0 d-flex justify-center" :class="fieldAlignment">
         {{ t('auth.signUpPrompt') }}

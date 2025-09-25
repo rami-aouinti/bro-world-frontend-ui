@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <Header />
     <div
       v-if="useStructuredLayout"
@@ -34,7 +34,7 @@
     </div>
     <Toaster />
     <VFooter />
-  </div>
+  </v-app>
 </template>
 
 <script setup lang="ts">

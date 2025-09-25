@@ -1,6 +1,10 @@
 <template>
   <div class="flex h-full flex-col gap-6">
     <SidebarWeatherCard :weather="weather" />
+    <SidebarWeatherCard :weather="weather" />
+    <SidebarWeatherCard :weather="weather" />
+    <SidebarWeatherCard :weather="weather" />
+    <SidebarWeatherCard :weather="weather" />
     <SidebarLeaderboardCard
       :title="leaderboard.title"
       :live-label="leaderboard.live"
