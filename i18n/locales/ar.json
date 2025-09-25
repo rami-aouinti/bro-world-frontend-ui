@@ -136,6 +136,42 @@
         "replyCount": "{count} ردًا"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "متابعة",
+        "following": "تمت المتابعة",
+        "followAria": "متابعة {name}",
+        "followingAria": "أنت تتابع {name}",
+        "openMenu": "فتح إجراءات المنشور",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "statistics": "{reactions} تفاعلات و {comments} تعليقات",
+        "editTitle": "تعديل المنشور",
+        "editDescription": "قم بتحديث تفاصيل منشورك أدناه.",
+        "save": "حفظ",
+        "cancel": "إلغاء",
+        "deleteTitle": "حذف هذا المنشور؟",
+        "deleteDescription": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف المنشور للجميع.",
+        "deleteConfirm": "حذف",
+        "editSuccessTitle": "تم تحديث المنشور",
+        "editSuccessDescription": "تم حفظ التعديلات بنجاح.",
+        "editErrorTitle": "فشل التحديث",
+        "editErrorDescription": "تعذر تحديث المنشور. يرجى المحاولة مرة أخرى.",
+        "deleteSuccessTitle": "تم حذف المنشور",
+        "deleteSuccessDescription": "تمت إزالة المنشور من القائمة.",
+        "deleteErrorTitle": "فشل الحذف",
+        "deleteErrorDescription": "تعذر حذف المنشور. يرجى المحاولة مرة أخرى.",
+        "followSuccessTitle": "تمت متابعة الكاتب",
+        "followSuccessDescription": "أصبحت تتابع {name} الآن.",
+        "followErrorTitle": "فشل المتابعة",
+        "followErrorDescription": "تعذر متابعة هذا الكاتب. يرجى المحاولة مرة أخرى.",
+        "fields": {
+          "title": "العنوان",
+          "summary": "الملخص",
+          "content": "المحتوى"
+        }
+      }
+    },
     "comments": {
       "label": "انضم إلى النقاش",
       "placeholder": "شارك أفكارك مع المجتمع...",

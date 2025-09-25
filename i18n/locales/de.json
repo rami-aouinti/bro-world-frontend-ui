@@ -134,6 +134,42 @@
         "replyCount": "{count} Antworten"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "Folgen",
+        "following": "Folgt",
+        "followAria": "{name} folgen",
+        "followingAria": "Sie folgen {name}",
+        "openMenu": "Beitragsaktionen öffnen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "statistics": "{reactions} Reaktionen und {comments} Kommentare",
+        "editTitle": "Beitrag bearbeiten",
+        "editDescription": "Aktualisieren Sie unten die Details Ihres Beitrags.",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "deleteTitle": "Diesen Beitrag löschen?",
+        "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Der Beitrag wird für alle entfernt.",
+        "deleteConfirm": "Löschen",
+        "editSuccessTitle": "Beitrag aktualisiert",
+        "editSuccessDescription": "Ihre Änderungen wurden erfolgreich gespeichert.",
+        "editErrorTitle": "Aktualisierung fehlgeschlagen",
+        "editErrorDescription": "Der Beitrag konnte nicht aktualisiert werden. Bitte erneut versuchen.",
+        "deleteSuccessTitle": "Beitrag gelöscht",
+        "deleteSuccessDescription": "Der Beitrag wurde aus dem Feed entfernt.",
+        "deleteErrorTitle": "Löschen fehlgeschlagen",
+        "deleteErrorDescription": "Der Beitrag konnte nicht gelöscht werden. Bitte erneut versuchen.",
+        "followSuccessTitle": "Autor gefolgt",
+        "followSuccessDescription": "Sie folgen nun {name}.",
+        "followErrorTitle": "Folgen fehlgeschlagen",
+        "followErrorDescription": "Der Autor konnte nicht gefolgt werden. Bitte erneut versuchen.",
+        "fields": {
+          "title": "Titel",
+          "summary": "Zusammenfassung",
+          "content": "Inhalt"
+        }
+      }
+    },
     "comments": {
       "label": "Beteilige dich an der Diskussion",
       "placeholder": "Teile deine Gedanken mit der Community...",

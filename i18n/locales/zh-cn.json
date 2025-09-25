@@ -137,6 +137,42 @@
         "replyCount": "{count} 条回复"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "关注",
+        "following": "已关注",
+        "followAria": "关注 {name}",
+        "followingAria": "你已关注 {name}",
+        "openMenu": "打开帖子操作",
+        "edit": "编辑",
+        "delete": "删除",
+        "statistics": "{reactions} 条互动和 {comments} 条评论",
+        "editTitle": "编辑帖子",
+        "editDescription": "在下方更新帖子内容。",
+        "save": "保存",
+        "cancel": "取消",
+        "deleteTitle": "删除此帖子？",
+        "deleteDescription": "此操作无法撤销，帖子将对所有人删除。",
+        "deleteConfirm": "删除",
+        "editSuccessTitle": "帖子已更新",
+        "editSuccessDescription": "修改内容已成功保存。",
+        "editErrorTitle": "更新失败",
+        "editErrorDescription": "无法更新此帖子，请稍后再试。",
+        "deleteSuccessTitle": "帖子已删除",
+        "deleteSuccessDescription": "帖子已从动态中移除。",
+        "deleteErrorTitle": "删除失败",
+        "deleteErrorDescription": "无法删除此帖子，请稍后再试。",
+        "followSuccessTitle": "已关注作者",
+        "followSuccessDescription": "你现在关注了 {name}。",
+        "followErrorTitle": "关注失败",
+        "followErrorDescription": "无法关注该作者，请稍后再试。",
+        "fields": {
+          "title": "标题",
+          "summary": "摘要",
+          "content": "内容"
+        }
+      }
+    },
     "comments": {
       "label": "加入讨论",
       "placeholder": "与社区分享你的想法...",
