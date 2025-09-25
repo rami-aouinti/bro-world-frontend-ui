@@ -7,18 +7,18 @@
       </div>
       <div class="ui-playground__actions">
         <BaseButton
-          variant="tonal"
-          size="sm"
-          class="ui-playground__action"
-          @click="expandAll"
+            variant="tonal"
+            size="sm"
+            class="ui-playground__action"
+            @click="expandAll"
         >
           {{ t('pages.playground.ui.controls.expandAll') }}
         </BaseButton>
         <BaseButton
-          variant="tonal"
-          size="sm"
-          class="ui-playground__action"
-          @click="collapseAll"
+            variant="tonal"
+            size="sm"
+            class="ui-playground__action"
+            @click="collapseAll"
         >
           {{ t('pages.playground.ui.controls.collapseAll') }}
         </BaseButton>
@@ -62,12 +62,12 @@
 
     <v-expansion-panels v-model="expandedPanels" multiple class="ui-playground__panels">
       <v-expansion-panel
-        v-for="(group, groupIndex) in groups"
-        :key="group.id"
-        :value="groupIndex"
-        elevation="1"
-        rounded="lg"
-        class="ui-playground__panel"
+          v-for="(group, groupIndex) in groups"
+          :key="group.id"
+          :value="groupIndex"
+          elevation="1"
+          rounded="lg"
+          class="ui-playground__panel"
       >
         <v-expansion-panel-title expand-icon="mdi:chevron-down" collapse-icon="mdi:chevron-up">
           <div class="ui-playground__panel-header">
@@ -95,58 +95,67 @@
                   </p>
                 </div>
                 <div class="ui-playground__example-preview">
+                  <!-- Composant principal -->
                   <component
-                    :is="componentRegistry[example.component]"
-                    v-if="example.component"
-                    v-bind="getExampleProps(example)"
-                    :model-value="example.modelKey ? models[example.modelKey] : undefined"
-                    @update:model-value="example.modelKey ? (value) => updateModel(example.modelKey!, value) : undefined"
+                      :is="componentRegistry[example.component]"
+                      v-if="example.component"
+                      v-bind="getExampleProps(example)"
+                      :model-value="example.modelKey ? models[example.modelKey] : undefined"
+                      @update:model-value="onUpdateModel(example.modelKey)"
                   >
+                    <!-- Slots dynamiques de l'exemple -->
                     <template
-                      v-for="(slotContent, slotName) in example.slots"
-                      :key="slotName"
-                      #[slotName]
+                        v-for="(slotContent, slotName) in example.slots"
+                        :key="slotName"
+                        v-slot:[slotName]
                     >
                       <component
-                        :is="componentRegistry[(slotContent as SlotComponentReference).component]"
-                        v-if="slotContent && typeof slotContent === 'object' && 'component' in slotContent"
-                        v-bind="(slotContent as SlotComponentReference).props"
-                        :model-value="(slotContent as SlotComponentReference).modelKey ? models[(slotContent as SlotComponentReference).modelKey as string] : undefined"
-                        @update:model-value="(slotContent as SlotComponentReference).modelKey ? (value) => updateModel((slotContent as SlotComponentReference).modelKey as string, value) : undefined"
+                          v-if="isSlotComponentRef(slotContent)"
+                          :is="componentRegistry[slotContent.component]"
+                          v-bind="slotProps(slotContent)"
+                          :model-value="slotModelValue(slotContent)"
+                          @update:model-value="onUpdateModel(slotContent.modelKey)"
                       />
                       <template v-else>{{ renderSlotContent(slotContent) }}</template>
                     </template>
+
+                    <!-- Enfants -->
                     <template v-if="example.children" #default>
                       <component
-                        :is="componentRegistry[child.component]"
-                        v-for="child in example.children"
-                        :key="child.id"
-                        v-bind="getExampleProps(child)"
-                        :model-value="child.modelKey ? models[child.modelKey] : undefined"
-                        @update:model-value="child.modelKey ? (value) => updateModel(child.modelKey!, value) : undefined"
+                          v-for="child in example.children"
+                          :key="child.id"
+                          :is="componentRegistry[child.component]"
+                          v-bind="getExampleProps(child)"
+                          :model-value="child.modelKey ? models[child.modelKey] : undefined"
+                          @update:model-value="onUpdateModel(child.modelKey)"
                       >
                         <template
-                          v-for="(slotContent, slotName) in child.slots"
-                          :key="slotName"
-                          #[slotName]
+                            v-for="(slotContent, slotName) in child.slots"
+                            :key="slotName"
+                            v-slot:[slotName]
                         >
-                          <template v-if="typeof slotContent === 'string'">{{ slotContent }}</template>
                           <component
-                            :is="componentRegistry[(slotContent as SlotComponentReference).component]"
-                            v-else-if="slotContent && typeof slotContent === 'object' && 'component' in slotContent"
-                            v-bind="(slotContent as SlotComponentReference).props"
+                              v-if="isSlotComponentRef(slotContent)"
+                              :is="componentRegistry[slotContent.component]"
+                              v-bind="slotProps(slotContent)"
+                              :model-value="slotModelValue(slotContent)"
+                              @update:model-value="onUpdateModel(slotContent.modelKey)"
                           />
                           <template v-else>{{ renderSlotContent(slotContent) }}</template>
                         </template>
                       </component>
                     </template>
-                    <template v-else-if="example.defaultSlot">
-                      {{ example.defaultSlot() }}
+
+                    <!-- Slots par défaut alternatifs -->
+                    <template v-else-if="example.defaultSlot" #default>
+                      {{ renderSlotContent(example.defaultSlot) }}
                     </template>
-                    <template v-else-if="example.slots?.default && typeof example.slots.default === 'string'">
+                    <template v-else-if="example.slots?.default && typeof example.slots.default === 'string'" #default>
                       {{ example.slots.default }}
                     </template>
                   </component>
+
+                  <!-- Rendu direct si pas de component -->
                   <component :is="example.render" v-else />
                 </div>
               </article>
@@ -159,8 +168,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import type { Component, VNodeChild } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch, type Component, type VNodeChild } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useTheme } from 'vuetify'
 import { createError, useHead } from '#imports'
@@ -281,12 +289,12 @@ onMounted(() => {
 })
 
 watch(
-  themeMode,
-  (value) => {
-    if (!import.meta.client) return
-    document.documentElement.classList.toggle('theme--dark', value === 'dark')
-  },
-  { immediate: true },
+    themeMode,
+    (value) => {
+      if (!import.meta.client) return
+      document.documentElement.classList.toggle('theme--dark', value === 'dark')
+    },
+    { immediate: true },
 )
 
 watch(direction, (value) => {
@@ -868,11 +876,11 @@ const groups = computed<PlaygroundGroup[]>(() => [
 const expandedPanels = ref<number[]>([])
 
 watch(
-  () => groups.value.length,
-  (length) => {
-    expandedPanels.value = Array.from({ length }, (_, index) => index)
-  },
-  { immediate: true },
+    () => groups.value.length,
+    (length) => {
+      expandedPanels.value = Array.from({ length }, (_, index) => index)
+    },
+    { immediate: true },
 )
 
 function expandAll() {
@@ -893,34 +901,32 @@ function formatExample(example: PlaygroundExample) {
   const props = { ...example.props }
 
   if (example.modelKey) {
-    props['v-model'] = example.modelKey
+    // affichage lisible
+    ;(props as any)['v-model'] = example.modelKey
   }
 
   const entries = Object.entries(props).filter(([, value]) => value !== undefined && value !== false)
   const propList = entries
-    .map(([key, value]) => {
-      if (key === 'v-model') {
-        return 'v-model'
-      }
-
-      if (typeof value === 'string') {
-        return `${key}="${value.replace(/"/g, '&quot;')}"`
-      }
-
-      if (typeof value === 'boolean') {
-        return value ? key : ''
-      }
-
-      return `${key}='${JSON.stringify(value)}'`
-    })
-    .filter(Boolean)
-    .join(' ')
+      .map(([key, value]) => {
+        if (key === 'v-model') {
+          return 'v-model'
+        }
+        if (typeof value === 'string') {
+          return `${key}="${value.replace(/"/g, '&quot;')}"`
+        }
+        if (typeof value === 'boolean') {
+          return value ? key : ''
+        }
+        return `${key}='${JSON.stringify(value)}'`
+      })
+      .filter(Boolean)
+      .join(' ')
 
   return `<${example.component}${propList ? ` ${propList}` : ''} />`
 }
 
 function getExampleProps(example: PlaygroundExample) {
-  const props = { ...(example.props ?? {}) }
+  const props: Record<string, unknown> = { ...(example.props ?? {}) }
 
   if (example.component && componentsWithSizeProp.includes(example.component)) {
     props.size = props.size ?? activeSize.value
@@ -929,12 +935,29 @@ function getExampleProps(example: PlaygroundExample) {
   return props
 }
 
-function renderSlotContent(content: SlotContent) {
+function renderSlotContent(content: SlotContent | undefined) {
   if (typeof content === 'function') {
     return content()
   }
+  return content as any
+}
 
-  return content
+/** ===== Helpers sans TS dans le template ===== */
+
+function isSlotComponentRef(x: unknown): x is SlotComponentReference {
+  return !!x && typeof x === 'object' && 'component' in (x as any)
+}
+
+function slotProps(x: SlotComponentReference | undefined) {
+  return x?.props ?? {}
+}
+
+function slotModelValue(x: SlotComponentReference | undefined) {
+  return x?.modelKey ? models[x.modelKey] : undefined
+}
+
+function onUpdateModel(key?: string) {
+  return key ? (v: unknown) => updateModel(key, v) : undefined
 }
 </script>
 
