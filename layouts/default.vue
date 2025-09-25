@@ -1,80 +1,204 @@
 <template>
   <v-app>
-    <Header />
-    <div
-      v-if="useStructuredLayout"
-      class="min-h-screen border-b"
-    >
-      <div
-        class="flex-1 items-start px-4 md:grid md:gap-6 md:px-8 lg:gap-10"
-        :class="[config.main.padded && 'container', layoutColumns]"
+    <v-layout class="min-h-screen">
+      <v-navigation-drawer
+        v-model="leftDrawer"
+        app
+        :permanent="isDesktop"
+        :temporary="!isDesktop"
+        :scrim="!isDesktop"
+        width="280"
+        border="end"
       >
-        <aside
-          v-if="showLeftAside"
-          class="fixed z-30 -ml-2 hidden w-full shrink-0 overflow-y-auto top-[102px] md:sticky md:block"
-          :class="stickyOffsets"
+        <v-toolbar
+          flat
+          density="comfortable"
         >
-          <Aside :is-mobile="false" />
-        </aside>
-        <div class="min-w-0">
-          <slot />
+          <v-toolbar-title class="text-base font-semibold">
+            Navigation
+          </v-toolbar-title>
+        </v-toolbar>
+        <v-divider />
+        <v-list
+          nav
+          density="comfortable"
+        >
+          <v-list-item
+            v-for="item in mainNavigation"
+            :key="item.to"
+            :title="item.title"
+            :subtitle="item.subtitle"
+            :to="item.to"
+            :active="route.path === item.to"
+            color="primary"
+            link
+          />
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-navigation-drawer
+        v-model="rightDrawer"
+        app
+        location="end"
+        :permanent="isDesktop"
+        :temporary="!isDesktop"
+        :scrim="!isDesktop"
+        width="300"
+        border="start"
+      >
+        <v-toolbar
+          flat
+          density="comfortable"
+        >
+          <v-toolbar-title class="text-base font-semibold">
+            Quick Actions
+          </v-toolbar-title>
+        </v-toolbar>
+        <v-divider />
+        <div class="space-y-4 px-4 py-4">
+          <p class="text-sm text-muted-foreground">
+            Use these shortcuts to validate that Vuetify and Tailwind styles render together.
+          </p>
+          <v-btn
+            color="primary"
+            variant="flat"
+            block
+          >
+            Vuetify Action
+          </v-btn>
+          <button
+            type="button"
+            class="w-full rounded-md border border-dashed border-border px-3 py-2 text-sm font-medium text-foreground transition hover:border-primary"
+          >
+            Tailwind Action
+          </button>
         </div>
-        <aside
-          v-if="showRightAside"
-          class="hidden w-full md:sticky md:block"
-          :class="stickyOffsets"
+        <v-divider />
+        <v-list
+          nav
+          density="comfortable"
         >
-          <LayoutRightSidebar />
-        </aside>
-      </div>
-    </div>
-    <div v-else>
-      <slot />
-      <LayoutRightSidebar v-if="showRightAside" />
-    </div>
-    <Toaster />
-    <VFooter />
+          <v-list-subheader>Resources</v-list-subheader>
+          <v-list-item
+            v-for="item in resourceLinks"
+            :key="item.title"
+            :title="item.title"
+            :subtitle="item.subtitle"
+            :href="item.href"
+            target="_blank"
+            rel="noopener"
+            append-icon="mdi-open-in-new"
+            color="primary"
+            link
+          />
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-app-bar
+        app
+        flat
+        height="64"
+        border="bottom"
+      >
+        <v-app-bar-nav-icon
+          class="md:hidden"
+          aria-label="Toggle navigation drawer"
+          @click="toggleLeftDrawer"
+        />
+        <v-toolbar-title class="font-semibold">
+          Bro World
+        </v-toolbar-title>
+        <v-spacer />
+        <v-btn
+          class="md:hidden"
+          icon
+          variant="text"
+          aria-label="Toggle quick actions"
+          @click="toggleRightDrawer"
+        >
+          <v-icon icon="mdi-dots-vertical" />
+        </v-btn>
+      </v-app-bar>
+
+      <v-main class="bg-muted/10">
+        <v-container
+          class="py-6"
+          fluid
+        >
+          <slot />
+        </v-container>
+      </v-main>
+
+      <Toaster />
+
+      <v-footer
+        app
+        border="top"
+        class="px-4 py-3 text-sm text-muted-foreground"
+      >
+        <span class="mr-1">&copy; {{ currentYear }}</span>
+        <span>Bro World</span>
+      </v-footer>
+    </v-layout>
   </v-app>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import Toaster from "shadcn-docs-nuxt/components/ui/toast/Toaster.vue";
-import Aside from "~/components/layout/Aside.vue";
-import LayoutRightSidebar from "~/components/layout/RightSidebar.vue";
-import Header from "~/components/layout/Header.vue";
+import { computed, ref, watch } from 'vue'
+import { useDisplay } from 'vuetify'
+import Toaster from 'shadcn-docs-nuxt/components/ui/toast/Toaster.vue'
 
-const { page } = useContent();
-const config = useConfig();
+const route = useRoute()
+const display = useDisplay()
 
-const hasContentPage = computed(() => Boolean(page.value));
-const useStructuredLayout = computed(() => hasContentPage.value && page.value?.fullpage !== true);
+const isDesktop = computed(() => display.mdAndUp.value)
+const leftDrawer = ref(false)
+const rightDrawer = ref(false)
 
-const showLeftAside = computed(() => hasContentPage.value && (page.value?.aside ?? true));
-const showRightAside = computed(() => hasContentPage.value && (page.value?.rightAside ?? true));
+watch(
+  isDesktop,
+  (value) => {
+    leftDrawer.value = value
+    rightDrawer.value = value
+  },
+  { immediate: true },
+)
 
-const stickyOffsets = computed(() =>
-  config.value.aside.useLevel && config.value.aside.levelStyle === "aside"
-    ? "h-[calc(100vh-3.5rem)] md:top-[61px]"
-    : "h-[calc(100vh-6rem)] md:top-[101px]",
-);
+watch(
+  () => route.fullPath,
+  () => {
+    if (!isDesktop.value) {
+      leftDrawer.value = false
+      rightDrawer.value = false
+    }
+  },
+)
 
-const layoutColumns = computed(() => {
-  const left = showLeftAside.value;
-  const right = showRightAside.value;
+function toggleLeftDrawer() {
+  leftDrawer.value = !leftDrawer.value
+}
 
-  if (left && right) {
-    return "md:grid-cols-[240px_minmax(0,1fr)_280px] lg:grid-cols-[280px_minmax(0,1fr)_320px]";
-  }
+function toggleRightDrawer() {
+  rightDrawer.value = !rightDrawer.value
+}
 
-  if (left) {
-    return "md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]";
-  }
+const currentYear = new Date().getFullYear()
 
-  if (right) {
-    return "md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_320px]";
-  }
+const mainNavigation = [
+  { title: 'Home', subtitle: 'Back to the dashboard', to: '/' },
+  { title: 'Playground', subtitle: 'UI verification page', to: '/playground' },
+]
 
-  return null;
-});
+const resourceLinks = [
+  {
+    title: 'Documentation',
+    subtitle: 'Project knowledge base',
+    href: 'https://bro-world-space.com/docs',
+  },
+  {
+    title: 'Support',
+    subtitle: 'Contact the team',
+    href: 'mailto:hello@bro-world-space.com',
+  },
+]
 </script>

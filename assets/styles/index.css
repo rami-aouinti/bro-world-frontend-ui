@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  min-height: 100%;
+}
+
+#__nuxt {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.v-application {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 html {
   overflow-y: auto;
 }

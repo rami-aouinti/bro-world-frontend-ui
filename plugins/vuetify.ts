@@ -16,9 +16,6 @@ import esLocale from 'date-fns/locale/es'
 import ruLocale from 'date-fns/locale/ru'
 import arLocale from 'date-fns/locale/ar-SA'
 
-import '@/assets/styles/material-dashboard.scss'
-import "flag-icons"
-
 export type DataTableHeaders = VDataTable['$props']['headers']
 
 function getStoredValue<T>(key: string, fallback: T): T {
