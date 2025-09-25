@@ -172,6 +172,10 @@ import type { ReactionType } from "~/lib/mock/blog";
 import type { SidebarWidgetData } from "~/components/blog/SidebarWidget.vue";
 import SidebarWidget from "~/components/blog/SidebarWidget.vue";
 
+definePageMeta({
+  showRightWidgets: false,
+});
+
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
 const reactionEmojis: Record<ReactionType, string> = {
