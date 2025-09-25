@@ -65,6 +65,31 @@
                 </UiDropdownMenuItem>
               </UiDropdownMenuContent>
             </UiDropdownMenu>
+            <a
+              v-else-if="link.external"
+              :href="link?.to"
+              :target="link?.target ?? '_blank'"
+              rel="noreferrer"
+            >
+              <UiButton
+                variant="ghost"
+                size="icon"
+                class="flex gap-2"
+                :aria-label="link?.label"
+              >
+                <SmartIcon
+                  v-if="link?.icon"
+                  :name="link.icon"
+                  :size="18"
+                />
+                <span
+                  v-if="link?.label"
+                  class="sr-only"
+                >
+                  {{ link.label }}
+                </span>
+              </UiButton>
+            </a>
             <NuxtLinkLocale
               v-else
               :to="localePath(link?.to)"
@@ -125,6 +150,7 @@ type HeaderLink = {
   to?: string;
   target?: string;
   label?: string;
+  external?: boolean;
   menuItems?: HeaderLinkMenuItem[];
 };
 
