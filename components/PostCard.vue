@@ -36,22 +36,16 @@
               {{ recentCommentsLabel }}
             </p>
           </div>
-          <p class="text-xs font-medium text-slate-400/90">
-          </p>
-        </div>
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
-            {{ recentCommentsLabel }}
-          </p>
-          <p class="text-xs text-slate-400">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-400/90">
             {{ commentPreviewCountLabel }}
           </p>
         </div>
-        <div class="mt-6 space-y-5">
+        <div class="mt-6 space-y-5 px-1.5 pt-1 sm:px-2">
           <CommentCard
             v-for="comment in topComments"
             :key="comment.id"
             :comment="comment"
+            class="mx-1.5 w-full sm:mx-2"
           />
         </div>
       </section>
