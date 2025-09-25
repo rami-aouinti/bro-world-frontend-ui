@@ -1,6 +1,21 @@
 <template>
   <form class="mx-auto max-w-xl" @submit.prevent="handleSubmit">
     <div class="card-padding">
+      <v-alert
+        v-if="sessionMessage"
+        type="warning"
+        variant="tonal"
+        density="comfortable"
+        border="start"
+        class="mb-4"
+        closable
+        prominent
+        role="status"
+        @click:close="dismissSessionMessage"
+      >
+        {{ sessionMessage }}
+      </v-alert>
+
       <v-text-field
         v-model="username"
         density="compact"
@@ -10,8 +25,9 @@
         class="font-size-input input-style"
         append-inner-icon="mdi-account"
         :disabled="loading"
-        :error="Boolean(error)"
+        :error="Boolean(formError)"
         :class="fieldAlignment"
+        @update:model-value="handleFieldInput"
       />
       <v-text-field
         v-model="password"
@@ -23,13 +39,14 @@
         class="font-size-input input-style"
         :class="fieldAlignment"
         :disabled="loading"
-        :error="Boolean(error)"
+        :error="Boolean(formError)"
         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
         @click:append-inner="togglePassword"
+        @update:model-value="handleFieldInput"
       />
 
-      <p v-if="error" class="mt-1 text-red text-caption d-flex justify-center">
-        {{ error }}
+      <p v-if="formError" class="mt-1 text-red text-caption d-flex justify-center" role="alert">
+        {{ formError }}
       </p>
 
       <div class="mt-2 mb-4" :class="isRtl ? 'text-start' : 'text-end'">
@@ -64,82 +81,111 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useLocalePath } from '#i18n'
+import { useAuthSession } from '~/stores/auth-session'
 
 const { t, locale } = useI18n()
 const router = useRouter()
+const route = useRoute()
 const localePath = useLocalePath()
 const { $notify } = useNuxtApp()
+const auth = useAuthSession()
 
 const isRtl = computed(() => ['ar', 'he', 'fa', 'ur'].includes(locale.value))
 const fieldAlignment = computed(() => (isRtl.value ? 'text-end' : 'text-start'))
 
 const username = ref('')
 const password = ref('')
-const loading = ref(false)
-const error = ref('')
 const showPassword = ref(false)
+const formError = ref('')
+
+const loading = computed(() => auth.isLoggingIn.value)
+const sessionMessage = computed(() => auth.sessionMessage.value ?? '')
+
+watch(
+  () => auth.loginError.value,
+  (message) => {
+    if (message) {
+      formError.value = message
+    }
+  },
+)
 
 function togglePassword() {
   showPassword.value = !showPassword.value
 }
 
+function handleFieldInput() {
+  if (formError.value) {
+    formError.value = ''
+  }
+
+  auth.clearLoginError()
+}
+
+function dismissSessionMessage() {
+  auth.setSessionMessage(null)
+}
+
 async function handleSubmit() {
-  if (loading.value) return
+  if (loading.value) {
+    return
+  }
 
-  loading.value = true
-  error.value = ''
+  const identifier = username.value.trim()
+  const secret = password.value
 
-  if (!username.value || !password.value) {
-    error.value = t('auth.requiredError')
-    loading.value = false
+  formError.value = ''
+  auth.clearLoginError()
+
+  if (!identifier || !secret) {
+    formError.value = t('auth.requiredError')
     return
   }
 
   try {
-    const { data, error: fetchError } = await useFetch('/api/auth/login', {
-      method: 'POST',
-      body: {
-        username: username.value,
-        password: password.value,
-      },
+    const success = await auth.login({
+      identifier,
+      password: secret,
     })
 
-    if (fetchError.value) {
-      const message = fetchError.value.data?.message ?? t('auth.invalidError')
-      error.value = message
+    if (!success) {
+      const message = auth.loginError.value ?? t('auth.invalidError')
+      formError.value = message
       $notify({
         type: 'error',
         title: t('auth.errorTitle'),
         message,
         timeout: null,
       })
+
       return
     }
 
-    if (data.value) {
-      $notify({
-        type: 'success',
-        title: t('auth.successTitle'),
-        message: t('auth.success'),
-      })
-      const homePath = localePath('/')
-      await router.push(homePath)
-    }
+    auth.setSessionMessage(null)
+
+    const redirectFromQuery = typeof route.query.redirect === 'string' ? route.query.redirect : null
+    const redirectTarget = redirectFromQuery || auth.consumeRedirect() || localePath('/')
+
+    $notify({
+      type: 'success',
+      title: t('auth.successTitle'),
+      message: t('auth.success'),
+    })
+
+    await router.push(redirectTarget)
   } catch (exception: unknown) {
     const message = t('auth.errorGeneric')
-    error.value = message
+    formError.value = message
     $notify({
       type: 'error',
       title: t('auth.errorTitle'),
       message,
       timeout: null,
     })
-  } finally {
-    loading.value = false
   }
 }
 </script>

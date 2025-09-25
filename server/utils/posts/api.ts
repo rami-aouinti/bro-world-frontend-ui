@@ -9,6 +9,7 @@ import type {
   UpdatePostPayload,
 } from "~/server/utils/posts/types";
 import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+import { withAuthHeaders } from "~/server/utils/auth/session";
 
 function sanitizeBaseEndpoint(rawEndpoint: string): string {
   return rawEndpoint.replace(/\/$/, "");
@@ -56,7 +57,12 @@ export async function fetchPostsListFromSource(
   const base = resolveBaseEndpoint(event);
   const endpoint = withQuery(joinEndpoint(base), buildListQuery(params));
 
-  const response = await $fetch<BlogApiResponse>(endpoint, { method: "GET" });
+  const headers = withAuthHeaders(event);
+
+  const response = await $fetch<BlogApiResponse>(endpoint, {
+    method: "GET",
+    headers,
+  });
 
   if (!response || !Array.isArray(response.data)) {
     throw createError({
@@ -72,7 +78,12 @@ export async function fetchPostByIdFromSource(event: H3Event, postId: string): P
   const base = resolveBaseEndpoint(event);
   const endpoint = joinEndpoint(base, postId);
 
-  const response = await $fetch<BlogPost>(endpoint, { method: "GET" });
+  const headers = withAuthHeaders(event);
+
+  const response = await $fetch<BlogPost>(endpoint, {
+    method: "GET",
+    headers,
+  });
 
   if (!response || typeof response !== "object" || !("id" in response)) {
     throw createError({
@@ -94,9 +105,9 @@ export async function createPostAtSource(
   return $fetch(endpoint, {
     method: "POST",
     body: payload,
-    headers: {
+    headers: withAuthHeaders(event, {
       "Content-Type": "application/json",
-    },
+    }),
   });
 }
 
@@ -111,9 +122,9 @@ export async function updatePostAtSource(
   return $fetch(endpoint, {
     method: "PATCH",
     body: payload,
-    headers: {
+    headers: withAuthHeaders(event, {
       "Content-Type": "application/json",
-    },
+    }),
   });
 }
 
@@ -121,7 +132,10 @@ export async function deletePostAtSource(event: H3Event, postId: string): Promis
   const base = resolveBaseEndpoint(event);
   const endpoint = joinEndpoint(base, postId);
 
-  return $fetch(endpoint, { method: "DELETE" });
+  return $fetch(endpoint, {
+    method: "DELETE",
+    headers: withAuthHeaders(event),
+  });
 }
 
 export async function postReactionAtSource(
@@ -138,9 +152,9 @@ export async function postReactionAtSource(
       reactionType: payload.reactionType,
       type: payload.reactionType,
     },
-    headers: {
+    headers: withAuthHeaders(event, {
       "Content-Type": "application/json",
-    },
+    }),
   });
 }
 
@@ -158,9 +172,9 @@ export async function addCommentAtSource(
       content: payload.content,
       parentCommentId: payload.parentCommentId ?? null,
     },
-    headers: {
+    headers: withAuthHeaders(event, {
       "Content-Type": "application/json",
-    },
+    }),
   });
 }
 
@@ -179,8 +193,8 @@ export async function reactToCommentAtSource(
       reactionType: payload.reactionType,
       type: payload.reactionType,
     },
-    headers: {
+    headers: withAuthHeaders(event, {
       "Content-Type": "application/json",
-    },
+    }),
   });
 }

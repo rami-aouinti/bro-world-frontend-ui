@@ -1,5 +1,7 @@
 import { computed } from "vue";
 import type { BlogUser } from "~/lib/mock/blog";
+import { useAuthSession } from "~/stores/auth-session";
+import type { AuthUser } from "~/types/auth";
 
 interface FollowState {
   [authorId: string]: boolean;
@@ -10,19 +12,21 @@ interface FollowPendingState {
 }
 
 export function useAuthStore() {
-  const currentUserState = useState<BlogUser | null>("auth-current-user", () => null);
+  const authSession = useAuthSession();
+  const currentUserState = useState<BlogUser | null>("auth-follow-current-user", () => null);
   const followingState = useState<FollowState>("auth-following", () => ({}));
   const followPendingState = useState<FollowPendingState>("auth-following-pending", () => ({}));
   const followErrorState = useState<string | null>("auth-following-error", () => null);
 
-  const currentUser = computed(() => currentUserState.value);
-  const isAuthenticated = computed(() => currentUser.value !== null);
+  const currentUser = computed(() => (authSession.currentUser.value as BlogUser | null) ?? currentUserState.value);
+  const isAuthenticated = computed(() => authSession.isAuthenticated.value || currentUser.value !== null);
   const following = computed(() => followingState.value);
   const followPending = computed(() => followPendingState.value);
   const followError = computed(() => followErrorState.value);
 
   function setCurrentUser(user: BlogUser | null) {
     currentUserState.value = user;
+    authSession.setCurrentUser(user as AuthUser | null);
 
     if (!user) {
       followingState.value = {};
