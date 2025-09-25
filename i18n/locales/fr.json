@@ -66,6 +66,18 @@
         "comments": "Commentaires publiés"
       }
     },
+    "composer": {
+      "title": "Partagez quelque chose avec la communauté",
+      "subtitle": "Lancez une conversation et inspirez les autres membres.",
+      "label": "Votre message",
+      "placeholder": "De quoi souhaitez-vous parler ?",
+      "characterCount": "{count} caractères",
+      "submit": "Publier",
+      "submitting": "Publication...",
+      "success": "Votre publication a été partagée avec succès !",
+      "error": "Impossible de publier votre message. Réessayez.",
+      "validation": "Écrivez un message avant de publier."
+    },
     "reactions": {
       "post": {
         "publishedOn": "Publié le {date}",
