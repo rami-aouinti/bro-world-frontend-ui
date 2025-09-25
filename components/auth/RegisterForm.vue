@@ -127,12 +127,12 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useLocalePath } from '#i18n'
 
-import { toast } from '~/components/content/common/toast'
 import Terms from '~/components/auth/Terms.vue'
 
 const { t, locale } = useI18n()
 const router = useRouter()
 const localePath = useLocalePath()
+const { $notify } = useNuxtApp()
 
 const isRtl = computed(() => ['ar', 'he', 'fa', 'ur'].includes(locale.value))
 const fieldAlignment = computed(() => (isRtl.value ? 'text-end' : 'text-start'))
@@ -190,14 +190,22 @@ async function handleSubmit() {
     })
 
     if (fetchError.value) {
-      error.value = fetchError.value.data?.message ?? t('register.errorGeneric')
+      const message = fetchError.value.data?.message ?? t('register.errorGeneric')
+      error.value = message
+      $notify({
+        type: 'error',
+        title: t('register.errorTitle'),
+        message,
+        timeout: null,
+      })
       return
     }
 
     if (data.value) {
-      toast({
+      $notify({
+        type: 'success',
         title: t('register.successTitle'),
-        description: t('register.success'),
+        message: t('register.success'),
       })
       email.value = ''
       password.value = ''
@@ -206,9 +214,15 @@ async function handleSubmit() {
       const loginPath = localePath('/login')
       await router.push(loginPath)
     }
-  } catch (exception) {
-    console.error('Registration failed', exception)
-    error.value = t('register.errorGeneric')
+  } catch (exception: unknown) {
+    const message = t('register.errorGeneric')
+    error.value = message
+    $notify({
+      type: 'error',
+      title: t('register.errorTitle'),
+      message,
+      timeout: null,
+    })
   } finally {
     loading.value = false
   }

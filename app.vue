@@ -6,6 +6,7 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <AlertPanel />
 </template>
 
 <script setup lang="ts">

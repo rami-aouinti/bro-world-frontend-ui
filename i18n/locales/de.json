@@ -1,6 +1,7 @@
 {
   "common": {
-    "InspiraUIPro": "Inspira UI Pro"
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Schließen"
   },
   "banner": {
     "Content": "Für die Tailwind CSS v3-Dokumentation [**hier klicken**](https://v1.inspira-ui.com)."
@@ -64,6 +65,7 @@
     "invalidError": "Anmeldung mit diesen Daten nicht möglich. Bitte versuchen Sie es erneut.",
     "successTitle": "Willkommen zurück",
     "success": "Sie wurden erfolgreich angemeldet.",
+    "errorTitle": "Anmeldung fehlgeschlagen",
     "errorGeneric": "Beim Anmelden ist ein Fehler aufgetreten.",
     "socialTitle": "Mit deinem bevorzugten Anbieter anmelden",
     "socialSubtitle": "Wir leiten dich weiter, um die Anmeldung abzuschließen.",
@@ -286,6 +288,7 @@
     "errorMissing": "Bitte füllen Sie alle Pflichtfelder aus.",
     "errorMismatch": "Die Passwörter stimmen nicht überein.",
     "errorGeneric": "Beim Erstellen des Kontos ist ein Fehler aufgetreten.",
+    "errorTitle": "Kontoerstellung fehlgeschlagen",
     "successTitle": "Konto erstellt",
     "success": "Ihr Konto wurde erfolgreich erstellt.",
     "termsIntro": "Mit dem Erstellen eines Kontos bestätigen Sie, dass Sie unsere Richtlinien verstehen und akzeptieren.",

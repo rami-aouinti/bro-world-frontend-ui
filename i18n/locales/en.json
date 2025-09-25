@@ -1,6 +1,7 @@
 {
   "common": {
-    "InspiraUIPro": "Inspira UI Pro"
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Close"
   },
   "banner": {
     "Content": "For Tailwind CSS v3 docs, [**click here**](https://v1.inspira-ui.com)."
@@ -64,6 +65,7 @@
     "invalidError": "We couldn't sign you in with those details. Please try again.",
     "successTitle": "Welcome back",
     "success": "You have been signed in successfully.",
+    "errorTitle": "Sign in failed",
     "errorGeneric": "Something went wrong while signing you in.",
     "socialTitle": "Sign in with your favorite provider",
     "socialSubtitle": "We'll redirect you to finish authentication.",
@@ -286,6 +288,7 @@
     "errorMissing": "Please complete all required fields.",
     "errorMismatch": "Passwords do not match.",
     "errorGeneric": "Something went wrong while creating your account.",
+    "errorTitle": "Account creation failed",
     "successTitle": "Account created",
     "success": "Your account has been created successfully.",
     "termsIntro": "By creating an account you confirm that you understand and accept our policies.",

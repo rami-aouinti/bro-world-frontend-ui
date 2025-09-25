@@ -69,11 +69,10 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useLocalePath } from '#i18n'
 
-import { toast } from '~/components/content/common/toast'
-
 const { t, locale } = useI18n()
 const router = useRouter()
 const localePath = useLocalePath()
+const { $notify } = useNuxtApp()
 
 const isRtl = computed(() => ['ar', 'he', 'fa', 'ur'].includes(locale.value))
 const fieldAlignment = computed(() => (isRtl.value ? 'text-end' : 'text-start'))
@@ -110,21 +109,35 @@ async function handleSubmit() {
     })
 
     if (fetchError.value) {
-      error.value = fetchError.value.data?.message ?? t('auth.invalidError')
+      const message = fetchError.value.data?.message ?? t('auth.invalidError')
+      error.value = message
+      $notify({
+        type: 'error',
+        title: t('auth.errorTitle'),
+        message,
+        timeout: null,
+      })
       return
     }
 
     if (data.value) {
-      toast({
+      $notify({
+        type: 'success',
         title: t('auth.successTitle'),
-        description: t('auth.success'),
+        message: t('auth.success'),
       })
       const homePath = localePath('/')
       await router.push(homePath)
     }
-  } catch (exception) {
-    console.error('Login failed', exception)
-    error.value = t('auth.errorGeneric')
+  } catch (exception: unknown) {
+    const message = t('auth.errorGeneric')
+    error.value = message
+    $notify({
+      type: 'error',
+      title: t('auth.errorTitle'),
+      message,
+      timeout: null,
+    })
   } finally {
     loading.value = false
   }

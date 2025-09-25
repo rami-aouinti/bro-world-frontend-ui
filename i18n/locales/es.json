@@ -1,6 +1,7 @@
 {
   "common": {
-    "InspiraUIPro": "Inspira UI Pro"
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Cerrar"
   },
   "banner": {
     "Content": "Para la documentación de Tailwind CSS v3, [**haz clic aquí**](https://v1.inspira-ui.com)."
@@ -248,6 +249,7 @@
     "invalidError": "No pudimos iniciar sesión con esos datos. Inténtalo de nuevo.",
     "successTitle": "Bienvenido de nuevo",
     "success": "Has iniciado sesión correctamente.",
+    "errorTitle": "Error al iniciar sesión",
     "errorGeneric": "Algo salió mal al iniciar sesión.",
     "socialTitle": "Inicia sesión con tu proveedor favorito",
     "socialSubtitle": "Te redirigiremos para finalizar la autenticación.",
@@ -471,6 +473,7 @@
     "errorMissing": "Completa todos los campos obligatorios.",
     "errorMismatch": "Las contraseñas no coinciden.",
     "errorGeneric": "Algo salió mal al crear tu cuenta.",
+    "errorTitle": "Error al crear la cuenta",
     "successTitle": "Cuenta creada",
     "success": "Tu cuenta se ha creado correctamente.",
     "termsIntro": "Al crear una cuenta confirmas que entiendes y aceptas nuestras políticas.",
