@@ -2,6 +2,7 @@
   <v-container class="py-12" style="margin-top: -70px;">
     <v-card-text class="text-medium-emphasis pa-0">
       <AuthRegisterForm />
+    </v-card-text>
   </v-container>
 </template>
 
