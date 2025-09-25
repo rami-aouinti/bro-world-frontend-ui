@@ -48,6 +48,8 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
 </script>
 
 <style scoped>
+@reference "../../assets/css/tailwind.css";
+
 .app-card {
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.95);
