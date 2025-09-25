@@ -5,7 +5,18 @@ export default {
   darkMode: "selector",
   safelist: ["dark"],
   prefix: "",
-  content: [],
+  content: [
+    "./app.vue",
+    "./components/**/*.{vue,js,ts}",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./composables/**/*.{js,ts}",
+    "./content/**/*.{md,mdx,json,yml,yaml}",
+    "./lib/**/*.{js,ts,vue}",
+    "./plugins/**/*.{js,ts}",
+    "./stores/**/*.{js,ts}",
+    "./utils/**/*.{js,ts}",
+  ],
   theme: {
     container: {
       center: true,

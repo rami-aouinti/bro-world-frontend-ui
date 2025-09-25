@@ -2,10 +2,11 @@ import type { IconProps } from 'vuetify'
 import { h } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import { VDateInput } from 'vuetify/labs/VDateInput'
+import { createVuetify } from 'vuetify'
+import * as vuetifyComponents from 'vuetify/components'
+import * as vuetifyDirectives from 'vuetify/directives'
 import { useStorage } from '@vueuse/core'
 import { aliases } from 'vuetify/iconsets/mdi'
-
-import { useNuxtApp } from '#app'
 import DateFnsAdapter from '@date-io/date-fns'
 import enUSLocale from 'date-fns/locale/en-US'
 import frLocale from 'date-fns/locale/fr'
@@ -20,13 +21,40 @@ import "flag-icons"
 
 export type DataTableHeaders = VDataTable['$props']['headers']
 
+function getStoredValue<T>(key: string, fallback: T): T {
+  if (import.meta.client) {
+    return useStorage<T>(key, fallback).value
+  }
+
+  return fallback
+}
+
 export default defineNuxtPlugin((nuxtApp) => {
-  const { $i18n } = useNuxtApp()
-  const currentLocale = useStorage('locale', 'en').value
-  nuxtApp.hook('vuetify:configuration', ({ vuetifyOptions }) => {
+  const primary = getStoredValue('theme-primary', '#E91E63')
+  const locale = getStoredValue('locale', 'en')
+  const nuxtIconComponent = nuxtApp.vueApp.component('Icon')
 
-
-    vuetifyOptions.date = {
+  const vuetify = createVuetify({
+    ssr: true,
+    components: {
+      ...vuetifyComponents,
+      VDateInput,
+    },
+    directives: {
+      ...vuetifyDirectives,
+    },
+    theme: {
+      defaultTheme: 'light',
+      themes: {
+        light: { colors: { primary } },
+        dark: { colors: { primary } },
+      },
+    },
+    locale: {
+      locale,
+      fallback: 'en',
+    },
+    date: {
       adapter: DateFnsAdapter,
       locale: {
         en: enUSLocale,
@@ -37,27 +65,12 @@ export default defineNuxtPlugin((nuxtApp) => {
         es: esLocale,
         ru: ruLocale,
       },
-    }
-
-    vuetifyOptions.components = {
-      ...(vuetifyOptions.components ?? {}),
-      VDateInput,
-    }
-
-    const primary = useStorage('theme-primary', '#E91E63').value
-    vuetifyOptions.theme = {
-      themes: {
-        light: { colors: { primary } },
-        dark: { colors: { primary } },
-      },
-    }
-
-    const nuxtIconComponent = nuxtApp.vueApp.component('Icon')
-    vuetifyOptions.icons = {
+    },
+    icons: {
       defaultSet: 'nuxtIcon',
       sets: {
         nuxtIcon: {
-          component: ({ icon, tag, ...rest }: IconProps) => {
+          component: ({ icon, tag = 'span', ...rest }: IconProps) => {
             const resolvedIconName =
               typeof icon === 'string'
                 ? (aliases[icon] as string | undefined) ?? icon
@@ -72,6 +85,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         },
       },
       aliases,
-    }
+    },
   })
+
+  nuxtApp.vueApp.use(vuetify)
 })

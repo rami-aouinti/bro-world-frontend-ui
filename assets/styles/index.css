@@ -1,19 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html {
   overflow-y: auto;
-  &.dark {
-    color-scheme: dark;
-  }
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 .v-card--variant-elevated:not(.v-card--flat) {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 
+.v-theme--light.v-icon--clickable,
+.v-theme--light.v-btn--icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .v-theme--light {
-  &.v-icon--clickable,
-  &.v-btn--icon {
-    color: rgba(0, 0, 0, 0.54);
-  }
   --v-border-opacity: 0.09 !important;
   --v-theme-background: 243, 243, 243 !important;
 }
@@ -32,12 +38,10 @@ html {
   text-transform: initial !important;
 }
 
-.v-data-table-footer {
-  .v-field__input {
-    min-height: 36px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+.v-data-table-footer .v-field__input {
+  min-height: 36px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .v-tab {
