@@ -3,6 +3,71 @@
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Schließen"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "Navigation öffnen",
+      "openWidgets": "Widgets öffnen",
+      "toggleTheme": "Theme wechseln",
+      "goBack": "Zurück",
+      "refresh": "Aktualisieren",
+      "notifications": "Benachrichtigungen öffnen",
+      "cart": "Einkaufstasche öffnen",
+      "profile": "Profilmenü öffnen",
+      "viewProfile": "Profil ansehen",
+      "signOut": "Abmelden",
+      "changeLanguage": "Sprache ändern (aktuell: {locale})"
+    },
+    "appIcons": {
+      "academy": "Akademie",
+      "briefcase": "Arbeit",
+      "store": "Shop",
+      "database": "Daten",
+      "game": "Spiele"
+    },
+    "sidebar": {
+      "title": "Verbinden",
+      "navigate": "Zum Bereich wechseln",
+      "items": {
+        "apps": "Apps",
+        "calendar": "Kalender",
+        "cv": "Lebenslauf",
+        "jobs": "Jobs",
+        "help": "Hilfe",
+        "about": "Über uns",
+        "contact": "Kontakt"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Wetter heute",
+        "condition": "Bewölkt",
+        "subtitle": "Gefühlt 11°"
+      },
+      "news": {
+        "title": "News",
+        "items": {
+          "0": {
+            "title": "Probestart des Produkts",
+            "timestamp": "Vor 5 Minuten"
+          },
+          "1": {
+            "title": "Wachstumsbericht verfügbar",
+            "timestamp": "Vor 15 Minuten"
+          }
+        }
+      },
+      "rating": {
+        "title": "Bewertungsübersicht",
+        "subtitle": "Noch keine Bewertungen",
+        "edit": "Bewertung hinzufügen",
+        "share": "Teilen",
+        "actionsLabel": "Bewertungsaktionen"
+      },
+      "feed": {
+        "title": "Aktivitätsfeed"
+      }
+    }
+  },
   "banner": {
     "Content": "Für die Tailwind CSS v3-Dokumentation [**hier klicken**](https://v1.inspira-ui.com)."
   },

@@ -1,178 +1,173 @@
 <template>
-  <v-app>
-    <v-layout class="min-h-screen">
-      <v-navigation-drawer
-        v-model="leftDrawer"
-        app
-        :permanent="isDesktop"
-        :temporary="!isDesktop"
-        :scrim="!isDesktop"
-        width="280"
-        border="end"
-      >
-        <v-toolbar
-          flat
-          density="comfortable"
-        >
-          <v-toolbar-title class="text-base font-semibold">
-            Navigation
-          </v-toolbar-title>
-        </v-toolbar>
-        <v-divider />
-        <v-list
-          nav
-          density="comfortable"
-        >
-          <v-list-item
-            v-for="item in mainNavigation"
-            :key="item.to"
-            :title="item.title"
-            :subtitle="item.subtitle"
-            :to="item.to"
-            :active="route.path === item.to"
-            color="primary"
-            link
-          />
-        </v-list>
-      </v-navigation-drawer>
+  <v-app :style="cssVars">
+    <AppTopBar
+      :app-icons="appIcons"
+      :is-dark="isDark"
+      :is-mobile="isMobile"
+      :locale="locale"
+      :locales="availableLocales"
+      @toggle-left="toggleLeftDrawer"
+      @toggle-right="toggleRightDrawer"
+      @toggle-theme="toggleTheme"
+      @go-back="goBack"
+      @refresh="refreshPage"
+      @update:locale="setLocale"
+    />
 
-      <v-navigation-drawer
-        v-model="rightDrawer"
-        app
-        location="end"
-        :permanent="isDesktop"
-        :temporary="!isDesktop"
-        :scrim="!isDesktop"
-        width="300"
-        border="start"
-      >
-        <v-toolbar
-          flat
-          density="comfortable"
-        >
-          <v-toolbar-title class="text-base font-semibold">
-            Quick Actions
-          </v-toolbar-title>
-        </v-toolbar>
-        <v-divider />
-        <div class="space-y-4 px-4 py-4">
-          <p class="text-sm text-muted-foreground">
-            Use these shortcuts to validate that Vuetify and Tailwind styles render together.
-          </p>
-          <v-btn
-            color="primary"
-            variant="flat"
-            block
-          >
-            Vuetify Action
-          </v-btn>
-          <button
-            type="button"
-            class="w-full rounded-md border border-dashed border-border px-3 py-2 text-sm font-medium text-foreground transition hover:border-primary"
-          >
-            Tailwind Action
-          </button>
-        </div>
-        <v-divider />
-        <v-list
-          nav
-          density="comfortable"
-        >
-          <v-list-subheader>Resources</v-list-subheader>
-          <v-list-item
-            v-for="item in resourceLinks"
-            :key="item.title"
-            :title="item.title"
-            :subtitle="item.subtitle"
-            :href="item.href"
-            target="_blank"
-            rel="noopener"
-            append-icon="mdi-open-in-new"
-            color="primary"
-            link
-          />
-        </v-list>
-      </v-navigation-drawer>
-
-      <v-app-bar
-        app
-        flat
-        height="64"
-        border="bottom"
-      >
-        <v-app-bar-nav-icon
-          class="md:hidden"
-          aria-label="Toggle navigation drawer"
-          @click="toggleLeftDrawer"
+    <v-navigation-drawer
+      v-if="isMobile"
+      v-model="leftDrawer"
+      temporary
+      location="start"
+      scrim
+      width="320"
+      class="bg-transparent"
+    >
+      <div class="px-3 py-4">
+        <AppSidebar
+          :items="sidebarItems"
+          :active-key="activeSidebar"
+          @select="handleSidebarSelect"
         />
-        <v-toolbar-title class="font-semibold">
-          Bro World
-        </v-toolbar-title>
-        <v-spacer />
-        <v-btn
-          class="md:hidden"
-          icon
-          variant="text"
-          aria-label="Toggle quick actions"
-          @click="toggleRightDrawer"
-        >
-          <v-icon icon="mdi-dots-vertical" />
-        </v-btn>
-      </v-app-bar>
+      </div>
+    </v-navigation-drawer>
 
-      <v-main class="bg-muted/10">
-        <v-container
-          class="py-6"
-          fluid
-        >
-          <slot />
-        </v-container>
-      </v-main>
+    <v-navigation-drawer
+      v-if="isMobile"
+      v-model="rightDrawer"
+      temporary
+      location="end"
+      scrim
+      width="360"
+      class="bg-transparent"
+    >
+      <div class="px-3 py-4">
+        <AppRightWidgets />
+      </div>
+    </v-navigation-drawer>
 
-      <Toaster />
+    <v-main class="app-surface">
+      <div class="app-container">
+        <div class="layout-grid">
+          <div class="hidden md:block">
+            <AppSidebar
+              :items="sidebarItems"
+              :active-key="activeSidebar"
+              @select="handleSidebarSelect"
+            />
+          </div>
 
-      <v-footer
-        app
-        border="top"
-        class="px-4 py-3 text-sm text-muted-foreground"
-      >
-        <span class="mr-1">&copy; {{ currentYear }}</span>
-        <span>Bro World</span>
-      </v-footer>
-    </v-layout>
+          <div class="content-area">
+            <slot />
+
+            <div class="mt-6 hidden md:block xl:hidden">
+              <AppRightWidgets />
+            </div>
+          </div>
+
+          <div class="hidden xl:block">
+            <AppRightWidgets />
+          </div>
+        </div>
+      </div>
+    </v-main>
+
+    <Toaster />
+
+    <v-footer
+      app
+      border="top"
+      class="px-4 py-3 text-sm text-muted-foreground"
+    >
+      <span class="mr-1">&copy; {{ currentYear }}</span>
+      <span>Bro World</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useDisplay } from 'vuetify'
+import { watch, computed, ref } from 'vue'
+import { useDisplay, useTheme } from 'vuetify'
+import AppRightWidgets from '@/components/layout/AppRightWidgets.vue'
+import AppSidebar from '@/components/layout/AppSidebar.vue'
+import AppTopBar from '@/components/layout/AppTopBar.vue'
 import Toaster from 'shadcn-docs-nuxt/components/ui/toast/Toaster.vue'
 
 const route = useRoute()
+const router = useRouter()
 const display = useDisplay()
+const theme = useTheme()
+const { locale, availableLocales } = useI18n()
 
-const isDesktop = computed(() => display.mdAndUp.value)
 const leftDrawer = ref(false)
 const rightDrawer = ref(false)
 
-watch(
-  isDesktop,
-  (value) => {
-    leftDrawer.value = value
-    rightDrawer.value = value
-  },
-  { immediate: true },
-)
+const isDesktop = computed(() => display.lgAndUp.value)
+const isTablet = computed(() => display.mdAndUp.value && !display.lgAndUp.value)
+const isMobile = computed(() => !display.mdAndUp.value)
+
+const isDark = computed(() => theme.global.current.value.dark)
+
+const cssVars = computed(() => ({
+  '--app-bar-height': '72px',
+  '--pink-shadow': isDark.value
+    ? '0px 16px 32px rgba(243, 126, 205, 0.18)'
+    : '0px 20px 45px rgba(243, 126, 205, 0.28)',
+}))
+
+const appIcons = [
+  { name: 'mdi-school-outline', label: 'layout.appIcons.academy' },
+  { name: 'mdi-briefcase-outline', label: 'layout.appIcons.briefcase' },
+  { name: 'mdi-store-outline', label: 'layout.appIcons.store' },
+  { name: 'mdi-database', label: 'layout.appIcons.database' },
+  { name: 'mdi-gamepad-variant-outline', label: 'layout.appIcons.game' },
+]
+
+const sidebarItems = [
+  { key: 'apps', label: 'layout.sidebar.items.apps', icon: 'mdi-apps', to: '/' },
+  { key: 'calendar', label: 'layout.sidebar.items.calendar', icon: 'mdi-calendar-month', to: '/' },
+  { key: 'cv', label: 'layout.sidebar.items.cv', icon: 'mdi-file-account', to: '/' },
+  { key: 'jobs', label: 'layout.sidebar.items.jobs', icon: 'mdi-briefcase-search', to: '/' },
+  { key: 'help', label: 'layout.sidebar.items.help', icon: 'mdi-lifebuoy', to: '/' },
+  { key: 'about', label: 'layout.sidebar.items.about', icon: 'mdi-information-outline', to: '/' },
+  { key: 'contact', label: 'layout.sidebar.items.contact', icon: 'mdi-email-outline', to: '/' },
+]
+
+const activeSidebar = ref('apps')
 
 watch(
   () => route.fullPath,
   () => {
-    if (!isDesktop.value) {
+    if (isMobile.value) {
       leftDrawer.value = false
       rightDrawer.value = false
     }
   },
 )
+
+watch(isMobile, (value) => {
+  if (!value) {
+    leftDrawer.value = false
+    rightDrawer.value = false
+  }
+})
+
+watch(isDesktop, (value) => {
+  if (value) {
+    leftDrawer.value = false
+    rightDrawer.value = false
+  }
+})
+
+watch(isTablet, (value) => {
+  if (value) {
+    rightDrawer.value = false
+  }
+})
+
+function toggleTheme() {
+  theme.global.name.value = isDark.value ? 'light' : 'dark'
+}
 
 function toggleLeftDrawer() {
   leftDrawer.value = !leftDrawer.value
@@ -182,23 +177,63 @@ function toggleRightDrawer() {
   rightDrawer.value = !rightDrawer.value
 }
 
+function goBack() {
+  router.back()
+}
+
+function refreshPage() {
+  refreshNuxtData()
+}
+
+function handleSidebarSelect(key: string) {
+  activeSidebar.value = key
+  if (isMobile.value) {
+    leftDrawer.value = false
+  }
+}
+
+function setLocale(newLocale: string) {
+  locale.value = newLocale
+}
+
 const currentYear = new Date().getFullYear()
-
-const mainNavigation = [
-  { title: 'Home', subtitle: 'Back to the dashboard', to: '/' },
-  { title: 'Playground', subtitle: 'UI verification page', to: '/playground' },
-]
-
-const resourceLinks = [
-  {
-    title: 'Documentation',
-    subtitle: 'Project knowledge base',
-    href: 'https://bro-world-space.com/docs',
-  },
-  {
-    title: 'Support',
-    subtitle: 'Contact the team',
-    href: 'mailto:hello@bro-world-space.com',
-  },
-]
 </script>
+
+<style scoped>
+.app-surface {
+  background: #f7f8fb;
+  min-height: 100vh;
+}
+
+.app-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+  padding: 32px clamp(16px, 3vw, 40px) 48px;
+}
+
+.layout-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 768px) {
+  .layout-grid {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .layout-grid {
+    grid-template-columns: 320px minmax(0, 1fr) 360px;
+  }
+}
+
+.content-area {
+  min-height: calc(100vh - var(--app-bar-height) - 120px);
+  border-radius: 32px;
+  background: transparent;
+  padding-top: 8px;
+}
+</style>

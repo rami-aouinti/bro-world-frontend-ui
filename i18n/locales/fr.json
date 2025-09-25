@@ -3,6 +3,71 @@
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Fermer"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "Ouvrir le menu de navigation",
+      "openWidgets": "Ouvrir les widgets rapides",
+      "toggleTheme": "Changer de thème",
+      "goBack": "Revenir en arrière",
+      "refresh": "Actualiser",
+      "notifications": "Ouvrir les notifications",
+      "cart": "Ouvrir le sac",
+      "profile": "Ouvrir le menu profil",
+      "viewProfile": "Voir le profil",
+      "signOut": "Se déconnecter",
+      "changeLanguage": "Changer de langue (actuel : {locale})"
+    },
+    "appIcons": {
+      "academy": "Académie",
+      "briefcase": "Travail",
+      "store": "Boutique",
+      "database": "Données",
+      "game": "Jeux"
+    },
+    "sidebar": {
+      "title": "Connexion",
+      "navigate": "Aller à la section",
+      "items": {
+        "apps": "Applications",
+        "calendar": "Calendrier",
+        "cv": "CV",
+        "jobs": "Emplois",
+        "help": "Aide",
+        "about": "À propos",
+        "contact": "Contact"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Météo du jour",
+        "condition": "Nuageux",
+        "subtitle": "Ressenti 11°"
+      },
+      "news": {
+        "title": "Actualités",
+        "items": {
+          "0": {
+            "title": "Répétition du lancement produit",
+            "timestamp": "Il y a 5 min"
+          },
+          "1": {
+            "title": "Rapport de croissance disponible",
+            "timestamp": "Il y a 15 min"
+          }
+        }
+      },
+      "rating": {
+        "title": "Vue d'ensemble des notes",
+        "subtitle": "Aucun avis pour le moment",
+        "edit": "Ajouter une note",
+        "share": "Partager",
+        "actionsLabel": "Actions de notation"
+      },
+      "feed": {
+        "title": "Flux d'activité"
+      }
+    }
+  },
   "banner": {
     "Content": "Pour la documentation Tailwind CSS v3, [**cliquez ici**](https://v1.inspira-ui.com)."
   },

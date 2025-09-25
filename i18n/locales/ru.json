@@ -3,6 +3,71 @@
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Закрыть"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "Открыть меню навигации",
+      "openWidgets": "Открыть виджеты",
+      "toggleTheme": "Переключить тему",
+      "goBack": "Назад",
+      "refresh": "Обновить",
+      "notifications": "Открыть уведомления",
+      "cart": "Открыть сумку",
+      "profile": "Открыть меню профиля",
+      "viewProfile": "Просмотреть профиль",
+      "signOut": "Выйти",
+      "changeLanguage": "Изменить язык (текущий: {locale})"
+    },
+    "appIcons": {
+      "academy": "Академия",
+      "briefcase": "Работа",
+      "store": "Магазин",
+      "database": "Данные",
+      "game": "Игры"
+    },
+    "sidebar": {
+      "title": "Подключение",
+      "navigate": "Перейти к разделу",
+      "items": {
+        "apps": "Приложения",
+        "calendar": "Календарь",
+        "cv": "Резюме",
+        "jobs": "Вакансии",
+        "help": "Помощь",
+        "about": "О нас",
+        "contact": "Контакты"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Погода сегодня",
+        "condition": "Облачно",
+        "subtitle": "Ощущается как 11°"
+      },
+      "news": {
+        "title": "Новости",
+        "items": {
+          "0": {
+            "title": "Репетиция запуска продукта",
+            "timestamp": "5 минут назад"
+          },
+          "1": {
+            "title": "Доступен отчет о росте",
+            "timestamp": "15 минут назад"
+          }
+        }
+      },
+      "rating": {
+        "title": "Обзор оценок",
+        "subtitle": "Отзывов пока нет",
+        "edit": "Добавить оценку",
+        "share": "Поделиться",
+        "actionsLabel": "Действия с оценками"
+      },
+      "feed": {
+        "title": "Лента активности"
+      }
+    }
+  },
   "banner": {
     "Content": "Для документации по Tailwind CSS v3 [**нажмите здесь**](https://v1.inspira-ui.com)."
   },

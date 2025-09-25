@@ -3,6 +3,71 @@
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Chiudi"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "Apri menu di navigazione",
+      "openWidgets": "Apri widget rapidi",
+      "toggleTheme": "Cambia tema",
+      "goBack": "Torna indietro",
+      "refresh": "Aggiorna",
+      "notifications": "Apri notifiche",
+      "cart": "Apri borsa",
+      "profile": "Apri menu profilo",
+      "viewProfile": "Vedi profilo",
+      "signOut": "Esci",
+      "changeLanguage": "Cambia lingua (attuale: {locale})"
+    },
+    "appIcons": {
+      "academy": "Accademia",
+      "briefcase": "Lavoro",
+      "store": "Store",
+      "database": "Dati",
+      "game": "Giochi"
+    },
+    "sidebar": {
+      "title": "Connetti",
+      "navigate": "Vai alla sezione",
+      "items": {
+        "apps": "Applicazioni",
+        "calendar": "Calendario",
+        "cv": "CV",
+        "jobs": "Lavori",
+        "help": "Aiuto",
+        "about": "Informazioni",
+        "contact": "Contatti"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Meteo di oggi",
+        "condition": "Nuvoloso",
+        "subtitle": "Percepita 11°"
+      },
+      "news": {
+        "title": "Notizie",
+        "items": {
+          "0": {
+            "title": "Prova lancio prodotto",
+            "timestamp": "5 min fa"
+          },
+          "1": {
+            "title": "Rapporto di crescita disponibile",
+            "timestamp": "15 min fa"
+          }
+        }
+      },
+      "rating": {
+        "title": "Panoramica valutazioni",
+        "subtitle": "Nessuna recensione",
+        "edit": "Aggiungi valutazione",
+        "share": "Condividi",
+        "actionsLabel": "Azioni valutazione"
+      },
+      "feed": {
+        "title": "Feed attività"
+      }
+    }
+  },
   "banner": {
     "Content": "Per la documentazione di Tailwind CSS v3, [**clicca qui**](https://v1.inspira-ui.com)."
   },
