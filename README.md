@@ -56,6 +56,12 @@ For full documentation and usage examples, visit the BroWorld documentation site
 - [Authentication guide](docs/authentication.md) – details the login flow, session
   storage, route guards, and API usage patterns.
 
+## 🔐 Profile page
+
+- The `/profile` route is protected by the `auth` middleware. Visitors without a valid session are redirected to `/login`, and the intended URL is stored so they return to `/profile` after authenticating.
+- The page reads the authenticated user from `useAuthSession`, which is hydrated from the `/api/auth/session` endpoint using the active token. Identity, contact, and profile fields come directly from this session payload.
+- Quick stats display the number of friends and the total stories count using **Option B** (own stories plus the sum of stories shared by friends). Expired tokens trigger the global API plugin to call `handleUnauthorized`, clearing the session and redirecting back to the login screen.
+
 ## 🙏 Acknowledgments
 
 A special thanks to:

@@ -49,6 +49,41 @@
       "WhatAreYouWaitingFor": "¿Qué estás esperando?",
       "GetStartedAndStartBuildingAwesomeUI": "Comienza y crea interfaces increíbles",
       "GetStarted": "Comenzar"
+    },
+    "profile": {
+      "title": "Perfil",
+      "subtitle": "Revisa y administra tu información personal.",
+      "sections": {
+        "contact": "Contacto",
+        "profile": "Perfil",
+        "social": "Social"
+      },
+      "labels": {
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "address": "Dirección",
+        "title": "Cargo",
+        "gender": "Género",
+        "birthday": "Fecha de nacimiento",
+        "description": "Descripción",
+        "roles": "Roles",
+        "friends": "Amigos",
+        "stories": "Historias",
+        "accountStatus": "Estado de la cuenta"
+      },
+      "statuses": {
+        "enabled": "Habilitada",
+        "disabled": "Deshabilitada"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "Sin historias"
+      },
+      "avatarAlt": "Foto de perfil de {name}",
+      "avatarAltFallback": "Imagen de perfil predeterminada",
+      "stats": {
+        "title": "Estadísticas rápidas"
+      }
     }
   },
   "pages": {
@@ -484,5 +519,11 @@
     "termsPoint2": "Puedes actualizar tus preferencias de notificación en cualquier momento.",
     "termsPoint3": "Al eliminar tu cuenta, tus datos se eliminarán de nuestros sistemas activos en un plazo de 30 días.",
     "termsOutro": "Contacta a nuestro equipo de soporte si tienes alguna pregunta sobre cómo tratamos tus datos."
+  },
+  "seo": {
+    "profile": {
+      "title": "Perfil",
+      "description": "Consulta los detalles de tu cuenta y actividad."
+    }
   }
 }

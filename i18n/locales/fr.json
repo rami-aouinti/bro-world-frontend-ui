@@ -424,6 +424,41 @@
         }
       }
     },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Consultez et gérez vos informations personnelles.",
+      "sections": {
+        "contact": "Contact",
+        "profile": "Profil",
+        "social": "Réseaux"
+      },
+      "labels": {
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "address": "Adresse",
+        "title": "Titre",
+        "gender": "Genre",
+        "birthday": "Date de naissance",
+        "description": "Description",
+        "roles": "Rôles",
+        "friends": "Amis",
+        "stories": "Stories",
+        "accountStatus": "Statut du compte"
+      },
+      "statuses": {
+        "enabled": "Activé",
+        "disabled": "Désactivé"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "Aucune story"
+      },
+      "avatarAlt": "Photo de profil de {name}",
+      "avatarAltFallback": "Image de profil par défaut",
+      "stats": {
+        "title": "Statistiques rapides"
+      }
+    },
     "contact": {
       "title": "Contact",
       "subtitle": "Nous répondons généralement sous 1–2 jours ouvrés.",
@@ -658,6 +693,10 @@
     "contact": {
       "title": "Contact",
       "description": "Contactez notre équipe."
+    },
+    "profile": {
+      "title": "Profil",
+      "description": "Consultez vos informations personnelles et l’activité du compte."
     }
   }
 }

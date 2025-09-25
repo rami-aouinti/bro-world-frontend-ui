@@ -49,6 +49,41 @@
       "WhatAreYouWaitingFor": "Cosa stai aspettando?",
       "GetStartedAndStartBuildingAwesomeUI": "Inizia subito e crea interfacce straordinarie",
       "GetStarted": "Inizia"
+    },
+    "profile": {
+      "title": "Profilo",
+      "subtitle": "Rivedi e gestisci le tue informazioni personali.",
+      "sections": {
+        "contact": "Contatti",
+        "profile": "Profilo",
+        "social": "Social"
+      },
+      "labels": {
+        "email": "Email",
+        "phone": "Telefono",
+        "address": "Indirizzo",
+        "title": "Titolo",
+        "gender": "Genere",
+        "birthday": "Data di nascita",
+        "description": "Descrizione",
+        "roles": "Ruoli",
+        "friends": "Amici",
+        "stories": "Storie",
+        "accountStatus": "Stato dell'account"
+      },
+      "statuses": {
+        "enabled": "Attivo",
+        "disabled": "Disattivato"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "Nessuna storia"
+      },
+      "avatarAlt": "Foto profilo di {name}",
+      "avatarAltFallback": "Immagine profilo predefinita",
+      "stats": {
+        "title": "Statistiche rapide"
+      }
     }
   },
   "pages": {
@@ -484,5 +519,11 @@
     "termsPoint2": "Puoi aggiornare le preferenze di notifica in qualsiasi momento.",
     "termsPoint3": "Eliminando il tuo account, i tuoi dati verranno rimossi dai nostri sistemi attivi entro 30 giorni.",
     "termsOutro": "Contatta il nostro team di supporto se hai domande su come gestiamo i tuoi dati."
+  },
+  "seo": {
+    "profile": {
+      "title": "Profilo",
+      "description": "Consulta i tuoi dati personali e l'attività dell'account."
+    }
   }
 }

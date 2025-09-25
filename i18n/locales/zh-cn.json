@@ -279,5 +279,48 @@
         }
       }
     }
+  },
+  "pages": {
+    "profile": {
+      "title": "个人资料",
+      "subtitle": "查看并管理您的个人信息。",
+      "sections": {
+        "contact": "联系方式",
+        "profile": "个人资料",
+        "social": "社交"
+      },
+      "labels": {
+        "email": "电子邮箱",
+        "phone": "电话",
+        "address": "地址",
+        "title": "头衔",
+        "gender": "性别",
+        "birthday": "生日",
+        "description": "简介",
+        "roles": "角色",
+        "friends": "好友",
+        "stories": "动态",
+        "accountStatus": "账号状态"
+      },
+      "statuses": {
+        "enabled": "已启用",
+        "disabled": "已停用"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "暂无动态"
+      },
+      "avatarAlt": "{name} 的个人头像",
+      "avatarAltFallback": "默认个人头像",
+      "stats": {
+        "title": "快速概览"
+      }
+    }
+  },
+  "seo": {
+    "profile": {
+      "title": "个人资料",
+      "description": "查看您的个人信息和账号活动。"
+    }
   }
 }
