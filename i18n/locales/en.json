@@ -60,6 +60,7 @@
     "signIn": "Sign in",
     "signUpPrompt": "Don't have an account?",
     "signUp": "Create one",
+    "signOut": "Sign out",
     "forgotPassword": "Forgot your password?",
     "requiredError": "Please enter your email and password.",
     "invalidError": "We couldn't sign you in with those details. Please try again.",
@@ -67,6 +68,8 @@
     "success": "You have been signed in successfully.",
     "errorTitle": "Sign in failed",
     "errorGeneric": "Something went wrong while signing you in.",
+    "logoutMessage": "You have been signed out successfully.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
     "socialTitle": "Sign in with your favorite provider",
     "socialSubtitle": "We'll redirect you to finish authentication.",
     "social": {

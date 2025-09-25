@@ -404,11 +404,20 @@ export default defineNuxtConfig({
       listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
       itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
     },
+    auth: {
+      apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
+      tokenCookieName: process.env.NUXT_AUTH_TOKEN_COOKIE ?? "auth_token",
+      userCookieName: process.env.NUXT_AUTH_USER_COOKIE ?? "auth_user",
+      tokenPresenceCookieName:
+        process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
+      sessionMaxAge: process.env.NUXT_AUTH_SESSION_MAX_AGE ?? String(60 * 60 * 24 * 7),
+    },
     public: {
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
       blogApiEndpoint: process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "http://localhost/public/post",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
     },
   },
 

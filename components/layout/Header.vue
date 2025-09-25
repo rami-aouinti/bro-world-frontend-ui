@@ -90,11 +90,11 @@
                 </span>
               </UiButton>
             </a>
-            <NuxtLinkLocale
-              v-else
-              :to="localePath(link?.to)"
-              :target="link?.target"
-            >
+          <NuxtLinkLocale
+            v-else
+            :to="localePath(link?.to)"
+            :target="link?.target"
+          >
               <UiButton
                 variant="ghost"
                 size="icon"
@@ -111,10 +111,33 @@
                   class="sr-only"
                 >
                   {{ link.label }}
-                </span>
-              </UiButton>
-            </NuxtLinkLocale>
-          </template>
+              </span>
+            </UiButton>
+          </NuxtLinkLocale>
+        </template>
+          <UiButton
+            v-if="isAuthenticated"
+            variant="ghost"
+            size="icon"
+            class="flex gap-2"
+            :aria-label="t('auth.signOut')"
+            :disabled="loggingOut"
+            @click="handleLogout"
+          >
+            <SmartIcon name="mdi:logout" :size="18" />
+            <span class="sr-only">{{ t('auth.signOut') }}</span>
+          </UiButton>
+          <NuxtLinkLocale v-else :to="localePath('/login')">
+            <UiButton
+              variant="ghost"
+              size="icon"
+              class="flex gap-2"
+              :aria-label="t('auth.signIn')"
+            >
+              <SmartIcon name="mdi:login" :size="18" />
+              <span class="sr-only">{{ t('auth.signIn') }}</span>
+            </UiButton>
+          </NuxtLinkLocale>
         </div>
       </div>
     </div>
@@ -137,6 +160,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useAuthSession } from '~/stores/auth-session'
+
 type HeaderLinkMenuItem = {
   title: string;
   to?: string;
@@ -157,8 +184,12 @@ type HeaderLink = {
 const config = useConfig();
 const { i18nEnabled, localePath } = useI18nDocs();
 const { page } = useContent();
+const { t } = useI18n();
+const auth = useAuthSession();
+const loggingOut = ref(false);
 
 const headerLinks = computed<HeaderLink[]>(() => config.value.header.links ?? []);
+const isAuthenticated = computed(() => auth.isAuthenticated.value);
 
 const showToc = computed(() => {
   return (
@@ -181,5 +212,19 @@ function handleMenuItemSelect(item: HeaderLinkMenuItem) {
   }
 
   navigateTo(localePath(item.to));
+}
+
+async function handleLogout() {
+  if (loggingOut.value) {
+    return;
+  }
+
+  loggingOut.value = true;
+
+  try {
+    await auth.logout();
+  } finally {
+    loggingOut.value = false;
+  }
 }
 </script>

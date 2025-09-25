@@ -60,6 +60,7 @@
     "signIn": "登录",
     "signUpPrompt": "还没有账号？",
     "signUp": "立即注册",
+    "signOut": "退出登录",
     "forgotPassword": "忘记密码？",
     "requiredError": "请输入邮箱和密码。",
     "invalidError": "这些信息无法登录，请重试。",
@@ -67,6 +68,8 @@
     "success": "您已成功登录。",
     "errorTitle": "登录失败",
     "errorGeneric": "登录时出现问题。",
+    "logoutMessage": "您已成功退出登录。",
+    "sessionExpired": "您的会话已过期，请重新登录。",
     "socialTitle": "使用常用账号快速登录",
     "socialSubtitle": "我们会跳转到第三方完成认证。",
     "social": {

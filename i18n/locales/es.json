@@ -244,6 +244,7 @@
     "signIn": "Iniciar sesión",
     "signUpPrompt": "¿No tienes una cuenta?",
     "signUp": "Crea una",
+    "signOut": "Cerrar sesión",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "requiredError": "Introduce tu correo y contraseña.",
     "invalidError": "No pudimos iniciar sesión con esos datos. Inténtalo de nuevo.",
@@ -251,6 +252,8 @@
     "success": "Has iniciado sesión correctamente.",
     "errorTitle": "Error al iniciar sesión",
     "errorGeneric": "Algo salió mal al iniciar sesión.",
+    "logoutMessage": "Has cerrado sesión correctamente.",
+    "sessionExpired": "Tu sesión ha expirado. Inicia sesión nuevamente.",
     "socialTitle": "Inicia sesión con tu proveedor favorito",
     "socialSubtitle": "Te redirigiremos para finalizar la autenticación.",
     "social": {

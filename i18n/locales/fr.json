@@ -60,6 +60,7 @@
     "signIn": "Se connecter",
     "signUpPrompt": "Pas encore de compte ?",
     "signUp": "Créer un compte",
+    "signOut": "Se déconnecter",
     "forgotPassword": "Mot de passe oublié ?",
     "requiredError": "Veuillez saisir votre e-mail et votre mot de passe.",
     "invalidError": "Impossible de vous connecter avec ces informations. Veuillez réessayer.",
@@ -67,6 +68,8 @@
     "success": "Connexion réussie.",
     "errorTitle": "Échec de la connexion",
     "errorGeneric": "Une erreur est survenue lors de la connexion.",
+    "logoutMessage": "Vous vous êtes déconnecté avec succès.",
+    "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
     "socialTitle": "Se connecter avec votre fournisseur préféré",
     "socialSubtitle": "Nous vous redirigerons pour terminer l'authentification.",
     "social": {

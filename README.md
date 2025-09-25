@@ -53,6 +53,9 @@ BroWorld was created to fill a gap in the Vue community by providing a set of co
 
 For full documentation and usage examples, visit the BroWorld documentation site.
 
+- [Authentication guide](docs/authentication.md) – details the login flow, session
+  storage, route guards, and API usage patterns.
+
 ## 🙏 Acknowledgments
 
 A special thanks to:

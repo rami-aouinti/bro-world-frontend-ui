@@ -244,6 +244,7 @@
     "signIn": "Accedi",
     "signUpPrompt": "Non hai un account?",
     "signUp": "Creane uno",
+    "signOut": "Esci",
     "forgotPassword": "Hai dimenticato la password?",
     "requiredError": "Inserisci email e password.",
     "invalidError": "Non siamo riusciti ad accedere con questi dati. Riprova.",
@@ -251,6 +252,8 @@
     "success": "Accesso eseguito con successo.",
     "errorTitle": "Accesso non riuscito",
     "errorGeneric": "Si è verificato un errore durante l'accesso.",
+    "logoutMessage": "Sei stato disconnesso con successo.",
+    "sessionExpired": "La sessione è scaduta. Effettua nuovamente l'accesso.",
     "socialTitle": "Accedi con il tuo provider preferito",
     "socialSubtitle": "Ti reindirizzeremo per completare l'autenticazione.",
     "social": {
