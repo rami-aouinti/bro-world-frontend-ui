@@ -68,14 +68,25 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
   @apply flex items-center justify-between text-left transition;
   padding: 0.75rem 1rem;
   border-radius: calc(var(--radius) + 8px);
-  @apply bg-white/70 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2;
+  @apply bg-white hover:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  --tw-bg-opacity: 0.7;
 }
 
 .sidebar-item--active {
-  @apply bg-primary/10 shadow-[0_10px_25px_rgba(243,126,205,0.35)];
+  @apply bg-primary shadow-[0_10px_25px_rgba(243,126,205,0.35)];
+  --tw-bg-opacity: 0.1;
 }
 
 .sidebar-icon {
-  @apply flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary;
+  @apply flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary;
+  --tw-bg-opacity: 0.1;
+}
+
+.sidebar-item:hover {
+  --tw-bg-opacity: 0.05;
+}
+
+.sidebar-item:focus-visible {
+  --tw-ring-opacity: 0.7;
 }
 </style>
