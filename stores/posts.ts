@@ -1,6 +1,7 @@
-import { computed, reactive, ref, shallowRef } from "vue";
+import { computed, reactive, shallowRef } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
 import { useRequestFetch } from "#app";
+import { useState } from "#imports";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 interface PostsListResponse {
@@ -78,18 +79,18 @@ export const usePostsStore = defineStore("posts", () => {
   const listTtlMs = Math.max(Number(runtimeConfig.redis?.listTtl ?? 60), 1) * 1000;
   const itemTtlMs = Math.max(Number(runtimeConfig.redis?.itemTtl ?? 300), 1) * 1000;
 
-  const items = ref<Record<string, PostsStorePost>>({});
-  const listIds = ref<string[]>([]);
-  const itemTimestamps = ref<Record<string, number>>({});
-  const cachedAt = ref<number | null>(null);
-  const lastFetched = ref<number | null>(null);
-  const pending = ref(false);
-  const error = ref<string | null>(null);
-  const creating = ref(false);
-  const createError = ref<string | null>(null);
-  const updating = ref<Record<string, boolean>>({});
-  const deleting = ref<Record<string, boolean>>({});
-  const isRevalidating = ref(false);
+  const items = useState<Record<string, PostsStorePost>>("posts-items", () => ({}));
+  const listIds = useState<string[]>("posts-list-ids", () => []);
+  const itemTimestamps = useState<Record<string, number>>("posts-item-timestamps", () => ({}));
+  const cachedAt = useState<number | null>("posts-cached-at", () => null);
+  const lastFetched = useState<number | null>("posts-last-fetched", () => null);
+  const pending = useState<boolean>("posts-pending", () => false);
+  const error = useState<string | null>("posts-error", () => null);
+  const creating = useState<boolean>("posts-creating", () => false);
+  const createError = useState<string | null>("posts-create-error", () => null);
+  const updating = useState<Record<string, boolean>>("posts-updating", () => ({}));
+  const deleting = useState<Record<string, boolean>>("posts-deleting", () => ({}));
+  const isRevalidating = useState<boolean>("posts-is-revalidating", () => false);
   const backgroundPromise = shallowRef<Promise<void> | null>(null);
 
   const posts = computed(() =>
