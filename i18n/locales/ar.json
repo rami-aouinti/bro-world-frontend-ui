@@ -11,14 +11,14 @@
     "GettingStartedDescription": "مقدمة عن Inspira UI وأهم مفاهيمه.",
     "Installation": "التثبيت",
     "InstallationDescription": "اتبع الدليل خطوة بخطوة لتثبيت Inspira UI في مشروعك.",
-  "Components": "المكوّنات",
-  "ComponentsDescription": "استكشف جميع المكوّنات المتاحة وكيفية استخدامها.",
-  "V1DocsDescription": "توثيق استخدام Inspira UI مع Tailwind CSS v3.",
-  "Community": "المجتمع",
-  "GitHub": "غيتهاب",
-  "GitHubDescription": "الكود المصدري لـ Inspira UI.",
-  "Discord": "ديسكورد",
-  "DiscordDescription": "تواصل مع المجتمع عبر ديسكورد",
+    "Components": "المكوّنات",
+    "ComponentsDescription": "استكشف جميع المكوّنات المتاحة وكيفية استخدامها.",
+    "V1DocsDescription": "توثيق استخدام Inspira UI مع Tailwind CSS v3.",
+    "Community": "المجتمع",
+    "GitHub": "غيتهاب",
+    "GitHubDescription": "الكود المصدري لـ Inspira UI.",
+    "Discord": "ديسكورد",
+    "DiscordDescription": "تواصل مع المجتمع عبر ديسكورد",
     "Forum": "المنتدى",
     "ForumDiscord": "انضم إلى المنتدى"
   },
@@ -53,7 +53,25 @@
   "auth": {
     "Account": "الحساب",
     "Login": "تسجيل الدخول",
-    "Register": "إنشاء حساب"
+    "Register": "إنشاء حساب",
+    "usernameOrEmail": "البريد الإلكتروني أو اسم المستخدم",
+    "password": "كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "signUpPrompt": "لا تملك حسابًا؟",
+    "signUp": "إنشاء حساب",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "requiredError": "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+    "invalidError": "تعذر تسجيل الدخول بهذه البيانات. حاول مرة أخرى.",
+    "successTitle": "مرحبًا بعودتك",
+    "success": "تم تسجيل دخولك بنجاح.",
+    "errorGeneric": "حدث خطأ أثناء تسجيل الدخول.",
+    "socialTitle": "سجّل الدخول باستخدام مزودك المفضل",
+    "socialSubtitle": "سنقوم بإعادة توجيهك لإكمال عملية المصادقة.",
+    "social": {
+      "google": "متابعة باستخدام Google",
+      "github": "متابعة باستخدام GitHub",
+      "microsoft": "متابعة باستخدام Microsoft"
+    }
   },
   "blog": {
     "hero": {
@@ -192,5 +210,30 @@
         }
       }
     }
+  },
+  "register": {
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "repeatPassword": "تأكيد كلمة المرور",
+    "agree": "أوافق على",
+    "terms": "الشروط والأحكام",
+    "requirements": "متطلبات كلمة المرور",
+    "requirement1": "يجب أن تتكون من 8 أحرف على الأقل.",
+    "requirement2": "يفضل أن تحتوي على أرقام أو رموز لزيادة الأمان.",
+    "signUp": "إنشاء حساب",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "signIn": "تسجيل الدخول",
+    "termsTitle": "الشروط والأحكام",
+    "errorTerms": "يجب الموافقة على الشروط والأحكام.",
+    "errorMissing": "يرجى إكمال جميع الحقول المطلوبة.",
+    "errorMismatch": "كلمتا المرور غير متطابقتين.",
+    "errorGeneric": "حدث خطأ أثناء إنشاء الحساب.",
+    "successTitle": "تم إنشاء الحساب",
+    "success": "تم إنشاء حسابك بنجاح.",
+    "termsIntro": "بإنشاء حساب فإنك تؤكد فهمك وقبولك لسياساتنا.",
+    "termsPoint1": "نستخدم معلوماتك فقط لإنشاء حسابك وتأمينه.",
+    "termsPoint2": "يمكنك تغيير إعدادات الإشعارات في أي وقت.",
+    "termsPoint3": "سيتم حذف بياناتك من أنظمتنا النشطة خلال 30 يومًا عند حذف الحساب.",
+    "termsOutro": "يرجى التواصل مع فريق الدعم إذا كانت لديك أسئلة حول كيفية تعاملنا مع بياناتك."
   }
 }

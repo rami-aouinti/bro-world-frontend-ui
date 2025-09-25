@@ -12,13 +12,13 @@
     "Installation": "Installation",
     "InstallationDescription": "Suivez le guide étape par étape pour installer Inspira UI dans votre projet.",
     "Components": "Composants",
-  "ComponentsDescription": "Explorez tous les composants disponibles et leur utilisation.",
-  "V1DocsDescription": "Documentation pour utiliser Inspira UI avec Tailwind CSS v3.",
-  "Community": "Communauté",
-  "GitHub": "GitHub",
-  "GitHubDescription": "Code source d'Inspira UI.",
-  "Discord": "Discord",
-  "DiscordDescription": "Rejoignez la communauté sur Discord",
+    "ComponentsDescription": "Explorez tous les composants disponibles et leur utilisation.",
+    "V1DocsDescription": "Documentation pour utiliser Inspira UI avec Tailwind CSS v3.",
+    "Community": "Communauté",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Code source d'Inspira UI.",
+    "Discord": "Discord",
+    "DiscordDescription": "Rejoignez la communauté sur Discord",
     "Forum": "Forum",
     "ForumDiscord": "Rejoindre le forum"
   },
@@ -53,7 +53,25 @@
   "auth": {
     "Account": "Compte",
     "Login": "Connexion",
-    "Register": "Inscription"
+    "Register": "Inscription",
+    "usernameOrEmail": "Adresse e-mail ou nom d'utilisateur",
+    "password": "Mot de passe",
+    "signIn": "Se connecter",
+    "signUpPrompt": "Pas encore de compte ?",
+    "signUp": "Créer un compte",
+    "forgotPassword": "Mot de passe oublié ?",
+    "requiredError": "Veuillez saisir votre e-mail et votre mot de passe.",
+    "invalidError": "Impossible de vous connecter avec ces informations. Veuillez réessayer.",
+    "successTitle": "Content de vous revoir",
+    "success": "Connexion réussie.",
+    "errorGeneric": "Une erreur est survenue lors de la connexion.",
+    "socialTitle": "Se connecter avec votre fournisseur préféré",
+    "socialSubtitle": "Nous vous redirigerons pour terminer l'authentification.",
+    "social": {
+      "google": "Continuer avec Google",
+      "github": "Continuer avec GitHub",
+      "microsoft": "Continuer avec Microsoft"
+    }
   },
   "blog": {
     "hero": {
@@ -190,5 +208,30 @@
         }
       }
     }
+  },
+  "register": {
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "repeatPassword": "Confirmez le mot de passe",
+    "agree": "J'accepte les",
+    "terms": "conditions générales",
+    "requirements": "Exigences du mot de passe",
+    "requirement1": "Doit contenir au moins 8 caractères.",
+    "requirement2": "Inclure des chiffres ou des caractères spéciaux pour plus de sécurité.",
+    "signUp": "Créer un compte",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "signIn": "Se connecter",
+    "termsTitle": "Conditions générales",
+    "errorTerms": "Vous devez accepter les conditions générales.",
+    "errorMissing": "Veuillez remplir tous les champs obligatoires.",
+    "errorMismatch": "Les mots de passe ne correspondent pas.",
+    "errorGeneric": "Une erreur est survenue lors de la création du compte.",
+    "successTitle": "Compte créé",
+    "success": "Votre compte a été créé avec succès.",
+    "termsIntro": "En créant un compte, vous confirmez comprendre et accepter nos politiques.",
+    "termsPoint1": "Nous utilisons vos informations uniquement pour créer et sécuriser votre compte.",
+    "termsPoint2": "Vous pouvez modifier vos préférences de notification à tout moment.",
+    "termsPoint3": "La suppression de votre compte entraîne l'effacement de vos données de nos systèmes actifs sous 30 jours.",
+    "termsOutro": "Contactez notre équipe d'assistance si vous avez des questions sur la gestion de vos données."
   }
 }
