@@ -1,6 +1,6 @@
 <template>
   <div class="relative min-h-screen overflow-hidden bg-transparent text-slate-50">
-    <div class="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
       <div
           v-if="pending"
           class="grid gap-8 sm:grid-cols-2"
@@ -30,7 +30,7 @@
       </div>
 
       <template v-else>
-        <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-4">
           <PostCard
               v-for="post in posts"
               :key="post.id"

@@ -1,6 +1,6 @@
 <template>
   <article
-    class="mx-auto flex w-full max-w-xl flex-col gap-4 rounded-2xl border border-white/10 bg-slate-950/40 p-5 shadow-[0_20px_45px_-35px_rgba(15,23,42,0.75)] backdrop-blur"
+    class="px-3 my-4 py-2 flex flex-col gap-4 rounded-2xl bg-slate-950/40 backdrop-blur"
   >
     <div class="flex items-center gap-3">
       <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/5">
@@ -24,7 +24,7 @@
       {{ comment.content }}
     </p>
     <div
-      class="mt-1 flex items-center justify-between gap-4 border-t border-white/10 pt-3 text-xs text-slate-400"
+      class="mt-1 flex items-center justify-between gap-4 mx-3 text-xs text-slate-400"
     >
       <span
           :aria-label="

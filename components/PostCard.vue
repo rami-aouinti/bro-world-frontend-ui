@@ -2,7 +2,7 @@
   <article
     class="group relative overflow-hidden rounded-3xl p-6 shadow-[0_25px_55px_-25px_rgba(15,23,42,0.65)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
   >
-    <div class="relative flex flex-col gap-12">
+    <div class="relative flex flex-col gap-2">
       <PostMeta
         :user="post.user"
         :default-avatar="defaultAvatar"
@@ -11,22 +11,40 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="mx-auto w-full max-w-2xl space-y-6 py-2">
-        <h2
-          class="text-3xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
+      <div class="mx-4 w-full max-w-2xl space-y-2">
+        <h4
+          class="text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
           {{ post.title }}
-        </h2>
+        </h4>
         <p class="text-base leading-relaxed text-slate-200/80">
           {{ post.summary }}
         </p>
       </div>
-
+      <footer
+          v-if="hasReactionPreview"
+          class="flex flex-wrap items-center gap-4 rounded-2xl px-4 py-1 text-sm"
+      >
+        <div class="flex flex-wrap gap-4">
+          <div
+              v-for="reaction in topReactions"
+              :key="reaction.id"
+              class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-4 py-1.5 text-slate-100 shadow-[0_10px_25px_-15px_rgba(15,23,42,0.9)]"
+          >
+            <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
+            <span
+                aria-hidden="true"
+                class="text-lg"
+            >{{ reactionEmojis[reaction.type] }}</span
+            >
+          </div>
+        </div>
+      </footer>
       <section
         v-if="hasCommentPreview"
-        class="rounded-3xl border border-white/10 bg-white/10 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:p-7"
+        class="rounded-3xl p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] sm:p-7"
       >
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+        <div class="flex flex-wrap items-center justify-between gap-4 mx-4 py-2 pb-4">
           <div class="flex items-center gap-3 text-slate-200">
             <span class="flex h-8 w-8 items-center justify-center rounded-2xl bg-primary/20 text-lg">💬</span>
             <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">
@@ -37,7 +55,7 @@
             {{ commentPreviewCountLabel }}
           </p>
         </div>
-        <div class="mx-auto mt-6 w-full max-w-2xl space-y-5 px-1.5 pt-1 sm:px-2">
+        <div class="w-full max-w-2xl space-y-5 px-1.5 pt-1 sm:px-2 px-2">
           <CommentCard
             v-for="comment in topComments"
             :key="comment.id"
@@ -46,29 +64,6 @@
           />
         </div>
       </section>
-
-      <footer
-        v-if="hasReactionPreview"
-        class="flex flex-wrap items-center gap-4 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
-      >
-        <span class="text-xs uppercase tracking-wide text-slate-300">
-          {{ highlightedReactionsLabel }}
-        </span>
-        <div class="flex flex-wrap gap-4">
-          <div
-            v-for="reaction in topReactions"
-            :key="reaction.id"
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-4 py-1.5 text-slate-100 shadow-[0_10px_25px_-15px_rgba(15,23,42,0.9)]"
-          >
-            <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
-            <span
-              aria-hidden="true"
-              class="text-lg"
-              >{{ reactionEmojis[reaction.type] }}</span
-            >
-          </div>
-        </div>
-      </footer>
     </div>
   </article>
 </template>
