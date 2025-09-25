@@ -301,7 +301,6 @@ import PostMeta from "~/components/blog/PostMeta.vue";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
-import { toast } from "~/components/content/common/toast";
 
 interface FeedbackState {
   type: "success" | "error";
@@ -316,6 +315,7 @@ const props = defineProps<{
 }>();
 
 const { locale, t } = useI18n();
+const { $notify } = useNuxtApp();
 const {
   reactToPost,
   addComment,
@@ -560,19 +560,21 @@ async function handleSaveEdit() {
 
     await updatePost(post.value.id, payload);
 
-    toast({
+    $notify({
+      type: "success",
       title: t("blog.posts.actions.editSuccessTitle"),
-      description: t("blog.posts.actions.editSuccessDescription"),
+      message: t("blog.posts.actions.editSuccessDescription"),
     });
 
     closeEditModal();
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
 
-    toast({
+    $notify({
+      type: "error",
       title: t("blog.posts.actions.editErrorTitle"),
-      description: message || t("blog.posts.actions.editErrorDescription"),
-      variant: "destructive",
+      message: message || t("blog.posts.actions.editErrorDescription"),
+      timeout: null,
     });
   } finally {
     saveLoading.value = false;
@@ -589,19 +591,21 @@ async function handleDeletePost() {
   try {
     await deletePost(post.value.id);
 
-    toast({
+    $notify({
+      type: "success",
       title: t("blog.posts.actions.deleteSuccessTitle"),
-      description: t("blog.posts.actions.deleteSuccessDescription"),
+      message: t("blog.posts.actions.deleteSuccessDescription"),
     });
 
     closeDeleteDialog();
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
 
-    toast({
+    $notify({
+      type: "error",
       title: t("blog.posts.actions.deleteErrorTitle"),
-      description: message || t("blog.posts.actions.deleteErrorDescription"),
-      variant: "destructive",
+      message: message || t("blog.posts.actions.deleteErrorDescription"),
+      timeout: null,
     });
   } finally {
     deleteLoading.value = false;
@@ -617,19 +621,21 @@ async function handleFollow() {
     resetFollowError();
     await followAuthor(post.value.user.id);
 
-    toast({
+    $notify({
+      type: "success",
       title: t("blog.posts.actions.followSuccessTitle"),
-      description: t("blog.posts.actions.followSuccessDescription", {
+      message: t("blog.posts.actions.followSuccessDescription", {
         name: `${post.value.user.firstName} ${post.value.user.lastName}`,
       }),
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
 
-    toast({
+    $notify({
+      type: "error",
       title: t("blog.posts.actions.followErrorTitle"),
-      description: message || t("blog.posts.actions.followErrorDescription"),
-      variant: "destructive",
+      message: message || t("blog.posts.actions.followErrorDescription"),
+      timeout: null,
     });
   }
 }

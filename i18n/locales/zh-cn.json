@@ -1,6 +1,7 @@
 {
   "common": {
-    "InspiraUIPro": "Inspira UI 专业版"
+    "InspiraUIPro": "Inspira UI 专业版",
+    "close": "关闭"
   },
   "banner": {
     "Content": "Tailwind CSS v3 文档, [**点击这里**](https://v1.inspira-ui.com)."
@@ -64,6 +65,7 @@
     "invalidError": "这些信息无法登录，请重试。",
     "successTitle": "欢迎回来",
     "success": "您已成功登录。",
+    "errorTitle": "登录失败",
     "errorGeneric": "登录时出现问题。",
     "socialTitle": "使用常用账号快速登录",
     "socialSubtitle": "我们会跳转到第三方完成认证。",
@@ -72,6 +74,9 @@
       "github": "使用 GitHub 继续",
       "microsoft": "使用 Microsoft 继续"
     }
+  },
+  "register": {
+    "errorTitle": "创建账户失败"
   },
   "blog": {
     "hero": {

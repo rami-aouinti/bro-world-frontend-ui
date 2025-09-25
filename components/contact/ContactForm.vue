@@ -11,13 +11,14 @@
 
     <v-form
       ref="formRef"
-      @submit.prevent="handleSubmit"
       aria-describedby="contact-status"
       role="form"
+      @submit.prevent="handleSubmit"
     >
       <div class="d-flex flex-column gap-4">
         <div>
           <v-text-field
+            id="contact-name"
             v-model="form.name"
             :label="t('pages.contact.form.name')"
             :error="Boolean(errors.name)"
@@ -25,7 +26,6 @@
             :aria-describedby="errors.name ? 'name-error' : undefined"
             :aria-invalid="errors.name ? 'true' : 'false'"
             data-test="name-field"
-            id="contact-name"
             name="name"
             autocomplete="name"
             required
@@ -43,6 +43,7 @@
 
         <div>
           <v-text-field
+            id="contact-email"
             v-model="form.email"
             :label="t('pages.contact.form.email')"
             :error="Boolean(errors.email)"
@@ -50,7 +51,6 @@
             :aria-describedby="errors.email ? 'email-error' : undefined"
             :aria-invalid="errors.email ? 'true' : 'false'"
             data-test="email-field"
-            id="contact-email"
             name="email"
             type="email"
             autocomplete="email"
@@ -70,6 +70,7 @@
 
         <div>
           <v-text-field
+            id="contact-subject"
             v-model="form.subject"
             :label="t('pages.contact.form.subject')"
             :error="Boolean(errors.subject)"
@@ -77,7 +78,6 @@
             :aria-describedby="errors.subject ? 'subject-error' : undefined"
             :aria-invalid="errors.subject ? 'true' : 'false'"
             data-test="subject-field"
-            id="contact-subject"
             name="subject"
             autocomplete="on"
             required
@@ -95,6 +95,7 @@
 
         <div>
           <v-textarea
+            id="contact-message"
             v-model="form.message"
             :label="t('pages.contact.form.message')"
             :error="Boolean(errors.message)"
@@ -105,7 +106,6 @@
             rows="4"
             counter="2000"
             data-test="message-field"
-            id="contact-message"
             name="message"
             required
           />
@@ -124,8 +124,8 @@
           {{ t('pages.contact.form.name') }}
         </label>
         <input
-          v-model="form.honeypot"
           id="contact-check-field"
+          v-model="form.honeypot"
           name="website"
           type="text"
           class="sr-only"
@@ -161,7 +161,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
 
-import { toast } from '~/components/content/common/toast'
 import type {
   ContactValidationErrors,
   ContactValidationKey,
@@ -169,7 +168,7 @@ import type {
 import { validateContactForm } from '~/lib/contact/validation'
 
 const { t, locale } = useI18n()
-const { $fetch } = useNuxtApp()
+const { $fetch, $notify } = useNuxtApp()
 
 const formRef = ref()
 const isSubmitting = ref(false)
@@ -190,8 +189,9 @@ const errors = reactive<ContactValidationErrors>({
   message: null,
 })
 
-const validationMessage = (key: ContactValidationKey) =>
-  t(`pages.contact.validation.${key}`)
+function validationMessage(key: ContactValidationKey) {
+  return t(`pages.contact.validation.${key}`)
+}
 
 const nameErrorMessages = computed(() =>
   errors.name ? [validationMessage(errors.name)] : [],
@@ -265,9 +265,10 @@ async function handleSubmit() {
       },
     })
 
-    toast({
+    $notify({
+      type: 'success',
       title: t('pages.contact.title'),
-      description: t('pages.contact.form.success'),
+      message: t('pages.contact.form.success'),
     })
 
     statusMessage.value = t('pages.contact.form.success')
@@ -286,12 +287,12 @@ async function handleSubmit() {
       message: null,
     })
     formRef.value?.resetValidation?.()
-  } catch (exception) {
-    console.error('Failed to submit contact form', exception)
-    toast({
+  } catch (exception: unknown) {
+    $notify({
+      type: 'error',
       title: t('pages.contact.title'),
-      description: t('pages.contact.form.error'),
-      variant: 'destructive',
+      message: t('pages.contact.form.error'),
+      timeout: null,
     })
     statusMessage.value = t('pages.contact.form.error')
   } finally {

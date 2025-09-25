@@ -1,6 +1,7 @@
 {
   "common": {
-    "InspiraUIPro": "Inspira UI Pro"
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Fermer"
   },
   "banner": {
     "Content": "Pour la documentation Tailwind CSS v3, [**cliquez ici**](https://v1.inspira-ui.com)."
@@ -64,6 +65,7 @@
     "invalidError": "Impossible de vous connecter avec ces informations. Veuillez réessayer.",
     "successTitle": "Content de vous revoir",
     "success": "Connexion réussie.",
+    "errorTitle": "Échec de la connexion",
     "errorGeneric": "Une erreur est survenue lors de la connexion.",
     "socialTitle": "Se connecter avec votre fournisseur préféré",
     "socialSubtitle": "Nous vous redirigerons pour terminer l'authentification.",
@@ -286,6 +288,7 @@
     "errorMissing": "Veuillez remplir tous les champs obligatoires.",
     "errorMismatch": "Les mots de passe ne correspondent pas.",
     "errorGeneric": "Une erreur est survenue lors de la création du compte.",
+    "errorTitle": "Échec de la création du compte",
     "successTitle": "Compte créé",
     "success": "Votre compte a été créé avec succès.",
     "termsIntro": "En créant un compte, vous confirmez comprendre et accepter nos politiques.",
