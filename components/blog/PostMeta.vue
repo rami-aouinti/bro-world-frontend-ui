@@ -54,6 +54,7 @@
               role="menuitem"
               class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-slate-100 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               data-test="post-action-edit"
+              :aria-label="editLabel"
               @click="handleEdit"
             >
               {{ editLabel }}
@@ -64,6 +65,7 @@
               role="menuitem"
               class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-rose-200 transition-colors hover:bg-rose-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400"
               data-test="post-action-delete"
+              :aria-label="deleteLabel"
               @click="handleDelete"
             >
               {{ deleteLabel }}

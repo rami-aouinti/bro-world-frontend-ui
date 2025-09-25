@@ -105,7 +105,7 @@
         </form>
       </div>
 
-      <div class="px-3 w-full max-w-2xl">
+      <footer class="px-3 w-full max-w-2xl pt-1" aria-live="polite">
         <div
           class="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-400"
           :aria-label="metaAriaLabel"
@@ -121,7 +121,7 @@
             <span>{{ commentCountDisplay }}</span>
           </span>
         </div>
-      </div>
+      </footer>
 
       <footer
         v-if="hasReactionPreview"
