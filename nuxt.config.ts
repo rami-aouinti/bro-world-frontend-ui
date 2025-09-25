@@ -10,6 +10,7 @@ import { dirname, resolve as resolvePath } from 'node:path'
 import { createRequire } from 'node:module'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
+import tailwindcss from '@tailwindcss/vite'
 import { aliases } from 'vuetify/iconsets/mdi'
 
 type FetchHeadersInit = Record<string, string | number | readonly string[]>
@@ -235,6 +236,7 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
+      tailwindcss(),
       cssInjectedByJsPlugin(),
       compression({ algorithm: 'brotliCompress' }),
     ],
