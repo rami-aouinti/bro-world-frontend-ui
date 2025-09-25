@@ -3,6 +3,71 @@
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Close"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "Open navigation menu",
+      "openWidgets": "Open quick widgets",
+      "toggleTheme": "Toggle theme",
+      "goBack": "Go back",
+      "refresh": "Refresh",
+      "notifications": "Open notifications",
+      "cart": "Open bag",
+      "profile": "Open profile menu",
+      "viewProfile": "View profile",
+      "signOut": "Sign out",
+      "changeLanguage": "Change language (current: {locale})"
+    },
+    "appIcons": {
+      "academy": "Academy",
+      "briefcase": "Work",
+      "store": "Store",
+      "database": "Data",
+      "game": "Games"
+    },
+    "sidebar": {
+      "title": "Connect",
+      "navigate": "Navigate to section",
+      "items": {
+        "apps": "Apps",
+        "calendar": "Calendar",
+        "cv": "CV",
+        "jobs": "Jobs",
+        "help": "Help",
+        "about": "About",
+        "contact": "Contact"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Weather today",
+        "condition": "Cloudy",
+        "subtitle": "Feels like 11°"
+      },
+      "news": {
+        "title": "News",
+        "items": {
+          "0": {
+            "title": "Product launch rehearsal",
+            "timestamp": "5 min ago"
+          },
+          "1": {
+            "title": "Growth report available",
+            "timestamp": "15 min ago"
+          }
+        }
+      },
+      "rating": {
+        "title": "Rating overview",
+        "subtitle": "No reviews yet",
+        "edit": "Add rating",
+        "share": "Share",
+        "actionsLabel": "Rating actions"
+      },
+      "feed": {
+        "title": "Activity feed"
+      }
+    }
+  },
   "banner": {
     "Content": "For Tailwind CSS v3 docs, [**click here**](https://v1.inspira-ui.com)."
   },

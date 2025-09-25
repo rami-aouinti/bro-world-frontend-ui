@@ -3,6 +3,71 @@
     "InspiraUIPro": "Inspira UI 专业版",
     "close": "关闭"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "打开导航菜单",
+      "openWidgets": "打开快速小部件",
+      "toggleTheme": "切换主题",
+      "goBack": "返回",
+      "refresh": "刷新",
+      "notifications": "打开通知",
+      "cart": "打开包",
+      "profile": "打开个人菜单",
+      "viewProfile": "查看个人资料",
+      "signOut": "退出登录",
+      "changeLanguage": "切换语言（当前：{locale}）"
+    },
+    "appIcons": {
+      "academy": "学院",
+      "briefcase": "工作",
+      "store": "商店",
+      "database": "数据",
+      "game": "游戏"
+    },
+    "sidebar": {
+      "title": "连接",
+      "navigate": "跳转到分区",
+      "items": {
+        "apps": "应用",
+        "calendar": "日历",
+        "cv": "简历",
+        "jobs": "职位",
+        "help": "帮助",
+        "about": "关于",
+        "contact": "联系"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "今日天气",
+        "condition": "多云",
+        "subtitle": "体感 11°"
+      },
+      "news": {
+        "title": "新闻",
+        "items": {
+          "0": {
+            "title": "产品发布彩排",
+            "timestamp": "5 分钟前"
+          },
+          "1": {
+            "title": "增长报告已发布",
+            "timestamp": "15 分钟前"
+          }
+        }
+      },
+      "rating": {
+        "title": "评分概览",
+        "subtitle": "尚无评价",
+        "edit": "添加评分",
+        "share": "分享",
+        "actionsLabel": "评分操作"
+      },
+      "feed": {
+        "title": "活动动态"
+      }
+    }
+  },
   "banner": {
     "Content": "Tailwind CSS v3 文档, [**点击这里**](https://v1.inspira-ui.com)."
   },

@@ -3,6 +3,71 @@
     "InspiraUIPro": "إنسبيرا UI برو",
     "close": "إغلاق"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "فتح قائمة التنقل",
+      "openWidgets": "فتح الويدجت السريعة",
+      "toggleTheme": "تغيير السمة",
+      "goBack": "العودة",
+      "refresh": "تحديث",
+      "notifications": "فتح الإشعارات",
+      "cart": "فتح الحقيبة",
+      "profile": "فتح قائمة الملف الشخصي",
+      "viewProfile": "عرض الملف الشخصي",
+      "signOut": "تسجيل الخروج",
+      "changeLanguage": "تغيير اللغة (الحالية: {locale})"
+    },
+    "appIcons": {
+      "academy": "الأكاديمية",
+      "briefcase": "العمل",
+      "store": "المتجر",
+      "database": "البيانات",
+      "game": "الألعاب"
+    },
+    "sidebar": {
+      "title": "اتصال",
+      "navigate": "الانتقال إلى القسم",
+      "items": {
+        "apps": "التطبيقات",
+        "calendar": "التقويم",
+        "cv": "السيرة الذاتية",
+        "jobs": "الوظائف",
+        "help": "المساعدة",
+        "about": "حول",
+        "contact": "اتصال"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "طقس اليوم",
+        "condition": "غائم",
+        "subtitle": "درجة الإحساس 11°"
+      },
+      "news": {
+        "title": "أخبار",
+        "items": {
+          "0": {
+            "title": "بروفة إطلاق المنتج",
+            "timestamp": "منذ 5 دقائق"
+          },
+          "1": {
+            "title": "تقرير النمو متاح",
+            "timestamp": "منذ 15 دقيقة"
+          }
+        }
+      },
+      "rating": {
+        "title": "نظرة عامة على التقييم",
+        "subtitle": "لا توجد مراجعات بعد",
+        "edit": "إضافة تقييم",
+        "share": "مشاركة",
+        "actionsLabel": "إجراءات التقييم"
+      },
+      "feed": {
+        "title": "تغذية النشاط"
+      }
+    }
+  },
   "banner": {
     "Content": "للاطلاع على توثيق Tailwind CSS v3، [**اضغط هنا**](https://v1.inspira-ui.com)."
   },

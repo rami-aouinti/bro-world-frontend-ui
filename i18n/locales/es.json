@@ -3,6 +3,71 @@
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Cerrar"
   },
+  "layout": {
+    "actions": {
+      "openNavigation": "Abrir menú de navegación",
+      "openWidgets": "Abrir widgets rápidos",
+      "toggleTheme": "Cambiar tema",
+      "goBack": "Volver",
+      "refresh": "Actualizar",
+      "notifications": "Abrir notificaciones",
+      "cart": "Abrir bolsa",
+      "profile": "Abrir menú de perfil",
+      "viewProfile": "Ver perfil",
+      "signOut": "Cerrar sesión",
+      "changeLanguage": "Cambiar idioma (actual: {locale})"
+    },
+    "appIcons": {
+      "academy": "Academia",
+      "briefcase": "Trabajo",
+      "store": "Tienda",
+      "database": "Datos",
+      "game": "Juegos"
+    },
+    "sidebar": {
+      "title": "Conectar",
+      "navigate": "Ir a la sección",
+      "items": {
+        "apps": "Aplicaciones",
+        "calendar": "Calendario",
+        "cv": "CV",
+        "jobs": "Empleos",
+        "help": "Ayuda",
+        "about": "Acerca de",
+        "contact": "Contacto"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Clima de hoy",
+        "condition": "Nublado",
+        "subtitle": "Sensación 11°"
+      },
+      "news": {
+        "title": "Noticias",
+        "items": {
+          "0": {
+            "title": "Ensayo de lanzamiento de producto",
+            "timestamp": "Hace 5 min"
+          },
+          "1": {
+            "title": "Informe de crecimiento disponible",
+            "timestamp": "Hace 15 min"
+          }
+        }
+      },
+      "rating": {
+        "title": "Resumen de calificaciones",
+        "subtitle": "Sin reseñas aún",
+        "edit": "Agregar calificación",
+        "share": "Compartir",
+        "actionsLabel": "Acciones de calificación"
+      },
+      "feed": {
+        "title": "Actividad reciente"
+      }
+    }
+  },
   "banner": {
     "Content": "Para la documentación de Tailwind CSS v3, [**haz clic aquí**](https://v1.inspira-ui.com)."
   },
