@@ -14,7 +14,7 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="py-4 space-y-2">
+      <div class="mx-auto w-full max-w-2xl space-y-2 py-4">
         <h4
           class="text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
@@ -41,7 +41,7 @@
             }}
           </p>
         </div>
-        <div class="mt-4 space-y-3">
+        <div class="mx-auto mt-4 w-full max-w-2xl space-y-3">
           <CommentCard
             v-for="comment in post.comments_preview.slice(0, 4)"
             :key="comment.id"
