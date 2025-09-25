@@ -146,7 +146,7 @@
               size="30"
               class="bg-transparent text-lg"
             >
-              <span>🇬🇧</span>
+              <span>{{ localeToFlag(props.locale) }}</span>
             </v-avatar>
           </button>
         </template>
@@ -211,6 +211,17 @@ const { t } = useI18n()
 
 const localeLabel = computed(() => formatLocaleLabel(props.locale))
 
+const localeFlags: Record<string, string> = {
+  en: '🇬🇧',
+  de: '🇩🇪',
+  fr: '🇫🇷',
+  es: '🇪🇸',
+  it: '🇮🇹',
+  ru: '🇷🇺',
+  ar: '🇸🇦',
+  'zh-cn': '🇨🇳',
+}
+
 function changeLocale(value: string) {
   emit('update:locale', value)
 }
@@ -236,6 +247,27 @@ function formatLocaleLabel(value: string) {
     default:
       return value
   }
+}
+
+function localeToFlag(value: string) {
+  const normalized = value.toLowerCase()
+
+  if (normalized in localeFlags) {
+    return localeFlags[normalized]
+  }
+
+  const parts = normalized.split(/[-_]/).filter(Boolean)
+  const initials = parts.map((part) => part.charAt(0).toUpperCase()).join('')
+
+  if (initials.length === 1 && parts[0]) {
+    return parts[0].slice(0, 2).toUpperCase()
+  }
+
+  if (initials) {
+    return initials
+  }
+
+  return value.toUpperCase()
 }
 </script>
 
