@@ -1,5 +1,5 @@
 import { useNuxtApp } from '#app'
-import { en, fr, de, ar } from 'vuetify/locale'
+import { en, fr, de, ar, it, es, ru } from 'vuetify/locale'
 
 
 export default defineNuxtPlugin(() => {
@@ -9,6 +9,9 @@ export default defineNuxtPlugin(() => {
     fr,
     de,
     ar,
+    it,
+    es,
+    ru,
   }
 
   for (const [code, messages] of Object.entries(availableLocales)) {

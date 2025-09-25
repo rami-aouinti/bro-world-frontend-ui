@@ -307,6 +307,9 @@ export default defineNuxtConfig({
       { code: 'de', name: 'Deutsch', iso: 'de-DE', icon: 'fi-de de', file: 'de.json' },
       { code: 'fr', name: 'Frensh', iso: 'fr-FR', icon: 'fi-fr fr', file: 'fr.json' },
       { code: 'ar', name: 'Arabic', iso: 'tn-TN', icon: 'fi-tn tn', file: 'ar.json' },
+      { code: 'it', name: 'Italian', iso: 'it-IT', icon: 'fi-it it', file: 'it.json' },
+      { code: 'es', name: 'Spanish', iso: 'es-ES', icon: 'fi-es es', file: 'es.json' },
+      { code: 'ru', name: 'Russian', iso: 'ru-RU', icon: 'fi-ru ru', file: 'ru.json' },
     ],
     baseUrl: 'https://bro-world-space.com'
   },

@@ -10,8 +10,10 @@ import DateFnsAdapter from '@date-io/date-fns'
 import enUSLocale from 'date-fns/locale/en-US'
 import frLocale from 'date-fns/locale/fr'
 import deLocale from 'date-fns/locale/de'
+import itLocale from 'date-fns/locale/it'
+import esLocale from 'date-fns/locale/es'
+import ruLocale from 'date-fns/locale/ru'
 import arLocale from 'date-fns/locale/ar-SA'
-import { en, fr, de, ar } from 'vuetify/locale'
 
 import '@/assets/styles/material-dashboard.scss'
 import "flag-icons"
@@ -31,6 +33,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         fr: frLocale,
         de: deLocale,
         ar: arLocale,
+        it: itLocale,
+        es: esLocale,
+        ru: ruLocale,
       },
     }
 
