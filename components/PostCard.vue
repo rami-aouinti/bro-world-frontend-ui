@@ -123,8 +123,6 @@ const commentPreviewCountLabel = computed(() =>
   }),
 );
 
-const highlightedReactionsLabel = computed(() => t("blog.reactions.posts.highlightedReactions"));
-
 const topComments = computed(() => props.post.comments_preview.slice(0, 4));
 const topReactions = computed(() => props.post.reactions_preview.slice(0, 4));
 const hasCommentPreview = computed(() => topComments.value.length > 0);
