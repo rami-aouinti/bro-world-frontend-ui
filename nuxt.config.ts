@@ -5,7 +5,8 @@ import http from 'node:http'
 import https from 'node:https'
 import os from 'node:os'
 import { Blob as NodeBlob, File as NodeFile } from 'node:buffer'
-import { URL } from 'node:url'
+import { URL, fileURLToPath } from 'node:url'
+import { dirname, resolve as resolvePath } from 'node:path'
 import { createRequire } from 'node:module'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
@@ -177,6 +178,11 @@ const osWithAvailableParallelism = os as typeof os & {
   availableParallelism?: () => number
 }
 
+const currentDir = dirname(fileURLToPath(new URL('.', import.meta.url)))
+function resolveFromRoot(...segments: string[]) {
+  return resolvePath(currentDir, ...segments)
+}
+
 const require = createRequire(import.meta.url)
 
 const nuxtLayers: string[] = ['shadcn-docs-nuxt']
@@ -247,6 +253,9 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "nuxt-llms",
   ],
+  alias: {
+    pinia: resolveFromRoot('lib/pinia-shim.ts'),
+  },
 
   components: [
     {
@@ -380,6 +389,13 @@ export default defineNuxtConfig({
   ignore: ["components/**/index.ts", "components/**/shaders.ts", "components/**/types.ts"],
 
   runtimeConfig: {
+    redis: {
+      url: process.env.NUXT_REDIS_URL ?? "",
+      tls: process.env.NUXT_REDIS_TLS === "true",
+      keyPrefix: process.env.NUXT_REDIS_KEY_PREFIX ?? "bro-world",
+      listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
+      itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
+    },
     public: {
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
