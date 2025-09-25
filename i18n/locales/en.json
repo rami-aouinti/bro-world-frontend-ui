@@ -59,10 +59,19 @@
     "signIn": "Sign in",
     "signUpPrompt": "Don't have an account?",
     "signUp": "Create one",
+    "forgotPassword": "Forgot your password?",
     "requiredError": "Please enter your email and password.",
     "invalidError": "We couldn't sign you in with those details. Please try again.",
     "successTitle": "Welcome back",
     "success": "You have been signed in successfully.",
+    "errorGeneric": "Something went wrong while signing you in.",
+    "socialTitle": "Sign in with your favorite provider",
+    "socialSubtitle": "We'll redirect you to finish authentication.",
+    "social": {
+      "google": "Continue with Google",
+      "github": "Continue with GitHub",
+      "microsoft": "Continue with Microsoft"
+    }
     "errorGeneric": "Something went wrong while signing you in."
   },
   "blog": {

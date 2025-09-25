@@ -59,10 +59,19 @@
     "signIn": "Se connecter",
     "signUpPrompt": "Pas encore de compte ?",
     "signUp": "Créer un compte",
+    "forgotPassword": "Mot de passe oublié ?",
     "requiredError": "Veuillez saisir votre e-mail et votre mot de passe.",
     "invalidError": "Impossible de vous connecter avec ces informations. Veuillez réessayer.",
     "successTitle": "Content de vous revoir",
     "success": "Connexion réussie.",
+    "errorGeneric": "Une erreur est survenue lors de la connexion.",
+    "socialTitle": "Se connecter avec votre fournisseur préféré",
+    "socialSubtitle": "Nous vous redirigerons pour terminer l'authentification.",
+    "social": {
+      "google": "Continuer avec Google",
+      "github": "Continuer avec GitHub",
+      "microsoft": "Continuer avec Microsoft"
+    }
     "errorGeneric": "Une erreur est survenue lors de la connexion."
   },
   "blog": {

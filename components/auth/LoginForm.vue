@@ -32,6 +32,14 @@
         {{ error }}
       </p>
 
+      <div class="mt-2 mb-4" :class="isRtl ? 'text-start' : 'text-end'">
+        <NuxtLink
+          :to="localePath('/forgot-password')"
+          class="text-primary text-decoration-none text-sm"
+        >
+          {{ t('auth.forgotPassword') }}
+        </NuxtLink>
+      </div>
       <button
         :disabled="loading"
         type="submit"

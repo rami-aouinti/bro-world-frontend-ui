@@ -59,10 +59,19 @@
     "signIn": "Anmelden",
     "signUpPrompt": "Noch kein Konto?",
     "signUp": "Jetzt registrieren",
+    "forgotPassword": "Passwort vergessen?",
     "requiredError": "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.",
     "invalidError": "Anmeldung mit diesen Daten nicht möglich. Bitte versuchen Sie es erneut.",
     "successTitle": "Willkommen zurück",
     "success": "Sie wurden erfolgreich angemeldet.",
+    "errorGeneric": "Beim Anmelden ist ein Fehler aufgetreten.",
+    "socialTitle": "Mit deinem bevorzugten Anbieter anmelden",
+    "socialSubtitle": "Wir leiten dich weiter, um die Anmeldung abzuschließen.",
+    "social": {
+      "google": "Mit Google fortfahren",
+      "github": "Mit GitHub fortfahren",
+      "microsoft": "Mit Microsoft fortfahren"
+    }
     "errorGeneric": "Beim Anmelden ist ein Fehler aufgetreten."
   },
   "blog": {

@@ -53,7 +53,25 @@
   "auth": {
     "Account": "账户",
     "Login": "登录",
-    "Register": "注册"
+    "Register": "注册",
+    "usernameOrEmail": "邮箱地址或用户名",
+    "password": "密码",
+    "signIn": "登录",
+    "signUpPrompt": "还没有账号？",
+    "signUp": "立即注册",
+    "forgotPassword": "忘记密码？",
+    "requiredError": "请输入邮箱和密码。",
+    "invalidError": "这些信息无法登录，请重试。",
+    "successTitle": "欢迎回来",
+    "success": "您已成功登录。",
+    "errorGeneric": "登录时出现问题。",
+    "socialTitle": "使用常用账号快速登录",
+    "socialSubtitle": "我们会跳转到第三方完成认证。",
+    "social": {
+      "google": "使用 Google 继续",
+      "github": "使用 GitHub 继续",
+      "microsoft": "使用 Microsoft 继续"
+    }
   },
   "blog": {
     "hero": {

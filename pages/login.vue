@@ -1,77 +1,76 @@
 <template>
-  <v-container class="py-12" style="margin-top: -70px;">
-    <v-card-text class="text-medium-emphasis pa-1">
-      <AuthLoginForm />
-    </v-card-text>
-  </v-container>
+  <v-card
+    :loading="isRedirecting"
+    class="auth-card border-radius-xl overflow-visible"
+    rounded="xl"
+    elevation="24"
+  >
+    <v-sheet
+      class="mx-auto"
+      elevation="12"
+      max-width="calc(100% - 32px)"
+      rounded="lg"
+      color="primary"
+      style="z-index: 2; top: -44px; position: relative;"
+    >
+      <div class="mt-4 py-3">
+        <div class="text-h4 font-weight-bold d-flex justify-center text-white">
+          Bro World
+        </div>
+      </div>
+      <AuthSocial :loading="isRedirecting" @redirect="handleSocialRedirect" />
+    </v-sheet>
+
+    <div class="pa-6">
+      <v-progress-circular
+        v-if="isRedirecting"
+        indeterminate
+        color="primary"
+        size="80"
+        class="mx-auto d-block"
+      />
+      <div v-else class="auth-card__form">
+        <AuthLoginForm />
+      </div>
+    </div>
+  </v-card>
 </template>
 
 <script setup lang="ts">
-import AuthLoginForm from "~/components/auth/LoginForm.vue";
-import { computed, ref } from "vue";
-import { useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
-import { useLocalePath } from "#i18n";
+import { ref } from 'vue'
 
-import { toast } from "~/components/content/common/toast";
+import AuthLoginForm from '~/components/auth/LoginForm.vue'
+import AuthSocial from '~/components/auth/Social.vue'
+import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
 
-const { t, locale } = useI18n();
-const router = useRouter();
-const localePath = useLocalePath();
+definePageMeta({
+  title: 'login',
+  layout: 'auth',
+  breadcrumb: 'disabled',
+})
 
-const isRtl = computed(() => ["ar", "he", "fa", "ur"].includes(locale.value));
-const fieldAlignment = computed(() => (isRtl.value ? "text-end" : "text-start"));
+const isRedirecting = ref(false)
 
-const username = ref("");
-const password = ref("");
-const loading = ref(false);
-const error = ref("");
-const showPassword = ref(false);
+function handleSocialRedirect(provider: SocialProvider) {
+  const target = resolveSocialRedirect(provider)
 
-function togglePassword() {
-  showPassword.value = !showPassword.value;
-}
+  if (!target) return
 
-async function handleSubmit() {
-  if (loading.value) return;
+  isRedirecting.value = true
 
-  loading.value = true;
-  error.value = "";
-
-  if (!username.value || !password.value) {
-    error.value = t("auth.requiredError");
-    loading.value = false;
-    return;
-  }
-
-  try {
-    const { data, error: fetchError } = await useFetch("/api/auth/login", {
-      method: "POST",
-      body: {
-        username: username.value,
-        password: password.value,
-      },
-    });
-
-    if (fetchError.value) {
-      error.value = fetchError.value.data?.message ?? t("auth.invalidError");
-      return;
-    }
-
-    if (data.value) {
-      toast({
-        title: t("auth.successTitle"),
-        description: t("auth.success"),
-      });
-      const homePath = localePath("/");
-      await router.push(homePath);
-    }
-  } catch (exception) {
-    console.error("Login failed", exception);
-    error.value = t("auth.errorGeneric");
-  } finally {
-    loading.value = false;
+  if (import.meta.client) {
+    window.location.href = target
   }
 }
 </script>
 
+<style scoped>
+.auth-card {
+  max-width: 450px;
+  margin-inline: auto;
+}
+
+.auth-card__form {
+  margin-top: -80px;
+}
+</style>
