@@ -51,6 +51,19 @@
       </v-tooltip>
     </div>
 
+    <div
+      v-if="showInlineSearch"
+      class="hidden flex-1 items-center px-4 md:flex"
+    >
+      <LayoutSearchButton class="w-full max-w-2xl" />
+    </div>
+    <div
+      v-else-if="showSearchButton"
+      class="hidden md:flex"
+    >
+      <LayoutSearchButton />
+    </div>
+
     <v-spacer />
 
     <div class="flex items-center gap-1">
@@ -208,6 +221,16 @@ const iconPillClasses =
   'flex h-10 w-10 items-center justify-center rounded-2xl border border-transparent bg-white/70 text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2'
 
 const { t } = useI18n()
+
+const config = useConfig()
+
+const showInlineSearch = computed(
+  () => !config.value.search.inAside && config.value.search.style === 'input',
+)
+
+const showSearchButton = computed(
+  () => !config.value.search.inAside && config.value.search.style === 'button',
+)
 
 const localeLabel = computed(() => formatLocaleLabel(props.locale))
 
