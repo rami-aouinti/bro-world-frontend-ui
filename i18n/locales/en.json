@@ -50,190 +50,6 @@
       "GetStarted": "Get Started"
     }
   },
-  "pages": {
-    "playground": {
-      "ui": {
-        "title": "UI Component Playground",
-        "description": "Review every base component with multiple variants, sizes, and accessibility states.",
-        "controls": {
-          "expandAll": "Expand all",
-          "collapseAll": "Collapse all"
-        },
-        "toggles": {
-          "locale": "Locale preview",
-          "direction": "Layout direction",
-          "theme": "Theme",
-          "density": "Control size"
-        },
-        "directions": {
-          "ltr": "LTR",
-          "rtl": "RTL"
-        },
-        "themes": {
-          "light": "Light",
-          "dark": "Dark"
-        },
-        "sizes": {
-          "sm": "Small",
-          "md": "Medium",
-          "lg": "Large"
-        },
-        "locales": {
-          "en": "English",
-          "ar": "Arabic"
-        },
-        "variants": {
-          "filled": "Filled",
-          "tonal": "Tonal",
-          "outline": "Outline",
-          "text": "Text",
-          "plain": "Plain"
-        },
-        "states": {
-          "default": "Default",
-          "disabled": "Disabled",
-          "loading": "Loading",
-          "leadingIcon": "Leading icon",
-          "trailingIcon": "Trailing icon",
-          "block": "Full width",
-          "focus": "Focused",
-          "error": "Error",
-          "success": "Success",
-          "checked": "Checked",
-          "indeterminate": "Indeterminate"
-        },
-        "inputTypes": {
-          "text": "Text",
-          "email": "Email",
-          "password": "Password",
-          "number": "Number",
-          "search": "Search",
-          "url": "URL"
-        },
-        "placeholders": {
-          "generic": "Enter a value",
-          "focus": "Auto-focused input",
-          "error": "Something went wrong",
-          "success": "Everything looks good",
-          "autogrow": "Describe your idea…",
-          "select": "Choose an option",
-          "selectMultiple": "Select integrations",
-          "fullName": "Ada Lovelace"
-        },
-        "examples": {
-          "buttonLabel": "Primary action",
-          "loading": "Loading…",
-          "primaryAction": "Continue",
-          "secondaryAction": "Learn more",
-          "fullWidth": "Take the full width",
-          "inputType": "{type} input",
-          "disabledValue": "Unavailable while disabled",
-          "textareaDefault": "Feedback textarea",
-          "textareaAutoGrow": "Auto growing notes",
-          "checkboxPrimary": "Email updates",
-          "checkboxIndeterminate": "Partially selected",
-          "checkboxDisabled": "Disabled checkbox",
-          "switchNotifications": "Enable notifications",
-          "switchDisabled": "Disabled switch",
-          "selectSingle": "Delivery channel",
-          "selectMultiple": "Team integrations",
-          "selectDisabledOptions": "Release channel",
-          "radioVertical": "Cadence options",
-          "radioHorizontal": "Payment methods",
-          "formFieldBasic": "Field with helper text",
-          "formFieldError": "Field with errors",
-          "formFieldCheckbox": "Field wrapping checkbox"
-        },
-        "feedback": {
-          "error": "Provide a valid response.",
-          "selectMethod": "Select a supported payment method.",
-          "invalidEmail": "Enter a valid email address."
-        },
-        "hints": {
-          "characterLimit": "Keep it under 240 characters.",
-          "checkbox": "You can mark more than one preference.",
-          "switch": "Switch represents an immediate action.",
-          "disabledOption": "Some options are unavailable right now.",
-          "radio": "Choose the plan that fits best.",
-          "required": "This field is required."
-        },
-        "notes": {
-          "autofocus": "Auto-focus is applied to show the focus style.",
-          "disabledChoice": "One option is disabled to demonstrate aria-disabled."
-        },
-        "sample": {
-          "textValue": "Hi from the playground!",
-          "multiline": "Let the team know how this feels.",
-          "longerText": "This textarea grows as you type so reviewers can stress-test the auto-grow behaviour."
-        },
-        "selectOptions": {
-          "email": "Email",
-          "sms": "SMS",
-          "push": "Push notification",
-          "alpha": "Alpha",
-          "beta": "Beta",
-          "release": "Release"
-        },
-        "radioOptions": {
-          "daily": "Daily summary",
-          "weekly": "Weekly digest",
-          "monthly": "Monthly report",
-          "card": "Credit card",
-          "paypal": "PayPal",
-          "bank": "Bank transfer"
-        },
-        "labels": {
-          "fullName": "Full name",
-          "email": "Email",
-          "preferences": "Preferences"
-        },
-        "groups": {
-          "buttons": {
-            "title": "Buttons",
-            "description": "Primary actions and secondary button styles."
-          },
-          "inputs": {
-            "title": "Inputs",
-            "description": "Text inputs and textareas with validation states."
-          },
-          "toggles": {
-            "title": "Toggles",
-            "description": "Checkboxes and switches for binary choices."
-          },
-          "selectors": {
-            "title": "Selectors",
-            "description": "Select menus and radio groups for choosing options."
-          },
-          "wrappers": {
-            "title": "Form wrappers",
-            "description": "FormField wrapper integrating labels, hints, and errors."
-          }
-        },
-        "sections": {
-          "buttonVariants": "Variants & sizes",
-          "buttonVariantsDescription": "Each button variant rendered across small, medium, and large sizes.",
-          "buttonStates": "States",
-          "buttonStatesDescription": "Loading, disabled, icon, and block button examples.",
-          "inputTypes": "Input types",
-          "inputTypesDescription": "BaseInput with different HTML input types and clearable behaviour.",
-          "inputStates": "States",
-          "inputStatesDescription": "Focused, success, error, and disabled input states.",
-          "textareaStates": "Textarea states",
-          "textareaStatesDescription": "Resizable textarea variations with hints and disabled view.",
-          "checkboxes": "Checkboxes",
-          "checkboxesDescription": "Checked, indeterminate, and disabled checkbox states.",
-          "switches": "Switches",
-          "switchesDescription": "Enabled and disabled switch controls.",
-          "selects": "Select menus",
-          "selectsDescription": "Single, multi-select, and disabled options examples.",
-          "radios": "Radio groups",
-          "radiosDescription": "Vertical and horizontal radio group layouts with keyboard support.",
-          "formFields": "FormField wrapper",
-          "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
-        }
-      }
-    }
-  },
   "auth": {
     "Account": "Account",
     "Login": "Log in",
@@ -639,6 +455,188 @@
       "availability": {
         "title": "When we're online",
         "body": "Our distributed team monitors requests Monday through Friday and rotates weekend coverage for urgent issues."
+      }
+    },
+    "playground": {
+      "ui": {
+        "title": "UI Component Playground",
+        "description": "Review every base component with multiple variants, sizes, and accessibility states.",
+        "controls": {
+          "expandAll": "Expand all",
+          "collapseAll": "Collapse all"
+        },
+        "toggles": {
+          "locale": "Locale preview",
+          "direction": "Layout direction",
+          "theme": "Theme",
+          "density": "Control size"
+        },
+        "directions": {
+          "ltr": "LTR",
+          "rtl": "RTL"
+        },
+        "themes": {
+          "light": "Light",
+          "dark": "Dark"
+        },
+        "sizes": {
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        },
+        "locales": {
+          "en": "English",
+          "ar": "Arabic"
+        },
+        "variants": {
+          "filled": "Filled",
+          "tonal": "Tonal",
+          "outline": "Outline",
+          "text": "Text",
+          "plain": "Plain"
+        },
+        "states": {
+          "default": "Default",
+          "disabled": "Disabled",
+          "loading": "Loading",
+          "leadingIcon": "Leading icon",
+          "trailingIcon": "Trailing icon",
+          "block": "Full width",
+          "focus": "Focused",
+          "error": "Error",
+          "success": "Success",
+          "checked": "Checked",
+          "indeterminate": "Indeterminate"
+        },
+        "inputTypes": {
+          "text": "Text",
+          "email": "Email",
+          "password": "Password",
+          "number": "Number",
+          "search": "Search",
+          "url": "URL"
+        },
+        "placeholders": {
+          "generic": "Enter a value",
+          "focus": "Auto-focused input",
+          "error": "Something went wrong",
+          "success": "Everything looks good",
+          "autogrow": "Describe your idea…",
+          "select": "Choose an option",
+          "selectMultiple": "Select integrations",
+          "fullName": "Ada Lovelace"
+        },
+        "examples": {
+          "buttonLabel": "Primary action",
+          "loading": "Loading…",
+          "primaryAction": "Continue",
+          "secondaryAction": "Learn more",
+          "fullWidth": "Take the full width",
+          "inputType": "{type} input",
+          "disabledValue": "Unavailable while disabled",
+          "textareaDefault": "Feedback textarea",
+          "textareaAutoGrow": "Auto growing notes",
+          "checkboxPrimary": "Email updates",
+          "checkboxIndeterminate": "Partially selected",
+          "checkboxDisabled": "Disabled checkbox",
+          "switchNotifications": "Enable notifications",
+          "switchDisabled": "Disabled switch",
+          "selectSingle": "Delivery channel",
+          "selectMultiple": "Team integrations",
+          "selectDisabledOptions": "Release channel",
+          "radioVertical": "Cadence options",
+          "radioHorizontal": "Payment methods",
+          "formFieldBasic": "Field with helper text",
+          "formFieldError": "Field with errors",
+          "formFieldCheckbox": "Field wrapping checkbox"
+        },
+        "feedback": {
+          "error": "Provide a valid response.",
+          "selectMethod": "Select a supported payment method.",
+          "invalidEmail": "Enter a valid email address."
+        },
+        "hints": {
+          "characterLimit": "Keep it under 240 characters.",
+          "checkbox": "You can mark more than one preference.",
+          "switch": "Switch represents an immediate action.",
+          "disabledOption": "Some options are unavailable right now.",
+          "radio": "Choose the plan that fits best.",
+          "required": "This field is required."
+        },
+        "notes": {
+          "autofocus": "Auto-focus is applied to show the focus style.",
+          "disabledChoice": "One option is disabled to demonstrate aria-disabled."
+        },
+        "sample": {
+          "textValue": "Hi from the playground!",
+          "multiline": "Let the team know how this feels.",
+          "longerText": "This textarea grows as you type so reviewers can stress-test the auto-grow behaviour."
+        },
+        "selectOptions": {
+          "email": "Email",
+          "sms": "SMS",
+          "push": "Push notification",
+          "alpha": "Alpha",
+          "beta": "Beta",
+          "release": "Release"
+        },
+        "radioOptions": {
+          "daily": "Daily summary",
+          "weekly": "Weekly digest",
+          "monthly": "Monthly report",
+          "card": "Credit card",
+          "paypal": "PayPal",
+          "bank": "Bank transfer"
+        },
+        "labels": {
+          "fullName": "Full name",
+          "email": "Email",
+          "preferences": "Preferences"
+        },
+        "groups": {
+          "buttons": {
+            "title": "Buttons",
+            "description": "Primary actions and secondary button styles."
+          },
+          "inputs": {
+            "title": "Inputs",
+            "description": "Text inputs and textareas with validation states."
+          },
+          "toggles": {
+            "title": "Toggles",
+            "description": "Checkboxes and switches for binary choices."
+          },
+          "selectors": {
+            "title": "Selectors",
+            "description": "Select menus and radio groups for choosing options."
+          },
+          "wrappers": {
+            "title": "Form wrappers",
+            "description": "FormField wrapper integrating labels, hints, and errors."
+          }
+        },
+        "sections": {
+          "buttonVariants": "Variants & sizes",
+          "buttonVariantsDescription": "Each button variant rendered across small, medium, and large sizes.",
+          "buttonStates": "States",
+          "buttonStatesDescription": "Loading, disabled, icon, and block button examples.",
+          "inputTypes": "Input types",
+          "inputTypesDescription": "BaseInput with different HTML input types and clearable behaviour.",
+          "inputStates": "States",
+          "inputStatesDescription": "Focused, success, error, and disabled input states.",
+          "textareaStates": "Textarea states",
+          "textareaStatesDescription": "Resizable textarea variations with hints and disabled view.",
+          "checkboxes": "Checkboxes",
+          "checkboxesDescription": "Checked, indeterminate, and disabled checkbox states.",
+          "switches": "Switches",
+          "switchesDescription": "Enabled and disabled switch controls.",
+          "selects": "Select menus",
+          "selectsDescription": "Single, multi-select, and disabled options examples.",
+          "radios": "Radio groups",
+          "radiosDescription": "Vertical and horizontal radio group layouts with keyboard support.",
+          "formFields": "FormField wrapper",
+          "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
+        }
       }
     }
   },

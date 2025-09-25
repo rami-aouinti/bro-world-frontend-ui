@@ -169,8 +169,6 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch, type Component, type VNodeChild } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useTheme } from 'vuetify'
 import { createError, useHead } from '#imports'
 
 import BaseButton from '~/components/ui/BaseButton.vue'
@@ -181,7 +179,7 @@ import BaseSelect from '~/components/ui/BaseSelect.vue'
 import BaseSwitch from '~/components/ui/BaseSwitch.vue'
 import BaseTextarea from '~/components/ui/BaseTextarea.vue'
 import FormField from '~/components/ui/FormField.vue'
-
+const { locale, t } = useI18n();
 if (process.env.APP_ENV === 'production') {
   throw createError({ statusCode: 404, statusMessage: 'Not Found' })
 }
@@ -192,8 +190,9 @@ definePageMeta({
 })
 
 type ControlSize = 'sm' | 'md' | 'lg'
-type ThemeMode = 'light' | 'dark'
+type ThemeMode =  'dark'
 type DirectionMode = 'ltr' | 'rtl'
+const themeMode = 'dark'
 
 const componentRegistry = {
   BaseButton,
@@ -254,16 +253,10 @@ interface PlaygroundGroup {
 
 const sizeOptions: ControlSize[] = ['sm', 'md', 'lg']
 const buttonVariants = ['filled', 'tonal', 'outline', 'text', 'plain'] as const
-const { t, locale } = useI18n()
-const theme = useTheme()
 
-const initialThemeName = theme.global.name.value as ThemeMode | string
-const themeMode = computed<ThemeMode>({
-  get: () => (theme.global.name.value === 'dark' ? 'dark' : 'light'),
-  set: (value) => {
-    theme.global.name.value = value
-  },
-})
+
+
+
 
 const initialLocale = locale.value
 const localeOptions = computed(() => [
