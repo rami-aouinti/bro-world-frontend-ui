@@ -176,6 +176,33 @@ describe("PostCard interactions", () => {
     expect(toastSpy).toHaveBeenCalled();
   });
 
+  it("does not render author actions when the viewer is logged out", () => {
+    setViewerAs(null);
+
+    const wrapper = mountComponent();
+
+    expect(wrapper.find("[data-test='author-actions']").exists()).toBe(false);
+  });
+
+  it("shows a following indicator when the viewer already follows the author", () => {
+    setViewerAs("viewer-1");
+    followingState[basePost.user.id] = true;
+
+    const wrapper = mountComponent();
+
+    const chip = wrapper.find("[data-test='following-chip']");
+    expect(chip.exists()).toBe(true);
+    expect(chip.text()).toBe(en.blog.posts.actions.following);
+  });
+
+  it("renders the post meta bar below the content", () => {
+    const wrapper = mountComponent();
+
+    const metaBar = wrapper.find("[data-test='post-meta-bar']");
+    expect(metaBar.exists()).toBe(true);
+    expect(metaBar.element.closest("footer")).not.toBeNull();
+  });
+
   it("opens the edit modal and saves changes", async () => {
     const wrapper = mountComponent();
 
