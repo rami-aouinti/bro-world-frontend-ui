@@ -26,7 +26,7 @@
       </div>
     </div>
     <div v-else>
-      <slot />
+      <NuxtPage />
     </div>
     <LayoutRightSidebar v-if="showRightAside" />
     <Toaster />
