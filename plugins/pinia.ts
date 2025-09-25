@@ -1,4 +1,4 @@
-import { createPinia } from "pinia";
+import { createPinia } from "~/lib/pinia-shim";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const pinia = createPinia();

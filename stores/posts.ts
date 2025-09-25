@@ -1,5 +1,5 @@
 import { computed, reactive, ref, shallowRef } from "vue";
-import { defineStore } from "pinia";
+import { defineStore } from "~/lib/pinia-shim";
 import { useRequestFetch } from "#app";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
