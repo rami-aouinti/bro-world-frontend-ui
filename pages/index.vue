@@ -1,5 +1,5 @@
 <template>
-  <div class="relative min-h-screen overflow-hidden bg-slate-950 text-slate-50">
+  <div class="relative min-h-screen overflow-hidden bg-transparent text-slate-50">
     <div class="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8">
       <div
           v-if="pending"
