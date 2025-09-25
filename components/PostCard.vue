@@ -1,20 +1,33 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-3xl p-6  shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
+    class="group relative overflow-hidden rounded-3xl p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
   >
     <div class="relative flex flex-col gap-2">
       <PostMeta
         :user="post.user"
         :default-avatar="defaultAvatar"
         :published-label="publishedLabel"
-        :reaction-badge="reactionBadge"
-        :comment-badge="commentBadge"
+        :is-authenticated="isAuthenticated"
+        :is-author="isAuthor"
+        :is-following="isFollowing"
+        :follow-loading="followLoading"
+        :follow-label="followLabel"
+        :follow-loading-label="followLoadingLabel"
+        :follow-aria-label="followAriaLabel"
+        :following-label="followingLabel"
+        :following-aria-label="followingAriaLabel"
+        :actions-aria-label="actionsAriaLabel"
+        :edit-label="editLabel"
+        :delete-label="deleteLabel"
+        @follow="handleFollow"
+        @edit="openEditModal"
+        @delete="openDeleteDialog"
       />
 
       <div class="px-3 w-full max-w-2xl space-y-2">
         <RadiantText
-            class="inline-flex items-center justify-center px-2 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
-            :duration="5"
+          class="inline-flex items-center justify-center px-2 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
+          :duration="5"
         >
           <span class="text-xl font-bold">{{ post.title }}</span>
         </RadiantText>
@@ -84,12 +97,30 @@
                 class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
                 :disabled="submittingComment"
               >
-                <span v-if="submittingComment">{{ t('blog.comments.submitting') }}</span>
-                <span v-else>{{ t('blog.comments.submit') }}</span>
+                <span v-if="submittingComment">{{ t("blog.comments.submitting") }}</span>
+                <span v-else>{{ t("blog.comments.submit") }}</span>
               </button>
             </div>
           </div>
         </form>
+      </div>
+
+      <div class="px-3 w-full max-w-2xl">
+        <div
+          class="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-400"
+          :aria-label="metaAriaLabel"
+          data-test="post-meta-bar"
+        >
+          <span class="inline-flex items-center gap-1">
+            <span aria-hidden="true">❤️</span>
+            <span>{{ reactionCountDisplay }}</span>
+          </span>
+          <span aria-hidden="true" class="text-slate-500">•</span>
+          <span class="inline-flex items-center gap-1">
+            <span aria-hidden="true">💬</span>
+            <span>{{ commentCountDisplay }}</span>
+          </span>
+        </div>
       </div>
 
       <footer
@@ -98,16 +129,15 @@
       >
         <div class="flex flex-wrap gap-4">
           <div
-              v-for="reaction in topReactions"
-              :key="reaction.id"
-              class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-4 py-1.5 text-slate-100 shadow-[0_10px_25px_-15px_rgba(15,23,42,0.9)]"
+            v-for="reaction in topReactions"
+            :key="reaction.id"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-4 py-1.5 text-slate-100 shadow-[0_10px_25px_-15px_rgba(15,23,42,0.9)]"
           >
             <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
             <span
-                aria-hidden="true"
-                class="text-lg"
-            >{{ reactionEmojis[reaction.type] }}</span
-            >
+              aria-hidden="true"
+              class="text-lg"
+            >{{ reactionEmojis[reaction.type] }}</span>
           </div>
         </div>
       </footer>
@@ -139,21 +169,138 @@
       </section>
     </div>
     <BorderBeam
-        :size="250"
-        :duration="12"
-        :delay="9"
-        :border-width="2"
+      :size="250"
+      :duration="12"
+      :delay="9"
+      :border-width="2"
     />
+
+    <teleport to="body">
+      <transition name="fade-scale">
+        <div
+          v-if="editModalOpen"
+          class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
+          aria-modal="true"
+          role="dialog"
+          :aria-label="editModalTitle"
+          @keydown="handleEditKeydown"
+        >
+          <div
+            ref="editDialogRef"
+            class="w-full max-w-2xl rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
+            tabindex="-1"
+          >
+            <header class="space-y-1">
+              <h2 class="text-xl font-semibold">{{ editModalTitle }}</h2>
+              <p class="text-sm text-slate-400">{{ editModalDescription }}</p>
+            </header>
+            <form class="mt-6 space-y-5" @submit.prevent="handleSaveEdit">
+              <label class="flex flex-col gap-2 text-sm">
+                <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.title') }}</span>
+                <input
+                  ref="editTitleRef"
+                  v-model="editForm.title"
+                  type="text"
+                  class="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+                />
+              </label>
+              <label class="flex flex-col gap-2 text-sm">
+                <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.summary') }}</span>
+                <textarea
+                  ref="editSummaryRef"
+                  v-model="editForm.summary"
+                  class="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+                />
+              </label>
+              <label class="flex flex-col gap-2 text-sm">
+                <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.content') }}</span>
+                <textarea
+                  v-model="editForm.content"
+                  class="min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+                />
+              </label>
+              <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  @click="closeEditModal"
+                >
+                  {{ editModalCancelLabel }}
+                </button>
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60"
+                  :disabled="saveLoading"
+                >
+                  <span v-if="saveLoading" class="inline-flex items-center gap-2">
+                    <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
+                    <span>{{ editModalSaveLabel }}</span>
+                  </span>
+                  <span v-else>{{ editModalSaveLabel }}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </transition>
+    </teleport>
+
+    <teleport to="body">
+      <transition name="fade-scale">
+        <div
+          v-if="deleteDialogOpen"
+          class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
+          role="alertdialog"
+          :aria-label="deleteDialogTitle"
+          aria-modal="true"
+          @keydown="handleDeleteKeydown"
+        >
+          <div
+            ref="deleteDialogRef"
+            class="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
+            tabindex="-1"
+          >
+            <header class="space-y-2">
+              <h2 class="text-xl font-semibold text-rose-200">{{ deleteDialogTitle }}</h2>
+              <p class="text-sm text-slate-400">{{ deleteDialogDescription }}</p>
+            </header>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                @click="closeDeleteDialog"
+              >
+                {{ deleteDialogCancelLabel }}
+              </button>
+              <button
+                type="button"
+                class="inline-flex items-center justify-center rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400 disabled:cursor-not-allowed disabled:opacity-60"
+                :disabled="deleteLoading"
+                @click="handleDeletePost"
+              >
+                <span v-if="deleteLoading" class="inline-flex items-center gap-2">
+                  <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
+                  <span>{{ deleteDialogConfirmLabel }}</span>
+                </span>
+                <span v-else>{{ deleteDialogConfirmLabel }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </teleport>
   </article>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, nextTick, reactive, ref, watch } from "vue";
 
 import CommentCard from "~/components/CommentCard.vue";
 import PostMeta from "~/components/blog/PostMeta.vue";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
+import { useAuthStore } from "~/composables/useAuthStore";
+import { toast } from "~/components/content/common/toast";
 
 interface FeedbackState {
   type: "success" | "error";
@@ -168,7 +315,21 @@ const props = defineProps<{
 }>();
 
 const { locale, t } = useI18n();
-const { reactToPost, addComment, reactToComment } = usePostsStore();
+const {
+  reactToPost,
+  addComment,
+  reactToComment,
+  updatePost,
+  deletePost,
+} = usePostsStore();
+const {
+  currentUser,
+  isAuthenticated: isAuthenticatedComputed,
+  following,
+  followPending,
+  followAuthor,
+  resetFollowError,
+} = useAuthStore();
 
 const post = computed(() => props.post);
 
@@ -195,21 +356,37 @@ const publishedLabel = computed(() =>
   t("blog.reactions.posts.publishedOn", { date: formatDateTime(post.value.publishedAt) }),
 );
 
-const reactionBadge = computed(() => ({
-  icon: props.reactionEmojis.like,
-  display: formatNumber(post.value.reactions_count),
-  ariaLabel: t("blog.reactions.posts.reactionCount", {
-    count: formatNumber(post.value.reactions_count),
-  }),
-}));
+const isAuthenticated = computed(() => isAuthenticatedComputed.value);
+const isAuthor = computed(() => isAuthenticated.value && currentUser.value?.id === post.value.user.id);
+const isFollowing = computed(() => Boolean(following.value?.[post.value.user.id]));
+const followLoading = computed(() => Boolean(followPending.value?.[post.value.user.id]));
 
-const commentBadge = computed(() => ({
-  icon: "💬",
-  display: formatNumber(post.value.totalComments),
-  ariaLabel: t("blog.reactions.posts.commentCount", {
-    count: formatNumber(post.value.totalComments),
+const followLabel = computed(() => t("blog.posts.actions.follow"));
+const followLoadingLabel = computed(() => t("blog.posts.actions.following"));
+const followAriaLabel = computed(() =>
+  t("blog.posts.actions.followAria", {
+    name: `${post.value.user.firstName} ${post.value.user.lastName}`,
   }),
-}));
+);
+const followingLabel = computed(() => t("blog.posts.actions.following"));
+const followingAriaLabel = computed(() =>
+  t("blog.posts.actions.followingAria", {
+    name: `${post.value.user.firstName} ${post.value.user.lastName}`,
+  }),
+);
+const actionsAriaLabel = computed(() => t("blog.posts.actions.openMenu"));
+const editLabel = computed(() => t("blog.posts.actions.edit"));
+const deleteLabel = computed(() => t("blog.posts.actions.delete"));
+
+const metaAriaLabel = computed(() =>
+  t("blog.posts.actions.statistics", {
+    reactions: reactionCountDisplay.value,
+    comments: commentCountDisplay.value,
+  }),
+);
+
+const reactionCountDisplay = computed(() => formatNumber(post.value.reactions_count));
+const commentCountDisplay = computed(() => formatNumber(post.value.totalComments));
 
 const recentCommentsLabel = computed(() => t("blog.reactions.posts.recentComments"));
 
@@ -232,6 +409,77 @@ const commentCharacterCountLabel = computed(() => {
   return t("blog.comments.characterCount", { count: formatNumber(length) });
 });
 
+const editModalOpen = ref(false);
+const deleteDialogOpen = ref(false);
+const editForm = reactive({
+  title: post.value.title,
+  summary: post.value.summary,
+  content: post.value.content,
+});
+const saveLoading = ref(false);
+const deleteLoading = ref(false);
+const editDialogRef = ref<HTMLDivElement | null>(null);
+const deleteDialogRef = ref<HTMLDivElement | null>(null);
+const editTitleRef = ref<HTMLInputElement | null>(null);
+const previousFocusedElement = ref<HTMLElement | null>(null);
+
+const editModalTitle = computed(() => t("blog.posts.actions.editTitle"));
+const editModalDescription = computed(() => t("blog.posts.actions.editDescription"));
+const editModalSaveLabel = computed(() => t("blog.posts.actions.save"));
+const editModalCancelLabel = computed(() => t("blog.posts.actions.cancel"));
+const deleteDialogTitle = computed(() => t("blog.posts.actions.deleteTitle"));
+const deleteDialogDescription = computed(() => t("blog.posts.actions.deleteDescription"));
+const deleteDialogConfirmLabel = computed(() => t("blog.posts.actions.deleteConfirm"));
+const deleteDialogCancelLabel = computed(() => t("blog.posts.actions.cancel"));
+
+watch(
+  post,
+  () => {
+    if (!editModalOpen.value) {
+      editForm.title = post.value.title;
+      editForm.summary = post.value.summary;
+      editForm.content = post.value.content;
+    }
+  },
+  { immediate: true },
+);
+
+watch(editModalOpen, (open) => {
+  if (open) {
+    previousFocusedElement.value = document.activeElement as HTMLElement | null;
+
+    nextTick(() => {
+      editTitleRef.value?.focus();
+    });
+
+    return;
+  }
+
+  if (previousFocusedElement.value) {
+    nextTick(() => {
+      previousFocusedElement.value?.focus();
+    });
+  }
+});
+
+watch(deleteDialogOpen, (open) => {
+  if (open) {
+    previousFocusedElement.value = document.activeElement as HTMLElement | null;
+
+    nextTick(() => {
+      deleteDialogRef.value?.focus();
+    });
+
+    return;
+  }
+
+  if (previousFocusedElement.value) {
+    nextTick(() => {
+      previousFocusedElement.value?.focus();
+    });
+  }
+});
+
 watch(
   () => post.value.id,
   () => {
@@ -242,6 +490,168 @@ watch(
     postReactionError.value = null;
   },
 );
+
+function trapFocus(event: KeyboardEvent, container: HTMLElement | null) {
+  if (!container || event.key !== "Tab") {
+    return;
+  }
+
+  const focusable = container.querySelectorAll<HTMLElement>(
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+  );
+
+  if (focusable.length === 0) {
+    event.preventDefault();
+    return;
+  }
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  const active = document.activeElement as HTMLElement | null;
+
+  if (event.shiftKey) {
+    if (active === first || !active) {
+      event.preventDefault();
+      last.focus();
+    }
+
+    return;
+  }
+
+  if (active === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function closeEditModal() {
+  editModalOpen.value = false;
+}
+
+function closeDeleteDialog() {
+  deleteDialogOpen.value = false;
+}
+
+function openEditModal() {
+  editForm.title = post.value.title;
+  editForm.summary = post.value.summary;
+  editForm.content = post.value.content;
+  editModalOpen.value = true;
+}
+
+function openDeleteDialog() {
+  deleteDialogOpen.value = true;
+}
+
+async function handleSaveEdit() {
+  if (saveLoading.value) {
+    return;
+  }
+
+  saveLoading.value = true;
+
+  try {
+    const payload = {
+      title: editForm.title,
+      summary: editForm.summary,
+      content: editForm.content,
+    };
+
+    await updatePost(post.value.id, payload);
+
+    toast({
+      title: t("blog.posts.actions.editSuccessTitle"),
+      description: t("blog.posts.actions.editSuccessDescription"),
+    });
+
+    closeEditModal();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "");
+
+    toast({
+      title: t("blog.posts.actions.editErrorTitle"),
+      description: message || t("blog.posts.actions.editErrorDescription"),
+      variant: "destructive",
+    });
+  } finally {
+    saveLoading.value = false;
+  }
+}
+
+async function handleDeletePost() {
+  if (deleteLoading.value) {
+    return;
+  }
+
+  deleteLoading.value = true;
+
+  try {
+    await deletePost(post.value.id);
+
+    toast({
+      title: t("blog.posts.actions.deleteSuccessTitle"),
+      description: t("blog.posts.actions.deleteSuccessDescription"),
+    });
+
+    closeDeleteDialog();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "");
+
+    toast({
+      title: t("blog.posts.actions.deleteErrorTitle"),
+      description: message || t("blog.posts.actions.deleteErrorDescription"),
+      variant: "destructive",
+    });
+  } finally {
+    deleteLoading.value = false;
+  }
+}
+
+async function handleFollow() {
+  if (followLoading.value) {
+    return;
+  }
+
+  try {
+    resetFollowError();
+    await followAuthor(post.value.user.id);
+
+    toast({
+      title: t("blog.posts.actions.followSuccessTitle"),
+      description: t("blog.posts.actions.followSuccessDescription", {
+        name: `${post.value.user.firstName} ${post.value.user.lastName}`,
+      }),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "");
+
+    toast({
+      title: t("blog.posts.actions.followErrorTitle"),
+      description: message || t("blog.posts.actions.followErrorDescription"),
+      variant: "destructive",
+    });
+  }
+}
+
+function handleEditKeydown(event: KeyboardEvent) {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeEditModal();
+    return;
+  }
+
+  trapFocus(event, editDialogRef.value);
+}
+
+function handleDeleteKeydown(event: KeyboardEvent) {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeDeleteDialog();
+    return;
+  }
+
+  trapFocus(event, deleteDialogRef.value);
+}
 
 async function handlePostReaction(type: ReactionType) {
   if (postReactingType.value) {
@@ -312,3 +722,16 @@ async function handleCommentReply(commentId: string, content: string) {
   }
 }
 </script>
+
+<style scoped>
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  transform: scale(0.96);
+}
+</style>

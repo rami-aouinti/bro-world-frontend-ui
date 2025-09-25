@@ -134,6 +134,42 @@
         "replyCount": "{count} réponses"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "Suivre",
+        "following": "Abonné",
+        "followAria": "Suivre {name}",
+        "followingAria": "Vous suivez {name}",
+        "openMenu": "Ouvrir les actions de la publication",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "statistics": "{reactions} réactions et {comments} commentaires",
+        "editTitle": "Modifier la publication",
+        "editDescription": "Mettez à jour les détails de votre publication ci-dessous.",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "deleteTitle": "Supprimer cette publication ?",
+        "deleteDescription": "Cette action est irréversible. La publication sera supprimée pour tout le monde.",
+        "deleteConfirm": "Supprimer",
+        "editSuccessTitle": "Publication mise à jour",
+        "editSuccessDescription": "Vos modifications ont été enregistrées.",
+        "editErrorTitle": "Échec de la mise à jour",
+        "editErrorDescription": "Nous n'avons pas pu mettre à jour cette publication. Veuillez réessayer.",
+        "deleteSuccessTitle": "Publication supprimée",
+        "deleteSuccessDescription": "La publication a été retirée du fil.",
+        "deleteErrorTitle": "Échec de la suppression",
+        "deleteErrorDescription": "Nous n'avons pas pu supprimer cette publication. Veuillez réessayer.",
+        "followSuccessTitle": "Auteur suivi",
+        "followSuccessDescription": "Vous suivez désormais {name}.",
+        "followErrorTitle": "Échec de l'abonnement",
+        "followErrorDescription": "Nous n'avons pas pu suivre cet auteur. Veuillez réessayer.",
+        "fields": {
+          "title": "Titre",
+          "summary": "Résumé",
+          "content": "Contenu"
+        }
+      }
+    },
     "comments": {
       "label": "Participez à la discussion",
       "placeholder": "Partagez vos idées avec la communauté...",

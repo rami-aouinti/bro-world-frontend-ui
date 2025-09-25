@@ -135,6 +135,42 @@
         "replyCount": "{count} ответов"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "Подписаться",
+        "following": "Вы подписаны",
+        "followAria": "Подписаться на {name}",
+        "followingAria": "Вы уже подписаны на {name}",
+        "openMenu": "Открыть действия с публикацией",
+        "edit": "Редактировать",
+        "delete": "Удалить",
+        "statistics": "{reactions} реакций и {comments} комментариев",
+        "editTitle": "Редактировать публикацию",
+        "editDescription": "Обновите информацию о публикации ниже.",
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "deleteTitle": "Удалить эту публикацию?",
+        "deleteDescription": "Действие нельзя отменить. Публикация будет удалена для всех.",
+        "deleteConfirm": "Удалить",
+        "editSuccessTitle": "Публикация обновлена",
+        "editSuccessDescription": "Изменения успешно сохранены.",
+        "editErrorTitle": "Не удалось обновить",
+        "editErrorDescription": "Не удалось обновить публикацию. Попробуйте ещё раз.",
+        "deleteSuccessTitle": "Публикация удалена",
+        "deleteSuccessDescription": "Публикация удалена из ленты.",
+        "deleteErrorTitle": "Не удалось удалить",
+        "deleteErrorDescription": "Не удалось удалить публикацию. Попробуйте ещё раз.",
+        "followSuccessTitle": "Автор добавлен",
+        "followSuccessDescription": "Теперь вы подписаны на {name}.",
+        "followErrorTitle": "Не удалось подписаться",
+        "followErrorDescription": "Не удалось подписаться на автора. Попробуйте ещё раз.",
+        "fields": {
+          "title": "Заголовок",
+          "summary": "Краткое описание",
+          "content": "Содержимое"
+        }
+      }
+    },
     "comments": {
       "label": "Присоединяйтесь к обсуждению",
       "placeholder": "Поделитесь своими мыслями с сообществом...",

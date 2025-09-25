@@ -134,6 +134,42 @@
         "replyCount": "{count} replies"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "Follow",
+        "following": "Following",
+        "followAria": "Follow {name}",
+        "followingAria": "You are following {name}",
+        "openMenu": "Open post actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "statistics": "{reactions} reactions and {comments} comments",
+        "editTitle": "Edit post",
+        "editDescription": "Update the details of your post below.",
+        "save": "Save",
+        "cancel": "Cancel",
+        "deleteTitle": "Delete this post?",
+        "deleteDescription": "This action cannot be undone. The post will be removed for everyone.",
+        "deleteConfirm": "Delete",
+        "editSuccessTitle": "Post updated",
+        "editSuccessDescription": "Your changes have been saved successfully.",
+        "editErrorTitle": "Update failed",
+        "editErrorDescription": "We couldn't update this post. Please try again.",
+        "deleteSuccessTitle": "Post deleted",
+        "deleteSuccessDescription": "The post has been removed from the feed.",
+        "deleteErrorTitle": "Delete failed",
+        "deleteErrorDescription": "We couldn't delete this post. Please try again.",
+        "followSuccessTitle": "Author followed",
+        "followSuccessDescription": "You're now following {name}.",
+        "followErrorTitle": "Follow failed",
+        "followErrorDescription": "We couldn't follow this author. Please try again.",
+        "fields": {
+          "title": "Title",
+          "summary": "Summary",
+          "content": "Content"
+        }
+      }
+    },
     "comments": {
       "label": "Join the discussion",
       "placeholder": "Share your thoughts with the community...",

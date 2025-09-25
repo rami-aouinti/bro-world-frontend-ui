@@ -135,6 +135,42 @@
         "replyCount": "{count} risposte"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "Segui",
+        "following": "Seguito",
+        "followAria": "Segui {name}",
+        "followingAria": "Stai già seguendo {name}",
+        "openMenu": "Apri azioni del post",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "statistics": "{reactions} reazioni e {comments} commenti",
+        "editTitle": "Modifica post",
+        "editDescription": "Aggiorna i dettagli del tuo post qui sotto.",
+        "save": "Salva",
+        "cancel": "Annulla",
+        "deleteTitle": "Eliminare questo post?",
+        "deleteDescription": "Questa azione non può essere annullata. Il post verrà rimosso per tutti.",
+        "deleteConfirm": "Elimina",
+        "editSuccessTitle": "Post aggiornato",
+        "editSuccessDescription": "Le modifiche sono state salvate correttamente.",
+        "editErrorTitle": "Aggiornamento non riuscito",
+        "editErrorDescription": "Non è stato possibile aggiornare il post. Riprova.",
+        "deleteSuccessTitle": "Post eliminato",
+        "deleteSuccessDescription": "Il post è stato rimosso dal feed.",
+        "deleteErrorTitle": "Eliminazione non riuscita",
+        "deleteErrorDescription": "Non è stato possibile eliminare il post. Riprova.",
+        "followSuccessTitle": "Autore seguito",
+        "followSuccessDescription": "Ora stai seguendo {name}.",
+        "followErrorTitle": "Impossibile seguire",
+        "followErrorDescription": "Non è stato possibile seguire questo autore. Riprova.",
+        "fields": {
+          "title": "Titolo",
+          "summary": "Sommario",
+          "content": "Contenuto"
+        }
+      }
+    },
     "comments": {
       "label": "Partecipa alla conversazione",
       "placeholder": "Condividi i tuoi pensieri con la community...",

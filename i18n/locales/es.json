@@ -135,6 +135,42 @@
         "replyCount": "{count} respuestas"
       }
     },
+    "posts": {
+      "actions": {
+        "follow": "Seguir",
+        "following": "Siguiendo",
+        "followAria": "Seguir a {name}",
+        "followingAria": "Ya sigues a {name}",
+        "openMenu": "Abrir acciones de la publicación",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "statistics": "{reactions} reacciones y {comments} comentarios",
+        "editTitle": "Editar publicación",
+        "editDescription": "Actualiza los detalles de tu publicación a continuación.",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "deleteTitle": "¿Eliminar esta publicación?",
+        "deleteDescription": "Esta acción no se puede deshacer. La publicación se eliminará para todos.",
+        "deleteConfirm": "Eliminar",
+        "editSuccessTitle": "Publicación actualizada",
+        "editSuccessDescription": "Tus cambios se han guardado correctamente.",
+        "editErrorTitle": "Fallo al actualizar",
+        "editErrorDescription": "No pudimos actualizar esta publicación. Inténtalo de nuevo.",
+        "deleteSuccessTitle": "Publicación eliminada",
+        "deleteSuccessDescription": "La publicación se ha eliminado del feed.",
+        "deleteErrorTitle": "Fallo al eliminar",
+        "deleteErrorDescription": "No pudimos eliminar esta publicación. Inténtalo de nuevo.",
+        "followSuccessTitle": "Autor seguido",
+        "followSuccessDescription": "Ahora sigues a {name}.",
+        "followErrorTitle": "Fallo al seguir",
+        "followErrorDescription": "No pudimos seguir a este autor. Inténtalo de nuevo.",
+        "fields": {
+          "title": "Título",
+          "summary": "Resumen",
+          "content": "Contenido"
+        }
+      }
+    },
     "comments": {
       "label": "Únete a la conversación",
       "placeholder": "Comparte tus ideas con la comunidad...",
