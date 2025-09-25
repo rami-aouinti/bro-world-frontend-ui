@@ -61,6 +61,36 @@ Toggle controls display inline labels and hints, and respect keyboard activation
 
 Validation errors are surfaced by passing translated strings from parent logic to `errorMessages`. Because components do not render hard-coded copy, they work seamlessly with Nuxt i18n. Focus states and spacing derive from Vuetify design tokens and adapt to dark/light themes automatically.
 
+## Modals
+
+`BaseModal` wraps Vuetify's dialog with a consistent header, body padding, and primary/secondary footer actions. The component exposes a `primaryLabel` prop (`Save` by default) and emits `primary` along with `close` when the user dismisses the modal via the Close button, overlay, or the <kbd>Esc</kbd> key. Slots for `title`, default content, and `footer` enable form layouts or fully custom actions.
+
+```vue
+<BaseModal
+  v-model="isEditing"
+  title="Edit profile"
+  primary-label="Update"
+  :loading="isSaving"
+  @primary="onSave"
+>
+  <FormField label="Display name">
+    <BaseInput v-model="form.name" />
+  </FormField>
+</BaseModal>
+```
+
+`DeleteConfirmModal` builds on `BaseModal` to provide a lightweight destructive confirmation with Cancel/Delete actions. It emits `confirm`, `cancel`, and forwards `update:modelValue` when closed so parent components can handle removal logic or analytics hooks.
+
+```vue
+<DeleteConfirmModal
+  v-model="showDelete"
+  title="Delete post?"
+  message="This action cannot be undone."
+  @confirm="removePost"
+  @cancel="showDelete = false"
+/>
+```
+
 ## Testing & Stories
 
 Unit tests live in `components/ui/tests` and cover v-model, accessibility wiring, disabled interactions, and keyboard navigation. Playground stories under `components/ui/stories` provide interactive examples for designers and developers.
