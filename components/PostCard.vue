@@ -11,7 +11,7 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="mx-4 w-full max-w-2xl space-y-2">
+      <div class="px-3 w-full max-w-2xl space-y-2">
         <h4
           class="text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
