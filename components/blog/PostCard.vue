@@ -1,6 +1,6 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/10 backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]"
+    class="group relative overflow-hidden rounded-3xl border border-white/5 bg-transparent backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/5 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]"
   >
     <div
       class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-primary/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -14,7 +14,7 @@
         :comment-badge="commentBadge"
       />
 
-      <div class="mx-auto py-4 space-y-2">
+      <div class="py-4 space-y-2">
         <h4
           class="text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
         >
@@ -27,9 +27,9 @@
 
       <div
         v-if="post.comments_preview.length"
-        class="rounded-2xl border border-white/10 bg-black/20 p-6"
+        class="rounded-2xl border border-white/10 bg-transparent p-6"
       >
-        <div class="flex items-center justify-between mx-auto py-2">
+        <div class="flex items-center justify-between py-2">
           <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
             {{ t("blog.reactions.post.recentComments") }}
           </p>
@@ -41,7 +41,7 @@
             }}
           </p>
         </div>
-        <div class="mt-2 space-y-2 mx-auto py-2">
+        <div class="mt-4 space-y-3">
           <CommentCard
             v-for="comment in post.comments_preview.slice(0, 4)"
             :key="comment.id"
@@ -52,12 +52,12 @@
 
       <footer
         v-if="post.reactions_preview.length"
-        class="flex flex-wrap items-center gap-3 text-sm mx-auto py-2"
+        class="flex flex-wrap items-center gap-3 pt-4 text-sm"
       >
         <span class="text-xs uppercase tracking-wide text-slate-400">
           {{ t("blog.reactions.post.reactionSpotlight") }}
         </span>
-        <div class="flex flex-wrap gap-3 mx-auto py-2">
+        <div class="flex flex-wrap gap-3">
           <div
             v-for="reaction in post.reactions_preview.slice(0, 4)"
             :key="reaction.id"
