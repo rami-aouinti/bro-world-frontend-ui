@@ -128,12 +128,36 @@
         "commentCount": "{count} 条评论",
         "recentComments": "最新评论",
         "previewCount": "{count} 条预览",
-        "highlightedReactions": "精选反应"
+        "highlightedReactions": "精选反应",
+        "reactLabel": "添加你的回应",
+        "reactionError": "无法对该帖子进行回应，请重试。"
       },
       "comments": {
         "reactionCount": "{count} 个反应",
         "replyCount": "{count} 条回复"
       }
+    },
+    "comments": {
+      "label": "加入讨论",
+      "placeholder": "与社区分享你的想法...",
+      "characterCount": "{count} 个字符",
+      "submit": "发布评论",
+      "submitting": "发布中...",
+      "success": "你的评论已添加。",
+      "error": "无法添加评论，请重试。",
+      "validation": "发布前请先写下评论。",
+      "empty": "暂无评论，快来抢沙发吧！",
+      "reply": "回复",
+      "replying": "正在回复...",
+      "replyPlaceholder": "写下你的回复...",
+      "replySubmit": "发送回复",
+      "replySuccess": "你的回复已添加。",
+      "replyError": "无法发布回复，请重试。",
+      "replyValidation": "发送前请先写下回复。",
+      "cancelReply": "取消",
+      "replyUnavailable": "暂时无法回复。",
+      "reactionUnavailable": "暂时无法添加回应。",
+      "reactionError": "无法对该评论进行回应，请重试。"
     },
     "sidebar": {
       "weather": {

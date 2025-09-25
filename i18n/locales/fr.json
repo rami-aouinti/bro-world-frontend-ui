@@ -125,12 +125,36 @@
         "commentCount": "{count} commentaires",
         "recentComments": "Commentaires récents",
         "previewCount": "{count} aperçus",
-        "highlightedReactions": "Réactions coup de cœur"
+        "highlightedReactions": "Réactions coup de cœur",
+        "reactLabel": "Ajoutez votre réaction",
+        "reactionError": "Impossible d'ajouter votre réaction à cette publication. Veuillez réessayer."
       },
       "comments": {
         "reactionCount": "{count} réactions",
         "replyCount": "{count} réponses"
       }
+    },
+    "comments": {
+      "label": "Participez à la discussion",
+      "placeholder": "Partagez vos idées avec la communauté...",
+      "characterCount": "{count} caractères",
+      "submit": "Publier le commentaire",
+      "submitting": "Publication...",
+      "success": "Votre commentaire a été ajouté.",
+      "error": "Impossible d'ajouter votre commentaire. Veuillez réessayer.",
+      "validation": "Écrivez un commentaire avant de publier.",
+      "empty": "Aucun commentaire pour le moment. Lancez la discussion !",
+      "reply": "Répondre",
+      "replying": "Réponse en cours...",
+      "replyPlaceholder": "Écrivez votre réponse...",
+      "replySubmit": "Envoyer la réponse",
+      "replySuccess": "Votre réponse a été ajoutée.",
+      "replyError": "Impossible de publier votre réponse. Veuillez réessayer.",
+      "replyValidation": "Écrivez une réponse avant d'envoyer.",
+      "cancelReply": "Annuler",
+      "replyUnavailable": "Les réponses ne sont pas disponibles pour le moment.",
+      "reactionUnavailable": "Les réactions ne sont pas disponibles pour le moment.",
+      "reactionError": "Impossible de réagir à ce commentaire. Veuillez réessayer."
     },
     "sidebar": {
       "weather": {

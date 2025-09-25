@@ -1,5 +1,5 @@
 import { computed } from "vue";
-import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+import type { BlogApiResponse, BlogPost, ReactionType } from "~/lib/mock/blog";
 
 interface CreatePostPayload {
   content: string;
@@ -89,6 +89,81 @@ export function usePostsStore() {
     }
   }
 
+  async function reactToPost(postId: string, reactionType: ReactionType) {
+    const trimmedPostId = postId?.trim();
+
+    if (!trimmedPostId) {
+      throw new Error("Post identifier is required.");
+    }
+
+    try {
+      await $fetch(`/api/posts/${trimmedPostId}/reactions`, {
+        method: "POST",
+        body: { reactionType },
+      });
+
+      await fetchPosts({ force: true });
+
+      return postsState.value;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error ?? "");
+      throw new Error(message || "Unable to react to the post.");
+    }
+  }
+
+  async function addComment(postId: string, content: string, parentCommentId?: string | null) {
+    const trimmedPostId = postId?.trim();
+    const trimmedContent = content?.trim();
+
+    if (!trimmedPostId) {
+      throw new Error("Post identifier is required.");
+    }
+
+    if (!trimmedContent) {
+      throw new Error("Comment content is required.");
+    }
+
+    try {
+      await $fetch(`/api/posts/${trimmedPostId}/comments`, {
+        method: "POST",
+        body: {
+          content: trimmedContent,
+          parentCommentId: parentCommentId?.trim() || null,
+        },
+      });
+
+      await fetchPosts({ force: true });
+
+      return postsState.value;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error ?? "");
+      throw new Error(message || "Unable to add the comment.");
+    }
+  }
+
+  async function reactToComment(postId: string, commentId: string, reactionType: ReactionType) {
+    const trimmedPostId = postId?.trim();
+    const trimmedCommentId = commentId?.trim();
+
+    if (!trimmedPostId || !trimmedCommentId) {
+      throw new Error("Post and comment identifiers are required.");
+    }
+
+    try {
+      await $fetch(`/api/posts/${trimmedPostId}/comments/${trimmedCommentId}/reactions`, {
+        method: "POST",
+        body: { reactionType },
+      });
+
+      await fetchPosts({ force: true });
+
+      return postsState.value;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error ?? "");
+      throw new Error(message || "Unable to react to the comment.");
+    }
+  }
+
   return {
     posts: computed(() => postsState.value),
     pending: computed(() => pendingState.value),
@@ -98,5 +173,8 @@ export function usePostsStore() {
     createPost,
     creating: computed(() => creatingState.value),
     createError: computed(() => createErrorState.value),
+    reactToPost,
+    addComment,
+    reactToComment,
   };
 }

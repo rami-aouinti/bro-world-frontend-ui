@@ -126,12 +126,36 @@
         "commentCount": "{count} comentarios",
         "recentComments": "Comentarios recientes",
         "previewCount": "{count} vistas previas",
-        "highlightedReactions": "Reacciones favoritas de los fans"
+        "highlightedReactions": "Reacciones favoritas de los fans",
+        "reactLabel": "Añade tu reacción",
+        "reactionError": "No pudimos reaccionar a esta publicación. Inténtalo de nuevo."
       },
       "comments": {
         "reactionCount": "{count} reacciones",
         "replyCount": "{count} respuestas"
       }
+    },
+    "comments": {
+      "label": "Únete a la conversación",
+      "placeholder": "Comparte tus ideas con la comunidad...",
+      "characterCount": "{count} caracteres",
+      "submit": "Publicar comentario",
+      "submitting": "Publicando...",
+      "success": "Tu comentario se agregó correctamente.",
+      "error": "No pudimos agregar tu comentario. Inténtalo de nuevo.",
+      "validation": "Escribe un comentario antes de publicar.",
+      "empty": "Aún no hay comentarios. ¡Sé la primera persona en participar!",
+      "reply": "Responder",
+      "replying": "Respondiendo...",
+      "replyPlaceholder": "Escribe tu respuesta...",
+      "replySubmit": "Enviar respuesta",
+      "replySuccess": "Tu respuesta se agregó correctamente.",
+      "replyError": "No pudimos publicar tu respuesta. Inténtalo de nuevo.",
+      "replyValidation": "Escribe una respuesta antes de enviarla.",
+      "cancelReply": "Cancelar",
+      "replyUnavailable": "Las respuestas no están disponibles en este momento.",
+      "reactionUnavailable": "Las reacciones no están disponibles en este momento.",
+      "reactionError": "No pudimos reaccionar a este comentario. Inténtalo de nuevo."
     },
     "sidebar": {
       "weather": {

@@ -127,12 +127,36 @@
         "commentCount": "{count} تعليقًا",
         "recentComments": "أحدث التعليقات",
         "previewCount": "{count} معاينات",
-        "highlightedReactions": "أبرز التفاعلات"
+        "highlightedReactions": "أبرز التفاعلات",
+        "reactLabel": "أضف تفاعلك",
+        "reactionError": "تعذر إضافة تفاعل على هذا المنشور. حاول مرة أخرى."
       },
       "comments": {
         "reactionCount": "{count} تفاعل",
         "replyCount": "{count} ردًا"
       }
+    },
+    "comments": {
+      "label": "انضم إلى النقاش",
+      "placeholder": "شارك أفكارك مع المجتمع...",
+      "characterCount": "{count} حرفًا",
+      "submit": "نشر التعليق",
+      "submitting": "جاري النشر...",
+      "success": "تمت إضافة تعليقك.",
+      "error": "تعذر إضافة تعليقك. حاول مرة أخرى.",
+      "validation": "اكتب تعليقًا قبل النشر.",
+      "empty": "لا توجد تعليقات بعد. كن أول من يبدأ المحادثة!",
+      "reply": "رد",
+      "replying": "جاري إرسال الرد...",
+      "replyPlaceholder": "اكتب ردك...",
+      "replySubmit": "إرسال الرد",
+      "replySuccess": "تمت إضافة ردك.",
+      "replyError": "تعذر نشر ردك. حاول مرة أخرى.",
+      "replyValidation": "اكتب ردًا قبل الإرسال.",
+      "cancelReply": "إلغاء",
+      "replyUnavailable": "الردود غير متاحة حاليًا.",
+      "reactionUnavailable": "التفاعلات غير متاحة حاليًا.",
+      "reactionError": "تعذر إضافة تفاعل على هذا التعليق. حاول مرة أخرى."
     },
     "sidebar": {
       "weather": {

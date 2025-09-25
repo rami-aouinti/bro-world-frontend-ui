@@ -28,6 +28,13 @@ export interface BlogCommentPreview {
   likes_count: number;
 }
 
+export interface BlogCommentWithReplies extends BlogCommentPreview {
+  parentId?: string | null;
+  comments?: BlogCommentWithReplies[];
+  replies?: BlogCommentWithReplies[];
+  children?: BlogCommentWithReplies[];
+}
+
 export interface BlogPost {
   id: string;
   title: string;
