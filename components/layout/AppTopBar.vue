@@ -9,7 +9,7 @@
       <button
         v-if="isMobile"
         type="button"
-        class="icon-trigger"
+        :class="iconTriggerClasses"
         :aria-label="t('layout.actions.openNavigation')"
         @click="emit('toggle-left')"
       >
@@ -38,7 +38,7 @@
         <template #activator="{ props: tooltipProps }">
           <button
             type="button"
-            class="icon-pill"
+            :class="iconPillClasses"
             v-bind="tooltipProps"
             :aria-label="t(icon.label)"
           >
@@ -56,7 +56,7 @@
     <div class="flex items-center gap-1">
       <button
         type="button"
-        class="icon-trigger"
+        :class="iconTriggerClasses"
         :aria-label="t('layout.actions.toggleTheme')"
         @click="emit('toggle-theme')"
       >
@@ -67,7 +67,7 @@
       </button>
       <button
         type="button"
-        class="icon-trigger"
+        :class="iconTriggerClasses"
         :aria-label="t('layout.actions.goBack')"
         @click="emit('go-back')"
       >
@@ -78,7 +78,7 @@
       </button>
       <button
         type="button"
-        class="icon-trigger"
+        :class="iconTriggerClasses"
         :aria-label="t('layout.actions.refresh')"
         @click="emit('refresh')"
       >
@@ -89,7 +89,7 @@
       </button>
       <button
         type="button"
-        class="icon-trigger"
+        :class="iconTriggerClasses"
         :aria-label="t('layout.actions.notifications')"
       >
         <v-icon
@@ -99,7 +99,7 @@
       </button>
       <button
         type="button"
-        class="icon-trigger"
+        :class="iconTriggerClasses"
         :aria-label="t('layout.actions.cart')"
       >
         <v-icon
@@ -111,7 +111,7 @@
         <template #activator="{ props: profileProps }">
           <button
             type="button"
-            class="icon-trigger"
+            :class="iconTriggerClasses"
             :aria-label="t('layout.actions.profile')"
             v-bind="profileProps"
           >
@@ -138,7 +138,7 @@
         <template #activator="{ props: languageProps }">
           <button
             type="button"
-            class="icon-trigger"
+            :class="iconTriggerClasses"
             :aria-label="t('layout.actions.changeLanguage', { locale: localeLabel })"
             v-bind="languageProps"
           >
@@ -165,7 +165,7 @@
       <button
         v-if="isMobile"
         type="button"
-        class="icon-trigger"
+        :class="iconTriggerClasses"
         :aria-label="t('layout.actions.openWidgets')"
         @click="emit('toggle-right')"
       >
@@ -200,6 +200,12 @@ const emit = defineEmits([
   'refresh',
   'update:locale',
 ])
+
+const iconTriggerClasses =
+  'flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2'
+
+const iconPillClasses =
+  'flex h-10 w-10 items-center justify-center rounded-2xl border border-transparent bg-white/70 text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2'
 
 const { t } = useI18n()
 
@@ -238,15 +244,5 @@ function formatLocaleLabel(value: string) {
   backdrop-filter: blur(18px);
   background: rgba(255, 255, 255, 0.82);
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-}
-
-.icon-trigger {
-  @apply flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition;
-  @apply hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2;
-}
-
-.icon-pill {
-  @apply flex h-10 w-10 items-center justify-center rounded-2xl border border-transparent bg-white/70 text-foreground shadow-sm transition;
-  @apply hover:-translate-y-0.5 hover:border-primary/30 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2;
 }
 </style>
