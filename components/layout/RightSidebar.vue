@@ -1,52 +1,51 @@
 <template>
+  <div class="hidden h-full flex-col md:flex">
+    <UiScrollArea
+      orientation="vertical"
+      type="hover"
+      class="relative h-full overflow-hidden py-6 pl-6 pr-0 md:pl-4"
+    >
+      <RightSidebarContent
+        class="h-full"
+        :weather="weather"
+        :leaderboard="leaderboard"
+        :rating="rating"
+      />
+    </UiScrollArea>
+  </div>
   <ClientOnly>
     <teleport to="body">
-      <div class="fixed inset-y-0 right-0 z-50 flex justify-end">
-        <div class="pointer-events-none flex h-full">
-          <section
-            ref="panelRef"
-            role="complementary"
-            aria-label="Right sidebar"
-            :aria-hidden="!isDrawerActive"
-            tabindex="-1"
-            class="pointer-events-auto flex h-full flex-col overflow-hidden border-l border-border bg-background transition-all duration-300 ease-out"
-            :class="panelClass"
-            @mouseenter="handlePanelEnter"
-            @mouseleave="handlePanelLeave"
-            @keydown="handlePanelKeydown"
+      <div v-if="!isDesktop" class="fixed inset-y-0 right-0 z-50 flex justify-end">
+        <section
+          id="right-sidebar-drawer"
+          ref="panelRef"
+          role="complementary"
+          aria-label="Right sidebar"
+          :aria-hidden="!isDrawerOpen"
+          tabindex="-1"
+          class="flex h-full w-screen max-w-full flex-col overflow-hidden border-l border-border bg-background shadow-xl transition-transform duration-200 ease-out sm:max-w-sm"
+          :class="isDrawerOpen ? 'translate-x-0' : 'translate-x-full'"
+          @keydown="handlePanelKeydown"
+        >
+          <UiScrollArea
+            orientation="vertical"
+            type="hover"
+            class="h-full w-full overflow-hidden"
           >
-            <UiScrollArea
-              v-show="showContent"
-              orientation="vertical"
-              type="hover"
-              class="h-full w-full overflow-hidden"
-            >
-              <div class="flex h-full flex-col gap-6 px-6 py-6">
-                <SidebarWeatherCard :weather="weather" />
-                <SidebarLeaderboardCard
-                  :title="leaderboard.title"
-                  :live-label="leaderboard.live"
-                  :participants="leaderboard.participants"
-                />
-                <SidebarRatingCard :rating="rating" />
-              </div>
-            </UiScrollArea>
-          </section>
-        </div>
+            <RightSidebarContent
+              class="h-full px-6 py-6"
+              :weather="weather"
+              :leaderboard="leaderboard"
+              :rating="rating"
+            />
+          </UiScrollArea>
+        </section>
       </div>
       <div
-        v-if="showBackdrop"
+        v-if="!isDesktop"
         class="fixed inset-0 z-40 bg-black/40 transition-opacity duration-200 ease-out"
-        :class="[isDrawerActive ? 'opacity-100' : 'pointer-events-none opacity-0']"
-        @click="closeSidebar({ returnFocus: false })"
-      />
-      <div
-        class="fixed inset-y-0 right-0 z-40"
-        :class="edgeClasses"
-        :style="edgeStyle"
-        aria-hidden="true"
-        @mouseenter="handleEdgeEnter"
-        @mouseleave="handleEdgeLeave"
+        :class="isDrawerOpen ? 'opacity-100' : 'pointer-events-none opacity-0'"
+        @click="closeDrawer({ returnFocus: false })"
       />
     </teleport>
   </ClientOnly>
@@ -56,73 +55,43 @@
 import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { useEventListener, useMediaQuery } from "@vueuse/core";
 
-interface SidebarWeatherContent {
-  badge: string;
-  title: string;
-  subtitle: string;
-  icon: string;
-  location: string;
-  temperature: string;
-  tip: string;
-  locationLabel: string;
-  temperatureLabel: string;
-  tipLabel: string;
-}
-
-interface SidebarParticipant {
-  name: string;
-  role: string;
-  score: string;
-}
-
-interface SidebarLeaderboardContent {
-  title: string;
-  live: string;
-  participants: Record<"first" | "second" | "third", SidebarParticipant>;
-}
-
-interface SidebarRatingCategory {
-  label: string;
-  value: number;
-}
-
-interface SidebarRatingContent {
-  title: string;
-  subtitle: string;
-  average: string;
-  total: number;
-  icon: string;
-  stars: number;
-  categories: Record<string, SidebarRatingCategory>;
-}
-
-interface SidebarPersistedState {
-  expanded: boolean;
-}
-
-const EDGE_ZONE_WIDTH = 14;
-const HOVER_CLOSE_DELAY = 180;
+import RightSidebarContent from "~/components/layout/RightSidebarContent.vue";
+import type {
+  SidebarLeaderboardData,
+  SidebarLeaderboardParticipant,
+  SidebarLeaderboardRaw,
+  SidebarRatingData,
+  SidebarRatingRaw,
+  SidebarWeatherData,
+} from "~/components/layout/right-sidebar.types";
 
 const { tm } = useI18n();
 const route = useRoute();
 
-const weather = computed(() => tm("sidebar.weather") as SidebarWeatherContent);
+const weather = computed(() => tm("sidebar.weather") as SidebarWeatherData);
 
-const leaderboard = computed(() => {
-  const raw = tm("sidebar.leaderboard") as SidebarLeaderboardContent | undefined;
-  const order: Array<keyof SidebarLeaderboardContent["participants"]> = [
+const leaderboard = computed<SidebarLeaderboardData>(() => {
+  const raw = tm("sidebar.leaderboard") as SidebarLeaderboardRaw | undefined;
+  const order: Array<keyof NonNullable<SidebarLeaderboardRaw["participants"]>> = [
     "first",
     "second",
     "third",
   ];
 
   const participants = order
-    .map((key) => raw?.participants?.[key])
-    .filter((participant): participant is SidebarParticipant => Boolean(participant))
-    .map((participant, index) => ({
-      position: index + 1,
-      ...participant,
-    }));
+    .map((key, index) => {
+      const participant = raw?.participants?.[key];
+
+      if (!participant) {
+        return null;
+      }
+
+      return {
+        position: index + 1,
+        ...participant,
+      } satisfies SidebarLeaderboardParticipant;
+    })
+    .filter((participant): participant is SidebarLeaderboardParticipant => Boolean(participant));
 
   return {
     title: raw?.title ?? "",
@@ -131,176 +100,56 @@ const leaderboard = computed(() => {
   };
 });
 
-const rating = computed(() => {
-  const raw = tm("sidebar.rating") as SidebarRatingContent;
+const rating = computed<SidebarRatingData>(() => {
+  const raw = tm("sidebar.rating") as SidebarRatingRaw;
 
   return {
-    ...raw,
+    title: raw.title ?? "",
+    subtitle: raw.subtitle ?? "",
+    average: raw.average ?? "",
+    total: raw.total ?? 0,
+    icon: raw.icon ?? "",
+    stars: raw.stars ?? 0,
     categories: Object.values(raw.categories ?? {}),
   };
 });
 
-const isLg = import.meta.client
-  ? useMediaQuery("(min-width: 1024px)")
-  : ref(false);
-const isMd = import.meta.client
+const isDesktop = import.meta.client
   ? useMediaQuery("(min-width: 768px)")
-  : ref(false);
+  : ref(true);
 
-const viewportVariant = computed<"lg" | "md" | "sm">(() => {
-  if (isLg.value) {
-    return "lg";
-  }
-
-  if (isMd.value) {
-    return "md";
-  }
-
-  return "sm";
-});
-
-const rawState = useState<Record<string, SidebarPersistedState>>("right-sidebar-state", () => ({}));
-
-const currentKey = computed(() => route.fullPath || route.path || "");
-
-watch(
-  currentKey,
-  (key) => {
-    if (key && !rawState.value[key]) {
-      rawState.value[key] = { expanded: false };
-    }
-  },
-  { immediate: true },
-);
-
-const isExpanded = computed({
-  get: () => Boolean(rawState.value[currentKey.value]?.expanded),
-  set: (value: boolean) => {
-    if (!currentKey.value) {
-      return;
-    }
-
-    const existing = rawState.value[currentKey.value] ?? { expanded: false };
-    rawState.value[currentKey.value] = { ...existing, expanded: value };
-  },
-});
-
-const isPeeking = ref(false);
-const hoverTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
+const isDrawerOpen = ref(false);
 const panelRef = ref<HTMLElement | null>(null);
 const previousFocus = ref<HTMLElement | null>(null);
-const lastKeyboardTrigger = ref<HTMLElement | null>(null);
+const lastTrigger = ref<HTMLElement | null>(null);
 const lastTouchPoint = ref<{ x: number; y: number; startOnDrawer: boolean } | null>(null);
 
-const isDrawerActive = computed(() => {
-  if (viewportVariant.value === "lg") {
-    return isExpanded.value || isPeeking.value;
-  }
+const EDGE_ZONE_WIDTH = 14;
 
-  return isExpanded.value;
-});
-
-const showBackdrop = computed(() => viewportVariant.value !== "lg");
-
-const panelClass = computed(() => {
-  if (viewportVariant.value === "lg") {
-    return [
-      "max-w-[320px]",
-      isDrawerActive.value ? "w-80 shadow-xl" : "w-[72px] shadow-none",
-    ];
-  }
-
-  if (viewportVariant.value === "md") {
-    return [
-      "w-80 shadow-xl transition-transform",
-      isDrawerActive.value ? "translate-x-0" : "translate-x-full",
-    ];
-  }
-
-  return [
-    "w-screen max-w-full shadow-xl transition-transform",
-    isDrawerActive.value ? "translate-x-0" : "translate-x-full",
-  ];
-});
-
-const showContent = computed(() => viewportVariant.value !== "lg" || isDrawerActive.value);
-
-const edgeStyle = computed(() => ({
-  width: `${EDGE_ZONE_WIDTH}px`,
-}));
-
-const edgeClasses = computed(() => {
-  if (showBackdrop.value && isExpanded.value) {
-    return "pointer-events-none";
-  }
-
-  return null;
-});
-
-function clearHoverTimeout() {
-  if (hoverTimeout.value) {
-    clearTimeout(hoverTimeout.value);
-    hoverTimeout.value = null;
-  }
-}
-
-function handleEdgeEnter() {
-  if (!import.meta.client) {
-    return;
-  }
-
-  clearHoverTimeout();
-
-  if (viewportVariant.value === "lg" && !isExpanded.value) {
-    isPeeking.value = true;
-  } else {
-    openSidebar();
-  }
-}
-
-function handleEdgeLeave() {
-  if (viewportVariant.value !== "lg") {
-    return;
-  }
-
-  scheduleCollapse();
-}
-
-function handlePanelEnter() {
-  if (viewportVariant.value === "lg" && !isExpanded.value) {
-    isPeeking.value = true;
-  }
-
-  clearHoverTimeout();
-}
-
-function handlePanelLeave() {
-  if (viewportVariant.value !== "lg") {
-    return;
-  }
-
-  scheduleCollapse();
-}
-
-function scheduleCollapse() {
-  clearHoverTimeout();
-
-  hoverTimeout.value = setTimeout(() => {
-    if (!isExpanded.value) {
-      isPeeking.value = false;
+watch(
+  () => route.fullPath,
+  () => {
+    if (!isDesktop.value) {
+      closeDrawer({ returnFocus: false });
     }
-  }, HOVER_CLOSE_DELAY);
-}
+  },
+);
 
-function openSidebar(options: { focus?: boolean; trigger?: HTMLElement | null } = {}) {
-  if (viewportVariant.value === "lg") {
-    isPeeking.value = false;
+watch(isDesktop, (desktop) => {
+  if (desktop) {
+    closeDrawer({ returnFocus: false });
+  }
+});
+
+function openDrawer(options: { focus?: boolean; trigger?: HTMLElement | null } = {}) {
+  if (isDesktop.value) {
+    return;
   }
 
-  isExpanded.value = true;
+  isDrawerOpen.value = true;
 
   if (options.trigger) {
-    lastKeyboardTrigger.value = options.trigger;
+    lastTrigger.value = options.trigger;
   }
 
   if (options.focus) {
@@ -312,40 +161,41 @@ function openSidebar(options: { focus?: boolean; trigger?: HTMLElement | null } 
   }
 }
 
-function closeSidebar(options: { returnFocus?: boolean } = {}) {
-  isExpanded.value = false;
-  isPeeking.value = false;
+function closeDrawer(options: { returnFocus?: boolean } = {}) {
+  isDrawerOpen.value = false;
 
   if (options.returnFocus !== false) {
     nextTick(() => {
-      const target = lastKeyboardTrigger.value || previousFocus.value;
+      const target = lastTrigger.value ?? previousFocus.value;
       target?.focus({ preventScroll: true });
-      lastKeyboardTrigger.value = null;
+      lastTrigger.value = null;
       previousFocus.value = null;
     });
-  } else {
-    lastKeyboardTrigger.value = null;
-    previousFocus.value = null;
-  }
-}
 
-function toggleSidebar(trigger: HTMLElement | null) {
-  if (isExpanded.value) {
-    closeSidebar({ returnFocus: true });
     return;
   }
 
-  openSidebar({ focus: true, trigger });
+  lastTrigger.value = null;
+  previousFocus.value = null;
+}
+
+function toggleDrawer(trigger: HTMLElement | null) {
+  if (isDrawerOpen.value) {
+    closeDrawer({ returnFocus: true });
+    return;
+  }
+
+  openDrawer({ focus: true, trigger });
 }
 
 function handlePanelKeydown(event: KeyboardEvent) {
-  if (!isExpanded.value) {
+  if (!isDrawerOpen.value) {
     return;
   }
 
   if (event.key === "Escape") {
     event.preventDefault();
-    closeSidebar({ returnFocus: true });
+    closeDrawer({ returnFocus: true });
     return;
   }
 
@@ -422,7 +272,7 @@ function isTextInput(target: EventTarget | null) {
 
 if (import.meta.client) {
   useEventListener(window, "keydown", (event: KeyboardEvent) => {
-    if (event.defaultPrevented) {
+    if (event.defaultPrevented || isDesktop.value) {
       return;
     }
 
@@ -432,18 +282,18 @@ if (import.meta.client) {
       }
 
       event.preventDefault();
-      toggleSidebar(event.target as HTMLElement | null);
+      toggleDrawer(event.target as HTMLElement | null);
       return;
     }
 
-    if ((event.key === "Escape" || event.code === "Escape") && isDrawerActive.value) {
+    if ((event.key === "Escape" || event.code === "Escape") && isDrawerOpen.value) {
       event.preventDefault();
-      closeSidebar({ returnFocus: true });
+      closeDrawer({ returnFocus: true });
     }
   });
 
   useEventListener(window, "touchstart", (event: TouchEvent) => {
-    if (event.touches.length === 0) {
+    if (isDesktop.value || event.touches.length === 0) {
       return;
     }
 
@@ -458,11 +308,12 @@ if (import.meta.client) {
   });
 
   useEventListener(window, "touchend", (event: TouchEvent) => {
-    if (!lastTouchPoint.value) {
+    if (isDesktop.value || !lastTouchPoint.value) {
       return;
     }
 
     const touch = event.changedTouches[0];
+
     if (!touch) {
       lastTouchPoint.value = null;
       return;
@@ -470,7 +321,6 @@ if (import.meta.client) {
 
     const deltaX = touch.clientX - lastTouchPoint.value.x;
     const deltaY = touch.clientY - lastTouchPoint.value.y;
-
     const mostlyHorizontal = Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30;
 
     if (!mostlyHorizontal) {
@@ -479,7 +329,7 @@ if (import.meta.client) {
     }
 
     if (lastTouchPoint.value.startOnDrawer && deltaX > 0) {
-      closeSidebar({ returnFocus: false });
+      closeDrawer({ returnFocus: false });
       lastTouchPoint.value = null;
       return;
     }
@@ -487,34 +337,16 @@ if (import.meta.client) {
     const fromRightEdge = window.innerWidth - lastTouchPoint.value.x;
 
     if (!lastTouchPoint.value.startOnDrawer && fromRightEdge <= EDGE_ZONE_WIDTH * 2 && deltaX < 0) {
-      openSidebar();
+      openDrawer();
     }
 
     lastTouchPoint.value = null;
   });
 }
 
-watch(
-  () => viewportVariant.value,
-  (variant) => {
-    if (variant !== "lg") {
-      isPeeking.value = false;
-    }
-  },
-);
-
-watch(
-  () => route.fullPath,
-  () => {
-    if (viewportVariant.value === "sm") {
-      closeSidebar({ returnFocus: false });
-    }
-
-    isPeeking.value = false;
-  },
-);
-
 onBeforeUnmount(() => {
-  clearHoverTimeout();
+  lastTrigger.value = null;
+  previousFocus.value = null;
+  lastTouchPoint.value = null;
 });
 </script>

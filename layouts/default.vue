@@ -12,23 +12,26 @@
         <aside
           v-if="showLeftAside"
           class="fixed z-30 -ml-2 hidden w-full shrink-0 overflow-y-auto top-[102px] md:sticky md:block"
-          :class="[
-            config.aside.useLevel && config.aside.levelStyle === 'aside'
-              ? 'h-[calc(100vh-3.5rem)] md:top-[61px]'
-              : 'h-[calc(100vh-6rem)] md:top-[101px]',
-          ]"
+          :class="stickyOffsets"
         >
           <Aside :is-mobile="false" />
         </aside>
         <div class="min-w-0">
           <slot />
         </div>
+        <aside
+          v-if="showRightAside"
+          class="hidden w-full md:sticky md:block"
+          :class="stickyOffsets"
+        >
+          <LayoutRightSidebar />
+        </aside>
       </div>
     </div>
     <div v-else>
       <slot />
+      <LayoutRightSidebar v-if="showRightAside" />
     </div>
-    <LayoutRightSidebar v-if="showRightAside" />
     <Toaster />
     <VFooter />
   </div>
@@ -50,9 +53,26 @@ const useStructuredLayout = computed(() => hasContentPage.value && page.value?.f
 const showLeftAside = computed(() => hasContentPage.value && (page.value?.aside ?? true));
 const showRightAside = computed(() => hasContentPage.value && (page.value?.rightAside ?? true));
 
+const stickyOffsets = computed(() =>
+  config.value.aside.useLevel && config.value.aside.levelStyle === "aside"
+    ? "h-[calc(100vh-3.5rem)] md:top-[61px]"
+    : "h-[calc(100vh-6rem)] md:top-[101px]",
+);
+
 const layoutColumns = computed(() => {
-  if (showLeftAside.value) {
+  const left = showLeftAside.value;
+  const right = showRightAside.value;
+
+  if (left && right) {
+    return "md:grid-cols-[240px_minmax(0,1fr)_280px] lg:grid-cols-[280px_minmax(0,1fr)_320px]";
+  }
+
+  if (left) {
     return "md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]";
+  }
+
+  if (right) {
+    return "md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_320px]";
   }
 
   return null;
