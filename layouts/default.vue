@@ -48,7 +48,6 @@
 
           <div class="content-area">
             <slot />
-
             <div
               v-if="showInlineRightWidgets"
               class="layout-right-widgets"
@@ -241,11 +240,6 @@ const currentYear = new Date().getFullYear()
   display: none;
 }
 
-.layout-right-widgets {
-  margin-top: 24px;
-  display: none;
-}
-
 .layout-right-rail {
   display: none;
 }
@@ -266,17 +260,9 @@ const currentYear = new Date().getFullYear()
   .layout-grid--no-right {
     grid-template-columns: 320px minmax(0, 1fr);
   }
-
-  .layout-right-widgets {
-    display: block;
-  }
 }
 
 @media (min-width: 1280px) {
-  .layout-right-widgets {
-    display: none;
-  }
-
   .layout-right-rail {
     display: block;
   }
