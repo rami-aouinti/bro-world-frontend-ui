@@ -4,6 +4,32 @@ type GlobalWithOptionalCrypto = typeof globalThis & { crypto?: Crypto }
 
 const globalScope = globalThis as GlobalWithOptionalCrypto
 
+function defineGlobalCrypto(cryptoInstance: Crypto) {
+  const descriptor = Object.getOwnPropertyDescriptor(globalScope, 'crypto')
+
+  if (!descriptor || 'value' in descriptor || descriptor.configurable) {
+    Object.defineProperty(globalScope, 'crypto', {
+      configurable: true,
+      enumerable: false,
+      value: cryptoInstance,
+      writable: true,
+    })
+
+    return
+  }
+
+  if (descriptor.get || descriptor.set) {
+    Object.defineProperty(globalScope, 'crypto', {
+      configurable: descriptor.configurable,
+      enumerable: descriptor.enumerable ?? false,
+      get: () => cryptoInstance,
+      set: (value: Crypto) => {
+        defineGlobalCrypto(value)
+      },
+    })
+  }
+}
+
 function createGetRandomValues() {
   const nodeCrypto = webcrypto as Crypto | undefined
   const nodeMethod = nodeCrypto?.getRandomValues?.bind(nodeCrypto)
@@ -52,4 +78,4 @@ function ensureCrypto(): Crypto {
   return cryptoLike as unknown as Crypto
 }
 
-globalScope.crypto = ensureCrypto()
+defineGlobalCrypto(ensureCrypto())
