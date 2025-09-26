@@ -2,7 +2,7 @@ import { createError, readBody } from 'h3'
 import type { FetchError } from 'ofetch'
 import { joinURL } from 'ufo'
 import type { AuthLoginResponse, AuthUser } from '~/types/auth'
-import { clearSession, setSession } from '~/server/utils/auth/session'
+import { clearAuthSession, setSession } from '~/server/utils/auth/session'
 
 interface LoginRequestBody {
   identifier?: string
@@ -77,7 +77,7 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      clearSession(event)
+      clearAuthSession(event)
 
       throw createError({
         statusCode: 502,
@@ -88,7 +88,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    clearSession(event)
+    clearAuthSession(event)
 
     throw createError({
       statusCode: 500,
