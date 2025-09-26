@@ -266,6 +266,7 @@ export default defineNuxtConfig({
     "motion-v/nuxt",
     "lenis/nuxt",
     "@nuxtjs/i18n",
+    '@nuxt/icon',
     "nuxt-llms",
   ],
   alias: {

@@ -3,7 +3,9 @@
     :color="false"
     class="z-100 bg-primary/80"
   />
-  <NuxtPage />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
   <AlertPanel />
 </template>
 
