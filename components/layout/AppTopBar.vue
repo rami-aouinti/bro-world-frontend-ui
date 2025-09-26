@@ -198,6 +198,30 @@
 
     <div class="flex items-center gap-1">
       <button
+        v-if="!isMobile"
+        type="button"
+        :class="iconTriggerClasses"
+        :aria-label="t('layout.actions.openNavigation')"
+        @click="emit('toggle-left')"
+      >
+        <v-icon
+          icon="mdi-view-sidebar"
+          size="22"
+        />
+      </button>
+      <button
+        v-if="!isMobile && props.showRightToggle"
+        type="button"
+        :class="iconTriggerClasses"
+        :aria-label="t('layout.actions.openWidgets')"
+        @click="emit('toggle-right')"
+      >
+        <v-icon
+          icon="mdi-view-sidebar-right"
+          size="22"
+        />
+      </button>
+      <button
         v-if="!config.header.darkModeToggle"
         type="button"
         :class="iconTriggerClasses"
@@ -310,11 +334,11 @@
         </v-list>
       </v-menu>
       <button
-        v-if="isMobile"
+        v-if="isMobile && props.showRightToggle"
         type="button"
         :class="iconTriggerClasses"
         :aria-label="t('layout.actions.openWidgets')"
-        @click="emit('toggle-right', $event)"
+        @click="emit('toggle-right')"
       >
         <v-icon
           icon="mdi-dots-vertical"
@@ -356,6 +380,7 @@ const props = defineProps<{
   isMobile: boolean
   locale: string
   locales: string[]
+  showRightToggle: boolean
 }>()
 
 const emit = defineEmits([
