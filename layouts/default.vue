@@ -53,10 +53,11 @@
               v-if="showInlineRightWidgets"
               class="layout-right-widgets"
             >
-              <RightSidebarContent
-                :weather="weather"
-                :leaderboard="leaderboard"
-                :rating="rating"
+              <RightSidebar
+                  ref="rightSidebarRef"
+                  :items="sidebarItems"
+                  :active-key="activeSidebar"
+                  @select="handleSidebarSelect"
               />
             </div>
           </div>
@@ -71,7 +72,6 @@
               :active-key="activeSidebar"
               @select="handleSidebarSelect"
             />
-            <RightSidebar ref="rightSidebarRef" />
           </div>
         </div>
       </div>
@@ -96,7 +96,6 @@ import { useDisplay, useTheme } from 'vuetify'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppTopBar from '@/components/layout/AppTopBar.vue'
 import RightSidebar from '@/components/layout/RightSidebar.vue'
-import RightSidebarContent from '@/components/layout/RightSidebarContent.vue'
 import Toaster from 'shadcn-docs-nuxt/components/ui/toast/Toaster.vue'
 import { useRightSidebarData } from '@/composables/useRightSidebarData'
 

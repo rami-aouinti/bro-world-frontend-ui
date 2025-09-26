@@ -5,57 +5,7 @@
       :active-key="activeKey"
       @select="handleSidebarSelect"
     />
-  <div class="hidden h-full flex-col xl:-translate-y-6 xl:transition xl:duration-300 xl:ease-out xl:flex">
-    <UiScrollArea
-      orientation="vertical"
-      type="hover"
-      class="relative h-full overflow-hidden py-6 pl-6 pr-0 md:pl-4"
-    >
-      <RightSidebarContent
-        class="h-full"
-        :weather="weather"
-        :leaderboard="leaderboard"
-        :rating="rating"
-      />
-    </UiScrollArea>
-  </div>
-  <ClientOnly>
-    <teleport to="body">
-      <div
-        v-if="!isDesktop"
-        class="fixed inset-y-0 right-0 z-50 flex justify-end"
-        :class="isDrawerOpen ? 'pointer-events-auto' : 'pointer-events-none'"
-      >
-        <section
-          id="right-sidebar-drawer"
-          ref="panelRef"
-          role="complementary"
-          aria-label="Right sidebar"
-          :aria-hidden="!isDrawerOpen"
-          tabindex="-1"
-          class="flex h-full w-screen max-w-full flex-col overflow-hidden border-l border-border bg-background shadow-xl transition-transform duration-200 ease-out sm:max-w-sm"
-          :class="isDrawerOpen ? 'translate-y-0' : '-translate-y-full'"
-          @keydown="handlePanelKeydown"
-        >
-          <div class="h-full w-full overflow-y-auto px-6 py-6">
-            <AppSidebar
-              :items="items"
-              :active-key="activeKey"
-              :sticky="false"
-              class="h-full"
-              @select="handleSidebarSelect"
-            />
-          </div>
-        </section>
-      </div>
-      <div
-        v-if="!isDesktop"
-        class="fixed inset-0 z-40 bg-black/40 transition-opacity duration-200 ease-out"
-        :class="isDrawerOpen ? 'opacity-100' : 'pointer-events-none opacity-0'"
-        @click="closeDrawer({ returnFocus: false })"
-      />
-    </teleport>
-  </ClientOnly>
+  </div>>
 </template>
 
 <script setup lang="ts">
@@ -81,13 +31,8 @@ const emit = defineEmits<{ (e: "select", key: string): void }>();
 const { items, activeKey } = toRefs(props);
 
 const route = useRoute();
-import { nextTick, onBeforeUnmount, ref, watch } from "vue";
-import { useEventListener, useMediaQuery } from "@vueuse/core";
-
-import RightSidebarContent from "~/components/layout/RightSidebarContent.vue";
 import { useRightSidebarData } from "~/composables/useRightSidebarData";
 
-const route = useRoute();
 
 const { weather, leaderboard, rating } = useRightSidebarData();
 
