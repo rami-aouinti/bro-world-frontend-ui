@@ -314,7 +314,7 @@
         type="button"
         :class="iconTriggerClasses"
         :aria-label="t('layout.actions.openWidgets')"
-        @click="emit('toggle-right')"
+        @click="emit('toggle-right', $event)"
       >
         <v-icon
           icon="mdi-dots-vertical"

@@ -1,5 +1,10 @@
 <template>
-  <aside class="app-card app-sidebar" role="navigation" aria-label="Main navigation">
+  <aside
+    class="app-card app-sidebar"
+    :class="{ 'app-sidebar--sticky': sticky }
+    role="navigation"
+    aria-label="Main navigation"
+  >
     <header class="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-primary">
       <v-icon icon="mdi-link-variant" size="20" />
       <span>{{ t('layout.sidebar.title') }}</span>
@@ -30,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface SidebarItem {
   key: string
   label: string
@@ -37,10 +44,18 @@ interface SidebarItem {
   to: string
 }
 
-const props = defineProps<{
-  items: SidebarItem[]
-  activeKey: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    items: SidebarItem[]
+    activeKey: string
+    sticky?: boolean
+  }>(),
+  {
+    sticky: true,
+  },
+)
+
+const sticky = computed(() => props.sticky)
 
 const { t } = useI18n()
 
@@ -59,11 +74,14 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
 }
 
 .app-sidebar {
-  position: sticky;
-  top: calc(var(--app-bar-height) + 24px);
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.app-sidebar--sticky {
+  position: sticky;
+  top: calc(var(--app-bar-height) + 24px);
 }
 
 .sidebar-item {
