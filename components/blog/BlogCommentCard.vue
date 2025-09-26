@@ -61,6 +61,10 @@ import type { BlogCommentPreview } from "~/lib/mock/blog";
 
 import { computed } from "vue";
 
+defineOptions({
+  name: "BlogCommentCard",
+});
+
 const props = defineProps<{ comment: BlogCommentPreview }>();
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
