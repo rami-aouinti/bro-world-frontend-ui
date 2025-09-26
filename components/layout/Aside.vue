@@ -28,7 +28,7 @@
             link._path === '/' && path === '/' && 'bg-muted !text-primary font-medium',
           ]"
         >
-          <SmartIcon
+          <AppSmartIcon
             v-if="link.icon"
             :name="link.icon"
             class="self-center"

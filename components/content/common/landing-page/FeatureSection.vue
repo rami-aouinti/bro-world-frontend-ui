@@ -9,7 +9,7 @@
           class="relative flex h-screen max-h-64 max-w-96 flex-col items-start justify-start overflow-hidden rounded-2xl border border-zinc-200 px-6 py-8 shadow-xl backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/50"
           :gradient-color="isDark ? '#262626' : '#E9E9E9'"
         >
-          <SmartIcon
+          <AppSmartIcon
             :name="feature.icon || 'lucide:rocket'"
             class="mb-2"
             :size="22"
