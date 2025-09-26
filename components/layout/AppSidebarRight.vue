@@ -63,7 +63,7 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
 @reference "../../assets/css/tailwind.css";
 
 .app-card {
-  padding: 24px 20px;
+  padding: 4px 16px;
 }
 
 .app-sidebar {
