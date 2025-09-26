@@ -106,7 +106,7 @@
       </form>
 
       <div class="flex flex-col gap-4">
-        <PostCard
+        <BlogPostCard
             v-for="post in posts"
             :key="post.id"
             :post="post"

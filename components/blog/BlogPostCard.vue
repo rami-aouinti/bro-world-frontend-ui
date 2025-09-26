@@ -114,6 +114,10 @@ import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 const props = defineProps<{ post: BlogPost }>();
 
+defineOptions({
+  name: "BlogPostCard",
+});
+
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
 const reactionEmojis: Record<ReactionType, string> = {

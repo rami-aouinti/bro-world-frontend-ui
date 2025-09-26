@@ -1,4 +1,4 @@
-import { clearSession, getSessionToken, getSessionUser } from '~/server/utils/auth/session'
+import { clearAuthSession, getSessionToken, getSessionUser } from '~/server/utils/auth/session'
 import type { AuthSessionEnvelope } from '~/types/auth'
 
 export default defineEventHandler(async (event) => {
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   if (!token) {
     if (user) {
-      clearSession(event)
+      clearAuthSession(event)
     }
 
     const response: AuthSessionEnvelope = {
