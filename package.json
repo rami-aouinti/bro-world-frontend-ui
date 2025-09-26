@@ -36,6 +36,7 @@
     "@uiw/color-convert": "^2.8.0",
     "@vueuse/core": "^13.9.0",
     "canvas-confetti": "^1.9.3",
+    "event-source-polyfill": "^1.0.35",
     "chartjs-adapter-date-fns": "^3.0.0",
     "class-variance-authority": "^0.7.1",
     "cobe": "^0.6.4",
