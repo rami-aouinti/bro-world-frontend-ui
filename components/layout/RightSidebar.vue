@@ -5,6 +5,19 @@
       :active-key="activeKey"
       @select="handleSidebarSelect"
     />
+  <div class="hidden h-full flex-col xl:-translate-y-6 xl:transition xl:duration-300 xl:ease-out xl:flex">
+    <UiScrollArea
+      orientation="vertical"
+      type="hover"
+      class="relative h-full overflow-hidden py-6 pl-6 pr-0 md:pl-4"
+    >
+      <RightSidebarContent
+        class="h-full"
+        :weather="weather"
+        :leaderboard="leaderboard"
+        :rating="rating"
+      />
+    </UiScrollArea>
   </div>
   <ClientOnly>
     <teleport to="body">
@@ -68,6 +81,15 @@ const emit = defineEmits<{ (e: "select", key: string): void }>();
 const { items, activeKey } = toRefs(props);
 
 const route = useRoute();
+import { nextTick, onBeforeUnmount, ref, watch } from "vue";
+import { useEventListener, useMediaQuery } from "@vueuse/core";
+
+import RightSidebarContent from "~/components/layout/RightSidebarContent.vue";
+import { useRightSidebarData } from "~/composables/useRightSidebarData";
+
+const route = useRoute();
+
+const { weather, leaderboard, rating } = useRightSidebarData();
 
 const isDesktop = import.meta.client
   ? useMediaQuery("(min-width: 1280px)")
