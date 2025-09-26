@@ -32,20 +32,6 @@
       </div>
     </v-navigation-drawer>
 
-    <v-navigation-drawer
-      v-if="isMobile && showRightWidgets"
-      v-model="rightDrawer"
-      temporary
-      location="end"
-      scrim
-      width="360"
-      class="bg-transparent"
-    >
-      <div class="px-3 py-4">
-        <AppRightWidgets />
-      </div>
-    </v-navigation-drawer>
-
     <v-main class="app-surface">
       <div class="app-container">
         <div
@@ -62,20 +48,13 @@
 
           <div class="content-area">
             <slot />
-
-            <div
-              v-if="showRightWidgets"
-              class="layout-right-widgets"
-            >
-              <AppRightWidgets />
-            </div>
           </div>
 
           <div
             v-if="showRightWidgets"
             class="layout-right-rail"
           >
-            <AppRightWidgets />
+            <RightSidebar ref="rightSidebarRef" />
           </div>
         </div>
       </div>
@@ -97,9 +76,9 @@
 <script setup lang="ts">
 import { watch, computed, ref } from 'vue'
 import { useDisplay, useTheme } from 'vuetify'
-import AppRightWidgets from '@/components/layout/AppRightWidgets.vue'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppTopBar from '@/components/layout/AppTopBar.vue'
+import RightSidebar from '@/components/layout/RightSidebar.vue'
 import Toaster from 'shadcn-docs-nuxt/components/ui/toast/Toaster.vue'
 
 const route = useRoute()
@@ -109,10 +88,15 @@ const theme = useTheme()
 const { locale, availableLocales } = useI18n()
 
 const leftDrawer = ref(false)
-const rightDrawer = ref(false)
+type RightSidebarExpose = {
+  openDrawer: (options?: { focus?: boolean; trigger?: HTMLElement | null }) => void
+  closeDrawer: (options?: { returnFocus?: boolean }) => void
+  toggleDrawer: (trigger?: HTMLElement | null) => void
+}
+
+const rightSidebarRef = ref<RightSidebarExpose | null>(null)
 
 const isDesktop = computed(() => display.lgAndUp.value)
-const isTablet = computed(() => display.mdAndUp.value && !display.lgAndUp.value)
 const isMobile = computed(() => !display.mdAndUp.value)
 
 const isDark = computed(() => theme.global.current.value.dark)
@@ -150,7 +134,7 @@ watch(
   () => {
     if (isMobile.value) {
       leftDrawer.value = false
-      rightDrawer.value = false
+      rightSidebarRef.value?.closeDrawer({ returnFocus: false })
     }
   },
 )
@@ -158,26 +142,19 @@ watch(
 watch(isMobile, (value) => {
   if (!value) {
     leftDrawer.value = false
-    rightDrawer.value = false
+    rightSidebarRef.value?.closeDrawer({ returnFocus: false })
   }
 })
 
 watch(showRightWidgets, (value) => {
   if (!value) {
-    rightDrawer.value = false
+    rightSidebarRef.value?.closeDrawer({ returnFocus: false })
   }
 })
 
 watch(isDesktop, (value) => {
   if (value) {
     leftDrawer.value = false
-    rightDrawer.value = false
-  }
-})
-
-watch(isTablet, (value) => {
-  if (value) {
-    rightDrawer.value = false
   }
 })
 
@@ -189,12 +166,17 @@ function toggleLeftDrawer() {
   leftDrawer.value = !leftDrawer.value
 }
 
-function toggleRightDrawer() {
+function toggleRightDrawer(event?: MouseEvent) {
   if (!showRightWidgets.value) {
     return
   }
 
-  rightDrawer.value = !rightDrawer.value
+  if (!isMobile.value) {
+    return
+  }
+
+  const trigger = (event?.currentTarget ?? null) as HTMLElement | null
+  rightSidebarRef.value?.toggleDrawer(trigger)
 }
 
 function goBack() {
@@ -242,11 +224,6 @@ const currentYear = new Date().getFullYear()
   display: none;
 }
 
-.layout-right-widgets {
-  margin-top: 24px;
-  display: none;
-}
-
 .layout-right-rail {
   display: none;
 }
@@ -267,17 +244,9 @@ const currentYear = new Date().getFullYear()
   .layout-grid--no-right {
     grid-template-columns: 320px minmax(0, 1fr);
   }
-
-  .layout-right-widgets {
-    display: block;
-  }
 }
 
 @media (min-width: 1280px) {
-  .layout-right-widgets {
-    display: none;
-  }
-
   .layout-right-rail {
     display: block;
   }
