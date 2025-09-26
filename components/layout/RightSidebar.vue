@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden h-full flex-col md:flex">
+  <div class="hidden h-full flex-col xl:flex">
     <UiScrollArea
       orientation="vertical"
       type="hover"
@@ -63,7 +63,7 @@ const route = useRoute();
 const { weather, leaderboard, rating } = useRightSidebarData();
 
 const isDesktop = import.meta.client
-  ? useMediaQuery("(min-width: 768px)")
+  ? useMediaQuery("(min-width: 1280px)")
   : ref(true);
 
 const isDrawerOpen = ref(false);
