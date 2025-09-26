@@ -179,7 +179,7 @@ function closeDrawer(options: { returnFocus?: boolean } = {}) {
   previousFocus.value = null;
 }
 
-function toggleDrawer(trigger: HTMLElement | null) {
+function toggleDrawer(trigger?: HTMLElement | null) {
   if (isDrawerOpen.value) {
     closeDrawer({ returnFocus: true });
     return;
@@ -348,5 +348,11 @@ onBeforeUnmount(() => {
   lastTrigger.value = null;
   previousFocus.value = null;
   lastTouchPoint.value = null;
+});
+
+defineExpose({
+  openDrawer,
+  closeDrawer,
+  toggleDrawer,
 });
 </script>
