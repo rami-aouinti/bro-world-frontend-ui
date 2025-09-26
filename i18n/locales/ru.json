@@ -114,7 +114,9 @@
       "WhatAreYouWaitingFor": "Чего вы ждёте?",
       "GetStartedAndStartBuildingAwesomeUI": "Начните и создавайте потрясающий интерфейс",
       "GetStarted": "Начать"
-    },
+    }
+  },
+  "pages": {
     "profile": {
       "title": "Профиль",
       "subtitle": "Просматривайте и управляйте своей личной информацией.",
@@ -149,9 +151,7 @@
       "stats": {
         "title": "Краткая статистика"
       }
-    }
-  },
-  "pages": {
+    },
     "playground": {
       "ui": {
         "title": "UI Component Playground",
