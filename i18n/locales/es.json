@@ -114,7 +114,9 @@
       "WhatAreYouWaitingFor": "¿Qué estás esperando?",
       "GetStartedAndStartBuildingAwesomeUI": "Comienza y crea interfaces increíbles",
       "GetStarted": "Comenzar"
-    },
+    }
+  },
+  "pages": {
     "profile": {
       "title": "Perfil",
       "subtitle": "Revisa y administra tu información personal.",
@@ -149,9 +151,7 @@
       "stats": {
         "title": "Estadísticas rápidas"
       }
-    }
-  },
-  "pages": {
+    },
     "playground": {
       "ui": {
         "title": "UI Component Playground",
