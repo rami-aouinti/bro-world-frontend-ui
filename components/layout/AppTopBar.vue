@@ -80,7 +80,7 @@
               class="flex gap-2"
               :aria-label="link?.label"
             >
-              <SmartIcon
+              <AppSmartIcon
                 v-if="link.icon"
                 :name="link.icon"
                 :size="18"
@@ -100,7 +100,7 @@
               @select="handleMenuItemSelect(item)"
             >
               <div class="flex w-full items-center gap-2">
-                <SmartIcon
+                <AppSmartIcon
                   v-if="item.icon"
                   :name="item.icon"
                   :size="16"
@@ -122,7 +122,7 @@
             class="flex gap-2"
             :aria-label="link?.label"
           >
-            <SmartIcon
+            <AppSmartIcon
               v-if="link?.icon"
               :name="link.icon"
               :size="18"
@@ -146,7 +146,7 @@
             class="flex gap-2"
             :aria-label="link?.label"
           >
-            <SmartIcon
+            <AppSmartIcon
               v-if="link?.icon"
               :name="link.icon"
               :size="18"
@@ -169,7 +169,7 @@
         :disabled="loggingOut"
         @click="handleLogout"
       >
-        <SmartIcon
+        <AppSmartIcon
           name="mdi:logout"
           :size="18"
         />
@@ -185,7 +185,7 @@
           class="flex gap-2"
           :aria-label="t('auth.signIn')"
         >
-          <SmartIcon
+          <AppSmartIcon
             name="mdi:login"
             :size="18"
           />

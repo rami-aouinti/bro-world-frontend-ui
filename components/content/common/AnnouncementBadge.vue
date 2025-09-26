@@ -8,7 +8,7 @@
     ]"
   >
     <template v-if="icon">
-      <SmartIcon
+      <AppSmartIcon
         :name="icon"
         :size="16"
       />

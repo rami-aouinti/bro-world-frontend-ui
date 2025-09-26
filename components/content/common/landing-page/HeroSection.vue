@@ -18,7 +18,7 @@
       target=""
       class="inline-flex items-center rounded-full bg-muted px-4 py-1.5 text-sm font-medium hover:cursor-pointer"
     >
-      <SmartIcon
+      <AppSmartIcon
         name="lucide:rocket"
         :size="16"
       />
@@ -61,7 +61,7 @@
         target="_blank"
       >
         <UiButton variant="outline">
-          <SmartIcon
+          <AppSmartIcon
             name="lucide:github"
             class="mr-1"
           />

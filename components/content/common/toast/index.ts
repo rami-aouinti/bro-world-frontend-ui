@@ -3,14 +3,14 @@ import type { HTMLAttributes } from "vue";
 
 import { cva, type VariantProps } from "class-variance-authority";
 
-export { default as Toast } from "./Toast.vue";
-export { default as ToastAction } from "./ToastAction.vue";
-export { default as ToastClose } from "./ToastClose.vue";
-export { default as ToastDescription } from "./ToastDescription.vue";
+export { default as Toast } from "./AppToast.vue";
+export { default as ToastAction } from "./AppToastAction.vue";
+export { default as ToastClose } from "./AppToastClose.vue";
+export { default as ToastDescription } from "./AppToastDescription.vue";
 export { default as Toaster } from "./Toaster.vue";
-export { default as ToastProvider } from "./ToastProvider.vue";
-export { default as ToastTitle } from "./ToastTitle.vue";
-export { default as ToastViewport } from "./ToastViewport.vue";
+export { default as ToastProvider } from "./AppToastProvider.vue";
+export { default as ToastTitle } from "./AppToastTitle.vue";
+export { default as ToastViewport } from "./AppToastViewport.vue";
 export { toast, useToast } from "./use-toast";
 
 export const toastVariants = cva(

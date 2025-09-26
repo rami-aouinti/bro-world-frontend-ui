@@ -35,7 +35,7 @@
                   class="flex gap-2"
                   :aria-label="link?.label"
                 >
-                  <SmartIcon
+                  <AppSmartIcon
                     v-if="link.icon"
                     :name="link.icon"
                     :size="18"
@@ -55,7 +55,7 @@
                   @select="handleMenuItemSelect(item)"
                 >
                   <div class="flex w-full items-center gap-2">
-                    <SmartIcon
+                    <AppSmartIcon
                       v-if="item.icon"
                       :name="item.icon"
                       :size="16"
@@ -77,7 +77,7 @@
                 class="flex gap-2"
                 :aria-label="link?.label"
               >
-                <SmartIcon
+                <AppSmartIcon
                   v-if="link?.icon"
                   :name="link.icon"
                   :size="18"
@@ -101,7 +101,7 @@
                 class="flex gap-2"
                 :aria-label="link?.label"
               >
-                <SmartIcon
+                <AppSmartIcon
                   v-if="link?.icon"
                   :name="link.icon"
                   :size="18"
@@ -124,7 +124,7 @@
             :disabled="loggingOut"
             @click="handleLogout"
           >
-            <SmartIcon name="mdi:logout" :size="18" />
+            <AppSmartIcon name="mdi:logout" :size="18" />
             <span class="sr-only">{{ t('auth.signOut') }}</span>
           </UiButton>
           <NuxtLinkLocale v-else :to="localePath('/login')">
@@ -134,7 +134,7 @@
               class="flex gap-2"
               :aria-label="t('auth.signIn')"
             >
-              <SmartIcon name="mdi:login" :size="18" />
+              <AppSmartIcon name="mdi:login" :size="18" />
               <span class="sr-only">{{ t('auth.signIn') }}</span>
             </UiButton>
           </NuxtLinkLocale>
