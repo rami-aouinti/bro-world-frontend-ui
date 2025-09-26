@@ -1,4 +1,10 @@
 <template>
+  <div class="hidden xl:block">
+    <AppSidebar
+      :items="items"
+      :active-key="activeKey"
+      @select="handleSidebarSelect"
+    />
   <div class="hidden h-full flex-col xl:-translate-y-6 xl:transition xl:duration-300 xl:ease-out xl:flex">
     <UiScrollArea
       orientation="vertical"
@@ -31,18 +37,15 @@
           :class="isDrawerOpen ? 'translate-y-0' : '-translate-y-full'"
           @keydown="handlePanelKeydown"
         >
-          <UiScrollArea
-            orientation="vertical"
-            type="hover"
-            class="h-full w-full overflow-hidden"
-          >
-            <RightSidebarContent
-              class="h-full px-6 py-6"
-              :weather="weather"
-              :leaderboard="leaderboard"
-              :rating="rating"
+          <div class="h-full w-full overflow-y-auto px-6 py-6">
+            <AppSidebar
+              :items="items"
+              :active-key="activeKey"
+              :sticky="false"
+              class="h-full"
+              @select="handleSidebarSelect"
             />
-          </UiScrollArea>
+          </div>
         </section>
       </div>
       <div
@@ -56,6 +59,28 @@
 </template>
 
 <script setup lang="ts">
+import { nextTick, onBeforeUnmount, ref, toRefs, watch } from "vue";
+import { useEventListener, useMediaQuery } from "@vueuse/core";
+
+import AppSidebar from "~/components/layout/AppSidebar.vue";
+
+interface SidebarItem {
+  key: string;
+  label: string;
+  icon: string;
+  to: string;
+}
+
+const props = defineProps<{
+  items: SidebarItem[];
+  activeKey: string;
+}>();
+
+const emit = defineEmits<{ (e: "select", key: string): void }>();
+
+const { items, activeKey } = toRefs(props);
+
+const route = useRoute();
 import { nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { useEventListener, useMediaQuery } from "@vueuse/core";
 
@@ -77,6 +102,14 @@ const lastTrigger = ref<HTMLElement | null>(null);
 const lastTouchPoint = ref<{ x: number; y: number; startOnDrawer: boolean } | null>(null);
 
 const EDGE_ZONE_OFFSET = 16;
+
+function handleSidebarSelect(key: string) {
+  emit("select", key);
+
+  if (!isDesktop.value) {
+    closeDrawer({ returnFocus: false });
+  }
+}
 
 watch(
   () => route.fullPath,

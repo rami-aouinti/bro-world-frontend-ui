@@ -48,6 +48,7 @@
 
           <div class="content-area">
             <slot />
+
             <div
               v-if="showInlineRightWidgets"
               class="layout-right-widgets"
@@ -64,6 +65,12 @@
             v-if="showRightWidgets"
             class="layout-right-rail"
           >
+            <RightSidebar
+              ref="rightSidebarRef"
+              :items="sidebarItems"
+              :active-key="activeSidebar"
+              @select="handleSidebarSelect"
+            />
             <RightSidebar ref="rightSidebarRef" />
           </div>
         </div>
@@ -260,6 +267,7 @@ const currentYear = new Date().getFullYear()
   .layout-grid--no-right {
     grid-template-columns: 320px minmax(0, 1fr);
   }
+
 }
 
 @media (min-width: 1280px) {
@@ -268,7 +276,7 @@ const currentYear = new Date().getFullYear()
   }
 
   .layout-grid {
-    grid-template-columns: 320px minmax(0, 1fr) 360px;
+    grid-template-columns: 320px minmax(0, 1fr) 320px;
   }
 
   .layout-grid--no-right {
