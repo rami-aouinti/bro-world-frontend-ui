@@ -32,8 +32,8 @@ const props = withDefaults(defineProps<BorderBeamProps>(), {
   duration: 15000,
   anchor: 90,
   borderWidth: 1.5,
-  colorFrom: "#ffaa40",
-  colorTo: "#9c40ff",
+  colorFrom: "#ebedef",
+  colorTo: "#000000",
   delay: 0,
 });
 

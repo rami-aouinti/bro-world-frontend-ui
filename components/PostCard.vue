@@ -169,13 +169,6 @@
         </p>
       </section>
     </div>
-    <BorderBeam
-      :size="250"
-      :duration="12"
-      :delay="9"
-      :border-width="2"
-    />
-
     <teleport to="body">
       <transition name="fade-scale">
         <div

@@ -4,6 +4,8 @@
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Main navigation"
   >
+    <HaloSearch />
+
     <nav>
       <ul class="flex flex-col gap-2">
         <li v-for="item in items" :key="item.key">
@@ -61,7 +63,7 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
 @reference "../../assets/css/tailwind.css";
 
 .app-card {
-  padding: 4px 16px;
+  padding: 24px 20px;
 }
 
 .app-sidebar {

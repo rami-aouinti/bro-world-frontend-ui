@@ -6,21 +6,29 @@
     data-component="base-card"
     :data-variant="props.variant"
   >
-    <div v-if="hasMedia" :class="mediaClasses" data-test="base-card-media">
-      <slot name="media" />
+    <div class="px-4 py-4">
+      <div v-if="hasMedia" :class="mediaClasses" data-test="base-card-media">
+        <slot name="media" />
+      </div>
+
+      <header v-if="hasHeader" :class="headerClasses" data-test="base-card-header">
+        <slot name="header" />
+      </header>
+
+      <section v-if="hasBody" :class="bodyClasses" data-test="base-card-body">
+        <slot />
+      </section>
+
+      <footer v-if="hasFooter" :class="footerClasses" data-test="base-card-footer">
+        <slot name="footer" />
+      </footer>
     </div>
-
-    <header v-if="hasHeader" :class="headerClasses" data-test="base-card-header">
-      <slot name="header" />
-    </header>
-
-    <section v-if="hasBody" :class="bodyClasses" data-test="base-card-body">
-      <slot />
-    </section>
-
-    <footer v-if="hasFooter" :class="footerClasses" data-test="base-card-footer">
-      <slot name="footer" />
-    </footer>
+    <BorderBeam
+        :size="250"
+        :duration="2"
+        :delay="5"
+        :border-width="2"
+    />
   </component>
 </template>
 
@@ -71,7 +79,8 @@ const props = withDefaults(
     variant?: CardVariant
     padding?: CardPadding
     rounded?: CardRounded
-    hoverable?: boolean
+    hover?: boolean
+    animation?: boolean
     spacing?: BodySpacing
     bodyClass?: string
     headerClass?: string
@@ -84,7 +93,8 @@ const props = withDefaults(
     variant: 'solid',
     padding: 'md',
     rounded: 'xl',
-    hoverable: false,
+    hover: false,
+    animation: false,
     spacing: 'md',
     bodyClass: '',
     headerClass: '',
@@ -111,7 +121,7 @@ const cardClasses = computed(() =>
     paddingClasses[props.padding],
     roundedClasses[props.rounded],
     variantClasses[props.variant],
-    props.hoverable && hoverClasses,
+    props.hover && hoverClasses,
     attrs.class as unknown,
   ),
 )

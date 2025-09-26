@@ -2,11 +2,11 @@
   <v-app-bar
     app
     flat
-    height="72"
+    height="50"
     class="app-top-bar"
   >
     <div class="flex items-center gap-3">
-      <button
+      <v-btn
         v-if="isMobile"
         type="button"
         :class="iconTriggerClasses"
@@ -17,7 +17,7 @@
           icon="mdi-menu"
           size="24"
         />
-      </button>
+      </v-btn>
       <div class="flex items-center gap-2">
         <NuxtLink
           class="flex items-center gap-2 rounded-xl px-2 py-1 font-semibold text-xl text-primary"
