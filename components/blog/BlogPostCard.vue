@@ -72,7 +72,7 @@
           </p>
         </div>
         <div class="mx-auto mt-4 w-full max-w-2xl space-y-3">
-          <CommentCard
+          <BlogCommentCard
             v-for="comment in post.comments_preview.slice(0, 4)"
             :key="comment.id"
             :comment="comment"
@@ -108,11 +108,15 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import CommentCard from "./CommentCard.vue";
+import BlogCommentCard from "./BlogCommentCard.vue";
 import PostMeta from "./PostMeta.vue";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 const props = defineProps<{ post: BlogPost }>();
+
+defineOptions({
+  name: "BlogPostCard",
+});
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
