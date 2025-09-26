@@ -5,7 +5,23 @@
     aria-label="Main navigation"
   >
     <HaloSearch />
+    <div
+        class="relative flex h-[200px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
+    >
+    <span
+        class="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10"
+    >
 
+    </span>
+      <ParticlesBg
+          class="absolute inset-0"
+          :quantity="100"
+          :ease="100"
+          :color="isDark ? '#FFF' : '#000'"
+          :staticity="10"
+          refresh
+      />
+    </div>
     <nav>
       <ul class="flex flex-col gap-2">
         <li v-for="item in items" :key="item.key">
@@ -33,7 +49,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useColorMode } from "@vueuse/core";
 
+const isDark = computed(() => useColorMode().value == "dark");
 interface SidebarItem {
   key: string
   label: string
