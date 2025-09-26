@@ -48,6 +48,16 @@
 
           <div class="content-area">
             <slot />
+            <div
+              v-if="showInlineRightWidgets"
+              class="layout-right-widgets"
+            >
+              <RightSidebarContent
+                :weather="weather"
+                :leaderboard="leaderboard"
+                :rating="rating"
+              />
+            </div>
           </div>
 
           <div
@@ -79,7 +89,9 @@ import { useDisplay, useTheme } from 'vuetify'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppTopBar from '@/components/layout/AppTopBar.vue'
 import RightSidebar from '@/components/layout/RightSidebar.vue'
+import RightSidebarContent from '@/components/layout/RightSidebarContent.vue'
 import Toaster from 'shadcn-docs-nuxt/components/ui/toast/Toaster.vue'
+import { useRightSidebarData } from '@/composables/useRightSidebarData'
 
 const route = useRoute()
 const router = useRouter()
@@ -101,6 +113,10 @@ const isMobile = computed(() => !display.mdAndUp.value)
 
 const isDark = computed(() => theme.global.current.value.dark)
 const showRightWidgets = computed(() => route.meta?.showRightWidgets !== false)
+const showInlineRightWidgets = computed(
+  () => showRightWidgets.value && !isDesktop.value && !isMobile.value,
+)
+const { weather, leaderboard, rating } = useRightSidebarData()
 
 const cssVars = computed(() => ({
   '--app-bar-height': '72px',
