@@ -10,6 +10,11 @@ export default defineConfig({
     include: ['components/ui/tests/**/*.spec.ts'],
     setupFiles: ['vitest.setup.ts'],
     css: true,
+    server: {
+      deps: {
+        inline: ['vuetify'],
+      },
+    },
   },
   resolve: {
     alias: {

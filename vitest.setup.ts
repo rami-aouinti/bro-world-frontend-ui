@@ -16,3 +16,20 @@ config.global.stubs = {
   transition: false,
   'transition-group': false,
 }
+
+if (!('visualViewport' in window)) {
+  const noop = () => {}
+  const mockViewport = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+    scale: 1,
+    offsetTop: 0,
+    offsetLeft: 0,
+    pageTop: 0,
+    pageLeft: 0,
+    addEventListener: noop,
+    removeEventListener: noop,
+  } as unknown as VisualViewport
+
+  window.visualViewport = mockViewport
+}
