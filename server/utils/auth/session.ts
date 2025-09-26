@@ -79,7 +79,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   })
 }
 
-export function clearSession(event: H3Event) {
+export function clearAuthSession(event: H3Event) {
   const { tokenCookieName, userCookieName, tokenPresenceCookieName } = resolveCookiesConfig(event)
 
   deleteCookie(event, tokenCookieName, { path: '/' })
