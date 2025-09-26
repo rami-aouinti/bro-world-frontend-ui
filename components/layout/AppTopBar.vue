@@ -64,10 +64,141 @@
       <LayoutSearchButton />
     </div>
 
+    <div class="hidden items-center gap-2 lg:flex">
+      <LangSwitcher v-if="i18nEnabled" />
+      <ThemePopover v-if="config.theme.customizable" />
+      <DarkModeToggle v-if="config.header.darkModeToggle" />
+      <template
+        v-for="(link, i) in headerLinks"
+        :key="i"
+      >
+        <UiDropdownMenu v-if="link.menuItems?.length">
+          <UiDropdownMenuTrigger as-child>
+            <UiButton
+              variant="ghost"
+              size="icon"
+              class="flex gap-2"
+              :aria-label="link?.label"
+            >
+              <SmartIcon
+                v-if="link.icon"
+                :name="link.icon"
+                :size="18"
+              />
+              <span
+                v-if="link?.label"
+                class="sr-only"
+              >
+                {{ link.label }}
+              </span>
+            </UiButton>
+          </UiDropdownMenuTrigger>
+          <UiDropdownMenuContent class="w-44">
+            <UiDropdownMenuItem
+              v-for="item in link.menuItems"
+              :key="item.title"
+              @select="handleMenuItemSelect(item)"
+            >
+              <div class="flex w-full items-center gap-2">
+                <SmartIcon
+                  v-if="item.icon"
+                  :name="item.icon"
+                  :size="16"
+                />
+                <span>{{ $t(item.title) }}</span>
+              </div>
+            </UiDropdownMenuItem>
+          </UiDropdownMenuContent>
+        </UiDropdownMenu>
+        <a
+          v-else-if="link.external"
+          :href="link?.to"
+          :target="link?.target ?? '_blank'"
+          rel="noreferrer"
+        >
+          <UiButton
+            variant="ghost"
+            size="icon"
+            class="flex gap-2"
+            :aria-label="link?.label"
+          >
+            <SmartIcon
+              v-if="link?.icon"
+              :name="link.icon"
+              :size="18"
+            />
+            <span
+              v-if="link?.label"
+              class="sr-only"
+            >
+              {{ link.label }}
+            </span>
+          </UiButton>
+        </a>
+        <NuxtLinkLocale
+          v-else
+          :to="localePath(link?.to)"
+          :target="link?.target"
+        >
+          <UiButton
+            variant="ghost"
+            size="icon"
+            class="flex gap-2"
+            :aria-label="link?.label"
+          >
+            <SmartIcon
+              v-if="link?.icon"
+              :name="link.icon"
+              :size="18"
+            />
+            <span
+              v-if="link?.label"
+              class="sr-only"
+            >
+              {{ link.label }}
+            </span>
+          </UiButton>
+        </NuxtLinkLocale>
+      </template>
+      <UiButton
+        v-if="isAuthenticated"
+        variant="ghost"
+        size="icon"
+        class="flex gap-2"
+        :aria-label="t('auth.signOut')"
+        :disabled="loggingOut"
+        @click="handleLogout"
+      >
+        <SmartIcon
+          name="mdi:logout"
+          :size="18"
+        />
+        <span class="sr-only">{{ t('auth.signOut') }}</span>
+      </UiButton>
+      <NuxtLinkLocale
+        v-else
+        :to="localePath('/login')"
+      >
+        <UiButton
+          variant="ghost"
+          size="icon"
+          class="flex gap-2"
+          :aria-label="t('auth.signIn')"
+        >
+          <SmartIcon
+            name="mdi:login"
+            :size="18"
+          />
+          <span class="sr-only">{{ t('auth.signIn') }}</span>
+        </UiButton>
+      </NuxtLinkLocale>
+    </div>
+
     <v-spacer />
 
     <div class="flex items-center gap-1">
       <button
+        v-if="!config.header.darkModeToggle"
         type="button"
         :class="iconTriggerClasses"
         :aria-label="t('layout.actions.toggleTheme')"
@@ -147,7 +278,10 @@
           />
         </v-list>
       </v-menu>
-      <v-menu location="bottom end">
+      <v-menu
+        v-if="!i18nEnabled"
+        location="bottom end"
+      >
         <template #activator="{ props: languageProps }">
           <button
             type="button"
@@ -192,9 +326,28 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthSession } from '~/stores/auth-session'
+
 interface AppIcon {
   name: string
   label: string
+}
+
+type HeaderLinkMenuItem = {
+  title: string
+  to?: string
+  icon?: string
+  target?: string
+  external?: boolean
+}
+
+type HeaderLink = {
+  icon?: string
+  to?: string
+  target?: string
+  label?: string
+  external?: boolean
+  menuItems?: HeaderLinkMenuItem[]
 }
 
 const props = defineProps<{
@@ -224,6 +377,8 @@ const { t } = useI18n()
 
 const config = useConfig()
 
+const { i18nEnabled, localePath } = useI18nDocs()
+
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === 'input',
 )
@@ -233,6 +388,14 @@ const showSearchButton = computed(
 )
 
 const localeLabel = computed(() => formatLocaleLabel(props.locale))
+
+const headerLinks = computed<HeaderLink[]>(() => config.value.header.links ?? [])
+
+const auth = useAuthSession()
+
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
+
+const loggingOut = ref(false)
 
 const localeFlags: Record<string, string> = {
   en: '🇬🇧',
@@ -291,6 +454,33 @@ function localeToFlag(value: string) {
   }
 
   return value.toUpperCase()
+}
+
+function handleMenuItemSelect(item: HeaderLinkMenuItem) {
+  if (!item?.to) return
+
+  if (item.external) {
+    if (typeof window !== 'undefined')
+      window.open(item.to, item.target ?? '_blank')
+
+    return
+  }
+
+  navigateTo(localePath(item.to))
+}
+
+async function handleLogout() {
+  if (loggingOut.value)
+    return
+
+  loggingOut.value = true
+
+  try {
+    await auth.logout()
+  }
+  finally {
+    loggingOut.value = false
+  }
 }
 </script>
 
