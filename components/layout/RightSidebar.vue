@@ -53,6 +53,13 @@
       />
     </teleport>
   </ClientOnly>
+  <div class="hidden xl:block">
+    <AppSidebar
+      :items="items"
+      :active-key="activeKey"
+      @select="handleSidebarSelect"
+    />
+  </div>>
 </template>
 
 <script setup lang="ts">
@@ -65,6 +72,27 @@ import { useRightSidebarData } from '~/composables/useRightSidebarData'
 const route = useRoute()
 
 const { weather, leaderboard, rating } = useRightSidebarData()
+interface SidebarItem {
+  key: string;
+  label: string;
+  icon: string;
+  to: string;
+}
+
+const props = defineProps<{
+  items: SidebarItem[];
+  activeKey: string;
+}>();
+
+const emit = defineEmits<{ (e: "select", key: string): void }>();
+
+const { items, activeKey } = toRefs(props);
+
+const route = useRoute();
+import { useRightSidebarData } from "~/composables/useRightSidebarData";
+
+
+const { weather, leaderboard, rating } = useRightSidebarData();
 
 const isDesktop = import.meta.client
   ? useMediaQuery('(min-width: 1280px)')

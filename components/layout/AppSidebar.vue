@@ -1,8 +1,7 @@
 <template>
   <aside
     class="app-card app-sidebar"
-    :class="{ 'app-sidebar--sticky': sticky }
-    role="navigation"
+    :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Main navigation"
   >
     <header class="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-primary">
