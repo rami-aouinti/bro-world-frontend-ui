@@ -55,11 +55,22 @@ async function resolveIcon(name: string) {
   }
 
   try {
-    const svg = await $fetch<string>(`https://api.iconify.design/${name}.svg`)
-    iconCache.value[name] = svg
+    const svg = await $fetch<string>(`https://api.iconify.design/${name}.svg`, {
+      responseType: 'text',
+      parseResponse: (text) => text,
+    })
+
+    iconCache.value = {
+      ...iconCache.value,
+      [name]: typeof svg === 'string' ? svg : String(svg),
+    }
   } catch (error) {
     console.warn(`Unable to load icon "${name}":`, error)
-    iconCache.value[name] = null
+
+    iconCache.value = {
+      ...iconCache.value,
+      [name]: null,
+    }
   }
 }
 
