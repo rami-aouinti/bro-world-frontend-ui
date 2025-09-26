@@ -76,7 +76,12 @@
         </div>
       </div>
     </v-main>
-
+    <RightSidebar
+        ref="rightSidebarRef"
+        :items="sidebarItems"
+        :active-key="activeSidebar"
+        @select="handleSidebarSelect"
+    />
     <Toaster />
 
     <v-footer
