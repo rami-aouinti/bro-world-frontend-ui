@@ -52,7 +52,7 @@
           class="layout-grid"
           :class="{ 'layout-grid--no-right': !showRightWidgets }"
         >
-          <div class="hidden md:block">
+          <div v-if="!isMobile" class="layout-sidebar">
             <AppSidebar
               :items="sidebarItems"
               :active-key="activeSidebar"
@@ -65,7 +65,7 @@
 
             <div
               v-if="showRightWidgets"
-              class="mt-6 hidden md:block xl:hidden"
+              class="layout-right-widgets"
             >
               <AppRightWidgets />
             </div>
@@ -73,7 +73,7 @@
 
           <div
             v-if="showRightWidgets"
-            class="hidden xl:block"
+            class="layout-right-rail"
           >
             <AppRightWidgets />
           </div>
@@ -238,11 +238,28 @@ const currentYear = new Date().getFullYear()
   grid-template-columns: minmax(0, 1fr);
 }
 
+.layout-sidebar {
+  display: none;
+}
+
+.layout-right-widgets {
+  margin-top: 24px;
+  display: none;
+}
+
+.layout-right-rail {
+  display: none;
+}
+
 .layout-grid--no-right {
   grid-template-columns: minmax(0, 1fr);
 }
 
 @media (min-width: 768px) {
+  .layout-sidebar {
+    display: block;
+  }
+
   .layout-grid {
     grid-template-columns: 320px minmax(0, 1fr);
   }
@@ -250,9 +267,21 @@ const currentYear = new Date().getFullYear()
   .layout-grid--no-right {
     grid-template-columns: 320px minmax(0, 1fr);
   }
+
+  .layout-right-widgets {
+    display: block;
+  }
 }
 
 @media (min-width: 1280px) {
+  .layout-right-widgets {
+    display: none;
+  }
+
+  .layout-right-rail {
+    display: block;
+  }
+
   .layout-grid {
     grid-template-columns: 320px minmax(0, 1fr) 360px;
   }
