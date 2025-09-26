@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden h-full flex-col md:flex">
+  <div class="hidden h-full flex-col xl:-translate-y-6 xl:transition xl:duration-300 xl:ease-out xl:flex">
     <UiScrollArea
       orientation="vertical"
       type="hover"
@@ -15,7 +15,11 @@
   </div>
   <ClientOnly>
     <teleport to="body">
-      <div v-if="!isDesktop" class="fixed inset-y-0 right-0 z-50 flex justify-end">
+      <div
+        v-if="!isDesktop"
+        class="fixed inset-y-0 right-0 z-50 flex justify-end"
+        :class="isDrawerOpen ? 'pointer-events-auto' : 'pointer-events-none'"
+      >
         <section
           id="right-sidebar-drawer"
           ref="panelRef"
@@ -24,7 +28,7 @@
           :aria-hidden="!isDrawerOpen"
           tabindex="-1"
           class="flex h-full w-screen max-w-full flex-col overflow-hidden border-l border-border bg-background shadow-xl transition-transform duration-200 ease-out sm:max-w-sm"
-          :class="isDrawerOpen ? 'translate-x-0' : 'translate-x-full'"
+          :class="isDrawerOpen ? 'translate-y-0' : '-translate-y-full'"
           @keydown="handlePanelKeydown"
         >
           <UiScrollArea
@@ -52,70 +56,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
+import { nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { useEventListener, useMediaQuery } from "@vueuse/core";
 
 import RightSidebarContent from "~/components/layout/RightSidebarContent.vue";
-import type {
-  SidebarLeaderboardData,
-  SidebarLeaderboardParticipant,
-  SidebarLeaderboardRaw,
-  SidebarRatingData,
-  SidebarRatingRaw,
-  SidebarWeatherData,
-} from "~/components/layout/right-sidebar.types";
+import { useRightSidebarData } from "~/composables/useRightSidebarData";
 
-const { tm } = useI18n();
 const route = useRoute();
 
-const weather = computed(() => tm("sidebar.weather") as SidebarWeatherData);
-
-const leaderboard = computed<SidebarLeaderboardData>(() => {
-  const raw = tm("sidebar.leaderboard") as SidebarLeaderboardRaw | undefined;
-  const order: Array<keyof NonNullable<SidebarLeaderboardRaw["participants"]>> = [
-    "first",
-    "second",
-    "third",
-  ];
-
-  const participants = order
-    .map((key, index) => {
-      const participant = raw?.participants?.[key];
-
-      if (!participant) {
-        return null;
-      }
-
-      return {
-        position: index + 1,
-        ...participant,
-      } satisfies SidebarLeaderboardParticipant;
-    })
-    .filter((participant): participant is SidebarLeaderboardParticipant => Boolean(participant));
-
-  return {
-    title: raw?.title ?? "",
-    live: raw?.live ?? "",
-    participants,
-  };
-});
-
-const rating = computed<SidebarRatingData>(() => {
-  const raw = tm("sidebar.rating") as SidebarRatingRaw;
-
-  return {
-    title: raw.title ?? "",
-    subtitle: raw.subtitle ?? "",
-    average: raw.average ?? "",
-    total: raw.total ?? 0,
-    icon: raw.icon ?? "",
-    stars: raw.stars ?? 0,
-    categories: Object.values(raw.categories ?? {}),
-  };
-});
+const { weather, leaderboard, rating } = useRightSidebarData();
 
 const isDesktop = import.meta.client
-  ? useMediaQuery("(min-width: 768px)")
+  ? useMediaQuery("(min-width: 1280px)")
   : ref(true);
 
 const isDrawerOpen = ref(false);
@@ -124,7 +76,7 @@ const previousFocus = ref<HTMLElement | null>(null);
 const lastTrigger = ref<HTMLElement | null>(null);
 const lastTouchPoint = ref<{ x: number; y: number; startOnDrawer: boolean } | null>(null);
 
-const EDGE_ZONE_WIDTH = 14;
+const EDGE_ZONE_OFFSET = 16;
 
 watch(
   () => route.fullPath,
@@ -179,7 +131,7 @@ function closeDrawer(options: { returnFocus?: boolean } = {}) {
   previousFocus.value = null;
 }
 
-function toggleDrawer(trigger: HTMLElement | null) {
+function toggleDrawer(trigger?: HTMLElement | null) {
   if (isDrawerOpen.value) {
     closeDrawer({ returnFocus: true });
     return;
@@ -321,22 +273,28 @@ if (import.meta.client) {
 
     const deltaX = touch.clientX - lastTouchPoint.value.x;
     const deltaY = touch.clientY - lastTouchPoint.value.y;
-    const mostlyHorizontal = Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30;
+    const mostlyVertical = Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 30;
 
-    if (!mostlyHorizontal) {
+    if (!mostlyVertical) {
       lastTouchPoint.value = null;
       return;
     }
 
-    if (lastTouchPoint.value.startOnDrawer && deltaX > 0) {
+    if (lastTouchPoint.value.startOnDrawer && deltaY < 0) {
       closeDrawer({ returnFocus: false });
       lastTouchPoint.value = null;
       return;
     }
 
+    const fromTopEdge = lastTouchPoint.value.y;
     const fromRightEdge = window.innerWidth - lastTouchPoint.value.x;
 
-    if (!lastTouchPoint.value.startOnDrawer && fromRightEdge <= EDGE_ZONE_WIDTH * 2 && deltaX < 0) {
+    if (
+      !lastTouchPoint.value.startOnDrawer &&
+      fromTopEdge <= EDGE_ZONE_OFFSET * 2 &&
+      fromRightEdge <= EDGE_ZONE_OFFSET * 2 &&
+      deltaY > 0
+    ) {
       openDrawer();
     }
 
@@ -348,5 +306,11 @@ onBeforeUnmount(() => {
   lastTrigger.value = null;
   previousFocus.value = null;
   lastTouchPoint.value = null;
+});
+
+defineExpose({
+  openDrawer,
+  closeDrawer,
+  toggleDrawer,
 });
 </script>
