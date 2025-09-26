@@ -14,9 +14,9 @@
         :aria-label="t('layout.actions.openNavigation')"
         @click="emit('toggle-left')"
       >
-        <v-icon
-          icon="mdi-menu"
-          size="24"
+        <Icon
+          name="mdi:menu"
+          :size="24"
         />
       </v-btn>
       <div class="flex items-center gap-2">
@@ -43,9 +43,9 @@
             v-bind="tooltipProps"
             :aria-label="t(icon.label)"
           >
-            <v-icon
-              :icon="icon.name"
-              size="22"
+            <Icon
+              :name="resolveIconName(icon.name)"
+              :size="22"
             />
           </button>
         </template>
@@ -195,14 +195,29 @@
       </NuxtLinkLocale>
     </div>
     <template v-slot:append>
-      <v-btn icon="mdi-magnify"></v-btn>
+      <v-btn icon>
+        <Icon
+          name="mdi:magnify"
+          :size="24"
+        />
+      </v-btn>
 
-      <v-btn icon="mdi-dots-vertical"></v-btn>
+      <v-btn icon>
+        <Icon
+          name="mdi:dots-vertical"
+          :size="24"
+        />
+      </v-btn>
     </template>
     <v-spacer />
 
     <div class="flex items-center gap-1">
-      <v-btn icon="mdi-heart"></v-btn>
+      <v-btn icon>
+        <Icon
+          name="mdi:heart"
+          :size="24"
+        />
+      </v-btn>
       <button
         v-if="!isMobile"
         type="button"
@@ -210,9 +225,9 @@
         :aria-label="t('layout.actions.openNavigation')"
         @click="emit('toggle-left')"
       >
-        <v-icon
-          icon="mdi-view-sidebar"
-          size="22"
+        <Icon
+          name="mdi:view-sidebar"
+          :size="22"
         />
       </button>
       <button
@@ -222,9 +237,9 @@
         :aria-label="t('layout.actions.openWidgets')"
         @click="emit('toggle-right')"
       >
-        <v-icon
-          icon="mdi-view-sidebar-right"
-          size="22"
+        <Icon
+          name="mdi:view-sidebar-right"
+          :size="22"
         />
       </button>
       <button
@@ -234,9 +249,9 @@
         :aria-label="t('layout.actions.toggleTheme')"
         @click="emit('toggle-theme')"
       >
-        <v-icon
-          :icon="isDark ? 'mdi-weather-night' : 'mdi-weather-sunny'"
-          size="22"
+        <Icon
+          :name="isDark ? 'mdi:weather-night' : 'mdi:weather-sunny'"
+          :size="22"
         />
       </button>
       <button
@@ -245,9 +260,9 @@
         :aria-label="t('layout.actions.goBack')"
         @click="emit('go-back')"
       >
-        <v-icon
-          icon="mdi-arrow-left"
-          size="22"
+        <Icon
+          name="mdi:arrow-left"
+          :size="22"
         />
       </button>
       <button
@@ -256,9 +271,9 @@
         :aria-label="t('layout.actions.refresh')"
         @click="emit('refresh')"
       >
-        <v-icon
-          icon="mdi-refresh"
-          size="22"
+        <Icon
+          name="mdi:refresh"
+          :size="22"
         />
       </button>
       <button
@@ -266,9 +281,9 @@
         :class="iconTriggerClasses"
         :aria-label="t('layout.actions.notifications')"
       >
-        <v-icon
-          icon="mdi-bell"
-          size="22"
+        <Icon
+          name="mdi:bell"
+          :size="22"
         />
       </button>
       <button
@@ -276,9 +291,9 @@
         :class="iconTriggerClasses"
         :aria-label="t('layout.actions.cart')"
       >
-        <v-icon
-          icon="mdi-shopping"
-          size="22"
+        <Icon
+          name="mdi:shopping"
+          :size="22"
         />
       </button>
       <v-menu location="bottom end">
@@ -298,14 +313,22 @@
           </button>
         </template>
         <v-list density="compact">
-          <v-list-item
-            :title="t('layout.actions.viewProfile')"
-            prepend-icon="mdi-account"
-          />
-          <v-list-item
-            :title="t('layout.actions.signOut')"
-            prepend-icon="mdi-logout"
-          />
+          <v-list-item :title="t('layout.actions.viewProfile')">
+            <template #prepend>
+              <Icon
+                name="mdi:account"
+                :size="20"
+              />
+            </template>
+          </v-list-item>
+          <v-list-item :title="t('layout.actions.signOut')">
+            <template #prepend>
+              <Icon
+                name="mdi:logout"
+                :size="20"
+              />
+            </template>
+          </v-list-item>
         </v-list>
       </v-menu>
       <v-menu
@@ -346,9 +369,9 @@
         :aria-label="t('layout.actions.openWidgets')"
         @click="emit('toggle-right')"
       >
-        <v-icon
-          icon="mdi-dots-vertical"
-          size="22"
+        <Icon
+          name="mdi:dots-vertical"
+          :size="22"
         />
       </button>
     </div>
@@ -427,6 +450,19 @@ const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
 
 const loggingOut = ref(false)
+
+function resolveIconName(name?: string) {
+  if (!name)
+    return ''
+
+  if (name.includes(':'))
+    return name
+
+  if (name.startsWith('mdi-'))
+    return `mdi:${name.slice(4)}`
+
+  return name
+}
 
 const localeFlags: Record<string, string> = {
   en: '🇬🇧',
