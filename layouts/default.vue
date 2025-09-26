@@ -36,7 +36,7 @@
       <div class="app-container">
         <div
           class="layout-grid"
-          :class="{ 'layout-grid--no-right': !showRightWidgets }"
+          :class="layoutGridClasses"
         >
           <div v-if="!isMobile" class="layout-sidebar">
             <AppSidebar
@@ -65,12 +65,6 @@
             v-if="showRightWidgets"
             class="layout-right-rail"
           >
-            <RightSidebar
-              ref="rightSidebarRef"
-              :items="sidebarItems"
-              :active-key="activeSidebar"
-              @select="handleSidebarSelect"
-            />
             <RightSidebar ref="rightSidebarRef" />
           </div>
         </div>
@@ -120,6 +114,11 @@ const isMobile = computed(() => !display.mdAndUp.value)
 
 const isDark = computed(() => theme.global.current.value.dark)
 const showRightWidgets = computed(() => route.meta?.showRightWidgets !== false)
+const layoutGridClasses = computed(() => ({
+  'layout-grid--with-sidebar': !isMobile.value,
+  'layout-grid--with-widgets': showRightWidgets.value,
+  'layout-grid--widgets-left': showRightWidgets.value && isDesktop.value && !isMobile.value,
+}))
 const showInlineRightWidgets = computed(
   () => showRightWidgets.value && !isDesktop.value && !isMobile.value,
 )
@@ -241,47 +240,18 @@ const currentYear = new Date().getFullYear()
   display: grid;
   gap: 24px;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "content";
 }
 
 .layout-sidebar {
   display: none;
+  grid-area: sidebar;
 }
 
 .layout-right-rail {
   display: none;
-}
-
-.layout-grid--no-right {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-@media (min-width: 768px) {
-  .layout-sidebar {
-    display: block;
-  }
-
-  .layout-grid {
-    grid-template-columns: 320px minmax(0, 1fr);
-  }
-
-  .layout-grid--no-right {
-    grid-template-columns: 320px minmax(0, 1fr);
-  }
-
-}
-
-@media (min-width: 1280px) {
-  .layout-right-rail {
-    display: block;
-  }
-
-  .layout-grid {
-    grid-template-columns: 320px minmax(0, 1fr) 320px;
-  }
-
-  .layout-grid--no-right {
-    grid-template-columns: 320px minmax(0, 1fr);
-  }
+  grid-area: widgets;
 }
 
 .content-area {
@@ -289,22 +259,42 @@ const currentYear = new Date().getFullYear()
   border-radius: 32px;
   background: transparent;
   padding-top: 8px;
-  grid-column: 1 / -1;
+  grid-area: content;
 }
 
 @media (min-width: 768px) {
-  .content-area {
-    grid-column: 2 / 3;
+  .layout-grid--with-sidebar {
+    grid-template-columns: 320px minmax(0, 1fr);
+    grid-template-areas: "sidebar content";
   }
 
-  .layout-grid--no-right .content-area {
-    grid-column: 2 / 3;
+  .layout-grid--with-sidebar .layout-sidebar {
+    display: block;
   }
 }
 
 @media (min-width: 1280px) {
-  .layout-grid--no-right .content-area {
-    grid-column: 2 / 3;
+  .layout-grid--with-widgets {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    grid-template-areas: "content widgets";
+  }
+
+  .layout-grid--with-widgets .layout-right-rail {
+    display: block;
+  }
+
+  .layout-grid--with-sidebar.layout-grid--with-widgets {
+    grid-template-columns: 320px minmax(0, 1fr) 320px;
+    grid-template-areas: "sidebar content widgets";
+  }
+
+  .layout-grid--widgets-left.layout-grid--with-widgets.layout-grid--with-sidebar {
+    grid-template-areas: "widgets content sidebar";
+  }
+
+  .layout-grid--widgets-left.layout-grid--with-widgets:not(.layout-grid--with-sidebar) {
+    grid-template-columns: 320px minmax(0, 1fr);
+    grid-template-areas: "widgets content";
   }
 }
 </style>

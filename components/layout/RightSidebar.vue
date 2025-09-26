@@ -1,11 +1,5 @@
 <template>
-  <div class="hidden xl:block">
-    <AppSidebar
-      :items="items"
-      :active-key="activeKey"
-      @select="handleSidebarSelect"
-    />
-  <div class="hidden h-full flex-col xl:-translate-y-6 xl:transition xl:duration-300 xl:ease-out xl:flex">
+  <div class="hidden h-full flex-col xl:-translate-y-6 xl:flex xl:transition xl:duration-300 xl:ease-out">
     <UiScrollArea
       orientation="vertical"
       type="hover"
@@ -37,15 +31,18 @@
           :class="isDrawerOpen ? 'translate-y-0' : '-translate-y-full'"
           @keydown="handlePanelKeydown"
         >
-          <div class="h-full w-full overflow-y-auto px-6 py-6">
-            <AppSidebar
-              :items="items"
-              :active-key="activeKey"
-              :sticky="false"
-              class="h-full"
-              @select="handleSidebarSelect"
+          <UiScrollArea
+            orientation="vertical"
+            type="hover"
+            class="h-full w-full overflow-hidden"
+          >
+            <RightSidebarContent
+              class="h-full px-6 py-6"
+              :weather="weather"
+              :leaderboard="leaderboard"
+              :rating="rating"
             />
-          </div>
+          </UiScrollArea>
         </section>
       </div>
       <div
@@ -59,268 +56,238 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, ref, toRefs, watch } from "vue";
-import { useEventListener, useMediaQuery } from "@vueuse/core";
+import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { useEventListener, useMediaQuery } from '@vueuse/core'
 
-import AppSidebar from "~/components/layout/AppSidebar.vue";
+import RightSidebarContent from '~/components/layout/RightSidebarContent.vue'
+import { useRightSidebarData } from '~/composables/useRightSidebarData'
 
-interface SidebarItem {
-  key: string;
-  label: string;
-  icon: string;
-  to: string;
-}
+const route = useRoute()
 
-const props = defineProps<{
-  items: SidebarItem[];
-  activeKey: string;
-}>();
-
-const emit = defineEmits<{ (e: "select", key: string): void }>();
-
-const { items, activeKey } = toRefs(props);
-
-const route = useRoute();
-import { nextTick, onBeforeUnmount, ref, watch } from "vue";
-import { useEventListener, useMediaQuery } from "@vueuse/core";
-
-import RightSidebarContent from "~/components/layout/RightSidebarContent.vue";
-import { useRightSidebarData } from "~/composables/useRightSidebarData";
-
-const route = useRoute();
-
-const { weather, leaderboard, rating } = useRightSidebarData();
+const { weather, leaderboard, rating } = useRightSidebarData()
 
 const isDesktop = import.meta.client
-  ? useMediaQuery("(min-width: 1280px)")
-  : ref(true);
+  ? useMediaQuery('(min-width: 1280px)')
+  : ref(true)
 
-const isDrawerOpen = ref(false);
-const panelRef = ref<HTMLElement | null>(null);
-const previousFocus = ref<HTMLElement | null>(null);
-const lastTrigger = ref<HTMLElement | null>(null);
-const lastTouchPoint = ref<{ x: number; y: number; startOnDrawer: boolean } | null>(null);
+const isDrawerOpen = ref(false)
+const panelRef = ref<HTMLElement | null>(null)
+const previousFocus = ref<HTMLElement | null>(null)
+const lastTrigger = ref<HTMLElement | null>(null)
+const lastTouchPoint = ref<{ x: number; y: number; startOnDrawer: boolean } | null>(null)
 
-const EDGE_ZONE_OFFSET = 16;
-
-function handleSidebarSelect(key: string) {
-  emit("select", key);
-
-  if (!isDesktop.value) {
-    closeDrawer({ returnFocus: false });
-  }
-}
+const EDGE_ZONE_OFFSET = 16
 
 watch(
   () => route.fullPath,
   () => {
     if (!isDesktop.value) {
-      closeDrawer({ returnFocus: false });
+      closeDrawer({ returnFocus: false })
     }
   },
-);
+)
 
 watch(isDesktop, (desktop) => {
   if (desktop) {
-    closeDrawer({ returnFocus: false });
+    closeDrawer({ returnFocus: false })
   }
-});
+})
 
 function openDrawer(options: { focus?: boolean; trigger?: HTMLElement | null } = {}) {
   if (isDesktop.value) {
-    return;
+    return
   }
 
-  isDrawerOpen.value = true;
+  isDrawerOpen.value = true
 
   if (options.trigger) {
-    lastTrigger.value = options.trigger;
+    lastTrigger.value = options.trigger
   }
 
   if (options.focus) {
-    previousFocus.value = options.trigger ?? (document.activeElement as HTMLElement | null);
+    previousFocus.value = options.trigger ?? (document.activeElement as HTMLElement | null)
 
     nextTick(() => {
-      focusFirstElement();
-    });
+      focusFirstElement()
+    })
   }
 }
 
 function closeDrawer(options: { returnFocus?: boolean } = {}) {
-  isDrawerOpen.value = false;
+  isDrawerOpen.value = false
 
   if (options.returnFocus !== false) {
     nextTick(() => {
-      const target = lastTrigger.value ?? previousFocus.value;
-      target?.focus({ preventScroll: true });
-      lastTrigger.value = null;
-      previousFocus.value = null;
-    });
+      const target = lastTrigger.value ?? previousFocus.value
+      target?.focus({ preventScroll: true })
+      lastTrigger.value = null
+      previousFocus.value = null
+    })
 
-    return;
+    return
   }
 
-  lastTrigger.value = null;
-  previousFocus.value = null;
+  lastTrigger.value = null
+  previousFocus.value = null
 }
 
 function toggleDrawer(trigger?: HTMLElement | null) {
   if (isDrawerOpen.value) {
-    closeDrawer({ returnFocus: true });
-    return;
+    closeDrawer({ returnFocus: true })
+    return
   }
 
-  openDrawer({ focus: true, trigger });
+  openDrawer({ focus: true, trigger })
 }
 
 function handlePanelKeydown(event: KeyboardEvent) {
   if (!isDrawerOpen.value) {
-    return;
+    return
   }
 
-  if (event.key === "Escape") {
-    event.preventDefault();
-    closeDrawer({ returnFocus: true });
-    return;
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeDrawer({ returnFocus: true })
+    return
   }
 
-  if (event.key !== "Tab") {
-    return;
+  if (event.key !== 'Tab') {
+    return
   }
 
-  const focusable = getFocusableElements();
+  const focusable = getFocusableElements()
 
   if (focusable.length === 0) {
-    event.preventDefault();
-    panelRef.value?.focus({ preventScroll: true });
-    return;
+    event.preventDefault()
+    panelRef.value?.focus({ preventScroll: true })
+    return
   }
 
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  const active = document.activeElement as HTMLElement | null;
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  const active = document.activeElement as HTMLElement | null
 
   if (event.shiftKey) {
     if (active === first || !panelRef.value?.contains(active)) {
-      event.preventDefault();
-      last.focus({ preventScroll: true });
+      event.preventDefault()
+      last.focus({ preventScroll: true })
     }
 
-    return;
+    return
   }
 
   if (active === last) {
-    event.preventDefault();
-    first.focus({ preventScroll: true });
+    event.preventDefault()
+    first.focus({ preventScroll: true })
   }
 }
 
 function focusFirstElement() {
-  const focusable = getFocusableElements();
+  const focusable = getFocusableElements()
 
   if (focusable.length > 0) {
-    focusable[0].focus({ preventScroll: true });
-    return;
+    focusable[0].focus({ preventScroll: true })
+    return
   }
 
-  panelRef.value?.focus({ preventScroll: true });
+  panelRef.value?.focus({ preventScroll: true })
 }
 
 function getFocusableElements() {
   if (!panelRef.value) {
-    return [] as HTMLElement[];
+    return [] as HTMLElement[]
   }
 
   const selectors = [
-    "a[href]",
-    "button:not([disabled])",
-    "textarea:not([disabled])",
-    "input:not([disabled])",
-    "select:not([disabled])",
+    'a[href]',
+    'button:not([disabled])',
+    'textarea:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
     "[tabindex]:not([tabindex='-1'])",
-  ];
+  ]
 
-  return Array.from(panelRef.value.querySelectorAll<HTMLElement>(selectors.join(","))).filter(
-    (element) => !element.hasAttribute("disabled") && !element.getAttribute("aria-hidden"),
-  );
+  return Array.from(panelRef.value.querySelectorAll<HTMLElement>(selectors.join(','))).filter(
+    (element) => !element.hasAttribute('disabled') && !element.getAttribute('aria-hidden'),
+  )
 }
 
 function isTextInput(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
-    return false;
+    return false
   }
 
-  const tag = target.tagName;
+  const tag = target.tagName
 
-  return tag === "INPUT" || tag === "TEXTAREA" || target.isContentEditable;
+  return tag === 'INPUT' || tag === 'TEXTAREA' || target.isContentEditable
 }
 
 if (import.meta.client) {
-  useEventListener(window, "keydown", (event: KeyboardEvent) => {
+  useEventListener(window, 'keydown', (event: KeyboardEvent) => {
     if (event.defaultPrevented || isDesktop.value) {
-      return;
+      return
     }
 
-    if (event.key === "]" || event.code === "BracketRight") {
+    if (event.key === ']' || event.code === 'BracketRight') {
       if (isTextInput(event.target)) {
-        return;
+        return
       }
 
-      event.preventDefault();
-      toggleDrawer(event.target as HTMLElement | null);
-      return;
+      event.preventDefault()
+      toggleDrawer(event.target as HTMLElement | null)
+      return
     }
 
-    if ((event.key === "Escape" || event.code === "Escape") && isDrawerOpen.value) {
-      event.preventDefault();
-      closeDrawer({ returnFocus: true });
+    if ((event.key === 'Escape' || event.code === 'Escape') && isDrawerOpen.value) {
+      event.preventDefault()
+      closeDrawer({ returnFocus: true })
     }
-  });
+  })
 
-  useEventListener(window, "touchstart", (event: TouchEvent) => {
+  useEventListener(window, 'touchstart', (event: TouchEvent) => {
     if (isDesktop.value || event.touches.length === 0) {
-      return;
+      return
     }
 
-    const touch = event.touches[0];
-    const startOnDrawer = Boolean(panelRef.value?.contains(event.target as Node));
+    const touch = event.touches[0]
+    const startOnDrawer = Boolean(panelRef.value?.contains(event.target as Node))
 
     lastTouchPoint.value = {
       x: touch.clientX,
       y: touch.clientY,
       startOnDrawer,
-    };
-  });
+    }
+  })
 
-  useEventListener(window, "touchend", (event: TouchEvent) => {
+  useEventListener(window, 'touchend', (event: TouchEvent) => {
     if (isDesktop.value || !lastTouchPoint.value) {
-      return;
+      return
     }
 
-    const touch = event.changedTouches[0];
+    const touch = event.changedTouches[0]
 
     if (!touch) {
-      lastTouchPoint.value = null;
-      return;
+      lastTouchPoint.value = null
+      return
     }
 
-    const deltaX = touch.clientX - lastTouchPoint.value.x;
-    const deltaY = touch.clientY - lastTouchPoint.value.y;
-    const mostlyVertical = Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 30;
+    const deltaX = touch.clientX - lastTouchPoint.value.x
+    const deltaY = touch.clientY - lastTouchPoint.value.y
+    const mostlyVertical = Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 30
 
     if (!mostlyVertical) {
-      lastTouchPoint.value = null;
-      return;
+      lastTouchPoint.value = null
+      return
     }
 
     if (lastTouchPoint.value.startOnDrawer && deltaY < 0) {
-      closeDrawer({ returnFocus: false });
-      lastTouchPoint.value = null;
-      return;
+      closeDrawer({ returnFocus: false })
+      lastTouchPoint.value = null
+      return
     }
 
-    const fromTopEdge = lastTouchPoint.value.y;
-    const fromRightEdge = window.innerWidth - lastTouchPoint.value.x;
+    const fromTopEdge = lastTouchPoint.value.y
+    const fromRightEdge = window.innerWidth - lastTouchPoint.value.x
 
     if (
       !lastTouchPoint.value.startOnDrawer &&
@@ -328,22 +295,22 @@ if (import.meta.client) {
       fromRightEdge <= EDGE_ZONE_OFFSET * 2 &&
       deltaY > 0
     ) {
-      openDrawer();
+      openDrawer()
     }
 
-    lastTouchPoint.value = null;
-  });
+    lastTouchPoint.value = null
+  })
 }
 
 onBeforeUnmount(() => {
-  lastTrigger.value = null;
-  previousFocus.value = null;
-  lastTouchPoint.value = null;
-});
+  lastTrigger.value = null
+  previousFocus.value = null
+  lastTouchPoint.value = null
+})
 
 defineExpose({
   openDrawer,
   closeDrawer,
   toggleDrawer,
-});
+})
 </script>
