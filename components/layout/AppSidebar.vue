@@ -5,25 +5,49 @@
     aria-label="Main navigation"
   >
     <nav>
-      <ul class="flex flex-col gap-2">
-        <li v-for="item in items" :key="item.key">
-          <NuxtLink
-            :to="item.to"
+      <ul class="flex flex-col gap-3">
+        <li v-for="item in items" :key="item.key" class="sidebar-group">
+          <component
+            :is="item.to ? NuxtLink : 'button'"
+            v-bind="item.to ? { to: item.to } : { type: 'button' }"
             class="sidebar-item"
-            :class="{ 'sidebar-item--active': item.key === activeKey }"
-            :aria-label="t(item.label)"
-            :aria-current="item.key === activeKey ? 'page' : undefined"
+            :class="{ 'sidebar-item--active': isItemActive(item, activeKey) }"
+            :aria-label="item.to ? t(item.label) : undefined"
+            :aria-current="isItemActive(item, activeKey) ? 'page' : undefined"
             @click="emit('select', item.key)"
           >
             <div class="flex items-center gap-3">
               <Icon
-                  :name="resolveIconName(item.icon)"
-                  :size="20"
+                v-if="item.icon"
+                class="sidebar-icon"
+                :name="resolveIconName(item.icon)"
+                :size="20"
               />
               <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
             </div>
-            <span class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
-          </NuxtLink>
+            <span v-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
+          </component>
+
+          <ul v-if="item.children?.length" class="sidebar-sublist">
+            <li v-for="child in item.children" :key="child.key">
+              <NuxtLink
+                :to="child.to"
+                class="sidebar-subitem"
+                :class="{ 'sidebar-subitem--active': child.key === activeKey }"
+                :aria-label="t(child.label)"
+                :aria-current="child.key === activeKey ? 'page' : undefined"
+                @click="emit('select', child.key)"
+              >
+                <Icon
+                  v-if="child.icon"
+                  class="sidebar-subicon"
+                  :name="resolveIconName(child.icon)"
+                  :size="18"
+                />
+                <span class="text-sm text-muted-foreground">{{ t(child.label) }}</span>
+              </NuxtLink>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>
@@ -36,8 +60,9 @@ import { computed } from 'vue'
 interface SidebarItem {
   key: string
   label: string
-  icon: string
-  to: string
+  icon?: string
+  to?: string
+  children?: SidebarItem[]
 }
 
 const props = withDefaults(
@@ -54,6 +79,16 @@ const props = withDefaults(
 const sticky = computed(() => props.sticky)
 
 const { t } = useI18n()
+
+function isItemActive(item: SidebarItem, key: string): boolean {
+  if (item.key === key)
+    return true
+
+  if (item.children)
+    return item.children.some(child => isItemActive(child, key))
+
+  return false
+}
 function resolveIconName(name?: string) {
   if (!name)
     return ''
@@ -86,6 +121,12 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
   position: sticky;
 }
 
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .sidebar-item {
   @apply flex items-center justify-between text-left transition;
   padding: 0.75rem 1rem;
@@ -110,5 +151,35 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
 
 .sidebar-item:focus-visible {
   --tw-ring-opacity: 0.7;
+}
+
+.sidebar-sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-left: 3.25rem;
+}
+
+.sidebar-subitem {
+  @apply flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition;
+  color: var(--v-theme-on-surface-variant);
+}
+
+.sidebar-subitem:hover,
+.sidebar-subitem:focus-visible {
+  @apply bg-primary/10 text-foreground;
+}
+
+.sidebar-subitem:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2;
+  --tw-ring-opacity: 0.7;
+}
+
+.sidebar-subitem--active {
+  @apply bg-primary/15 text-foreground;
+}
+
+.sidebar-subicon {
+  @apply text-muted-foreground;
 }
 </style>
