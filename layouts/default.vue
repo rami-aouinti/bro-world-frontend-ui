@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="cssVars">
+  <v-app :theme="isDark ? 'dark' : 'light'" :style="cssVars">
     <AppTopBar
       :app-icons="appIcons"
       :is-dark="isDark"
@@ -73,6 +73,7 @@ import AppTopBar from '@/components/layout/AppTopBar.vue'
 import { useRightSidebarData } from '@/composables/useRightSidebarData'
 import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
 
+const isDark = computed(() => useColorMode().value == "dark");
 const route = useRoute()
 const router = useRouter()
 const display = useDisplay()
@@ -83,8 +84,6 @@ const leftDrawer = ref(true)
 const rightDrawer = ref(true)
 const isMobile = computed(() => !display.mdAndUp.value)
 const isRail = computed(() => display.mdAndDown.value && !isMobile.value)
-
-const isDark = computed(() => theme.global.current.value.dark)
 const showRightWidgets = computed(() => route.meta?.showRightWidgets !== false)
 
 const { weather, leaderboard, rating } = useRightSidebarData()
@@ -151,7 +150,7 @@ watch(
 )
 
 function toggleTheme() {
-  theme.global.name.value = isDark.value ? 'light' : 'dark'
+  return  isDark.value ? 'light' : 'dark'
 }
 
 function toggleLeftDrawer() {

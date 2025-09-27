@@ -16,9 +16,10 @@
             @click="emit('select', item.key)"
           >
             <div class="flex items-center gap-3">
-              <div class="sidebar-icon">
-                <v-icon :icon="item.icon" size="20" />
-              </div>
+              <Icon
+                  :name="resolveIconName(item.icon)"
+                  :size="20"
+              />
               <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
             </div>
             <span class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
@@ -53,7 +54,18 @@ const props = withDefaults(
 const sticky = computed(() => props.sticky)
 
 const { t } = useI18n()
+function resolveIconName(name?: string) {
+  if (!name)
+    return ''
 
+  if (name.includes(':'))
+    return name
+
+  if (name.startsWith('mdi-'))
+    return `mdi:${name.slice(4)}`
+
+  return name
+}
 const emit = defineEmits<{ (e: 'select', key: string): void }>()
 </script>
 
@@ -78,7 +90,7 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
   @apply flex items-center justify-between text-left transition;
   padding: 0.75rem 1rem;
   border-radius: calc(var(--radius) + 8px);
-  @apply bg-white hover:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  @apply hover:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
   --tw-bg-opacity: 0.7;
 }
 

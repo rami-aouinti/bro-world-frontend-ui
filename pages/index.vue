@@ -1,32 +1,11 @@
 <template>
   <main aria-labelledby="blog-heading">
 
-    <BaseCard
-        rounded="xl"
-        padding="md"
-        spacing="md"
-        :hover="true"
-        :animation="true"
-        class="my-4"
-    >
+    <NewPost :avatar="user.avatarUrl"
+             :userName="user.name"
+             @submit="createPost"
+             @attach="onAttach" />
 
-      <template #header>
-        <div>
-          <h3 class="text-lg font-semibold">Titre de la carte</h3>
-          <p class="text-slate-400 text-sm">Sous-titre</p>
-        </div>
-        <button class="rounded-lg px-3 py-1 bg-white/10 hover:bg-white/20">Action</button>
-      </template>
-
-      <p>
-        Contenu principal de la carte. Tu peux y mettre du texte, des composants, etc.
-      </p>
-
-      <template #footer>
-        <span>Dernière mise à jour : aujourd’hui</span>
-        <a href="#" class="underline">Voir plus</a>
-      </template>
-    </BaseCard>
     <div v-if="pending" class="grid gap-4">
       <div
           v-for="index in 4"
@@ -53,57 +32,6 @@
     </div>
 
     <template v-else>
-      <form
-          class="flex flex-col gap-5 rounded-[32px] border border-white/70 bg-white/95 p-6 shadow-[0_40px_75px_-45px_rgba(15,23,42,0.6)] backdrop-blur-xl"
-          @submit.prevent="handleCreatePost"
-      >
-        <div class="flex flex-col gap-2">
-          <h2 class="text-lg font-semibold text-slate-900">
-            {{ t("blog.composer.title") }}
-          </h2>
-          <p class="text-sm text-slate-600">
-            {{ t("blog.composer.subtitle") }}
-          </p>
-        </div>
-
-        <label class="flex flex-col gap-3 text-sm text-slate-600">
-                <span class="font-medium text-slate-800">
-                  {{ t("blog.composer.label") }}
-                </span>
-          <textarea
-              v-model="newPostContent"
-              class="min-h-[140px] w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-800 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-              :placeholder="t('blog.composer.placeholder')"
-          />
-        </label>
-
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <p
-              v-if="composerFeedback"
-              :class="composerFeedback.type === 'success' ? 'text-emerald-500' : 'text-rose-500'"
-              class="text-sm"
-          >
-            {{ composerFeedback.message }}
-          </p>
-          <div class="flex items-center gap-3 sm:justify-end">
-                  <span class="text-xs text-slate-500">
-                    {{ characterCountLabel }}
-                  </span>
-            <button
-                type="submit"
-                class="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
-                :disabled="creating"
-            >
-                    <span v-if="creating">
-                      {{ t("blog.composer.submitting") }}
-                    </span>
-              <span v-else>
-                      {{ t("blog.composer.submit") }}
-                    </span>
-            </button>
-          </div>
-        </div>
-      </form>
 
       <div class="flex flex-col gap-4">
         <BlogPostCard
@@ -130,7 +58,16 @@ definePageMeta({
 });
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
+const user = {
+  name: 'Rami Aouinti',
+  avatarUrl: 'https://bro-world-space.com/img/person.png',
+}
 
+
+
+function onAttach(type: string) {
+  // Ouvre sélecteur média / GIF / etc.
+}
 const reactionEmojis: Record<ReactionType, string> = {
   like: "👍",
   love: "❤️",

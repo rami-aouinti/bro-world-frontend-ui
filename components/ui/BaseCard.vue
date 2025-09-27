@@ -25,8 +25,8 @@
     </div>
     <BorderBeam
         :size="250"
-        :duration="2"
-        :delay="5"
+        :duration="8"
+        :delay="10"
         :border-width="2"
     />
   </component>

@@ -1,11 +1,18 @@
 <template>
   <v-app-bar
-    app
-    :elevation="10" rounded
-    color="primary"
-    height="50"
-    class="app-top-bar"
+      class="app-top-bar"
+      :class="isDark ? 'text-white' : 'text-black'"
+      :color="textGradient"
+      app
+      :elevation="10" rounded
+      height="50"
   >
+    <template v-slot:image>
+      <v-img
+          cover
+          :gradient="gradient"
+      ></v-img>
+    </template>
     <div class="flex items-center gap-3">
       <v-btn
         v-if="isMobile"
@@ -21,37 +28,53 @@
       </v-btn>
       <div class="flex items-center gap-2">
         <NuxtLink
-          class="flex items-center gap-2 rounded-xl px-2 py-1 font-semibold text-xl text-primary"
+          class="flex items-center gap-2 rounded-xl px-2 py-1 font-semibold text-xl"
           to="/"
         >
-          <span class="rounded-full bg-primary/10 px-2 py-1 text-base text-primary">Bro</span>
-          <span class="text-foreground">World</span>
+          <h1
+              class="z-2 relative text-center font-sans font-bold"
+          >
+            Bro <ColourfulText :colors="['#cc2b16', '#c52279', '#5b0734']" text="World" />
+          </h1>
         </NuxtLink>
       </div>
-    </div>
-
-    <div class="hidden shrink-0 items-center gap-2 md:flex">
-      <v-tooltip
-        v-for="icon in appIcons"
-        :key="icon.label"
-        :text="t(icon.label)"
-      >
-        <template #activator="{ props: tooltipProps }">
-          <button
+      <div class="flex items-center gap-8 px-16">
+        <button
             type="button"
-            :class="iconPillClasses"
-            v-bind="tooltipProps"
-            :aria-label="t(icon.label)"
-          >
-            <Icon
-              :name="resolveIconName(icon.name)"
+            :class="iconTriggerClasses"
+            :aria-label="t('layout.actions.goBack')"
+            @click="emit('go-back')"
+        >
+          <Icon
+              name="mdi:arrow-left"
               :size="22"
-            />
-          </button>
-        </template>
-      </v-tooltip>
+          />
+        </button>
+        <button
+            type="button"
+            :class="iconTriggerClasses"
+            :aria-label="t('layout.actions.refresh')"
+            @click="emit('refresh')"
+        >
+          <Icon
+              name="mdi:refresh"
+              :size="22"
+          />
+        </button>
+        <button
+            v-if="!isMobile"
+            type="button"
+            :class="iconTriggerClasses"
+            :aria-label="t('layout.actions.openNavigation')"
+            @click="emit('toggle-left')"
+        >
+          <Icon
+              name="mdi-format-align-justify"
+              :size="22"
+          />
+        </button>
+      </div>
     </div>
-
     <div
       v-if="showInlineSearch"
       class="hidden flex-1 items-center px-4 md:flex"
@@ -65,103 +88,7 @@
       <LayoutSearchButton />
     </div>
 
-    <div class="hidden items-center gap-2 lg:flex">
-      <LangSwitcher v-if="i18nEnabled" />
-      <ThemePopover v-if="config.theme.customizable" />
-      <DarkModeToggle v-if="config.header.darkModeToggle" />
-      <template
-        v-for="(link, i) in headerLinks"
-        :key="i"
-      >
-        <UiDropdownMenu v-if="link.menuItems?.length">
-          <UiDropdownMenuTrigger as-child>
-            <UiButton
-              variant="ghost"
-              size="icon"
-              class="flex gap-2"
-              :aria-label="link?.label"
-            >
-              <AppSmartIcon
-                v-if="link.icon"
-                :name="link.icon"
-                :size="18"
-              />
-              <span
-                v-if="link?.label"
-                class="sr-only"
-              >
-                {{ link.label }}
-              </span>
-            </UiButton>
-          </UiDropdownMenuTrigger>
-          <UiDropdownMenuContent class="w-44">
-            <UiDropdownMenuItem
-              v-for="item in link.menuItems"
-              :key="item.title"
-              @select="handleMenuItemSelect(item)"
-            >
-              <div class="flex w-full items-center gap-2">
-                <AppSmartIcon
-                  v-if="item.icon"
-                  :name="item.icon"
-                  :size="16"
-                />
-                <span>{{ $t(item.title) }}</span>
-              </div>
-            </UiDropdownMenuItem>
-          </UiDropdownMenuContent>
-        </UiDropdownMenu>
-        <a
-          v-else-if="link.external"
-          :href="link?.to"
-          :target="link?.target ?? '_blank'"
-          rel="noreferrer"
-        >
-          <UiButton
-            variant="ghost"
-            size="icon"
-            class="flex gap-2"
-            :aria-label="link?.label"
-          >
-            <AppSmartIcon
-              v-if="link?.icon"
-              :name="link.icon"
-              :size="18"
-            />
-            <span
-              v-if="link?.label"
-              class="sr-only"
-            >
-              {{ link.label }}
-            </span>
-          </UiButton>
-        </a>
-        <NuxtLinkLocale
-          v-else
-          :to="localePath(link?.to)"
-          :target="link?.target"
-        >
-          <UiButton
-            variant="ghost"
-            size="icon"
-            class="flex gap-2"
-            :aria-label="link?.label"
-          >
-            <AppSmartIcon
-              v-if="link?.icon"
-              :name="link.icon"
-              :size="18"
-            />
-            <span
-              v-if="link?.label"
-              class="sr-only"
-            >
-              {{ link.label }}
-            </span>
-          </UiButton>
-        </NuxtLinkLocale>
-      </template>
-      <UiButton
+    <UiButton
         v-if="isAuthenticated"
         variant="ghost"
         size="icon"
@@ -169,217 +96,148 @@
         :aria-label="t('auth.signOut')"
         :disabled="loggingOut"
         @click="handleLogout"
-      >
-        <AppSmartIcon
+    >
+      <AppSmartIcon
           name="mdi:logout"
           :size="18"
-        />
-        <span class="sr-only">{{ t('auth.signOut') }}</span>
-      </UiButton>
-      <NuxtLinkLocale
-        v-else
-        :to="localePath('/login')"
+      />
+      <span class="sr-only">{{ t('auth.signOut') }}</span>
+    </UiButton>
+    <div class="px-16">
+      <v-tooltip
+          v-for="icon in appIcons"
+          :key="icon.label"
+          :text="t(icon.label)"
       >
-        <UiButton
-          variant="ghost"
-          size="icon"
-          class="flex gap-2"
-          :aria-label="t('auth.signIn')"
-        >
-          <AppSmartIcon
-            name="mdi:login"
-            :size="18"
-          />
-          <span class="sr-only">{{ t('auth.signIn') }}</span>
-        </UiButton>
-      </NuxtLinkLocale>
+        <template #activator="{ props: tooltipProps }">
+          <v-btn
+              v-bind="tooltipProps"
+              :aria-label="t(icon.label)"
+          >
+            <Icon
+                :name="resolveIconName(icon.name)"
+                :size="26"
+            />
+          </v-btn>
+        </template>
+      </v-tooltip>
     </div>
     <template v-slot:append>
-      <v-btn icon>
-        <Icon
-          name="mdi:magnify"
-          :size="24"
-        />
-      </v-btn>
-
-      <v-btn icon>
-        <Icon
-          name="mdi:dots-vertical"
-          :size="24"
-        />
-      </v-btn>
-    </template>
-    <v-spacer />
-
-    <div class="flex items-center gap-1">
-      <v-btn icon>
-        <Icon
-          name="mdi:heart"
-          :size="24"
-        />
-      </v-btn>
-      <button
-        v-if="!isMobile"
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.openNavigation')"
-        @click="emit('toggle-left')"
-      >
-        <Icon
-          name="mdi:view-sidebar"
-          :size="22"
-        />
-      </button>
-      <button
-        v-if="!isMobile && props.showRightToggle"
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.openWidgets')"
-        @click="emit('toggle-right')"
-      >
-        <Icon
-          name="mdi:view-sidebar-right"
-          :size="22"
-        />
-      </button>
-      <button
-        v-if="!config.header.darkModeToggle"
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.toggleTheme')"
-        @click="emit('toggle-theme')"
-      >
-        <Icon
-          :name="isDark ? 'mdi:weather-night' : 'mdi:weather-sunny'"
-          :size="22"
-        />
-      </button>
-      <button
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.goBack')"
-        @click="emit('go-back')"
-      >
-        <Icon
-          name="mdi:arrow-left"
-          :size="22"
-        />
-      </button>
-      <button
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.refresh')"
-        @click="emit('refresh')"
-      >
-        <Icon
-          name="mdi:refresh"
-          :size="22"
-        />
-      </button>
-      <button
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.notifications')"
-      >
-        <Icon
-          name="mdi:bell"
-          :size="22"
-        />
-      </button>
-      <button
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.cart')"
-      >
-        <Icon
-          name="mdi:shopping"
-          :size="22"
-        />
-      </button>
-      <v-menu location="bottom end">
-        <template #activator="{ props: profileProps }">
-          <button
+      <div class="flex items-center gap-3">
+        <button
             type="button"
             :class="iconTriggerClasses"
-            :aria-label="t('layout.actions.profile')"
-            v-bind="profileProps"
-          >
-            <v-avatar
-              size="34"
-              class="bg-primary/10 text-primary"
-            >
-              <span class="text-sm font-semibold">BW</span>
-            </v-avatar>
-          </button>
-        </template>
-        <v-list density="compact">
-          <v-list-item :title="t('layout.actions.viewProfile')">
-            <template #prepend>
-              <Icon
-                name="mdi:account"
-                :size="20"
-              />
-            </template>
-          </v-list-item>
-          <v-list-item :title="t('layout.actions.signOut')">
-            <template #prepend>
-              <Icon
-                name="mdi:logout"
-                :size="20"
-              />
-            </template>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <v-menu
-        v-if="!i18nEnabled"
-        location="bottom end"
-      >
-        <template #activator="{ props: languageProps }">
-          <button
-            type="button"
-            :class="iconTriggerClasses"
-            :aria-label="t('layout.actions.changeLanguage', { locale: localeLabel })"
-            v-bind="languageProps"
-          >
-            <v-avatar
-              size="30"
-              class="bg-transparent text-lg"
-            >
-              <span>{{ localeToFlag(props.locale) }}</span>
-            </v-avatar>
-          </button>
-        </template>
-        <v-list density="compact">
-          <v-list-item
-            v-for="availableLocale in locales"
-            :key="availableLocale"
-            :active="availableLocale === locale"
-            :title="formatLocaleLabel(availableLocale)"
-            role="menuitemradio"
-            :aria-checked="availableLocale === locale"
-            @click="changeLocale(availableLocale)"
+            :aria-label="t('layout.actions.notifications')"
+        >
+          <Icon
+              name="mdi:bell-outline"
+              :size="22"
           />
-        </v-list>
-      </v-menu>
-      <button
-        v-if="isMobile && props.showRightToggle"
-        type="button"
-        :class="iconTriggerClasses"
-        :aria-label="t('layout.actions.openWidgets')"
-        @click="emit('toggle-right')"
-      >
-        <Icon
-          name="mdi:dots-vertical"
-          :size="22"
-        />
-      </button>
-    </div>
+        </button>
+        <button
+            type="button"
+            :class="iconTriggerClasses"
+            :aria-label="t('layout.actions.cart')"
+        >
+          <Icon
+              name="mdi:shopping-outline"
+              :size="22"
+          />
+        </button>
+        <v-menu location="bottom end">
+          <template #activator="{ props: profileProps }">
+            <button
+                type="button"
+                :class="iconTriggerClasses"
+                :aria-label="t('layout.actions.profile')"
+                v-bind="profileProps"
+            >
+              <Icon
+                  name="mdi:person-outline"
+                  :size="22"
+              />
+            </button>
+          </template>
+          <v-list density="compact">
+            <v-list-item :title="t('layout.actions.viewProfile')">
+              <template #prepend>
+                <Icon
+                    name="mdi:account"
+                    :size="20"
+                />
+              </template>
+            </v-list-item>
+            <v-list-item :title="t('layout.actions.signOut')">
+              <template #prepend>
+                <Icon
+                    name="mdi:logout"
+                    :size="20"
+                />
+              </template>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-menu location="bottom end">
+          <template #activator="{ props: languageProps }">
+            <button
+                type="button"
+                :class="iconTriggerClasses"
+                :aria-label="t('layout.actions.changeLanguage', { locale: localeLabel })"
+                v-bind="languageProps"
+            >
+              <Icon
+                  name="mdi:flag-outline"
+                  :size="22"
+              />
+            </button>
+          </template>
+          <v-list density="compact">
+            <v-list-item
+                v-for="availableLocale in locales"
+                :key="availableLocale"
+                :active="availableLocale === locale"
+                :title="formatLocaleLabel(availableLocale)"
+                role="menuitemradio"
+                :aria-checked="availableLocale === locale"
+                @click="changeLocale(availableLocale)"
+            />
+          </v-list>
+        </v-menu>
+        <button
+            v-if="isMobile && props.showRightToggle"
+            type="button"
+            :class="iconTriggerClasses"
+            :aria-label="t('layout.actions.openWidgets')"
+            @click="emit('toggle-right')"
+        >
+          <Icon
+              name="mdi:dots-vertical"
+              :size="22"
+          />
+        </button>
+        <ThemePopover v-if="config.theme.customizable" />
+        <DarkModeToggle v-if="config.header.darkModeToggle" />
+        <button
+            v-if="!isMobile && props.showRightToggle"
+            type="button"
+            :class="iconTriggerClasses"
+            :aria-label="t('layout.actions.openWidgets')"
+            @click="emit('toggle-right')"
+        >
+          <Icon
+              name="mdi-format-align-justify"
+              :size="22"
+          />
+        </button>
+      </div>
+    </template>
   </v-app-bar>
 </template>
 
 <script setup lang="ts">
 import { useAuthSession } from '~/stores/auth-session'
+
+const isDark = computed(() => useColorMode().value == "dark");
 
 interface AppIcon {
   name: string
@@ -424,14 +282,14 @@ const emit = defineEmits([
 const iconTriggerClasses =
   'flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2'
 
-const iconPillClasses =
-  'flex h-10 w-10 items-center justify-center rounded-2xl border border-transparent bg-white/70 text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2'
 
 const { t } = useI18n()
 
 const config = useConfig()
 
 const { i18nEnabled, localePath } = useI18nDocs()
+const gradient = computed(() => (isDark.value ? "#000" : "#fff"));
+const textGradient = computed(() => (isDark.value ? "#fff" : "#000"));
 
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === 'input',
@@ -552,9 +410,5 @@ async function handleLogout() {
 </script>
 
 <style scoped>
-.app-top-bar {
-  backdrop-filter: blur(18px);
-  background: rgba(255, 255, 255, 0.82);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-}
+
 </style>

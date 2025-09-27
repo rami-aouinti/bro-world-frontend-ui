@@ -261,6 +261,7 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/image",
     "nuxt-gtag",
+    '@nuxt/ui',
     "@nuxt/eslint",
     "@nuxt/scripts",
     "motion-v/nuxt",
