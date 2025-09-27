@@ -15,7 +15,6 @@
             :aria-label="item.to ? t(item.label) : undefined"
             :aria-current="isItemActive(item, activeKey) ? 'page' : undefined"
             @click="handleParentSelect(item)"
-            @click="emit('select', item.key)"
           >
             <div class="flex items-center gap-3">
               <Icon
@@ -42,15 +41,6 @@
               <span class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
             </button>
             <span v-else-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
-          </component>
-
-          <ul
-            v-if="item.children?.length"
-            :id="`sidebar-group-${item.key}`"
-            class="sidebar-sublist"
-            v-show="isGroupExpanded(item.key)"
-          >
-            <span v-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
           </component>
 
           <ul v-if="item.children?.length" class="sidebar-sublist">
