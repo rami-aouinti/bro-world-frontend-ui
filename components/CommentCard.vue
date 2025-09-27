@@ -1,12 +1,12 @@
 <template>
   <article
     :class="[
-      'flex flex-col gap-4 rounded-2xl bg-slate-950/40 px-4 py-4 backdrop-blur transition-colors',
+      'flex flex-col gap-4 rounded-2xl border border-white/5 bg-gradient-to-br from-slate-950/80 via-slate-900/60 to-slate-950/80 px-5 py-5 shadow-[0_20px_50px_-35px_rgba(15,23,42,1)] backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40',
       depth > 0 ? 'ml-6 border-l border-white/10 pl-5' : '',
     ]"
   >
     <div class="flex items-center gap-3">
-      <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/5">
+      <div class="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/10 shadow-[0_12px_25px_-20px_rgba(15,23,42,1)]">
         <img
           :src="comment.user.photo ?? avatarFallback"
           :alt="`${comment.user.firstName} ${comment.user.lastName}`"
@@ -18,7 +18,7 @@
         <p class="text-sm font-semibold text-slate-100">
           {{ comment.user.firstName }} {{ comment.user.lastName }}
         </p>
-        <p class="text-[11px] uppercase tracking-wide text-slate-400">
+        <p class="text-[11px] uppercase tracking-[0.35em] text-slate-400">
           {{ formatDateTime(comment.publishedAt) }}
         </p>
       </div>
@@ -36,7 +36,7 @@
             :key="type"
             type="button"
             :aria-label="reactionLabels[type]"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-base text-slate-100 transition-colors hover:bg-white/10 disabled:opacity-60"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-white/15 via-white/5 to-transparent text-base text-slate-100 shadow-[0_12px_25px_-20px_rgba(15,23,42,1)] transition-colors hover:border-primary/60 hover:bg-primary/15 hover:text-primary disabled:cursor-not-allowed disabled:opacity-60"
             :disabled="!!reactingType"
             @click="handleReact(type)"
           >
@@ -46,7 +46,7 @@
           <div
             v-if="hasReactionPreview"
             :aria-label="reactionCountLabel"
-            class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-100 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
+            class="inline-flex items-center gap-1 rounded-full border border-white/5 bg-white/10 px-3 py-1.5 text-slate-100 shadow-[0_15px_35px_-28px_rgba(15,23,42,1)]"
           >
             <span v-for="reaction in comment.reactions_preview" :key="reaction.id" class="text-sm" aria-hidden="true">
               {{ reactionEmojis[reaction.type] }}
@@ -58,21 +58,21 @@
         <div class="flex flex-wrap items-center gap-2">
           <span
             :aria-label="reactionCountLabel"
-            class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-100 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
+            class="inline-flex items-center gap-1 rounded-full border border-white/5 bg-white/10 px-3 py-1.5 text-slate-100 shadow-[0_15px_35px_-28px_rgba(15,23,42,1)]"
           >
             <span aria-hidden="true">👍</span>
             <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
           </span>
           <span
             :aria-label="replyCountLabel"
-            class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1.5 text-slate-100 shadow-[0_10px_25px_-20px_rgba(15,23,42,1)]"
+            class="inline-flex items-center gap-1 rounded-full border border-white/5 bg-white/10 px-3 py-1.5 text-slate-100 shadow-[0_15px_35px_-28px_rgba(15,23,42,1)]"
           >
             <span aria-hidden="true">💬</span>
             <span aria-hidden="true">{{ formatNumber(comment.totalComments) }}</span>
           </span>
           <button
             type="button"
-            class="inline-flex items-center justify-center rounded-full border border-white/10 bg-transparent px-4 py-1.5 font-semibold text-slate-100 transition-colors hover:border-primary/60 hover:text-primary disabled:opacity-60"
+            class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-semibold text-slate-100 transition-colors hover:border-primary/60 hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-60"
             @click="toggleReply"
           >
             <span v-if="replying">{{ t('blog.comments.cancelReply') }}</span>
@@ -86,12 +86,16 @@
       </p>
     </div>
 
-    <form v-if="replying" class="flex flex-col gap-3 rounded-2xl border border-white/5 bg-black/20 p-4" @submit.prevent="handleReplySubmit">
+    <form
+      v-if="replying"
+      class="flex flex-col gap-3 rounded-2xl border border-white/5 bg-slate-950/60 p-4 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.95)]"
+      @submit.prevent="handleReplySubmit"
+    >
       <label class="flex flex-col gap-2 text-xs text-slate-200">
         <span class="sr-only">{{ t('blog.comments.replyPlaceholder') }}</span>
         <textarea
           v-model="replyContent"
-          class="min-h-[96px] w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+          class="min-h-[96px] w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white placeholder:text-slate-500 shadow-inner focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
           :placeholder="t('blog.comments.replyPlaceholder')"
         />
       </label>
@@ -105,14 +109,14 @@
         <div class="flex items-center gap-2 sm:justify-end">
           <button
             type="button"
-            class="inline-flex items-center justify-center rounded-full border border-white/10 bg-transparent px-4 py-1.5 font-semibold text-slate-200 transition-colors hover:border-white/30 hover:text-slate-50"
+            class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 hover:text-slate-50"
             @click="cancelReply"
           >
             {{ t('blog.comments.cancelReply') }}
           </button>
           <button
             type="submit"
-            class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-1.5 font-semibold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+            class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-1.5 font-semibold text-white shadow-[0_18px_35px_-22px_hsl(var(--primary)/0.9)] transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
             :disabled="submittingReply"
           >
             <span v-if="submittingReply">{{ t('blog.comments.replying') }}</span>

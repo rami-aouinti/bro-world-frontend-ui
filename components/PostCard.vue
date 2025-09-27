@@ -1,8 +1,10 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-3xl p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/15 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] sm:p-8"
+    class="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-950/90 via-slate-900/80 to-slate-950/90 p-6 shadow-[0_25px_45px_-30px_rgba(15,23,42,0.9)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_35px_75px_-30px_hsl(var(--primary)/0.55)] sm:p-8"
   >
-    <div class="relative flex flex-col gap-2">
+    <div
+      class="relative flex flex-col gap-2 before:absolute before:-left-20 before:top-0 before:h-40 before:w-40 before:rounded-full before:bg-primary/15 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 before:content-[''] group-hover:before:opacity-100"
+    >
       <PostMeta
         :user="post.user"
         :default-avatar="defaultAvatar"
@@ -24,21 +26,21 @@
         @delete="openDeleteDialog"
       />
 
-      <div class="px-3 w-full max-w-2xl space-y-2">
+      <div class="w-full max-w-2xl space-y-2 rounded-2xl px-4 py-3 transition-colors duration-500 group-hover:bg-white/5">
         <RadiantText
-          class="inline-flex items-center justify-center px-2 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
+          class="inline-flex items-center justify-center px-2 py-1 text-balance transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
           :duration="5"
         >
-          <span class="text-xl font-bold">{{ post.title }}</span>
+          <span class="text-xl font-semibold text-slate-100 sm:text-2xl">{{ post.title }}</span>
         </RadiantText>
         <p class="text-base leading-relaxed text-slate-200/80">
           {{ post.summary }}
         </p>
       </div>
 
-      <div class="px-3 w-full max-w-2xl space-y-5 py-3">
+      <div class="w-full max-w-2xl space-y-5 rounded-2xl border border-white/5 bg-slate-950/40 px-4 py-5 shadow-[0_15px_35px_-25px_rgba(15,23,42,0.9)]">
         <div class="flex flex-col gap-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+          <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
             {{ reactionPromptLabel }}
           </p>
           <div class="flex flex-wrap items-center gap-2">
@@ -47,7 +49,7 @@
               :key="type"
               type="button"
               :aria-label="reactionLabels[type]"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-slate-100 transition-colors hover:border-primary/60 hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-60"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent text-lg text-slate-100 shadow-[0_15px_25px_-20px_rgba(15,23,42,0.9)] transition-colors hover:border-primary/60 hover:bg-primary/15 hover:text-primary disabled:cursor-not-allowed disabled:opacity-60"
               :disabled="!!postReactingType"
               @click="handlePostReaction(type)"
             >
@@ -60,7 +62,7 @@
         </div>
 
         <form
-          class="flex flex-col gap-3 rounded-3xl border border-white/10 bg-black/20 p-5"
+          class="flex flex-col gap-3 rounded-3xl border border-white/5 bg-slate-950/50 p-5 shadow-[0_20px_45px_-28px_rgba(15,23,42,0.85)]"
           @submit.prevent="handleCommentSubmit"
         >
           <div class="flex items-start gap-3">
@@ -78,7 +80,7 @@
               </span>
               <textarea
                 v-model="commentContent"
-                class="min-h-[110px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+                class="min-h-[110px] w-full rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 shadow-inner focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                 :placeholder="commentPlaceholder"
               />
             </label>
@@ -94,7 +96,7 @@
               <span class="text-slate-400">{{ commentCharacterCountLabel }}</span>
               <button
                 type="submit"
-                class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+                class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-[0_18px_35px_-22px_hsl(var(--primary)/0.9)] transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
                 :disabled="submittingComment"
               >
                 <span v-if="submittingComment">{{ t("blog.comments.submitting") }}</span>
@@ -105,9 +107,9 @@
         </form>
       </div>
 
-      <footer class="px-3 w-full max-w-2xl pt-1">
+      <footer class="w-full max-w-2xl pt-1">
         <div
-          class="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-400"
+          class="mt-4 flex flex-wrap items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-slate-300 shadow-[0_15px_25px_-25px_rgba(15,23,42,1)]"
           :aria-label="metaAriaLabel"
           aria-live="polite"
           data-test="post-meta-bar"
@@ -126,13 +128,13 @@
 
       <footer
         v-if="hasReactionPreview"
-        class="flex flex-wrap items-center gap-4 rounded-2xl px-4 py-1 text-sm"
+        class="flex flex-wrap items-center gap-4 rounded-2xl border border-white/5 bg-slate-950/40 px-4 py-3 text-sm shadow-[0_18px_45px_-30px_rgba(15,23,42,0.9)]"
       >
-        <div class="flex flex-wrap gap-4">
+        <div class="flex flex-wrap gap-3">
           <div
             v-for="reaction in topReactions"
             :key="reaction.id"
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/40 px-4 py-1.5 text-slate-100 shadow-[0_10px_25px_-15px_rgba(15,23,42,0.9)]"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-gradient-to-br from-slate-900/70 via-slate-900/40 to-transparent px-4 py-1.5 text-slate-100 shadow-[0_15px_30px_-25px_rgba(15,23,42,0.9)]"
           >
             <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
             <span
@@ -142,16 +144,16 @@
           </div>
         </div>
       </footer>
-      <section class="w-full max-w-2xl space-y-4 rounded-3xl px-3 pb-6">
-        <header class="flex items-center justify-between px-1 pt-2">
-          <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
+      <section class="w-full max-w-2xl space-y-4 rounded-3xl border border-white/5 bg-slate-950/40 px-4 pb-6 shadow-[0_25px_55px_-35px_rgba(15,23,42,0.9)]">
+        <header class="flex items-center justify-between border-b border-white/5 pb-3 pt-4">
+          <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-300">
             {{ recentCommentsLabel }}
           </p>
           <p class="text-xs text-slate-400">
             {{ commentPreviewCountLabel }}
           </p>
         </header>
-        <div v-if="hasCommentPreview" class="w-full space-y-5 px-1.5 pt-1 sm:px-2">
+        <div v-if="hasCommentPreview" class="w-full space-y-5 pt-3">
           <CommentCard
             v-for="comment in comments"
             :key="comment.id"
@@ -161,7 +163,7 @@
             :reaction-labels="reactionLabels"
             :react-to-comment="handleCommentReaction"
             :reply-to-comment="handleCommentReply"
-            class="mx-1.5 w-full sm:mx-2"
+            class="w-full"
           />
         </div>
         <p v-else class="px-2 text-sm text-slate-400">
