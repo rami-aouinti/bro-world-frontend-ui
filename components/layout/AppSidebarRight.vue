@@ -31,8 +31,9 @@ const isDark = computed(() => useColorMode().value == "dark");
 interface SidebarItem {
   key: string
   label: string
-  icon: string
-  to: string
+  icon?: string
+  to?: string
+  children?: SidebarItem[]
 }
 
 const props = withDefaults(
