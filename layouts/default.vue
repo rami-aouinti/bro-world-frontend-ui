@@ -104,8 +104,17 @@ const appIcons = [
 ]
 
 const sidebarItems = [
-  { key: 'apps', label: 'layout.sidebar.items.apps', icon: 'mdi-apps', to: '/' },
-  { key: 'calendar', label: 'layout.sidebar.items.calendar', icon: 'mdi-calendar-month', to: '/' },
+  {
+    key: 'apps',
+    label: 'layout.sidebar.items.apps',
+    icon: 'mdi-apps',
+    to: '/',
+    children: [
+      { key: 'calendar', label: 'layout.sidebar.items.calendar', icon: 'mdi-calendar-month', to: '/' },
+      { key: 'cv', label: 'layout.sidebar.items.cv', icon: 'mdi-file-account', to: '/' },
+      { key: 'jobs', label: 'layout.sidebar.items.jobs', icon: 'mdi-briefcase-search', to: '/' },
+    ],
+  },
   { key: 'help', label: 'layout.sidebar.items.help', icon: 'mdi-lifebuoy', to: '/help' },
   { key: 'about', label: 'layout.sidebar.items.about', icon: 'mdi-information-outline', to: '/about' },
   { key: 'contact', label: 'layout.sidebar.items.contact', icon: 'mdi-email-outline', to: '/contact' },
