@@ -35,6 +35,10 @@
         "help": "Помощь",
         "about": "О нас",
         "contact": "Контакты"
+      },
+      "groups": {
+        "planning": "Планирование",
+        "career": "Карьера"
       }
     },
     "widgets": {

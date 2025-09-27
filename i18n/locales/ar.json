@@ -35,6 +35,10 @@
         "help": "المساعدة",
         "about": "حول",
         "contact": "اتصال"
+      },
+      "groups": {
+        "planning": "التخطيط",
+        "career": "المسار المهني"
       }
     },
     "widgets": {

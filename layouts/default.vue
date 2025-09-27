@@ -71,7 +71,8 @@ import { useDisplay, useTheme } from 'vuetify'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppTopBar from '@/components/layout/AppTopBar.vue'
 import { useRightSidebarData } from '@/composables/useRightSidebarData'
-import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
+import AppSidebarRight from '@/components/layout/AppSidebarRight.vue'
+import type { SidebarItem } from '@/types/sidebar'
 
 const isDark = computed(() => useColorMode().value == "dark");
 const route = useRoute()
@@ -103,15 +104,38 @@ const appIcons = [
   { name: 'mdi-gamepad-variant-outline', label: 'layout.appIcons.game' },
 ]
 
-const sidebarItems = [
-  { key: 'apps', label: 'layout.sidebar.items.apps', icon: 'mdi-apps', to: '/' },
-  { key: 'calendar', label: 'layout.sidebar.items.calendar', icon: 'mdi-calendar-month', to: '/' },
+const sidebarItems: SidebarItem[] = [
+  {
+    key: 'apps',
+    label: 'layout.sidebar.items.apps',
+    icon: 'mdi-apps',
+    to: '/',
+    children: [
+      {
+        key: 'planning',
+        label: 'layout.sidebar.groups.planning',
+        icon: 'mdi-calendar-month-outline',
+        children: [
+          { key: 'calendar', label: 'layout.sidebar.items.calendar', icon: 'mdi-calendar-month', to: '/' },
+        ],
+      },
+      {
+        key: 'career',
+        label: 'layout.sidebar.groups.career',
+        icon: 'mdi-briefcase-outline',
+        children: [
+          { key: 'cv', label: 'layout.sidebar.items.cv', icon: 'mdi-file-account', to: '/' },
+          { key: 'jobs', label: 'layout.sidebar.items.jobs', icon: 'mdi-briefcase-search', to: '/' },
+        ],
+      },
+    ],
+  },
   { key: 'help', label: 'layout.sidebar.items.help', icon: 'mdi-lifebuoy', to: '/help' },
   { key: 'about', label: 'layout.sidebar.items.about', icon: 'mdi-information-outline', to: '/about' },
   { key: 'contact', label: 'layout.sidebar.items.contact', icon: 'mdi-email-outline', to: '/contact' },
 ]
 
-const activeSidebar = ref('apps')
+const activeSidebar = ref('calendar')
 
 watch(
   isMobile,

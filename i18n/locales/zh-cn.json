@@ -35,6 +35,10 @@
         "help": "帮助",
         "about": "关于",
         "contact": "联系"
+      },
+      "groups": {
+        "planning": "规划",
+        "career": "职业发展"
       }
     },
     "widgets": {

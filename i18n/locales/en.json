@@ -35,6 +35,10 @@
         "help": "Help",
         "about": "About",
         "contact": "Contact"
+      },
+      "groups": {
+        "planning": "Planning",
+        "career": "Career"
       }
     },
     "widgets": {
