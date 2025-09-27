@@ -14,6 +14,7 @@
             :class="{ 'sidebar-item--active': isItemActive(item, activeKey) }"
             :aria-label="item.to ? t(item.label) : undefined"
             :aria-current="isItemActive(item, activeKey) ? 'page' : undefined"
+            @click="handleParentSelect(item)"
             @click="emit('select', item.key)"
           >
             <div class="flex items-center gap-3">
@@ -25,6 +26,30 @@
               />
               <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
             </div>
+            <button
+              v-if="item.children?.length"
+              type="button"
+              class="sidebar-toggle"
+              :aria-controls="`sidebar-group-${item.key}`"
+              :aria-expanded="isGroupExpanded(item.key)"
+              @click.stop="toggleGroup(item.key)"
+            >
+              <Icon
+                class="sidebar-toggle-icon"
+                name="mdi:chevron-down"
+                :class="{ 'sidebar-toggle-icon--open': isGroupExpanded(item.key) }"
+              />
+              <span class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
+            </button>
+            <span v-else-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
+          </component>
+
+          <ul
+            v-if="item.children?.length"
+            :id="`sidebar-group-${item.key}`"
+            class="sidebar-sublist"
+            v-show="isGroupExpanded(item.key)"
+          >
             <span v-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
           </component>
 
@@ -55,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 interface SidebarItem {
   key: string
@@ -80,6 +105,32 @@ const sticky = computed(() => props.sticky)
 
 const { t } = useI18n()
 
+const expandedGroups = ref(new Set<string>())
+
+watch(
+  () => props.activeKey,
+  (key) => {
+    let updated = false
+    const next = new Set(expandedGroups.value)
+
+    for (const item of props.items) {
+      if (!item.children?.length)
+        continue
+
+      if (isItemActive(item, key)) {
+        if (!next.has(item.key)) {
+          next.add(item.key)
+          updated = true
+        }
+      }
+    }
+
+    if (updated)
+      expandedGroups.value = next
+  },
+  { immediate: true },
+)
+
 function isItemActive(item: SidebarItem, key: string): boolean {
   if (item.key === key)
     return true
@@ -89,6 +140,29 @@ function isItemActive(item: SidebarItem, key: string): boolean {
 
   return false
 }
+
+function toggleGroup(key: string) {
+  const next = new Set(expandedGroups.value)
+
+  if (next.has(key))
+    next.delete(key)
+  else
+    next.add(key)
+
+  expandedGroups.value = next
+}
+
+function isGroupExpanded(key: string) {
+  return expandedGroups.value.has(key)
+}
+
+function handleParentSelect(item: SidebarItem) {
+  emit('select', item.key)
+
+  if (item.children?.length && !isGroupExpanded(item.key))
+    toggleGroup(item.key)
+}
+
 function resolveIconName(name?: string) {
   if (!name)
     return ''
@@ -135,6 +209,11 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
   --tw-bg-opacity: 0.7;
 }
 
+.sidebar-group:focus-within .sidebar-item {
+  @apply ring-2 ring-primary ring-offset-2;
+  --tw-ring-opacity: 0.7;
+}
+
 .sidebar-item--active {
   @apply bg-primary shadow-[0_10px_25px_rgba(243,126,205,0.35)];
   --tw-bg-opacity: 0.1;
@@ -151,6 +230,20 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
 
 .sidebar-item:focus-visible {
   --tw-ring-opacity: 0.7;
+}
+
+.sidebar-toggle {
+  @apply ml-3 inline-flex h-8 w-8 items-center justify-center rounded-full transition;
+  @apply hover:bg-muted focus-visible:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  --tw-ring-opacity: 0.7;
+}
+
+.sidebar-toggle-icon {
+  @apply text-muted-foreground transition-transform;
+}
+
+.sidebar-toggle-icon--open {
+  transform: rotate(180deg);
 }
 
 .sidebar-sublist {
