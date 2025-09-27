@@ -15,6 +15,7 @@
             :aria-label="item.to ? t(item.label) : undefined"
             :aria-current="isItemActive(item, activeKey) ? 'page' : undefined"
             @click="handleParentSelect(item)"
+            @click="emit('select', item.key)"
           >
             <div class="flex items-center gap-3">
               <Icon
@@ -49,6 +50,10 @@
             class="sidebar-sublist"
             v-show="isGroupExpanded(item.key)"
           >
+            <span v-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
+          </component>
+
+          <ul v-if="item.children?.length" class="sidebar-sublist">
             <li v-for="child in item.children" :key="child.key">
               <NuxtLink
                 :to="child.to"
@@ -196,7 +201,7 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
   gap: 0.5rem;
 }
 
-.sidebar-item { 
+.sidebar-item {
   @apply flex items-center justify-between text-left transition;
   padding: 0.75rem 1rem;
   border-radius: calc(var(--radius) + 8px);
