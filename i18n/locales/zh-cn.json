@@ -171,6 +171,32 @@
       "error": "帖子发布失败，请重试。",
       "validation": "发布前请先填写内容。"
     },
+    "newPost": {
+      "placeholder": "在想些什么，{name}？",
+      "quickActions": {
+        "liveVideo": "直播视频",
+        "photoVideo": "照片/视频",
+        "feelingActivity": "心情/活动"
+      },
+      "dialog": {
+        "title": "创建帖子",
+        "addToPost": "为你的帖子添加内容",
+        "postButton": "发布"
+      },
+      "audience": {
+        "public": "公开",
+        "friends": "好友",
+        "private": "仅自己"
+      },
+      "attachments": {
+        "media": "照片/视频",
+        "tag": "标记好友",
+        "feeling": "心情/活动",
+        "location": "位置",
+        "gif": "GIF",
+        "poll": "添加投票"
+      }
+    },
     "reactions": {
       "like": "点赞",
       "love": "喜爱",

@@ -388,6 +388,32 @@
       "error": "Non siamo riusciti a pubblicare il tuo post. Riprova.",
       "validation": "Scrivi un messaggio prima di pubblicare."
     },
+    "newPost": {
+      "placeholder": "A cosa stai pensando, {name}?",
+      "quickActions": {
+        "liveVideo": "Video in diretta",
+        "photoVideo": "Foto/Video",
+        "feelingActivity": "Emozione/Attività"
+      },
+      "dialog": {
+        "title": "Crea post",
+        "addToPost": "Aggiungi qualcosa al tuo post",
+        "postButton": "Pubblica"
+      },
+      "audience": {
+        "public": "Pubblico",
+        "friends": "Amici",
+        "private": "Solo io"
+      },
+      "attachments": {
+        "media": "Foto/Video",
+        "tag": "Tagga persone",
+        "feeling": "Emozione/Attività",
+        "location": "Posizione",
+        "gif": "GIF",
+        "poll": "Aggiungi sondaggio"
+      }
+    },
     "reactions": {
       "post": {
         "publishedOn": "Pubblicato il {date}",

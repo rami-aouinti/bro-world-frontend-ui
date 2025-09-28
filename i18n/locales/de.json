@@ -168,6 +168,32 @@
       "error": "Dein Beitrag konnte nicht veröffentlicht werden. Bitte versuche es erneut.",
       "validation": "Schreibe eine Nachricht, bevor du veröffentlichst."
     },
+    "newPost": {
+      "placeholder": "Was machst du gerade, {name}?",
+      "quickActions": {
+        "liveVideo": "Live-Video",
+        "photoVideo": "Foto/Video",
+        "feelingActivity": "Gefühl/Aktivität"
+      },
+      "dialog": {
+        "title": "Beitrag erstellen",
+        "addToPost": "Füge noch etwas zu deinem Beitrag hinzu",
+        "postButton": "Posten"
+      },
+      "audience": {
+        "public": "Öffentlich",
+        "friends": "Freunde",
+        "private": "Nur ich"
+      },
+      "attachments": {
+        "media": "Foto/Video",
+        "tag": "Person markieren",
+        "feeling": "Gefühl/Aktivität",
+        "location": "Standort",
+        "gif": "GIF",
+        "poll": "Umfrage hinzufügen"
+      }
+    },
     "reactions": {
       "post": {
         "publishedOn": "Veröffentlicht am {date}",

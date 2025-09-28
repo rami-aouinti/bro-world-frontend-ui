@@ -168,6 +168,32 @@
       "error": "We couldn't publish your post. Please try again.",
       "validation": "Write a message before publishing."
     },
+    "newPost": {
+      "placeholder": "What's on your mind, {name}?",
+      "quickActions": {
+        "liveVideo": "Live video",
+        "photoVideo": "Photo/Video",
+        "feelingActivity": "Feeling/Activity"
+      },
+      "dialog": {
+        "title": "Create post",
+        "addToPost": "Add something to your post",
+        "postButton": "Post"
+      },
+      "audience": {
+        "public": "Public",
+        "friends": "Friends",
+        "private": "Only me"
+      },
+      "attachments": {
+        "media": "Photo/Video",
+        "tag": "Tag people",
+        "feeling": "Feeling/Activity",
+        "location": "Check in",
+        "gif": "GIF",
+        "poll": "Add poll"
+      }
+    },
     "reactions": {
       "post": {
         "publishedOn": "Published on {date}",
