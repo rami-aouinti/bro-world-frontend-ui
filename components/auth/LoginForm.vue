@@ -1,13 +1,13 @@
 <template>
-  <form class="mx-auto max-w-xl" @submit.prevent="handleSubmit">
-    <div class="card-padding">
+  <form :class="formClasses" @submit.prevent="handleSubmit">
+    <div class="login-form__inner">
       <v-alert
         v-if="sessionMessage"
         type="warning"
         variant="tonal"
         density="comfortable"
         border="start"
-        class="mb-4"
+        class="login-form__alert"
         closable
         prominent
         role="status"
@@ -16,63 +16,67 @@
         {{ sessionMessage }}
       </v-alert>
 
-      <IInput
-        v-model="username"
-        density="compact"
-        rounded="xl"
-        :label="t('auth.usernameOrEmail')"
-        required
-        class="font-size-input input-style"
-        append-inner-icon="mdi-account"
-        :disabled="loading"
-        :error="Boolean(formError)"
-        :class="fieldAlignment"
-        @update:model-value="handleFieldInput"
-      />
-      <IInput
-        v-model="password"
-        density="compact"
-        rounded="xl"
-        :type="showPassword ? 'text' : 'password'"
-        :label="t('auth.password')"
-        required
-        class="font-size-input input-style"
-        :class="fieldAlignment"
-        :disabled="loading"
-        :error="Boolean(formError)"
-        :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-        @click:append-inner="togglePassword"
-        @update:model-value="handleFieldInput"
-      />
+      <label :class="fieldContainerClasses">
+        <Icon name="mdi-account-circle-outline" size="24" class="login-field__icon" />
+        <input
+          v-model="username"
+          :placeholder="t('auth.usernameOrEmail')"
+          class="login-field__input"
+          :class="fieldAlignment"
+          autocomplete="username"
+          required
+          :disabled="isDisabled"
+          @input="handleFieldInput"
+        />
+        <Icon name="mdi-emoticon-happy-outline" size="22" class="login-field__addon" />
+      </label>
 
-      <p v-if="formError" class="mt-1 text-red text-caption d-flex justify-center" role="alert">
+      <label :class="fieldContainerClasses">
+        <Icon name="mdi-lock-outline" size="22" class="login-field__icon" />
+        <input
+          v-model="password"
+          :type="showPassword ? 'text' : 'password'"
+          :placeholder="t('auth.password')"
+          class="login-field__input"
+          :class="fieldAlignment"
+          autocomplete="current-password"
+          required
+          :disabled="isDisabled"
+          @input="handleFieldInput"
+        />
+        <button
+          type="button"
+          class="login-field__action"
+          :aria-label="showPassword ? hidePasswordLabel : showPasswordLabel"
+          :disabled="isDisabled"
+          @click="togglePassword"
+        >
+          <Icon :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="22" />
+        </button>
+      </label>
+
+      <p v-if="formError" class="login-form__error" role="alert">
         {{ formError }}
       </p>
 
-      <div class="mt-2 mb-4" :class="isRtl ? 'text-start' : 'text-end'">
-        <NuxtLink
-          :to="localePath('/forgot-password')"
-          class="text-primary text-decoration-none text-sm"
-        >
+      <div class="login-form__links" :class="isRtl ? 'text-start' : 'text-end'">
+        <NuxtLink :to="localePath('/forgot-password')" class="login-form__forgot">
           {{ t('auth.forgotPassword') }}
         </NuxtLink>
       </div>
-      <GradientButton
-          :disabled="loading"
-        type="submit"
-        class="btn btn-outline-primary bg-primary rounded-xl text-decoration-none font-weight-bold text-uppercase py-2 px-6 me-2 mb-2 w-100"
-      >
-        <v-progress-circular v-if="loading" indeterminate size="20" />
-        <span v-else :class="fieldAlignment">{{ t('auth.signIn') }}</span>
-      </GradientButton >
 
-      <p class="text-sm text-body mt-3 mb-0 d-flex justify-center" :class="fieldAlignment">
+      <GradientButton
+        type="submit"
+        class="login-form__submit"
+        :disabled="isDisabled"
+      >
+        <v-progress-circular v-if="isSubmitting" indeterminate size="20" />
+        <span v-else>{{ t('auth.signIn') }}</span>
+      </GradientButton>
+
+      <p class="login-form__signup" :class="fieldAlignment">
         {{ t('auth.signUpPrompt') }}
-        <NuxtLink
-          :to="localePath('/register')"
-          class="text-primary text-decoration-none font-weight-bolder px-1"
-          :class="fieldAlignment"
-        >
+        <NuxtLink :to="localePath('/register')" class="login-form__signup-link" :class="fieldAlignment">
           {{ t('auth.signUp') }}
         </NuxtLink>
       </p>
@@ -87,6 +91,17 @@ import { useI18n } from 'vue-i18n'
 import { useLocalePath } from '#i18n'
 import { useAuthSession } from '~/stores/auth-session'
 
+const props = withDefaults(
+  defineProps<{
+    variant?: 'default' | 'compact'
+    disabled?: boolean
+  }>(),
+  {
+    variant: 'default',
+    disabled: false,
+  },
+)
+
 const { t, locale } = useI18n()
 const router = useRouter()
 const route = useRoute()
@@ -96,13 +111,25 @@ const auth = useAuthSession()
 
 const isRtl = computed(() => ['ar', 'he', 'fa', 'ur'].includes(locale.value))
 const fieldAlignment = computed(() => (isRtl.value ? 'text-end' : 'text-start'))
+const isCompact = computed(() => props.variant === 'compact')
+const isSubmitting = computed(() => auth.isLoggingIn.value)
+const isDisabled = computed(() => props.disabled || isSubmitting.value)
+const formClasses = computed(() => [
+  'login-form',
+  { 'login-form--compact': isCompact.value },
+])
+const fieldContainerClasses = computed(() => [
+  'login-field',
+  { 'login-field--compact': isCompact.value },
+])
 
 const username = ref('')
 const password = ref('')
 const showPassword = ref(false)
 const formError = ref('')
 
-const loading = computed(() => auth.isLoggingIn.value)
+const showPasswordLabel = computed(() => t('auth.showPassword'))
+const hidePasswordLabel = computed(() => t('auth.hidePassword'))
 const sessionMessage = computed(() => auth.sessionMessage.value ?? '')
 
 watch(
@@ -131,7 +158,7 @@ function dismissSessionMessage() {
 }
 
 async function handleSubmit() {
-  if (loading.value) {
+  if (isSubmitting.value) {
     return
   }
 
@@ -189,3 +216,168 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+.login-form {
+  width: 100%;
+}
+
+.login-form__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form__alert {
+  margin-bottom: 0.25rem;
+}
+
+.login-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  padding: 0.85rem 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(247, 247, 247, 0.8));
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(236, 72, 153, 0.25);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.login-field--compact {
+  padding: 0.7rem 1rem;
+  gap: 0.6rem;
+}
+
+.login-field:focus-within {
+  box-shadow: 0 22px 45px rgba(236, 72, 153, 0.18);
+  border-color: rgba(236, 72, 153, 0.45);
+}
+
+.login-field__icon {
+  color: rgba(71, 85, 105, 0.65);
+}
+
+.login-field__addon {
+  color: rgba(236, 72, 153, 0.7);
+}
+
+.login-field__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgb(30, 41, 59);
+  outline: none;
+}
+
+.login-form--compact .login-field__input {
+  font-size: 0.9rem;
+}
+
+.login-field__input::placeholder {
+  color: rgba(71, 85, 105, 0.6);
+}
+
+.login-field__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(236, 72, 153, 0.25);
+  color: rgba(71, 85, 105, 0.7);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-field--compact .login-field__action {
+  width: 36px;
+  height: 36px;
+}
+
+.login-field__action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-field__action:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(236, 72, 153, 0.25);
+}
+
+.login-form__error {
+  margin: 0.25rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #f87171;
+  font-weight: 500;
+}
+
+.login-form__links {
+  font-size: 0.85rem;
+}
+
+.login-form__forgot {
+  color: rgb(236, 72, 153);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-form__forgot:hover {
+  text-decoration: underline;
+}
+
+.login-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 9999px;
+  padding: 0.95rem 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  gap: 0.5rem;
+  box-shadow: 0 18px 30px rgba(236, 72, 153, 0.35);
+}
+
+.login-form--compact .login-form__submit {
+  padding: 0.8rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+.login-form__signup {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(71, 85, 105, 0.9);
+}
+
+.login-form__signup-link {
+  color: rgb(236, 72, 153);
+  text-decoration: none;
+  font-weight: 700;
+  margin-inline-start: 0.35rem;
+}
+
+.login-form__signup-link:hover {
+  text-decoration: underline;
+}
+
+.login-form--compact .login-form__signup {
+  font-size: 0.8rem;
+}
+
+@media (max-width: 420px) {
+  .login-field {
+    padding-inline: 1rem;
+  }
+
+  .login-field__input {
+    font-size: 0.95rem;
+  }
+}
+</style>

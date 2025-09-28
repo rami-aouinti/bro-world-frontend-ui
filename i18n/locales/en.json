@@ -123,6 +123,8 @@
     "Register": "Register",
     "usernameOrEmail": "Email address or username",
     "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
     "signIn": "Sign in",
     "signUpPrompt": "Don't have an account?",
     "signUp": "Create one",
