@@ -790,5 +790,216 @@
       "title": "Profil",
       "description": "Consultez vos informations personnelles et l’activité du compte."
     }
+  },
+  "admin": {
+    "metaTitle": "Administration",
+    "page": {
+      "title": "Espace d'administration",
+      "subtitle": "Pilotez l'ensemble de la plateforme, suivez les indicateurs clés et activez les bons leviers en quelques clics."
+    },
+    "actions": {
+      "newAdminRole": "Nouveau rôle admin",
+      "exportReport": "Exporter le rapport"
+    },
+    "sections": {
+      "stats": {
+        "title": "Aperçu en temps réel",
+        "subtitle": "Données consolidées sur les dernières 24 heures",
+        "metrics": {
+          "users": {
+            "label": "Utilisateurs actifs",
+            "trend": "+12% cette semaine",
+            "caption": "Engagement moyen par session",
+            "description": "Mesure le nombre de membres connectés au cours des dernières 24 heures."
+          },
+          "content": {
+            "label": "Contenus publiés",
+            "trend": "+5% vs. hier",
+            "caption": "Nouveaux articles et annonces",
+            "description": "Nombre total de publications, événements et annonces validés."
+          },
+          "reports": {
+            "label": "Signalements traités",
+            "trend": "-8% vs. moyenne",
+            "caption": "Temps moyen de résolution : 1h42",
+            "description": "Tickets de modération résolus par l’équipe de support."
+          },
+          "availability": {
+            "label": "Taux de disponibilité",
+            "value": "{value}%",
+            "trend": "+0,2 point",
+            "caption": "Sur les 30 derniers jours",
+            "description": "Indicateur consolidé sur l’ensemble des services critiques."
+          }
+        }
+      },
+      "controls": {
+        "title": "Contrôles globaux",
+        "subtitle": "Activez ou désactivez les fonctionnalités critiques du site",
+        "toggles": {
+          "maintenance": {
+            "label": "Mode maintenance",
+            "description": "Activez un message de maintenance et restreignez l’accès aux administrateurs uniquement.",
+            "helper": "Recommandé uniquement pour les mises à jour majeures.",
+            "enabled": "Maintenance activée",
+            "disabled": "Maintenance désactivée"
+          },
+          "registrations": {
+            "label": "Inscriptions ouvertes",
+            "description": "Permettez aux nouveaux membres de créer un compte sans invitation préalable.",
+            "helper": "Surveillez l’afflux via les rapports de croissance.",
+            "enabled": "Inscriptions autorisées",
+            "disabled": "Inscriptions fermées"
+          },
+          "moderation": {
+            "label": "Modération assistée",
+            "description": "Lance automatiquement la détection de contenu sensible avant publication.",
+            "helper": "Réglable depuis le module de modération avancée.",
+            "enabled": "Automatisation active",
+            "disabled": "Automatisation inactive"
+          },
+          "broadcast": {
+            "label": "Annonce globale épinglée",
+            "description": "Affiche une bannière d’information en haut de toutes les pages publiques.",
+            "helper": "Utilisez-le pour les communications officielles ou urgentes.",
+            "enabled": "Annonce visible",
+            "disabled": "Annonce masquée"
+          }
+        }
+      },
+      "quickActions": {
+        "title": "Actions rapides",
+        "subtitle": "Déclenchez les opérations de gestion les plus utilisées",
+        "button": "Lancer",
+        "items": {
+          "contentReview": {
+            "title": "Valider les contenus en attente",
+            "description": "Passez en revue les contributions de la communauté avant leur mise en ligne."
+          },
+          "securityScan": {
+            "title": "Analyser la sécurité",
+            "description": "Lancez un contrôle automatisé des permissions et des rôles sensibles."
+          },
+          "communityUpdate": {
+            "title": "Envoyer une mise à jour globale",
+            "description": "Programmez une newsletter ou une notification push à l’ensemble des membres."
+          }
+        }
+      },
+      "modules": {
+        "title": "Modules de gestion",
+        "subtitle": "Retrouvez les espaces dédiés à chaque pilier de la plateforme",
+        "openButton": "Ouvrir le module",
+        "policiesButton": "Voir les politiques",
+        "items": {
+          "content": {
+            "title": "Gestion du contenu",
+            "description": "Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.",
+            "tags": [
+              "Workflow éditorial",
+              "Validation",
+              "Programmation"
+            ],
+            "status": "12 contenus nécessitent une revue éditoriale."
+          },
+          "community": {
+            "title": "Communauté & modération",
+            "description": "Paramétrez les règles de modération, gérez les signalements et les sanctions.",
+            "tags": [
+              "Signalements",
+              "Sanctions",
+              "Messages privés"
+            ],
+            "status": "Temps moyen de réponse : 1 h 42."
+          },
+          "commerce": {
+            "title": "Monétisation & offres",
+            "description": "Administrez les abonnements, codes promotionnels et partenariats commerciaux.",
+            "tags": [
+              "Abonnements",
+              "Facturation",
+              "Coupons"
+            ],
+            "status": "Taux de conversion en hausse de 3,4 % cette semaine."
+          },
+          "governance": {
+            "title": "Gouvernance & conformité",
+            "description": "Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.",
+            "tags": [
+              "Audit",
+              "Rôles",
+              "Traçabilité"
+            ],
+            "status": "Dernier audit complet réalisé il y a 5 jours."
+          }
+        }
+      },
+      "activity": {
+        "title": "Activité récente",
+        "subtitle": "Suivi des actions réalisées par les administrateurs",
+        "cta": "Historique complet",
+        "items": {
+          "1": {
+            "title": "Revue de 18 contenus publiée",
+            "description": "Clara Dupont a validé le lot de contenus en attente pour la rubrique Blog.",
+            "time": "Il y a 12 minutes"
+          },
+          "2": {
+            "title": "Nouveau rôle attribué",
+            "description": "Ahmed B. a reçu les permissions de modérateur senior pour la zone Communauté.",
+            "time": "Il y a 47 minutes"
+          },
+          "3": {
+            "title": "Signalement critique résolu",
+            "description": "Un contenu signalé pour incitation à la haine a été supprimé et l’utilisateur suspendu.",
+            "time": "Il y a 2 heures"
+          }
+        }
+      },
+      "health": {
+        "title": "Santé du système",
+        "subtitle": "Surveillez les flux critiques et leur état opérationnel",
+        "cta": "Centre de statut",
+        "uptimeLabel": "Disponibilité",
+        "items": {
+          "api": {
+            "name": "API publique",
+            "description": "Flux GraphQL et Webhooks pour les intégrations tierces.",
+            "status": "Opérationnel"
+          },
+          "payments": {
+            "name": "Passerelle de paiement",
+            "description": "Transactions, facturation et webhooks financiers.",
+            "status": "Incident mineur"
+          },
+          "notifications": {
+            "name": "Notifications temps réel",
+            "description": "Envoi d’e-mails transactionnels et de notifications push.",
+            "status": "Opérationnel"
+          }
+        }
+      },
+      "resources": {
+        "title": "Ressources & conformité",
+        "subtitle": "Assurez-vous que vos équipes disposent des bonnes directives pour maintenir la qualité du site.",
+        "knowledgeBase": "Centre de connaissances",
+        "complianceAudit": "Audit de conformité",
+        "download": "Télécharger",
+        "items": {
+          "charter": {
+            "title": "Charte éditoriale & guide de modération",
+            "description": "Règles officielles qui encadrent la publication de contenu sur la plateforme."
+          },
+          "security": {
+            "title": "Procédure de gestion des incidents de sécurité",
+            "description": "Checklist opérationnelle en cas de faille de sécurité ou de tentative d’intrusion."
+          },
+          "compliance": {
+            "title": "Document RGPD & traitement des données",
+            "description": "Inventaire des traitements, durées de conservation et modèles de réponse aux utilisateurs."
+          }
+        }
+      }
+    }
   }
 }

@@ -790,5 +790,216 @@
       "title": "Profil",
       "description": "Sieh dir deine persönlichen Daten und Kontoaktivitäten an."
     }
+  },
+  "admin": {
+    "metaTitle": "Administration",
+    "page": {
+      "title": "Administrationsbereich",
+      "subtitle": "Steuern Sie die gesamte Plattform, verfolgen Sie Kennzahlen und aktivieren Sie die richtigen Hebel mit nur wenigen Klicks."
+    },
+    "actions": {
+      "newAdminRole": "Neue Admin-Rolle",
+      "exportReport": "Bericht exportieren"
+    },
+    "sections": {
+      "stats": {
+        "title": "Echtzeit-Überblick",
+        "subtitle": "Konsolidierte Daten der letzten 24 Stunden",
+        "metrics": {
+          "users": {
+            "label": "Aktive Nutzer",
+            "trend": "+12 % diese Woche",
+            "caption": "Durchschnittliche Sitzungsbeteiligung",
+            "description": "Zählt Mitglieder, die sich in den letzten 24 Stunden angemeldet haben."
+          },
+          "content": {
+            "label": "Veröffentlichte Inhalte",
+            "trend": "+5 % ggü. gestern",
+            "caption": "Neue Artikel und Ankündigungen",
+            "description": "Gesamtzahl freigegebener Beiträge, Events und Ankündigungen."
+          },
+          "reports": {
+            "label": "Bearbeitete Meldungen",
+            "trend": "-8 % ggü. dem Durchschnitt",
+            "caption": "Durchschnittliche Lösungszeit: 1h42",
+            "description": "Moderations-Tickets, die vom Supportteam abgeschlossen wurden."
+          },
+          "availability": {
+            "label": "Verfügbarkeitsrate",
+            "value": "{value}%",
+            "trend": "+0,2 Punkte",
+            "caption": "Über die letzten 30 Tage",
+            "description": "Konsolidierter Indikator über alle kritischen Dienste."
+          }
+        }
+      },
+      "controls": {
+        "title": "Globale Steuerungen",
+        "subtitle": "Aktivieren oder deaktivieren Sie kritische Plattformfunktionen",
+        "toggles": {
+          "maintenance": {
+            "label": "Wartungsmodus",
+            "description": "Zeigt eine Wartungsmeldung an und beschränkt den Zugriff auf Administratoren.",
+            "helper": "Nur für größere Aktualisierungen empfohlen.",
+            "enabled": "Wartung aktiviert",
+            "disabled": "Wartung deaktiviert"
+          },
+          "registrations": {
+            "label": "Registrierungen offen",
+            "description": "Erlaubt neuen Mitgliedern, ohne Einladung ein Konto zu erstellen.",
+            "helper": "Überwachen Sie den Zulauf in den Wachstumsberichten.",
+            "enabled": "Registrierungen erlaubt",
+            "disabled": "Registrierungen geschlossen"
+          },
+          "moderation": {
+            "label": "Unterstützte Moderation",
+            "description": "Startet eine automatische Erkennung sensibler Inhalte vor der Veröffentlichung.",
+            "helper": "Feinjustierung im Modul für erweiterte Moderation.",
+            "enabled": "Automatisierung aktiv",
+            "disabled": "Automatisierung inaktiv"
+          },
+          "broadcast": {
+            "label": "Globale Ankündigung angeheftet",
+            "description": "Blendet einen Hinweisbanner oben auf allen öffentlichen Seiten ein.",
+            "helper": "Für offizielle oder dringende Mitteilungen nutzen.",
+            "enabled": "Ankündigung sichtbar",
+            "disabled": "Ankündigung verborgen"
+          }
+        }
+      },
+      "quickActions": {
+        "title": "Schnellaktionen",
+        "subtitle": "Starten Sie die meistgenutzten Verwaltungsaufgaben",
+        "button": "Starten",
+        "items": {
+          "contentReview": {
+            "title": "Ausstehende Inhalte freigeben",
+            "description": "Prüfen Sie Community-Beiträge, bevor sie veröffentlicht werden."
+          },
+          "securityScan": {
+            "title": "Sicherheitsprüfung ausführen",
+            "description": "Starten Sie eine automatische Prüfung von Berechtigungen und sensiblen Rollen."
+          },
+          "communityUpdate": {
+            "title": "Globale Aktualisierung senden",
+            "description": "Planen Sie einen Newsletter oder eine Push-Mitteilung für alle Mitglieder."
+          }
+        }
+      },
+      "modules": {
+        "title": "Verwaltungsmodule",
+        "subtitle": "Greifen Sie auf die Arbeitsbereiche für jede Säule der Plattform zu",
+        "openButton": "Modul öffnen",
+        "policiesButton": "Richtlinien ansehen",
+        "items": {
+          "content": {
+            "title": "Content-Management",
+            "description": "Planen, veröffentlichen und archivieren Sie Artikel, Events und Lernressourcen.",
+            "tags": [
+              "Redaktions-Workflow",
+              "Freigabe",
+              "Terminplanung"
+            ],
+            "status": "12 Inhalte erfordern eine redaktionelle Prüfung."
+          },
+          "community": {
+            "title": "Community & Moderation",
+            "description": "Konfigurieren Sie Moderationsregeln, verwalten Sie Meldungen und Sanktionen.",
+            "tags": [
+              "Meldungen",
+              "Sanktionen",
+              "Private Nachrichten"
+            ],
+            "status": "Durchschnittliche Reaktionszeit: 1 h 42."
+          },
+          "commerce": {
+            "title": "Monetarisierung & Angebote",
+            "description": "Verwalten Sie Abonnements, Promo-Codes und Geschäftspartnerschaften.",
+            "tags": [
+              "Abonnements",
+              "Abrechnung",
+              "Gutscheine"
+            ],
+            "status": "Konversionsrate diese Woche um 3,4 % gestiegen."
+          },
+          "governance": {
+            "title": "Governance & Compliance",
+            "description": "Prüfen Sie Zugriffe, verwalten Sie privilegierte Rollen und erstellen Sie Compliance-Berichte.",
+            "tags": [
+              "Audit",
+              "Rollen",
+              "Nachverfolgbarkeit"
+            ],
+            "status": "Letztes vollständiges Audit vor 5 Tagen abgeschlossen."
+          }
+        }
+      },
+      "activity": {
+        "title": "Aktuelle Aktivitäten",
+        "subtitle": "Nachverfolgung der Aktionen der Administratoren",
+        "cta": "Gesamten Verlauf anzeigen",
+        "items": {
+          "1": {
+            "title": "Prüfung von 18 Inhalten veröffentlicht",
+            "description": "Clara Dupont hat das ausstehende Content-Paket für den Blogbereich freigegeben.",
+            "time": "Vor 12 Minuten"
+          },
+          "2": {
+            "title": "Neue Rolle zugewiesen",
+            "description": "Ahmed B. erhielt Senior-Moderator-Rechte für den Community-Bereich.",
+            "time": "Vor 47 Minuten"
+          },
+          "3": {
+            "title": "Kritische Meldung gelöst",
+            "description": "Ein wegen Hassrede gemeldeter Beitrag wurde entfernt und der Nutzer gesperrt.",
+            "time": "Vor 2 Stunden"
+          }
+        }
+      },
+      "health": {
+        "title": "Systemzustand",
+        "subtitle": "Überwachen Sie kritische Abläufe und ihren Betriebsstatus",
+        "cta": "Statuszentrum",
+        "uptimeLabel": "Verfügbarkeit",
+        "items": {
+          "api": {
+            "name": "Öffentliche API",
+            "description": "GraphQL-Flüsse und Webhooks für Integrationen von Drittanbietern.",
+            "status": "Betriebsbereit"
+          },
+          "payments": {
+            "name": "Zahlungsschnittstelle",
+            "description": "Transaktionen, Abrechnung und finanzielle Webhooks.",
+            "status": "Geringfügiger Vorfall"
+          },
+          "notifications": {
+            "name": "Echtzeit-Benachrichtigungen",
+            "description": "Transaktionale E-Mails und Push-Benachrichtigungen.",
+            "status": "Betriebsbereit"
+          }
+        }
+      },
+      "resources": {
+        "title": "Ressourcen & Compliance",
+        "subtitle": "Stellen Sie sicher, dass Ihre Teams die richtigen Leitlinien für eine hohe Seitenqualität besitzen.",
+        "knowledgeBase": "Wissenscenter",
+        "complianceAudit": "Compliance-Audit",
+        "download": "Herunterladen",
+        "items": {
+          "charter": {
+            "title": "Redaktionsleitfaden & Moderationshandbuch",
+            "description": "Offizielle Regeln für die Veröffentlichung von Inhalten auf der Plattform."
+          },
+          "security": {
+            "title": "Vorgehen bei Sicherheitsvorfällen",
+            "description": "Operative Checkliste bei Sicherheitslücken oder Eindringversuchen."
+          },
+          "compliance": {
+            "title": "DSGVO- & Datenverarbeitungsdokument",
+            "description": "Verzeichnis der Verarbeitungstätigkeiten, Aufbewahrungsfristen und Antwortvorlagen für Nutzer."
+          }
+        }
+      }
+    }
   }
 }

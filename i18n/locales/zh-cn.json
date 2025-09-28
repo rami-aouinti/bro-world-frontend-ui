@@ -78,14 +78,14 @@
     "GettingStartedDescription": "介绍 Inspira UI 及其核心概念。",
     "Installation": "安装",
     "InstallationDescription": "按照指南一步一步地在您的项目中安装 Inspira UI。",
-  "Components": "组件",
-  "ComponentsDescription": "探讨所有可用的组件及其用法。",
-  "V1DocsDescription": "使用 Tailwind CSS v3 的 Inspira UI 的文档。",
-  "Community": "社区",
-  "GitHub": "GitHub",
-  "GitHubDescription": "Inspira UI 的源代码",
-  "Discord": "Discord",
-  "DiscordDescription": "连接 Discord 社区",
+    "Components": "组件",
+    "ComponentsDescription": "探讨所有可用的组件及其用法。",
+    "V1DocsDescription": "使用 Tailwind CSS v3 的 Inspira UI 的文档。",
+    "Community": "社区",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Inspira UI 的源代码",
+    "Discord": "Discord",
+    "DiscordDescription": "连接 Discord 社区",
     "Forum": "论坛",
     "ForumDiscord": "加入论坛"
   },
@@ -413,6 +413,217 @@
     "profile": {
       "title": "个人资料",
       "description": "查看您的个人信息和账号活动。"
+    }
+  },
+  "admin": {
+    "metaTitle": "管理",
+    "page": {
+      "title": "管理中心",
+      "subtitle": "只需几次点击即可掌控整个平台，监控关键指标并启用合适的功能。"
+    },
+    "actions": {
+      "newAdminRole": "新建管理员角色",
+      "exportReport": "导出报告"
+    },
+    "sections": {
+      "stats": {
+        "title": "实时概览",
+        "subtitle": "汇总最近24小时的数据",
+        "metrics": {
+          "users": {
+            "label": "活跃用户",
+            "trend": "本周增长12%",
+            "caption": "每次会话的平均互动",
+            "description": "统计最近24小时内登录的成员数量。"
+          },
+          "content": {
+            "label": "已发布内容",
+            "trend": "较昨日提升5%",
+            "caption": "新增文章与公告",
+            "description": "已审核通过的帖子、活动和公告总数。"
+          },
+          "reports": {
+            "label": "已处理举报",
+            "trend": "较平均值下降8%",
+            "caption": "平均处理时长：1小时42分",
+            "description": "由支持团队完成的内容审核工单。"
+          },
+          "availability": {
+            "label": "可用率",
+            "value": "{value}%",
+            "trend": "提升0.2个百分点",
+            "caption": "过去30天",
+            "description": "覆盖所有关键服务的综合指标。"
+          }
+        }
+      },
+      "controls": {
+        "title": "全局控制",
+        "subtitle": "启用或停用关键站点功能",
+        "toggles": {
+          "maintenance": {
+            "label": "维护模式",
+            "description": "显示维护提示，并仅允许管理员访问。",
+            "helper": "仅在重大更新时建议启用。",
+            "enabled": "维护模式已开启",
+            "disabled": "维护模式已关闭"
+          },
+          "registrations": {
+            "label": "开放注册",
+            "description": "允许新成员无需邀请即可创建账号。",
+            "helper": "请通过增长报告监控流量。",
+            "enabled": "允许注册",
+            "disabled": "注册关闭"
+          },
+          "moderation": {
+            "label": "辅助审核",
+            "description": "发布前自动检测敏感内容。",
+            "helper": "可在高级审核模块中进行微调。",
+            "enabled": "自动化已开启",
+            "disabled": "自动化已关闭"
+          },
+          "broadcast": {
+            "label": "置顶全站公告",
+            "description": "在所有公开页面顶部展示信息横幅。",
+            "helper": "适用于官方或紧急通知。",
+            "enabled": "公告可见",
+            "disabled": "公告隐藏"
+          }
+        }
+      },
+      "quickActions": {
+        "title": "快速操作",
+        "subtitle": "启动最常用的管理任务",
+        "button": "执行",
+        "items": {
+          "contentReview": {
+            "title": "审批待发布内容",
+            "description": "在上线之前审核社区投稿。"
+          },
+          "securityScan": {
+            "title": "执行安全扫描",
+            "description": "自动检查权限和敏感角色。"
+          },
+          "communityUpdate": {
+            "title": "发送全站更新",
+            "description": "为所有成员安排简报或推送通知。"
+          }
+        }
+      },
+      "modules": {
+        "title": "管理模块",
+        "subtitle": "访问平台各支柱的专属空间",
+        "openButton": "打开模块",
+        "policiesButton": "查看政策",
+        "items": {
+          "content": {
+            "title": "内容管理",
+            "description": "规划、发布与归档文章、活动以及学习资源。",
+            "tags": [
+              "内容流程",
+              "审核",
+              "排期"
+            ],
+            "status": "有12条内容等待编辑审核。"
+          },
+          "community": {
+            "title": "社区与审核",
+            "description": "配置审核规则，管理举报与处罚。",
+            "tags": [
+              "举报",
+              "处罚",
+              "私信"
+            ],
+            "status": "平均响应时间：1小时42分。"
+          },
+          "commerce": {
+            "title": "变现与优惠",
+            "description": "管理订阅、优惠码和商业合作。",
+            "tags": [
+              "订阅",
+              "计费",
+              "优惠券"
+            ],
+            "status": "本周转化率提升3.4%。"
+          },
+          "governance": {
+            "title": "治理与合规",
+            "description": "审计访问权限，管理敏感角色并准备合规报告。",
+            "tags": [
+              "审计",
+              "角色",
+              "可追溯性"
+            ],
+            "status": "最近一次完整审计在5天前完成。"
+          }
+        }
+      },
+      "activity": {
+        "title": "最近活动",
+        "subtitle": "跟踪管理员执行的操作",
+        "cta": "完整历史",
+        "items": {
+          "1": {
+            "title": "发布18条内容审核",
+            "description": "Clara Dupont 批准了博客栏目待发布的内容批次。",
+            "time": "12分钟前"
+          },
+          "2": {
+            "title": "分配新角色",
+            "description": "Ahmed B. 获得社区区域的高级版主权限。",
+            "time": "47分钟前"
+          },
+          "3": {
+            "title": "已解决严重举报",
+            "description": "一条仇恨言论举报内容被移除，相关用户已停权。",
+            "time": "2小时前"
+          }
+        }
+      },
+      "health": {
+        "title": "系统健康",
+        "subtitle": "监控关键流程及其运行状态",
+        "cta": "状态中心",
+        "uptimeLabel": "可用性",
+        "items": {
+          "api": {
+            "name": "公共 API",
+            "description": "面向第三方集成的 GraphQL 流程与 Webhook。",
+            "status": "运行正常"
+          },
+          "payments": {
+            "name": "支付网关",
+            "description": "交易、账单及财务 Webhook。",
+            "status": "轻微故障"
+          },
+          "notifications": {
+            "name": "实时通知",
+            "description": "事务型邮件与推送通知。",
+            "status": "运行正常"
+          }
+        }
+      },
+      "resources": {
+        "title": "资源与合规",
+        "subtitle": "确保团队拥有正确指引以保持站点质量。",
+        "knowledgeBase": "知识中心",
+        "complianceAudit": "合规审计",
+        "download": "下载",
+        "items": {
+          "charter": {
+            "title": "内容规范与审核指南",
+            "description": "平台内容发布的官方规则。"
+          },
+          "security": {
+            "title": "安全事件响应流程",
+            "description": "发生安全漏洞或入侵尝试时的操作清单。"
+          },
+          "compliance": {
+            "title": "GDPR 与数据处理文档",
+            "description": "梳理处理活动、保留期限及用户回复模板。"
+          }
+        }
+      }
     }
   }
 }
