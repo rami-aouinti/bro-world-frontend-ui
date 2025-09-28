@@ -91,19 +91,26 @@ Une ombre de focus harmonisée est également disponible via `--ui-focus` (`0 0 
 
 ## Typographie
 
-- Police par défaut (`$body-font-family`) : `var(--v-font-family-base)` → `Inter` (fallback systèmes).
-- Police display (`var(--v-font-family-display)`) pour les titres : `Plus Jakarta Sans`.
-- Tailles :
-  - `h1` → `var(--v-text-h1-size)` (3.25rem), line-height 1.2.
-  - `h2` → `var(--v-text-h2-size)` (2.5rem), line-height 1.25.
-  - `h3` → `var(--v-text-h3-size)` (2rem), line-height 1.3.
-  - `h4` → `var(--v-text-h4-size)` (1.5rem), line-height 1.35.
-  - `h5` → `var(--v-text-h5-size)` (1.25rem), line-height 1.4.
-  - `h6` → `var(--v-text-h6-size)` (1rem), line-height 1.45.
-  - Corps (`body-1`) → `var(--v-text-body-1-size)` (1rem), line-height 1.6.
-  - Corps secondaire (`body-2`) → `var(--v-text-body-2-size)` (0.875rem), line-height 1.6.
+- Police par défaut (`$body-font-family` / `var(--v-font-family-base)`) : `Manrope`, avec retours `Inter`, `Helvetica Neue`, `Arial`, `sans-serif`.
+- Police display (`var(--v-font-family-display)`) pour les titres : `Bricolage Grotesque`, retombant sur `Manrope`, `Inter`, puis les fontes systèmes.
+- Les fontes sont chargées via `assets/styles/index.css` (Google Fonts, `font-display: swap`) et appliquées globalement au `<body>`.
 
-Les lettres-spacing et poids (`var(--v-text-*-letter-spacing|weight)`) sont également exposés.
+### Échelle commune Vuetify ↔ Tailwind
+
+Les tokens Vuetify sont repris tels quels côté Tailwind via des utilitaires (`text-h1`, `text-body-1`, etc.). Utilisez-les pour aligner tout le contenu typographique, quelle que soit la techno utilisée.
+
+| Rôle | Token Vuetify | Classe Tailwind | Taille | Line-height | Letter-spacing | Poids |
+| --- | --- | --- | --- | --- | --- | --- |
+| Affichage XL | `--v-text-h1-*` | `text-h1` | 3.25rem | 1.2 | -0.02em | 600 |
+| Affichage LG | `--v-text-h2-*` | `text-h2` | 2.5rem | 1.25 | -0.015em | 600 |
+| Affichage MD | `--v-text-h3-*` | `text-h3` | 2rem | 1.3 | -0.01em | 600 |
+| Affichage SM | `--v-text-h4-*` | `text-h4` | 1.5rem | 1.35 | -0.005em | 600 |
+| Affichage XS | `--v-text-h5-*` | `text-h5` | 1.25rem | 1.4 | -0.0025em | 600 |
+| Sur-titre | `--v-text-h6-*` | `text-h6` | 1rem | 1.45 | 0 | 600 |
+| Corps | `--v-text-body-1-*` | `text-body-1` | 1rem | 1.6 | 0 | 400 |
+| Corps secondaire | `--v-text-body-2-*` | `text-body-2` | 0.875rem | 1.6 | 0 | 400 |
+
+Les variables `var(--v-text-*-letter-spacing)` et `var(--v-text-*-weight)` sont injectées dans la configuration Tailwind afin de rester synchronisées même si les valeurs évoluent dans le thème.
 
 ## Formulaires et boutons
 
