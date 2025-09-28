@@ -43,7 +43,13 @@
             <span v-else-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
           </component>
 
-          <ul v-if="item.children?.length" class="sidebar-sublist">
+          <ul
+            v-if="item.children?.length"
+            v-show="isGroupExpanded(item.key)"
+            :id="`sidebar-group-${item.key}`"
+            class="sidebar-sublist"
+            :aria-hidden="!isGroupExpanded(item.key)"
+          >
             <li v-for="child in item.children" :key="child.key">
               <NuxtLink
                 :to="child.to"
