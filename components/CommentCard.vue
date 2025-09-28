@@ -9,29 +9,31 @@
       'w-full border border-slate-200 bg-white text-slate-800 shadow-sm transition-transform duration-200 hover:-translate-y-0.5',
       depth > 0 ? 'ml-6 border-l border-slate-200/70 pl-6' : '',
     ]"
-    header-class="items-center gap-3"
+    header-class="items-start gap-3"
     body-class="space-y-3 text-sm text-slate-700"
     :footer-divider="false"
   >
     <template #header>
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm">
-          <img
-            :src="comment.user.photo ?? avatarFallback"
-            :alt="`${comment.user.firstName} ${comment.user.lastName}`"
-            class="h-full w-full object-cover"
-            loading="lazy"
-          />
-        </div>
-        <div>
-          <p class="text-sm font-semibold text-slate-900">
-            {{ comment.user.firstName }} {{ comment.user.lastName }}
-          </p>
-          <p class="text-[11px] uppercase tracking-[0.35em] text-slate-500">
-            {{ formatDateTime(comment.publishedAt) }}
-          </p>
-        </div>
-      </div>
+      <CommentMeta
+        :user="comment.user"
+        :default-avatar="avatarFallback"
+        :published-label="formatDateTime(comment.publishedAt)"
+        :is-authenticated="isAuthenticated"
+        :is-author="isAuthor"
+        :is-following="isFollowing"
+        :follow-loading="followLoading"
+        :follow-label="followLabel"
+        :follow-loading-label="followLoadingLabel"
+        :follow-aria-label="followAriaLabel"
+        :following-label="followingLabel"
+        :following-aria-label="followingAriaLabel"
+        :actions-aria-label="actionsAriaLabel"
+        :edit-label="editLabel"
+        :delete-label="deleteLabel"
+        @follow="handleFollow"
+        @edit="handleEdit"
+        @delete="handleDelete"
+      />
     </template>
 
     <p class="leading-relaxed text-slate-700">
@@ -146,6 +148,21 @@
         :reaction-labels="reactionLabels"
         :react-to-comment="reactToComment"
         :reply-to-comment="replyToComment"
+        :is-authenticated="isAuthenticated"
+        :is-author="isAuthor"
+        :is-following="isFollowing"
+        :follow-loading="followLoading"
+        :follow-label="followLabel"
+        :follow-loading-label="followLoadingLabel"
+        :follow-aria-label="followAriaLabel"
+        :following-label="followingLabel"
+        :following-aria-label="followingAriaLabel"
+        :actions-aria-label="actionsAriaLabel"
+        :edit-label="editLabel"
+        :delete-label="deleteLabel"
+        :follow-comment="followComment"
+        :edit-comment="editComment"
+        :delete-comment="deleteComment"
         :depth="depth + 1"
       />
     </div>
@@ -154,6 +171,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
+import CommentMeta from "~/components/blog/CommentMeta.vue";
 import { BaseCard } from "~/components/ui";
 import type { BlogCommentWithReplies, ReactionType } from "~/lib/mock/blog";
 
@@ -172,6 +190,21 @@ const props = defineProps<{
   depth?: number;
   reactToComment?: (commentId: string, reactionType: ReactionType) => Promise<void> | void;
   replyToComment?: (commentId: string, content: string) => Promise<void> | void;
+  isAuthenticated?: boolean;
+  isAuthor?: boolean;
+  isFollowing?: boolean;
+  followLoading?: boolean;
+  followLabel?: string;
+  followLoadingLabel?: string;
+  followAriaLabel?: string;
+  followingLabel?: string;
+  followingAriaLabel?: string;
+  actionsAriaLabel?: string;
+  editLabel?: string;
+  deleteLabel?: string;
+  followComment?: (commentId: string) => Promise<void> | void;
+  editComment?: (commentId: string, event: Event) => Promise<void> | void;
+  deleteComment?: (commentId: string, event: Event) => Promise<void> | void;
 }>();
 
 const { locale, t } = useI18n();
@@ -183,6 +216,31 @@ const reactionTypes = computed(() => Object.keys(props.reactionEmojis) as Reacti
 const hasReactionPreview = computed(() => (comment.value.reactions_preview ?? []).length > 0);
 const childComments = computed(() => comment.value.comments ?? comment.value.replies ?? comment.value.children ?? []);
 const hasChildren = computed(() => childComments.value.length > 0);
+const isAuthenticated = computed(() => props.isAuthenticated ?? false);
+const isAuthor = computed(() => props.isAuthor ?? false);
+const isFollowing = computed(() => props.isFollowing ?? false);
+const followLoading = computed(() => props.followLoading ?? false);
+const followLabel = computed(() => props.followLabel ?? t("blog.posts.actions.follow"));
+const followLoadingLabel = computed(() => props.followLoadingLabel ?? t("blog.posts.actions.following"));
+const followAriaLabel = computed(() =>
+  props.followAriaLabel ??
+  t("blog.posts.actions.followAria", {
+    name: `${comment.value.user.firstName} ${comment.value.user.lastName}`,
+  }),
+);
+const followingLabel = computed(() => props.followingLabel ?? t("blog.posts.actions.following"));
+const followingAriaLabel = computed(() =>
+  props.followingAriaLabel ??
+  t("blog.posts.actions.followingAria", {
+    name: `${comment.value.user.firstName} ${comment.value.user.lastName}`,
+  }),
+);
+const actionsAriaLabel = computed(() => props.actionsAriaLabel ?? t("blog.posts.actions.openMenu"));
+const editLabel = computed(() => props.editLabel ?? t("blog.posts.actions.edit"));
+const deleteLabel = computed(() => props.deleteLabel ?? t("blog.posts.actions.delete"));
+const followComment = computed(() => props.followComment);
+const editComment = computed(() => props.editComment);
+const deleteComment = computed(() => props.deleteComment);
 
 const reactingType = ref<ReactionType | null>(null);
 const reactionError = ref<string | null>(null);
@@ -228,6 +286,30 @@ function toggleReply() {
     replyContent.value = "";
     replyFeedback.value = null;
   }
+}
+
+function handleFollow() {
+  if (!props.followComment) {
+    return;
+  }
+
+  void props.followComment(comment.value.id);
+}
+
+function handleEdit(event: Event) {
+  if (!props.editComment) {
+    return;
+  }
+
+  void props.editComment(comment.value.id, event);
+}
+
+function handleDelete(event: Event) {
+  if (!props.deleteComment) {
+    return;
+  }
+
+  void props.deleteComment(comment.value.id, event);
 }
 
 function cancelReply() {
