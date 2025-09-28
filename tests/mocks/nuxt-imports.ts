@@ -4,6 +4,7 @@ import { vi } from 'vitest'
 type StateRef<T> = ReturnType<typeof ref<T>>
 
 const stateRegistry = new Map<string, StateRef<unknown>>()
+const cookieRegistry = new Map<string, StateRef<unknown>>()
 
 export function useState<T>(key: string, init: () => T): StateRef<T> {
   if (!stateRegistry.has(key)) {
@@ -30,6 +31,14 @@ export function useLocalePath() {
   return (path: string) => path
 }
 
+export function useCookie<T>(name: string, _options?: Record<string, unknown>) {
+  if (!cookieRegistry.has(name)) {
+    cookieRegistry.set(name, ref<T | null>(null))
+  }
+
+  return cookieRegistry.get(name) as StateRef<T | null>
+}
+
 const notifyMock = vi.fn()
 
 export function useNuxtApp() {
@@ -52,6 +61,7 @@ export function useI18n() {
 
 export function __resetNuxtStateMocks() {
   stateRegistry.clear()
+  cookieRegistry.clear()
 }
 
 export function __getNuxtStateRef<T>(key: string): StateRef<T> | undefined {
