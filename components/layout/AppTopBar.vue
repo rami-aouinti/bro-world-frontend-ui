@@ -88,36 +88,6 @@
       <LayoutSearchButton />
     </div>
 
-    <nav
-      v-if="navigationLinks.length"
-      class="flex items-center gap-3 px-6"
-      :aria-label="t('layout.actions.profile')"
-    >
-      <NuxtLinkLocale
-        v-for="link in navigationLinks"
-        :key="link.path"
-        :to="localePath(link.path)"
-        :aria-label="link.label"
-        class="rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2"
-      >
-        {{ link.label }}
-      </NuxtLinkLocale>
-    </nav>
-    <UiButton
-        v-if="isAuthenticated"
-        variant="ghost"
-        size="icon"
-        class="flex gap-2"
-        :aria-label="t('auth.signOut')"
-        :disabled="loggingOut"
-        @click="handleLogout"
-    >
-      <AppSmartIcon
-          name="mdi:logout"
-          :size="18"
-      />
-      <span class="sr-only">{{ t('auth.signOut') }}</span>
-    </UiButton>
     <div class="px-16">
       <v-tooltip
           v-for="icon in appIcons"
@@ -174,18 +144,16 @@
             </button>
           </template>
           <v-list density="compact">
-            <v-list-item :title="t('layout.actions.viewProfile')">
+            <v-list-item
+                v-for="item in userMenuItems"
+                :key="item.title"
+                :title="item.title"
+                :disabled="item.action === 'logout' && loggingOut"
+                @click="handleUserMenuSelect(item)"
+            >
               <template #prepend>
                 <Icon
-                    name="mdi:account"
-                    :size="20"
-                />
-              </template>
-            </v-list-item>
-            <v-list-item :title="t('layout.actions.signOut')">
-              <template #prepend>
-                <Icon
-                    name="mdi:logout"
+                    :name="item.icon"
                     :size="20"
                 />
               </template>
@@ -276,9 +244,11 @@ type HeaderLink = {
   menuItems?: HeaderLinkMenuItem[]
 }
 
-type NavigationLink = {
-  path: string
-  label: string
+type UserMenuItem = {
+  title: string
+  icon: string
+  to?: string
+  action?: 'logout'
 }
 
 const props = defineProps<{
@@ -329,28 +299,32 @@ const isAuthenticated = computed(() => auth.isAuthenticated.value)
 
 const loggingOut = ref(false)
 
-const navigationLinks = computed<NavigationLink[]>(() => {
+const userMenuItems = computed<UserMenuItem[]>(() => {
   if (isAuthenticated.value) {
     return [
       {
-        path: '/profile',
-        label: t('layout.actions.viewProfile'),
+        title: t('layout.actions.viewProfile'),
+        icon: 'mdi:account',
+        to: '/profile',
       },
       {
-        path: '/logout',
-        label: t('auth.signOut'),
+        title: t('auth.signOut'),
+        icon: 'mdi:logout',
+        action: 'logout',
       },
     ]
   }
 
   return [
     {
-      path: '/login',
-      label: t('auth.Login'),
+      title: t('auth.Login'),
+      icon: 'mdi:login',
+      to: '/login',
     },
     {
-      path: '/register',
-      label: t('auth.Register'),
+      title: t('auth.Register'),
+      icon: 'mdi:account-plus',
+      to: '/register',
     },
   ]
 })
@@ -438,6 +412,17 @@ function handleMenuItemSelect(item: HeaderLinkMenuItem) {
   }
 
   navigateTo(localePath(item.to))
+}
+
+function handleUserMenuSelect(item: UserMenuItem) {
+  if (item.action === 'logout') {
+    handleLogout()
+    return
+  }
+
+  if (item.to) {
+    navigateTo(localePath(item.to))
+  }
 }
 
 async function handleLogout() {
