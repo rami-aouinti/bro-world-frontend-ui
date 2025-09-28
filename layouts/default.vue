@@ -45,27 +45,36 @@
       location="end"
       width="340"
       class="app-drawer"
+      data-test="app-right-drawer"
     >
       <Suspense>
         <template #default>
-          <div class="pane-scroll px-3 py-4">
-            <AppSidebarRight
-              :items="sidebarItems"
-              :active-key="activeSidebar"
-              @select="handleSidebarSelect"
-            >
-              <div class="flex flex-col gap-4">
-                <SidebarWeatherCard v-if="weather" :weather="weather" />
-                <SidebarLeaderboardCard
-                  v-if="leaderboard?.participants?.length"
-                  :title="leaderboard.title"
-                  :live-label="leaderboard.live"
-                  :participants="leaderboard.participants"
-                />
-                <SidebarRatingCard v-if="rating" :rating="rating" />
+          <ClientOnly>
+            <div v-if="rightDrawer" class="pane-scroll px-3 py-4">
+              <AppSidebarRight
+                :items="sidebarItems"
+                :active-key="activeSidebar"
+                :eager="rightDrawer"
+                @select="handleSidebarSelect"
+              />
+            </div>
+            <template #fallback>
+              <div class="pane-scroll px-3 py-4">
+                <div class="flex flex-col gap-4">
+                  <v-skeleton-loader
+                    type="list-item-two-line"
+                    class="rounded-2xl"
+                  />
+                  <v-skeleton-loader
+                    v-for="index in 2"
+                    :key="index"
+                    type="card"
+                    class="rounded-2xl"
+                  />
+                </div>
               </div>
-            </AppSidebarRight>
-          </div>
+            </template>
+          </ClientOnly>
         </template>
         <template #fallback>
           <div class="pane-scroll px-3 py-4">
@@ -109,7 +118,10 @@ import SidebarWeatherCard from '~/components/layout/SidebarWeatherCard.vue'
 import SidebarLeaderboardCard from '~/components/layout/SidebarLeaderboardCard.vue'
 import SidebarRatingCard from '~/components/layout/SidebarRatingCard.vue'
 
-const AppSidebarRight = defineAsyncComponent(() => import('~/components/layout/AppSidebarRight.vue'))
+const AppSidebarRight = defineAsyncComponent({
+  loader: () => import('~/components/layout/AppSidebarRight.vue'),
+  suspensible: false,
+})
 
 const isDark = computed(() => useColorMode().value == "dark");
 const route = useRoute()
@@ -131,6 +143,18 @@ const cssVars = computed(() => ({
   '--pink-shadow': isDark.value
     ? '0px 16px 32px rgba(243, 126, 205, 0.18)'
     : '0px 20px 45px rgba(243, 126, 205, 0.28)',
+  '--surface-gradient-start': isDark.value
+    ? 'rgba(120, 106, 255, 0.28)'
+    : 'rgba(125, 196, 255, 0.45)',
+  '--surface-gradient-end': isDark.value
+    ? 'rgba(255, 153, 214, 0.24)'
+    : 'rgba(255, 183, 236, 0.4)',
+  '--surface-base': isDark.value ? 'rgba(12, 14, 24, 0.9)' : 'rgba(244, 247, 252, 0.95)',
+  '--card-bg': isDark.value ? 'rgba(20, 22, 33, 0.94)' : 'rgba(255, 255, 255, 0.92)',
+  '--card-border': isDark.value ? 'rgba(255, 255, 255, 0.08)' : 'rgba(15, 23, 42, 0.08)',
+  '--card-shadow': isDark.value
+    ? '0 28px 60px -30px rgba(12, 14, 24, 0.9)'
+    : '0 28px 60px -30px rgba(15, 23, 42, 0.45)',
 }))
 
 const appIcons = [
@@ -260,8 +284,25 @@ function matchesRoute(path: string, target: string) {
 
 <style scoped>
 .app-surface {
+  position: relative;
+  display: flex;
   border-color: transparent;
   min-height: 100vh;
+  background: var(--surface-base);
+  overflow: hidden;
+}
+
+.app-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, var(--surface-gradient-start) 0%, transparent 60%),
+    radial-gradient(circle at 85% 90%, var(--surface-gradient-end) 0%, transparent 55%);
+  opacity: 0.9;
+  pointer-events: none;
+  transform: translateZ(0);
+  z-index: 0;
 }
 
 .app-drawer {
@@ -274,8 +315,44 @@ function matchesRoute(path: string, target: string) {
 }
 
 .app-container {
+  position: relative;
+  z-index: 1;
   margin: 0 auto;
-  width: 100%;
-  max-width: 1440px;
+  width: min(100%, 1200px);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  box-shadow: var(--card-shadow);
+  padding: clamp(20px, 5vw, 48px);
+  backdrop-filter: blur(16px);
+}
+
+.main-scroll {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: clamp(24px, 4vw, 64px) clamp(16px, 5vw, 72px);
+  overflow-y: auto;
+}
+
+@media (max-width: 960px) {
+  .app-container {
+    border-radius: 24px;
+    padding: clamp(20px, 6vw, 32px);
+  }
+}
+
+@media (max-width: 600px) {
+  .main-scroll {
+    padding: 16px;
+  }
+
+  .app-container {
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+  }
 }
 </style>
