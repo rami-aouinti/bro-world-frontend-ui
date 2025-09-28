@@ -1,7 +1,8 @@
 <template>
   <main aria-labelledby="blog-heading">
 
-    <NewPost :avatar="user.avatarUrl"
+    <NewPost v-if="isAuthenticated"
+             :avatar="user.avatarUrl"
              :userName="user.name"
              @submit="createPost"
              @attach="onAttach" />
@@ -51,6 +52,7 @@
 import { computed, ref, watch } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
+import { useAuthStore } from "~/composables/useAuthStore";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 definePageMeta({
@@ -58,6 +60,7 @@ definePageMeta({
 });
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
+const { isAuthenticated } = useAuthStore();
 const user = {
   name: 'Rami Aouinti',
   avatarUrl: 'https://bro-world-space.com/img/person.png',
