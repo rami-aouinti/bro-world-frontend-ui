@@ -5,10 +5,10 @@
       padding="lg"
       rounded="xl"
       spacing="lg"
-      class="group relative w-full max-w-3xl border border-slate-200 bg-white text-slate-900 shadow-xl"
+      class="group relative w-full max-w-3xl border border-slate-200 bg-white/95 text-slate-900 shadow-md transition-shadow duration-300 hover:shadow-lg"
       header-class="gap-4"
-      body-class="space-y-6 text-slate-700"
-      footer-class="flex flex-wrap items-center gap-3 text-sm text-slate-600"
+      body-class="flex flex-col gap-6 text-slate-700"
+      footer-class="flex flex-wrap items-center gap-3 text-sm text-slate-500"
       :footer-divider="false"
   >
     <template #header>
@@ -34,36 +34,46 @@
       />
     </template>
 
-    <section class="space-y-3">
-      <RadiantText
-          class="inline-flex items-center justify-start px-2 py-1 text-balance text-slate-600 transition-colors duration-300 hover:text-primary"
-          :duration="5"
-      >
-        <span class="text-2xl font-semibold text-slate-900 sm:text-[1.75rem]">{{ post.title }}</span>
-      </RadiantText>
-      <p class="text-base leading-relaxed text-slate-600">
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold leading-tight text-slate-900 sm:text-2xl">
+        {{ post.title }}
+      </h2>
+      <p v-if="post.summary" class="text-base leading-relaxed text-slate-600">
         {{ post.summary }}
       </p>
     </section>
 
     <section
         ref="commentsSectionRef"
-        class="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/80 p-5"
+        class="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-sm"
     >
       <div class="space-y-3">
-        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
-          {{ reactionPromptLabel }}
-        </p>
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+            {{ reactionPromptLabel }}
+          </p>
+          <div class="flex items-center gap-4 text-xs text-slate-500 sm:text-sm">
+            <span class="inline-flex items-center gap-1">
+              <span aria-hidden="true">❤️</span>
+              <span>{{ reactionCountDisplay }}</span>
+            </span>
+            <span aria-hidden="true" class="hidden text-slate-300 sm:inline">•</span>
+            <span class="inline-flex items-center gap-1">
+              <span aria-hidden="true">💬</span>
+              <span>{{ commentCountDisplay }}</span>
+            </span>
+          </div>
+        </div>
         <div class="flex flex-wrap items-center gap-2">
           <button
               type="button"
               data-test="post-like-button"
               :aria-label="postReactionButtonAriaLabel"
               :aria-pressed="isPostReacted"
-              class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50"
               :class="isPostReacted
               ? 'border-primary bg-primary text-white hover:border-primary hover:bg-primary/90'
-              : 'border-slate-200 bg-white text-slate-700 hover:border-primary hover:bg-primary/10 hover:text-primary'"
+              : 'hover:border-primary hover:bg-primary/10 hover:text-primary'"
               :disabled="postReacting || !isAuthenticated"
               @click="handleTogglePostReaction"
           >
@@ -134,7 +144,7 @@
 
     <div
         v-if="hasReactionPreview"
-        class="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600"
+        class="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm"
     >
       <div class="flex flex-wrap gap-2">
         <div
@@ -148,8 +158,8 @@
       </div>
     </div>
 
-    <section class="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-5">
-      <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+    <section class="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <header class="flex flex-col gap-1 border-b border-slate-200 pb-3 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-600">
           {{ recentCommentsLabel }}
         </p>
