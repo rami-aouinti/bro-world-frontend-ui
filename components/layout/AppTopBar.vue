@@ -443,22 +443,5 @@ async function handleLogout() {
 </script>
 
 <style scoped>
-.app-top-bar {
-  background-repeat: no-repeat;
-  background-size: cover;
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 10px 32px rgba(197, 34, 121, 0.15);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
 
-:global(.v-theme--light) .app-top-bar {
-  border-color: rgba(204, 43, 22, 0.22);
-  box-shadow: 0 14px 40px rgba(91, 7, 52, 0.18);
-}
-
-:global(.v-theme--dark) .app-top-bar {
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.55);
-}
 </style>

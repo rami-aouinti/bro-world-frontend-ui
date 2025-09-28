@@ -311,32 +311,12 @@ function matchesRoute(path: string, target: string) {
   overflow-y: auto;
 }
 
-.main-scroll {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  padding: clamp(24px, 4vw, 64px) clamp(16px, 5vw, 72px);
-  overflow-y: auto;
-}
+
 
 @media (max-width: 960px) {
   .app-container {
     border-radius: 24px;
     padding: clamp(20px, 6vw, 32px);
-  }
-}
-
-@media (max-width: 600px) {
-  .main-scroll {
-    padding: 16px;
-  }
-
-  .app-container {
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: var(--card-shadow);
   }
 }
 </style>
