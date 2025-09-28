@@ -9,7 +9,7 @@ import type {
   ReactionPayload,
   UpdatePostPayload,
 } from "~/server/utils/posts/types";
-import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+import type { BlogApiResponse, BlogCommentWithReplies, BlogPost } from "~/lib/mock/blog";
 import { clearAuthSession, getSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
 
 type PostsVisibility = "public" | "private";
@@ -36,18 +36,62 @@ function joinEndpoint(base: string, ...segments: (string | number)[]): string {
   return [sanitizeBaseEndpoint(base), ...cleanedSegments].join("/");
 }
 
-function resolveEndpoint(event: H3Event, visibility: PostsVisibility): string {
+function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
-  const publicEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
+  const publicEndpoint =
+    config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
   const privateEndpoint =
-    config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/v1/private/post";
+    config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/v1/platform/post";
+
+  return visibility === "private" ? privateEndpoint : publicEndpoint;
+}
+
+function deriveCommentEndpoint(baseEndpoint: string | undefined): string | undefined {
+  if (!baseEndpoint) {
+    return undefined;
+  }
+
+  if (/\/comment\/?$/.test(baseEndpoint)) {
+    return baseEndpoint;
+  }
+
+  if (/\/post\/?$/.test(baseEndpoint)) {
+    return baseEndpoint.replace(/post\/?$/, "comment");
+  }
+
+  return `${baseEndpoint.replace(/\/$/, "")}/comment`;
+}
+
+function resolveCommentEndpoint(event: H3Event, visibility: PostsVisibility): string {
+  const config = useRuntimeConfig(event);
+  const publicEndpoint =
+    config.public.blogCommentApiEndpoint ||
+    deriveCommentEndpoint(config.public.blogApiEndpoint) ||
+    "https://blog.bro-world.org/public/comment";
+  const privateEndpoint =
+    config.public.blogPrivateCommentApiEndpoint ||
+    deriveCommentEndpoint(config.public.blogPrivateApiEndpoint) ||
+    "https://blog.bro-world.org/v1/platform/comment";
 
   return visibility === "private" ? privateEndpoint : publicEndpoint;
 }
 
 function resolveBaseEndpoint(event: H3Event): string {
   const token = getSessionToken(event);
-  return resolveEndpoint(event, token ? "private" : "public");
+  return resolvePostEndpoint(event, token ? "private" : "public");
+}
+
+function requireAuthToken(event: H3Event): string {
+  const token = getSessionToken(event);
+
+  if (!token) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "Authentication required.",
+    });
+  }
+
+  return token;
 }
 
 function buildHeaders(event: H3Event, includeAuth: boolean) {
@@ -93,11 +137,14 @@ export async function fetchPostsListFromSource(
   params: NormalizedPostsListQuery,
 ): Promise<PostsListSourceResult> {
   const token = getSessionToken(event);
-  const publicEndpoint = withQuery(joinEndpoint(resolveEndpoint(event, "public")), buildListQuery(params));
+  const publicEndpoint = withQuery(
+    joinEndpoint(resolvePostEndpoint(event, "public")),
+    buildListQuery(params),
+  );
 
   if (token) {
     const privateEndpoint = withQuery(
-      joinEndpoint(resolveEndpoint(event, "private")),
+      joinEndpoint(resolvePostEndpoint(event, "private")),
       buildListQuery(params),
     );
 
@@ -208,18 +255,26 @@ export async function postReactionAtSource(
   postId: string,
   payload: ReactionPayload,
 ): Promise<unknown> {
-  const base = resolveBaseEndpoint(event);
-  const endpoint = joinEndpoint(base, postId, "reaction");
+  requireAuthToken(event);
+
+  const base = resolvePostEndpoint(event, "private");
+  const action = payload.reactionType?.toLowerCase() === "dislike" ? "dislike" : "like";
+  const endpoint = joinEndpoint(base, postId, action);
+  const body =
+    action === "like"
+      ? {
+          reactionType: payload.reactionType,
+          type: payload.reactionType,
+        }
+      : undefined;
 
   return $fetch(endpoint, {
     method: "POST",
-    body: {
-      reactionType: payload.reactionType,
-      type: payload.reactionType,
-    },
-    headers: withAuthHeaders(event, {
-      "Content-Type": "application/json",
-    }),
+    ...(body ? { body } : {}),
+    headers:
+      action === "like"
+        ? withAuthHeaders(event, { "Content-Type": "application/json" })
+        : withAuthHeaders(event),
   });
 }
 
@@ -228,14 +283,19 @@ export async function addCommentAtSource(
   postId: string,
   payload: CommentPayload,
 ): Promise<unknown> {
-  const base = resolveBaseEndpoint(event);
-  const endpoint = joinEndpoint(base, postId, "comment");
+  requireAuthToken(event);
+
+  const postBase = resolvePostEndpoint(event, "private");
+  const commentBase = resolveCommentEndpoint(event, "private");
+  const parentId = typeof payload.parentCommentId === "string" ? payload.parentCommentId.trim() : "";
+  const endpoint = parentId
+    ? joinEndpoint(commentBase, parentId, "comment")
+    : joinEndpoint(postBase, postId, "comment");
 
   return $fetch(endpoint, {
     method: "POST",
     body: {
       content: payload.content,
-      parentCommentId: payload.parentCommentId ?? null,
     },
     headers: withAuthHeaders(event, {
       "Content-Type": "application/json",
@@ -245,21 +305,53 @@ export async function addCommentAtSource(
 
 export async function reactToCommentAtSource(
   event: H3Event,
-  postId: string,
+  _postId: string,
   commentId: string,
   payload: ReactionPayload,
 ): Promise<unknown> {
-  const base = resolveBaseEndpoint(event);
-  const endpoint = joinEndpoint(base, postId, "comment", commentId, "reaction");
+  requireAuthToken(event);
+
+  const base = resolveCommentEndpoint(event, "private");
+  const action = payload.reactionType?.toLowerCase() === "dislike" ? "dislike" : "like";
+  const endpoint = joinEndpoint(base, commentId, action);
+  const body =
+    action === "like"
+      ? {
+          reactionType: payload.reactionType,
+          type: payload.reactionType,
+        }
+      : undefined;
 
   return $fetch(endpoint, {
     method: "POST",
-    body: {
-      reactionType: payload.reactionType,
-      type: payload.reactionType,
-    },
-    headers: withAuthHeaders(event, {
-      "Content-Type": "application/json",
-    }),
+    ...(body ? { body } : {}),
+    headers:
+      action === "like"
+        ? withAuthHeaders(event, { "Content-Type": "application/json" })
+        : withAuthHeaders(event),
   });
+}
+
+export async function fetchPostCommentsFromSource(
+  event: H3Event,
+  postId: string,
+): Promise<BlogCommentWithReplies[]> {
+  requireAuthToken(event);
+
+  const base = resolvePostEndpoint(event, "private");
+  const endpoint = joinEndpoint(base, postId, "comments");
+
+  const response = await $fetch<unknown>(endpoint, {
+    method: "GET",
+    headers: withAuthHeaders(event),
+  });
+
+  if (!Array.isArray(response)) {
+    throw createError({
+      statusCode: 502,
+      statusMessage: "Invalid comments response.",
+    });
+  }
+
+  return response as BlogCommentWithReplies[];
 }
