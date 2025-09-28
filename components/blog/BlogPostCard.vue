@@ -77,6 +77,7 @@
       </div>
 
       <form
+          v-if="isAuthenticated"
           class="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           @submit.prevent="handleCommentSubmit"
       >
@@ -97,7 +98,6 @@
                 v-model="commentContent"
                 class="min-h-[110px] w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 shadow-inner focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                 :placeholder="commentPlaceholder"
-                :disabled="!isAuthenticated"
             />
           </label>
         </div>
@@ -108,15 +108,12 @@
           >
             {{ commentFeedback.message }}
           </p>
-          <p v-else-if="!isAuthenticated" class="text-slate-500">
-            {{ loginToCommentMessage }}
-          </p>
           <div class="flex items-center gap-3 sm:justify-end">
             <span class="text-slate-500">{{ commentCharacterCountLabel }}</span>
             <button
                 type="submit"
                 class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
-                :disabled="submittingComment || !isAuthenticated"
+                :disabled="submittingComment"
             >
               <span v-if="submittingComment">{{ t("blog.comments.submitting") }}</span>
               <span v-else>{{ t("blog.comments.submit") }}</span>
@@ -124,6 +121,12 @@
           </div>
         </div>
       </form>
+      <div
+          v-else
+          class="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-600 shadow-sm"
+      >
+        <p>{{ loginToCommentMessage }}</p>
+      </div>
     </section>
 
     <div
