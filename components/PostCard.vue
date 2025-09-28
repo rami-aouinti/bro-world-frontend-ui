@@ -1,10 +1,17 @@
 <template>
-  <article
-    class="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-950/90 via-slate-900/80 to-slate-950/90 p-6 shadow-[0_25px_45px_-30px_rgba(15,23,42,0.9)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_35px_75px_-30px_hsl(var(--primary)/0.55)] sm:p-8"
+  <BaseCard
+    as="article"
+    variant="solid"
+    padding="lg"
+    rounded="xl"
+    spacing="lg"
+    class="group relative w-full max-w-3xl border border-slate-200 bg-white text-slate-900 shadow-xl"
+    header-class="gap-4"
+    body-class="space-y-6 text-slate-700"
+    footer-class="flex flex-wrap items-center gap-3 text-sm text-slate-600"
+    :footer-divider="false"
   >
-    <div
-      class="relative flex flex-col gap-2 before:absolute before:-left-20 before:top-0 before:h-40 before:w-40 before:rounded-full before:bg-primary/15 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 before:content-[''] group-hover:before:opacity-100"
-    >
+    <template #header>
       <PostMeta
         :user="post.user"
         :default-avatar="defaultAvatar"
@@ -25,273 +32,273 @@
         @edit="openEditModal"
         @delete="openDeleteDialog"
       />
+    </template>
 
-      <div class="w-full max-w-2xl space-y-2 rounded-2xl px-4 py-3 transition-colors duration-500 group-hover:bg-white/5">
-        <RadiantText
-          class="inline-flex items-center justify-center px-2 py-1 text-balance transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
-          :duration="5"
-        >
-          <span class="text-xl font-semibold text-slate-100 sm:text-2xl">{{ post.title }}</span>
-        </RadiantText>
-        <p class="text-base leading-relaxed text-slate-200/80">
-          {{ post.summary }}
+    <section class="space-y-3">
+      <RadiantText
+        class="inline-flex items-center justify-start px-2 py-1 text-balance text-slate-600 transition-colors duration-300 hover:text-primary"
+        :duration="5"
+      >
+        <span class="text-2xl font-semibold text-slate-900 sm:text-[1.75rem]">{{ post.title }}</span>
+      </RadiantText>
+      <p class="text-base leading-relaxed text-slate-600">
+        {{ post.summary }}
+      </p>
+    </section>
+
+    <section class="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/80 p-5">
+      <div class="space-y-3">
+        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+          {{ reactionPromptLabel }}
+        </p>
+        <div class="flex flex-wrap items-center gap-2">
+          <button
+            v-for="type in reactionTypes"
+            :key="type"
+            type="button"
+            :aria-label="reactionLabels[type]"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-slate-600 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
+            :disabled="!!postReactingType"
+            @click="handlePostReaction(type)"
+          >
+            <span aria-hidden="true">{{ reactionEmojis[type] }}</span>
+          </button>
+        </div>
+        <p v-if="postReactionError" class="text-xs text-rose-500">
+          {{ postReactionError }}
         </p>
       </div>
 
-      <div class="w-full max-w-2xl space-y-5 rounded-2xl border border-white/5 bg-slate-950/40 px-4 py-5 shadow-[0_15px_35px_-25px_rgba(15,23,42,0.9)]">
-        <div class="flex flex-col gap-3">
-          <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
-            {{ reactionPromptLabel }}
+      <form
+        class="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+        @submit.prevent="handleCommentSubmit"
+      >
+        <div class="flex items-start gap-3">
+          <div class="hidden h-10 w-10 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-slate-100 sm:block">
+            <img
+              :src="post.user.photo ?? defaultAvatar"
+              :alt="`${post.user.firstName} ${post.user.lastName}`"
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <label class="flex w-full flex-col gap-2 text-sm text-slate-600">
+            <span class="font-semibold text-slate-700">
+              {{ commentComposerLabel }}
+            </span>
+            <textarea
+              v-model="commentContent"
+              class="min-h-[110px] w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 shadow-inner focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+              :placeholder="commentPlaceholder"
+            />
+          </label>
+        </div>
+        <div class="flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <p
+            v-if="commentFeedback"
+            :class="commentFeedback.type === 'success' ? 'text-emerald-500' : 'text-rose-500'"
+          >
+            {{ commentFeedback.message }}
           </p>
-          <div class="flex flex-wrap items-center gap-2">
+          <div class="flex items-center gap-3 sm:justify-end">
+            <span class="text-slate-500">{{ commentCharacterCountLabel }}</span>
             <button
-              v-for="type in reactionTypes"
-              :key="type"
-              type="button"
-              :aria-label="reactionLabels[type]"
-              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent text-lg text-slate-100 shadow-[0_15px_25px_-20px_rgba(15,23,42,0.9)] transition-colors hover:border-primary/60 hover:bg-primary/15 hover:text-primary disabled:cursor-not-allowed disabled:opacity-60"
-              :disabled="!!postReactingType"
-              @click="handlePostReaction(type)"
+              type="submit"
+              class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+              :disabled="submittingComment"
             >
-              <span aria-hidden="true">{{ reactionEmojis[type] }}</span>
+              <span v-if="submittingComment">{{ t("blog.comments.submitting") }}</span>
+              <span v-else>{{ t("blog.comments.submit") }}</span>
             </button>
           </div>
-          <p v-if="postReactionError" class="text-xs text-rose-300">
-            {{ postReactionError }}
-          </p>
         </div>
+      </form>
+    </section>
 
-        <form
-          class="flex flex-col gap-3 rounded-3xl border border-white/5 bg-slate-950/50 p-5 shadow-[0_20px_45px_-28px_rgba(15,23,42,0.85)]"
-          @submit.prevent="handleCommentSubmit"
+    <div
+      v-if="hasReactionPreview"
+      class="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600"
+    >
+      <div class="flex flex-wrap gap-2">
+        <div
+          v-for="reaction in topReactions"
+          :key="reaction.id"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-slate-700 shadow-sm"
         >
-          <div class="flex items-start gap-3">
-            <div class="hidden h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/5 sm:block">
-              <img
-                :src="post.user.photo ?? defaultAvatar"
-                :alt="`${post.user.firstName} ${post.user.lastName}`"
-                class="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <label class="flex w-full flex-col gap-2 text-sm text-slate-200">
-              <span class="font-semibold text-slate-100">
-                {{ commentComposerLabel }}
-              </span>
-              <textarea
-                v-model="commentContent"
-                class="min-h-[110px] w-full rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 shadow-inner focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-                :placeholder="commentPlaceholder"
+          <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
+          <span aria-hidden="true" class="text-lg">{{ reactionEmojis[reaction.type] }}</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-5">
+      <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-600">
+          {{ recentCommentsLabel }}
+        </p>
+        <p class="text-xs text-slate-500">
+          {{ commentPreviewCountLabel }}
+        </p>
+      </header>
+      <div v-if="hasCommentPreview" class="w-full space-y-4 pt-3">
+        <CommentCard
+          v-for="comment in comments"
+          :key="comment.id"
+          :comment="comment"
+          :default-avatar="defaultAvatar"
+          :reaction-emojis="reactionEmojis"
+          :reaction-labels="reactionLabels"
+          :react-to-comment="handleCommentReaction"
+          :reply-to-comment="handleCommentReply"
+          class="w-full"
+        />
+      </div>
+      <p v-else class="px-2 text-sm text-slate-500">
+        {{ t('blog.comments.empty') }}
+      </p>
+    </section>
+
+    <template #footer>
+      <div
+        class="flex flex-wrap items-center gap-2 rounded-full bg-slate-100 px-4 py-2"
+        :aria-label="metaAriaLabel"
+        aria-live="polite"
+        data-test="post-meta-bar"
+      >
+        <span class="inline-flex items-center gap-1">
+          <span aria-hidden="true">❤️</span>
+          <span>{{ reactionCountDisplay }}</span>
+        </span>
+        <span aria-hidden="true" class="text-slate-400">•</span>
+        <span class="inline-flex items-center gap-1">
+          <span aria-hidden="true">💬</span>
+          <span>{{ commentCountDisplay }}</span>
+        </span>
+      </div>
+    </template>
+  </BaseCard>
+
+  <teleport to="body">
+    <transition name="fade-scale">
+      <div
+        v-if="editModalOpen"
+        class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
+        aria-modal="true"
+        role="dialog"
+        :aria-label="editModalTitle"
+        @keydown="handleEditKeydown"
+      >
+        <div
+          ref="editDialogRef"
+          class="w-full max-w-2xl rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
+          tabindex="-1"
+        >
+          <header class="space-y-1">
+            <h2 class="text-xl font-semibold">{{ editModalTitle }}</h2>
+            <p class="text-sm text-slate-400">{{ editModalDescription }}</p>
+          </header>
+          <form class="mt-6 space-y-5" @submit.prevent="handleSaveEdit">
+            <label class="flex flex-col gap-2 text-sm">
+              <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.title') }}</span>
+              <input
+                ref="editTitleRef"
+                v-model="editForm.title"
+                type="text"
+                class="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
               />
             </label>
-          </div>
-          <div class="flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between">
-            <p
-              v-if="commentFeedback"
-              :class="commentFeedback.type === 'success' ? 'text-emerald-300' : 'text-rose-300'"
-            >
-              {{ commentFeedback.message }}
-            </p>
-            <div class="flex items-center gap-3 sm:justify-end">
-              <span class="text-slate-400">{{ commentCharacterCountLabel }}</span>
-              <button
-                type="submit"
-                class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-[0_18px_35px_-22px_hsl(var(--primary)/0.9)] transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
-                :disabled="submittingComment"
-              >
-                <span v-if="submittingComment">{{ t("blog.comments.submitting") }}</span>
-                <span v-else>{{ t("blog.comments.submit") }}</span>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <footer class="w-full max-w-2xl pt-1">
-        <div
-          class="mt-4 flex flex-wrap items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-slate-300 shadow-[0_15px_25px_-25px_rgba(15,23,42,1)]"
-          :aria-label="metaAriaLabel"
-          aria-live="polite"
-          data-test="post-meta-bar"
-        >
-          <span class="inline-flex items-center gap-1">
-            <span aria-hidden="true">❤️</span>
-            <span>{{ reactionCountDisplay }}</span>
-          </span>
-          <span aria-hidden="true" class="text-slate-500">•</span>
-          <span class="inline-flex items-center gap-1">
-            <span aria-hidden="true">💬</span>
-            <span>{{ commentCountDisplay }}</span>
-          </span>
-        </div>
-      </footer>
-
-      <footer
-        v-if="hasReactionPreview"
-        class="flex flex-wrap items-center gap-4 rounded-2xl border border-white/5 bg-slate-950/40 px-4 py-3 text-sm shadow-[0_18px_45px_-30px_rgba(15,23,42,0.9)]"
-      >
-        <div class="flex flex-wrap gap-3">
-          <div
-            v-for="reaction in topReactions"
-            :key="reaction.id"
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-gradient-to-br from-slate-900/70 via-slate-900/40 to-transparent px-4 py-1.5 text-slate-100 shadow-[0_15px_30px_-25px_rgba(15,23,42,0.9)]"
-          >
-            <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
-            <span
-              aria-hidden="true"
-              class="text-lg"
-            >{{ reactionEmojis[reaction.type] }}</span>
-          </div>
-        </div>
-      </footer>
-      <section class="w-full max-w-2xl space-y-4 rounded-3xl border border-white/5 bg-slate-950/40 px-4 pb-6 shadow-[0_25px_55px_-35px_rgba(15,23,42,0.9)]">
-        <header class="flex items-center justify-between border-b border-white/5 pb-3 pt-4">
-          <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-300">
-            {{ recentCommentsLabel }}
-          </p>
-          <p class="text-xs text-slate-400">
-            {{ commentPreviewCountLabel }}
-          </p>
-        </header>
-        <div v-if="hasCommentPreview" class="w-full space-y-5 pt-3">
-          <CommentCard
-            v-for="comment in comments"
-            :key="comment.id"
-            :comment="comment"
-            :default-avatar="defaultAvatar"
-            :reaction-emojis="reactionEmojis"
-            :reaction-labels="reactionLabels"
-            :react-to-comment="handleCommentReaction"
-            :reply-to-comment="handleCommentReply"
-            class="w-full"
-          />
-        </div>
-        <p v-else class="px-2 text-sm text-slate-400">
-          {{ t('blog.comments.empty') }}
-        </p>
-      </section>
-    </div>
-    <teleport to="body">
-      <transition name="fade-scale">
-        <div
-          v-if="editModalOpen"
-          class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
-          aria-modal="true"
-          role="dialog"
-          :aria-label="editModalTitle"
-          @keydown="handleEditKeydown"
-        >
-          <div
-            ref="editDialogRef"
-            class="w-full max-w-2xl rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
-            tabindex="-1"
-          >
-            <header class="space-y-1">
-              <h2 class="text-xl font-semibold">{{ editModalTitle }}</h2>
-              <p class="text-sm text-slate-400">{{ editModalDescription }}</p>
-            </header>
-            <form class="mt-6 space-y-5" @submit.prevent="handleSaveEdit">
-              <label class="flex flex-col gap-2 text-sm">
-                <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.title') }}</span>
-                <input
-                  ref="editTitleRef"
-                  v-model="editForm.title"
-                  type="text"
-                  class="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-                />
-              </label>
-              <label class="flex flex-col gap-2 text-sm">
-                <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.summary') }}</span>
-                <textarea
-                  ref="editSummaryRef"
-                  v-model="editForm.summary"
-                  class="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-                />
-              </label>
-              <label class="flex flex-col gap-2 text-sm">
-                <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.content') }}</span>
-                <textarea
-                  v-model="editForm.content"
-                  class="min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-                />
-              </label>
-              <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  @click="closeEditModal"
-                >
-                  {{ editModalCancelLabel }}
-                </button>
-                <button
-                  type="submit"
-                  class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60"
-                  :disabled="saveLoading"
-                >
-                  <span v-if="saveLoading" class="inline-flex items-center gap-2">
-                    <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
-                    <span>{{ editModalSaveLabel }}</span>
-                  </span>
-                  <span v-else>{{ editModalSaveLabel }}</span>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </transition>
-    </teleport>
-
-    <teleport to="body">
-      <transition name="fade-scale">
-        <div
-          v-if="deleteDialogOpen"
-          class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
-          role="alertdialog"
-          :aria-label="deleteDialogTitle"
-          aria-modal="true"
-          @keydown="handleDeleteKeydown"
-        >
-          <div
-            ref="deleteDialogRef"
-            class="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
-            tabindex="-1"
-          >
-            <header class="space-y-2">
-              <h2 class="text-xl font-semibold text-rose-200">{{ deleteDialogTitle }}</h2>
-              <p class="text-sm text-slate-400">{{ deleteDialogDescription }}</p>
-            </header>
-            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+            <label class="flex flex-col gap-2 text-sm">
+              <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.summary') }}</span>
+              <textarea
+                ref="editSummaryRef"
+                v-model="editForm.summary"
+                class="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </label>
+            <label class="flex flex-col gap-2 text-sm">
+              <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.content') }}</span>
+              <textarea
+                v-model="editForm.content"
+                class="min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </label>
+            <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
               <button
                 type="button"
                 class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                @click="closeDeleteDialog"
+                @click="closeEditModal"
               >
-                {{ deleteDialogCancelLabel }}
+                {{ editModalCancelLabel }}
               </button>
               <button
-                type="button"
-                class="inline-flex items-center justify-center rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400 disabled:cursor-not-allowed disabled:opacity-60"
-                :disabled="deleteLoading"
-                @click="handleDeletePost"
+                type="submit"
+                class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60"
+                :disabled="saveLoading"
               >
-                <span v-if="deleteLoading" class="inline-flex items-center gap-2">
+                <span v-if="saveLoading" class="inline-flex items-center gap-2">
                   <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
-                  <span>{{ deleteDialogConfirmLabel }}</span>
+                  <span>{{ editModalSaveLabel }}</span>
                 </span>
-                <span v-else>{{ deleteDialogConfirmLabel }}</span>
+                <span v-else>{{ editModalSaveLabel }}</span>
               </button>
             </div>
+          </form>
+        </div>
+      </div>
+    </transition>
+  </teleport>
+
+  <teleport to="body">
+    <transition name="fade-scale">
+      <div
+        v-if="deleteDialogOpen"
+        class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
+        role="alertdialog"
+        :aria-label="deleteDialogTitle"
+        aria-modal="true"
+        @keydown="handleDeleteKeydown"
+      >
+        <div
+          ref="deleteDialogRef"
+          class="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
+          tabindex="-1"
+        >
+          <header class="space-y-2">
+            <h2 class="text-xl font-semibold text-rose-200">{{ deleteDialogTitle }}</h2>
+            <p class="text-sm text-slate-400">{{ deleteDialogDescription }}</p>
+          </header>
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              @click="closeDeleteDialog"
+            >
+              {{ deleteDialogCancelLabel }}
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400 disabled:cursor-not-allowed disabled:opacity-60"
+              :disabled="deleteLoading"
+              @click="handleDeletePost"
+            >
+              <span v-if="deleteLoading" class="inline-flex items-center gap-2">
+                <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
+                <span>{{ deleteDialogConfirmLabel }}</span>
+              </span>
+              <span v-else>{{ deleteDialogConfirmLabel }}</span>
+            </button>
           </div>
         </div>
-      </transition>
-    </teleport>
-  </article>
+      </div>
+    </transition>
+  </teleport>
 </template>
 
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, watch } from "vue";
 
 import CommentCard from "~/components/CommentCard.vue";
+import { BaseCard } from "~/components/ui";
 import PostMeta from "~/components/blog/PostMeta.vue";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
