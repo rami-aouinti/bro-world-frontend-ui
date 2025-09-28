@@ -2,7 +2,7 @@ import { computed, reactive, shallowRef } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
 import { useRequestFetch } from "#app";
 import { useState } from "#imports";
-import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import type { BlogCommentWithReplies, BlogPost, ReactionType } from "~/lib/mock/blog";
 
 interface PostsListResponse {
   data: BlogPost[];
@@ -572,6 +572,34 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
+  async function getComments(postId: string): Promise<BlogCommentWithReplies[]> {
+    const trimmedId = sanitizeTextInput(postId);
+
+    if (!trimmedId) {
+      throw new Error("Post identifier is required.");
+    }
+
+    const fetcher = resolveFetcher();
+
+    try {
+      const response = await fetcher<BlogCommentWithReplies[] | unknown>(
+        `/api/v1/posts/${encodeURIComponent(trimmedId)}/comments`,
+        {
+          method: "GET",
+        },
+      );
+
+      if (!Array.isArray(response)) {
+        throw new Error("Invalid comments response.");
+      }
+
+      return response;
+    } catch (caughtError) {
+      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      throw new Error(message || "Unable to load comments.");
+    }
+  }
+
   async function addComment(postId: string, content: string, parentCommentId?: string | null) {
     const trimmedId = sanitizeTextInput(postId);
     const trimmedContent = sanitizeTextInput(content);
@@ -652,6 +680,7 @@ export const usePostsStore = defineStore("posts", () => {
     updatePost,
     deletePost,
     reactToPost,
+    getComments,
     addComment,
     reactToComment,
   };
