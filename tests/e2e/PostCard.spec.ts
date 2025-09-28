@@ -84,6 +84,7 @@ const deletePostSpy = vi.fn(async () => Promise.resolve());
 const reactToPostSpy = vi.fn(async () => Promise.resolve());
 const addCommentSpy = vi.fn(async () => Promise.resolve());
 const reactToCommentSpy = vi.fn(async () => Promise.resolve());
+const getCommentsSpy = vi.fn(async () => Promise.resolve([]));
 
 vi.mock("~/composables/useAuthStore", () => ({
   useAuthStore: () => ({
@@ -101,6 +102,7 @@ vi.mock("~/composables/usePostsStore", () => ({
     reactToPost: reactToPostSpy,
     addComment: addCommentSpy,
     reactToComment: reactToCommentSpy,
+    getComments: getCommentsSpy,
     updatePost: updatePostSpy,
     deletePost: deletePostSpy,
   }),
@@ -150,6 +152,7 @@ beforeEach(() => {
   reactToPostSpy.mockClear();
   addCommentSpy.mockClear();
   reactToCommentSpy.mockClear();
+  getCommentsSpy.mockClear();
   resetFollowError.mockClear();
   toastSpy.mockReset();
 

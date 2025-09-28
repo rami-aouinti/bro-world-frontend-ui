@@ -61,16 +61,21 @@
             <span>{{ commentReactionButtonText }}</span>
           </button>
 
-          <div
-            v-if="hasReactionPreview"
-            :aria-label="reactionCountLabel"
-            class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-600 shadow-sm"
+        <div
+          v-if="hasReactionPreview"
+          :aria-label="reactionCountLabel"
+          class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-600 shadow-sm"
+        >
+          <span
+            v-for="reaction in comment.reactions_preview"
+            :key="reaction.id"
+            class="inline-flex items-center"
           >
-            <span v-for="reaction in comment.reactions_preview" :key="reaction.id" class="text-sm" aria-hidden="true">
-              {{ reactionEmojis[reaction.type] }}
-            </span>
-            <span aria-hidden="true">{{ formatNumber(commentReactionCount) }}</span>
-          </div>
+            <span class="sr-only">{{ reactionLabelMap[reaction.type] }}</span>
+            <span aria-hidden="true" class="text-sm">{{ reactionEmojis[reaction.type] }}</span>
+          </span>
+          <span aria-hidden="true">{{ formatNumber(commentReactionCount) }}</span>
+        </div>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -151,7 +156,7 @@
         :comment="child"
         :default-avatar="avatarFallback"
         :reaction-emojis="reactionEmojis"
-        :reaction-labels="reactionLabels"
+        :reaction-labels="reactionLabelMap"
         :react-to-comment="reactToComment"
         :reply-to-comment="replyToComment"
         :is-authenticated="isAuthenticated"
@@ -264,6 +269,7 @@ const props = defineProps<{
   comment: BlogCommentWithReplies;
   defaultAvatar: string;
   reactionEmojis: Record<ReactionType, string>;
+  reactionLabels?: Partial<Record<ReactionType, string>>;
   depth?: number;
   reactToComment?: (commentId: string, reactionType: ReactionAction) => Promise<void> | void;
   replyToComment?: (commentId: string, content: string) => Promise<void> | void;
@@ -290,6 +296,15 @@ const comment = computed(() => props.comment);
 const sanitizedContent = computed(() => sanitizeRichText(comment.value.content));
 const depth = computed(() => props.depth ?? 0);
 const avatarFallback = computed(() => props.defaultAvatar || "https://bro-world-space.com/img/person.png");
+const reactionLabelMap = computed<Record<ReactionType, string>>(() => ({
+  like: props.reactionLabels?.like ?? t("blog.reactions.reactionTypes.like"),
+  love: props.reactionLabels?.love ?? t("blog.reactions.reactionTypes.love"),
+  wow: props.reactionLabels?.wow ?? t("blog.reactions.reactionTypes.wow"),
+  haha: props.reactionLabels?.haha ?? t("blog.reactions.reactionTypes.haha"),
+  sad: props.reactionLabels?.sad ?? t("blog.reactions.reactionTypes.sad"),
+  angry: props.reactionLabels?.angry ?? t("blog.reactions.reactionTypes.angry"),
+  dislike: props.reactionLabels?.dislike ?? t("blog.reactions.reactionTypes.dislike"),
+}));
 const hasReactionPreview = computed(() => (comment.value.reactions_preview ?? []).length > 0);
 const childComments = computed(() => comment.value.comments ?? comment.value.replies ?? comment.value.children ?? []);
 const hasChildren = computed(() => childComments.value.length > 0);
