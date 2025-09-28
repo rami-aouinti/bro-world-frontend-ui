@@ -1,11 +1,8 @@
 <template>
   <article
-    class="group relative overflow-hidden rounded-3xl border border-white/5 bg-transparent backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/50 hover:bg-white/5 hover:shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]"
+    class="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl"
   >
-    <div
-      class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-primary/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-    />
-    <div class="relative flex flex-col gap-8 p-8 sm:p-10">
+    <div class="flex flex-col gap-6 p-6 sm:p-8">
       <PostMeta
         :user="post.user"
         :default-avatar="defaultAvatar"
@@ -27,81 +24,82 @@
         @delete="openDelete"
       />
 
-      <div class="mx-auto w-full max-w-2xl space-y-2 py-4">
-        <h4
-          class="text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-primary"
-        >
+      <div class="space-y-4 text-slate-700">
+        <h4 v-if="post.title" class="text-xl font-semibold text-slate-900 sm:text-2xl">
           {{ post.title }}
         </h4>
-        <p class="text-base text-slate-200/80">
-          {{ post.summary }}
-        </p>
-      </div>
-
-      <div class="mx-auto w-full max-w-2xl">
-        <div
-          class="flex items-center gap-2 text-sm text-slate-400"
-          :aria-label="metaAriaLabel"
-        >
-          <span class="inline-flex items-center gap-1">
-            <span aria-hidden="true">❤️</span>
-            <span>{{ reactionCountDisplay }}</span>
-          </span>
-          <span aria-hidden="true" class="text-slate-500">•</span>
-          <span class="inline-flex items-center gap-1">
-            <span aria-hidden="true">💬</span>
-            <span>{{ commentCountDisplay }}</span>
-          </span>
-        </div>
-      </div>
-
-      <div
-        v-if="post.comments_preview.length"
-        class="rounded-2xl border border-white/10 bg-transparent p-6"
-      >
-        <div class="flex items-center justify-between py-2">
-          <p class="text-sm font-semibold uppercase tracking-wide text-slate-300">
-            {{ t("blog.reactions.post.recentComments") }}
-          </p>
-          <p class="text-xs text-slate-400">
-            {{
-              t("blog.reactions.post.commentPreviews", {
-                count: formatNumber(post.comments_preview.length),
-              })
-            }}
-          </p>
-        </div>
-        <div class="mx-auto mt-4 w-full max-w-2xl space-y-3">
-          <BlogCommentCard
-            v-for="comment in post.comments_preview.slice(0, 4)"
-            :key="comment.id"
-            :comment="comment"
-          />
-        </div>
-      </div>
-
-      <footer
-        v-if="post.reactions_preview.length"
-        class="flex flex-wrap items-center gap-3 pt-4 text-sm"
-      >
-        <span class="text-xs uppercase tracking-wide text-slate-400">
-          {{ t("blog.reactions.post.reactionSpotlight") }}
-        </span>
-        <div class="flex flex-wrap gap-3">
-          <div
-            v-for="reaction in post.reactions_preview.slice(0, 4)"
-            :key="reaction.id"
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-slate-200 shadow-sm"
+        <div v-if="bodyParagraphs.length" class="space-y-3 leading-relaxed">
+          <p
+            v-for="(paragraph, index) in bodyParagraphs"
+            :key="index"
+            class="whitespace-pre-line"
           >
-            <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
-            <span
-              aria-hidden="true"
-              class="text-lg"
-              >{{ reactionEmojis[reaction.type] }}</span
-            >
-          </div>
+            {{ paragraph }}
+          </p>
         </div>
-      </footer>
+      </div>
+    </div>
+
+    <div class="border-t border-slate-200 px-6 py-4 text-sm text-slate-600">
+      <div class="flex flex-wrap items-center justify-between gap-3" :aria-label="metaAriaLabel">
+        <span class="inline-flex items-center gap-2">
+          <span aria-hidden="true">❤️</span>
+          <span>{{ reactionCountDisplay }}</span>
+        </span>
+        <span class="inline-flex items-center gap-2 text-slate-500">
+          <span aria-hidden="true">💬</span>
+          <span>{{ commentCountDisplay }}</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 border-t border-slate-200 px-6 py-3 text-sm font-medium text-slate-500">
+      <button
+        v-for="action in postActions"
+        :key="action.id"
+        type="button"
+        class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 transition-colors duration-200 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        <span aria-hidden="true" class="text-lg">{{ action.icon }}</span>
+        <span>{{ action.label }}</span>
+      </button>
+    </div>
+
+    <div
+      v-if="post.reactions_preview.length"
+      class="space-y-3 border-t border-slate-200 bg-slate-50 px-6 py-5"
+    >
+      <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+        {{ t("blog.reactions.post.reactionSpotlight") }}
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <div
+          v-for="reaction in post.reactions_preview.slice(0, 4)"
+          :key="reaction.id"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-slate-600 shadow-sm"
+        >
+          <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
+          <span aria-hidden="true" class="text-lg">{{ reactionEmojis[reaction.type] }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="post.comments_preview.length" class="space-y-4 border-t border-slate-200 px-6 py-6">
+      <header class="flex items-center justify-between gap-4">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          {{ t("blog.reactions.post.recentComments") }}
+        </p>
+        <p class="text-xs text-slate-400">
+          {{ t("blog.reactions.post.commentPreviews", { count: formatNumber(post.comments_preview.length) }) }}
+        </p>
+      </header>
+      <div class="space-y-4">
+        <BlogCommentCard
+          v-for="comment in post.comments_preview.slice(0, 4)"
+          :key="comment.id"
+          :comment="comment"
+        />
+      </div>
     </div>
   </article>
 </template>
@@ -140,20 +138,40 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
   angry: t("blog.reactions.reactionTypes.angry"),
 }));
 
-function formatDateTime(value: string) {
-  return new Intl.DateTimeFormat(locale.value, {
-    dateStyle: "long",
-    timeStyle: "short",
-  }).format(new Date(value));
+function formatRelativeTime(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const now = Date.now();
+  const diff = date.getTime() - now;
+  const intervals: Array<{ unit: Intl.RelativeTimeFormatUnit; ms: number }> = [
+    { unit: "year", ms: 1000 * 60 * 60 * 24 * 365 },
+    { unit: "month", ms: 1000 * 60 * 60 * 24 * 30 },
+    { unit: "week", ms: 1000 * 60 * 60 * 24 * 7 },
+    { unit: "day", ms: 1000 * 60 * 60 * 24 },
+    { unit: "hour", ms: 1000 * 60 * 60 },
+    { unit: "minute", ms: 1000 * 60 },
+  ];
+
+  const rtf = new Intl.RelativeTimeFormat(locale.value, { numeric: "auto" });
+
+  for (const { unit, ms } of intervals) {
+    const valueInUnit = diff / ms;
+    if (Math.abs(valueInUnit) >= 1 || unit === "minute") {
+      return rtf.format(Math.round(valueInUnit), unit);
+    }
+  }
+
+  return rtf.format(0, "second");
 }
 
 function formatNumber(value: number | null | undefined) {
   return new Intl.NumberFormat(locale.value).format(value ?? 0);
 }
 
-const publishedLabel = computed(() =>
-  t("blog.reactions.post.publishedOn", { date: formatDateTime(props.post.publishedAt) }),
-);
+const publishedLabel = computed(() => formatRelativeTime(props.post.publishedAt));
 
 const reactionCountDisplay = computed(() => formatNumber(props.post.reactions_count));
 const commentCountDisplay = computed(() => formatNumber(props.post.totalComments));
@@ -198,5 +216,21 @@ function openDelete() {
   /* no-op */
 }
 
-const post = computed(() => props.post);
+const bodyParagraphs = computed(() => {
+  const paragraphs = (props.post.content ?? "")
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+
+  if (props.post.summary) {
+    paragraphs.unshift(props.post.summary);
+  }
+
+  return paragraphs;
+});
+
+const postActions = computed(() => [
+  { id: "like", icon: "👍", label: t("blog.reactions.reactionTypes.like") },
+  { id: "comment", icon: "💬", label: t("blog.comments.reply") },
+]);
 </script>
