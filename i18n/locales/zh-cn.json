@@ -123,6 +123,8 @@
     "Register": "注册",
     "usernameOrEmail": "邮箱地址或用户名",
     "password": "密码",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
     "signIn": "登录",
     "signUpPrompt": "还没有账号？",
     "signUp": "立即注册",

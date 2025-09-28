@@ -123,6 +123,8 @@
     "Register": "إنشاء حساب",
     "usernameOrEmail": "البريد الإلكتروني أو اسم المستخدم",
     "password": "كلمة المرور",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
     "signIn": "تسجيل الدخول",
     "signUpPrompt": "لا تملك حسابًا؟",
     "signUp": "إنشاء حساب",

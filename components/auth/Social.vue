@@ -1,30 +1,18 @@
 <template>
-  <div class="auth-social text-center text-white px-6 pb-6">
-    <p class="text-subtitle-1 font-weight-medium mb-2">
-      {{ t('auth.socialTitle') }}
-    </p>
-    <p class="text-body-2 text-white text-opacity-80 mb-5">
-      {{ t('auth.socialSubtitle') }}
-    </p>
-
-    <v-row class="justify-center align-center" dense>
-      <v-col
-          v-for="button in buttons"
-          :key="button.provider"
-          cols="auto"
-          class="d-flex"
-      >
-        <v-btn
-            variant="flat"
-            class="font-weight-bold rounded-xl text-body-2"
-            :loading="props.loading"
-            :disabled="props.loading"
-            @click="handleRedirect(button.provider)"
-        >
-          <Icon :name="button.icon" />
-        </v-btn>
-      </v-col>
-    </v-row>
+  <div :class="socialClasses">
+    <button
+      v-for="button in buttons"
+      :key="button.provider"
+      type="button"
+      class="auth-social__button"
+      :class="{ 'auth-social__button--compact': isCompact }"
+      :style="{ background: button.gradient }"
+      :aria-label="button.label"
+      :disabled="props.loading"
+      @click="handleRedirect(button.provider)"
+    >
+      <Icon :name="button.icon" :size="isCompact ? 20 : 24" :color="button.iconColor" />
+    </button>
   </div>
 </template>
 
@@ -34,9 +22,16 @@ import { useI18n } from 'vue-i18n'
 
 import type { SocialProvider } from '~/lib/auth/social'
 
-const props = withDefaults(defineProps<{ loading?: boolean }>(), {
-  loading: false,
-})
+const props = withDefaults(
+  defineProps<{
+    loading?: boolean
+    size?: 'default' | 'compact'
+  }>(),
+  {
+    loading: false,
+    size: 'default',
+  },
+)
 
 const emit = defineEmits<{
   (e: 'redirect', provider: SocialProvider): void
@@ -44,24 +39,96 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
-const buttons = computed(() => [
-  { provider: 'google', icon: 'mdi-google' },
-  { provider: 'github', icon: 'mdi-github' },
-  { provider: 'microsoft', icon: 'mdi-microsoft' },
-] as const satisfies ReadonlyArray<{ provider: SocialProvider; icon: string }>)
+const baseButtons = [
+  {
+    provider: 'google',
+    icon: 'mdi-google',
+    gradient: 'linear-gradient(135deg, #ff8a00 0%, #ff2d55 100%)',
+    iconColor: '#ffffff',
+  },
+  {
+    provider: 'github',
+    icon: 'mdi-github',
+    gradient: 'linear-gradient(135deg, #232526 0%, #414345 100%)',
+    iconColor: '#ffffff',
+  },
+  {
+    provider: 'microsoft',
+    icon: 'mdi-microsoft',
+    gradient: 'linear-gradient(135deg, #00b4db 0%, #0083b0 100%)',
+    iconColor: '#ffffff',
+  },
+] as const satisfies ReadonlyArray<{
+  provider: SocialProvider
+  icon: string
+  gradient: string
+  iconColor: string
+}>
+
+const buttons = computed(() =>
+  baseButtons.map((button) => ({
+    ...button,
+    label: t(`auth.social.${button.provider}`),
+  })),
+)
+
+const isCompact = computed(() => props.size === 'compact')
+const socialClasses = computed(() => [
+  'auth-social',
+  { 'auth-social--compact': isCompact.value },
+])
 
 function handleRedirect(provider: SocialProvider) {
+  if (props.loading) return
+
   emit('redirect', provider)
 }
 </script>
 
 <style scoped>
 .auth-social {
-  position: relative;
-  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.1rem;
 }
 
-.text-opacity-80 {
-  opacity: 0.8;
+.auth-social--compact {
+  gap: 0.75rem;
+}
+
+.auth-social__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 20px 38px rgba(15, 23, 42, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.auth-social__button--compact {
+  width: 2.75rem;
+  height: 2.75rem;
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.18);
+}
+
+.auth-social__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.auth-social__button:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 44px rgba(236, 72, 153, 0.28);
+}
+
+.auth-social__button:not(:disabled):active {
+  transform: translateY(-1px);
 }
 </style>

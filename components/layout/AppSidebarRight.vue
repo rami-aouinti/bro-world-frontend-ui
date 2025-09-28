@@ -2,32 +2,49 @@
   <aside
     class="app-card app-sidebar"
     :class="{ 'app-sidebar--sticky': sticky }"
-    aria-label="Main navigation"
+    aria-label="Secondary navigation"
   >
     <HaloSearch />
-    <div
-        class="relative flex h-[200px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
-    >
-    <span
-        class="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10"
-    >
 
-    </span>
+    <div v-if="!isAuthenticated" class="sidebar-login-card">
       <ParticlesBg
-          class="absolute inset-0"
-          :quantity="100"
-          :ease="100"
-          :color="isDark ? '#FFF' : '#000'"
-          :staticity="10"
-          refresh
+        class="sidebar-login-card__particles"
+        :quantity="120"
+        :ease="120"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
       />
+      <div class="sidebar-login-card__content">
+        <h2 class="sidebar-login-card__title">Bro World</h2>
+        <p class="sidebar-login-card__subtitle">{{ t('auth.socialSubtitle') }}</p>
+
+        <AuthSocial
+          class="sidebar-login-card__socials"
+          size="compact"
+          :loading="isRedirecting"
+          @redirect="handleSocialRedirect"
+        />
+
+        <div class="sidebar-login-card__form">
+          <AuthLoginForm variant="compact" :disabled="isRedirecting" />
+        </div>
+      </div>
     </div>
+
+    <slot v-else />
   </aside>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const isDark = computed(() => useColorMode().value == "dark");
+import AuthLoginForm from '~/components/auth/LoginForm.vue'
+import AuthSocial from '~/components/auth/Social.vue'
+import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
+import { useAuthSession } from '~/stores/auth-session'
+
 interface SidebarItem {
   key: string
   label: string
@@ -48,10 +65,33 @@ const props = withDefaults(
 )
 
 const sticky = computed(() => props.sticky)
-
+const isDark = computed(() => useColorMode().value === 'dark')
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const { t } = useI18n()
 
-const emit = defineEmits<{ (e: 'select', key: string): void }>()
+const isRedirecting = ref(false)
+
+watch(
+  () => auth.isAuthenticated.value,
+  (value) => {
+    if (value) {
+      isRedirecting.value = false
+    }
+  },
+)
+
+function handleSocialRedirect(provider: SocialProvider) {
+  const target = resolveSocialRedirect(provider)
+
+  if (!target) return
+
+  isRedirecting.value = true
+
+  if (import.meta.client) {
+    window.location.href = target
+  }
+}
 </script>
 
 <style scoped>
@@ -71,29 +111,62 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
   position: sticky;
 }
 
-.sidebar-item {
-  @apply flex items-center justify-between text-left transition;
-  padding: 0.75rem 1rem;
-  border-radius: calc(var(--radius) + 8px);
-  @apply hover:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
-  --tw-bg-opacity: 0.7;
+.sidebar-login-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 1.75rem 1.25rem;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.95), rgba(255, 255, 255, 0.9));
+  box-shadow: 0 20px 45px rgba(236, 72, 153, 0.2), 0 14px 30px rgba(15, 23, 42, 0.12);
 }
 
-.sidebar-item--active {
-  @apply bg-primary shadow-[0_10px_25px_rgba(243,126,205,0.35)];
-  --tw-bg-opacity: 0.1;
+.sidebar-login-card__particles {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
 }
 
-.sidebar-icon {
-  @apply flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary;
-  --tw-bg-opacity: 0.1;
+.sidebar-login-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
-.sidebar-item:hover {
-  --tw-bg-opacity: 0.05;
+.sidebar-login-card__title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: rgb(15, 23, 42);
+  text-align: center;
 }
 
-.sidebar-item:focus-visible {
-  --tw-ring-opacity: 0.7;
+.sidebar-login-card__subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgba(71, 85, 105, 0.75);
+}
+
+.sidebar-login-card__socials {
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-login-card__form {
+  margin-top: 0.5rem;
+}
+
+.sidebar-login-card :deep(.login-form__inner) {
+  gap: 0.75rem;
+}
+
+.sidebar-login-card :deep(.login-field) {
+  box-shadow: 0 12px 26px rgba(236, 72, 153, 0.18);
+}
+
+.sidebar-login-card :deep(.login-form__submit) {
+  box-shadow: 0 16px 32px rgba(236, 72, 153, 0.28);
 }
 </style>

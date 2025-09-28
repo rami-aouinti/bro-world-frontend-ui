@@ -342,6 +342,8 @@
     "Register": "Registrarse",
     "usernameOrEmail": "Correo electrónico o nombre de usuario",
     "password": "Contraseña",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
     "signIn": "Iniciar sesión",
     "signUpPrompt": "¿No tienes una cuenta?",
     "signUp": "Crea una",

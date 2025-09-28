@@ -342,6 +342,8 @@
     "Register": "Регистрация",
     "usernameOrEmail": "Email или имя пользователя",
     "password": "Пароль",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль",
     "signIn": "Войти",
     "signUpPrompt": "Нет аккаунта?",
     "signUp": "Создать",
