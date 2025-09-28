@@ -78,11 +78,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n, useNuxtApp } from '#imports'
 import { useAuthStore } from '~/composables/useAuthStore'
+import { defineAsyncComponentWithVendorStyles } from '~/lib/material-dashboard-vendors'
 
-const NewPostDialog = defineAsyncComponent(() => import('./NewPostDialog.vue'))
+const NewPostDialog = defineAsyncComponentWithVendorStyles(() => import('./NewPostDialog.vue'))
 
 interface Props {
   userName?: string
