@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { vi } from 'vitest'
 
 type StateRef<T> = ReturnType<typeof ref<T>>
 
@@ -29,10 +30,38 @@ export function useLocalePath() {
   return (path: string) => path
 }
 
+const notifyMock = vi.fn()
+
+export function useNuxtApp() {
+  return {
+    $notify: notifyMock,
+  }
+}
+
+export function useI18n() {
+  return {
+    t: (key: string, params?: Record<string, unknown>) => {
+      if (params && 'name' in params) {
+        return `${key}:${(params as { name: string }).name}`
+      }
+
+      return key
+    },
+  }
+}
+
 export function __resetNuxtStateMocks() {
   stateRegistry.clear()
 }
 
 export function __getNuxtStateRef<T>(key: string): StateRef<T> | undefined {
   return stateRegistry.get(key) as StateRef<T> | undefined
+}
+
+export function __getNotifyMock() {
+  return notifyMock
+}
+
+export function __resetNuxtNotifyMock() {
+  notifyMock.mockReset()
 }
