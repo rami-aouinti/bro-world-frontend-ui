@@ -191,6 +191,7 @@
             type="button"
             :class="iconTriggerClasses"
             :aria-label="t('layout.actions.openWidgets')"
+            data-test="open-right-widgets"
             @click="emit('toggle-right')"
         >
           <AppIcon

@@ -3,10 +3,11 @@
     class="app-card app-sidebar"
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Secondary navigation"
+    data-test="app-sidebar-right"
   >
-    <HaloSearch v-if="isAuthenticated" />
+    <HaloSearch v-if="shouldLoadWidgets && isAuthenticated" />
 
-    <div v-if="!isAuthenticated" class="sidebar-login-card">
+    <div v-if="shouldLoadWidgets && !isAuthenticated" class="sidebar-login-card">
       <ParticlesBg
         v-if="shouldRenderParticles"
         class="sidebar-login-card__particles"
@@ -38,15 +39,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
 import { useAuthSession } from '~/stores/auth-session'
 
-const HaloSearch = defineAsyncComponent(() => import('~/components/content/inspira/ui/halo-search/HaloSearch.vue'))
-const ParticlesBg = defineAsyncComponent(() => import('~/components/content/inspira/ui/particles-bg/ParticlesBg.vue'))
-const AuthLoginForm = defineAsyncComponent(() => import('~/components/auth/LoginForm.vue'))
-const AuthSocial = defineAsyncComponent(() => import('~/components/auth/Social.vue'))
+const HaloSearch = defineAsyncComponent({
+  loader: () => import('~/components/content/inspira/ui/halo-search/HaloSearch.vue'),
+  suspensible: false,
+})
+const ParticlesBg = defineAsyncComponent({
+  loader: () => import('~/components/content/inspira/ui/particles-bg/ParticlesBg.vue'),
+  suspensible: false,
+})
+const AuthLoginForm = defineAsyncComponent({
+  loader: () => import('~/components/auth/LoginForm.vue'),
+  suspensible: false,
+})
+const AuthSocial = defineAsyncComponent({
+  loader: () => import('~/components/auth/Social.vue'),
+  suspensible: false,
+})
 
 interface SidebarItem {
   key: string
@@ -61,9 +74,11 @@ const props = withDefaults(
     items: SidebarItem[]
     activeKey: string
     sticky?: boolean
+    eager?: boolean
   }>(),
   {
     sticky: true,
+    eager: false,
   },
 )
 
@@ -75,18 +90,32 @@ const { t } = useI18n()
 
 const isRedirecting = ref(false)
 const shouldRenderParticles = ref(false)
+const shouldLoadWidgets = ref(props.eager)
 
-onMounted(() => {
-  if (!import.meta.client) {
+watch(
+  () => props.eager,
+  (value) => {
+    if (value) {
+      shouldLoadWidgets.value = true
+    }
+  },
+)
+
+let particlesScheduled = false
+
+function scheduleParticles() {
+  if (particlesScheduled || !import.meta.client) {
     return
   }
 
-  function enableParticles() {
-    shouldRenderParticles.value = true
-  }
+  particlesScheduled = true
 
   const idleWindow = window as typeof window & {
     requestIdleCallback?: (callback: () => void) => number
+  }
+
+  const enableParticles = () => {
+    shouldRenderParticles.value = true
   }
 
   if (typeof idleWindow.requestIdleCallback === 'function') {
@@ -95,7 +124,17 @@ onMounted(() => {
   }
 
   window.setTimeout(enableParticles, 200)
-})
+}
+
+watch(
+  shouldLoadWidgets,
+  (value) => {
+    if (value) {
+      scheduleParticles()
+    }
+  },
+  { immediate: true },
+)
 
 watch(
   () => auth.isAuthenticated.value,
