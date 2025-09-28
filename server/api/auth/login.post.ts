@@ -63,6 +63,7 @@ export default defineEventHandler(async (event) => {
 
     return {
       user: profile,
+      token: response.token,
     }
   } catch (error) {
     if (isFetchError(error)) {

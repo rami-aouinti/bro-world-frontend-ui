@@ -5,7 +5,7 @@ import { useLocalePath } from '#i18n'
 import { useRequestFetch } from '#app'
 import { useState } from '#imports'
 import { defineStore } from '~/lib/pinia-shim'
-import type { AuthSessionEnvelope, AuthUser } from '~/types/auth'
+import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from '~/types/auth'
 import type { MercureTokenEnvelope, MercureTokenState } from '~/types/mercure'
 
 interface LoginCredentials {
@@ -60,6 +60,7 @@ export const useAuthSession = defineStore('auth-session', () => {
   const readyState = useState<boolean>('auth-ready', () => import.meta.server)
   const redirectState = useState<string | null>('auth-redirect-target', () => null)
   const mercureTokenState = useState<MercureTokenState | null>('auth-mercure-token', () => null)
+  const sessionTokenState = useState<string | null>('auth-session-token', () => null)
 
   const loginPendingState = ref(false)
   const loginErrorState = ref<string | null>(null)
@@ -86,6 +87,8 @@ export const useAuthSession = defineStore('auth-session', () => {
     currentUserState.value = userCookie.value
   }
 
+  const sessionTokenStorageKey = 'auth-session-token'
+
   if (import.meta.client) {
     watch(
       currentUserState,
@@ -98,6 +101,37 @@ export const useAuthSession = defineStore('auth-session', () => {
     watch(tokenAvailableState, (value) => {
       presenceCookie.value = value ? '1' : null
     })
+
+    function readStoredToken() {
+      try {
+        return window.sessionStorage.getItem(sessionTokenStorageKey)
+      } catch (error) {
+        console.warn('Unable to read auth token from session storage', error)
+        return null
+      }
+    }
+
+    function persistToken(value: string | null) {
+      try {
+        if (value) {
+          window.sessionStorage.setItem(sessionTokenStorageKey, value)
+        } else {
+          window.sessionStorage.removeItem(sessionTokenStorageKey)
+        }
+      } catch (error) {
+        console.warn('Unable to persist auth token to session storage', error)
+      }
+    }
+
+    const existingToken = readStoredToken()
+
+    if (existingToken) {
+      sessionTokenState.value = existingToken
+    }
+
+    watch(sessionTokenState, (value) => {
+      persistToken(value)
+    })
   }
 
   const currentUser = computed(() => currentUserState.value)
@@ -107,6 +141,7 @@ export const useAuthSession = defineStore('auth-session', () => {
   const isLoggingIn = computed(() => loginPendingState.value)
   const sessionMessage = computed(() => sessionMessageState.value)
   const mercureToken = computed(() => mercureTokenState.value?.token ?? null)
+  const sessionToken = computed(() => sessionTokenState.value)
 
   function setCurrentUser(user: AuthUser | null) {
     currentUserState.value = user
@@ -118,6 +153,10 @@ export const useAuthSession = defineStore('auth-session', () => {
 
   function setMercureToken(token: MercureTokenState | null) {
     mercureTokenState.value = token
+  }
+
+  function setSessionToken(token: string | null) {
+    sessionTokenState.value = token
   }
 
   function setSessionMessage(message: string | null) {
@@ -132,6 +171,7 @@ export const useAuthSession = defineStore('auth-session', () => {
     setCurrentUser(null)
     setTokenPresence(false)
     setMercureToken(null)
+    setSessionToken(null)
     loginErrorState.value = null
     readyState.value = true
 
@@ -283,7 +323,7 @@ export const useAuthSession = defineStore('auth-session', () => {
     const fetcher = resolveFetcher()
 
     try {
-      const response = await fetcher<{ user: AuthUser }>('/auth/login', {
+      const response = await fetcher<AuthLoginEnvelope>('/auth/login', {
         method: 'POST',
         body: {
           identifier: trimmedIdentifier,
@@ -294,13 +334,14 @@ export const useAuthSession = defineStore('auth-session', () => {
         },
       })
 
-      if (!response?.user) {
+      if (!response?.user || !response?.token) {
         loginErrorState.value = 'Unable to sign in at this time. Please try again later.'
         return false
       }
 
       setCurrentUser(response.user)
       setTokenPresence(true)
+      setSessionToken(response.token)
       readyState.value = true
       sessionMessageState.value = null
 
@@ -394,6 +435,7 @@ export const useAuthSession = defineStore('auth-session', () => {
     sessionMessage,
     redirectAfterLogin: computed(() => redirectState.value),
     mercureToken,
+    sessionToken,
     setCurrentUser,
     setRedirect,
     consumeRedirect,

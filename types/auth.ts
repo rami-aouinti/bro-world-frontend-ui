@@ -15,6 +15,11 @@ export interface AuthLoginResponse {
   profile: AuthUser
 }
 
+export interface AuthLoginEnvelope {
+  token: string
+  user: AuthUser
+}
+
 export interface AuthSessionEnvelope {
   authenticated: boolean
   user: AuthUser | null
