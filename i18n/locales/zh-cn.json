@@ -33,6 +33,9 @@
         "cv": "简历",
         "jobs": "职位",
         "admin": "管理后台",
+        "adminGeneral": "总览",
+        "adminUserManagement": "用户管理",
+        "adminBlog": "博客",
         "help": "帮助",
         "about": "关于",
         "contact": "联系"
@@ -288,6 +291,7 @@
       "characterCount": "{count} 个字符",
       "submit": "发布评论",
       "submitting": "发布中...",
+      "loading": "正在加载评论...",
       "success": "你的评论已添加。",
       "error": "无法添加评论，请重试。",
       "validation": "发布前请先写下评论。",
@@ -430,9 +434,76 @@
       "title": "管理中心",
       "subtitle": "只需几次点击即可掌控整个平台，监控关键指标并启用合适的功能。"
     },
+    "userManagement": {
+      "metaTitle": "用户管理",
+      "page": {
+        "title": "用户管理",
+        "subtitle": "在一个位置完成邀请、审核与权限调整。"
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "博客管理",
+      "page": {
+        "title": "博客管理",
+        "subtitle": "策划社区故事并发布官方公告。"
+      }
+    },
     "actions": {
       "newAdminRole": "新建管理员角色",
       "exportReport": "导出报告"
+    },
+    "userManagement": {
+      "title": "User management",
+      "subtitle": "Invite, update, or deactivate accounts in real-time.",
+      "actions": {
+        "add": "Invite user"
+      },
+      "table": {
+        "search": "Search users",
+        "empty": "No users found.",
+        "columns": {
+          "user": "User",
+          "email": "Email",
+          "status": "Status",
+          "roles": "Roles",
+          "updatedAt": "Last update",
+          "actions": "Actions"
+        }
+      },
+      "status": {
+        "active": "Active",
+        "disabled": "Disabled"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Invite a new user",
+          "submit": "Create user"
+        },
+        "edit": {
+          "title": "Update user",
+          "submit": "Save changes"
+        },
+        "delete": {
+          "title": "Remove user",
+          "description": "Are you sure you want to remove {name}? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "form": {
+        "username": "Username",
+        "email": "Email",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "roles": "Roles",
+        "rolesHint": "Select one or more roles",
+        "enabled": "Account enabled"
+      },
+      "validation": {
+        "username": "Username is required.",
+        "email": "A valid email address is required.",
+        "roles": "Select at least one role."
+      }
     },
     "sections": {
       "stats": {

@@ -33,6 +33,9 @@
         "cv": "Lebenslauf",
         "jobs": "Jobs",
         "admin": "Verwaltung",
+        "adminGeneral": "Allgemein",
+        "adminUserManagement": "Benutzerverwaltung",
+        "adminBlog": "Blog",
         "help": "Hilfe",
         "about": "Über uns",
         "contact": "Kontakt"
@@ -282,6 +285,7 @@
       "characterCount": "{count} Zeichen",
       "submit": "Kommentar veröffentlichen",
       "submitting": "Wird veröffentlicht...",
+      "loading": "Kommentare werden geladen...",
       "success": "Dein Kommentar wurde hinzugefügt.",
       "error": "Dein Kommentar konnte nicht hinzugefügt werden. Bitte versuche es erneut.",
       "validation": "Schreibe einen Kommentar, bevor du veröffentlichst.",
@@ -806,9 +810,76 @@
       "title": "Administrationsbereich",
       "subtitle": "Steuern Sie die gesamte Plattform, verfolgen Sie Kennzahlen und aktivieren Sie die richtigen Hebel mit nur wenigen Klicks."
     },
+    "userManagement": {
+      "metaTitle": "Benutzerverwaltung",
+      "page": {
+        "title": "Benutzerverwaltung",
+        "subtitle": "Laden Sie Mitglieder ein, prüfen Sie Zugänge und passen Sie Berechtigungen an."
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "Blog-Administration",
+      "page": {
+        "title": "Blog-Administration",
+        "subtitle": "Veröffentlichen Sie Ankündigungen und kuratieren Sie Community-Geschichten."
+      }
+    },
     "actions": {
       "newAdminRole": "Neue Admin-Rolle",
       "exportReport": "Bericht exportieren"
+    },
+    "userManagement": {
+      "title": "User management",
+      "subtitle": "Invite, update, or deactivate accounts in real-time.",
+      "actions": {
+        "add": "Invite user"
+      },
+      "table": {
+        "search": "Search users",
+        "empty": "No users found.",
+        "columns": {
+          "user": "User",
+          "email": "Email",
+          "status": "Status",
+          "roles": "Roles",
+          "updatedAt": "Last update",
+          "actions": "Actions"
+        }
+      },
+      "status": {
+        "active": "Active",
+        "disabled": "Disabled"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Invite a new user",
+          "submit": "Create user"
+        },
+        "edit": {
+          "title": "Update user",
+          "submit": "Save changes"
+        },
+        "delete": {
+          "title": "Remove user",
+          "description": "Are you sure you want to remove {name}? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "form": {
+        "username": "Username",
+        "email": "Email",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "roles": "Roles",
+        "rolesHint": "Select one or more roles",
+        "enabled": "Account enabled"
+      },
+      "validation": {
+        "username": "Username is required.",
+        "email": "A valid email address is required.",
+        "roles": "Select at least one role."
+      }
     },
     "sections": {
       "stats": {
