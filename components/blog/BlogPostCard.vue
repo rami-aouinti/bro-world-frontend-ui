@@ -322,6 +322,8 @@ import { computed, nextTick, reactive, ref, shallowRef, watch } from "vue";
 import CommentCard from "~/components/blog/BlogCommentCard.vue";
 import { BaseCard } from "~/components/ui";
 import PostMeta from "~/components/blog/PostMeta.vue";
+import { formatMetricNumber, resolveCommentTotal, resolveReactionTotal } from "~/lib/blogMetrics";
+import type { CommentAggregate, ReactionAggregate } from "~/lib/blogMetrics";
 import type { BlogCommentWithReplies, BlogPost, ReactionAction, ReactionType } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
@@ -329,77 +331,6 @@ import { useAuthStore } from "~/composables/useAuthStore";
 interface FeedbackState {
   type: "success" | "error";
   message: string;
-}
-
-interface ReactionAggregate {
-  reactions_count?: number | null;
-  likes_count?: number | null;
-  likes?: unknown[] | null;
-  reactions?: unknown[] | null;
-}
-
-interface CommentAggregate {
-  totalComments?: number | null;
-  children?: unknown;
-  comments?: unknown;
-  replies?: unknown;
-}
-
-function toFiniteNumber(value: unknown): number | null {
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return value;
-  }
-
-  if (typeof value === "string" && value.trim()) {
-    const parsed = Number(value);
-
-    if (Number.isFinite(parsed)) {
-      return parsed;
-    }
-  }
-
-  return null;
-}
-
-function resolveReactionTotal(entity: ReactionAggregate): number {
-  const candidates: Array<number | null> = [
-    toFiniteNumber(entity.likes_count ?? null),
-    toFiniteNumber(entity.reactions_count ?? null),
-  ];
-
-  for (const candidate of candidates) {
-    if (candidate !== null) {
-      return candidate;
-    }
-  }
-
-  if (Array.isArray(entity.likes)) {
-    return entity.likes.length;
-  }
-
-  if (Array.isArray(entity.reactions)) {
-    return entity.reactions.length;
-  }
-
-  return 0;
-}
-
-function resolveReplyTotal(entity: CommentAggregate): number {
-  const directTotal = toFiniteNumber(entity.totalComments ?? null);
-
-  if (directTotal !== null) {
-    return directTotal;
-  }
-
-  const collections = [entity.children, entity.comments, entity.replies];
-
-  for (const candidate of collections) {
-    if (Array.isArray(candidate)) {
-      return candidate.length;
-    }
-  }
-
-  return 0;
 }
 
 const props = defineProps<{
@@ -449,7 +380,7 @@ function formatDateTime(value: string) {
 }
 
 function formatNumber(value: number | null | undefined) {
-  return new Intl.NumberFormat(locale.value ?? "fr-FR").format(value ?? 0);
+  return formatMetricNumber(value, locale.value ?? "fr-FR");
 }
 
 const publishedLabel = computed(() =>
@@ -499,7 +430,7 @@ const postCommentCount = computed(() => {
     return loadedCommentCount.value;
   }
 
-  return resolveReplyTotal(post.value as CommentAggregate);
+  return resolveCommentTotal(post.value as CommentAggregate);
 });
 
 const reactionCountDisplay = computed(() => formatNumber(postReactionCount.value));
