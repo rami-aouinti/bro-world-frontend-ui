@@ -80,6 +80,7 @@
     "@inspira-ui/plugins": "0.0.1",
     "@nuxt/content": "^3.7.1",
     "@nuxt/eslint": "^1.9.0",
+    "@playwright/test": "^1.55.1",
     "@testing-library/vue": "^8.1.0",
     "@types/canvas-confetti": "^1.9.0",
     "@types/lodash-es": "^4.17.12",

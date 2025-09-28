@@ -45,16 +45,36 @@
       location="end"
       width="340"
       class="app-drawer"
+      data-test="app-right-drawer"
     >
       <Suspense>
         <template #default>
-          <div class="pane-scroll px-3 py-4">
-            <AppSidebarRight
+          <ClientOnly>
+            <div v-if="rightDrawer" class="pane-scroll px-3 py-4">
+              <AppSidebarRight
                 :items="sidebarItems"
                 :active-key="activeSidebar"
+                :eager="rightDrawer"
                 @select="handleSidebarSelect"
-            />
-          </div>
+              />
+            </div>
+            <template #fallback>
+              <div class="pane-scroll px-3 py-4">
+                <div class="flex flex-col gap-4">
+                  <v-skeleton-loader
+                    type="list-item-two-line"
+                    class="rounded-2xl"
+                  />
+                  <v-skeleton-loader
+                    v-for="index in 2"
+                    :key="index"
+                    type="card"
+                    class="rounded-2xl"
+                  />
+                </div>
+              </div>
+            </template>
+          </ClientOnly>
         </template>
         <template #fallback>
           <div class="pane-scroll px-3 py-4">
@@ -95,7 +115,10 @@ import type { LayoutSidebarItem } from '~/lib/navigation/sidebar'
 import { ADMIN_ROLE_KEYS, buildSidebarItems } from '~/lib/navigation/sidebar'
 import { useAuthSession } from '~/stores/auth-session'
 
-const AppSidebarRight = defineAsyncComponent(() => import('~/components/layout/AppSidebarRight.vue'))
+const AppSidebarRight = defineAsyncComponent({
+  loader: () => import('~/components/layout/AppSidebarRight.vue'),
+  suspensible: false,
+})
 
 const isDark = computed(() => useColorMode().value == "dark");
 const route = useRoute()
