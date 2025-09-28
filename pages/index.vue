@@ -10,28 +10,7 @@
     />
 
     <div v-if="pending" class="grid gap-4">
-      <div
-          v-for="index in 4"
-          :key="index"
-          class="flex flex-col gap-6 rounded-[32px] border border-white/80 bg-white/80 p-6 shadow-[0_30px_60px_-40px_rgba(15,23,42,0.55)]"
-      >
-        <div class="flex items-center gap-4">
-          <div class="h-12 w-12 rounded-2xl bg-slate-200/60" />
-          <div class="flex-1 space-y-2">
-            <div class="h-3 w-32 rounded-full bg-slate-200/60" />
-            <div class="h-3 w-24 rounded-full bg-slate-200/60" />
-          </div>
-        </div>
-        <div class="space-y-3">
-          <div class="h-3 w-3/4 rounded-full bg-slate-200/60" />
-          <div class="h-3 w-2/3 rounded-full bg-slate-200/60" />
-          <div class="h-3 w-full rounded-full bg-slate-200/60" />
-        </div>
-        <div class="mt-auto flex gap-3">
-          <div class="h-8 w-32 rounded-full bg-slate-200/60" />
-          <div class="h-8 w-32 rounded-full bg-slate-200/60" />
-        </div>
-      </div>
+      <PostCardSkeleton v-for="index in 4" :key="index" />
     </div>
 
     <template v-else>
@@ -56,6 +35,7 @@ import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 
 definePageMeta({
   showRightWidgets: true,
