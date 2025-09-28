@@ -17,10 +17,10 @@
             @click="handleParentSelect(item)"
           >
             <div class="flex items-center gap-3">
-              <Icon
+              <AppIcon
                 v-if="item.icon"
                 class="sidebar-icon"
-                :name="resolveIconName(item.icon)"
+                :name="item.icon"
                 :size="20"
               />
               <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
@@ -59,10 +59,10 @@
                 :aria-current="child.key === activeKey ? 'page' : undefined"
                 @click="emit('select', child.key)"
               >
-                <Icon
+                <AppIcon
                   v-if="child.icon"
                   class="sidebar-subicon"
-                  :name="resolveIconName(child.icon)"
+                  :name="child.icon"
                   :size="18"
                 />
                 <span class="text-sm text-muted-foreground">{{ t(child.label) }}</span>
@@ -160,18 +160,6 @@ function handleParentSelect(item: SidebarItem) {
     toggleGroup(item.key)
 }
 
-function resolveIconName(name?: string) {
-  if (!name)
-    return ''
-
-  if (name.includes(':'))
-    return name
-
-  if (name.startsWith('mdi-'))
-    return `mdi:${name.slice(4)}`
-
-  return name
-}
 const emit = defineEmits<{ (e: 'select', key: string): void }>()
 </script>
 
