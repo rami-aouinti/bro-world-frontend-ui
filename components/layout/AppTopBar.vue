@@ -2,10 +2,11 @@
   <v-app-bar
       class="app-top-bar"
       :class="isDarkMode ? 'text-white' : 'text-black'"
-      :color="textGradient"
+      :color="appBarColor"
       app
-      :elevation="10" rounded
+      :elevation="0" rounded
       height="50"
+      :style="{ backgroundImage: textGradient }"
   >
     <template #image>
       <v-img
@@ -278,8 +279,21 @@ const { t } = useI18n()
 const config = useConfig()
 
 const { i18nEnabled, localePath } = useI18nDocs()
-const gradient = computed(() => (isDarkMode.value ? "#000" : "#fff"))
-const textGradient = computed(() => (isDarkMode.value ? "#fff" : "#000"))
+const gradient = computed(() =>
+  isDarkMode.value
+    ? 'linear-gradient(135deg, rgba(204, 43, 22, 0.55), rgba(197, 34, 121, 0.5), rgba(91, 7, 52, 0.6))'
+    : 'linear-gradient(135deg, rgba(204, 43, 22, 0.85), rgba(197, 34, 121, 0.8), rgba(91, 7, 52, 0.85))',
+)
+
+const textGradient = computed(() =>
+  isDarkMode.value
+    ? 'linear-gradient(120deg, rgba(204, 43, 22, 0.25), rgba(197, 34, 121, 0.35), rgba(91, 7, 52, 0.45))'
+    : 'linear-gradient(120deg, rgba(204, 43, 22, 0.8), rgba(197, 34, 121, 0.75), rgba(91, 7, 52, 0.7))',
+)
+
+const appBarColor = computed(() =>
+  isDarkMode.value ? 'rgba(12, 10, 22, 0.78)' : 'rgba(255, 255, 255, 0.82)',
+)
 
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === 'input',
@@ -428,5 +442,22 @@ async function handleLogout() {
 </script>
 
 <style scoped>
+.app-top-bar {
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 32px rgba(197, 34, 121, 0.15);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
 
+:global(.v-theme--light) .app-top-bar {
+  border-color: rgba(204, 43, 22, 0.22);
+  box-shadow: 0 14px 40px rgba(91, 7, 52, 0.18);
+}
+
+:global(.v-theme--dark) .app-top-bar {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.55);
+}
 </style>
