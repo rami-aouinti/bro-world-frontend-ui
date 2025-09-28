@@ -213,26 +213,33 @@
       "reactionTypes": {
         "like": "Like",
         "love": "Love",
-        "wow": "Wow",
-        "haha": "Haha",
-        "sad": "Sad",
-        "angry": "Angry"
-      },
-      "posts": {
-        "publishedOn": "Published on {date}",
-        "reactionCount": "{count} reactions",
-        "commentCount": "{count} comments",
-        "recentComments": "Recent comments",
-        "previewCount": "{count} previews",
-        "highlightedReactions": "Fan favorite reactions",
-        "reactLabel": "Add your reaction",
-        "reactionError": "We couldn't react to this post. Please try again."
-      },
-      "comments": {
-        "reactionCount": "{count} reactions",
-        "replyCount": "{count} replies"
-      }
+      "wow": "Wow",
+      "haha": "Haha",
+      "sad": "Sad",
+      "angry": "Angry",
+      "dislike": "Dislike"
     },
+    "posts": {
+      "publishedOn": "Published on {date}",
+      "reactionCount": "{count} reactions",
+      "commentCount": "{count} comments",
+      "recentComments": "Recent comments",
+      "previewCount": "{count} previews",
+      "highlightedReactions": "Fan favorite reactions",
+      "reactLabel": "Add your reaction",
+      "reactionError": "We couldn't react to this post. Please try again.",
+      "likeAction": "Like",
+      "unlikeAction": "Unlike",
+      "toggleReaction": "Toggle like on this post"
+    },
+    "comments": {
+      "reactionCount": "{count} reactions",
+      "replyCount": "{count} replies",
+      "likeAction": "Like",
+      "unlikeAction": "Unlike",
+      "toggleReaction": "Toggle like on this comment"
+    }
+  },
     "posts": {
       "actions": {
         "follow": "Follow",

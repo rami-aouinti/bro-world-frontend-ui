@@ -216,7 +216,8 @@
         "wow": "Wow",
         "haha": "Haha",
         "sad": "Traurig",
-        "angry": "Wütend"
+        "angry": "Wütend",
+        "dislike": "Gefällt mir nicht"
       },
       "posts": {
         "publishedOn": "Veröffentlicht am {date}",
@@ -226,11 +227,17 @@
         "previewCount": "{count} Vorschauen",
         "highlightedReactions": "Beliebte Reaktionen",
         "reactLabel": "Reagiere auf diesen Beitrag",
-        "reactionError": "Die Reaktion auf diesen Beitrag ist fehlgeschlagen. Bitte versuche es erneut."
+        "reactionError": "Die Reaktion auf diesen Beitrag ist fehlgeschlagen. Bitte versuche es erneut.",
+        "likeAction": "Gefällt mir",
+        "unlikeAction": "Gefällt mir nicht mehr",
+        "toggleReaction": "Gefällt mir für diesen Beitrag umschalten"
       },
       "comments": {
         "reactionCount": "{count} Reaktionen",
-        "replyCount": "{count} Antworten"
+        "replyCount": "{count} Antworten",
+        "likeAction": "Gefällt mir",
+        "unlikeAction": "Gefällt mir nicht mehr",
+        "toggleReaction": "Gefällt mir für diesen Kommentar umschalten"
       }
     },
     "posts": {

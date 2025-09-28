@@ -53,15 +53,19 @@
         </p>
         <div class="flex flex-wrap items-center gap-2">
           <button
-            v-for="type in reactionTypes"
-            :key="type"
             type="button"
-            :aria-label="reactionLabels[type]"
-            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-slate-600 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="!!postReactingType"
-            @click="handlePostReaction(type)"
+            data-test="post-like-button"
+            :aria-label="postReactionButtonAriaLabel"
+            :aria-pressed="isPostReacted"
+            class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+            :class="isPostReacted
+              ? 'border-primary bg-primary text-white hover:border-primary hover:bg-primary/90'
+              : 'border-slate-200 bg-white text-slate-700 hover:border-primary hover:bg-primary/10 hover:text-primary'"
+            :disabled="postReacting"
+            @click="handleTogglePostReaction"
           >
-            <span aria-hidden="true">{{ reactionEmojis[type] }}</span>
+            <span aria-hidden="true">{{ postReactionIcon }}</span>
+            <span>{{ postReactionButtonText }}</span>
           </button>
         </div>
         <p v-if="postReactionError" class="text-xs text-rose-500">
@@ -147,7 +151,6 @@
           :comment="comment"
           :default-avatar="defaultAvatar"
           :reaction-emojis="reactionEmojis"
-          :reaction-labels="reactionLabels"
           :react-to-comment="handleCommentReaction"
           :reply-to-comment="handleCommentReply"
           class="w-full"
@@ -300,13 +303,84 @@ import { computed, nextTick, reactive, ref, watch } from "vue";
 import CommentCard from "~/components/CommentCard.vue";
 import { BaseCard } from "~/components/ui";
 import PostMeta from "~/components/blog/PostMeta.vue";
-import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import type { BlogPost, ReactionAction, ReactionType } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
 
 interface FeedbackState {
   type: "success" | "error";
   message: string;
+}
+
+interface ReactionAggregate {
+  reactions_count?: number | null;
+  likes_count?: number | null;
+  likes?: unknown[] | null;
+  reactions?: unknown[] | null;
+}
+
+interface CommentAggregate {
+  totalComments?: number | null;
+  children?: unknown;
+  comments?: unknown;
+  replies?: unknown;
+}
+
+function toFiniteNumber(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number(value);
+
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return null;
+}
+
+function resolveReactionTotal(entity: ReactionAggregate): number {
+  const candidates: Array<number | null> = [
+    toFiniteNumber(entity.likes_count ?? null),
+    toFiniteNumber(entity.reactions_count ?? null),
+  ];
+
+  for (const candidate of candidates) {
+    if (candidate !== null) {
+      return candidate;
+    }
+  }
+
+  if (Array.isArray(entity.likes)) {
+    return entity.likes.length;
+  }
+
+  if (Array.isArray(entity.reactions)) {
+    return entity.reactions.length;
+  }
+
+  return 0;
+}
+
+function resolveReplyTotal(entity: CommentAggregate): number {
+  const directTotal = toFiniteNumber(entity.totalComments ?? null);
+
+  if (directTotal !== null) {
+    return directTotal;
+  }
+
+  const collections = [entity.children, entity.comments, entity.replies];
+
+  for (const candidate of collections) {
+    if (Array.isArray(candidate)) {
+      return candidate.length;
+    }
+  }
+
+  return 0;
 }
 
 const props = defineProps<{
@@ -336,13 +410,11 @@ const {
 
 const post = computed(() => props.post);
 
-const postReactingType = ref<ReactionType | null>(null);
+const postReacting = ref(false);
 const postReactionError = ref<string | null>(null);
 const commentContent = ref("");
 const submittingComment = ref(false);
 const commentFeedback = ref<FeedbackState | null>(null);
-
-const reactionTypes = computed(() => Object.keys(props.reactionEmojis) as ReactionType[]);
 
 function formatDateTime(value: string) {
   return new Intl.DateTimeFormat(locale.value ?? "fr-FR", {
@@ -388,18 +460,47 @@ const metaAriaLabel = computed(() =>
   }),
 );
 
-const reactionCountDisplay = computed(() => formatNumber(post.value.reactions_count));
-const commentCountDisplay = computed(() => formatNumber(post.value.totalComments));
+const postReactionCount = computed(() => resolveReactionTotal(post.value as ReactionAggregate));
+const postCommentCount = computed(() => resolveReplyTotal(post.value as CommentAggregate));
+
+const reactionCountDisplay = computed(() => formatNumber(postReactionCount.value));
+const commentCountDisplay = computed(() => formatNumber(postCommentCount.value));
+const isPostReacted = computed(() => Boolean(post.value.isReacted));
+const postReactionButtonText = computed(() =>
+  isPostReacted.value
+    ? t("blog.reactions.posts.unlikeAction")
+    : t("blog.reactions.posts.likeAction"),
+);
+const postReactionButtonAriaLabel = computed(() => t("blog.reactions.posts.toggleReaction"));
+const postReactionIcon = computed(() => "👍");
 
 const recentCommentsLabel = computed(() => t("blog.reactions.posts.recentComments"));
 
 const commentPreviewCountLabel = computed(() =>
   t("blog.reactions.posts.previewCount", {
-    count: formatNumber(post.value.comments_preview.length),
+    count: formatNumber(postCommentCount.value),
   }),
 );
 
-const comments = computed(() => post.value.comments_preview ?? []);
+const comments = computed(() => {
+  if (Array.isArray(post.value.comments_preview) && post.value.comments_preview.length > 0) {
+    return post.value.comments_preview;
+  }
+
+  const directComments = (post.value as Record<string, unknown>).comments;
+
+  if (Array.isArray(directComments) && directComments.length > 0) {
+    return directComments as typeof post.value.comments_preview;
+  }
+
+  const childComments = (post.value as Record<string, unknown>).children;
+
+  if (Array.isArray(childComments) && childComments.length > 0) {
+    return childComments as typeof post.value.comments_preview;
+  }
+
+  return post.value.comments_preview ?? [];
+});
 const topReactions = computed(() => post.value.reactions_preview.slice(0, 4));
 const hasCommentPreview = computed(() => comments.value.length > 0);
 const hasReactionPreview = computed(() => topReactions.value.length > 0);
@@ -489,7 +590,7 @@ watch(
     commentContent.value = "";
     commentFeedback.value = null;
     submittingComment.value = false;
-    postReactingType.value = null;
+    postReacting.value = false;
     postReactionError.value = null;
   },
 );
@@ -662,21 +763,22 @@ function handleDeleteKeydown(event: KeyboardEvent) {
   trapFocus(event, deleteDialogRef.value);
 }
 
-async function handlePostReaction(type: ReactionType) {
-  if (postReactingType.value) {
+async function handleTogglePostReaction() {
+  if (postReacting.value) {
     return;
   }
 
-  postReactingType.value = type;
+  postReacting.value = true;
   postReactionError.value = null;
 
   try {
-    await reactToPost(post.value.id, type);
+    const action: ReactionAction = isPostReacted.value ? "dislike" : "like";
+    await reactToPost(post.value.id, action);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
     postReactionError.value = message || t("blog.reactions.posts.reactionError");
   } finally {
-    postReactingType.value = null;
+    postReacting.value = false;
   }
 }
 
@@ -713,7 +815,7 @@ async function handleCommentSubmit() {
   }
 }
 
-async function handleCommentReaction(commentId: string, reactionType: ReactionType) {
+async function handleCommentReaction(commentId: string, reactionType: ReactionAction) {
   try {
     await reactToComment(post.value.id, commentId, reactionType);
   } catch (error) {

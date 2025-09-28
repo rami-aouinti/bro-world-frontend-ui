@@ -2,7 +2,7 @@ import { computed, reactive, shallowRef } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
 import { useRequestFetch } from "#app";
 import { useState } from "#imports";
-import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/mock/blog";
 
 interface PostsListResponse {
   data: BlogPost[];
@@ -544,7 +544,7 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
-  async function reactToPost(postId: string, reactionType: ReactionType) {
+  async function reactToPost(postId: string, reactionType: ReactionAction) {
     const trimmedId = sanitizeTextInput(postId);
     const payload = sanitizeTextInput(reactionType);
 
@@ -552,7 +552,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Post identifier is required.");
     }
 
-    if (!payload) {
+    if (!payload || (payload !== "like" && payload !== "dislike")) {
       throw new Error("Reaction type is required.");
     }
 
@@ -569,6 +569,34 @@ export const usePostsStore = defineStore("posts", () => {
     } catch (caughtError) {
       const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to react to the post.");
+    }
+  }
+
+  async function getComments(postId: string): Promise<BlogCommentWithReplies[]> {
+    const trimmedId = sanitizeTextInput(postId);
+
+    if (!trimmedId) {
+      throw new Error("Post identifier is required.");
+    }
+
+    const fetcher = resolveFetcher();
+
+    try {
+      const response = await fetcher<BlogCommentWithReplies[] | unknown>(
+        `/api/v1/posts/${encodeURIComponent(trimmedId)}/comments`,
+        {
+          method: "GET",
+        },
+      );
+
+      if (!Array.isArray(response)) {
+        throw new Error("Invalid comments response.");
+      }
+
+      return response;
+    } catch (caughtError) {
+      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      throw new Error(message || "Unable to load comments.");
     }
   }
 
@@ -603,7 +631,7 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
-  async function reactToComment(postId: string, commentId: string, reactionType: ReactionType) {
+  async function reactToComment(postId: string, commentId: string, reactionType: ReactionAction) {
     const trimmedId = sanitizeTextInput(postId);
     const trimmedCommentId = sanitizeTextInput(commentId);
     const trimmedReaction = sanitizeTextInput(reactionType);
@@ -612,7 +640,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Post and comment identifiers are required.");
     }
 
-    if (!trimmedReaction) {
+    if (!trimmedReaction || (trimmedReaction !== "like" && trimmedReaction !== "dislike")) {
       throw new Error("Reaction type is required.");
     }
 
@@ -652,6 +680,7 @@ export const usePostsStore = defineStore("posts", () => {
     updatePost,
     deletePost,
     reactToPost,
+    getComments,
     addComment,
     reactToComment,
   };

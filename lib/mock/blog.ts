@@ -1,4 +1,5 @@
-export type ReactionType = "like" | "love" | "wow" | "haha" | "sad" | "angry";
+export type ReactionType = "like" | "love" | "wow" | "haha" | "sad" | "angry" | "dislike";
+export type ReactionAction = "like" | "dislike";
 
 export interface BlogUser {
   id: string;

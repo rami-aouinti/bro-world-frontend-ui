@@ -222,7 +222,8 @@
         "wow": "惊叹",
         "haha": "哈哈",
         "sad": "难过",
-        "angry": "生气"
+        "angry": "生气",
+        "dislike": "不喜欢"
       },
       "posts": {
         "publishedOn": "发布于 {date}",
@@ -232,11 +233,17 @@
         "previewCount": "{count} 条预览",
         "highlightedReactions": "精选反应",
         "reactLabel": "添加你的回应",
-        "reactionError": "无法对该帖子进行回应，请重试。"
+        "reactionError": "无法对该帖子进行回应，请重试。",
+        "likeAction": "点赞",
+        "unlikeAction": "取消点赞",
+        "toggleReaction": "切换此帖的点赞状态"
       },
       "comments": {
         "reactionCount": "{count} 个反应",
-        "replyCount": "{count} 条回复"
+        "replyCount": "{count} 条回复",
+        "likeAction": "点赞",
+        "unlikeAction": "取消点赞",
+        "toggleReaction": "切换此评论的点赞状态"
       }
     },
     "posts": {

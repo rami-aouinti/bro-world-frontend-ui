@@ -29,6 +29,7 @@ const reactionEmojis: Record<ReactionType, string> = {
   haha: "😂",
   sad: "😢",
   angry: "😡",
+  dislike: "👎",
 };
 
 const reactionLabels: Record<ReactionType, string> = {
@@ -38,6 +39,7 @@ const reactionLabels: Record<ReactionType, string> = {
   haha: "Haha",
   sad: "Sad",
   angry: "Angry",
+  dislike: "Dislike",
 };
 
 const basePost: BlogPost = {
@@ -162,6 +164,34 @@ beforeEach(() => {
 });
 
 describe("PostCard interactions", () => {
+  it("toggles the like state of a post", async () => {
+    setViewerAs("viewer-1");
+
+    const wrapper = mountComponent({ isReacted: false });
+
+    const likeButton = wrapper.find("[data-test='post-like-button']");
+    expect(likeButton.exists()).toBe(true);
+    expect(likeButton.text()).toContain(en.blog.reactions.posts.likeAction);
+
+    await likeButton.trigger("click");
+
+    expect(reactToPostSpy).toHaveBeenCalledWith(basePost.id, "like");
+
+    reactToPostSpy.mockClear();
+
+    await wrapper.setProps({
+      post: { ...basePost, isReacted: true },
+    });
+
+    expect(wrapper.find("[data-test='post-like-button']").text()).toContain(
+      en.blog.reactions.posts.unlikeAction,
+    );
+
+    await likeButton.trigger("click");
+
+    expect(reactToPostSpy).toHaveBeenCalledWith(basePost.id, "dislike");
+  });
+
   it("allows a viewer to follow the author", async () => {
     setViewerAs("viewer-1");
 

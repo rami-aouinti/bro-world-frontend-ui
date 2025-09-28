@@ -435,7 +435,8 @@
         "wow": "Вау",
         "haha": "Ха-ха",
         "sad": "Грусть",
-        "angry": "Злость"
+        "angry": "Злость",
+        "dislike": "Не нравится"
       },
       "posts": {
         "publishedOn": "Опубликовано {date}",
@@ -445,11 +446,17 @@
         "previewCount": "{count} превью",
         "highlightedReactions": "Любимые реакции фанатов",
         "reactLabel": "Добавьте свою реакцию",
-        "reactionError": "Не удалось отреагировать на эту запись. Попробуйте ещё раз."
+        "reactionError": "Не удалось отреагировать на эту запись. Попробуйте ещё раз.",
+        "likeAction": "Нравится",
+        "unlikeAction": "Убрать «Нравится»",
+        "toggleReaction": "Переключить отметку «Нравится» у этой записи"
       },
       "comments": {
         "reactionCount": "{count} реакций",
-        "replyCount": "{count} ответов"
+        "replyCount": "{count} ответов",
+        "likeAction": "Нравится",
+        "unlikeAction": "Убрать «Нравится»",
+        "toggleReaction": "Переключить отметку «Нравится» у этого комментария"
       }
     },
     "posts": {
