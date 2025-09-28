@@ -827,6 +827,59 @@
       "newAdminRole": "Nouveau rôle admin",
       "exportReport": "Exporter le rapport"
     },
+    "userManagement": {
+      "title": "Gestion des utilisateurs",
+      "subtitle": "Invitez, mettez à jour ou désactivez des comptes en temps réel.",
+      "actions": {
+        "add": "Inviter un utilisateur"
+      },
+      "table": {
+        "search": "Rechercher un utilisateur",
+        "empty": "Aucun utilisateur trouvé.",
+        "columns": {
+          "user": "Utilisateur",
+          "email": "E-mail",
+          "status": "Statut",
+          "roles": "Rôles",
+          "updatedAt": "Dernière mise à jour",
+          "actions": "Actions"
+        }
+      },
+      "status": {
+        "active": "Actif",
+        "disabled": "Désactivé"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Inviter un nouvel utilisateur",
+          "submit": "Créer l’utilisateur"
+        },
+        "edit": {
+          "title": "Mettre à jour l’utilisateur",
+          "submit": "Enregistrer"
+        },
+        "delete": {
+          "title": "Supprimer l’utilisateur",
+          "description": "Confirmez-vous la suppression de {name} ? Cette action est irréversible.",
+          "confirm": "Supprimer",
+          "cancel": "Annuler"
+        }
+      },
+      "form": {
+        "username": "Nom d’utilisateur",
+        "email": "E-mail",
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "roles": "Rôles",
+        "rolesHint": "Sélectionnez un ou plusieurs rôles",
+        "enabled": "Compte activé"
+      },
+      "validation": {
+        "username": "Le nom d’utilisateur est requis.",
+        "email": "Une adresse e-mail valide est requise.",
+        "roles": "Sélectionnez au moins un rôle."
+      }
+    },
     "sections": {
       "stats": {
         "title": "Aperçu en temps réel",
