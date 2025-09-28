@@ -218,7 +218,8 @@
         "wow": "واو",
         "haha": "هاها",
         "sad": "حزين",
-        "angry": "غاضب"
+        "angry": "غاضب",
+        "dislike": "عدم الإعجاب"
       },
       "posts": {
         "publishedOn": "نُشر في {date}",
@@ -228,11 +229,17 @@
         "previewCount": "{count} معاينات",
         "highlightedReactions": "أبرز التفاعلات",
         "reactLabel": "أضف تفاعلك",
-        "reactionError": "تعذر إضافة تفاعل على هذا المنشور. حاول مرة أخرى."
+        "reactionError": "تعذر إضافة تفاعل على هذا المنشور. حاول مرة أخرى.",
+        "likeAction": "إعجاب",
+        "unlikeAction": "إزالة الإعجاب",
+        "toggleReaction": "تبديل الإعجاب على هذا المنشور"
       },
       "comments": {
         "reactionCount": "{count} تفاعل",
-        "replyCount": "{count} ردًا"
+        "replyCount": "{count} ردًا",
+        "likeAction": "إعجاب",
+        "unlikeAction": "إزالة الإعجاب",
+        "toggleReaction": "تبديل الإعجاب على هذا التعليق"
       }
     },
     "posts": {

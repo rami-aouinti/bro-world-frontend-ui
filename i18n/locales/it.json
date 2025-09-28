@@ -435,7 +435,8 @@
         "wow": "Wow",
         "haha": "Ahah",
         "sad": "Triste",
-        "angry": "Arrabbiato"
+        "angry": "Arrabbiato",
+        "dislike": "Non mi piace"
       },
       "posts": {
         "publishedOn": "Pubblicato il {date}",
@@ -445,11 +446,17 @@
         "previewCount": "{count} anteprime",
         "highlightedReactions": "Reazioni preferite dai fan",
         "reactLabel": "Aggiungi la tua reazione",
-        "reactionError": "Non siamo riusciti a reagire a questo post. Riprova."
+        "reactionError": "Non siamo riusciti a reagire a questo post. Riprova.",
+        "likeAction": "Metti mi piace",
+        "unlikeAction": "Rimuovi mi piace",
+        "toggleReaction": "Attiva/disattiva Mi piace su questo post"
       },
       "comments": {
         "reactionCount": "{count} reazioni",
-        "replyCount": "{count} risposte"
+        "replyCount": "{count} risposte",
+        "likeAction": "Mi piace",
+        "unlikeAction": "Rimuovi mi piace",
+        "toggleReaction": "Attiva/disattiva Mi piace su questo commento"
       }
     },
     "posts": {

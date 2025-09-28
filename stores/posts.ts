@@ -2,7 +2,7 @@ import { computed, reactive, shallowRef } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
 import { useRequestFetch } from "#app";
 import { useState } from "#imports";
-import type { BlogCommentWithReplies, BlogPost, ReactionType } from "~/lib/mock/blog";
+import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/mock/blog";
 
 interface PostsListResponse {
   data: BlogPost[];
@@ -544,7 +544,7 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
-  async function reactToPost(postId: string, reactionType: ReactionType) {
+  async function reactToPost(postId: string, reactionType: ReactionAction) {
     const trimmedId = sanitizeTextInput(postId);
     const payload = sanitizeTextInput(reactionType);
 
@@ -552,7 +552,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Post identifier is required.");
     }
 
-    if (!payload) {
+    if (!payload || (payload !== "like" && payload !== "dislike")) {
       throw new Error("Reaction type is required.");
     }
 
@@ -631,7 +631,7 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
-  async function reactToComment(postId: string, commentId: string, reactionType: ReactionType) {
+  async function reactToComment(postId: string, commentId: string, reactionType: ReactionAction) {
     const trimmedId = sanitizeTextInput(postId);
     const trimmedCommentId = sanitizeTextInput(commentId);
     const trimmedReaction = sanitizeTextInput(reactionType);
@@ -640,7 +640,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Post and comment identifiers are required.");
     }
 
-    if (!trimmedReaction) {
+    if (!trimmedReaction || (trimmedReaction !== "like" && trimmedReaction !== "dislike")) {
       throw new Error("Reaction type is required.");
     }
 

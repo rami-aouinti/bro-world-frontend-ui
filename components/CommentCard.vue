@@ -46,15 +46,19 @@
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
         <div class="flex flex-wrap items-center gap-2">
           <button
-            v-for="type in reactionTypes"
-            :key="type"
             type="button"
-            :aria-label="reactionLabels[type]"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-base text-slate-600 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="!!reactingType"
-            @click="handleReact(type)"
+            data-test="comment-like-button"
+            :aria-label="commentReactionButtonAriaLabel"
+            :aria-pressed="isReacted"
+            class="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+            :class="isReacted
+              ? 'border-primary bg-primary text-white hover:border-primary hover:bg-primary/90'
+              : 'border-slate-200 bg-white text-slate-700 hover:border-primary hover:bg-primary/10 hover:text-primary'"
+            :disabled="reacting"
+            @click="handleReact"
           >
-            <span aria-hidden="true">{{ reactionEmojis[type] }}</span>
+            <span aria-hidden="true">{{ commentReactionIcon }}</span>
+            <span>{{ commentReactionButtonText }}</span>
           </button>
 
           <div
@@ -65,7 +69,7 @@
             <span v-for="reaction in comment.reactions_preview" :key="reaction.id" class="text-sm" aria-hidden="true">
               {{ reactionEmojis[reaction.type] }}
             </span>
-            <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
+            <span aria-hidden="true">{{ formatNumber(commentReactionCount) }}</span>
           </div>
         </div>
 
@@ -75,14 +79,14 @@
             class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-600 shadow-sm"
           >
             <span aria-hidden="true">👍</span>
-            <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
+            <span aria-hidden="true">{{ formatNumber(commentReactionCount) }}</span>
           </span>
           <span
             :aria-label="replyCountLabel"
             class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-600 shadow-sm"
           >
             <span aria-hidden="true">💬</span>
-            <span aria-hidden="true">{{ formatNumber(comment.totalComments) }}</span>
+            <span aria-hidden="true">{{ formatNumber(commentReplyCount) }}</span>
           </span>
           <button
             type="button"
@@ -175,7 +179,7 @@
 import { computed, ref, watch } from "vue";
 import CommentMeta from "~/components/blog/CommentMeta.vue";
 import { BaseCard } from "~/components/ui";
-import type { BlogCommentWithReplies, ReactionType } from "~/lib/mock/blog";
+import type { BlogCommentWithReplies, ReactionAction, ReactionType } from "~/lib/mock/blog";
 import { sanitizeRichText } from "~/lib/sanitize-html";
 
 defineOptions({ name: "CommentCard" });
@@ -185,13 +189,83 @@ interface FeedbackState {
   message: string;
 }
 
+interface ReactionAggregate {
+  reactions_count?: number | null;
+  likes_count?: number | null;
+  likes?: unknown[] | null;
+  reactions?: unknown[] | null;
+}
+
+interface CommentAggregate {
+  totalComments?: number | null;
+  children?: unknown;
+  comments?: unknown;
+  replies?: unknown;
+}
+
+function toFiniteNumber(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number(value);
+
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return null;
+}
+
+function resolveReactionTotal(entity: ReactionAggregate): number {
+  const candidates: Array<number | null> = [
+    toFiniteNumber(entity.likes_count ?? null),
+    toFiniteNumber(entity.reactions_count ?? null),
+  ];
+
+  for (const candidate of candidates) {
+    if (candidate !== null) {
+      return candidate;
+    }
+  }
+
+  if (Array.isArray(entity.likes)) {
+    return entity.likes.length;
+  }
+
+  if (Array.isArray(entity.reactions)) {
+    return entity.reactions.length;
+  }
+
+  return 0;
+}
+
+function resolveReplyTotal(entity: CommentAggregate): number {
+  const directTotal = toFiniteNumber(entity.totalComments ?? null);
+
+  if (directTotal !== null) {
+    return directTotal;
+  }
+
+  const collections = [entity.children, entity.comments, entity.replies];
+
+  for (const candidate of collections) {
+    if (Array.isArray(candidate)) {
+      return candidate.length;
+    }
+  }
+
+  return 0;
+}
+
 const props = defineProps<{
   comment: BlogCommentWithReplies;
   defaultAvatar: string;
   reactionEmojis: Record<ReactionType, string>;
-  reactionLabels: Record<ReactionType, string>;
   depth?: number;
-  reactToComment?: (commentId: string, reactionType: ReactionType) => Promise<void> | void;
+  reactToComment?: (commentId: string, reactionType: ReactionAction) => Promise<void> | void;
   replyToComment?: (commentId: string, content: string) => Promise<void> | void;
   isAuthenticated?: boolean;
   isAuthor?: boolean;
@@ -216,7 +290,6 @@ const comment = computed(() => props.comment);
 const sanitizedContent = computed(() => sanitizeRichText(comment.value.content));
 const depth = computed(() => props.depth ?? 0);
 const avatarFallback = computed(() => props.defaultAvatar || "https://bro-world-space.com/img/person.png");
-const reactionTypes = computed(() => Object.keys(props.reactionEmojis) as ReactionType[]);
 const hasReactionPreview = computed(() => (comment.value.reactions_preview ?? []).length > 0);
 const childComments = computed(() => comment.value.comments ?? comment.value.replies ?? comment.value.children ?? []);
 const hasChildren = computed(() => childComments.value.length > 0);
@@ -246,19 +319,29 @@ const followComment = computed(() => props.followComment);
 const editComment = computed(() => props.editComment);
 const deleteComment = computed(() => props.deleteComment);
 
-const reactingType = ref<ReactionType | null>(null);
+const reacting = ref(false);
 const reactionError = ref<string | null>(null);
 const replying = ref(false);
 const submittingReply = ref(false);
 const replyContent = ref("");
 const replyFeedback = ref<FeedbackState | null>(null);
 
+const commentReactionCount = computed(() => resolveReactionTotal(comment.value as ReactionAggregate));
+const commentReplyCount = computed(() => resolveReplyTotal(comment.value as CommentAggregate));
 const reactionCountLabel = computed(() =>
-  t("blog.reactions.comment.reactions", { count: formatNumber(comment.value.reactions_count) }),
+  t("blog.reactions.comment.reactions", { count: formatNumber(commentReactionCount.value) }),
 );
 const replyCountLabel = computed(() =>
-  t("blog.reactions.comment.replies", { count: formatNumber(comment.value.totalComments) }),
+  t("blog.reactions.comment.replies", { count: formatNumber(commentReplyCount.value) }),
 );
+const isReacted = computed(() => Boolean(comment.value.isReacted));
+const commentReactionButtonText = computed(() =>
+  isReacted.value
+    ? t("blog.reactions.comments.unlikeAction")
+    : t("blog.reactions.comments.likeAction"),
+);
+const commentReactionButtonAriaLabel = computed(() => t("blog.reactions.comments.toggleReaction"));
+const commentReactionIcon = computed(() => "👍");
 
 watch(
   () => comment.value.id,
@@ -268,7 +351,7 @@ watch(
     replyContent.value = "";
     replyFeedback.value = null;
     reactionError.value = null;
-    reactingType.value = null;
+    reacting.value = false;
   },
 );
 
@@ -322,8 +405,8 @@ function cancelReply() {
   replyFeedback.value = null;
 }
 
-async function handleReact(type: ReactionType) {
-  if (reactingType.value) {
+async function handleReact() {
+  if (reacting.value) {
     return;
   }
 
@@ -332,16 +415,17 @@ async function handleReact(type: ReactionType) {
     return;
   }
 
-  reactingType.value = type;
+  reacting.value = true;
   reactionError.value = null;
 
   try {
-    await props.reactToComment(comment.value.id, type);
+    const action: ReactionAction = isReacted.value ? "dislike" : "like";
+    await props.reactToComment(comment.value.id, action);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
     reactionError.value = message || t("blog.comments.reactionError");
   } finally {
-    reactingType.value = null;
+    reacting.value = false;
   }
 }
 

@@ -216,7 +216,8 @@
         "wow": "Waouh",
         "haha": "Haha",
         "sad": "Triste",
-        "angry": "En colère"
+        "angry": "En colère",
+        "dislike": "Je n'aime pas"
       },
       "posts": {
         "publishedOn": "Publié le {date}",
@@ -226,11 +227,17 @@
         "previewCount": "{count} aperçus",
         "highlightedReactions": "Réactions coup de cœur",
         "reactLabel": "Ajoutez votre réaction",
-        "reactionError": "Impossible d'ajouter votre réaction à cette publication. Veuillez réessayer."
+        "reactionError": "Impossible d'ajouter votre réaction à cette publication. Veuillez réessayer.",
+        "likeAction": "J'aime",
+        "unlikeAction": "Je n'aime plus",
+        "toggleReaction": "Basculer le j'aime sur ce post"
       },
       "comments": {
         "reactionCount": "{count} réactions",
-        "replyCount": "{count} réponses"
+        "replyCount": "{count} réponses",
+        "likeAction": "J'aime",
+        "unlikeAction": "Je n'aime plus",
+        "toggleReaction": "Basculer le j'aime sur ce commentaire"
       }
     },
     "posts": {
