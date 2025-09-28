@@ -118,8 +118,15 @@ const requiredKeys = [
   'seo.contact.description',
 ] as const
 
-function getValue(message: Record<string, any>, path: string) {
-  return path.split('.').reduce((acc, part) => (acc ? acc[part] : undefined), message)
+type LocaleMessages = Record<string, unknown>
+
+function getValue(message: LocaleMessages, path: string): unknown {
+  return path.split('.').reduce<unknown>((acc, part) => {
+    if (acc && typeof acc === 'object' && part in acc) {
+      return (acc as LocaleMessages)[part]
+    }
+    return undefined
+  }, message)
 }
 
 describe('page translations', () => {
@@ -127,7 +134,7 @@ describe('page translations', () => {
     describe(code, () => {
       for (const key of requiredKeys) {
         it(`includes translation for ${key}`, () => {
-          const value = getValue(messages as Record<string, any>, key)
+          const value = getValue(messages as LocaleMessages, key)
           expect(value, `Missing key ${key} for locale ${code}`).toBeTruthy()
         })
       }

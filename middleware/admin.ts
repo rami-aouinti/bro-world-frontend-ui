@@ -1,8 +1,10 @@
-import { useAuthSession } from "~/stores/auth-session";
 import { createError } from '#imports'
 import { ADMIN_ROLE_KEYS } from '~/lib/navigation/sidebar'
+import { useAuthSession } from '~/stores/auth-session'
 
-export default defineNuxtRouteMiddleware(async (_to) => {
+type MiddlewareResult = ReturnType<typeof defineNuxtRouteMiddleware>
+
+export default defineNuxtRouteMiddleware(async (_to): MiddlewareResult => {
   const auth = useAuthSession()
   await auth.initialize()
 
@@ -13,7 +15,7 @@ export default defineNuxtRouteMiddleware(async (_to) => {
     return
   }
 
-  if (process.server) {
+  if (import.meta.server) {
     return abortNavigation(
       createError({
         statusCode: 403,

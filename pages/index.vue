@@ -1,11 +1,13 @@
 <template>
   <main aria-labelledby="blog-heading">
 
-    <NewPost v-if="isAuthenticated"
-             :avatar="user.avatarUrl"
-             :userName="user.name"
-             @submit="createPost"
-             @attach="onAttach" />
+    <NewPost
+        v-if="isAuthenticated"
+        :avatar="user.avatarUrl"
+        :user-name="user.name"
+        @submit="createPost"
+        @attach="onAttach"
+    />
 
     <div v-if="pending" class="grid gap-4">
       <div

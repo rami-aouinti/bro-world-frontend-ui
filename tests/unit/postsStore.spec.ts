@@ -50,32 +50,34 @@ describe('posts store', () => {
     expect(listRef).toBeDefined()
     expect(timestampsRef).toBeDefined()
 
-    const makePost = (id: string, overrides: Partial<BlogPost> = {}): BlogPost => ({
-      id,
-      title: `Title ${id}`,
-      summary: `Summary ${id}`,
-      content: `Content ${id}`,
-      url: null,
-      slug: `slug-${id}`,
-      medias: [],
-      isReacted: null,
-      publishedAt: new Date(2024, 0, Number(id.replace('post-', '')) + 1).toISOString(),
-      sharedFrom: null,
-      reactions_count: 1,
-      totalComments: 0,
-      user: {
-        id: `user-${id}`,
-        firstName: 'Jane',
-        lastName: 'Doe',
-        username: `jane-${id}`,
-        email: 'jane@example.com',
-        enabled: true,
-        photo: null,
-      },
-      reactions_preview: [],
-      comments_preview: [],
-      ...overrides,
-    })
+    function makePost(id: string, overrides: Partial<BlogPost> = {}): BlogPost {
+      return {
+        id,
+        title: `Title ${id}`,
+        summary: `Summary ${id}`,
+        content: `Content ${id}`,
+        url: null,
+        slug: `slug-${id}`,
+        medias: [],
+        isReacted: null,
+        publishedAt: new Date(2024, 0, Number(id.replace('post-', '')) + 1).toISOString(),
+        sharedFrom: null,
+        reactions_count: 1,
+        totalComments: 0,
+        user: {
+          id: `user-${id}`,
+          firstName: 'Jane',
+          lastName: 'Doe',
+          username: `jane-${id}`,
+          email: 'jane@example.com',
+          enabled: true,
+          photo: null,
+        },
+        reactions_preview: [],
+        comments_preview: [],
+        ...overrides,
+      }
+    }
 
     const post1 = makePost('post-1')
     const post2 = makePost('post-2')

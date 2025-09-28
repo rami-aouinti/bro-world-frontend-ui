@@ -18,7 +18,7 @@ config.global.stubs = {
 }
 
 if (!('visualViewport' in window)) {
-  const noop = () => {}
+  function noop() {}
   const mockViewport = {
     width: window.innerWidth,
     height: window.innerHeight,

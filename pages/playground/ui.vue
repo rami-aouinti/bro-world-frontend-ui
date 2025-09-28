@@ -104,14 +104,10 @@
                       @update:model-value="onUpdateModel(example.modelKey)"
                   >
                     <!-- Slots dynamiques de l'exemple -->
-                    <template
-                        v-for="(slotContent, slotName) in example.slots"
-                        :key="slotName"
-                        v-slot:[slotName]
-                    >
+                    <template v-for="(slotContent, slotName) in example.slots" :key="slotName" #[slotName]>
                       <component
-                          v-if="isSlotComponentRef(slotContent)"
                           :is="componentRegistry[slotContent.component]"
+                          v-if="isSlotComponentRef(slotContent)"
                           v-bind="slotProps(slotContent)"
                           :model-value="slotModelValue(slotContent)"
                           @update:model-value="onUpdateModel(slotContent.modelKey)"
@@ -122,21 +118,17 @@
                     <!-- Enfants -->
                     <template v-if="example.children" #default>
                       <component
+                          :is="componentRegistry[child.component]"
                           v-for="child in example.children"
                           :key="child.id"
-                          :is="componentRegistry[child.component]"
                           v-bind="getExampleProps(child)"
                           :model-value="child.modelKey ? models[child.modelKey] : undefined"
                           @update:model-value="onUpdateModel(child.modelKey)"
                       >
-                        <template
-                            v-for="(slotContent, slotName) in child.slots"
-                            :key="slotName"
-                            v-slot:[slotName]
-                        >
+                        <template v-for="(slotContent, slotName) in child.slots" :key="slotName" #[slotName]>
                           <component
-                              v-if="isSlotComponentRef(slotContent)"
                               :is="componentRegistry[slotContent.component]"
+                              v-if="isSlotComponentRef(slotContent)"
                               v-bind="slotProps(slotContent)"
                               :model-value="slotModelValue(slotContent)"
                               @update:model-value="onUpdateModel(slotContent.modelKey)"
@@ -170,6 +162,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch, type Component, type VNodeChild } from 'vue'
 import { createError, useHead } from '#imports'
+import { useTheme } from 'vuetify'
 
 import BaseButton from '~/components/ui/BaseButton.vue'
 import BaseCheckbox from '~/components/ui/BaseCheckbox.vue'
@@ -179,7 +172,8 @@ import BaseSelect from '~/components/ui/BaseSelect.vue'
 import BaseSwitch from '~/components/ui/BaseSwitch.vue'
 import BaseTextarea from '~/components/ui/BaseTextarea.vue'
 import FormField from '~/components/ui/FormField.vue'
-const { locale, t } = useI18n();
+
+const { locale, t } = useI18n()
 if (process.env.APP_ENV === 'production') {
   throw createError({ statusCode: 404, statusMessage: 'Not Found' })
 }
@@ -190,9 +184,15 @@ definePageMeta({
 })
 
 type ControlSize = 'sm' | 'md' | 'lg'
-type ThemeMode =  'dark'
+const SUPPORTED_THEME_MODES = ['light', 'dark'] as const
+type ThemeMode = (typeof SUPPORTED_THEME_MODES)[number]
 type DirectionMode = 'ltr' | 'rtl'
-const themeMode = 'dark'
+
+const theme = useTheme()
+const initialThemeName = SUPPORTED_THEME_MODES.includes(theme.global.name.value as ThemeMode)
+  ? (theme.global.name.value as ThemeMode)
+  : 'light'
+const themeMode = ref<ThemeMode>(initialThemeName)
 
 const componentRegistry = {
   BaseButton,
@@ -284,8 +284,10 @@ onMounted(() => {
 watch(
     themeMode,
     (value) => {
-      if (!import.meta.client) return
-      document.documentElement.classList.toggle('theme--dark', value === 'dark')
+      theme.global.name.value = value
+      if (import.meta.client) {
+        document.documentElement.classList.toggle('theme--dark', value === 'dark')
+      }
     },
     { immediate: true },
 )
@@ -311,8 +313,8 @@ onBeforeUnmount(() => {
   if (import.meta.client) {
     document.documentElement.setAttribute('dir', initialDirection.value)
     document.documentElement.classList.toggle('theme--dark', initialThemeName === 'dark')
-    theme.global.name.value = initialThemeName as ThemeMode
   }
+  theme.global.name.value = initialThemeName
   locale.value = initialLocale
 })
 
@@ -891,11 +893,12 @@ function updateModel(key: string, value: unknown) {
 function formatExample(example: PlaygroundExample) {
   if (example.captionOverride) return example.captionOverride
   if (!example.component) return ''
-  const props = { ...example.props }
+  const props: (Record<string, unknown> & { 'v-model'?: string }) = {
+    ...(example.props ?? {}),
+  }
 
   if (example.modelKey) {
-    // affichage lisible
-    ;(props as any)['v-model'] = example.modelKey
+    props['v-model'] = example.modelKey
   }
 
   const entries = Object.entries(props).filter(([, value]) => value !== undefined && value !== false)
@@ -928,17 +931,25 @@ function getExampleProps(example: PlaygroundExample) {
   return props
 }
 
-function renderSlotContent(content: SlotContent | undefined) {
+function renderSlotContent(content: SlotContent | undefined): VNodeChild {
   if (typeof content === 'function') {
     return content()
   }
-  return content as any
+  if (typeof content === 'string' || typeof content === 'number') {
+    return content
+  }
+  return ''
 }
 
 /** ===== Helpers sans TS dans le template ===== */
 
 function isSlotComponentRef(x: unknown): x is SlotComponentReference {
-  return !!x && typeof x === 'object' && 'component' in (x as any)
+  if (!x || typeof x !== 'object') {
+    return false
+  }
+
+  const candidate = x as Record<string, unknown>
+  return 'component' in candidate && typeof candidate.component === 'string'
 }
 
 function slotProps(x: SlotComponentReference | undefined) {

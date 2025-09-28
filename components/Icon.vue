@@ -1,17 +1,17 @@
 <template>
   <span
     v-if="iconSvg"
+    ref="iconEl"
     v-bind="forwardedAttrs"
     :class="['inline-flex items-center justify-center align-middle', attrs.class]"
     :style="[attrs.style as StyleValue | undefined, iconStyle]"
     role="img"
     aria-hidden="true"
-    v-html="iconSvg"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, watch, useAttrs } from 'vue'
+import { computed, ref, watch, useAttrs } from 'vue'
 import type { StyleValue } from 'vue'
 
 const props = withDefaults(
@@ -28,6 +28,14 @@ const props = withDefaults(
 const attrs = useAttrs()
 const iconCache = useState<Record<string, string | null>>('app-icon-cache', () => ({}))
 
+function sanitizeSvg(svg: string): string {
+  return svg
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+    .replace(/\son[a-z]+="[^"]*"/gi, '')
+    .replace(/\son[a-z]+='[^']*'/gi, '')
+    .replace(/javascript:/gi, '')
+}
+
 const normalizedSize = computed(() => {
   if (props.size == null) {
     return undefined
@@ -42,6 +50,7 @@ const forwardedAttrs = computed(() => {
 })
 
 const iconSvg = computed(() => (props.name ? iconCache.value[props.name] ?? null : null))
+const iconEl = ref<HTMLElement | null>(null)
 
 const iconStyle = computed(() => ({
   width: normalizedSize.value,
@@ -62,7 +71,7 @@ async function resolveIcon(name: string) {
 
     iconCache.value = {
       ...iconCache.value,
-      [name]: typeof svg === 'string' ? svg : String(svg),
+      [name]: typeof svg === 'string' ? sanitizeSvg(svg) : sanitizeSvg(String(svg)),
     }
   } catch (error) {
     console.warn(`Unable to load icon "${name}":`, error)
@@ -79,6 +88,16 @@ watch(
   (name) => {
     if (name) {
       resolveIcon(name)
+    }
+  },
+  { immediate: true },
+)
+
+watch(
+  iconSvg,
+  (value) => {
+    if (iconEl.value) {
+      iconEl.value.innerHTML = value ?? ''
     }
   },
   { immediate: true },
