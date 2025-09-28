@@ -81,8 +81,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   const nuxtIconComponent = nuxtApp.vueApp.component('Icon')
 
   const sharedVariables = {
-    'font-family-base': "'Inter', 'Helvetica Neue', Arial, sans-serif",
-    'font-family-display': "'Plus Jakarta Sans', 'Inter', sans-serif",
+    'font-family-base': "'Manrope', 'Inter', 'Helvetica Neue', Arial, sans-serif",
+    'font-family-display':
+      "'Bricolage Grotesque', 'Manrope', 'Inter', 'Helvetica Neue', Arial, sans-serif",
     'font-size-root': '16px',
     'line-height-base': 1.5,
     'text-h1-size': '3.25rem',

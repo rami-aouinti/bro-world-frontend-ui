@@ -62,11 +62,96 @@ export default {
       // => @media (min-width: 640px) { ... }
     },
     fontFamily: {
-      heading: ["Bricolage Grotesque", "Manrope"],
-      sans: ["Manrope"],
+      heading: [
+        "Bricolage Grotesque",
+        "Manrope",
+        "Inter",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif",
+      ],
+      sans: [
+        "Manrope",
+        "Inter",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif",
+      ],
       mono: ["monospace"],
     },
     extend: {
+      fontSize: {
+        h1: [
+          "var(--v-text-h1-size)",
+          {
+            lineHeight: "var(--v-text-h1-line-height)",
+            letterSpacing: "var(--v-text-h1-letter-spacing)",
+            fontWeight: "var(--v-text-h1-weight)",
+            fontFamily: "var(--v-font-family-display)",
+          },
+        ],
+        h2: [
+          "var(--v-text-h2-size)",
+          {
+            lineHeight: "var(--v-text-h2-line-height)",
+            letterSpacing: "var(--v-text-h2-letter-spacing)",
+            fontWeight: "var(--v-text-h2-weight)",
+            fontFamily: "var(--v-font-family-display)",
+          },
+        ],
+        h3: [
+          "var(--v-text-h3-size)",
+          {
+            lineHeight: "var(--v-text-h3-line-height)",
+            letterSpacing: "var(--v-text-h3-letter-spacing)",
+            fontWeight: "var(--v-text-h3-weight)",
+            fontFamily: "var(--v-font-family-display)",
+          },
+        ],
+        h4: [
+          "var(--v-text-h4-size)",
+          {
+            lineHeight: "var(--v-text-h4-line-height)",
+            letterSpacing: "var(--v-text-h4-letter-spacing)",
+            fontWeight: "var(--v-text-h4-weight)",
+            fontFamily: "var(--v-font-family-display)",
+          },
+        ],
+        h5: [
+          "var(--v-text-h5-size)",
+          {
+            lineHeight: "var(--v-text-h5-line-height)",
+            letterSpacing: "var(--v-text-h5-letter-spacing)",
+            fontWeight: "var(--v-text-h5-weight)",
+            fontFamily: "var(--v-font-family-display)",
+          },
+        ],
+        h6: [
+          "var(--v-text-h6-size)",
+          {
+            lineHeight: "var(--v-text-h6-line-height)",
+            letterSpacing: "var(--v-text-h6-letter-spacing)",
+            fontWeight: "var(--v-text-h6-weight)",
+            fontFamily: "var(--v-font-family-display)",
+          },
+        ],
+        "body-1": [
+          "var(--v-text-body-1-size)",
+          {
+            lineHeight: "var(--v-text-body-1-line-height)",
+            fontWeight: "var(--v-text-body-1-weight, 400)",
+            fontFamily: "var(--v-font-family-base)",
+          },
+        ],
+        "body-2": [
+          "var(--v-text-body-2-size)",
+          {
+            lineHeight: "var(--v-text-body-2-line-height)",
+            fontWeight: "var(--v-text-body-2-weight, 400)",
+            fontFamily: "var(--v-font-family-base)",
+          },
+        ],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
