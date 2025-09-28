@@ -194,7 +194,40 @@ export const usePostsStore = defineStore("posts", () => {
     return index;
   }
 
+  interface ActiveFetchState {
+    promise: Promise<BlogPost[]>;
+    hasBackground: boolean;
+    hasForeground: boolean;
+  }
+
+  const activeFetches = new Map<string, ActiveFetchState>();
+
+  function createFetchKey(options: FetchOptions & { background?: boolean } = {}) {
+    const params = options.params ?? {};
+    const normalizedParams = Object.keys(params)
+      .sort()
+      .map((key) => `${key}:${JSON.stringify(params[key])}`)
+      .join("|");
+
+    return `${normalizedParams}|force:${Boolean(options.force)}`;
+  }
+
   async function fetchPostsFromServer(options: FetchOptions & { background?: boolean } = {}) {
+    const fetchKey = createFetchKey(options);
+    const existingRequest = activeFetches.get(fetchKey);
+
+    if (existingRequest) {
+      if (options.background) {
+        existingRequest.hasBackground = true;
+      } else {
+        pending.value = true;
+        error.value = null;
+        existingRequest.hasForeground = true;
+      }
+
+      return existingRequest.promise;
+    }
+
     const fetcher = resolveFetcher();
 
     if (!options.background) {
@@ -202,33 +235,50 @@ export const usePostsStore = defineStore("posts", () => {
       error.value = null;
     }
 
-    try {
-      const response = await fetcher<PostsListResponse>("/api/v1/posts", {
-        method: "GET",
-        query: options.params,
-      });
+    const fetchState: ActiveFetchState = {
+      promise: Promise.resolve([] as BlogPost[]),
+      hasBackground: Boolean(options.background),
+      hasForeground: !options.background,
+    };
 
-      if (!response || !Array.isArray(response.data)) {
-        throw new Error("Invalid posts response format.");
+    const requestPromise = (async () => {
+      try {
+        const response = await fetcher<PostsListResponse>("/api/v1/posts", {
+          method: "GET",
+          query: options.params,
+        });
+
+        if (!response || !Array.isArray(response.data)) {
+          throw new Error("Invalid posts response format.");
+        }
+
+        setPostsFromResponse(response);
+        return response.data;
+      } catch (caughtError) {
+        const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+
+        if (fetchState.hasForeground) {
+          error.value = message || "Unable to fetch posts.";
+        }
+
+        throw new Error(message || "Unable to fetch posts.");
+      } finally {
+        activeFetches.delete(fetchKey);
+
+        if (fetchState.hasBackground) {
+          isRevalidating.value = false;
+        }
+
+        if (fetchState.hasForeground) {
+          pending.value = false;
+        }
       }
+    })();
 
-      setPostsFromResponse(response);
-      return response.data;
-    } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+    fetchState.promise = requestPromise;
+    activeFetches.set(fetchKey, fetchState);
 
-      if (!options.background) {
-        error.value = message || "Unable to fetch posts.";
-      }
-
-      throw new Error(message || "Unable to fetch posts.");
-    } finally {
-      if (options.background) {
-        isRevalidating.value = false;
-      } else {
-        pending.value = false;
-      }
-    }
+    return requestPromise;
   }
 
   async function fetchPosts(options: FetchOptions = {}) {
