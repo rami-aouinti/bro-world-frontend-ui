@@ -29,6 +29,14 @@ interface PostsStorePost extends BlogPost {
   __optimistic?: boolean;
 }
 
+function clonePost(post: PostsStorePost) {
+  try {
+    return structuredClone(post) as PostsStorePost;
+  } catch {
+    return JSON.parse(JSON.stringify(post)) as PostsStorePost;
+  }
+}
+
 function createOptimisticPost(id: string, content: string, overrides?: Partial<BlogPost>): PostsStorePost {
   const timestamp = new Date().toISOString();
 
@@ -448,7 +456,7 @@ export const usePostsStore = defineStore("posts", () => {
       return existing;
     }
 
-    const snapshot = structuredClone(existing) as PostsStorePost;
+    const snapshot = clonePost(existing);
     items.value = {
       ...items.value,
       [trimmedId]: { ...existing, ...updates, __optimistic: true },
@@ -506,7 +514,7 @@ export const usePostsStore = defineStore("posts", () => {
       return;
     }
 
-    const snapshot = structuredClone(existing) as PostsStorePost;
+    const snapshot = clonePost(existing);
     const previousIndex = removePostFromState(trimmedId);
 
     deleting.value = {
