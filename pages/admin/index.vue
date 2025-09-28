@@ -49,8 +49,8 @@
                       size="x-small"
                       class="font-weight-medium"
                     >
-                      <v-icon
-                        :icon="metric.trendIsPositive ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold'"
+                      <Icon
+                        :name="metric.trendIsPositive ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold'"
                         size="16"
                         class="me-1"
                       />
@@ -60,7 +60,7 @@
                   </div>
                 </div>
                 <v-avatar color="primary" variant="tonal" size="44">
-                  <v-icon :icon="metric.icon" size="26" />
+                  <Icon :name="metric.icon" size="26" />
                 </v-avatar>
               </div>
               <p class="text-body-2 text-medium-emphasis mb-0 mt-4">{{ metric.description }}</p>
@@ -90,7 +90,7 @@
                   <p class="text-body-2 text-medium-emphasis mb-4">{{ control.description }}</p>
                 </div>
                 <v-avatar color="primary" variant="tonal">
-                  <v-icon :icon="control.icon" />
+                  <Icon :name="control.icon" />
                 </v-avatar>
               </div>
               <v-switch
@@ -124,7 +124,7 @@
             <v-card class="pa-6 h-100" rounded="xl" elevation="6">
               <div class="d-flex align-start gap-4">
                 <v-avatar :color="action.color" variant="tonal" size="48">
-                  <v-icon :icon="action.icon" size="26" />
+                  <Icon :name="action.icon" size="26" />
                 </v-avatar>
                 <div class="flex-grow-1">
                   <h3 class="text-subtitle-1 font-weight-semibold mb-2">{{ action.title }}</h3>
@@ -163,7 +163,7 @@
               <div class="d-flex flex-column gap-4">
                 <div class="d-flex align-start gap-3">
                   <v-avatar color="primary" variant="tonal" size="44">
-                    <v-icon :icon="module.icon" size="24" />
+                    <Icon :name="module.icon" size="24" />
                   </v-avatar>
                   <div>
                     <h3 class="text-subtitle-1 font-weight-semibold mb-1">{{ module.title }}</h3>
@@ -233,7 +233,7 @@
                   class="d-flex gap-3"
                 >
                   <v-avatar :color="item.color" variant="tonal" size="40">
-                    <v-icon :icon="item.icon" size="22" />
+                    <Icon :name="item.icon" size="22" />
                   </v-avatar>
                   <div class="flex-grow-1">
                     <div class="d-flex align-center justify-space-between gap-2">
@@ -274,7 +274,7 @@
                   <div class="d-flex align-center justify-space-between">
                     <div class="d-flex align-center gap-3">
                       <v-avatar :color="service.color" variant="tonal" size="36">
-                        <v-icon :icon="service.icon" size="20" />
+                        <Icon :name="service.icon" size="20" />
                       </v-avatar>
                       <div>
                         <p class="text-subtitle-2 font-weight-semibold mb-0">{{ service.name }}</p>

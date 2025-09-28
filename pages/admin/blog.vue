@@ -23,6 +23,7 @@
             :aria-label="t('admin.blog.actions.refreshAria')"
             @click="handleRefresh"
           >
+            <Icon name="mdi-refresh" class="me-2" />
             {{ t('admin.blog.actions.refresh') }}
           </v-btn>
           <v-btn
@@ -34,6 +35,7 @@
             :aria-label="t('admin.blog.actions.createAria')"
             @click="openCreateDialog"
           >
+            <Icon name="mdi-plus" class="me-2" />
             {{ t('admin.blog.actions.create') }}
           </v-btn>
         </div>
@@ -134,7 +136,9 @@
               icon="mdi-eye-outline"
               :aria-label="t('admin.blog.table.previewAria', { title: item.title })"
               @click="openPreview(item)"
-            />
+            >
+              <Icon name="mdi-eye-outline" />
+            </v-btn>
             <v-btn
               variant="text"
               color="primary"
@@ -143,7 +147,9 @@
               :disabled="isUpdating(item.id) || isDeleting(item.id)"
               :aria-label="t('admin.blog.table.editAria', { title: item.title })"
               @click="openEditDialog(item)"
-            />
+            >
+              <Icon name="mdi-pencil-outline" />
+            </v-btn>
             <v-btn
               variant="text"
               color="error"
@@ -152,7 +158,9 @@
               :disabled="isUpdating(item.id) || isDeleting(item.id)"
               :aria-label="t('admin.blog.table.deleteAria', { title: item.title })"
               @click="confirmDelete(item)"
-            />
+            >
+              <Icon name="mdi-delete-outline" />
+            </v-btn>
             <v-btn
               v-if="item.publicUrl"
               variant="text"
@@ -162,7 +170,9 @@
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="t('admin.blog.table.viewAria', { title: item.title })"
-            />
+            >
+              <Icon name="mdi-open-in-new" />
+            </v-btn>
           </div>
         </template>
 
@@ -385,6 +395,7 @@ import type { BlogPost } from '~/lib/mock/blog'
 
 definePageMeta({
   middleware: ['auth', 'admin'],
+  showRightWidgets: false,
 })
 
 const { t, locale } = useI18n()

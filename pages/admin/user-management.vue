@@ -110,7 +110,9 @@
                 :disabled="isDeleting(item.id)"
                 :loading="isUpdating(item.id)"
                 @click="openEditDialog(item.id)"
-              />
+              >
+                <Icon name="mdi-pencil" />
+              </v-btn>
               <v-btn
                 icon="mdi-delete"
                 size="small"
@@ -118,7 +120,9 @@
                 color="error"
                 :loading="isDeleting(item.id)"
                 @click="openDeleteDialog(item.id)"
-              />
+              >
+                <Icon name="mdi-delete" />
+              </v-btn>
             </div>
           </template>
 
@@ -373,6 +377,7 @@ interface FormErrors {
 
 definePageMeta({
   middleware: ['auth', 'admin'],
+  showRightWidgets: false,
 })
 
 const { t, locale } = useI18n()
