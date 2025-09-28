@@ -20,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthSession } from '~/stores/auth-session'
+
 definePageMeta({
   middleware: 'auth',
   title: 'logout',

@@ -59,18 +59,18 @@
           :search="search"
           class="user-table"
         >
-          <template #item.user="{ item }">
+          <template #[`item.user`]="{ item }">
             <div class="d-flex flex-column">
               <span class="text-body-1 font-weight-medium">{{ item.displayName }}</span>
               <span class="text-body-2 text-medium-emphasis">@{{ item.username }}</span>
             </div>
           </template>
 
-          <template #item.email="{ item }">
+          <template #[`item.email`]="{ item }">
             <span class="text-body-2">{{ item.email }}</span>
           </template>
 
-          <template #item.status="{ item }">
+          <template #[`item.status`]="{ item }">
             <v-chip
               :color="item.enabled ? 'success' : 'warning'"
               size="small"
@@ -81,7 +81,7 @@
             </v-chip>
           </template>
 
-          <template #item.roles="{ item }">
+          <template #[`item.roles`]="{ item }">
             <div class="d-flex flex-wrap gap-2">
               <v-chip
                 v-for="role in item.roles"
@@ -96,11 +96,11 @@
             </div>
           </template>
 
-          <template #item.updatedAt="{ item }">
+          <template #[`item.updatedAt`]="{ item }">
             <span class="text-body-2 text-medium-emphasis">{{ formatDate(item.updatedAt) }}</span>
           </template>
 
-          <template #item.actions="{ item }">
+          <template #[`item.actions`]="{ item }">
             <div class="d-flex gap-2">
               <v-btn
                 icon="mdi-pencil"

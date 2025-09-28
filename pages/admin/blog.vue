@@ -94,7 +94,7 @@
           <v-skeleton-loader type="table-row@5" />
         </template>
 
-        <template #item.title="{ item }">
+        <template #[`item.title`]="{ item }">
           <div class="d-flex flex-column gap-1">
             <div class="d-flex align-center gap-2">
               <span class="text-body-1 font-weight-medium text-high-emphasis">{{ item.title }}</span>
@@ -112,23 +112,23 @@
           </div>
         </template>
 
-        <template #item.author="{ item }">
+        <template #[`item.author`]="{ item }">
           <span class="text-body-2 text-medium-emphasis">{{ item.author }}</span>
         </template>
 
-        <template #item.publishedTimestamp="{ item }">
+        <template #[`item.publishedTimestamp`]="{ item }">
           <span class="text-body-2 text-medium-emphasis">{{ item.publishedLabel }}</span>
         </template>
 
-        <template #item.reactions="{ item }">
+        <template #[`item.reactions`]="{ item }">
           <span class="text-body-2 font-weight-medium">{{ formatNumber(item.reactions) }}</span>
         </template>
 
-        <template #item.comments="{ item }">
+        <template #[`item.comments`]="{ item }">
           <span class="text-body-2 font-weight-medium">{{ formatNumber(item.comments) }}</span>
         </template>
 
-        <template #item.actions="{ item }">
+        <template #[`item.actions`]="{ item }">
           <div class="d-flex justify-end gap-1">
             <v-btn
               variant="text"

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 type StateRef<T> = ReturnType<typeof ref<T>>
 
-const stateRegistry = new Map<string, StateRef<any>>()
+const stateRegistry = new Map<string, StateRef<unknown>>()
 
 export function useState<T>(key: string, init: () => T): StateRef<T> {
   if (!stateRegistry.has(key)) {

@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
-const trimmedString = () => z.string().trim()
+function trimmedString() {
+  return z.string().trim()
+}
 
 const contactSchema = z
   .object({
