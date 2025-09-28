@@ -704,6 +704,80 @@
           }
         }
       }
+    },
+    "blog": {
+      "metaTitle": "Blog management",
+      "title": "Blog posts",
+      "subtitle": "Review, publish, and maintain articles in one place.",
+      "actions": {
+        "create": "New post",
+        "createAria": "Create a new blog post",
+        "refresh": "Refresh",
+        "refreshAria": "Refresh posts list",
+        "refreshSuccess": "Posts list refreshed."
+      },
+      "table": {
+        "searchLabel": "Search posts",
+        "searchPlaceholder": "Filter by title, summary, or author",
+        "itemsPerPageLabel": "Items per page",
+        "empty": "No posts available yet.",
+        "emptySearch": "No posts match your search.",
+        "headers": {
+          "title": "Title",
+          "author": "Author",
+          "publishedAt": "Published",
+          "reactions": "Reactions",
+          "comments": "Comments",
+          "actions": "Actions"
+        },
+        "optimisticBadge": "Pending sync",
+        "noSummary": "No summary provided.",
+        "untitled": "Untitled post",
+        "unknownAuthor": "Unknown author",
+        "notPublished": "Not published",
+        "previewAria": "Preview “{title}”",
+        "editAria": "Edit “{title}”",
+        "deleteAria": "Delete “{title}”",
+        "viewAria": "Open public page for “{title}”",
+        "results": "{count} results"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Create a new post",
+          "submit": "Publish post"
+        },
+        "edit": {
+          "title": "Edit post",
+          "submit": "Save changes"
+        },
+        "preview": {
+          "title": "Quick preview",
+          "summaryLabel": "Summary",
+          "contentLabel": "Content",
+          "openPublic": "Open public page"
+        },
+        "delete": {
+          "title": "Delete post",
+          "description": "This action cannot be undone. The post will be removed from the blog.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        },
+        "form": {
+          "titleLabel": "Title",
+          "summaryLabel": "Summary",
+          "contentLabel": "Content"
+        }
+      },
+      "feedback": {
+        "created": "Post created successfully.",
+        "updated": "Post updated successfully.",
+        "deleted": "Post deleted successfully.",
+        "loadError": "Unable to load posts. Please try again.",
+        "actionError": "Something went wrong. Please try again."
+      },
+      "validation": {
+        "contentRequired": "Content is required."
+      }
     }
   }
 }

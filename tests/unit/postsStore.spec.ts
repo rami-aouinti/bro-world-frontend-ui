@@ -1,0 +1,108 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { createSSRApp, h } from 'vue'
+
+import { createPinia } from '~/lib/pinia-shim'
+import type { BlogPost } from '~/lib/mock/blog'
+import { __requestFetchSpy, __resetRequestFetchMock } from '#app'
+import { __getNuxtStateRef, __resetNuxtStateMocks } from '#imports'
+
+const fetchSpy = __requestFetchSpy
+
+describe('posts store', () => {
+  beforeEach(() => {
+    __resetNuxtStateMocks()
+    __resetRequestFetchMock()
+    fetchSpy.mockReset()
+    vi.stubGlobal('$fetch', fetchSpy)
+    vi.stubGlobal('useRuntimeConfig', () => ({
+      redis: {
+        listTtl: 60,
+        itemTtl: 300,
+      },
+    }))
+    vi.stubGlobal('structuredClone', <T>(value: T) => JSON.parse(JSON.stringify(value)) as T)
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('restores the post when deletePost fails', async () => {
+    const { usePostsStore } = await import('~/stores/posts')
+
+    const app = createSSRApp({
+      render: () => h('div'),
+    })
+
+    const pinia = createPinia()
+    app.use(pinia)
+
+    let store!: ReturnType<typeof usePostsStore>
+    app.runWithContext(() => {
+      store = usePostsStore()
+    })
+
+    const itemsRef = __getNuxtStateRef<Record<string, BlogPost>>('posts-items')
+    const listRef = __getNuxtStateRef<string[]>('posts-list-ids')
+    const timestampsRef = __getNuxtStateRef<Record<string, number>>('posts-item-timestamps')
+
+    expect(itemsRef).toBeDefined()
+    expect(listRef).toBeDefined()
+    expect(timestampsRef).toBeDefined()
+
+    const makePost = (id: string, overrides: Partial<BlogPost> = {}): BlogPost => ({
+      id,
+      title: `Title ${id}`,
+      summary: `Summary ${id}`,
+      content: `Content ${id}`,
+      url: null,
+      slug: `slug-${id}`,
+      medias: [],
+      isReacted: null,
+      publishedAt: new Date(2024, 0, Number(id.replace('post-', '')) + 1).toISOString(),
+      sharedFrom: null,
+      reactions_count: 1,
+      totalComments: 0,
+      user: {
+        id: `user-${id}`,
+        firstName: 'Jane',
+        lastName: 'Doe',
+        username: `jane-${id}`,
+        email: 'jane@example.com',
+        enabled: true,
+        photo: null,
+      },
+      reactions_preview: [],
+      comments_preview: [],
+      ...overrides,
+    })
+
+    const post1 = makePost('post-1')
+    const post2 = makePost('post-2')
+    const post3 = makePost('post-3')
+
+    itemsRef!.value = {
+      [post2.id]: post2,
+      [post1.id]: post1,
+      [post3.id]: post3,
+    }
+    listRef!.value = [post2.id, post1.id, post3.id]
+    const initialTimestamp = Date.now() - 1_000
+    timestampsRef!.value = {
+      [post1.id]: initialTimestamp,
+      [post2.id]: initialTimestamp,
+      [post3.id]: initialTimestamp,
+    }
+
+    fetchSpy.mockRejectedValueOnce(new Error('network error'))
+
+    await expect(store.deletePost(post1.id)).rejects.toThrow('network error')
+
+    expect(fetchSpy).toHaveBeenCalledWith(`/api/v1/posts/${post1.id}`, expect.objectContaining({ method: 'DELETE' }))
+    expect(listRef!.value).toEqual([post2.id, post1.id, post3.id])
+    expect(itemsRef!.value[post1.id]).toMatchObject({ id: post1.id })
+    expect(store.deleting.value[post1.id]).toBe(false)
+    expect(store.posts.value.map((post) => post.id)).toEqual([post2.id, post1.id, post3.id])
+    expect(timestampsRef!.value[post1.id]).toBeGreaterThanOrEqual(initialTimestamp)
+  })
+})
