@@ -17,9 +17,11 @@
         :default-avatar="defaultAvatar"
         :published-label="publishedDisplay"
     />
-    <p class="mt-2 text-sm leading-relaxed text-slate-700 whitespace-pre-line">
-      {{ comment.content }}
-    </p>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div
+      class="mt-2 text-sm leading-relaxed text-slate-700 [&_a]:text-primary [&_a]:underline [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5 [&_strong]:font-semibold"
+      v-html="sanitizedContent"
+    ></div>
     <div class="mt-3 flex flex-wrap items-center gap-4 border-t border-slate-200 pt-3 text-xs text-slate-500">
         <span
             :aria-label="t('blog.reactions.comment.reactions', { count: formatNumber(comment.reactions_count) })"
@@ -46,6 +48,7 @@ import type { BlogCommentPreview } from "~/lib/mock/blog";
 import { computed } from "vue";
 import CommentMeta from "~/components/blog/CommentMeta.vue";
 import { BaseCard } from "~/components/ui";
+import { sanitizeRichText } from "~/lib/sanitize-html";
 
 
 defineOptions({
@@ -99,6 +102,7 @@ function formatNumber(value: number | null | undefined) {
 }
 
 const comment = computed(() => props.comment);
+const sanitizedContent = computed(() => sanitizeRichText(comment.value.content));
 const publishedDisplay = computed(() => {
   const relative = formatRelativeTime(comment.value.publishedAt);
   return relative || formatDateTime(comment.value.publishedAt);

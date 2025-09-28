@@ -37,14 +37,14 @@
         <h4 v-if="post.title" class="text-xl font-semibold text-slate-900 sm:text-2xl">
           {{ post.title }}
         </h4>
-        <div v-if="bodyParagraphs.length" class="space-y-3 leading-relaxed">
-          <p
-            v-for="(paragraph, index) in bodyParagraphs"
-            :key="index"
-            class="whitespace-pre-line"
-          >
-            {{ paragraph }}
-          </p>
+        <div
+          v-if="sanitizedSummary || sanitizedBody"
+          class="space-y-4 leading-relaxed text-slate-700 [&_a]:text-primary [&_a]:underline [&_h1]:text-2xl [&_h1]:font-semibold [&_h2]:text-xl [&_h2]:font-semibold [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5 [&_strong]:font-semibold"
+        >
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div v-if="sanitizedSummary" v-html="sanitizedSummary"></div>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div v-if="sanitizedBody" v-html="sanitizedBody"></div>
         </div>
       </div>
     </div>
@@ -86,8 +86,9 @@
 import { computed } from "vue";
 import BlogCommentCard from "./BlogCommentCard.vue";
 import PostMeta from "./PostMeta.vue";
+import { BaseCard } from "~/components/ui";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
-import {BaseCard} from "~/components/ui";
+import { sanitizeRichText } from "~/lib/sanitize-html";
 
 const props = defineProps<{ post: BlogPost }>();
 
@@ -195,21 +196,6 @@ function openDelete() {
   /* no-op */
 }
 
-const bodyParagraphs = computed(() => {
-  const paragraphs = (props.post.content ?? "")
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
-
-  if (props.post.summary) {
-    paragraphs.unshift(props.post.summary);
-  }
-
-  return paragraphs;
-});
-
-const postActions = computed(() => [
-  { id: "like", icon: "👍", label: t("blog.reactions.reactionTypes.like") },
-  { id: "comment", icon: "💬", label: t("blog.comments.reply") },
-]);
+const sanitizedSummary = computed(() => sanitizeRichText(props.post.summary ?? ""));
+const sanitizedBody = computed(() => sanitizeRichText(props.post.content ?? ""));
 </script>
