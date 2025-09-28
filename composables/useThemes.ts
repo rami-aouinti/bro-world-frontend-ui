@@ -90,12 +90,21 @@ export function useThemes() {
     }
   }
 
+  const colorModeCookie = useCookie<'light' | 'dark' | 'auto'>('color-mode', {
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+  })
+
   const colorMode = useColorMode({
-    storage: 'cookie',
     storageKey: 'color-mode',
-    cookieOptions: {
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+    storage: {
+      getItem: () => colorModeCookie.value ?? 'auto',
+      setItem: (_, value) => {
+        colorModeCookie.value = value as typeof colorModeCookie.value
+      },
+      removeItem: () => {
+        colorModeCookie.value = null
+      },
     },
   })
   const isDark = computed(() => colorMode.value === 'dark')
