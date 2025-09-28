@@ -238,124 +238,33 @@
     </template>
   </BaseCard>
 
-  <teleport to="body">
-    <transition name="fade-scale">
-      <div
-          v-if="editModalOpen"
-          class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
-          aria-modal="true"
-          role="dialog"
-          :aria-label="editModalTitle"
-          @keydown="handleEditKeydown"
-      >
-        <div
-            ref="editDialogRef"
-            class="w-full max-w-2xl rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
-            tabindex="-1"
-        >
-          <header class="space-y-1">
-            <h2 class="text-xl font-semibold">{{ editModalTitle }}</h2>
-            <p class="text-sm text-slate-400">{{ editModalDescription }}</p>
-          </header>
-          <form class="mt-6 space-y-5" @submit.prevent="handleSaveEdit">
-            <label class="flex flex-col gap-2 text-sm">
-              <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.title') }}</span>
-              <input
-                  ref="editTitleRef"
-                  v-model="editForm.title"
-                  type="text"
-                  class="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-              />
-            </label>
-            <label class="flex flex-col gap-2 text-sm">
-              <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.summary') }}</span>
-              <textarea
-                  ref="editSummaryRef"
-                  v-model="editForm.summary"
-                  class="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-              />
-            </label>
-            <label class="flex flex-col gap-2 text-sm">
-              <span class="font-medium text-slate-200">{{ t('blog.posts.actions.fields.content') }}</span>
-              <textarea
-                  v-model="editForm.content"
-                  class="min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-              />
-            </label>
-            <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
-              <button
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  @click="closeEditModal"
-              >
-                {{ editModalCancelLabel }}
-              </button>
-              <button
-                  type="submit"
-                  class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60"
-                  :disabled="saveLoading"
-              >
-                <span v-if="saveLoading" class="inline-flex items-center gap-2">
-                  <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
-                  <span>{{ editModalSaveLabel }}</span>
-                </span>
-                <span v-else>{{ editModalSaveLabel }}</span>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </transition>
-  </teleport>
+  <component
+      :is="BlogPostEditDialog"
+      v-if="editModalOpen"
+      :post="post"
+      :title="editModalTitle"
+      :description="editModalDescription"
+      :save-label="editModalSaveLabel"
+      :cancel-label="editModalCancelLabel"
+      @close="handleEditDialogClose"
+      @saved="handleEditDialogClose"
+  />
 
-  <teleport to="body">
-    <transition name="fade-scale">
-      <div
-          v-if="deleteDialogOpen"
-          class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
-          role="alertdialog"
-          :aria-label="deleteDialogTitle"
-          aria-modal="true"
-          @keydown="handleDeleteKeydown"
-      >
-        <div
-            ref="deleteDialogRef"
-            class="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
-            tabindex="-1"
-        >
-          <header class="space-y-2">
-            <h2 class="text-xl font-semibold text-rose-200">{{ deleteDialogTitle }}</h2>
-            <p class="text-sm text-slate-400">{{ deleteDialogDescription }}</p>
-          </header>
-          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
-            <button
-                type="button"
-                class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                @click="closeDeleteDialog"
-            >
-              {{ deleteDialogCancelLabel }}
-            </button>
-            <button
-                type="button"
-                class="inline-flex items-center justify-center rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400 disabled:cursor-not-allowed disabled:opacity-60"
-                :disabled="deleteLoading"
-                @click="handleDeletePost"
-            >
-              <span v-if="deleteLoading" class="inline-flex items-center gap-2">
-                <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
-                <span>{{ deleteDialogConfirmLabel }}</span>
-              </span>
-              <span v-else>{{ deleteDialogConfirmLabel }}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </teleport>
+  <component
+      :is="BlogPostDeleteDialog"
+      v-if="deleteDialogOpen"
+      :post="post"
+      :title="deleteDialogTitle"
+      :description="deleteDialogDescription"
+      :confirm-label="deleteDialogConfirmLabel"
+      :cancel-label="deleteDialogCancelLabel"
+      @close="handleDeleteDialogClose"
+      @deleted="handleDeleteDialogClose"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, shallowRef, watch } from "vue";
+import { computed, defineAsyncComponent, nextTick, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 
 import CommentCard from "~/components/blog/BlogCommentCard.vue";
@@ -386,8 +295,6 @@ const {
   addComment,
   reactToComment,
   getComments,
-  updatePost,
-  deletePost,
 } = usePostsStore();
 const {
   currentUser,
@@ -536,17 +443,17 @@ const commentsActivationPending = computed(() => !commentsActivated.value && !co
 
 const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
-const editForm = reactive({
-  title: post.value.title,
-  summary: post.value.summary,
-  content: post.value.content,
-});
-const saveLoading = ref(false);
-const deleteLoading = ref(false);
-const editDialogRef = ref<HTMLDivElement | null>(null);
-const deleteDialogRef = ref<HTMLDivElement | null>(null);
-const editTitleRef = ref<HTMLInputElement | null>(null);
 const previousFocusedElement = ref<HTMLElement | null>(null);
+
+const BlogPostEditDialog = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostEditDialog.vue"),
+  suspensible: false,
+});
+
+const BlogPostDeleteDialog = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostDeleteDialog.vue"),
+  suspensible: false,
+});
 
 const editModalTitle = computed(() => t("blog.posts.actions.editTitle"));
 const editModalDescription = computed(() => t("blog.posts.actions.editDescription"));
@@ -556,54 +463,6 @@ const deleteDialogTitle = computed(() => t("blog.posts.actions.deleteTitle"));
 const deleteDialogDescription = computed(() => t("blog.posts.actions.deleteDescription"));
 const deleteDialogConfirmLabel = computed(() => t("blog.posts.actions.deleteConfirm"));
 const deleteDialogCancelLabel = computed(() => t("blog.posts.actions.cancel"));
-
-watch(
-    post,
-    () => {
-      if (!editModalOpen.value) {
-        editForm.title = post.value.title;
-        editForm.summary = post.value.summary;
-        editForm.content = post.value.content;
-      }
-    },
-    { immediate: true },
-);
-
-watch(editModalOpen, (open) => {
-  if (open) {
-    previousFocusedElement.value = document.activeElement as HTMLElement | null;
-
-    nextTick(() => {
-      editTitleRef.value?.focus();
-    });
-
-    return;
-  }
-
-  if (previousFocusedElement.value) {
-    nextTick(() => {
-      previousFocusedElement.value?.focus();
-    });
-  }
-});
-
-watch(deleteDialogOpen, (open) => {
-  if (open) {
-    previousFocusedElement.value = document.activeElement as HTMLElement | null;
-
-    nextTick(() => {
-      deleteDialogRef.value?.focus();
-    });
-
-    return;
-  }
-
-  if (previousFocusedElement.value) {
-    nextTick(() => {
-      previousFocusedElement.value?.focus();
-    });
-  }
-});
 
 watch(
     () => post.value.id,
@@ -616,124 +475,14 @@ watch(
     },
 );
 
-function trapFocus(event: KeyboardEvent, container: HTMLElement | null) {
-  if (!container || event.key !== "Tab") {
-    return;
-  }
-
-  const focusable = container.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
-  );
-
-  if (focusable.length === 0) {
-    event.preventDefault();
-    return;
-  }
-
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  const active = document.activeElement as HTMLElement | null;
-
-  if (event.shiftKey) {
-    if (active === first || !active) {
-      event.preventDefault();
-      last.focus();
-    }
-
-    return;
-  }
-
-  if (active === last) {
-    event.preventDefault();
-    first.focus();
-  }
-}
-
-function closeEditModal() {
-  editModalOpen.value = false;
-}
-
-function closeDeleteDialog() {
-  deleteDialogOpen.value = false;
-}
-
 function openEditModal() {
-  editForm.title = post.value.title;
-  editForm.summary = post.value.summary;
-  editForm.content = post.value.content;
+  previousFocusedElement.value = document.activeElement as HTMLElement | null;
   editModalOpen.value = true;
 }
 
 function openDeleteDialog() {
+  previousFocusedElement.value = document.activeElement as HTMLElement | null;
   deleteDialogOpen.value = true;
-}
-
-async function handleSaveEdit() {
-  if (saveLoading.value) {
-    return;
-  }
-
-  saveLoading.value = true;
-
-  try {
-    const payload = {
-      title: editForm.title,
-      summary: editForm.summary,
-      content: editForm.content,
-    };
-
-    await updatePost(post.value.id, payload);
-
-    $notify({
-      type: "success",
-      title: t("blog.posts.actions.editSuccessTitle"),
-      message: t("blog.posts.actions.editSuccessDescription"),
-    });
-
-    closeEditModal();
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error ?? "");
-
-    $notify({
-      type: "error",
-      title: t("blog.posts.actions.editErrorTitle"),
-      message: message || t("blog.posts.actions.editErrorDescription"),
-      timeout: null,
-    });
-  } finally {
-    saveLoading.value = false;
-  }
-}
-
-async function handleDeletePost() {
-  if (deleteLoading.value) {
-    return;
-  }
-
-  deleteLoading.value = true;
-
-  try {
-    await deletePost(post.value.id);
-
-    $notify({
-      type: "success",
-      title: t("blog.posts.actions.deleteSuccessTitle"),
-      message: t("blog.posts.actions.deleteSuccessDescription"),
-    });
-
-    closeDeleteDialog();
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error ?? "");
-
-    $notify({
-      type: "error",
-      title: t("blog.posts.actions.deleteErrorTitle"),
-      message: message || t("blog.posts.actions.deleteErrorDescription"),
-      timeout: null,
-    });
-  } finally {
-    deleteLoading.value = false;
-  }
 }
 
 async function handleFollow() {
@@ -762,26 +511,6 @@ async function handleFollow() {
       timeout: null,
     });
   }
-}
-
-function handleEditKeydown(event: KeyboardEvent) {
-  if (event.key === "Escape") {
-    event.preventDefault();
-    closeEditModal();
-    return;
-  }
-
-  trapFocus(event, editDialogRef.value);
-}
-
-function handleDeleteKeydown(event: KeyboardEvent) {
-  if (event.key === "Escape") {
-    event.preventDefault();
-    closeDeleteDialog();
-    return;
-  }
-
-  trapFocus(event, deleteDialogRef.value);
 }
 
 async function handleTogglePostReaction() {
@@ -1006,6 +735,26 @@ watch(
     },
     { immediate: true },
 );
+
+function handleEditDialogClose() {
+  editModalOpen.value = false;
+
+  if (previousFocusedElement.value) {
+    nextTick(() => {
+      previousFocusedElement.value?.focus();
+    });
+  }
+}
+
+function handleDeleteDialogClose() {
+  deleteDialogOpen.value = false;
+
+  if (previousFocusedElement.value) {
+    nextTick(() => {
+      previousFocusedElement.value?.focus();
+    });
+  }
+}
 </script>
 
 <style scoped>

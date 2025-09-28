@@ -138,6 +138,12 @@ function mountComponent() {
         CommentCard: {
           template: "<div data-test='comment-card'></div>",
         },
+        BlogPostEditDialog: {
+          template: "<div data-test='edit-dialog-stub'></div>",
+        },
+        BlogPostDeleteDialog: {
+          template: "<div data-test='delete-dialog-stub'></div>",
+        },
         teleport: true,
       },
     },
