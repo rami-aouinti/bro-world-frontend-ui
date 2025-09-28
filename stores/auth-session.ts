@@ -265,10 +265,8 @@ export const useAuthSession = defineStore('auth-session', () => {
       return isAuthenticated.value
     }
 
-    if (!tokenAvailableState.value) {
-      clearSession()
-      readyState.value = true
-      return false
+    if (!tokenAvailableState.value && presenceCookie.value === '1') {
+      tokenAvailableState.value = true
     }
 
     const fetcher = resolveFetcher()
