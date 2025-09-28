@@ -88,6 +88,21 @@
       <LayoutSearchButton />
     </div>
 
+    <nav
+      v-if="navigationLinks.length"
+      class="flex items-center gap-3 px-6"
+      :aria-label="t('layout.actions.profile')"
+    >
+      <NuxtLinkLocale
+        v-for="link in navigationLinks"
+        :key="link.path"
+        :to="localePath(link.path)"
+        :aria-label="link.label"
+        class="rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2"
+      >
+        {{ link.label }}
+      </NuxtLinkLocale>
+    </nav>
     <UiButton
         v-if="isAuthenticated"
         variant="ghost"
@@ -261,6 +276,11 @@ type HeaderLink = {
   menuItems?: HeaderLinkMenuItem[]
 }
 
+type NavigationLink = {
+  path: string
+  label: string
+}
+
 const props = defineProps<{
   appIcons: AppIcon[]
   isDark: boolean
@@ -308,6 +328,32 @@ const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
 
 const loggingOut = ref(false)
+
+const navigationLinks = computed<NavigationLink[]>(() => {
+  if (isAuthenticated.value) {
+    return [
+      {
+        path: '/profile',
+        label: t('layout.actions.viewProfile'),
+      },
+      {
+        path: '/logout',
+        label: t('auth.signOut'),
+      },
+    ]
+  }
+
+  return [
+    {
+      path: '/login',
+      label: t('auth.Login'),
+    },
+    {
+      path: '/register',
+      label: t('auth.Register'),
+    },
+  ]
+})
 
 function resolveIconName(name?: string) {
   if (!name)
