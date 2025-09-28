@@ -50,10 +50,21 @@
         <template #default>
           <div class="pane-scroll px-3 py-4">
             <AppSidebarRight
-                :items="sidebarItems"
-                :active-key="activeSidebar"
-                @select="handleSidebarSelect"
-            />
+              :items="sidebarItems"
+              :active-key="activeSidebar"
+              @select="handleSidebarSelect"
+            >
+              <div class="flex flex-col gap-4">
+                <SidebarWeatherCard v-if="weather" :weather="weather" />
+                <SidebarLeaderboardCard
+                  v-if="leaderboard?.participants?.length"
+                  :title="leaderboard.title"
+                  :live-label="leaderboard.live"
+                  :participants="leaderboard.participants"
+                />
+                <SidebarRatingCard v-if="rating" :rating="rating" />
+              </div>
+            </AppSidebarRight>
           </div>
         </template>
         <template #fallback>
@@ -94,6 +105,9 @@ import { useRightSidebarData } from '@/composables/useRightSidebarData'
 import type { LayoutSidebarItem } from '~/lib/navigation/sidebar'
 import { ADMIN_ROLE_KEYS, buildSidebarItems } from '~/lib/navigation/sidebar'
 import { useAuthSession } from '~/stores/auth-session'
+import SidebarWeatherCard from '~/components/layout/SidebarWeatherCard.vue'
+import SidebarLeaderboardCard from '~/components/layout/SidebarLeaderboardCard.vue'
+import SidebarRatingCard from '~/components/layout/SidebarRatingCard.vue'
 
 const AppSidebarRight = defineAsyncComponent(() => import('~/components/layout/AppSidebarRight.vue'))
 
