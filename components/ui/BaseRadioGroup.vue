@@ -212,7 +212,7 @@ function onKeydown(event: KeyboardEvent, index: number) {
 .ui-radio-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--ui-spacing-2);
 }
 
 .ui-radio-group--horizontal {
@@ -223,10 +223,10 @@ function onKeydown(event: KeyboardEvent, index: number) {
 .ui-radio-group__option {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  gap: var(--ui-spacing-2);
+  padding: var(--ui-spacing-2) var(--ui-spacing-3);
   border: 1px solid rgba(var(--v-theme-outline), 0.4);
-  border-radius: var(--ui-radius, var(--v-border-radius));
+  border-radius: var(--ui-radius);
   background-color: transparent;
   cursor: pointer;
   font-size: 0.875rem;
@@ -245,8 +245,8 @@ function onKeydown(event: KeyboardEvent, index: number) {
 }
 
 .ui-radio-group__control {
-  width: 1rem;
-  height: 1rem;
+  width: var(--ui-spacing-4);
+  height: var(--ui-spacing-4);
   border-radius: 9999px;
   border: 2px solid rgba(var(--v-theme-outline), 0.6);
   display: inline-flex;
@@ -259,8 +259,8 @@ function onKeydown(event: KeyboardEvent, index: number) {
 }
 
 .ui-radio-group__dot {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: var(--ui-spacing-2);
+  height: var(--ui-spacing-2);
   border-radius: 9999px;
   background-color: rgb(var(--v-theme-primary));
   transform: scale(0);
@@ -275,7 +275,7 @@ function onKeydown(event: KeyboardEvent, index: number) {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.125rem;
+  gap: calc(var(--ui-spacing-1) / 2);
 }
 
 .ui-radio-group__option-hint {
@@ -295,7 +295,7 @@ function onKeydown(event: KeyboardEvent, index: number) {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--ui-spacing-1);
   font-size: 0.75rem;
   color: rgb(var(--v-theme-error));
 }

@@ -108,25 +108,25 @@ function onClick(event: MouseEvent) {
 .ui-button {
   text-transform: none;
   font-weight: 600;
-  border-radius: var(--ui-radius, var(--v-border-radius));
+  border-radius: var(--ui-radius);
 }
 
 .ui-button--sm {
-  --v-btn-height: 32px;
+  --v-btn-height: var(--ui-spacing-6);
   font-size: 0.8125rem;
-  padding-inline: 0.75rem;
+  padding-inline: var(--ui-spacing-3);
 }
 
 .ui-button--md {
-  --v-btn-height: 40px;
+  --v-btn-height: var(--ui-spacing-7);
   font-size: 0.875rem;
-  padding-inline: 1rem;
+  padding-inline: var(--ui-spacing-4);
 }
 
 .ui-button--lg {
-  --v-btn-height: 48px;
+  --v-btn-height: var(--ui-spacing-8);
   font-size: 1rem;
-  padding-inline: 1.25rem;
+  padding-inline: var(--ui-spacing-5);
 }
 
 .ui-button--block {
@@ -134,6 +134,6 @@ function onClick(event: MouseEvent) {
 }
 
 .ui-button:focus-visible {
-  box-shadow: var(--ui-focus, 0 0 0 3px rgba(var(--v-theme-primary), 0.35));
+  box-shadow: var(--ui-focus);
 }
 </style>

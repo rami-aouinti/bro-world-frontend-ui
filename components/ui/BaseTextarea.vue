@@ -155,6 +155,6 @@ function onChange(event: Event) {
 }
 
 :deep(.v-field) {
-  border-radius: var(--ui-radius, var(--v-border-radius));
+  border-radius: var(--ui-radius);
 }
 </style>
