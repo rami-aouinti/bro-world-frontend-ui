@@ -97,6 +97,7 @@ export const useAuthSession = defineStore('auth-session', () => {
 
   if (sessionTokenCookie.value) {
     sessionTokenState.value = sessionTokenCookie.value
+    tokenAvailableState.value = true
   }
 
   if (import.meta.client) {
@@ -116,6 +117,7 @@ export const useAuthSession = defineStore('auth-session', () => {
       sessionTokenState,
       (value) => {
         sessionTokenCookie.value = value
+        tokenAvailableState.value = Boolean(value)
       },
       { immediate: true },
     )
@@ -145,6 +147,7 @@ export const useAuthSession = defineStore('auth-session', () => {
   function setSessionToken(token: string | null) {
     sessionTokenState.value = token
     sessionTokenCookie.value = token
+    tokenAvailableState.value = Boolean(token)
   }
 
   function setSessionMessage(message: string | null) {
