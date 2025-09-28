@@ -43,7 +43,7 @@
             :aria-label="$t('common.close')"
             @click="close(alert.id)"
           >
-            <v-icon icon="mdi-close" />
+            <Icon name="mdi-close" />
           </v-btn>
         </div>
       </v-alert>

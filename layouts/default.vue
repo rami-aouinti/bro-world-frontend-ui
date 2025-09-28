@@ -46,13 +46,26 @@
       width="340"
       class="app-drawer"
     >
-      <div class="pane-scroll px-3 py-4">
-        <AppSidebarRight
-            :items="sidebarItems"
-            :active-key="activeSidebar"
-            @select="handleSidebarSelect"
-        />
-      </div>
+      <Suspense>
+        <template #default>
+          <div class="pane-scroll px-3 py-4">
+            <AppSidebarRight
+                :items="sidebarItems"
+                :active-key="activeSidebar"
+                @select="handleSidebarSelect"
+            />
+          </div>
+        </template>
+        <template #fallback>
+          <div class="pane-scroll px-3 py-4">
+            <div class="flex flex-col gap-4">
+              <div class="h-10 rounded-2xl bg-slate-200/60" />
+              <div class="h-24 rounded-2xl bg-slate-200/60" />
+              <div class="h-24 rounded-2xl bg-slate-200/60" />
+            </div>
+          </div>
+        </template>
+      </Suspense>
     </v-navigation-drawer>
 
     <v-main class="app-surface">
@@ -66,12 +79,13 @@
 </template>
 
 <script setup lang="ts">
-import { watch, computed, ref } from 'vue'
+import { watch, computed, ref, defineAsyncComponent } from 'vue'
 import { useDisplay, useTheme } from 'vuetify'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppTopBar from '@/components/layout/AppTopBar.vue'
 import { useRightSidebarData } from '@/composables/useRightSidebarData'
-import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
+
+const AppSidebarRight = defineAsyncComponent(() => import('~/components/layout/AppSidebarRight.vue'))
 
 interface LayoutSidebarItem {
   key: string

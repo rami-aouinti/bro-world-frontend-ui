@@ -1,13 +1,13 @@
 <template>
   <v-app-bar
       class="app-top-bar"
-      :class="isDark ? 'text-white' : 'text-black'"
+      :class="isDarkMode ? 'text-white' : 'text-black'"
       :color="textGradient"
       app
       :elevation="10" rounded
       height="50"
   >
-    <template v-slot:image>
+    <template #image>
       <v-img
           cover
           :gradient="gradient"
@@ -21,7 +21,7 @@
         :aria-label="t('layout.actions.openNavigation')"
         @click="emit('toggle-left')"
       >
-        <Icon
+        <AppIcon
           name="mdi:menu"
           :size="24"
         />
@@ -45,7 +45,7 @@
             :aria-label="t('layout.actions.goBack')"
             @click="emit('go-back')"
         >
-          <Icon
+          <AppIcon
               name="mdi:arrow-left"
               :size="22"
           />
@@ -56,7 +56,7 @@
             :aria-label="t('layout.actions.refresh')"
             @click="emit('refresh')"
         >
-          <Icon
+          <AppIcon
               name="mdi:refresh"
               :size="22"
           />
@@ -68,7 +68,7 @@
             :aria-label="t('layout.actions.openNavigation')"
             @click="emit('toggle-left')"
         >
-          <Icon
+          <AppIcon
               name="mdi-format-align-justify"
               :size="22"
           />
@@ -88,36 +88,6 @@
       <LayoutSearchButton />
     </div>
 
-    <nav
-      v-if="navigationLinks.length"
-      class="flex items-center gap-3 px-6"
-      :aria-label="t('layout.actions.profile')"
-    >
-      <NuxtLinkLocale
-        v-for="link in navigationLinks"
-        :key="link.path"
-        :to="localePath(link.path)"
-        :aria-label="link.label"
-        class="rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2"
-      >
-        {{ link.label }}
-      </NuxtLinkLocale>
-    </nav>
-    <UiButton
-        v-if="isAuthenticated"
-        variant="ghost"
-        size="icon"
-        class="flex gap-2"
-        :aria-label="t('auth.signOut')"
-        :disabled="loggingOut"
-        @click="handleLogout"
-    >
-      <AppSmartIcon
-          name="mdi:logout"
-          :size="18"
-      />
-      <span class="sr-only">{{ t('auth.signOut') }}</span>
-    </UiButton>
     <div class="px-16">
       <v-tooltip
           v-for="icon in appIcons"
@@ -129,22 +99,22 @@
               v-bind="tooltipProps"
               :aria-label="t(icon.label)"
           >
-            <Icon
-                :name="resolveIconName(icon.name)"
+            <AppIcon
+                :name="icon.name"
                 :size="26"
             />
           </v-btn>
         </template>
       </v-tooltip>
     </div>
-    <template v-slot:append>
+    <template #append>
       <div class="flex items-center gap-3">
         <button
             type="button"
             :class="iconTriggerClasses"
             :aria-label="t('layout.actions.notifications')"
         >
-          <Icon
+          <AppIcon
               name="mdi:bell-outline"
               :size="22"
           />
@@ -154,7 +124,7 @@
             :class="iconTriggerClasses"
             :aria-label="t('layout.actions.cart')"
         >
-          <Icon
+          <AppIcon
               name="mdi:shopping-outline"
               :size="22"
           />
@@ -167,25 +137,23 @@
                 :aria-label="t('layout.actions.profile')"
                 v-bind="profileProps"
             >
-              <Icon
+              <AppIcon
                   name="mdi:person-outline"
                   :size="22"
               />
             </button>
           </template>
           <v-list density="compact">
-            <v-list-item :title="t('layout.actions.viewProfile')">
+            <v-list-item
+                v-for="item in userMenuItems"
+                :key="item.title"
+                :title="item.title"
+                :disabled="item.action === 'logout' && loggingOut"
+                @click="handleUserMenuSelect(item)"
+            >
               <template #prepend>
-                <Icon
-                    name="mdi:account"
-                    :size="20"
-                />
-              </template>
-            </v-list-item>
-            <v-list-item :title="t('layout.actions.signOut')">
-              <template #prepend>
-                <Icon
-                    name="mdi:logout"
+                <AppIcon
+                    :name="item.icon"
                     :size="20"
                 />
               </template>
@@ -200,7 +168,7 @@
                 :aria-label="t('layout.actions.changeLanguage', { locale: localeLabel })"
                 v-bind="languageProps"
             >
-              <Icon
+              <AppIcon
                   name="mdi:flag-outline"
                   :size="22"
               />
@@ -225,7 +193,7 @@
             :aria-label="t('layout.actions.openWidgets')"
             @click="emit('toggle-right')"
         >
-          <Icon
+          <AppIcon
               name="mdi:dots-vertical"
               :size="22"
           />
@@ -239,7 +207,7 @@
             :aria-label="t('layout.actions.openWidgets')"
             @click="emit('toggle-right')"
         >
-          <Icon
+          <AppIcon
               name="mdi-format-align-justify"
               :size="22"
           />
@@ -251,8 +219,6 @@
 
 <script setup lang="ts">
 import { useAuthSession } from '~/stores/auth-session'
-
-const isDark = computed(() => useColorMode().value == "dark");
 
 interface AppIcon {
   name: string
@@ -276,9 +242,11 @@ type HeaderLink = {
   menuItems?: HeaderLinkMenuItem[]
 }
 
-type NavigationLink = {
-  path: string
-  label: string
+type UserMenuItem = {
+  title: string
+  icon: string
+  to?: string
+  action?: 'logout'
 }
 
 const props = defineProps<{
@@ -289,6 +257,8 @@ const props = defineProps<{
   locales: string[]
   showRightToggle: boolean
 }>()
+
+const isDarkMode = computed(() => props.isDark)
 
 const emit = defineEmits([
   'toggle-left',
@@ -308,8 +278,8 @@ const { t } = useI18n()
 const config = useConfig()
 
 const { i18nEnabled, localePath } = useI18nDocs()
-const gradient = computed(() => (isDark.value ? "#000" : "#fff"));
-const textGradient = computed(() => (isDark.value ? "#fff" : "#000"));
+const gradient = computed(() => (isDarkMode.value ? "#000" : "#fff"))
+const textGradient = computed(() => (isDarkMode.value ? "#fff" : "#000"))
 
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === 'input',
@@ -329,44 +299,35 @@ const isAuthenticated = computed(() => auth.isAuthenticated.value)
 
 const loggingOut = ref(false)
 
-const navigationLinks = computed<NavigationLink[]>(() => {
+const userMenuItems = computed<UserMenuItem[]>(() => {
   if (isAuthenticated.value) {
     return [
       {
-        path: '/profile',
-        label: t('layout.actions.viewProfile'),
+        title: t('layout.actions.viewProfile'),
+        icon: 'mdi:account',
+        to: '/profile',
       },
       {
-        path: '/logout',
-        label: t('auth.signOut'),
+        title: t('auth.signOut'),
+        icon: 'mdi:logout',
+        action: 'logout',
       },
     ]
   }
 
   return [
     {
-      path: '/login',
-      label: t('auth.Login'),
+      title: t('auth.Login'),
+      icon: 'mdi:login',
+      to: '/login',
     },
     {
-      path: '/register',
-      label: t('auth.Register'),
+      title: t('auth.Register'),
+      icon: 'mdi:account-plus',
+      to: '/register',
     },
   ]
 })
-
-function resolveIconName(name?: string) {
-  if (!name)
-    return ''
-
-  if (name.includes(':'))
-    return name
-
-  if (name.startsWith('mdi-'))
-    return `mdi:${name.slice(4)}`
-
-  return name
-}
 
 const localeFlags: Record<string, string> = {
   en: '🇬🇧',
@@ -438,6 +399,17 @@ function handleMenuItemSelect(item: HeaderLinkMenuItem) {
   }
 
   navigateTo(localePath(item.to))
+}
+
+function handleUserMenuSelect(item: UserMenuItem) {
+  if (item.action === 'logout') {
+    handleLogout()
+    return
+  }
+
+  if (item.to) {
+    navigateTo(localePath(item.to))
+  }
 }
 
 async function handleLogout() {

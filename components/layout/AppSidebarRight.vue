@@ -4,10 +4,11 @@
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Secondary navigation"
   >
-    <HaloSearch />
+    <HaloSearch v-if="isAuthenticated" />
 
     <div v-if="!isAuthenticated" class="sidebar-login-card">
       <ParticlesBg
+        v-if="shouldRenderParticles"
         class="sidebar-login-card__particles"
         :quantity="120"
         :ease="120"
@@ -37,13 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-import AuthLoginForm from '~/components/auth/LoginForm.vue'
-import AuthSocial from '~/components/auth/Social.vue'
 import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
 import { useAuthSession } from '~/stores/auth-session'
+
+const HaloSearch = defineAsyncComponent(() => import('~/components/content/inspira/ui/halo-search/HaloSearch.vue'))
+const ParticlesBg = defineAsyncComponent(() => import('~/components/content/inspira/ui/particles-bg/ParticlesBg.vue'))
+const AuthLoginForm = defineAsyncComponent(() => import('~/components/auth/LoginForm.vue'))
+const AuthSocial = defineAsyncComponent(() => import('~/components/auth/Social.vue'))
 
 interface SidebarItem {
   key: string
@@ -71,6 +74,28 @@ const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const { t } = useI18n()
 
 const isRedirecting = ref(false)
+const shouldRenderParticles = ref(false)
+
+onMounted(() => {
+  if (!import.meta.client) {
+    return
+  }
+
+  function enableParticles() {
+    shouldRenderParticles.value = true
+  }
+
+  const idleWindow = window as typeof window & {
+    requestIdleCallback?: (callback: () => void) => number
+  }
+
+  if (typeof idleWindow.requestIdleCallback === 'function') {
+    idleWindow.requestIdleCallback(enableParticles)
+    return
+  }
+
+  window.setTimeout(enableParticles, 200)
+})
 
 watch(
   () => auth.isAuthenticated.value,
