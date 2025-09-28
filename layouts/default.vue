@@ -80,27 +80,22 @@
 
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent } from 'vue'
-import { useDisplay, useTheme } from 'vuetify'
+import { useDisplay } from 'vuetify'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppTopBar from '@/components/layout/AppTopBar.vue'
 import { useRightSidebarData } from '@/composables/useRightSidebarData'
+import type { LayoutSidebarItem } from '~/lib/navigation/sidebar'
+import { ADMIN_ROLE_KEYS, buildSidebarItems } from '~/lib/navigation/sidebar'
+import { useAuthSession } from '~/stores/auth-session'
 
 const AppSidebarRight = defineAsyncComponent(() => import('~/components/layout/AppSidebarRight.vue'))
-
-interface LayoutSidebarItem {
-  key: string
-  label: string
-  icon?: string
-  to?: string
-  children?: LayoutSidebarItem[]
-}
 
 const isDark = computed(() => useColorMode().value == "dark");
 const route = useRoute()
 const router = useRouter()
 const display = useDisplay()
-const theme = useTheme()
 const { locale, availableLocales } = useI18n()
+const auth = useAuthSession()
 
 const leftDrawer = ref(true)
 const rightDrawer = ref(true)
@@ -125,23 +120,16 @@ const appIcons = [
   { name: 'mdi-gamepad-variant-outline', label: 'layout.appIcons.game' },
 ]
 
-const sidebarItems: LayoutSidebarItem[] = [
-  {
-    key: 'apps',
-    label: 'layout.sidebar.items.apps',
-    icon: 'mdi-apps',
-    to: '/',
-    children: [
-      { key: 'calendar', label: 'layout.sidebar.items.calendar', icon: 'mdi-calendar-month', to: '/' },
-      { key: 'cv', label: 'layout.sidebar.items.cv', icon: 'mdi-file-account', to: '/' },
-      { key: 'jobs', label: 'layout.sidebar.items.jobs', icon: 'mdi-briefcase-search', to: '/' },
-    ],
-  },
-  { key: 'admin', label: 'layout.sidebar.items.admin', icon: 'mdi-shield-crown', to: '/admin' },
-  { key: 'help', label: 'layout.sidebar.items.help', icon: 'mdi-lifebuoy', to: '/help' },
-  { key: 'about', label: 'layout.sidebar.items.about', icon: 'mdi-information-outline', to: '/about' },
-  { key: 'contact', label: 'layout.sidebar.items.contact', icon: 'mdi-email-outline', to: '/contact' },
-]
+const canAccessAdmin = computed(() => {
+  if (!auth.isAuthenticated.value) {
+    return false
+  }
+
+  const roles = auth.currentUser.value?.roles ?? []
+  return roles.some((role) => ADMIN_ROLE_KEYS.includes(role))
+})
+
+const sidebarItems = computed<LayoutSidebarItem[]>(() => buildSidebarItems(canAccessAdmin.value))
 
 const activeSidebar = ref('apps')
 
@@ -179,7 +167,7 @@ watch(
       rightDrawer.value = false
     }
 
-    const matchedKey = findActiveSidebarKey(path, sidebarItems)
+    const matchedKey = findActiveSidebarKey(path, sidebarItems.value)
     if (matchedKey) {
       activeSidebar.value = matchedKey
     }

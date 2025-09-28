@@ -33,6 +33,9 @@
         "cv": "Lebenslauf",
         "jobs": "Jobs",
         "admin": "Verwaltung",
+        "adminGeneral": "Allgemein",
+        "adminUserManagement": "Benutzerverwaltung",
+        "adminBlog": "Blog",
         "help": "Hilfe",
         "about": "Über uns",
         "contact": "Kontakt"
@@ -805,6 +808,20 @@
     "page": {
       "title": "Administrationsbereich",
       "subtitle": "Steuern Sie die gesamte Plattform, verfolgen Sie Kennzahlen und aktivieren Sie die richtigen Hebel mit nur wenigen Klicks."
+    },
+    "userManagement": {
+      "metaTitle": "Benutzerverwaltung",
+      "page": {
+        "title": "Benutzerverwaltung",
+        "subtitle": "Laden Sie Mitglieder ein, prüfen Sie Zugänge und passen Sie Berechtigungen an."
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "Blog-Administration",
+      "page": {
+        "title": "Blog-Administration",
+        "subtitle": "Veröffentlichen Sie Ankündigungen und kuratieren Sie Community-Geschichten."
+      }
     },
     "actions": {
       "newAdminRole": "Neue Admin-Rolle",

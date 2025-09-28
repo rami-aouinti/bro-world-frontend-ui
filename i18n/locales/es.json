@@ -33,6 +33,9 @@
         "cv": "CV",
         "jobs": "Empleos",
         "admin": "Administración",
+        "adminGeneral": "General",
+        "adminUserManagement": "Gestión de usuarios",
+        "adminBlog": "Blog",
         "help": "Ayuda",
         "about": "Acerca de",
         "contact": "Contacto"
@@ -631,6 +634,20 @@
     "page": {
       "title": "Centro de administración",
       "subtitle": "Gestiona toda la plataforma, sigue los indicadores clave y activa las palancas correctas en cuestión de clics."
+    },
+    "userManagement": {
+      "metaTitle": "Gestión de usuarios",
+      "page": {
+        "title": "Gestión de usuarios",
+        "subtitle": "Invita, revisa y ajusta los permisos de cada miembro."
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "Administración del blog",
+      "page": {
+        "title": "Administración del blog",
+        "subtitle": "Publica anuncios y destaca las historias de la comunidad."
+      }
     },
     "actions": {
       "newAdminRole": "Nuevo rol de administrador",
