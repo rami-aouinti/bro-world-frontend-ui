@@ -5,7 +5,6 @@ import { VDateInput } from 'vuetify/labs/VDateInput'
 import { createVuetify } from 'vuetify'
 import * as vuetifyComponents from 'vuetify/components'
 import * as vuetifyDirectives from 'vuetify/directives'
-import { useStorage } from '@vueuse/core'
 import { aliases } from 'vuetify/iconsets/mdi'
 import DateFnsAdapter from '@date-io/date-fns'
 import enUSLocale from 'date-fns/locale/en-US'
@@ -18,17 +17,20 @@ import arLocale from 'date-fns/locale/ar-SA'
 
 export type DataTableHeaders = VDataTable['$props']['headers']
 
-function getStoredValue<T>(key: string, fallback: T): T {
-  if (import.meta.client) {
-    return useStorage<T>(key, fallback).value
-  }
-
-  return fallback
-}
-
 export default defineNuxtPlugin((nuxtApp) => {
-  const primary = getStoredValue('theme-primary', '#E91E63')
-  const locale = getStoredValue('locale', 'en')
+  const primaryCookie = useCookie<string | null>('theme-primary', {
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    watch: false,
+  })
+  const primary = primaryCookie.value ?? '#E91E63'
+
+  const localeCookie = useCookie<string | null>('i18n_redirected', {
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    watch: false,
+  })
+  const locale = localeCookie.value ?? 'en'
   const nuxtIconComponent = nuxtApp.vueApp.component('Icon')
 
   const vuetify = createVuetify({
