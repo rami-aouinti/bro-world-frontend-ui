@@ -79,7 +79,7 @@ const props = withDefaults(
     variant?: CardVariant
     padding?: CardPadding
     rounded?: CardRounded
-    hover?: boolean
+    hoverable?: boolean
     animation?: boolean
     spacing?: BodySpacing
     bodyClass?: string
@@ -93,7 +93,7 @@ const props = withDefaults(
     variant: 'solid',
     padding: 'md',
     rounded: 'xl',
-    hover: false,
+    hoverable: false,
     animation: false,
     spacing: 'md',
     bodyClass: '',
@@ -121,7 +121,7 @@ const cardClasses = computed(() =>
     paddingClasses[props.padding],
     roundedClasses[props.rounded],
     variantClasses[props.variant],
-    props.hover && hoverClasses,
+    props.hoverable && hoverClasses,
     attrs.class as unknown,
   ),
 )

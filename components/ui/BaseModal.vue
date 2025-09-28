@@ -1,16 +1,18 @@
 <template>
-  <v-dialog
-    v-model="model"
-    :width="width"
-    :aria-labelledby="titleId"
-    aria-modal="true"
-    class="ui-modal"
-    @keydown.esc.prevent="handleEsc"
-  >
+  <div class="ui-modal-container" :aria-labelledby="titleId" aria-modal="true">
+    <v-dialog
+      v-model="model"
+      :width="width"
+      :aria-labelledby="titleId"
+      aria-modal="true"
+      class="ui-modal"
+      :data-modal-instance="instanceId"
+      @keydown="handleDialogKeydown"
+    >
     <v-card :elevation="0" class="ui-modal__card">
-      <header v-if="hasTitle" :id="titleId" class="ui-modal__header">
-        <slot name="title">
-          <h2 class="ui-modal__title">
+      <header v-if="hasTitle" class="ui-modal__header">
+        <slot name="title" :title-id="titleId">
+          <h2 :id="titleId" class="ui-modal__title">
             {{ title }}
           </h2>
         </slot>
@@ -37,11 +39,12 @@
         </slot>
       </footer>
     </v-card>
-  </v-dialog>
+    </v-dialog>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, useId, useSlots } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, useSlots, watch } from 'vue'
 import BaseButton from './BaseButton.vue'
 
 type PrimaryLabel = 'Save' | 'Update'
@@ -84,10 +87,12 @@ const emit = defineEmits<{
 }>()
 
 const slots = useSlots()
-const uniqueId = useId()
+const instanceId = `base-modal-${Math.random().toString(36).slice(2, 10)}`
+let dialogElement: HTMLElement | null = null
+
 const hasTitleSlot = computed(() => Boolean(slots.title))
 const hasTitle = computed(() => Boolean(props.title || hasTitleSlot.value))
-const titleId = computed(() => (hasTitle.value ? `${uniqueId}-modal-title` : undefined))
+const titleId = computed(() => (hasTitle.value ? `${instanceId}-title` : undefined))
 
 const model = computed({
   get: () => props.modelValue,
@@ -111,9 +116,101 @@ function close() {
   emit('close')
 }
 
-function handleEsc() {
-  close()
+function handleGlobalKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    close()
+  }
 }
+
+function handleDialogKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    close()
+  }
+}
+
+function detachDialogListeners() {
+  if (dialogElement) {
+    dialogElement.removeEventListener('keydown', handleDialogKeydown)
+    dialogElement = null
+  }
+}
+
+function updateAriaLabelledby(value: string | undefined) {
+  if (!dialogElement) {
+    return
+  }
+
+  if (value) {
+    dialogElement.setAttribute('aria-labelledby', value)
+  } else {
+    dialogElement.removeAttribute('aria-labelledby')
+  }
+}
+
+function resolveDialogElement() {
+  if (typeof document === 'undefined') {
+    return null
+  }
+
+  return document.querySelector<HTMLElement>(`[data-modal-instance="${instanceId}"]`)
+}
+
+function attachDialogListeners() {
+  const element = resolveDialogElement()
+
+  if (!element || element === dialogElement) {
+    return
+  }
+
+  detachDialogListeners()
+  dialogElement = element
+  dialogElement.addEventListener('keydown', handleDialogKeydown)
+  updateAriaLabelledby(titleId.value)
+}
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('keydown', handleGlobalKeydown)
+  }
+
+  if (props.modelValue) {
+    nextTick(() => {
+      attachDialogListeners()
+    })
+  }
+})
+
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('keydown', handleGlobalKeydown)
+  }
+
+  detachDialogListeners()
+})
+
+watch(
+  () => titleId.value,
+  (value) => {
+    updateAriaLabelledby(value)
+  },
+)
+
+watch(
+  () => props.modelValue,
+  (isOpen) => {
+    if (!isOpen) {
+      detachDialogListeners()
+      return
+    }
+
+    nextTick(() => {
+      attachDialogListeners()
+    })
+  },
+  { immediate: true },
+)
 </script>
 
 <style scoped>
