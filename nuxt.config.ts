@@ -11,6 +11,7 @@ import { createRequire } from 'node:module'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
 import tailwindcss from '@tailwindcss/vite'
+import { simplePurgeCssPlugin } from './lib/vite/simple-purgecss'
 import { aliases } from 'vuetify/iconsets/mdi'
 
 type FetchHeadersInit = Record<string, string | number | readonly string[]>
@@ -243,6 +244,71 @@ export default defineNuxtConfig({
   vite: {
     plugins: [
       tailwindcss(),
+      simplePurgeCssPlugin({
+        content: [
+          'app.vue',
+          'app.config.ts',
+          'components/**/*.{vue,js,ts}',
+          'layouts/**/*.vue',
+          'pages/**/*.vue',
+          'composables/**/*.{js,ts}',
+          'content/**/*.{md,mdx,json,yml,yaml}',
+          'lib/**/*.{js,ts,vue}',
+          'plugins/**/*.{js,ts}',
+          'stores/**/*.{js,ts}',
+        ],
+        safelist: {
+          standard: [
+            'dark',
+            'rtl',
+            'ltr',
+            'text-align-auto',
+            'nuxt-loading-indicator',
+          ],
+          deep: [
+            /^v-/, // Vuetify utility classes
+            /^d-/, // display utilities
+            /^pa[trblxy]?-/,
+            /^ma[trblxy]?-/,
+            /^ga-/, // gap utilities
+            /^text-/, // typography utilities
+            /^bg-/, // background helpers
+            /^elevation-/,
+            /^rounded/,
+            /^border-/,
+            /-enter$/, // transition classes
+            /-leave$/,
+            /-leave-active$/,
+            /-move$/,
+            /^col-/,
+            /^row-/,
+            /^order-/,
+            /^offset-/,
+            /^justify-/,
+            /^items-/,
+            /^content-/,
+            /^flex-/,
+            /^grid-/,
+            /^gap-/,
+            /^min-/,
+            /^max-/,
+            /^w-/,
+            /^h-/,
+            /^z-/,
+            /^shadow-/,
+            /^opacity-/,
+            /^transition-/,
+            /^duration-/,
+            /^ease-/,
+            /^delay-/,
+            /^animate-/,
+          ],
+          greedy: [
+            /\\:/, // Tailwind responsive prefixes (sm:, md:, ...)
+            /\\\//, // Fraction based utilities (w-1\/2, etc.)
+          ],
+        },
+      }),
       cssInjectedByJsPlugin(),
       compression({ algorithm: 'brotliCompress' }),
     ],
