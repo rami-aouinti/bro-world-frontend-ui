@@ -5,18 +5,18 @@
         <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-4">
           <div>
             <h1 id="admin-title" class="text-h4 text-lg-h3 font-weight-bold mb-2">
-              Espace d'administration
+              {{ t('admin.page.title') }}
             </h1>
             <p id="admin-subtitle" class="text-body-1 text-medium-emphasis mb-0">
-              Pilotez l'ensemble de la plateforme, suivez les indicateurs clés et activez les bons leviers en quelques clics.
+              {{ t('admin.page.subtitle') }}
             </p>
           </div>
           <div class="d-flex flex-wrap gap-3">
             <v-btn color="primary" variant="flat" prepend-icon="mdi-shield-account" class="text-none">
-              Nouveau rôle admin
+              {{ t('admin.actions.newAdminRole') }}
             </v-btn>
             <v-btn color="primary" variant="tonal" prepend-icon="mdi-file-chart" class="text-none">
-              Exporter le rapport
+              {{ t('admin.actions.exportReport') }}
             </v-btn>
           </div>
         </div>
@@ -24,8 +24,10 @@
 
       <section aria-labelledby="admin-stats" class="mb-12">
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4">
-          <h2 id="admin-stats" class="text-h5 font-weight-semibold mb-0">Aperçu en temps réel</h2>
-          <span class="text-body-2 text-medium-emphasis">Données consolidées sur les dernières 24 heures</span>
+          <h2 id="admin-stats" class="text-h5 font-weight-semibold mb-0">
+            {{ t('admin.sections.stats.title') }}
+          </h2>
+          <span class="text-body-2 text-medium-emphasis">{{ t('admin.sections.stats.subtitle') }}</span>
         </div>
         <v-row dense>
           <v-col
@@ -69,8 +71,10 @@
 
       <section aria-labelledby="admin-controls" class="mb-12">
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4">
-          <h2 id="admin-controls" class="text-h5 font-weight-semibold mb-0">Contrôles globaux</h2>
-          <span class="text-body-2 text-medium-emphasis">Activez ou désactivez les fonctionnalités critiques du site</span>
+          <h2 id="admin-controls" class="text-h5 font-weight-semibold mb-0">
+            {{ t('admin.sections.controls.title') }}
+          </h2>
+          <span class="text-body-2 text-medium-emphasis">{{ t('admin.sections.controls.subtitle') }}</span>
         </div>
         <v-row dense>
           <v-col
@@ -105,8 +109,10 @@
 
       <section aria-labelledby="admin-actions" class="mb-12">
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4">
-          <h2 id="admin-actions" class="text-h5 font-weight-semibold mb-0">Actions rapides</h2>
-          <span class="text-body-2 text-medium-emphasis">Déclenchez les opérations de gestion les plus utilisées</span>
+          <h2 id="admin-actions" class="text-h5 font-weight-semibold mb-0">
+            {{ t('admin.sections.quickActions.title') }}
+          </h2>
+          <span class="text-body-2 text-medium-emphasis">{{ t('admin.sections.quickActions.subtitle') }}</span>
         </div>
         <v-row dense>
           <v-col
@@ -130,7 +136,7 @@
                     block
                     prepend-icon="mdi-play-circle"
                   >
-                    Lancer
+                    {{ t('admin.sections.quickActions.button') }}
                   </v-btn>
                 </div>
               </div>
@@ -141,8 +147,10 @@
 
       <section aria-labelledby="admin-modules" class="mb-12">
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4">
-          <h2 id="admin-modules" class="text-h5 font-weight-semibold mb-0">Modules de gestion</h2>
-          <span class="text-body-2 text-medium-emphasis">Retrouvez les espaces dédiés à chaque pilier de la plateforme</span>
+          <h2 id="admin-modules" class="text-h5 font-weight-semibold mb-0">
+            {{ t('admin.sections.modules.title') }}
+          </h2>
+          <span class="text-body-2 text-medium-emphasis">{{ t('admin.sections.modules.subtitle') }}</span>
         </div>
         <v-row dense>
           <v-col
@@ -181,7 +189,7 @@
                     class="text-none"
                     prepend-icon="mdi-open-in-new"
                   >
-                    Ouvrir le module
+                    {{ t('admin.sections.modules.openButton') }}
                   </v-btn>
                   <v-btn
                     color="primary"
@@ -189,7 +197,7 @@
                     class="text-none"
                     prepend-icon="mdi-clipboard-text"
                   >
-                    Voir les politiques
+                    {{ t('admin.sections.modules.policiesButton') }}
                   </v-btn>
                 </div>
                 <p class="text-caption text-medium-emphasis mb-0">{{ module.status }}</p>
@@ -205,11 +213,15 @@
             <v-card class="pa-6 h-100" rounded="xl" variant="tonal">
               <div class="d-flex justify-space-between align-start mb-4">
                 <div>
-                  <h2 id="admin-activity" class="text-h5 font-weight-semibold mb-1">Activité récente</h2>
-                  <p class="text-body-2 text-medium-emphasis mb-0">Suivi des actions réalisées par les administrateurs</p>
+                  <h2 id="admin-activity" class="text-h5 font-weight-semibold mb-1">
+                    {{ t('admin.sections.activity.title') }}
+                  </h2>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ t('admin.sections.activity.subtitle') }}
+                  </p>
                 </div>
                 <v-btn color="primary" variant="text" class="text-none" prepend-icon="mdi-history">
-                  Historique complet
+                  {{ t('admin.sections.activity.cta') }}
                 </v-btn>
               </div>
               <v-divider class="mb-4" />
@@ -240,11 +252,15 @@
             <v-card class="pa-6 h-100" rounded="xl" variant="tonal">
               <div class="d-flex justify-space-between align-start mb-4">
                 <div>
-                  <h2 id="admin-health" class="text-h5 font-weight-semibold mb-1">Santé du système</h2>
-                  <p class="text-body-2 text-medium-emphasis mb-0">Surveillez les flux critiques et leur état opérationnel</p>
+                  <h2 id="admin-health" class="text-h5 font-weight-semibold mb-1">
+                    {{ t('admin.sections.health.title') }}
+                  </h2>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ t('admin.sections.health.subtitle') }}
+                  </p>
                 </div>
                 <v-btn color="primary" variant="text" class="text-none" prepend-icon="mdi-connection">
-                  Centre de statut
+                  {{ t('admin.sections.health.cta') }}
                 </v-btn>
               </div>
               <v-divider class="mb-4" />
@@ -276,8 +292,8 @@
                     rounded
                   />
                   <div class="d-flex justify-space-between text-caption text-medium-emphasis">
-                    <span>Disponibilité</span>
-                    <span>{{ service.uptime }}%</span>
+                    <span>{{ t('admin.sections.health.uptimeLabel') }}</span>
+                    <span>{{ formatNumber(service.uptime) }}%</span>
                   </div>
                 </div>
               </div>
@@ -290,22 +306,26 @@
         <v-card class="pa-6" rounded="xl" variant="elevated" elevation="4">
           <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4">
             <div>
-              <h2 id="admin-resources" class="text-h5 font-weight-semibold mb-1">Ressources & conformité</h2>
-              <p class="text-body-2 text-medium-emphasis mb-0">Assurez-vous que vos équipes disposent des bonnes directives pour maintenir la qualité du site.</p>
+              <h2 id="admin-resources" class="text-h5 font-weight-semibold mb-1">
+                {{ t('admin.sections.resources.title') }}
+              </h2>
+              <p class="text-body-2 text-medium-emphasis mb-0">
+                {{ t('admin.sections.resources.subtitle') }}
+              </p>
             </div>
             <div class="d-flex flex-wrap gap-3">
               <v-btn color="primary" variant="flat" class="text-none" prepend-icon="mdi-book-open-page-variant">
-                Centre de connaissances
+                {{ t('admin.sections.resources.knowledgeBase') }}
               </v-btn>
               <v-btn color="primary" variant="tonal" class="text-none" prepend-icon="mdi-shield-check">
-                Audit de conformité
+                {{ t('admin.sections.resources.complianceAudit') }}
               </v-btn>
             </div>
           </div>
           <v-divider class="my-6" />
           <div class="d-flex flex-column flex-md-row gap-6" role="list">
             <div
-              v-for="resource in resources"
+              v-for="resource in resourceItems"
               :key="resource.id"
               role="listitem"
               class="flex-grow-1"
@@ -313,7 +333,7 @@
               <p class="text-subtitle-2 font-weight-semibold mb-2">{{ resource.title }}</p>
               <p class="text-body-2 text-medium-emphasis mb-3">{{ resource.description }}</p>
               <v-btn color="primary" variant="text" class="text-none" prepend-icon="mdi-download">
-                Télécharger
+                {{ t('admin.sections.resources.download') }}
               </v-btn>
             </div>
           </div>
@@ -330,52 +350,75 @@ definePageMeta({
   showRightWidgets: false,
 })
 
+const { t, tm, locale } = useI18n()
+
 useHead({
-  title: "Administration",
+  title: computed(() => t('admin.metaTitle')),
 })
 
-const numberFormatter = new Intl.NumberFormat('fr-FR')
+const localeMap: Record<string, string> = {
+  'zh-cn': 'zh-CN',
+}
+
+const resolvedLocale = computed(() => {
+  const current = locale.value
+  const normalized = current.toLowerCase()
+  return localeMap[normalized] ?? current
+})
+
+const numberFormatter = computed(() => new Intl.NumberFormat(resolvedLocale.value))
+const decimalFormatter = computed(
+  () => new Intl.NumberFormat(resolvedLocale.value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+)
+
+function formatNumber(value: number) {
+  return numberFormatter.value.format(value)
+}
+
+function formatDecimal(value: number) {
+  return decimalFormatter.value.format(value)
+}
 
 const metrics = computed(() => [
   {
     id: 'users',
-    label: 'Utilisateurs actifs',
-    value: numberFormatter.format(12486),
-    trend: '+12% cette semaine',
+    label: t('admin.sections.stats.metrics.users.label'),
+    value: formatNumber(12486),
+    trend: t('admin.sections.stats.metrics.users.trend'),
     trendIsPositive: true,
-    caption: 'Engagement moyen par session',
+    caption: t('admin.sections.stats.metrics.users.caption'),
     icon: 'mdi-account-group',
-    description: 'Mesure le nombre de membres connectés au cours des dernières 24 heures.',
+    description: t('admin.sections.stats.metrics.users.description'),
   },
   {
     id: 'content',
-    label: 'Contenus publiés',
-    value: numberFormatter.format(872),
-    trend: '+5% vs. hier',
+    label: t('admin.sections.stats.metrics.content.label'),
+    value: formatNumber(872),
+    trend: t('admin.sections.stats.metrics.content.trend'),
     trendIsPositive: true,
-    caption: 'Nouveaux articles et annonces',
+    caption: t('admin.sections.stats.metrics.content.caption'),
     icon: 'mdi-text-box-multiple',
-    description: 'Nombre total de publications, événements et annonces validés.',
+    description: t('admin.sections.stats.metrics.content.description'),
   },
   {
     id: 'reports',
-    label: 'Signalements traités',
-    value: numberFormatter.format(94),
-    trend: '-8% vs. moyenne',
+    label: t('admin.sections.stats.metrics.reports.label'),
+    value: formatNumber(94),
+    trend: t('admin.sections.stats.metrics.reports.trend'),
     trendIsPositive: true,
-    caption: 'Temps moyen de résolution: 1h42',
+    caption: t('admin.sections.stats.metrics.reports.caption'),
     icon: 'mdi-shield-check',
-    description: 'Tickets de modération résolus par l’équipe de support.',
+    description: t('admin.sections.stats.metrics.reports.description'),
   },
   {
     id: 'availability',
-    label: 'Taux de disponibilité',
-    value: '99,98%',
-    trend: '+0,2 point',
+    label: t('admin.sections.stats.metrics.availability.label'),
+    value: t('admin.sections.stats.metrics.availability.value', { value: formatDecimal(99.98) }),
+    trend: t('admin.sections.stats.metrics.availability.trend'),
     trendIsPositive: true,
-    caption: 'Sur les 30 derniers jours',
+    caption: t('admin.sections.stats.metrics.availability.caption'),
     icon: 'mdi-chart-areaspline',
-    description: 'Indicateur consolidé sur l’ensemble des services critiques.',
+    description: t('admin.sections.stats.metrics.availability.description'),
   },
 ])
 
@@ -387,183 +430,187 @@ const globalAnnouncements = ref(false)
 const controlToggles = computed(() => [
   {
     id: 'maintenance',
-    label: 'Mode maintenance',
-    description: 'Activez un message de maintenance et restreignez l’accès aux administrateurs uniquement.',
-    helper: 'Recommandé uniquement pour les mises à jour majeures.',
+    label: t('admin.sections.controls.toggles.maintenance.label'),
+    description: t('admin.sections.controls.toggles.maintenance.description'),
+    helper: t('admin.sections.controls.toggles.maintenance.helper'),
     icon: 'mdi-tools',
-    enabledLabel: 'Maintenance activée',
-    disabledLabel: 'Maintenance désactivée',
+    enabledLabel: t('admin.sections.controls.toggles.maintenance.enabled'),
+    disabledLabel: t('admin.sections.controls.toggles.maintenance.disabled'),
     activeColor: 'warning',
     model: maintenanceMode,
   },
   {
     id: 'registrations',
-    label: 'Inscriptions ouvertes',
-    description: 'Permettez aux nouveaux membres de créer un compte sans invitation préalable.',
-    helper: 'Surveillez l’afflux via les rapports de croissance.',
+    label: t('admin.sections.controls.toggles.registrations.label'),
+    description: t('admin.sections.controls.toggles.registrations.description'),
+    helper: t('admin.sections.controls.toggles.registrations.helper'),
     icon: 'mdi-account-plus',
-    enabledLabel: 'Inscriptions autorisées',
-    disabledLabel: 'Inscriptions fermées',
+    enabledLabel: t('admin.sections.controls.toggles.registrations.enabled'),
+    disabledLabel: t('admin.sections.controls.toggles.registrations.disabled'),
     activeColor: 'success',
     model: openRegistrations,
   },
   {
     id: 'moderation',
-    label: 'Modération assistée',
-    description: 'Lance automatiquement la détection de contenu sensible avant publication.',
-    helper: 'Réglable depuis le module de modération avancée.',
+    label: t('admin.sections.controls.toggles.moderation.label'),
+    description: t('admin.sections.controls.toggles.moderation.description'),
+    helper: t('admin.sections.controls.toggles.moderation.helper'),
     icon: 'mdi-robot-outline',
-    enabledLabel: 'Automatisation active',
-    disabledLabel: 'Automatisation inactive',
+    enabledLabel: t('admin.sections.controls.toggles.moderation.enabled'),
+    disabledLabel: t('admin.sections.controls.toggles.moderation.disabled'),
     activeColor: 'info',
     model: autoModeration,
   },
   {
     id: 'broadcast',
-    label: 'Annonce globale épinglée',
-    description: 'Affiche une bannière d’information en haut de toutes les pages publiques.',
-    helper: 'Utilisez-le pour les communications officielles ou urgentes.',
+    label: t('admin.sections.controls.toggles.broadcast.label'),
+    description: t('admin.sections.controls.toggles.broadcast.description'),
+    helper: t('admin.sections.controls.toggles.broadcast.helper'),
     icon: 'mdi-bullhorn',
-    enabledLabel: 'Annonce visible',
-    disabledLabel: 'Annonce masquée',
+    enabledLabel: t('admin.sections.controls.toggles.broadcast.enabled'),
+    disabledLabel: t('admin.sections.controls.toggles.broadcast.disabled'),
     activeColor: 'primary',
     model: globalAnnouncements,
   },
 ])
 
-const quickActions = [
+const quickActions = computed(() => [
   {
     id: 'content-review',
-    title: 'Valider les contenus en attente',
-    description: 'Passez en revue les contributions de la communauté avant leur mise en ligne.',
+    title: t('admin.sections.quickActions.items.contentReview.title'),
+    description: t('admin.sections.quickActions.items.contentReview.description'),
     icon: 'mdi-check-decagram',
     color: 'primary',
   },
   {
     id: 'security-scan',
-    title: 'Analyser la sécurité',
-    description: 'Lancez un contrôle automatisé des permissions et des rôles sensibles.',
+    title: t('admin.sections.quickActions.items.securityScan.title'),
+    description: t('admin.sections.quickActions.items.securityScan.description'),
     icon: 'mdi-shield-lock',
     color: 'secondary',
   },
   {
     id: 'community-update',
-    title: 'Envoyer une mise à jour globale',
-    description: 'Programmez une newsletter ou une notification push à l’ensemble des membres.',
+    title: t('admin.sections.quickActions.items.communityUpdate.title'),
+    description: t('admin.sections.quickActions.items.communityUpdate.description'),
     icon: 'mdi-email-send',
     color: 'purple',
   },
-]
+])
 
-const adminModules = [
+function getModuleTags(module: string) {
+  return tm(`admin.sections.modules.items.${module}.tags`) as string[] | undefined
+}
+
+const adminModules = computed(() => [
   {
     id: 'content',
-    title: 'Gestion du contenu',
-    description: 'Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.',
+    title: t('admin.sections.modules.items.content.title'),
+    description: t('admin.sections.modules.items.content.description'),
     icon: 'mdi-file-document-edit',
-    tags: ['Workflow éditorial', 'Validation', 'Programmation'],
-    status: '12 contenus nécessitent une revue éditoriale.',
+    tags: getModuleTags('content') ?? [],
+    status: t('admin.sections.modules.items.content.status'),
   },
   {
     id: 'community',
-    title: 'Communauté & modération',
-    description: 'Paramétrez les règles de modération, gérez les signalements et les sanctions.',
+    title: t('admin.sections.modules.items.community.title'),
+    description: t('admin.sections.modules.items.community.description'),
     icon: 'mdi-account-group-outline',
-    tags: ['Signalements', 'Sanctions', 'Messages privés'],
-    status: 'Temps moyen de réponse : 1 h 42.',
+    tags: getModuleTags('community') ?? [],
+    status: t('admin.sections.modules.items.community.status'),
   },
   {
     id: 'commerce',
-    title: 'Monétisation & offres',
-    description: 'Administrez les abonnements, codes promotionnels et partenariats commerciaux.',
+    title: t('admin.sections.modules.items.commerce.title'),
+    description: t('admin.sections.modules.items.commerce.description'),
     icon: 'mdi-cash-sync',
-    tags: ['Abonnements', 'Facturation', 'Coupons'],
-    status: 'Taux de conversion en hausse de 3,4 % cette semaine.',
+    tags: getModuleTags('commerce') ?? [],
+    status: t('admin.sections.modules.items.commerce.status'),
   },
   {
     id: 'governance',
-    title: 'Gouvernance & conformité',
-    description: 'Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.',
+    title: t('admin.sections.modules.items.governance.title'),
+    description: t('admin.sections.modules.items.governance.description'),
     icon: 'mdi-gavel',
-    tags: ['Audit', 'Rôles', 'Traçabilité'],
-    status: 'Dernier audit complet réalisé il y a 5 jours.',
+    tags: getModuleTags('governance') ?? [],
+    status: t('admin.sections.modules.items.governance.status'),
   },
-]
+])
 
-const activityFeed = [
+const activityFeed = computed(() => [
   {
     id: '1',
-    title: 'Revue de 18 contenus publiée',
-    description: 'Clara Dupont a validé le lot de contenus en attente pour la rubrique Blog.',
-    time: 'Il y a 12 minutes',
+    title: t('admin.sections.activity.items.1.title'),
+    description: t('admin.sections.activity.items.1.description'),
+    time: t('admin.sections.activity.items.1.time'),
     icon: 'mdi-clipboard-check',
     color: 'success',
   },
   {
     id: '2',
-    title: 'Nouveau rôle attribué',
-    description: 'Ahmed B. a reçu les permissions de modérateur senior pour la zone Communauté.',
-    time: 'Il y a 47 minutes',
+    title: t('admin.sections.activity.items.2.title'),
+    description: t('admin.sections.activity.items.2.description'),
+    time: t('admin.sections.activity.items.2.time'),
     icon: 'mdi-account-key',
     color: 'primary',
   },
   {
     id: '3',
-    title: 'Signalement critique résolu',
-    description: 'Un contenu signalé pour incitation à la haine a été supprimé et l’utilisateur suspendu.',
-    time: 'Il y a 2 heures',
+    title: t('admin.sections.activity.items.3.title'),
+    description: t('admin.sections.activity.items.3.description'),
+    time: t('admin.sections.activity.items.3.time'),
     icon: 'mdi-alert-decagram',
     color: 'error',
   },
-]
+])
 
-const systemStatus = [
+const systemStatus = computed(() => [
   {
     id: 'api',
-    name: 'API publique',
-    description: 'Flux GraphQL et Webhooks pour les intégrations tierces.',
-    status: 'Opérationnel',
+    name: t('admin.sections.health.items.api.name'),
+    description: t('admin.sections.health.items.api.description'),
+    status: t('admin.sections.health.items.api.status'),
     uptime: 99,
     icon: 'mdi-api',
     color: 'success',
   },
   {
     id: 'payments',
-    name: 'Passerelle de paiement',
-    description: 'Transactions, facturation et webhooks financiers.',
-    status: 'Incident mineur',
+    name: t('admin.sections.health.items.payments.name'),
+    description: t('admin.sections.health.items.payments.description'),
+    status: t('admin.sections.health.items.payments.status'),
     uptime: 96,
     icon: 'mdi-credit-card-sync',
     color: 'warning',
   },
   {
     id: 'notifications',
-    name: 'Notifications temps réel',
-    description: 'Envoi d’e-mails transactionnels et de notifications push.',
-    status: 'Opérationnel',
+    name: t('admin.sections.health.items.notifications.name'),
+    description: t('admin.sections.health.items.notifications.description'),
+    status: t('admin.sections.health.items.notifications.status'),
     uptime: 98,
     icon: 'mdi-bell-ring',
     color: 'info',
   },
-]
+])
 
-const resources = [
+const resourceItems = computed(() => [
   {
     id: 'charter',
-    title: 'Charte éditoriale & guide de modération',
-    description: 'Règles officielles qui encadrent la publication de contenu sur la plateforme.',
+    title: t('admin.sections.resources.items.charter.title'),
+    description: t('admin.sections.resources.items.charter.description'),
   },
   {
     id: 'security',
-    title: 'Procédure de gestion des incidents de sécurité',
-    description: 'Checklist opérationnelle en cas de faille de sécurité ou de tentative d’intrusion.',
+    title: t('admin.sections.resources.items.security.title'),
+    description: t('admin.sections.resources.items.security.description'),
   },
   {
     id: 'compliance',
-    title: 'Document RGPD & traitement des données',
-    description: 'Inventaire des traitements, durées de conservation et modèles de réponse aux utilisateurs.',
+    title: t('admin.sections.resources.items.compliance.title'),
+    description: t('admin.sections.resources.items.compliance.description'),
   },
-]
+])
 </script>
 
 <style scoped>

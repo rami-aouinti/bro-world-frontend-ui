@@ -361,8 +361,7 @@
       "google": "Continua con Google",
       "github": "Continua con GitHub",
       "microsoft": "Continua con Microsoft"
-    },
-    "errorGeneric": "Si è verificato un errore durante l'accesso."
+    }
   },
   "blog": {
     "hero": {
@@ -616,6 +615,217 @@
     "profile": {
       "title": "Profilo",
       "description": "Consulta i tuoi dati personali e l'attività dell'account."
+    }
+  },
+  "admin": {
+    "metaTitle": "Amministrazione",
+    "page": {
+      "title": "Area di amministrazione",
+      "subtitle": "Gestisci l’intera piattaforma, monitora le metriche chiave e attiva le leve giuste in pochi clic."
+    },
+    "actions": {
+      "newAdminRole": "Nuovo ruolo admin",
+      "exportReport": "Esporta report"
+    },
+    "sections": {
+      "stats": {
+        "title": "Panoramica in tempo reale",
+        "subtitle": "Dati consolidati nelle ultime 24 ore",
+        "metrics": {
+          "users": {
+            "label": "Utenti attivi",
+            "trend": "+12% questa settimana",
+            "caption": "Coinvolgimento medio per sessione",
+            "description": "Conta i membri che hanno effettuato l’accesso nelle ultime 24 ore."
+          },
+          "content": {
+            "label": "Contenuti pubblicati",
+            "trend": "+5% vs. ieri",
+            "caption": "Nuovi articoli e annunci",
+            "description": "Totale di post, eventi e annunci approvati."
+          },
+          "reports": {
+            "label": "Segnalazioni gestite",
+            "trend": "-8% vs. media",
+            "caption": "Tempo medio di risoluzione: 1h42",
+            "description": "Ticket di moderazione risolti dal team di supporto."
+          },
+          "availability": {
+            "label": "Tasso di disponibilità",
+            "value": "{value}%",
+            "trend": "+0,2 punti",
+            "caption": "Negli ultimi 30 giorni",
+            "description": "Indicatore consolidato su tutti i servizi critici."
+          }
+        }
+      },
+      "controls": {
+        "title": "Controlli globali",
+        "subtitle": "Attiva o disattiva le funzionalità critiche della piattaforma",
+        "toggles": {
+          "maintenance": {
+            "label": "Modalità manutenzione",
+            "description": "Mostra un messaggio di manutenzione e limita l’accesso ai soli amministratori.",
+            "helper": "Consigliata solo per aggiornamenti importanti.",
+            "enabled": "Manutenzione attiva",
+            "disabled": "Manutenzione disattivata"
+          },
+          "registrations": {
+            "label": "Iscrizioni aperte",
+            "description": "Consenti ai nuovi membri di creare un account senza invito.",
+            "helper": "Monitora il flusso tramite i report di crescita.",
+            "enabled": "Iscrizioni consentite",
+            "disabled": "Iscrizioni chiuse"
+          },
+          "moderation": {
+            "label": "Moderazione assistita",
+            "description": "Avvia il rilevamento automatico dei contenuti sensibili prima della pubblicazione.",
+            "helper": "Regolabile dal modulo di moderazione avanzata.",
+            "enabled": "Automazione attiva",
+            "disabled": "Automazione disattivata"
+          },
+          "broadcast": {
+            "label": "Annuncio globale fissato",
+            "description": "Mostra un banner informativo in cima a tutte le pagine pubbliche.",
+            "helper": "Usalo per comunicazioni ufficiali o urgenti.",
+            "enabled": "Annuncio visibile",
+            "disabled": "Annuncio nascosto"
+          }
+        }
+      },
+      "quickActions": {
+        "title": "Azioni rapide",
+        "subtitle": "Avvia le operazioni di gestione più frequenti",
+        "button": "Avvia",
+        "items": {
+          "contentReview": {
+            "title": "Approva i contenuti in attesa",
+            "description": "Rivedi i contributi della community prima della pubblicazione."
+          },
+          "securityScan": {
+            "title": "Esegui scansione di sicurezza",
+            "description": "Avvia un controllo automatico di permessi e ruoli sensibili."
+          },
+          "communityUpdate": {
+            "title": "Invia un aggiornamento globale",
+            "description": "Programma una newsletter o una notifica push per tutti i membri."
+          }
+        }
+      },
+      "modules": {
+        "title": "Moduli di gestione",
+        "subtitle": "Accedi agli spazi dedicati a ciascun pilastro della piattaforma",
+        "openButton": "Apri modulo",
+        "policiesButton": "Vedi politiche",
+        "items": {
+          "content": {
+            "title": "Gestione dei contenuti",
+            "description": "Pianifica, pubblica e archivia articoli, eventi e risorse formative.",
+            "tags": [
+              "Workflow editoriale",
+              "Validazione",
+              "Programmazione"
+            ],
+            "status": "12 contenuti richiedono una revisione editoriale."
+          },
+          "community": {
+            "title": "Community e moderazione",
+            "description": "Configura le regole di moderazione, gestisci segnalazioni e sanzioni.",
+            "tags": [
+              "Segnalazioni",
+              "Sanzioni",
+              "Messaggi privati"
+            ],
+            "status": "Tempo medio di risposta: 1 h 42."
+          },
+          "commerce": {
+            "title": "Monetizzazione e offerte",
+            "description": "Gestisci abbonamenti, codici promozionali e partnership commerciali.",
+            "tags": [
+              "Abbonamenti",
+              "Fatturazione",
+              "Coupon"
+            ],
+            "status": "Tasso di conversione in aumento del 3,4% questa settimana."
+          },
+          "governance": {
+            "title": "Governance e conformità",
+            "description": "Verifica gli accessi, gestisci i ruoli sensibili e prepara i report di conformità.",
+            "tags": [
+              "Audit",
+              "Ruoli",
+              "Tracciabilità"
+            ],
+            "status": "Ultimo audit completo effettuato 5 giorni fa."
+          }
+        }
+      },
+      "activity": {
+        "title": "Attività recente",
+        "subtitle": "Traccia le azioni eseguite dagli amministratori",
+        "cta": "Storico completo",
+        "items": {
+          "1": {
+            "title": "Revisione di 18 contenuti pubblicata",
+            "description": "Clara Dupont ha approvato il lotto di contenuti in attesa per la sezione Blog.",
+            "time": "12 minuti fa"
+          },
+          "2": {
+            "title": "Nuovo ruolo assegnato",
+            "description": "Ahmed B. ha ricevuto i permessi di moderatore senior per l’area Community.",
+            "time": "47 minuti fa"
+          },
+          "3": {
+            "title": "Segnalazione critica risolta",
+            "description": "Un contenuto segnalato per incitamento all’odio è stato rimosso e l’utente sospeso.",
+            "time": "2 ore fa"
+          }
+        }
+      },
+      "health": {
+        "title": "Stato del sistema",
+        "subtitle": "Monitora i flussi critici e il loro stato operativo",
+        "cta": "Centro stato",
+        "uptimeLabel": "Disponibilità",
+        "items": {
+          "api": {
+            "name": "API pubblica",
+            "description": "Flussi GraphQL e webhook per integrazioni di terze parti.",
+            "status": "Operativo"
+          },
+          "payments": {
+            "name": "Gateway di pagamento",
+            "description": "Transazioni, fatturazione e webhook finanziari.",
+            "status": "Incidente minore"
+          },
+          "notifications": {
+            "name": "Notifiche in tempo reale",
+            "description": "Email transazionali e notifiche push.",
+            "status": "Operativo"
+          }
+        }
+      },
+      "resources": {
+        "title": "Risorse e conformità",
+        "subtitle": "Assicurati che i team abbiano le giuste linee guida per mantenere alta la qualità del sito.",
+        "knowledgeBase": "Centro di conoscenza",
+        "complianceAudit": "Audit di conformità",
+        "download": "Scarica",
+        "items": {
+          "charter": {
+            "title": "Carta editoriale e guida alla moderazione",
+            "description": "Regole ufficiali che disciplinano la pubblicazione sulla piattaforma."
+          },
+          "security": {
+            "title": "Procedura di gestione degli incidenti di sicurezza",
+            "description": "Checklist operativa in caso di violazioni o tentativi di intrusione."
+          },
+          "compliance": {
+            "title": "Documento GDPR e trattamento dei dati",
+            "description": "Inventario dei trattamenti, tempi di conservazione e modelli di risposta per gli utenti."
+          }
+        }
+      }
     }
   }
 }
