@@ -424,7 +424,7 @@ export default defineNuxtConfig({
     public: {
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
-      blogApiEndpoint: process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "http://localhost/public/post",
+      blogApiEndpoint: process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://blog.bro-world.org/public/post",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
     },

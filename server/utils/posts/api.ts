@@ -30,7 +30,7 @@ function joinEndpoint(base: string, ...segments: (string | number)[]): string {
 
 function resolveBaseEndpoint(event: H3Event): string {
   const config = useRuntimeConfig(event);
-  return config.public.blogApiEndpoint || "http://localhost/public/post";
+  return config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
 }
 
 function buildListQuery(params: NormalizedPostsListQuery) {

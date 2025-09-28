@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const config = useRuntimeConfig(event);
-  const baseEndpoint = config.public.blogApiEndpoint || "http://localhost/public/post";
+  const baseEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
   const endpoint = buildEndpoint(baseEndpoint, `/${id}/comment/${commentId}/reaction`);
 
   try {
