@@ -33,6 +33,9 @@
         "cv": "CV",
         "jobs": "Jobs",
         "admin": "Administration",
+        "adminGeneral": "General",
+        "adminUserManagement": "User management",
+        "adminBlog": "Blog",
         "help": "Help",
         "about": "About",
         "contact": "Contact"
@@ -805,6 +808,20 @@
     "page": {
       "title": "Administration hub",
       "subtitle": "Manage the entire platform, monitor key metrics, and activate the right levers in a few clicks."
+    },
+    "userManagement": {
+      "metaTitle": "User management",
+      "page": {
+        "title": "User management",
+        "subtitle": "Invite, review, and adjust permissions for every member."
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "Blog administration",
+      "page": {
+        "title": "Blog administration",
+        "subtitle": "Curate stories and publish announcements for the community."
+      }
     },
     "actions": {
       "newAdminRole": "New admin role",

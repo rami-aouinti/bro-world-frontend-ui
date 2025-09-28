@@ -347,6 +347,7 @@
 import { computed, ref } from 'vue'
 
 definePageMeta({
+  middleware: ['auth', 'admin'],
   showRightWidgets: false,
 })
 
