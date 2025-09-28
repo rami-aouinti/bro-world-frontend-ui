@@ -7,6 +7,37 @@ body {
   min-height: 100%;
 }
 
+:root {
+  /* Radius */
+  --ui-radius-none: var(--v-radius-none);
+  --ui-radius-xs: var(--v-radius-xs);
+  --ui-radius-sm: var(--v-radius-sm);
+  --ui-radius-md: var(--v-radius-md);
+  --ui-radius-lg: var(--v-radius-lg);
+  --ui-radius-xl: var(--v-radius-xl);
+  --ui-radius-pill: var(--v-radius-pill);
+  --ui-radius: var(--ui-radius-md);
+
+  /* Focus */
+  --ui-focus: 0 0 0 3px rgba(var(--v-theme-primary), 0.35);
+
+  /* Spacing */
+  --ui-spacing-0: var(--v-space-0);
+  --ui-spacing-1: var(--v-space-1);
+  --ui-spacing-2: var(--v-space-2);
+  --ui-spacing-3: var(--v-space-3);
+  --ui-spacing-4: var(--v-space-4);
+  --ui-spacing-5: var(--v-space-5);
+  --ui-spacing-6: var(--v-space-6);
+  --ui-spacing-7: var(--v-space-7);
+  --ui-spacing-8: var(--v-space-8);
+  --ui-spacing-xs: var(--ui-spacing-1);
+  --ui-spacing-sm: var(--ui-spacing-2);
+  --ui-spacing-md: var(--ui-spacing-3);
+  --ui-spacing-lg: var(--ui-spacing-4);
+  --ui-spacing-xl: var(--ui-spacing-6);
+}
+
 #__nuxt {
   min-height: 100%;
   display: flex;

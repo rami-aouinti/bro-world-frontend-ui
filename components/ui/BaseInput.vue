@@ -198,7 +198,7 @@ function onClear() {
 }
 
 :deep(.v-field) {
-  border-radius: var(--ui-radius, var(--v-border-radius));
+  border-radius: var(--ui-radius);
 }
 
 :deep(.v-field__outline) {
@@ -206,6 +206,6 @@ function onClear() {
 }
 
 :deep(.v-field--focused) {
-  box-shadow: var(--ui-focus, 0 0 0 3px rgba(var(--v-theme-primary), 0.35));
+  box-shadow: var(--ui-focus);
 }
 </style>

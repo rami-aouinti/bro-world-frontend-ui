@@ -52,9 +52,42 @@ Une échelle cohérente est exposée via `--v-space-n` (en rem) :
 
 Utilisez-les pour les marges et paddings : `padding: var(--v-space-4);`.
 
+Des alias sont disponibles pour les composants UI :
+
+| Variable | Alias Vuetify | Valeur par défaut |
+| --- | --- | --- |
+| `--ui-spacing-0` | `var(--v-space-0)` | `0rem` |
+| `--ui-spacing-1` | `var(--v-space-1)` | `0.25rem` |
+| `--ui-spacing-2` | `var(--v-space-2)` | `0.5rem` |
+| `--ui-spacing-3` | `var(--v-space-3)` | `0.75rem` |
+| `--ui-spacing-4` | `var(--v-space-4)` | `1rem` |
+| `--ui-spacing-5` | `var(--v-space-5)` | `1.5rem` |
+| `--ui-spacing-6` | `var(--v-space-6)` | `2rem` |
+| `--ui-spacing-7` | `var(--v-space-7)` | `2.5rem` |
+| `--ui-spacing-8` | `var(--v-space-8)` | `3rem` |
+
+Des raccourcis (`--ui-spacing-xs`, `--ui-spacing-sm`, `--ui-spacing-md`, `--ui-spacing-lg`, `--ui-spacing-xl`) pointent respectivement vers `1`, `2`, `3`, `4` et `6`. Ils facilitent l'écriture de styles : `padding: var(--ui-spacing-lg);`.
+
 ## Rayons
 
 Les rayons sont accessibles via `--v-radius-*` : `none`, `xs`, `sm`, `md`, `lg`, `xl`, `pill`. Exemple : `border-radius: var(--v-radius-md);`.
+
+Pour simplifier la consommation des tokens dans nos composants, des alias globaux sont exposés dans `assets/styles/index.css` :
+
+| Variable | Alias Vuetify | Usage |
+| --- | --- | --- |
+| `--ui-radius` | `var(--v-radius-md)` | Rayon par défaut des contrôles.
+| `--ui-radius-none` | `var(--v-radius-none)` | Rayon nul.
+| `--ui-radius-xs` | `var(--v-radius-xs)` | Très petits éléments.
+| `--ui-radius-sm` | `var(--v-radius-sm)` | Inputs compacts.
+| `--ui-radius-md` | `var(--v-radius-md)` | Rayon standard.
+| `--ui-radius-lg` | `var(--v-radius-lg)` | Cartes, modales.
+| `--ui-radius-xl` | `var(--v-radius-xl)` | Surfaces généreuses.
+| `--ui-radius-pill` | `var(--v-radius-pill)` | Boutons pill ou badges.
+
+Utilisez ces variables pour garantir la cohérence même en dehors des composants Vuetify : `border-radius: var(--ui-radius);`.
+
+Une ombre de focus harmonisée est également disponible via `--ui-focus` (`0 0 0 3px rgba(var(--v-theme-primary), 0.35))`.
 
 ## Typographie
 
