@@ -65,12 +65,33 @@ const alertRefs = new Map<string, HTMLElement>();
 const previousFocus = ref<HTMLElement | null>(null);
 const isClient = typeof window !== "undefined";
 
-function setAlertRef(id: string, element: HTMLElement | null) {
-  if (element) {
-    alertRefs.set(id, element);
-  } else {
-    alertRefs.delete(id);
+type AlertRef = HTMLElement | { $el?: HTMLElement | null } | null;
+
+function resolveAlertElement(element: AlertRef) {
+  if (!element) {
+    return null;
   }
+
+  if (element instanceof HTMLElement) {
+    return element;
+  }
+
+  if (element.$el instanceof HTMLElement) {
+    return element.$el;
+  }
+
+  return null;
+}
+
+function setAlertRef(id: string, element: AlertRef) {
+  const resolved = resolveAlertElement(element);
+
+  if (resolved) {
+    alertRefs.set(id, resolved);
+    return;
+  }
+
+  alertRefs.delete(id);
 }
 
 async function focusAlert(id: string) {
@@ -82,7 +103,7 @@ async function focusAlert(id: string) {
 
   const element = alertRefs.get(id);
 
-  if (!element) {
+  if (!(element instanceof HTMLElement)) {
     return;
   }
 
