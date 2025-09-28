@@ -291,6 +291,8 @@
       "submit": "Publier le commentaire",
       "submitting": "Publication...",
       "loading": "Chargement des commentaires...",
+      "load": "Charger les commentaires",
+      "activationHint": "Les commentaires se chargent lorsque cette section est visible ou lorsque vous appuyez sur le bouton.",
       "success": "Votre commentaire a été ajouté.",
       "error": "Impossible d'ajouter votre commentaire. Veuillez réessayer.",
       "validation": "Écrivez un commentaire avant de publier.",

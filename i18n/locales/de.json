@@ -291,6 +291,8 @@
       "submit": "Kommentar veröffentlichen",
       "submitting": "Wird veröffentlicht...",
       "loading": "Kommentare werden geladen...",
+      "load": "Kommentare laden",
+      "activationHint": "Kommentare werden geladen, sobald dieser Bereich sichtbar ist oder wenn du den Button drückst.",
       "success": "Dein Kommentar wurde hinzugefügt.",
       "error": "Dein Kommentar konnte nicht hinzugefügt werden. Bitte versuche es erneut.",
       "validation": "Schreibe einen Kommentar, bevor du veröffentlichst.",
