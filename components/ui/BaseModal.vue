@@ -215,12 +215,12 @@ watch(
 
 <style scoped>
 .ui-modal__card {
-  border-radius: var(--ui-radius, var(--v-border-radius-lg));
+  border-radius: var(--ui-radius-lg);
   overflow: hidden;
 }
 
 .ui-modal__header {
-  padding: 24px 24px 0;
+  padding: var(--ui-spacing-6) var(--ui-spacing-6) 0;
 }
 
 .ui-modal__title {
@@ -230,14 +230,14 @@ watch(
 }
 
 .ui-modal__body {
-  padding: 24px;
+  padding: var(--ui-spacing-6);
   color: rgba(var(--v-theme-on-surface), 0.87);
 }
 
 .ui-modal__footer {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 24px 24px;
+  gap: var(--ui-spacing-3);
+  padding: var(--ui-spacing-4) var(--ui-spacing-6) var(--ui-spacing-6);
 }
 </style>
