@@ -9,14 +9,17 @@ import {
   queueRevalidation,
 } from "~/server/utils/cache/posts";
 import { fetchPostsListFromSource } from "~/server/utils/posts/api";
+import { getSessionToken } from "~/server/utils/auth/session";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const normalizedQuery = normalizeListQuery(query);
-  const cacheKey = getPostsListCacheKey(event, normalizedQuery);
+  const hasToken = Boolean(getSessionToken(event));
+  const visibility = hasToken ? "private" : "public";
+  const cacheKey = getPostsListCacheKey(event, normalizedQuery, visibility);
 
   try {
-    const cached = await getCachedPostsList(event, normalizedQuery);
+    const cached = await getCachedPostsList(event, normalizedQuery, visibility);
 
     if (cached) {
       const cachedResponse: PostsListEnvelope = {
@@ -29,10 +32,10 @@ export default defineEventHandler(async (event) => {
       event.waitUntil(
         queueRevalidation(cacheKey, async () => {
           const fresh = await fetchPostsListFromSource(event, normalizedQuery);
-          await cachePostsList(event, normalizedQuery, fresh);
+          await cachePostsList(event, normalizedQuery, fresh.payload, fresh.visibility);
 
           await Promise.all(
-            (fresh.data ?? []).map(async (post) => {
+            (fresh.payload.data ?? []).map(async (post) => {
               if (post?.id) {
                 await cachePostById(event, post);
               }
@@ -45,10 +48,10 @@ export default defineEventHandler(async (event) => {
     }
 
     const fresh = await fetchPostsListFromSource(event, normalizedQuery);
-    await cachePostsList(event, normalizedQuery, fresh);
+    await cachePostsList(event, normalizedQuery, fresh.payload, fresh.visibility);
 
     await Promise.all(
-      (fresh.data ?? []).map(async (post) => {
+      (fresh.payload.data ?? []).map(async (post) => {
         if (post?.id) {
           await cachePostById(event, post);
         }
@@ -58,7 +61,7 @@ export default defineEventHandler(async (event) => {
     const now = Date.now();
 
     const response: PostsListEnvelope = {
-      ...fresh,
+      ...fresh.payload,
       cachedAt: now,
       revalidatedAt: now,
       fromCache: false,

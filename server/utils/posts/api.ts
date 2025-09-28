@@ -1,5 +1,6 @@
 import { createError } from "h3";
 import type { H3Event } from "h3";
+import type { FetchError } from "ofetch";
 import { withQuery } from "ufo";
 import type {
   CommentPayload,
@@ -9,7 +10,14 @@ import type {
   UpdatePostPayload,
 } from "~/server/utils/posts/types";
 import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
-import { withAuthHeaders } from "~/server/utils/auth/session";
+import { clearAuthSession, getSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
+
+type PostsVisibility = "public" | "private";
+
+interface PostsListSourceResult {
+  payload: BlogApiResponse;
+  visibility: PostsVisibility;
+}
 
 function sanitizeBaseEndpoint(rawEndpoint: string): string {
   return rawEndpoint.replace(/\/$/, "");
@@ -28,9 +36,39 @@ function joinEndpoint(base: string, ...segments: (string | number)[]): string {
   return [sanitizeBaseEndpoint(base), ...cleanedSegments].join("/");
 }
 
-function resolveBaseEndpoint(event: H3Event): string {
+function resolveEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
-  return config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
+  const publicEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
+  const privateEndpoint =
+    config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/v1/private/post";
+
+  return visibility === "private" ? privateEndpoint : publicEndpoint;
+}
+
+function resolveBaseEndpoint(event: H3Event): string {
+  const token = getSessionToken(event);
+  return resolveEndpoint(event, token ? "private" : "public");
+}
+
+function buildHeaders(event: H3Event, includeAuth: boolean) {
+  const baseHeaders: Record<string, string> = {
+    Accept: "application/json",
+  };
+
+  return includeAuth ? withAuthHeaders(event, baseHeaders) : baseHeaders;
+}
+
+function isFetchError(error: unknown): error is FetchError<unknown> {
+  return Boolean(error) && typeof error === "object" && "response" in (error as Record<string, unknown>);
+}
+
+function isAuthorizationError(error: unknown): boolean {
+  if (!isFetchError(error)) {
+    return false;
+  }
+
+  const status = error.response?.status ?? 0;
+  return status === 401 || status === 403;
 }
 
 function buildListQuery(params: NormalizedPostsListQuery) {
@@ -53,36 +91,63 @@ function buildListQuery(params: NormalizedPostsListQuery) {
 export async function fetchPostsListFromSource(
   event: H3Event,
   params: NormalizedPostsListQuery,
-): Promise<BlogApiResponse> {
-  const base = resolveBaseEndpoint(event);
-  const endpoint = withQuery(joinEndpoint(base), buildListQuery(params));
+): Promise<PostsListSourceResult> {
+  const token = getSessionToken(event);
+  const publicEndpoint = withQuery(joinEndpoint(resolveEndpoint(event, "public")), buildListQuery(params));
 
-  const headers = withAuthHeaders(event);
+  if (token) {
+    const privateEndpoint = withQuery(
+      joinEndpoint(resolveEndpoint(event, "private")),
+      buildListQuery(params),
+    );
 
-  const response = await $fetch<BlogApiResponse>(endpoint, {
+    try {
+      const response = await $fetch<BlogApiResponse>(privateEndpoint, {
+        method: "GET",
+        headers: buildHeaders(event, true),
+      });
+
+      if (!response || !Array.isArray(response.data)) {
+        throw createError({
+          statusCode: 502,
+          statusMessage: "Invalid posts list response.",
+        });
+      }
+
+      return { payload: response, visibility: "private" };
+    } catch (error) {
+      if (!isAuthorizationError(error)) {
+        throw error;
+      }
+
+      clearAuthSession(event);
+    }
+  }
+
+  const fallbackResponse = await $fetch<BlogApiResponse>(publicEndpoint, {
     method: "GET",
-    headers,
+    headers: buildHeaders(event, false),
   });
 
-  if (!response || !Array.isArray(response.data)) {
+  if (!fallbackResponse || !Array.isArray(fallbackResponse.data)) {
     throw createError({
       statusCode: 502,
       statusMessage: "Invalid posts list response.",
     });
   }
 
-  return response;
+  return { payload: fallbackResponse, visibility: "public" };
 }
 
 export async function fetchPostByIdFromSource(event: H3Event, postId: string): Promise<BlogPost> {
   const base = resolveBaseEndpoint(event);
   const endpoint = joinEndpoint(base, postId);
 
-  const headers = withAuthHeaders(event);
+  const token = getSessionToken(event);
 
   const response = await $fetch<BlogPost>(endpoint, {
     method: "GET",
-    headers,
+    headers: buildHeaders(event, Boolean(token)),
   });
 
   if (!response || typeof response !== "object" || !("id" in response)) {

@@ -4,6 +4,8 @@ import type { H3Event } from "h3";
 import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
 import type { NormalizedPostsListQuery } from "~/server/utils/posts/types";
 
+type PostsVisibility = "public" | "private";
+
 const DEFAULT_LIST_TTL_SECONDS = 60;
 const DEFAULT_ITEM_TTL_SECONDS = 300;
 
@@ -230,12 +232,16 @@ function getAuthorTag(prefix: string, authorId: string) {
   return `${prefix}:posts:tag:author:${authorId}`;
 }
 
-export function getPostsListCacheKey(event: H3Event, params: NormalizedPostsListQuery) {
+export function getPostsListCacheKey(
+  event: H3Event,
+  params: NormalizedPostsListQuery,
+  visibility: PostsVisibility = "public",
+) {
   const prefix = getCachePrefix(event);
   const sortHash = buildHash(params.sort || "default");
   const filterHash = buildHash(stableSerialize(params.filter));
 
-  return `${prefix}:posts:list:${params.page}:${params.pageSize}:${sortHash}:${filterHash}`;
+  return `${prefix}:posts:list:${params.page}:${params.pageSize}:${sortHash}:${filterHash}:${visibility}`;
 }
 
 export function getPostItemCacheKey(event: H3Event, postId: string) {
@@ -370,8 +376,9 @@ async function invalidateTags(event: H3Event, tags: string[]) {
 export async function getCachedPostsList(
   event: H3Event,
   params: NormalizedPostsListQuery,
+  visibility: PostsVisibility = "public",
 ): Promise<CachedEntry<BlogApiResponse> | null> {
-  const key = getPostsListCacheKey(event, params);
+  const key = getPostsListCacheKey(event, params, visibility);
   return readCache<BlogApiResponse>(event, key);
 }
 
@@ -387,8 +394,9 @@ export async function cachePostsList(
   event: H3Event,
   params: NormalizedPostsListQuery,
   payload: BlogApiResponse,
+  visibility: PostsVisibility = "public",
 ): Promise<void> {
-  const key = getPostsListCacheKey(event, params);
+  const key = getPostsListCacheKey(event, params, visibility);
   const entry: CachedEntry<BlogApiResponse> = {
     data: payload,
     cachedAt: Date.now(),
