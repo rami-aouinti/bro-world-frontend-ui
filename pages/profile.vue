@@ -404,11 +404,7 @@ const profileItems = computed(() => {
 
 <style scoped>
 main {
-  background: linear-gradient(
-    180deg,
-    rgba(var(--v-theme-surface), 1) 0%,
-    rgba(var(--v-theme-surface-variant), 0.35) 100%
-  );
+  background: transparent;
 }
 
 dl {
