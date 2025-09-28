@@ -311,19 +311,6 @@ function matchesRoute(path: string, target: string) {
   overflow-y: auto;
 }
 
-.app-container {
-  position: relative;
-  z-index: 1;
-  margin: 0 auto;
-  width: min(100%, 1200px);
-  background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 28px;
-  box-shadow: var(--card-shadow);
-  padding: clamp(20px, 5vw, 48px);
-  backdrop-filter: blur(16px);
-}
-
 .main-scroll {
   position: relative;
   z-index: 1;
