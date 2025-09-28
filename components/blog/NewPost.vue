@@ -13,11 +13,23 @@
           height="44"
           rounded="pill"
           :ripple="false"
+          :disabled="!isAuthenticated"
           @click="openDialog()"
       >
         {{ placeholderText }}
       </v-btn>
     </div>
+
+    <v-alert
+        v-if="!isAuthenticated"
+        class="mt-3"
+        type="info"
+        density="compact"
+        border="start"
+        variant="tonal"
+    >
+      {{ loginToPostMessage }}
+    </v-alert>
 
     <v-divider class="my-2" />
 
@@ -28,6 +40,7 @@
           :key="action.key"
           variant="text"
           :color="action.color"
+          :disabled="!isAuthenticated"
           @click="openDialog()"
       >
         <Icon :name="action.icon" class="mr-2" />
@@ -146,7 +159,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useI18n } from '#imports'
+import { useI18n, useNuxtApp } from '#imports'
+import { useAuthStore } from '~/composables/useAuthStore'
 
 interface Props {
   userName?: string
@@ -173,6 +187,9 @@ const message = ref('')
 const audience = ref<'friends' | 'public' | 'private'>('friends')
 
 const { t } = useI18n()
+const { $notify } = useNuxtApp()
+const authStore = useAuthStore()
+const isAuthenticated = computed(() => authStore.isAuthenticated.value)
 
 const placeholderText = computed(() => props.placeholder ?? t('blog.newPost.placeholder', { name: props.userName }))
 const quickActions = computed(() => [
@@ -196,12 +213,22 @@ const attachmentLabels = computed(() => ({
 const dialogTitle = computed(() => t('blog.newPost.dialog.title'))
 const addToPostLabel = computed(() => t('blog.newPost.dialog.addToPost'))
 const postButtonLabel = computed(() => t('blog.newPost.dialog.postButton'))
+const loginToPostMessage = computed(() => t('blog.auth.postRequired'))
 
 const audienceLabel = computed(() => audienceOptions.value.find(a => a.value === audience.value)?.label ?? audienceOptions.value[0]?.label ?? '')
 const maxLength = computed(() => props.maxLength)
-const canPost = computed(() => message.value.trim().length > 0 && message.value.length <= maxLength.value)
+const canPost = computed(() => isAuthenticated.value && message.value.trim().length > 0 && message.value.length <= maxLength.value)
 
 function openDialog() {
+  if (!isAuthenticated.value) {
+    $notify({
+      type: 'info',
+      title: t('blog.newPost.dialog.title'),
+      message: loginToPostMessage.value,
+    })
+    return
+  }
+
   dialog.value = true
   emit('open')
 }
@@ -213,6 +240,15 @@ function onAttach(type: string) {
   emit('attach', type)
 }
 function submitPost() {
+  if (!isAuthenticated.value) {
+    $notify({
+      type: 'info',
+      title: t('blog.newPost.dialog.title'),
+      message: loginToPostMessage.value,
+    })
+    return
+  }
+
   if (!canPost.value) return
   emit('submit', { text: message.value.trim(), audience: audience.value })
   // ici tu peux réinitialiser/fermer

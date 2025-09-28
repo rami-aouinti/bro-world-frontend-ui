@@ -203,6 +203,11 @@
         "poll": "添加投票"
       }
     },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
     "reactions": {
       "like": "点赞",
       "love": "喜爱",

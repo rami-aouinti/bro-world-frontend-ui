@@ -3,6 +3,7 @@ import { defineStore } from "~/lib/pinia-shim";
 import { useRequestFetch } from "#app";
 import { useState } from "#imports";
 import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/mock/blog";
+import { useAuthStore } from "~/composables/useAuthStore";
 
 interface PostsListResponse {
   data: BlogPost[];
@@ -83,6 +84,7 @@ function resolveFetcher() {
 }
 
 export const usePostsStore = defineStore("posts", () => {
+  const authStore = useAuthStore();
   const runtimeConfig = useRuntimeConfig();
   const listTtlMs = Math.max(Number(runtimeConfig.redis?.listTtl ?? 60), 1) * 1000;
   const itemTtlMs = Math.max(Number(runtimeConfig.redis?.itemTtl ?? 300), 1) * 1000;
@@ -371,6 +373,12 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error(message);
     }
 
+    if (!authStore.isAuthenticated.value) {
+      const message = "You must be logged in to create a post.";
+      createError.value = message;
+      throw new Error(message);
+    }
+
     if (creating.value) {
       return posts.value;
     }
@@ -564,6 +572,10 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Reaction type is required.");
     }
 
+    if (!authStore.isAuthenticated.value) {
+      throw new Error("You must be logged in to react to posts.");
+    }
+
     const fetcher = resolveFetcher();
 
     try {
@@ -620,6 +632,10 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Comment content is required.");
     }
 
+    if (!authStore.isAuthenticated.value) {
+      throw new Error("You must be logged in to add comments.");
+    }
+
     const fetcher = resolveFetcher();
 
     try {
@@ -650,6 +666,10 @@ export const usePostsStore = defineStore("posts", () => {
 
     if (!trimmedReaction || (trimmedReaction !== "like" && trimmedReaction !== "dislike")) {
       throw new Error("Reaction type is required.");
+    }
+
+    if (!authStore.isAuthenticated.value) {
+      throw new Error("You must be logged in to react to comments.");
     }
 
     const fetcher = resolveFetcher();

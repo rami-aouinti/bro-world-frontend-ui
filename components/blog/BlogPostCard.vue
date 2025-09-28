@@ -61,13 +61,16 @@
               :class="isPostReacted
               ? 'border-primary bg-primary text-white hover:border-primary hover:bg-primary/90'
               : 'border-slate-200 bg-white text-slate-700 hover:border-primary hover:bg-primary/10 hover:text-primary'"
-              :disabled="postReacting"
+              :disabled="postReacting || !isAuthenticated"
               @click="handleTogglePostReaction"
           >
             <span aria-hidden="true">{{ postReactionIcon }}</span>
             <span>{{ postReactionButtonText }}</span>
           </button>
         </div>
+        <p v-if="!isAuthenticated" class="text-xs text-slate-500">
+          {{ loginToReactMessage }}
+        </p>
         <p v-if="postReactionError" class="text-xs text-rose-500">
           {{ postReactionError }}
         </p>
@@ -94,6 +97,7 @@
                 v-model="commentContent"
                 class="min-h-[110px] w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 shadow-inner focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                 :placeholder="commentPlaceholder"
+                :disabled="!isAuthenticated"
             />
           </label>
         </div>
@@ -104,12 +108,15 @@
           >
             {{ commentFeedback.message }}
           </p>
+          <p v-else-if="!isAuthenticated" class="text-slate-500">
+            {{ loginToCommentMessage }}
+          </p>
           <div class="flex items-center gap-3 sm:justify-end">
             <span class="text-slate-500">{{ commentCharacterCountLabel }}</span>
             <button
                 type="submit"
                 class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
-                :disabled="submittingComment"
+                :disabled="submittingComment || !isAuthenticated"
             >
               <span v-if="submittingComment">{{ t("blog.comments.submitting") }}</span>
               <span v-else>{{ t("blog.comments.submit") }}</span>
@@ -539,12 +546,14 @@ const hasCommentPreview = computed(() => comments.value.length > 0);
 const hasReactionPreview = computed(() => topReactions.value.length > 0);
 
 const reactionPromptLabel = computed(() => t("blog.reactions.posts.reactLabel"));
+const loginToReactMessage = computed(() => t("blog.auth.reactionRequired"));
 const commentPlaceholder = computed(() => t("blog.comments.placeholder"));
 const commentComposerLabel = computed(() => t("blog.comments.label"));
 const commentCharacterCountLabel = computed(() => {
   const length = commentContent.value.trim().length;
   return t("blog.comments.characterCount", { count: formatNumber(length) });
 });
+const loginToCommentMessage = computed(() => t("blog.auth.commentRequired"));
 
 const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
@@ -801,6 +810,11 @@ async function handleTogglePostReaction() {
     return;
   }
 
+  if (!isAuthenticated.value) {
+    postReactionError.value = loginToReactMessage.value;
+    return;
+  }
+
   postReacting.value = true;
   postReactionError.value = null;
 
@@ -819,6 +833,14 @@ async function handleCommentSubmit() {
   commentFeedback.value = null;
 
   const content = commentContent.value.trim();
+
+  if (!isAuthenticated.value) {
+    commentFeedback.value = {
+      type: "error",
+      message: loginToCommentMessage.value,
+    };
+    return;
+  }
 
   if (!content) {
     commentFeedback.value = {
@@ -850,6 +872,10 @@ async function handleCommentSubmit() {
 }
 
 async function handleCommentReaction(commentId: string, reactionType: ReactionAction) {
+  if (!isAuthenticated.value) {
+    throw new Error(loginToReactMessage.value);
+  }
+
   try {
     await reactToComment(post.value.id, commentId, reactionType);
     await loadComments({ force: true });
@@ -860,6 +886,10 @@ async function handleCommentReaction(commentId: string, reactionType: ReactionAc
 }
 
 async function handleCommentReply(commentId: string, content: string) {
+  if (!isAuthenticated.value) {
+    throw new Error(loginToCommentMessage.value);
+  }
+
   try {
     await addComment(post.value.id, content, commentId);
     await loadComments({ force: true });

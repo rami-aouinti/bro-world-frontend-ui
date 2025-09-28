@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <BaseCard
       as="article"
       variant="solid"
@@ -54,7 +55,7 @@
               :class="isReacted
               ? 'border-primary bg-primary text-white hover:border-primary hover:bg-primary/90'
               : 'border-slate-200 bg-white text-slate-700 hover:border-primary hover:bg-primary/10 hover:text-primary'"
-              :disabled="reacting"
+              :disabled="reacting || !isAuthenticated"
               @click="handleReact"
           >
             <span aria-hidden="true">{{ commentReactionIcon }}</span>
@@ -96,6 +97,7 @@
           <button
               type="button"
               class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-1.5 font-semibold text-slate-700 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="!isAuthenticated"
               @click="toggleReply"
           >
             <span v-if="replying">{{ t('blog.comments.cancelReply') }}</span>
@@ -106,6 +108,9 @@
 
       <p v-if="reactionError" class="text-xs text-rose-500">
         {{ reactionError }}
+      </p>
+      <p v-else-if="!isAuthenticated" class="text-xs text-slate-500">
+        {{ loginToReplyMessage }}
       </p>
     </div>
 
@@ -178,6 +183,7 @@
       />
     </div>
   </BaseCard>
+  <!-- eslint-enable vue/no-v-html -->
 </template>
 
 <script setup lang="ts">
@@ -357,6 +363,8 @@ const commentReactionButtonText = computed(() =>
 );
 const commentReactionButtonAriaLabel = computed(() => t("blog.reactions.comments.toggleReaction"));
 const commentReactionIcon = computed(() => "👍");
+const loginToReactMessage = computed(() => t("blog.auth.reactionRequired"));
+const loginToReplyMessage = computed(() => t("blog.auth.commentRequired"));
 
 watch(
     () => comment.value.id,
@@ -382,6 +390,14 @@ function formatNumber(value: number | null | undefined) {
 }
 
 function toggleReply() {
+  if (!isAuthenticated.value) {
+    replyFeedback.value = {
+      type: "error",
+      message: loginToReplyMessage.value,
+    };
+    return;
+  }
+
   replying.value = !replying.value;
 
   if (!replying.value) {
@@ -425,6 +441,11 @@ async function handleReact() {
     return;
   }
 
+  if (!isAuthenticated.value) {
+    reactionError.value = loginToReactMessage.value;
+    return;
+  }
+
   if (!props.reactToComment) {
     reactionError.value = t("blog.comments.reactionUnavailable");
     return;
@@ -448,6 +469,14 @@ async function handleReplySubmit() {
   replyFeedback.value = null;
 
   const content = replyContent.value.trim();
+
+  if (!isAuthenticated.value) {
+    replyFeedback.value = {
+      type: "error",
+      message: loginToReplyMessage.value,
+    };
+    return;
+  }
 
   if (!content) {
     replyFeedback.value = {

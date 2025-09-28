@@ -419,6 +419,11 @@
         "poll": "Aggiungi sondaggio"
       }
     },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
     "reactions": {
       "post": {
         "publishedOn": "Pubblicato il {date}",

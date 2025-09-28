@@ -200,6 +200,11 @@
         "poll": "Ajouter un sondage"
       }
     },
+    "auth": {
+      "postRequired": "Connectez-vous pour partager vos idées.",
+      "reactionRequired": "Connectez-vous pour réagir aux publications.",
+      "commentRequired": "Connectez-vous pour participer à la discussion."
+    },
     "reactions": {
       "post": {
         "publishedOn": "Publié le {date}",
