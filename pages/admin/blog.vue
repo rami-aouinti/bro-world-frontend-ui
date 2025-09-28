@@ -19,7 +19,7 @@
             prepend-icon="mdi-refresh"
             class="text-none"
             :loading="isRefreshing"
-            :disabled="isLoading"
+            :disabled="isBusy"
             :aria-label="t('admin.blog.actions.refreshAria')"
             @click="handleRefresh"
           >
@@ -52,6 +52,15 @@
         {{ generalError }}
       </v-alert>
 
+      <v-progress-linear
+        v-if="isRevalidating"
+        indeterminate
+        color="primary"
+        class="mb-4"
+        role="status"
+        :aria-label="t('admin.blog.actions.refreshAria')"
+      />
+
       <div class="d-flex flex-column flex-md-row align-md-center gap-4 mb-6">
         <v-text-field
           v-model="search"
@@ -82,7 +91,7 @@
         :headers="tableHeaders"
         :items="paginatedPosts"
         :items-length="totalItems"
-        :loading="isLoading"
+        :loading="isInitialLoading"
         :no-data-text="noDataLabel"
         :items-per-page="itemsPerPage"
         :page="page"
@@ -579,7 +588,9 @@ watch([totalItems, itemsPerPage], () => {
   }
 })
 
-const isLoading = computed(() => pending.value || isRevalidating.value)
+const hasPostsLoaded = computed(() => posts.value.length > 0)
+const isInitialLoading = computed(() => pending.value && !hasPostsLoaded.value)
+const isBusy = computed(() => pending.value || isRevalidating.value)
 const isRefreshing = computed(() => isRevalidating.value)
 const isCreating = computed(() => creatingState.value)
 
