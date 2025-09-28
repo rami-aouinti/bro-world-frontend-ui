@@ -114,6 +114,9 @@ import { useRightSidebarData } from '@/composables/useRightSidebarData'
 import type { LayoutSidebarItem } from '~/lib/navigation/sidebar'
 import { ADMIN_ROLE_KEYS, buildSidebarItems } from '~/lib/navigation/sidebar'
 import { useAuthSession } from '~/stores/auth-session'
+import SidebarWeatherCard from '~/components/layout/SidebarWeatherCard.vue'
+import SidebarLeaderboardCard from '~/components/layout/SidebarLeaderboardCard.vue'
+import SidebarRatingCard from '~/components/layout/SidebarRatingCard.vue'
 
 const AppSidebarRight = defineAsyncComponent({
   loader: () => import('~/components/layout/AppSidebarRight.vue'),
