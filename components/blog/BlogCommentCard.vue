@@ -190,6 +190,8 @@
 import { computed, ref, watch } from "vue";
 import CommentMeta from "~/components/blog/CommentMeta.vue";
 import { BaseCard } from "~/components/ui";
+import { formatMetricNumber, resolveCommentTotal, resolveReactionTotal } from "~/lib/blogMetrics";
+import type { CommentAggregate, ReactionAggregate } from "~/lib/blogMetrics";
 import type { BlogCommentWithReplies, ReactionAction, ReactionType } from "~/lib/mock/blog";
 import { sanitizeRichText } from "~/lib/sanitize-html";
 
@@ -198,77 +200,6 @@ defineOptions({ name: "CommentCard" });
 interface FeedbackState {
   type: "success" | "error";
   message: string;
-}
-
-interface ReactionAggregate {
-  reactions_count?: number | null;
-  likes_count?: number | null;
-  likes?: unknown[] | null;
-  reactions?: unknown[] | null;
-}
-
-interface CommentAggregate {
-  totalComments?: number | null;
-  children?: unknown;
-  comments?: unknown;
-  replies?: unknown;
-}
-
-function toFiniteNumber(value: unknown): number | null {
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return value;
-  }
-
-  if (typeof value === "string" && value.trim()) {
-    const parsed = Number(value);
-
-    if (Number.isFinite(parsed)) {
-      return parsed;
-    }
-  }
-
-  return null;
-}
-
-function resolveReactionTotal(entity: ReactionAggregate): number {
-  const candidates: Array<number | null> = [
-    toFiniteNumber(entity.likes_count ?? null),
-    toFiniteNumber(entity.reactions_count ?? null),
-  ];
-
-  for (const candidate of candidates) {
-    if (candidate !== null) {
-      return candidate;
-    }
-  }
-
-  if (Array.isArray(entity.likes)) {
-    return entity.likes.length;
-  }
-
-  if (Array.isArray(entity.reactions)) {
-    return entity.reactions.length;
-  }
-
-  return 0;
-}
-
-function resolveReplyTotal(entity: CommentAggregate): number {
-  const directTotal = toFiniteNumber(entity.totalComments ?? null);
-
-  if (directTotal !== null) {
-    return directTotal;
-  }
-
-  const collections = [entity.children, entity.comments, entity.replies];
-
-  for (const candidate of collections) {
-    if (Array.isArray(candidate)) {
-      return candidate.length;
-    }
-  }
-
-  return 0;
 }
 
 const props = defineProps<{
@@ -348,7 +279,7 @@ const replyContent = ref("");
 const replyFeedback = ref<FeedbackState | null>(null);
 
 const commentReactionCount = computed(() => resolveReactionTotal(comment.value as ReactionAggregate));
-const commentReplyCount = computed(() => resolveReplyTotal(comment.value as CommentAggregate));
+const commentReplyCount = computed(() => resolveCommentTotal(comment.value as CommentAggregate));
 const reactionCountLabel = computed(() =>
     t("blog.reactions.comment.reactions", { count: formatNumber(commentReactionCount.value) }),
 );
@@ -386,7 +317,7 @@ function formatDateTime(value: string) {
 }
 
 function formatNumber(value: number | null | undefined) {
-  return new Intl.NumberFormat(locale.value).format(value ?? 0);
+  return formatMetricNumber(value, locale.value);
 }
 
 function toggleReply() {

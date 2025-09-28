@@ -34,7 +34,9 @@ import { computed, ref, watch } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
-import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import { formatMetricNumber, resolveCommentTotal, resolveReactionTotal } from "~/lib/blogMetrics";
+import type { ReactionAggregate, CommentAggregate } from "~/lib/blogMetrics";
+import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 
 definePageMeta({
@@ -53,75 +55,6 @@ const user = {
 function onAttach(type: string) {
   // Ouvre sélecteur média / GIF / etc.
 }
-function toFiniteNumber(value: unknown): number {
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return value;
-  }
-
-  if (typeof value === "string" && value.trim()) {
-    const parsed = Number(value);
-
-    if (Number.isFinite(parsed)) {
-      return parsed;
-    }
-  }
-
-  if (Array.isArray(value)) {
-    return value.length;
-  }
-
-  return 0;
-}
-
-function resolveReactionTotal(post: Partial<BlogPost> & {
-  likes_count?: number | null;
-  likes?: unknown[] | null;
-  reactions?: unknown[] | null;
-}): number {
-  const candidates = [post.likes_count, post.reactions_count];
-
-  for (const candidate of candidates) {
-    const numeric = toFiniteNumber(candidate ?? 0);
-
-    if (numeric) {
-      return numeric;
-    }
-  }
-
-  if (post.likes) {
-    return toFiniteNumber(post.likes);
-  }
-
-  if (post.reactions) {
-    return toFiniteNumber(post.reactions);
-  }
-
-  return 0;
-}
-
-function resolveCommentTotal(post: Partial<BlogPost> & {
-  totalComments?: number | null;
-  comments?: unknown;
-  children?: unknown;
-  replies?: unknown;
-}): number {
-  const direct = toFiniteNumber(post.totalComments ?? 0);
-
-  if (direct) {
-    return direct;
-  }
-
-  const collections = [post.comments, post.children, post.replies];
-
-  for (const collection of collections) {
-    if (Array.isArray(collection) && collection.length > 0) {
-      return collection.length;
-    }
-  }
-
-  return 0;
-}
-
 const reactionEmojis: Record<ReactionType, string> = {
   like: "👍",
   love: "❤️",
@@ -152,11 +85,11 @@ const heroContent = computed(() => ({
 const heroStats = computed(() => {
   const communityPosts = posts.value ?? [];
   const totalReactions = communityPosts.reduce(
-    (total, post) => total + resolveReactionTotal(post),
+    (total, post) => total + resolveReactionTotal(post as ReactionAggregate),
     0,
   );
   const totalComments = communityPosts.reduce(
-    (total, post) => total + resolveCommentTotal(post),
+    (total, post) => total + resolveCommentTotal(post as CommentAggregate),
     0,
   );
   const activeMembers = new Set(communityPosts.map((post) => post.user?.id)).size;
@@ -164,17 +97,17 @@ const heroStats = computed(() => {
   return [
     {
       id: "members",
-      value: formatNumber(activeMembers),
+      value: formatMetricNumber(activeMembers, locale.value),
       label: t("blog.hero.stats.members"),
     },
     {
       id: "reactions",
-      value: formatNumber(totalReactions),
+      value: formatMetricNumber(totalReactions, locale.value),
       label: t("blog.hero.stats.reactions"),
     },
     {
       id: "comments",
-      value: formatNumber(totalComments),
+      value: formatMetricNumber(totalComments, locale.value),
       label: t("blog.hero.stats.comments"),
     },
   ];
@@ -228,10 +161,6 @@ const ratingOverview = computed(() => ({
   ],
 }));
 
-function formatNumber(value: number | null | undefined) {
-  return new Intl.NumberFormat(locale.value).format(value ?? 0);
-}
-
 await callOnce(() => fetchPosts());
 
 const newPostContent = ref("");
@@ -239,7 +168,9 @@ const composerFeedback = ref<{ type: "success" | "error"; message: string } | nu
 
 const characterCountLabel = computed(() => {
   const length = newPostContent.value.trim().length;
-  return t("blog.composer.characterCount", { count: formatNumber(length) });
+  return t("blog.composer.characterCount", {
+    count: formatMetricNumber(length, locale.value),
+  });
 });
 
 async function handleCreatePost() {
