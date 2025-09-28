@@ -36,9 +36,11 @@
       />
     </template>
 
-    <p class="leading-relaxed text-slate-700">
-      {{ comment.content }}
-    </p>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div
+      class="space-y-2 leading-relaxed text-slate-700 [&_a]:text-primary [&_a]:underline [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5 [&_strong]:font-semibold"
+      v-html="sanitizedContent"
+    ></div>
 
     <div class="flex flex-col gap-3">
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
@@ -174,6 +176,7 @@ import { computed, ref, watch } from "vue";
 import CommentMeta from "~/components/blog/CommentMeta.vue";
 import { BaseCard } from "~/components/ui";
 import type { BlogCommentWithReplies, ReactionType } from "~/lib/mock/blog";
+import { sanitizeRichText } from "~/lib/sanitize-html";
 
 defineOptions({ name: "CommentCard" });
 
@@ -210,6 +213,7 @@ const props = defineProps<{
 const { locale, t } = useI18n();
 
 const comment = computed(() => props.comment);
+const sanitizedContent = computed(() => sanitizeRichText(comment.value.content));
 const depth = computed(() => props.depth ?? 0);
 const avatarFallback = computed(() => props.defaultAvatar || "https://bro-world-space.com/img/person.png");
 const reactionTypes = computed(() => Object.keys(props.reactionEmojis) as ReactionType[]);
