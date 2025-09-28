@@ -389,6 +389,32 @@
       "error": "No pudimos publicar tu mensaje. Inténtalo de nuevo.",
       "validation": "Escribe un mensaje antes de publicar."
     },
+    "newPost": {
+      "placeholder": "¿Qué estás pensando, {name}?",
+      "quickActions": {
+        "liveVideo": "Video en vivo",
+        "photoVideo": "Foto/Video",
+        "feelingActivity": "Sentimiento/Actividad"
+      },
+      "dialog": {
+        "title": "Crear publicación",
+        "addToPost": "Añade algo a tu publicación",
+        "postButton": "Publicar"
+      },
+      "audience": {
+        "public": "Público",
+        "friends": "Amigos",
+        "private": "Solo yo"
+      },
+      "attachments": {
+        "media": "Foto/Video",
+        "tag": "Etiquetar personas",
+        "feeling": "Sentimiento/Actividad",
+        "location": "Ubicación",
+        "gif": "GIF",
+        "poll": "Agregar encuesta"
+      }
+    },
     "reactions": {
       "post": {
         "publishedOn": "Publicado el {date}",

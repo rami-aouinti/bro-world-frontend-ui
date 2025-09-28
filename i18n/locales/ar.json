@@ -169,6 +169,32 @@
       "error": "تعذّر نشر منشورك. حاول مرة أخرى.",
       "validation": "اكتب رسالة قبل النشر."
     },
+    "newPost": {
+      "placeholder": "بم تفكر يا {name}؟",
+      "quickActions": {
+        "liveVideo": "فيديو مباشر",
+        "photoVideo": "صورة/فيديو",
+        "feelingActivity": "شعور/نشاط"
+      },
+      "dialog": {
+        "title": "إنشاء منشور",
+        "addToPost": "أضف شيئًا إلى منشورك",
+        "postButton": "نشر"
+      },
+      "audience": {
+        "public": "عام",
+        "friends": "الأصدقاء",
+        "private": "أنا فقط"
+      },
+      "attachments": {
+        "media": "صورة/فيديو",
+        "tag": "الإشارة إلى أشخاص",
+        "feeling": "شعور/نشاط",
+        "location": "الموقع",
+        "gif": "صورة GIF",
+        "poll": "إضافة استطلاع"
+      }
+    },
     "reactions": {
       "like": "إعجاب",
       "love": "محبة",

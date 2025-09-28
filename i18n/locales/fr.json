@@ -169,6 +169,32 @@
       "error": "Impossible de publier votre message. Réessayez.",
       "validation": "Écrivez un message avant de publier."
     },
+    "newPost": {
+      "placeholder": "Quoi de neuf, {name} ?",
+      "quickActions": {
+        "liveVideo": "Vidéo en direct",
+        "photoVideo": "Photo/Vidéo",
+        "feelingActivity": "Humeur/Activité"
+      },
+      "dialog": {
+        "title": "Créer une publication",
+        "addToPost": "Ajoutez quelque chose à votre publication",
+        "postButton": "Publier"
+      },
+      "audience": {
+        "public": "Public",
+        "friends": "Amis",
+        "private": "Moi uniquement"
+      },
+      "attachments": {
+        "media": "Photo/Vidéo",
+        "tag": "Identifier des personnes",
+        "feeling": "Humeur/Activité",
+        "location": "Localisation",
+        "gif": "GIF",
+        "poll": "Ajouter un sondage"
+      }
+    },
     "reactions": {
       "post": {
         "publishedOn": "Publié le {date}",

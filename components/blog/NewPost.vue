@@ -15,7 +15,7 @@
           :ripple="false"
           @click="openDialog()"
       >
-        {{ placeholder }}
+        {{ placeholderText }}
       </v-btn>
     </div>
 
@@ -23,16 +23,15 @@
 
     <!-- Actions rapides (non obligatoires) -->
     <div class="d-flex ga-4 flex-wrap justify-center">
-      <v-btn variant="text" color="primary" prepend-icon="mdi-video" @click="openDialog()">
-        <Icon name="mdi:video" class="mr-2" />
-        Live-Video
-      </v-btn>
-      <v-btn variant="text" color="secondary" prepend-icon="mdi-image-multiple" @click="openDialog()">
-        <Icon name="mdi:image-multiple" class="mr-2" />
-        Foto/Video</v-btn>
-      <v-btn variant="text" color="default" prepend-icon="mdi-emoticon-happy-outline" @click="openDialog()">
-        <Icon name="mdi:emoticon-happy-outline" class="mr-2" />
-        Gefühl/Aktivität
+      <v-btn
+          v-for="action in quickActions"
+          :key="action.key"
+          variant="text"
+          :color="action.color"
+          @click="openDialog()"
+      >
+        <Icon :name="action.icon" class="mr-2" />
+        {{ action.label }}
       </v-btn>
     </div>
     <BorderBeam
@@ -47,7 +46,7 @@
   <v-dialog v-model="dialog" max-width="680" persistent>
     <v-card class="rounded-xl">
       <v-card-title class="d-flex align-center justify-space-between">
-        <span class="text-h6 font-weight-semibold">Beitrag erstellen</span>
+        <span class="text-h6 font-weight-semibold">{{ dialogTitle }}</span>
         <v-btn icon="mdi-close" variant="text" @click="closeDialog()">
           <Icon name="mdi-close" />
         </v-btn>
@@ -95,7 +94,7 @@
             auto-grow
             :rows="5"
             class="text-body-1"
-            :placeholder="placeholder"
+            :placeholder="placeholderText"
         />
 
         <div class="d-flex justify-end text-caption text-medium-emphasis">
@@ -106,21 +105,21 @@
             class="rounded-xl my-2"
         >
           <div class="d-flex align-center justify-space-between px-3 py-2">
-            <div class="text-medium-emphasis text-body-2">Füge noch etwas zu deinem Beitrag hinzu</div>
+            <div class="text-medium-emphasis text-body-2">{{ addToPostLabel }}</div>
             <div class="d-flex ga-1">
-              <v-btn icon variant="text" :title="'Foto/Video'" @click="onAttach('media')">
+              <v-btn icon variant="text" :title="attachmentLabels.media" @click="onAttach('media')">
                 <Icon name="mdi-image-multiple" />
               </v-btn>
-              <v-btn icon variant="text" :title="'Person markieren'" @click="onAttach('tag')">
+              <v-btn icon variant="text" :title="attachmentLabels.tag" @click="onAttach('tag')">
                 <Icon name="mdi-account-plus-outline" />
               </v-btn>
-              <v-btn icon variant="text" :title="'Gefühl/Aktivität'" @click="onAttach('feeling')">
+              <v-btn icon variant="text" :title="attachmentLabels.feeling" @click="onAttach('feeling')">
                 <Icon name="mdi-emoticon-happy-outline" />
               </v-btn>
-              <v-btn icon variant="text" :title="'Standort'" @click="onAttach('location')">
+              <v-btn icon variant="text" :title="attachmentLabels.location" @click="onAttach('location')">
                 <Icon name="mdi-map-marker" />
               </v-btn>
-              <v-btn icon variant="text" :title="'GIF'" @click="onAttach('gif')">
+              <v-btn icon variant="text" :title="attachmentLabels.gif" @click="onAttach('gif')">
                 <Icon name="mdi-gif" />
               </v-btn>
               <v-menu>
@@ -128,7 +127,7 @@
                   <v-btn icon variant="text" v-bind="p"><v-icon icon="mdi-dots-horizontal" /></v-btn>
                 </template>
                 <v-list density="compact">
-                  <v-list-item title="Umfrage hinzufügen" @click="onAttach('poll')" />
+                  <v-list-item :title="attachmentLabels.poll" @click="onAttach('poll')" />
                 </v-list>
               </v-menu>
             </div>
@@ -138,7 +137,7 @@
 
       <v-card-actions class="px-2 pb-2">
         <v-btn block color="primary" :disabled="!canPost" @click="submitPost">
-          Post
+          {{ postButtonLabel }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -147,6 +146,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useI18n } from '#imports'
 
 interface Props {
   userName?: string
@@ -157,7 +157,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   userName: 'Rami Aouinti',
   avatar: '/avatar.png', // remplace par ton URL
-  placeholder: 'Was machst du gerade, Rami?',
+  placeholder: undefined,
   maxLength: 5000,
 })
 
@@ -172,12 +172,32 @@ const dialog = ref(false)
 const message = ref('')
 const audience = ref<'friends' | 'public' | 'private'>('friends')
 
-const audienceOptions = [
-  { value: 'public', label: 'Öffentlich', icon: 'mdi-earth' },
-  { value: 'friends', label: 'Freunde', icon: 'mdi-account-multiple' },
-  { value: 'private', label: 'Nur ich', icon: 'mdi-lock' },
-]
-const audienceLabel = computed(() => audienceOptions.find(a => a.value === audience.value)?.label ?? 'Freunde')
+const { t } = useI18n()
+
+const placeholderText = computed(() => props.placeholder ?? t('blog.newPost.placeholder', { name: props.userName }))
+const quickActions = computed(() => [
+  { key: 'liveVideo', label: t('blog.newPost.quickActions.liveVideo'), icon: 'mdi:video', color: 'primary' },
+  { key: 'photoVideo', label: t('blog.newPost.quickActions.photoVideo'), icon: 'mdi:image-multiple', color: 'secondary' },
+  { key: 'feelingActivity', label: t('blog.newPost.quickActions.feelingActivity'), icon: 'mdi:emoticon-happy-outline', color: 'default' },
+])
+const audienceOptions = computed(() => [
+  { value: 'public', label: t('blog.newPost.audience.public'), icon: 'mdi-earth' },
+  { value: 'friends', label: t('blog.newPost.audience.friends'), icon: 'mdi-account-multiple' },
+  { value: 'private', label: t('blog.newPost.audience.private'), icon: 'mdi-lock' },
+])
+const attachmentLabels = computed(() => ({
+  media: t('blog.newPost.attachments.media'),
+  tag: t('blog.newPost.attachments.tag'),
+  feeling: t('blog.newPost.attachments.feeling'),
+  location: t('blog.newPost.attachments.location'),
+  gif: t('blog.newPost.attachments.gif'),
+  poll: t('blog.newPost.attachments.poll'),
+}))
+const dialogTitle = computed(() => t('blog.newPost.dialog.title'))
+const addToPostLabel = computed(() => t('blog.newPost.dialog.addToPost'))
+const postButtonLabel = computed(() => t('blog.newPost.dialog.postButton'))
+
+const audienceLabel = computed(() => audienceOptions.value.find(a => a.value === audience.value)?.label ?? audienceOptions.value[0]?.label ?? '')
 const maxLength = computed(() => props.maxLength)
 const canPost = computed(() => message.value.trim().length > 0 && message.value.length <= maxLength.value)
 
