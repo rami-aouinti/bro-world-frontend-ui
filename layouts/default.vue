@@ -73,6 +73,14 @@ import AppTopBar from '@/components/layout/AppTopBar.vue'
 import { useRightSidebarData } from '@/composables/useRightSidebarData'
 import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
 
+interface LayoutSidebarItem {
+  key: string
+  label: string
+  icon?: string
+  to?: string
+  children?: LayoutSidebarItem[]
+}
+
 const isDark = computed(() => useColorMode().value == "dark");
 const route = useRoute()
 const router = useRouter()
@@ -103,7 +111,7 @@ const appIcons = [
   { name: 'mdi-gamepad-variant-outline', label: 'layout.appIcons.game' },
 ]
 
-const sidebarItems = [
+const sidebarItems: LayoutSidebarItem[] = [
   {
     key: 'apps',
     label: 'layout.sidebar.items.apps',
@@ -115,6 +123,7 @@ const sidebarItems = [
       { key: 'jobs', label: 'layout.sidebar.items.jobs', icon: 'mdi-briefcase-search', to: '/' },
     ],
   },
+  { key: 'admin', label: 'layout.sidebar.items.admin', icon: 'mdi-shield-crown', to: '/admin' },
   { key: 'help', label: 'layout.sidebar.items.help', icon: 'mdi-lifebuoy', to: '/help' },
   { key: 'about', label: 'layout.sidebar.items.about', icon: 'mdi-information-outline', to: '/about' },
   { key: 'contact', label: 'layout.sidebar.items.contact', icon: 'mdi-email-outline', to: '/contact' },
@@ -150,16 +159,22 @@ watch(showRightWidgets, (value) => {
 
 watch(
   () => route.fullPath,
-  () => {
+  (path) => {
     if (isMobile.value) {
       leftDrawer.value = false
       rightDrawer.value = false
     }
+
+    const matchedKey = findActiveSidebarKey(path, sidebarItems)
+    if (matchedKey) {
+      activeSidebar.value = matchedKey
+    }
   },
+  { immediate: true },
 )
 
 function toggleTheme() {
-  return  isDark.value ? 'light' : 'dark'
+  return isDark.value ? 'light' : 'dark'
 }
 
 function toggleLeftDrawer() {
@@ -191,6 +206,31 @@ function handleSidebarSelect(key: string) {
 
 function setLocale(newLocale: string) {
   locale.value = newLocale
+}
+
+function findActiveSidebarKey(path: string, items: LayoutSidebarItem[]): string | null {
+  for (const item of items) {
+    if (item.to && matchesRoute(path, item.to)) {
+      return item.key
+    }
+
+    if (item.children?.length) {
+      const childMatch = findActiveSidebarKey(path, item.children)
+      if (childMatch) {
+        return childMatch
+      }
+    }
+  }
+
+  return null
+}
+
+function matchesRoute(path: string, target: string) {
+  if (target === '/') {
+    return path === '/' || path.startsWith('/?')
+  }
+
+  return path === target || path.startsWith(`${target}/`) || path.startsWith(`${target}?`)
 }
 
 </script>
