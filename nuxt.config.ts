@@ -11,6 +11,7 @@ import { createRequire } from 'node:module'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import compression from 'vite-plugin-compression'
 import tailwindcss from '@tailwindcss/vite'
+import type { PluginOption } from 'vite'
 import { simplePurgeCssPlugin } from './lib/vite/simple-purgecss'
 import { aliases } from 'vuetify/iconsets/mdi'
 
@@ -187,6 +188,19 @@ function resolveFromRoot(...segments: string[]) {
 
 const require = createRequire(import.meta.url)
 
+type VuetifyPluginFactory = (options?: { autoImport?: boolean }) => PluginOption | PluginOption[]
+
+let vuetifyPlugin: PluginOption | PluginOption[] | null = null
+
+try {
+  const { default: vuetify } = require('vite-plugin-vuetify') as { default: VuetifyPluginFactory }
+  vuetifyPlugin = vuetify({
+    autoImport: true,
+  })
+} catch (error) {
+  console.warn(`vite-plugin-vuetify not loaded: ${(error as Error | undefined)?.message ?? 'unknown error'}`)
+}
+
 const nuxtLayers: string[] = ['shadcn-docs-nuxt']
 
 try {
@@ -243,6 +257,11 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
+      ...(vuetifyPlugin
+        ? Array.isArray(vuetifyPlugin)
+          ? vuetifyPlugin
+          : [vuetifyPlugin]
+        : []),
       tailwindcss(),
       simplePurgeCssPlugin({
         content: [
