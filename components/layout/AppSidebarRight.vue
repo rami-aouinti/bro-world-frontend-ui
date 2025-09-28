@@ -4,7 +4,7 @@
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Secondary navigation"
   >
-    <HaloSearch />
+    <HaloSearch v-if="isAuthenticated" />
 
     <div v-if="!isAuthenticated" class="sidebar-login-card">
       <ParticlesBg
