@@ -282,6 +282,7 @@
       "characterCount": "{count} caractères",
       "submit": "Publier le commentaire",
       "submitting": "Publication...",
+      "loading": "Chargement des commentaires...",
       "success": "Votre commentaire a été ajouté.",
       "error": "Impossible d'ajouter votre commentaire. Veuillez réessayer.",
       "validation": "Écrivez un commentaire avant de publier.",

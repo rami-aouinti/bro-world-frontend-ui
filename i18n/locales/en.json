@@ -282,6 +282,7 @@
       "characterCount": "{count} characters",
       "submit": "Post comment",
       "submitting": "Posting...",
+      "loading": "Loading comments...",
       "success": "Your comment has been added.",
       "error": "We couldn't add your comment. Please try again.",
       "validation": "Write a comment before posting.",

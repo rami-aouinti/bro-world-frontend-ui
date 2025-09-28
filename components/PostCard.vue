@@ -144,13 +144,22 @@
           {{ commentPreviewCountLabel }}
         </p>
       </header>
-      <div v-if="hasCommentPreview" class="w-full space-y-4 pt-3">
+      <div v-if="commentsLoading" class="w-full space-y-4 pt-3">
+        <div class="px-2 text-sm text-slate-500">
+          {{ t('blog.comments.loading') }}
+        </div>
+      </div>
+      <p v-else-if="commentsError" class="px-2 text-sm text-rose-500">
+        {{ commentsError }}
+      </p>
+      <div v-else-if="hasCommentPreview" class="w-full space-y-4 pt-3">
         <CommentCard
           v-for="comment in comments"
           :key="comment.id"
           :comment="comment"
           :default-avatar="defaultAvatar"
           :reaction-emojis="reactionEmojis"
+          :reaction-labels="reactionLabels"
           :react-to-comment="handleCommentReaction"
           :reply-to-comment="handleCommentReply"
           class="w-full"
@@ -298,12 +307,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, watch } from "vue";
+import { computed, nextTick, reactive, ref, shallowRef, watch } from "vue";
 
 import CommentCard from "~/components/CommentCard.vue";
 import { BaseCard } from "~/components/ui";
 import PostMeta from "~/components/blog/PostMeta.vue";
-import type { BlogPost, ReactionAction, ReactionType } from "~/lib/mock/blog";
+import type { BlogCommentWithReplies, BlogPost, ReactionAction, ReactionType } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
 
@@ -396,6 +405,7 @@ const {
   reactToPost,
   addComment,
   reactToComment,
+  getComments,
   updatePost,
   deletePost,
 } = usePostsStore();
@@ -409,12 +419,17 @@ const {
 } = useAuthStore();
 
 const post = computed(() => props.post);
+const reactionLabels = computed(() => props.reactionLabels);
 
 const postReacting = ref(false);
 const postReactionError = ref<string | null>(null);
 const commentContent = ref("");
 const submittingComment = ref(false);
 const commentFeedback = ref<FeedbackState | null>(null);
+const loadedComments = ref<BlogCommentWithReplies[] | null>(null);
+const commentsLoading = ref(false);
+const commentsError = ref<string | null>(null);
+const activeCommentsRequest = shallowRef<Promise<void> | null>(null);
 
 function formatDateTime(value: string) {
   return new Intl.DateTimeFormat(locale.value ?? "fr-FR", {
@@ -461,7 +476,21 @@ const metaAriaLabel = computed(() =>
 );
 
 const postReactionCount = computed(() => resolveReactionTotal(post.value as ReactionAggregate));
-const postCommentCount = computed(() => resolveReplyTotal(post.value as CommentAggregate));
+const loadedCommentCount = computed(() => {
+  if (!Array.isArray(loadedComments.value)) {
+    return null;
+  }
+
+  return countComments(loadedComments.value);
+});
+
+const postCommentCount = computed(() => {
+  if (typeof loadedCommentCount.value === "number") {
+    return loadedCommentCount.value;
+  }
+
+  return resolveReplyTotal(post.value as CommentAggregate);
+});
 
 const reactionCountDisplay = computed(() => formatNumber(postReactionCount.value));
 const commentCountDisplay = computed(() => formatNumber(postCommentCount.value));
@@ -483,6 +512,10 @@ const commentPreviewCountLabel = computed(() =>
 );
 
 const comments = computed(() => {
+  if (Array.isArray(loadedComments.value)) {
+    return loadedComments.value;
+  }
+
   if (Array.isArray(post.value.comments_preview) && post.value.comments_preview.length > 0) {
     return post.value.comments_preview;
   }
@@ -804,6 +837,7 @@ async function handleCommentSubmit() {
       message: t("blog.comments.success"),
     };
     commentContent.value = "";
+    await loadComments({ force: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
     commentFeedback.value = {
@@ -818,6 +852,7 @@ async function handleCommentSubmit() {
 async function handleCommentReaction(commentId: string, reactionType: ReactionAction) {
   try {
     await reactToComment(post.value.id, commentId, reactionType);
+    await loadComments({ force: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
     throw new Error(message || t("blog.comments.reactionError"));
@@ -827,11 +862,107 @@ async function handleCommentReaction(commentId: string, reactionType: ReactionAc
 async function handleCommentReply(commentId: string, content: string) {
   try {
     await addComment(post.value.id, content, commentId);
+    await loadComments({ force: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
     throw new Error(message || t("blog.comments.replyError"));
   }
 }
+
+function countComments(comments: BlogCommentWithReplies[]): number {
+  let total = 0;
+
+  for (const comment of comments) {
+    if (!comment || typeof comment !== "object") {
+      continue;
+    }
+
+    total += 1;
+
+    const nestedCandidates = [comment.comments, comment.replies, comment.children];
+    const aggregatedChildren: BlogCommentWithReplies[] = [];
+    const seenIds = new Set<string>();
+
+    for (const candidate of nestedCandidates) {
+      if (!Array.isArray(candidate)) {
+        continue;
+      }
+
+      for (const child of candidate) {
+        if (!child || typeof child !== "object") {
+          continue;
+        }
+
+        const childId = typeof child.id === "string" ? child.id : "";
+
+        if (childId) {
+          if (seenIds.has(childId)) {
+            continue;
+          }
+          seenIds.add(childId);
+        }
+
+        aggregatedChildren.push(child as BlogCommentWithReplies);
+      }
+    }
+
+    if (aggregatedChildren.length > 0) {
+      total += countComments(aggregatedChildren);
+    }
+  }
+
+  return total;
+}
+
+async function loadComments(options: { force?: boolean } = {}) {
+  const postId = post.value.id?.trim();
+
+  if (!postId) {
+    loadedComments.value = [];
+    commentsError.value = null;
+    commentsLoading.value = false;
+    return;
+  }
+
+  if (activeCommentsRequest.value && !options.force) {
+    return activeCommentsRequest.value;
+  }
+
+  commentsLoading.value = true;
+  commentsError.value = null;
+
+  const request = (async () => {
+    try {
+      const response = await getComments(postId);
+      loadedComments.value = Array.isArray(response) ? response : [];
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error ?? "");
+      commentsError.value = message || t("blog.comments.error");
+    } finally {
+      commentsLoading.value = false;
+      activeCommentsRequest.value = null;
+    }
+  })();
+
+  activeCommentsRequest.value = request;
+
+  return request;
+}
+
+watch(
+  () => post.value.id,
+  () => {
+    loadedComments.value = null;
+    commentsError.value = null;
+    commentsLoading.value = false;
+    activeCommentsRequest.value = null;
+
+    if (post.value.id) {
+      void loadComments({ force: true });
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>

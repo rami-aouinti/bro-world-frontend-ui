@@ -501,6 +501,7 @@
       "characterCount": "{count} caracteres",
       "submit": "Publicar comentario",
       "submitting": "Publicando...",
+      "loading": "Cargando comentarios...",
       "success": "Tu comentario se agregó correctamente.",
       "error": "No pudimos agregar tu comentario. Inténtalo de nuevo.",
       "validation": "Escribe un comentario antes de publicar.",
