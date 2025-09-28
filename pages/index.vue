@@ -19,10 +19,28 @@
         <BlogPostCard
             v-for="post in posts"
             :key="post.id"
+            data-test="blog-post-card"
             :post="post"
             :default-avatar="defaultAvatar"
             :reaction-emojis="reactionEmojis"
             :reaction-labels="reactionLabels"
+        />
+
+        <div
+            v-if="loadingMore"
+            class="grid gap-4"
+            aria-live="polite"
+            data-test="posts-loading-more"
+        >
+          <PostCardSkeleton v-for="index in skeletonBatchSize" :key="`loading-${index}`" />
+        </div>
+
+        <div
+            v-if="hasMore"
+            ref="loadMoreTrigger"
+            class="h-1 w-full"
+            aria-hidden="true"
+            data-test="posts-infinite-sentinel"
         />
       </div>
     </template>
@@ -30,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
@@ -73,7 +91,56 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
   dislike: t("blog.reactions.reactionTypes.dislike"),
 }));
 
-const { posts, pending, fetchPosts, createPost } = usePostsStore();
+const INITIAL_PAGE_SIZE = 6;
 
-await callOnce(() => fetchPosts());
+const { posts, pending, loadingMore, hasMore, fetchPosts, fetchMorePosts, createPost, pageSize } = usePostsStore();
+
+const skeletonBatchSize = computed(() => {
+  const size = pageSize.value || INITIAL_PAGE_SIZE;
+  return Math.min(Math.max(size, 3), 10);
+});
+
+const loadMoreTrigger = ref<HTMLElement | null>(null);
+
+async function maybeLoadMore() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (!hasMore.value || pending.value || loadingMore.value) {
+    return;
+  }
+
+  try {
+    await fetchMorePosts({ params: { pageSize: INITIAL_PAGE_SIZE } });
+  } catch (error) {
+    console.error("Failed to load more posts", error);
+  }
+}
+
+if (typeof window !== "undefined") {
+  watchEffect((onCleanup) => {
+    const target = loadMoreTrigger.value;
+
+    if (!target || pending.value || !hasMore.value || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          void maybeLoadMore();
+        }
+      }
+    }, { rootMargin: "200px 0px" });
+
+    observer.observe(target);
+
+    onCleanup(() => {
+      observer.disconnect();
+    });
+  });
+}
+
+await callOnce(() => fetchPosts(1, { params: { pageSize: INITIAL_PAGE_SIZE } }));
 </script>

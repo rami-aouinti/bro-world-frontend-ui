@@ -96,11 +96,17 @@ export const usePostsStore = defineStore("posts", () => {
   const lastFetched = useState<number | null>("posts-last-fetched", () => null);
   const pending = useState<boolean>("posts-pending", () => false);
   const error = useState<string | null>("posts-error", () => null);
+  const loadingMore = useState<boolean>("posts-loading-more", () => false);
   const creating = useState<boolean>("posts-creating", () => false);
   const createError = useState<string | null>("posts-create-error", () => null);
   const updating = useState<Record<string, boolean>>("posts-updating", () => ({}));
   const deleting = useState<Record<string, boolean>>("posts-deleting", () => ({}));
   const isRevalidating = useState<boolean>("posts-is-revalidating", () => false);
+  const currentPage = useState<number>("posts-current-page", () => 0);
+  const pageSize = useState<number>("posts-page-size", () => 0);
+  const totalCount = useState<number>("posts-total-count", () => 0);
+  const pageMap = useState<Record<number, string[]>>("posts-page-map", () => ({}));
+  const pageTimestamps = useState<Record<number, number>>("posts-page-timestamps", () => ({}));
   const backgroundPromise = shallowRef<Promise<void> | null>(null);
 
   const posts = computed(() =>
@@ -108,6 +114,18 @@ export const usePostsStore = defineStore("posts", () => {
       .map((id) => items.value[id])
       .filter((post): post is PostsStorePost => Boolean(post)),
   );
+
+  const resolvedPostCount = computed(() =>
+    posts.value.filter((post) => !post.__optimistic).length,
+  );
+
+  const hasMore = computed(() => {
+    if (!Number.isFinite(totalCount.value) || totalCount.value <= 0) {
+      return false;
+    }
+
+    return resolvedPostCount.value < totalCount.value;
+  });
 
   function markItemTimestamp(id: string, timestamp: number) {
     itemTimestamps.value = {
@@ -142,24 +160,61 @@ export const usePostsStore = defineStore("posts", () => {
 
   function setPostsFromResponse(response: PostsListResponse) {
     const now = typeof response.cachedAt === "number" ? response.cachedAt : Date.now();
-    const nextItems: Record<string, PostsStorePost> = {};
-    const nextIds: string[] = [];
-    const nextTimestamps: Record<string, number> = {};
+    const normalizedPage = Number.isFinite(response.page) && response.page > 0 ? Math.floor(response.page) : 1;
+    const normalizedLimit = Number.isFinite(response.limit) && response.limit > 0
+      ? Math.floor(response.limit)
+      : (response.data?.length ?? 0);
+    const normalizedCount = Number.isFinite(response.count) && response.count >= 0
+      ? Math.floor(response.count)
+      : (response.data?.length ?? 0);
 
-    for (const post of response.data ?? []) {
-      if (!post?.id) {
-        continue;
+    const incomingPosts = (response.data ?? []).filter((post): post is BlogPost => Boolean(post?.id));
+    const incomingIds = incomingPosts.map((post) => post.id);
+
+    const existingPageIds = pageMap.value[normalizedPage] ?? [];
+    const removalSet = new Set(existingPageIds);
+    const retainedIds = listIds.value.filter((id) => !removalSet.has(id));
+
+    const finalIds = normalizedPage === 1 ? [...incomingIds, ...retainedIds] : [...retainedIds, ...incomingIds];
+    const activeIds = new Set(finalIds);
+
+    const nextItems = { ...items.value };
+    const nextTimestamps = { ...itemTimestamps.value };
+
+    for (const [id] of Object.entries(nextItems)) {
+      if (!activeIds.has(id)) {
+        delete nextItems[id];
+        delete nextTimestamps[id];
       }
+    }
 
+    for (const post of incomingPosts) {
       nextItems[post.id] = { ...post, __optimistic: false };
-      nextIds.push(post.id);
       nextTimestamps[post.id] = now;
     }
 
     items.value = nextItems;
-    listIds.value = nextIds;
+    listIds.value = finalIds;
     itemTimestamps.value = nextTimestamps;
-    cachedAt.value = now;
+
+    pageMap.value = {
+      ...pageMap.value,
+      [normalizedPage]: incomingIds,
+    };
+
+    pageTimestamps.value = {
+      ...pageTimestamps.value,
+      [normalizedPage]: now,
+    };
+
+    pageSize.value = normalizedLimit;
+    totalCount.value = normalizedCount;
+
+    if (normalizedPage === 1) {
+      cachedAt.value = now;
+    }
+
+    currentPage.value = Math.max(currentPage.value, normalizedPage);
     lastFetched.value = Date.now();
   }
 
@@ -208,6 +263,7 @@ export const usePostsStore = defineStore("posts", () => {
     promise: Promise<BlogPost[]>;
     hasBackground: boolean;
     hasForeground: boolean;
+    hasLoadMore: boolean;
   }
 
   const activeFetches = new Map<string, ActiveFetchState>();
@@ -222,13 +278,21 @@ export const usePostsStore = defineStore("posts", () => {
     return `${normalizedParams}|force:${Boolean(options.force)}`;
   }
 
-  async function fetchPostsFromServer(options: FetchOptions & { background?: boolean } = {}) {
-    const fetchKey = createFetchKey(options);
+  async function fetchPostsFromServer(
+    page: number,
+    options: FetchOptions & { background?: boolean; loadMore?: boolean } = {},
+  ) {
+    const { loadMore, ...restOptions } = options;
+    const params = { ...(options.params ?? {}), page };
+    const fetchKey = createFetchKey({ ...restOptions, params });
     const existingRequest = activeFetches.get(fetchKey);
 
     if (existingRequest) {
       if (options.background) {
         existingRequest.hasBackground = true;
+      } else if (loadMore) {
+        existingRequest.hasLoadMore = true;
+        loadingMore.value = true;
       } else {
         pending.value = true;
         error.value = null;
@@ -241,21 +305,26 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveFetcher();
 
     if (!options.background) {
-      pending.value = true;
-      error.value = null;
+      if (loadMore) {
+        loadingMore.value = true;
+      } else {
+        pending.value = true;
+        error.value = null;
+      }
     }
 
     const fetchState: ActiveFetchState = {
       promise: Promise.resolve([] as BlogPost[]),
       hasBackground: Boolean(options.background),
-      hasForeground: !options.background,
+      hasForeground: !options.background && !loadMore,
+      hasLoadMore: Boolean(loadMore),
     };
 
     const requestPromise = (async () => {
       try {
         const response = await fetcher<PostsListResponse>("/api/v1/posts", {
           method: "GET",
-          query: options.params,
+          query: params,
         });
 
         if (!response || !Array.isArray(response.data)) {
@@ -279,6 +348,10 @@ export const usePostsStore = defineStore("posts", () => {
           isRevalidating.value = false;
         }
 
+        if (fetchState.hasLoadMore) {
+          loadingMore.value = false;
+        }
+
         if (fetchState.hasForeground) {
           pending.value = false;
         }
@@ -291,31 +364,82 @@ export const usePostsStore = defineStore("posts", () => {
     return requestPromise;
   }
 
-  async function fetchPosts(options: FetchOptions = {}) {
+  async function fetchPosts(
+    pageOrOptions?: number | FetchOptions,
+    maybeOptions?: FetchOptions,
+  ) {
+    let requestedPage = 1;
+    let options: FetchOptions = {};
+
+    if (typeof pageOrOptions === "number") {
+      requestedPage = Number.isFinite(pageOrOptions) && pageOrOptions > 0 ? Math.floor(pageOrOptions) : 1;
+      options = maybeOptions ?? {};
+    } else if (pageOrOptions && typeof pageOrOptions === "object") {
+      options = pageOrOptions;
+    }
+
+    const page = requestedPage;
+    const params = { ...(options.params ?? {}), page };
     const now = Date.now();
 
-    if (!options.force && posts.value.length > 0) {
-      const isFresh = typeof cachedAt.value === "number" && now - cachedAt.value < listTtlMs;
+    if (!options.force) {
+      if (page === 1 && posts.value.length > 0) {
+        const isFresh = typeof cachedAt.value === "number" && now - cachedAt.value < listTtlMs;
 
-      if (isFresh) {
+        if (isFresh) {
+          return posts.value;
+        }
+
+        if (!isRevalidating.value && !backgroundPromise.value) {
+          isRevalidating.value = true;
+          backgroundPromise.value = fetchPostsFromServer(page, {
+            ...options,
+            params,
+            force: true,
+            background: true,
+          })
+            .catch((revalidationError) => {
+              console.error("Posts revalidation failed", revalidationError);
+            })
+            .finally(() => {
+              backgroundPromise.value = null;
+            });
+        }
+
         return posts.value;
       }
 
-      if (!isRevalidating.value && !backgroundPromise.value) {
-        isRevalidating.value = true;
-        backgroundPromise.value = fetchPostsFromServer({ ...options, force: true, background: true })
-          .catch((revalidationError) => {
-            console.error("Posts revalidation failed", revalidationError);
-          })
-          .finally(() => {
-            backgroundPromise.value = null;
-          });
-      }
+      if (page !== 1) {
+        const pageTimestamp = pageTimestamps.value[page];
+        const hasPage = Array.isArray(pageMap.value[page]);
+        const isFresh = typeof pageTimestamp === "number" && now - pageTimestamp < listTtlMs;
 
+        if (hasPage && isFresh) {
+          return posts.value;
+        }
+      }
+    }
+
+    return fetchPostsFromServer(page, { ...options, params, loadMore: page > 1 && !options.force });
+  }
+
+  async function fetchMorePosts(options: FetchOptions = {}) {
+    if (loadingMore.value) {
       return posts.value;
     }
 
-    return fetchPostsFromServer(options);
+    const nextPage = currentPage.value > 0 ? currentPage.value + 1 : 2;
+
+    if (!hasMore.value) {
+      return posts.value;
+    }
+
+    try {
+      return await fetchPosts(nextPage, options);
+    } catch (error_) {
+      loadingMore.value = false;
+      throw error_;
+    }
   }
 
   async function getPost(postId: string, options: FetchOptions = {}) {
@@ -694,6 +818,7 @@ export const usePostsStore = defineStore("posts", () => {
   return {
     posts,
     pending: computed(() => pending.value),
+    loadingMore: computed(() => loadingMore.value),
     error: computed(() => error.value),
     cachedAt: computed(() => cachedAt.value),
     lastFetched: computed(() => lastFetched.value),
@@ -702,7 +827,12 @@ export const usePostsStore = defineStore("posts", () => {
     createError: computed(() => createError.value),
     updating: computed(() => updating.value),
     deleting: computed(() => deleting.value),
+    hasMore,
+    currentPage: computed(() => currentPage.value),
+    pageSize: computed(() => pageSize.value),
+    totalCount: computed(() => totalCount.value),
     fetchPosts,
+    fetchMorePosts,
     getPost,
     createPost,
     updatePost,
