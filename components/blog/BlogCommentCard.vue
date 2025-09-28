@@ -1,5 +1,17 @@
 <template>
-  <article class="flex items-start gap-3">
+  <BaseCard
+      as="article"
+      variant="solid"
+      padding="md"
+      rounded="lg"
+      spacing="sm"
+      :class="[
+      'w-full border border-slate-200 bg-white text-slate-800 shadow-sm transition-transform duration-200 hover:-translate-y-0.5',
+    ]"
+      header-class="items-center gap-3"
+      body-class="space-y-3 text-sm text-slate-700"
+      :footer-divider="false"
+  >
     <div class="h-10 w-10 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
       <img
         :src="comment.user.photo ?? defaultAvatar"
@@ -37,13 +49,14 @@
         </span>
       </div>
     </div>
-  </article>
+  </BaseCard>
 </template>
 
 <script setup lang="ts">
 import type { BlogCommentPreview } from "~/lib/mock/blog";
 
 import { computed } from "vue";
+import {BaseCard} from "~/components/ui";
 
 
 defineOptions({

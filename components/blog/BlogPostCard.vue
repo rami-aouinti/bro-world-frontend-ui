@@ -1,6 +1,15 @@
 <template>
-  <article
-    class="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl"
+  <BaseCard
+      as="article"
+      variant="solid"
+      padding="lg"
+      rounded="xl"
+      spacing="lg"
+      class="group relative w-full max-w-3xl border border-slate-200 bg-white text-slate-900 shadow-xl"
+      header-class="gap-4"
+      body-class="space-y-6 text-slate-700"
+      footer-class="flex flex-wrap items-center gap-3 text-sm text-slate-600"
+      :footer-divider="false"
   >
     <div class="flex flex-col gap-6 p-6 sm:p-8">
       <PostMeta
@@ -101,7 +110,7 @@
         />
       </div>
     </div>
-  </article>
+  </BaseCard>
 </template>
 
 <script setup lang="ts">
@@ -109,6 +118,7 @@ import { computed } from "vue";
 import BlogCommentCard from "./BlogCommentCard.vue";
 import PostMeta from "./PostMeta.vue";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import {BaseCard} from "~/components/ui";
 
 const props = defineProps<{ post: BlogPost }>();
 
