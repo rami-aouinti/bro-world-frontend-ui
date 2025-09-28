@@ -33,6 +33,9 @@
         "cv": "简历",
         "jobs": "职位",
         "admin": "管理后台",
+        "adminGeneral": "总览",
+        "adminUserManagement": "用户管理",
+        "adminBlog": "博客",
         "help": "帮助",
         "about": "关于",
         "contact": "联系"
@@ -429,6 +432,20 @@
     "page": {
       "title": "管理中心",
       "subtitle": "只需几次点击即可掌控整个平台，监控关键指标并启用合适的功能。"
+    },
+    "userManagement": {
+      "metaTitle": "用户管理",
+      "page": {
+        "title": "用户管理",
+        "subtitle": "在一个位置完成邀请、审核与权限调整。"
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "博客管理",
+      "page": {
+        "title": "博客管理",
+        "subtitle": "策划社区故事并发布官方公告。"
+      }
     },
     "actions": {
       "newAdminRole": "新建管理员角色",

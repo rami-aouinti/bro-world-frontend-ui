@@ -1,20 +1,28 @@
 import { useAuthSession } from "~/stores/auth-session";
+import { createError } from '#imports'
+import { ADMIN_ROLE_KEYS } from '~/lib/navigation/sidebar'
+import { useAuthSession } from '~/stores/auth-session'
 
-export default defineNuxtRouteMiddleware(async (to) => {
-  const auth = useAuthSession();
-  await auth.initialize();
+export default defineNuxtRouteMiddleware(async (_to) => {
+  const auth = useAuthSession()
+  await auth.initialize()
 
-  const roles = auth.currentUser.value?.roles ?? [];
-  const isAdmin = Array.isArray(roles) && roles.includes("admin");
+  const roles = auth.currentUser.value?.roles ?? []
+  const hasAccess = auth.isAuthenticated.value && roles.some((role) => ADMIN_ROLE_KEYS.includes(role))
 
-  if (isAdmin) {
-    return;
+  if (hasAccess) {
+    return
   }
 
-  const localePath = useLocalePath();
-  const redirectTarget = localePath("/");
+  if (process.server) {
+    return abortNavigation(
+      createError({
+        statusCode: 403,
+        statusMessage: 'Forbidden',
+      }),
+    )
+  }
 
-  auth.setSessionMessage("You need administrator rights to access that page.");
-
-  return navigateTo(redirectTarget);
-});
+  const localePath = useLocalePath()
+  return navigateTo(localePath('/'))
+})

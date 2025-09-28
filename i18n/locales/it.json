@@ -33,6 +33,9 @@
         "cv": "CV",
         "jobs": "Lavori",
         "admin": "Amministrazione",
+        "adminGeneral": "Generale",
+        "adminUserManagement": "Gestione utenti",
+        "adminBlog": "Blog",
         "help": "Aiuto",
         "about": "Informazioni",
         "contact": "Contatti"
@@ -631,6 +634,20 @@
     "page": {
       "title": "Area di amministrazione",
       "subtitle": "Gestisci l’intera piattaforma, monitora le metriche chiave e attiva le leve giuste in pochi clic."
+    },
+    "userManagement": {
+      "metaTitle": "Gestione utenti",
+      "page": {
+        "title": "Gestione utenti",
+        "subtitle": "Invita, revisiona e aggiorna i permessi di ogni membro."
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "Gestione blog",
+      "page": {
+        "title": "Gestione blog",
+        "subtitle": "Pubblica annunci e cura le storie della community."
+      }
     },
     "actions": {
       "newAdminRole": "Nuovo ruolo admin",
