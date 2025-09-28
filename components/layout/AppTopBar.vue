@@ -1,13 +1,13 @@
 <template>
   <v-app-bar
       class="app-top-bar"
-      :class="isDark ? 'text-white' : 'text-black'"
+      :class="isDarkMode ? 'text-white' : 'text-black'"
       :color="textGradient"
       app
       :elevation="10" rounded
       height="50"
   >
-    <template v-slot:image>
+    <template #image>
       <v-img
           cover
           :gradient="gradient"
@@ -21,7 +21,7 @@
         :aria-label="t('layout.actions.openNavigation')"
         @click="emit('toggle-left')"
       >
-        <Icon
+        <AppIcon
           name="mdi:menu"
           :size="24"
         />
@@ -45,7 +45,7 @@
             :aria-label="t('layout.actions.goBack')"
             @click="emit('go-back')"
         >
-          <Icon
+          <AppIcon
               name="mdi:arrow-left"
               :size="22"
           />
@@ -56,7 +56,7 @@
             :aria-label="t('layout.actions.refresh')"
             @click="emit('refresh')"
         >
-          <Icon
+          <AppIcon
               name="mdi:refresh"
               :size="22"
           />
@@ -68,7 +68,7 @@
             :aria-label="t('layout.actions.openNavigation')"
             @click="emit('toggle-left')"
         >
-          <Icon
+          <AppIcon
               name="mdi-format-align-justify"
               :size="22"
           />
@@ -99,22 +99,22 @@
               v-bind="tooltipProps"
               :aria-label="t(icon.label)"
           >
-            <Icon
-                :name="resolveIconName(icon.name)"
+            <AppIcon
+                :name="icon.name"
                 :size="26"
             />
           </v-btn>
         </template>
       </v-tooltip>
     </div>
-    <template v-slot:append>
+    <template #append>
       <div class="flex items-center gap-3">
         <button
             type="button"
             :class="iconTriggerClasses"
             :aria-label="t('layout.actions.notifications')"
         >
-          <Icon
+          <AppIcon
               name="mdi:bell-outline"
               :size="22"
           />
@@ -124,7 +124,7 @@
             :class="iconTriggerClasses"
             :aria-label="t('layout.actions.cart')"
         >
-          <Icon
+          <AppIcon
               name="mdi:shopping-outline"
               :size="22"
           />
@@ -137,7 +137,7 @@
                 :aria-label="t('layout.actions.profile')"
                 v-bind="profileProps"
             >
-              <Icon
+              <AppIcon
                   name="mdi:person-outline"
                   :size="22"
               />
@@ -152,7 +152,7 @@
                 @click="handleUserMenuSelect(item)"
             >
               <template #prepend>
-                <Icon
+                <AppIcon
                     :name="item.icon"
                     :size="20"
                 />
@@ -168,7 +168,7 @@
                 :aria-label="t('layout.actions.changeLanguage', { locale: localeLabel })"
                 v-bind="languageProps"
             >
-              <Icon
+              <AppIcon
                   name="mdi:flag-outline"
                   :size="22"
               />
@@ -193,7 +193,7 @@
             :aria-label="t('layout.actions.openWidgets')"
             @click="emit('toggle-right')"
         >
-          <Icon
+          <AppIcon
               name="mdi:dots-vertical"
               :size="22"
           />
@@ -207,7 +207,7 @@
             :aria-label="t('layout.actions.openWidgets')"
             @click="emit('toggle-right')"
         >
-          <Icon
+          <AppIcon
               name="mdi-format-align-justify"
               :size="22"
           />
@@ -219,8 +219,6 @@
 
 <script setup lang="ts">
 import { useAuthSession } from '~/stores/auth-session'
-
-const isDark = computed(() => useColorMode().value == "dark");
 
 interface AppIcon {
   name: string
@@ -260,6 +258,8 @@ const props = defineProps<{
   showRightToggle: boolean
 }>()
 
+const isDarkMode = computed(() => props.isDark)
+
 const emit = defineEmits([
   'toggle-left',
   'toggle-right',
@@ -278,8 +278,8 @@ const { t } = useI18n()
 const config = useConfig()
 
 const { i18nEnabled, localePath } = useI18nDocs()
-const gradient = computed(() => (isDark.value ? "#000" : "#fff"));
-const textGradient = computed(() => (isDark.value ? "#fff" : "#000"));
+const gradient = computed(() => (isDarkMode.value ? "#000" : "#fff"))
+const textGradient = computed(() => (isDarkMode.value ? "#fff" : "#000"))
 
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === 'input',
@@ -328,19 +328,6 @@ const userMenuItems = computed<UserMenuItem[]>(() => {
     },
   ]
 })
-
-function resolveIconName(name?: string) {
-  if (!name)
-    return ''
-
-  if (name.includes(':'))
-    return name
-
-  if (name.startsWith('mdi-'))
-    return `mdi:${name.slice(4)}`
-
-  return name
-}
 
 const localeFlags: Record<string, string> = {
   en: '🇬🇧',
