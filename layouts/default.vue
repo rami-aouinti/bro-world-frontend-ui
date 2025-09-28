@@ -59,9 +59,16 @@
         <template #fallback>
           <div class="pane-scroll px-3 py-4">
             <div class="flex flex-col gap-4">
-              <div class="h-10 rounded-2xl bg-slate-200/60" />
-              <div class="h-24 rounded-2xl bg-slate-200/60" />
-              <div class="h-24 rounded-2xl bg-slate-200/60" />
+              <v-skeleton-loader
+                type="list-item-two-line"
+                class="rounded-2xl"
+              />
+              <v-skeleton-loader
+                v-for="index in 2"
+                :key="index"
+                type="card"
+                class="rounded-2xl"
+              />
             </div>
           </div>
         </template>

@@ -6,7 +6,7 @@
       </template>
       <template #fallback>
         <div class="p-4">
-          <Spinner class="mx-auto" />
+          <v-skeleton-loader type="card" class="mx-auto" />
         </div>
       </template>
     </Suspense>
