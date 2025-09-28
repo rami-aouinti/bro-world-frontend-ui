@@ -286,9 +286,8 @@ function matchesRoute(path: string, target: string) {
 .app-surface {
   position: relative;
   display: flex;
-  border-color: transparent;
   min-height: 100vh;
-  background: var(--surface-base);
+  background: transparent;
   overflow: hidden;
 }
 
@@ -296,9 +295,7 @@ function matchesRoute(path: string, target: string) {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at top left, var(--surface-gradient-start) 0%, transparent 60%),
-    radial-gradient(circle at 85% 90%, var(--surface-gradient-end) 0%, transparent 55%);
+  background: transparent;
   opacity: 0.9;
   pointer-events: none;
   transform: translateZ(0);
