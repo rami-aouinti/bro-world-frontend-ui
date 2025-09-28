@@ -12,16 +12,16 @@
       body-class="space-y-3 text-sm text-slate-700"
       :footer-divider="false"
   >
-    <div class="h-10 w-10 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
-      <img
-        :src="comment.user.photo ?? defaultAvatar"
-        :alt="`${comment.user.firstName} ${comment.user.lastName}`"
-        class="h-full w-full object-cover"
-        loading="lazy"
-      />
-    </div>
     <div class="flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 shadow-sm">
       <header class="flex items-center justify-between gap-3">
+        <div class="h-10 w-10 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
+          <img
+              :src="comment.user.photo ?? defaultAvatar"
+              :alt="`${comment.user.firstName} ${comment.user.lastName}`"
+              class="h-full w-full object-cover"
+              loading="lazy"
+          />
+        </div>
         <p class="text-sm font-semibold text-slate-900">
           {{ comment.user.firstName }} {{ comment.user.lastName }}
         </p>
