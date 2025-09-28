@@ -62,6 +62,12 @@ export const useAuthSession = defineStore('auth-session', () => {
   const mercureTokenState = useState<MercureTokenState | null>('auth-mercure-token', () => null)
   const sessionTokenState = useState<string | null>('auth-session-token', () => null)
 
+  const loginPendingState = ref(false)
+  const loginErrorState = ref<string | null>(null)
+  const sessionMessageState = ref<string | null>(null)
+  const handlingUnauthorizedState = ref(false)
+
+  const runtimeConfig = useRuntimeConfig()
   const sessionTokenCookie = useCookie<string | null>(
     runtimeConfig.auth?.sessionTokenCookieName ?? 'auth_session_token',
     {
@@ -70,13 +76,6 @@ export const useAuthSession = defineStore('auth-session', () => {
       watch: false,
     },
   )
-
-  const loginPendingState = ref(false)
-  const loginErrorState = ref<string | null>(null)
-  const sessionMessageState = ref<string | null>(null)
-  const handlingUnauthorizedState = ref(false)
-
-  const runtimeConfig = useRuntimeConfig()
   const presenceCookie = useCookie<string | null>(runtimeConfig.auth?.tokenPresenceCookieName ?? 'auth_token_present', {
     sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
