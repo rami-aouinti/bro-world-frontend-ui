@@ -62,6 +62,15 @@ export const useAuthSession = defineStore('auth-session', () => {
   const mercureTokenState = useState<MercureTokenState | null>('auth-mercure-token', () => null)
   const sessionTokenState = useState<string | null>('auth-session-token', () => null)
 
+  const sessionTokenCookie = useCookie<string | null>(
+    runtimeConfig.auth?.sessionTokenCookieName ?? 'auth_session_token',
+    {
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+      watch: false,
+    },
+  )
+
   const loginPendingState = ref(false)
   const loginErrorState = ref<string | null>(null)
   const sessionMessageState = ref<string | null>(null)
@@ -87,7 +96,9 @@ export const useAuthSession = defineStore('auth-session', () => {
     currentUserState.value = userCookie.value
   }
 
-  const sessionTokenStorageKey = 'auth-session-token'
+  if (sessionTokenCookie.value) {
+    sessionTokenState.value = sessionTokenCookie.value
+  }
 
   if (import.meta.client) {
     watch(
@@ -102,36 +113,13 @@ export const useAuthSession = defineStore('auth-session', () => {
       presenceCookie.value = value ? '1' : null
     })
 
-    function readStoredToken() {
-      try {
-        return window.sessionStorage.getItem(sessionTokenStorageKey)
-      } catch (error) {
-        console.warn('Unable to read auth token from session storage', error)
-        return null
-      }
-    }
-
-    function persistToken(value: string | null) {
-      try {
-        if (value) {
-          window.sessionStorage.setItem(sessionTokenStorageKey, value)
-        } else {
-          window.sessionStorage.removeItem(sessionTokenStorageKey)
-        }
-      } catch (error) {
-        console.warn('Unable to persist auth token to session storage', error)
-      }
-    }
-
-    const existingToken = readStoredToken()
-
-    if (existingToken) {
-      sessionTokenState.value = existingToken
-    }
-
-    watch(sessionTokenState, (value) => {
-      persistToken(value)
-    })
+    watch(
+      sessionTokenState,
+      (value) => {
+        sessionTokenCookie.value = value
+      },
+      { immediate: true },
+    )
   }
 
   const currentUser = computed(() => currentUserState.value)
@@ -157,6 +145,7 @@ export const useAuthSession = defineStore('auth-session', () => {
 
   function setSessionToken(token: string | null) {
     sessionTokenState.value = token
+    sessionTokenCookie.value = token
   }
 
   function setSessionMessage(message: string | null) {
