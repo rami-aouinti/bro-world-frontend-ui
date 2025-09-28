@@ -297,6 +297,8 @@
       "submit": "发布评论",
       "submitting": "发布中...",
       "loading": "正在加载评论...",
+      "load": "加载评论",
+      "activationHint": "当此区域可见或点击按钮时将加载评论。",
       "success": "你的评论已添加。",
       "error": "无法添加评论，请重试。",
       "validation": "发布前请先写下评论。",

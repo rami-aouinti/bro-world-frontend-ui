@@ -46,7 +46,10 @@
       </p>
     </section>
 
-    <section class="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/80 p-5">
+    <section
+        ref="commentsSectionRef"
+        class="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/80 p-5"
+    >
       <div class="space-y-3">
         <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
           {{ reactionPromptLabel }}
@@ -154,14 +157,39 @@
           {{ commentPreviewCountLabel }}
         </p>
       </header>
-      <div v-if="commentsLoading" class="w-full space-y-4 pt-3">
+      <div
+          v-if="commentsActivationPending"
+          class="space-y-3 rounded-2xl border border-dashed border-slate-300 bg-white/60 p-4 text-sm text-slate-600"
+          data-test="comments-activation-placeholder"
+          role="status"
+          aria-live="polite"
+      >
+        <p>{{ commentsActivationHint }}</p>
+        <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-full border border-primary bg-white px-4 py-2 font-semibold text-primary shadow-sm transition-colors duration-200 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            data-test="load-comments-button"
+            @click="handleManualCommentsLoad"
+        >
+          {{ loadCommentsLabel }}
+        </button>
+      </div>
+      <div v-else-if="commentsLoading" class="w-full space-y-4 pt-3">
         <div class="px-2 text-sm text-slate-500">
           {{ t('blog.comments.loading') }}
         </div>
       </div>
-      <p v-else-if="commentsError" class="px-2 text-sm text-rose-500">
-        {{ commentsError }}
-      </p>
+      <div v-else-if="commentsError" class="space-y-3 px-2 text-sm text-rose-500">
+        <p>{{ commentsError }}</p>
+        <button
+            type="button"
+            class="inline-flex w-max items-center justify-center rounded-full border border-rose-200 bg-white px-4 py-2 font-semibold text-rose-600 shadow-sm transition-colors duration-200 hover:bg-rose-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400"
+            data-test="load-comments-button"
+            @click="handleManualCommentsLoad"
+        >
+          {{ loadCommentsLabel }}
+        </button>
+      </div>
       <div v-else-if="hasCommentPreview" class="w-full space-y-4 pt-3">
         <CommentCard
             v-for="comment in comments"
@@ -318,6 +346,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, shallowRef, watch } from "vue";
+import { useElementVisibility } from "@vueuse/core";
 
 import CommentCard from "~/components/blog/BlogCommentCard.vue";
 import { BaseCard } from "~/components/ui";
@@ -440,6 +469,9 @@ const loadedComments = ref<BlogCommentWithReplies[] | null>(null);
 const commentsLoading = ref(false);
 const commentsError = ref<string | null>(null);
 const activeCommentsRequest = shallowRef<Promise<void> | null>(null);
+const commentsSectionRef = ref<HTMLElement | null>(null);
+const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
+const commentsActivated = ref(false);
 
 function formatDateTime(value: string) {
   return new Intl.DateTimeFormat(locale.value ?? "fr-FR", {
@@ -557,6 +589,9 @@ const commentCharacterCountLabel = computed(() => {
   return t("blog.comments.characterCount", { count: formatNumber(length) });
 });
 const loginToCommentMessage = computed(() => t("blog.auth.commentRequired"));
+const loadCommentsLabel = computed(() => t("blog.comments.load"));
+const commentsActivationHint = computed(() => t("blog.comments.activationHint"));
+const commentsActivationPending = computed(() => !commentsActivated.value && !commentsLoading.value);
 
 const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
@@ -982,6 +1017,39 @@ async function loadComments(options: { force?: boolean } = {}) {
   return request;
 }
 
+function requestComments(options: { force?: boolean } = {}) {
+  if (!post.value.id) {
+    return;
+  }
+
+  if (!commentsActivated.value) {
+    commentsActivated.value = true;
+  }
+
+  const hasLoadedComments = Array.isArray(loadedComments.value);
+  const shouldForce = Boolean(options.force || commentsError.value);
+
+  if (!shouldForce && hasLoadedComments) {
+    return;
+  }
+
+  void loadComments({ force: shouldForce });
+}
+
+function handleManualCommentsLoad() {
+  requestComments({ force: true });
+}
+
+watch(
+    isCommentsSectionVisible,
+    (visible) => {
+      if (visible) {
+        requestComments();
+      }
+    },
+    { immediate: true },
+);
+
 watch(
     () => post.value.id,
     () => {
@@ -989,9 +1057,10 @@ watch(
       commentsError.value = null;
       commentsLoading.value = false;
       activeCommentsRequest.value = null;
+      commentsActivated.value = false;
 
-      if (post.value.id) {
-        void loadComments({ force: true });
+      if (post.value.id && isCommentsSectionVisible.value) {
+        requestComments();
       }
     },
     { immediate: true },

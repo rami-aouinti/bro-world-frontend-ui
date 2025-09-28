@@ -510,6 +510,8 @@
       "submit": "Pubblica commento",
       "submitting": "Pubblicazione...",
       "loading": "Caricamento dei commenti...",
+      "load": "Carica i commenti",
+      "activationHint": "I commenti vengono caricati quando questa sezione è visibile o quando premi il pulsante.",
       "success": "Il tuo commento è stato aggiunto.",
       "error": "Non siamo riusciti ad aggiungere il tuo commento. Riprova.",
       "validation": "Scrivi un commento prima di pubblicare.",

@@ -291,6 +291,8 @@
       "submit": "Post comment",
       "submitting": "Posting...",
       "loading": "Loading comments...",
+      "load": "Load comments",
+      "activationHint": "Comments load when this section becomes visible or when you press the button.",
       "success": "Your comment has been added.",
       "error": "We couldn't add your comment. Please try again.",
       "validation": "Write a comment before posting.",
