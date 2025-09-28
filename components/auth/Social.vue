@@ -6,22 +6,25 @@
     <p class="text-body-2 text-white text-opacity-80 mb-5">
       {{ t('auth.socialSubtitle') }}
     </p>
-    <div class="d-flex flex-column gap-2">
-      <v-btn
-        v-for="button in buttons"
-        :key="button.provider"
-        block
-        :prepend-icon="button.icon"
-        color="white"
-        variant="flat"
-        class="text-primary font-weight-bold rounded-xl text-body-2 py-4"
-        :loading="props.loading"
-        :disabled="props.loading"
-        @click="handleRedirect(button.provider)"
+
+    <v-row class="justify-center align-center" dense>
+      <v-col
+          v-for="button in buttons"
+          :key="button.provider"
+          cols="auto"
+          class="d-flex"
       >
-        {{ t(`auth.social.${button.provider}`) }}
-      </v-btn>
-    </div>
+        <v-btn
+            variant="flat"
+            class="font-weight-bold rounded-xl text-body-2"
+            :loading="props.loading"
+            :disabled="props.loading"
+            @click="handleRedirect(button.provider)"
+        >
+          <Icon :name="button.icon" />
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
