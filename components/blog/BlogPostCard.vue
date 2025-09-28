@@ -62,37 +62,6 @@
       </div>
     </div>
 
-    <div class="flex flex-wrap items-center gap-2 border-t border-slate-200 px-6 py-3 text-sm font-medium text-slate-500">
-      <button
-        v-for="action in postActions"
-        :key="action.id"
-        type="button"
-        class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 transition-colors duration-200 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-      >
-        <span aria-hidden="true" class="text-lg">{{ action.icon }}</span>
-        <span>{{ action.label }}</span>
-      </button>
-    </div>
-
-    <div
-      v-if="post.reactions_preview.length"
-      class="space-y-3 border-t border-slate-200 bg-slate-50 px-6 py-5"
-    >
-      <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-        {{ t("blog.reactions.post.reactionSpotlight") }}
-      </p>
-      <div class="flex flex-wrap gap-2">
-        <div
-          v-for="reaction in post.reactions_preview.slice(0, 4)"
-          :key="reaction.id"
-          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-slate-600 shadow-sm"
-        >
-          <span class="sr-only">{{ reactionLabels[reaction.type] }}</span>
-          <span aria-hidden="true" class="text-lg">{{ reactionEmojis[reaction.type] }}</span>
-        </div>
-      </div>
-    </div>
-
     <div v-if="post.comments_preview.length" class="space-y-4 border-t border-slate-200 px-6 py-6">
       <header class="flex items-center justify-between gap-4">
         <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">

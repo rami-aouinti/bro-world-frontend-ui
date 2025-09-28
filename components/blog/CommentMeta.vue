@@ -1,7 +1,7 @@
 <template>
   <header class="flex flex-wrap items-start justify-between gap-3">
     <div class="flex items-center gap-3">
-      <div class="h-10 w-10 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
+      <div class="h-11 w-11 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
         <img
           :src="user.photo ?? defaultAvatar"
           :alt="`${user.firstName} ${user.lastName}`"
@@ -13,7 +13,7 @@
         <p class="text-sm font-semibold leading-tight text-slate-900">
           {{ user.firstName }} {{ user.lastName }}
         </p>
-        <p class="text-[11px] uppercase tracking-[0.35em] text-slate-500">
+        <p class="text-xs text-slate-500">
           {{ publishedLabel }}
         </p>
       </div>

@@ -77,6 +77,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import {NuxtLink} from "#components";
 
 interface SidebarItem {
   key: string

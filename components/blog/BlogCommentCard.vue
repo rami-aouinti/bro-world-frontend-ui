@@ -12,32 +12,31 @@
     body-class="space-y-3 text-sm text-slate-700"
     :footer-divider="false"
   >
-    <div class="flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 shadow-sm">
-      <CommentMeta
+    <CommentMeta
         :user="comment.user"
         :default-avatar="defaultAvatar"
         :published-label="publishedDisplay"
-      />
-      <p class="mt-2 text-sm leading-relaxed text-slate-700 whitespace-pre-line">
-        {{ comment.content }}
-      </p>
-      <div class="mt-3 flex flex-wrap items-center gap-4 border-t border-slate-200 pt-3 text-xs text-slate-500">
+    />
+    <p class="mt-2 text-sm leading-relaxed text-slate-700 whitespace-pre-line">
+      {{ comment.content }}
+    </p>
+    <div class="mt-3 flex flex-wrap items-center gap-4 border-t border-slate-200 pt-3 text-xs text-slate-500">
         <span
-          :aria-label="t('blog.reactions.comment.reactions', { count: formatNumber(comment.reactions_count) })"
-          class="inline-flex items-center gap-1 font-medium"
+            :aria-label="t('blog.reactions.comment.reactions', { count: formatNumber(comment.reactions_count) })"
+            class="inline-flex items-center gap-1 font-medium"
         >
           <span aria-hidden="true" class="text-base">👍</span>
           <span aria-hidden="true">{{ formatNumber(comment.reactions_count) }}</span>
         </span>
-        <span
+      <span
           :aria-label="t('blog.reactions.comment.replies', { count: formatNumber(comment.totalComments) })"
           class="inline-flex items-center gap-1 font-medium"
-        >
+      >
           <span aria-hidden="true" class="text-base">💬</span>
           <span aria-hidden="true">{{ formatNumber(comment.totalComments) }}</span>
         </span>
-      </div>
     </div>
+
   </BaseCard>
 </template>
 
