@@ -1,8 +1,8 @@
 <template>
-  <v-icon
+  <Icon
     v-if="resolved.type === 'mdi'"
     v-bind="attrs"
-    :icon="resolved.value"
+    :name="resolved.value"
     :size="size"
   />
   <Icon
