@@ -1,8 +1,3 @@
-$text-field-filled-full-width-outlined-slot-min-height: var(
-    --v-input-min-height,
-    44px
-  ) !default;
+$text-field-filled-full-width-outlined-slot-min-height: 36px !default;
 
-$input-font-size: var(--v-input-font-size, 15px) !default;
-$input-line-height: var(--v-input-line-height, 1.4) !default;
-$text-field-outlined-border-radius: var(--v-field-border-radius, var(--v-radius-md, 8px)) !default;
+$input-font-size: 14px !default;

@@ -1,9 +1,5 @@
 $btn-hover-opacity: 0 !default;
 $btn-active-opacity: 0 !default;
 $btn-focus-opacity: 0 !default;
-$btn-letter-spacing: var(--v-btn-letter-spacing, 0.02em) !default;
-$btn-border-radius: var(--v-radius-pill, 9999px) !default;
-$btn-font-size: var(--v-text-body-1-size, 1rem) !default;
-$btn-line-height: var(--v-text-body-1-line-height, 1.6) !default;
-$btn-height: var(--v-btn-height, 2.75rem) !default;
-$btn-padding-x: var(--v-btn-padding-x, var(--v-space-4)) !default;
+$btn-letter-spacing: 0.02em !default;
+$btn-border-radius: 0.5rem !default;
