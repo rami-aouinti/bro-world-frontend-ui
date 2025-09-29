@@ -293,8 +293,12 @@ export const useAuthSession = defineStore('auth-session', () => {
   }
 
   async function initialize() {
-    if (readyState.value && import.meta.client) {
-      return isAuthenticated.value
+    // During client hydration we may have an authenticated session cookie without a
+    // hydrated user state (for example if the session cookies were set by the
+    // server). In that case we should refresh the session even if the store was
+    // previously marked as ready so we can recover the current user information.
+    if (import.meta.client && readyState.value && isAuthenticated.value) {
+      return true
     }
 
     return refreshSession()
