@@ -30,7 +30,9 @@
 </template>
 
 <script lang="ts" setup>
-const isDark = computed(() => useColorMode().value == "dark");
+import { useCookieColorMode } from "#imports";
+
+const isDark = computed(() => useCookieColorMode().value == "dark");
 
 const features = [
   {

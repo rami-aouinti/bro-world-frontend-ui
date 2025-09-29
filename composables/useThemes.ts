@@ -1,7 +1,7 @@
 import { computed, watch } from 'vue'
-import { useColorMode } from '@vueuse/core'
 import type { Theme } from 'shadcn-docs-nuxt/lib/themes'
 import { themes } from 'shadcn-docs-nuxt/lib/themes'
+import { useCookieColorMode } from './useCookieColorMode'
 
 interface ThemeCookieConfig {
   theme: Theme['name']
@@ -90,23 +90,7 @@ export function useThemes() {
     }
   }
 
-  const colorModeCookie = useCookie<'light' | 'dark' | 'auto'>('color-mode', {
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-  })
-
-  const colorMode = useColorMode({
-    storageKey: 'color-mode',
-    storage: {
-      getItem: () => colorModeCookie.value ?? 'auto',
-      setItem: (_, value) => {
-        colorModeCookie.value = value as typeof colorModeCookie.value
-      },
-      removeItem: () => {
-        colorModeCookie.value = null
-      },
-    },
-  })
+  const colorMode = useCookieColorMode()
   const isDark = computed(() => colorMode.value === 'dark')
 
   const themeCookie = useCookie<ThemeCookieConfig>('theme', {

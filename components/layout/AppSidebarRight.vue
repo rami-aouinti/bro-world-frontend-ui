@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
+import { useCookieColorMode } from '#imports'
 import { useI18n } from 'vue-i18n'
 import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
 import { useAuthSession } from '~/stores/auth-session'
@@ -81,7 +82,7 @@ const props = withDefaults(
 )
 
 const sticky = computed(() => props.sticky)
-const isDark = computed(() => useColorMode().value === 'dark')
+const isDark = computed(() => useCookieColorMode().value === 'dark')
 const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const { t } = useI18n()
@@ -112,9 +113,9 @@ function scheduleParticles() {
     requestIdleCallback?: (callback: () => void) => number
   }
 
-  const enableParticles = () => {
-    shouldRenderParticles.value = true
-  }
+    function enableParticles() {
+      shouldRenderParticles.value = true
+    }
 
   if (typeof idleWindow.requestIdleCallback === 'function') {
     idleWindow.requestIdleCallback(enableParticles)

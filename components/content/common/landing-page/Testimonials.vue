@@ -111,7 +111,9 @@
 </template>
 
 <script setup lang="ts">
-const isDark = computed(() => useColorMode().value == "dark");
+import { useCookieColorMode } from "#imports";
+
+const isDark = computed(() => useCookieColorMode().value == "dark");
 
 // Reviews data
 const reviews = [
