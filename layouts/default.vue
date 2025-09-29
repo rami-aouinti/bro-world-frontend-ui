@@ -56,7 +56,18 @@
                 :active-key="activeSidebar"
                 :eager="rightDrawer"
                 @select="handleSidebarSelect"
-              />
+              >
+                <div class="flex flex-col gap-4">
+                  <SidebarWeatherCard v-if="weather" :weather="weather" />
+                  <SidebarLeaderboardCard
+                    v-if="leaderboard"
+                    :title="leaderboard.title"
+                    :live-label="leaderboard.live"
+                    :participants="leaderboard.participants"
+                  />
+                  <SidebarRatingCard v-if="rating" :rating="rating" />
+                </div>
+              </AppSidebarRight>
             </div>
             <template #fallback>
               <div class="pane-scroll px-3 py-4">
