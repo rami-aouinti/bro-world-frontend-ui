@@ -1,8 +1,9 @@
 import { computed } from "vue";
-import { useState } from "#imports";
+import { useCookie, useRuntimeConfig, useState } from "#imports";
 import type { BlogUser } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
 import type { AuthUser } from "~/types/auth";
+import { withSecureCookieOptions } from "~/lib/cookies";
 
 interface FollowState {
   [authorId: string]: boolean;
@@ -18,9 +19,16 @@ export function useAuthStore() {
   const followingState = useState<FollowState>("auth-following", () => ({}));
   const followPendingState = useState<FollowPendingState>("auth-following-pending", () => ({}));
   const followErrorState = useState<string | null>("auth-following-error", () => null);
+  const runtimeConfig = useRuntimeConfig();
+  const sessionTokenCookie = useCookie<string | null>(
+    runtimeConfig.auth?.sessionTokenCookieName ?? "auth_session_token",
+    withSecureCookieOptions({
+      sameSite: "strict",
+    }),
+  );
 
   const currentUser = computed(() => (authSession.currentUser.value as BlogUser | null) ?? currentUserState.value);
-  const isAuthenticated = computed(() => authSession.isAuthenticated.value || currentUser.value !== null);
+  const isAuthenticated = computed(() => Boolean(sessionTokenCookie.value));
   const following = computed(() => followingState.value);
   const followPending = computed(() => followPendingState.value);
   const followError = computed(() => followErrorState.value);
