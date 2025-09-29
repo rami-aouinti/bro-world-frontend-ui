@@ -3,6 +3,7 @@
 import { resolve, relative, join } from "pathe";
 import { readdirSync, statSync, readFileSync, existsSync } from "fs";
 import yaml from "yaml";
+import { defineNitroPlugin } from "nitropack";
 import type { NitroApp } from "nitropack";
 
 /**
