@@ -16,7 +16,7 @@
         <div class="d-flex align-center justify-space-between">
           <div class="text-h6">{{ user.name }}</div>
           <v-btn size="small" variant="text" color="primary" @click="$emit('edit-bio')">
-            {{ $t?.('edit') ?? 'Bearbeiten' }}
+            {{ t('layout.profileSidebar.editBio') }}
           </v-btn>
         </div>
       </v-card-item>
@@ -34,10 +34,10 @@
 
         <div class="d-flex ga-3 mt-4">
           <v-btn block color="primary" variant="tonal" @click="$emit('edit-details')">
-            Details bearbeiten
+            {{ t('layout.profileSidebar.editDetails') }}
           </v-btn>
           <v-btn block color="primary" variant="outlined" @click="$emit('add-featured')">
-            Featured Content hinzufügen
+            {{ t('layout.profileSidebar.addFeatured') }}
           </v-btn>
         </div>
       </v-card-text>
@@ -56,9 +56,9 @@
               :footer-divider="false">
       <v-card-item>
         <div class="d-flex align-center justify-space-between">
-          <div class="text-subtitle-1 font-weight-semibold">Fotos</div>
+          <div class="text-subtitle-1 font-weight-semibold">{{ t('layout.profileSidebar.photosTitle') }}</div>
           <v-btn size="small" variant="text" color="primary" @click="$emit('view-all-photos')">
-            Alle Fotos ansehen
+            {{ t('layout.profileSidebar.viewAllPhotos') }}
           </v-btn>
         </div>
       </v-card-item>
@@ -91,10 +91,10 @@
       <v-card-item>
         <div class="d-flex align-center justify-space-between">
           <div class="text-subtitle-1 font-weight-semibold">
-            Freunde <span class="text-medium-emphasis">· {{ friendsCount }}</span>
+            {{ t('layout.profileSidebar.friendsTitle') }} <span class="text-medium-emphasis">· {{ friendsCount }}</span>
           </div>
           <v-btn size="small" variant="text" color="primary" @click="$emit('view-all-friends')">
-            Alle Freunde ansehen
+            {{ t('layout.profileSidebar.viewAllFriends') }}
           </v-btn>
         </div>
       </v-card-item>
@@ -119,6 +119,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n'
 import {BaseCard} from "~/components/ui";
 
 type IntroItem = { icon: string; title: string; subtitle?: string }
@@ -140,6 +141,8 @@ const props = defineProps<{
   lifeEvents: LifeEvent[]
 }>()
 
+const { t } = useI18n()
+
 const friendsCount = computed(() => props.friendsCount ?? props.friends?.length ?? 0)
 
 const introItems = computed<IntroItem[]>(() => {
@@ -149,8 +152,8 @@ const introItems = computed<IntroItem[]>(() => {
         items.push({ icon: 'mdi-school-outline', title: s })
     )
   }
-  if (props.user.livesIn) items.push({ icon: 'mdi-home-map-marker', title: `Wohnt in ${props.user.livesIn}` })
-  if (props.user.from) items.push({ icon: 'mdi-map-marker', title: `Aus ${props.user.from}` })
+  if (props.user.livesIn) items.push({ icon: 'mdi-home-map-marker', title: t('layout.profileSidebar.livesIn', { location: props.user.livesIn }) })
+  if (props.user.from) items.push({ icon: 'mdi-map-marker', title: t('layout.profileSidebar.from', { location: props.user.from }) })
   return items
 })
 </script>

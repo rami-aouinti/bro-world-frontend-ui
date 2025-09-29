@@ -70,6 +70,17 @@
       "feed": {
         "title": "活动动态"
       }
+    },
+    "profileSidebar": {
+      "editBio": "编辑",
+      "editDetails": "编辑详细信息",
+      "addFeatured": "添加精选内容",
+      "photosTitle": "照片",
+      "viewAllPhotos": "查看所有照片",
+      "friendsTitle": "好友",
+      "viewAllFriends": "查看所有好友",
+      "livesIn": "居住在{location}",
+      "from": "来自{location}"
     }
   },
   "banner": {
