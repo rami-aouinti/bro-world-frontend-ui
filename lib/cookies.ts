@@ -1,7 +1,30 @@
-import { useRequestEvent, type CookieOptions } from 'nuxt/app'
+import type { CookieOptions } from 'nuxt/app'
 import type { H3Event } from 'h3'
+import { getContext } from 'unctx'
 
 type MaybeEvent = H3Event | null | undefined
+
+type NuxtAppContext = {
+  ssrContext?: {
+    event?: MaybeEvent
+  }
+}
+
+const nuxtAppContext = getContext<NuxtAppContext>('nuxt-app', {
+  asyncContext: import.meta.server,
+})
+
+function resolveActiveRequestEvent(): MaybeEvent {
+  if (!import.meta.server) {
+    return null
+  }
+
+  try {
+    return nuxtAppContext.tryUse()?.ssrContext?.event ?? null
+  } catch {
+    return null
+  }
+}
 
 type MaybeEncryptedSocket = { encrypted?: boolean }
 
@@ -37,15 +60,7 @@ function isEventSecure(event: H3Event): boolean {
 }
 
 export function shouldUseSecureCookies(event?: MaybeEvent): boolean {
-  let targetEvent = event ?? null
-
-  if (!targetEvent && import.meta.server) {
-    try {
-      targetEvent = useRequestEvent()
-    } catch (error) {
-      targetEvent = null
-    }
-  }
+  const targetEvent = event ?? resolveActiveRequestEvent()
 
   if (targetEvent) {
     return isEventSecure(targetEvent)
