@@ -6,6 +6,10 @@ type StateRef<T> = ReturnType<typeof ref<T>>
 const stateRegistry = new Map<string, StateRef<unknown>>()
 const cookieRegistry = new Map<string, StateRef<unknown>>()
 
+export function useRequestEvent() {
+  return null
+}
+
 export function useState<T>(key: string, init: () => T): StateRef<T> {
   if (!stateRegistry.has(key)) {
     stateRegistry.set(key, ref(init()))
