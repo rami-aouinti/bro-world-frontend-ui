@@ -201,6 +201,37 @@ try {
   console.warn(`vite-plugin-vuetify not loaded: ${(error as Error | undefined)?.message ?? 'unknown error'}`)
 }
 
+const iconCollections = ['mdi', 'logos', 'heroicons', 'lucide', 'tabler', 'vscode-icons'] as const
+
+function hasIconCollection(name: (typeof iconCollections)[number]) {
+  try {
+    require.resolve(`@iconify-json/${name}/icons.json`)
+    return true
+  } catch {
+    return false
+  }
+}
+
+const availableIconCollections = iconCollections.filter(hasIconCollection)
+const clientBundleCollections = ['mdi', 'logos', 'heroicons'] as const
+const missingClientBundleCollections = clientBundleCollections.filter(
+  (collection) => !availableIconCollections.includes(collection),
+)
+
+if (missingClientBundleCollections.length > 0) {
+  console.warn(
+    `Nuxt Icon client bundle disabled: missing icon collections ${missingClientBundleCollections.join(', ')}`,
+  )
+}
+
+const iconClientBundleConfig =
+  missingClientBundleCollections.length === 0
+    ? {
+        icons: Object.values(aliases).map((v) => (v as string).replace(/^mdi-/, 'mdi:')),
+        scan: true,
+      }
+    : false
+
 const nuxtLayers: string[] = ['shadcn-docs-nuxt']
 
 try {
@@ -437,10 +468,10 @@ export default defineNuxtConfig({
   },
 
   icon: {
-    clientBundle: {
-      icons: Object.values(aliases).map((v) => (v as string).replace(/^mdi-/, 'mdi:')),
-      scan: true,
-    },
+    ...(availableIconCollections.length
+      ? { serverBundle: { collections: availableIconCollections } }
+      : {}),
+    ...(iconClientBundleConfig ? { clientBundle: iconClientBundleConfig } : {}),
     customCollections: [
       {
         prefix: 'custom',
