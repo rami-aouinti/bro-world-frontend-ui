@@ -70,6 +70,17 @@
       "feed": {
         "title": "Лента активности"
       }
+    },
+    "profileSidebar": {
+      "editBio": "Редактировать",
+      "editDetails": "Редактировать сведения",
+      "addFeatured": "Добавить избранный контент",
+      "photosTitle": "Фотографии",
+      "viewAllPhotos": "Посмотреть все фотографии",
+      "friendsTitle": "Друзья",
+      "viewAllFriends": "Посмотреть всех друзей",
+      "livesIn": "Живёт в {location}",
+      "from": "Из {location}"
     }
   },
   "banner": {

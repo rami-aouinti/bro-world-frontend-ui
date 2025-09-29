@@ -70,6 +70,17 @@
       "feed": {
         "title": "Aktivitätsfeed"
       }
+    },
+    "profileSidebar": {
+      "editBio": "Bearbeiten",
+      "editDetails": "Details bearbeiten",
+      "addFeatured": "Hervorgehobene Inhalte hinzufügen",
+      "photosTitle": "Fotos",
+      "viewAllPhotos": "Alle Fotos ansehen",
+      "friendsTitle": "Freunde",
+      "viewAllFriends": "Alle Freunde ansehen",
+      "livesIn": "Wohnt in {location}",
+      "from": "Aus {location}"
     }
   },
   "banner": {

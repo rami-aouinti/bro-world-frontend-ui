@@ -70,6 +70,17 @@
       "feed": {
         "title": "Flux d'activité"
       }
+    },
+    "profileSidebar": {
+      "editBio": "Modifier",
+      "editDetails": "Modifier les détails",
+      "addFeatured": "Ajouter du contenu à la une",
+      "photosTitle": "Photos",
+      "viewAllPhotos": "Voir toutes les photos",
+      "friendsTitle": "Amis",
+      "viewAllFriends": "Voir tous les amis",
+      "livesIn": "Habite à {location}",
+      "from": "Originaire de {location}"
     }
   },
   "banner": {

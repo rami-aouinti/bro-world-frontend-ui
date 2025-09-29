@@ -70,6 +70,17 @@
       "feed": {
         "title": "تغذية النشاط"
       }
+    },
+    "profileSidebar": {
+      "editBio": "تعديل",
+      "editDetails": "تعديل التفاصيل",
+      "addFeatured": "إضافة محتوى مميز",
+      "photosTitle": "الصور",
+      "viewAllPhotos": "عرض جميع الصور",
+      "friendsTitle": "الأصدقاء",
+      "viewAllFriends": "عرض جميع الأصدقاء",
+      "livesIn": "يعيش في {location}",
+      "from": "من {location}"
     }
   },
   "banner": {
