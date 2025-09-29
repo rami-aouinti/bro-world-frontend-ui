@@ -148,7 +148,7 @@
                 v-for="item in userMenuItems"
                 :key="item.title"
                 :title="item.title"
-                :disabled="item.action === 'logout' && loggingOut"
+                :disabled="item.action === 'logout' && loggingOut.value"
                 @click="handleUserMenuSelect(item)"
             >
               <template #prepend>
