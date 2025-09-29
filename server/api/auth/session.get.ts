@@ -1,5 +1,5 @@
-import { clearAuthSession, getSessionToken, getSessionUser } from '~/server/utils/auth/session'
-import type { AuthSessionEnvelope } from '~/types/auth'
+import { clearAuthSession, getSessionToken, getSessionUser } from '../../utils/auth/session'
+import type { AuthSessionEnvelope } from '../../../types/auth'
 
 export default defineEventHandler(async (event) => {
   const token = getSessionToken(event)

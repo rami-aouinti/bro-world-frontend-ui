@@ -1,6 +1,6 @@
 import { createError, readBody } from "h3";
-import { invalidatePostAndLists } from "~/server/utils/cache/posts";
-import { addCommentAtSource } from "~/server/utils/posts/api";
+import { invalidatePostAndLists } from "../../../../../utils/cache/posts";
+import { addCommentAtSource } from "../../../../../utils/posts/api";
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params ?? {};

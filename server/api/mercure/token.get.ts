@@ -1,8 +1,8 @@
 import { createError } from 'h3'
 import type { FetchError } from 'ofetch'
 import { joinURL } from 'ufo'
-import type { MercureTokenEnvelope } from '~/types/mercure'
-import { withAuthHeaders } from '~/server/utils/auth/session'
+import type { MercureTokenEnvelope } from '../../../types/mercure'
+import { withAuthHeaders } from '../../utils/auth/session'
 
 function sanitizeBaseEndpoint(raw: string): string {
   return raw.replace(/\/$/, '')

@@ -1,7 +1,7 @@
 import { deleteCookie, getCookie, setCookie } from 'h3'
 import type { H3Event } from 'h3'
-import type { AuthUser } from '~/types/auth'
-import { shouldUseSecureCookies, withSecureCookieOptions } from '~/lib/cookies'
+import type { AuthUser } from '../../../types/auth'
+import { shouldUseSecureCookies, withSecureCookieOptions } from '../../../lib/cookies'
 
 interface SessionCookiesConfig {
   tokenCookieName: string

@@ -1,5 +1,5 @@
 import { createError } from "h3";
-import { listUsers } from "~/server/utils/users/storage";
+import { listUsers } from "../../utils/users/storage";
 
 export default defineEventHandler(async () => {
   try {
