@@ -61,9 +61,9 @@
 <script lang="ts" setup>
 import { cn } from "@/lib/utils";
 import NumberFlow from "@number-flow/vue";
-import { useColorMode } from "@vueuse/core";
 import { motion, MotionConfig } from "motion-v";
 import { computed, onMounted, onUnmounted, ref, useSlots } from "vue";
+import { useCookieColorMode } from "#imports";
 
 interface Props {
   class?: string;
@@ -82,7 +82,8 @@ const slots = useSlots();
 
 const scrollPercentage = ref(0);
 
-const isDark = computed(() => useColorMode().value == "dark");
+const colorMode = useCookieColorMode();
+const isDark = computed(() => colorMode.value === "dark");
 const isSlotAvailable = computed(() => !!slots.default);
 const borderRadius = computed(() => `${props.height / 2}px`);
 

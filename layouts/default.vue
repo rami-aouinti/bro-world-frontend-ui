@@ -120,6 +120,7 @@
 
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent } from 'vue'
+import { useCookieColorMode } from '#imports'
 import { useDisplay } from 'vuetify'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppTopBar from '@/components/layout/AppTopBar.vue'
@@ -137,7 +138,8 @@ const AppSidebarRight = defineAsyncComponent({
   suspensible: false,
 })
 
-const isDark = computed(() => useColorMode().value == 'dark')
+const colorMode = useCookieColorMode()
+const isDark = computed(() => colorMode.value === 'dark')
 const route = useRoute()
 const router = useRouter()
 const display = useDisplay()
@@ -227,7 +229,8 @@ function onEditDetails() {}
 function onAddFeatured() {}
 function onViewAllPhotos() {}
 function onViewAllFriends() {}
-function openFriend(f: any) {}
+type Friend = (typeof friends)[number]
+function openFriend(_friend: Friend) {}
 function onViewAllEvents() {}
 function onAddEvent() {}
 

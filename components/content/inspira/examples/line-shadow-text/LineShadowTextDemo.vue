@@ -14,8 +14,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useColorMode } from "@vueuse/core";
+import { useCookieColorMode } from "#imports";
 
-const isDark = computed(() => useColorMode().value == "dark");
+const colorMode = useCookieColorMode();
+const isDark = computed(() => colorMode.value === "dark");
 const shadowColor = computed(() => (isDark.value ? "white" : "black"));
 </script>

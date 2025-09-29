@@ -32,6 +32,7 @@
 
 <script lang="ts" setup>
 import { Motion } from "motion-v";
+import { useCookieColorMode } from "#imports";
 
 const dots = [
   {
@@ -66,5 +67,6 @@ const dots = [
   },
 ];
 
-const isDark = computed(() => useColorMode().value == "dark");
+const colorMode = useCookieColorMode();
+const isDark = computed(() => colorMode.value === "dark");
 </script>
