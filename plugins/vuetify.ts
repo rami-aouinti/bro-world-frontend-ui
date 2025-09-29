@@ -67,14 +67,12 @@ export type DataTableHeaders = VDataTable['$props']['headers']
 export default defineNuxtPlugin((nuxtApp) => {
   const primaryCookie = useCookie<string | null>('theme-primary', {
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
     watch: false,
   })
   const primary = primaryCookie.value ?? '#E91E63'
 
   const localeCookie = useCookie<string | null>('i18n_redirected', {
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
     watch: false,
   })
   const locale = localeCookie.value ?? 'en'
@@ -311,7 +309,7 @@ export default defineNuxtPlugin((nuxtApp) => {
                 ? (aliases[icon] as string | undefined) ?? icon
                 : icon
 
-            if (!nuxtIconComponent || typeof resolvedIconName !== 'string') {
+            if (!nuxtIconComponent) {
               return h(tag, rest)
             }
 
