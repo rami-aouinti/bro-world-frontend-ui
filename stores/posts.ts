@@ -1,7 +1,6 @@
 import { computed, reactive, shallowRef } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
-import { useRequestFetch } from "#app";
-import { useState } from "#imports";
+import { useRequestFetch, useState } from "#imports";
 import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/mock/blog";
 import { useAuthStore } from "~/composables/useAuthStore";
 

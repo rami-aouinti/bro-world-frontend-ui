@@ -1,6 +1,13 @@
 import { ref } from 'vue'
 import { vi } from 'vitest'
 
+import {
+  __requestFetchSpy,
+  __resetRequestFetchMock,
+  __setRequestFetchMock,
+  useRequestFetch as useAppRequestFetch,
+} from './nuxt-app'
+
 type StateRef<T> = ReturnType<typeof ref<T>>
 
 const stateRegistry = new Map<string, StateRef<unknown>>()
@@ -16,6 +23,10 @@ export function useState<T>(key: string, init: () => T): StateRef<T> {
   }
 
   return stateRegistry.get(key) as StateRef<T>
+}
+
+export function useRequestFetch() {
+  return useAppRequestFetch()
 }
 
 export function useRuntimeConfig() {
@@ -79,3 +90,5 @@ export function __getNotifyMock() {
 export function __resetNuxtNotifyMock() {
   notifyMock.mockReset()
 }
+
+export { __requestFetchSpy, __resetRequestFetchMock, __setRequestFetchMock }
