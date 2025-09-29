@@ -6,8 +6,8 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useColorMode } from "@vueuse/core";
+import { useCookieColorMode } from "#imports";
 
-const isDark = computed(() => useColorMode().value == "dark");
+const isDark = computed(() => useCookieColorMode().value == "dark");
 const bgColor = computed(() => (isDark.value ? "#000" : "#fff"));
 </script>

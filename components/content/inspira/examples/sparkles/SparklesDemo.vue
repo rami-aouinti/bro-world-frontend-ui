@@ -38,7 +38,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
-import { useColorMode } from "@vueuse/core";
+import { useCookieColorMode } from "#imports";
 
-const particlesColor = computed(() => (useColorMode().value === "dark" ? "#FFFFFF" : "#000000"));
+const particlesColor = computed(() =>
+  useCookieColorMode().value === "dark" ? "#FFFFFF" : "#000000",
+);
 </script>

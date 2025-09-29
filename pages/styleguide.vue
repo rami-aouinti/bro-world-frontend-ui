@@ -240,7 +240,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
-import { useColorMode } from '@vueuse/core'
+import { useCookieColorMode } from '#imports'
 import {
   BaseButton,
   BaseCard,
@@ -256,7 +256,7 @@ import {
   BaseModal,
 } from '~/components/ui'
 
-const colorMode = useColorMode()
+const colorMode = useCookieColorMode()
 const activeColorMode = computed(() => {
   const raw = colorMode.preference ?? (colorMode.value as 'auto' | 'light' | 'dark' | undefined)
   return raw ?? 'auto'
