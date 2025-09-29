@@ -61,20 +61,27 @@ import itLocale from 'date-fns/locale/it'
 import esLocale from 'date-fns/locale/es'
 import ruLocale from 'date-fns/locale/ru'
 import arLocale from 'date-fns/locale/ar-SA'
+import { withSecureCookieOptions } from '~/lib/cookies'
 
 export type DataTableHeaders = VDataTable['$props']['headers']
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const primaryCookie = useCookie<string | null>('theme-primary', {
-    sameSite: 'lax',
-    watch: false,
-  })
+  const primaryCookie = useCookie<string | null>(
+    'theme-primary',
+    withSecureCookieOptions({
+      sameSite: 'lax',
+      watch: false,
+    }),
+  )
   const primary = primaryCookie.value ?? '#E91E63'
 
-  const localeCookie = useCookie<string | null>('i18n_redirected', {
-    sameSite: 'lax',
-    watch: false,
-  })
+  const localeCookie = useCookie<string | null>(
+    'i18n_redirected',
+    withSecureCookieOptions({
+      sameSite: 'lax',
+      watch: false,
+    }),
+  )
   const locale = localeCookie.value ?? 'en'
   const nuxtIconComponent = nuxtApp.vueApp.component('Icon')
 

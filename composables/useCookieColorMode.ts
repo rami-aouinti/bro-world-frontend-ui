@@ -1,14 +1,17 @@
 import { watchEffect } from 'vue'
 import { useColorMode } from '@vueuse/core'
 import { useCookie } from '#imports'
+import { withSecureCookieOptions } from '~/lib/cookies'
 
 type ColorModeValue = 'light' | 'dark' | 'auto'
 
 export function useCookieColorMode() {
-  const colorModeCookie = useCookie<ColorModeValue>('color-mode', {
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-  })
+  const colorModeCookie = useCookie<ColorModeValue>(
+    'color-mode',
+    withSecureCookieOptions({
+      sameSite: 'lax',
+    }),
+  )
 
   const colorMode = useColorMode<ColorModeValue>({
     storageKey: 'color-mode',

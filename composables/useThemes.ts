@@ -2,6 +2,7 @@ import { computed, watch } from 'vue'
 import type { Theme } from 'shadcn-docs-nuxt/lib/themes'
 import { themes } from 'shadcn-docs-nuxt/lib/themes'
 import { useCookieColorMode } from './useCookieColorMode'
+import { withSecureCookieOptions } from '~/lib/cookies'
 
 interface ThemeCookieConfig {
   theme: Theme['name']
@@ -93,11 +94,13 @@ export function useThemes() {
   const colorMode = useCookieColorMode()
   const isDark = computed(() => colorMode.value === 'dark')
 
-  const themeCookie = useCookie<ThemeCookieConfig>('theme', {
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    default: resolveThemeDefaults,
-  })
+  const themeCookie = useCookie<ThemeCookieConfig>(
+    'theme',
+    withSecureCookieOptions({
+      sameSite: 'lax',
+      default: resolveThemeDefaults,
+    }),
+  )
 
   const theme = computed<Theme['name']>(() => themeCookie.value?.theme ?? resolveThemeDefaults().theme)
   const radius = computed(() => themeCookie.value?.radius ?? resolveThemeDefaults().radius)
@@ -139,10 +142,12 @@ export function useThemes() {
     return hslToHex(components)
   })
 
-  const themePrimaryCookie = useCookie<string | null>('theme-primary', {
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-  })
+  const themePrimaryCookie = useCookie<string | null>(
+    'theme-primary',
+    withSecureCookieOptions({
+      sameSite: 'lax',
+    }),
+  )
 
   if (!themePrimaryCookie.value && themePrimaryHex.value) {
     themePrimaryCookie.value = themePrimaryHex.value

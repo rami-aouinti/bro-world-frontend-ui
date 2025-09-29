@@ -7,6 +7,7 @@ import { useCookie, useState } from '#imports'
 import { defineStore } from '~/lib/pinia-shim'
 import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from '~/types/auth'
 import type { MercureTokenEnvelope, MercureTokenState } from '~/types/mercure'
+import { withSecureCookieOptions } from '~/lib/cookies'
 
 interface LoginCredentials {
   identifier: string
@@ -70,22 +71,25 @@ export const useAuthSession = defineStore('auth-session', () => {
   const runtimeConfig = useRuntimeConfig()
   const sessionTokenCookie = useCookie<string | null>(
     runtimeConfig.auth?.sessionTokenCookieName ?? 'auth_session_token',
-    {
+    withSecureCookieOptions({
       sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production',
       watch: false,
-    },
+    }),
   )
-  const presenceCookie = useCookie<string | null>(runtimeConfig.auth?.tokenPresenceCookieName ?? 'auth_token_present', {
-    sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
-    watch: false,
-  })
-  const userCookie = useCookie<AuthUser | null>(runtimeConfig.auth?.userCookieName ?? 'auth_user', {
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    watch: false,
-  })
+  const presenceCookie = useCookie<string | null>(
+    runtimeConfig.auth?.tokenPresenceCookieName ?? 'auth_token_present',
+    withSecureCookieOptions({
+      sameSite: 'strict',
+      watch: false,
+    }),
+  )
+  const userCookie = useCookie<AuthUser | null>(
+    runtimeConfig.auth?.userCookieName ?? 'auth_user',
+    withSecureCookieOptions({
+      sameSite: 'lax',
+      watch: false,
+    }),
+  )
 
   if (presenceCookie.value === '1') {
     tokenAvailableState.value = true

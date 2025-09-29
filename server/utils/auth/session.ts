@@ -1,6 +1,7 @@
 import { deleteCookie, getCookie, setCookie } from 'h3'
 import type { H3Event } from 'h3'
 import type { AuthUser } from '~/types/auth'
+import { shouldUseSecureCookies, withSecureCookieOptions } from '~/lib/cookies'
 
 interface SessionCookiesConfig {
   tokenCookieName: string
@@ -23,10 +24,6 @@ function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
     tokenPresenceCookieName: authConfig.tokenPresenceCookieName ?? 'auth_token_present',
     maxAge,
   }
-}
-
-function isProduction() {
-  return process.env.NODE_ENV === 'production'
 }
 
 export function getSessionToken(event: H3Event): string | null {
@@ -52,31 +49,51 @@ export function getSessionUser(event: H3Event): AuthUser | null {
 
 export function setSession(event: H3Event, token: string, user: AuthUser) {
   const { tokenCookieName, userCookieName, tokenPresenceCookieName, maxAge } = resolveCookiesConfig(event)
-  const secure = isProduction()
+  const secure = shouldUseSecureCookies(event)
 
-  setCookie(event, tokenCookieName, token, {
-    httpOnly: true,
-    secure,
-    sameSite: 'lax',
-    maxAge,
-    path: '/',
-  })
+  setCookie(
+    event,
+    tokenCookieName,
+    token,
+    withSecureCookieOptions(
+      {
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge,
+      },
+      event,
+    ),
+  )
 
-  setCookie(event, userCookieName, JSON.stringify(user), {
-    httpOnly: false,
-    secure,
-    sameSite: 'lax',
-    maxAge,
-    path: '/',
-  })
+  setCookie(
+    event,
+    userCookieName,
+    JSON.stringify(user),
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: 'lax',
+        maxAge,
+        secure,
+      },
+      event,
+    ),
+  )
 
-  setCookie(event, tokenPresenceCookieName, '1', {
-    httpOnly: false,
-    secure,
-    sameSite: 'strict',
-    maxAge,
-    path: '/',
-  })
+  setCookie(
+    event,
+    tokenPresenceCookieName,
+    '1',
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: 'strict',
+        maxAge,
+        secure,
+      },
+      event,
+    ),
+  )
 }
 
 export function clearAuthSession(event: H3Event) {
