@@ -1,6 +1,5 @@
-import type { CookieOptions } from 'nuxt/app'
+import { useRequestEvent, type CookieOptions } from 'nuxt/app'
 import type { H3Event } from 'h3'
-import { useRequestEvent } from '#app'
 
 type MaybeEvent = H3Event | null | undefined
 
