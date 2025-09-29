@@ -1,11 +1,11 @@
 import { createError, readBody } from "h3";
-import type { PostItemEnvelope } from "~/server/utils/posts/types";
+import type { PostItemEnvelope } from "../../../utils/posts/types";
 import {
   cachePostById,
   invalidatePostAndLists,
-} from "~/server/utils/cache/posts";
-import { fetchPostByIdFromSource, updatePostAtSource } from "~/server/utils/posts/api";
-import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+} from "../../../utils/cache/posts";
+import { fetchPostByIdFromSource, updatePostAtSource } from "../../../utils/posts/api";
+import type { BlogApiResponse, BlogPost } from "../../../lib/mock/blog";
 
 function normalizePostResponse(response: unknown): BlogPost | null {
   if (!response || typeof response !== "object") {

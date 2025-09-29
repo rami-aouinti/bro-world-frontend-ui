@@ -1,8 +1,8 @@
 import { createError, readBody } from 'h3'
 import type { FetchError } from 'ofetch'
 import { joinURL } from 'ufo'
-import type { AuthLoginResponse, AuthUser } from '~/types/auth'
-import { clearAuthSession, setSession } from '~/server/utils/auth/session'
+import type { AuthLoginResponse, AuthUser } from '../../../types/auth'
+import { clearAuthSession, setSession } from '../../utils/auth/session'
 
 interface LoginRequestBody {
   identifier?: string

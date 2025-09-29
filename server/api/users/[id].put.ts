@@ -1,6 +1,6 @@
 import { createError, readBody } from "h3";
-import type { AuthUser } from "~/types/auth";
-import { updateUser } from "~/server/utils/users/storage";
+import type { AuthUser } from "../../../types/auth";
+import { updateUser } from "../../utils/users/storage";
 
 export default defineEventHandler(async (event) => {
   const id = event.context.params?.id;

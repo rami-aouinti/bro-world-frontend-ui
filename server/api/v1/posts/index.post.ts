@@ -1,8 +1,8 @@
 import { createError, readBody } from "h3";
-import type { PostItemEnvelope } from "~/server/utils/posts/types";
-import { cachePostById, invalidatePostsList } from "~/server/utils/cache/posts";
-import { createPostAtSource } from "~/server/utils/posts/api";
-import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+import type { PostItemEnvelope } from "../../../utils/posts/types";
+import { cachePostById, invalidatePostsList } from "../../../utils/cache/posts";
+import { createPostAtSource } from "../../../utils/posts/api";
+import type { BlogApiResponse, BlogPost } from "../../../lib/mock/blog";
 
 function normalizeCreatedPost(response: unknown): BlogPost | null {
   if (!response || typeof response !== "object") {

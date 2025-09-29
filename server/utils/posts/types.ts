@@ -1,4 +1,4 @@
-import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+import type { BlogApiResponse, BlogPost } from "../../../lib/mock/blog";
 
 export interface NormalizedPostsListQuery {
   page: number;

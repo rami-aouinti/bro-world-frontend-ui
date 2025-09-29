@@ -1,5 +1,5 @@
 import { createError } from "h3";
-import { removeUser } from "~/server/utils/users/storage";
+import { removeUser } from "../../utils/users/storage";
 
 export default defineEventHandler(async (event) => {
   const id = event.context.params?.id;

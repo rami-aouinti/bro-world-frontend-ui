@@ -1,5 +1,5 @@
 import { createError, getQuery } from "h3";
-import type { PostsListEnvelope } from "~/server/utils/posts/types";
+import type { PostsListEnvelope } from "../../../utils/posts/types";
 import {
   cachePostById,
   cachePostsList,
@@ -7,9 +7,9 @@ import {
   getPostsListCacheKey,
   normalizeListQuery,
   queueRevalidation,
-} from "~/server/utils/cache/posts";
-import { fetchPostsListFromSource } from "~/server/utils/posts/api";
-import { getSessionToken } from "~/server/utils/auth/session";
+} from "../../../utils/cache/posts";
+import { fetchPostsListFromSource } from "../../../utils/posts/api";
+import { getSessionToken } from "../../../utils/auth/session";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);

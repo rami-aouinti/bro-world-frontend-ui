@@ -1,5 +1,5 @@
 import { createError } from "h3";
-import { fetchPostCommentsFromSource } from "~/server/utils/posts/api";
+import { fetchPostCommentsFromSource } from "../../../../../utils/posts/api";
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params ?? {};

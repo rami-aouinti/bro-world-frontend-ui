@@ -8,9 +8,9 @@ import type {
   NormalizedPostsListQuery,
   ReactionPayload,
   UpdatePostPayload,
-} from "~/server/utils/posts/types";
-import type { BlogApiResponse, BlogCommentWithReplies, BlogPost } from "~/lib/mock/blog";
-import { clearAuthSession, getSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
+} from "./types";
+import type { BlogApiResponse, BlogCommentWithReplies, BlogPost } from "../../../lib/mock/blog";
+import { clearAuthSession, getSessionToken, withAuthHeaders } from "../auth/session";
 
 type PostsVisibility = "public" | "private";
 

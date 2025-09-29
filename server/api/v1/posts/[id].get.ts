@@ -1,12 +1,12 @@
 import { createError } from "h3";
-import type { PostItemEnvelope } from "~/server/utils/posts/types";
+import type { PostItemEnvelope } from "../../../utils/posts/types";
 import {
   cachePostById,
   getCachedPostById,
   getPostItemCacheKey,
   queueRevalidation,
-} from "~/server/utils/cache/posts";
-import { fetchPostByIdFromSource } from "~/server/utils/posts/api";
+} from "../../../utils/cache/posts";
+import { fetchPostByIdFromSource } from "../../../utils/posts/api";
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params ?? {};

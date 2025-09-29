@@ -1,7 +1,7 @@
 import { createError } from "h3";
 import { useStorage } from "nitropack/runtime";
-import type { AuthUser } from "~/types/auth";
-import { normalizeUserPayload } from "~/lib/users/normalizers";
+import type { AuthUser } from "../../../types/auth";
+import { normalizeUserPayload } from "../../../lib/users/normalizers";
 
 export interface StoredUser extends AuthUser {
   createdAt: string;
