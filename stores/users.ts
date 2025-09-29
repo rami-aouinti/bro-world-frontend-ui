@@ -1,6 +1,5 @@
 import { computed } from "vue";
-import { useRequestFetch } from "#app";
-import { useState } from "#imports";
+import { useRequestFetch, useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import type { AuthUser } from "~/types/auth";
 import { normalizeRolesInput, normalizeUserPayload } from "~/lib/users/normalizers";

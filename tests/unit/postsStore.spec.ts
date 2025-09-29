@@ -3,8 +3,12 @@ import { createSSRApp, h } from 'vue'
 
 import { createPinia } from '~/lib/pinia-shim'
 import type { BlogPost } from '~/lib/mock/blog'
-import { __requestFetchSpy, __resetRequestFetchMock } from '#app'
-import { __getNuxtStateRef, __resetNuxtStateMocks } from '#imports'
+import {
+  __getNuxtStateRef,
+  __requestFetchSpy,
+  __resetNuxtStateMocks,
+  __resetRequestFetchMock,
+} from '#imports'
 
 const fetchSpy = __requestFetchSpy
 
