@@ -235,7 +235,7 @@ const emit = defineEmits<{ (e: 'select', key: string): void }>()
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding-left: 3.25rem;
+  padding-left: 2rem;
 }
 
 .sidebar-subitem {

@@ -26,7 +26,7 @@
       width="320"
       class="app-drawer"
     >
-      <div class="pane-scroll px-3 py-4">
+      <div class="pane-scroll py-4">
         <AppSidebar
           :items="sidebarItems"
           :active-key="activeSidebar"
