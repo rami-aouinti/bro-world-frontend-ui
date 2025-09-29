@@ -1,3 +1,4 @@
+import { watchEffect } from 'vue'
 import { useColorMode } from '@vueuse/core'
 import { useCookie } from '#imports'
 
@@ -9,7 +10,7 @@ export function useCookieColorMode() {
     secure: process.env.NODE_ENV === 'production',
   })
 
-  return useColorMode<ColorModeValue>({
+  const colorMode = useColorMode<ColorModeValue>({
     storageKey: 'color-mode',
     storage: {
       getItem: () => colorModeCookie.value ?? 'auto',
@@ -21,4 +22,18 @@ export function useCookieColorMode() {
       },
     },
   })
+
+  if (import.meta.client) {
+    watchEffect(() => {
+      const resolvedMode =
+        colorMode.value === 'auto' ? colorMode.system.value : colorMode.value
+      const isDark = resolvedMode === 'dark'
+      const classList = document.documentElement.classList
+
+      classList.toggle('dark', isDark)
+      classList.toggle('theme--dark', isDark)
+    })
+  }
+
+  return colorMode
 }
