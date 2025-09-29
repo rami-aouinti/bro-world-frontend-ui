@@ -7,7 +7,6 @@ type ColorModeValue = 'light' | 'dark' | 'auto'
 export function useCookieColorMode() {
   const colorModeCookie = useCookie<ColorModeValue>('color-mode', {
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
   })
 
   const colorMode = useColorMode<ColorModeValue>({

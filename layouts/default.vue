@@ -137,8 +137,7 @@ const AppSidebarRight = defineAsyncComponent({
   loader: () => import('~/components/layout/AppSidebarRight.vue'),
   suspensible: false,
 })
-
-const isDark = computed(() => useCookieColorMode().value == 'dark')
+const isDark = computed(() => useColorMode().value == 'dark')
 const route = useRoute()
 const router = useRouter()
 const display = useDisplay()
