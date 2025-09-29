@@ -17,9 +17,8 @@
             @click="handleParentSelect(item)"
           >
             <div class="flex items-center gap-3">
-              <AppIcon
+              <Icon
                 v-if="item.icon"
-                class="sidebar-icon"
                 :name="item.icon"
                 :size="20"
               />
@@ -59,9 +58,8 @@
                 :aria-current="child.key === activeKey ? 'page' : undefined"
                 @click="emit('select', child.key)"
               >
-                <AppIcon
+                <Icon
                   v-if="child.icon"
-                  class="sidebar-subicon"
                   :name="child.icon"
                   :size="18"
                 />

@@ -5,8 +5,6 @@
     aria-label="Secondary navigation"
     data-test="app-sidebar-right"
   >
-    <HaloSearch v-if="shouldLoadWidgets && isAuthenticated" />
-
     <div v-if="shouldLoadWidgets && !isAuthenticated" class="sidebar-login-card">
       <ParticlesBg
         v-if="shouldRenderParticles"

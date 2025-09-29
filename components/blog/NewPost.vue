@@ -1,6 +1,8 @@
 <template>
   <!-- Barre compacte -->
-  <v-card class="px-4 py-3 my-4 rounded-xl" elevation="0" border style="background: transparent;">
+  <section
+      class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+  >
     <div class="d-flex align-center ga-3">
       <v-avatar size="44">
         <v-img :src="avatar" alt="Avatar" />
@@ -54,7 +56,7 @@
         :delay="10"
         :border-width="2"
     />
-  </v-card>
+  </section>
 
   <Suspense v-if="dialog && isAuthenticated">
     <template #default>

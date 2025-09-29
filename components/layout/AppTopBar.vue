@@ -6,7 +6,6 @@
       app
       :elevation="0" rounded
       height="50"
-      :style="{ backgroundImage: textGradient }"
   >
     <template #image>
       <v-img

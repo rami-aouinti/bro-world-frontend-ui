@@ -127,10 +127,10 @@ const props = defineProps<Props>();
   filter: brightness(1.4);
   background-image: conic-gradient(
     rgba(0, 0, 0, 0) 0%,
-    #a099d8,
+    #091b2d,
     rgba(0, 0, 0, 0) 8%,
     rgba(0, 0, 0, 0) 50%,
-    #dfa2da,
+    #9a1140,
     rgba(0, 0, 0, 0) 58%
   );
   transition: all 2s;
@@ -186,10 +186,10 @@ const props = defineProps<Props>();
   background-position: 0 0;
   background-image: conic-gradient(
     rgba(0, 0, 0, 0),
-    #18116a,
+    #091b2d,
     rgba(0, 0, 0, 0) 10%,
     rgba(0, 0, 0, 0) 50%,
-    #6e1b60,
+    #91114a,
     rgba(0, 0, 0, 0) 60%
   );
   transition: all 2s;
