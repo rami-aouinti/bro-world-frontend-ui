@@ -56,7 +56,7 @@ function isEventSecure(event: H3Event): boolean {
     return connection.encrypted
   }
 
-  return process.env.NODE_ENV === 'production'
+  return false
 }
 
 export function shouldUseSecureCookies(event?: MaybeEvent): boolean {
@@ -70,7 +70,7 @@ export function shouldUseSecureCookies(event?: MaybeEvent): boolean {
     return window.location.protocol === 'https:'
   }
 
-  return process.env.NODE_ENV === 'production'
+  return false
 }
 
 export function withSecureCookieOptions<T>(
