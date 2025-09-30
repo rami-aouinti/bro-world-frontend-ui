@@ -22,7 +22,7 @@ const props = withDefaults(
     color?: string;
   }>(),
   {
-    size: 18,
+    size: 24,
   },
 );
 
