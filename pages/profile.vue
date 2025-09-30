@@ -255,9 +255,34 @@ interface ProfileDetails {
   schools?: string[] | null;
 }
 
+interface FriendProfile {
+  id?: string | null;
+  title?: string | null;
+  photo?: string | null;
+}
+
+interface FriendStory {
+  id?: string | null;
+  mediaPath?: string | null;
+  expiresAt?: string | null;
+}
+
+interface FriendUserDetails {
+  id?: string | null;
+  username?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  profile?: FriendProfile | null;
+  language?: string | null;
+  locale?: string | null;
+  timezone?: string | null;
+  enabled?: boolean | null;
+}
+
 interface FriendEntry {
-  user?: string[] | null;
-  stories?: unknown[] | null;
+  user?: FriendUserDetails | null;
+  stories?: FriendStory[] | null;
   status?: number | null;
 }
 
@@ -548,16 +573,62 @@ const sidebarPhotos = computed(() => {
   return [{ src: photo, alt }];
 });
 
-const sidebarFriends = computed(() => {
+interface SidebarFriend {
+  id?: string;
+  username?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  name: string;
+  avatar: string;
+  profile: FriendProfile | null;
+  status?: number | null;
+  stories: FriendStory[];
+}
+
+const sidebarFriends = computed<SidebarFriend[]>(() => {
   const placeholder = placeholderValue.value;
 
-  return friendEntries.value.map((entry) => ({
-    name:
-      asString((entry as { name?: string | null; user?: string | null })?.name) ??
-      asString(entry?.user) ??
-      placeholder,
-    avatar: defaultAvatar,
-  }));
+  return friendEntries.value.reduce<SidebarFriend[]>((acc, entry) => {
+    if (!entry) {
+      return acc;
+    }
+
+    const friend = entry.user;
+
+    if (!friend) {
+      return acc;
+    }
+
+    const id = asString(friend.id) ?? undefined;
+    const username = asString(friend.username);
+    const firstName = asString(friend.firstName);
+    const lastName = asString(friend.lastName);
+    const profile = friend.profile ?? null;
+
+    const profilePhoto = asString(profile?.photo);
+    const fallbackPhoto = asString((friend as { photo?: string | null })?.photo);
+
+    const avatar = profilePhoto ?? fallbackPhoto ?? defaultAvatar;
+
+    const displayName = [firstName, lastName].filter(Boolean).join(" ") || username || placeholder;
+
+    const rawStories = Array.isArray(entry.stories) ? entry.stories : [];
+    const stories = rawStories.filter((story): story is FriendStory => Boolean(story));
+
+    acc.push({
+      id,
+      username,
+      firstName,
+      lastName,
+      name: displayName,
+      avatar,
+      profile,
+      status: typeof entry.status === "number" ? entry.status : null,
+      stories,
+    });
+
+    return acc;
+  }, []);
 });
 
 const sidebarEvents = computed(() => [] as { title: string; date?: string; description?: string }[]);

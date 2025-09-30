@@ -107,8 +107,8 @@
     <v-card-text>
       <div class="friends-grid">
         <div
-          v-for="(f, i) in friends.slice(0, 9)"
-          :key="f.id ?? i"
+          v-for="(f, i) in visibleFriends"
+          :key="f.id ?? f.username ?? i"
           class="friend-card"
           @click="$emit('open-friend', f)"
         >
@@ -117,12 +117,12 @@
             class="mb-2"
           >
             <v-img
-              :src="f.profile.photo"
-              :alt="f.username"
+              :src="friendAvatar(f)"
+              :alt="friendDisplayName(f)"
               cover
             />
           </v-avatar>
-          <div class="friend-name">{{ f.firstName }} {{ f.lastName }}</div>
+          <div class="friend-name">{{ friendDisplayName(f) }}</div>
         </div>
       </div>
     </v-card-text>
@@ -135,8 +135,17 @@ import { useI18n } from "vue-i18n";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
 type Photo = { id?: string | number; src: string; alt?: string };
-type Profile = { id?: string | number; title: string; photo?: string };
-type Friend = { id?: string | number; username: string; firstName: string; lastName: string; profile: Profile[] };
+type Profile = { id?: string | number; title?: string | null; photo?: string | null };
+type FriendProfile = Profile | Profile[] | null | undefined;
+type Friend = {
+  id?: string | number;
+  username?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  name?: string | null;
+  avatar?: string | null;
+  profile?: FriendProfile;
+};
 type LifeEvent = { id?: string | number; title: string; date?: string; description?: string };
 
 const props = defineProps<{
@@ -163,7 +172,13 @@ defineEmits<{
 
 const { t } = useI18n();
 
-const friendsCount = computed(() => props.friendsCount ?? props.friends?.length ?? 0);
+const defaultAvatar = "https://bro-world-space.com/img/person.png";
+
+const friendsList = computed<Friend[]>(() => (Array.isArray(props.friends) ? props.friends.filter(Boolean) : []));
+
+const visibleFriends = computed(() => friendsList.value.slice(0, 9));
+
+const friendsCount = computed(() => props.friendsCount ?? friendsList.value.length);
 
 const introItems = computed<IntroItem[]>(() => {
   const items: IntroItem[] = [];
@@ -182,6 +197,65 @@ const introItems = computed<IntroItem[]>(() => {
     });
   return items;
 });
+
+const friendPlaceholderName = computed(() => t("pages.profile.placeholders.missing"));
+
+function friendDisplayName(friend: Friend) {
+  const segments = [friend.firstName, friend.lastName]
+    .map((segment) => (typeof segment === "string" ? segment.trim() : ""))
+    .filter(Boolean);
+
+  if (segments.length) {
+    return segments.join(" ");
+  }
+
+  const fallbackName = typeof friend.name === "string" ? friend.name.trim() : "";
+  if (fallbackName) {
+    return fallbackName;
+  }
+
+  const username = typeof friend.username === "string" ? friend.username.trim() : "";
+  if (username) {
+    return username;
+  }
+
+  return friendPlaceholderName.value;
+}
+
+function resolveProfilePhoto(profile: FriendProfile) {
+  if (!profile) {
+    return null;
+  }
+
+  if (Array.isArray(profile)) {
+    for (const entry of profile) {
+      if (entry && typeof entry === "object" && typeof entry.photo === "string" && entry.photo.trim()) {
+        return entry.photo.trim();
+      }
+    }
+    return null;
+  }
+
+  if (typeof profile === "object" && profile && typeof profile.photo === "string" && profile.photo.trim()) {
+    return profile.photo.trim();
+  }
+
+  return null;
+}
+
+function friendAvatar(friend: Friend) {
+  const fromProfile = resolveProfilePhoto(friend.profile);
+
+  if (fromProfile) {
+    return fromProfile;
+  }
+
+  if (typeof friend.avatar === "string" && friend.avatar.trim()) {
+    return friend.avatar.trim();
+  }
+
+  return defaultAvatar;
+}
 </script>
 
 <style scoped>
