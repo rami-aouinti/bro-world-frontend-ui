@@ -1,6 +1,6 @@
 <template>
   <main
-    class="py-10"
+    class="py-4"
     aria-labelledby="profile-title"
   >
     <v-container>
