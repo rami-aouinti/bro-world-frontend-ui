@@ -608,6 +608,137 @@
         "title": "Statistiques rapides"
       }
     },
+    "profileFriends": {
+      "title": "Connections",
+      "subtitle": "Reconnect with your collaborators, mentors, and communities.",
+      "actions": {
+        "message": "Send message",
+        "schedule": "Schedule call",
+        "viewProfile": "Open profile"
+      },
+      "highlights": {
+        "title": "Featured collaborators",
+        "subtitle": "Handpicked partners you collaborate with the most this quarter."
+      },
+      "filters": {
+        "all": "All",
+        "design": "Design",
+        "product": "Product",
+        "engineering": "Engineering",
+        "marketing": "Marketing"
+      },
+      "stats": {
+        "totalFriends": "Connections",
+        "mutual": "mutual connections",
+        "online": "online now"
+      },
+      "sections": {
+        "suggestions": "Suggested connections",
+        "active": "Active now"
+      },
+      "status": {
+        "online": "Online",
+        "focus": "Focus",
+        "busy": "Busy",
+        "offline": "Offline"
+      },
+      "feedback": {
+        "message": "Drafting a quick hello…",
+        "messageWith": "Drafting a quick hello to {name}…",
+        "schedule": "Opening your scheduling flow…",
+        "scheduleWith": "Opening your scheduling flow for {name}…",
+        "connect": "We'll note that you'd like to connect.",
+        "connectWith": "We'll let {name} know you'd like to connect."
+      },
+      "empty": "No profiles match this filter yet."
+    },
+    "profilePhotos": {
+      "title": "Photo library",
+      "subtitle": "Curate highlights from launches, research trips, and behind-the-scenes moments.",
+      "actions": {
+        "upload": "Upload photos",
+        "createAlbum": "Create album"
+      },
+      "sections": {
+        "pinned": "Pinned collections",
+        "albums": "Album explorer",
+        "timeline": "Creative notes"
+      },
+      "meta": {
+        "updated": "Updated {date}",
+        "photoCount": "photos"
+      },
+      "filters": {
+        "recent": "Recent",
+        "events": "Events",
+        "studio": "Studio",
+        "travel": "Travel"
+      },
+      "cta": {
+        "share": "Share curated sets with your crew or export to presentations."
+      },
+      "stats": {
+        "albums": "curated albums",
+        "tags": "unique story tags"
+      },
+      "timeline": {
+        "title": "Story milestones",
+        "description": "Snapshots from key launches, residencies, and retreats that shaped your year."
+      },
+      "feedback": {
+        "upload": "Opening your media picker…",
+        "createAlbum": "Let's craft a new album.",
+        "shareCollection": "Sharing options are ready.",
+        "generic": "Action started."
+      },
+      "empty": "No photos match this filter yet."
+    },
+    "profileEdit": {
+      "title": "Edit profile",
+      "subtitle": "Refresh your details so collaborators always have the latest context.",
+      "sections": {
+        "profile": "Profile",
+        "contact": "Contact",
+        "about": "About",
+        "social": "Social links"
+      },
+      "labels": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "headline": "Headline",
+        "pronouns": "Pronouns",
+        "language": "Preferred language",
+        "timezone": "Time zone",
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "website": "Website",
+        "bio": "Bio",
+        "skills": "Key skills",
+        "interests": "Focus areas",
+        "linkedin": "LinkedIn",
+        "twitter": "Twitter / X",
+        "dribbble": "Dribbble",
+        "behance": "Behance"
+      },
+      "actions": {
+        "cancel": "Reset",
+        "save": "Save changes"
+      },
+      "helpers": {
+        "bio": "Share your mission, how you collaborate, or recent wins (280 characters).",
+        "skills": "Type to add custom skills or pick from the suggestions.",
+        "summary": "This quick card updates automatically as you edit your details."
+      },
+      "feedback": {
+        "successMessage": "Profile details saved successfully.",
+        "errorMessage": "Please review the highlighted fields."
+      },
+      "validation": {
+        "required": "This field is required.",
+        "bioLimit": "Your bio must be 280 characters or fewer."
+      }
+    },
     "contact": {
       "title": "Contact",
       "subtitle": "Nous répondons généralement sous 1–2 jours ouvrés.",
@@ -846,6 +977,18 @@
     "profile": {
       "title": "Profil",
       "description": "Consultez vos informations personnelles et l’activité du compte."
+    },
+    "profileFriends": {
+      "title": "Connections",
+      "description": "Browse your collaborators, suggested contacts, and real-time activity."
+    },
+    "profilePhotos": {
+      "title": "Photo library",
+      "description": "Organise launch highlights, studio shoots, and research archives."
+    },
+    "profileEdit": {
+      "title": "Edit profile",
+      "description": "Update your contact information, skills, and social links."
     }
   },
   "admin": {
