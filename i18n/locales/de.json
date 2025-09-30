@@ -32,6 +32,12 @@
         "calendar": "Kalender",
         "cv": "Lebenslauf",
         "jobs": "Jobs",
+        "profile": "Profil",
+        "profileOverview": "Übersicht",
+        "profileSettings": "Kontoeinstellungen",
+        "profileSecurity": "Passwort & Sicherheit",
+        "profileFriends": "Freunde",
+        "profilePhotos": "Fotos & Medien",
         "admin": "Verwaltung",
         "adminGeneral": "Allgemein",
         "adminUserManagement": "Benutzerverwaltung",
@@ -739,6 +745,52 @@
         "bioLimit": "Your bio must be 280 characters or fewer."
       }
     },
+    "profileSecurity": {
+      "title": "Password & security",
+      "subtitle": "Keep your account protected with strong credentials and verified devices.",
+      "actions": {
+        "save": "Save security settings",
+        "generateCodes": "Generate recovery codes"
+      },
+      "sections": {
+        "password": {
+          "title": "Update password",
+          "description": "Create a unique passphrase that combines at least 12 characters, numbers, and symbols."
+        },
+        "sessions": {
+          "title": "Active sessions",
+          "description": "Review where you're signed in and revoke access from unfamiliar devices."
+        },
+        "mfa": {
+          "title": "Two-factor authentication",
+          "description": "Add an extra verification step to keep your workspace secure."
+        }
+      },
+      "labels": {
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "mfaToggle": "Enable two-factor authentication"
+      },
+      "passwordHint": {
+        "title": "Password tips",
+        "description": "Use a password manager, avoid reusing credentials, and rotate sensitive passwords regularly."
+      },
+      "sessions": {
+        "device": "Device",
+        "location": "Location",
+        "activity": "Last activity",
+        "actions": "Actions",
+        "revoke": "Revoke",
+        "activeNow": "Active now",
+        "trusted": "Trusted",
+        "remembered": "Remembered",
+        "untrusted": "Unrecognized"
+      },
+      "recoveryCodes": {
+        "title": "Store these one-time recovery codes"
+      }
+    },
     "contact": {
       "title": "Kontakt",
       "subtitle": "Wir antworten in der Regel innerhalb von 1–2 Werktagen.",
@@ -989,6 +1041,10 @@
     "profileEdit": {
       "title": "Edit profile",
       "description": "Update your contact information, skills, and social links."
+    },
+    "profileSecurity": {
+      "title": "Passwort & Sicherheit",
+      "description": "Verwalte Anmeldedaten, Zwei-Faktor-Authentifizierung und vertrauenswürdige Geräte."
     }
   },
   "admin": {

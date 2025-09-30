@@ -32,6 +32,12 @@
         "calendar": "Calendrier",
         "cv": "CV",
         "jobs": "Emplois",
+        "profile": "Profil",
+        "profileOverview": "Vue d'ensemble",
+        "profileSettings": "Paramètres du compte",
+        "profileSecurity": "Mot de passe et sécurité",
+        "profileFriends": "Amis",
+        "profilePhotos": "Photos et médias",
         "admin": "Administration",
         "adminGeneral": "Général",
         "adminUserManagement": "Gestion des utilisateurs",
@@ -739,6 +745,52 @@
         "bioLimit": "Your bio must be 280 characters or fewer."
       }
     },
+    "profileSecurity": {
+      "title": "Mot de passe et sécurité",
+      "subtitle": "Protégez votre compte avec des identifiants robustes et des appareils vérifiés.",
+      "actions": {
+        "save": "Enregistrer la sécurité",
+        "generateCodes": "Générer des codes de secours"
+      },
+      "sections": {
+        "password": {
+          "title": "Mettre à jour le mot de passe",
+          "description": "Créez une phrase secrète unique d'au moins 12 caractères avec chiffres et symboles."
+        },
+        "sessions": {
+          "title": "Sessions actives",
+          "description": "Vérifiez où vous êtes connecté et révoquez l'accès des appareils inconnus."
+        },
+        "mfa": {
+          "title": "Authentification à deux facteurs",
+          "description": "Ajoutez une étape de vérification supplémentaire pour sécuriser votre espace."
+        }
+      },
+      "labels": {
+        "currentPassword": "Mot de passe actuel",
+        "newPassword": "Nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "mfaToggle": "Activer l'authentification à deux facteurs"
+      },
+      "passwordHint": {
+        "title": "Conseils de mot de passe",
+        "description": "Utilisez un gestionnaire de mots de passe, évitez les doublons et renouvelez-les régulièrement."
+      },
+      "sessions": {
+        "device": "Appareil",
+        "location": "Emplacement",
+        "activity": "Dernière activité",
+        "actions": "Actions",
+        "revoke": "Révoquer",
+        "activeNow": "Actif maintenant",
+        "trusted": "De confiance",
+        "remembered": "Enregistré",
+        "untrusted": "Non reconnu"
+      },
+      "recoveryCodes": {
+        "title": "Conservez ces codes de secours uniques"
+      }
+    },
     "contact": {
       "title": "Contact",
       "subtitle": "Nous répondons généralement sous 1–2 jours ouvrés.",
@@ -989,6 +1041,10 @@
     "profileEdit": {
       "title": "Edit profile",
       "description": "Update your contact information, skills, and social links."
+    },
+    "profileSecurity": {
+      "title": "Mot de passe et sécurité",
+      "description": "Gérez vos identifiants de connexion, l'authentification à deux facteurs et les appareils de confiance."
     }
   },
   "admin": {

@@ -344,6 +344,7 @@ definePageMeta({
   middleware: "auth",
   title: "profile-edit",
   showRightWidgets: false,
+  sidebarVariant: "profile",
 });
 
 const { t, locale, localeProperties } = useI18n();

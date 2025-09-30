@@ -299,6 +299,7 @@ definePageMeta({
   middleware: "auth",
   title: "profile",
   layout: false,
+  sidebarVariant: "profile",
 });
 
 const auth = useAuthSession();

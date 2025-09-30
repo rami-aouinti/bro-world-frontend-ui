@@ -73,3 +73,45 @@ export function buildSidebarItems(canAccessAdmin: boolean): LayoutSidebarItem[] 
 
   return items;
 }
+
+export function buildProfileSidebarItems(): LayoutSidebarItem[] {
+  return [
+    {
+      key: "profile",
+      label: "layout.sidebar.items.profile",
+      icon: "mdi-account-circle-outline",
+      children: [
+        {
+          key: "profile-overview",
+          label: "layout.sidebar.items.profileOverview",
+          icon: "mdi-card-account-details-outline",
+          to: "/profile",
+        },
+        {
+          key: "profile-edit",
+          label: "layout.sidebar.items.profileSettings",
+          icon: "mdi-cog-outline",
+          to: "/profile-edit",
+        },
+        {
+          key: "profile-security",
+          label: "layout.sidebar.items.profileSecurity",
+          icon: "mdi-shield-check-outline",
+          to: "/profile-security",
+        },
+        {
+          key: "profile-friends",
+          label: "layout.sidebar.items.profileFriends",
+          icon: "mdi-account-group-outline",
+          to: "/profile-friends",
+        },
+        {
+          key: "profile-photos",
+          label: "layout.sidebar.items.profilePhotos",
+          icon: "mdi-image-multiple-outline",
+          to: "/profile-photos",
+        },
+      ],
+    },
+  ];
+}

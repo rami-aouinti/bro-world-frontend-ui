@@ -7,7 +7,7 @@
     <nav>
       <ul class="flex flex-col gap-3">
         <li
-          v-for="item in items"
+          v-for="item in resolvedItems"
           :key="item.key"
           class="sidebar-group"
         >
@@ -15,9 +15,9 @@
             :is="item.to ? NuxtLink : 'button'"
             v-bind="item.to ? { to: item.to } : { type: 'button' }"
             class="sidebar-item"
-            :class="{ 'sidebar-item--active': isItemActive(item, activeKey) }"
+            :class="{ 'sidebar-item--active': isItemActive(item, resolvedActiveKey) }"
             :aria-label="item.to ? t(item.label) : undefined"
-            :aria-current="isItemActive(item, activeKey) ? 'page' : undefined"
+            :aria-current="isItemActive(item, resolvedActiveKey) ? 'page' : undefined"
             @click="handleParentSelect(item)"
           >
             <div class="flex items-center gap-3">
@@ -64,9 +64,9 @@
               <NuxtLink
                 :to="child.to"
                 class="sidebar-subitem"
-                :class="{ 'sidebar-subitem--active': child.key === activeKey }"
+                :class="{ 'sidebar-subitem--active': child.key === resolvedActiveKey }"
                 :aria-label="t(child.label)"
-                :aria-current="child.key === activeKey ? 'page' : undefined"
+                :aria-current="child.key === resolvedActiveKey ? 'page' : undefined"
                 @click="emit('select', child.key)"
               >
                 <Icon
@@ -87,42 +87,75 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { NuxtLink } from "#components";
+import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
+import {
+  ADMIN_ROLE_KEYS,
+  buildProfileSidebarItems,
+  buildSidebarItems,
+} from "~/lib/navigation/sidebar";
+import { useAuthSession } from "~/stores/auth-session";
 
-interface SidebarItem {
-  key: string;
-  label: string;
-  icon?: string;
-  to?: string;
-  children?: SidebarItem[];
-}
+type SidebarVariant = "default" | "profile";
 
 const props = withDefaults(
   defineProps<{
-    items: SidebarItem[];
-    activeKey: string;
+    items?: LayoutSidebarItem[];
+    activeKey?: string;
     sticky?: boolean;
+    variant?: SidebarVariant;
   }>(),
   {
     sticky: true,
+    variant: "default",
   },
 );
 
 const sticky = computed(() => props.sticky);
 
 const { t } = useI18n();
+const route = useRoute();
+const auth = useAuthSession();
+
+const canAccessAdmin = computed(() => {
+  if (!auth.isAuthenticated.value) return false;
+  const roles = auth.currentUser.value?.roles ?? [];
+  return roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
+});
+
+const variantItems = computed<LayoutSidebarItem[]>(() => {
+  if (props.variant === "profile") {
+    return buildProfileSidebarItems();
+  }
+
+  return buildSidebarItems(canAccessAdmin.value);
+});
+
+const resolvedItems = computed<LayoutSidebarItem[]>(() => props.items ?? variantItems.value);
+
+const derivedActiveKey = computed(() => {
+  const items = resolvedItems.value;
+  const match = findActiveSidebarKey(route.fullPath, items);
+  if (match) return match;
+  return findFirstSidebarKey(items) ?? "";
+});
+
+const resolvedActiveKey = computed(() => props.activeKey ?? derivedActiveKey.value);
 
 const expandedGroups = ref(new Set<string>());
 
 watch(
-  () => props.activeKey,
-  (key) => {
+  () => [resolvedActiveKey.value, resolvedItems.value],
+  ([activeKey]) => {
     let updated = false;
     const next = new Set(expandedGroups.value);
+    const availableGroups = new Set(
+      resolvedItems.value.filter((item) => item.children?.length).map((item) => item.key),
+    );
 
-    for (const item of props.items) {
+    for (const item of resolvedItems.value) {
       if (!item.children?.length) continue;
 
-      if (isItemActive(item, key)) {
+      if (isItemActive(item, activeKey)) {
         if (!next.has(item.key)) {
           next.add(item.key);
           updated = true;
@@ -130,12 +163,19 @@ watch(
       }
     }
 
+    for (const groupKey of Array.from(next)) {
+      if (!availableGroups.has(groupKey)) {
+        next.delete(groupKey);
+        updated = true;
+      }
+    }
+
     if (updated) expandedGroups.value = next;
   },
-  { immediate: true },
+  { immediate: true, deep: true },
 );
 
-function isItemActive(item: SidebarItem, key: string): boolean {
+function isItemActive(item: LayoutSidebarItem, key: string): boolean {
   if (item.key === key) return true;
 
   if (item.children) return item.children.some((child) => isItemActive(child, key));
@@ -156,13 +196,44 @@ function isGroupExpanded(key: string) {
   return expandedGroups.value.has(key);
 }
 
-function handleParentSelect(item: SidebarItem) {
+function handleParentSelect(item: LayoutSidebarItem) {
   emit("select", item.key);
 
   if (item.children?.length && !isGroupExpanded(item.key)) toggleGroup(item.key);
 }
 
 const emit = defineEmits<{ (e: "select", key: string): void }>();
+
+function findActiveSidebarKey(path: string, items: LayoutSidebarItem[]): string | null {
+  for (const item of items) {
+    if (item.to && matchesRoute(path, item.to)) return item.key;
+    if (item.children?.length) {
+      const childMatch = findActiveSidebarKey(path, item.children);
+      if (childMatch) return childMatch;
+    }
+  }
+
+  return null;
+}
+
+function matchesRoute(path: string, target: string) {
+  if (target === "/") return path === "/" || path.startsWith("/?");
+  return path === target || path.startsWith(`${target}/`) || path.startsWith(`${target}?`);
+}
+
+function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
+  for (const item of items) {
+    if (item.children?.length) {
+      const childKey = findFirstSidebarKey(item.children);
+      if (childKey) return childKey;
+      continue;
+    }
+
+    return item.key;
+  }
+
+  return null;
+}
 </script>
 
 <style scoped>

@@ -32,6 +32,12 @@
         "calendar": "Calendario",
         "cv": "CV",
         "jobs": "Lavori",
+        "profile": "Profilo",
+        "profileOverview": "Panoramica",
+        "profileSettings": "Impostazioni account",
+        "profileSecurity": "Password e sicurezza",
+        "profileFriends": "Amici",
+        "profilePhotos": "Foto e media",
         "admin": "Amministrazione",
         "adminGeneral": "Generale",
         "adminUserManagement": "Gestione utenti",
@@ -296,6 +302,52 @@
       "validation": {
         "required": "This field is required.",
         "bioLimit": "Your bio must be 280 characters or fewer."
+      }
+    },
+    "profileSecurity": {
+      "title": "Password & security",
+      "subtitle": "Keep your account protected with strong credentials and verified devices.",
+      "actions": {
+        "save": "Save security settings",
+        "generateCodes": "Generate recovery codes"
+      },
+      "sections": {
+        "password": {
+          "title": "Update password",
+          "description": "Create a unique passphrase that combines at least 12 characters, numbers, and symbols."
+        },
+        "sessions": {
+          "title": "Active sessions",
+          "description": "Review where you're signed in and revoke access from unfamiliar devices."
+        },
+        "mfa": {
+          "title": "Two-factor authentication",
+          "description": "Add an extra verification step to keep your workspace secure."
+        }
+      },
+      "labels": {
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "mfaToggle": "Enable two-factor authentication"
+      },
+      "passwordHint": {
+        "title": "Password tips",
+        "description": "Use a password manager, avoid reusing credentials, and rotate sensitive passwords regularly."
+      },
+      "sessions": {
+        "device": "Device",
+        "location": "Location",
+        "activity": "Last activity",
+        "actions": "Actions",
+        "revoke": "Revoke",
+        "activeNow": "Active now",
+        "trusted": "Trusted",
+        "remembered": "Remembered",
+        "untrusted": "Unrecognized"
+      },
+      "recoveryCodes": {
+        "title": "Store these one-time recovery codes"
       }
     },
     "playground": {
@@ -815,6 +867,10 @@
     "profileEdit": {
       "title": "Edit profile",
       "description": "Update your contact information, skills, and social links."
+    },
+    "profileSecurity": {
+      "title": "Password & security",
+      "description": "Manage sign-in credentials, two-factor authentication, and trusted devices."
     }
   },
   "admin": {

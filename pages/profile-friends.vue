@@ -376,6 +376,7 @@ definePageMeta({
   middleware: "auth",
   title: "profile-friends",
   showRightWidgets: false,
+  sidebarVariant: "profile",
 });
 
 const { t, locale, localeProperties } = useI18n();
