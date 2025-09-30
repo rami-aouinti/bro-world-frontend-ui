@@ -112,11 +112,11 @@ import { useI18n } from '#imports'
 type AudienceOption = 'friends' | 'public' | 'private'
 
 interface Props {
-  open: boolean
-  userName: string
-  avatar: string
-  placeholder: string
-  maxLength: number
+  open?: boolean
+  userName?: string
+  avatar?: string
+  placeholder?: string
+  maxLength?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {

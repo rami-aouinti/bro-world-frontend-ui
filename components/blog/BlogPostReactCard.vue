@@ -71,18 +71,21 @@ import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 
 import {useAuthSession} from "~/stores/auth-session";
+import type { BlogPost } from "~/lib/mock/blog";
 
 type Reaction = PickerReaction
 
 const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
+type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null
+
 const props = defineProps<{
   counts: Record<Reaction, number>
   reacts?: number
   comments?: number
   shares?: number
   liked?: boolean
-  node?: any
+  node?: ReactionNode
 }>()
 
 const emit = defineEmits<{
@@ -127,14 +130,20 @@ function calcAnchor(){
 
 function onMouseEnter(){
   if (pickerOpen.value) return
-  openTimer && clearTimeout(openTimer)
+  if (openTimer) {
+    window.clearTimeout(openTimer)
+    openTimer = null
+  }
   openTimer = window.setTimeout(() => {
     anchor.value = calcAnchor()
     pickerOpen.value = true
   }, 250) // petit délai comme Facebook
 }
 function onMouseLeave(){
-  openTimer && clearTimeout(openTimer)
+  if (openTimer) {
+    window.clearTimeout(openTimer)
+    openTimer = null
+  }
   // la fermeture se fait dans le picker (click dehors) + petit délai pour permettre d'atteindre le popover
   window.setTimeout(() => {
     // si la souris n'est pas au-dessus du picker, il se fermera via doc listener

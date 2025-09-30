@@ -7,7 +7,6 @@
     :style="[attrs.style as StyleValue | undefined, iconStyle]"
     role="img"
     aria-hidden="true"
-    v-html="iconSvg"
   />
 </template>
 

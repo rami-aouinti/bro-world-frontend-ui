@@ -38,7 +38,7 @@ config.global.stubs = {
           ...restAttrs
         } = attrs as Record<string, unknown> & { onKeydown?: ((event: KeyboardEvent) => void) | ((event: KeyboardEvent) => void)[] }
 
-        const handleKeydown = (event: KeyboardEvent) => {
+        function handleKeydown(event: KeyboardEvent) {
           if (Array.isArray(onKeydown)) {
             onKeydown.forEach((handler) => handler(event))
           } else if (typeof onKeydown === 'function') {

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="isAuthenticated"
+    v-if="isUserAuthenticated"
     :class="variantClasses.wrapper"
     v-bind="$attrs"
   >
@@ -175,7 +175,6 @@ const props = withDefaults(
     followingChipTestId?: string;
   }>(),
   {
-    isAuthenticated: false,
     isAuthor: false,
     isFollowing: false,
     followLoading: false,
@@ -199,7 +198,9 @@ const deleteButton = ref<HTMLButtonElement | null>(null);
 const { t } = useI18n();
 
 const auth = useAuthSession();
-const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const isUserAuthenticated = computed(
+  () => props.isAuthenticated ?? auth.isAuthenticated.value,
+);
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);

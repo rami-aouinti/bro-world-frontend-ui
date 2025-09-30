@@ -9,11 +9,11 @@
       :eager="true"
       content-class="rx-menu-content rx-rounded"
   >
-    <template #activator="{ props }">
+    <template #activator="{ props: activatorProps }">
       <button
           class="meta__btn"
           :class="`meta__btn--${props.btnSize}`"
-          v-bind="props"
+          v-bind="activatorProps"
           @click.stop="() => { if (!open) emit('like') }"
           @pointerdown.passive="onPointerDown"
           @pointerup.passive="onPointerUp"
