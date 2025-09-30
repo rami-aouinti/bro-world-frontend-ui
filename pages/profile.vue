@@ -82,131 +82,153 @@
       >
         <v-col
           cols="12"
-          md="4"
+          md="8"
         >
-          <section
-            aria-labelledby="contact-section-title"
-            class="h-100"
+          <v-row
+            dense
+            align="stretch"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="lg"
-              variant="tonal"
+            <v-col
+              cols="12"
+              md="6"
             >
-              <h2
-                id="contact-section-title"
-                class="text-h5 font-weight-semibold mb-4"
+              <section
+                aria-labelledby="contact-section-title"
+                class="h-100"
               >
-                {{ t("pages.profile.sections.contact") }}
-              </h2>
-              <dl class="d-flex flex-column gap-4">
-                <div
-                  v-for="item in contactItems"
-                  :key="item.id"
+                <v-card
+                  class="pa-6 h-100"
+                  rounded="lg"
+                  variant="tonal"
                 >
-                  <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
-                  <dd class="text-body-1 font-weight-medium mb-0">
-                    <a
-                      v-if="item.href && item.value !== placeholderValue"
-                      :href="item.href"
-                      class="text-primary text-decoration-none"
+                  <h2
+                    id="contact-section-title"
+                    class="text-h5 font-weight-semibold mb-4"
+                  >
+                    {{ t("pages.profile.sections.contact") }}
+                  </h2>
+                  <dl class="d-flex flex-column gap-4">
+                    <div
+                      v-for="item in contactItems"
+                      :key="item.id"
                     >
-                      {{ item.value }}
-                    </a>
-                    <span v-else>{{ item.value }}</span>
-                  </dd>
-                </div>
-              </dl>
-            </v-card>
-          </section>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        <a
+                          v-if="item.href && item.value !== placeholderValue"
+                          :href="item.href"
+                          class="text-primary text-decoration-none"
+                        >
+                          {{ item.value }}
+                        </a>
+                        <span v-else>{{ item.value }}</span>
+                      </dd>
+                    </div>
+                  </dl>
+                </v-card>
+              </section>
+            </v-col>
+
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <section
+                aria-labelledby="profile-section-title"
+                class="h-100"
+              >
+                <v-card
+                  class="pa-6 h-100"
+                  rounded="lg"
+                  variant="tonal"
+                >
+                  <h2
+                    id="profile-section-title"
+                    class="text-h5 font-weight-semibold mb-4"
+                  >
+                    {{ t("pages.profile.sections.profile") }}
+                  </h2>
+                  <dl class="d-flex flex-column gap-4">
+                    <div
+                      v-for="item in profileItems"
+                      :key="item.id"
+                    >
+                      <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">{{ item.value }}</dd>
+                    </div>
+                  </dl>
+                </v-card>
+              </section>
+            </v-col>
+
+            <v-col
+              cols="12"
+            >
+              <section
+                aria-labelledby="social-section-title"
+                class="h-100"
+              >
+                <v-card
+                  class="pa-6 h-100"
+                  rounded="lg"
+                  variant="tonal"
+                >
+                  <h2
+                    id="social-section-title"
+                    class="text-h5 font-weight-semibold mb-4"
+                  >
+                    {{ t("pages.profile.sections.social") }}
+                  </h2>
+                  <dl
+                    class="d-flex flex-column gap-4"
+                    :aria-label="t('pages.profile.stats.title')"
+                  >
+                    <div>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">
+                        {{ t("pages.profile.labels.friends") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">{{ formattedFriendsCount }}</dd>
+                    </div>
+                    <div>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">
+                        {{ t("pages.profile.labels.stories") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">{{ formattedStoriesCount }}</dd>
+                    </div>
+                    <div>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">
+                        {{ t("pages.profile.labels.accountStatus") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        <v-chip
+                          v-if="accountStatus"
+                          :color="accountStatus.color"
+                          size="small"
+                          variant="flat"
+                        >
+                          {{ accountStatus.label }}
+                        </v-chip>
+                        <span v-else>{{ placeholderValue }}</span>
+                      </dd>
+                    </div>
+                  </dl>
+                </v-card>
+              </section>
+            </v-col>
+          </v-row>
         </v-col>
 
         <v-col
           cols="12"
           md="4"
         >
-          <section
-            aria-labelledby="profile-section-title"
-            class="h-100"
-          >
-            <v-card
-              class="pa-6 h-100"
-              rounded="lg"
-              variant="tonal"
-            >
-              <h2
-                id="profile-section-title"
-                class="text-h5 font-weight-semibold mb-4"
-              >
-                {{ t("pages.profile.sections.profile") }}
-              </h2>
-              <dl class="d-flex flex-column gap-4">
-                <div
-                  v-for="item in profileItems"
-                  :key="item.id"
-                >
-                  <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
-                  <dd class="text-body-1 font-weight-medium mb-0">{{ item.value }}</dd>
-                </div>
-              </dl>
-            </v-card>
-          </section>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <section
-            aria-labelledby="social-section-title"
-            class="h-100"
-          >
-            <v-card
-              class="pa-6 h-100"
-              rounded="lg"
-              variant="tonal"
-            >
-              <h2
-                id="social-section-title"
-                class="text-h5 font-weight-semibold mb-4"
-              >
-                {{ t("pages.profile.sections.social") }}
-              </h2>
-              <dl
-                class="d-flex flex-column gap-4"
-                :aria-label="t('pages.profile.stats.title')"
-              >
-                <div>
-                  <dt class="text-body-2 text-medium-emphasis mb-1">
-                    {{ t("pages.profile.labels.friends") }}
-                  </dt>
-                  <dd class="text-body-1 font-weight-medium mb-0">{{ formattedFriendsCount }}</dd>
-                </div>
-                <div>
-                  <dt class="text-body-2 text-medium-emphasis mb-1">
-                    {{ t("pages.profile.labels.stories") }}
-                  </dt>
-                  <dd class="text-body-1 font-weight-medium mb-0">{{ formattedStoriesCount }}</dd>
-                </div>
-                <div>
-                  <dt class="text-body-2 text-medium-emphasis mb-1">
-                    {{ t("pages.profile.labels.accountStatus") }}
-                  </dt>
-                  <dd class="text-body-1 font-weight-medium mb-0">
-                    <v-chip
-                      v-if="accountStatus"
-                      :color="accountStatus.color"
-                      size="small"
-                      variant="flat"
-                    >
-                      {{ accountStatus.label }}
-                    </v-chip>
-                    <span v-else>{{ placeholderValue }}</span>
-                  </dd>
-                </div>
-              </dl>
-            </v-card>
-          </section>
+          <ProfileSidebar
+            :user="sidebarUser"
+            :photos="sidebarPhotos"
+            :friends="sidebarFriends"
+            :friends-count="friendsCount"
+            :life-events="sidebarEvents"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -218,6 +240,7 @@ import { computed } from "vue";
 
 import { useAuthSession } from "~/stores/auth-session";
 import type { AuthUser } from "~/types/auth";
+import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
 
 interface ProfileDetails {
   id?: string;
@@ -228,6 +251,8 @@ interface ProfileDetails {
   photo?: string | null;
   description?: string | null;
   address?: string | null;
+  hometown?: string | null;
+  schools?: string[] | null;
 }
 
 interface FriendEntry {
@@ -362,6 +387,7 @@ const address = computed(() => asString(profileDetails.value?.address));
 const titleValue = computed(() => asString(profileDetails.value?.title));
 const gender = computed(() => asString(profileDetails.value?.gender));
 const description = computed(() => asString(profileDetails.value?.description));
+const hometown = computed(() => asString(profileDetails.value?.hometown));
 const birthdayFormatted = computed(() => {
   const raw = asString(profileDetails.value?.birthday);
 
@@ -488,6 +514,52 @@ const profileItems = computed(() => {
     },
   ];
 });
+
+const sidebarUser = computed(() => {
+  const placeholder = placeholderValue.value;
+
+  const sanitizedBio = description.value ?? undefined;
+  const sanitizedLivesIn = address.value ?? undefined;
+  const sanitizedFrom = hometown.value ?? undefined;
+  const schools = Array.isArray(profileDetails.value?.schools)
+    ? (profileDetails.value!.schools.filter(
+        (value): value is string => typeof value === "string" && value.trim().length > 0,
+      ) as string[])
+    : [];
+
+  return {
+    name: displayName.value || placeholder,
+    bio: sanitizedBio,
+    livesIn: sanitizedLivesIn,
+    from: sanitizedFrom,
+    schools,
+  };
+});
+
+const sidebarPhotos = computed(() => {
+  const photo = avatarSrc.value;
+  const alt = avatarAlt.value;
+
+  if (!photo) {
+    return [] as { src: string; alt?: string }[];
+  }
+
+  return [{ src: photo, alt }];
+});
+
+const sidebarFriends = computed(() => {
+  const placeholder = placeholderValue.value;
+
+  return friendEntries.value.map((entry) => ({
+    name:
+      asString((entry as { name?: string | null; user?: string | null })?.name) ??
+      asString(entry?.user) ??
+      placeholder,
+    avatar: defaultAvatar,
+  }));
+});
+
+const sidebarEvents = computed(() => [] as { title: string; date?: string; description?: string }[]);
 </script>
 
 <style scoped>
