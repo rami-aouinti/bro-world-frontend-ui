@@ -8,6 +8,9 @@
           :friends="sidebarFriends"
           :friends-count="friendsCount"
           :life-events="sidebarEvents"
+          @view-all-friends="goToFriendsPage"
+          @view-all-photos="goToPhotosPage"
+          @edit-details="goToEditPage"
         />
       </div>
     </template>
@@ -301,6 +304,7 @@ definePageMeta({
 const auth = useAuthSession();
 const { t, locale, localeProperties } = useI18n();
 const route = useRoute();
+const router = useRouter();
 const runtimeConfig = useRuntimeConfig();
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
@@ -632,6 +636,18 @@ const sidebarFriends = computed<SidebarFriend[]>(() => {
 });
 
 const sidebarEvents = computed(() => [] as { title: string; date?: string; description?: string }[]);
+
+function goToFriendsPage() {
+  router.push({ name: "profile-friends" });
+}
+
+function goToPhotosPage() {
+  router.push({ name: "profile-photos" });
+}
+
+function goToEditPage() {
+  router.push({ name: "profile-edit" });
+}
 </script>
 
 <style scoped>
