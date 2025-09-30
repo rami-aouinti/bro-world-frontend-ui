@@ -96,6 +96,7 @@ import BlogPostReactCard from "~/components/blog/BlogPostReactCard.vue";
 import CommentThread, { type CommentNode } from "~/components/blog/CommentThread.vue";
 import BlogPostContent from "~/components/blog/BlogPostContent.vue";
 import CommentSortMenu from "~/components/blog/CommentSortMenu.vue";
+import { useRelativeTime } from "~/composables/useRelativeTime";
 
 interface FeedbackState {
   type: "success" | "error";
@@ -109,7 +110,7 @@ const props = defineProps<{
   reactionLabels: Record<ReactionType, string>;
 }>();
 
-const { locale, t } = useI18n();
+const { t } = useI18n();
 const { $notify } = useNuxtApp();
 const { reactToPost, addComment, reactToComment, getComments } = usePostsStore();
 const {
@@ -133,13 +134,7 @@ const activeCommentsRequest = shallowRef<Promise<void> | null>(null);
 const commentsSectionRef = ref<HTMLElement | null>(null);
 const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
 const commentsActivated = ref(false);
-
-function formatDateTime(value: string) {
-  return new Intl.DateTimeFormat(locale.value ?? "fr-FR", {
-    dateStyle: "long",
-    timeStyle: "short",
-  }).format(new Date(value));
-}
+const { formatRelativeTime } = useRelativeTime();
 type Comment = {
   id: string;
   author: string;
@@ -168,9 +163,7 @@ const sorted = computed(() => {
 
   return arr;
 });
-const publishedLabel = computed(() =>
-  t("blog.reactions.posts.publishedOn", { date: formatDateTime(post.value.publishedAt) }),
-);
+const publishedLabel = computed(() => formatRelativeTime(post.value.publishedAt));
 
 const isAuthenticated = computed(() => isAuthenticatedComputed.value);
 const isAuthor = computed(

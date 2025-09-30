@@ -138,6 +138,7 @@ import CommentComposer from "~/components/blog/CommentComposer.vue";
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
+import { useRelativeTime } from "~/composables/useRelativeTime";
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
@@ -168,7 +169,8 @@ const emit = defineEmits<{
   (e: "react", payload: { id: string; type: Reaction }): void;
 }>();
 
-const { locale, t } = useI18n();
+const { t } = useI18n();
+const { formatRelativeTime } = useRelativeTime();
 
 const depth = computed(() => props.depth ?? 0);
 const bubbleOrder: Reaction[] = ["like", "sad", "angry"];
@@ -183,14 +185,6 @@ const topReactions = computed(() =>
 const expanded = reactive<Record<string, boolean>>({});
 const replying = reactive<Record<string, boolean>>({});
 const replyText = reactive<Record<string, string>>({});
-
-const relativeTimeFormatter = computed(
-  () => new Intl.RelativeTimeFormat(locale.value ?? "fr-FR", { numeric: "auto" }),
-);
-const dateFormatter = computed(
-  () =>
-    new Intl.DateTimeFormat(locale.value ?? "fr-FR", { dateStyle: "medium", timeStyle: "short" }),
-);
 
 const commentPlaceholder = computed(() => {
   const firstName = props.currentUser?.firstName ?? "";
@@ -210,28 +204,8 @@ function toggleExpand(id: string) {
 function toggleReply(id: string) {
   replying[id] = !replying[id];
 }
-function formatTime(d: Date | string | number) {
-  const date = new Date(d);
-  const diffSeconds = (date.getTime() - Date.now()) / 1000;
-  const absDiff = Math.abs(diffSeconds);
-
-  if (absDiff < 60) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds), "second");
-  }
-
-  if (absDiff < 3600) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 60), "minute");
-  }
-
-  if (absDiff < 86400) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 3600), "hour");
-  }
-
-  if (absDiff < 604800) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 86400), "day");
-  }
-
-  return dateFormatter.value.format(date);
+function formatTime(value: Date | string | number) {
+  return formatRelativeTime(value);
 }
 
 function getReactionTotal(node: CommentNode) {
