@@ -30,7 +30,7 @@
       </div>
 
       <!-- meta -->
-      <div class="meta">
+      <div class="meta" style="margin-top: 10px;">
         <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
         <ReactionPicker
             v-if="isAuthenticated"
