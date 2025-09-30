@@ -236,7 +236,8 @@
         "haha": "Haha",
         "sad": "Traurig",
         "angry": "Wütend",
-        "dislike": "Gefällt mir nicht"
+        "dislike": "Gefällt mir nicht",
+        "care": "Mitgefühl"
       },
       "posts": {
         "publishedOn": "Veröffentlicht am {date}",
@@ -292,8 +293,11 @@
           "title": "Titel",
           "summary": "Zusammenfassung",
           "content": "Inhalt"
-        }
-      }
+        },
+        "comment": "Kommentieren",
+        "share": "Teilen"
+      },
+      "loading": "Beitrag wird geladen"
     },
     "comments": {
       "label": "Beteilige dich an der Diskussion",
@@ -318,7 +322,29 @@
       "cancelReply": "Abbrechen",
       "replyUnavailable": "Antworten sind derzeit nicht verfügbar.",
       "reactionUnavailable": "Reaktionen sind derzeit nicht verfügbar.",
-      "reactionError": "Auf diesen Kommentar konnte nicht reagiert werden. Bitte versuche es erneut."
+      "reactionError": "Auf diesen Kommentar konnte nicht reagiert werden. Bitte versuche es erneut.",
+      "placeholderWithName": "Kommentieren als {name}",
+      "sort": {
+        "menuAria": "Kommentar-Sortierung",
+        "options": {
+          "relevant": {
+            "label": "Relevanteste",
+            "description": "Zeigt zuerst Kommentare von Freunden und mit den meisten Interaktionen an."
+          },
+          "newest": {
+            "label": "Neueste zuerst",
+            "description": "Zeigt alle Kommentare in umgekehrter chronologischer Reihenfolge."
+          },
+          "all": {
+            "label": "Alle Kommentare",
+            "description": "Zeigt alle Kommentare an, einschließlich möglichem Spam."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "Alle {count} Antworten anzeigen",
+        "hideReplies": "Antworten ausblenden"
+      }
     },
     "sidebar": {
       "weather": {
@@ -829,24 +855,6 @@
       "subtitle": "Steuern Sie die gesamte Plattform, verfolgen Sie Kennzahlen und aktivieren Sie die richtigen Hebel mit nur wenigen Klicks."
     },
     "userManagement": {
-      "metaTitle": "Benutzerverwaltung",
-      "page": {
-        "title": "Benutzerverwaltung",
-        "subtitle": "Laden Sie Mitglieder ein, prüfen Sie Zugänge und passen Sie Berechtigungen an."
-      }
-    },
-    "blogManagement": {
-      "metaTitle": "Blog-Administration",
-      "page": {
-        "title": "Blog-Administration",
-        "subtitle": "Veröffentlichen Sie Ankündigungen und kuratieren Sie Community-Geschichten."
-      }
-    },
-    "actions": {
-      "newAdminRole": "Neue Admin-Rolle",
-      "exportReport": "Bericht exportieren"
-    },
-    "userManagement": {
       "title": "User management",
       "subtitle": "Invite, update, or deactivate accounts in real-time.",
       "actions": {
@@ -898,6 +906,17 @@
         "email": "A valid email address is required.",
         "roles": "Select at least one role."
       }
+    },
+    "blogManagement": {
+      "metaTitle": "Blog-Administration",
+      "page": {
+        "title": "Blog-Administration",
+        "subtitle": "Veröffentlichen Sie Ankündigungen und kuratieren Sie Community-Geschichten."
+      }
+    },
+    "actions": {
+      "newAdminRole": "Neue Admin-Rolle",
+      "exportReport": "Bericht exportieren"
     },
     "sections": {
       "stats": {

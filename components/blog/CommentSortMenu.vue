@@ -1,6 +1,7 @@
 <!-- components/CommentSortMenu.vue -->
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export type SortKey = 'relevant' | 'newest' | 'all'
 
@@ -10,27 +11,31 @@ const props = defineProps<{
 
 const emit = defineEmits<{ (e: 'update:modelValue', v: SortKey): void }>()
 
-const currentLabel = computed(() =>
-    ({ relevant: 'Relevanteste', newest: 'Neueste zuerst', all: 'Alle Kommentare' } as const)[props.modelValue]
-)
+const { t } = useI18n()
 
-const OPTIONS: { key: SortKey; title: string; subtitle: string }[] = [
+const options = computed<{ key: SortKey; title: string; subtitle: string }[]>(() => [
   {
     key: 'relevant',
-    title: 'Relevanteste',
-    subtitle: 'Kommentare von Freunden sowie Kommentare mit den meisten Interaktionen zuerst anzeigen.'
+    title: t('blog.comments.sort.options.relevant.label'),
+    subtitle: t('blog.comments.sort.options.relevant.description'),
   },
   {
     key: 'newest',
-    title: 'Neueste zuerst',
-    subtitle: 'Alle Kommentare anzeigen, die neuesten zuerst.'
+    title: t('blog.comments.sort.options.newest.label'),
+    subtitle: t('blog.comments.sort.options.newest.description'),
   },
   {
     key: 'all',
-    title: 'Alle Kommentare',
-    subtitle: 'Alle Kommentare anzeigen, auch potenziellen Spam.'
-  }
-]
+    title: t('blog.comments.sort.options.all.label'),
+    subtitle: t('blog.comments.sort.options.all.description'),
+  },
+])
+
+const currentLabel = computed(() =>
+  options.value.find(option => option.key === props.modelValue)?.title ?? '',
+)
+
+const menuAriaLabel = computed(() => t('blog.comments.sort.menuAria'))
 
 function pick(v: SortKey) {
   emit('update:modelValue', v)
@@ -50,9 +55,9 @@ function pick(v: SortKey) {
       </button>
     </template>
 
-    <div class="cs-bubble" role="menu" aria-label="Kommentar-Sortierung">
+    <div class="cs-bubble" role="menu" :aria-label="menuAriaLabel">
       <div
-          v-for="opt in OPTIONS"
+          v-for="opt in options"
           :key="opt.key"
           class="cs-item"
           :class="{ active: opt.key === modelValue }"

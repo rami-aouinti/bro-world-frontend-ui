@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export type Reaction = 'like'|'love'|'care'|'haha'|'wow'|'sad'|'angry'
 const emit = defineEmits<{ (e:'select', r:Reaction):void; (e:'like'):void }>()
@@ -9,21 +10,24 @@ const props = withDefaults(defineProps<{
 const open = ref(false)
 let longPressTimer: number | null = null
 
+const { t } = useI18n()
+
 function onPointerDown(){
   longPressTimer = window.setTimeout(() => (open.value = true), 350)
 }
 function onPointerUp(){
   if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null }
 }
-const items: { key: Reaction; src: string; label: string }[] = [
-  { key:'like',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44d.png', label:'Like' },
-  { key:'love',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2764.png',   label:'Love' }, // <- fix
-  { key:'care',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f970.png', label:'Care' }, // ou 1f917 (hugging face)
-  { key:'haha',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f606.png', label:'Haha' },
-  { key:'wow',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f62e.png', label:'Wow' },
-  { key:'sad',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f622.png', label:'Sad' },
-  { key:'angry', src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f620.png', label:'Angry' },
-]
+
+const items = computed(() => [
+  { key:'like',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44d.png', label:t('blog.reactions.reactionTypes.like') },
+  { key:'love',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2764.png',   label:t('blog.reactions.reactionTypes.love') },
+  { key:'care',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f970.png', label:t('blog.reactions.reactionTypes.care') },
+  { key:'haha',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f606.png', label:t('blog.reactions.reactionTypes.haha') },
+  { key:'wow',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f62e.png', label:t('blog.reactions.reactionTypes.wow') },
+  { key:'sad',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f622.png', label:t('blog.reactions.reactionTypes.sad') },
+  { key:'angry', src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f620.png', label:t('blog.reactions.reactionTypes.angry') },
+] satisfies { key: Reaction; src: string; label: string }[])
 </script>
 
 <template>
@@ -47,11 +51,11 @@ const items: { key: Reaction; src: string; label: string }[] = [
           @pointerup.passive="onPointerUp"
       >
         <Icon name="mdi-thumb-up-outline" start></Icon>
-        Gefällt mir
+        {{ t('blog.reactions.posts.likeAction') }}
       </button>
     </template>
 
-    <div class="rx-bubble" role="listbox" aria-label="Reaktionen">
+    <div class="rx-bubble" role="listbox" :aria-label="t('blog.reactions.posts.reactLabel')">
       <button
           v-for="it in items"
           :key="it.key"

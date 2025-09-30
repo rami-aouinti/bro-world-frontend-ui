@@ -455,7 +455,8 @@
         "haha": "Ahah",
         "sad": "Triste",
         "angry": "Arrabbiato",
-        "dislike": "Non mi piace"
+        "dislike": "Non mi piace",
+        "care": "Mi importa"
       },
       "posts": {
         "publishedOn": "Pubblicato il {date}",
@@ -511,8 +512,11 @@
           "title": "Titolo",
           "summary": "Sommario",
           "content": "Contenuto"
-        }
-      }
+        },
+        "comment": "Commenta",
+        "share": "Condividi"
+      },
+      "loading": "Caricamento del post"
     },
     "comments": {
       "label": "Partecipa alla conversazione",
@@ -537,7 +541,29 @@
       "cancelReply": "Annulla",
       "replyUnavailable": "Le risposte non sono disponibili al momento.",
       "reactionUnavailable": "Le reazioni non sono disponibili al momento.",
-      "reactionError": "Non siamo riusciti a reagire a questo commento. Riprova."
+      "reactionError": "Non siamo riusciti a reagire a questo commento. Riprova.",
+      "placeholderWithName": "Commenta come {name}",
+      "sort": {
+        "menuAria": "Ordina i commenti",
+        "options": {
+          "relevant": {
+            "label": "Più rilevanti",
+            "description": "Mostra per primi i commenti degli amici e quelli con più interazioni."
+          },
+          "newest": {
+            "label": "Più recenti",
+            "description": "Mostra tutti i commenti dal più recente al meno recente."
+          },
+          "all": {
+            "label": "Tutti i commenti",
+            "description": "Mostra tutti i commenti, incluso lo spam potenziale."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "Mostra tutte le {count} risposte",
+        "hideReplies": "Nascondi risposte"
+      }
     },
     "sidebar": {
       "weather": {
@@ -655,24 +681,6 @@
       "subtitle": "Gestisci l’intera piattaforma, monitora le metriche chiave e attiva le leve giuste in pochi clic."
     },
     "userManagement": {
-      "metaTitle": "Gestione utenti",
-      "page": {
-        "title": "Gestione utenti",
-        "subtitle": "Invita, revisiona e aggiorna i permessi di ogni membro."
-      }
-    },
-    "blogManagement": {
-      "metaTitle": "Gestione blog",
-      "page": {
-        "title": "Gestione blog",
-        "subtitle": "Pubblica annunci e cura le storie della community."
-      }
-    },
-    "actions": {
-      "newAdminRole": "Nuovo ruolo admin",
-      "exportReport": "Esporta report"
-    },
-    "userManagement": {
       "title": "User management",
       "subtitle": "Invite, update, or deactivate accounts in real-time.",
       "actions": {
@@ -724,6 +732,17 @@
         "email": "A valid email address is required.",
         "roles": "Select at least one role."
       }
+    },
+    "blogManagement": {
+      "metaTitle": "Gestione blog",
+      "page": {
+        "title": "Gestione blog",
+        "subtitle": "Pubblica annunci e cura le storie della community."
+      }
+    },
+    "actions": {
+      "newAdminRole": "Nuovo ruolo admin",
+      "exportReport": "Esporta report"
     },
     "sections": {
       "stats": {

@@ -236,7 +236,8 @@
         "haha": "Haha",
         "sad": "Sad",
         "angry": "Angry",
-        "dislike": "Dislike"
+        "dislike": "Dislike",
+        "care": "Care"
       },
       "posts": {
         "publishedOn": "Published on {date}",
@@ -292,8 +293,11 @@
           "title": "Title",
           "summary": "Summary",
           "content": "Content"
-        }
-      }
+        },
+        "comment": "Comment",
+        "share": "Share"
+      },
+      "loading": "Loading post"
     },
     "comments": {
       "label": "Join the discussion",
@@ -318,7 +322,29 @@
       "cancelReply": "Cancel",
       "replyUnavailable": "Replying isn't available right now.",
       "reactionUnavailable": "Reacting isn't available right now.",
-      "reactionError": "We couldn't react to this comment. Please try again."
+      "reactionError": "We couldn't react to this comment. Please try again.",
+      "placeholderWithName": "Comment as {name}",
+      "sort": {
+        "menuAria": "Comment sorting",
+        "options": {
+          "relevant": {
+            "label": "Most relevant",
+            "description": "Show comments from friends and those with the most engagement first."
+          },
+          "newest": {
+            "label": "Newest first",
+            "description": "Display comments in reverse chronological order."
+          },
+          "all": {
+            "label": "All comments",
+            "description": "Show every comment, including potential spam."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "View all {count} replies",
+        "hideReplies": "Hide replies"
+      }
     },
     "sidebar": {
       "weather": {
@@ -829,24 +855,6 @@
       "subtitle": "Manage the entire platform, monitor key metrics, and activate the right levers in a few clicks."
     },
     "userManagement": {
-      "metaTitle": "User management",
-      "page": {
-        "title": "User management",
-        "subtitle": "Invite, review, and adjust permissions for every member."
-      }
-    },
-    "blogManagement": {
-      "metaTitle": "Blog administration",
-      "page": {
-        "title": "Blog administration",
-        "subtitle": "Curate stories and publish announcements for the community."
-      }
-    },
-    "actions": {
-      "newAdminRole": "New admin role",
-      "exportReport": "Export report"
-    },
-    "userManagement": {
       "title": "User management",
       "subtitle": "Invite, update, or deactivate accounts in real-time.",
       "actions": {
@@ -898,6 +906,17 @@
         "email": "A valid email address is required.",
         "roles": "Select at least one role."
       }
+    },
+    "blogManagement": {
+      "metaTitle": "Blog administration",
+      "page": {
+        "title": "Blog administration",
+        "subtitle": "Curate stories and publish announcements for the community."
+      }
+    },
+    "actions": {
+      "newAdminRole": "New admin role",
+      "exportReport": "Export report"
     },
     "sections": {
       "stats": {

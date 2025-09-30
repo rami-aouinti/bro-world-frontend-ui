@@ -6,7 +6,7 @@
     rounded="xl"
     role="status"
     aria-live="polite"
-    aria-label="Loading post"
+    :aria-label="loadingLabel"
   >
     <v-skeleton-loader
       type="list-item-avatar-two-line"
@@ -29,6 +29,14 @@
     </div>
   </v-card>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const loadingLabel = computed(() => t('blog.posts.loading'))
+</script>
 
 <style scoped>
 .post-skeleton {

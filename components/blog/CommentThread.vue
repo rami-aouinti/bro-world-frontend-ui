@@ -1,10 +1,12 @@
 <!-- components/CommentThread.vue -->
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import CommentComposer from "~/components/blog/CommentComposer.vue";
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
+import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 
-type Reaction = 'like' | 'haha' | 'sad' | 'angry'
+type Reaction = PickerReaction
 export type CommentNode = {
   id: string
   user: { firstName?: string; lastName?: string; photo?: string }
@@ -27,7 +29,11 @@ const emit = defineEmits<{
   (e:'like', id:string): void
   (e:'reply', parentId:string, text:string): void
   (e:'more', id:string): void
+  (e:'submit', text: string): void
+  (e:'react', payload: { id: string; type: Reaction }): void
 }>()
+
+const { locale, t } = useI18n()
 
 const depth = computed(() => props.depth ?? 0)
 const bubbleOrder: Reaction[] = ['like', 'sad', 'angry']
@@ -43,15 +49,63 @@ const expanded = reactive<Record<string, boolean>>({})
 const replying = reactive<Record<string, boolean>>({})
 const replyText = reactive<Record<string, string>>({})
 
+const relativeTimeFormatter = computed(
+  () => new Intl.RelativeTimeFormat(locale.value ?? 'fr-FR', { numeric: 'auto' }),
+)
+const dateFormatter = computed(
+  () => new Intl.DateTimeFormat(locale.value ?? 'fr-FR', { dateStyle: 'medium', timeStyle: 'short' }),
+)
+
+const commentPlaceholder = computed(() => {
+  const firstName = props.currentUser?.firstName ?? ''
+  const lastName = props.currentUser?.lastName ?? ''
+  const name = `${firstName} ${lastName}`.trim()
+
+  if (name) {
+    return t('blog.comments.placeholderWithName', { name })
+  }
+
+  return t('blog.comments.placeholder')
+})
+
 function toggleExpand(id: string){ expanded[id] = !expanded[id] }
 function toggleReply(id: string){ replying[id] = !replying[id] }
 function formatTime(d: Date | string | number) {
   const date = new Date(d)
-  const diff = (Date.now() - date.getTime()) / 1000
-  if (diff < 60) return 'Jetzt'
-  if (diff < 3600) return `${Math.floor(diff / 60)} Min.`
-  if (diff < 86400) return `${Math.floor(diff / 3600)} Std.`
-  return date.toLocaleDateString()
+  const diffSeconds = (date.getTime() - Date.now()) / 1000
+  const absDiff = Math.abs(diffSeconds)
+
+  if (absDiff < 60) {
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds), 'second')
+  }
+
+  if (absDiff < 3600) {
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 60), 'minute')
+  }
+
+  if (absDiff < 86400) {
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 3600), 'hour')
+  }
+
+  if (absDiff < 604800) {
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 86400), 'day')
+  }
+
+  return dateFormatter.value.format(date)
+}
+
+function getReactionTotal(node: CommentNode) {
+  return Object.values(node.reactions ?? {}).reduce((sum, count) => sum + (count ?? 0), 0)
+}
+
+function reactionAriaLabel(node: CommentNode) {
+  const total = getReactionTotal(node)
+
+  if (total <= 0) {
+    return t('blog.reactions.posts.reactLabel')
+  }
+
+  return t('blog.reactions.comments.reactionCount', { count: total })
 }
 </script>
 
@@ -83,9 +137,9 @@ function formatTime(d: Date | string | number) {
             @select="r => emit('react', { id: node.id, type: r })"
 
         />
-        <button class="meta__btn" @click="toggleReply(node.id)">Antworten</button>
-        <span class="total">5</span>
-        <div class="bubblesReacts" aria-label="Reaktionen">
+        <button class="meta__btn" @click="toggleReply(node.id)">{{ t('blog.comments.reply') }}</button>
+        <span v-if="getReactionTotal(node) > 0" class="total">{{ getReactionTotal(node) }}</span>
+        <div class="bubblesReacts" :aria-label="reactionAriaLabel(node)">
           <v-avatar
               v-for="(r, i) in topReactions"
               :key="r.type"
@@ -109,7 +163,10 @@ function formatTime(d: Date | string | number) {
         <template v-if="(node.children?.length || 0) > 0">
           <button class="meta__btn" @click="toggleExpand(node.id)">
             <Icon v-if="expanded[node.id]" name="mdi-message">{{ `${node.children!.length} ` }}</Icon>
-            {{ expanded[node.id] ? 'Weniger Antworten' : `Alle ${node.children!.length} Antworten anzeigen` }}
+            {{ expanded[node.id]
+              ? t('blog.comments.thread.hideReplies')
+              : t('blog.comments.thread.showReplies', { count: node.children!.length })
+            }}
           </button>
         </template>
       </div>
@@ -117,6 +174,7 @@ function formatTime(d: Date | string | number) {
       <div v-if="replying[node.id]" class="reply-composer">
         <comment-composer
             avatar="https://i.pravatar.cc/80?img=33"
+            :placeholder="t('blog.comments.replyPlaceholder')"
             @submit="t => emit('submit', t)"
         />
       </div>
@@ -135,8 +193,8 @@ function formatTime(d: Date | string | number) {
     </div>
     <comment-composer
         class="mt-2"
-        :placeholder="'Als ' + props.currentUser.firstName + ' ' + props.currentUser.lastName + ' kommentieren'"
-        :avatar="props.currentUser.photo"
+        :placeholder="commentPlaceholder"
+        :avatar="props.currentUser?.photo"
         @submit="t => emit('submit', t)"
     />
   </div>

@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 const props = defineProps<{ avatar?: string; placeholder?: string }>()
 const emit = defineEmits<{ (e:'submit', text:string):void }>()
 const text = ref('')
+
+const { t } = useI18n()
+
+const placeholderText = computed(() => props.placeholder ?? t('blog.comments.placeholder'))
 
 function send(){
   if(!text.value.trim()) return
@@ -24,7 +30,7 @@ function send(){
           rows="1"
           auto-grow
           variant="text"
-          :placeholder="placeholder || 'Schreibe einen Kommentar...'"
+          :placeholder="placeholderText"
           hide-details
           class="grow-input"
           @keyup.enter.exact.prevent="send"
