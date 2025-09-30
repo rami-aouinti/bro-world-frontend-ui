@@ -72,7 +72,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="37">
+          <list size="46">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -110,6 +110,15 @@
             <item index="34" class="java.lang.String" itemvalue="v-container" />
             <item index="35" class="java.lang.String" itemvalue="v-chip" />
             <item index="36" class="java.lang.String" itemvalue="v-card-item" />
+            <item index="37" class="java.lang.String" itemvalue="v-chip-group" />
+            <item index="38" class="java.lang.String" itemvalue="v-list-item-subtitle" />
+            <item index="39" class="java.lang.String" itemvalue="v-snackbar" />
+            <item index="40" class="java.lang.String" itemvalue="v-select" />
+            <item index="41" class="java.lang.String" itemvalue="v-combobox" />
+            <item index="42" class="java.lang.String" itemvalue="v-expansion-panels" />
+            <item index="43" class="java.lang.String" itemvalue="v-expansion-panel" />
+            <item index="44" class="java.lang.String" itemvalue="v-expansion-panel-title" />
+            <item index="45" class="java.lang.String" itemvalue="v-expansion-panel-text" />
           </list>
         </value>
       </option>

@@ -341,6 +341,7 @@ import { computed, reactive, ref } from "vue";
 definePageMeta({
   middleware: "auth",
   title: "profile-photos",
+  showRightWidgets: false,
 });
 
 const { t, locale, localeProperties } = useI18n();

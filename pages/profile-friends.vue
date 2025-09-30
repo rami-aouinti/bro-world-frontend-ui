@@ -147,11 +147,11 @@
 
               <div class="d-flex flex-wrap align-center justify-space-between text-medium-emphasis text-body-2 mb-4 gap-2">
                 <div class="d-flex align-center gap-2">
-                  <v-icon icon="mdi-map-marker-outline" size="18" />
+                  <Icon name="mdi-map-marker-outline" size="18" />
                   <span>{{ friend.location }}</span>
                 </div>
                 <div class="d-flex align-center gap-2">
-                  <v-icon icon="mdi-account-multiple-outline" size="18" />
+                  <Icon name="mdi-account-multiple-outline" size="18" />
                   <span>{{ friend.mutualCount }} {{ t("pages.profileFriends.stats.mutual") }}</span>
                 </div>
               </div>
@@ -327,7 +327,7 @@
             {{ selectedFriend.bio }}
           </p>
           <div class="d-flex align-center gap-2 text-body-2 text-medium-emphasis">
-            <v-icon icon="mdi-map-marker-outline" size="18" />
+            <Icon name="mdi-map-marker-outline" size="18" />
             <span>{{ selectedFriend.location }}</span>
           </div>
         </v-card-text>
@@ -375,6 +375,7 @@ import { computed, ref } from "vue";
 definePageMeta({
   middleware: "auth",
   title: "profile-friends",
+  showRightWidgets: false,
 });
 
 const { t, locale, localeProperties } = useI18n();

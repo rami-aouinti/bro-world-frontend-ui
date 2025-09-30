@@ -343,6 +343,7 @@ import { computed, reactive, ref } from "vue";
 definePageMeta({
   middleware: "auth",
   title: "profile-edit",
+  showRightWidgets: false,
 });
 
 const { t, locale, localeProperties } = useI18n();
