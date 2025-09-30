@@ -28,7 +28,7 @@
       :content="post.content"
     />
     <BlogPostReactCard
-      :counts="{care: 0,haha: 0,love: 0,wow: 0, like: 4, sad: 2, angry: 1 }"
+      :counts="{ care: 0, haha: 0, love: 0, wow: 0, like: 4, sad: 2, angry: 1 }"
       :node="post"
       :reacts="post.reactions_count"
       :comments="post.totalComments"
@@ -45,7 +45,7 @@
     </div>
     <div ref="commentsSectionRef">
       <CommentThread
-        :counts="{care: 0,love: 0,wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
+        :counts="{ care: 0, love: 0, wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
         :nodes="post.comments_preview || []"
         :current-user="currentUser || []"
         @like="handleCommentLike"
@@ -84,8 +84,6 @@ import { computed, defineAsyncComponent, nextTick, ref, shallowRef, watch } from
 import { useElementVisibility } from "@vueuse/core";
 
 import PostMeta from "~/components/blog/PostMeta.vue";
-import { formatMetricNumber, resolveCommentTotal, resolveReactionTotal } from "~/lib/blogMetrics";
-import type { CommentAggregate, ReactionAggregate } from "~/lib/blogMetrics";
 import type {
   BlogCommentWithReplies,
   BlogPost,
@@ -170,10 +168,6 @@ const sorted = computed(() => {
 
   return arr;
 });
-function formatNumber(value: number | null | undefined) {
-  return formatMetricNumber(value, locale.value ?? "fr-FR");
-}
-
 const publishedLabel = computed(() =>
   t("blog.reactions.posts.publishedOn", { date: formatDateTime(post.value.publishedAt) }),
 );
@@ -201,26 +195,6 @@ const followingAriaLabel = computed(() =>
 const actionsAriaLabel = computed(() => t("blog.posts.actions.openMenu"));
 const editLabel = computed(() => t("blog.posts.actions.edit"));
 const deleteLabel = computed(() => t("blog.posts.actions.delete"));
-
-const postReactionCount = computed(() => resolveReactionTotal(post.value as ReactionAggregate));
-const loadedCommentCount = computed(() => {
-  if (!Array.isArray(loadedComments.value)) {
-    return null;
-  }
-
-  return countComments(loadedComments.value);
-});
-
-const postCommentCount = computed(() => {
-  if (typeof loadedCommentCount.value === "number") {
-    return loadedCommentCount.value;
-  }
-
-  return resolveCommentTotal(post.value as CommentAggregate);
-});
-
-const reactionCountDisplay = computed(() => formatNumber(postReactionCount.value));
-const commentCountDisplay = computed(() => formatNumber(postCommentCount.value));
 const isPostReacted = computed(() => Boolean(post.value.isReacted));
 
 const comments = computed(() => {
@@ -251,7 +225,6 @@ function openReply(id: string) {
   /* TODO */
 }
 const loginToReactMessage = computed(() => t("blog.auth.reactionRequired"));
-const loginToCommentMessage = computed(() => t("blog.auth.commentRequired"));
 const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
 const previousFocusedElement = ref<HTMLElement | null>(null);
@@ -415,48 +388,6 @@ function handleCommentButtonClick() {
   });
 }
 
-async function handleCommentSubmit() {
-  commentFeedback.value = null;
-
-  const content = commentContent.value.trim();
-
-  if (!isAuthenticated.value) {
-    commentFeedback.value = {
-      type: "error",
-      message: loginToCommentMessage.value,
-    };
-    return;
-  }
-
-  if (!content) {
-    commentFeedback.value = {
-      type: "error",
-      message: t("blog.comments.validation"),
-    };
-    return;
-  }
-
-  submittingComment.value = true;
-
-  try {
-    await addComment(post.value.id, content);
-    commentFeedback.value = {
-      type: "success",
-      message: t("blog.comments.success"),
-    };
-    commentContent.value = "";
-    await loadComments({ force: true });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error ?? "");
-    commentFeedback.value = {
-      type: "error",
-      message: message || t("blog.comments.error"),
-    };
-  } finally {
-    submittingComment.value = false;
-  }
-}
-
 async function handleCommentReaction(commentId: string, reactionType: ReactionAction) {
   if (!isAuthenticated.value) {
     throw new Error(loginToReactMessage.value);
@@ -469,65 +400,6 @@ async function handleCommentReaction(commentId: string, reactionType: ReactionAc
     const message = error instanceof Error ? error.message : String(error ?? "");
     throw new Error(message || t("blog.comments.reactionError"));
   }
-}
-
-async function handleCommentReply(commentId: string, content: string) {
-  if (!isAuthenticated.value) {
-    throw new Error(loginToCommentMessage.value);
-  }
-
-  try {
-    await addComment(post.value.id, content, commentId);
-    await loadComments({ force: true });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error ?? "");
-    throw new Error(message || t("blog.comments.replyError"));
-  }
-}
-
-function countComments(comments: BlogCommentWithReplies[]): number {
-  let total = 0;
-
-  for (const comment of comments) {
-    if (!comment || typeof comment !== "object") {
-      continue;
-    }
-
-    total += 1;
-
-    const nestedCandidates = [comment.comments, comment.replies, comment.children];
-    const aggregatedChildren: BlogCommentWithReplies[] = [];
-    const seenIds = new Set<string>();
-
-    for (const candidate of nestedCandidates) {
-      if (!Array.isArray(candidate)) {
-        continue;
-      }
-
-      for (const child of candidate) {
-        if (!child || typeof child !== "object") {
-          continue;
-        }
-
-        const childId = typeof child.id === "string" ? child.id : "";
-
-        if (childId) {
-          if (seenIds.has(childId)) {
-            continue;
-          }
-          seenIds.add(childId);
-        }
-
-        aggregatedChildren.push(child as BlogCommentWithReplies);
-      }
-    }
-
-    if (aggregatedChildren.length > 0) {
-      total += countComments(aggregatedChildren);
-    }
-  }
-
-  return total;
 }
 
 async function loadComments(options: { force?: boolean } = {}) {
@@ -582,10 +454,6 @@ function requestComments(options: { force?: boolean } = {}) {
   }
 
   void loadComments({ force: shouldForce });
-}
-
-function handleManualCommentsLoad() {
-  requestComments({ force: true });
 }
 
 watch(

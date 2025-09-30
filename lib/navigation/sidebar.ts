@@ -14,7 +14,6 @@ export function buildSidebarItems(canAccessAdmin: boolean): LayoutSidebarItem[] 
       key: "apps",
       label: "layout.sidebar.items.apps",
       icon: "mdi-apps",
-      to: "/",
       children: [
         {
           key: "calendar",
