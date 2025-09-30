@@ -31,11 +31,18 @@
       class="app-drawer"
     >
       <div class="pane-scroll py-4">
-        <AppSidebar
+        <slot
+          name="left-sidebar"
           :items="sidebarItems"
           :active-key="activeSidebar"
-          @select="handleSidebarSelect"
-        />
+          :on-select="handleSidebarSelect"
+        >
+          <AppSidebar
+            :items="sidebarItems"
+            :active-key="activeSidebar"
+            @select="handleSidebarSelect"
+          />
+        </slot>
       </div>
     </v-navigation-drawer>
 
@@ -65,37 +72,45 @@
                 :eager="rightDrawer"
                 @select="handleSidebarSelect"
               >
-                <div class="flex flex-col gap-4">
-                  <ProfileSidebar
-                    :user="user"
-                    :photos="photos"
-                    :friends="friends"
-                    :friends-count="1599"
-                    :life-events="events"
-                    @edit-bio="onEditBio"
-                    @edit-details="onEditDetails"
-                    @add-featured="onAddFeatured"
-                    @view-all-photos="onViewAllPhotos"
-                    @view-all-friends="onViewAllFriends"
-                    @open-friend="openFriend"
-                    @view-all-events="onViewAllEvents"
-                    @add-event="onAddEvent"
-                  />
-                  <SidebarWeatherCard
-                    v-if="weather"
-                    :weather="weather"
-                  />
-                  <SidebarLeaderboardCard
-                    v-if="leaderboard"
-                    :title="leaderboard.title"
-                    :live-label="leaderboard.live"
-                    :participants="leaderboard.participants"
-                  />
-                  <SidebarRatingCard
-                    v-if="rating"
-                    :rating="rating"
-                  />
-                </div>
+                <slot
+                  name="right-sidebar"
+                  :weather="weather"
+                  :leaderboard="leaderboard"
+                  :rating="rating"
+                  :user="user"
+                >
+                  <div class="flex flex-col gap-4">
+                    <ProfileSidebar
+                      :user="user"
+                      :photos="photos"
+                      :friends="friends"
+                      :friends-count="1599"
+                      :life-events="events"
+                      @edit-bio="onEditBio"
+                      @edit-details="onEditDetails"
+                      @add-featured="onAddFeatured"
+                      @view-all-photos="onViewAllPhotos"
+                      @view-all-friends="onViewAllFriends"
+                      @open-friend="openFriend"
+                      @view-all-events="onViewAllEvents"
+                      @add-event="onAddEvent"
+                    />
+                    <SidebarWeatherCard
+                      v-if="weather"
+                      :weather="weather"
+                    />
+                    <SidebarLeaderboardCard
+                      v-if="leaderboard"
+                      :title="leaderboard.title"
+                      :live-label="leaderboard.live"
+                      :participants="leaderboard.participants"
+                    />
+                    <SidebarRatingCard
+                      v-if="rating"
+                      :rating="rating"
+                    />
+                  </div>
+                </slot>
               </AppSidebarRight>
             </div>
             <template #fallback>
