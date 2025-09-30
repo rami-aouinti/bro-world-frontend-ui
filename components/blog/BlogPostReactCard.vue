@@ -8,6 +8,11 @@ import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicke
 
 type Reaction = PickerReaction
 
+import {useAuthSession} from "~/stores/auth-session";
+
+type Reaction = 'like' | 'sad' | 'angry'
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const props = defineProps<{
   counts: Record<Reaction, number>
   reacts?: number
@@ -134,7 +139,7 @@ const reactionListLabel = computed(() => {
       <span  v-if="(shares ?? 0) > 0" class="ml-1">{{ shares }}</span>
     </div>
   </div>
-  <div class="reaction-bar">
+  <div v-if="isAuthenticated" class="reaction-bar">
     <!-- Actions -->
     <div class="actions">
       <ReactionPicker

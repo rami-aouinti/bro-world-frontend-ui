@@ -7,6 +7,10 @@ import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 
 type Reaction = PickerReaction
+import {useAuthSession} from "~/stores/auth-session";
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
+type Reaction = 'like' | 'haha' | 'sad' | 'angry'
 export type CommentNode = {
   id: string
   user: { firstName?: string; lastName?: string; photo?: string }
@@ -192,6 +196,7 @@ function reactionAriaLabel(node: CommentNode) {
       />
     </div>
     <comment-composer
+        v-if="isAuthenticated"
         class="mt-2"
         :placeholder="commentPlaceholder"
         :avatar="props.currentUser?.photo"

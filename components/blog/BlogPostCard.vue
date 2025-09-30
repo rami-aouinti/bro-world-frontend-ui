@@ -33,13 +33,13 @@
         @toggle-like="val => console.log('liked?', val)"
         @comment="() => console.log('open comments')"
     />
-    <div class="header">
+    <div v-if="post.totalComments > 2" class="header">
       <CommentSortMenu v-model="sortBy" />
     </div>
     <CommentThread
         :counts="{haha: 0, like: 4, sad: 2, angry: 1 }"
         :nodes="post.comments_preview || []"
-        :current-user=currentUser
+        :current-user="currentUser || []"
         @like="onLike"
         @reply="openReply"
     />
