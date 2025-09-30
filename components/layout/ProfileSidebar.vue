@@ -117,12 +117,12 @@
             class="mb-2"
           >
             <v-img
-              :src="f.avatar"
-              :alt="f.name"
+              :src="f.profile.photo"
+              :alt="f.username"
               cover
             />
           </v-avatar>
-          <div class="friend-name">{{ f.name }}</div>
+          <div class="friend-name">{{ f.firstName }} {{ f.lastName }}</div>
         </div>
       </div>
     </v-card-text>
@@ -135,7 +135,8 @@ import { useI18n } from "vue-i18n";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
 type Photo = { id?: string | number; src: string; alt?: string };
-type Friend = { id?: string | number; name: string; avatar: string };
+type Profile = { id?: string | number; title: string; photo?: string };
+type Friend = { id?: string | number; username: string; firstName: string; lastName: string; profile: Profile[] };
 type LifeEvent = { id?: string | number; title: string; date?: string; description?: string };
 
 const props = defineProps<{

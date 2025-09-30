@@ -21,76 +21,71 @@
         aria-describedby="profile-subtitle"
       >
         <v-card
-          class="pa-6"
-          rounded="xl"
-          elevation="10"
-        >
-          <v-card
             class="pa-6"
             rounded="xl"
             elevation="10"
-          >
-            <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
-              <v-avatar
+        >
+          <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
+            <v-avatar
                 size="96"
                 class="flex-shrink-0"
                 color="primary"
                 variant="tonal"
-              >
-                <v-img
+            >
+              <v-img
                   :src="avatarSrc"
                   :alt="avatarAlt"
                   cover
-                />
-              </v-avatar>
-              <div class="flex-grow-1 w-100">
-                <div
+              />
+            </v-avatar>
+            <div class="flex-grow-1 w-100">
+              <div
                   class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-3"
-                >
-                  <div>
-                    <h1
+              >
+                <div>
+                  <h1
                       id="profile-title"
                       class="text-h4 font-weight-bold mb-1"
-                    >
-                      {{ displayName }}
-                    </h1>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ usernameLabel }}
-                    </p>
-                  </div>
-                  <div
+                  >
+                    {{ displayName }}
+                  </h1>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ usernameLabel }}
+                  </p>
+                </div>
+                <div
                     class="d-flex flex-wrap align-center gap-2"
                     :aria-label="t('pages.profile.labels.roles')"
                     role="list"
-                  >
-                    <template v-if="hasRoles">
-                      <v-chip
+                >
+                  <template v-if="hasRoles">
+                    <v-chip
                         v-for="role in roles"
                         :key="role"
                         color="primary"
                         variant="tonal"
                         size="small"
                         role="listitem"
-                      >
-                        {{ role }}
-                      </v-chip>
-                    </template>
-                    <span
+                    >
+                      {{ role }}
+                    </v-chip>
+                  </template>
+                  <span
                       v-else
                       class="text-body-2 text-medium-emphasis"
-                      >{{ placeholderValue }}</span
-                    >
-                  </div>
+                  >{{ placeholderValue }}</span
+                  >
                 </div>
-                <p
+              </div>
+              <p
                   id="profile-subtitle"
                   class="text-body-1 text-medium-emphasis mt-4 mb-0"
-                >
-                  {{ t("pages.profile.subtitle") }}
-                </p>
-              </div>
+              >
+                {{ t("pages.profile.subtitle") }}
+              </p>
             </div>
-          </v-card>
+          </div>
+        </v-card>
         </header>
 
         <v-row
@@ -261,7 +256,7 @@ interface ProfileDetails {
 }
 
 interface FriendEntry {
-  user?: string | null;
+  user?: string[] | null;
   stories?: unknown[] | null;
   status?: number | null;
 }
