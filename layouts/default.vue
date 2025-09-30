@@ -34,11 +34,13 @@
         <slot
           name="left-sidebar"
           :items="sidebarItems"
+          :variant="sidebarVariant"
           :active-key="activeSidebar"
           :on-select="handleSidebarSelect"
         >
           <AppSidebar
             :items="sidebarItems"
+            :variant="sidebarVariant"
             :active-key="activeSidebar"
             @select="handleSidebarSelect"
           />
@@ -67,7 +69,7 @@
               class="pane-scroll px-3 py-4"
             >
               <AppSidebarRight
-                  :is-dark="isDark"
+                :is-dark="isDark"
                 :items="sidebarItems"
                 :active-key="activeSidebar"
                 :eager="rightDrawer"
@@ -157,7 +159,11 @@ import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
-import { ADMIN_ROLE_KEYS, buildSidebarItems } from "~/lib/navigation/sidebar";
+import {
+  ADMIN_ROLE_KEYS,
+  buildSidebarItems,
+  buildProfileSidebarItems,
+} from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import SidebarWeatherCard from "~/components/layout/SidebarWeatherCard.vue";
 import SidebarLeaderboardCard from "~/components/layout/SidebarLeaderboardCard.vue";
@@ -214,7 +220,17 @@ const canAccessAdmin = computed(() => {
   return roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
 });
 
-const sidebarItems = computed<LayoutSidebarItem[]>(() => buildSidebarItems(canAccessAdmin.value));
+const sidebarVariant = computed<"default" | "profile">(() =>
+  route.meta?.sidebarVariant === "profile" ? "profile" : "default",
+);
+
+const sidebarItems = computed<LayoutSidebarItem[]>(() => {
+  if (sidebarVariant.value === "profile") {
+    return buildProfileSidebarItems();
+  }
+
+  return buildSidebarItems(canAccessAdmin.value);
+});
 
 const activeSidebar = ref("apps");
 
@@ -258,8 +274,15 @@ watch(
       leftDrawer.value = false;
       rightDrawer.value = false;
     }
-    const matchedKey = findActiveSidebarKey(path, sidebarItems.value);
-    if (matchedKey) activeSidebar.value = matchedKey;
+    updateActiveSidebar(path, sidebarItems.value);
+  },
+  { immediate: true },
+);
+
+watch(
+  sidebarItems,
+  (items) => {
+    updateActiveSidebar(route.fullPath, items);
   },
   { immediate: true },
 );
@@ -304,6 +327,31 @@ function findActiveSidebarKey(path: string, items: LayoutSidebarItem[]): string 
 function matchesRoute(path: string, target: string) {
   if (target === "/") return path === "/" || path.startsWith("/?");
   return path === target || path.startsWith(`${target}/`) || path.startsWith(`${target}?`);
+}
+
+function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
+  const matchedKey = findActiveSidebarKey(path, items);
+  if (matchedKey) {
+    activeSidebar.value = matchedKey;
+    return;
+  }
+
+  const fallbackKey = findFirstSidebarKey(items);
+  if (fallbackKey) activeSidebar.value = fallbackKey;
+}
+
+function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
+  for (const item of items) {
+    if (item.children?.length) {
+      const childKey = findFirstSidebarKey(item.children);
+      if (childKey) return childKey;
+      continue;
+    }
+
+    return item.key;
+  }
+
+  return null;
 }
 </script>
 

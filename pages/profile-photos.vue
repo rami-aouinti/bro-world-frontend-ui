@@ -342,6 +342,7 @@ definePageMeta({
   middleware: "auth",
   title: "profile-photos",
   showRightWidgets: false,
+  sidebarVariant: "profile",
 });
 
 const { t, locale, localeProperties } = useI18n();
