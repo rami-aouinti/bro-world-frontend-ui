@@ -12,6 +12,18 @@ import {
 
 const fetchSpy = __requestFetchSpy
 
+function createDeferred<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void
+  let reject!: (reason?: unknown) => void
+
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res
+    reject = rej
+  })
+
+  return { promise, resolve, reject }
+}
+
 describe('posts store', () => {
   beforeEach(() => {
     __resetNuxtStateMocks()
@@ -110,5 +122,53 @@ describe('posts store', () => {
     expect(store.deleting.value[post1.id]).toBe(false)
     expect(store.posts.value.map((post) => post.id)).toEqual([post2.id, post1.id, post3.id])
     expect(timestampsRef!.value[post1.id]).toBeGreaterThanOrEqual(initialTimestamp)
+  })
+
+  it('deduplicates concurrent fetches with equivalent params', async () => {
+    const { usePostsStore } = await import('~/stores/posts')
+
+    const app = createSSRApp({
+      render: () => h('div'),
+    })
+
+    const pinia = createPinia()
+    app.use(pinia)
+
+    let store!: ReturnType<typeof usePostsStore>
+    app.runWithContext(() => {
+      store = usePostsStore()
+    })
+
+    const deferred = createDeferred<any>()
+    fetchSpy.mockImplementationOnce(() => deferred.promise)
+
+    const firstFetch = store.fetchPosts({
+      params: {
+        pageSize: 10,
+        filter: { category: 'news', sort: 'desc' },
+      },
+    })
+
+    const secondFetch = store.fetchPosts({
+      params: {
+        filter: { sort: 'desc', category: 'news' },
+        pageSize: 10,
+      },
+    })
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
+
+    deferred.resolve({
+      data: [],
+      page: 1,
+      limit: 10,
+      count: 0,
+      cachedAt: Date.now(),
+      revalidatedAt: null,
+      fromCache: false,
+    })
+
+    await expect(firstFetch).resolves.toEqual([])
+    await expect(secondFetch).resolves.toEqual([])
   })
 })
