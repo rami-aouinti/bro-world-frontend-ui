@@ -200,7 +200,7 @@ const showRightWidgets = computed(() => route.meta?.showRightWidgets !== false);
 const { weather, leaderboard, rating } = useRightSidebarData();
 
 const cssVars = computed(() => ({
-  "--app-bar-height": "72px",
+  "--app-bar-height": "50px",
   "--pink-shadow": isDark.value
     ? "0px 16px 32px rgba(243, 126, 205, 0.18)"
     : "0px 20px 45px rgba(243, 126, 205, 0.28)",
@@ -217,7 +217,7 @@ const cssVars = computed(() => ({
 }));
 
 const appIcons = [
-  { name: "mdi-school-outline", label: "layout.appIcons.academy" },
+  { name: "mdi-school-outline", label: "layout.appIcons.academy", size: 22, to: "/academy" },
   { name: "mdi-briefcase-outline", label: "layout.appIcons.briefcase" },
   { name: "mdi-store-outline", label: "layout.appIcons.store" },
   { name: "mdi-database", label: "layout.appIcons.database" },

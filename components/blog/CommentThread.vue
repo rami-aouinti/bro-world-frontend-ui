@@ -33,11 +33,13 @@
       <div class="meta">
         <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
         <ReactionPicker
+            v-if="isAuthenticated"
           class="like-size-sm"
           @like="emit('like', node.id)"
           @select="(r) => emit('react', { id: node.id, type: r })"
         />
         <button
+            v-if="isAuthenticated"
           class="meta__btn"
           @click="toggleReply(node.id)"
         >
@@ -110,7 +112,7 @@
       <!-- sous-commentaires (récursif) -->
       <CommentThread
         v-if="expanded[node.id] && (node.children?.length || 0) > 0"
-        :counts="{ sad: 0, like: 4, haha: 2, angry: 1 }"
+        :counts="{care: 0,love: 0,wow: 0, sad: 0, like: 4, haha: 2, angry: 1 }"
         :nodes="node.children!"
         :depth="(depth ?? 0) + 1"
         :current-user="props.currentUser"

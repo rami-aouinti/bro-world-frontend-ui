@@ -81,7 +81,7 @@ import RightControls from "./AppBar/RightControls.vue";
 import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
 import { useAuthSession } from "~/stores/auth-session";
 
-type AppIcon = { name: string; label: string };
+type AppIcon = { name: string; label: string; size?: number; to: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
 
 const props = defineProps<{
