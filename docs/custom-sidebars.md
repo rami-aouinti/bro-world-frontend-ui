@@ -25,7 +25,10 @@ Le layout par défaut expose désormais des slots nommés permettant aux pages d
         :life-events="[]"
       />
       <MyUpcomingEvents />
-      <SidebarWeatherCard v-if="weather" :weather="weather" />
+      <SidebarWeatherCard
+        v-if="weather"
+        :weather="weather"
+      />
     </template>
 
     <MyPageContent />
