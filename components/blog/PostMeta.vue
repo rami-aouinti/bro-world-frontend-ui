@@ -51,7 +51,6 @@ const props = withDefaults(
     user: BlogUser;
     defaultAvatar: string;
     publishedLabel: string;
-    isAuthenticated?: boolean;
     isAuthor?: boolean;
     isFollowing?: boolean;
     followLoading?: boolean;
@@ -65,7 +64,6 @@ const props = withDefaults(
     deleteLabel?: string;
   }>(),
   {
-    isAuthenticated: false,
     isAuthor: false,
     isFollowing: false,
     followLoading: false,

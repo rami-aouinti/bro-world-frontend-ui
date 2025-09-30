@@ -13,7 +13,7 @@
     </v-card-item>
     <v-divider />
     <v-card-text>
-      <div class="text-subtitle-2 mb-3 text-high-emphasis text-center" v-if="user.bio">{{ user.bio }}</div>
+      <div v-if="user.bio" class="text-subtitle-2 mb-3 text-high-emphasis text-center">{{ user.bio }}</div>
 
       <v-list density="compact" class="py-0">
         <v-list-item v-for="(item, i) in introItems" :key="i" :title="item.title" :subtitle="item.subtitle">

@@ -45,7 +45,7 @@
         <template #append>
           <!-- Exemple : avatar/icône custom -->
           <v-avatar size="28" class="mr-2">
-            <Icon @click="close(alert.id)" name="mdi-close" class="text-foreground"></Icon>
+            <Icon name="mdi-close" class="text-foreground" @click="close(alert.id)"></Icon>
           </v-avatar>
         </template>
       </v-alert>

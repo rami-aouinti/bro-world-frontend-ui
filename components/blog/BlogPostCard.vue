@@ -81,6 +81,9 @@ import type { BlogCommentWithReplies, BlogPost, ReactionAction, ReactionType } f
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
 import BlogPostReactCard from "~/components/blog/BlogPostReactCard.vue";
+import CommentThread, { type CommentNode } from '~/components/blog/CommentThread.vue'
+import BlogPostContent from "~/components/blog/BlogPostContent.vue";
+import CommentSortMenu from "~/components/blog/CommentSortMenu.vue";
 
 interface FeedbackState {
   type: "success" | "error";
@@ -230,9 +233,6 @@ const loginToCommentMessage = computed(() => t("blog.auth.commentRequired"));
 const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
 const previousFocusedElement = ref<HTMLElement | null>(null);
-import CommentThread, { type CommentNode } from '~/components/blog/CommentThread.vue'
-import BlogPostContent from "~/components/blog/BlogPostContent.vue";
-import CommentSortMenu from "~/components/blog/CommentSortMenu.vue";
 
 const tree = ref<CommentNode[]>([
   {

@@ -1,4 +1,34 @@
 <!-- components/CommentSortMenu.vue -->
+<template>
+  <v-menu
+      offset="10"
+      :close-on-content-click="true"
+      content-class="cs-menu"
+  >
+    <template #activator="{ props: a }">
+      <button class="cs-activator" v-bind="a" aria-haspopup="menu" :aria-expanded="undefined">
+        {{ currentLabel }}
+        <Icon name="mdi-chevron-down" size="16" class="ml-1" />
+      </button>
+    </template>
+
+    <div class="cs-bubble" role="menu" :aria-label="menuAriaLabel">
+      <div
+          v-for="opt in options"
+          :key="opt.key"
+          class="cs-item"
+          :class="{ active: opt.key === modelValue }"
+          role="menuitemradio"
+          :aria-checked="opt.key === modelValue"
+          @click="pick(opt.key)"
+      >
+        <div class="cs-title">{{ opt.title }}</div>
+        <div class="cs-sub">{{ opt.subtitle }}</div>
+      </div>
+    </div>
+  </v-menu>
+</template>
+
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -41,36 +71,6 @@ function pick(v: SortKey) {
   emit('update:modelValue', v)
 }
 </script>
-
-<template>
-  <v-menu
-      offset="10"
-      :close-on-content-click="true"
-      content-class="cs-menu"
-  >
-    <template #activator="{ props: a }">
-      <button class="cs-activator" v-bind="a" aria-haspopup="menu" :aria-expanded="undefined">
-        {{ currentLabel }}
-        <Icon name="mdi-chevron-down" size="16" class="ml-1" />
-      </button>
-    </template>
-
-    <div class="cs-bubble" role="menu" :aria-label="menuAriaLabel">
-      <div
-          v-for="opt in options"
-          :key="opt.key"
-          class="cs-item"
-          :class="{ active: opt.key === modelValue }"
-          role="menuitemradio"
-          :aria-checked="opt.key === modelValue"
-          @click="pick(opt.key)"
-      >
-        <div class="cs-title">{{ opt.title }}</div>
-        <div class="cs-sub">{{ opt.subtitle }}</div>
-      </div>
-    </div>
-  </v-menu>
-</template>
 
 <style scoped>
 .cs-activator{

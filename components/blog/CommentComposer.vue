@@ -1,22 +1,3 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-
-const props = defineProps<{ avatar?: string; placeholder?: string }>()
-const emit = defineEmits<{ (e:'submit', text:string):void }>()
-const text = ref('')
-
-const { t } = useI18n()
-
-const placeholderText = computed(() => props.placeholder ?? t('blog.comments.placeholder'))
-
-function send(){
-  if(!text.value.trim()) return
-  emit('submit', text.value.trim())
-  text.value = ''
-}
-</script>
-
 <template>
   <div class="composer">
     <v-avatar size="34" class="mr-2">
@@ -47,6 +28,25 @@ function send(){
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const props = defineProps<{ avatar?: string; placeholder?: string }>()
+const emit = defineEmits<{ (e:'submit', text:string):void }>()
+const text = ref('')
+
+const { t } = useI18n()
+
+const placeholderText = computed(() => props.placeholder ?? t('blog.comments.placeholder'))
+
+function send(){
+  if(!text.value.trim()) return
+  emit('submit', text.value.trim())
+  text.value = ''
+}
+</script>
 
 <style scoped>
 .composer{display:flex;align-items:flex-start;margin-top:12px}

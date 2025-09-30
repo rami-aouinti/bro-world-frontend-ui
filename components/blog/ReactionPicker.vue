@@ -1,35 +1,3 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-
-export type Reaction = 'like'|'love'|'care'|'haha'|'wow'|'sad'|'angry'
-const emit = defineEmits<{ (e:'select', r:Reaction):void; (e:'like'):void }>()
-const props = withDefaults(defineProps<{
-  btnSize?: 'sm'|'md'|'lg'|'xl'
-}>(), { btnSize: 'md' })
-const open = ref(false)
-let longPressTimer: number | null = null
-
-const { t } = useI18n()
-
-function onPointerDown(){
-  longPressTimer = window.setTimeout(() => (open.value = true), 350)
-}
-function onPointerUp(){
-  if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null }
-}
-
-const items = computed(() => [
-  { key:'like',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44d.png', label:t('blog.reactions.reactionTypes.like') },
-  { key:'love',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2764.png',   label:t('blog.reactions.reactionTypes.love') },
-  { key:'care',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f970.png', label:t('blog.reactions.reactionTypes.care') },
-  { key:'haha',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f606.png', label:t('blog.reactions.reactionTypes.haha') },
-  { key:'wow',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f62e.png', label:t('blog.reactions.reactionTypes.wow') },
-  { key:'sad',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f622.png', label:t('blog.reactions.reactionTypes.sad') },
-  { key:'angry', src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f620.png', label:t('blog.reactions.reactionTypes.angry') },
-] satisfies { key: Reaction; src: string; label: string }[])
-</script>
-
 <template>
   <v-menu
       v-model="open"
@@ -69,6 +37,38 @@ const items = computed(() => [
     </div>
   </v-menu>
 </template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+export type Reaction = 'like'|'love'|'care'|'haha'|'wow'|'sad'|'angry'
+const emit = defineEmits<{ (e:'select', r:Reaction):void; (e:'like'):void }>()
+const props = withDefaults(defineProps<{
+  btnSize?: 'sm'|'md'|'lg'|'xl'
+}>(), { btnSize: 'md' })
+const open = ref(false)
+let longPressTimer: number | null = null
+
+const { t } = useI18n()
+
+function onPointerDown(){
+  longPressTimer = window.setTimeout(() => (open.value = true), 350)
+}
+function onPointerUp(){
+  if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null }
+}
+
+const items = computed(() => [
+  { key:'like',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44d.png', label:t('blog.reactions.reactionTypes.like') },
+  { key:'love',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2764.png',   label:t('blog.reactions.reactionTypes.love') },
+  { key:'care',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f970.png', label:t('blog.reactions.reactionTypes.care') },
+  { key:'haha',  src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f606.png', label:t('blog.reactions.reactionTypes.haha') },
+  { key:'wow',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f62e.png', label:t('blog.reactions.reactionTypes.wow') },
+  { key:'sad',   src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f622.png', label:t('blog.reactions.reactionTypes.sad') },
+  { key:'angry', src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f620.png', label:t('blog.reactions.reactionTypes.angry') },
+] satisfies { key: Reaction; src: string; label: string }[])
+</script>
 
 <style scoped>
 .meta__btn{

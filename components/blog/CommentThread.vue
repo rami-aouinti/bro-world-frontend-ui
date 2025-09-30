@@ -1,13 +1,106 @@
 <!-- components/CommentThread.vue -->
+<template>
+  <div>
+    <div
+        v-for="node in nodes"
+        :key="node.id"
+        :style="{ marginLeft: depth > 0 ? `${46}px` : 0 }"
+    >
+      <div class="comment">
+        <v-avatar size="34" class="mr-2">
+          <v-img :src="node.user.photo || 'https://i.pravatar.cc/80?img=5'" alt=""/>
+        </v-avatar>
+        <div class="bubble">
+          <div class="bubble__inner">
+            <div class="bubble__author">{{ node.user.firstName }} {{ node.user.lastName }}</div>
+            <div class="bubble__message" dir="auto">{{ node.content }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- meta -->
+      <div class="meta">
+        <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
+        <ReactionPicker
+            class="like-size-sm"
+            @like="emit('like', node.id)"
+            @select="r => emit('react', { id: node.id, type: r })"
+
+        />
+        <button class="meta__btn" @click="toggleReply(node.id)">{{ t('blog.comments.reply') }}</button>
+        <span v-if="getReactionTotal(node) > 0" class="total">{{ getReactionTotal(node) }}</span>
+        <div class="bubblesReacts" :aria-label="reactionAriaLabel(node)">
+          <v-avatar
+              v-for="(r, i) in topReactions"
+              :key="r.type"
+              size="22"
+              class="bubbleReacts"
+              :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
+              variant="flat"
+          >
+            <!-- remplace par tes propres images si tu en as -->
+            <v-img
+:src="{
+              like:  'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
+              sad:   'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
+              angry: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png'
+            }[r.type]"
+                   alt="" cover
+            />
+          </v-avatar>
+        </div>
+      </div>
+      <div class="meta py-2">
+        <template v-if="(node.children?.length || 0) > 0">
+          <button class="meta__btn" @click="toggleExpand(node.id)">
+            <Icon v-if="expanded[node.id]" name="mdi-message">{{ `${node.children!.length} ` }}</Icon>
+            {{ expanded[node.id]
+              ? t('blog.comments.thread.hideReplies')
+              : t('blog.comments.thread.showReplies', { count: node.children!.length })
+            }}
+          </button>
+        </template>
+      </div>
+
+      <div v-if="replying[node.id]" class="reply-composer">
+        <comment-composer
+            :avatar="props.currentUser?.photo"
+            :placeholder="t('blog.comments.replyPlaceholder')"
+            @submit="t => emit('submit', t)"
+        />
+      </div>
+
+      <!-- sous-commentaires (récursif) -->
+      <CommentThread
+          v-if="expanded[node.id] && (node.children?.length || 0) > 0"
+          :counts="{sad: 0, like: 4, haha: 2, angry: 1 }"
+          :nodes="node.children!"
+          :depth="(depth ?? 0) + 1"
+          :current-user="props.currentUser"
+          @like="id => emit('like', id)"
+          @reply="(pid, text) => emit('reply', pid, text)"
+          @more="id => emit('more', id)"
+      />
+    </div>
+    <comment-composer
+        v-if="isAuthenticated"
+        class="mt-2"
+        :placeholder="commentPlaceholder"
+        :avatar="props.currentUser?.photo"
+        @submit="t => emit('submit', t)"
+    />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import CommentComposer from "~/components/blog/CommentComposer.vue";
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
+import {useAuthSession} from "~/stores/auth-session";
 
 type Reaction = PickerReaction
-import {useAuthSession} from "~/stores/auth-session";
 const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
 export type CommentNode = {
@@ -111,98 +204,6 @@ function reactionAriaLabel(node: CommentNode) {
   return t('blog.reactions.comments.reactionCount', { count: total })
 }
 </script>
-
-<template>
-  <div>
-    <div
-        v-for="node in nodes"
-        :key="node.id"
-        :style="{ marginLeft: depth > 0 ? `${46}px` : 0 }"
-    >
-      <div class="comment">
-        <v-avatar size="34" class="mr-2">
-          <v-img :src="node.user.photo || 'https://i.pravatar.cc/80?img=5'" alt=""/>
-        </v-avatar>
-        <div class="bubble">
-          <div class="bubble__inner">
-            <div class="bubble__author">{{ node.user.firstName }} {{ node.user.lastName }}</div>
-            <div class="bubble__message" dir="auto">{{ node.content }}</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- meta -->
-      <div class="meta">
-        <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
-        <ReactionPicker
-            class="like-size-sm"
-            @like="emit('like', node.id)"
-            @select="r => emit('react', { id: node.id, type: r })"
-
-        />
-        <button class="meta__btn" @click="toggleReply(node.id)">{{ t('blog.comments.reply') }}</button>
-        <span v-if="getReactionTotal(node) > 0" class="total">{{ getReactionTotal(node) }}</span>
-        <div class="bubblesReacts" :aria-label="reactionAriaLabel(node)">
-          <v-avatar
-              v-for="(r, i) in topReactions"
-              :key="r.type"
-              size="22"
-              class="bubbleReacts"
-              :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
-              variant="flat"
-          >
-            <!-- remplace par tes propres images si tu en as -->
-            <v-img :src="{
-              like:  'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
-              sad:   'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
-              angry: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png'
-            }[r.type]"
-                   alt="" cover
-            />
-          </v-avatar>
-        </div>
-      </div>
-      <div class="meta py-2">
-        <template v-if="(node.children?.length || 0) > 0">
-          <button class="meta__btn" @click="toggleExpand(node.id)">
-            <Icon v-if="expanded[node.id]" name="mdi-message">{{ `${node.children!.length} ` }}</Icon>
-            {{ expanded[node.id]
-              ? t('blog.comments.thread.hideReplies')
-              : t('blog.comments.thread.showReplies', { count: node.children!.length })
-            }}
-          </button>
-        </template>
-      </div>
-
-      <div v-if="replying[node.id]" class="reply-composer">
-        <comment-composer
-            avatar="https://i.pravatar.cc/80?img=33"
-            :placeholder="t('blog.comments.replyPlaceholder')"
-            @submit="t => emit('submit', t)"
-        />
-      </div>
-
-      <!-- sous-commentaires (récursif) -->
-      <CommentThread
-          v-if="expanded[node.id] && (node.children?.length || 0) > 0"
-          :counts="{sad: 0, like: 4, haha: 2, angry: 1 }"
-          :nodes="node.children!"
-          :depth="(depth ?? 0) + 1"
-          :current-user="props.currentUser"
-          @like="id => emit('like', id)"
-          @reply="(pid, text) => emit('reply', pid, text)"
-          @more="id => emit('more', id)"
-      />
-    </div>
-    <comment-composer
-        v-if="isAuthenticated"
-        class="mt-2"
-        :placeholder="commentPlaceholder"
-        :avatar="props.currentUser?.photo"
-        @submit="t => emit('submit', t)"
-    />
-  </div>
-</template>
 
 <style scoped>
 .comment{display:flex;align-items:flex-start;margin-top:12px}

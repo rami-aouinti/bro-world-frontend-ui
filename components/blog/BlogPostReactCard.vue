@@ -1,4 +1,68 @@
 <!-- components/ReactionBar.vue -->
+<template>
+  <div class="reaction-bar">
+    <!-- Gauche : bulles de réactions + total -->
+    <div class="left">
+      <div class="bubbles" :aria-label="reactionListLabel">
+        <v-avatar
+            v-for="(r, i) in topReactions"
+            :key="r.type"
+            size="22"
+            class="bubble"
+            :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
+            variant="flat"
+        >
+          <!-- remplace par tes propres images si tu en as -->
+          <v-img
+:src="{
+              like:  'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
+              sad:   'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
+              angry: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png'
+            }[r.type]"
+                 alt="" cover
+          />
+        </v-avatar>
+      </div>
+
+      <span v-if="reacts > 0" class="total">{{ reacts }}</span>
+    </div>
+
+    <div class="right">
+      <Icon name="mdi-chat-outline" size="18"></Icon>
+      <span v-if="(comments ?? 0) > 0" class="ml-1">{{ comments }}</span>
+      <Icon class="ml-2" name="mdi-share-outline" size="18"></Icon>
+      <span  v-if="(shares ?? 0) > 0" class="ml-1">{{ shares }}</span>
+    </div>
+  </div>
+  <div v-if="isAuthenticated" class="reaction-bar">
+    <!-- Actions -->
+    <div class="actions">
+      <ReactionPicker
+          class="like-size-lg"
+          @like="onToggleLike"
+          @select="handleSelect"
+
+      />
+      <v-btn
+          variant="text"
+          density="comfortable"
+          class="action-btn"
+          @click="$emit('comment')"
+      >
+        <Icon name="mdi-chat-outline" start></Icon>
+        {{ t('blog.posts.actions.comment') }}
+      </v-btn>
+      <v-btn
+          variant="text"
+          @click="$emit('share')"
+      >
+        <Icon name="mdi-share-outline" start></Icon>
+        {{ t('blog.posts.actions.share') }}
+      </v-btn>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -6,9 +70,9 @@ import { useI18n } from 'vue-i18n'
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 
-type Reaction = PickerReaction
-
 import {useAuthSession} from "~/stores/auth-session";
+
+type Reaction = PickerReaction
 
 const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
@@ -103,69 +167,6 @@ const reactionListLabel = computed(() => {
   return t('blog.reactions.posts.reactLabel')
 })
 </script>
-
-<template>
-  <div class="reaction-bar">
-    <!-- Gauche : bulles de réactions + total -->
-    <div class="left">
-      <div class="bubbles" :aria-label="reactionListLabel">
-        <v-avatar
-            v-for="(r, i) in topReactions"
-            :key="r.type"
-            size="22"
-            class="bubble"
-            :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
-            variant="flat"
-        >
-          <!-- remplace par tes propres images si tu en as -->
-          <v-img :src="{
-              like:  'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
-              sad:   'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
-              angry: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png'
-            }[r.type]"
-                 alt="" cover
-          />
-        </v-avatar>
-      </div>
-
-      <span class="total" v-if="reacts > 0">{{ reacts }}</span>
-    </div>
-
-    <div class="right">
-      <Icon name="mdi-chat-outline" size="18"></Icon>
-      <span v-if="(comments ?? 0) > 0" class="ml-1">{{ comments }}</span>
-      <Icon class="ml-2" name="mdi-share-outline" size="18"></Icon>
-      <span  v-if="(shares ?? 0) > 0" class="ml-1">{{ shares }}</span>
-    </div>
-  </div>
-  <div v-if="isAuthenticated" class="reaction-bar">
-    <!-- Actions -->
-    <div class="actions">
-      <ReactionPicker
-          class="like-size-lg"
-          @like="onToggleLike"
-          @select="handleSelect"
-
-      />
-      <v-btn
-          variant="text"
-          density="comfortable"
-          class="action-btn"
-          @click="$emit('comment')"
-      >
-        <Icon name="mdi-chat-outline" start></Icon>
-        {{ t('blog.posts.actions.comment') }}
-      </v-btn>
-      <v-btn
-          variant="text"
-          @click="$emit('share')"
-      >
-        <Icon name="mdi-share-outline" start></Icon>
-        {{ t('blog.posts.actions.share') }}
-      </v-btn>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .reaction-bar{

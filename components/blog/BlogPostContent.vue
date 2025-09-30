@@ -1,3 +1,15 @@
+<template>
+  <section class="space-y-2 py-4 my-3 px-2" style="max-width: 590px;">
+    <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
+      {{ props.title }}
+    </h2>
+    <p v-if="props.summary" class="text-base leading-relaxed text-slate-500">
+      {{ props.summary }}
+    </p>
+    <div v-html="safeHtml"></div>
+  </section>
+</template>
+
 <script setup lang="ts">
 import DOMPurify from 'dompurify'
 
@@ -44,18 +56,6 @@ const safeHtml = DOMPurify.sanitize(rawHtml, {
   ALLOWED_ATTR: ALLOWED_ATTR
 })
 </script>
-
-<template>
-  <section class="space-y-2 py-4 my-3 px-2" style="max-width: 590px;">
-    <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
-      {{ props.title }}
-    </h2>
-    <p v-if="props.summary" class="text-base leading-relaxed text-slate-500">
-      {{ props.summary }}
-    </p>
-    <div v-html="safeHtml"></div>
-  </section>
-</template>
 
 <style scoped>
 

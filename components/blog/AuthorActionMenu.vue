@@ -51,9 +51,9 @@
       </transition>
     </div>
     <v-btn
+        v-else-if="!isFollowing"
         variant="text"
-        color="primary"
-      v-else-if="!isFollowing"
+      color="primary"
       :aria-label="followAriaLabel"
       :disabled="followLoading"
       :data-test="followButtonTestId"
