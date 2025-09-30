@@ -10,7 +10,7 @@
           size="small"
           variant="text"
           color="primary"
-          @click="$emit('edit-bio')"
+          to="/profile-edit"
         >
           {{ t("layout.profileSidebar.editBio") }}
         </v-btn>
@@ -46,7 +46,7 @@
           block
           color="primary"
           variant="tonal"
-          @click="$emit('edit-details')"
+          to="/profile-edit"
         >
           {{ t("layout.profileSidebar.editDetails") }}
         </v-btn>
@@ -65,7 +65,7 @@
           size="small"
           variant="text"
           color="primary"
-          @click="$emit('view-all-photos')"
+          to="/profile-photos"
         >
           {{ t("layout.profileSidebar.viewAllPhotos") }}
         </v-btn>
@@ -98,7 +98,7 @@
           size="small"
           variant="text"
           color="primary"
-          @click="$emit('view-all-friends')"
+          to="/profile-friends"
         >
           {{ t("layout.profileSidebar.viewAllFriends") }}
         </v-btn>
