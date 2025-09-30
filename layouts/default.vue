@@ -81,21 +81,6 @@
                   :user="user"
                 >
                   <div class="flex flex-col gap-4">
-                    <ProfileSidebar
-                      :user="user"
-                      :photos="photos"
-                      :friends="friends"
-                      :friends-count="1599"
-                      :life-events="events"
-                      @edit-bio="onEditBio"
-                      @edit-details="onEditDetails"
-                      @add-featured="onAddFeatured"
-                      @view-all-photos="onViewAllPhotos"
-                      @view-all-friends="onViewAllFriends"
-                      @open-friend="openFriend"
-                      @view-all-events="onViewAllEvents"
-                      @add-event="onAddEvent"
-                    />
                     <SidebarWeatherCard
                       v-if="weather"
                       :weather="weather"
@@ -177,7 +162,6 @@ import { useAuthSession } from "~/stores/auth-session";
 import SidebarWeatherCard from "~/components/layout/SidebarWeatherCard.vue";
 import SidebarLeaderboardCard from "~/components/layout/SidebarLeaderboardCard.vue";
 import SidebarRatingCard from "~/components/layout/SidebarRatingCard.vue";
-import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
 
 const AppSidebarRight = defineAsyncComponent({
   loader: () => import("~/components/layout/AppSidebarRight.vue"),
@@ -235,46 +219,7 @@ const sidebarItems = computed<LayoutSidebarItem[]>(() => buildSidebarItems(canAc
 const activeSidebar = ref("apps");
 
 /** Données de démonstration pour ProfileSidebar */
-const user = {
-  name: "Rami Aouinti",
-  bio: "عامل الناس بأخلاقك لا بأخلاقهم",
-  livesIn: "Köln",
-  from: "Tunis",
-  schools: [
-    "Hat hier studiert: INSAT",
-    "Ist hier zur Schule gegangen: Lycée el Menazah 6",
-    "Hat hier studiert: Hochschulenzentrum - Beuth Hochschule für Technik Berlin",
-  ],
-};
-
-const photos = Array.from({ length: 12 }).map((_, i) => ({
-  src: `https://picsum.photos/seed/p${i}/300/300`,
-  alt: `photo ${i}`,
-}));
-
-const friends = [
-  { name: "Nihal Rmili", avatar: "https://i.pravatar.cc/150?img=5" },
-  { name: "Ahlam Chermiti", avatar: "https://i.pravatar.cc/150?img=6" },
-  { name: "Oussama Bacha", avatar: "https://i.pravatar.cc/150?img=7" },
-  { name: "Wafâ Mahdaoui", avatar: "https://i.pravatar.cc/150?img=8" },
-  { name: "Hiba Souab", avatar: "https://i.pravatar.cc/150?img=9" },
-  { name: "Nedra K.", avatar: "https://i.pravatar.cc/150?img=10" },
-  { name: "Mongi Souab", avatar: "https://i.pravatar.cc/150?img=11" },
-  { name: "Sana Boualima", avatar: "https://i.pravatar.cc/150?img=12" },
-  { name: "Friend 9", avatar: "https://i.pravatar.cc/150?img=13" },
-];
-
-const events = [{ title: "Studium abgeschlossen: INSAT", date: "Dezember 2015", description: "" }];
-
-function onEditBio() {}
-function onEditDetails() {}
-function onAddFeatured() {}
-function onViewAllPhotos() {}
-function onViewAllFriends() {}
-type Friend = (typeof friends)[number];
-function openFriend(_friend: Friend) {}
-function onViewAllEvents() {}
-function onAddEvent() {}
+const user = computed(() => auth.currentUser.value ?? null);
 
 /** ✅ Règle d’affichage du contenu: gauche ouverte ET (droite ouverte si demandée) */
 const areSidebarsVisible = computed(() => {
