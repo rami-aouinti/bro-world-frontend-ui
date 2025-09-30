@@ -19,60 +19,33 @@
         {{ sessionMessage }}
       </v-alert>
 
-      <label :class="fieldContainerClasses">
-        <Icon
-          name="mdi-account-circle-outline"
-          size="24"
-          class="login-field__icon"
-        />
-        <input
+      <v-text-field
+          variant="outlined"
+          rounded
           v-model="username"
           :placeholder="t('auth.usernameOrEmail')"
-          class="login-field__input"
+          class="login-field__input text-foreground"
           :class="fieldAlignment"
           autocomplete="username"
           required
+          color="primary"
           :disabled="isDisabled"
           @input="handleFieldInput"
-        />
-        <Icon
-          name="mdi-emoticon-happy-outline"
-          size="22"
-          class="login-field__addon"
-        />
-      </label>
-
-      <label :class="fieldContainerClasses">
-        <Icon
-          name="mdi-lock-outline"
-          size="22"
-          class="login-field__icon"
-        />
-        <input
+      />
+      <v-text-field
+          variant="outlined"
+          rounded
           v-model="password"
           :type="showPassword ? 'text' : 'password'"
           :placeholder="t('auth.password')"
-          class="login-field__input"
+          class="login-field__input text-foreground"
           :class="fieldAlignment"
           autocomplete="current-password"
           required
+          color="primary"
           :disabled="isDisabled"
           @input="handleFieldInput"
-        />
-        <button
-          type="button"
-          class="login-field__action"
-          :aria-label="showPassword ? hidePasswordLabel : showPasswordLabel"
-          :disabled="isDisabled"
-          @click="togglePassword"
-        >
-          <Icon
-            :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-            size="22"
-          />
-        </button>
-      </label>
-
+      />
       <p
         v-if="formError"
         class="login-form__error"
@@ -93,7 +66,7 @@
         </NuxtLink>
       </div>
 
-      <GradientButton
+      <button
         type="submit"
         class="login-form__submit"
         :disabled="isDisabled"
@@ -104,7 +77,7 @@
           size="20"
         />
         <span v-else>{{ t("auth.signIn") }}</span>
-      </GradientButton>
+      </button>
 
       <p
         class="login-form__signup"
@@ -306,14 +279,13 @@ async function handleSubmit() {
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 1rem;
+  font-size: 0.6rem;
   font-weight: 500;
-  color: rgb(30, 41, 59);
   outline: none;
 }
 
 .login-form--compact .login-field__input {
-  font-size: 0.9rem;
+  font-size: 0.6rem;
 }
 
 .login-field__input::placeholder {

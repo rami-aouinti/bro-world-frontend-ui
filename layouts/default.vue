@@ -67,6 +67,7 @@
               class="pane-scroll px-3 py-4"
             >
               <AppSidebarRight
+                  :is-dark="isDark"
                 :items="sidebarItems"
                 :active-key="activeSidebar"
                 :eager="rightDrawer"
@@ -166,7 +167,6 @@
 
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent } from "vue";
-import { useCookieColorMode } from "#imports";
 import { useDisplay } from "vuetify";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";

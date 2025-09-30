@@ -135,7 +135,7 @@
     "Account": "Compte",
     "Login": "Connexion",
     "Register": "Inscription",
-    "usernameOrEmail": "Adresse e-mail ou nom d'utilisateur",
+    "usernameOrEmail": "Adresse e-mail",
     "password": "Mot de passe",
     "showPassword": "Afficher le mot de passe",
     "hidePassword": "Masquer le mot de passe",

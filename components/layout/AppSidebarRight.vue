@@ -19,9 +19,7 @@
         refresh
       />
       <div class="sidebar-login-card__content">
-        <h2 class="sidebar-login-card__title">Bro World</h2>
-        <p class="sidebar-login-card__subtitle">{{ t("auth.socialSubtitle") }}</p>
-
+        <h2 class="sidebar-login-card__title text-foreground">Bro World</h2>
         <AuthSocial
           class="sidebar-login-card__socials"
           size="compact"
@@ -79,16 +77,18 @@ const props = withDefaults(
     items: SidebarItem[];
     activeKey: string;
     sticky?: boolean;
+    isDark?: boolean;
     eager?: boolean;
   }>(),
   {
     sticky: true,
     eager: false,
+    isDark: false,
   },
 );
 
 const sticky = computed(() => props.sticky);
-const isDark = computed(() => useCookieColorMode().value === "dark");
+const isDark = computed(() => props.isDark);
 const auth = useAuthSession();
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const { t } = useI18n();
@@ -167,7 +167,7 @@ function handleSocialRedirect(provider: SocialProvider) {
 @reference "../../assets/css/tailwind.css";
 
 .app-card {
-  padding: 4px 16px;
+  padding: 30px 16px;
 }
 
 .app-sidebar {
@@ -185,7 +185,6 @@ function handleSocialRedirect(provider: SocialProvider) {
   overflow: hidden;
   border-radius: 20px;
   padding: 1.75rem 1.25rem;
-  background: linear-gradient(180deg, rgba(248, 250, 252, 0.95), rgba(255, 255, 255, 0.9));
   box-shadow:
     0 20px 45px rgba(236, 72, 153, 0.2),
     0 14px 30px rgba(15, 23, 42, 0.12);
@@ -209,7 +208,6 @@ function handleSocialRedirect(provider: SocialProvider) {
   margin: 0;
   font-size: 1.6rem;
   font-weight: 800;
-  color: rgb(15, 23, 42);
   text-align: center;
 }
 

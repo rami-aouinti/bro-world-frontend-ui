@@ -354,7 +354,7 @@
     "Account": "Cuenta",
     "Login": "Iniciar sesión",
     "Register": "Registrarse",
-    "usernameOrEmail": "Correo electrónico o nombre de usuario",
+    "usernameOrEmail": "Correo electrónico",
     "password": "Contraseña",
     "showPassword": "Mostrar contraseña",
     "hidePassword": "Ocultar contraseña",
