@@ -2,6 +2,7 @@
   <teleport to="body">
     <transition name="fade-scale">
       <div
+          v-if="isVisible"
           class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
           role="alertdialog"
           :aria-label="title"
@@ -64,6 +65,7 @@ const emit = defineEmits<{
 }>();
 
 const dialogRef = ref<HTMLDivElement | null>(null);
+const isVisible = ref(true);
 
 const { deleteLoading, handleDeletePost } = usePostEditing(toRef(props, "post"));
 
@@ -74,6 +76,11 @@ onMounted(() => {
 });
 
 function emitClose() {
+  if (!isVisible.value) {
+    return;
+  }
+
+  isVisible.value = false;
   emit("close");
 }
 
@@ -81,6 +88,7 @@ async function handleDelete() {
   const success = await handleDeletePost();
 
   if (success) {
+    isVisible.value = false;
     emit("deleted");
   }
 }

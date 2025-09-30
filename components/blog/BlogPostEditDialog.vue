@@ -2,6 +2,7 @@
   <teleport to="body">
     <transition name="fade-scale">
       <div
+          v-if="isVisible"
           class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
           aria-modal="true"
           role="dialog"
@@ -93,6 +94,7 @@ const { t } = useI18n();
 
 const dialogRef = ref<HTMLDivElement | null>(null);
 const titleRef = ref<HTMLInputElement | null>(null);
+const isVisible = ref(true);
 
 const { editForm, saveLoading, handleSaveEdit, syncFormFromPost } = usePostEditing(toRef(props, "post"));
 
@@ -105,6 +107,11 @@ onMounted(() => {
 });
 
 function emitClose() {
+  if (!isVisible.value) {
+    return;
+  }
+
+  isVisible.value = false;
   emit("close");
 }
 
@@ -112,6 +119,7 @@ async function handleSubmit() {
   const success = await handleSaveEdit();
 
   if (success) {
+    isVisible.value = false;
     emit("saved");
   }
 }

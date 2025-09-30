@@ -30,19 +30,21 @@
         :comments="post.totalComments"
         :shares="1"
         :liked="false"
-        @toggle-like="val => console.log('liked?', val)"
-        @comment="() => console.log('open comments')"
+        @toggle-like="handleTogglePostReaction"
+        @comment="handleCommentButtonClick"
     />
     <div v-if="post.totalComments > 2" class="header">
       <CommentSortMenu v-model="sortBy" />
     </div>
-    <CommentThread
-        :counts="{haha: 0, like: 4, sad: 2, angry: 1 }"
-        :nodes="post.comments_preview || []"
-        :current-user="currentUser || []"
-        @like="onLike"
-        @reply="openReply"
-    />
+    <div ref="commentsSectionRef">
+      <CommentThread
+          :counts="{haha: 0, like: 4, sad: 2, angry: 1 }"
+          :nodes="post.comments_preview || []"
+          :current-user="currentUser || []"
+          @like="handleCommentLike"
+          @reply="openReply"
+      />
+    </div>
   </section>
 
   <component
@@ -142,14 +144,19 @@ const sortBy = ref<'relevant'|'newest'|'all'>('relevant')
 
 const sorted = computed(() => {
   const arr = [...comments.value]
-  if (sortBy.value === 'newest') return arr.sort((a,b)=> b.createdAt - a.createdAt)
-  if (sortBy.value === 'relevant') {
-    return arr.sort((a,b)=>{
-      const score = (c:Comment)=>
-          (c.isFriend?1000:0) + c.likes*5 + c.replies*8 + (Date.now()-c.createdAt ? 0 : 0)
-      return score(b) - score(a)
-    })
+
+  if (sortBy.value === 'newest') {
+    return arr.sort((a, b) => b.createdAt - a.createdAt)
   }
+
+  if (sortBy.value === 'relevant') {
+    function score(comment: Comment) {
+      return (comment.isFriend ? 1000 : 0) + comment.likes * 5 + comment.replies * 8
+    }
+
+    return arr.sort((a, b) => score(b) - score(a))
+  }
+
   return arr
 })
 function formatNumber(value: number | null | undefined) {
@@ -265,7 +272,18 @@ const tree = ref<CommentNode[]>([
   }
 ])
 
-function onLike(id: string){ console.log('like:', id) }
+function handleCommentLike(commentId: string) {
+  void handleCommentReaction(commentId, "like").catch((error: unknown) => {
+    const message = error instanceof Error ? error.message : String(error ?? "")
+
+    $notify({
+      type: "error",
+      title: t("blog.comments.reactionError"),
+      message: message || t("blog.comments.reactionError"),
+      timeout: null,
+    })
+  })
+}
 const BlogPostEditDialog = defineAsyncComponent({
   loader: () => import("~/components/blog/BlogPostEditDialog.vue"),
   suspensible: false,
@@ -356,6 +374,14 @@ async function handleTogglePostReaction() {
   } finally {
     postReacting.value = false;
   }
+}
+
+function handleCommentButtonClick() {
+  requestComments();
+
+  nextTick(() => {
+    commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
 }
 
 async function handleCommentSubmit() {

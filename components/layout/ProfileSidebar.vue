@@ -87,6 +87,7 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 type IntroItem = { icon: string; title: string; subtitle?: string }
@@ -106,6 +107,14 @@ const props = defineProps<{
   friends: Friend[]
   friendsCount?: number
   lifeEvents: LifeEvent[]
+}>()
+
+defineEmits<{
+  (e: 'edit-bio'): void
+  (e: 'edit-details'): void
+  (e: 'view-all-photos'): void
+  (e: 'view-all-friends'): void
+  (e: 'open-friend', friend: Friend): void
 }>()
 
 const { t } = useI18n()

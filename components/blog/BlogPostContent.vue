@@ -6,11 +6,12 @@
     <p v-if="props.summary" class="text-base leading-relaxed text-slate-500">
       {{ props.summary }}
     </p>
-    <div v-html="safeHtml"></div>
+    <div ref="contentEl"></div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue'
 import DOMPurify from 'dompurify'
 
 const props = defineProps<{
@@ -19,7 +20,7 @@ const props = defineProps<{
   content?: string
 }>()
 
-const rawHtml = props.content || ''
+const rawHtml = computed(() => props.content ?? '')
 const ALLOWED_TAGS = [
   // texte & inline
   'p','div','span','strong','b','em','i','u','s','sub','sup','small','mark','abbr','kbd','code','pre',
@@ -51,10 +52,28 @@ const ALLOWED_ATTR = [
   'datetime','start','value'
 ];
 
-const safeHtml = DOMPurify.sanitize(rawHtml, {
-  ALLOWED_TAGS: ALLOWED_TAGS,
-  ALLOWED_ATTR: ALLOWED_ATTR
-})
+const contentEl = ref<HTMLElement | null>(null)
+
+const safeHtml = computed(() =>
+  DOMPurify.sanitize(rawHtml.value, {
+    ALLOWED_TAGS,
+    ALLOWED_ATTR,
+  }),
+)
+
+function updateContent(value: string) {
+  if (contentEl.value) {
+    contentEl.value.innerHTML = value
+  }
+}
+
+watch(
+  safeHtml,
+  (value) => {
+    updateContent(value)
+  },
+  { immediate: true },
+)
 </script>
 
 <style scoped>
