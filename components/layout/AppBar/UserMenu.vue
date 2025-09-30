@@ -18,6 +18,7 @@
         v-for="item in props.items"
         :key="item.title"
         :title="item.title"
+        :to="item.to"
         :disabled="item.action === 'logout' && props.loggingOut"
         @click="emit('select', item)"
       >
