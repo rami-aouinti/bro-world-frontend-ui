@@ -10,7 +10,6 @@ type Reaction = PickerReaction
 
 import {useAuthSession} from "~/stores/auth-session";
 
-type Reaction = 'like' | 'sad' | 'angry'
 const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const props = defineProps<{

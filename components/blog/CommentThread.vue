@@ -10,7 +10,6 @@ type Reaction = PickerReaction
 import {useAuthSession} from "~/stores/auth-session";
 const auth = useAuthSession()
 const isAuthenticated = computed(() => auth.isAuthenticated.value)
-type Reaction = 'like' | 'haha' | 'sad' | 'angry'
 export type CommentNode = {
   id: string
   user: { firstName?: string; lastName?: string; photo?: string }
