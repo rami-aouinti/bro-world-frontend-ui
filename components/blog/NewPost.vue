@@ -84,6 +84,7 @@ import { computed, ref } from 'vue'
 import { useI18n, useNuxtApp } from '#imports'
 import { useAuthStore } from '~/composables/useAuthStore'
 import { defineAsyncComponentWithVendorStyles } from '~/lib/material-dashboard-vendors'
+import {useAuthSession} from "~/stores/auth-session";
 
 const NewPostDialog = defineAsyncComponentWithVendorStyles(() => import('./NewPostDialog.vue'))
 
@@ -110,8 +111,8 @@ const emit = defineEmits<{
 const dialog = ref(false)
 const { t } = useI18n()
 const { $notify } = useNuxtApp()
-const authStore = useAuthStore()
-const isAuthenticated = computed(() => authStore.isAuthenticated.value)
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 
 const placeholderText = computed(() => props.placeholder ?? t('blog.newPost.placeholder', { name: props.userName }))
 const quickActions = computed(() => [

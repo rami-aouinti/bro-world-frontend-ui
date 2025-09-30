@@ -54,13 +54,15 @@ import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
+import {useAuthSession} from "~/stores/auth-session";
 
 definePageMeta({
   showRightWidgets: true,
 });
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
-const { isAuthenticated } = useAuthStore();
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const user = {
   name: 'Rami Aouinti',
   avatarUrl: 'https://bro-world-space.com/img/person.png',

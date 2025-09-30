@@ -10,7 +10,7 @@
         />
       </div>
       <div class="space-y-1">
-        <p class="text-sm font-semibold leading-tight text-slate-900">
+        <p class="text-sm font-semibold leading-tight text-foreground">
           {{ user.firstName }} {{ user.lastName }}
         </p>
         <p class="text-xs text-slate-500">
@@ -44,6 +44,7 @@
 import { computed } from "vue";
 import AuthorActionMenu from "~/components/blog/AuthorActionMenu.vue";
 import type { BlogUser } from "~/lib/mock/blog";
+import {useAuthSession} from "~/stores/auth-session";
 
 const props = withDefaults(
   defineProps<{
@@ -85,7 +86,8 @@ const emit = defineEmits<{
   (e: "delete", event: Event): void;
 }>();
 
-const isAuthenticated = computed(() => props.isAuthenticated);
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);

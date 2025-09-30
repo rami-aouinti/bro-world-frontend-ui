@@ -50,10 +50,10 @@
         </div>
       </transition>
     </div>
-    <button
+    <v-btn
+        variant="text"
+        color="primary"
       v-else-if="!isFollowing"
-      type="button"
-      :class="variantClasses.followButton"
       :aria-label="followAriaLabel"
       :disabled="followLoading"
       :data-test="followButtonTestId"
@@ -64,7 +64,7 @@
         <span>{{ followLoadingLabel }}</span>
       </span>
       <span v-else>{{ followLabel }}</span>
-    </button>
+    </v-btn>
     <span
       v-else
       :class="variantClasses.followingChip"
@@ -79,6 +79,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
+import {useAuthSession} from "~/stores/auth-session";
 
 type Variant = "post" | "comment";
 
@@ -201,7 +202,8 @@ const menuPanel = ref<HTMLDivElement | null>(null);
 const editButton = ref<HTMLButtonElement | null>(null);
 const deleteButton = ref<HTMLButtonElement | null>(null);
 
-const isAuthenticated = computed(() => props.isAuthenticated);
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);

@@ -17,10 +17,16 @@
         :aria-live="ariaLive(alert.type)"
         border="start"
         prominent
-        density="comfortable"
+        density="compact"
         tabindex="-1"
         class="alert-panel__item"
       >
+        <template #prepend>
+          <!-- Exemple : avatar/icône custom -->
+          <v-avatar size="28" class="mr-2">
+            <Icon name="mdi-shield-alert" class="text-foreground"></Icon>
+          </v-avatar>
+        </template>
         <div class="alert-panel__content">
           <div class="alert-panel__message">{{ alert.message }}</div>
           <div v-if="alert.actions?.length" class="alert-panel__actions">
@@ -35,17 +41,13 @@
               {{ action.label }}
             </v-btn>
           </div>
-          <v-btn
-            class="alert-panel__close"
-            icon
-            variant="text"
-            size="small"
-            :aria-label="$t('common.close')"
-            @click="close(alert.id)"
-          >
-            <Icon name="mdi-close" />
-          </v-btn>
         </div>
+        <template #append>
+          <!-- Exemple : avatar/icône custom -->
+          <v-avatar size="28" class="mr-2">
+            <Icon @click="close(alert.id)" name="mdi-close" class="text-foreground"></Icon>
+          </v-avatar>
+        </template>
       </v-alert>
     </transition-group>
   </div>
@@ -176,7 +178,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .alert-panel {
   position: fixed;
-  inset-block-start: 80px;
+  inset-block-start: 50px;
   inset-inline-end: 16px;
   width: min(420px, calc(100vw - 24px));
   z-index: 2000;

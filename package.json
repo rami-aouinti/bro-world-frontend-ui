@@ -40,6 +40,7 @@
     "cobe": "^0.6.4",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.18",
+    "dompurify": "^3.2.7",
     "dotted-map": "^2.2.3",
     "eslint-plugin-nuxt": "^4.0.0",
     "event-source-polyfill": "^1.*",

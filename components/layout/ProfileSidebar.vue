@@ -5,7 +5,7 @@
   >
     <v-card-item>
       <div class="d-flex align-center justify-space-between">
-        <div class="text-h6">{{ user.name }}</div>
+        <div class="text-h6 text-foreground">{{ user.name }}</div>
         <v-btn size="small" variant="text" color="primary" @click="$emit('edit-bio')">
           {{ t('layout.profileSidebar.editBio') }}
         </v-btn>
@@ -35,7 +35,7 @@
   >
     <v-card-item>
       <div class="d-flex align-center justify-space-between">
-        <div class="text-subtitle-1 font-weight-semibold">{{ t('layout.profileSidebar.photosTitle') }}</div>
+        <div class="text-subtitle-1 font-weight-semibold text-foreground">{{ t('layout.profileSidebar.photosTitle') }}</div>
         <v-btn size="small" variant="text" color="primary" @click="$emit('view-all-photos')">
           {{ t('layout.profileSidebar.viewAllPhotos') }}
         </v-btn>
@@ -60,7 +60,7 @@
   >
     <v-card-item>
       <div class="d-flex align-center justify-space-between">
-        <div class="text-subtitle-1 font-weight-semibold">
+        <div class="text-subtitle-1 font-weight-semibold text-foreground">
           {{ t('layout.profileSidebar.friendsTitle') }} <span class="text-medium-emphasis">· {{ friendsCount }}</span>
         </div>
         <v-btn size="small" variant="text" color="primary" @click="$emit('view-all-friends')">

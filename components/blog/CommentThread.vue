@@ -1,0 +1,185 @@
+<!-- components/CommentThread.vue -->
+<script setup lang="ts">
+import { reactive, ref, computed } from 'vue'
+import CommentComposer from "~/components/blog/CommentComposer.vue";
+import ReactionPicker from "~/components/blog/ReactionPicker.vue";
+
+type Reaction = 'like' | 'haha' | 'sad' | 'angry'
+export type CommentNode = {
+  id: string
+  user: { firstName?: string; lastName?: string; photo?: string }
+  content: string
+  publishedAt: Date | string | number
+  reactions?: Partial<Record<Reaction, number>>
+  children?: CommentNode[]
+}
+
+defineOptions({ name: 'CommentThread' })
+
+const props = defineProps<{
+  counts: Record<Reaction, number>
+  nodes: CommentNode[]
+  depth?: number
+  currentUser?: { firstName?: string; lastName?: string; photo?: string }
+}>()
+
+const emit = defineEmits<{
+  (e:'like', id:string): void
+  (e:'reply', parentId:string, text:string): void
+  (e:'more', id:string): void
+}>()
+
+const depth = computed(() => props.depth ?? 0)
+const bubbleOrder: Reaction[] = ['like', 'sad', 'angry']
+const topReactions = computed(() =>
+    bubbleOrder
+        .map(type => ({ type, count: props.counts?.[type] ?? 0 }))
+        .filter(r => r.count > 0)
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 3)
+)
+// états UI par id
+const expanded = reactive<Record<string, boolean>>({})
+const replying = reactive<Record<string, boolean>>({})
+const replyText = reactive<Record<string, string>>({})
+
+function toggleExpand(id: string){ expanded[id] = !expanded[id] }
+function toggleReply(id: string){ replying[id] = !replying[id] }
+function formatTime(d: Date | string | number) {
+  const date = new Date(d)
+  const diff = (Date.now() - date.getTime()) / 1000
+  if (diff < 60) return 'Jetzt'
+  if (diff < 3600) return `${Math.floor(diff / 60)} Min.`
+  if (diff < 86400) return `${Math.floor(diff / 3600)} Std.`
+  return date.toLocaleDateString()
+}
+</script>
+
+<template>
+  <div>
+    <div
+        v-for="node in nodes"
+        :key="node.id"
+        :style="{ marginLeft: depth > 0 ? `${46}px` : 0 }"
+    >
+      <div class="comment">
+        <v-avatar size="34" class="mr-2">
+          <v-img :src="node.user.photo || 'https://i.pravatar.cc/80?img=5'" alt=""/>
+        </v-avatar>
+        <div class="bubble">
+          <div class="bubble__inner">
+            <div class="bubble__author">{{ node.user.firstName }} {{ node.user.lastName }}</div>
+            <div class="bubble__message" dir="auto">{{ node.content }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- meta -->
+      <div class="meta">
+        <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
+        <ReactionPicker
+            class="like-size-sm"
+            @like="emit('like', node.id)"
+            @select="r => emit('react', { id: node.id, type: r })"
+
+        />
+        <button class="meta__btn" @click="toggleReply(node.id)">Antworten</button>
+        <span class="total">5</span>
+        <div class="bubblesReacts" aria-label="Reaktionen">
+          <v-avatar
+              v-for="(r, i) in topReactions"
+              :key="r.type"
+              size="22"
+              class="bubbleReacts"
+              :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
+              variant="flat"
+          >
+            <!-- remplace par tes propres images si tu en as -->
+            <v-img :src="{
+              like:  'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
+              sad:   'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
+              angry: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png'
+            }[r.type]"
+                   alt="" cover
+            />
+          </v-avatar>
+        </div>
+      </div>
+      <div class="meta py-2">
+        <template v-if="(node.children?.length || 0) > 0">
+          <button class="meta__btn" @click="toggleExpand(node.id)">
+            <Icon v-if="expanded[node.id]" name="mdi-message">{{ `${node.children!.length} ` }}</Icon>
+            {{ expanded[node.id] ? 'Weniger Antworten' : `Alle ${node.children!.length} Antworten anzeigen` }}
+          </button>
+        </template>
+      </div>
+
+      <div v-if="replying[node.id]" class="reply-composer">
+        <comment-composer
+            avatar="https://i.pravatar.cc/80?img=33"
+            @submit="t => emit('submit', t)"
+        />
+      </div>
+
+      <!-- sous-commentaires (récursif) -->
+      <CommentThread
+          v-if="expanded[node.id] && (node.children?.length || 0) > 0"
+          :counts="{sad: 0, like: 4, haha: 2, angry: 1 }"
+          :nodes="node.children!"
+          :depth="(depth ?? 0) + 1"
+          :current-user="props.currentUser"
+          @like="id => emit('like', id)"
+          @reply="(pid, text) => emit('reply', pid, text)"
+          @more="id => emit('more', id)"
+      />
+    </div>
+    <comment-composer
+        class="mt-2"
+        :placeholder="'Als ' + props.currentUser.firstName + ' ' + props.currentUser.lastName + ' kommentieren'"
+        :avatar="props.currentUser.photo"
+        @submit="t => emit('submit', t)"
+    />
+  </div>
+</template>
+
+<style scoped>
+.comment{display:flex;align-items:flex-start;margin-top:12px}
+.bubblesReacts{
+  position:relative;
+  height:22px;
+  width:60px; /* s’adapte à 3 bulles chevauchées */
+}
+.bubbleReacts{
+  position:absolute;
+  top:0;
+  border:2px solid var(--v-theme-surface); /* anneau blanc */
+  border-radius:9999px;
+  overflow:hidden;
+  box-shadow:0 0 0 1px rgba(0,0,0,.04);
+}
+.bubble{
+  display:flex;gap:8px;align-items:flex-start
+}
+.bubble__inner{
+  background:rgba(var(--v-theme-on-surface),0.06);
+  border-radius:18px;
+  padding:8px 12px;
+  max-width:680px;
+}
+.bubble__author{font-weight:700;margin-bottom:2px}
+.bubble__message{white-space:pre-wrap;word-break:break-word}
+.meta{
+  display:flex;align-items:center;gap:10px;
+  margin-left:46px;flex-wrap:wrap
+}
+.meta__time{color:rgba(var(--v-theme-on-surface),0.6);font-size:.8rem}
+.meta__btn{
+  background:none;border:0;padding:0;cursor:pointer;
+  color:rgba(var(--v-theme-on-surface),0.85);font-size:.85rem;font-weight:600
+}
+.meta__btn.more{letter-spacing:2px}
+.reply-composer{align-items:flex-start;margin-left:46px;margin-top:6px}
+.box{flex:1;background:rgba(var(--v-theme-on-surface),0.04);border-radius:18px;padding:4px 6px}
+.grow-input :deep(textarea){padding-top:8px !important;padding-bottom:6px !important}
+.toolbar{display:flex;align-items:center;padding:0 4px 4px}
+</style>
