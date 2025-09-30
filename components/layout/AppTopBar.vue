@@ -4,7 +4,7 @@
     :class="isDark ? 'text-white' : 'text-black'"
     :color="appBarColor"
     app
-    :elevation="0"
+    :elevation="10"
     rounded
     height="50"
   >
