@@ -2,9 +2,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
+import {useAuthSession} from "~/stores/auth-session";
 
 type Reaction = 'like' | 'sad' | 'angry'
-
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 const props = defineProps<{
   counts: Record<Reaction, number>
   reacts?: number
@@ -118,7 +120,7 @@ function handleSelect(r: Reaction){
       <span  v-if="(shares ?? 0) > 0" class="ml-1">{{ shares }}</span>
     </div>
   </div>
-  <div class="reaction-bar">
+  <div v-if="isAuthenticated" class="reaction-bar">
     <!-- Actions -->
     <div class="actions">
       <ReactionPicker

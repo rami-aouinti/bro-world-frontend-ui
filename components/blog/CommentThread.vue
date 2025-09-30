@@ -3,7 +3,9 @@
 import { reactive, ref, computed } from 'vue'
 import CommentComposer from "~/components/blog/CommentComposer.vue";
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
-
+import {useAuthSession} from "~/stores/auth-session";
+const auth = useAuthSession()
+const isAuthenticated = computed(() => auth.isAuthenticated.value)
 type Reaction = 'like' | 'haha' | 'sad' | 'angry'
 export type CommentNode = {
   id: string
@@ -134,6 +136,7 @@ function formatTime(d: Date | string | number) {
       />
     </div>
     <comment-composer
+        v-if="isAuthenticated"
         class="mt-2"
         :placeholder="'Als ' + props.currentUser.firstName + ' ' + props.currentUser.lastName + ' kommentieren'"
         :avatar="props.currentUser.photo"
