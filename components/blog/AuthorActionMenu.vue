@@ -79,7 +79,9 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import {useAuthSession} from "~/stores/auth-session";
+import { useI18n } from "vue-i18n";
+
+import { useAuthSession } from "~/stores/auth-session";
 
 type Variant = "post" | "comment";
 
@@ -177,14 +179,6 @@ const props = withDefaults(
     isAuthor: false,
     isFollowing: false,
     followLoading: false,
-    followLabel: "Follow",
-    followLoadingLabel: "Following",
-    followAriaLabel: "Follow author",
-    followingLabel: "Following",
-    followingAriaLabel: "Already following",
-    actionsAriaLabel: "Open author actions",
-    editLabel: "Edit",
-    deleteLabel: "Delete",
     variant: "post",
   },
 );
@@ -202,19 +196,37 @@ const menuPanel = ref<HTMLDivElement | null>(null);
 const editButton = ref<HTMLButtonElement | null>(null);
 const deleteButton = ref<HTMLButtonElement | null>(null);
 
-const auth = useAuthSession()
-const isAuthenticated = computed(() => auth.isAuthenticated.value)
+const { t } = useI18n();
+
+const auth = useAuthSession();
+const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);
-const followLabel = computed(() => props.followLabel);
-const followLoadingLabel = computed(() => props.followLoadingLabel);
-const followAriaLabel = computed(() => props.followAriaLabel);
-const followingLabel = computed(() => props.followingLabel);
-const followingAriaLabel = computed(() => props.followingAriaLabel);
-const actionsAriaLabel = computed(() => props.actionsAriaLabel);
-const editLabel = computed(() => props.editLabel);
-const deleteLabel = computed(() => props.deleteLabel);
+const followLabel = computed(
+  () => props.followLabel ?? t("blog.posts.actions.follow"),
+);
+const followLoadingLabel = computed(
+  () => props.followLoadingLabel ?? t("blog.posts.actions.following"),
+);
+const followAriaLabel = computed(
+  () => props.followAriaLabel ?? t("blog.posts.actions.follow"),
+);
+const followingLabel = computed(
+  () => props.followingLabel ?? t("blog.posts.actions.following"),
+);
+const followingAriaLabel = computed(
+  () => props.followingAriaLabel ?? t("blog.posts.actions.following"),
+);
+const actionsAriaLabel = computed(
+  () => props.actionsAriaLabel ?? t("blog.posts.actions.openMenu"),
+);
+const editLabel = computed(
+  () => props.editLabel ?? t("blog.posts.actions.edit"),
+);
+const deleteLabel = computed(
+  () => props.deleteLabel ?? t("blog.posts.actions.delete"),
+);
 
 const menuTriggerTestId = computed(
   () => props.menuTriggerTestId ?? VARIANT_CONFIG[props.variant].defaults.menuTriggerTestId,

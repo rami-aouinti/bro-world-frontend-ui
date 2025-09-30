@@ -242,7 +242,8 @@
         "haha": "哈哈",
         "sad": "难过",
         "angry": "生气",
-        "dislike": "不喜欢"
+        "dislike": "不喜欢",
+        "care": "关心"
       },
       "posts": {
         "publishedOn": "发布于 {date}",
@@ -298,8 +299,11 @@
           "title": "标题",
           "summary": "摘要",
           "content": "内容"
-        }
-      }
+        },
+        "comment": "评论",
+        "share": "分享"
+      },
+      "loading": "正在加载帖子"
     },
     "comments": {
       "label": "加入讨论",
@@ -324,7 +328,29 @@
       "cancelReply": "取消",
       "replyUnavailable": "暂时无法回复。",
       "reactionUnavailable": "暂时无法添加回应。",
-      "reactionError": "无法对该评论进行回应，请重试。"
+      "reactionError": "无法对该评论进行回应，请重试。",
+      "placeholderWithName": "以{name}的身份发表评论",
+      "sort": {
+        "menuAria": "评论排序",
+        "options": {
+          "relevant": {
+            "label": "最相关",
+            "description": "优先显示好友评论和互动最多的评论。"
+          },
+          "newest": {
+            "label": "最新优先",
+            "description": "按时间倒序显示所有评论。"
+          },
+          "all": {
+            "label": "全部评论",
+            "description": "显示所有评论，包括可能的垃圾信息。"
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "查看全部{count}条回复",
+        "hideReplies": "收起回复"
+      }
     },
     "sidebar": {
       "weather": {
@@ -453,24 +479,6 @@
       "subtitle": "只需几次点击即可掌控整个平台，监控关键指标并启用合适的功能。"
     },
     "userManagement": {
-      "metaTitle": "用户管理",
-      "page": {
-        "title": "用户管理",
-        "subtitle": "在一个位置完成邀请、审核与权限调整。"
-      }
-    },
-    "blogManagement": {
-      "metaTitle": "博客管理",
-      "page": {
-        "title": "博客管理",
-        "subtitle": "策划社区故事并发布官方公告。"
-      }
-    },
-    "actions": {
-      "newAdminRole": "新建管理员角色",
-      "exportReport": "导出报告"
-    },
-    "userManagement": {
       "title": "User management",
       "subtitle": "Invite, update, or deactivate accounts in real-time.",
       "actions": {
@@ -522,6 +530,17 @@
         "email": "A valid email address is required.",
         "roles": "Select at least one role."
       }
+    },
+    "blogManagement": {
+      "metaTitle": "博客管理",
+      "page": {
+        "title": "博客管理",
+        "subtitle": "策划社区故事并发布官方公告。"
+      }
+    },
+    "actions": {
+      "newAdminRole": "新建管理员角色",
+      "exportReport": "导出报告"
     },
     "sections": {
       "stats": {

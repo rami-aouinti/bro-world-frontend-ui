@@ -1,7 +1,13 @@
 <!-- components/ReactionBar.vue -->
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
+import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
+
+type Reaction = PickerReaction
+
 import {useAuthSession} from "~/stores/auth-session";
 
 type Reaction = 'like' | 'sad' | 'angry'
@@ -19,9 +25,13 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'toggle-like', value: boolean): void
   (e: 'comment'): void
+  (e: 'share'): void
+  (e: 'react', payload: { id?: string; type: PickerReaction }): void
 }>()
 
 const isLiked = ref(!!props.liked)
+
+const { t } = useI18n()
 
 
 // Choisit les 3 réactions les plus fréquentes (ordre “Facebook-ish”)
@@ -79,18 +89,27 @@ function onPointerUp(){
   if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null }
 }
 
-function handleSelect(r: Reaction){
+function handleSelect(r: PickerReaction){
   pickerOpen.value = false
-  // TODO: applique la réaction choisie côté métier
-  // ex: emit('react', { type: r })
+  emit('react', { id: props.node?.id, type: r })
 }
+
+const reactionListLabel = computed(() => {
+  const total = props.reacts ?? 0
+
+  if (total > 0) {
+    return t('blog.reactions.posts.reactionCount', { count: total })
+  }
+
+  return t('blog.reactions.posts.reactLabel')
+})
 </script>
 
 <template>
   <div class="reaction-bar">
     <!-- Gauche : bulles de réactions + total -->
     <div class="left">
-      <div class="bubbles" aria-label="Reaktionen">
+      <div class="bubbles" :aria-label="reactionListLabel">
         <v-avatar
             v-for="(r, i) in topReactions"
             :key="r.type"
@@ -125,8 +144,8 @@ function handleSelect(r: Reaction){
     <div class="actions">
       <ReactionPicker
           class="like-size-lg"
-          @like="emit('like', node.id)"
-          @select="r => emit('react', { id: node.id, type: r })"
+          @like="onToggleLike"
+          @select="handleSelect"
 
       />
       <v-btn
@@ -136,14 +155,14 @@ function handleSelect(r: Reaction){
           @click="$emit('comment')"
       >
         <Icon name="mdi-chat-outline" start></Icon>
-        Kommentieren
+        {{ t('blog.posts.actions.comment') }}
       </v-btn>
       <v-btn
           variant="text"
           @click="$emit('share')"
       >
         <Icon name="mdi-share-outline" start></Icon>
-        Teilen
+        {{ t('blog.posts.actions.share') }}
       </v-btn>
     </div>
   </div>

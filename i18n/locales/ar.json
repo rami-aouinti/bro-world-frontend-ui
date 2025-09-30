@@ -238,7 +238,8 @@
         "haha": "هاها",
         "sad": "حزين",
         "angry": "غاضب",
-        "dislike": "عدم الإعجاب"
+        "dislike": "عدم الإعجاب",
+        "care": "أهتم"
       },
       "posts": {
         "publishedOn": "نُشر في {date}",
@@ -294,8 +295,11 @@
           "title": "العنوان",
           "summary": "الملخص",
           "content": "المحتوى"
-        }
-      }
+        },
+        "comment": "تعليق",
+        "share": "مشاركة"
+      },
+      "loading": "جارٍ تحميل المنشور"
     },
     "comments": {
       "label": "انضم إلى النقاش",
@@ -320,7 +324,29 @@
       "cancelReply": "إلغاء",
       "replyUnavailable": "الردود غير متاحة حاليًا.",
       "reactionUnavailable": "التفاعلات غير متاحة حاليًا.",
-      "reactionError": "تعذر إضافة تفاعل على هذا التعليق. حاول مرة أخرى."
+      "reactionError": "تعذر إضافة تفاعل على هذا التعليق. حاول مرة أخرى.",
+      "placeholderWithName": "التعليق بصفتك {name}",
+      "sort": {
+        "menuAria": "فرز التعليقات",
+        "options": {
+          "relevant": {
+            "label": "الأكثر صلة",
+            "description": "عرض تعليقات الأصدقاء والتعليقات ذات التفاعل الأعلى أولاً."
+          },
+          "newest": {
+            "label": "الأحدث أولاً",
+            "description": "عرض جميع التعليقات من الأحدث إلى الأقدم."
+          },
+          "all": {
+            "label": "كل التعليقات",
+            "description": "عرض جميع التعليقات بما في ذلك المحتمل غير المرغوب فيه."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "عرض كل {count} ردًا",
+        "hideReplies": "إخفاء الردود"
+      }
     },
     "sidebar": {
       "weather": {
@@ -831,24 +857,6 @@
       "subtitle": "أدر المنصة بالكامل، راقب المؤشرات الرئيسية وفعّل الخيارات المناسبة ببضع نقرات."
     },
     "userManagement": {
-      "metaTitle": "إدارة المستخدمين",
-      "page": {
-        "title": "إدارة المستخدمين",
-        "subtitle": "ادعُ الأعضاء، راجع الأذونات وعدّل الأدوار من مكان واحد."
-      }
-    },
-    "blogManagement": {
-      "metaTitle": "إدارة المدونة",
-      "page": {
-        "title": "إدارة المدونة",
-        "subtitle": "انشر الإعلانات ونظّم قصص المجتمع بسهولة."
-      }
-    },
-    "actions": {
-      "newAdminRole": "دور مشرف جديد",
-      "exportReport": "تصدير التقرير"
-    },
-    "userManagement": {
       "title": "User management",
       "subtitle": "Invite, update, or deactivate accounts in real-time.",
       "actions": {
@@ -900,6 +908,17 @@
         "email": "A valid email address is required.",
         "roles": "Select at least one role."
       }
+    },
+    "blogManagement": {
+      "metaTitle": "إدارة المدونة",
+      "page": {
+        "title": "إدارة المدونة",
+        "subtitle": "انشر الإعلانات ونظّم قصص المجتمع بسهولة."
+      }
+    },
+    "actions": {
+      "newAdminRole": "دور مشرف جديد",
+      "exportReport": "تصدير التقرير"
     },
     "sections": {
       "stats": {
