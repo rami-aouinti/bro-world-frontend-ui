@@ -74,6 +74,49 @@ function sanitizeTextInput(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (value === null || typeof value !== "object") {
+    return false;
+  }
+
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
+}
+
+function normalizeForStableSerialization(value: unknown, seen = new WeakSet<object>()): unknown {
+  if (Array.isArray(value)) {
+    return value.map((entry) => normalizeForStableSerialization(entry, seen));
+  }
+
+  if (isPlainObject(value)) {
+    if (seen.has(value)) {
+      return {};
+    }
+
+    seen.add(value);
+
+    const normalized: Record<string, unknown> = {};
+    const keys = Object.keys(value).sort();
+
+    for (const key of keys) {
+      normalized[key] = normalizeForStableSerialization(value[key], seen);
+    }
+
+    seen.delete(value);
+    return normalized;
+  }
+
+  return value;
+}
+
+function stableStringify(value: unknown) {
+  try {
+    return JSON.stringify(normalizeForStableSerialization(value));
+  } catch {
+    return JSON.stringify(value);
+  }
+}
+
 function resolveFetcher() {
   if (import.meta.server) {
     return useRequestFetch();
@@ -268,13 +311,12 @@ export const usePostsStore = defineStore("posts", () => {
   const activeFetches = new Map<string, ActiveFetchState>();
 
   function createFetchKey(options: FetchOptions & { background?: boolean } = {}) {
-    const params = options.params ?? {};
-    const normalizedParams = Object.keys(params)
-      .sort()
-      .map((key) => `${key}:${JSON.stringify(params[key])}`)
-      .join("|");
+    const payload = {
+      params: options.params ?? {},
+      force: Boolean(options.force),
+    };
 
-    return `${normalizedParams}|force:${Boolean(options.force)}`;
+    return stableStringify(payload);
   }
 
   async function fetchPostsFromServer(
