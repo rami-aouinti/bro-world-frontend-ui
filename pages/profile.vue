@@ -11,15 +11,19 @@
         />
       </div>
     </template>
-
-    <main
-      class="py-10"
-      aria-labelledby="profile-title"
-    >
-      <v-container>
-        <header
-          class="mb-8"
-          aria-describedby="profile-subtitle"
+  <main
+    class="py-4"
+    aria-labelledby="profile-title"
+  >
+    <v-container>
+      <header
+        class="mb-8"
+        aria-describedby="profile-subtitle"
+      >
+        <v-card
+          class="pa-6"
+          rounded="xl"
+          elevation="10"
         >
           <v-card
             class="pa-6"
