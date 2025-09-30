@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { BaseCardLoader } from '../index'
+import { BaseCardLoader } from "../index";
 </script>
 
 <style scoped>

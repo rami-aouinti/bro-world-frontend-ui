@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 .card-shadow {
   box-shadow: $card-box-shadow !important;
@@ -24,7 +24,7 @@
   box-shadow: $card-border-with-box-shadow !important;
 }
 
-.card[data-animation='true'] {
+.card[data-animation="true"] {
   .card-header {
     transition: $card-animation-transition;
   }

@@ -62,21 +62,8 @@ export default {
       // => @media (min-width: 640px) { ... }
     },
     fontFamily: {
-      heading: [
-        "Bricolage Grotesque",
-        "Manrope",
-        "Inter",
-        "Helvetica Neue",
-        "Arial",
-        "sans-serif",
-      ],
-      sans: [
-        "Manrope",
-        "Inter",
-        "Helvetica Neue",
-        "Arial",
-        "sans-serif",
-      ],
+      heading: ["Bricolage Grotesque", "Manrope", "Inter", "Helvetica Neue", "Arial", "sans-serif"],
+      sans: ["Manrope", "Inter", "Helvetica Neue", "Arial", "sans-serif"],
       mono: ["monospace"],
     },
     extend: {

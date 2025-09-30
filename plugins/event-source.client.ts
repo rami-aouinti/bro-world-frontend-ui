@@ -21,7 +21,10 @@ function appendQueryValue(params: URLSearchParams, key: string, value: MercureQu
   params.append(key, String(value));
 }
 
-function createMercureEventSource(input: string, options: MercureConnectionOptions = {}): EventSource {
+function createMercureEventSource(
+  input: string,
+  options: MercureConnectionOptions = {},
+): EventSource {
   const { token, params, init } = options;
   const url = new URL(input, window.location.href);
 

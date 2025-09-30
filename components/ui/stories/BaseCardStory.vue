@@ -17,7 +17,10 @@
           :rounded="variant.rounded ?? 'xl'"
           :spacing="variant.spacing ?? 'md'"
         >
-          <template v-if="variant.media" #media>
+          <template
+            v-if="variant.media"
+            #media
+          >
             <div class="card-story__media" />
           </template>
 
@@ -27,7 +30,11 @@
                 <p class="card-story__heading">{{ variant.label }}</p>
                 <p class="card-story__subtitle">{{ variant.subtitle }}</p>
               </div>
-              <span v-if="variant.badge" class="card-story__badge">{{ variant.badge }}</span>
+              <span
+                v-if="variant.badge"
+                class="card-story__badge"
+                >{{ variant.badge }}</span
+              >
             </div>
           </template>
 
@@ -44,59 +51,59 @@
 </template>
 
 <script setup lang="ts">
-import { BaseCard } from '../index'
+import { BaseCard } from "../index";
 
 const themes = [
-  { key: 'light', label: 'Thème clair', class: 'v-theme--light' },
-  { key: 'dark', label: 'Thème sombre', class: 'v-theme--dark dark' },
-] as const
+  { key: "light", label: "Thème clair", class: "v-theme--light" },
+  { key: "dark", label: "Thème sombre", class: "v-theme--dark dark" },
+] as const;
 
 const variants = [
   {
-    variant: 'solid',
-    label: 'Solid',
-    subtitle: 'Surface principale',
+    variant: "solid",
+    label: "Solid",
+    subtitle: "Surface principale",
     description:
-      'La variante solide repose sur la surface principale du thème et convient aux contenus riches et structurés.',
-    footer: 'Mis à jour il y a 2 heures',
-    badge: 'Nouveau',
+      "La variante solide repose sur la surface principale du thème et convient aux contenus riches et structurés.",
+    footer: "Mis à jour il y a 2 heures",
+    badge: "Nouveau",
   },
   {
-    variant: 'muted',
-    label: 'Muted',
-    subtitle: 'Surface atténuée',
+    variant: "muted",
+    label: "Muted",
+    subtitle: "Surface atténuée",
     description:
-      'Utilisez-la pour des encarts secondaires ou des résumés, elle reste lisible tout en étant plus discrète.',
-    footer: 'Rappel prévu demain',
+      "Utilisez-la pour des encarts secondaires ou des résumés, elle reste lisible tout en étant plus discrète.",
+    footer: "Rappel prévu demain",
   },
   {
-    variant: 'outline',
-    label: 'Outline',
-    subtitle: 'Contour marqué',
+    variant: "outline",
+    label: "Outline",
+    subtitle: "Contour marqué",
     description:
-      'Met en avant les séparations et fonctionne bien pour des listes d’actions ou des aperçus de contenus.',
-    footer: 'Détails disponibles',
+      "Met en avant les séparations et fonctionne bien pour des listes d’actions ou des aperçus de contenus.",
+    footer: "Détails disponibles",
   },
   {
-    variant: 'glass',
-    label: 'Glass',
-    subtitle: 'Effet verre dépoli',
+    variant: "glass",
+    label: "Glass",
+    subtitle: "Effet verre dépoli",
     description:
-      'Combine un arrière-plan translucide et une bordure douce, idéal pour superposer du contenu visuel.',
-    footer: 'Voir la galerie',
+      "Combine un arrière-plan translucide et une bordure douce, idéal pour superposer du contenu visuel.",
+    footer: "Voir la galerie",
     media: true,
   },
   {
-    variant: 'gradient',
-    label: 'Gradient',
-    subtitle: 'Accent primaire',
+    variant: "gradient",
+    label: "Gradient",
+    subtitle: "Accent primaire",
     description:
-      'Parfaite pour mettre en avant une action ou une annonce importante avec un dégradé basé sur le thème.',
-    footer: 'Appel à l’action',
-    rounded: 'lg',
-    padding: 'sm',
+      "Parfaite pour mettre en avant une action ou une annonce importante avec un dégradé basé sur le thème.",
+    footer: "Appel à l’action",
+    rounded: "lg",
+    padding: "sm",
   },
-] as const
+] as const;
 </script>
 
 <style scoped>

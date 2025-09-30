@@ -1,11 +1,14 @@
 <template>
   <section aria-labelledby="contact-form-heading">
     <header class="mb-6">
-      <h2 id="contact-form-heading" class="text-h5 font-weight-bold">
-        {{ t('pages.contact.title') }}
+      <h2
+        id="contact-form-heading"
+        class="text-h5 font-weight-bold"
+      >
+        {{ t("pages.contact.title") }}
       </h2>
       <p class="text-body-2 text-medium-emphasis">
-        {{ t('pages.contact.subtitle') }}
+        {{ t("pages.contact.subtitle") }}
       </p>
     </header>
 
@@ -120,8 +123,11 @@
           </p>
         </div>
 
-        <label class="sr-only" for="contact-check-field">
-          {{ t('pages.contact.form.name') }}
+        <label
+          class="sr-only"
+          for="contact-check-field"
+        >
+          {{ t("pages.contact.form.name") }}
         </label>
         <input
           id="contact-check-field"
@@ -141,7 +147,7 @@
           :disabled="isSubmitting"
           data-test="submit-button"
         >
-          {{ isSubmitting ? t('pages.contact.form.sending') : t('pages.contact.form.submit') }}
+          {{ isSubmitting ? t("pages.contact.form.sending") : t("pages.contact.form.submit") }}
         </v-btn>
       </div>
     </v-form>
@@ -159,103 +165,91 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from "vue";
 
-import type {
-  ContactValidationErrors,
-  ContactValidationKey,
-} from '~/lib/contact/validation'
-import { validateContactForm } from '~/lib/contact/validation'
+import type { ContactValidationErrors, ContactValidationKey } from "~/lib/contact/validation";
+import { validateContactForm } from "~/lib/contact/validation";
 
-const { t, locale } = useI18n()
-const { $fetch, $notify } = useNuxtApp()
+const { t, locale } = useI18n();
+const { $fetch, $notify } = useNuxtApp();
 
-const formRef = ref()
-const isSubmitting = ref(false)
-const statusMessage = ref('')
+const formRef = ref();
+const isSubmitting = ref(false);
+const statusMessage = ref("");
 
 const form = reactive({
-  name: '',
-  email: '',
-  subject: '',
-  message: '',
-  honeypot: '',
-})
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+  honeypot: "",
+});
 
 const errors = reactive<ContactValidationErrors>({
   name: null,
   email: null,
   subject: null,
   message: null,
-})
+});
 
 function validationMessage(key: ContactValidationKey) {
-  return t(`pages.contact.validation.${key}`)
+  return t(`pages.contact.validation.${key}`);
 }
 
-const nameErrorMessages = computed(() =>
-  errors.name ? [validationMessage(errors.name)] : [],
-)
-const emailErrorMessages = computed(() =>
-  errors.email ? [validationMessage(errors.email)] : [],
-)
+const nameErrorMessages = computed(() => (errors.name ? [validationMessage(errors.name)] : []));
+const emailErrorMessages = computed(() => (errors.email ? [validationMessage(errors.email)] : []));
 const subjectErrorMessages = computed(() =>
   errors.subject ? [validationMessage(errors.subject)] : [],
-)
+);
 const messageErrorMessages = computed(() =>
   errors.message ? [validationMessage(errors.message)] : [],
-)
+);
 
 watch(
   form,
   () => {
     if (Object.values(errors).some(Boolean)) {
-      const { errors: freshErrors } = validateContactForm(form)
-      Object.assign(errors, freshErrors)
+      const { errors: freshErrors } = validateContactForm(form);
+      Object.assign(errors, freshErrors);
     }
   },
   { deep: true },
-)
+);
 
 function focusFirstInvalidField() {
-  if (!import.meta.client) return
+  if (!import.meta.client) return;
 
-  const fieldOrder: Array<keyof ContactValidationErrors> = [
-    'name',
-    'email',
-    'subject',
-    'message',
-  ]
+  const fieldOrder: Array<keyof ContactValidationErrors> = ["name", "email", "subject", "message"];
 
   for (const field of fieldOrder) {
-    if (!errors[field]) continue
+    if (!errors[field]) continue;
 
-    const element = document.getElementById(`contact-${field}`)
+    const element = document.getElementById(`contact-${field}`);
     if (element) {
-      element.focus()
-      break
+      element.focus();
+      break;
     }
   }
 }
 
 async function handleSubmit() {
-  if (form.honeypot.trim().length > 0) return
+  if (form.honeypot.trim().length > 0) return;
 
-  const { valid, errors: freshErrors } = validateContactForm(form)
-  Object.assign(errors, freshErrors)
+  const { valid, errors: freshErrors } = validateContactForm(form);
+  Object.assign(errors, freshErrors);
 
   if (!valid) {
-    statusMessage.value = t('pages.contact.validation.required')
-    focusFirstInvalidField()
-    return
+    statusMessage.value = t("pages.contact.validation.required");
+    focusFirstInvalidField();
+    return;
   }
 
-  isSubmitting.value = true
-  statusMessage.value = t('pages.contact.form.sending')
+  isSubmitting.value = true;
+  statusMessage.value = t("pages.contact.form.sending");
 
   try {
-    await $fetch('/v1/contact', {
-      method: 'POST',
+    await $fetch("/v1/contact", {
+      method: "POST",
       body: {
         name: form.name,
         email: form.email,
@@ -263,40 +257,40 @@ async function handleSubmit() {
         message: form.message,
         locale: locale.value,
       },
-    })
+    });
 
     $notify({
-      type: 'success',
-      title: t('pages.contact.title'),
-      message: t('pages.contact.form.success'),
-    })
+      type: "success",
+      title: t("pages.contact.title"),
+      message: t("pages.contact.form.success"),
+    });
 
-    statusMessage.value = t('pages.contact.form.success')
+    statusMessage.value = t("pages.contact.form.success");
 
     Object.assign(form, {
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-      honeypot: '',
-    })
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+      honeypot: "",
+    });
     Object.assign(errors, {
       name: null,
       email: null,
       subject: null,
       message: null,
-    })
-    formRef.value?.resetValidation?.()
+    });
+    formRef.value?.resetValidation?.();
   } catch (exception: unknown) {
     $notify({
-      type: 'error',
-      title: t('pages.contact.title'),
-      message: t('pages.contact.form.error'),
+      type: "error",
+      title: t("pages.contact.title"),
+      message: t("pages.contact.form.error"),
       timeout: null,
-    })
-    statusMessage.value = t('pages.contact.form.error')
+    });
+    statusMessage.value = t("pages.contact.form.error");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
 }
 </script>

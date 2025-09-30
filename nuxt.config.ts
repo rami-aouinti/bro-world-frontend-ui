@@ -1,270 +1,273 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import './lib/setup-node-crypto'
+import "./lib/setup-node-crypto";
 
-import http from 'node:http'
-import https from 'node:https'
-import os from 'node:os'
-import { Blob as NodeBlob, File as NodeFile } from 'node:buffer'
-import { URL, fileURLToPath } from 'node:url'
-import { dirname, resolve as resolvePath } from 'node:path'
-import { createRequire } from 'node:module'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
-import compression from 'vite-plugin-compression'
-import tailwindcss from '@tailwindcss/vite'
-import type { PluginOption } from 'vite'
-import { simplePurgeCssPlugin } from './lib/vite/simple-purgecss'
-import { aliases } from 'vuetify/iconsets/mdi'
+import http from "node:http";
+import https from "node:https";
+import os from "node:os";
+import { Blob as NodeBlob, File as NodeFile } from "node:buffer";
+import { URL, fileURLToPath } from "node:url";
+import { dirname, resolve as resolvePath } from "node:path";
+import { createRequire } from "node:module";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import compression from "vite-plugin-compression";
+import tailwindcss from "@tailwindcss/vite";
+import type { PluginOption } from "vite";
+import { simplePurgeCssPlugin } from "./lib/vite/simple-purgecss";
+import { aliases } from "vuetify/iconsets/mdi";
 
-type FetchHeadersInit = Record<string, string | number | readonly string[]>
+type FetchHeadersInit = Record<string, string | number | readonly string[]>;
 
 type FetchRequestInit = {
-  method?: string
-  headers?: FetchHeadersInit
-  body?: string | Buffer
-}
+  method?: string;
+  headers?: FetchHeadersInit;
+  body?: string | Buffer;
+};
 
 class SimpleHeaders {
-  private readonly headersMap = new Map<string, string>()
+  private readonly headersMap = new Map<string, string>();
 
   constructor(init?: FetchHeadersInit | http.IncomingHttpHeaders) {
     if (!init) {
-      return
+      return;
     }
 
-    const entries = Array.isArray(init)
-      ? init
-      : Object.entries(init)
+    const entries = Array.isArray(init) ? init : Object.entries(init);
 
     for (const [rawKey, rawValue] of entries) {
       if (!rawKey || rawValue == null) {
-        continue
+        continue;
       }
 
-      const key = String(rawKey).toLowerCase()
+      const key = String(rawKey).toLowerCase();
       const value = Array.isArray(rawValue)
-        ? rawValue.filter(Boolean).join(', ')
-        : String(rawValue)
+        ? rawValue.filter(Boolean).join(", ")
+        : String(rawValue);
 
       if (!value) {
-        continue
+        continue;
       }
 
-      this.headersMap.set(key, value)
+      this.headersMap.set(key, value);
     }
   }
 
   get(name: string): string | null {
-    return this.headersMap.get(name.toLowerCase()) ?? null
+    return this.headersMap.get(name.toLowerCase()) ?? null;
   }
 
   set(name: string, value: string): void {
-    this.headersMap.set(name.toLowerCase(), value)
+    this.headersMap.set(name.toLowerCase(), value);
   }
 
   entries(): IterableIterator<[string, string]> {
-    return this.headersMap.entries()
+    return this.headersMap.entries();
   }
 
   [Symbol.iterator](): IterableIterator<[string, string]> {
-    return this.entries()
+    return this.entries();
   }
 }
 
 class SimpleResponse {
-  readonly ok: boolean
-  readonly status: number
-  readonly statusText: string
-  readonly headers: SimpleHeaders
+  readonly ok: boolean;
+  readonly status: number;
+  readonly statusText: string;
+  readonly headers: SimpleHeaders;
 
-  constructor(private readonly body: Buffer, res: http.IncomingMessage) {
-    this.status = res.statusCode ?? 0
-    this.statusText = res.statusMessage ?? ''
-    this.ok = this.status >= 200 && this.status < 300
-    this.headers = new SimpleHeaders(res.headers)
+  constructor(
+    private readonly body: Buffer,
+    res: http.IncomingMessage,
+  ) {
+    this.status = res.statusCode ?? 0;
+    this.statusText = res.statusMessage ?? "";
+    this.ok = this.status >= 200 && this.status < 300;
+    this.headers = new SimpleHeaders(res.headers);
   }
 
   async arrayBuffer(): Promise<ArrayBuffer> {
-    const cloned = Buffer.from(this.body)
-    return cloned.buffer.slice(cloned.byteOffset, cloned.byteOffset + cloned.byteLength)
+    const cloned = Buffer.from(this.body);
+    return cloned.buffer.slice(cloned.byteOffset, cloned.byteOffset + cloned.byteLength);
   }
 
   async text(): Promise<string> {
-    return this.body.toString('utf8')
+    return this.body.toString("utf8");
   }
 
   async json(): Promise<unknown> {
-    const text = await this.text()
-    return JSON.parse(text)
+    const text = await this.text();
+    return JSON.parse(text);
   }
 }
 
 class SimpleRequest {
-  readonly url: string
-  readonly method: string
-  readonly headers: SimpleHeaders
-  readonly body?: string | Buffer
+  readonly url: string;
+  readonly method: string;
+  readonly headers: SimpleHeaders;
+  readonly body?: string | Buffer;
 
   constructor(input: string | URL, init?: FetchRequestInit) {
-    this.url = typeof input === 'string' ? input : input.toString()
-    this.method = init?.method ?? 'GET'
-    this.headers = new SimpleHeaders(init?.headers)
-    this.body = init?.body
+    this.url = typeof input === "string" ? input : input.toString();
+    this.method = init?.method ?? "GET";
+    this.headers = new SimpleHeaders(init?.headers);
+    this.body = init?.body;
   }
 }
 
 function createFetch() {
   return function nodeFetch(input: string | URL, init?: FetchRequestInit): Promise<SimpleResponse> {
-    const request = new SimpleRequest(input, init)
-    const url = new URL(request.url)
-    const client = url.protocol === 'https:' ? https : http
+    const request = new SimpleRequest(input, init);
+    const url = new URL(request.url);
+    const client = url.protocol === "https:" ? https : http;
 
     const requestOptions: http.RequestOptions = {
       method: request.method,
       headers: Object.fromEntries(request.headers),
-    }
+    };
 
     return new Promise((resolve, reject) => {
       const req = client.request(url, requestOptions, (res) => {
-        const chunks: Buffer[] = []
+        const chunks: Buffer[] = [];
 
-        res.on('data', (chunk: Buffer) => chunks.push(chunk))
-        res.on('end', () => {
-          resolve(new SimpleResponse(Buffer.concat(chunks), res))
-        })
-      })
+        res.on("data", (chunk: Buffer) => chunks.push(chunk));
+        res.on("end", () => {
+          resolve(new SimpleResponse(Buffer.concat(chunks), res));
+        });
+      });
 
-      req.on('error', reject)
+      req.on("error", reject);
 
       if (request.body) {
-        req.write(request.body)
+        req.write(request.body);
       }
 
-      req.end()
-    })
-  }
+      req.end();
+    });
+  };
 }
 
 const globalScope = globalThis as typeof globalThis & {
-  Blob: typeof NodeBlob | undefined
-  File: typeof NodeFile | undefined
-  fetch: ReturnType<typeof createFetch> | undefined
-  Headers: typeof SimpleHeaders | undefined
-  Request: typeof SimpleRequest | undefined
-  Response: typeof SimpleResponse | undefined
+  Blob: typeof NodeBlob | undefined;
+  File: typeof NodeFile | undefined;
+  fetch: ReturnType<typeof createFetch> | undefined;
+  Headers: typeof SimpleHeaders | undefined;
+  Request: typeof SimpleRequest | undefined;
+  Response: typeof SimpleResponse | undefined;
+};
+
+if (typeof globalScope.Blob !== "function") {
+  globalScope.Blob = NodeBlob;
 }
 
-if (typeof globalScope.Blob !== 'function') {
-  globalScope.Blob = NodeBlob
+if (typeof globalScope.File !== "function") {
+  globalScope.File = NodeFile;
 }
 
-if (typeof globalScope.File !== 'function') {
-  globalScope.File = NodeFile
+if (typeof globalScope.fetch !== "function") {
+  globalScope.fetch = createFetch();
 }
 
-if (typeof globalScope.fetch !== 'function') {
-  globalScope.fetch = createFetch()
+if (typeof globalScope.Headers !== "function") {
+  globalScope.Headers = SimpleHeaders;
 }
 
-if (typeof globalScope.Headers !== 'function') {
-  globalScope.Headers = SimpleHeaders
+if (typeof globalScope.Request !== "function") {
+  globalScope.Request = SimpleRequest;
 }
 
-if (typeof globalScope.Request !== 'function') {
-  globalScope.Request = SimpleRequest
-}
-
-if (typeof globalScope.Response !== 'function') {
-  globalScope.Response = SimpleResponse
+if (typeof globalScope.Response !== "function") {
+  globalScope.Response = SimpleResponse;
 }
 
 const osWithAvailableParallelism = os as typeof os & {
-  availableParallelism?: () => number
-}
+  availableParallelism?: () => number;
+};
 
-const currentDir = dirname(fileURLToPath(new URL('.', import.meta.url)))
+const currentDir = dirname(fileURLToPath(new URL(".", import.meta.url)));
 function resolveFromRoot(...segments: string[]) {
-  return resolvePath(currentDir, ...segments)
+  return resolvePath(currentDir, ...segments);
 }
 
-const require = createRequire(import.meta.url)
+const require = createRequire(import.meta.url);
 
-type VuetifyPluginFactory = (options?: { autoImport?: boolean }) => PluginOption | PluginOption[]
+type VuetifyPluginFactory = (options?: { autoImport?: boolean }) => PluginOption | PluginOption[];
 
-let vuetifyPlugin: PluginOption | PluginOption[] | null = null
+let vuetifyPlugin: PluginOption | PluginOption[] | null = null;
 
 try {
-  const { default: vuetify } = require('vite-plugin-vuetify') as { default: VuetifyPluginFactory }
+  const { default: vuetify } = require("vite-plugin-vuetify") as { default: VuetifyPluginFactory };
   vuetifyPlugin = vuetify({
     autoImport: true,
-  })
+  });
 } catch (error) {
-  console.warn(`vite-plugin-vuetify not loaded: ${(error as Error | undefined)?.message ?? 'unknown error'}`)
+  console.warn(
+    `vite-plugin-vuetify not loaded: ${(error as Error | undefined)?.message ?? "unknown error"}`,
+  );
 }
 
-const iconCollections = ['mdi', 'logos', 'heroicons', 'lucide', 'tabler', 'vscode-icons'] as const
+const iconCollections = ["mdi", "logos", "heroicons", "lucide", "tabler", "vscode-icons"] as const;
 
 function hasIconCollection(name: (typeof iconCollections)[number]) {
   try {
-    require.resolve(`@iconify-json/${name}/icons.json`)
-    return true
+    require.resolve(`@iconify-json/${name}/icons.json`);
+    return true;
   } catch {
-    return false
+    return false;
   }
 }
 
-const availableIconCollections = iconCollections.filter(hasIconCollection)
-const clientBundleCollections = ['mdi', 'logos', 'heroicons'] as const
+const availableIconCollections = iconCollections.filter(hasIconCollection);
+const clientBundleCollections = ["mdi", "logos", "heroicons"] as const;
 const missingClientBundleCollections = clientBundleCollections.filter(
   (collection) => !availableIconCollections.includes(collection),
-)
+);
 
 if (missingClientBundleCollections.length > 0) {
   console.warn(
-    `Nuxt Icon client bundle disabled: missing icon collections ${missingClientBundleCollections.join(', ')}`,
-  )
+    `Nuxt Icon client bundle disabled: missing icon collections ${missingClientBundleCollections.join(", ")}`,
+  );
 }
 
 const iconClientBundleConfig =
   missingClientBundleCollections.length === 0
     ? {
-        icons: Object.values(aliases).map((v) => (v as string).replace(/^mdi-/, 'mdi:')),
+        icons: Object.values(aliases).map((v) => (v as string).replace(/^mdi-/, "mdi:")),
         scan: true,
       }
-    : false
+    : false;
 
-const nuxtLayers: string[] = ['shadcn-docs-nuxt']
+const nuxtLayers: string[] = ["shadcn-docs-nuxt"];
 
 try {
-  require.resolve('@nuxt/ui-pro/nuxt.config')
-  nuxtLayers.unshift('@nuxt/ui-pro')
+  require.resolve("@nuxt/ui-pro/nuxt.config");
+  nuxtLayers.unshift("@nuxt/ui-pro");
 } catch (error) {
   console.warn(
-    `@nuxt/ui-pro layer skipped: ${(error as Error | undefined)?.message ?? 'Unknown error'}`,
-  )
+    `@nuxt/ui-pro layer skipped: ${(error as Error | undefined)?.message ?? "Unknown error"}`,
+  );
 }
 
-if (typeof osWithAvailableParallelism.availableParallelism !== 'function') {
-  Object.defineProperty(osWithAvailableParallelism, 'availableParallelism', {
+if (typeof osWithAvailableParallelism.availableParallelism !== "function") {
+  Object.defineProperty(osWithAvailableParallelism, "availableParallelism", {
     configurable: true,
     enumerable: false,
     value: () => {
       try {
-        const cpuInfo = os.cpus()
-        return Array.isArray(cpuInfo) && cpuInfo.length > 0 ? cpuInfo.length : 1
+        const cpuInfo = os.cpus();
+        return Array.isArray(cpuInfo) && cpuInfo.length > 0 ? cpuInfo.length : 1;
       } catch {
-        return 1
+        return 1;
       }
     },
-  })
+  });
 }
 
 const rawBaseURL =
   process.env.NUXT_APP_BASE_URL ??
   process.env.NUXT_PUBLIC_APP_BASE_URL ??
-  (process.env.NODE_ENV === "development" ? "/" : "/")
+  (process.env.NODE_ENV === "development" ? "/" : "/");
 
-const normalizedBaseURL = rawBaseURL.startsWith("/") ? rawBaseURL : `/${rawBaseURL}`
-const baseURL = normalizedBaseURL.endsWith("/") ? normalizedBaseURL : `${normalizedBaseURL}/`
+const normalizedBaseURL = rawBaseURL.startsWith("/") ? rawBaseURL : `/${rawBaseURL}`;
+const baseURL = normalizedBaseURL.endsWith("/") ? normalizedBaseURL : `${normalizedBaseURL}/`;
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -288,33 +291,23 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
-      ...(vuetifyPlugin
-        ? Array.isArray(vuetifyPlugin)
-          ? vuetifyPlugin
-          : [vuetifyPlugin]
-        : []),
+      ...(vuetifyPlugin ? (Array.isArray(vuetifyPlugin) ? vuetifyPlugin : [vuetifyPlugin]) : []),
       tailwindcss(),
       simplePurgeCssPlugin({
         content: [
-          'app.vue',
-          'app.config.ts',
-          'components/**/*.{vue,js,ts}',
-          'layouts/**/*.vue',
-          'pages/**/*.vue',
-          'composables/**/*.{js,ts}',
-          'content/**/*.{md,mdx,json,yml,yaml}',
-          'lib/**/*.{js,ts,vue}',
-          'plugins/**/*.{js,ts}',
-          'stores/**/*.{js,ts}',
+          "app.vue",
+          "app.config.ts",
+          "components/**/*.{vue,js,ts}",
+          "layouts/**/*.vue",
+          "pages/**/*.vue",
+          "composables/**/*.{js,ts}",
+          "content/**/*.{md,mdx,json,yml,yaml}",
+          "lib/**/*.{js,ts,vue}",
+          "plugins/**/*.{js,ts}",
+          "stores/**/*.{js,ts}",
         ],
         safelist: {
-          standard: [
-            'dark',
-            'rtl',
-            'ltr',
-            'text-align-auto',
-            'nuxt-loading-indicator',
-          ],
+          standard: ["dark", "rtl", "ltr", "text-align-auto", "nuxt-loading-indicator"],
           deep: [
             /^v-/, // Vuetify utility classes
             /^d-/, // display utilities
@@ -360,7 +353,7 @@ export default defineNuxtConfig({
         },
       }),
       cssInjectedByJsPlugin(),
-      compression({ algorithm: 'brotliCompress' }),
+      compression({ algorithm: "brotliCompress" }),
     ],
     build: {
       sourcemap: false,
@@ -368,8 +361,8 @@ export default defineNuxtConfig({
       splitChunks: {
         layouts: true,
         pages: true,
-        commons: true
-      }
+        commons: true,
+      },
     },
   },
 
@@ -377,17 +370,17 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/image",
     "nuxt-gtag",
-    '@nuxt/ui',
+    "@nuxt/ui",
     "@nuxt/eslint",
     "@nuxt/scripts",
     "motion-v/nuxt",
     "lenis/nuxt",
     "@nuxtjs/i18n",
-    '@nuxt/icon',
+    "@nuxt/icon",
     "nuxt-llms",
   ],
   alias: {
-    pinia: resolveFromRoot('lib/pinia-shim.ts'),
+    pinia: resolveFromRoot("lib/pinia-shim.ts"),
   },
 
   components: [
@@ -399,7 +392,7 @@ export default defineNuxtConfig({
   ],
   extends: nuxtLayers,
   sitemap: {
-    siteUrl: 'https://bro-world-space.com',
+    siteUrl: "https://bro-world-space.com",
     trailingSlash: false,
     gzip: true,
   },
@@ -411,7 +404,7 @@ export default defineNuxtConfig({
 
   ui: {
     icons: ["heroicons", "lucide"],
-    safelistColors: ['primary', 'red', 'orange', 'green'],
+    safelistColors: ["primary", "red", "orange", "green"],
   },
 
   experimental: {
@@ -435,25 +428,25 @@ export default defineNuxtConfig({
 
   i18n: {
     lazy: true,
-    langDir: 'locales/',
-    defaultLocale: 'en',
-    strategy: 'prefix_except_default',
+    langDir: "locales/",
+    defaultLocale: "en",
+    strategy: "prefix_except_default",
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: 'i18n_redirected',
+      cookieKey: "i18n_redirected",
       alwaysRedirect: true,
-      fallbackLocale: 'en',
+      fallbackLocale: "en",
     },
     locales: [
-      { code: 'en', name: 'English', iso: 'en-US', icon: 'fi-gb gb', file: 'en.json' },
-      { code: 'de', name: 'Deutsch', iso: 'de-DE', icon: 'fi-de de', file: 'de.json' },
-      { code: 'fr', name: 'Frensh', iso: 'fr-FR', icon: 'fi-fr fr', file: 'fr.json' },
-      { code: 'ar', name: 'Arabic', iso: 'tn-TN', icon: 'fi-tn tn', file: 'ar.json' },
-      { code: 'it', name: 'Italian', iso: 'it-IT', icon: 'fi-it it', file: 'it.json' },
-      { code: 'es', name: 'Spanish', iso: 'es-ES', icon: 'fi-es es', file: 'es.json' },
-      { code: 'ru', name: 'Russian', iso: 'ru-RU', icon: 'fi-ru ru', file: 'ru.json' },
+      { code: "en", name: "English", iso: "en-US", icon: "fi-gb gb", file: "en.json" },
+      { code: "de", name: "Deutsch", iso: "de-DE", icon: "fi-de de", file: "de.json" },
+      { code: "fr", name: "Frensh", iso: "fr-FR", icon: "fi-fr fr", file: "fr.json" },
+      { code: "ar", name: "Arabic", iso: "tn-TN", icon: "fi-tn tn", file: "ar.json" },
+      { code: "it", name: "Italian", iso: "it-IT", icon: "fi-it it", file: "it.json" },
+      { code: "es", name: "Spanish", iso: "es-ES", icon: "fi-es es", file: "es.json" },
+      { code: "ru", name: "Russian", iso: "ru-RU", icon: "fi-ru ru", file: "ru.json" },
     ],
-    baseUrl: 'https://bro-world-space.com'
+    baseUrl: "https://bro-world-space.com",
   },
 
   vuetify: {
@@ -474,15 +467,15 @@ export default defineNuxtConfig({
     ...(iconClientBundleConfig ? { clientBundle: iconClientBundleConfig } : {}),
     customCollections: [
       {
-        prefix: 'custom',
-        dir: './assets/icons',
+        prefix: "custom",
+        dir: "./assets/icons",
       },
     ],
   },
 
   image: {
-    dir: 'public',
-    domains: ['images.unsplash.com'],
+    dir: "public",
+    domains: ["images.unsplash.com"],
     screens: {
       sm: 320,
       md: 640,
@@ -491,31 +484,31 @@ export default defineNuxtConfig({
     },
     quality: 80,
     ipx: {
-      dir: 'public',
+      dir: "public",
       allowFiles: true,
       domains: [],
     },
     presets: {
       lcp: {
         modifiers: {
-          format: 'webp',
+          format: "webp",
           quality: 80,
         },
       },
     },
   },
   echarts: {
-    charts: ['LineChart', 'BarChart', 'PieChart', 'RadarChart'],
-    renderer: 'svg',
+    charts: ["LineChart", "BarChart", "PieChart", "RadarChart"],
+    renderer: "svg",
     components: [
-      'DataZoomComponent',
-      'LegendComponent',
-      'TooltipComponent',
-      'ToolboxComponent',
-      'GridComponent',
-      'TitleComponent',
-      'DatasetComponent',
-      'VisualMapComponent',
+      "DataZoomComponent",
+      "LegendComponent",
+      "TooltipComponent",
+      "ToolboxComponent",
+      "GridComponent",
+      "TitleComponent",
+      "DatasetComponent",
+      "VisualMapComponent",
     ],
   },
 
@@ -533,18 +526,20 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
       tokenCookieName: process.env.NUXT_AUTH_TOKEN_COOKIE ?? "auth_token",
       userCookieName: process.env.NUXT_AUTH_USER_COOKIE ?? "auth_user",
-      tokenPresenceCookieName:
-        process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
+      tokenPresenceCookieName: process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
       sessionMaxAge: process.env.NUXT_AUTH_SESSION_MAX_AGE ?? String(60 * 60 * 24 * 7),
     },
     public: {
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
-      blogApiEndpoint: process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://blog.bro-world.org/public/post",
+      blogApiEndpoint:
+        process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://blog.bro-world.org/public/post",
       blogCommentApiEndpoint:
-        process.env.NUXT_PUBLIC_BLOG_COMMENT_API_ENDPOINT ?? "https://blog.bro-world.org/public/comment",
+        process.env.NUXT_PUBLIC_BLOG_COMMENT_API_ENDPOINT ??
+        "https://blog.bro-world.org/public/comment",
       blogPrivateApiEndpoint:
-        process.env.NUXT_PUBLIC_BLOG_PRIVATE_API_ENDPOINT ?? "https://blog.bro-world.org/v1/platform/post",
+        process.env.NUXT_PUBLIC_BLOG_PRIVATE_API_ENDPOINT ??
+        "https://blog.bro-world.org/v1/platform/post",
       blogPrivateCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_COMMENT_API_ENDPOINT ??
         "https://blog.bro-world.org/v1/platform/comment",

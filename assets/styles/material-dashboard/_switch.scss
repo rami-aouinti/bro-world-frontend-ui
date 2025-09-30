@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 .switch {
   .v-input--selection-controls__input {
@@ -25,7 +25,6 @@
   }
 }
 
-.v-input--switch:not(.v-input--switch--flat):not(.v-input--switch--inset)
-  .v-input--switch__thumb {
+.v-input--switch:not(.v-input--switch--flat):not(.v-input--switch--inset) .v-input--switch__thumb {
   box-shadow: $box-shadow;
 }

@@ -11,7 +11,7 @@
       :aria-label="t('auth.signOut')"
     />
     <div class="space-y-2">
-      <h1 class="text-2xl font-semibold">{{ t('auth.signOut') }}</h1>
+      <h1 class="text-2xl font-semibold">{{ t("auth.signOut") }}</h1>
       <p class="text-muted-foreground">
         {{ statusMessage }}
       </p>
@@ -20,25 +20,25 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthSession } from '~/stores/auth-session'
+import { useAuthSession } from "~/stores/auth-session";
 
 definePageMeta({
-  middleware: 'auth',
-  title: 'logout',
-})
+  middleware: "auth",
+  title: "logout",
+});
 
-const auth = useAuthSession()
-const router = useRouter()
-const { t } = useI18n()
-const { localePath } = useI18nDocs()
+const auth = useAuthSession();
+const router = useRouter();
+const { t } = useI18n();
+const { localePath } = useI18nDocs();
 
-const isProcessing = ref(true)
-const statusMessage = ref(t('auth.signOut'))
+const isProcessing = ref(true);
+const statusMessage = ref(t("auth.signOut"));
 
 onMounted(async () => {
-  await auth.logout({ redirect: false })
-  statusMessage.value = t('auth.logoutMessage')
-  isProcessing.value = false
-  await router.replace(localePath('/login'))
-})
+  await auth.logout({ redirect: false });
+  statusMessage.value = t("auth.logoutMessage");
+  isProcessing.value = false;
+  await router.replace(localePath("/login"));
+});
 </script>

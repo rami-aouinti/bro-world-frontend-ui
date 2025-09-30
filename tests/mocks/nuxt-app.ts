@@ -1,19 +1,19 @@
-import { vi } from 'vitest'
+import { vi } from "vitest";
 
-type Fetcher = ReturnType<typeof vi.fn>
+type Fetcher = ReturnType<typeof vi.fn>;
 
-const globalFetchSpy = vi.fn() as Fetcher
+const globalFetchSpy = vi.fn() as Fetcher;
 
 export function useRequestFetch() {
-  return globalFetchSpy
+  return globalFetchSpy;
 }
 
 export function __setRequestFetchMock(mock: Fetcher) {
-  globalFetchSpy.mockImplementation(mock)
+  globalFetchSpy.mockImplementation(mock);
 }
 
 export function __resetRequestFetchMock() {
-  globalFetchSpy.mockReset()
+  globalFetchSpy.mockReset();
 }
 
-export { globalFetchSpy as __requestFetchSpy }
+export { globalFetchSpy as __requestFetchSpy };

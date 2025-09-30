@@ -29,26 +29,32 @@
     @change="onChange"
     @click:clear="onClear"
   >
-    <template v-if="slots.prepend" #prepend>
+    <template
+      v-if="slots.prepend"
+      #prepend
+    >
       <slot name="prepend" />
     </template>
-    <template v-if="slots.append" #append>
+    <template
+      v-if="slots.append"
+      #append
+    >
       <slot name="append" />
     </template>
   </v-text-field>
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots, useId } from 'vue'
-import { useFormField } from './useFormField'
+import { computed, useSlots, useId } from "vue";
+import { useFormField } from "./useFormField";
 
-type InputType = 'text' | 'password' | 'email' | 'number' | 'search' | 'url'
-type ControlSize = 'sm' | 'md' | 'lg'
+type InputType = "text" | "password" | "email" | "number" | "search" | "url";
+type ControlSize = "sm" | "md" | "lg";
 
 const props = defineProps({
   modelValue: {
     type: [String, Number, null] as () => string | number | null,
-    default: '',
+    default: "",
   },
   id: {
     type: String,
@@ -56,7 +62,7 @@ const props = defineProps({
   },
   type: {
     type: String as () => InputType,
-    default: 'text',
+    default: "text",
   },
   placeholder: {
     type: String,
@@ -112,71 +118,71 @@ const props = defineProps({
   },
   size: {
     type: String as () => ControlSize,
-    default: 'md',
+    default: "md",
   },
-})
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [string | number | null]
-  blur: [FocusEvent]
-  focus: [FocusEvent]
-  change: [Event]
-  input: [string | number | null]
-  clear: []
-}>()
+  "update:modelValue": [string | number | null];
+  blur: [FocusEvent];
+  focus: [FocusEvent];
+  change: [Event];
+  input: [string | number | null];
+  clear: [];
+}>();
 
-const slots = useSlots()
-const fieldContext = useFormField()
-const uid = useId()
+const slots = useSlots();
+const fieldContext = useFormField();
+const uid = useId();
 
-const hasError = computed(() => props.error || fieldContext?.error.value)
-const controlId = computed(() => props.id ?? fieldContext?.id.value ?? `input-${uid}`)
-const describedBy = computed(() => fieldContext?.ariaDescribedby.value)
+const hasError = computed(() => props.error || fieldContext?.error.value);
+const controlId = computed(() => props.id ?? fieldContext?.id.value ?? `input-${uid}`);
+const describedBy = computed(() => fieldContext?.ariaDescribedby.value);
 
-const densityMap: Record<ControlSize, 'comfortable' | 'default' | 'compact'> = {
-  sm: 'compact',
-  md: 'comfortable',
-  lg: 'default',
-}
+const densityMap: Record<ControlSize, "comfortable" | "default" | "compact"> = {
+  sm: "compact",
+  md: "comfortable",
+  lg: "default",
+};
 
-const density = computed(() => densityMap[props.size])
-const classes = computed(() => ['ui-input', `ui-input--${props.size}`])
+const density = computed(() => densityMap[props.size]);
+const classes = computed(() => ["ui-input", `ui-input--${props.size}`]);
 
 const normalizedErrors = computed(() => {
-  const value = props.errorMessages
-  if (!value) return [] as string[]
-  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean)
-})
+  const value = props.errorMessages;
+  if (!value) return [] as string[];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+});
 
-const hideDetails = computed(() => Boolean(fieldContext))
-const internalHint = computed(() => (fieldContext ? undefined : props.hint))
-const internalErrors = computed(() => (fieldContext ? [] : normalizedErrors.value))
-const persistentHint = computed(() => Boolean(internalHint.value))
+const hideDetails = computed(() => Boolean(fieldContext));
+const internalHint = computed(() => (fieldContext ? undefined : props.hint));
+const internalErrors = computed(() => (fieldContext ? [] : normalizedErrors.value));
+const persistentHint = computed(() => Boolean(internalHint.value));
 
 const inputAttrs = computed(() => ({
   required: props.required,
-}))
+}));
 
 function onUpdate(value: string | number | null) {
-  emit('update:modelValue', value)
-  emit('input', value)
+  emit("update:modelValue", value);
+  emit("input", value);
 }
 
 function onBlur(event: FocusEvent) {
-  emit('blur', event)
+  emit("blur", event);
 }
 
 function onFocus(event: FocusEvent) {
-  emit('focus', event)
+  emit("focus", event);
 }
 
 function onChange(event: Event) {
-  emit('change', event)
+  emit("change", event);
 }
 
 function onClear() {
-  emit('clear')
-  emit('update:modelValue', null)
+  emit("clear");
+  emit("update:modelValue", null);
 }
 </script>
 

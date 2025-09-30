@@ -1,8 +1,8 @@
 //
 // Dropzone
 //
-@use 'sass:color';
-@use '../variables' as *;
+@use "sass:color";
+@use "../variables" as *;
 
 .dropzone {
   position: relative;
@@ -36,8 +36,8 @@
 }
 
 .dz-drag-hover .dz-message {
-  border-color: theme-color('primary');
-  color: theme-color('primary');
+  border-color: theme-color("primary");
+  color: theme-color("primary");
 }
 
 .dropzone-multiple .dz-message {

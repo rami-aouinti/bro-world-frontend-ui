@@ -1,10 +1,13 @@
 <template>
   <div class="login-page">
-    <div class="login-card" :class="{ 'login-card--loading': isRedirecting }">
+    <div
+      class="login-card"
+      :class="{ 'login-card--loading': isRedirecting }"
+    >
       <span class="login-card__glow" />
       <div class="login-card__header">
         <h1 class="login-card__title">Bro World</h1>
-        <p class="login-card__subtitle">{{ t('auth.socialSubtitle') }}</p>
+        <p class="login-card__subtitle">{{ t("auth.socialSubtitle") }}</p>
         <AuthSocial
           class="login-card__socials"
           :loading="isRedirecting"
@@ -17,8 +20,15 @@
       </div>
 
       <transition name="login-card__overlay-fade">
-        <div v-if="isRedirecting" class="login-card__overlay">
-          <v-progress-circular indeterminate color="primary" size="64" />
+        <div
+          v-if="isRedirecting"
+          class="login-card__overlay"
+        >
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            size="64"
+          />
         </div>
       </transition>
     </div>
@@ -26,31 +36,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
-import AuthLoginForm from '~/components/auth/LoginForm.vue'
-import AuthSocial from '~/components/auth/Social.vue'
-import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
+import AuthLoginForm from "~/components/auth/LoginForm.vue";
+import AuthSocial from "~/components/auth/Social.vue";
+import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
 definePageMeta({
-  title: 'login',
-  layout: 'auth',
-  breadcrumb: 'disabled',
-})
+  title: "login",
+  layout: "auth",
+  breadcrumb: "disabled",
+});
 
-const { t } = useI18n()
-const isRedirecting = ref(false)
+const { t } = useI18n();
+const isRedirecting = ref(false);
 
 function handleSocialRedirect(provider: SocialProvider) {
-  const target = resolveSocialRedirect(provider)
+  const target = resolveSocialRedirect(provider);
 
-  if (!target) return
+  if (!target) return;
 
-  isRedirecting.value = true
+  isRedirecting.value = true;
 
   if (import.meta.client) {
-    window.location.href = target
+    window.location.href = target;
   }
 }
 </script>
@@ -69,7 +79,9 @@ function handleSocialRedirect(provider: SocialProvider) {
   border-radius: 28px;
   padding: clamp(2.25rem, 4vw, 2.75rem) clamp(1.75rem, 4vw, 2.5rem) clamp(2.5rem, 4vw, 3rem);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.96));
-  box-shadow: 0 28px 60px rgba(236, 72, 153, 0.25), 0 18px 40px rgba(30, 41, 59, 0.12);
+  box-shadow:
+    0 28px 60px rgba(236, 72, 153, 0.25),
+    0 18px 40px rgba(30, 41, 59, 0.12);
   overflow: hidden;
 }
 

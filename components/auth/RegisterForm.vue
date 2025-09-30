@@ -1,5 +1,8 @@
 <template>
-  <form class="mx-auto max-w-xl" @submit.prevent="handleSubmit">
+  <form
+    class="mx-auto max-w-xl"
+    @submit.prevent="handleSubmit"
+  >
     <div class="card-padding">
       <v-text-field
         v-model="email"
@@ -39,7 +42,10 @@
         @click:append-inner="toggleRepeatPassword"
       />
 
-      <v-row class="align-center" :class="{ 'flex-row-reverse': isRtl }">
+      <v-row
+        class="align-center"
+        :class="{ 'flex-row-reverse': isRtl }"
+      >
         <v-col cols="auto">
           <v-checkbox
             v-model="checkbox"
@@ -50,37 +56,58 @@
           />
         </v-col>
         <v-col>
-          <span class="text-body text-sm ls-0" :class="fieldAlignment">
-            {{ t('register.agree') }}
+          <span
+            class="text-body text-sm ls-0"
+            :class="fieldAlignment"
+          >
+            {{ t("register.agree") }}
             <a
               href="javascript:void(0)"
               class="font-weight-bolder text-decoration-none text-primary"
               @click.prevent="showTerms = true"
             >
-              {{ t('register.terms') }}
+              {{ t("register.terms") }}
             </a>
           </span>
         </v-col>
       </v-row>
 
-      <p v-if="error" class="mt-1 text-red d-flex justify-center">
+      <p
+        v-if="error"
+        class="mt-1 text-red d-flex justify-center"
+      >
         {{ error }}
       </p>
 
-      <p class="mt-1 mb-2 font-weight-bold text-typo" :class="fieldAlignment">
-        {{ t('register.requirements') }}
+      <p
+        class="mt-1 mb-2 font-weight-bold text-typo"
+        :class="fieldAlignment"
+      >
+        {{ t("register.requirements") }}
       </p>
 
-      <div class="d-sm-flex" :class="isRtl ? 'rtl-block' : 'ltr-block'">
-        <ul class="text-muted ps-6 mb-0" :class="isRtl ? 'rtl-block' : 'ltr-block'">
+      <div
+        class="d-sm-flex"
+        :class="isRtl ? 'rtl-block' : 'ltr-block'"
+      >
+        <ul
+          class="text-muted ps-6 mb-0"
+          :class="isRtl ? 'rtl-block' : 'ltr-block'"
+        >
           <li>
-            <h6 class="text-h7" :class="isRtl ? 'rtl-block' : 'ltr-block'">
-              {{ t('register.requirement1') }}
+            <h6
+              class="text-h7"
+              :class="isRtl ? 'rtl-block' : 'ltr-block'"
+            >
+              {{ t("register.requirement1") }}
             </h6>
           </li>
           <li>
-            <h6 class="text-h7" :class="isRtl ? 'rtl-block' : 'ltr-block'">
-              {{ t('register.requirement2') }}
+            <h6
+              class="text-h7"
+              :class="isRtl ? 'rtl-block' : 'ltr-block'"
+            >
+              {{ t("register.requirement2") }}
             </h6>
           </li>
         </ul>
@@ -91,26 +118,43 @@
         type="submit"
         class="btn btn-outline-primary bg-primary rounded-xl text-decoration-none font-weight-bold text-uppercase py-2 px-6 me-2 mt-6 mb-2 w-100"
       >
-        <v-progress-circular v-if="loading" indeterminate size="20" />
-        <span v-else :class="fieldAlignment">{{ t('register.signUp') }}</span>
+        <v-progress-circular
+          v-if="loading"
+          indeterminate
+          size="20"
+        />
+        <span
+          v-else
+          :class="fieldAlignment"
+          >{{ t("register.signUp") }}</span
+        >
       </button>
 
-      <p class="text-sm text-body mt-1 mb-0 d-flex justify-center" :class="fieldAlignment">
-        {{ t('register.haveAccount') }}
+      <p
+        class="text-sm text-body mt-1 mb-0 d-flex justify-center"
+        :class="fieldAlignment"
+      >
+        {{ t("register.haveAccount") }}
         <NuxtLink
           :to="localePath('/login')"
           class="text-primary text-decoration-none font-weight-bolder px-1"
           :class="fieldAlignment"
         >
-          {{ t('register.signIn') }}
+          {{ t("register.signIn") }}
         </NuxtLink>
       </p>
     </div>
 
-    <v-dialog v-model="showTerms" max-width="600">
+    <v-dialog
+      v-model="showTerms"
+      max-width="600"
+    >
       <v-card class="mx-auto">
-        <v-card-title class="text-h6 font-weight-bold" :class="fieldAlignment">
-          {{ t('register.termsTitle') }}
+        <v-card-title
+          class="text-h6 font-weight-bold"
+          :class="fieldAlignment"
+        >
+          {{ t("register.termsTitle") }}
         </v-card-title>
         <v-divider />
         <v-card-text class="text-body-2">
@@ -122,109 +166,109 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { useLocalePath } from '#i18n'
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { useLocalePath } from "#i18n";
 
-import Terms from '~/components/auth/Terms.vue'
+import Terms from "~/components/auth/Terms.vue";
 
-const { t, locale } = useI18n()
-const router = useRouter()
-const localePath = useLocalePath()
-const { $notify } = useNuxtApp()
+const { t, locale } = useI18n();
+const router = useRouter();
+const localePath = useLocalePath();
+const { $notify } = useNuxtApp();
 
-const isRtl = computed(() => ['ar', 'he', 'fa', 'ur'].includes(locale.value))
-const fieldAlignment = computed(() => (isRtl.value ? 'text-end' : 'text-start'))
+const isRtl = computed(() => ["ar", "he", "fa", "ur"].includes(locale.value));
+const fieldAlignment = computed(() => (isRtl.value ? "text-end" : "text-start"));
 
-const email = ref('')
-const password = ref('')
-const repeatPassword = ref('')
-const checkbox = ref(false)
-const loading = ref(false)
-const error = ref('')
-const showPassword = ref(false)
-const showRepeatPassword = ref(false)
-const showTerms = ref(false)
+const email = ref("");
+const password = ref("");
+const repeatPassword = ref("");
+const checkbox = ref(false);
+const loading = ref(false);
+const error = ref("");
+const showPassword = ref(false);
+const showRepeatPassword = ref(false);
+const showTerms = ref(false);
 
 function togglePassword() {
-  showPassword.value = !showPassword.value
+  showPassword.value = !showPassword.value;
 }
 
 function toggleRepeatPassword() {
-  showRepeatPassword.value = !showRepeatPassword.value
+  showRepeatPassword.value = !showRepeatPassword.value;
 }
 
 async function handleSubmit() {
-  if (loading.value) return
+  if (loading.value) return;
 
-  loading.value = true
-  error.value = ''
+  loading.value = true;
+  error.value = "";
 
   if (!checkbox.value) {
-    error.value = t('register.errorTerms')
-    loading.value = false
-    return
+    error.value = t("register.errorTerms");
+    loading.value = false;
+    return;
   }
 
   if (!email.value || !password.value || !repeatPassword.value) {
-    error.value = t('register.errorMissing')
-    loading.value = false
-    return
+    error.value = t("register.errorMissing");
+    loading.value = false;
+    return;
   }
 
   if (password.value !== repeatPassword.value) {
-    error.value = t('register.errorMismatch')
-    loading.value = false
-    return
+    error.value = t("register.errorMismatch");
+    loading.value = false;
+    return;
   }
 
   try {
-    const { data, error: fetchError } = await useFetch('/api/auth/register', {
-      method: 'POST',
+    const { data, error: fetchError } = await useFetch("/api/auth/register", {
+      method: "POST",
       body: {
         email: email.value,
         password: password.value,
         repeatPassword: repeatPassword.value,
       },
-    })
+    });
 
     if (fetchError.value) {
-      const message = fetchError.value.data?.message ?? t('register.errorGeneric')
-      error.value = message
+      const message = fetchError.value.data?.message ?? t("register.errorGeneric");
+      error.value = message;
       $notify({
-        type: 'error',
-        title: t('register.errorTitle'),
+        type: "error",
+        title: t("register.errorTitle"),
         message,
         timeout: null,
-      })
-      return
+      });
+      return;
     }
 
     if (data.value) {
       $notify({
-        type: 'success',
-        title: t('register.successTitle'),
-        message: t('register.success'),
-      })
-      email.value = ''
-      password.value = ''
-      repeatPassword.value = ''
-      checkbox.value = false
-      const loginPath = localePath('/login')
-      await router.push(loginPath)
+        type: "success",
+        title: t("register.successTitle"),
+        message: t("register.success"),
+      });
+      email.value = "";
+      password.value = "";
+      repeatPassword.value = "";
+      checkbox.value = false;
+      const loginPath = localePath("/login");
+      await router.push(loginPath);
     }
   } catch (exception: unknown) {
-    const message = t('register.errorGeneric')
-    error.value = message
+    const message = t("register.errorGeneric");
+    error.value = message;
     $notify({
-      type: 'error',
-      title: t('register.errorTitle'),
+      type: "error",
+      title: t("register.errorTitle"),
       message,
       timeout: null,
-    })
+    });
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 </script>

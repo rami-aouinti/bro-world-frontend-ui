@@ -150,19 +150,20 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const response = await fetcher<UsersListResponse>('/api/users', {
-        method: 'GET',
+      const response = await fetcher<UsersListResponse>("/api/users", {
+        method: "GET",
       });
 
       if (!response?.data) {
-        throw new Error('Invalid users response.');
+        throw new Error("Invalid users response.");
       }
 
       setUsersFromResponse(response);
       return users.value;
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? '');
-      error.value = message || 'Unable to load users.';
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      error.value = message || "Unable to load users.";
       throw new Error(error.value);
     } finally {
       pending.value = false;
@@ -182,12 +183,12 @@ export const useUsersStore = defineStore("users", () => {
 
     try {
       const response = await fetcher<UserResponse>("/api/users", {
-        method: 'POST',
+        method: "POST",
         body: buildRequestBody(payload),
       });
 
       if (!response?.data) {
-        throw new Error('Invalid create user response.');
+        throw new Error("Invalid create user response.");
       }
 
       removeUserFromState(optimisticId);
@@ -195,8 +196,9 @@ export const useUsersStore = defineStore("users", () => {
 
       return response.data;
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? '');
-      createError.value = message || 'Unable to create user.';
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      createError.value = message || "Unable to create user.";
       removeUserFromState(optimisticId);
       throw new Error(createError.value);
     } finally {
@@ -208,13 +210,13 @@ export const useUsersStore = defineStore("users", () => {
     const trimmedId = id?.trim();
 
     if (!trimmedId) {
-      throw new Error('A user identifier is required.');
+      throw new Error("A user identifier is required.");
     }
 
     const existing = items.value[trimmedId];
 
     if (!existing) {
-      throw new Error('User not found in state.');
+      throw new Error("User not found in state.");
     }
 
     updating.value = {
@@ -236,16 +238,13 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const response = await fetcher<UserResponse>(
-        `/api/users/${encodeURIComponent(trimmedId)}`,
-        {
-          method: "PUT",
-          body: buildRequestBody(payload),
-        },
-      );
+      const response = await fetcher<UserResponse>(`/api/users/${encodeURIComponent(trimmedId)}`, {
+        method: "PUT",
+        body: buildRequestBody(payload),
+      });
 
       if (!response?.data) {
-        throw new Error('Invalid update user response.');
+        throw new Error("Invalid update user response.");
       }
 
       upsertUser({ ...response.data, __optimistic: false }, position);
@@ -253,8 +252,9 @@ export const useUsersStore = defineStore("users", () => {
       return response.data;
     } catch (caughtError) {
       upsertUser(previous, position);
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? '');
-      throw new Error(message || 'Unable to update user.');
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      throw new Error(message || "Unable to update user.");
     } finally {
       const { [trimmedId]: _flag, ...rest } = updating.value;
       updating.value = rest;
@@ -265,13 +265,13 @@ export const useUsersStore = defineStore("users", () => {
     const trimmedId = id?.trim();
 
     if (!trimmedId) {
-      throw new Error('A user identifier is required.');
+      throw new Error("A user identifier is required.");
     }
 
     const existing = items.value[trimmedId];
 
     if (!existing) {
-      throw new Error('User not found in state.');
+      throw new Error("User not found in state.");
     }
 
     deleting.value = {
@@ -285,7 +285,7 @@ export const useUsersStore = defineStore("users", () => {
 
     try {
       await fetcher(`/api/users/${encodeURIComponent(trimmedId)}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
     } catch (caughtError) {
       if (position !== -1) {
@@ -294,8 +294,9 @@ export const useUsersStore = defineStore("users", () => {
         upsertUser(existing);
       }
 
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? '');
-      throw new Error(message || 'Unable to delete user.');
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      throw new Error(message || "Unable to delete user.");
     } finally {
       const { [trimmedId]: _flag, ...rest } = deleting.value;
       deleting.value = rest;

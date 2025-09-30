@@ -184,4 +184,3 @@ describe("BlogPostCard", () => {
     expect(getCommentsMock).toHaveBeenCalledWith(defaultPost.id);
   });
 });
-

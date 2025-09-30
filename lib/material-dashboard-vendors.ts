@@ -1,16 +1,17 @@
-import { defineAsyncComponent, type AsyncComponentLoader } from 'vue'
+import { defineAsyncComponent, type AsyncComponentLoader } from "vue";
 
-const vendorStyleLoaders = {
-} as const
+const vendorStyleLoaders = {} as const;
 
-export type MaterialDashboardVendor = keyof typeof vendorStyleLoaders
+export type MaterialDashboardVendor = keyof typeof vendorStyleLoaders;
 
-export async function loadMaterialDashboardVendorStyles(...vendors: MaterialDashboardVendor[]): Promise<void> {
+export async function loadMaterialDashboardVendorStyles(
+  ...vendors: MaterialDashboardVendor[]
+): Promise<void> {
   if (!vendors.length) {
-    return
+    return;
   }
 
-  await Promise.all(vendors.map(vendor => vendorStyleLoaders[vendor]()))
+  await Promise.all(vendors.map((vendor) => vendorStyleLoaders[vendor]()));
 }
 
 export function defineAsyncComponentWithVendorStyles<T>(
@@ -19,9 +20,9 @@ export function defineAsyncComponentWithVendorStyles<T>(
 ) {
   return defineAsyncComponent(async () => {
     if (vendors.length) {
-      await loadMaterialDashboardVendorStyles(...vendors)
+      await loadMaterialDashboardVendorStyles(...vendors);
     }
 
-    return loader()
-  })
+    return loader();
+  });
 }

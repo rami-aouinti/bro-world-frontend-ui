@@ -1,7 +1,7 @@
-@use 'sass:list';
-@use 'sass:color';
-@use 'variables' as *;
-@use 'mixins/background' as *;
+@use "sass:list";
+@use "sass:color";
+@use "variables" as *;
+@use "mixins/background" as *;
 
 @each $name, $val in $width {
   .w-#{$name} {
@@ -55,9 +55,9 @@
 
 @each $name, $val in $theme-colors {
   .badge-#{$name} {
-    @if $name == 'info' {
+    @if $name == "info" {
       color: color.scale($val, $lightness: -8%) !important;
-    } @else if $name == 'success' {
+    } @else if $name == "success" {
       color: color.scale($val, $lightness: -11%) !important;
     } @else {
       color: $val !important;

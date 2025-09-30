@@ -16,15 +16,28 @@
       @blur="onBlur"
     >
       <template #label>
-        <label :id="labelId" class="ui-checkbox__label" :for="controlId">
+        <label
+          :id="labelId"
+          class="ui-checkbox__label"
+          :for="controlId"
+        >
           <slot name="label">
             <span v-if="props.label">{{ props.label }}</span>
           </slot>
-          <span v-if="isRequired" class="ui-checkbox__required" aria-hidden="true">*</span>
+          <span
+            v-if="isRequired"
+            class="ui-checkbox__required"
+            aria-hidden="true"
+            >*</span
+          >
         </label>
       </template>
     </v-checkbox>
-    <p v-if="hasHint" :id="hintId" class="ui-checkbox__hint">
+    <p
+      v-if="hasHint"
+      :id="hintId"
+      class="ui-checkbox__hint"
+    >
       <slot name="hint">
         <span v-if="props.hint">{{ props.hint }}</span>
       </slot>
@@ -33,11 +46,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useId, useSlots } from 'vue'
-import type { VNodeChild } from 'vue'
-import { useFormField } from './useFormField'
+import { computed, useId, useSlots } from "vue";
+import type { VNodeChild } from "vue";
+import { useFormField } from "./useFormField";
 
-type CheckboxValue = boolean
+type CheckboxValue = boolean;
 
 const props = defineProps({
   modelValue: {
@@ -72,53 +85,53 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [CheckboxValue]
-  change: [CheckboxValue]
-  focus: [FocusEvent]
-  blur: [FocusEvent]
-}>()
+  "update:modelValue": [CheckboxValue];
+  change: [CheckboxValue];
+  focus: [FocusEvent];
+  blur: [FocusEvent];
+}>();
 
-const slots = useSlots()
-const field = useFormField()
-const uid = useId()
+const slots = useSlots();
+const field = useFormField();
+const uid = useId();
 
-const controlId = computed(() => props.id ?? field?.id.value ?? `checkbox-${uid}`)
-const labelId = computed(() => `${controlId.value}-label`)
-const hasHint = computed(() => Boolean(slots.hint || props.hint))
-const hintId = computed(() => (hasHint.value ? `${controlId.value}-hint` : undefined))
-const hasError = computed(() => props.error || field?.error.value)
-const isRequired = computed(() => props.required || field?.required.value)
+const controlId = computed(() => props.id ?? field?.id.value ?? `checkbox-${uid}`);
+const labelId = computed(() => `${controlId.value}-label`);
+const hasHint = computed(() => Boolean(slots.hint || props.hint));
+const hintId = computed(() => (hasHint.value ? `${controlId.value}-hint` : undefined));
+const hasError = computed(() => props.error || field?.error.value);
+const isRequired = computed(() => props.required || field?.required.value);
 const describedBy = computed(() => {
-  const ids = [field?.ariaDescribedby.value, hintId.value].filter(Boolean) as string[]
-  return ids.length ? ids.join(' ') : undefined
-})
-const indeterminate = computed(() => props.indeterminate)
+  const ids = [field?.ariaDescribedby.value, hintId.value].filter(Boolean) as string[];
+  return ids.length ? ids.join(" ") : undefined;
+});
+const indeterminate = computed(() => props.indeterminate);
 
 const classes = computed(() => [
-  'ui-checkbox',
+  "ui-checkbox",
   {
-    'ui-checkbox--error': hasError.value,
-    'ui-checkbox--disabled': props.disabled,
+    "ui-checkbox--error": hasError.value,
+    "ui-checkbox--disabled": props.disabled,
   },
-])
+]);
 
 function onUpdate(value: CheckboxValue) {
-  emit('update:modelValue', value)
+  emit("update:modelValue", value);
 }
 
 function onChange(value: CheckboxValue) {
-  emit('change', value)
+  emit("change", value);
 }
 
 function onFocus(event: FocusEvent) {
-  emit('focus', event)
+  emit("focus", event);
 }
 
 function onBlur(event: FocusEvent) {
-  emit('blur', event)
+  emit("blur", event);
 }
 </script>
 

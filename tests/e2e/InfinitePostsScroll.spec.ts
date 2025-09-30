@@ -30,13 +30,17 @@ const loadingMoreRef = ref(false);
 const hasMoreRef = ref(true);
 const pageSizeRef = ref(INITIAL_PAGE_SIZE);
 const fetchPostsMock = vi.fn<() => Promise<BlogPost[]>>();
-const fetchMorePostsMock = vi.fn<(options?: { params: { pageSize: number } }) => Promise<BlogPost[]>>();
+const fetchMorePostsMock =
+  vi.fn<(options?: { params: { pageSize: number } }) => Promise<BlogPost[]>>();
 let resolveLoadMore: (() => void) | null = null;
 
-(globalThis as typeof globalThis & { definePageMeta?: (...args: unknown[]) => void }).definePageMeta = () => {};
-(globalThis as typeof globalThis & { useI18n?: () => { t: (key: string) => string } }).useI18n = () => ({
-  t: (key: string) => key,
-});
+(
+  globalThis as typeof globalThis & { definePageMeta?: (...args: unknown[]) => void }
+).definePageMeta = () => {};
+(globalThis as typeof globalThis & { useI18n?: () => { t: (key: string) => string } }).useI18n =
+  () => ({
+    t: (key: string) => key,
+  });
 
 let IndexPage: typeof IndexPageComponent;
 
@@ -100,8 +104,7 @@ const BlogPostCardStub = {
       required: true,
     },
   },
-  template:
-    '<article :data-id="post.id" data-test="blog-post-card">{{ post.title }}</article>',
+  template: '<article :data-id="post.id" data-test="blog-post-card">{{ post.title }}</article>',
 };
 
 const PostCardSkeletonStub = {
@@ -245,7 +248,9 @@ describe("Home page infinite post loading", () => {
 
     await flushPromises();
 
-    expect(fetchMorePostsMock).toHaveBeenCalledWith(expect.objectContaining({ params: { pageSize: INITIAL_PAGE_SIZE } }));
+    expect(fetchMorePostsMock).toHaveBeenCalledWith(
+      expect.objectContaining({ params: { pageSize: INITIAL_PAGE_SIZE } }),
+    );
 
     const loadingPlaceholder = pageWrapper.find('[data-test="posts-loading-more"]');
     expect(loadingPlaceholder.exists()).toBe(true);

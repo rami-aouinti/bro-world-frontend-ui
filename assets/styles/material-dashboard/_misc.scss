@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use 'variables' as *;
+@use "sass:map";
+@use "variables" as *;
 
 html {
   -webkit-font-smoothing: auto;
@@ -72,7 +72,7 @@ html {
   }
 
   .text-dark {
-    color: map.get($colors-simple, 'gray-dark') !important;
+    color: map.get($colors-simple, "gray-dark") !important;
   }
 
   .text-darker {
@@ -85,7 +85,7 @@ html {
 
   .text-border:after,
   .text-border:before {
-    content: '';
+    content: "";
     display: inline-block;
     width: $text-border-width;
     height: $text-border-height;

@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 @each $name, $val in $headings-display-typo {
   .display-h-#{$name} {
@@ -13,7 +13,7 @@
 h1,
 h2,
 h3 {
-  font-family: 'Roboto Slab', sans-serif;
+  font-family: "Roboto Slab", sans-serif;
 }
 .text-lg {
   font-size: $font-size-lg !important;
@@ -55,7 +55,7 @@ p {
   color: $gray-600;
 
   &:before {
-    content: '\2014\00A0';
+    content: "\2014\00A0";
   }
 }
 

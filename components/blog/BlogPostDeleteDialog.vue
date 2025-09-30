@@ -2,17 +2,17 @@
   <teleport to="body">
     <transition name="fade-scale">
       <div
-          v-if="isVisible"
-          class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
-          role="alertdialog"
-          :aria-label="title"
-          aria-modal="true"
-          @keydown="handleKeydown"
+        v-if="isVisible"
+        class="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur"
+        role="alertdialog"
+        :aria-label="title"
+        aria-modal="true"
+        @keydown="handleKeydown"
       >
         <div
-            ref="dialogRef"
-            class="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
-            tabindex="-1"
+          ref="dialogRef"
+          class="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
+          tabindex="-1"
         >
           <header class="space-y-2">
             <h2 class="text-xl font-semibold text-rose-200">{{ title }}</h2>
@@ -20,20 +20,26 @@
           </header>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
             <button
-                type="button"
-                class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                @click="emitClose"
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              @click="emitClose"
             >
               {{ cancelLabel }}
             </button>
             <button
-                type="button"
-                class="inline-flex items-center justify-center rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400 disabled:cursor-not-allowed disabled:opacity-60"
-                :disabled="deleteLoading"
-                @click="handleDelete"
+              type="button"
+              class="inline-flex items-center justify-center rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400 disabled:cursor-not-allowed disabled:opacity-60"
+              :disabled="deleteLoading"
+              @click="handleDelete"
             >
-              <span v-if="deleteLoading" class="inline-flex items-center gap-2">
-                <span class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
+              <span
+                v-if="deleteLoading"
+                class="inline-flex items-center gap-2"
+              >
+                <span
+                  class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white"
+                  aria-hidden="true"
+                />
                 <span>{{ confirmLabel }}</span>
               </span>
               <span v-else>{{ confirmLabel }}</span>
@@ -111,7 +117,7 @@ function handleKeydown(event: KeyboardEvent) {
   }
 
   const focusable = container.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
   );
 
   if (focusable.length === 0) {
@@ -142,7 +148,9 @@ function handleKeydown(event: KeyboardEvent) {
 <style scoped>
 .fade-scale-enter-active,
 .fade-scale-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .fade-scale-enter-from,

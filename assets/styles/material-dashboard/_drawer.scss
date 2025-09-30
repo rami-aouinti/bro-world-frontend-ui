@@ -1,6 +1,6 @@
-@use 'sass:list';
-@use 'variables' as *;
-@use 'mixins/background' as *;
+@use "sass:list";
+@use "variables" as *;
+@use "mixins/background" as *;
 
 .v-navigation-drawer {
   box-shadow: $v-navigation-drawer-box-shadow;
@@ -18,7 +18,7 @@
 }
 
 .v-navigation-drawer {
-  &[data-color='primary'] {
+  &[data-color="primary"] {
     .v-navigation-drawer__content {
       .item-active + .v-list-group__items {
         .v-list-item--active > div {
@@ -27,7 +27,7 @@
       }
     }
   }
-  &[data-color='info'] {
+  &[data-color="info"] {
     .v-navigation-drawer__content {
       .item-active + .v-list-group__items {
         .v-list-item--active > div {
@@ -36,7 +36,7 @@
       }
     }
   }
-  &[data-color='success'] {
+  &[data-color="success"] {
     .v-navigation-drawer__content {
       .item-active + .v-list-group__items {
         .v-list-item--active > div {
@@ -45,7 +45,7 @@
       }
     }
   }
-  &[data-color='default'] {
+  &[data-color="default"] {
     .v-navigation-drawer__content {
       .item-active + .v-list-group__items {
         .v-list-item--active > div {
@@ -54,7 +54,7 @@
       }
     }
   }
-  &[data-color='warning'] {
+  &[data-color="warning"] {
     .v-navigation-drawer__content {
       .item-active + .v-list-group__items {
         .v-list-item--active > div {
@@ -63,7 +63,7 @@
       }
     }
   }
-  &[data-color='danger'] {
+  &[data-color="danger"] {
     .v-navigation-drawer__content {
       .item-active + .v-list-group__items {
         .v-list-item--active > div {
@@ -72,7 +72,7 @@
       }
     }
   }
-  &[data-theme='white'] {
+  &[data-theme="white"] {
     background: $white;
     box-shadow: $v-list-item-active-shadow;
     .v-navigation-drawer__content {
@@ -92,7 +92,7 @@
       }
     }
   }
-  &[data-theme='transparent'] {
+  &[data-theme="transparent"] {
     background: transparent;
     .v-navigation-drawer__content {
       .v-list-item {
@@ -108,11 +108,8 @@
       }
     }
   }
-  &[data-theme='dark'] {
-    @include bg-gradient-variant(
-      list.nth($dark-gradient, 1),
-      list.nth($dark-gradient-state, -1)
-    );
+  &[data-theme="dark"] {
+    @include bg-gradient-variant(list.nth($dark-gradient, 1), list.nth($dark-gradient-state, -1));
     .v-navigation-drawer__content {
       .v-navigation-drawer-brand {
         color: $white;
@@ -152,10 +149,7 @@
           }
         }
       }
-      .v-list-group--active
-        > .v-list-group__header
-        .v-list-item__content
-        .v-list-item__title {
+      .v-list-group--active > .v-list-group__header .v-list-item__content .v-list-item__title {
         color: $white;
       }
     }
@@ -335,10 +329,7 @@
     color: $v-list-item-active-content-background-color;
   }
 
-  .v-list-group--active
-    > .v-list-group__header
-    .v-list-item__content
-    .v-list-item__title {
+  .v-list-group--active > .v-list-group__header .v-list-item__content .v-list-item__title {
     color: $dark-gradient-state;
     font-weight: $font-weight-light;
   }
@@ -351,9 +342,7 @@
     color: $v-list-item-title-color !important;
   }
 
-  .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):not(
-      .has-children
-    ) {
+  .v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):not(.has-children) {
     &:focus,
     &:hover {
       background-color: $navbar-vertical-hover-bg-color;

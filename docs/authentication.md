@@ -22,23 +22,23 @@ protect pages, and respond to authentication errors.
 ## Logging in and out programmatically
 
 ```ts
-const auth = useAuthSession()
+const auth = useAuthSession();
 
 // Initialise the session (normally handled by the auth plugin)
-await auth.initialize()
+await auth.initialize();
 
 // Attempt a login
 const success = await auth.login({
-  identifier: 'john@example.com',
-  password: 'secret',
-})
+  identifier: "john@example.com",
+  password: "secret",
+});
 
 if (success) {
   // access auth.currentUser.value, auth.isAuthenticated.value, etc.
 }
 
 // Log out (redirects to the localized login route and shows a toast)
-await auth.logout()
+await auth.logout();
 ```
 
 Additional helpers:
@@ -56,8 +56,8 @@ Protected pages should reference the shared `auth` middleware:
 ```ts
 // pages/dashboard.vue
 definePageMeta({
-  middleware: ['auth'],
-})
+  middleware: ["auth"],
+});
 ```
 
 When an unauthenticated user visits a protected route, the middleware stores the
@@ -70,8 +70,8 @@ that location.
 Use the provided `$api` client to interact with backend endpoints:
 
 ```ts
-const { $api } = useNuxtApp()
-const profile = await $api('/v1/profile')
+const { $api } = useNuxtApp();
+const profile = await $api("/v1/profile");
 ```
 
 `$api` automatically attaches the necessary cookies, surfaces error

@@ -1,5 +1,8 @@
 <template>
-  <v-form lazy-validation @submit.prevent="handleSubmit">
+  <v-form
+    lazy-validation
+    @submit.prevent="handleSubmit"
+  >
     <v-text-field
       v-model="email"
       :label="t('reset.email')"
@@ -36,82 +39,88 @@
       color="primary"
       class="mt-4 w-100 rounded-xl text-white font-weight-bold"
     >
-      {{ t('reset.submit') }}
+      {{ t("reset.submit") }}
     </v-btn>
 
-    <p v-if="error" class="mt-3 text-red text-center">
+    <p
+      v-if="error"
+      class="mt-3 text-red text-center"
+    >
       {{ error }}
     </p>
-    <p v-if="success" class="mt-3 text-green text-center">
+    <p
+      v-if="success"
+      class="mt-3 text-green text-center"
+    >
       {{ success }}
     </p>
   </v-form>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { computed, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-const { t } = useI18n()
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const showPassword = ref(false)
-const loading = ref(false)
-const error = ref('')
-const success = ref('')
+const { t } = useI18n();
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
+const showPassword = ref(false);
+const loading = ref(false);
+const error = ref("");
+const success = ref("");
 
-const route = useRoute()
-const router = useRouter()
-const token = computed(() => route.query.token as string)
+const route = useRoute();
+const router = useRouter();
+const token = computed(() => route.query.token as string);
 
 const passwordRules = [
-  (v: string) => !!v || t('reset.rules.required'),
-  (v: string) => v.length >= 8 || t('reset.rules.minLength'),
-]
+  (v: string) => !!v || t("reset.rules.required"),
+  (v: string) => v.length >= 8 || t("reset.rules.minLength"),
+];
 
 function confirmPasswordRule(v: string) {
-  return v === password.value || t('reset.rules.mismatch')
+  return v === password.value || t("reset.rules.mismatch");
 }
 
 function togglePassword() {
-  showPassword.value = !showPassword.value
+  showPassword.value = !showPassword.value;
 }
 
 async function handleSubmit() {
-  error.value = ''
-  success.value = ''
-  loading.value = true
+  error.value = "";
+  success.value = "";
+  loading.value = true;
 
   if (!token.value) {
-    error.value = t('reset.errorToken')
-    loading.value = false
-    return
+    error.value = t("reset.errorToken");
+    loading.value = false;
+    return;
   }
 
-  const { error: fetchError } = await useFetch('/api/auth/reset-password', {
-    method: 'POST',
+  const { error: fetchError } = await useFetch("/api/auth/reset-password", {
+    method: "POST",
     body: {
       email: email.value,
       token: token.value,
       password: password.value,
       confirmPassword: confirmPassword.value,
     },
-  })
+  });
 
   if (fetchError.value) {
-    error.value = fetchError.value.data?.message || t('reset.errorGeneric')
-    loading.value = false
-    return
+    error.value = fetchError.value.data?.message || t("reset.errorGeneric");
+    loading.value = false;
+    return;
   }
 
-  success.value = t('reset.success')
+  success.value = t("reset.success");
 
   setTimeout(() => {
-    router.push('/login')
-  }, 2500)
+    router.push("/login");
+  }, 2500);
 
-  loading.value = false
+  loading.value = false;
 }
 </script>

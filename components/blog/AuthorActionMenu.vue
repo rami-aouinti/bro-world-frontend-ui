@@ -4,7 +4,11 @@
     :class="variantClasses.wrapper"
     v-bind="$attrs"
   >
-    <div v-if="isAuthor" ref="menuContainer" class="relative">
+    <div
+      v-if="isAuthor"
+      ref="menuContainer"
+      class="relative"
+    >
       <button
         ref="menuButton"
         type="button"
@@ -51,16 +55,22 @@
       </transition>
     </div>
     <v-btn
-        v-else-if="!isFollowing"
-        variant="text"
+      v-else-if="!isFollowing"
+      variant="text"
       color="primary"
       :aria-label="followAriaLabel"
       :disabled="followLoading"
       :data-test="followButtonTestId"
       @click="emitFollow"
     >
-      <span v-if="followLoading" :class="variantClasses.followLoadingWrapper">
-        <span :class="variantClasses.spinner" aria-hidden="true" />
+      <span
+        v-if="followLoading"
+        :class="variantClasses.followLoadingWrapper"
+      >
+        <span
+          :class="variantClasses.spinner"
+          aria-hidden="true"
+        />
         <span>{{ followLoadingLabel }}</span>
       </span>
       <span v-else>{{ followLabel }}</span>
@@ -85,24 +95,27 @@ import { useAuthSession } from "~/stores/auth-session";
 
 type Variant = "post" | "comment";
 
-const VARIANT_CONFIG: Record<Variant, {
-  wrapper: string;
-  menuButton: string;
-  menuPanel: string;
-  editButton: string;
-  deleteButton: string;
-  followButton: string;
-  followLoadingWrapper: string;
-  spinner: string;
-  followingChip: string;
-  defaults: {
-    menuTriggerTestId: string;
-    editButtonTestId: string;
-    deleteButtonTestId: string;
-    followButtonTestId: string;
-    followingChipTestId: string;
-  };
-}> = {
+const VARIANT_CONFIG: Record<
+  Variant,
+  {
+    wrapper: string;
+    menuButton: string;
+    menuPanel: string;
+    editButton: string;
+    deleteButton: string;
+    followButton: string;
+    followLoadingWrapper: string;
+    spinner: string;
+    followingChip: string;
+    defaults: {
+      menuTriggerTestId: string;
+      editButtonTestId: string;
+      deleteButtonTestId: string;
+      followButtonTestId: string;
+      followingChipTestId: string;
+    };
+  }
+> = {
   post: {
     wrapper: "flex flex-wrap items-center gap-3 text-sm text-slate-500",
     menuButton:
@@ -198,36 +211,22 @@ const deleteButton = ref<HTMLButtonElement | null>(null);
 const { t } = useI18n();
 
 const auth = useAuthSession();
-const isUserAuthenticated = computed(
-  () => props.isAuthenticated ?? auth.isAuthenticated.value,
-);
+const isUserAuthenticated = computed(() => props.isAuthenticated ?? auth.isAuthenticated.value);
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);
-const followLabel = computed(
-  () => props.followLabel ?? t("blog.posts.actions.follow"),
-);
+const followLabel = computed(() => props.followLabel ?? t("blog.posts.actions.follow"));
 const followLoadingLabel = computed(
   () => props.followLoadingLabel ?? t("blog.posts.actions.following"),
 );
-const followAriaLabel = computed(
-  () => props.followAriaLabel ?? t("blog.posts.actions.follow"),
-);
-const followingLabel = computed(
-  () => props.followingLabel ?? t("blog.posts.actions.following"),
-);
+const followAriaLabel = computed(() => props.followAriaLabel ?? t("blog.posts.actions.follow"));
+const followingLabel = computed(() => props.followingLabel ?? t("blog.posts.actions.following"));
 const followingAriaLabel = computed(
   () => props.followingAriaLabel ?? t("blog.posts.actions.following"),
 );
-const actionsAriaLabel = computed(
-  () => props.actionsAriaLabel ?? t("blog.posts.actions.openMenu"),
-);
-const editLabel = computed(
-  () => props.editLabel ?? t("blog.posts.actions.edit"),
-);
-const deleteLabel = computed(
-  () => props.deleteLabel ?? t("blog.posts.actions.delete"),
-);
+const actionsAriaLabel = computed(() => props.actionsAriaLabel ?? t("blog.posts.actions.openMenu"));
+const editLabel = computed(() => props.editLabel ?? t("blog.posts.actions.edit"));
+const deleteLabel = computed(() => props.deleteLabel ?? t("blog.posts.actions.delete"));
 
 const menuTriggerTestId = computed(
   () => props.menuTriggerTestId ?? VARIANT_CONFIG[props.variant].defaults.menuTriggerTestId,
@@ -340,7 +339,9 @@ onUnmounted(() => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .fade-enter-from,

@@ -6,7 +6,11 @@
   >
     <nav>
       <ul class="flex flex-col gap-3">
-        <li v-for="item in items" :key="item.key" class="sidebar-group">
+        <li
+          v-for="item in items"
+          :key="item.key"
+          class="sidebar-group"
+        >
           <component
             :is="item.to ? NuxtLink : 'button'"
             v-bind="item.to ? { to: item.to } : { type: 'button' }"
@@ -37,9 +41,13 @@
                 name="mdi:chevron-down"
                 :class="{ 'sidebar-toggle-icon--open': isGroupExpanded(item.key) }"
               />
-              <span class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
+              <span class="sr-only">{{ t("layout.sidebar.navigate") }}</span>
             </button>
-            <span v-else-if="item.to" class="sr-only">{{ t('layout.sidebar.navigate') }}</span>
+            <span
+              v-else-if="item.to"
+              class="sr-only"
+              >{{ t("layout.sidebar.navigate") }}</span
+            >
           </component>
 
           <ul
@@ -49,7 +57,10 @@
             class="sidebar-sublist"
             :aria-hidden="!isGroupExpanded(item.key)"
           >
-            <li v-for="child in item.children" :key="child.key">
+            <li
+              v-for="child in item.children"
+              :key="child.key"
+            >
               <NuxtLink
                 :to="child.to"
                 class="sidebar-subitem"
@@ -74,91 +85,84 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import {NuxtLink} from "#components";
+import { computed, ref, watch } from "vue";
+import { NuxtLink } from "#components";
 
 interface SidebarItem {
-  key: string
-  label: string
-  icon?: string
-  to?: string
-  children?: SidebarItem[]
+  key: string;
+  label: string;
+  icon?: string;
+  to?: string;
+  children?: SidebarItem[];
 }
 
 const props = withDefaults(
   defineProps<{
-    items: SidebarItem[]
-    activeKey: string
-    sticky?: boolean
+    items: SidebarItem[];
+    activeKey: string;
+    sticky?: boolean;
   }>(),
   {
     sticky: true,
   },
-)
+);
 
-const sticky = computed(() => props.sticky)
+const sticky = computed(() => props.sticky);
 
-const { t } = useI18n()
+const { t } = useI18n();
 
-const expandedGroups = ref(new Set<string>())
+const expandedGroups = ref(new Set<string>());
 
 watch(
   () => props.activeKey,
   (key) => {
-    let updated = false
-    const next = new Set(expandedGroups.value)
+    let updated = false;
+    const next = new Set(expandedGroups.value);
 
     for (const item of props.items) {
-      if (!item.children?.length)
-        continue
+      if (!item.children?.length) continue;
 
       if (isItemActive(item, key)) {
         if (!next.has(item.key)) {
-          next.add(item.key)
-          updated = true
+          next.add(item.key);
+          updated = true;
         }
       }
     }
 
-    if (updated)
-      expandedGroups.value = next
+    if (updated) expandedGroups.value = next;
   },
   { immediate: true },
-)
+);
 
 function isItemActive(item: SidebarItem, key: string): boolean {
-  if (item.key === key)
-    return true
+  if (item.key === key) return true;
 
-  if (item.children)
-    return item.children.some(child => isItemActive(child, key))
+  if (item.children) return item.children.some((child) => isItemActive(child, key));
 
-  return false
+  return false;
 }
 
 function toggleGroup(key: string) {
-  const next = new Set(expandedGroups.value)
+  const next = new Set(expandedGroups.value);
 
-  if (next.has(key))
-    next.delete(key)
-  else
-    next.add(key)
+  if (next.has(key)) next.delete(key);
+  else next.add(key);
 
-  expandedGroups.value = next
+  expandedGroups.value = next;
 }
 
 function isGroupExpanded(key: string) {
-  return expandedGroups.value.has(key)
+  return expandedGroups.value.has(key);
 }
 
 function handleParentSelect(item: SidebarItem) {
-  emit('select', item.key)
+  emit("select", item.key);
 
-  if (item.children?.length && !isGroupExpanded(item.key))
-    toggleGroup(item.key)
+  if (item.children?.length && !isGroupExpanded(item.key)) toggleGroup(item.key);
 }
 
-const emit = defineEmits<{ (e: 'select', key: string): void }>()
+const emit = defineEmits<{ (e: "select", key: string): void }>();
 </script>
 
 <style scoped>

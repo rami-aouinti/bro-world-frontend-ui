@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody<UpdatePayload>(event);
 
-  if (!body || (Object.values(body).every((value) => typeof value !== "string" || !value.trim()))) {
+  if (!body || Object.values(body).every((value) => typeof value !== "string" || !value.trim())) {
     throw createError({
       statusCode: 400,
       statusMessage: "At least one field is required to update the post.",

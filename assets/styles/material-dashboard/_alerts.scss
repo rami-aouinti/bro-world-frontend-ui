@@ -1,14 +1,10 @@
-@use 'sass:list';
-@use 'variables' as *;
-@use 'mixins/gradients' as *;
+@use "sass:list";
+@use "variables" as *;
+@use "mixins/gradients" as *;
 
 @each $state, $value in $theme-gradient-colors {
   .v-alert.alert-#{$state} {
-    @include gradient-directional(
-      list.nth($value, 1) 0%,
-      list.nth($value, -1) 100%,
-      $deg: 195deg
-    );
+    @include gradient-directional(list.nth($value, 1) 0%, list.nth($value, -1) 100%, $deg: 195deg);
   }
 }
 

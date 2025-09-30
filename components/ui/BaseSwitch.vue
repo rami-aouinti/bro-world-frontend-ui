@@ -16,15 +16,28 @@
       @blur="onBlur"
     >
       <template #label>
-        <label :id="labelId" class="ui-switch__label" :for="controlId">
+        <label
+          :id="labelId"
+          class="ui-switch__label"
+          :for="controlId"
+        >
           <slot name="label">
             <span v-if="props.label">{{ props.label }}</span>
           </slot>
-          <span v-if="isRequired" class="ui-switch__required" aria-hidden="true">*</span>
+          <span
+            v-if="isRequired"
+            class="ui-switch__required"
+            aria-hidden="true"
+            >*</span
+          >
         </label>
       </template>
     </v-switch>
-    <p v-if="hasHint" :id="hintId" class="ui-switch__hint">
+    <p
+      v-if="hasHint"
+      :id="hintId"
+      class="ui-switch__hint"
+    >
       <slot name="hint">
         <span v-if="props.hint">{{ props.hint }}</span>
       </slot>
@@ -33,11 +46,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useId, useSlots } from 'vue'
-import type { VNodeChild } from 'vue'
-import { useFormField } from './useFormField'
+import { computed, useId, useSlots } from "vue";
+import type { VNodeChild } from "vue";
+import { useFormField } from "./useFormField";
 
-type SwitchValue = boolean
+type SwitchValue = boolean;
 
 const props = defineProps({
   modelValue: {
@@ -68,52 +81,52 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [SwitchValue]
-  change: [SwitchValue]
-  focus: [FocusEvent]
-  blur: [FocusEvent]
-}>()
+  "update:modelValue": [SwitchValue];
+  change: [SwitchValue];
+  focus: [FocusEvent];
+  blur: [FocusEvent];
+}>();
 
-const slots = useSlots()
-const field = useFormField()
-const uid = useId()
+const slots = useSlots();
+const field = useFormField();
+const uid = useId();
 
-const controlId = computed(() => props.id ?? field?.id.value ?? `switch-${uid}`)
-const labelId = computed(() => `${controlId.value}-label`)
-const hasHint = computed(() => Boolean(slots.hint || props.hint))
-const hintId = computed(() => (hasHint.value ? `${controlId.value}-hint` : undefined))
-const hasError = computed(() => props.error || field?.error.value)
-const isRequired = computed(() => props.required || field?.required.value)
+const controlId = computed(() => props.id ?? field?.id.value ?? `switch-${uid}`);
+const labelId = computed(() => `${controlId.value}-label`);
+const hasHint = computed(() => Boolean(slots.hint || props.hint));
+const hintId = computed(() => (hasHint.value ? `${controlId.value}-hint` : undefined));
+const hasError = computed(() => props.error || field?.error.value);
+const isRequired = computed(() => props.required || field?.required.value);
 const describedBy = computed(() => {
-  const ids = [field?.ariaDescribedby.value, hintId.value].filter(Boolean) as string[]
-  return ids.length ? ids.join(' ') : undefined
-})
+  const ids = [field?.ariaDescribedby.value, hintId.value].filter(Boolean) as string[];
+  return ids.length ? ids.join(" ") : undefined;
+});
 
 const classes = computed(() => [
-  'ui-switch',
+  "ui-switch",
   {
-    'ui-switch--error': hasError.value,
-    'ui-switch--disabled': props.disabled,
+    "ui-switch--error": hasError.value,
+    "ui-switch--disabled": props.disabled,
   },
-])
+]);
 
 function onUpdate(value: SwitchValue) {
-  emit('update:modelValue', value)
+  emit("update:modelValue", value);
 }
 
 function onChange(value: SwitchValue) {
-  emit('change', value)
+  emit("change", value);
 }
 
 function onFocus(event: FocusEvent) {
-  emit('focus', event)
+  emit("focus", event);
 }
 
 function onBlur(event: FocusEvent) {
-  emit('blur', event)
+  emit("blur", event);
 }
 </script>
 

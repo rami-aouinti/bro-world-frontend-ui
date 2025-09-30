@@ -88,10 +88,10 @@ describe("usePostEditing", () => {
       content: basePost.content,
     });
     expect(notifyMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: "success",
-          title: "blog.posts.actions.editSuccessTitle",
-        }),
+      expect.objectContaining({
+        type: "success",
+        title: "blog.posts.actions.editSuccessTitle",
+      }),
     );
   });
 
@@ -105,10 +105,10 @@ describe("usePostEditing", () => {
 
     expect(result).toBe(false);
     expect(notifyMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: "error",
-          title: "blog.posts.actions.editErrorTitle",
-        }),
+      expect.objectContaining({
+        type: "error",
+        title: "blog.posts.actions.editErrorTitle",
+      }),
     );
   });
 
@@ -122,10 +122,10 @@ describe("usePostEditing", () => {
     expect(result).toBe(true);
     expect(deletePostMock).toHaveBeenCalledWith(basePost.id);
     expect(notifyMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: "success",
-          title: "blog.posts.actions.deleteSuccessTitle",
-        }),
+      expect.objectContaining({
+        type: "success",
+        title: "blog.posts.actions.deleteSuccessTitle",
+      }),
     );
   });
 
@@ -139,10 +139,10 @@ describe("usePostEditing", () => {
 
     expect(result).toBe(false);
     expect(notifyMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: "error",
-          title: "blog.posts.actions.deleteErrorTitle",
-        }),
+      expect.objectContaining({
+        type: "error",
+        title: "blog.posts.actions.deleteErrorTitle",
+      }),
     );
   });
 

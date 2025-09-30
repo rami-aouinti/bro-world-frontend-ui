@@ -32,8 +32,8 @@
         </v-alert>
         <div class="rounded-lg border border-dashed border-border bg-background/60 p-4">
           <p class="text-sm text-muted-foreground">
-            Tailwind utility styles layer on top without overriding the Vuetify base styles. Use this page to verify new layout
-            changes quickly.
+            Tailwind utility styles layer on top without overriding the Vuetify base styles. Use
+            this page to verify new layout changes quickly.
           </p>
         </div>
       </div>

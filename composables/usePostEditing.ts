@@ -54,13 +54,13 @@ export function usePostEditing(postSource: Ref<BlogPost | null | undefined> | Re
   }
 
   watch(
-      () => post.value,
-      () => {
-        if (!saveLoading.value) {
-          syncFormFromPost();
-        }
-      },
-      { immediate: true, deep: true },
+    () => post.value,
+    () => {
+      if (!saveLoading.value) {
+        syncFormFromPost();
+      }
+    },
+    { immediate: true, deep: true },
   );
 
   async function handleSaveEdit() {

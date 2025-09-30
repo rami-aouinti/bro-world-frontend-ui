@@ -25,28 +25,34 @@
     @focus="onFocus"
     @click:clear="onClear"
   >
-    <template v-if="slots.prepend" #prepend>
+    <template
+      v-if="slots.prepend"
+      #prepend
+    >
       <slot name="prepend" />
     </template>
-    <template v-if="slots.append" #append>
+    <template
+      v-if="slots.append"
+      #append
+    >
       <slot name="append" />
     </template>
   </v-select>
 </template>
 
 <script setup lang="ts">
-import { computed, useId, useSlots } from 'vue'
-import type { VNodeChild } from 'vue'
-import { useFormField } from './useFormField'
+import { computed, useId, useSlots } from "vue";
+import type { VNodeChild } from "vue";
+import { useFormField } from "./useFormField";
 
-type OptionValue = string | number
+type OptionValue = string | number;
 
-type ControlSize = 'sm' | 'md' | 'lg'
+type ControlSize = "sm" | "md" | "lg";
 
 interface SelectItem {
-  label: string | VNodeChild
-  value: OptionValue
-  disabled?: boolean
+  label: string | VNodeChild;
+  value: OptionValue;
+  disabled?: boolean;
 }
 
 const props = defineProps({
@@ -100,36 +106,36 @@ const props = defineProps({
   },
   size: {
     type: String as () => ControlSize,
-    default: 'md',
+    default: "md",
   },
-})
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [OptionValue | OptionValue[] | null]
-  change: [OptionValue | OptionValue[] | null]
-  blur: [FocusEvent]
-  focus: [FocusEvent]
-  clear: []
-}>()
+  "update:modelValue": [OptionValue | OptionValue[] | null];
+  change: [OptionValue | OptionValue[] | null];
+  blur: [FocusEvent];
+  focus: [FocusEvent];
+  clear: [];
+}>();
 
-const slots = useSlots()
-const field = useFormField()
-const uid = useId()
+const slots = useSlots();
+const field = useFormField();
+const uid = useId();
 
-const controlId = computed(() => props.id ?? field?.id.value ?? `select-${uid}`)
-const hasError = computed(() => props.error || field?.error.value)
-const describedBy = computed(() => field?.ariaDescribedby.value)
+const controlId = computed(() => props.id ?? field?.id.value ?? `select-${uid}`);
+const hasError = computed(() => props.error || field?.error.value);
+const describedBy = computed(() => field?.ariaDescribedby.value);
 
 const normalizedErrors = computed(() => {
-  const value = props.errorMessages
-  if (!value) return [] as string[]
-  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean)
-})
+  const value = props.errorMessages;
+  if (!value) return [] as string[];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+});
 
-const hideDetails = computed(() => Boolean(field))
-const internalHint = computed(() => (field ? undefined : props.hint))
-const internalErrors = computed(() => (field ? [] : normalizedErrors.value))
-const persistentHint = computed(() => Boolean(internalHint.value))
+const hideDetails = computed(() => Boolean(field));
+const internalHint = computed(() => (field ? undefined : props.hint));
+const internalErrors = computed(() => (field ? [] : normalizedErrors.value));
+const persistentHint = computed(() => Boolean(internalHint.value));
 
 const computedItems = computed(() =>
   props.items.map((item) => ({
@@ -137,47 +143,47 @@ const computedItems = computed(() =>
     title: item.label,
     disabled: item.disabled,
   })),
-)
+);
 
-const densityMap: Record<ControlSize, 'comfortable' | 'default' | 'compact'> = {
-  sm: 'compact',
-  md: 'comfortable',
-  lg: 'default',
-}
+const densityMap: Record<ControlSize, "comfortable" | "default" | "compact"> = {
+  sm: "compact",
+  md: "comfortable",
+  lg: "default",
+};
 
-const density = computed(() => densityMap[props.size])
-const classes = computed(() => ['ui-select', `ui-select--${props.size}`])
-const multiple = computed(() => props.multiple)
-const clearable = computed(() => props.clearable)
-const disabled = computed(() => props.disabled)
-const readonly = computed(() => props.readonly)
+const density = computed(() => densityMap[props.size]);
+const classes = computed(() => ["ui-select", `ui-select--${props.size}`]);
+const multiple = computed(() => props.multiple);
+const clearable = computed(() => props.clearable);
+const disabled = computed(() => props.disabled);
+const readonly = computed(() => props.readonly);
 
 const selectAttrs = computed(() => ({
   required: props.required,
-}))
+}));
 
 function onUpdate(value: OptionValue | OptionValue[] | null) {
-  emit('update:modelValue', value)
+  emit("update:modelValue", value);
 }
 
 function onChange(value: OptionValue | OptionValue[] | null) {
-  emit('change', value)
+  emit("change", value);
 }
 
 function onBlur(event: FocusEvent) {
-  emit('blur', event)
+  emit("blur", event);
 }
 
 function onFocus(event: FocusEvent) {
-  emit('focus', event)
+  emit("focus", event);
 }
 
 function onClear() {
-  emit('clear')
+  emit("clear");
   if (props.multiple) {
-    emit('update:modelValue', [])
+    emit("update:modelValue", []);
   } else {
-    emit('update:modelValue', null)
+    emit("update:modelValue", null);
   }
 }
 </script>

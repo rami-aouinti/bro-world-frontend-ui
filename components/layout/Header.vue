@@ -90,11 +90,11 @@
                 </span>
               </UiButton>
             </a>
-          <NuxtLinkLocale
-            v-else
-            :to="localePath(link?.to)"
-            :target="link?.target"
-          >
+            <NuxtLinkLocale
+              v-else
+              :to="localePath(link?.to)"
+              :target="link?.target"
+            >
               <UiButton
                 variant="ghost"
                 size="icon"
@@ -111,10 +111,10 @@
                   class="sr-only"
                 >
                   {{ link.label }}
-              </span>
-            </UiButton>
-          </NuxtLinkLocale>
-        </template>
+                </span>
+              </UiButton>
+            </NuxtLinkLocale>
+          </template>
           <UiButton
             v-if="isAuthenticated"
             variant="ghost"
@@ -124,18 +124,27 @@
             :disabled="loggingOut"
             @click="handleLogout"
           >
-            <AppSmartIcon name="mdi:logout" :size="18" />
-            <span class="sr-only">{{ t('auth.signOut') }}</span>
+            <AppSmartIcon
+              name="mdi:logout"
+              :size="18"
+            />
+            <span class="sr-only">{{ t("auth.signOut") }}</span>
           </UiButton>
-          <NuxtLinkLocale v-else :to="localePath('/login')">
+          <NuxtLinkLocale
+            v-else
+            :to="localePath('/login')"
+          >
             <UiButton
               variant="ghost"
               size="icon"
               class="flex gap-2"
               :aria-label="t('auth.signIn')"
             >
-              <AppSmartIcon name="mdi:login" :size="18" />
-              <span class="sr-only">{{ t('auth.signIn') }}</span>
+              <AppSmartIcon
+                name="mdi:login"
+                :size="18"
+              />
+              <span class="sr-only">{{ t("auth.signIn") }}</span>
             </UiButton>
           </NuxtLinkLocale>
         </div>
@@ -160,9 +169,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useAuthSession } from '~/stores/auth-session'
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useAuthSession } from "~/stores/auth-session";
 
 type HeaderLinkMenuItem = {
   title: string;

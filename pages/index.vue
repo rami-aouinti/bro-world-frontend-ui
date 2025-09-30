@@ -1,46 +1,53 @@
 <template>
   <main aria-labelledby="blog-heading">
-
     <NewPost
-        v-if="isAuthenticated"
-        :avatar="user.avatarUrl"
-        :user-name="user.name"
-        @submit="createPost"
-        @attach="onAttach"
+      v-if="isAuthenticated"
+      :avatar="user.avatarUrl"
+      :user-name="user.name"
+      @submit="createPost"
+      @attach="onAttach"
     />
 
-    <div v-if="pending" class="grid gap-4">
-      <PostCardSkeleton v-for="index in 4" :key="index" />
+    <div
+      v-if="pending"
+      class="grid gap-4"
+    >
+      <PostCardSkeleton
+        v-for="index in 4"
+        :key="index"
+      />
     </div>
 
     <template v-else>
-
       <div class="flex flex-col gap-4">
         <BlogPostCard
-            v-for="post in posts"
-            :key="post.id"
-            data-test="blog-post-card"
-            :post="post"
-            :default-avatar="defaultAvatar"
-            :reaction-emojis="reactionEmojis"
-            :reaction-labels="reactionLabels"
+          v-for="post in posts"
+          :key="post.id"
+          data-test="blog-post-card"
+          :post="post"
+          :default-avatar="defaultAvatar"
+          :reaction-emojis="reactionEmojis"
+          :reaction-labels="reactionLabels"
         />
 
         <div
-            v-if="loadingMore"
-            class="grid gap-4"
-            aria-live="polite"
-            data-test="posts-loading-more"
+          v-if="loadingMore"
+          class="grid gap-4"
+          aria-live="polite"
+          data-test="posts-loading-more"
         >
-          <PostCardSkeleton v-for="index in skeletonBatchSize" :key="`loading-${index}`" />
+          <PostCardSkeleton
+            v-for="index in skeletonBatchSize"
+            :key="`loading-${index}`"
+          />
         </div>
 
         <div
-            v-if="hasMore"
-            ref="loadMoreTrigger"
-            class="h-1 w-full"
-            aria-hidden="true"
-            data-test="posts-infinite-sentinel"
+          v-if="hasMore"
+          ref="loadMoreTrigger"
+          class="h-1 w-full"
+          aria-hidden="true"
+          data-test="posts-infinite-sentinel"
         />
       </div>
     </template>
@@ -54,19 +61,19 @@ import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
-import {useAuthSession} from "~/stores/auth-session";
+import { useAuthSession } from "~/stores/auth-session";
 
 definePageMeta({
   showRightWidgets: true,
 });
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
-const auth = useAuthSession()
-const isAuthenticated = computed(() => auth.isAuthenticated.value)
+const auth = useAuthSession();
+const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const user = {
-  name: 'Rami Aouinti',
-  avatarUrl: 'https://bro-world-space.com/img/person.png',
-}
+  name: "Rami Aouinti",
+  avatarUrl: "https://bro-world-space.com/img/person.png",
+};
 
 function onAttach(type: string) {
   // Ouvre sélecteur média / GIF / etc.
@@ -95,7 +102,8 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
 
 const INITIAL_PAGE_SIZE = 6;
 
-const { posts, pending, loadingMore, hasMore, fetchPosts, fetchMorePosts, createPost, pageSize } = usePostsStore();
+const { posts, pending, loadingMore, hasMore, fetchPosts, fetchMorePosts, createPost, pageSize } =
+  usePostsStore();
 
 const skeletonBatchSize = computed(() => {
   const size = pageSize.value || INITIAL_PAGE_SIZE;
@@ -128,13 +136,16 @@ if (typeof window !== "undefined") {
       return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          void maybeLoadMore();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            void maybeLoadMore();
+          }
         }
-      }
-    }, { rootMargin: "200px 0px" });
+      },
+      { rootMargin: "200px 0px" },
+    );
 
     observer.observe(target);
 

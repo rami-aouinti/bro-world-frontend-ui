@@ -9,40 +9,59 @@
     :aria-label="ariaLabel"
     @click="onClick"
   >
-    <template v-if="hasIcon" #prepend>
+    <template
+      v-if="hasIcon"
+      #prepend
+    >
       <slot name="icon">
-        <v-icon :icon="icon" size="18" />
+        <v-icon
+          :icon="icon"
+          size="18"
+        />
       </slot>
     </template>
 
-    <template v-if="loading" #loader>
-      <v-progress-circular indeterminate size="18" width="2" />
+    <template
+      v-if="loading"
+      #loader
+    >
+      <v-progress-circular
+        indeterminate
+        size="18"
+        width="2"
+      />
     </template>
 
     <slot />
 
-    <template v-if="hasTrailing" #append>
+    <template
+      v-if="hasTrailing"
+      #append
+    >
       <slot name="trailing">
-        <v-icon :icon="trailingIcon" size="18" />
+        <v-icon
+          :icon="trailingIcon"
+          size="18"
+        />
       </slot>
     </template>
   </v-btn>
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed, useSlots } from "vue";
 
-type ButtonVariant = 'filled' | 'tonal' | 'outline' | 'text' | 'plain'
-type ButtonSize = 'sm' | 'md' | 'lg'
+type ButtonVariant = "filled" | "tonal" | "outline" | "text" | "plain";
+type ButtonSize = "sm" | "md" | "lg";
 
 const props = defineProps({
   variant: {
     type: String as () => ButtonVariant,
-    default: 'filled',
+    default: "filled",
   },
   size: {
     type: String as () => ButtonSize,
-    default: 'md',
+    default: "md",
   },
   block: {
     type: Boolean,
@@ -57,8 +76,8 @@ const props = defineProps({
     default: false,
   },
   type: {
-    type: String as () => 'button' | 'submit' | 'reset',
-    default: 'button',
+    type: String as () => "button" | "submit" | "reset",
+    default: "button",
   },
   icon: {
     type: String,
@@ -72,35 +91,35 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
-})
+});
 
 const emit = defineEmits<{
-  click: [MouseEvent]
-}>()
+  click: [MouseEvent];
+}>();
 
-const slots = useSlots()
+const slots = useSlots();
 
-const hasIcon = computed(() => Boolean(props.icon || slots.icon))
-const hasTrailing = computed(() => Boolean(props.trailingIcon || slots.trailing))
+const hasIcon = computed(() => Boolean(props.icon || slots.icon));
+const hasTrailing = computed(() => Boolean(props.trailingIcon || slots.trailing));
 
-const isDisabled = computed(() => props.disabled || props.loading)
+const isDisabled = computed(() => props.disabled || props.loading);
 const classes = computed(() => [
-  'ui-button',
+  "ui-button",
   `ui-button--${props.size}`,
   {
-    'ui-button--loading': props.loading,
-    'ui-button--block': props.block,
+    "ui-button--loading": props.loading,
+    "ui-button--block": props.block,
   },
-])
+]);
 
 function onClick(event: MouseEvent) {
   if (isDisabled.value) {
-    event.preventDefault()
-    event.stopPropagation()
-    return
+    event.preventDefault();
+    event.stopPropagation();
+    return;
   }
 
-  emit('click', event)
+  emit("click", event);
 }
 </script>
 

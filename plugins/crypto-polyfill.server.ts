@@ -5,8 +5,8 @@ export default defineNuxtPlugin(async () => {
 
   const existingCrypto = globalThis.crypto as Crypto | undefined;
 
-  if (!existingCrypto || typeof existingCrypto.getRandomValues !== 'function') {
-    const { webcrypto } = await import('node:crypto');
+  if (!existingCrypto || typeof existingCrypto.getRandomValues !== "function") {
+    const { webcrypto } = await import("node:crypto");
 
     (globalThis as typeof globalThis & { crypto: Crypto }).crypto = webcrypto as unknown as Crypto;
   }

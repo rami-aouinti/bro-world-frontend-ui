@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use 'sass:color';
+@use "sass:map";
+@use "sass:color";
 
 $white: #fff !default;
 $gray-100: #f8f9fa !default;
@@ -34,15 +34,15 @@ $dark: #212529 !default;
 $theme-colors: () !default;
 $theme-colors: map.merge(
   (
-    'default': #344767,
-    'pink': $primary,
-    'warning': $warning,
-    'danger': $danger,
-    'info': $info,
-    'success': $success,
-    'secondary': $secondary,
-    'light': $gray-200,
-    'neutral': $white,
+    "default": #344767,
+    "pink": $primary,
+    "warning": $warning,
+    "danger": $danger,
+    "info": $info,
+    "success": $success,
+    "secondary": $secondary,
+    "light": $gray-200,
+    "neutral": $white,
   ),
   $theme-colors
 );
@@ -50,21 +50,21 @@ $theme-colors: map.merge(
 $colors-simple: () !default;
 $colors-simple: map.merge(
   (
-    'blue': #63b3ed,
-    'indigo': #596cff,
-    'purple': #6f42c1,
-    'pink': #d63384,
-    'red': #f56565,
-    'orange': #fd7e14,
-    'yellow': #fbd38d,
-    'green': #81e6d9,
-    'teal': #20c997,
-    'cyan': #0dcaf0,
-    'white': $white,
-    'gray': $gray-600,
-    'light': $gray-400,
-    'lighter': $gray-200,
-    'gray-dark': #344767,
+    "blue": #63b3ed,
+    "indigo": #596cff,
+    "purple": #6f42c1,
+    "pink": #d63384,
+    "red": #f56565,
+    "orange": #fd7e14,
+    "yellow": #fbd38d,
+    "green": #81e6d9,
+    "teal": #20c997,
+    "cyan": #0dcaf0,
+    "white": $white,
+    "gray": $gray-600,
+    "light": $gray-400,
+    "lighter": $gray-200,
+    "gray-dark": #344767,
   ),
   $colors-simple
 );
@@ -96,35 +96,35 @@ $light-gradient-state: #ced4da !default;
 
 // Gradient Colors map
 $theme-gradient-colors: (
-  'pink': (
+  "pink": (
     $primary-gradient,
     $primary-gradient-state,
   ),
-  'secondary': (
+  "secondary": (
     $secondary-gradient,
     $secondary-gradient-state,
   ),
-  'success': (
+  "success": (
     $success-gradient,
     $success-gradient-state,
   ),
-  'info': (
+  "info": (
     $info-gradient,
     $info-gradient-state,
   ),
-  'warning': (
+  "warning": (
     $warning-gradient,
     $warning-gradient-state,
   ),
-  'danger': (
+  "danger": (
     $danger-gradient,
     $danger-gradient-state,
   ),
-  'light': (
+  "light": (
     $light-gradient,
     $light-gradient-state,
   ),
-  'dark': (
+  "dark": (
     $dark-gradient,
     $dark-gradient-state,
   ),
@@ -133,46 +133,46 @@ $theme-gradient-colors: (
 $bg-gradient-variant: () !default;
 $bg-gradient-variant: map.merge(
   (
-    'default': (
+    "default": (
       $dark-gradient,
       $dark-gradient-state,
     ),
-    'pink': (
+    "pink": (
       $primary-gradient,
       $primary-gradient-state,
     ),
-    'warning': (
+    "warning": (
       $warning-gradient,
       $warning-gradient-state,
     ),
-    'danger': (
+    "danger": (
       $danger-gradient $danger-gradient-state,
     ),
-    'success': (
+    "success": (
       $success-gradient,
       $success-gradient-state,
     ),
-    'info': (
+    "info": (
       $info-gradient,
       $info-gradient-state,
     ),
-    'light': (
+    "light": (
       $light-gradient,
       $light-gradient-state,
     ),
-    'secondary': (
+    "secondary": (
       $secondary-gradient,
       $secondary-gradient-state,
     ),
-    'purple': (
+    "purple": (
       $primary-gradient,
       $primary-gradient-state,
     ),
-    'yellow': (
+    "yellow": (
       $warning-gradient,
       $warning-gradient-state,
     ),
-    'neutral': (
+    "neutral": (
       $secondary-gradient,
       $secondary-gradient-state,
     ),
@@ -205,9 +205,9 @@ $separator-skew-height: 60px !default;
 $letter-spacing: () !default;
 $letter-spacing: map.merge(
   (
-    '0': unset,
-    '1': 0.0625rem,
-    '2': 0.125rem,
+    "0": unset,
+    "1": 0.0625rem,
+    "2": 0.125rem,
   ),
   $letter-spacing
 );
@@ -216,10 +216,10 @@ $letter-spacing: map.merge(
 $headings-display-typo: () !default;
 $headings-display-typo: map.merge(
   (
-    '1': 5rem,
-    '2': 4.5rem,
-    '3': 4rem,
-    '4': 3.5rem,
+    "1": 5rem,
+    "2": 4.5rem,
+    "3": 4rem,
+    "4": 3.5rem,
   ),
   $headings-display-typo
 );
@@ -229,44 +229,44 @@ $headings-color: #344767 !default;
 $width: () !default;
 $width: map.merge(
   (
-    '5': 5%,
-    '10': 10%,
-    '15': 15%,
-    '20': 20%,
-    '30': 30%,
-    '40': 40%,
-    '50': 50%,
-    '60': 60%,
-    '70': 70%,
-    '75': 75%,
-    '80': 80%,
-    '90': 90%,
-    '100': 100%,
+    "5": 5%,
+    "10": 10%,
+    "15": 15%,
+    "20": 20%,
+    "30": 30%,
+    "40": 40%,
+    "50": 50%,
+    "60": 60%,
+    "70": 70%,
+    "75": 75%,
+    "80": 80%,
+    "90": 90%,
+    "100": 100%,
   ),
   $width
 );
 
 $height: (
-  '100': 100px,
-  '200': 200px,
-  '300': 300px,
-  '400': 400px,
-  '500': 500px,
-  '600': 600px,
+  "100": 100px,
+  "200": 200px,
+  "300": 300px,
+  "400": 400px,
+  "500": 500px,
+  "600": 600px,
 ) !default;
 
 $opacity: () !default;
 $opacity: map.merge(
   (
-    '1': 0.1,
-    '2': 0.2,
-    '3': 0.3,
-    '4': 0.4,
-    '5': 0.5,
-    '6': 0.6,
-    '7': 0.7,
-    '8': 0.8,
-    '9': 0.9,
+    "1": 0.1,
+    "2": 0.2,
+    "3": 0.3,
+    "4": 0.4,
+    "5": 0.5,
+    "6": 0.6,
+    "7": 0.7,
+    "8": 0.8,
+    "9": 0.9,
   ),
   $opacity
 );
@@ -348,8 +348,7 @@ $card-dropdown-box-shadow:
   0 15px 35px rgb(50, 50, 93, 0.15),
   0 5px 15px rgb(0, 0, 0, 0.1);
 $card-datepicker-icon-size: 12px !default;
-$move-hover-transform: perspective(999px) rotateX(7deg)
-  translate3d(0px, -4px, 5px) !default;
+$move-hover-transform: perspective(999px) rotateX(7deg) translate3d(0px, -4px, 5px) !default;
 $move-will-change: transform, box-shadow !default;
 $move-backface-visibility: hidden !default;
 $move-overflow: hidden !default;
@@ -431,41 +430,13 @@ $v-list-item-content-border-radius: 1.5rem !default;
 $v-list-item-content-background-color: rgba(58, 65, 111, 0.5) !default;
 $v-list-item-active-content-background-color: rgba($gray-400, 0.7) !default;
 $v-list-item-active-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%) !default;
-$v-list-item-icon-active-color-primary: linear-gradient(
-  310deg,
-  #cb0c9f,
-  #cb0c9f
-) !default;
-$v-list-item-icon-active-color-info: linear-gradient(
-  310deg,
-  #17c1e8,
-  #17c1e8
-) !default;
-$v-list-item-icon-active-color-success: linear-gradient(
-  310deg,
-  #82d616,
-  #82d616
-) !default;
-$v-list-item-icon-active-color-default: linear-gradient(
-  310deg,
-  #344767,
-  #344767
-) !default;
-$v-list-item-icon-active-color-warning: linear-gradient(
-  310deg,
-  #fbcf33,
-  #fbcf33
-) !default;
-$v-list-item-icon-active-color-danger: linear-gradient(
-  310deg,
-  #ea0606,
-  #ea0606
-) !default;
-$v-list-item-icon-active-color-secondary: linear-gradient(
-  310deg,
-  #e9ecef,
-  #e9ecef
-) !default;
+$v-list-item-icon-active-color-primary: linear-gradient(310deg, #cb0c9f, #cb0c9f) !default;
+$v-list-item-icon-active-color-info: linear-gradient(310deg, #17c1e8, #17c1e8) !default;
+$v-list-item-icon-active-color-success: linear-gradient(310deg, #82d616, #82d616) !default;
+$v-list-item-icon-active-color-default: linear-gradient(310deg, #344767, #344767) !default;
+$v-list-item-icon-active-color-warning: linear-gradient(310deg, #fbcf33, #fbcf33) !default;
+$v-list-item-icon-active-color-danger: linear-gradient(310deg, #ea0606, #ea0606) !default;
+$v-list-item-icon-active-color-secondary: linear-gradient(310deg, #e9ecef, #e9ecef) !default;
 
 $v-list-group-items-margin-left: 52px !default;
 
@@ -561,15 +532,15 @@ $min-height-600: 600px !default;
 $min-height: () !default;
 $min-height: map.merge(
   (
-    '100': $min-height-100,
-    '150': $min-height-150,
-    '160': $min-height-160,
-    '200': $min-height-200,
-    '250': $min-height-250,
-    '300': $min-height-300,
-    '400': $min-height-400,
-    '500': $min-height-500,
-    '600': $min-height-600,
+    "100": $min-height-100,
+    "150": $min-height-150,
+    "160": $min-height-160,
+    "200": $min-height-200,
+    "250": $min-height-250,
+    "300": $min-height-300,
+    "400": $min-height-400,
+    "500": $min-height-500,
+    "600": $min-height-600,
   ),
   $min-height
 );
@@ -610,19 +581,19 @@ $section-height-100-min-height: 100vh !default;
 $section-height: () !default;
 $section-height: map.merge(
   (
-    '25': $section-height-25-min-height,
-    '35': $section-height-35-min-height,
-    '45': $section-height-45-min-height,
-    '50': $section-height-50-min-height,
-    '55': $section-height-55-min-height,
-    '65': $section-height-65-min-height,
-    '70': $section-height-70-min-height,
-    '75': $section-height-75-min-height,
-    '80': $section-height-80-min-height,
-    '85': $section-height-85-min-height,
-    '90': $section-height-90-min-height,
-    '95': $section-height-95-min-height,
-    '100': $section-height-100-min-height,
+    "25": $section-height-25-min-height,
+    "35": $section-height-35-min-height,
+    "45": $section-height-45-min-height,
+    "50": $section-height-50-min-height,
+    "55": $section-height-55-min-height,
+    "65": $section-height-65-min-height,
+    "70": $section-height-70-min-height,
+    "75": $section-height-75-min-height,
+    "80": $section-height-80-min-height,
+    "85": $section-height-85-min-height,
+    "90": $section-height-90-min-height,
+    "95": $section-height-95-min-height,
+    "100": $section-height-100-min-height,
   ),
   $section-height
 );

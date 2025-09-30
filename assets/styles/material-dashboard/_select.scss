@@ -1,5 +1,5 @@
-@use 'variables' as *;
-@use '../variables/typography' as *;
+@use "variables" as *;
+@use "../variables/typography" as *;
 
 .v-menu__content {
   box-shadow: $card-dropdown-box-shadow;
@@ -27,7 +27,9 @@
 .chat-list-item {
   padding: 12px;
   margin-bottom: 8px;
-  transition: background 0.3s ease, transform 0.2s;
+  transition:
+    background 0.3s ease,
+    transform 0.2s;
   border-radius: 16px;
 }
 
@@ -46,11 +48,15 @@
 }
 .online-badge {
   background: #4caf50;
-  box-shadow: 0 0 4px #4caf50, 0 0 8px #4caf50;
+  box-shadow:
+    0 0 4px #4caf50,
+    0 0 8px #4caf50;
 }
 .offline-badge {
   background: #e00a1e;
-  box-shadow: 0 0 4px #c51616, 0 0 8px #e00a1e;
+  box-shadow:
+    0 0 4px #c51616,
+    0 0 8px #e00a1e;
 }
 
 .input-style .v-input__slot {

@@ -2,7 +2,7 @@
 //
 // Template's photoswipe styles.
 //
-@use '../variables' as *;
+@use "../variables" as *;
 .pswp__img {
   border-radius: 12px !important ;
 }
@@ -57,15 +57,15 @@
 }
 
 .pswp__button--fs::before {
-  content: 'Full Screen' !important ;
+  content: "Full Screen" !important ;
 }
 
 .pswp__button--share::before {
-  content: 'Share' !important ;
+  content: "Share" !important ;
 }
 
 .pswp__button--close::before {
-  content: 'Close (Esc)' !important ;
+  content: "Close (Esc)" !important ;
 }
 
 .pswp__button--zoom,

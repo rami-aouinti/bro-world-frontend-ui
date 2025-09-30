@@ -1,9 +1,6 @@
 import { createError, readBody } from "h3";
 import type { PostItemEnvelope } from "../../../utils/posts/types";
-import {
-  cachePostById,
-  invalidatePostAndLists,
-} from "../../../utils/cache/posts";
+import { cachePostById, invalidatePostAndLists } from "../../../utils/cache/posts";
 import { fetchPostByIdFromSource, updatePostAtSource } from "../../../utils/posts/api";
 import type { BlogApiResponse, BlogPost } from "../../../lib/mock/blog";
 

@@ -1,32 +1,32 @@
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import BaseButton from '../BaseButton.vue'
+import { describe, it, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import BaseButton from "../BaseButton.vue";
 
-describe('BaseButton', () => {
-  it('prevents click when loading', async () => {
+describe("BaseButton", () => {
+  it("prevents click when loading", async () => {
     const wrapper = mount(BaseButton, {
       props: {
         loading: true,
       },
       slots: {
-        default: 'Submit',
+        default: "Submit",
       },
-    })
+    });
 
-    await wrapper.get('button').trigger('click')
+    await wrapper.get("button").trigger("click");
 
-    expect(wrapper.emitted('click')).toBeUndefined()
-  })
+    expect(wrapper.emitted("click")).toBeUndefined();
+  });
 
-  it('emits click when enabled', async () => {
+  it("emits click when enabled", async () => {
     const wrapper = mount(BaseButton, {
       slots: {
-        default: 'Save',
+        default: "Save",
       },
-    })
+    });
 
-    await wrapper.get('button').trigger('click')
+    await wrapper.get("button").trigger("click");
 
-    expect(wrapper.emitted('click')).toHaveLength(1)
-  })
-})
+    expect(wrapper.emitted("click")).toHaveLength(1);
+  });
+});

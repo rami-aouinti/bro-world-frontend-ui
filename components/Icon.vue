@@ -7,79 +7,80 @@
     :style="[attrs.style as StyleValue | undefined, iconStyle]"
     role="img"
     aria-hidden="true"
+    v-html="iconSvg"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, useAttrs } from 'vue'
-import type { StyleValue } from 'vue'
+import { computed, ref, watch, useAttrs } from "vue";
+import type { StyleValue } from "vue";
 
 const props = withDefaults(
   defineProps<{
-    name?: string
-    size?: number | string
-    color?: string
+    name?: string;
+    size?: number | string;
+    color?: string;
   }>(),
   {
     size: 18,
   },
-)
+);
 
-const attrs = useAttrs()
-const iconCache = useState<Record<string, string | null>>('app-icon-cache', () => ({}))
+const attrs = useAttrs();
+const iconCache = useState<Record<string, string | null>>("app-icon-cache", () => ({}));
 
 function sanitizeSvg(svg: string): string {
   return svg
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
-    .replace(/\son[a-z]+="[^"]*"/gi, '')
-    .replace(/\son[a-z]+='[^']*'/gi, '')
-    .replace(/javascript:/gi, '')
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/\son[a-z]+="[^"]*"/gi, "")
+    .replace(/\son[a-z]+='[^']*'/gi, "")
+    .replace(/javascript:/gi, "");
 }
 
 const normalizedSize = computed(() => {
   if (props.size == null) {
-    return undefined
+    return undefined;
   }
 
-  return typeof props.size === 'number' ? `${props.size}px` : props.size
-})
+  return typeof props.size === "number" ? `${props.size}px` : props.size;
+});
 
 const forwardedAttrs = computed(() => {
-  const entries = Object.entries(attrs)
-  return Object.fromEntries(entries.filter(([key]) => key !== 'class' && key !== 'style'))
-})
+  const entries = Object.entries(attrs);
+  return Object.fromEntries(entries.filter(([key]) => key !== "class" && key !== "style"));
+});
 
-const iconSvg = computed(() => (props.name ? iconCache.value[props.name] ?? null : null))
-const iconEl = ref<HTMLElement | null>(null)
+const iconSvg = computed(() => (props.name ? (iconCache.value[props.name] ?? null) : null));
+const iconEl = ref<HTMLElement | null>(null);
 
 const iconStyle = computed(() => ({
   width: normalizedSize.value,
   height: normalizedSize.value,
   color: props.color,
-}))
+}));
 
 async function resolveIcon(name: string) {
   if (iconCache.value[name] !== undefined) {
-    return
+    return;
   }
 
   try {
     const svg = await $fetch<string>(`https://api.iconify.design/${name}.svg`, {
-      responseType: 'text',
+      responseType: "text",
       parseResponse: (text) => text,
-    })
+    });
 
     iconCache.value = {
       ...iconCache.value,
-      [name]: typeof svg === 'string' ? sanitizeSvg(svg) : sanitizeSvg(String(svg)),
-    }
+      [name]: typeof svg === "string" ? sanitizeSvg(svg) : sanitizeSvg(String(svg)),
+    };
   } catch (error) {
-    console.warn(`Unable to load icon "${name}":`, error)
+    console.warn(`Unable to load icon "${name}":`, error);
 
     iconCache.value = {
       ...iconCache.value,
       [name]: null,
-    }
+    };
   }
 }
 
@@ -87,19 +88,19 @@ watch(
   () => props.name,
   (name) => {
     if (name) {
-      resolveIcon(name)
+      resolveIcon(name);
     }
   },
   { immediate: true },
-)
+);
 
 watch(
   iconSvg,
   (value) => {
     if (iconEl.value) {
-      iconEl.value.innerHTML = value ?? ''
+      iconEl.value.innerHTML = value ?? "";
     }
   },
   { immediate: true },
-)
+);
 </script>

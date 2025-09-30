@@ -252,7 +252,9 @@ describe("PostCard interactions", () => {
     await textareas[0].setValue("Updated summary");
     await textareas[1].setValue("Updated content");
 
-    const saveButton = wrapper.findAll("button").find((button) => button.text() === en.blog.posts.actions.save);
+    const saveButton = wrapper
+      .findAll("button")
+      .find((button) => button.text() === en.blog.posts.actions.save);
     expect(saveButton).toBeDefined();
 
     await saveButton!.trigger("submit");

@@ -1,5 +1,8 @@
 <template>
-  <form :class="formClasses" @submit.prevent="handleSubmit">
+  <form
+    :class="formClasses"
+    @submit.prevent="handleSubmit"
+  >
     <div class="login-form__inner">
       <v-alert
         v-if="sessionMessage"
@@ -17,7 +20,11 @@
       </v-alert>
 
       <label :class="fieldContainerClasses">
-        <Icon name="mdi-account-circle-outline" size="24" class="login-field__icon" />
+        <Icon
+          name="mdi-account-circle-outline"
+          size="24"
+          class="login-field__icon"
+        />
         <input
           v-model="username"
           :placeholder="t('auth.usernameOrEmail')"
@@ -28,11 +35,19 @@
           :disabled="isDisabled"
           @input="handleFieldInput"
         />
-        <Icon name="mdi-emoticon-happy-outline" size="22" class="login-field__addon" />
+        <Icon
+          name="mdi-emoticon-happy-outline"
+          size="22"
+          class="login-field__addon"
+        />
       </label>
 
       <label :class="fieldContainerClasses">
-        <Icon name="mdi-lock-outline" size="22" class="login-field__icon" />
+        <Icon
+          name="mdi-lock-outline"
+          size="22"
+          class="login-field__icon"
+        />
         <input
           v-model="password"
           :type="showPassword ? 'text' : 'password'"
@@ -51,17 +66,30 @@
           :disabled="isDisabled"
           @click="togglePassword"
         >
-          <Icon :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" size="22" />
+          <Icon
+            :name="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+            size="22"
+          />
         </button>
       </label>
 
-      <p v-if="formError" class="login-form__error" role="alert">
+      <p
+        v-if="formError"
+        class="login-form__error"
+        role="alert"
+      >
         {{ formError }}
       </p>
 
-      <div class="login-form__links" :class="isRtl ? 'text-start' : 'text-end'">
-        <NuxtLink :to="localePath('/forgot-password')" class="login-form__forgot">
-          {{ t('auth.forgotPassword') }}
+      <div
+        class="login-form__links"
+        :class="isRtl ? 'text-start' : 'text-end'"
+      >
+        <NuxtLink
+          :to="localePath('/forgot-password')"
+          class="login-form__forgot"
+        >
+          {{ t("auth.forgotPassword") }}
         </NuxtLink>
       </div>
 
@@ -70,14 +98,25 @@
         class="login-form__submit"
         :disabled="isDisabled"
       >
-        <v-progress-circular v-if="isSubmitting" indeterminate size="20" />
-        <span v-else>{{ t('auth.signIn') }}</span>
+        <v-progress-circular
+          v-if="isSubmitting"
+          indeterminate
+          size="20"
+        />
+        <span v-else>{{ t("auth.signIn") }}</span>
       </GradientButton>
 
-      <p class="login-form__signup" :class="fieldAlignment">
-        {{ t('auth.signUpPrompt') }}
-        <NuxtLink :to="localePath('/register')" class="login-form__signup-link" :class="fieldAlignment">
-          {{ t('auth.signUp') }}
+      <p
+        class="login-form__signup"
+        :class="fieldAlignment"
+      >
+        {{ t("auth.signUpPrompt") }}
+        <NuxtLink
+          :to="localePath('/register')"
+          class="login-form__signup-link"
+          :class="fieldAlignment"
+        >
+          {{ t("auth.signUp") }}
         </NuxtLink>
       </p>
     </div>
@@ -85,134 +124,132 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { useLocalePath } from '#i18n'
-import { useAuthSession } from '~/stores/auth-session'
+import { computed, ref, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { useLocalePath } from "#i18n";
+import { useAuthSession } from "~/stores/auth-session";
 
 const props = withDefaults(
   defineProps<{
-    variant?: 'default' | 'compact'
-    disabled?: boolean
+    variant?: "default" | "compact";
+    disabled?: boolean;
   }>(),
   {
-    variant: 'default',
+    variant: "default",
     disabled: false,
   },
-)
+);
 
-const { t, locale } = useI18n()
-const router = useRouter()
-const route = useRoute()
-const localePath = useLocalePath()
-const { $notify } = useNuxtApp()
-const auth = useAuthSession()
+const { t, locale } = useI18n();
+const router = useRouter();
+const route = useRoute();
+const localePath = useLocalePath();
+const { $notify } = useNuxtApp();
+const auth = useAuthSession();
 
-const isRtl = computed(() => ['ar', 'he', 'fa', 'ur'].includes(locale.value))
-const fieldAlignment = computed(() => (isRtl.value ? 'text-end' : 'text-start'))
-const isCompact = computed(() => props.variant === 'compact')
-const isSubmitting = computed(() => auth.isLoggingIn.value)
-const isDisabled = computed(() => props.disabled || isSubmitting.value)
-const formClasses = computed(() => [
-  'login-form',
-  { 'login-form--compact': isCompact.value },
-])
+const isRtl = computed(() => ["ar", "he", "fa", "ur"].includes(locale.value));
+const fieldAlignment = computed(() => (isRtl.value ? "text-end" : "text-start"));
+const isCompact = computed(() => props.variant === "compact");
+const isSubmitting = computed(() => auth.isLoggingIn.value);
+const isDisabled = computed(() => props.disabled || isSubmitting.value);
+const formClasses = computed(() => ["login-form", { "login-form--compact": isCompact.value }]);
 const fieldContainerClasses = computed(() => [
-  'login-field',
-  { 'login-field--compact': isCompact.value },
-])
+  "login-field",
+  { "login-field--compact": isCompact.value },
+]);
 
-const username = ref('')
-const password = ref('')
-const showPassword = ref(false)
-const formError = ref('')
+const username = ref("");
+const password = ref("");
+const showPassword = ref(false);
+const formError = ref("");
 
-const showPasswordLabel = computed(() => t('auth.showPassword'))
-const hidePasswordLabel = computed(() => t('auth.hidePassword'))
-const sessionMessage = computed(() => auth.sessionMessage.value ?? '')
+const showPasswordLabel = computed(() => t("auth.showPassword"));
+const hidePasswordLabel = computed(() => t("auth.hidePassword"));
+const sessionMessage = computed(() => auth.sessionMessage.value ?? "");
 
 watch(
   () => auth.loginError.value,
   (message) => {
     if (message) {
-      formError.value = message
+      formError.value = message;
     }
   },
-)
+);
 
 function togglePassword() {
-  showPassword.value = !showPassword.value
+  showPassword.value = !showPassword.value;
 }
 
 function handleFieldInput() {
   if (formError.value) {
-    formError.value = ''
+    formError.value = "";
   }
 
-  auth.clearLoginError()
+  auth.clearLoginError();
 }
 
 function dismissSessionMessage() {
-  auth.setSessionMessage(null)
+  auth.setSessionMessage(null);
 }
 
 async function handleSubmit() {
   if (isSubmitting.value) {
-    return
+    return;
   }
 
-  const identifier = username.value.trim()
-  const secret = password.value
+  const identifier = username.value.trim();
+  const secret = password.value;
 
-  formError.value = ''
-  auth.clearLoginError()
+  formError.value = "";
+  auth.clearLoginError();
 
   if (!identifier || !secret) {
-    formError.value = t('auth.requiredError')
-    return
+    formError.value = t("auth.requiredError");
+    return;
   }
 
   try {
     const success = await auth.login({
       identifier,
       password: secret,
-    })
+    });
 
     if (!success) {
-      const message = auth.loginError.value ?? t('auth.invalidError')
-      formError.value = message
+      const message = auth.loginError.value ?? t("auth.invalidError");
+      formError.value = message;
       $notify({
-        type: 'error',
-        title: t('auth.errorTitle'),
+        type: "error",
+        title: t("auth.errorTitle"),
         message,
         timeout: null,
-      })
+      });
 
-      return
+      return;
     }
 
-    auth.setSessionMessage(null)
+    auth.setSessionMessage(null);
 
-    const redirectFromQuery = typeof route.query.redirect === 'string' ? route.query.redirect : null
-    const redirectTarget = redirectFromQuery || auth.consumeRedirect() || localePath('/')
+    const redirectFromQuery =
+      typeof route.query.redirect === "string" ? route.query.redirect : null;
+    const redirectTarget = redirectFromQuery || auth.consumeRedirect() || localePath("/");
 
     $notify({
-      type: 'success',
-      title: t('auth.successTitle'),
-      message: t('auth.success'),
-    })
+      type: "success",
+      title: t("auth.successTitle"),
+      message: t("auth.success"),
+    });
 
-    await router.push(redirectTarget)
+    await router.push(redirectTarget);
   } catch (exception: unknown) {
-    const message = t('auth.errorGeneric')
-    formError.value = message
+    const message = t("auth.errorGeneric");
+    formError.value = message;
     $notify({
-      type: 'error',
-      title: t('auth.errorTitle'),
+      type: "error",
+      title: t("auth.errorTitle"),
       message,
       timeout: null,
-    })
+    });
   }
 }
 </script>
@@ -242,7 +279,9 @@ async function handleSubmit() {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(247, 247, 247, 0.8));
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
   border: 1px solid rgba(236, 72, 153, 0.25);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .login-field--compact {
@@ -291,7 +330,9 @@ async function handleSubmit() {
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(236, 72, 153, 0.25);
   color: rgba(71, 85, 105, 0.7);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .login-field--compact .login-field__action {

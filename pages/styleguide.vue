@@ -4,23 +4,28 @@
       <div class="flex flex-col gap-2">
         <h1 class="text-3xl font-semibold tracking-tight">Design System Styleguide</h1>
         <p class="max-w-3xl text-base text-muted-foreground">
-          Aperçu interactif des composants fondamentaux de l'interface BroWorld.
-          Utilisez les contrôles ci-dessous pour vérifier les variantes, les états d'accessibilité,
-          la compatibilité responsive et la cohérence des modes clair/sombre.
+          Aperçu interactif des composants fondamentaux de l'interface BroWorld. Utilisez les
+          contrôles ci-dessous pour vérifier les variantes, les états d'accessibilité, la
+          compatibilité responsive et la cohérence des modes clair/sombre.
         </p>
       </div>
 
-      <div class="styleguide-controls grid gap-4 rounded-xl border border-border bg-card/60 p-4 shadow-sm">
+      <div
+        class="styleguide-controls grid gap-4 rounded-xl border border-border bg-card/60 p-4 shadow-sm"
+      >
         <div class="flex flex-wrap items-center justify-between gap-4">
           <h2 class="text-lg font-semibold">Aperçu global</h2>
           <p class="text-sm text-muted-foreground">
-            Les contrôles s'appliquent à toutes les démonstrations ci-dessous pour faciliter la revue visuelle.
+            Les contrôles s'appliquent à toutes les démonstrations ci-dessous pour faciliter la
+            revue visuelle.
           </p>
         </div>
 
         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div class="flex flex-1 flex-col gap-2">
-            <span class="text-sm font-medium uppercase tracking-wide text-muted-foreground">Mode couleur</span>
+            <span class="text-sm font-medium uppercase tracking-wide text-muted-foreground"
+              >Mode couleur</span
+            >
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="option in colorModeOptions"
@@ -35,12 +40,15 @@
               </button>
             </div>
             <p class="text-xs text-muted-foreground">
-              Astuce : le mode "Auto" s'aligne sur le système et permet de comparer rapidement la bascule.
+              Astuce : le mode "Auto" s'aligne sur le système et permet de comparer rapidement la
+              bascule.
             </p>
           </div>
 
           <div class="flex flex-1 flex-col gap-2">
-            <span class="text-sm font-medium uppercase tracking-wide text-muted-foreground">Breakpoint</span>
+            <span class="text-sm font-medium uppercase tracking-wide text-muted-foreground"
+              >Breakpoint</span
+            >
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="option in breakpointOptions"
@@ -111,11 +119,20 @@
             <BaseCard class="flex flex-col gap-4">
               <h3 class="text-lg font-semibold">Card par défaut</h3>
               <p class="text-sm text-muted-foreground">
-                Utilisée pour les encarts de contenu avec padding interne et fond conforme aux thèmes.
+                Utilisée pour les encarts de contenu avec padding interne et fond conforme aux
+                thèmes.
               </p>
               <div class="flex flex-wrap gap-3">
-                <BaseButton size="sm" variant="tonal">Action</BaseButton>
-                <BaseButton size="sm" variant="outline">Secondaire</BaseButton>
+                <BaseButton
+                  size="sm"
+                  variant="tonal"
+                  >Action</BaseButton
+                >
+                <BaseButton
+                  size="sm"
+                  variant="outline"
+                  >Secondaire</BaseButton
+                >
               </div>
             </BaseCard>
 
@@ -132,7 +149,11 @@
           </header>
           <div class="grid gap-6 lg:grid-cols-2">
             <div class="flex flex-col gap-4">
-              <FormField label="Email" :error="true" hint="Nous n'utiliserons jamais votre email pour du spam.">
+              <FormField
+                label="Email"
+                :error="true"
+                hint="Nous n'utiliserons jamais votre email pour du spam."
+              >
                 <BaseInput
                   v-model="formValues.email"
                   placeholder="john@bro.world"
@@ -140,14 +161,20 @@
                   :error-messages="['Adresse invalide']"
                 />
               </FormField>
-              <FormField label="Message" hint="Saisissez un message de démonstration.">
+              <FormField
+                label="Message"
+                hint="Saisissez un message de démonstration."
+              >
                 <BaseTextarea
                   v-model="formValues.message"
                   placeholder="Votre message"
                   rows="3"
                 />
               </FormField>
-              <FormField label="Pays" hint="Menu déroulant avec état désactivé">
+              <FormField
+                label="Pays"
+                hint="Menu déroulant avec état désactivé"
+              >
                 <BaseSelect
                   v-model="formValues.country"
                   :items="selectOptions"
@@ -158,12 +185,21 @@
             <div class="flex flex-col gap-6">
               <FormField label="Préférences">
                 <div class="grid gap-4">
-                  <BaseCheckbox v-model="formValues.agree" label="J'accepte les conditions" />
-                  <BaseSwitch v-model="formValues.notifications" label="Notifications" />
+                  <BaseCheckbox
+                    v-model="formValues.agree"
+                    label="J'accepte les conditions"
+                  />
+                  <BaseSwitch
+                    v-model="formValues.notifications"
+                    label="Notifications"
+                  />
                 </div>
               </FormField>
 
-              <FormField label="Plan" hint="Afficher les états actif/désactivé">
+              <FormField
+                label="Plan"
+                hint="Afficher les états actif/désactivé"
+              >
                 <BaseRadioGroup
                   v-model="formValues.plan"
                   :options="radioOptions"
@@ -184,7 +220,10 @@
           <BaseCard class="flex flex-col gap-4">
             <h3 class="text-lg font-semibold">Liste d'actions</h3>
             <ul class="styleguide-list">
-              <li v-for="item in listItems" :key="item.label">
+              <li
+                v-for="item in listItems"
+                :key="item.label"
+              >
                 <div class="flex items-center gap-4">
                   <div class="styleguide-list__icon">{{ item.icon }}</div>
                   <div>
@@ -210,8 +249,17 @@
             <p>Modales primaires et confirmation destructive.</p>
           </header>
           <div class="flex flex-wrap gap-4">
-            <BaseButton variant="filled" @click="showPrimaryModal = true">Ouvrir la modale</BaseButton>
-            <BaseButton variant="outline" color="error" @click="showDeleteModal = true">Supprimer un élément</BaseButton>
+            <BaseButton
+              variant="filled"
+              @click="showPrimaryModal = true"
+              >Ouvrir la modale</BaseButton
+            >
+            <BaseButton
+              variant="outline"
+              color="error"
+              @click="showDeleteModal = true"
+              >Supprimer un élément</BaseButton
+            >
           </div>
         </section>
       </div>
@@ -223,8 +271,8 @@
       @primary="showPrimaryModal = false"
     >
       <p class="text-sm text-muted-foreground">
-        Cette modale illustre la typographie par défaut et le footer primaire.
-        Testez la navigation clavier pour vérifier le focus visible.
+        Cette modale illustre la typographie par défaut et le footer primaire. Testez la navigation
+        clavier pour vérifier le focus visible.
       </p>
     </BaseModal>
 
@@ -239,8 +287,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { useCookieColorMode } from '#imports'
+import { computed, reactive, ref } from "vue";
+import { useCookieColorMode } from "#imports";
 import {
   BaseButton,
   BaseCard,
@@ -254,113 +302,121 @@ import {
   DeleteConfirmModal,
   FormField,
   BaseModal,
-} from '~/components/ui'
+} from "~/components/ui";
 
-const colorMode = useCookieColorMode()
+const colorMode = useCookieColorMode();
 const activeColorMode = computed(() => {
-  const raw = colorMode.preference ?? (colorMode.value as 'auto' | 'light' | 'dark' | undefined)
-  return raw ?? 'auto'
-})
+  const raw = colorMode.preference ?? (colorMode.value as "auto" | "light" | "dark" | undefined);
+  return raw ?? "auto";
+});
 
 const colorModeOptions = [
-  { label: 'Auto', value: 'auto' as const },
-  { label: 'Clair', value: 'light' as const },
-  { label: 'Sombre', value: 'dark' as const },
-]
+  { label: "Auto", value: "auto" as const },
+  { label: "Clair", value: "light" as const },
+  { label: "Sombre", value: "dark" as const },
+];
 
-type BreakpointKey = 'auto' | 'sm' | 'md' | 'lg' | 'xl'
+type BreakpointKey = "auto" | "sm" | "md" | "lg" | "xl";
 
 const breakpointOptions: Array<{ label: string; value: BreakpointKey; width: number | null }> = [
-  { label: 'Auto', value: 'auto', width: null },
-  { label: 'sm', value: 'sm', width: 640 },
-  { label: 'md', value: 'md', width: 768 },
-  { label: 'lg', value: 'lg', width: 1024 },
-  { label: 'xl', value: 'xl', width: 1280 },
-]
+  { label: "Auto", value: "auto", width: null },
+  { label: "sm", value: "sm", width: 640 },
+  { label: "md", value: "md", width: 768 },
+  { label: "lg", value: "lg", width: 1024 },
+  { label: "xl", value: "xl", width: 1280 },
+];
 
-const selectedBreakpoint = ref<BreakpointKey>('auto')
+const selectedBreakpoint = ref<BreakpointKey>("auto");
 
 const previewStyle = computed(() => {
-  const option = breakpointOptions.find((candidate) => candidate.value === selectedBreakpoint.value)
+  const option = breakpointOptions.find(
+    (candidate) => candidate.value === selectedBreakpoint.value,
+  );
   if (!option || !option.width) {
     return {
-      width: '100%',
-    }
+      width: "100%",
+    };
   }
   return {
-    width: '100%',
+    width: "100%",
     maxWidth: `${option.width}px`,
-  }
-})
+  };
+});
 
 const breakpointDescription = computed(() => {
-  const option = breakpointOptions.find((candidate) => candidate.value === selectedBreakpoint.value)
+  const option = breakpointOptions.find(
+    (candidate) => candidate.value === selectedBreakpoint.value,
+  );
   if (!option) {
-    return 'Prévisualisation pleine largeur.'
+    return "Prévisualisation pleine largeur.";
   }
   if (!option.width) {
-    return 'Prévisualisation pleine largeur.'
+    return "Prévisualisation pleine largeur.";
   }
-  return `Conteneur limité à ${option.width}px pour simuler le breakpoint ${option.label}.`
-})
+  return `Conteneur limité à ${option.width}px pour simuler le breakpoint ${option.label}.`;
+});
 
-const buttonVariants = ['filled', 'tonal', 'outline', 'text', 'plain'] as const
+const buttonVariants = ["filled", "tonal", "outline", "text", "plain"] as const;
 
-type ButtonStateId = 'default' | 'hover' | 'focus' | 'disabled' | 'loading'
+type ButtonStateId = "default" | "hover" | "focus" | "disabled" | "loading";
 
 const buttonStates: Array<{
-  id: ButtonStateId
-  label: string
-  loading?: boolean
-  disabled?: boolean
-  className?: string
-  size: 'sm' | 'md' | 'lg'
+  id: ButtonStateId;
+  label: string;
+  loading?: boolean;
+  disabled?: boolean;
+  className?: string;
+  size: "sm" | "md" | "lg";
 }> = [
-  { id: 'default', label: 'Défaut', size: 'md' },
-  { id: 'hover', label: 'Hover', className: 'is-simulated-hover', size: 'md' },
-  { id: 'focus', label: 'Focus', className: 'is-simulated-focus', size: 'md' },
-  { id: 'disabled', label: 'Désactivé', disabled: true, size: 'md' },
-  { id: 'loading', label: 'Chargement', loading: true, size: 'md' },
-]
+  { id: "default", label: "Défaut", size: "md" },
+  { id: "hover", label: "Hover", className: "is-simulated-hover", size: "md" },
+  { id: "focus", label: "Focus", className: "is-simulated-focus", size: "md" },
+  { id: "disabled", label: "Désactivé", disabled: true, size: "md" },
+  { id: "loading", label: "Chargement", loading: true, size: "md" },
+];
 
 const formValues = reactive({
-  email: '',
-  message: '',
-  country: '',
+  email: "",
+  message: "",
+  country: "",
   agree: true,
   notifications: false,
-  plan: '',
-})
+  plan: "",
+});
 
 const selectOptions = [
-  { label: 'France', value: 'fr' },
-  { label: 'Canada', value: 'ca' },
-  { label: 'Tunisie', value: 'tn' },
-  { label: 'Brésil', value: 'br', disabled: true },
-]
+  { label: "France", value: "fr" },
+  { label: "Canada", value: "ca" },
+  { label: "Tunisie", value: "tn" },
+  { label: "Brésil", value: "br", disabled: true },
+];
 
 const radioOptions = [
-  { label: 'Gratuit', value: 'free', hint: 'Fonctionnalités de base' },
-  { label: 'Pro', value: 'pro', hint: 'Accès aux analytics', disabled: false },
-  { label: 'Entreprise', value: 'enterprise', hint: 'Support dédié', disabled: true },
-]
+  { label: "Gratuit", value: "free", hint: "Fonctionnalités de base" },
+  { label: "Pro", value: "pro", hint: "Accès aux analytics", disabled: false },
+  { label: "Entreprise", value: "enterprise", hint: "Support dédié", disabled: true },
+];
 
 const listItems = [
-  { icon: '📝', label: 'Brief créatif', description: 'Valider le contenu principal des campagnes.' },
-  { icon: '🎯', label: 'Objectifs', description: 'Aligner l’équipe sur les KPIs trimestriels.' },
-  { icon: '🛠️', label: 'Maintenance', description: 'Suivi des corrections et dettes techniques.' },
-]
+  {
+    icon: "📝",
+    label: "Brief créatif",
+    description: "Valider le contenu principal des campagnes.",
+  },
+  { icon: "🎯", label: "Objectifs", description: "Aligner l’équipe sur les KPIs trimestriels." },
+  { icon: "🛠️", label: "Maintenance", description: "Suivi des corrections et dettes techniques." },
+];
 
-const showPrimaryModal = ref(false)
-const showDeleteModal = ref(false)
+const showPrimaryModal = ref(false);
+const showDeleteModal = ref(false);
 
-function setColorPreference(value: 'auto' | 'light' | 'dark') {
-  colorMode.preference = value
+function setColorPreference(value: "auto" | "light" | "dark") {
+  colorMode.preference = value;
 }
 
 definePageMeta({
   showRightWidgets: false,
-})
+});
 </script>
 
 <style scoped>
@@ -381,7 +437,10 @@ definePageMeta({
   padding: 0.375rem 0.875rem;
   font-size: 0.875rem;
   font-weight: 600;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
   background-color: transparent;
   color: hsl(var(--foreground));
 }
@@ -477,7 +536,7 @@ definePageMeta({
 }
 
 :deep(.is-simulated-hover .v-btn::after) {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background-color: currentColor;

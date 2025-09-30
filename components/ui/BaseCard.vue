@@ -8,19 +8,35 @@
     :data-variant="props.variant"
   >
     <div class="base-card__content">
-      <div v-if="hasMedia" :class="mediaClasses" data-test="base-card-media">
+      <div
+        v-if="hasMedia"
+        :class="mediaClasses"
+        data-test="base-card-media"
+      >
         <slot name="media" />
       </div>
 
-      <header v-if="hasHeader" :class="headerClasses" data-test="base-card-header">
+      <header
+        v-if="hasHeader"
+        :class="headerClasses"
+        data-test="base-card-header"
+      >
         <slot name="header" />
       </header>
 
-      <section v-if="hasBody" :class="bodyClasses" data-test="base-card-body">
+      <section
+        v-if="hasBody"
+        :class="bodyClasses"
+        data-test="base-card-body"
+      >
         <slot />
       </section>
 
-      <footer v-if="hasFooter" :class="footerClasses" data-test="base-card-footer">
+      <footer
+        v-if="hasFooter"
+        :class="footerClasses"
+        data-test="base-card-footer"
+      >
         <slot name="footer" />
       </footer>
     </div>
@@ -34,200 +50,201 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue'
-import { cn } from '~/lib/utils'
+import { computed, useAttrs, useSlots } from "vue";
+import { cn } from "~/lib/utils";
 
-type CardVariant = 'solid' | 'muted' | 'outline' | 'glass' | 'gradient'
-type CardPadding = 'none' | 'sm' | 'md' | 'lg'
-type CardRounded = 'md' | 'lg' | 'xl'
-type BodySpacing = 'sm' | 'md' | 'lg'
+type CardVariant = "solid" | "muted" | "outline" | "glass" | "gradient";
+type CardPadding = "none" | "sm" | "md" | "lg";
+type CardRounded = "md" | "lg" | "xl";
+type BodySpacing = "sm" | "md" | "lg";
 
 type VariantToken = {
-  background: string
-  color: string
-  borderColor?: string
-  borderStyle?: string
-  borderWidth?: string
-  shadow?: string
-  hoverShadow?: string
-  backdropFilter?: string
-  surfaceOverlay?: string
-  bodyColor?: string
-  footerColor?: string
-}
+  background: string;
+  color: string;
+  borderColor?: string;
+  borderStyle?: string;
+  borderWidth?: string;
+  shadow?: string;
+  hoverShadow?: string;
+  backdropFilter?: string;
+  surfaceOverlay?: string;
+  bodyColor?: string;
+  footerColor?: string;
+};
 
 const variantTokens: Record<CardVariant, VariantToken> = {
   solid: {
-    background: 'rgba(var(--v-theme-surface), 0.96)',
-    color: 'rgb(var(--v-theme-on-surface))',
-    borderColor: 'rgba(var(--v-theme-outline-variant), 0.6)',
-    shadow: '0 28px 55px rgba(var(--v-theme-shadow), 0.18)',
-    hoverShadow: '0 36px 70px rgba(var(--v-theme-shadow), 0.25)',
+    background: "rgba(var(--v-theme-surface), 0.96)",
+    color: "rgb(var(--v-theme-on-surface))",
+    borderColor: "rgba(var(--v-theme-outline-variant), 0.6)",
+    shadow: "0 28px 55px rgba(var(--v-theme-shadow), 0.18)",
+    hoverShadow: "0 36px 70px rgba(var(--v-theme-shadow), 0.25)",
   },
   muted: {
-    background: 'rgba(var(--v-theme-surface-variant), 0.78)',
-    color: 'rgb(var(--v-theme-on-surface))',
-    borderColor: 'rgba(var(--v-theme-outline), 0.45)',
-    shadow: '0 24px 50px rgba(var(--v-theme-shadow), 0.16)',
-    hoverShadow: '0 34px 75px rgba(var(--v-theme-shadow), 0.22)',
+    background: "rgba(var(--v-theme-surface-variant), 0.78)",
+    color: "rgb(var(--v-theme-on-surface))",
+    borderColor: "rgba(var(--v-theme-outline), 0.45)",
+    shadow: "0 24px 50px rgba(var(--v-theme-shadow), 0.16)",
+    hoverShadow: "0 34px 75px rgba(var(--v-theme-shadow), 0.22)",
   },
   outline: {
-    background: 'rgba(var(--v-theme-surface), 0.58)',
-    color: 'rgb(var(--v-theme-on-surface))',
-    borderColor: 'rgba(var(--v-theme-outline), 0.72)',
-    borderStyle: 'solid',
-    shadow: 'inset 0 1px 0 rgba(var(--v-theme-outline-variant), 0.9)',
-    hoverShadow: '0 28px 55px rgba(var(--v-theme-shadow), 0.2)',
+    background: "rgba(var(--v-theme-surface), 0.58)",
+    color: "rgb(var(--v-theme-on-surface))",
+    borderColor: "rgba(var(--v-theme-outline), 0.72)",
+    borderStyle: "solid",
+    shadow: "inset 0 1px 0 rgba(var(--v-theme-outline-variant), 0.9)",
+    hoverShadow: "0 28px 55px rgba(var(--v-theme-shadow), 0.2)",
   },
   glass: {
-    background: 'rgba(var(--v-theme-surface), 0.18)',
-    color: 'rgb(var(--v-theme-on-surface))',
-    borderColor: 'rgba(var(--v-theme-outline), 0.35)',
-    shadow: '0 35px 70px rgba(var(--v-theme-shadow), 0.24)',
-    hoverShadow: '0 48px 95px rgba(var(--v-theme-shadow), 0.28)',
-    backdropFilter: 'blur(18px)',
+    background: "rgba(var(--v-theme-surface), 0.18)",
+    color: "rgb(var(--v-theme-on-surface))",
+    borderColor: "rgba(var(--v-theme-outline), 0.35)",
+    shadow: "0 35px 70px rgba(var(--v-theme-shadow), 0.24)",
+    hoverShadow: "0 48px 95px rgba(var(--v-theme-shadow), 0.28)",
+    backdropFilter: "blur(18px)",
     surfaceOverlay:
-      'linear-gradient(135deg, rgba(var(--v-theme-surface-bright), 0.16), rgba(var(--v-theme-surface), 0.02))',
+      "linear-gradient(135deg, rgba(var(--v-theme-surface-bright), 0.16), rgba(var(--v-theme-surface), 0.02))",
   },
   gradient: {
     background:
-      'linear-gradient(135deg, rgba(var(--v-theme-primary), 0.28) 0%, rgba(var(--v-theme-surface-light), 0.85) 55%, rgba(var(--v-theme-surface), 0.98) 100%)',
-    color: 'rgb(var(--v-theme-on-primary))',
-    borderColor: 'rgba(var(--v-theme-primary), 0.35)',
-    shadow: '0 38px 80px rgba(var(--v-theme-shadow), 0.32)',
-    hoverShadow: '0 46px 105px rgba(var(--v-theme-shadow), 0.36)',
-    bodyColor: 'rgba(var(--v-theme-on-primary), 0.92)',
-    footerColor: 'rgba(var(--v-theme-on-primary), 0.85)',
+      "linear-gradient(135deg, rgba(var(--v-theme-primary), 0.28) 0%, rgba(var(--v-theme-surface-light), 0.85) 55%, rgba(var(--v-theme-surface), 0.98) 100%)",
+    color: "rgb(var(--v-theme-on-primary))",
+    borderColor: "rgba(var(--v-theme-primary), 0.35)",
+    shadow: "0 38px 80px rgba(var(--v-theme-shadow), 0.32)",
+    hoverShadow: "0 46px 105px rgba(var(--v-theme-shadow), 0.36)",
+    bodyColor: "rgba(var(--v-theme-on-primary), 0.92)",
+    footerColor: "rgba(var(--v-theme-on-primary), 0.85)",
   },
-}
+};
 
 const paddingTokens: Record<CardPadding, string> = {
-  none: '0',
-  sm: 'var(--ui-spacing-4)',
-  md: 'var(--ui-spacing-5)',
-  lg: 'var(--ui-spacing-6)',
-}
+  none: "0",
+  sm: "var(--ui-spacing-4)",
+  md: "var(--ui-spacing-5)",
+  lg: "var(--ui-spacing-6)",
+};
 
 const roundedTokens: Record<CardRounded, string> = {
-  md: 'var(--ui-radius-lg)',
-  lg: 'calc(var(--ui-radius-xl) + 0.25rem)',
-  xl: 'calc(var(--ui-radius-xl) + 0.75rem)',
-}
+  md: "var(--ui-radius-lg)",
+  lg: "calc(var(--ui-radius-xl) + 0.25rem)",
+  xl: "calc(var(--ui-radius-xl) + 0.75rem)",
+};
 
 const spacingTokens: Record<BodySpacing, { gap: string; fontSize: string; lineHeight: string }> = {
   sm: {
-    gap: 'var(--ui-spacing-3)',
-    fontSize: 'var(--v-text-body-2-size)',
-    lineHeight: 'var(--v-text-body-2-line-height, 1.6)',
+    gap: "var(--ui-spacing-3)",
+    fontSize: "var(--v-text-body-2-size)",
+    lineHeight: "var(--v-text-body-2-line-height, 1.6)",
   },
   md: {
-    gap: 'var(--ui-spacing-4)',
-    fontSize: 'var(--v-text-body-1-size)',
-    lineHeight: 'var(--v-text-body-1-line-height, 1.6)',
+    gap: "var(--ui-spacing-4)",
+    fontSize: "var(--v-text-body-1-size)",
+    lineHeight: "var(--v-text-body-1-line-height, 1.6)",
   },
   lg: {
-    gap: 'var(--ui-spacing-6)',
-    fontSize: 'var(--v-text-body-1-size)',
-    lineHeight: 'var(--v-text-body-1-line-height, 1.6)',
+    gap: "var(--ui-spacing-6)",
+    fontSize: "var(--v-text-body-1-size)",
+    lineHeight: "var(--v-text-body-1-line-height, 1.6)",
   },
-}
+};
 
 const props = withDefaults(
   defineProps<{
-    as?: string
-    variant?: CardVariant
-    padding?: CardPadding
-    rounded?: CardRounded
-    hoverable?: boolean
-    animation?: boolean
-    spacing?: BodySpacing
-    bodyClass?: string
-    headerClass?: string
-    footerClass?: string
-    mediaClass?: string
-    footerDivider?: boolean
+    as?: string;
+    variant?: CardVariant;
+    padding?: CardPadding;
+    rounded?: CardRounded;
+    hoverable?: boolean;
+    animation?: boolean;
+    spacing?: BodySpacing;
+    bodyClass?: string;
+    headerClass?: string;
+    footerClass?: string;
+    mediaClass?: string;
+    footerDivider?: boolean;
   }>(),
   {
-    as: 'article',
-    variant: 'solid',
-    padding: 'md',
-    rounded: 'xl',
+    as: "article",
+    variant: "solid",
+    padding: "md",
+    rounded: "xl",
     hoverable: false,
     animation: false,
-    spacing: 'md',
-    bodyClass: '',
-    headerClass: '',
-    footerClass: '',
-    mediaClass: '',
+    spacing: "md",
+    bodyClass: "",
+    headerClass: "",
+    footerClass: "",
+    mediaClass: "",
     footerDivider: true,
   },
-)
+);
 
-const attrs = useAttrs()
-const slots = useSlots()
+const attrs = useAttrs();
+const slots = useSlots();
 
 const restAttrs = computed(() => {
-  const { class: _class, style: _style, ...rest } = attrs as Record<string, unknown> & {
-    class?: unknown
-    style?: unknown
-  }
-  return rest
-})
+  const {
+    class: _class,
+    style: _style,
+    ...rest
+  } = attrs as Record<string, unknown> & {
+    class?: unknown;
+    style?: unknown;
+  };
+  return rest;
+});
 
-const inlineStyle = computed(() => (attrs as Record<string, unknown> & { style?: unknown }).style)
+const inlineStyle = computed(() => (attrs as Record<string, unknown> & { style?: unknown }).style);
 
 const cardStyle = computed(() => {
-  const variant = variantTokens[props.variant]
-  const spacing = spacingTokens[props.spacing]
+  const variant = variantTokens[props.variant];
+  const spacing = spacingTokens[props.spacing];
 
   return {
-    '--card-background': variant.background,
-    '--card-color': variant.color,
-    '--card-border-color': variant.borderColor ?? 'transparent',
-    '--card-border-style': variant.borderStyle ?? 'solid',
-    '--card-border-width': variant.borderWidth ?? '1px',
-    '--card-shadow': variant.shadow ?? 'none',
-    '--card-hover-shadow': variant.hoverShadow ?? variant.shadow ?? 'none',
-    '--card-backdrop-filter': variant.backdropFilter ?? 'none',
-    '--card-surface-overlay': variant.surfaceOverlay ?? 'transparent',
-    '--card-padding': paddingTokens[props.padding],
-    '--card-radius': roundedTokens[props.rounded],
-    '--card-body-gap': spacing.gap,
-    '--card-body-font-size': spacing.fontSize,
-    '--card-body-line-height': spacing.lineHeight,
-    '--card-body-color': variant.bodyColor ?? variant.color,
-    '--card-footer-color': variant.footerColor ?? 'rgba(var(--v-theme-on-surface), 0.74)',
-    '--card-footer-border': props.footerDivider
-      ? '1px solid rgba(var(--v-theme-outline-variant), 0.6)'
-      : '0',
-    '--card-footer-padding': props.footerDivider ? 'var(--ui-spacing-4)' : '0',
-  }
-})
+    "--card-background": variant.background,
+    "--card-color": variant.color,
+    "--card-border-color": variant.borderColor ?? "transparent",
+    "--card-border-style": variant.borderStyle ?? "solid",
+    "--card-border-width": variant.borderWidth ?? "1px",
+    "--card-shadow": variant.shadow ?? "none",
+    "--card-hover-shadow": variant.hoverShadow ?? variant.shadow ?? "none",
+    "--card-backdrop-filter": variant.backdropFilter ?? "none",
+    "--card-surface-overlay": variant.surfaceOverlay ?? "transparent",
+    "--card-padding": paddingTokens[props.padding],
+    "--card-radius": roundedTokens[props.rounded],
+    "--card-body-gap": spacing.gap,
+    "--card-body-font-size": spacing.fontSize,
+    "--card-body-line-height": spacing.lineHeight,
+    "--card-body-color": variant.bodyColor ?? variant.color,
+    "--card-footer-color": variant.footerColor ?? "rgba(var(--v-theme-on-surface), 0.74)",
+    "--card-footer-border": props.footerDivider
+      ? "1px solid rgba(var(--v-theme-outline-variant), 0.6)"
+      : "0",
+    "--card-footer-padding": props.footerDivider ? "var(--ui-spacing-4)" : "0",
+  };
+});
 
-const styleBinding = computed(() =>
-  [cardStyle.value, inlineStyle.value].filter(Boolean) as Array<string | Record<string, string>>,
-)
+const styleBinding = computed(
+  () =>
+    [cardStyle.value, inlineStyle.value].filter(Boolean) as Array<string | Record<string, string>>,
+);
 
 const cardClasses = computed(() =>
-  cn(
-    'base-card',
-    props.hoverable && 'base-card--hoverable',
-    attrs.class as unknown,
-  ),
-)
+  cn("base-card", props.hoverable && "base-card--hoverable", attrs.class as unknown),
+);
 
-const mediaClasses = computed(() => cn('base-card__media', props.mediaClass))
+const mediaClasses = computed(() => cn("base-card__media", props.mediaClass));
 
-const headerClasses = computed(() => cn('base-card__header', props.headerClass))
+const headerClasses = computed(() => cn("base-card__header", props.headerClass));
 
-const bodyClasses = computed(() => cn('base-card__body', props.bodyClass))
+const bodyClasses = computed(() => cn("base-card__body", props.bodyClass));
 
-const footerClasses = computed(() => cn('base-card__footer', props.footerClass))
+const footerClasses = computed(() => cn("base-card__footer", props.footerClass));
 
-const hasMedia = computed(() => Boolean(slots.media))
-const hasHeader = computed(() => Boolean(slots.header))
-const hasBody = computed(() => Boolean(slots.default))
-const hasFooter = computed(() => Boolean(slots.footer))
+const hasMedia = computed(() => Boolean(slots.media));
+const hasHeader = computed(() => Boolean(slots.header));
+const hasBody = computed(() => Boolean(slots.default));
+const hasFooter = computed(() => Boolean(slots.footer));
 </script>
 
 <style scoped>
@@ -264,13 +281,17 @@ const hasFooter = computed(() => Boolean(slots.footer))
   border-color: var(--card-border-color);
   box-shadow: var(--card-shadow);
   overflow: hidden;
-  transition: background-color 200ms ease, border-color 200ms ease, box-shadow 250ms ease,
-    color 200ms ease, transform 250ms ease;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 250ms ease,
+    color 200ms ease,
+    transform 250ms ease;
   backdrop-filter: var(--card-backdrop-filter);
 }
 
 .base-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: var(--card-surface-overlay);

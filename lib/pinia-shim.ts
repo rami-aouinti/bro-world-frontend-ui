@@ -32,15 +32,14 @@ export function createPinia(): PiniaInstance {
   return pinia;
 }
 
-export function defineStore<StoreReturn>(
-  id: string,
-  setup: () => StoreReturn,
-): () => StoreReturn {
+export function defineStore<StoreReturn>(id: string, setup: () => StoreReturn): () => StoreReturn {
   return function useStore() {
     const pinia = inject<PiniaInstance | undefined>(PINIA_SYMBOL);
 
     if (!pinia) {
-      throw new Error("[pinia-shim] Pinia instance is not available. Ensure the Pinia plugin is registered.");
+      throw new Error(
+        "[pinia-shim] Pinia instance is not available. Ensure the Pinia plugin is registered.",
+      );
     }
 
     if (!pinia._s.has(id)) {

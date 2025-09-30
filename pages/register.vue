@@ -11,14 +11,15 @@
       max-width="calc(100% - 32px)"
       rounded="lg"
       color="primary"
-      style="z-index: 2; top: -44px; position: relative;"
+      style="z-index: 2; top: -44px; position: relative"
     >
       <div class="py-4 text-center">
-        <div class="text-h4 font-weight-bold text-white">
-          Bro World
-        </div>
+        <div class="text-h4 font-weight-bold text-white">Bro World</div>
       </div>
-      <AuthSocial :loading="isRedirecting" @redirect="handleSocialRedirect" />
+      <AuthSocial
+        :loading="isRedirecting"
+        @redirect="handleSocialRedirect"
+      />
     </v-sheet>
 
     <div class="pa-6">
@@ -29,7 +30,10 @@
         size="80"
         class="mx-auto d-block"
       />
-      <div v-else class="auth-card__form">
+      <div
+        v-else
+        class="auth-card__form"
+      >
         <AuthRegisterForm />
       </div>
     </div>
@@ -37,29 +41,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-import AuthRegisterForm from '~/components/auth/RegisterForm.vue'
-import AuthSocial from '~/components/auth/Social.vue'
-import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
+import AuthRegisterForm from "~/components/auth/RegisterForm.vue";
+import AuthSocial from "~/components/auth/Social.vue";
+import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
 definePageMeta({
-  title: 'register',
-  layout: 'auth',
-  breadcrumb: 'disabled',
-})
+  title: "register",
+  layout: "auth",
+  breadcrumb: "disabled",
+});
 
-const isRedirecting = ref(false)
+const isRedirecting = ref(false);
 
 function handleSocialRedirect(provider: SocialProvider) {
-  const target = resolveSocialRedirect(provider)
+  const target = resolveSocialRedirect(provider);
 
-  if (!target) return
+  if (!target) return;
 
-  isRedirecting.value = true
+  isRedirecting.value = true;
 
   if (import.meta.client) {
-    window.location.href = target
+    window.location.href = target;
   }
 }
 </script>

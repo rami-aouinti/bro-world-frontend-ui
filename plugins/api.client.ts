@@ -25,13 +25,14 @@ export default defineNuxtPlugin({
         error,
         options,
       }: {
-        response?: FetchResponse<ErrorPayload>
-        error: FetchError<ErrorPayload>
-        options: FetchOptions
+        response?: FetchResponse<ErrorPayload>;
+        error: FetchError<ErrorPayload>;
+        options: FetchOptions;
       }) {
         const status = response?.status;
         const payload = (response?._data ?? {}) as ErrorPayload;
-        const message = payload.message || payload.error || error.message || "Unexpected network error";
+        const message =
+          payload.message || payload.error || error.message || "Unexpected network error";
         const title = payload.title || (status ? `HTTP ${status}` : undefined);
 
         if (status === 401 || status === 403) {
@@ -44,7 +45,8 @@ export default defineNuxtPlugin({
         }
 
         const suppressNotification = Boolean(
-          options?.context && (options.context as Record<string, unknown>).suppressErrorNotification,
+          options?.context &&
+            (options.context as Record<string, unknown>).suppressErrorNotification,
         );
 
         if (suppressNotification) {

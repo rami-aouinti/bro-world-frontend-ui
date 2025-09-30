@@ -11,77 +11,78 @@
       :disabled="props.loading"
       @click="handleRedirect(button.provider)"
     >
-      <Icon :name="button.icon" :size="isCompact ? 20 : 24" :color="button.iconColor" />
+      <Icon
+        :name="button.icon"
+        :size="isCompact ? 20 : 24"
+        :color="button.iconColor"
+      />
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
-import type { SocialProvider } from '~/lib/auth/social'
+import type { SocialProvider } from "~/lib/auth/social";
 
 const props = withDefaults(
   defineProps<{
-    loading?: boolean
-    size?: 'default' | 'compact'
+    loading?: boolean;
+    size?: "default" | "compact";
   }>(),
   {
     loading: false,
-    size: 'default',
+    size: "default",
   },
-)
+);
 
 const emit = defineEmits<{
-  (e: 'redirect', provider: SocialProvider): void
-}>()
+  (e: "redirect", provider: SocialProvider): void;
+}>();
 
-const { t } = useI18n()
+const { t } = useI18n();
 
 const baseButtons = [
   {
-    provider: 'google',
-    icon: 'mdi-google',
-    gradient: 'linear-gradient(135deg, #ff8a00 0%, #ff2d55 100%)',
-    iconColor: '#ffffff',
+    provider: "google",
+    icon: "mdi-google",
+    gradient: "linear-gradient(135deg, #ff8a00 0%, #ff2d55 100%)",
+    iconColor: "#ffffff",
   },
   {
-    provider: 'github',
-    icon: 'mdi-github',
-    gradient: 'linear-gradient(135deg, #232526 0%, #414345 100%)',
-    iconColor: '#ffffff',
+    provider: "github",
+    icon: "mdi-github",
+    gradient: "linear-gradient(135deg, #232526 0%, #414345 100%)",
+    iconColor: "#ffffff",
   },
   {
-    provider: 'microsoft',
-    icon: 'mdi-microsoft',
-    gradient: 'linear-gradient(135deg, #00b4db 0%, #0083b0 100%)',
-    iconColor: '#ffffff',
+    provider: "microsoft",
+    icon: "mdi-microsoft",
+    gradient: "linear-gradient(135deg, #00b4db 0%, #0083b0 100%)",
+    iconColor: "#ffffff",
   },
 ] as const satisfies ReadonlyArray<{
-  provider: SocialProvider
-  icon: string
-  gradient: string
-  iconColor: string
-}>
+  provider: SocialProvider;
+  icon: string;
+  gradient: string;
+  iconColor: string;
+}>;
 
 const buttons = computed(() =>
   baseButtons.map((button) => ({
     ...button,
     label: t(`auth.social.${button.provider}`),
   })),
-)
+);
 
-const isCompact = computed(() => props.size === 'compact')
-const socialClasses = computed(() => [
-  'auth-social',
-  { 'auth-social--compact': isCompact.value },
-])
+const isCompact = computed(() => props.size === "compact");
+const socialClasses = computed(() => ["auth-social", { "auth-social--compact": isCompact.value }]);
 
 function handleRedirect(provider: SocialProvider) {
-  if (props.loading) return
+  if (props.loading) return;
 
-  emit('redirect', provider)
+  emit("redirect", provider);
 }
 </script>
 
@@ -107,7 +108,9 @@ function handleRedirect(provider: SocialProvider) {
   border: none;
   color: #ffffff;
   box-shadow: 0 20px 38px rgba(15, 23, 42, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
 }
 

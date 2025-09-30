@@ -5,7 +5,10 @@
     aria-label="Secondary navigation"
     data-test="app-sidebar-right"
   >
-    <div v-if="shouldLoadWidgets && !isAuthenticated" class="sidebar-login-card">
+    <div
+      v-if="shouldLoadWidgets && !isAuthenticated"
+      class="sidebar-login-card"
+    >
       <ParticlesBg
         v-if="shouldRenderParticles"
         class="sidebar-login-card__particles"
@@ -17,7 +20,7 @@
       />
       <div class="sidebar-login-card__content">
         <h2 class="sidebar-login-card__title">Bro World</h2>
-        <p class="sidebar-login-card__subtitle">{{ t('auth.socialSubtitle') }}</p>
+        <p class="sidebar-login-card__subtitle">{{ t("auth.socialSubtitle") }}</p>
 
         <AuthSocial
           class="sidebar-login-card__socials"
@@ -27,7 +30,10 @@
         />
 
         <div class="sidebar-login-card__form">
-          <AuthLoginForm variant="compact" :disabled="isRedirecting" />
+          <AuthLoginForm
+            variant="compact"
+            :disabled="isRedirecting"
+          />
         </div>
       </div>
     </div>
@@ -37,122 +43,122 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref, watch } from 'vue'
-import { useCookieColorMode } from '#imports'
-import { useI18n } from 'vue-i18n'
-import { resolveSocialRedirect, type SocialProvider } from '~/lib/auth/social'
-import { useAuthSession } from '~/stores/auth-session'
+import { computed, defineAsyncComponent, ref, watch } from "vue";
+import { useCookieColorMode } from "#imports";
+import { useI18n } from "vue-i18n";
+import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
+import { useAuthSession } from "~/stores/auth-session";
 
 const HaloSearch = defineAsyncComponent({
-  loader: () => import('~/components/content/inspira/ui/halo-search/HaloSearch.vue'),
+  loader: () => import("~/components/content/inspira/ui/halo-search/HaloSearch.vue"),
   suspensible: false,
-})
+});
 const ParticlesBg = defineAsyncComponent({
-  loader: () => import('~/components/content/inspira/ui/particles-bg/ParticlesBg.vue'),
+  loader: () => import("~/components/content/inspira/ui/particles-bg/ParticlesBg.vue"),
   suspensible: false,
-})
+});
 const AuthLoginForm = defineAsyncComponent({
-  loader: () => import('~/components/auth/LoginForm.vue'),
+  loader: () => import("~/components/auth/LoginForm.vue"),
   suspensible: false,
-})
+});
 const AuthSocial = defineAsyncComponent({
-  loader: () => import('~/components/auth/Social.vue'),
+  loader: () => import("~/components/auth/Social.vue"),
   suspensible: false,
-})
+});
 
 interface SidebarItem {
-  key: string
-  label: string
-  icon?: string
-  to?: string
-  children?: SidebarItem[]
+  key: string;
+  label: string;
+  icon?: string;
+  to?: string;
+  children?: SidebarItem[];
 }
 
 const props = withDefaults(
   defineProps<{
-    items: SidebarItem[]
-    activeKey: string
-    sticky?: boolean
-    eager?: boolean
+    items: SidebarItem[];
+    activeKey: string;
+    sticky?: boolean;
+    eager?: boolean;
   }>(),
   {
     sticky: true,
     eager: false,
   },
-)
+);
 
-const sticky = computed(() => props.sticky)
-const isDark = computed(() => useCookieColorMode().value === 'dark')
-const auth = useAuthSession()
-const isAuthenticated = computed(() => auth.isAuthenticated.value)
-const { t } = useI18n()
+const sticky = computed(() => props.sticky);
+const isDark = computed(() => useCookieColorMode().value === "dark");
+const auth = useAuthSession();
+const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const { t } = useI18n();
 
-const isRedirecting = ref(false)
-const shouldRenderParticles = ref(false)
-const shouldLoadWidgets = ref(props.eager)
+const isRedirecting = ref(false);
+const shouldRenderParticles = ref(false);
+const shouldLoadWidgets = ref(props.eager);
 
 watch(
   () => props.eager,
   (value) => {
     if (value) {
-      shouldLoadWidgets.value = true
+      shouldLoadWidgets.value = true;
     }
   },
-)
+);
 
-let particlesScheduled = false
+let particlesScheduled = false;
 
 function scheduleParticles() {
   if (particlesScheduled || !import.meta.client) {
-    return
+    return;
   }
 
-  particlesScheduled = true
+  particlesScheduled = true;
 
   const idleWindow = window as typeof window & {
-    requestIdleCallback?: (callback: () => void) => number
+    requestIdleCallback?: (callback: () => void) => number;
+  };
+
+  function enableParticles() {
+    shouldRenderParticles.value = true;
   }
 
-    function enableParticles() {
-      shouldRenderParticles.value = true
-    }
-
-  if (typeof idleWindow.requestIdleCallback === 'function') {
-    idleWindow.requestIdleCallback(enableParticles)
-    return
+  if (typeof idleWindow.requestIdleCallback === "function") {
+    idleWindow.requestIdleCallback(enableParticles);
+    return;
   }
 
-  window.setTimeout(enableParticles, 200)
+  window.setTimeout(enableParticles, 200);
 }
 
 watch(
   shouldLoadWidgets,
   (value) => {
     if (value) {
-      scheduleParticles()
+      scheduleParticles();
     }
   },
   { immediate: true },
-)
+);
 
 watch(
   () => auth.isAuthenticated.value,
   (value) => {
     if (value) {
-      isRedirecting.value = false
+      isRedirecting.value = false;
     }
   },
-)
+);
 
 function handleSocialRedirect(provider: SocialProvider) {
-  const target = resolveSocialRedirect(provider)
+  const target = resolveSocialRedirect(provider);
 
-  if (!target) return
+  if (!target) return;
 
-  isRedirecting.value = true
+  isRedirecting.value = true;
 
   if (import.meta.client) {
-    window.location.href = target
+    window.location.href = target;
   }
 }
 </script>
@@ -180,7 +186,9 @@ function handleSocialRedirect(provider: SocialProvider) {
   border-radius: 20px;
   padding: 1.75rem 1.25rem;
   background: linear-gradient(180deg, rgba(248, 250, 252, 0.95), rgba(255, 255, 255, 0.9));
-  box-shadow: 0 20px 45px rgba(236, 72, 153, 0.2), 0 14px 30px rgba(15, 23, 42, 0.12);
+  box-shadow:
+    0 20px 45px rgba(236, 72, 153, 0.2),
+    0 14px 30px rgba(15, 23, 42, 0.12);
 }
 
 .sidebar-login-card__particles {

@@ -11,10 +11,16 @@
 
     <template #footer>
       <v-spacer />
-      <BaseButton variant="text" @click="handleCancel">
+      <BaseButton
+        variant="text"
+        @click="handleCancel"
+      >
         Cancel
       </BaseButton>
-      <BaseButton color="error" @click="handleConfirm">
+      <BaseButton
+        color="error"
+        @click="handleConfirm"
+      >
         {{ confirmLabel }}
       </BaseButton>
     </template>
@@ -22,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import BaseModal from './BaseModal.vue'
-import BaseButton from './BaseButton.vue'
+import { computed } from "vue";
+import BaseModal from "./BaseModal.vue";
+import BaseButton from "./BaseButton.vue";
 
 const props = defineProps({
   modelValue: {
@@ -33,7 +39,7 @@ const props = defineProps({
   },
   title: {
     type: String,
-    default: 'Delete item',
+    default: "Delete item",
   },
   message: {
     type: String,
@@ -41,38 +47,38 @@ const props = defineProps({
   },
   confirmLabel: {
     type: String,
-    default: 'Delete',
+    default: "Delete",
   },
-})
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [boolean]
-  confirm: []
-  cancel: []
-}>()
+  "update:modelValue": [boolean];
+  confirm: [];
+  cancel: [];
+}>();
 
 const model = computed({
   get: () => props.modelValue,
   set: (value: boolean) => {
-    emit('update:modelValue', value)
+    emit("update:modelValue", value);
   },
-})
+});
 
-const messageText = computed(() => props.message ?? 'This action cannot be undone.')
+const messageText = computed(() => props.message ?? "This action cannot be undone.");
 
 function handleConfirm() {
-  emit('confirm')
+  emit("confirm");
 }
 
 function handleCancel(shouldUpdate = true) {
   if (shouldUpdate && model.value) {
-    emit('update:modelValue', false)
+    emit("update:modelValue", false);
   }
-  emit('cancel')
+  emit("cancel");
 }
 
 function handleModalClose() {
-  handleCancel(false)
+  handleCancel(false);
 }
 </script>
 

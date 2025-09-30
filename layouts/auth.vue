@@ -12,7 +12,7 @@
   min-height: 100vh;
   position: relative;
   padding: clamp(1.5rem, 3vw, 3rem);
-  background-image: url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1950&q=80');
+  background-image: url("https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1950&q=80");
   background-size: cover;
   background-position: center;
   overflow: hidden;

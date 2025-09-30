@@ -6,7 +6,10 @@
     aria-live="polite"
     aria-label="Notifications"
   >
-    <transition-group name="slide-fade" tag="div">
+    <transition-group
+      name="slide-fade"
+      tag="div"
+    >
       <v-alert
         v-for="alert in queue"
         :key="alert.id"
@@ -23,13 +26,22 @@
       >
         <template #prepend>
           <!-- Exemple : avatar/icône custom -->
-          <v-avatar size="28" class="mr-2">
-            <Icon name="mdi-shield-alert" class="text-foreground"></Icon>
+          <v-avatar
+            size="28"
+            class="mr-2"
+          >
+            <Icon
+              name="mdi-shield-alert"
+              class="text-foreground"
+            ></Icon>
           </v-avatar>
         </template>
         <div class="alert-panel__content">
           <div class="alert-panel__message">{{ alert.message }}</div>
-          <div v-if="alert.actions?.length" class="alert-panel__actions">
+          <div
+            v-if="alert.actions?.length"
+            class="alert-panel__actions"
+          >
             <v-btn
               v-for="(action, index) in alert.actions"
               :key="`${alert.id}-action-${index}`"
@@ -44,8 +56,15 @@
         </div>
         <template #append>
           <!-- Exemple : avatar/icône custom -->
-          <v-avatar size="28" class="mr-2">
-            <Icon name="mdi-close" class="text-foreground" @click="close(alert.id)"></Icon>
+          <v-avatar
+            size="28"
+            class="mr-2"
+          >
+            <Icon
+              name="mdi-close"
+              class="text-foreground"
+              @click="close(alert.id)"
+            ></Icon>
           </v-avatar>
         </template>
       </v-alert>

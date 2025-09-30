@@ -1,27 +1,27 @@
 <template>
   <Icon
-      :icon="iconName"
-      :width="iconSize"
-      :height="iconSize"
+    :icon="iconName"
+    :width="iconSize"
+    :height="iconSize"
     v-bind="attrs"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, useAttrs } from "vue";
 
 const props = withDefaults(
   defineProps<{
-    name?: string
-    size?: number | string
+    name?: string;
+    size?: number | string;
   }>(),
   {
     size: 16,
   },
-)
+);
 
-const attrs = useAttrs()
+const attrs = useAttrs();
 
-const iconName = computed(() => props.name)
-const iconSize = computed(() => props.size)
+const iconName = computed(() => props.name);
+const iconSize = computed(() => props.size);
 </script>

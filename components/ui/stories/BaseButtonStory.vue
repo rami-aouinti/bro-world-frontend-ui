@@ -6,13 +6,17 @@
     <BaseButton variant="text">Text</BaseButton>
     <BaseButton variant="plain">Plain</BaseButton>
     <BaseButton size="sm">Small</BaseButton>
-    <BaseButton size="lg" loading>Loading</BaseButton>
+    <BaseButton
+      size="lg"
+      loading
+      >Loading</BaseButton
+    >
     <BaseButton block>Block</BaseButton>
   </div>
 </template>
 
 <script setup lang="ts">
-import { BaseButton } from '../index'
+import { BaseButton } from "../index";
 </script>
 
 <style scoped>

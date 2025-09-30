@@ -2,18 +2,29 @@
 <template>
   <div>
     <div
-        v-for="node in nodes"
-        :key="node.id"
-        :style="{ marginLeft: depth > 0 ? `${46}px` : 0 }"
+      v-for="node in nodes"
+      :key="node.id"
+      :style="{ marginLeft: depth > 0 ? `${46}px` : 0 }"
     >
       <div class="comment">
-        <v-avatar size="34" class="mr-2">
-          <v-img :src="node.user.photo || 'https://i.pravatar.cc/80?img=5'" alt=""/>
+        <v-avatar
+          size="34"
+          class="mr-2"
+        >
+          <v-img
+            :src="node.user.photo || 'https://i.pravatar.cc/80?img=5'"
+            alt=""
+          />
         </v-avatar>
         <div class="bubble">
           <div class="bubble__inner">
             <div class="bubble__author">{{ node.user.firstName }} {{ node.user.lastName }}</div>
-            <div class="bubble__message" dir="auto">{{ node.content }}</div>
+            <div
+              class="bubble__message"
+              dir="auto"
+            >
+              {{ node.content }}
+            </div>
           </div>
         </div>
       </div>
@@ -22,227 +33,299 @@
       <div class="meta">
         <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
         <ReactionPicker
-            class="like-size-sm"
-            @like="emit('like', node.id)"
-            @select="r => emit('react', { id: node.id, type: r })"
-
+          class="like-size-sm"
+          @like="emit('like', node.id)"
+          @select="(r) => emit('react', { id: node.id, type: r })"
         />
-        <button class="meta__btn" @click="toggleReply(node.id)">{{ t('blog.comments.reply') }}</button>
-        <span v-if="getReactionTotal(node) > 0" class="total">{{ getReactionTotal(node) }}</span>
-        <div class="bubblesReacts" :aria-label="reactionAriaLabel(node)">
+        <button
+          class="meta__btn"
+          @click="toggleReply(node.id)"
+        >
+          {{ t("blog.comments.reply") }}
+        </button>
+        <span
+          v-if="getReactionTotal(node) > 0"
+          class="total"
+          >{{ getReactionTotal(node) }}</span
+        >
+        <div
+          class="bubblesReacts"
+          :aria-label="reactionAriaLabel(node)"
+        >
           <v-avatar
-              v-for="(r, i) in topReactions"
-              :key="r.type"
-              size="22"
-              class="bubbleReacts"
-              :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
-              variant="flat"
+            v-for="(r, i) in topReactions"
+            :key="r.type"
+            size="22"
+            class="bubbleReacts"
+            :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
+            variant="flat"
           >
             <!-- remplace par tes propres images si tu en as -->
             <v-img
-:src="{
-              like:  'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
-              sad:   'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
-              angry: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png'
-            }[r.type]"
-                   alt="" cover
+              :src="
+                {
+                  like: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
+                  sad: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
+                  angry:
+                    'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png',
+                }[r.type]
+              "
+              alt=""
+              cover
             />
           </v-avatar>
         </div>
       </div>
       <div class="meta py-2">
         <template v-if="(node.children?.length || 0) > 0">
-          <button class="meta__btn" @click="toggleExpand(node.id)">
-            <Icon v-if="expanded[node.id]" name="mdi-message">{{ `${node.children!.length} ` }}</Icon>
-            {{ expanded[node.id]
-              ? t('blog.comments.thread.hideReplies')
-              : t('blog.comments.thread.showReplies', { count: node.children!.length })
+          <button
+            class="meta__btn"
+            @click="toggleExpand(node.id)"
+          >
+            <Icon
+              v-if="expanded[node.id]"
+              name="mdi-message"
+              >{{ `${node.children!.length} ` }}</Icon
+            >
+            {{
+              expanded[node.id]
+                ? t("blog.comments.thread.hideReplies")
+                : t("blog.comments.thread.showReplies", { count: node.children!.length })
             }}
           </button>
         </template>
       </div>
 
-      <div v-if="replying[node.id]" class="reply-composer">
+      <div
+        v-if="replying[node.id]"
+        class="reply-composer"
+      >
         <comment-composer
-            :avatar="props.currentUser?.photo"
-            :placeholder="t('blog.comments.replyPlaceholder')"
-            @submit="t => emit('submit', t)"
+          :avatar="props.currentUser?.photo"
+          :placeholder="t('blog.comments.replyPlaceholder')"
+          @submit="(t) => emit('submit', t)"
         />
       </div>
 
       <!-- sous-commentaires (récursif) -->
       <CommentThread
-          v-if="expanded[node.id] && (node.children?.length || 0) > 0"
-          :counts="{sad: 0, like: 4, haha: 2, angry: 1 }"
-          :nodes="node.children!"
-          :depth="(depth ?? 0) + 1"
-          :current-user="props.currentUser"
-          @like="id => emit('like', id)"
-          @reply="(pid, text) => emit('reply', pid, text)"
-          @more="id => emit('more', id)"
+        v-if="expanded[node.id] && (node.children?.length || 0) > 0"
+        :counts="{ sad: 0, like: 4, haha: 2, angry: 1 }"
+        :nodes="node.children!"
+        :depth="(depth ?? 0) + 1"
+        :current-user="props.currentUser"
+        @like="(id) => emit('like', id)"
+        @reply="(pid, text) => emit('reply', pid, text)"
+        @more="(id) => emit('more', id)"
       />
     </div>
     <comment-composer
-        v-if="isAuthenticated"
-        class="mt-2"
-        :placeholder="commentPlaceholder"
-        :avatar="props.currentUser?.photo"
-        @submit="t => emit('submit', t)"
+      v-if="isAuthenticated"
+      class="mt-2"
+      :placeholder="commentPlaceholder"
+      :avatar="props.currentUser?.photo"
+      @submit="(t) => emit('submit', t)"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { reactive, ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import CommentComposer from "~/components/blog/CommentComposer.vue";
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
-import {useAuthSession} from "~/stores/auth-session";
+import { useAuthSession } from "~/stores/auth-session";
 
-type Reaction = PickerReaction
-const auth = useAuthSession()
-const isAuthenticated = computed(() => auth.isAuthenticated.value)
+type Reaction = PickerReaction;
+const auth = useAuthSession();
+const isAuthenticated = computed(() => auth.isAuthenticated.value);
 export type CommentNode = {
-  id: string
-  user: { firstName?: string; lastName?: string; photo?: string }
-  content: string
-  publishedAt: Date | string | number
-  reactions?: Partial<Record<Reaction, number>>
-  children?: CommentNode[]
-}
+  id: string;
+  user: { firstName?: string; lastName?: string; photo?: string };
+  content: string;
+  publishedAt: Date | string | number;
+  reactions?: Partial<Record<Reaction, number>>;
+  children?: CommentNode[];
+};
 
-defineOptions({ name: 'CommentThread' })
+defineOptions({ name: "CommentThread" });
 
 const props = defineProps<{
-  counts: Record<Reaction, number>
-  nodes: CommentNode[]
-  depth?: number
-  currentUser?: { firstName?: string; lastName?: string; photo?: string }
-}>()
+  counts: Record<Reaction, number>;
+  nodes: CommentNode[];
+  depth?: number;
+  currentUser?: { firstName?: string; lastName?: string; photo?: string };
+}>();
 
 const emit = defineEmits<{
-  (e:'like', id:string): void
-  (e:'reply', parentId:string, text:string): void
-  (e:'more', id:string): void
-  (e:'submit', text: string): void
-  (e:'react', payload: { id: string; type: Reaction }): void
-}>()
+  (e: "like", id: string): void;
+  (e: "reply", parentId: string, text: string): void;
+  (e: "more", id: string): void;
+  (e: "submit", text: string): void;
+  (e: "react", payload: { id: string; type: Reaction }): void;
+}>();
 
-const { locale, t } = useI18n()
+const { locale, t } = useI18n();
 
-const depth = computed(() => props.depth ?? 0)
-const bubbleOrder: Reaction[] = ['like', 'sad', 'angry']
+const depth = computed(() => props.depth ?? 0);
+const bubbleOrder: Reaction[] = ["like", "sad", "angry"];
 const topReactions = computed(() =>
-    bubbleOrder
-        .map(type => ({ type, count: props.counts?.[type] ?? 0 }))
-        .filter(r => r.count > 0)
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 3)
-)
+  bubbleOrder
+    .map((type) => ({ type, count: props.counts?.[type] ?? 0 }))
+    .filter((r) => r.count > 0)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 3),
+);
 // états UI par id
-const expanded = reactive<Record<string, boolean>>({})
-const replying = reactive<Record<string, boolean>>({})
-const replyText = reactive<Record<string, string>>({})
+const expanded = reactive<Record<string, boolean>>({});
+const replying = reactive<Record<string, boolean>>({});
+const replyText = reactive<Record<string, string>>({});
 
 const relativeTimeFormatter = computed(
-  () => new Intl.RelativeTimeFormat(locale.value ?? 'fr-FR', { numeric: 'auto' }),
-)
+  () => new Intl.RelativeTimeFormat(locale.value ?? "fr-FR", { numeric: "auto" }),
+);
 const dateFormatter = computed(
-  () => new Intl.DateTimeFormat(locale.value ?? 'fr-FR', { dateStyle: 'medium', timeStyle: 'short' }),
-)
+  () =>
+    new Intl.DateTimeFormat(locale.value ?? "fr-FR", { dateStyle: "medium", timeStyle: "short" }),
+);
 
 const commentPlaceholder = computed(() => {
-  const firstName = props.currentUser?.firstName ?? ''
-  const lastName = props.currentUser?.lastName ?? ''
-  const name = `${firstName} ${lastName}`.trim()
+  const firstName = props.currentUser?.firstName ?? "";
+  const lastName = props.currentUser?.lastName ?? "";
+  const name = `${firstName} ${lastName}`.trim();
 
   if (name) {
-    return t('blog.comments.placeholderWithName', { name })
+    return t("blog.comments.placeholderWithName", { name });
   }
 
-  return t('blog.comments.placeholder')
-})
+  return t("blog.comments.placeholder");
+});
 
-function toggleExpand(id: string){ expanded[id] = !expanded[id] }
-function toggleReply(id: string){ replying[id] = !replying[id] }
+function toggleExpand(id: string) {
+  expanded[id] = !expanded[id];
+}
+function toggleReply(id: string) {
+  replying[id] = !replying[id];
+}
 function formatTime(d: Date | string | number) {
-  const date = new Date(d)
-  const diffSeconds = (date.getTime() - Date.now()) / 1000
-  const absDiff = Math.abs(diffSeconds)
+  const date = new Date(d);
+  const diffSeconds = (date.getTime() - Date.now()) / 1000;
+  const absDiff = Math.abs(diffSeconds);
 
   if (absDiff < 60) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds), 'second')
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds), "second");
   }
 
   if (absDiff < 3600) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 60), 'minute')
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 60), "minute");
   }
 
   if (absDiff < 86400) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 3600), 'hour')
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 3600), "hour");
   }
 
   if (absDiff < 604800) {
-    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 86400), 'day')
+    return relativeTimeFormatter.value.format(Math.round(diffSeconds / 86400), "day");
   }
 
-  return dateFormatter.value.format(date)
+  return dateFormatter.value.format(date);
 }
 
 function getReactionTotal(node: CommentNode) {
-  return Object.values(node.reactions ?? {}).reduce((sum, count) => sum + (count ?? 0), 0)
+  return Object.values(node.reactions ?? {}).reduce((sum, count) => sum + (count ?? 0), 0);
 }
 
 function reactionAriaLabel(node: CommentNode) {
-  const total = getReactionTotal(node)
+  const total = getReactionTotal(node);
 
   if (total <= 0) {
-    return t('blog.reactions.posts.reactLabel')
+    return t("blog.reactions.posts.reactLabel");
   }
 
-  return t('blog.reactions.comments.reactionCount', { count: total })
+  return t("blog.reactions.comments.reactionCount", { count: total });
 }
 </script>
 
 <style scoped>
-.comment{display:flex;align-items:flex-start;margin-top:12px}
-.bubblesReacts{
-  position:relative;
-  height:22px;
-  width:60px; /* s’adapte à 3 bulles chevauchées */
+.comment {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 12px;
 }
-.bubbleReacts{
-  position:absolute;
-  top:0;
-  border:2px solid var(--v-theme-surface); /* anneau blanc */
-  border-radius:9999px;
-  overflow:hidden;
-  box-shadow:0 0 0 1px rgba(0,0,0,.04);
+.bubblesReacts {
+  position: relative;
+  height: 22px;
+  width: 60px; /* s’adapte à 3 bulles chevauchées */
 }
-.bubble{
-  display:flex;gap:8px;align-items:flex-start
+.bubbleReacts {
+  position: absolute;
+  top: 0;
+  border: 2px solid var(--v-theme-surface); /* anneau blanc */
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
-.bubble__inner{
-  background:rgba(var(--v-theme-on-surface),0.06);
-  border-radius:18px;
-  padding:8px 12px;
-  max-width:680px;
+.bubble {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
 }
-.bubble__author{font-weight:700;margin-bottom:2px}
-.bubble__message{white-space:pre-wrap;word-break:break-word}
-.meta{
-  display:flex;align-items:center;gap:10px;
-  margin-left:46px;flex-wrap:wrap
+.bubble__inner {
+  background: rgba(var(--v-theme-on-surface), 0.06);
+  border-radius: 18px;
+  padding: 8px 12px;
+  max-width: 680px;
 }
-.meta__time{color:rgba(var(--v-theme-on-surface),0.6);font-size:.8rem}
-.meta__btn{
-  background:none;border:0;padding:0;cursor:pointer;
-  color:rgba(var(--v-theme-on-surface),0.85);font-size:.85rem;font-weight:600
+.bubble__author {
+  font-weight: 700;
+  margin-bottom: 2px;
 }
-.meta__btn.more{letter-spacing:2px}
-.reply-composer{align-items:flex-start;margin-left:46px;margin-top:6px}
-.box{flex:1;background:rgba(var(--v-theme-on-surface),0.04);border-radius:18px;padding:4px 6px}
-.grow-input :deep(textarea){padding-top:8px !important;padding-bottom:6px !important}
-.toolbar{display:flex;align-items:center;padding:0 4px 4px}
+.bubble__message {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 46px;
+  flex-wrap: wrap;
+}
+.meta__time {
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  font-size: 0.8rem;
+}
+.meta__btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: rgba(var(--v-theme-on-surface), 0.85);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.meta__btn.more {
+  letter-spacing: 2px;
+}
+.reply-composer {
+  align-items: flex-start;
+  margin-left: 46px;
+  margin-top: 6px;
+}
+.box {
+  flex: 1;
+  background: rgba(var(--v-theme-on-surface), 0.04);
+  border-radius: 18px;
+  padding: 4px 6px;
+}
+.grow-input :deep(textarea) {
+  padding-top: 8px !important;
+  padding-bottom: 6px !important;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 4px 4px;
+}
 </style>

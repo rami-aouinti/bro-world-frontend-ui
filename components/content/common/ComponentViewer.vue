@@ -6,7 +6,10 @@
       </template>
       <template #fallback>
         <div class="p-4">
-          <v-skeleton-loader type="card" class="mx-auto" />
+          <v-skeleton-loader
+            type="card"
+            class="mx-auto"
+          />
         </div>
       </template>
     </Suspense>

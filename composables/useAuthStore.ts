@@ -27,7 +27,9 @@ export function useAuthStore() {
     }),
   );
 
-  const currentUser = computed(() => (authSession.currentUser.value as BlogUser | null) ?? currentUserState.value);
+  const currentUser = computed(
+    () => (authSession.currentUser.value as BlogUser | null) ?? currentUserState.value,
+  );
   const isAuthenticated = computed(() => Boolean(sessionTokenCookie.value));
   const following = computed(() => followingState.value);
   const followPending = computed(() => followPendingState.value);

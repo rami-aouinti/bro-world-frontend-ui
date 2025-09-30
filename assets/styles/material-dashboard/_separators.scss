@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use 'variables' as *;
+@use "sass:map";
+@use "variables" as *;
 
 //
 // Separator
@@ -54,5 +54,5 @@
 }
 
 .fill-default {
-  fill: map.get($theme-colors, 'default');
+  fill: map.get($theme-colors, "default");
 }

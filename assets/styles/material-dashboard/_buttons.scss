@@ -1,6 +1,6 @@
-@use 'sass:map';
-@use 'variables' as *;
-@use '../variables/typography' as *;
+@use "sass:map";
+@use "variables" as *;
+@use "../variables/typography" as *;
 .btn-toggler-hover .drawer-toggler-inner {
   &:hover .drawer-toggler-line,
   &:focus .drawer-toggler-line {
@@ -27,9 +27,9 @@
     .btn-#{$name},
     .btn-#{$name}.bg-gradient-#{$name} {
       // ✅ Déclarations mises avant les règles imbriquées
-      @if $name == 'neutral' {
-        color: map.get($theme-colors, 'primary');
-      } @else if $name == 'secondary' {
+      @if $name == "neutral" {
+        color: map.get($theme-colors, "primary");
+      } @else if $name == "secondary" {
         color: $dark;
       } @else {
         color: $white;
@@ -48,7 +48,7 @@
       &:focus {
         transform: $btn-hover-transform;
 
-        @if $name == 'neutral' or $name == 'secondary' {
+        @if $name == "neutral" or $name == "secondary" {
           color: $dark;
         } @else {
           color: $white;
@@ -67,7 +67,7 @@
         box-shadow: $btn-shadow-hover !important;
         background-color: transparent !important;
 
-        @if $name == 'secondary' {
+        @if $name == "secondary" {
           color: $dark;
         } @else {
           color: $val;
@@ -113,8 +113,8 @@
   color: $dark;
 }
 
-[class*='btn-'].active-status {
-  background-color: map.get($theme-colors, 'primary') !important;
+[class*="btn-"].active-status {
+  background-color: map.get($theme-colors, "primary") !important;
 
   &,
   &:hover,
@@ -123,9 +123,9 @@
   }
 }
 
-.btn-group-colors > [class*='bg-'] {
+.btn-group-colors > [class*="bg-"] {
   box-shadow: none;
-  border-radius: map.get($rounded, 'circle') !important;
+  border-radius: map.get($rounded, "circle") !important;
   width: 30px;
   height: 30px;
   padding: 0;
@@ -145,7 +145,7 @@
     color: $white;
     transform: scale(0);
     opacity: 0;
-    content: '';
+    content: "";
     font-family: NucleoIcons, sans-serif;
     font-size: 14px;
     transition:
@@ -156,13 +156,13 @@
     justify-content: center;
   }
 }
-.btn-group-colors > [class*='bg-'] input {
+.btn-group-colors > [class*="bg-"] input {
   position: absolute;
   clip: rect(0, 0, 0, 0);
   pointer-events: none;
 }
 
-.btn-group-colors > [class*='bg-'].active:before {
+.btn-group-colors > [class*="bg-"].active:before {
   transform: scale(1);
   opacity: 1;
 }

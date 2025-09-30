@@ -44,7 +44,7 @@
 import { computed } from "vue";
 import AuthorActionMenu from "~/components/blog/AuthorActionMenu.vue";
 import type { BlogUser } from "~/lib/mock/blog";
-import {useAuthSession} from "~/stores/auth-session";
+import { useAuthSession } from "~/stores/auth-session";
 
 const props = withDefaults(
   defineProps<{
@@ -84,8 +84,8 @@ const emit = defineEmits<{
   (e: "delete", event: Event): void;
 }>();
 
-const auth = useAuthSession()
-const isAuthenticated = computed(() => auth.isAuthenticated.value)
+const auth = useAuthSession();
+const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);
@@ -102,7 +102,9 @@ const deleteLabel = computed(() => props.deleteLabel);
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .fade-enter-from,

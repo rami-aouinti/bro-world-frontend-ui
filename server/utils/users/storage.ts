@@ -166,7 +166,9 @@ export async function updateUser(id: string, payload: Partial<AuthUser>): Promis
   const existing = users[index];
 
   if (normalized.email && normalized.email !== existing.email) {
-    const emailTaken = users.some((user, position) => position !== index && user.email === normalized.email);
+    const emailTaken = users.some(
+      (user, position) => position !== index && user.email === normalized.email,
+    );
 
     if (emailTaken) {
       throw createError({

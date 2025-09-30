@@ -37,7 +37,11 @@ function clonePost(post: PostsStorePost) {
   }
 }
 
-function createOptimisticPost(id: string, content: string, overrides?: Partial<BlogPost>): PostsStorePost {
+function createOptimisticPost(
+  id: string,
+  content: string,
+  overrides?: Partial<BlogPost>,
+): PostsStorePost {
   const timestamp = new Date().toISOString();
 
   return {
@@ -157,9 +161,7 @@ export const usePostsStore = defineStore("posts", () => {
       .filter((post): post is PostsStorePost => Boolean(post)),
   );
 
-  const resolvedPostCount = computed(() =>
-    posts.value.filter((post) => !post.__optimistic).length,
-  );
+  const resolvedPostCount = computed(() => posts.value.filter((post) => !post.__optimistic).length);
 
   const hasMore = computed(() => {
     if (!Number.isFinite(totalCount.value) || totalCount.value <= 0) {
@@ -202,22 +204,28 @@ export const usePostsStore = defineStore("posts", () => {
 
   function setPostsFromResponse(response: PostsListResponse) {
     const now = typeof response.cachedAt === "number" ? response.cachedAt : Date.now();
-    const normalizedPage = Number.isFinite(response.page) && response.page > 0 ? Math.floor(response.page) : 1;
-    const normalizedLimit = Number.isFinite(response.limit) && response.limit > 0
-      ? Math.floor(response.limit)
-      : (response.data?.length ?? 0);
-    const normalizedCount = Number.isFinite(response.count) && response.count >= 0
-      ? Math.floor(response.count)
-      : (response.data?.length ?? 0);
+    const normalizedPage =
+      Number.isFinite(response.page) && response.page > 0 ? Math.floor(response.page) : 1;
+    const normalizedLimit =
+      Number.isFinite(response.limit) && response.limit > 0
+        ? Math.floor(response.limit)
+        : (response.data?.length ?? 0);
+    const normalizedCount =
+      Number.isFinite(response.count) && response.count >= 0
+        ? Math.floor(response.count)
+        : (response.data?.length ?? 0);
 
-    const incomingPosts = (response.data ?? []).filter((post): post is BlogPost => Boolean(post?.id));
+    const incomingPosts = (response.data ?? []).filter((post): post is BlogPost =>
+      Boolean(post?.id),
+    );
     const incomingIds = incomingPosts.map((post) => post.id);
 
     const existingPageIds = pageMap.value[normalizedPage] ?? [];
     const removalSet = new Set(existingPageIds);
     const retainedIds = listIds.value.filter((id) => !removalSet.has(id));
 
-    const finalIds = normalizedPage === 1 ? [...incomingIds, ...retainedIds] : [...retainedIds, ...incomingIds];
+    const finalIds =
+      normalizedPage === 1 ? [...incomingIds, ...retainedIds] : [...retainedIds, ...incomingIds];
     const activeIds = new Set(finalIds);
 
     const nextItems = { ...items.value };
@@ -375,7 +383,8 @@ export const usePostsStore = defineStore("posts", () => {
         setPostsFromResponse(response);
         return response.data;
       } catch (caughtError) {
-        const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+        const message =
+          caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
 
         if (fetchState.hasForeground) {
           error.value = message || "Unable to fetch posts.";
@@ -405,15 +414,13 @@ export const usePostsStore = defineStore("posts", () => {
     return requestPromise;
   }
 
-  async function fetchPosts(
-    pageOrOptions?: number | FetchOptions,
-    maybeOptions?: FetchOptions,
-  ) {
+  async function fetchPosts(pageOrOptions?: number | FetchOptions, maybeOptions?: FetchOptions) {
     let requestedPage = 1;
     let options: FetchOptions = {};
 
     if (typeof pageOrOptions === "number") {
-      requestedPage = Number.isFinite(pageOrOptions) && pageOrOptions > 0 ? Math.floor(pageOrOptions) : 1;
+      requestedPage =
+        Number.isFinite(pageOrOptions) && pageOrOptions > 0 ? Math.floor(pageOrOptions) : 1;
       options = maybeOptions ?? {};
     } else if (pageOrOptions && typeof pageOrOptions === "object") {
       options = pageOrOptions;
@@ -501,9 +508,12 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const response = await fetcher<PostResponse>(`/api/v1/posts/${encodeURIComponent(trimmedId)}`, {
-        method: "GET",
-      });
+      const response = await fetcher<PostResponse>(
+        `/api/v1/posts/${encodeURIComponent(trimmedId)}`,
+        {
+          method: "GET",
+        },
+      );
 
       if (!response?.data || typeof response.data.id !== "string") {
         throw new Error("Invalid post response format.");
@@ -520,11 +530,15 @@ export const usePostsStore = defineStore("posts", () => {
         listIds.value.push(post.id);
       }
 
-      markItemTimestamp(post.id, typeof response.cachedAt === "number" ? response.cachedAt : Date.now());
+      markItemTimestamp(
+        post.id,
+        typeof response.cachedAt === "number" ? response.cachedAt : Date.now(),
+      );
 
       return post;
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to retrieve the post.");
     }
   }
@@ -577,11 +591,15 @@ export const usePostsStore = defineStore("posts", () => {
 
       const createdPost: PostsStorePost = { ...response.data, __optimistic: false };
       replaceOptimisticId(optimisticId, createdPost);
-      markItemTimestamp(createdPost.id, typeof response.cachedAt === "number" ? response.cachedAt : Date.now());
+      markItemTimestamp(
+        createdPost.id,
+        typeof response.cachedAt === "number" ? response.cachedAt : Date.now(),
+      );
 
       return posts.value;
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       createError.value = message || "Unable to create the post.";
       removePostFromState(optimisticId);
       throw new Error(createError.value);
@@ -643,10 +661,13 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const response = await fetcher<PostResponse>(`/api/v1/posts/${encodeURIComponent(trimmedId)}`, {
-        method: "PATCH",
-        body: updates,
-      });
+      const response = await fetcher<PostResponse>(
+        `/api/v1/posts/${encodeURIComponent(trimmedId)}`,
+        {
+          method: "PATCH",
+          body: updates,
+        },
+      );
 
       const updatedPost: PostsStorePost = { ...response.data, __optimistic: false };
 
@@ -655,7 +676,10 @@ export const usePostsStore = defineStore("posts", () => {
         [trimmedId]: updatedPost,
       };
 
-      markItemTimestamp(trimmedId, typeof response.cachedAt === "number" ? response.cachedAt : Date.now());
+      markItemTimestamp(
+        trimmedId,
+        typeof response.cachedAt === "number" ? response.cachedAt : Date.now(),
+      );
 
       return updatedPost;
     } catch (caughtError) {
@@ -664,7 +688,8 @@ export const usePostsStore = defineStore("posts", () => {
         [trimmedId]: snapshot,
       };
 
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to update the post.");
     } finally {
       updating.value = {
@@ -715,7 +740,8 @@ export const usePostsStore = defineStore("posts", () => {
 
       markItemTimestamp(trimmedId, Date.now());
 
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to delete the post.");
     } finally {
       deleting.value = {
@@ -752,7 +778,8 @@ export const usePostsStore = defineStore("posts", () => {
       await getPost(trimmedId, { force: true });
       await fetchPosts({ force: true });
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to react to the post.");
     }
   }
@@ -780,7 +807,8 @@ export const usePostsStore = defineStore("posts", () => {
 
       return response;
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to load comments.");
     }
   }
@@ -815,7 +843,8 @@ export const usePostsStore = defineStore("posts", () => {
       await getPost(trimmedId, { force: true });
       await fetchPosts({ force: true });
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to add the comment.");
     }
   }
@@ -851,7 +880,8 @@ export const usePostsStore = defineStore("posts", () => {
       await getPost(trimmedId, { force: true });
       await fetchPosts({ force: true });
     } catch (caughtError) {
-      const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to react to the comment.");
     }
   }

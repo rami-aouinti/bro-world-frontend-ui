@@ -15,7 +15,8 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody<Record<string, unknown>>(event);
   const content = typeof body?.content === "string" ? body.content.trim() : "";
-  const parentCommentId = typeof body?.parentCommentId === "string" ? body.parentCommentId.trim() : "";
+  const parentCommentId =
+    typeof body?.parentCommentId === "string" ? body.parentCommentId.trim() : "";
 
   if (!content) {
     throw createError({

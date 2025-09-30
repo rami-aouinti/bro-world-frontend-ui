@@ -30,10 +30,7 @@ export default defineEventHandler(async (event) => {
 
     return { success: true };
   } catch (error) {
-    console.error(
-      `Failed to react to comment ${trimmedCommentId} on post ${trimmedPostId}`,
-      error,
-    );
+    console.error(`Failed to react to comment ${trimmedCommentId} on post ${trimmedPostId}`, error);
 
     throw createError({
       statusCode: 502,

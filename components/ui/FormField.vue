@@ -1,11 +1,26 @@
 <template>
-  <div class="ui-form-field" :class="classes">
-    <div v-if="hasLabel" class="ui-form-field__label-wrapper">
-      <label :id="labelId" class="ui-form-field__label" :for="controlId">
+  <div
+    class="ui-form-field"
+    :class="classes"
+  >
+    <div
+      v-if="hasLabel"
+      class="ui-form-field__label-wrapper"
+    >
+      <label
+        :id="labelId"
+        class="ui-form-field__label"
+        :for="controlId"
+      >
         <slot name="label">
           <span>{{ label }}</span>
         </slot>
-        <span v-if="required" class="ui-form-field__required" aria-hidden="true">*</span>
+        <span
+          v-if="required"
+          class="ui-form-field__required"
+          aria-hidden="true"
+          >*</span
+        >
       </label>
     </div>
 
@@ -13,14 +28,34 @@
       <slot />
     </div>
 
-    <p v-if="hasHint" :id="hintId" class="ui-form-field__hint">
+    <p
+      v-if="hasHint"
+      :id="hintId"
+      class="ui-form-field__hint"
+    >
       <slot name="hint">{{ hintContent }}</slot>
     </p>
 
-    <ul v-if="showErrors" :id="errorId" class="ui-form-field__errors" role="list">
-      <slot name="error" :messages="normalizedErrors">
-        <li v-for="message in normalizedErrors" :key="message" class="ui-form-field__error-item">
-          <span class="ui-form-field__error-icon" aria-hidden="true">!</span>
+    <ul
+      v-if="showErrors"
+      :id="errorId"
+      class="ui-form-field__errors"
+      role="list"
+    >
+      <slot
+        name="error"
+        :messages="normalizedErrors"
+      >
+        <li
+          v-for="message in normalizedErrors"
+          :key="message"
+          class="ui-form-field__error-item"
+        >
+          <span
+            class="ui-form-field__error-icon"
+            aria-hidden="true"
+            >!</span
+          >
           <span>{{ message }}</span>
         </li>
       </slot>
@@ -29,9 +64,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useId, useSlots } from 'vue'
-import type { VNodeChild } from 'vue'
-import { provideFormField } from './useFormField'
+import { computed, useId, useSlots } from "vue";
+import type { VNodeChild } from "vue";
+import { provideFormField } from "./useFormField";
 
 const props = defineProps({
   id: {
@@ -58,32 +93,32 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
-const slots = useSlots()
-const uid = useId()
+const slots = useSlots();
+const uid = useId();
 
 const normalizedErrors = computed(() => {
-  const value = props.errorMessages
-  if (!value) return [] as string[]
-  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean)
-})
+  const value = props.errorMessages;
+  if (!value) return [] as string[];
+  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
+});
 
-const showErrors = computed(() => props.error || normalizedErrors.value.length > 0)
-const hintContent = computed(() => (slots.hint ? undefined : props.hint))
-const controlId = computed(() => props.id ?? `field-${uid}`)
-const labelId = computed(() => `${controlId.value}-label`)
-const hasHint = computed(() => Boolean(slots.hint || props.hint))
-const hintId = computed(() => (hasHint.value ? `${controlId.value}-hint` : undefined))
-const errorId = computed(() => (showErrors.value ? `${controlId.value}-error` : undefined))
-const hasLabel = computed(() => Boolean(slots.label || props.label))
+const showErrors = computed(() => props.error || normalizedErrors.value.length > 0);
+const hintContent = computed(() => (slots.hint ? undefined : props.hint));
+const controlId = computed(() => props.id ?? `field-${uid}`);
+const labelId = computed(() => `${controlId.value}-label`);
+const hasHint = computed(() => Boolean(slots.hint || props.hint));
+const hintId = computed(() => (hasHint.value ? `${controlId.value}-hint` : undefined));
+const errorId = computed(() => (showErrors.value ? `${controlId.value}-error` : undefined));
+const hasLabel = computed(() => Boolean(slots.label || props.label));
 
 const ariaDescribedby = computed(() => {
-  const ids: string[] = []
-  if (showErrors.value && errorId.value) ids.push(errorId.value)
-  if (hasHint.value && hintId.value) ids.push(hintId.value)
-  return ids.length ? ids.join(' ') : undefined
-})
+  const ids: string[] = [];
+  if (showErrors.value && errorId.value) ids.push(errorId.value);
+  if (hasHint.value && hintId.value) ids.push(hintId.value);
+  return ids.length ? ids.join(" ") : undefined;
+});
 
 provideFormField({
   id: controlId,
@@ -91,12 +126,12 @@ provideFormField({
   ariaDescribedby,
   required: computed(() => props.required),
   error: computed(() => showErrors.value),
-})
+});
 
 const classes = computed(() => ({
-  'ui-form-field--error': showErrors.value,
-  'ui-form-field--required': props.required,
-}))
+  "ui-form-field--error": showErrors.value,
+  "ui-form-field--required": props.required,
+}));
 </script>
 
 <style scoped>

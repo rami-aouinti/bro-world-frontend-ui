@@ -38,8 +38,7 @@ function joinEndpoint(base: string, ...segments: (string | number)[]): string {
 
 function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
-  const publicEndpoint =
-    config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
+  const publicEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
   const privateEndpoint =
     config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/v1/platform/post";
 
@@ -103,7 +102,9 @@ function buildHeaders(event: H3Event, includeAuth: boolean) {
 }
 
 function isFetchError(error: unknown): error is FetchError<unknown> {
-  return Boolean(error) && typeof error === "object" && "response" in (error as Record<string, unknown>);
+  return (
+    Boolean(error) && typeof error === "object" && "response" in (error as Record<string, unknown>)
+  );
 }
 
 function isAuthorizationError(error: unknown): boolean {
@@ -287,7 +288,8 @@ export async function addCommentAtSource(
 
   const postBase = resolvePostEndpoint(event, "private");
   const commentBase = resolveCommentEndpoint(event, "private");
-  const parentId = typeof payload.parentCommentId === "string" ? payload.parentCommentId.trim() : "";
+  const parentId =
+    typeof payload.parentCommentId === "string" ? payload.parentCommentId.trim() : "";
   const endpoint = parentId
     ? joinEndpoint(commentBase, parentId, "comment")
     : joinEndpoint(postBase, postId, "comment");

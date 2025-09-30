@@ -1,20 +1,26 @@
 <template>
   <div class="story-stack">
     <FormField label="Notifications">
-      <BaseSwitch v-model="marketing" label="Marketing emails" />
+      <BaseSwitch
+        v-model="marketing"
+        label="Marketing emails"
+      />
     </FormField>
     <FormField label="Dark mode">
-      <BaseSwitch v-model="darkMode" label="Enable dark theme" />
+      <BaseSwitch
+        v-model="darkMode"
+        label="Enable dark theme"
+      />
     </FormField>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { BaseSwitch, FormField } from '../index'
+import { ref } from "vue";
+import { BaseSwitch, FormField } from "../index";
 
-const marketing = ref(true)
-const darkMode = ref(false)
+const marketing = ref(true);
+const darkMode = ref(false);
 </script>
 
 <style scoped>
