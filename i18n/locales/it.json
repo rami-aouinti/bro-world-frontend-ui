@@ -44,7 +44,10 @@
         "adminBlog": "Blog",
         "help": "Aiuto",
         "about": "Informazioni",
-        "contact": "Contatti"
+        "contact": "Contatti",
+        "game": "Gaming",
+        "ecommerce": "E-commerce",
+        "education": "Education"
       }
     },
     "widgets": {
@@ -531,6 +534,238 @@
           "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
         }
       }
+    },
+    "job": {
+      "title": "Jobs",
+      "subtitle": "Centralise every step of your recruiting funnel to move from sourcing to signing with clarity.",
+      "featuresTitle": "Build a confident hiring pipeline",
+      "features": {
+        "matching": {
+          "title": "Spot the right talent faster",
+          "description": "Aggregate sourcing activity and prioritise applicants automatically.",
+          "points": [
+            "Sync job boards, referrals, and internal mobility into one view.",
+            "Score applications with configurable criteria and bias safeguards.",
+            "Highlight talent pools ready for nurture or re-engagement."
+          ]
+        },
+        "automation": {
+          "title": "Automate team coordination",
+          "description": "Give recruiters, interviewers, and hiring managers a shared command centre.",
+          "points": [
+            "Trigger interview kits and reminders in the right timezone.",
+            "Share structured feedback templates that surface signal over noise.",
+            "Notify stakeholders the moment a candidate advances or stalls."
+          ]
+        },
+        "insights": {
+          "title": "Measure hiring impact",
+          "description": "Understand conversion, velocity, and quality without exporting spreadsheets.",
+          "points": [
+            "Track time-to-fill, diversity ratios, and offer acceptance in real time.",
+            "Visualise bottlenecks across regions or job families instantly.",
+            "Share live dashboards with leadership and partners securely."
+          ]
+        }
+      },
+      "workflowTitle": "Your hiring rhythm, visualised",
+      "workflow": {
+        "steps": {
+          "publish": {
+            "title": "Publish with confidence",
+            "description": "Launch branded job pages and syndicated listings with reusable templates."
+          },
+          "review": {
+            "title": "Review together",
+            "description": "Collaborate on feedback, calibrate scorecards, and keep the loop accountable."
+          },
+          "hire": {
+            "title": "Hire and onboard",
+            "description": "Secure approvals, generate offers, and pass context to onboarding seamlessly."
+          }
+        }
+      },
+      "stepLabel": "Step {number}",
+      "cta": {
+        "title": "Design a hiring experience candidates love",
+        "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
+        "button": "Talk to us",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "game": {
+      "title": "Gaming",
+      "subtitle": "Launch vibrant player communities, live events, and monetisation loops without extra engineering time.",
+      "featuresTitle": "Level up every player journey",
+      "features": {
+        "community": {
+          "title": "Build communities that stay",
+          "description": "Host news, patch notes, and discussions with built-in moderation controls.",
+          "points": [
+            "Curate seasonal hubs that adapt to each franchise or guild.",
+            "Reward loyal fans with badges, drops, and cross-game progression.",
+            "Localise experiences with one click for global launches."
+          ]
+        },
+        "monetization": {
+          "title": "Unlock sustainable revenue",
+          "description": "Experiment with stores, battle passes, and bundles in a safe sandbox.",
+          "points": [
+            "Configure limited-time offers and track conversion instantly.",
+            "Integrate multiple payment providers and entitlement systems.",
+            "Balance in-game economies with configurable guardrails."
+          ]
+        },
+        "events": {
+          "title": "Orchestrate unforgettable events",
+          "description": "Coordinate tournaments, live ops, and creator collaborations effortlessly.",
+          "points": [
+            "Schedule announcements, streams, and drops in a unified timeline.",
+            "Share production checklists and asset packs with internal teams.",
+            "Track sentiment and uptime to react before the hype dips."
+          ]
+        }
+      },
+      "workflowTitle": "Plan, launch, and grow",
+      "workflow": {
+        "steps": {
+          "launch": {
+            "title": "Launch",
+            "description": "Prototype your experience, test with closed groups, and ship with guardrails."
+          },
+          "engage": {
+            "title": "Engage",
+            "description": "Deliver live updates, challenges, and quests that feel fresh every session."
+          },
+          "grow": {
+            "title": "Grow",
+            "description": "Analyse cohorts, expand to new platforms, and activate creators responsibly."
+          }
+        }
+      },
+      "stepLabel": "Stage {number}",
+      "cta": {
+        "title": "Ship the next fan-favourite season",
+        "description": "We partner with studios of every size to streamline community, monetisation, and live ops management.",
+        "button": "Plan a demo",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",
+      "featuresTitle": "Modern retail, one toolkit",
+      "features": {
+        "catalog": {
+          "title": "Unify your catalogue",
+          "description": "Manage product variants, rich storytelling, and merchandising in one workspace.",
+          "points": [
+            "Support digital, physical, and subscription products side by side.",
+            "Optimise imagery, copy, and translations with collaborative reviews.",
+            "Launch curated collections with scheduling and inventory safeguards."
+          ]
+        },
+        "checkout": {
+          "title": "Delight at checkout",
+          "description": "Reduce friction with fast, accessible, and trusted purchase flows.",
+          "points": [
+            "Offer local payments, wallets, and instalments without custom code.",
+            "Embed fraud checks, taxes, and duties that scale globally.",
+            "Give support teams live context to resolve orders instantly."
+          ]
+        },
+        "marketing": {
+          "title": "Personalise every campaign",
+          "description": "Coordinate lifecycle messaging, loyalty, and analytics together.",
+          "points": [
+            "Segment audiences with zero-party and behavioural data respectfully.",
+            "Trigger automations tied to launches, restocks, and VIP moments.",
+            "Attribute revenue accurately with multi-touch insights."
+          ]
+        }
+      },
+      "workflowTitle": "From concept to scale",
+      "workflow": {
+        "steps": {
+          "launch": {
+            "title": "Launch",
+            "description": "Prototype storefronts, test merchandising, and go live confidently."
+          },
+          "optimize": {
+            "title": "Optimise",
+            "description": "Iterate on conversion, retention, and operations with actionable insights."
+          },
+          "scale": {
+            "title": "Scale",
+            "description": "Expand to new regions, channels, and partnerships with built-in governance."
+          }
+        }
+      },
+      "stepLabel": "Phase {number}",
+      "cta": {
+        "title": "Transform your retail roadmap",
+        "description": "Explore how BroWorld adapts to your commerce stack, fulfilment partners, and customer promises.",
+        "button": "Connect with sales",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "education": {
+      "title": "Education",
+      "subtitle": "Empower instructors, learners, and administrators with collaborative, data-informed experiences.",
+      "featuresTitle": "Create learning journeys that stick",
+      "features": {
+        "curriculum": {
+          "title": "Design inclusive curriculum",
+          "description": "Author courses, micro-learning paths, and certification programmes with ease.",
+          "points": [
+            "Reuse templates that balance synchronous and asynchronous learning.",
+            "Embed multimedia, assessments, and accessibility standards by default.",
+            "Localise content for cohorts across campuses or regions."
+          ]
+        },
+        "collaboration": {
+          "title": "Champion collaboration",
+          "description": "Connect faculty, mentors, and peers inside a secure digital campus.",
+          "points": [
+            "Coordinate mentorship, office hours, and cohort forums effortlessly.",
+            "Offer real-time feedback loops on assignments and projects.",
+            "Celebrate progress with badges, spotlights, and alumni pathways."
+          ]
+        },
+        "analytics": {
+          "title": "Act on meaningful analytics",
+          "description": "Surface insights that support retention, wellbeing, and accreditation goals.",
+          "points": [
+            "Monitor engagement signals to intervene before learners drift.",
+            "Share programme dashboards with leadership and accreditation boards.",
+            "Respect privacy with transparent controls and governance."
+          ]
+        }
+      },
+      "workflowTitle": "Guide every cohort",
+      "workflow": {
+        "steps": {
+          "design": {
+            "title": "Design",
+            "description": "Map learning outcomes, content, and assessment moments collaboratively."
+          },
+          "deliver": {
+            "title": "Deliver",
+            "description": "Host live and on-demand sessions, track attendance, and adapt in real time."
+          },
+          "reflect": {
+            "title": "Reflect",
+            "description": "Review impact, gather feedback, and iterate for the next intake."
+          }
+        }
+      },
+      "stepLabel": "Milestone {number}",
+      "cta": {
+        "title": "Elevate your learning ecosystem",
+        "description": "Partner with us to modernise programmes, student services, and alumni experiences.",
+        "button": "Schedule a consultation",
+        "buttonAria": "Open the contact page"
+      }
     }
   },
   "auth": {
@@ -871,6 +1106,22 @@
     "profileSecurity": {
       "title": "Password & security",
       "description": "Manage sign-in credentials, two-factor authentication, and trusted devices."
+    },
+    "job": {
+      "title": "Jobs",
+      "description": "Plan, track, and optimise hiring programmes."
+    },
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "description": "Launch and scale modern retail journeys."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Design collaborative, data-informed learning experiences."
     }
   },
   "admin": {
@@ -1037,25 +1288,41 @@
           "content": {
             "title": "Gestione dei contenuti",
             "description": "Pianifica, pubblica e archivia articoli, eventi e risorse formative.",
-            "tags": ["Workflow editoriale", "Validazione", "Programmazione"],
+            "tags": [
+              "Workflow editoriale",
+              "Validazione",
+              "Programmazione"
+            ],
             "status": "12 contenuti richiedono una revisione editoriale."
           },
           "community": {
             "title": "Community e moderazione",
             "description": "Configura le regole di moderazione, gestisci segnalazioni e sanzioni.",
-            "tags": ["Segnalazioni", "Sanzioni", "Messaggi privati"],
+            "tags": [
+              "Segnalazioni",
+              "Sanzioni",
+              "Messaggi privati"
+            ],
             "status": "Tempo medio di risposta: 1 h 42."
           },
           "commerce": {
             "title": "Monetizzazione e offerte",
             "description": "Gestisci abbonamenti, codici promozionali e partnership commerciali.",
-            "tags": ["Abbonamenti", "Fatturazione", "Coupon"],
+            "tags": [
+              "Abbonamenti",
+              "Fatturazione",
+              "Coupon"
+            ],
             "status": "Tasso di conversione in aumento del 3,4% questa settimana."
           },
           "governance": {
             "title": "Governance e conformità",
             "description": "Verifica gli accessi, gestisci i ruoli sensibili e prepara i report di conformità.",
-            "tags": ["Audit", "Ruoli", "Tracciabilità"],
+            "tags": [
+              "Audit",
+              "Ruoli",
+              "Tracciabilità"
+            ],
             "status": "Ultimo audit completo effettuato 5 giorni fa."
           }
         }

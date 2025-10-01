@@ -17,7 +17,10 @@ export function buildSidebarItems(canAccessAdmin: boolean): LayoutSidebarItem[] 
       to: "/",
     },
     { key: "cv", label: "layout.sidebar.items.cv", icon: "mdi-file-account", to: "/" },
-    { key: "jobs", label: "layout.sidebar.items.jobs", icon: "mdi-briefcase-search", to: "/" },
+    { key: "jobs", label: "layout.sidebar.items.jobs", icon: "mdi-briefcase-search", to: "/job" },
+    { key: "game", label: "layout.sidebar.items.game", icon: "mdi-gamepad-variant-outline", to: "/game" },
+    { key: "ecommerce", label: "layout.sidebar.items.ecommerce", icon: "mdi-shopping-outline", to: "/ecommerce" },
+    { key: "education", label: "layout.sidebar.items.education", icon: "mdi-school-outline", to: "/education" },
   ];
 
   items.push(
