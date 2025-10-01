@@ -178,6 +178,7 @@
 
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent } from "vue";
+import { useCookieColorMode } from "#imports";
 import { useDisplay } from "vuetify";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import { useRequestHeaders } from "#imports";
@@ -217,6 +218,14 @@ const resolvedColorMode = computed(() => {
   }
 
   return colorMode.value;
+const resolvedColorMode = computed(() => {
+  const preference = colorMode.value;
+
+  if (preference === "auto") {
+    return colorMode.system.value ?? "light";
+  }
+
+  return preference ?? "light";
 });
 
 const isDark = computed(() => resolvedColorMode.value === "dark");
