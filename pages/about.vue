@@ -1,25 +1,42 @@
 <template>
   <main
-    class="py-12"
+    class="about-page py-12"
     aria-labelledby="about-heading"
   >
-    <v-container>
+    <v-container class="about-container">
       <section
         class="mb-12"
         aria-describedby="about-subtitle"
       >
-        <h1
-          id="about-heading"
-          class="text-h3 font-weight-bold mb-3"
+        <v-sheet
+          class="about-hero"
+          elevation="0"
+          rounded="xl"
         >
-          {{ t("pages.about.title") }}
-        </h1>
-        <p
-          id="about-subtitle"
-          class="text-body-1 text-medium-emphasis"
-        >
-          {{ t("pages.about.subtitle") }}
-        </p>
+          <div class="about-hero__badge">
+            <v-icon
+              icon="mdi-rocket-launch-outline"
+              size="22"
+              class="mr-2"
+              aria-hidden="true"
+            />
+            <span class="text-caption font-weight-medium text-uppercase tracking-wide">
+              {{ t("pages.about.missionTitle") }}
+            </span>
+          </div>
+          <h1
+            id="about-heading"
+            class="text-h3 font-weight-bold mb-3"
+          >
+            {{ t("pages.about.title") }}
+          </h1>
+          <p
+            id="about-subtitle"
+            class="text-body-1 text-medium-emphasis mb-0"
+          >
+            {{ t("pages.about.subtitle") }}
+          </p>
+        </v-sheet>
       </section>
 
       <section
@@ -34,43 +51,71 @@
             cols="12"
             md="6"
           >
-            <h2
-              id="mission-title"
-              class="text-h4 font-weight-semibold mb-4"
+            <v-sheet
+              class="about-section"
+              elevation="0"
+              rounded="xl"
             >
-              {{ t("pages.about.missionTitle") }}
-            </h2>
-            <p class="text-body-1 text-medium-emphasis mb-6">
-              {{ t("pages.about.missionBody") }}
-            </p>
+              <h2
+                id="mission-title"
+                class="text-h4 font-weight-semibold mb-4"
+              >
+                {{ t("pages.about.missionTitle") }}
+              </h2>
+              <p class="text-body-1 text-medium-emphasis mb-6">
+                {{ t("pages.about.missionBody") }}
+              </p>
+              <div class="d-flex flex-wrap gap-3">
+                <v-chip
+                  v-for="tech in techStack"
+                  :key="tech.label"
+                  class="about-chip"
+                  color="primary"
+                  variant="tonal"
+                >
+                  {{ tech.label }}
+                </v-chip>
+              </div>
+            </v-sheet>
           </v-col>
           <v-col
             cols="12"
             md="6"
           >
-            <v-card
-              v-for="point in missionPoints"
-              :key="point.title"
-              variant="tonal"
-              class="mb-4 pa-4"
+            <v-sheet
+              class="about-section about-section--cards"
+              elevation="0"
+              rounded="xl"
             >
-              <div class="d-flex align-start">
-                <v-icon
-                  :icon="point.icon"
-                  size="32"
-                  class="mr-4"
-                  aria-hidden="true"
-                />
-                <div>
-                  <h3 class="text-subtitle-1 font-weight-semibold mb-1">
-                    {{ point.title }}
-                  </h3>
-                  <p class="text-body-2 text-medium-emphasis mb-0">
-                    {{ point.body }}
-                  </p>
+              <v-card
+                v-for="point in missionPoints"
+                :key="point.title"
+                class="about-mission-card"
+                elevation="0"
+                rounded="lg"
+              >
+                <div class="d-flex align-start">
+                  <v-avatar
+                    class="about-mission-card__icon mr-4"
+                    size="48"
+                  >
+                    <v-icon
+                      :icon="point.icon"
+                      size="26"
+                      aria-hidden="true"
+                    />
+                  </v-avatar>
+                  <div>
+                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
+                      {{ point.title }}
+                    </h3>
+                    <p class="text-body-2 text-medium-emphasis mb-0">
+                      {{ point.body }}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </v-card>
+              </v-card>
+            </v-sheet>
           </v-col>
         </v-row>
       </section>
@@ -79,144 +124,169 @@
         class="mb-12"
         aria-labelledby="team-title"
       >
-        <h2
-          id="team-title"
-          class="text-h4 font-weight-semibold mb-6"
+        <v-sheet
+          class="about-section"
+          elevation="0"
+          rounded="xl"
         >
-          {{ t("pages.about.teamTitle") }}
-        </h2>
-        <p class="text-body-1 text-medium-emphasis mb-6">
-          {{ t("pages.about.teamBody") }}
-        </p>
-        <v-row dense>
-          <v-col
-            v-for="member in teamMembers"
-            :key="member.name"
-            cols="12"
-            sm="6"
-            lg="3"
+          <h2
+            id="team-title"
+            class="text-h4 font-weight-semibold mb-6"
           >
-            <v-card
-              class="pa-4 h-100"
-              elevation="4"
-              rounded="lg"
+            {{ t("pages.about.teamTitle") }}
+          </h2>
+          <p class="text-body-1 text-medium-emphasis mb-6">
+            {{ t("pages.about.teamBody") }}
+          </p>
+          <v-row dense>
+            <v-col
+              v-for="member in teamMembers"
+              :key="member.name"
+              cols="12"
+              sm="6"
+              lg="3"
             >
-              <div class="d-flex align-center mb-4">
-                <v-avatar
-                  color="primary"
-                  size="56"
-                  class="mr-4"
-                >
-                  <span class="text-h6 text-white">{{ member.initials }}</span>
-                </v-avatar>
-                <div>
-                  <h3 class="text-subtitle-1 font-weight-semibold mb-1">
-                    {{ member.name }}
-                  </h3>
-                  <p class="text-body-2 text-medium-emphasis mb-0">
-                    {{ member.role }}
-                  </p>
+              <v-card
+                class="about-team-card"
+                elevation="0"
+                rounded="lg"
+              >
+                <div class="d-flex align-center mb-4">
+                  <v-avatar
+                    class="about-team-card__avatar mr-4"
+                    size="56"
+                  >
+                    <span class="text-h6">{{ member.initials }}</span>
+                  </v-avatar>
+                  <div>
+                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
+                      {{ member.name }}
+                    </h3>
+                    <p class="text-body-2 text-medium-emphasis mb-0">
+                      {{ member.role }}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ member.bio }}
-              </p>
-            </v-card>
-          </v-col>
-        </v-row>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ member.bio }}
+                </p>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-sheet>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="tech-title"
       >
-        <h2
-          id="tech-title"
-          class="text-h4 font-weight-semibold mb-4"
+        <v-sheet
+          class="about-section"
+          elevation="0"
+          rounded="xl"
         >
-          {{ t("pages.about.techTitle") }}
-        </h2>
-        <p class="text-body-1 text-medium-emphasis mb-6">
-          {{ t("pages.about.techBody") }}
-        </p>
-        <div class="d-flex flex-wrap gap-3">
-          <v-chip
-            v-for="tech in techStack"
-            :key="tech.label"
-            color="primary"
-            variant="elevated"
-            class="text-body-2"
+          <h2
+            id="tech-title"
+            class="text-h4 font-weight-semibold mb-4"
           >
-            {{ tech.label }} — {{ tech.description }}
-          </v-chip>
-        </div>
+            {{ t("pages.about.techTitle") }}
+          </h2>
+          <p class="text-body-1 text-medium-emphasis mb-6">
+            {{ t("pages.about.techBody") }}
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <v-chip
+              v-for="tech in techStack"
+              :key="tech.label"
+              class="about-chip about-chip--outlined"
+              color="primary"
+              variant="outlined"
+            >
+              {{ tech.label }} — {{ tech.description }}
+            </v-chip>
+          </div>
+        </v-sheet>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="timeline-title"
       >
-        <h2
-          id="timeline-title"
-          class="text-h4 font-weight-semibold mb-4"
+        <v-sheet
+          class="about-section"
+          elevation="0"
+          rounded="xl"
         >
-          {{ t("pages.about.timelineTitle") }}
-        </h2>
-        <v-timeline
-          side="end"
-          density="compact"
-        >
-          <v-timeline-item
-            v-for="item in timeline"
-            :key="item.year"
-            :dot-color="item.color"
-            size="small"
+          <h2
+            id="timeline-title"
+            class="text-h4 font-weight-semibold mb-4"
           >
-            <template #opposite>
-              <span class="font-weight-medium">{{ item.year }}</span>
-            </template>
-            <v-card
-              class="pa-4"
-              elevation="3"
-              rounded="lg"
+            {{ t("pages.about.timelineTitle") }}
+          </h2>
+          <v-timeline
+            class="about-timeline"
+            side="end"
+            density="compact"
+          >
+            <v-timeline-item
+              v-for="item in timeline"
+              :key="item.year"
+              :dot-color="item.color"
+              size="small"
             >
-              <h3 class="text-subtitle-1 font-weight-semibold mb-1">
-                {{ item.title }}
-              </h3>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ item.description }}
-              </p>
-            </v-card>
-          </v-timeline-item>
-        </v-timeline>
+              <template #opposite>
+                <span class="font-weight-medium">{{ item.year }}</span>
+              </template>
+              <v-card
+                class="about-timeline-card"
+                elevation="0"
+                rounded="lg"
+              >
+                <h3 class="text-subtitle-1 font-weight-semibold mb-1">
+                  {{ item.title }}
+                </h3>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ item.description }}
+                </p>
+              </v-card>
+            </v-timeline-item>
+          </v-timeline>
+        </v-sheet>
       </section>
 
       <section aria-labelledby="links-title">
-        <h2
-          id="links-title"
-          class="text-h5 font-weight-semibold mb-4"
+        <v-sheet
+          class="about-section"
+          elevation="0"
+          rounded="xl"
         >
-          {{ t("pages.about.linksTitle") }}
-        </h2>
-        <div class="d-flex flex-wrap gap-4">
-          <v-btn
-            v-for="link in resourceLinks"
-            :key="link.href"
-            :href="link.href"
-            :target="link.target"
-            :rel="link.rel"
-            color="primary"
-            variant="outlined"
-            :aria-label="link.ariaLabel"
+          <h2
+            id="links-title"
+            class="text-h5 font-weight-semibold mb-4"
           >
-            <v-icon
-              :icon="link.icon"
-              class="mr-2"
-              aria-hidden="true"
-            />
-            {{ link.label }}
-          </v-btn>
-        </div>
+            {{ t("pages.about.linksTitle") }}
+          </h2>
+          <div class="d-flex flex-wrap gap-4">
+            <v-btn
+              v-for="link in resourceLinks"
+              :key="link.href"
+              :href="link.href"
+              :target="link.target"
+              :rel="link.rel"
+              color="primary"
+              variant="outlined"
+              class="about-link"
+              :aria-label="link.ariaLabel"
+            >
+              <v-icon
+                :icon="link.icon"
+                class="mr-2"
+                aria-hidden="true"
+              />
+              {{ link.label }}
+            </v-btn>
+          </div>
+        </v-sheet>
       </section>
     </v-container>
   </main>
@@ -369,21 +439,132 @@ const resourceLinks = computed(() => [
 </script>
 
 <style scoped>
-main {
+main.about-page {
+  position: relative;
+  overflow: hidden;
   background:
-    radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.08), transparent 55%),
-    radial-gradient(circle at bottom right, rgba(var(--v-theme-secondary), 0.08), transparent 55%);
+    radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.14), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(var(--v-theme-secondary), 0.12), transparent 55%),
+    linear-gradient(180deg, rgba(var(--v-theme-surface), 1) 0%, rgba(var(--v-theme-surface-variant), 0.18) 100%);
 }
 
-.v-card.h-100 {
+.about-container {
+  position: relative;
+  z-index: 1;
+}
+
+.about-hero {
+  padding: 48px 40px;
+  background:
+    linear-gradient(135deg, rgba(var(--v-theme-primary), 0.18), transparent 45%),
+    rgba(var(--v-theme-surface), 0.8);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.35);
+  backdrop-filter: blur(18px);
+}
+
+.about-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(var(--v-theme-primary), 0.12);
+  color: rgba(var(--v-theme-primary), 0.92);
+  margin-bottom: 20px;
+}
+
+.tracking-wide {
+  letter-spacing: 0.14em;
+}
+
+.about-section {
+  padding: 36px 32px;
+  background:
+    linear-gradient(135deg, rgba(var(--v-theme-surface-variant), 0.14), transparent 55%),
+    rgba(var(--v-theme-surface), 0.82);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.35);
+  backdrop-filter: blur(16px);
+}
+
+.about-section--cards {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 16px;
+}
+
+.about-mission-card {
+  padding: 20px 24px;
+  background: rgba(var(--v-theme-surface), 0.88);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.32);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.about-mission-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -22px rgba(var(--v-theme-on-surface), 0.4);
+}
+
+.about-mission-card__icon {
+  background: rgba(var(--v-theme-primary), 0.14);
+  color: rgba(var(--v-theme-primary), 0.96);
+}
+
+.about-team-card {
+  height: 100%;
+  padding: 28px 24px;
+  background: rgba(var(--v-theme-surface), 0.88);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.32);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.about-team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -24px rgba(var(--v-theme-on-surface), 0.4);
+}
+
+.about-team-card__avatar {
+  background: rgba(var(--v-theme-secondary), 0.18);
+  color: rgba(var(--v-theme-secondary), 0.95);
+  font-weight: 600;
+}
+
+.about-chip {
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.about-chip--outlined {
+  border-color: rgba(var(--v-theme-primary), 0.35);
+  background: rgba(var(--v-theme-primary), 0.08);
+}
+
+.about-timeline {
+  padding-block: 8px;
+}
+
+.about-timeline-card {
+  padding: 24px 22px;
+  background: rgba(var(--v-theme-surface), 0.88);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.32);
+}
+
+.about-link {
+  border-color: rgba(var(--v-theme-primary), 0.4) !important;
+  background: rgba(var(--v-theme-surface), 0.85);
+}
+
+@media (max-width: 1280px) {
+  .about-section {
+    padding: 28px 24px;
+  }
 }
 
 @media (max-width: 960px) {
-  main {
-    padding-block: 48px;
+  main.about-page {
+    padding-block: 60px;
+  }
+
+  .about-hero {
+    padding: 36px 28px;
   }
 }
 </style>

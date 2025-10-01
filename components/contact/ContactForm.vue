@@ -1,6 +1,9 @@
 <template>
-  <section aria-labelledby="contact-form-heading">
-    <header class="mb-6">
+  <section class="contact-form" aria-labelledby="contact-form-heading">
+    <header
+      v-if="showHeading"
+      class="contact-form__header mb-6"
+    >
       <h2
         id="contact-form-heading"
         class="text-h5 font-weight-bold"
@@ -18,7 +21,7 @@
       role="form"
       @submit.prevent="handleSubmit"
     >
-      <div class="d-flex flex-column gap-4">
+      <div class="contact-form__grid">
         <div>
           <v-text-field
             id="contact-name"
@@ -145,6 +148,7 @@
           color="primary"
           :loading="isSubmitting"
           :disabled="isSubmitting"
+          class="contact-form__submit"
           data-test="submit-button"
         >
           {{ isSubmitting ? t("pages.contact.form.sending") : t("pages.contact.form.submit") }}
@@ -166,9 +170,15 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#app";
 
 import type { ContactValidationErrors, ContactValidationKey } from "~/lib/contact/validation";
 import { validateContactForm } from "~/lib/contact/validation";
+
+const props = defineProps<{ showHeading?: boolean }>();
+
+const showHeading = computed(() => props.showHeading ?? true);
 
 const { t, locale } = useI18n();
 const { $fetch, $notify } = useNuxtApp();
@@ -296,15 +306,24 @@ async function handleSubmit() {
 </script>
 
 <style scoped>
-section {
-  background-color: rgba(var(--v-theme-surface-variant), 0.4);
-  border-radius: 16px;
-  padding: 24px;
+.contact-form__header p {
+  max-width: 420px;
 }
 
-@media (min-width: 960px) {
-  section {
-    padding: 32px;
+.contact-form__grid {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-form__submit {
+  align-self: flex-start;
+  min-width: 160px;
+}
+
+@media (max-width: 600px) {
+  .contact-form__submit {
+    width: 100%;
   }
 }
 </style>
+
