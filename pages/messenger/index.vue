@@ -10,7 +10,9 @@
       @select="handleSelect"
     />
     <div class="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-10 text-center">
-      <div class="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary">
+      <div
+        class="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary"
+      >
         <AppIcon
           name="mdi:message-outline"
           :size="48"
@@ -18,18 +20,18 @@
       </div>
       <div class="space-y-2">
         <h1 class="text-2xl font-semibold">
-          {{ t('messenger.emptyTitle') }}
+          {{ t("messenger.emptyTitle") }}
         </h1>
         <p class="max-w-md text-sm text-muted-foreground">
-          {{ t('messenger.emptyDescription') }}
+          {{ t("messenger.emptyDescription") }}
         </p>
       </div>
       <v-btn
         color="primary"
         variant="flat"
         :to="emptyCtaTo"
-        >
-        {{ t('messenger.emptyCtaLabel') }}
+      >
+        {{ t("messenger.emptyCtaLabel") }}
       </v-btn>
     </div>
   </div>

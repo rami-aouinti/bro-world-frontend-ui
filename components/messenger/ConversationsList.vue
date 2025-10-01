@@ -1,10 +1,7 @@
 <template>
   <aside
     class="flex h-full flex-col border-border bg-card"
-    :class="[
-      'w-full md:w-[320px]',
-      'border-b md:border-b-0 md:border-r',
-    ]"
+    :class="['w-full md:w-[320px]', 'border-b md:border-b-0 md:border-r']"
   >
     <div class="border-b border-border px-4 py-3">
       <v-text-field
@@ -36,8 +33,14 @@
             width="42"
           />
           <div class="flex flex-1 flex-col gap-2">
-            <v-skeleton-loader height="12" type="text" />
-            <v-skeleton-loader height="10" type="text" />
+            <v-skeleton-loader
+              height="12"
+              type="text"
+            />
+            <v-skeleton-loader
+              height="10"
+              type="text"
+            />
           </div>
         </div>
       </div>
@@ -70,7 +73,7 @@
                   v-if="conversation.avatarUrl"
                   :alt="conversation.title"
                   :src="conversation.avatarUrl"
-                >
+                />
                 <span v-else>
                   {{ conversation.initials }}
                 </span>
@@ -87,7 +90,10 @@
               </div>
               <div class="flex items-center justify-between gap-2">
                 <p class="line-clamp-1 text-xs text-muted-foreground">
-                  <span v-if="conversation.sender" class="font-medium text-foreground">
+                  <span
+                    v-if="conversation.sender"
+                    class="font-medium text-foreground"
+                  >
                     {{ conversation.sender }}
                   </span>
                   <span v-if="conversation.sender && conversation.snippet">
@@ -101,7 +107,7 @@
                   v-if="conversation.unreadCount"
                   class="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground"
                 >
-                  {{ conversation.unreadCount > 99 ? '99+' : conversation.unreadCount }}
+                  {{ conversation.unreadCount > 99 ? "99+" : conversation.unreadCount }}
                 </span>
               </div>
             </div>
@@ -111,7 +117,9 @@
           v-else
           class="flex h-full flex-col items-center justify-center gap-3 px-8 py-12 text-center"
         >
-          <div class="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <div
+            class="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary"
+          >
             <AppIcon
               name="mdi:message-reply-text"
               :size="32"

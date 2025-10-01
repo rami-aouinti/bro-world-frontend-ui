@@ -78,7 +78,9 @@
           @click="emit('select', item)"
         >
           <template #prepend>
-            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary"
+            >
               <AppIcon
                 :name="item.icon"
                 :size="20"

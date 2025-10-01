@@ -1520,41 +1520,25 @@
           "content": {
             "title": "Content management",
             "description": "Plan, publish, and archive articles, events, and learning resources.",
-            "tags": [
-              "Editorial workflow",
-              "Review",
-              "Scheduling"
-            ],
+            "tags": ["Editorial workflow", "Review", "Scheduling"],
             "status": "12 items require editorial review."
           },
           "community": {
             "title": "Community & moderation",
             "description": "Configure moderation rules, manage reports, and handle sanctions.",
-            "tags": [
-              "Reports",
-              "Sanctions",
-              "Private messages"
-            ],
+            "tags": ["Reports", "Sanctions", "Private messages"],
             "status": "Average response time: 1h42."
           },
           "commerce": {
             "title": "Monetization & offers",
             "description": "Manage subscriptions, promo codes, and commercial partnerships.",
-            "tags": [
-              "Subscriptions",
-              "Billing",
-              "Coupons"
-            ],
+            "tags": ["Subscriptions", "Billing", "Coupons"],
             "status": "Conversion rate up by 3.4% this week."
           },
           "governance": {
             "title": "Governance & compliance",
             "description": "Audit access, manage privileged roles, and prepare compliance reports.",
-            "tags": [
-              "Audit",
-              "Roles",
-              "Traceability"
-            ],
+            "tags": ["Audit", "Roles", "Traceability"],
             "status": "Last full audit completed 5 days ago."
           }
         }

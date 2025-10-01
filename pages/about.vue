@@ -445,7 +445,11 @@ main.about-page {
   background:
     radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.14), transparent 55%),
     radial-gradient(circle at bottom right, rgba(var(--v-theme-secondary), 0.12), transparent 55%),
-    linear-gradient(180deg, rgba(var(--v-theme-surface), 1) 0%, rgba(var(--v-theme-surface-variant), 0.18) 100%);
+    linear-gradient(
+      180deg,
+      rgba(var(--v-theme-surface), 1) 0%,
+      rgba(var(--v-theme-surface-variant), 0.18) 100%
+    );
 }
 
 .about-container {
@@ -495,7 +499,9 @@ main.about-page {
   padding: 20px 24px;
   background: rgba(var(--v-theme-surface), 0.88);
   border: 1px solid rgba(var(--v-theme-outline-variant), 0.32);
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .about-mission-card:hover {
@@ -513,7 +519,9 @@ main.about-page {
   padding: 28px 24px;
   background: rgba(var(--v-theme-surface), 0.88);
   border: 1px solid rgba(var(--v-theme-outline-variant), 0.32);
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .about-team-card:hover {

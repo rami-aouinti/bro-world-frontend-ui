@@ -1,7 +1,4 @@
-export function formatRelativeTime(
-  value: string | null | undefined,
-  locale: string,
-): string {
+export function formatRelativeTime(value: string | null | undefined, locale: string): string {
   if (!value) {
     return "";
   }

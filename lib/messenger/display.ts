@@ -1,4 +1,8 @@
-import type { MessengerConversation, MessengerMessage, MessengerParticipant } from "~/types/messenger";
+import type {
+  MessengerConversation,
+  MessengerMessage,
+  MessengerParticipant,
+} from "~/types/messenger";
 
 export function resolveConversationTitle(
   conversation: MessengerConversation,
@@ -9,9 +13,7 @@ export function resolveConversationTitle(
     return conversation.title;
   }
 
-  const participants = Array.isArray(conversation.participants)
-    ? conversation.participants
-    : [];
+  const participants = Array.isArray(conversation.participants) ? conversation.participants : [];
 
   const others = participants.filter((participant) => participant.id !== currentUserId);
   const base = (others.length ? others : participants)
@@ -22,7 +24,10 @@ export function resolveConversationTitle(
   return base || fallback;
 }
 
-export function resolveParticipantInitials(participant: MessengerParticipant | undefined, fallback: string): string {
+export function resolveParticipantInitials(
+  participant: MessengerParticipant | undefined,
+  fallback: string,
+): string {
   if (!participant) {
     return fallback;
   }
@@ -46,11 +51,10 @@ export function resolveConversationAvatar(
   currentUserId: string | null,
   fallback: string,
 ): { url: string | null; initials: string } {
-  const participants = Array.isArray(conversation.participants)
-    ? conversation.participants
-    : [];
+  const participants = Array.isArray(conversation.participants) ? conversation.participants : [];
 
-  const target = participants.find((participant) => participant.id !== currentUserId) ?? participants[0];
+  const target =
+    participants.find((participant) => participant.id !== currentUserId) ?? participants[0];
 
   return {
     url: target?.avatarUrl ?? null,
@@ -58,7 +62,10 @@ export function resolveConversationAvatar(
   };
 }
 
-export function resolveMessageSender(message: MessengerMessage | null | undefined, fallback: string): string {
+export function resolveMessageSender(
+  message: MessengerMessage | null | undefined,
+  fallback: string,
+): string {
   if (!message?.sender) {
     return fallback;
   }

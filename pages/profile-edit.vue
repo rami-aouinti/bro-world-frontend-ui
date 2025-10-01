@@ -516,13 +516,11 @@ async function submitForm() {
     snackbarMessage.value = t("pages.profileEdit.feedback.successMessage");
     snackbarColor.value = "success";
     showSnackbar.value = true;
-  }
-  catch (error) {
+  } catch (error) {
     snackbarMessage.value = t("pages.profileEdit.feedback.errorMessage");
     snackbarColor.value = "error";
     showSnackbar.value = true;
-  }
-  finally {
+  } finally {
     isSaving.value = false;
   }
 }

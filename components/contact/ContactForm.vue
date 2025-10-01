@@ -1,5 +1,8 @@
 <template>
-  <section class="contact-form" aria-labelledby="contact-form-heading">
+  <section
+    class="contact-form"
+    aria-labelledby="contact-form-heading"
+  >
     <header
       v-if="showHeading"
       class="contact-form__header mb-6"
@@ -326,4 +329,3 @@ async function handleSubmit() {
   }
 }
 </style>
-

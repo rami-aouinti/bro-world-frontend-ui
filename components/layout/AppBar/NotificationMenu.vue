@@ -103,7 +103,9 @@
           v-else
           class="flex flex-col items-center justify-center gap-2 px-6 py-8 text-center"
         >
-          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary"
+          >
             <AppIcon
               name="mdi:bell-plus-outline"
               :size="28"
@@ -124,10 +126,8 @@ import type { AppNotification } from "~/types/layout";
 
 const colorClasses: Record<NonNullable<AppNotification["color"]>, string> = {
   primary: "bg-primary/10 text-primary",
-  success:
-    "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-200",
-  warning:
-    "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300",
+  success: "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-200",
+  warning: "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300",
   info: "bg-sky-100 text-sky-600 dark:bg-sky-500/10 dark:text-sky-300",
   error: "bg-rose-100 text-rose-600 dark:bg-rose-500/10 dark:text-rose-300",
 };
@@ -144,7 +144,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'mark-all'): void
+  (e: "mark-all"): void;
 }>();
 
 const open = ref(false);

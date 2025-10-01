@@ -1,7 +1,7 @@
 <template>
   <!-- Barre compacte -->
   <section
-    class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+    class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-20 backdrop-blur-xl"
   >
     <div class="d-flex align-center ga-3">
       <v-avatar size="44">

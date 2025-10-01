@@ -31,12 +31,12 @@
       class="app-drawer"
     >
       <ParticlesBg
-          class="sidebar-default-card__particles"
-          :quantity="50"
-          :ease="50"
-          :color="isDark ? '#ffffff' : '#111827'"
-          :staticity="12"
-          refresh
+        class="sidebar-default-card__particles"
+        :quantity="50"
+        :ease="50"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
       />
       <div class="pane-scroll py-4">
         <slot
@@ -47,7 +47,7 @@
           :on-select="handleSidebarSelect"
         >
           <AppSidebar
-              :is-dark="isDark"
+            :is-dark="isDark"
             :items="sidebarItems"
             :variant="sidebarVariant"
             :active-key="activeSidebar"
@@ -71,12 +71,12 @@
       data-test="app-right-drawer"
     >
       <ParticlesBg
-          class="sidebar-default-card__particles"
-          :quantity="50"
-          :ease="50"
-          :color="isDark ? '#ffffff' : '#111827'"
-          :staticity="12"
-          refresh
+        class="sidebar-default-card__particles"
+        :quantity="50"
+        :ease="50"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
       />
       <Suspense>
         <template #default>
@@ -160,12 +160,12 @@
       class="app-surface"
     >
       <ParticlesBg
-          class="sidebar-default-card__particles"
-          :quantity="120"
-          :ease="120"
-          :color="isDark ? '#ffffff' : '#111827'"
-          :staticity="12"
-          refresh
+        class="sidebar-default-card__particles"
+        :quantity="120"
+        :ease="120"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
       />
       <div class="main-scroll">
         <div class="app-container">

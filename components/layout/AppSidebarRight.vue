@@ -186,7 +186,7 @@ function handleSocialRedirect(provider: SocialProvider) {
   border-radius: 20px;
   padding: 1.75rem 1.25rem;
   box-shadow:
-      0 5px 5px rgba(var(--v-theme-primary), 0.2),
+    0 5px 5px rgba(var(--v-theme-primary), 0.2),
     0 14px 30px rgba(15, 23, 42, 0.12);
 }
 

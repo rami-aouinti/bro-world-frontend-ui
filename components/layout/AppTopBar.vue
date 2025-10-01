@@ -201,8 +201,8 @@ const notifications = computed<AppNotification[]>(() =>
   })),
 );
 
-const notificationCount = computed(() =>
-  notificationDefinitions.value.filter((item) => !item.read).length,
+const notificationCount = computed(
+  () => notificationDefinitions.value.filter((item) => !item.read).length,
 );
 
 const notificationsTitle = computed(() => t("layout.notificationsMenu.title"));
@@ -217,9 +217,7 @@ const notificationsButtonLabel = computed(() => {
   return t("layout.actions.notifications");
 });
 
-const messengerPreviewConversations = computed(
-  () => messenger.previewConversations.value ?? [],
-);
+const messengerPreviewConversations = computed(() => messenger.previewConversations.value ?? []);
 const messengerUnreadCount = computed(() => messenger.unreadTotal.value);
 const messengerTitle = computed(() => t("layout.messengerMenu.title"));
 const messengerSubtitle = computed(() => {

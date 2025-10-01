@@ -350,7 +350,11 @@ main.help-page {
   background:
     radial-gradient(circle at top right, rgba(var(--v-theme-primary), 0.14), transparent 55%),
     radial-gradient(circle at bottom left, rgba(var(--v-theme-secondary), 0.12), transparent 60%),
-    linear-gradient(180deg, rgba(var(--v-theme-surface), 1) 0%, rgba(var(--v-theme-surface-variant), 0.18) 100%);
+    linear-gradient(
+      180deg,
+      rgba(var(--v-theme-surface), 1) 0%,
+      rgba(var(--v-theme-surface-variant), 0.18) 100%
+    );
 }
 
 .help-container {
@@ -418,7 +422,9 @@ main.help-page {
   justify-content: space-between;
   background: rgba(var(--v-theme-surface), 0.85);
   border: 1px solid rgba(var(--v-theme-outline-variant), 0.35);
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .help-actions__card:hover {

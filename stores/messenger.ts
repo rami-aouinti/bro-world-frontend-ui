@@ -92,7 +92,7 @@ function normalizeConversation(conversation: MessengerConversation): NormalizedC
     unreadCount: Math.max(Number(conversation.unreadCount ?? 0), 0),
     updatedAt: isIsoDate(conversation.updatedAt)
       ? conversation.updatedAt
-      : conversation.lastMessage?.createdAt ?? new Date().toISOString(),
+      : (conversation.lastMessage?.createdAt ?? new Date().toISOString()),
   };
 }
 
@@ -159,7 +159,10 @@ export const useMessengerStore = defineStore("messenger", () => {
   const fetcher = resolveFetcher();
   const connectToMercure = import.meta.client ? useMercure() : null;
 
-  const conversations = useState<Record<string, NormalizedConversation>>("messenger-conversations", () => ({}));
+  const conversations = useState<Record<string, NormalizedConversation>>(
+    "messenger-conversations",
+    () => ({}),
+  );
   const conversationOrder = useState<string[]>("messenger-conversation-order", () => []);
   const messages = useState<Record<string, MessengerMessage[]>>("messenger-messages", () => ({}));
   const pagination = useState<Record<string, ConversationPaginationState>>(
@@ -171,8 +174,14 @@ export const useMessengerStore = defineStore("messenger", () => {
   const previewFetchedAt = useState<number | null>("messenger-preview-fetched", () => null);
   const loadingPreview = useState<boolean>("messenger-preview-loading", () => false);
   const loadingList = useState<boolean>("messenger-list-loading", () => false);
-  const loadingMessages = useState<Record<string, boolean>>("messenger-messages-loading", () => ({}));
-  const lastReadMessage = useState<Record<string, string | null>>("messenger-last-read", () => ({}));
+  const loadingMessages = useState<Record<string, boolean>>(
+    "messenger-messages-loading",
+    () => ({}),
+  );
+  const lastReadMessage = useState<Record<string, string | null>>(
+    "messenger-last-read",
+    () => ({}),
+  );
   const errorState = useState<string | null>("messenger-error", () => null);
 
   const inboxSource = shallowRef<EventSource | null>(null);
@@ -296,7 +305,11 @@ export const useMessengerStore = defineStore("messenger", () => {
     };
   }
 
-  function replaceMessage(conversationId: string, optimisticId: string, replacement: MessengerMessage) {
+  function replaceMessage(
+    conversationId: string,
+    optimisticId: string,
+    replacement: MessengerMessage,
+  ) {
     const current = getMessagesState(conversationId);
     const index = current.findIndex((message) => message.id === optimisticId);
 
@@ -462,9 +475,9 @@ export const useMessengerStore = defineStore("messenger", () => {
   async function fetchConversation(conversationId: string) {
     try {
       errorState.value = null;
-      const response = await fetcher<MessengerConversationEnvelope | (MessengerConversation & { messages?: MessengerMessage[] })>(
-        `/api/v1/messenger/threads/${conversationId}`,
-      );
+      const response = await fetcher<
+        MessengerConversationEnvelope | (MessengerConversation & { messages?: MessengerMessage[] })
+      >(`/api/v1/messenger/threads/${conversationId}`);
 
       const payload = (response as MessengerConversationEnvelope)?.data
         ? (response as MessengerConversationEnvelope).data
@@ -493,7 +506,11 @@ export const useMessengerStore = defineStore("messenger", () => {
   }
 
   async function fetchMessages(conversationId: string, options: FetchMessagesOptions = {}) {
-    const state = pagination.value[conversationId] ?? { before: null, hasMore: true, pending: false };
+    const state = pagination.value[conversationId] ?? {
+      before: null,
+      hasMore: true,
+      pending: false,
+    };
 
     if (state.pending) {
       return;
@@ -537,10 +554,17 @@ export const useMessengerStore = defineStore("messenger", () => {
 
       const current = getMessagesState(conversationId);
       const normalized = list.map(normalizeMessage);
-      const merged = uniqueIds([...normalized.map((message) => message.id), ...current.map((message) => message.id)]);
+      const merged = uniqueIds([
+        ...normalized.map((message) => message.id),
+        ...current.map((message) => message.id),
+      ]);
 
       const mergedMessages = merged
-        .map((id) => normalized.find((message) => message.id === id) ?? current.find((message) => message.id === id)!)
+        .map(
+          (id) =>
+            normalized.find((message) => message.id === id) ??
+            current.find((message) => message.id === id)!,
+        )
         .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
 
       messages.value = {
@@ -552,7 +576,9 @@ export const useMessengerStore = defineStore("messenger", () => {
 
       setPagination(conversationId, {
         pending: false,
-        hasMore: Boolean((response as MessengerMessagesEnvelope)?.hasMore ?? normalized.length === limit),
+        hasMore: Boolean(
+          (response as MessengerMessagesEnvelope)?.hasMore ?? normalized.length === limit,
+        ),
         before: lastItem?.id ?? null,
       });
     } catch (error) {
@@ -602,7 +628,9 @@ export const useMessengerStore = defineStore("messenger", () => {
     const sender: MessengerParticipant = {
       id: currentUser.id,
       displayName:
-        [currentUser.firstName, currentUser.lastName].filter(Boolean).join(" ") || currentUser.username || "You",
+        [currentUser.firstName, currentUser.lastName].filter(Boolean).join(" ") ||
+        currentUser.username ||
+        "You",
       avatarUrl: currentUser.photo ?? null,
     };
 
@@ -701,9 +729,10 @@ export const useMessengerStore = defineStore("messenger", () => {
         appendMessage(conversationId, { ...normalized, status: "sent", optimistic: false });
 
         const conversation = conversations.value[conversationId];
-        const unreadCount = conversationId === activeConversationId.value
-          ? 0
-          : payload.unreadCount ?? (conversation?.unreadCount ?? 0) + 1;
+        const unreadCount =
+          conversationId === activeConversationId.value
+            ? 0
+            : (payload.unreadCount ?? (conversation?.unreadCount ?? 0) + 1);
 
         upsertConversation({
           ...(conversation ?? {
@@ -727,7 +756,9 @@ export const useMessengerStore = defineStore("messenger", () => {
 
       case "conversation.updated": {
         const conversation = conversations.value[conversationId];
-        const lastMessage = payload.lastMessage ? normalizeMessage(payload.lastMessage) : conversation?.lastMessage ?? null;
+        const lastMessage = payload.lastMessage
+          ? normalizeMessage(payload.lastMessage)
+          : (conversation?.lastMessage ?? null);
 
         upsertConversation({
           ...(conversation ?? {
@@ -886,13 +917,21 @@ export const useMessengerStore = defineStore("messenger", () => {
   );
 
   const previewConversations = computed(() =>
-    conversationOrder.value.slice(0, DEFAULT_PREVIEW_LIMIT).map((id) => conversations.value[id]).filter(Boolean),
+    conversationOrder.value
+      .slice(0, DEFAULT_PREVIEW_LIMIT)
+      .map((id) => conversations.value[id])
+      .filter(Boolean),
   );
 
-  const orderedConversations = computed(() => conversationOrder.value.map((id) => conversations.value[id]).filter(Boolean));
+  const orderedConversations = computed(() =>
+    conversationOrder.value.map((id) => conversations.value[id]).filter(Boolean),
+  );
 
   const unreadTotal = computed(() =>
-    orderedConversations.value.reduce((total, conversation) => total + (conversation?.unreadCount ?? 0), 0),
+    orderedConversations.value.reduce(
+      (total, conversation) => total + (conversation?.unreadCount ?? 0),
+      0,
+    ),
   );
 
   const activeConversation = computed(() => {

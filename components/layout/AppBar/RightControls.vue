@@ -1,15 +1,15 @@
 <template>
   <div class="flex items-center gap-3">
     <button
-        v-if="!props.isMobile && props.showRightToggle"
-        type="button"
-        :class="props.iconTriggerClasses"
-        aria-label="Open widgets"
-        @click="emit('toggle-right')"
+      v-if="!props.isMobile && props.showRightToggle"
+      type="button"
+      :class="props.iconTriggerClasses"
+      aria-label="Open widgets"
+      @click="emit('toggle-right')"
     >
       <AppIcon
-          name="mdi-format-align-justify"
-          :size="22"
+        name="mdi-format-align-justify"
+        :size="22"
       />
     </button>
     <MessengerMenu

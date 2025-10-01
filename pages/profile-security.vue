@@ -29,8 +29,14 @@
           </div>
         </header>
 
-        <v-row align="stretch" dense>
-          <v-col cols="12" md="8">
+        <v-row
+          align="stretch"
+          dense
+        >
+          <v-col
+            cols="12"
+            md="8"
+          >
             <v-card
               class="pa-6 mb-4"
               rounded="xl"
@@ -53,7 +59,10 @@
 
                   <v-form @submit.prevent="handleSubmit">
                     <v-row dense>
-                      <v-col cols="12" md="6">
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
                         <v-text-field
                           v-model="form.currentPassword"
                           :label="t('pages.profileSecurity.labels.currentPassword')"
@@ -65,7 +74,10 @@
                           required
                         />
                       </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
                         <v-text-field
                           v-model="form.newPassword"
                           :label="t('pages.profileSecurity.labels.newPassword')"
@@ -77,7 +89,10 @@
                           required
                         />
                       </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
                         <v-text-field
                           v-model="form.confirmPassword"
                           :label="t('pages.profileSecurity.labels.confirmPassword')"
@@ -108,7 +123,10 @@
                     </p>
                   </div>
 
-                  <v-table class="rounded-lg" density="comfortable">
+                  <v-table
+                    class="rounded-lg"
+                    density="comfortable"
+                  >
                     <thead>
                       <tr>
                         <th class="text-left">
@@ -133,7 +151,9 @@
                         <td>
                           <div class="d-flex flex-column">
                             <span class="text-body-2 font-weight-medium">{{ session.device }}</span>
-                            <span class="text-caption text-medium-emphasis">{{ session.status }}</span>
+                            <span class="text-caption text-medium-emphasis">{{
+                              session.status
+                            }}</span>
                           </div>
                         </td>
                         <td class="text-body-2">
@@ -159,7 +179,10 @@
             </v-card>
           </v-col>
 
-          <v-col cols="12" md="4">
+          <v-col
+            cols="12"
+            md="4"
+          >
             <v-card
               class="pa-5 mb-4"
               rounded="xl"

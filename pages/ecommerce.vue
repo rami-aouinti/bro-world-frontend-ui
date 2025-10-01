@@ -134,7 +134,10 @@
               >
                 {{ t("pages.ecommerce.cta.title") }}
               </h2>
-              <p class="text-body-1 text-white text-opacity-80 mb-0" style="max-width: 520px">
+              <p
+                class="text-body-1 text-white text-opacity-80 mb-0"
+                style="max-width: 520px"
+              >
                 {{ t("pages.ecommerce.cta.description") }}
               </p>
             </div>

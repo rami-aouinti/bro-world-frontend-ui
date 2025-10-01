@@ -13,7 +13,7 @@
             v-if="avatar.url"
             :alt="conversationTitle"
             :src="avatar.url"
-          >
+          />
           <span v-else>
             {{ avatar.initials }}
           </span>
@@ -44,7 +44,9 @@
       v-else
       class="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center"
     >
-      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+      <div
+        class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary"
+      >
         <AppIcon
           name="mdi:message-outline"
           :size="36"
@@ -109,7 +111,10 @@
             </span>
           </div>
         </div>
-        <div v-if="!messages.length" class="py-10 text-center text-sm text-muted-foreground">
+        <div
+          v-if="!messages.length"
+          class="py-10 text-center text-sm text-muted-foreground"
+        >
           {{ props.noMessagesLabel }}
         </div>
       </div>

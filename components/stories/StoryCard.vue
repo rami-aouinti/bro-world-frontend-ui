@@ -10,87 +10,108 @@
  *   - seen   => anneau gris
  * - duration: texte optionnel (ex: "0:22")
  */
-const props = withDefaults(defineProps<{
-  image?: string
-  name?: string
-  avatar?: string
-  state?: 'create' | 'new' | 'seen'
-  duration?: string
-  width?: number | string
-  height?: number | string
-  ringColor?: string // couleur anneau "new"
-}>(), {
-  state: 'new',
-  width: 144,
-  height: 240,
-  ringColor: '#1b74e4', // bleu FB
-})
+const props = withDefaults(
+  defineProps<{
+    image?: string;
+    name?: string;
+    avatar?: string;
+    state?: "create" | "new" | "seen";
+    duration?: string;
+    width?: number | string;
+    height?: number | string;
+    ringColor?: string; // couleur anneau "new"
+  }>(),
+  {
+    state: "new",
+    width: 144,
+    height: 240,
+    ringColor: "#1b74e4", // bleu FB
+  },
+);
 
 const emit = defineEmits<{
-  (e: 'click'): void
-  (e: 'create'): void
-}>()
+  (e: "click"): void;
+  (e: "create"): void;
+}>();
 
-const { t } = useI18n()
+const { t } = useI18n();
 
-const isCreate = computed(() => props.state === 'create')
+const isCreate = computed(() => props.state === "create");
 const ringStyle = computed(() => {
-  if (isCreate.value) return {}
-  const color = props.state === 'new' ? props.ringColor : 'rgba(255,255,255,0.4)'
+  if (isCreate.value) return {};
+  const color = props.state === "new" ? props.ringColor : "rgba(255,255,255,0.4)";
   return {
     boxShadow: `0 0 0 3px #fff, 0 0 0 6px ${color}`,
-  } as Record<string, string>
-})
+  } as Record<string, string>;
+});
 
-const createLabel = computed(() => t('stories.card.createLabel'))
+const createLabel = computed(() => t("stories.card.createLabel"));
 const openStoryLabel = computed(() =>
   props.name
-    ? t('stories.card.openAria', { name: props.name })
-    : t('stories.card.openAriaFallback'),
-)
-const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openStoryLabel.value))
+    ? t("stories.card.openAria", { name: props.name })
+    : t("stories.card.openAriaFallback"),
+);
+const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openStoryLabel.value));
 </script>
 
 <template>
   <v-sheet
-      class="story-card relative overflow-hidden rounded-xl"
-      :width="width"
-      :height="height"
-      elevation="4"
-      rounded="xl"
-      role="button"
-      :aria-label="cardAriaLabel"
-      @click="isCreate ? emit('create') : emit('click')"
+    class="story-card relative overflow-hidden rounded-xl"
+    :width="width"
+    :height="height"
+    elevation="4"
+    rounded="xl"
+    role="button"
+    :aria-label="cardAriaLabel"
+    @click="isCreate ? emit('create') : emit('click')"
   >
     <!-- Image de fond -->
     <v-img
-        v-if="image"
-        :src="image"
-        cover
-        :alt="name || t('stories.card.imageAlt')"
-        class="h-100 w-100"
+      v-if="image"
+      :src="image"
+      cover
+      :alt="name || t('stories.card.imageAlt')"
+      class="h-100 w-100"
     />
 
     <!-- Overlay gradient -->
-    <div class="absolute inset-0 pointer-events-none"
-         style="background: linear-gradient(180deg, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.65) 100%);">
-    </div>
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.65) 100%)"
+    ></div>
 
     <!-- Avatar / bouton create -->
     <div class="absolute top-2 left-2 z-10">
-      <div v-if="!isCreate" class="relative">
-        <v-avatar size="36" class="bg-white" :style="ringStyle">
-          <v-img :src="avatar" :alt="name || t('stories.card.avatarAlt')" cover />
+      <div
+        v-if="!isCreate"
+        class="relative"
+      >
+        <v-avatar
+          size="36"
+          class="bg-white"
+          :style="ringStyle"
+        >
+          <v-img
+            :src="avatar"
+            :alt="name || t('stories.card.avatarAlt')"
+            cover
+          />
         </v-avatar>
       </div>
-      <div v-else class="relative">
-        <v-avatar size="44" class="bg-white/90 backdrop-blur-sm">
+      <div
+        v-else
+        class="relative"
+      >
+        <v-avatar
+          size="44"
+          class="bg-white/90 backdrop-blur-sm"
+        >
           <v-btn
-              icon
-              color="primary"
-              size="small"
-              variant="flat"
-              :aria-label="createLabel"
+            icon
+            color="primary"
+            size="small"
+            variant="flat"
+            :aria-label="createLabel"
           >
             <Icon name="mdi-plus"></Icon>
           </v-btn>
@@ -99,8 +120,16 @@ const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openS
     </div>
 
     <!-- Durée (optionnel) -->
-    <div v-if="duration" class="absolute bottom-14 right-2 z-10">
-      <v-chip size="x-small" variant="elevated" class="bg-black/60 text-white">{{ duration }}</v-chip>
+    <div
+      v-if="duration"
+      class="absolute bottom-14 right-2 z-10"
+    >
+      <v-chip
+        size="x-small"
+        variant="elevated"
+        class="bg-black/60 text-white"
+        >{{ duration }}</v-chip
+      >
     </div>
 
     <!-- Nom / label create -->
@@ -115,11 +144,18 @@ const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openS
 
 <style scoped>
 .story-card {
-  transition: transform .18s ease, box-shadow .18s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
   will-change: transform;
 }
-.story-card:hover { transform: translateY(-2px); }
+.story-card:hover {
+  transform: translateY(-2px);
+}
 .line-clamp-2 {
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>

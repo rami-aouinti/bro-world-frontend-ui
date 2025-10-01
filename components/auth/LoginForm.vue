@@ -20,31 +20,31 @@
       </v-alert>
 
       <v-text-field
-          variant="outlined"
-          rounded
-          v-model="username"
-          :placeholder="t('auth.usernameOrEmail')"
-          class="login-field__input text-foreground"
-          :class="fieldAlignment"
-          autocomplete="username"
-          required
-          color="primary"
-          :disabled="isDisabled"
-          @input="handleFieldInput"
+        variant="outlined"
+        rounded
+        v-model="username"
+        :placeholder="t('auth.usernameOrEmail')"
+        class="login-field__input text-foreground"
+        :class="fieldAlignment"
+        autocomplete="username"
+        required
+        color="primary"
+        :disabled="isDisabled"
+        @input="handleFieldInput"
       />
       <v-text-field
-          variant="outlined"
-          rounded
-          v-model="password"
-          :type="showPassword ? 'text' : 'password'"
-          :placeholder="t('auth.password')"
-          class="login-field__input text-foreground"
-          :class="fieldAlignment"
-          autocomplete="current-password"
-          required
-          color="primary"
-          :disabled="isDisabled"
-          @input="handleFieldInput"
+        variant="outlined"
+        rounded
+        v-model="password"
+        :type="showPassword ? 'text' : 'password'"
+        :placeholder="t('auth.password')"
+        class="login-field__input text-foreground"
+        :class="fieldAlignment"
+        autocomplete="current-password"
+        required
+        color="primary"
+        :disabled="isDisabled"
+        @input="handleFieldInput"
       />
       <p
         v-if="formError"

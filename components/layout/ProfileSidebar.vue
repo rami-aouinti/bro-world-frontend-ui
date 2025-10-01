@@ -1,171 +1,165 @@
 <!-- components/ProfileSidebar.vue -->
 <template>
-  <div
-      class="sidebar-profile-card"
-  >
+  <div class="sidebar-profile-card">
     <ParticlesBg
-        v-if="shouldRenderParticles"
-        class="sidebar-profile-card__particles"
-        :quantity="120"
-        :ease="120"
-        :color="isDark ? '#ffffff' : '#111827'"
-        :staticity="12"
-        refresh
+      v-if="shouldRenderParticles"
+      class="sidebar-profile-card__particles"
+      :quantity="120"
+      :ease="120"
+      :color="isDark ? '#ffffff' : '#111827'"
+      :staticity="12"
+      refresh
     />
     <div class="sidebar-profile-card__content">
-    <v-card-item>
-      <div class="d-flex align-center justify-space-between">
-        <div class="text-h6 text-foreground">{{ user.name }}</div>
-        <v-btn
-          size="small"
-          variant="text"
-          color="primary"
-          to="/profile-edit"
+      <v-card-item>
+        <div class="d-flex align-center justify-space-between">
+          <div class="text-h6 text-foreground">{{ user.name }}</div>
+          <v-btn
+            size="small"
+            variant="text"
+            color="primary"
+            to="/profile-edit"
+          >
+            {{ t("layout.profileSidebar.editBio") }}
+          </v-btn>
+        </div>
+      </v-card-item>
+      <v-divider />
+      <v-card-text>
+        <div
+          v-if="user.bio"
+          class="text-subtitle-2 mb-3 text-high-emphasis text-center"
         >
-          {{ t("layout.profileSidebar.editBio") }}
-        </v-btn>
-      </div>
-    </v-card-item>
-    <v-divider />
-    <v-card-text>
-      <div
-        v-if="user.bio"
-        class="text-subtitle-2 mb-3 text-high-emphasis text-center"
-      >
-        {{ user.bio }}
-      </div>
+          {{ user.bio }}
+        </div>
 
-      <v-list
-        density="compact"
-        class="py-0"
-      >
-        <v-list-item
-          v-for="(item, i) in introItems"
-          :key="i"
-          :title="item.title"
-          :subtitle="item.subtitle"
+        <v-list
+          density="compact"
+          class="py-0"
         >
-          <template #prepend>
-            <Icon :name="item.icon" />
-          </template>
-        </v-list-item>
-      </v-list>
+          <v-list-item
+            v-for="(item, i) in introItems"
+            :key="i"
+            :title="item.title"
+            :subtitle="item.subtitle"
+          >
+            <template #prepend>
+              <Icon :name="item.icon" />
+            </template>
+          </v-list-item>
+        </v-list>
 
-      <div class="d-flex ga-3 mt-4">
-        <v-btn
-          block
-          color="primary"
-          variant="tonal"
-          to="/profile-edit"
-        >
-          {{ t("layout.profileSidebar.editDetails") }}
-        </v-btn>
-      </div>
-    </v-card-text>
+        <div class="d-flex ga-3 mt-4">
+          <v-btn
+            block
+            color="primary"
+            variant="tonal"
+            to="/profile-edit"
+          >
+            {{ t("layout.profileSidebar.editDetails") }}
+          </v-btn>
+        </div>
+      </v-card-text>
     </div>
   </div>
-  <div
-      class="sidebar-profile-card"
-  >
+  <div class="sidebar-profile-card">
     <ParticlesBg
-        v-if="shouldRenderParticles"
-        class="sidebar-profile-card__particles"
-        :quantity="120"
-        :ease="120"
-        :color="isDark ? '#ffffff' : '#111827'"
-        :staticity="12"
-        refresh
+      v-if="shouldRenderParticles"
+      class="sidebar-profile-card__particles"
+      :quantity="120"
+      :ease="120"
+      :color="isDark ? '#ffffff' : '#111827'"
+      :staticity="12"
+      refresh
     />
     <div class="sidebar-profile-card__content">
-    <v-card-item>
-      <div class="d-flex align-center justify-space-between">
-        <div class="text-subtitle-1 font-weight-semibold text-foreground">
-          {{ t("layout.profileSidebar.photosTitle") }}
-        </div>
-        <v-btn
-          size="small"
-          variant="text"
-          color="primary"
-          to="/profile-photos"
-        >
-          {{ t("layout.profileSidebar.viewAllPhotos") }}
-        </v-btn>
-      </div>
-    </v-card-item>
-    <v-card-text>
-      <div class="photos-grid">
-        <v-img
-          v-for="(photo, i) in photos.slice(0, 9)"
-          :key="photo.id ?? i"
-          :src="photo.src"
-          :alt="photo.alt ?? 'photo-' + i"
-          aspect-ratio="1"
-          cover
-          class="rounded-lg"
-        />
-      </div>
-    </v-card-text>
-  </div>
-  </div>
-  <div
-      class="sidebar-profile-card"
-  >
-    <ParticlesBg
-        v-if="shouldRenderParticles"
-        class="sidebar-profile-card__particles"
-        :quantity="120"
-        :ease="120"
-        :color="isDark ? '#ffffff' : '#111827'"
-        :staticity="12"
-        refresh
-    />
-    <div class="sidebar-profile-card__content">
-    <v-card-item>
-      <div class="d-flex align-center justify-space-between">
-        <div class="text-subtitle-1 font-weight-semibold text-foreground">
-          {{ t("layout.profileSidebar.friendsTitle") }}
-          <span class="text-medium-emphasis">· {{ friendsCount }}</span>
-        </div>
-        <v-btn
-          size="small"
-          variant="text"
-          color="primary"
-          to="/profile-friends"
-        >
-          {{ t("layout.profileSidebar.viewAllFriends") }}
-        </v-btn>
-      </div>
-    </v-card-item>
-    <v-card-text>
-      <div class="friends-grid">
-        <div
-          v-for="(f, i) in visibleFriends"
-          :key="f.id ?? f.username ?? i"
-          class="friend-card"
-          @click="$emit('open-friend', f)"
-        >
-          <v-avatar
-            size="72"
-            class="mb-2"
+      <v-card-item>
+        <div class="d-flex align-center justify-space-between">
+          <div class="text-subtitle-1 font-weight-semibold text-foreground">
+            {{ t("layout.profileSidebar.photosTitle") }}
+          </div>
+          <v-btn
+            size="small"
+            variant="text"
+            color="primary"
+            to="/profile-photos"
           >
-            <v-img
-              :src="friendAvatar(f)"
-              :alt="friendDisplayName(f)"
-              cover
-            />
-          </v-avatar>
-          <div class="friend-name">{{ friendDisplayName(f) }}</div>
+            {{ t("layout.profileSidebar.viewAllPhotos") }}
+          </v-btn>
         </div>
-      </div>
-    </v-card-text>
+      </v-card-item>
+      <v-card-text>
+        <div class="photos-grid">
+          <v-img
+            v-for="(photo, i) in photos.slice(0, 9)"
+            :key="photo.id ?? i"
+            :src="photo.src"
+            :alt="photo.alt ?? 'photo-' + i"
+            aspect-ratio="1"
+            cover
+            class="rounded-lg"
+          />
+        </div>
+      </v-card-text>
+    </div>
   </div>
+  <div class="sidebar-profile-card">
+    <ParticlesBg
+      v-if="shouldRenderParticles"
+      class="sidebar-profile-card__particles"
+      :quantity="120"
+      :ease="120"
+      :color="isDark ? '#ffffff' : '#111827'"
+      :staticity="12"
+      refresh
+    />
+    <div class="sidebar-profile-card__content">
+      <v-card-item>
+        <div class="d-flex align-center justify-space-between">
+          <div class="text-subtitle-1 font-weight-semibold text-foreground">
+            {{ t("layout.profileSidebar.friendsTitle") }}
+            <span class="text-medium-emphasis">· {{ friendsCount }}</span>
+          </div>
+          <v-btn
+            size="small"
+            variant="text"
+            color="primary"
+            to="/profile-friends"
+          >
+            {{ t("layout.profileSidebar.viewAllFriends") }}
+          </v-btn>
+        </div>
+      </v-card-item>
+      <v-card-text>
+        <div class="friends-grid">
+          <div
+            v-for="(f, i) in visibleFriends"
+            :key="f.id ?? f.username ?? i"
+            class="friend-card"
+            @click="$emit('open-friend', f)"
+          >
+            <v-avatar
+              size="72"
+              class="mb-2"
+            >
+              <v-img
+                :src="friendAvatar(f)"
+                :alt="friendDisplayName(f)"
+                cover
+              />
+            </v-avatar>
+            <div class="friend-name">{{ friendDisplayName(f) }}</div>
+          </div>
+        </div>
+      </v-card-text>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import {useCookieColorMode} from "~/composables/useCookieColorMode";
+import { useCookieColorMode } from "~/composables/useCookieColorMode";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
 type Photo = { id?: string | number; src: string; alt?: string };
@@ -208,7 +202,9 @@ const { t } = useI18n();
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
-const friendsList = computed<Friend[]>(() => (Array.isArray(props.friends) ? props.friends.filter(Boolean) : []));
+const friendsList = computed<Friend[]>(() =>
+  Array.isArray(props.friends) ? props.friends.filter(Boolean) : [],
+);
 
 const visibleFriends = computed(() => friendsList.value.slice(0, 9));
 
@@ -264,14 +260,24 @@ function resolveProfilePhoto(profile: FriendProfile) {
 
   if (Array.isArray(profile)) {
     for (const entry of profile) {
-      if (entry && typeof entry === "object" && typeof entry.photo === "string" && entry.photo.trim()) {
+      if (
+        entry &&
+        typeof entry === "object" &&
+        typeof entry.photo === "string" &&
+        entry.photo.trim()
+      ) {
         return entry.photo.trim();
       }
     }
     return null;
   }
 
-  if (typeof profile === "object" && profile && typeof profile.photo === "string" && profile.photo.trim()) {
+  if (
+    typeof profile === "object" &&
+    profile &&
+    typeof profile.photo === "string" &&
+    profile.photo.trim()
+  ) {
     return profile.photo.trim();
   }
 
@@ -322,8 +328,8 @@ function friendAvatar(friend: Friend) {
   border-radius: 20px;
   padding: 1.25rem 0.25rem;
   box-shadow:
-      0 5px 5px rgba(var(--v-theme-primary), 0.2),
-      0 14px 10px rgba(15, 23, 42, 0.12);
+    0 5px 5px rgba(var(--v-theme-primary), 0.2),
+    0 14px 10px rgba(15, 23, 42, 0.12);
 }
 
 .sidebar-profile-card__particles {

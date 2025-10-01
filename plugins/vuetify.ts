@@ -204,7 +204,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       readonly "radius-none": "0";
       readonly "text-h1-size": "3.25rem";
       readonly "radius-sm": "0.25rem";
-      readonly "text-h3-letter-spacing": "-0.01em"
+      readonly "text-h3-letter-spacing": "-0.01em";
     };
     dark: boolean;
     colors: {
@@ -238,8 +238,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       success: string;
       background: string;
       "on-secondary": string;
-      primary: any
-    }
+      primary: any;
+    };
   } = {
     dark: false,
     colors: {
@@ -341,7 +341,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       readonly "radius-none": "0";
       readonly "text-h1-size": "3.25rem";
       readonly "radius-sm": "0.25rem";
-      readonly "text-h3-letter-spacing": "-0.01em"
+      readonly "text-h3-letter-spacing": "-0.01em";
     };
     dark: boolean;
     colors: {
@@ -375,8 +375,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       success: string;
       background: string;
       "on-secondary": string;
-      primary: any
-    }
+      primary: any;
+    };
   } = {
     dark: true,
     colors: {

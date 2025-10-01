@@ -5,91 +5,94 @@
  * - showCreate: ajoute une carte "create" en tête
  */
 type Story = {
-  id?: string | number
-  image?: string
-  name?: string
-  avatar?: string
-  state?: 'create' | 'new' | 'seen'
-  duration?: string
-}
+  id?: string | number;
+  image?: string;
+  name?: string;
+  avatar?: string;
+  state?: "create" | "new" | "seen";
+  duration?: string;
+};
 
-const props = withDefaults(defineProps<{
-  items: Story[]
-  showCreate?: boolean
-}>(), {
-  items: () => [],
-  showCreate: true
-})
+const props = withDefaults(
+  defineProps<{
+    items: Story[];
+    showCreate?: boolean;
+  }>(),
+  {
+    items: () => [],
+    showCreate: true,
+  },
+);
 
-const scroller = ref<HTMLElement | null>(null)
-const { t } = useI18n()
+const scroller = ref<HTMLElement | null>(null);
+const { t } = useI18n();
 
 function scrollBy(delta = 280) {
-  if (!scroller.value) return
-  scroller.value.scrollBy({ left: delta, behavior: 'smooth' })
+  if (!scroller.value) return;
+  scroller.value.scrollBy({ left: delta, behavior: "smooth" });
 }
 
 const hasOverflow = computed(() => {
-  const el = scroller.value
-  return el ? el.scrollWidth > el.clientWidth + 8 : false
-})
+  const el = scroller.value;
+  return el ? el.scrollWidth > el.clientWidth + 8 : false;
+});
 
 const emit = defineEmits<{
-  (e: 'open', story: Story): void
-  (e: 'create'): void
-}>()
+  (e: "open", story: Story): void;
+  (e: "create"): void;
+}>();
 </script>
 
 <template>
   <div class="relative">
     <div
-        ref="scroller"
-        class="stories-scroll"
-        role="listbox"
-        :aria-label="t('stories.strip.ariaLabel')"
+      ref="scroller"
+      class="stories-scroll"
+      role="listbox"
+      :aria-label="t('stories.strip.ariaLabel')"
     >
       <StoryCard
-          v-if="showCreate"
-          state="create"
-          image=""
-          name=""
-          avatar=""
-          @create="$emit('create')"
+        v-if="showCreate"
+        state="create"
+        image=""
+        name=""
+        avatar=""
+        @create="$emit('create')"
       />
 
       <StoryCard
-          v-for="s in items"
-          :key="s.id ?? s.name"
-          :image="s.image"
-          :name="s.name"
-          :avatar="s.avatar"
-          :state="s.state ?? 'new'"
-          :duration="s.duration"
-          @click="$emit('open', s)"
+        v-for="s in items"
+        :key="s.id ?? s.name"
+        :image="s.image"
+        :name="s.name"
+        :avatar="s.avatar"
+        :state="s.state ?? 'new'"
+        :duration="s.duration"
+        @click="$emit('open', s)"
       />
     </div>
 
     <!-- Flèches -->
     <v-btn
-        v-if="hasOverflow"
-        class="nav-btn left"
-        icon
-        size="large"
-        variant="elevated"
-        @click="scrollBy(-320)"
-        :aria-label="t('stories.strip.scrollLeft')"
+      v-if="hasOverflow"
+      class="nav-btn left"
+      icon
+      size="large"
+      variant="elevated"
+      @click="scrollBy(-320)"
+      :aria-label="t('stories.strip.scrollLeft')"
     >
       <Icon name="mdi-chevron-left"></Icon>
     </v-btn>
 
     <v-btn
-        v-if="hasOverflow"
-        class="nav-btn right"
-        icon
-        size="large"
-        variant="elevated"
-        @click="scrollBy(320)"
-        :aria-label="t('stories.strip.scrollRight')"
+      v-if="hasOverflow"
+      class="nav-btn right"
+      icon
+      size="large"
+      variant="elevated"
+      @click="scrollBy(320)"
+      :aria-label="t('stories.strip.scrollRight')"
     >
       <Icon name="mdi-chevron-right"></Icon>
     </v-btn>
@@ -97,7 +100,7 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
-.stories-scroll{
+.stories-scroll {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: max-content;
@@ -106,13 +109,19 @@ const emit = defineEmits<{
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
-.stories-scroll > * { scroll-snap-align: start; }
-.nav-btn{
+.stories-scroll > * {
+  scroll-snap-align: start;
+}
+.nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   backdrop-filter: blur(6px);
 }
-.nav-btn.left{ left: -6px; }
-.nav-btn.right{ right: -6px; }
+.nav-btn.left {
+  left: -6px;
+}
+.nav-btn.right {
+  right: -6px;
+}
 </style>

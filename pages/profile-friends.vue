@@ -65,7 +65,9 @@
         class="mb-10"
         aria-labelledby="friends-filter-title"
       >
-        <div class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-4 gap-4">
+        <div
+          class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-4 gap-4"
+        >
           <div>
             <h2
               id="friends-filter-title"
@@ -145,13 +147,21 @@
                 </div>
               </div>
 
-              <div class="d-flex flex-wrap align-center justify-space-between text-medium-emphasis text-body-2 mb-4 gap-2">
+              <div
+                class="d-flex flex-wrap align-center justify-space-between text-medium-emphasis text-body-2 mb-4 gap-2"
+              >
                 <div class="d-flex align-center gap-2">
-                  <Icon name="mdi-map-marker-outline" size="18" />
+                  <Icon
+                    name="mdi-map-marker-outline"
+                    size="18"
+                  />
                   <span>{{ friend.location }}</span>
                 </div>
                 <div class="d-flex align-center gap-2">
-                  <Icon name="mdi-account-multiple-outline" size="18" />
+                  <Icon
+                    name="mdi-account-multiple-outline"
+                    size="18"
+                  />
                   <span>{{ friend.mutualCount }} {{ t("pages.profileFriends.stats.mutual") }}</span>
                 </div>
               </div>
@@ -186,9 +196,7 @@
         </div>
       </section>
 
-      <section
-        aria-labelledby="friend-suggestions-title"
-      >
+      <section aria-labelledby="friend-suggestions-title">
         <v-row dense>
           <v-col
             cols="12"
@@ -222,7 +230,9 @@
                       />
                     </v-avatar>
                   </template>
-                  <v-list-item-title class="font-weight-semibold">{{ suggestion.name }}</v-list-item-title>
+                  <v-list-item-title class="font-weight-semibold">{{
+                    suggestion.name
+                  }}</v-list-item-title>
                   <v-list-item-subtitle>{{ suggestion.headline }}</v-list-item-subtitle>
                   <template #append>
                     <div class="d-flex flex-column align-end gap-2">
@@ -327,7 +337,10 @@
             {{ selectedFriend.bio }}
           </p>
           <div class="d-flex align-center gap-2 text-body-2 text-medium-emphasis">
-            <Icon name="mdi-map-marker-outline" size="18" />
+            <Icon
+              name="mdi-map-marker-outline"
+              size="18"
+            />
             <span>{{ selectedFriend.location }}</span>
           </div>
         </v-card-text>
@@ -428,7 +441,8 @@ const allFriends = ref<FriendCard[]>([
     id: "amina-rahman",
     name: "Amina Rahman",
     headline: "Lead Product Designer · Flowbase",
-    avatar: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Casablanca, Morocco",
     mutualCount: 12,
     status: "online",
@@ -441,7 +455,8 @@ const allFriends = ref<FriendCard[]>([
     id: "leo-martinez",
     name: "Leo Martínez",
     headline: "Senior Frontend Engineer · Alloy",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Madrid, Spain",
     mutualCount: 18,
     status: "focus",
@@ -454,7 +469,8 @@ const allFriends = ref<FriendCard[]>([
     id: "noor-hassan",
     name: "Noor Hassan",
     headline: "Community Strategist · Orbit",
-    avatar: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Dubai, UAE",
     mutualCount: 9,
     status: "online",
@@ -467,7 +483,8 @@ const allFriends = ref<FriendCard[]>([
     id: "sasha-ivanov",
     name: "Sasha Ivanov",
     headline: "Staff Software Engineer · Vertex",
-    avatar: "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Berlin, Germany",
     mutualCount: 7,
     status: "busy",
@@ -480,7 +497,8 @@ const allFriends = ref<FriendCard[]>([
     id: "harper-lee",
     name: "Harper Lee",
     headline: "Growth Marketing Lead · Sail",
-    avatar: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Toronto, Canada",
     mutualCount: 14,
     status: "online",
@@ -493,7 +511,8 @@ const allFriends = ref<FriendCard[]>([
     id: "meera-kapoor",
     name: "Meera Kapoor",
     headline: "Principal Product Manager · Aurora",
-    avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Bengaluru, India",
     mutualCount: 21,
     status: "focus",
@@ -506,7 +525,8 @@ const allFriends = ref<FriendCard[]>([
     id: "julien-morel",
     name: "Julien Morel",
     headline: "Design Operations Manager · Lumen",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Paris, France",
     mutualCount: 10,
     status: "offline",
@@ -519,7 +539,8 @@ const allFriends = ref<FriendCard[]>([
     id: "ayesha-rahim",
     name: "Ayesha Rahim",
     headline: "Solutions Engineer · Stripe",
-    avatar: "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Singapore",
     mutualCount: 11,
     status: "online",
@@ -532,7 +553,8 @@ const allFriends = ref<FriendCard[]>([
     id: "daniel-cho",
     name: "Daniel Cho",
     headline: "Brand Strategist · Northwind",
-    avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80",
     location: "Seoul, South Korea",
     mutualCount: 6,
     status: "offline",
@@ -552,9 +574,21 @@ const heroStats = computed(() => {
   const formatter = new Intl.NumberFormat(locale.value || "en-US");
 
   return [
-    { id: "total", label: t("pages.profileFriends.stats.totalFriends"), value: formatter.format(total) },
-    { id: "mutual", label: t("pages.profileFriends.stats.mutual"), value: formatter.format(mutual) },
-    { id: "online", label: t("pages.profileFriends.stats.online"), value: formatter.format(online) },
+    {
+      id: "total",
+      label: t("pages.profileFriends.stats.totalFriends"),
+      value: formatter.format(total),
+    },
+    {
+      id: "mutual",
+      label: t("pages.profileFriends.stats.mutual"),
+      value: formatter.format(mutual),
+    },
+    {
+      id: "online",
+      label: t("pages.profileFriends.stats.online"),
+      value: formatter.format(online),
+    },
   ];
 });
 
@@ -574,14 +608,20 @@ const filteredFriends = computed(() => {
   }
 
   return allFriends.value.filter(
-    (friend) => featuredIds.has(friend.id) && friend.segments.includes(activeFilter.value as FriendCard["segments"][number]),
+    (friend) =>
+      featuredIds.has(friend.id) &&
+      friend.segments.includes(activeFilter.value as FriendCard["segments"][number]),
   );
 });
 
-const suggestions = computed(() => allFriends.value.filter((friend) => !featuredIds.has(friend.id)));
+const suggestions = computed(() =>
+  allFriends.value.filter((friend) => !featuredIds.has(friend.id)),
+);
 
 const activeNow = computed(() =>
-  allFriends.value.filter((friend) => friend.status === "online" || friend.status === "focus").slice(0, 4),
+  allFriends.value
+    .filter((friend) => friend.status === "online" || friend.status === "focus")
+    .slice(0, 4),
 );
 
 const showProfileDialog = ref(false);
@@ -627,13 +667,11 @@ function triggerAction(action: "message" | "schedule" | "connect", friend?: Frie
     snackbarMessage.value = name
       ? t("pages.profileFriends.feedback.messageWith", { name })
       : t("pages.profileFriends.feedback.message");
-  }
-  else if (action === "schedule") {
+  } else if (action === "schedule") {
     snackbarMessage.value = name
       ? t("pages.profileFriends.feedback.scheduleWith", { name })
       : t("pages.profileFriends.feedback.schedule");
-  }
-  else {
+  } else {
     snackbarMessage.value = name
       ? t("pages.profileFriends.feedback.connectWith", { name })
       : t("pages.profileFriends.feedback.connect");

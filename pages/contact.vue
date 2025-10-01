@@ -204,7 +204,6 @@ const supportChannels = computed(() => [
     ctaLabel: t("pages.contact.details.docsCtaLabel"),
   },
 ]);
-
 </script>
 
 <style scoped>
@@ -214,7 +213,11 @@ main.contact-page {
   background:
     radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.12), transparent 55%),
     radial-gradient(circle at bottom right, rgba(var(--v-theme-secondary), 0.1), transparent 60%),
-    linear-gradient(180deg, rgba(var(--v-theme-surface), 1) 0%, rgba(var(--v-theme-surface-variant), 0.2) 100%);
+    linear-gradient(
+      180deg,
+      rgba(var(--v-theme-surface), 1) 0%,
+      rgba(var(--v-theme-surface-variant), 0.2) 100%
+    );
 }
 
 .contact-container {
@@ -232,7 +235,9 @@ main.contact-page {
   background: rgba(var(--v-theme-surface), 0.72);
   border: 1px solid rgba(var(--v-theme-outline-variant), 0.4);
   backdrop-filter: blur(16px);
-  transition: box-shadow 200ms ease, transform 200ms ease;
+  transition:
+    box-shadow 200ms ease,
+    transform 200ms ease;
 }
 
 .contact-panel:hover {
@@ -277,7 +282,9 @@ main.contact-page {
   padding: 24px;
   background: rgba(var(--v-theme-surface), 0.8);
   border: 1px solid rgba(var(--v-theme-outline-variant), 0.35);
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .contact-channel:hover {

@@ -4,88 +4,86 @@
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Main navigation"
   >
-    <div
-        class="sidebar-menu-card"
-    >
+    <div class="sidebar-menu-card">
       <ParticlesBg
-          v-if="shouldRenderParticles"
-          class="sidebar-menu-card__particles"
-          :quantity="120"
-          :ease="120"
-          :color="isDark ? '#ffffff' : '#111827'"
-          :staticity="12"
-          refresh
+        v-if="shouldRenderParticles"
+        class="sidebar-menu-card__particles"
+        :quantity="120"
+        :ease="120"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
       />
       <div class="sidebar-menu-card__content">
         <nav>
           <ul class="flex flex-col gap-3">
             <li
-                v-for="item in resolvedItems"
-                :key="item.key"
-                class="sidebar-group"
+              v-for="item in resolvedItems"
+              :key="item.key"
+              class="sidebar-group"
             >
               <component
-                  :is="item.to ? NuxtLink : 'button'"
-                  v-bind="item.to ? { to: item.to } : { type: 'button' }"
-                  class="sidebar-item"
-                  :class="{ 'sidebar-item--active': isItemActive(item, resolvedActiveKey) }"
-                  :aria-label="item.to ? t(item.label) : undefined"
-                  :aria-current="isItemActive(item, resolvedActiveKey) ? 'page' : undefined"
-                  @click="handleParentSelect(item)"
+                :is="item.to ? NuxtLink : 'button'"
+                v-bind="item.to ? { to: item.to } : { type: 'button' }"
+                class="sidebar-item"
+                :class="{ 'sidebar-item--active': isItemActive(item, resolvedActiveKey) }"
+                :aria-label="item.to ? t(item.label) : undefined"
+                :aria-current="isItemActive(item, resolvedActiveKey) ? 'page' : undefined"
+                @click="handleParentSelect(item)"
               >
                 <div class="flex items-center gap-3">
                   <Icon
-                      v-if="item.icon"
-                      :name="item.icon"
-                      :size="20"
+                    v-if="item.icon"
+                    :name="item.icon"
+                    :size="20"
                   />
                   <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
                 </div>
                 <button
-                    v-if="item.children?.length"
-                    type="button"
-                    class="sidebar-toggle"
-                    :aria-controls="`sidebar-group-${item.key}`"
-                    :aria-expanded="isGroupExpanded(item.key)"
-                    @click.stop="toggleGroup(item.key)"
+                  v-if="item.children?.length"
+                  type="button"
+                  class="sidebar-toggle"
+                  :aria-controls="`sidebar-group-${item.key}`"
+                  :aria-expanded="isGroupExpanded(item.key)"
+                  @click.stop="toggleGroup(item.key)"
                 >
                   <Icon
-                      class="sidebar-toggle-icon"
-                      name="mdi:chevron-down"
-                      :class="{ 'sidebar-toggle-icon--open': isGroupExpanded(item.key) }"
+                    class="sidebar-toggle-icon"
+                    name="mdi:chevron-down"
+                    :class="{ 'sidebar-toggle-icon--open': isGroupExpanded(item.key) }"
                   />
                   <span class="sr-only">{{ t("layout.sidebar.navigate") }}</span>
                 </button>
                 <span
-                    v-else-if="item.to"
-                    class="sr-only"
-                >{{ t("layout.sidebar.navigate") }}</span
+                  v-else-if="item.to"
+                  class="sr-only"
+                  >{{ t("layout.sidebar.navigate") }}</span
                 >
               </component>
 
               <ul
-                  v-if="item.children?.length"
-                  v-show="isGroupExpanded(item.key)"
-                  :id="`sidebar-group-${item.key}`"
-                  class="sidebar-sublist"
-                  :aria-hidden="!isGroupExpanded(item.key)"
+                v-if="item.children?.length"
+                v-show="isGroupExpanded(item.key)"
+                :id="`sidebar-group-${item.key}`"
+                class="sidebar-sublist"
+                :aria-hidden="!isGroupExpanded(item.key)"
               >
                 <li
-                    v-for="child in item.children"
-                    :key="child.key"
+                  v-for="child in item.children"
+                  :key="child.key"
                 >
                   <NuxtLink
-                      :to="child.to"
-                      class="sidebar-subitem"
-                      :class="{ 'sidebar-subitem--active': child.key === resolvedActiveKey }"
-                      :aria-label="t(child.label)"
-                      :aria-current="child.key === resolvedActiveKey ? 'page' : undefined"
-                      @click="emit('select', child.key)"
+                    :to="child.to"
+                    class="sidebar-subitem"
+                    :class="{ 'sidebar-subitem--active': child.key === resolvedActiveKey }"
+                    :aria-label="t(child.label)"
+                    :aria-current="child.key === resolvedActiveKey ? 'page' : undefined"
+                    @click="emit('select', child.key)"
                   >
                     <Icon
-                        v-if="child.icon"
-                        :name="child.icon"
-                        :size="18"
+                      v-if="child.icon"
+                      :name="child.icon"
+                      :size="18"
                     />
                     <span class="text-sm text-muted-foreground">{{ t(child.label) }}</span>
                   </NuxtLink>
@@ -357,8 +355,8 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
   border-radius: 20px;
   padding: 1.75rem 1.25rem;
   box-shadow:
-      0 5px 5px rgba(var(--v-theme-primary), 0.2),
-      0 14px 30px rgba(15, 23, 42, 0.12);
+    0 5px 5px rgba(var(--v-theme-primary), 0.2),
+    0 14px 30px rgba(15, 23, 42, 0.12);
 }
 
 .sidebar-menu-card__particles {

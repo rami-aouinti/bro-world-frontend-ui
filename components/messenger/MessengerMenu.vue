@@ -61,7 +61,10 @@
         </v-btn>
       </div>
       <v-divider />
-      <div v-if="props.loading" class="flex flex-col gap-3 px-4 py-6">
+      <div
+        v-if="props.loading"
+        class="flex flex-col gap-3 px-4 py-6"
+      >
         <div
           v-for="index in 3"
           :key="index"
@@ -111,7 +114,7 @@
                   v-if="preview.avatarUrl"
                   :alt="preview.title"
                   :src="preview.avatarUrl"
-                >
+                />
                 <span v-else>
                   {{ preview.initials }}
                 </span>
@@ -122,12 +125,13 @@
                 {{ preview.title }}
               </p>
               <p class="line-clamp-2 text-xs text-muted-foreground leading-relaxed">
-                <span v-if="preview.sender" class="font-medium text-foreground">
+                <span
+                  v-if="preview.sender"
+                  class="font-medium text-foreground"
+                >
                   {{ preview.sender }}
                 </span>
-                <span v-if="preview.sender && preview.snippet">
-                  &nbsp;&mdash;&nbsp;
-                </span>
+                <span v-if="preview.sender && preview.snippet"> &nbsp;&mdash;&nbsp; </span>
                 <span>
                   {{ preview.snippet || props.emptyText }}
                 </span>
@@ -142,7 +146,7 @@
                   v-if="preview.unread && preview.unreadCount"
                   class="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground"
                 >
-                  {{ preview.unreadCount > 99 ? '99+' : preview.unreadCount }}
+                  {{ preview.unreadCount > 99 ? "99+" : preview.unreadCount }}
                 </span>
                 <span
                   v-else-if="preview.unread"
@@ -156,7 +160,9 @@
           v-else
           class="flex flex-col items-center justify-center gap-2 px-6 py-8 text-center"
         >
-          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary"
+          >
             <AppIcon
               name="mdi:message-plus-outline"
               :size="28"

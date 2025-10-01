@@ -75,7 +75,9 @@
               rounded="xl"
               elevation="6"
             >
-              <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-6">
+              <div
+                class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-6"
+              >
                 <div>
                   <h2
                     id="pinned-albums-title"
@@ -126,12 +128,17 @@
                         cover
                       />
                     </div>
-                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">{{ highlightedAlbum.title }}</h3>
+                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
+                      {{ highlightedAlbum.title }}
+                    </h3>
                     <p class="text-body-2 text-medium-emphasis mb-4">
                       {{ highlightedAlbum.description }}
                     </p>
                     <div class="d-flex flex-wrap gap-2 text-body-2 text-medium-emphasis">
-                      <span>{{ highlightedAlbum.count }} {{ t("pages.profilePhotos.meta.photoCount") }}</span>
+                      <span
+                        >{{ highlightedAlbum.count }}
+                        {{ t("pages.profilePhotos.meta.photoCount") }}</span
+                      >
                       <span>•</span>
                       <span>{{ highlightedAlbum.location }}</span>
                     </div>
@@ -160,7 +167,9 @@
                         />
                         <div class="flex-grow-1">
                           <div class="d-flex align-center justify-space-between mb-1">
-                            <h3 class="text-subtitle-1 font-weight-semibold mb-0">{{ album.title }}</h3>
+                            <h3 class="text-subtitle-1 font-weight-semibold mb-0">
+                              {{ album.title }}
+                            </h3>
                             <v-chip
                               size="small"
                               variant="tonal"
@@ -168,7 +177,9 @@
                               {{ album.count }}
                             </v-chip>
                           </div>
-                          <p class="text-body-2 text-medium-emphasis mb-2">{{ album.description }}</p>
+                          <p class="text-body-2 text-medium-emphasis mb-2">
+                            {{ album.description }}
+                          </p>
                           <div class="text-caption text-medium-emphasis">{{ album.updated }}</div>
                         </div>
                       </div>
@@ -185,7 +196,9 @@
               rounded="xl"
               elevation="4"
             >
-              <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4 mb-4">
+              <div
+                class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4 mb-4"
+              >
                 <div>
                   <h2
                     id="photo-gallery-title"
@@ -399,8 +412,10 @@ interface AlbumSummary {
 const highlightedAlbum = reactive<AlbumSummary>({
   id: "field-research",
   title: "Field research week",
-  description: "Immersive research sessions with the Flowbase design team across artisanal workshops.",
-  cover: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=960&q=80",
+  description:
+    "Immersive research sessions with the Flowbase design team across artisanal workshops.",
+  cover:
+    "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=960&q=80",
   count: 42,
   location: "Lisbon, Portugal",
   updated: "2 days ago",
@@ -411,7 +426,8 @@ const secondaryAlbums = reactive<AlbumSummary[]>([
     id: "studio",
     title: "Studio portraits",
     description: "Editorial portraits for the latest community profile series.",
-    cover: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=640&q=80",
+    cover:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=640&q=80",
     count: 18,
     location: "",
     updated: "4 days ago",
@@ -420,7 +436,8 @@ const secondaryAlbums = reactive<AlbumSummary[]>([
     id: "product-launch",
     title: "Product launch night",
     description: "Highlights from the BroWorld 2.0 launch gathering.",
-    cover: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=640&q=80",
+    cover:
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=640&q=80",
     count: 27,
     location: "",
     updated: "1 week ago",
@@ -429,7 +446,8 @@ const secondaryAlbums = reactive<AlbumSummary[]>([
     id: "retreat",
     title: "Team retreat",
     description: "Moments from the annual leadership retreat in the mountains.",
-    cover: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=640&q=80",
+    cover:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=640&q=80",
     count: 33,
     location: "",
     updated: "3 weeks ago",
@@ -530,14 +548,29 @@ const photoLibrary = reactive<PhotoItem[]>([
 
 const collectionStats = computed(() => {
   const formatter = new Intl.NumberFormat(locale.value || "en-US");
-  const totalPhotos = photoLibrary.length + highlightedAlbum.count + secondaryAlbums.reduce((sum, album) => sum + album.count, 0);
+  const totalPhotos =
+    photoLibrary.length +
+    highlightedAlbum.count +
+    secondaryAlbums.reduce((sum, album) => sum + album.count, 0);
   const curatedAlbums = 1 + secondaryAlbums.length;
   const curatedTags = new Set(photoLibrary.map((photo) => photo.category)).size;
 
   return [
-    { id: "photos", label: t("pages.profilePhotos.meta.photoCount"), value: formatter.format(totalPhotos) },
-    { id: "albums", label: t("pages.profilePhotos.stats.albums"), value: formatter.format(curatedAlbums) },
-    { id: "tags", label: t("pages.profilePhotos.stats.tags"), value: formatter.format(curatedTags) },
+    {
+      id: "photos",
+      label: t("pages.profilePhotos.meta.photoCount"),
+      value: formatter.format(totalPhotos),
+    },
+    {
+      id: "albums",
+      label: t("pages.profilePhotos.stats.albums"),
+      value: formatter.format(curatedAlbums),
+    },
+    {
+      id: "tags",
+      label: t("pages.profilePhotos.stats.tags"),
+      value: formatter.format(curatedTags),
+    },
   ];
 });
 
@@ -549,39 +582,47 @@ const displayedPhotos = computed(() => {
   return photoLibrary.filter((photo) => photo.filter === activeFilter.value);
 });
 
-const timeline = reactive(
-  [
-    {
-      id: "2024-q2",
-      title: "Research residency",
-      date: "Q2 2024",
-      description: "A week-long residency documenting artisan workshops to inspire new community formats.",
-      tags: ["Research", "Community"],
-    },
-    {
-      id: "2024-launch",
-      title: "BroWorld 2.0 launch",
-      date: "May 2024",
-      description: "Captured stories from partners, beta customers, and the team during launch week.",
-      tags: ["Events", "Product"],
-    },
-    {
-      id: "2023-retreat",
-      title: "Leadership retreat",
-      date: "November 2023",
-      description: "Photo journal from the annual strategy retreat in the mountains.",
-      tags: ["Retreat", "Team"],
-    },
-  ] satisfies Array<{ id: string; title: string; date: string; description: string; tags: string[] }>,
-);
+const timeline = reactive([
+  {
+    id: "2024-q2",
+    title: "Research residency",
+    date: "Q2 2024",
+    description:
+      "A week-long residency documenting artisan workshops to inspire new community formats.",
+    tags: ["Research", "Community"],
+  },
+  {
+    id: "2024-launch",
+    title: "BroWorld 2.0 launch",
+    date: "May 2024",
+    description: "Captured stories from partners, beta customers, and the team during launch week.",
+    tags: ["Events", "Product"],
+  },
+  {
+    id: "2023-retreat",
+    title: "Leadership retreat",
+    date: "November 2023",
+    description: "Photo journal from the annual strategy retreat in the mountains.",
+    tags: ["Retreat", "Team"],
+  },
+] satisfies Array<{
+  id: string;
+  title: string;
+  date: string;
+  description: string;
+  tags: string[];
+}>);
 
-const quickNotes = reactive(
-  [
-    { id: "note-1", initials: "AR", title: "Shot list updated", subtitle: "Amina added 3 new prompts" },
-    { id: "note-2", initials: "LM", title: "Color grading", subtitle: "Leo shared LUT presets" },
-    { id: "note-3", initials: "NH", title: "Story ideas", subtitle: "Noor drafted interview angles" },
-  ] satisfies Array<{ id: string; initials: string; title: string; subtitle: string }>,
-);
+const quickNotes = reactive([
+  {
+    id: "note-1",
+    initials: "AR",
+    title: "Shot list updated",
+    subtitle: "Amina added 3 new prompts",
+  },
+  { id: "note-2", initials: "LM", title: "Color grading", subtitle: "Leo shared LUT presets" },
+  { id: "note-3", initials: "NH", title: "Story ideas", subtitle: "Noor drafted interview angles" },
+] satisfies Array<{ id: string; initials: string; title: string; subtitle: string }>);
 
 const showSnackbar = ref(false);
 const snackbarMessage = ref("");

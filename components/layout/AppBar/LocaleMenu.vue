@@ -46,9 +46,7 @@
           :title="props.formatLabel(l)"
           :class="[
             'px-4',
-            l === props.current
-              ? 'bg-primary/5 text-primary dark:bg-primary/15'
-              : '',
+            l === props.current ? 'bg-primary/5 text-primary dark:bg-primary/15' : '',
           ]"
           role="menuitemradio"
           :aria-checked="l === props.current"
