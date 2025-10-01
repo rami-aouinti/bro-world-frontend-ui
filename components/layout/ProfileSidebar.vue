@@ -159,7 +159,6 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { useCookieColorMode } from "~/composables/useCookieColorMode";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
 type Photo = { id?: string | number; src: string; alt?: string };

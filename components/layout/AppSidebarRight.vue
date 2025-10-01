@@ -42,7 +42,6 @@
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref, watch } from "vue";
-import { useCookieColorMode } from "#imports";
 import { useI18n } from "vue-i18n";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 import { useAuthSession } from "~/stores/auth-session";

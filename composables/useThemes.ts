@@ -1,7 +1,6 @@
 import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
-import { useCookieColorMode } from "./useCookieColorMode";
 import { withSecureCookieOptions } from "~/lib/cookies";
 
 interface ThemeCookieConfig {
@@ -97,8 +96,7 @@ export function useThemes() {
     };
   }
 
-  const colorMode = useCookieColorMode();
-  const isDark = computed(() => colorMode.value === "dark");
+  const isDark = computed(() => useColorMode.value === "dark");
 
   const themeCookie = useCookie<ThemeCookieConfig>(
     "theme",

@@ -179,7 +179,6 @@
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent } from "vue";
 import { useDisplay, useTheme } from "vuetify";
-import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import { useRequestHeaders } from "#imports";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
@@ -202,7 +201,6 @@ const AppSidebarRight = defineAsyncComponent({
   loader: () => import("~/components/layout/AppSidebarRight.vue"),
   suspensible: false,
 });
-const colorMode = useCookieColorMode();
 
 const isDark = computed(() => useColorMode().value == "dark");
 

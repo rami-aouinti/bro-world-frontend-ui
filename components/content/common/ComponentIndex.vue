@@ -51,7 +51,6 @@
 
 <script setup lang="ts">
 import type { QueryBuilderParams } from "@nuxt/content";
-import { useCookieColorMode } from "#imports";
 
 interface Badge {
   type: "default" | "info" | "warning" | "success" | "danger" | "lime" | undefined;
@@ -107,7 +106,7 @@ const query: QueryBuilderParams = {
 };
 
 const categories = ref<Array<Category>>([]);
-const isDark = computed(() => useCookieColorMode().value == "dark");
+const isDark = computed(() => useColorMode().value == "dark");
 const gradientColor = computed(() => (isDark.value ? "#363636" : "#C9C9C9"));
 const openCategories = ref<Array<string>>([]);
 
