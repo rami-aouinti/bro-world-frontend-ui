@@ -52,7 +52,8 @@
     "userMenu": {
       "signedInAs": "مسجل الدخول باسم",
       "guestTitle": "مرحبًا بك",
-      "guestSubtitle": "سجّل الدخول للحصول على تجربة مخصصة"
+      "guestSubtitle": "سجّل الدخول للحصول على تجربة مخصصة",
+      "admin": "لوحة الإدارة"
     },
     "localeMenu": {
       "title": "اللغة",

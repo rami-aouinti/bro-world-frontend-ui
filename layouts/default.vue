@@ -322,12 +322,25 @@ const sidebarVariant = computed<"default" | "profile">(() =>
   route.meta?.sidebarVariant === "profile" ? "profile" : "default",
 );
 
+const isAdminRoute = computed(() => route.path.startsWith("/admin"));
+
 const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   if (sidebarVariant.value === "profile") {
     return buildProfileSidebarItems();
   }
 
-  return buildSidebarItems(siteSettings.value, canAccessAdmin.value);
+  const items = buildSidebarItems(siteSettings.value, canAccessAdmin.value);
+  const adminItem = items.find((item) => item.key === "admin");
+
+  if (isAdminRoute.value && canAccessAdmin.value) {
+    return adminItem?.children ?? [];
+  }
+
+  if (adminItem) {
+    return items.filter((item) => item.key !== "admin");
+  }
+
+  return items;
 });
 
 const activeSidebar = ref("apps");
