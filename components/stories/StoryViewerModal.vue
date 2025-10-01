@@ -259,7 +259,7 @@ onBeforeUnmount(() => {
   background: linear-gradient(90deg, #60a5fa, #a855f7);
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform var(--story-duration, 1000ms) linear;
+  transition: transform var(--story-duration, 3000ms) linear;
 }
 
 .story-viewer__progress.active::after {
