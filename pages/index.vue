@@ -11,6 +11,13 @@
       v-if="isAuthenticated"
       class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
     >
+      <input
+        ref="storyFileInput"
+        type="file"
+        accept="image/*"
+        class="sr-only"
+        @change="onStorySelected"
+      />
       <StoriesStrip
         :items="stories"
         @open="openStory"
@@ -73,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect } from "vue";
+import { computed, onUnmounted, ref, watchEffect } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
@@ -165,13 +172,15 @@ const lastStoryReaction = ref<{ storyId: Story["id"]; reactionId: StoryReaction[
   null,
 );
 const lastStoryMessage = ref<{ storyId: Story["id"]; message: string } | null>(null);
+const storyFileInput = ref<HTMLInputElement | null>(null);
+const storyObjectUrls = new Set<string>();
 
 function openStory(story: Story) {
   activeStory.value = story;
   isStoryViewerOpen.value = true;
 }
 function createStory() {
-  /* ouvrir éditeur */
+  storyFileInput.value?.click();
 }
 function onStoryClosed() {
   activeStory.value = null;
@@ -207,6 +216,38 @@ function handleStoryMessage({ story, message }: { story: Story | null; message: 
 function onAttach(type: string) {
   // Ouvre sélecteur média / GIF / etc.
 }
+
+function onStorySelected(event: Event) {
+  const input = event.target as HTMLInputElement | null;
+  const file = input?.files?.[0];
+
+  if (!file) {
+    return;
+  }
+
+  const imageUrl = URL.createObjectURL(file);
+  storyObjectUrls.add(imageUrl);
+
+  stories.value = [
+    {
+      id: Date.now(),
+      image: imageUrl,
+      name: user.name,
+      avatar: user.avatarUrl,
+      state: "new",
+    },
+    ...stories.value,
+  ];
+
+  if (input) {
+    input.value = "";
+  }
+}
+
+onUnmounted(() => {
+  storyObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+  storyObjectUrls.clear();
+});
 const reactionEmojis: Record<ReactionType, string> = {
   like: "👍",
   love: "❤️",
