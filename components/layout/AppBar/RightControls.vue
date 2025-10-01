@@ -1,15 +1,16 @@
 <template>
   <div class="flex items-center gap-3">
-    <button
-      type="button"
-      :class="props.iconTriggerClasses"
-      aria-label="Notifications"
-    >
-      <AppIcon
-        name="mdi:bell-outline"
-        :size="32"
-      />
-    </button>
+    <NotificationMenu
+      :items="props.notifications"
+      :icon-trigger-classes="props.iconTriggerClasses"
+      :title="props.notificationsTitle"
+      :subtitle="props.notificationsSubtitle"
+      :empty-text="props.notificationsEmpty"
+      :mark-all-text="props.notificationsMarkAll"
+      :button-label="props.notificationsButtonLabel"
+      :unread-count="props.notificationCount"
+      @mark-all="emit('mark-all-notifications')"
+    />
     <button
       type="button"
       :class="props.iconTriggerClasses"
@@ -55,10 +56,20 @@
 </template>
 
 <script setup lang="ts">
+import NotificationMenu from "./NotificationMenu.vue";
+import type { AppNotification } from "~/types/layout";
+
 const props = defineProps<{
   isMobile: boolean;
   showRightToggle: boolean;
   iconTriggerClasses: string;
+  notifications: AppNotification[];
+  notificationCount: number;
+  notificationsTitle: string;
+  notificationsSubtitle?: string;
+  notificationsEmpty: string;
+  notificationsMarkAll: string;
+  notificationsButtonLabel: string;
 }>();
-const emit = defineEmits(["toggle-right"]);
+const emit = defineEmits(["toggle-right", "mark-all-notifications"]);
 </script>

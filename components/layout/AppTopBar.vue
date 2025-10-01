@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     class="app-top-bar"
-    :class="isDark ? 'text-white' : 'text-black'"
+    :class="gradientIsDark ? 'text-white' : 'text-black'"
     :color="appBarColor"
     app
     :elevation="10"
@@ -47,13 +47,25 @@
         :is-mobile="props.isMobile"
         :show-right-toggle="props.showRightToggle"
         :icon-trigger-classes="iconTriggerClasses"
+        :notifications="notifications"
+        :notification-count="notificationCount"
+        :notifications-title="notificationsTitle"
+        :notifications-subtitle="notificationsSubtitle"
+        :notifications-empty="notificationsEmpty"
+        :notifications-mark-all="notificationsMarkAll"
+        :notifications-button-label="notificationsButtonLabel"
         @toggle-right="$emit('toggle-right')"
+        @mark-all-notifications="markAllNotifications"
       >
         <template #user>
           <UserMenu
             :items="userMenuItems"
             :icon-trigger-classes="iconTriggerClasses"
             :logging-out="loggingOut"
+            :user="currentUser"
+            :signed-in-text="userSignedInText"
+            :guest-title="userGuestTitle"
+            :guest-subtitle="userGuestSubtitle"
             @select="handleUserMenuSelect"
           />
         </template>
@@ -63,6 +75,8 @@
             :current="props.locale"
             :icon-trigger-classes="iconTriggerClasses"
             :format-label="formatLocaleLabel"
+            :title="localeMenuTitle"
+            :subtitle="localeMenuSubtitle"
             @change="changeLocale"
           />
         </template>
@@ -80,9 +94,18 @@ import LocaleMenu from "./AppBar/LocaleMenu.vue";
 import RightControls from "./AppBar/RightControls.vue";
 import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
 import { useAuthSession } from "~/stores/auth-session";
+import type { AppNotification } from "~/types/layout";
 
 type AppIcon = { name: string; label: string; size?: number; to: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
+type NotificationKey = "newFollower" | "newComment" | "systemUpdate";
+type NotificationDefinition = {
+  id: string;
+  key: NotificationKey;
+  icon: string;
+  color?: AppNotification["color"];
+  read: boolean;
+};
 
 const props = defineProps<{
   appIcons: AppIcon[];
@@ -103,7 +126,7 @@ const iconTriggerClasses =
   "flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2";
 
 /** Dégradés dynamiques depuis primary + mode sombre */
-const { barGradient, isDark } = usePrimaryGradient();
+const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
 
 const appBarColor = computed(() =>
   props.isDark ? "rgba(12, 10, 22, 0.78)" : "rgba(255, 255, 255, 0.82)",
@@ -116,7 +139,69 @@ const showSearchButton = computed(
 );
 
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const currentUser = computed(() => auth.currentUser.value);
 const loggingOut = ref(false);
+
+const notificationDefinitions = ref<NotificationDefinition[]>([
+  {
+    id: "new-follower",
+    key: "newFollower",
+    icon: "mdi:account-plus",
+    color: "primary",
+    read: false,
+  },
+  {
+    id: "new-comment",
+    key: "newComment",
+    icon: "mdi:message-reply-text",
+    color: "info",
+    read: false,
+  },
+  {
+    id: "system-update",
+    key: "systemUpdate",
+    icon: "mdi:calendar-clock",
+    color: "warning",
+    read: true,
+  },
+]);
+
+const notifications = computed<AppNotification[]>(() =>
+  notificationDefinitions.value.map((item) => ({
+    id: item.id,
+    icon: item.icon,
+    color: item.color,
+    read: item.read,
+    title: t(`layout.notificationsMenu.items.${item.key}.title`),
+    description: t(`layout.notificationsMenu.items.${item.key}.description`),
+    time: t(`layout.notificationsMenu.items.${item.key}.time`),
+  })),
+);
+
+const notificationCount = computed(() =>
+  notificationDefinitions.value.filter((item) => !item.read).length,
+);
+
+const notificationsTitle = computed(() => t("layout.notificationsMenu.title"));
+const notificationsSubtitle = computed(() => t("layout.notificationsMenu.subtitle"));
+const notificationsEmpty = computed(() => t("layout.notificationsMenu.empty"));
+const notificationsMarkAll = computed(() => t("layout.notificationsMenu.markAll"));
+const notificationsButtonLabel = computed(() => {
+  const count = notificationCount.value;
+  if (count > 0) {
+    return t("layout.notificationsMenu.badgeLabel", { count });
+  }
+  return t("layout.actions.notifications");
+});
+
+const userSignedInText = computed(() => t("layout.userMenu.signedInAs"));
+const userGuestTitle = computed(() => t("layout.userMenu.guestTitle"));
+const userGuestSubtitle = computed(() => t("layout.userMenu.guestSubtitle"));
+
+const localeMenuTitle = computed(() => t("layout.localeMenu.title"));
+const localeMenuSubtitle = computed(() =>
+  t("layout.localeMenu.subtitle", { count: props.locales.length }),
+);
 
 const userMenuItems = computed<UserMenuItem[]>(() => {
   if (isAuthenticated.value) {
@@ -169,5 +254,12 @@ async function handleUserMenuSelect(item: UserMenuItem) {
     return;
   }
   if (item.to) navigateTo(useI18nDocs().localePath(item.to));
+}
+
+function markAllNotifications() {
+  notificationDefinitions.value = notificationDefinitions.value.map((item) => ({
+    ...item,
+    read: true,
+  }));
 }
 </script>

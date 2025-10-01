@@ -17,6 +17,39 @@
       "signOut": "Se déconnecter",
       "changeLanguage": "Changer de langue (actuel : {locale})"
     },
+    "notificationsMenu": {
+      "title": "Notifications",
+      "subtitle": "Dernières actualités de votre réseau",
+      "markAll": "Tout marquer comme lu",
+      "empty": "Vous êtes à jour !",
+      "badgeLabel": "{count} notifications non lues",
+      "items": {
+        "newFollower": {
+          "title": "Nouvel abonné",
+          "description": "Alex Carter a commencé à vous suivre.",
+          "time": "il y a 2 min"
+        },
+        "newComment": {
+          "title": "Nouveau commentaire",
+          "description": "Maria a commenté votre publication.",
+          "time": "il y a 12 min"
+        },
+        "systemUpdate": {
+          "title": "Rappel de planification",
+          "description": "Une maintenance du système est prévue ce soir.",
+          "time": "il y a 1 h"
+        }
+      }
+    },
+    "userMenu": {
+      "signedInAs": "Connecté en tant que",
+      "guestTitle": "Bienvenue",
+      "guestSubtitle": "Connectez-vous pour profiter d'une expérience personnalisée"
+    },
+    "localeMenu": {
+      "title": "Langue",
+      "subtitle": "Disponible en {count} langues"
+    },
     "appIcons": {
       "academy": "Académie",
       "briefcase": "Travail",

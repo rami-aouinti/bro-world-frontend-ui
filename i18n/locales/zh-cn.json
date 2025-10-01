@@ -17,6 +17,39 @@
       "signOut": "退出登录",
       "changeLanguage": "切换语言（当前：{locale}）"
     },
+    "notificationsMenu": {
+      "title": "通知",
+      "subtitle": "来自网络的最新更新",
+      "markAll": "全部标记为已读",
+      "empty": "已全部查看！",
+      "badgeLabel": "{count} 条未读通知",
+      "items": {
+        "newFollower": {
+          "title": "新的关注者",
+          "description": "Alex Carter 开始关注你。",
+          "time": "2 分钟前"
+        },
+        "newComment": {
+          "title": "新的评论",
+          "description": "Maria 在你的动态下留言。",
+          "time": "12 分钟前"
+        },
+        "systemUpdate": {
+          "title": "日程提醒",
+          "description": "系统维护已安排在今晚。",
+          "time": "1 小时前"
+        }
+      }
+    },
+    "userMenu": {
+      "signedInAs": "已登录身份",
+      "guestTitle": "欢迎",
+      "guestSubtitle": "登录即可解锁个性化体验"
+    },
+    "localeMenu": {
+      "title": "语言",
+      "subtitle": "提供 {count} 种语言"
+    },
     "appIcons": {
       "academy": "学院",
       "briefcase": "工作",

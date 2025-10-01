@@ -13,17 +13,50 @@
         />
       </button>
     </template>
-    <v-list density="compact">
-      <v-list-item
-        v-for="l in props.locales"
-        :key="l"
-        :active="l === props.current"
-        :title="props.formatLabel(l)"
-        role="menuitemradio"
-        :aria-checked="l === props.current"
-        @click="emit('change', l)"
-      />
-    </v-list>
+    <v-card
+      class="min-w-[220px] overflow-hidden"
+      elevation="12"
+    >
+      <div class="px-4 py-3">
+        <p class="text-sm font-semibold leading-tight">
+          {{ props.title }}
+        </p>
+        <p
+          v-if="props.subtitle"
+          class="text-xs text-muted-foreground"
+        >
+          {{ props.subtitle }}
+        </p>
+      </div>
+      <v-divider />
+      <v-list
+        class="py-0"
+        density="compact"
+      >
+        <v-list-item
+          v-for="l in props.locales"
+          :key="l"
+          :title="props.formatLabel(l)"
+          :class="[
+            'px-4',
+            l === props.current
+              ? 'bg-primary/5 text-primary dark:bg-primary/15'
+              : '',
+          ]"
+          role="menuitemradio"
+          :aria-checked="l === props.current"
+          @click="emit('change', l)"
+        >
+          <template #append>
+            <AppIcon
+              v-if="l === props.current"
+              name="mdi:check"
+              :size="18"
+            />
+          </template>
+        </v-list-item>
+      </v-list>
+    </v-card>
   </v-menu>
 </template>
 
@@ -33,6 +66,8 @@ const props = defineProps<{
   current: string;
   iconTriggerClasses: string;
   formatLabel: (l: string) => string;
+  title: string;
+  subtitle?: string;
 }>();
 const emit = defineEmits(["change"]);
 </script>
