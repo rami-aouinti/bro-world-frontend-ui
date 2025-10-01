@@ -82,7 +82,16 @@
         "profilePhotos": "照片与媒体",
         "admin": "管理后台",
         "adminGeneral": "总览",
+        "adminStatistics": "统计",
+        "adminGeneralSetting": "通用设置",
+        "adminData": "数据",
+        "adminCrons": "定时任务",
         "adminUserManagement": "用户管理",
+        "adminBlogManagement": "博客管理",
+        "adminJobManagement": "职位管理",
+        "adminEcommerceManagement": "电商管理",
+        "adminEducationManagement": "教育管理",
+        "adminGameManagement": "游戏管理",
         "adminBlog": "博客",
         "help": "帮助",
         "about": "关于",
@@ -1038,6 +1047,22 @@
         "username": "Username is required.",
         "email": "A valid email address is required.",
         "roles": "Select at least one role."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "User data",
+          "page": {
+            "title": "User data",
+            "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "User crons",
+          "page": {
+            "title": "Scheduled automations",
+            "subtitle": "Monitor background jobs that sync accounts, cleanse inactive users, and dispatch notifications."
+          }
+        }
       }
     },
     "blogManagement": {
@@ -1045,6 +1070,22 @@
       "page": {
         "title": "博客管理",
         "subtitle": "策划社区故事并发布官方公告。"
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Blog data",
+          "page": {
+            "title": "Content data",
+            "subtitle": "Inspect metrics, search indexes, and data feeds powering editorial workflows."
+          }
+        },
+        "crons": {
+          "metaTitle": "Blog crons",
+          "page": {
+            "title": "Scheduled publishing",
+            "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
       }
     },
     "actions": {
@@ -1145,25 +1186,41 @@
           "content": {
             "title": "内容管理",
             "description": "规划、发布与归档文章、活动以及学习资源。",
-            "tags": ["内容流程", "审核", "排期"],
+            "tags": [
+              "内容流程",
+              "审核",
+              "排期"
+            ],
             "status": "有12条内容等待编辑审核。"
           },
           "community": {
             "title": "社区与审核",
             "description": "配置审核规则，管理举报与处罚。",
-            "tags": ["举报", "处罚", "私信"],
+            "tags": [
+              "举报",
+              "处罚",
+              "私信"
+            ],
             "status": "平均响应时间：1小时42分。"
           },
           "commerce": {
             "title": "变现与优惠",
             "description": "管理订阅、优惠码和商业合作。",
-            "tags": ["订阅", "计费", "优惠券"],
+            "tags": [
+              "订阅",
+              "计费",
+              "优惠券"
+            ],
             "status": "本周转化率提升3.4%。"
           },
           "governance": {
             "title": "治理与合规",
             "description": "审计访问权限，管理敏感角色并准备合规报告。",
-            "tags": ["审计", "角色", "可追溯性"],
+            "tags": [
+              "审计",
+              "角色",
+              "可追溯性"
+            ],
             "status": "最近一次完整审计在5天前完成。"
           }
         }
@@ -1307,6 +1364,101 @@
       },
       "validation": {
         "contentRequired": "Content is required."
+      }
+    },
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
+          }
+        }
       }
     }
   },
