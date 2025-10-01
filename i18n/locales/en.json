@@ -17,6 +17,39 @@
       "signOut": "Sign out",
       "changeLanguage": "Change language (current: {locale})"
     },
+    "notificationsMenu": {
+      "title": "Notifications",
+      "subtitle": "Latest updates from your network",
+      "markAll": "Mark all as read",
+      "empty": "You're all caught up!",
+      "badgeLabel": "{count} unread notifications",
+      "items": {
+        "newFollower": {
+          "title": "New follower",
+          "description": "Alex Carter started following you.",
+          "time": "2m ago"
+        },
+        "newComment": {
+          "title": "New comment",
+          "description": "Maria left a comment on your update.",
+          "time": "12m ago"
+        },
+        "systemUpdate": {
+          "title": "Schedule reminder",
+          "description": "System maintenance is planned for tonight.",
+          "time": "1h ago"
+        }
+      }
+    },
+    "userMenu": {
+      "signedInAs": "Signed in as",
+      "guestTitle": "Welcome",
+      "guestSubtitle": "Sign in to unlock personalised features"
+    },
+    "localeMenu": {
+      "title": "Language",
+      "subtitle": "Available in {count} languages"
+    },
     "appIcons": {
       "academy": "Academy",
       "briefcase": "Work",

@@ -17,6 +17,39 @@
       "signOut": "تسجيل الخروج",
       "changeLanguage": "تغيير اللغة (الحالية: {locale})"
     },
+    "notificationsMenu": {
+      "title": "الإشعارات",
+      "subtitle": "آخر التحديثات من شبكتك",
+      "markAll": "وضع الكل كمقروء",
+      "empty": "أنت على اطلاع كامل!",
+      "badgeLabel": "{count} إشعارات غير مقروءة",
+      "items": {
+        "newFollower": {
+          "title": "متابع جديد",
+          "description": "بدأ أليكس كارتر بمتابعتك.",
+          "time": "منذ دقيقتين"
+        },
+        "newComment": {
+          "title": "تعليق جديد",
+          "description": "تركت ماريا تعليقًا على منشورك.",
+          "time": "منذ 12 دقيقة"
+        },
+        "systemUpdate": {
+          "title": "تذكير بالجدولة",
+          "description": "تم جدولة صيانة للنظام هذا المساء.",
+          "time": "منذ ساعة"
+        }
+      }
+    },
+    "userMenu": {
+      "signedInAs": "مسجل الدخول باسم",
+      "guestTitle": "مرحبًا بك",
+      "guestSubtitle": "سجّل الدخول للحصول على تجربة مخصصة"
+    },
+    "localeMenu": {
+      "title": "اللغة",
+      "subtitle": "متاحة بـ {count} لغات"
+    },
     "appIcons": {
       "academy": "الأكاديمية",
       "briefcase": "العمل",

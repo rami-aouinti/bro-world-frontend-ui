@@ -17,6 +17,39 @@
       "signOut": "Esci",
       "changeLanguage": "Cambia lingua (attuale: {locale})"
     },
+    "notificationsMenu": {
+      "title": "Notifiche",
+      "subtitle": "Ultimi aggiornamenti dalla tua rete",
+      "markAll": "Segna tutto come letto",
+      "empty": "Sei aggiornato!",
+      "badgeLabel": "{count} notifiche non lette",
+      "items": {
+        "newFollower": {
+          "title": "Nuovo follower",
+          "description": "Alex Carter ha iniziato a seguirti.",
+          "time": "2 min fa"
+        },
+        "newComment": {
+          "title": "Nuovo commento",
+          "description": "Maria ha lasciato un commento al tuo aggiornamento.",
+          "time": "12 min fa"
+        },
+        "systemUpdate": {
+          "title": "Promemoria pianificazione",
+          "description": "È prevista una manutenzione del sistema per questa sera.",
+          "time": "1 h fa"
+        }
+      }
+    },
+    "userMenu": {
+      "signedInAs": "Connesso come",
+      "guestTitle": "Benvenuto",
+      "guestSubtitle": "Accedi per un'esperienza personalizzata"
+    },
+    "localeMenu": {
+      "title": "Lingua",
+      "subtitle": "Disponibile in {count} lingue"
+    },
     "appIcons": {
       "academy": "Accademia",
       "briefcase": "Lavoro",
