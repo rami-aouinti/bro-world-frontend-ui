@@ -75,6 +75,7 @@
             :current="props.locale"
             :icon-trigger-classes="iconTriggerClasses"
             :format-label="formatLocaleLabel"
+            :locale-metadata="localeMetadata"
             :title="localeMenuTitle"
             :subtitle="localeMenuSubtitle"
             @change="changeLocale"
@@ -124,6 +125,17 @@ const auth = useAuthSession();
 
 const iconTriggerClasses =
   "flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2";
+
+const localeMetadata = {
+  en: { label: "English", flag: "gb" },
+  de: { label: "Deutsch", flag: "de" },
+  fr: { label: "Français", flag: "fr" },
+  es: { label: "Español", flag: "es" },
+  it: { label: "Italiano", flag: "it" },
+  ru: { label: "Русский", flag: "ru" },
+  ar: { label: "العربية", flag: "tn" },
+  "zh-cn": { label: "中文 (简体)", flag: "cn" },
+} as const satisfies Record<string, { label: string; flag: string }>;
 
 /** Dégradés dynamiques depuis primary + mode sombre */
 const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
@@ -217,26 +229,7 @@ const userMenuItems = computed<UserMenuItem[]>(() => {
 });
 
 function formatLocaleLabel(v: string) {
-  switch (v) {
-    case "en":
-      return "English";
-    case "de":
-      return "Deutsch";
-    case "fr":
-      return "Français";
-    case "es":
-      return "Español";
-    case "it":
-      return "Italiano";
-    case "ru":
-      return "Русский";
-    case "ar":
-      return "العربية";
-    case "zh-cn":
-      return "中文 (简体)";
-    default:
-      return v;
-  }
+  return localeMetadata[v]?.label ?? v;
 }
 function changeLocale(value: string) {
   emit("update:locale", value);

@@ -7,7 +7,14 @@
         :aria-label="`Language: ${props.formatLabel(props.current)}`"
         v-bind="languageProps"
       >
+        <span
+          v-if="currentFlag"
+          :class="['fi', `fi-${currentFlag}`]"
+          class="block h-[18px] w-[24px] rounded-sm shadow-sm"
+          aria-hidden="true"
+        />
         <AppIcon
+          v-else
           name="mdi:flag-outline"
           :size="22"
         />
@@ -47,6 +54,14 @@
           :aria-checked="l === props.current"
           @click="emit('change', l)"
         >
+          <template #prepend>
+            <span
+              v-if="getFlag(l)"
+              :class="['fi', `fi-${getFlag(l)}`]"
+              class="mr-3 block h-[16px] w-[22px] rounded-sm shadow-sm"
+              aria-hidden="true"
+            />
+          </template>
           <template #append>
             <AppIcon
               v-if="l === props.current"
@@ -61,6 +76,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
+type LocaleMetadata = Record<string, { flag?: string }>;
+
 const props = defineProps<{
   locales: string[];
   current: string;
@@ -68,6 +87,14 @@ const props = defineProps<{
   formatLabel: (l: string) => string;
   title: string;
   subtitle?: string;
+  localeMetadata?: LocaleMetadata;
 }>();
 const emit = defineEmits(["change"]);
+
+const metadata = computed<LocaleMetadata>(() => props.localeMetadata ?? {});
+const currentFlag = computed(() => metadata.value[props.current]?.flag ?? "");
+
+function getFlag(code: string): string {
+  return metadata.value[code]?.flag ?? "";
+}
 </script>
