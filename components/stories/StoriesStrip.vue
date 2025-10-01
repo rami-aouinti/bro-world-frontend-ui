@@ -1,65 +1,59 @@
 <template>
-  <div class="relative">
-    <div
-      ref="scroller"
-      class="stories-scroll"
-      role="listbox"
-      :aria-label="t('stories.strip.ariaLabel')"
-    >
-      <StoryCard
-        v-if="showCreate"
-        state="create"
-        image=""
-        name=""
-        avatar=""
-        @create="$emit('create')"
-      />
+  <div class="stories">
+    <!-- Viewport centré qui CLIPPE et SCROLLE -->
+    <div ref="viewport" class="stories-viewport" role="listbox" :aria-label="t('stories.strip.ariaLabel')">
+      <!-- Rail au format shrink-to-fit -->
+      <div ref="scroller" class="stories-scroll">
+        <StoryCard
+            v-if="showCreate"
+            state="create"
+            image=""
+            name=""
+            avatar=""
+            @create="$emit('create')"
+        />
 
-      <StoryCard
-        v-for="s in items"
-        :key="s.id ?? s.name"
-        :image="s.image"
-        :name="s.name"
-        :avatar="s.avatar"
-        :state="s.state ?? 'new'"
-        :duration="s.duration"
-        @click="$emit('open', s)"
-      />
+        <StoryCard
+            v-for="s in items"
+            :key="s.id ?? s.name"
+            :image="s.image"
+            :name="s.name"
+            :avatar="s.avatar"
+            :state="s.state ?? 'new'"
+            :duration="s.duration"
+            @click="$emit('open', s)"
+        />
+      </div>
     </div>
 
     <!-- Flèches -->
     <v-btn
-      v-if="hasOverflow"
-      class="nav-btn left"
-      icon
-      size="large"
-      variant="elevated"
-      :aria-label="t('stories.strip.scrollLeft')"
-      @click="scrollBy(-320)"
+        v-if="hasOverflow"
+        class="nav-btn left"
+        icon
+        size="large"
+        variant="elevated"
+        :aria-label="t('stories.strip.scrollLeft')"
+        @click="scrollBy(-320)"
     >
-      <Icon name="mdi-chevron-left"></Icon>
+      <Icon name="mdi-chevron-left" />
     </v-btn>
 
     <v-btn
-      v-if="hasOverflow"
-      class="nav-btn right"
-      icon
-      size="large"
-      variant="elevated"
-      :aria-label="t('stories.strip.scrollRight')"
-      @click="scrollBy(320)"
+        v-if="hasOverflow"
+        class="nav-btn right"
+        icon
+        size="large"
+        variant="elevated"
+        :aria-label="t('stories.strip.scrollRight')"
+        @click="scrollBy(320)"
     >
-      <Icon name="mdi-chevron-right"></Icon>
+      <Icon name="mdi-chevron-right" />
     </v-btn>
   </div>
 </template>
 
 <script setup lang="ts">
-/**
- * Props
- * - items: tableau de stories { id, image, name, avatar, state, duration }
- * - showCreate: ajoute une carte "create" en tête
- */
 type Story = {
   id?: string | number;
   image?: string;
@@ -69,67 +63,89 @@ type Story = {
   duration?: string;
 };
 
-withDefaults(
-  defineProps<{
-    items?: Story[];
-    showCreate?: boolean;
-  }>(),
-  {
-    items: () => [],
-    showCreate: true,
-  },
+const props = withDefaults(
+    defineProps<{ items?: Story[]; showCreate?: boolean }>(),
+    { items: () => [], showCreate: true }
 );
 
-const scroller = ref<HTMLElement | null>(null);
+defineEmits<{ (e: "open", story: Story): void; (e: "create"): void }>();
+
 const { t } = useI18n();
 
+const viewport = ref<HTMLElement | null>(null); // -> conteneur qui SCROLLE
+const scroller = ref<HTMLElement | null>(null); // -> rail largeur = contenu
+
 function scrollBy(delta = 280) {
-  if (!scroller.value) return;
-  scroller.value.scrollBy({ left: delta, behavior: "smooth" });
+  viewport.value?.scrollBy({ left: delta, behavior: "smooth" });
 }
 
 const hasOverflow = computed(() => {
-  const el = scroller.value;
-  return el ? el.scrollWidth > el.clientWidth + 8 : false;
+  const v = viewport.value;
+  const s = scroller.value;
+  return v && s ? s.scrollWidth > v.clientWidth + 1 : false;
 });
-
-const emit = defineEmits<{
-  (e: "open", story: Story): void;
-  (e: "create"): void;
-}>();
 </script>
 
 <style scoped>
-.stories-scroll {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 4px 2px;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 2px;
+/* Conteneur global pour positionner les flèches */
+.stories {
+  position: relative;
+}
+
+/* Viewport centré, largeur limitée, et *c'est lui qui scrolle* */
+.stories-viewport {
+  max-inline-size: clamp(360px, 80vw, 572px);
+  inline-size: 100%;
+  margin-inline: auto;
+  overflow-x: auto;                /* SCROLL ICI */
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;   /* SNAP sur le conteneur qui scrolle */
+  scroll-padding-inline: 2px;
+  position: relative;
+  scrollbar-width: none;
+}
+.stories-viewport::-webkit-scrollbar { display: none; }
+
+/* Rail : ne s'étire pas, largeur = somme des cartes */
+.stories-scroll {
+  display: inline-flex;            /* shrink-to-fit */
+  width: max-content;              /* largeur = contenu */
+  gap: 12px;
+  padding: 4px 2px;
 }
 .stories-scroll > * {
   flex: 0 0 auto;
   scroll-snap-align: start;
 }
-.stories-scroll::-webkit-scrollbar {
-  display: none;
-}
-.stories-scroll {
-  scrollbar-width: none;
-}
+
+/* Flèches */
 .nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   backdrop-filter: blur(6px);
+  z-index: 2;
 }
-.nav-btn.left {
-  left: -6px;
+.nav-btn.left { left: 0; translate: -10px 0; }
+.nav-btn.right { right: 0; translate: 10px 0; }
+
+/* (Optionnel) fondu sur les bords */
+.stories-viewport::before,
+.stories-viewport::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inline-size: 24px;
+  pointer-events: none;
 }
-.nav-btn.right {
-  right: -6px;
+.stories-viewport::before {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, rgba(0,0,0,.18), transparent);
+}
+.stories-viewport::after {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, rgba(0,0,0,.18), transparent);
 }
 </style>

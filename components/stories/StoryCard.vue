@@ -47,14 +47,14 @@
         class="relative"
       >
         <v-avatar
-          size="44"
+            style="height: 230px; width: 120px;"
           class="bg-white/90 backdrop-blur-sm"
         >
           <v-btn
             icon
             color="primary"
-            size="small"
-            variant="flat"
+            size="large"
+            variant="text"
             :aria-label="createLabel"
           >
             <Icon name="mdi-plus"></Icon>

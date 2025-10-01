@@ -1,16 +1,12 @@
 <template>
-  <main
-    class="py-10"
-    aria-labelledby="admin-settings-title"
-  >
-    <v-container>
-      <header class="mb-10">
+  <main class="py-10" aria-labelledby="admin-settings-title">
+    <v-container class="settings-container">
+
+      <!-- Header sticky + actions -->
+      <header class="settings-header" :class="{ 'is-stuck': isStuck }" ref="stickyHeader">
         <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-4">
           <div>
-            <h1
-              id="admin-settings-title"
-              class="text-h4 text-lg-h3 font-weight-bold mb-2"
-            >
+            <h1 id="admin-settings-title" class="text-h4 text-lg-h3 font-weight-bold mb-1">
               {{ t('admin.settings.page.title') }}
             </h1>
             <p class="text-body-1 text-medium-emphasis mb-0">
@@ -19,179 +15,217 @@
           </div>
           <div class="d-flex flex-wrap gap-3">
             <v-btn
-              color="primary"
-              variant="flat"
-              class="text-none"
-              :loading="isSaving"
-              @click="handleSave"
+                color="primary"
+                variant="flat"
+                class="text-none px-5"
+                :loading="isSaving"
+                prepend-icon="mdi-content-save-outline"
+                @click="handleSave"
             >
               {{ t('admin.settings.actions.save') }}
             </v-btn>
             <v-btn
-              variant="text"
-              class="text-none"
-              :disabled="isSaving || !hasChanges"
-              @click="resetForm"
+                variant="text"
+                class="text-none"
+                prepend-icon="mdi-restore"
+                :disabled="isSaving || !hasChanges"
+                @click="resetForm"
             >
               {{ t('admin.settings.actions.reset') }}
             </v-btn>
           </div>
         </div>
+        <div class="settings-header-shadow" />
       </header>
 
-      <v-row dense>
+      <!-- Contenu -->
+      <v-row dense class="settings-grid">
+
+        <!-- General -->
         <v-col cols="12" md="6">
-          <v-card class="pa-6" rounded="xl" elevation="8">
-            <header class="mb-6">
-              <h2 class="text-h5 font-weight-semibold mb-1">
-                {{ t('admin.settings.sections.general.title') }}
-              </h2>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ t('admin.settings.sections.general.subtitle') }}
-              </p>
-            </header>
+          <v-card class="glass-card pa-6" rounded="xl" elevation="8">
+            <div class="section-title">
+              <div>
+                <h2 class="text-h5 font-weight-semibold mb-1">
+                  {{ t('admin.settings.sections.general.title') }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t('admin.settings.sections.general.subtitle') }}
+                </p>
+              </div>
+              <v-chip size="small" color="primary" variant="tonal" prepend-icon="mdi-cog-outline">
+                {{ t('admin.settings.sections.general.badge') || 'Core' }}
+              </v-chip>
+            </div>
+
+            <v-divider class="my-4" />
+
             <v-form @submit.prevent>
               <v-text-field
-                v-model="form.siteName"
-                :label="t('admin.settings.fields.siteName')"
-                :placeholder="t('admin.settings.placeholders.siteName')"
-                :disabled="isSaving"
-                variant="outlined"
-                class="mb-4"
-                density="comfortable"
-                hide-details
-                required
+                  v-model="form.siteName"
+                  :label="t('admin.settings.fields.siteName')"
+                  :placeholder="t('admin.settings.placeholders.siteName')"
+                  :disabled="isSaving"
+                  variant="outlined"
+                  class="mb-4"
+                  density="comfortable"
+                  hide-details
               />
               <v-textarea
-                v-model="form.tagline"
-                :label="t('admin.settings.fields.tagline')"
-                :placeholder="t('admin.settings.placeholders.tagline')"
-                :disabled="isSaving"
-                variant="outlined"
-                auto-grow
-                rows="3"
-                density="comfortable"
-                hide-details
+                  v-model="form.tagline"
+                  :label="t('admin.settings.fields.tagline')"
+                  :placeholder="t('admin.settings.placeholders.tagline')"
+                  :disabled="isSaving"
+                  variant="outlined"
+                  auto-grow
+                  rows="3"
+                  density="comfortable"
+                  hide-details
               />
             </v-form>
           </v-card>
         </v-col>
 
+        <!-- Theme -->
         <v-col cols="12" md="6">
-          <v-card class="pa-6 h-100" rounded="xl" elevation="8">
-            <header class="mb-6">
-              <h2 class="text-h5 font-weight-semibold mb-1">
-                {{ t('admin.settings.sections.theme.title') }}
-              </h2>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ t('admin.settings.sections.theme.subtitle') }}
-              </p>
-            </header>
+          <v-card class="glass-card pa-6 h-100" rounded="xl" elevation="8">
+            <div class="section-title">
+              <div>
+                <h2 class="text-h5 font-weight-semibold mb-1">
+                  {{ t('admin.settings.sections.theme.title') }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t('admin.settings.sections.theme.subtitle') }}
+                </p>
+              </div>
+              <v-chip size="small" color="purple" variant="tonal" prepend-icon="mdi-palette-outline">
+                UI
+              </v-chip>
+            </div>
+
+            <v-divider class="my-4" />
+
             <div class="d-flex flex-column gap-4">
               <v-item-group v-model="form.activeThemeId" mandatory>
                 <v-item
-                  v-for="(themeOption, index) in form.themes"
-                  :key="themeOption.id"
-                  :value="themeOption.id"
+                    v-for="(themeOption, index) in form.themes"
+                    :key="themeOption.id"
+                    :value="themeOption.id"
                 >
                   <template #default="{ isSelected, toggle }">
-                    <v-sheet
-                      rounded="xl"
-                      border
-                      class="pa-4 transition"
-                      :class="isSelected ? 'border-primary elevation-4' : 'border-dashed elevation-1'"
-                      @click="toggle"
-                    >
-                      <div class="d-flex justify-space-between align-start gap-4">
-                        <div class="flex-grow-1">
-                          <div class="d-flex align-center justify-space-between mb-2">
-                            <v-text-field
-                              v-model="themeOption.name"
-                              :label="t('admin.settings.fields.themeName')"
-                              :disabled="isSaving"
-                              variant="outlined"
-                              density="comfortable"
-                              hide-details
+                    <v-hover v-slot="{ isHovering, props: hoverProps }">
+                      <v-sheet
+                          v-bind="hoverProps"
+                          rounded="xl"
+                          class="theme-card pa-4 transition"
+                          :class="[
+                          isSelected ? 'theme-card--active' : 'theme-card--idle',
+                          isHovering ? 'elevation-6' : 'elevation-2'
+                        ]"
+                          @click="toggle"
+                      >
+                        <div class="d-flex justify-space-between align-start gap-4">
+                          <div class="flex-grow-1">
+                            <div class="d-flex align-center justify-space-between mb-3">
+                              <v-text-field
+                                  v-model="themeOption.name"
+                                  :label="t('admin.settings.fields.themeName')"
+                                  :disabled="isSaving"
+                                  variant="outlined"
+                                  density="comfortable"
+                                  hide-details
+                              />
+                              <div class="d-flex align-center">
+                                <v-chip v-if="isSelected" color="primary" variant="flat" size="small" class="mr-2">
+                                  {{ t('admin.settings.sections.theme.active') }}
+                                </v-chip>
+                                <v-btn
+                                    icon="mdi-delete"
+                                    variant="text"
+                                    color="error"
+                                    :disabled="isSaving || form.themes.length <= 1"
+                                    @click.stop="removeTheme(index)"
+                                />
+                              </div>
+                            </div>
+
+                            <v-textarea
+                                v-model="themeOption.description"
+                                :label="t('admin.settings.fields.themeDescription')"
+                                :disabled="isSaving"
+                                variant="outlined"
+                                auto-grow
+                                rows="2"
+                                density="comfortable"
+                                hide-details
+                                class="mb-4"
                             />
-                            <v-btn
-                              icon="mdi-delete"
-                              variant="text"
-                              color="error"
-                              :disabled="isSaving || form.themes.length <= 1"
-                              class="ml-3"
-                              @click.stop="removeTheme(index)"
-                            />
+
+                            <div class="d-flex flex-column flex-sm-row gap-3">
+                              <v-text-field
+                                  v-model="themeOption.primaryColor"
+                                  :label="t('admin.settings.fields.themePrimary')"
+                                  :disabled="isSaving"
+                                  variant="outlined"
+                                  density="comfortable"
+                                  hide-details
+                                  type="color"
+                              />
+                              <v-text-field
+                                  v-model="themeOption.accentColor"
+                                  :label="t('admin.settings.fields.themeAccent')"
+                                  :disabled="isSaving"
+                                  variant="outlined"
+                                  density="comfortable"
+                                  hide-details
+                                  type="color"
+                              />
+                              <v-text-field
+                                  v-model="themeOption.surfaceColor"
+                                  :label="t('admin.settings.fields.themeSurface')"
+                                  :disabled="isSaving"
+                                  variant="outlined"
+                                  density="comfortable"
+                                  hide-details
+                                  type="color"
+                              />
+                            </div>
                           </div>
-                          <v-textarea
-                            v-model="themeOption.description"
-                            :label="t('admin.settings.fields.themeDescription')"
-                            :disabled="isSaving"
-                            variant="outlined"
-                            auto-grow
-                            rows="2"
-                            density="comfortable"
-                            hide-details
-                            class="mb-3"
-                          />
-                          <div class="d-flex flex-column flex-sm-row gap-3">
-                            <v-text-field
-                              v-model="themeOption.primaryColor"
-                              :label="t('admin.settings.fields.themePrimary')"
-                              :disabled="isSaving"
-                              variant="outlined"
-                              density="comfortable"
-                              hide-details
-                              type="color"
+
+                          <!-- Aperçu -->
+                          <div class="theme-preview">
+                            <div
+                                class="theme-swatch rounded-lg"
+                                :style="{
+                                background: `linear-gradient(135deg, ${themeOption.primaryColor}, ${themeOption.accentColor})`
+                              }"
                             />
-                            <v-text-field
-                              v-model="themeOption.accentColor"
-                              :label="t('admin.settings.fields.themeAccent')"
-                              :disabled="isSaving"
-                              variant="outlined"
-                              density="comfortable"
-                              hide-details
-                              type="color"
-                            />
-                            <v-text-field
-                              v-model="themeOption.surfaceColor"
-                              :label="t('admin.settings.fields.themeSurface')"
-                              :disabled="isSaving"
-                              variant="outlined"
-                              density="comfortable"
-                              hide-details
-                              type="color"
-                            />
+                            <div class="d-flex flex-column align-end mt-2">
+                              <v-chip size="x-small" variant="tonal" class="mb-1">
+                                {{ themeOption.primaryColor }}
+                              </v-chip>
+                              <v-chip size="x-small" variant="tonal" class="mb-1">
+                                {{ themeOption.accentColor }}
+                              </v-chip>
+                              <v-chip size="x-small" variant="tonal">
+                                {{ themeOption.surfaceColor }}
+                              </v-chip>
+                            </div>
                           </div>
                         </div>
-                        <div class="d-flex flex-column align-end gap-2">
-                          <v-chip
-                            v-if="isSelected"
-                            color="primary"
-                            variant="flat"
-                            size="small"
-                          >
-                            {{ t('admin.settings.sections.theme.active') }}
-                          </v-chip>
-                          <div
-                            class="rounded-lg"
-                            style="width: 72px; height: 72px"
-                            :style="{
-                              background: `linear-gradient(135deg, ${themeOption.primaryColor}, ${themeOption.accentColor})`,
-                            }"
-                          />
-                        </div>
-                      </div>
-                    </v-sheet>
+                      </v-sheet>
+                    </v-hover>
                   </template>
                 </v-item>
               </v-item-group>
+
               <v-btn
-                variant="tonal"
-                color="primary"
-                class="text-none"
-                :disabled="isSaving"
-                prepend-icon="mdi-palette"
-                @click="addTheme"
+                  variant="tonal"
+                  color="primary"
+                  class="text-none"
+                  :disabled="isSaving"
+                  prepend-icon="mdi-palette"
+                  @click="addTheme"
               >
                 {{ t('admin.settings.actions.addTheme') }}
               </v-btn>
@@ -199,198 +233,214 @@
           </v-card>
         </v-col>
 
+        <!-- Navigation -->
         <v-col cols="12">
-          <v-card class="pa-6" rounded="xl" elevation="8">
-            <header class="mb-6">
-              <h2 class="text-h5 font-weight-semibold mb-1">
-                {{ t('admin.settings.sections.navigation.title') }}
-              </h2>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ t('admin.settings.sections.navigation.subtitle') }}
-              </p>
-            </header>
+          <v-card class="glass-card pa-6" rounded="xl" elevation="8">
+            <div class="section-title">
+              <div>
+                <h2 class="text-h5 font-weight-semibold mb-1">
+                  {{ t('admin.settings.sections.navigation.title') }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t('admin.settings.sections.navigation.subtitle') }}
+                </p>
+              </div>
+              <v-chip size="small" color="teal" variant="tonal" prepend-icon="mdi-compass-outline">
+                {{ t('admin.settings.sections.navigation.badge') || 'Menus' }}
+              </v-chip>
+            </div>
+
+            <v-divider class="my-4" />
 
             <div class="d-flex flex-column gap-4">
               <v-sheet
-                v-for="(menu, index) in form.menus"
-                :key="menu.id"
-                class="pa-4"
-                rounded="xl"
-                border
-                elevation="2"
+                  v-for="(menu, index) in form.menus"
+                  :key="menu.id"
+                  class="menu-item pa-4"
+                  rounded="xl"
+                  border
+                  elevation="2"
               >
                 <div class="d-flex flex-column gap-4">
                   <div class="d-flex flex-column flex-md-row gap-4">
                     <v-text-field
-                      v-model="menu.label"
-                      :label="t('admin.settings.fields.menuLabel')"
-                      :disabled="isSaving"
-                      variant="outlined"
-                      density="comfortable"
-                      hide-details
+                        v-model="menu.label"
+                        :label="t('admin.settings.fields.menuLabel')"
+                        :disabled="isSaving"
+                        variant="outlined"
+                        density="comfortable"
+                        hide-details
+                        prepend-inner-icon="mdi-label-outline"
                     />
                     <v-text-field
-                      v-model="menu.to"
-                      :label="t('admin.settings.fields.menuPath')"
-                      :disabled="isSaving"
-                      variant="outlined"
-                      density="comfortable"
-                      hide-details
+                        v-model="menu.to"
+                        :label="t('admin.settings.fields.menuPath')"
+                        :disabled="isSaving"
+                        variant="outlined"
+                        density="comfortable"
+                        hide-details
+                        prepend-inner-icon="mdi-link-variant"
                     />
                     <v-text-field
-                      v-model="menu.icon"
-                      :label="t('admin.settings.fields.menuIcon')"
-                      :disabled="isSaving"
-                      variant="outlined"
-                      density="comfortable"
-                      hide-details
+                        v-model="menu.icon"
+                        :label="t('admin.settings.fields.menuIcon')"
+                        :disabled="isSaving"
+                        variant="outlined"
+                        density="comfortable"
+                        hide-details
+                        prepend-inner-icon="mdi-shape-outline"
                     />
                   </div>
+
                   <div class="d-flex flex-wrap gap-3">
                     <v-switch
-                      v-model="menu.requiresAdmin"
-                      inset
-                      color="primary"
-                      :label="t('admin.settings.fields.menuAdmin')"
-                      :disabled="isSaving"
+                        v-model="menu.requiresAdmin"
+                        inset
+                        color="primary"
+                        :label="t('admin.settings.fields.menuAdmin')"
+                        :disabled="isSaving"
                     />
                     <v-switch
-                      v-model="menu.isVisible"
-                      inset
-                      color="primary"
-                      :label="t('admin.settings.fields.menuVisible')"
-                      :disabled="isSaving"
+                        v-model="menu.isVisible"
+                        inset
+                        color="primary"
+                        :label="t('admin.settings.fields.menuVisible')"
+                        :disabled="isSaving"
                     />
                   </div>
+
                   <div class="d-flex flex-wrap gap-2">
                     <v-btn
-                      variant="text"
-                      color="primary"
-                      prepend-icon="mdi-arrow-up"
-                      class="text-none"
-                      :disabled="isSaving"
-                      @click="moveMenu(index, -1)"
+                        variant="text"
+                        color="primary"
+                        prepend-icon="mdi-arrow-up"
+                        class="text-none"
+                        :disabled="isSaving"
+                        @click="moveMenu(index, -1)"
                     >
                       {{ t('admin.settings.actions.moveUp') }}
                     </v-btn>
                     <v-btn
-                      variant="text"
-                      color="primary"
-                      prepend-icon="mdi-arrow-down"
-                      class="text-none"
-                      :disabled="isSaving"
-                      @click="moveMenu(index, 1)"
+                        variant="text"
+                        color="primary"
+                        prepend-icon="mdi-arrow-down"
+                        class="text-none"
+                        :disabled="isSaving"
+                        @click="moveMenu(index, 1)"
                     >
                       {{ t('admin.settings.actions.moveDown') }}
                     </v-btn>
                     <v-btn
-                      variant="text"
-                      color="error"
-                      prepend-icon="mdi-delete"
-                      class="text-none"
-                      :disabled="isSaving"
-                      @click="removeMenu(index)"
+                        variant="text"
+                        color="error"
+                        prepend-icon="mdi-delete"
+                        class="text-none"
+                        :disabled="isSaving"
+                        @click="removeMenu(index)"
                     >
                       {{ t('admin.settings.actions.removeMenu') }}
                     </v-btn>
                     <v-btn
-                      variant="tonal"
-                      color="primary"
-                      prepend-icon="mdi-plus"
-                      class="text-none"
-                      :disabled="isSaving"
-                      @click="addChildMenu(index)"
+                        variant="tonal"
+                        color="primary"
+                        prepend-icon="mdi-plus"
+                        class="text-none"
+                        :disabled="isSaving"
+                        @click="addChildMenu(index)"
                     >
                       {{ t('admin.settings.actions.addChild') }}
                     </v-btn>
                   </div>
 
-                  <div
-                    v-if="menu.children?.length"
-                    class="d-flex flex-column gap-3"
-                  >
+                  <!-- Children -->
+                  <div v-if="menu.children?.length" class="d-flex flex-column gap-3">
                     <div class="text-subtitle-2 text-medium-emphasis">
                       {{ t('admin.settings.sections.navigation.children') }}
                     </div>
+
                     <v-sheet
-                      v-for="(child, childIndex) in menu.children"
-                      :key="child.id"
-                      class="pa-3"
-                      rounded="lg"
-                      border
+                        v-for="(child, childIndex) in menu.children"
+                        :key="child.id"
+                        class="pa-3 rounded-xl child-item"
+                        border
                     >
                       <div class="d-flex flex-column flex-md-row gap-3">
                         <v-text-field
-                          v-model="child.label"
-                          :label="t('admin.settings.fields.menuLabel')"
-                          :disabled="isSaving"
-                          variant="outlined"
-                          density="comfortable"
-                          hide-details
+                            v-model="child.label"
+                            :label="t('admin.settings.fields.menuLabel')"
+                            :disabled="isSaving"
+                            variant="outlined"
+                            density="comfortable"
+                            hide-details
+                            prepend-inner-icon="mdi-subdirectory-arrow-right"
                         />
                         <v-text-field
-                          v-model="child.to"
-                          :label="t('admin.settings.fields.menuPath')"
-                          :disabled="isSaving"
-                          variant="outlined"
-                          density="comfortable"
-                          hide-details
+                            v-model="child.to"
+                            :label="t('admin.settings.fields.menuPath')"
+                            :disabled="isSaving"
+                            variant="outlined"
+                            density="comfortable"
+                            hide-details
+                            prepend-inner-icon="mdi-link-variant"
                         />
                         <v-text-field
-                          v-model="child.icon"
-                          :label="t('admin.settings.fields.menuIcon')"
-                          :disabled="isSaving"
-                          variant="outlined"
-                          density="comfortable"
-                          hide-details
+                            v-model="child.icon"
+                            :label="t('admin.settings.fields.menuIcon')"
+                            :disabled="isSaving"
+                            variant="outlined"
+                            density="comfortable"
+                            hide-details
+                            prepend-inner-icon="mdi-shape-outline"
                         />
                       </div>
+
                       <div class="d-flex flex-wrap gap-2 mt-2">
                         <v-btn
-                          variant="text"
-                          color="primary"
-                          prepend-icon="mdi-arrow-up"
-                          class="text-none"
-                          :disabled="isSaving"
-                          @click="moveChildMenu(index, childIndex, -1)"
+                            variant="text"
+                            color="primary"
+                            prepend-icon="mdi-arrow-up"
+                            class="text-none"
+                            :disabled="isSaving"
+                            @click="moveChildMenu(index, childIndex, -1)"
                         >
                           {{ t('admin.settings.actions.moveUp') }}
                         </v-btn>
                         <v-btn
-                          variant="text"
-                          color="primary"
-                          prepend-icon="mdi-arrow-down"
-                          class="text-none"
-                          :disabled="isSaving"
-                          @click="moveChildMenu(index, childIndex, 1)"
+                            variant="text"
+                            color="primary"
+                            prepend-icon="mdi-arrow-down"
+                            class="text-none"
+                            :disabled="isSaving"
+                            @click="moveChildMenu(index, childIndex, 1)"
                         >
                           {{ t('admin.settings.actions.moveDown') }}
                         </v-btn>
                         <v-btn
-                          variant="text"
-                          color="error"
-                          prepend-icon="mdi-delete"
-                          class="text-none"
-                          :disabled="isSaving"
-                          @click="removeChildMenu(index, childIndex)"
+                            variant="text"
+                            color="error"
+                            prepend-icon="mdi-delete"
+                            class="text-none"
+                            :disabled="isSaving"
+                            @click="removeChildMenu(index, childIndex)"
                         >
                           {{ t('admin.settings.actions.removeMenu') }}
                         </v-btn>
                       </div>
+
                       <div class="d-flex flex-wrap gap-2 mt-2">
                         <v-switch
-                          v-model="child.requiresAdmin"
-                          inset
-                          color="primary"
-                          :label="t('admin.settings.fields.menuAdmin')"
-                          :disabled="isSaving"
+                            v-model="child.requiresAdmin"
+                            inset
+                            color="primary"
+                            :label="t('admin.settings.fields.menuAdmin')"
+                            :disabled="isSaving"
                         />
                         <v-switch
-                          v-model="child.isVisible"
-                          inset
-                          color="primary"
-                          :label="t('admin.settings.fields.menuVisible')"
-                          :disabled="isSaving"
+                            v-model="child.isVisible"
+                            inset
+                            color="primary"
+                            :label="t('admin.settings.fields.menuVisible')"
+                            :disabled="isSaving"
                         />
                       </div>
                     </v-sheet>
@@ -398,27 +448,29 @@
                 </div>
               </v-sheet>
 
-              <v-btn
-                variant="tonal"
-                color="primary"
-                class="text-none"
-                :disabled="isSaving"
-                prepend-icon="mdi-playlist-plus"
-                @click="addMenu"
-              >
-                {{ t('admin.settings.actions.addMenu') }}
-              </v-btn>
+              <div class="d-flex">
+                <v-btn
+                    variant="tonal"
+                    color="primary"
+                    class="text-none ml-auto"
+                    :disabled="isSaving"
+                    prepend-icon="mdi-playlist-plus"
+                    @click="addMenu"
+                >
+                  {{ t('admin.settings.actions.addMenu') }}
+                </v-btn>
+              </div>
             </div>
           </v-card>
         </v-col>
       </v-row>
 
       <v-snackbar
-        v-model="snackbar.visible"
-        :color="snackbar.color"
-        timeout="4000"
-        location="bottom"
-        position="fixed"
+          v-model="snackbar.visible"
+          :color="snackbar.color"
+          timeout="4000"
+          location="bottom"
+          position="fixed"
       >
         {{ snackbar.message }}
       </v-snackbar>
@@ -427,11 +479,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+definePageMeta({ middleware: ["auth", "admin"], showRightWidgets: false });
+
+import { computed, reactive, ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSiteSettingsState } from '~/composables/useSiteSettingsState';
 import { getDefaultSiteSettings } from '~/lib/settings/defaults';
-import type { SiteMenuItem, SiteSettings, SiteThemeDefinition } from '~/types/settings';
+import type { SiteMenuItem, SiteSettings } from '~/types/settings';
 
 interface EditableMenu extends SiteMenuItem {
   children?: EditableMenu[];
@@ -447,7 +501,7 @@ const snackbar = reactive({
 });
 
 const { data: fetchedSettings, refresh } = await useAsyncData('admin-site-settings', () =>
-  $fetch<{ data: SiteSettings }>('/api/settings').then((response) => response.data),
+    $fetch<{ data: SiteSettings }>('/api/settings').then((response) => response.data),
 );
 
 const form = reactive({
@@ -461,14 +515,13 @@ const form = reactive({
 const initialSnapshot = ref(JSON.stringify(serializeForm()));
 
 watch(
-  () => fetchedSettings.value,
-  (value) => {
-    if (!value) return;
-
-    siteSettingsState.value = value;
-    applySettings(value);
-  },
-  { immediate: true },
+    () => fetchedSettings.value,
+    (value) => {
+      if (!value) return;
+      siteSettingsState.value = value;
+      applySettings(value);
+    },
+    { immediate: true },
 );
 
 const hasChanges = computed(() => JSON.stringify(serializeForm()) !== initialSnapshot.value);
@@ -618,4 +671,107 @@ async function handleSave() {
     isSaving.value = false;
   }
 }
+
+/* Header sticky observer (ajoute ombre discrète quand collé) */
+const stickyHeader = ref<HTMLElement | null>(null);
+const isStuck = ref(false);
+let observer: IntersectionObserver | null = null;
+
+onMounted(() => {
+  if (!stickyHeader.value) return;
+  observer = new IntersectionObserver(
+      (entries) => { isStuck.value = !entries[0].isIntersecting; },
+      { rootMargin: '-1px 0px 0px 0px', threshold: [1] }
+  );
+  observer.observe(stickyHeader.value);
+});
+
+onBeforeUnmount(() => {
+  observer?.disconnect();
+});
 </script>
+
+<style scoped>
+/* Layout global + grid */
+.settings-container {
+  max-width: 1200px;
+}
+.settings-grid {
+  row-gap: 16px;
+}
+
+/* Header sticky */
+.settings-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 12px 0 16px;
+  backdrop-filter: saturate(120%) blur(6px);
+  background: linear-gradient(to bottom, rgba(16,18,27,0.75), rgba(16,18,27,0.35) 70%, transparent);
+}
+.settings-header-shadow {
+  block-size: 1px;
+  inline-size: 100%;
+  background: transparent;
+  transition: background .2s ease;
+}
+.settings-header.is-stuck .settings-header-shadow {
+  background: linear-gradient(to right, rgba(99,102,241,.25), rgba(168,85,247,.25));
+}
+
+/* Cartes “glass” élégantes */
+.glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Titres de section */
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Theme cards */
+.theme-card {
+  border: 1px dashed rgba(255,255,255,0.14);
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.theme-card--active {
+  border: 1px solid rgb(var(--v-theme-primary));
+  box-shadow: 0 2px 14px rgba(99,102,241,.25);
+}
+.theme-card--idle:hover {
+  transform: translateY(-2px);
+}
+.theme-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.theme-swatch {
+  inline-size: 80px;
+  block-size: 80px;
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.06);
+}
+
+/* Menu items */
+.menu-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.menu-item:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.14);
+}
+.child-item {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* Petits détails */
+.transition { transition: all .2s ease; }
+.text-none { text-transform: none; }
+</style>

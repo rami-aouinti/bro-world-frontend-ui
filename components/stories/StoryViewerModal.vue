@@ -140,7 +140,7 @@ const props = withDefaults(
   }>(),
   {
     story: null,
-    duration: 1000,
+    duration: 3000,
     reactions: () => [
       { id: "like", emoji: "👍", label: "Like" },
       { id: "love", emoji: "❤️", label: "Love" },
@@ -278,7 +278,7 @@ onBeforeUnmount(() => {
   background: linear-gradient(90deg, #60a5fa, #a855f7);
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform var(--story-duration, 3000ms) linear;
+  transition: transform var(--story-duration, 1000ms) linear;
 }
 
 .story-viewer__progress.active::after {
