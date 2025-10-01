@@ -201,13 +201,8 @@ const AppSidebarRight = defineAsyncComponent({
 });
 const colorMode = useCookieColorMode();
 
-const isDark = computed(() => {
-  if (colorMode.value === "dark") return true;
-  if (import.meta.client && colorMode.value === "auto") {
-    return colorMode.system.value === "dark";
-  }
-  return false;
-});
+const isDark = computed(() => useColorMode().value == "dark");
+
 const colorSchemeHint = import.meta.server
   ? useRequestHeaders(["sec-ch-prefers-color-scheme"])["sec-ch-prefers-color-scheme"]
   : null;

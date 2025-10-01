@@ -10,13 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
 const config = useConfig();
 const route = useRoute();
 const { themeClass, radius } = useThemes();
-
-const baseRouteName = computed(() => useRouteBaseName()(route));
 
 useSeoMeta({
   description: config.value.site.description,
