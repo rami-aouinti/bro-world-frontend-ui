@@ -106,6 +106,7 @@ import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
+import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
 
 type AppIcon = { name: string; label: string; size?: number; to: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
@@ -164,6 +165,12 @@ const showSearchButton = computed(
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const currentUser = computed(() => auth.currentUser.value);
 const loggingOut = ref(false);
+const adminRoleSet = new Set<string>(ADMIN_ROLE_KEYS);
+const canAccessAdmin = computed(() => {
+  if (!isAuthenticated.value) return false;
+  const roles = currentUser.value?.roles ?? [];
+  return roles.some((role) => adminRoleSet.has(role));
+});
 
 const notificationDefinitions = ref<NotificationDefinition[]>([
   {
@@ -255,10 +262,16 @@ const localeMenuSubtitle = computed(() =>
 
 const userMenuItems = computed<UserMenuItem[]>(() => {
   if (isAuthenticated.value) {
-    return [
+    const items: UserMenuItem[] = [
       { title: t("layout.actions.viewProfile"), icon: "mdi:account", to: "/profile" },
-      { title: t("auth.signOut"), icon: "mdi:logout", action: "logout" },
     ];
+
+    if (canAccessAdmin.value) {
+      items.push({ title: t("layout.userMenu.admin"), icon: "mdi-shield-crown", to: "/admin" });
+    }
+
+    items.push({ title: t("auth.signOut"), icon: "mdi:logout", action: "logout" });
+    return items;
   }
   return [
     { title: t("auth.Login"), icon: "mdi:login", to: "/login" },

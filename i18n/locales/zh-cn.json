@@ -52,7 +52,8 @@
     "userMenu": {
       "signedInAs": "已登录身份",
       "guestTitle": "欢迎",
-      "guestSubtitle": "登录即可解锁个性化体验"
+      "guestSubtitle": "登录即可解锁个性化体验",
+      "admin": "管理后台"
     },
     "localeMenu": {
       "title": "语言",

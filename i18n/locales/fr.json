@@ -52,7 +52,8 @@
     "userMenu": {
       "signedInAs": "Connecté en tant que",
       "guestTitle": "Bienvenue",
-      "guestSubtitle": "Connectez-vous pour profiter d'une expérience personnalisée"
+      "guestSubtitle": "Connectez-vous pour profiter d'une expérience personnalisée",
+      "admin": "Administration"
     },
     "localeMenu": {
       "title": "Langue",

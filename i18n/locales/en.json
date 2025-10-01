@@ -52,7 +52,8 @@
     "userMenu": {
       "signedInAs": "Signed in as",
       "guestTitle": "Welcome",
-      "guestSubtitle": "Sign in to unlock personalised features"
+      "guestSubtitle": "Sign in to unlock personalised features",
+      "admin": "Administration"
     },
     "localeMenu": {
       "title": "Language",
