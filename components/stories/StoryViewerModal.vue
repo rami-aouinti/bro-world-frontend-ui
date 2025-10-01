@@ -13,18 +13,31 @@
       elevation="12"
       rounded="xl"
     >
-      <div class="story-viewer__progress" :class="{ active: isStoryVisible }" :style="progressStyle"></div>
+      <div
+        class="story-viewer__progress"
+        :class="{ active: isStoryVisible }"
+        :style="progressStyle"
+      ></div>
       <header class="story-viewer__header">
         <div class="story-viewer__profile">
           <v-avatar
             v-if="story?.avatar"
             size="40"
           >
-            <v-img :src="story?.avatar" :alt="story?.name || t('stories.viewer.avatarAlt')" cover />
+            <v-img
+              :src="story?.avatar"
+              :alt="story?.name || t('stories.viewer.avatarAlt')"
+              cover
+            />
           </v-avatar>
           <div class="story-viewer__meta">
             <p class="story-viewer__name">{{ story?.name }}</p>
-            <p v-if="story?.duration" class="story-viewer__duration">{{ story?.duration }}</p>
+            <p
+              v-if="story?.duration"
+              class="story-viewer__duration"
+            >
+              {{ story?.duration }}
+            </p>
           </div>
         </div>
         <v-btn
@@ -49,15 +62,21 @@
             :alt="story?.name || t('stories.viewer.imageAlt')"
           />
         </transition>
-        <div v-if="!isStoryVisible" class="story-viewer__expired">
-          <Icon name="mdi-timer-off" class="mr-2" />
-          <span>{{ t('stories.viewer.expired') }}</span>
+        <div
+          v-if="!isStoryVisible"
+          class="story-viewer__expired"
+        >
+          <Icon
+            name="mdi-timer-off"
+            class="mr-2"
+          />
+          <span>{{ t("stories.viewer.expired") }}</span>
         </div>
       </main>
 
       <footer class="story-viewer__footer">
         <div class="story-viewer__reactions">
-          <p class="story-viewer__prompt">{{ t('stories.viewer.reactPrompt') }}</p>
+          <p class="story-viewer__prompt">{{ t("stories.viewer.reactPrompt") }}</p>
           <div class="story-viewer__reaction-buttons">
             <v-btn
               v-for="reaction in reactions"
@@ -87,7 +106,7 @@
             :disabled="!canSendMessage"
             @click="sendMessage"
           >
-            {{ t('stories.viewer.send') }}
+            {{ t("stories.viewer.send") }}
           </v-btn>
         </div>
       </footer>
@@ -96,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from "vue";
 
 interface Story {
   id?: string | number;
@@ -123,21 +142,21 @@ const props = withDefaults(
     story: null,
     duration: 1000,
     reactions: () => [
-      { id: 'like', emoji: '👍', label: 'Like' },
-      { id: 'love', emoji: '❤️', label: 'Love' },
-      { id: 'haha', emoji: '😂', label: 'Haha' },
-      { id: 'wow', emoji: '😮', label: 'Wow' },
-      { id: 'sad', emoji: '😢', label: 'Sad' },
-      { id: 'angry', emoji: '😡', label: 'Angry' },
+      { id: "like", emoji: "👍", label: "Like" },
+      { id: "love", emoji: "❤️", label: "Love" },
+      { id: "haha", emoji: "😂", label: "Haha" },
+      { id: "wow", emoji: "😮", label: "Wow" },
+      { id: "sad", emoji: "😢", label: "Sad" },
+      { id: "angry", emoji: "😡", label: "Angry" },
     ],
   },
 );
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
-  (e: 'close'): void;
-  (e: 'react', payload: { story: Story | null; reaction: ReactionOption }): void;
-  (e: 'message', payload: { story: Story | null; message: string }): void;
+  (e: "update:modelValue", value: boolean): void;
+  (e: "close"): void;
+  (e: "react", payload: { story: Story | null; reaction: ReactionOption }): void;
+  (e: "message", payload: { story: Story | null; message: string }): void;
 }>();
 
 const { t } = useI18n();
@@ -145,19 +164,19 @@ const { t } = useI18n();
 const model = computed({
   get: () => props.modelValue,
   set: (value: boolean) => {
-    emit('update:modelValue', value);
+    emit("update:modelValue", value);
     if (!value) {
-      emit('close');
+      emit("close");
     }
   },
 });
 
-const message = ref('');
+const message = ref("");
 const isStoryVisible = ref(false);
 let timer: ReturnType<typeof setTimeout> | null = null;
 
 const canSendMessage = computed(() => message.value.trim().length > 0 && Boolean(props.story));
-const progressStyle = computed(() => ({ '--story-duration': `${props.duration}ms` }));
+const progressStyle = computed(() => ({ "--story-duration": `${props.duration}ms` }));
 
 function clearTimer() {
   if (timer) {
@@ -189,7 +208,7 @@ function onReact(reaction: ReactionOption) {
     return;
   }
 
-  emit('react', { story: props.story, reaction });
+  emit("react", { story: props.story, reaction });
 }
 
 function sendMessage() {
@@ -197,8 +216,8 @@ function sendMessage() {
     return;
   }
 
-  emit('message', { story: props.story, message: message.value.trim() });
-  message.value = '';
+  emit("message", { story: props.story, message: message.value.trim() });
+  message.value = "";
 }
 
 watch(
@@ -209,7 +228,7 @@ watch(
     } else {
       clearTimer();
       isStoryVisible.value = false;
-      message.value = '';
+      message.value = "";
     }
   },
 );
@@ -252,7 +271,7 @@ onBeforeUnmount(() => {
 }
 
 .story-viewer__progress::after {
-  content: '';
+  content: "";
   display: block;
   height: 100%;
   width: 100%;

@@ -12,9 +12,7 @@
       <span class="mr-auto overflow-hidden">
         {{ $t(placeholder) }}
       </span>
-      <Kbd class="ml-auto hidden md:block">
-        <span class="text-xs">⌘</span>K
-      </Kbd>
+      <Kbd class="ml-auto hidden md:block"> <span class="text-xs">⌘</span>K </Kbd>
     </UiButton>
     <UiButton
       v-else
@@ -25,7 +23,10 @@
       :class="rootClass"
       @click="isOpen = true"
     >
-      <Icon name="lucide:search" size="18" />
+      <Icon
+        name="lucide:search"
+        size="18"
+      />
     </UiButton>
   </template>
 
@@ -45,9 +46,8 @@ const colorMode = useCookieColorMode();
 
 const isOpen = ref<boolean | undefined>(false);
 const isHydrated = ref(false);
-const initialTheme = useState<'light' | 'dark'>(
-  "layout-search-button-theme",
-  () => (colorMode.value === "dark" ? "dark" : "light"),
+const initialTheme = useState<"light" | "dark">("layout-search-button-theme", () =>
+  colorMode.value === "dark" ? "dark" : "light",
 );
 
 if (import.meta.client) {
@@ -74,9 +74,7 @@ const resolvedMode = computed<"light" | "dark">(() => {
   return colorMode.system.value === "dark" ? "dark" : "light";
 });
 
-const buttonTheme = computed(() =>
-  isHydrated.value ? resolvedMode.value : initialTheme.value,
-);
+const buttonTheme = computed(() => (isHydrated.value ? resolvedMode.value : initialTheme.value));
 
 const rootClass = computed(() => attrs.class);
 const forwardedAttrs = computed(() => {

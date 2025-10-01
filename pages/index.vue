@@ -8,7 +8,7 @@
       @attach="onAttach"
     />
     <section
-        v-if="isAuthenticated"
+      v-if="isAuthenticated"
       class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
     >
       <StoriesStrip
@@ -161,7 +161,9 @@ const stories = ref<Story[]>([
 
 const activeStory = ref<Story | null>(null);
 const isStoryViewerOpen = ref(false);
-const lastStoryReaction = ref<{ storyId: Story["id"]; reactionId: StoryReaction["id"] } | null>(null);
+const lastStoryReaction = ref<{ storyId: Story["id"]; reactionId: StoryReaction["id"] } | null>(
+  null,
+);
 const lastStoryMessage = ref<{ storyId: Story["id"]; message: string } | null>(null);
 
 function openStory(story: Story) {
@@ -192,13 +194,7 @@ function handleStoryReaction({
   };
 }
 
-function handleStoryMessage({
-  story,
-  message,
-}: {
-  story: Story | null;
-  message: string;
-}) {
+function handleStoryMessage({ story, message }: { story: Story | null; message: string }) {
   if (!story) {
     return;
   }
