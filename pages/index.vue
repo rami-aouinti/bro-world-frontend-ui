@@ -7,6 +7,7 @@
       @submit="createPost"
       @attach="onAttach"
     />
+    <StoriesStrip :items="stories" @open="openStory" @create="createStory" />
 
     <div
       v-if="pending"
@@ -61,6 +62,7 @@ import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 import { useAuthSession } from "~/stores/auth-session";
+import StoriesStrip from "~/components/stories/StoriesStrip.vue";
 
 definePageMeta({
   showRightWidgets: true,
@@ -73,7 +75,34 @@ const user = {
   name: "Rami Aouinti",
   avatarUrl: "https://bro-world-space.com/img/person.png",
 };
+const stories = ref([
+  {
+    id: 1,
+    image: 'https://picsum.photos/seed/1/600/900',
+    name: 'Asma Hmida',
+    avatar: 'https://i.pravatar.cc/64?img=5',
+    state: 'new',
+    duration: '0:22'
+  },
+  {
+    id: 2,
+    image: 'https://picsum.photos/seed/2/600/900',
+    name: 'Ichrak Ben Youcef',
+    avatar: 'https://i.pravatar.cc/64?img=7',
+    state: 'seen'
+  },
+  {
+    id: 3,
+    image: 'https://picsum.photos/seed/3/600/900',
+    name: 'Rim Abdelwahed',
+    avatar: 'https://i.pravatar.cc/64?img=9',
+    state: 'new',
+    duration: '1:03'
+  }
+])
 
+function openStory(s:any){ /* navigate/modal */ }
+function createStory(){ /* ouvrir éditeur */ }
 function onAttach(type: string) {
   // Ouvre sélecteur média / GIF / etc.
 }

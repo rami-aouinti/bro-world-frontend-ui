@@ -1,7 +1,7 @@
 <template>
   <section class="rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
     <header class="flex items-center justify-between text-slate-200">
-      <h3 class="text-lg font-semibold text-white">{{ title }}</h3>
+      <h3 class="text-lg font-semibold text-foreground">{{ title }}</h3>
       <span class="text-xs uppercase tracking-[0.3em] text-primary/70">{{ liveLabel }}</span>
     </header>
     <ul class="mt-5 space-y-4">

@@ -2,10 +2,10 @@
   <section class="rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
     <header class="flex items-start justify-between">
       <div>
-        <h3 class="text-lg font-semibold text-white">{{ rating.title }}</h3>
+        <h3 class="text-lg font-semibold text-foreground">{{ rating.title }}</h3>
         <p class="text-sm text-slate-300">{{ rating.subtitle }}</p>
       </div>
-      <div class="text-right text-white">
+      <div class="text-right text-foreground">
         <p class="text-3xl font-bold">{{ rating.average }}</p>
         <p class="text-xs uppercase tracking-[0.3em] text-slate-400">/ {{ rating.total }}</p>
       </div>

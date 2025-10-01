@@ -5,7 +5,7 @@
     <div class="flex items-start justify-between gap-4">
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ weather.badge }}</p>
-        <h3 class="mt-3 text-2xl font-semibold text-white">{{ weather.title }}</h3>
+        <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ weather.title }}</h3>
         <p class="mt-2 text-sm text-slate-300">{{ weather.subtitle }}</p>
       </div>
       <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-3xl">
