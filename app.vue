@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { tryUseNuxtApp, useRequestURL } from "#imports";
+import { tryUseNuxtApp, useAppConfig, useRequestURL } from "#imports";
 
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {
@@ -19,11 +19,19 @@ const fallbackSiteConfig = {
   description: "Welcome to Bro World — your unique community platform.",
 };
 
-const config = nuxtApp
-  ? useConfig()
-  : computed(() => ({
-      site: fallbackSiteConfig,
-    }));
+const siteConfig = computed(() => {
+  if (!nuxtApp) {
+    return fallbackSiteConfig;
+  }
+
+  const appConfig = useAppConfig();
+  const site = appConfig?.shadcnDocs?.site;
+
+  return {
+    name: site?.name ?? fallbackSiteConfig.name,
+    description: site?.description ?? fallbackSiteConfig.description,
+  };
+});
 const route = useRoute();
 const { themeClass, radius } = useThemes();
 const { locale } = useI18n();
@@ -69,12 +77,8 @@ const matchedMeta = computed<SeoMetaFields>(
 );
 const currentMeta = computed<SeoMetaFields>(() => route.meta as SeoMetaFields);
 
-const defaultTitle = computed(
-  () => config.value.site?.name ?? fallbackSiteConfig.name,
-);
-const defaultDescription = computed(
-  () => config.value.site?.description ?? fallbackSiteConfig.description,
-);
+const defaultTitle = computed(() => siteConfig.value.name);
+const defaultDescription = computed(() => siteConfig.value.description);
 const canonicalUrl = computed(() => {
   const base = normalizedBaseUrl.value;
 
