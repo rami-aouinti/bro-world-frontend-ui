@@ -1700,5 +1700,19 @@
         "contentRequired": "Le contenu est requis."
       }
     }
+  },
+  "stories": {
+    "card": {
+      "createLabel": "Créer une story",
+      "openAria": "Ouvrir la story de {name}",
+      "openAriaFallback": "Ouvrir la story",
+      "imageAlt": "Image de couverture de story",
+      "avatarAlt": "Avatar de la story"
+    },
+    "strip": {
+      "ariaLabel": "Stories",
+      "scrollLeft": "Faire défiler les stories vers la gauche",
+      "scrollRight": "Faire défiler les stories vers la droite"
+    }
   }
 }

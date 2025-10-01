@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<{
 })
 
 const scroller = ref<HTMLElement | null>(null)
+const { t } = useI18n()
 
 function scrollBy(delta = 280) {
   if (!scroller.value) return
@@ -45,7 +46,7 @@ const emit = defineEmits<{
         ref="scroller"
         class="stories-scroll"
         role="listbox"
-        aria-label="Stories"
+        :aria-label="t('stories.strip.ariaLabel')"
     >
       <StoryCard
           v-if="showCreate"
@@ -76,7 +77,7 @@ const emit = defineEmits<{
         size="large"
         variant="elevated"
         @click="scrollBy(-320)"
-        aria-label="Scroll stories left"
+        :aria-label="t('stories.strip.scrollLeft')"
     >
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
@@ -88,7 +89,7 @@ const emit = defineEmits<{
         size="large"
         variant="elevated"
         @click="scrollBy(320)"
-        aria-label="Scroll stories right"
+        :aria-label="t('stories.strip.scrollRight')"
     >
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>

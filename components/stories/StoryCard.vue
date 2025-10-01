@@ -31,6 +31,8 @@ const emit = defineEmits<{
   (e: 'create'): void
 }>()
 
+const { t } = useI18n()
+
 const isCreate = computed(() => props.state === 'create')
 const ringStyle = computed(() => {
   if (isCreate.value) return {}
@@ -39,6 +41,14 @@ const ringStyle = computed(() => {
     boxShadow: `0 0 0 3px #fff, 0 0 0 6px ${color}`,
   } as Record<string, string>
 })
+
+const createLabel = computed(() => t('stories.card.createLabel'))
+const openStoryLabel = computed(() =>
+  props.name
+    ? t('stories.card.openAria', { name: props.name })
+    : t('stories.card.openAriaFallback'),
+)
+const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openStoryLabel.value))
 </script>
 
 <template>
@@ -49,7 +59,7 @@ const ringStyle = computed(() => {
       elevation="4"
       rounded="xl"
       role="button"
-      :aria-label="isCreate ? 'Create story' : `Open story of ${name}`"
+      :aria-label="cardAriaLabel"
       @click="isCreate ? emit('create') : emit('click')"
   >
     <!-- Image de fond -->
@@ -57,7 +67,7 @@ const ringStyle = computed(() => {
         v-if="image"
         :src="image"
         cover
-        :alt="name || 'story'"
+        :alt="name || t('stories.card.imageAlt')"
         class="h-100 w-100"
     />
 
@@ -70,7 +80,7 @@ const ringStyle = computed(() => {
     <div class="absolute top-2 left-2 z-10">
       <div v-if="!isCreate" class="relative">
         <v-avatar size="36" class="bg-white" :style="ringStyle">
-          <v-img :src="avatar" :alt="name" cover />
+          <v-img :src="avatar" :alt="name || t('stories.card.avatarAlt')" cover />
         </v-avatar>
       </div>
       <div v-else class="relative">
@@ -80,7 +90,7 @@ const ringStyle = computed(() => {
               color="primary"
               size="small"
               variant="flat"
-              :aria-label="'Create story'"
+              :aria-label="createLabel"
           >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
@@ -96,7 +106,7 @@ const ringStyle = computed(() => {
     <!-- Nom / label create -->
     <div class="absolute bottom-2 left-2 right-2 z-10">
       <div class="text-white font-weight-bold text-subtitle-2 line-clamp-2">
-        <template v-if="isCreate">Story erstellen</template>
+        <template v-if="isCreate">{{ createLabel }}</template>
         <template v-else>{{ name }}</template>
       </div>
     </div>

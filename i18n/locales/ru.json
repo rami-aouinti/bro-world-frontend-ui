@@ -1526,5 +1526,19 @@
         "contentRequired": "Content is required."
       }
     }
+  },
+  "stories": {
+    "card": {
+      "createLabel": "Создать историю",
+      "openAria": "Открыть историю {name}",
+      "openAriaFallback": "Открыть историю",
+      "imageAlt": "Обложка истории",
+      "avatarAlt": "Аватар истории"
+    },
+    "strip": {
+      "ariaLabel": "Истории",
+      "scrollLeft": "Прокрутить истории влево",
+      "scrollRight": "Прокрутить истории вправо"
+    }
   }
 }
