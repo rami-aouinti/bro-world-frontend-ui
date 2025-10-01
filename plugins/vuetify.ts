@@ -145,7 +145,102 @@ export default defineNuxtPlugin((nuxtApp) => {
     "border-width": "1px",
   } as const;
 
-  const lightTheme: ThemeDefinition = {
+  const lightTheme: {
+    variables: {
+      readonly "radius-xl": "1rem";
+      readonly "text-body-1-size": "1rem";
+      readonly "text-body-1-line-height": 1.6;
+      readonly "text-body-2-line-height": 1.6;
+      readonly "text-h5-size": "1.25rem";
+      "elevation-shadow": string;
+      readonly "text-h5-letter-spacing": "-0.0025em";
+      readonly "border-width": "1px";
+      readonly "text-h6-size": "1rem";
+      readonly "radius-xs": "0.125rem";
+      readonly "radius-lg": "0.75rem";
+      readonly "text-h6-letter-spacing": "0";
+      readonly "space-7": "2.5rem";
+      readonly "text-h1-letter-spacing": "-0.02em";
+      readonly "text-h6-weight": 600;
+      readonly "space-8": "3rem";
+      readonly "btn-letter-spacing": "0.02em";
+      readonly "btn-height": "2.75rem";
+      readonly "text-h2-weight": 600;
+      readonly "text-h4-weight": 600;
+      readonly "btn-padding-x": "var(--v-space-4)";
+      readonly "line-height-base": 1.5;
+      readonly "input-font-size": "0.9375rem";
+      readonly "text-h4-line-height": 1.35;
+      readonly "space-0": "0rem";
+      readonly "space-1": "0.25rem";
+      readonly "text-h3-line-height": 1.3;
+      readonly "space-2": "0.5rem";
+      readonly "field-border-radius": "var(--v-radius-md)";
+      readonly "space-3": "0.75rem";
+      readonly "space-4": "1rem";
+      readonly "space-5": "1.5rem";
+      readonly "text-h2-line-height": 1.25;
+      readonly "space-6": "2rem";
+      readonly "radius-md": "0.5rem";
+      readonly "font-family-base": "'Manrope', 'Inter', 'Helvetica Neue', Arial, sans-serif";
+      readonly "text-h1-line-height": 1.2;
+      readonly "input-line-height": 1.4;
+      readonly "text-h4-letter-spacing": "-0.005em";
+      readonly "text-h5-line-height": 1.4;
+      readonly "text-h2-size": "2.5rem";
+      readonly "text-h6-line-height": 1.45;
+      readonly "font-size-root": "16px";
+      readonly "font-family-display": "'Bricolage Grotesque', 'Manrope', 'Inter', 'Helvetica Neue', Arial, sans-serif";
+      readonly "text-h3-size": "2rem";
+      readonly "input-min-height": "2.75rem";
+      readonly "text-body-2-size": "0.875rem";
+      readonly "text-h3-weight": 600;
+      "border-color": string;
+      readonly "text-h1-weight": 600;
+      readonly "text-h2-letter-spacing": "-0.015em";
+      readonly "text-h5-weight": 600;
+      readonly "text-h4-size": "1.5rem";
+      readonly "radius-pill": "9999px";
+      readonly "radius-none": "0";
+      readonly "text-h1-size": "3.25rem";
+      readonly "radius-sm": "0.25rem";
+      readonly "text-h3-letter-spacing": "-0.01em"
+    };
+    dark: boolean;
+    colors: {
+      "primary-container": string;
+      "on-error": string;
+      shadow: string;
+      "on-primary": string;
+      scrim: string;
+      "on-surface-variant": string;
+      "inverse-primary": string;
+      error: string;
+      "surface-bright": string;
+      outline: string;
+      "inverse-on-surface": string;
+      warning: string;
+      "surface-light": string;
+      "on-success": string;
+      "secondary-container": string;
+      info: string;
+      "on-surface": string;
+      "on-secondary-container": string;
+      surface: string;
+      "outline-variant": string;
+      "on-info": string;
+      "inverse-surface": string;
+      "surface-variant": string;
+      "on-background": string;
+      secondary: string;
+      "on-warning": string;
+      "on-primary-container": string;
+      success: string;
+      background: string;
+      "on-secondary": string;
+      primary: any
+    }
+  } = {
     dark: false,
     colors: {
       primary,
@@ -187,7 +282,102 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
   };
 
-  const darkTheme: ThemeDefinition = {
+  const darkTheme: {
+    variables: {
+      readonly "radius-xl": "1rem";
+      readonly "text-body-1-size": "1rem";
+      readonly "text-body-1-line-height": 1.6;
+      readonly "text-body-2-line-height": 1.6;
+      readonly "text-h5-size": "1.25rem";
+      "elevation-shadow": string;
+      readonly "text-h5-letter-spacing": "-0.0025em";
+      readonly "border-width": "1px";
+      readonly "text-h6-size": "1rem";
+      readonly "radius-xs": "0.125rem";
+      readonly "radius-lg": "0.75rem";
+      readonly "text-h6-letter-spacing": "0";
+      readonly "space-7": "2.5rem";
+      readonly "text-h1-letter-spacing": "-0.02em";
+      readonly "text-h6-weight": 600;
+      readonly "space-8": "3rem";
+      readonly "btn-letter-spacing": "0.02em";
+      readonly "btn-height": "2.75rem";
+      readonly "text-h2-weight": 600;
+      readonly "text-h4-weight": 600;
+      readonly "btn-padding-x": "var(--v-space-4)";
+      readonly "line-height-base": 1.5;
+      readonly "input-font-size": "0.9375rem";
+      readonly "text-h4-line-height": 1.35;
+      readonly "space-0": "0rem";
+      readonly "space-1": "0.25rem";
+      readonly "text-h3-line-height": 1.3;
+      readonly "space-2": "0.5rem";
+      readonly "field-border-radius": "var(--v-radius-md)";
+      readonly "space-3": "0.75rem";
+      readonly "space-4": "1rem";
+      readonly "space-5": "1.5rem";
+      readonly "text-h2-line-height": 1.25;
+      readonly "space-6": "2rem";
+      readonly "radius-md": "0.5rem";
+      readonly "font-family-base": "'Manrope', 'Inter', 'Helvetica Neue', Arial, sans-serif";
+      readonly "text-h1-line-height": 1.2;
+      readonly "input-line-height": 1.4;
+      readonly "text-h4-letter-spacing": "-0.005em";
+      readonly "text-h5-line-height": 1.4;
+      readonly "text-h2-size": "2.5rem";
+      readonly "text-h6-line-height": 1.45;
+      readonly "font-size-root": "16px";
+      readonly "font-family-display": "'Bricolage Grotesque', 'Manrope', 'Inter', 'Helvetica Neue', Arial, sans-serif";
+      readonly "text-h3-size": "2rem";
+      readonly "input-min-height": "2.75rem";
+      readonly "text-body-2-size": "0.875rem";
+      readonly "text-h3-weight": 600;
+      "border-color": string;
+      readonly "text-h1-weight": 600;
+      readonly "text-h2-letter-spacing": "-0.015em";
+      readonly "text-h5-weight": 600;
+      readonly "text-h4-size": "1.5rem";
+      readonly "radius-pill": "9999px";
+      readonly "radius-none": "0";
+      readonly "text-h1-size": "3.25rem";
+      readonly "radius-sm": "0.25rem";
+      readonly "text-h3-letter-spacing": "-0.01em"
+    };
+    dark: boolean;
+    colors: {
+      "primary-container": string;
+      "on-error": string;
+      shadow: string;
+      "on-primary": string;
+      scrim: string;
+      "on-surface-variant": string;
+      "inverse-primary": string;
+      error: string;
+      "surface-bright": string;
+      outline: string;
+      "inverse-on-surface": string;
+      warning: string;
+      "surface-light": string;
+      "on-success": string;
+      "secondary-container": string;
+      info: string;
+      "on-surface": string;
+      "on-secondary-container": string;
+      surface: string;
+      "outline-variant": string;
+      "on-info": string;
+      "inverse-surface": string;
+      "surface-variant": string;
+      "on-background": string;
+      secondary: string;
+      "on-warning": string;
+      "on-primary-container": string;
+      success: string;
+      background: string;
+      "on-secondary": string;
+      primary: any
+    }
+  } = {
     dark: true,
     colors: {
       primary,

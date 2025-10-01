@@ -14,11 +14,9 @@
         <v-badge
           v-if="props.unreadCount > 0"
           :content="props.unreadCount"
+          location="top right"
           color="primary"
-          floating
           max="99"
-          offset-x="4"
-          offset-y="2"
           size="small"
         >
           <AppIcon
