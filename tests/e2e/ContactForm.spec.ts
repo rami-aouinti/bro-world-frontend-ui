@@ -5,16 +5,13 @@ import { createI18n } from "vue-i18n";
 import ContactForm from "~/components/contact/ContactForm.vue";
 import en from "~/i18n/locales/en.json";
 
-const toastMock = vi.fn();
+const notifyMock = vi.fn();
 const fetchMock = vi.fn();
-
-vi.mock("~/components/content/common/toast", () => ({
-  toast: (...args: unknown[]) => toastMock(...args),
-}));
 
 vi.mock("#app", () => ({
   useNuxtApp: () => ({
     $fetch: (...args: unknown[]) => fetchMock(...args),
+    $notify: (...args: unknown[]) => notifyMock(...args),
   }),
 }));
 
@@ -33,7 +30,7 @@ const i18n = createI18n({
 
 describe("ContactForm", () => {
   beforeEach(() => {
-    toastMock.mockClear();
+    notifyMock.mockClear();
     fetchMock.mockReset();
   });
 
@@ -66,9 +63,10 @@ describe("ContactForm", () => {
       },
       method: "POST",
     });
-    expect(toastMock).toHaveBeenCalledWith({
-      description: en.pages.contact.form.success,
+    expect(notifyMock).toHaveBeenCalledWith({
+      message: en.pages.contact.form.success,
       title: en.pages.contact.title,
+      type: "success",
     });
 
     expect((wrapper.find('[data-test="name-field"] input').element as HTMLInputElement).value).toBe(
