@@ -1697,6 +1697,15 @@
       "ariaLabel": "Stories",
       "scrollLeft": "Stories nach links scrollen",
       "scrollRight": "Stories nach rechts scrollen"
+    },
+    "viewer": {
+      "close": "Story schließen",
+      "imageAlt": "Story-Inhalt",
+      "avatarAlt": "Story-Avatar",
+      "expired": "Die Story ist nicht mehr sichtbar.",
+      "reactPrompt": "Reagiere auf diese Story",
+      "messageLabel": "Nachricht senden",
+      "send": "Senden"
     }
   }
 }
