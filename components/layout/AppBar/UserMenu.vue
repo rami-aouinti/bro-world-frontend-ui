@@ -9,7 +9,7 @@
       >
         <template v-if="props.user">
           <v-avatar
-            size="36"
+            size="28"
             :class="avatarClasses"
           >
             <v-img
@@ -39,7 +39,7 @@
     >
       <div class="flex items-center gap-3 px-4 py-4">
         <v-avatar
-          size="40"
+          size="28"
           class="bg-primary/10 text-primary"
         >
           <template v-if="props.user">

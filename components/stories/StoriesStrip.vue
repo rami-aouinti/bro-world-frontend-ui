@@ -79,7 +79,7 @@ const emit = defineEmits<{
         @click="scrollBy(-320)"
         :aria-label="t('stories.strip.scrollLeft')"
     >
-      <v-icon>mdi-chevron-left</v-icon>
+      <Icon name="mdi-chevron-left"></Icon>
     </v-btn>
 
     <v-btn
@@ -91,7 +91,7 @@ const emit = defineEmits<{
         @click="scrollBy(320)"
         :aria-label="t('stories.strip.scrollRight')"
     >
-      <v-icon>mdi-chevron-right</v-icon>
+      <Icon name="mdi-chevron-right"></Icon>
     </v-btn>
   </div>
 </template>
@@ -103,7 +103,6 @@ const emit = defineEmits<{
   grid-auto-columns: max-content;
   gap: 12px;
   overflow-x: auto;
-  padding: 8px 4px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }

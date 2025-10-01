@@ -98,6 +98,30 @@ const stories = ref([
     avatar: 'https://i.pravatar.cc/64?img=9',
     state: 'new',
     duration: '1:03'
+  },
+  {
+    id: 4,
+    image: 'https://picsum.photos/seed/3/600/900',
+    name: 'Rim Abdelwahed',
+    avatar: 'https://i.pravatar.cc/64?img=9',
+    state: 'new',
+    duration: '1:03'
+  },
+  {
+    id: 5,
+    image: 'https://picsum.photos/seed/3/600/900',
+    name: 'Rim Abdelwahed',
+    avatar: 'https://i.pravatar.cc/64?img=9',
+    state: 'new',
+    duration: '1:03'
+  },
+  {
+    id: 6,
+    image: 'https://picsum.photos/seed/3/600/900',
+    name: 'Rim Abdelwahed',
+    avatar: 'https://i.pravatar.cc/64?img=9',
+    state: 'new',
+    duration: '1:03'
   }
 ])
 

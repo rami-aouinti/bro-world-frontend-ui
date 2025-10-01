@@ -92,7 +92,7 @@ const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openS
               variant="flat"
               :aria-label="createLabel"
           >
-            <v-icon>mdi-plus</v-icon>
+            <Icon name="mdi-plus"></Icon>
           </v-btn>
         </v-avatar>
       </div>
