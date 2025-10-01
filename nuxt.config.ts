@@ -544,6 +544,7 @@ export default defineNuxtConfig({
       blogPrivateCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_COMMENT_API_ENDPOINT ??
         "https://blog.bro-world.org/v1/platform/comment",
+      siteUrl: "https://bro-world-space.com",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
     },
