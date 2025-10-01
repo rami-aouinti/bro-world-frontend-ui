@@ -84,6 +84,7 @@
         "profilePhotos": "Photos et médias",
         "admin": "Administration",
         "adminGeneral": "Général",
+        "adminSettings": "Paramètres du site",
         "adminUserManagement": "Gestion des utilisateurs",
         "adminBlog": "Blog",
         "help": "Aide",
@@ -1361,6 +1362,66 @@
     "page": {
       "title": "Espace d'administration",
       "subtitle": "Pilotez l'ensemble de la plateforme, suivez les indicateurs clés et activez les bons leviers en quelques clics."
+    },
+    "settings": {
+      "metaTitle": "Paramètres du site",
+      "page": {
+        "title": "Paramètres du site",
+        "subtitle": "Configurez l'identité de marque, la palette de thèmes et la navigation de votre communauté."
+      },
+      "sections": {
+        "general": {
+          "title": "Identité de marque",
+          "subtitle": "Mettez à jour le nom du site et la signature affichés sur l'ensemble de l'espace."
+        },
+        "theme": {
+          "title": "Thèmes",
+          "subtitle": "Composez les thèmes disponibles et choisissez celui appliqué par défaut.",
+          "active": "Thème par défaut"
+        },
+        "navigation": {
+          "title": "Menu de navigation",
+          "subtitle": "Ajoutez, réorganisez et sécurisez les entrées de la barre latérale.",
+          "children": "Liens enfants"
+        }
+      },
+      "fields": {
+        "siteName": "Nom du site",
+        "tagline": "Accroche",
+        "themeName": "Nom du thème",
+        "themeDescription": "Description",
+        "themePrimary": "Couleur principale",
+        "themeAccent": "Couleur d'accent",
+        "themeSurface": "Couleur de surface",
+        "menuLabel": "Libellé du menu",
+        "menuPath": "Chemin de destination",
+        "menuIcon": "Icône (optionnel)",
+        "menuAdmin": "Réservé aux admins",
+        "menuVisible": "Visible"
+      },
+      "placeholders": {
+        "siteName": "Saisissez le nom public du site",
+        "tagline": "Décrivez votre mission en une phrase"
+      },
+      "actions": {
+        "save": "Enregistrer",
+        "reset": "Annuler les modifications",
+        "addTheme": "Ajouter un thème",
+        "addMenu": "Ajouter un menu",
+        "addChild": "Ajouter un sous-lien",
+        "removeMenu": "Supprimer",
+        "moveUp": "Monter",
+        "moveDown": "Descendre"
+      },
+      "feedback": {
+        "saved": "Configuration mise à jour avec succès.",
+        "error": "Impossible de mettre à jour la configuration. Réessayez plus tard."
+      },
+      "defaults": {
+        "themeName": "Nouveau thème",
+        "menuLabel": "Nouveau menu",
+        "submenuLabel": "Nouveau sous-menu"
+      }
     },
     "userManagement": {
       "title": "Gestion des utilisateurs",

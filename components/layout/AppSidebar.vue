@@ -27,7 +27,7 @@
                 v-bind="item.to ? { to: item.to } : { type: 'button' }"
                 class="sidebar-item"
                 :class="{ 'sidebar-item--active': isItemActive(item, resolvedActiveKey) }"
-                :aria-label="item.to ? t(item.label) : undefined"
+                :aria-label="item.to ? resolveLabel(item) : undefined"
                 :aria-current="isItemActive(item, resolvedActiveKey) ? 'page' : undefined"
                 @click="handleParentSelect(item)"
               >
@@ -37,7 +37,7 @@
                     :name="item.icon"
                     :size="20"
                   />
-                  <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
+                  <span class="text-sm font-medium text-foreground">{{ resolveLabel(item) }}</span>
                 </div>
                 <button
                   v-if="item.children?.length"
@@ -76,7 +76,7 @@
                     :to="child.to"
                     class="sidebar-subitem"
                     :class="{ 'sidebar-subitem--active': child.key === resolvedActiveKey }"
-                    :aria-label="t(child.label)"
+                    :aria-label="resolveLabel(child)"
                     :aria-current="child.key === resolvedActiveKey ? 'page' : undefined"
                     @click="emit('select', child.key)"
                   >
@@ -85,7 +85,7 @@
                       :name="child.icon"
                       :size="18"
                     />
-                    <span class="text-sm text-muted-foreground">{{ t(child.label) }}</span>
+                    <span class="text-sm text-muted-foreground">{{ resolveLabel(child) }}</span>
                   </NuxtLink>
                 </li>
               </ul>
@@ -107,6 +107,7 @@ import {
   buildSidebarItems,
 } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 
 type SidebarVariant = "default" | "profile";
 
@@ -130,6 +131,7 @@ const shouldRenderParticles = ref(false);
 const { t } = useI18n();
 const route = useRoute();
 const auth = useAuthSession();
+const siteSettings = useSiteSettingsState();
 
 const canAccessAdmin = computed(() => {
   if (!auth.isAuthenticated.value) return false;
@@ -142,7 +144,7 @@ const variantItems = computed<LayoutSidebarItem[]>(() => {
     return buildProfileSidebarItems();
   }
 
-  return buildSidebarItems(canAccessAdmin.value);
+  return buildSidebarItems(siteSettings.value, canAccessAdmin.value);
 });
 
 const resolvedItems = computed<LayoutSidebarItem[]>(() => props.items ?? variantItems.value);
@@ -218,6 +220,14 @@ function handleParentSelect(item: LayoutSidebarItem) {
 }
 
 const emit = defineEmits<{ (e: "select", key: string): void }>();
+
+function resolveLabel(item: LayoutSidebarItem): string {
+  if (item.translate === false) {
+    return item.label;
+  }
+
+  return t(item.label);
+}
 
 function findActiveSidebarKey(path: string, items: LayoutSidebarItem[]): string | null {
   for (const item of items) {
