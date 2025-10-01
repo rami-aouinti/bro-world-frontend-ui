@@ -201,6 +201,14 @@ const AppSidebarRight = defineAsyncComponent({
   suspensible: false,
 });
 const colorMode = useCookieColorMode();
+
+const isDark = computed(() => {
+  if (colorMode.value === "dark") return true;
+  if (import.meta.client && colorMode.value === "auto") {
+    return colorMode.system.value === "dark";
+  }
+  return false;
+});
 const colorSchemeHint = import.meta.server
   ? useRequestHeaders(["sec-ch-prefers-color-scheme"])["sec-ch-prefers-color-scheme"]
   : null;
@@ -344,6 +352,7 @@ watch(
 
 /** Actions UI */
 function toggleTheme() {
+  colorMode.value = isDark.value ? "light" : "dark";
   colorMode.value = resolvedColorMode.value === "dark" ? "light" : "dark";
 }
 function toggleLeftDrawer() {
