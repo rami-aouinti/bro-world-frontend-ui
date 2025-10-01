@@ -197,7 +197,15 @@ const AppSidebarRight = defineAsyncComponent({
   loader: () => import("~/components/layout/AppSidebarRight.vue"),
   suspensible: false,
 });
-const isDark = computed(() => useColorMode().value == "dark");
+const colorMode = useCookieColorMode();
+
+const isDark = computed(() => {
+  if (colorMode.value === "dark") return true;
+  if (import.meta.client && colorMode.value === "auto") {
+    return colorMode.system.value === "dark";
+  }
+  return false;
+});
 const route = useRoute();
 const router = useRouter();
 const display = useDisplay();
@@ -313,7 +321,7 @@ watch(
 
 /** Actions UI */
 function toggleTheme() {
-  return isDark.value ? "light" : "dark";
+  colorMode.value = isDark.value ? "light" : "dark";
 }
 function toggleLeftDrawer() {
   leftDrawer.value = !leftDrawer.value;
