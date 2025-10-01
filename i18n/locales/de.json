@@ -11,6 +11,7 @@
       "goBack": "Zurück",
       "refresh": "Aktualisieren",
       "notifications": "Benachrichtigungen öffnen",
+      "messages": "Messenger öffnen",
       "cart": "Einkaufstasche öffnen",
       "profile": "Profilmenü öffnen",
       "viewProfile": "Profil ansehen",
@@ -40,6 +41,13 @@
           "time": "vor 1 Std."
         }
       }
+    },
+    "messengerMenu": {
+      "title": "Nachrichten",
+      "subtitle": "Aktuelle Unterhaltungen",
+      "viewAll": "Alle anzeigen",
+      "empty": "Keine neuen Nachrichten",
+      "badgeLabel": "{count} ungelesene Nachrichten"
     },
     "userMenu": {
       "signedInAs": "Angemeldet als",
@@ -172,6 +180,23 @@
       "GetStartedAndStartBuildingAwesomeUI": "Leg los und baue beeindruckende Benutzeroberflächen",
       "GetStarted": "Jetzt starten"
     }
+  },
+  "messenger": {
+    "searchPlaceholder": "Konversationen durchsuchen",
+    "emptyList": "Noch keine Konversationen",
+    "unknownParticipant": "Unbekannt",
+    "emptyTitle": "Wähle eine Konversation",
+    "emptyDescription": "Wähle eine Konversation aus der Liste, um Nachrichten zu lesen und zu senden.",
+    "emptyCtaLabel": "Konversation starten",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Nachricht schreiben...",
+    "sendLabel": "Senden",
+    "sendingLabel": "Senden…",
+    "sendErrorStatus": "Nicht zugestellt",
+    "shortcutsHint": "Drücke Strg+Enter zum Senden",
+    "noMessages": "Noch keine Nachrichten",
+    "loadOlder": "Ältere Nachrichten laden",
+    "participantsLabel": "{count} Teilnehmende"
   },
   "auth": {
     "Account": "Konto",

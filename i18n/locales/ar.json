@@ -11,6 +11,7 @@
       "goBack": "العودة",
       "refresh": "تحديث",
       "notifications": "فتح الإشعارات",
+      "messages": "فتح الرسائل",
       "cart": "فتح الحقيبة",
       "profile": "فتح قائمة الملف الشخصي",
       "viewProfile": "عرض الملف الشخصي",
@@ -40,6 +41,13 @@
           "time": "منذ ساعة"
         }
       }
+    },
+    "messengerMenu": {
+      "title": "الرسائل",
+      "subtitle": "أحدث المحادثات",
+      "viewAll": "عرض الكل",
+      "empty": "لا توجد رسائل جديدة",
+      "badgeLabel": "{count} رسالة غير مقروءة"
     },
     "userMenu": {
       "signedInAs": "مسجل الدخول باسم",
@@ -172,6 +180,23 @@
       "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
       "GetStarted": "ابدأ الآن"
     }
+  },
+  "messenger": {
+    "searchPlaceholder": "ابحث في المحادثات",
+    "emptyList": "لا توجد محادثات بعد",
+    "unknownParticipant": "غير معروف",
+    "emptyTitle": "اختر محادثة",
+    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
+    "emptyCtaLabel": "ابدأ محادثة",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "اكتب رسالة...",
+    "sendLabel": "إرسال",
+    "sendingLabel": "جارٍ الإرسال...",
+    "sendErrorStatus": "لم يتم التسليم",
+    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
+    "noMessages": "لا توجد رسائل بعد",
+    "loadOlder": "تحميل الرسائل السابقة",
+    "participantsLabel": "{count} مشارك"
   },
   "auth": {
     "Account": "الحساب",

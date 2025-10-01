@@ -54,6 +54,15 @@
         :notifications-empty="notificationsEmpty"
         :notifications-mark-all="notificationsMarkAll"
         :notifications-button-label="notificationsButtonLabel"
+        :messenger-conversations="messengerPreviewConversations"
+        :messenger-unread-count="messengerUnreadCount"
+        :messenger-button-label="messengerButtonLabel"
+        :messenger-title="messengerTitle"
+        :messenger-subtitle="messengerSubtitle"
+        :messenger-empty="messengerEmpty"
+        :messenger-view-all="messengerViewAll"
+        :messenger-unknown-label="messengerUnknownLabel"
+        :messenger-loading="messengerMenuLoading"
         @toggle-right="$emit('toggle-right')"
         @mark-all-notifications="markAllNotifications"
       >
@@ -95,6 +104,7 @@ import LocaleMenu from "./AppBar/LocaleMenu.vue";
 import RightControls from "./AppBar/RightControls.vue";
 import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
 import { useAuthSession } from "~/stores/auth-session";
+import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
 
 type AppIcon = { name: string; label: string; size?: number; to: string };
@@ -122,6 +132,7 @@ const emit = defineEmits(["toggle-left", "toggle-right", "go-back", "refresh", "
 const { t } = useI18n();
 const config = useConfig();
 const auth = useAuthSession();
+const messenger = useMessengerStore();
 
 const iconTriggerClasses =
   "flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2";
@@ -205,6 +216,35 @@ const notificationsButtonLabel = computed(() => {
   }
   return t("layout.actions.notifications");
 });
+
+const messengerPreviewConversations = computed(
+  () => messenger.previewConversations.value ?? [],
+);
+const messengerUnreadCount = computed(() => messenger.unreadTotal.value);
+const messengerTitle = computed(() => t("layout.messengerMenu.title"));
+const messengerSubtitle = computed(() => {
+  const raw = t("layout.messengerMenu.subtitle");
+  return raw === "layout.messengerMenu.subtitle" ? undefined : raw;
+});
+const messengerEmpty = computed(() => t("layout.messengerMenu.empty"));
+const messengerViewAll = computed(() => t("layout.messengerMenu.viewAll"));
+const messengerUnknownLabel = computed(() => t("messenger.unknownParticipant"));
+const messengerMenuLoading = computed(() => messenger.loadingPreview.value);
+const messengerButtonLabel = computed(() => {
+  const count = messengerUnreadCount.value;
+  if (count > 0) {
+    return t("layout.messengerMenu.badgeLabel", { count });
+  }
+  return t("layout.actions.messages");
+});
+
+if (import.meta.client) {
+  onMounted(() => {
+    if (!messengerPreviewConversations.value.length) {
+      messenger.fetchThreads({ limit: 3 }).catch(() => {});
+    }
+  });
+}
 
 const userSignedInText = computed(() => t("layout.userMenu.signedInAs"));
 const userGuestTitle = computed(() => t("layout.userMenu.guestTitle"));

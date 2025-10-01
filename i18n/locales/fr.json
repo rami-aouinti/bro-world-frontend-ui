@@ -11,6 +11,7 @@
       "goBack": "Revenir en arrière",
       "refresh": "Actualiser",
       "notifications": "Ouvrir les notifications",
+      "messages": "Ouvrir Messenger",
       "cart": "Ouvrir le sac",
       "profile": "Ouvrir le menu profil",
       "viewProfile": "Voir le profil",
@@ -40,6 +41,13 @@
           "time": "il y a 1 h"
         }
       }
+    },
+    "messengerMenu": {
+      "title": "Messages",
+      "subtitle": "Conversations récentes",
+      "viewAll": "Tout voir",
+      "empty": "Aucun nouveau message",
+      "badgeLabel": "{count} messages non lus"
     },
     "userMenu": {
       "signedInAs": "Connecté en tant que",
@@ -172,6 +180,23 @@
       "GetStartedAndStartBuildingAwesomeUI": "Commencez et créez une interface incroyable",
       "GetStarted": "Commencer"
     }
+  },
+  "messenger": {
+    "searchPlaceholder": "Rechercher une conversation",
+    "emptyList": "Aucune conversation pour le moment",
+    "unknownParticipant": "Inconnu",
+    "emptyTitle": "Sélectionnez une conversation",
+    "emptyDescription": "Choisissez une conversation dans la liste pour lire et envoyer des messages.",
+    "emptyCtaLabel": "Commencer une conversation",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Écrire un message…",
+    "sendLabel": "Envoyer",
+    "sendingLabel": "Envoi…",
+    "sendErrorStatus": "Non remis",
+    "shortcutsHint": "Appuyez sur Ctrl+Entrée pour envoyer",
+    "noMessages": "Aucun message pour le moment",
+    "loadOlder": "Charger les messages précédents",
+    "participantsLabel": "{count} participants"
   },
   "auth": {
     "Account": "Compte",

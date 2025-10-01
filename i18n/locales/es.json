@@ -11,6 +11,7 @@
       "goBack": "Volver",
       "refresh": "Actualizar",
       "notifications": "Abrir notificaciones",
+      "messages": "Abrir Messenger",
       "cart": "Abrir bolsa",
       "profile": "Abrir menú de perfil",
       "viewProfile": "Ver perfil",
@@ -40,6 +41,13 @@
           "time": "hace 1 h"
         }
       }
+    },
+    "messengerMenu": {
+      "title": "Mensajes",
+      "subtitle": "Conversaciones recientes",
+      "viewAll": "Ver todo",
+      "empty": "No hay mensajes nuevos",
+      "badgeLabel": "{count} mensajes sin leer"
     },
     "userMenu": {
       "signedInAs": "Conectado como",
@@ -800,6 +808,23 @@
         "buttonAria": "Open the contact page"
       }
     }
+  },
+  "messenger": {
+    "searchPlaceholder": "Buscar conversaciones",
+    "emptyList": "Todavía no hay conversaciones",
+    "unknownParticipant": "Desconocido",
+    "emptyTitle": "Selecciona una conversación",
+    "emptyDescription": "Elige una conversación de la lista para leer y enviar mensajes.",
+    "emptyCtaLabel": "Iniciar una conversación",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Escribe un mensaje...",
+    "sendLabel": "Enviar",
+    "sendingLabel": "Enviando…",
+    "sendErrorStatus": "No entregado",
+    "shortcutsHint": "Presiona Ctrl+Enter para enviar",
+    "noMessages": "Aún no hay mensajes",
+    "loadOlder": "Cargar mensajes anteriores",
+    "participantsLabel": "{count} participantes"
   },
   "auth": {
     "Account": "Cuenta",
