@@ -1702,5 +1702,19 @@
         "contentRequired": "Content is required."
       }
     }
+  },
+  "stories": {
+    "card": {
+      "createLabel": "إنشاء قصة",
+      "openAria": "فتح قصة {name}",
+      "openAriaFallback": "فتح قصة",
+      "imageAlt": "صورة غلاف القصة",
+      "avatarAlt": "أفاتار القصة"
+    },
+    "strip": {
+      "ariaLabel": "القصص",
+      "scrollLeft": "تمرير القصص إلى اليسار",
+      "scrollRight": "تمرير القصص إلى اليمين"
+    }
   }
 }
