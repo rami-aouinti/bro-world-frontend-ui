@@ -7,10 +7,30 @@
         aria-label="Profile"
         v-bind="profileProps"
       >
-        <AppIcon
-          name="mdi:person-outline"
-          :size="22"
-        />
+        <template v-if="props.user">
+          <v-avatar
+            size="36"
+            :class="avatarClasses"
+          >
+            <v-img
+              v-if="props.user.photo"
+              :src="props.user.photo"
+              :alt="heading"
+              cover
+            />
+            <template v-else>
+              <span class="font-semibold uppercase">
+                {{ initials }}
+              </span>
+            </template>
+          </v-avatar>
+        </template>
+        <template v-else>
+          <AppIcon
+            name="mdi:person-outline"
+            :size="22"
+          />
+        </template>
       </button>
     </template>
     <v-card
@@ -109,6 +129,14 @@ const subheading = computed(() => {
   if (props.user.username) return `${props.signedInText} ${props.user.username}`;
 
   return props.signedInText;
+});
+
+const avatarClasses = computed(() => {
+  if (props.user?.photo) {
+    return "bg-transparent";
+  }
+
+  return "bg-primary/10 text-primary";
 });
 
 const initials = computed(() => {
