@@ -11,7 +11,12 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { tryUseNuxtApp, useAppConfig, useRequestURL } from "#imports";
+import {
+  hasInjectionContext,
+  tryUseNuxtApp,
+  useAppConfig,
+  useRequestURL,
+} from "#imports";
 
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {
@@ -20,7 +25,7 @@ const fallbackSiteConfig = {
 };
 
 const siteConfig = computed(() => {
-  if (!nuxtApp) {
+  if (!nuxtApp || !hasInjectionContext()) {
     return fallbackSiteConfig;
   }
 
@@ -35,8 +40,8 @@ const siteConfig = computed(() => {
 const route = useRoute();
 const { themeClass, radius } = useThemes();
 const { locale } = useI18n();
-const runtimeConfig = nuxtApp ? useRuntimeConfig() : null;
-const requestUrl = nuxtApp ? useRequestURL() : null;
+const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
+const requestUrl = nuxtApp && hasInjectionContext() ? useRequestURL() : null;
 
 const fallbackBaseUrl = "https://bro-world-space.com";
 
