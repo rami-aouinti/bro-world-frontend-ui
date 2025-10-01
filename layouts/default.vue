@@ -426,19 +426,41 @@ function setLocale(newLocale: string) {
 
 /** Helpers routes */
 function findActiveSidebarKey(path: string, items: LayoutSidebarItem[]): string | null {
+  let bestMatch: { key: string; score: number } | null = null;
+
   for (const item of items) {
-    if (item.to && matchesRoute(path, item.to)) return item.key;
     if (item.children?.length) {
       const childMatch = findActiveSidebarKey(path, item.children);
-      if (childMatch) return childMatch;
+      if (childMatch && (!bestMatch || childMatch.score > bestMatch.score)) {
+        bestMatch = childMatch;
+      }
+    }
+
+    if (!item.to) continue;
+
+    const score = getRouteMatchScore(path, item.to);
+    if (score > 0 && (!bestMatch || score > bestMatch.score)) {
+      bestMatch = { key: item.key, score };
     }
   }
-  return null;
+
+  return bestMatch?.key ?? null;
 }
 
-function matchesRoute(path: string, target: string) {
-  if (target === "/") return path === "/" || path.startsWith("/?");
-  return path === target || path.startsWith(`${target}/`) || path.startsWith(`${target}?`);
+function getRouteMatchScore(path: string, target: string) {
+  if (target === "/") {
+    return path === "/" || path.startsWith("/?") ? 1 : 0;
+  }
+
+  if (path === target) {
+    return target.length + 1000;
+  }
+
+  if (path.startsWith(`${target}/`) || path.startsWith(`${target}?`)) {
+    return target.length;
+  }
+
+  return 0;
 }
 
 function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
