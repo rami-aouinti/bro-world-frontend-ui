@@ -30,6 +30,14 @@
       width="320"
       class="app-drawer"
     >
+      <ParticlesBg
+          class="sidebar-default-card__particles"
+          :quantity="50"
+          :ease="50"
+          :color="isDark ? '#ffffff' : '#111827'"
+          :staticity="12"
+          refresh
+      />
       <div class="pane-scroll py-4">
         <slot
           name="left-sidebar"
@@ -39,6 +47,7 @@
           :on-select="handleSidebarSelect"
         >
           <AppSidebar
+              :is-dark="isDark"
             :items="sidebarItems"
             :variant="sidebarVariant"
             :active-key="activeSidebar"
@@ -61,6 +70,14 @@
       class="app-drawer"
       data-test="app-right-drawer"
     >
+      <ParticlesBg
+          class="sidebar-default-card__particles"
+          :quantity="50"
+          :ease="50"
+          :color="isDark ? '#ffffff' : '#111827'"
+          :staticity="12"
+          refresh
+      />
       <Suspense>
         <template #default>
           <ClientOnly>
@@ -138,11 +155,18 @@
       </Suspense>
     </v-navigation-drawer>
 
-    <!-- MAIN: affiché seulement si les sidebars sont visibles selon la règle -->
     <v-main
       v-if="areSidebarsVisible"
       class="app-surface"
     >
+      <ParticlesBg
+          class="sidebar-default-card__particles"
+          :quantity="1200"
+          :ease="1200"
+          :color="isDark ? '#ffffff' : '#111827'"
+          :staticity="120"
+          refresh
+      />
       <div class="main-scroll">
         <div class="app-container">
           <slot />
@@ -382,6 +406,11 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
 .pane-scroll {
   height: calc(100vh - var(--app-bar-height));
   overflow-y: auto;
+}
+.sidebar-default-card__particles {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
 }
 
 /* Responsive */

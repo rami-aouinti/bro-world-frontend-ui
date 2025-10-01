@@ -4,83 +4,98 @@
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Main navigation"
   >
-    <nav>
-      <ul class="flex flex-col gap-3">
-        <li
-          v-for="item in resolvedItems"
-          :key="item.key"
-          class="sidebar-group"
-        >
-          <component
-            :is="item.to ? NuxtLink : 'button'"
-            v-bind="item.to ? { to: item.to } : { type: 'button' }"
-            class="sidebar-item"
-            :class="{ 'sidebar-item--active': isItemActive(item, resolvedActiveKey) }"
-            :aria-label="item.to ? t(item.label) : undefined"
-            :aria-current="isItemActive(item, resolvedActiveKey) ? 'page' : undefined"
-            @click="handleParentSelect(item)"
-          >
-            <div class="flex items-center gap-3">
-              <Icon
-                v-if="item.icon"
-                :name="item.icon"
-                :size="20"
-              />
-              <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
-            </div>
-            <button
-              v-if="item.children?.length"
-              type="button"
-              class="sidebar-toggle"
-              :aria-controls="`sidebar-group-${item.key}`"
-              :aria-expanded="isGroupExpanded(item.key)"
-              @click.stop="toggleGroup(item.key)"
-            >
-              <Icon
-                class="sidebar-toggle-icon"
-                name="mdi:chevron-down"
-                :class="{ 'sidebar-toggle-icon--open': isGroupExpanded(item.key) }"
-              />
-              <span class="sr-only">{{ t("layout.sidebar.navigate") }}</span>
-            </button>
-            <span
-              v-else-if="item.to"
-              class="sr-only"
-              >{{ t("layout.sidebar.navigate") }}</span
-            >
-          </component>
-
-          <ul
-            v-if="item.children?.length"
-            v-show="isGroupExpanded(item.key)"
-            :id="`sidebar-group-${item.key}`"
-            class="sidebar-sublist"
-            :aria-hidden="!isGroupExpanded(item.key)"
-          >
+    <div
+        class="sidebar-menu-card"
+    >
+      <ParticlesBg
+          v-if="shouldRenderParticles"
+          class="sidebar-menu-card__particles"
+          :quantity="120"
+          :ease="120"
+          :color="isDark ? '#ffffff' : '#111827'"
+          :staticity="12"
+          refresh
+      />
+      <div class="sidebar-menu-card__content">
+        <nav>
+          <ul class="flex flex-col gap-3">
             <li
-              v-for="child in item.children"
-              :key="child.key"
+                v-for="item in resolvedItems"
+                :key="item.key"
+                class="sidebar-group"
             >
-              <NuxtLink
-                :to="child.to"
-                class="sidebar-subitem"
-                :class="{ 'sidebar-subitem--active': child.key === resolvedActiveKey }"
-                :aria-label="t(child.label)"
-                :aria-current="child.key === resolvedActiveKey ? 'page' : undefined"
-                @click="emit('select', child.key)"
+              <component
+                  :is="item.to ? NuxtLink : 'button'"
+                  v-bind="item.to ? { to: item.to } : { type: 'button' }"
+                  class="sidebar-item"
+                  :class="{ 'sidebar-item--active': isItemActive(item, resolvedActiveKey) }"
+                  :aria-label="item.to ? t(item.label) : undefined"
+                  :aria-current="isItemActive(item, resolvedActiveKey) ? 'page' : undefined"
+                  @click="handleParentSelect(item)"
               >
-                <Icon
-                  v-if="child.icon"
-                  :name="child.icon"
-                  :size="18"
-                />
-                <span class="text-sm text-muted-foreground">{{ t(child.label) }}</span>
-              </NuxtLink>
+                <div class="flex items-center gap-3">
+                  <Icon
+                      v-if="item.icon"
+                      :name="item.icon"
+                      :size="20"
+                  />
+                  <span class="text-sm font-medium text-foreground">{{ t(item.label) }}</span>
+                </div>
+                <button
+                    v-if="item.children?.length"
+                    type="button"
+                    class="sidebar-toggle"
+                    :aria-controls="`sidebar-group-${item.key}`"
+                    :aria-expanded="isGroupExpanded(item.key)"
+                    @click.stop="toggleGroup(item.key)"
+                >
+                  <Icon
+                      class="sidebar-toggle-icon"
+                      name="mdi:chevron-down"
+                      :class="{ 'sidebar-toggle-icon--open': isGroupExpanded(item.key) }"
+                  />
+                  <span class="sr-only">{{ t("layout.sidebar.navigate") }}</span>
+                </button>
+                <span
+                    v-else-if="item.to"
+                    class="sr-only"
+                >{{ t("layout.sidebar.navigate") }}</span
+                >
+              </component>
+
+              <ul
+                  v-if="item.children?.length"
+                  v-show="isGroupExpanded(item.key)"
+                  :id="`sidebar-group-${item.key}`"
+                  class="sidebar-sublist"
+                  :aria-hidden="!isGroupExpanded(item.key)"
+              >
+                <li
+                    v-for="child in item.children"
+                    :key="child.key"
+                >
+                  <NuxtLink
+                      :to="child.to"
+                      class="sidebar-subitem"
+                      :class="{ 'sidebar-subitem--active': child.key === resolvedActiveKey }"
+                      :aria-label="t(child.label)"
+                      :aria-current="child.key === resolvedActiveKey ? 'page' : undefined"
+                      @click="emit('select', child.key)"
+                  >
+                    <Icon
+                        v-if="child.icon"
+                        :name="child.icon"
+                        :size="18"
+                    />
+                    <span class="text-sm text-muted-foreground">{{ t(child.label) }}</span>
+                  </NuxtLink>
+                </li>
+              </ul>
             </li>
           </ul>
-        </li>
-      </ul>
-    </nav>
+        </nav>
+      </div>
+    </div>
   </aside>
 </template>
 
@@ -100,6 +115,7 @@ type SidebarVariant = "default" | "profile";
 const props = withDefaults(
   defineProps<{
     items?: LayoutSidebarItem[];
+    isDark?: boolean;
     activeKey?: string;
     sticky?: boolean;
     variant?: SidebarVariant;
@@ -107,11 +123,12 @@ const props = withDefaults(
   {
     sticky: true,
     variant: "default",
+    isDark: false,
   },
 );
-
+const isDark = computed(() => props.isDark);
 const sticky = computed(() => props.sticky);
-
+const shouldRenderParticles = ref(false);
 const { t } = useI18n();
 const route = useRoute();
 const auth = useAuthSession();
@@ -332,5 +349,29 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
 
 .sidebar-subicon {
   @apply text-muted-foreground;
+}
+
+.sidebar-menu-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 1.75rem 1.25rem;
+  box-shadow:
+      0 5px 5px rgba(var(--v-theme-primary), 0.2),
+      0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+.sidebar-menu-card__particles {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+}
+
+.sidebar-menu-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 </style>

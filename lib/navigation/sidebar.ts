@@ -11,21 +11,30 @@ export const ADMIN_ROLE_KEYS = ["ROLE_ROOT", "ROLE_ADMIN"] as const;
 export function buildSidebarItems(canAccessAdmin: boolean): LayoutSidebarItem[] {
   const items: LayoutSidebarItem[] = [
     {
-      key: "apps",
-      label: "layout.sidebar.items.apps",
-      icon: "mdi-apps",
-      children: [
-        {
-          key: "calendar",
-          label: "layout.sidebar.items.calendar",
-          icon: "mdi-calendar-month",
-          to: "/",
-        },
-        { key: "cv", label: "layout.sidebar.items.cv", icon: "mdi-file-account", to: "/" },
-        { key: "jobs", label: "layout.sidebar.items.jobs", icon: "mdi-briefcase-search", to: "/" },
-      ],
+      key: "calendar",
+      label: "layout.sidebar.items.calendar",
+      icon: "mdi-calendar-month",
+      to: "/",
     },
+    { key: "cv", label: "layout.sidebar.items.cv", icon: "mdi-file-account", to: "/" },
+    { key: "jobs", label: "layout.sidebar.items.jobs", icon: "mdi-briefcase-search", to: "/" },
   ];
+
+  items.push(
+    { key: "help", label: "layout.sidebar.items.help", icon: "mdi-lifebuoy", to: "/help" },
+    {
+      key: "about",
+      label: "layout.sidebar.items.about",
+      icon: "mdi-information-outline",
+      to: "/about",
+    },
+    {
+      key: "contact",
+      label: "layout.sidebar.items.contact",
+      icon: "mdi-email-outline",
+      to: "/contact",
+    },
+  );
 
   if (canAccessAdmin) {
     items.push({
@@ -55,63 +64,40 @@ export function buildSidebarItems(canAccessAdmin: boolean): LayoutSidebarItem[] 
     });
   }
 
-  items.push(
-    { key: "help", label: "layout.sidebar.items.help", icon: "mdi-lifebuoy", to: "/help" },
-    {
-      key: "about",
-      label: "layout.sidebar.items.about",
-      icon: "mdi-information-outline",
-      to: "/about",
-    },
-    {
-      key: "contact",
-      label: "layout.sidebar.items.contact",
-      icon: "mdi-email-outline",
-      to: "/contact",
-    },
-  );
-
   return items;
 }
 
 export function buildProfileSidebarItems(): LayoutSidebarItem[] {
   return [
     {
-      key: "profile",
-      label: "layout.sidebar.items.profile",
-      icon: "mdi-account-circle-outline",
-      children: [
-        {
-          key: "profile-overview",
-          label: "layout.sidebar.items.profileOverview",
-          icon: "mdi-card-account-details-outline",
-          to: "/profile",
-        },
-        {
-          key: "profile-edit",
-          label: "layout.sidebar.items.profileSettings",
-          icon: "mdi-cog-outline",
-          to: "/profile-edit",
-        },
-        {
-          key: "profile-security",
-          label: "layout.sidebar.items.profileSecurity",
-          icon: "mdi-shield-check-outline",
-          to: "/profile-security",
-        },
-        {
-          key: "profile-friends",
-          label: "layout.sidebar.items.profileFriends",
-          icon: "mdi-account-group-outline",
-          to: "/profile-friends",
-        },
-        {
-          key: "profile-photos",
-          label: "layout.sidebar.items.profilePhotos",
-          icon: "mdi-image-multiple-outline",
-          to: "/profile-photos",
-        },
-      ],
+      key: "profile-overview",
+      label: "layout.sidebar.items.profileOverview",
+      icon: "mdi-card-account-details-outline",
+      to: "/profile",
+    },
+    {
+      key: "profile-edit",
+      label: "layout.sidebar.items.profileSettings",
+      icon: "mdi-cog-outline",
+      to: "/profile-edit",
+    },
+    {
+      key: "profile-security",
+      label: "layout.sidebar.items.profileSecurity",
+      icon: "mdi-shield-check-outline",
+      to: "/profile-security",
+    },
+    {
+      key: "profile-friends",
+      label: "layout.sidebar.items.profileFriends",
+      icon: "mdi-account-group-outline",
+      to: "/profile-friends",
+    },
+    {
+      key: "profile-photos",
+      label: "layout.sidebar.items.profilePhotos",
+      icon: "mdi-image-multiple-outline",
+      to: "/profile-photos",
     },
   ];
 }

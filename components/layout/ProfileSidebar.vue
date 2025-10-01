@@ -1,8 +1,18 @@
 <!-- components/ProfileSidebar.vue -->
 <template>
-  <section
-    class="rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+  <div
+      class="sidebar-profile-card"
   >
+    <ParticlesBg
+        v-if="shouldRenderParticles"
+        class="sidebar-profile-card__particles"
+        :quantity="120"
+        :ease="120"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
+    />
+    <div class="sidebar-profile-card__content">
     <v-card-item>
       <div class="d-flex align-center justify-space-between">
         <div class="text-h6 text-foreground">{{ user.name }}</div>
@@ -52,10 +62,21 @@
         </v-btn>
       </div>
     </v-card-text>
-  </section>
-  <section
-    class="rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+    </div>
+  </div>
+  <div
+      class="sidebar-profile-card"
   >
+    <ParticlesBg
+        v-if="shouldRenderParticles"
+        class="sidebar-profile-card__particles"
+        :quantity="120"
+        :ease="120"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
+    />
+    <div class="sidebar-profile-card__content">
     <v-card-item>
       <div class="d-flex align-center justify-space-between">
         <div class="text-subtitle-1 font-weight-semibold text-foreground">
@@ -84,10 +105,21 @@
         />
       </div>
     </v-card-text>
-  </section>
-  <section
-    class="rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+  </div>
+  </div>
+  <div
+      class="sidebar-profile-card"
   >
+    <ParticlesBg
+        v-if="shouldRenderParticles"
+        class="sidebar-profile-card__particles"
+        :quantity="120"
+        :ease="120"
+        :color="isDark ? '#ffffff' : '#111827'"
+        :staticity="12"
+        refresh
+    />
+    <div class="sidebar-profile-card__content">
     <v-card-item>
       <div class="d-flex align-center justify-space-between">
         <div class="text-subtitle-1 font-weight-semibold text-foreground">
@@ -126,12 +158,14 @@
         </div>
       </div>
     </v-card-text>
-  </section>
+  </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import {useCookieColorMode} from "~/composables/useCookieColorMode";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
 type Photo = { id?: string | number; src: string; alt?: string };
@@ -179,7 +213,7 @@ const friendsList = computed<Friend[]>(() => (Array.isArray(props.friends) ? pro
 const visibleFriends = computed(() => friendsList.value.slice(0, 9));
 
 const friendsCount = computed(() => props.friendsCount ?? friendsList.value.length);
-
+const shouldRenderParticles = ref(false);
 const introItems = computed<IntroItem[]>(() => {
   const items: IntroItem[] = [];
   if (props.user.schools?.length) {
@@ -199,6 +233,7 @@ const introItems = computed<IntroItem[]>(() => {
 });
 
 const friendPlaceholderName = computed(() => t("pages.profile.placeholders.missing"));
+const isDark = computed(() => useColorMode().value == "dark");
 
 function friendDisplayName(friend: Friend) {
   const segments = [friend.firstName, friend.lastName]
@@ -279,5 +314,29 @@ function friendAvatar(friend: Friend) {
 .friend-name {
   font-size: 0.85rem;
   line-height: 1.2;
+}
+
+.sidebar-profile-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 1.25rem 0.25rem;
+  box-shadow:
+      0 5px 5px rgba(var(--v-theme-primary), 0.2),
+      0 14px 10px rgba(15, 23, 42, 0.12);
+}
+
+.sidebar-profile-card__particles {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+}
+
+.sidebar-profile-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 </style>

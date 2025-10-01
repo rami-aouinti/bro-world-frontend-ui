@@ -58,7 +58,6 @@
 import { computed, ref, watchEffect } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
-import { useAuthStore } from "~/composables/useAuthStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 import { useAuthSession } from "~/stores/auth-session";
