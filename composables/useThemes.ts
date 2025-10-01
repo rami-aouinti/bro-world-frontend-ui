@@ -83,7 +83,7 @@ function hslToHex({
 }
 
 export function useThemes() {
-  const config = useDocsConfig();
+  const config = useConfig();
 
   function resolveThemeDefaults(): ThemeCookieConfig {
     const defaults = config.value.theme ?? {};
