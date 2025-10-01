@@ -1,5 +1,17 @@
 <template>
   <div class="flex items-center gap-3">
+    <MessengerMenu
+      :conversations="props.messengerConversations"
+      :icon-trigger-classes="props.iconTriggerClasses"
+      :title="props.messengerTitle"
+      :subtitle="props.messengerSubtitle"
+      :view-all-label="props.messengerViewAll"
+      :button-label="props.messengerButtonLabel"
+      :unread-count="props.messengerUnreadCount"
+      :empty-text="props.messengerEmpty"
+      :unknown-label="props.messengerUnknownLabel"
+      :loading="props.messengerLoading"
+    />
     <NotificationMenu
       :items="props.notifications"
       :icon-trigger-classes="props.iconTriggerClasses"
@@ -57,7 +69,9 @@
 
 <script setup lang="ts">
 import NotificationMenu from "./NotificationMenu.vue";
+import MessengerMenu from "~/components/messenger/MessengerMenu.vue";
 import type { AppNotification } from "~/types/layout";
+import type { MessengerConversation } from "~/types/messenger";
 
 const props = defineProps<{
   isMobile: boolean;
@@ -70,6 +84,15 @@ const props = defineProps<{
   notificationsEmpty: string;
   notificationsMarkAll: string;
   notificationsButtonLabel: string;
+  messengerConversations: MessengerConversation[];
+  messengerUnreadCount: number;
+  messengerButtonLabel: string;
+  messengerTitle: string;
+  messengerSubtitle?: string;
+  messengerEmpty: string;
+  messengerViewAll: string;
+  messengerUnknownLabel: string;
+  messengerLoading: boolean;
 }>();
 const emit = defineEmits(["toggle-right", "mark-all-notifications"]);
 </script>

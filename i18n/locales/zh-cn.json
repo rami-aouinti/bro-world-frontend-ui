@@ -11,6 +11,7 @@
       "goBack": "返回",
       "refresh": "刷新",
       "notifications": "打开通知",
+      "messages": "打开消息",
       "cart": "打开包",
       "profile": "打开个人菜单",
       "viewProfile": "查看个人资料",
@@ -40,6 +41,13 @@
           "time": "1 小时前"
         }
       }
+    },
+    "messengerMenu": {
+      "title": "消息",
+      "subtitle": "最近的会话",
+      "viewAll": "查看全部",
+      "empty": "暂无新消息",
+      "badgeLabel": "{count} 条未读消息"
     },
     "userMenu": {
       "signedInAs": "已登录身份",
@@ -172,6 +180,23 @@
       "GetStartedAndStartBuildingAwesomeUI": "开始构建出色的 UI 吧",
       "GetStarted": "开始"
     }
+  },
+  "messenger": {
+    "searchPlaceholder": "搜索会话",
+    "emptyList": "暂无会话",
+    "unknownParticipant": "未知",
+    "emptyTitle": "选择一个会话",
+    "emptyDescription": "从列表中选择一个会话以阅读并发送消息。",
+    "emptyCtaLabel": "开始会话",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "输入消息...",
+    "sendLabel": "发送",
+    "sendingLabel": "正在发送…",
+    "sendErrorStatus": "未送达",
+    "shortcutsHint": "按 Ctrl+Enter 发送",
+    "noMessages": "暂无消息",
+    "loadOlder": "加载更早的消息",
+    "participantsLabel": "{count} 位参与者"
   },
   "auth": {
     "Account": "账户",

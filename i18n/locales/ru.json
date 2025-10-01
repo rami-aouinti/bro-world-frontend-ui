@@ -11,6 +11,7 @@
       "goBack": "Назад",
       "refresh": "Обновить",
       "notifications": "Открыть уведомления",
+      "messages": "Открыть мессенджер",
       "cart": "Открыть сумку",
       "profile": "Открыть меню профиля",
       "viewProfile": "Просмотреть профиль",
@@ -40,6 +41,13 @@
           "time": "1 ч назад"
         }
       }
+    },
+    "messengerMenu": {
+      "title": "Сообщения",
+      "subtitle": "Последние беседы",
+      "viewAll": "Показать все",
+      "empty": "Новых сообщений нет",
+      "badgeLabel": "{count} непрочитанных сообщений"
     },
     "userMenu": {
       "signedInAs": "Выполнен вход как",
@@ -800,6 +808,23 @@
         "buttonAria": "Open the contact page"
       }
     }
+  },
+  "messenger": {
+    "searchPlaceholder": "Поиск по перепискам",
+    "emptyList": "Пока нет переписок",
+    "unknownParticipant": "Неизвестно",
+    "emptyTitle": "Выберите беседу",
+    "emptyDescription": "Выберите беседу из списка, чтобы читать и отправлять сообщения.",
+    "emptyCtaLabel": "Начать беседу",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Напишите сообщение...",
+    "sendLabel": "Отправить",
+    "sendingLabel": "Отправка…",
+    "sendErrorStatus": "Не доставлено",
+    "shortcutsHint": "Нажмите Ctrl+Enter для отправки",
+    "noMessages": "Сообщений пока нет",
+    "loadOlder": "Загрузить предыдущие сообщения",
+    "participantsLabel": "{count} участников"
   },
   "auth": {
     "Account": "Аккаунт",
