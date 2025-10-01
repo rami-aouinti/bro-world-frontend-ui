@@ -10,13 +10,6 @@ export const ADMIN_ROLE_KEYS = ["ROLE_ROOT", "ROLE_ADMIN"] as const;
 
 export function buildSidebarItems(canAccessAdmin: boolean): LayoutSidebarItem[] {
   const items: LayoutSidebarItem[] = [
-    {
-      key: "calendar",
-      label: "layout.sidebar.items.calendar",
-      icon: "mdi-calendar-month",
-      to: "/",
-    },
-    { key: "cv", label: "layout.sidebar.items.cv", icon: "mdi-file-account", to: "/" },
     { key: "jobs", label: "layout.sidebar.items.jobs", icon: "mdi-briefcase-search", to: "/job" },
     { key: "game", label: "layout.sidebar.items.game", icon: "mdi-gamepad-variant-outline", to: "/game" },
     { key: "ecommerce", label: "layout.sidebar.items.ecommerce", icon: "mdi-shopping-outline", to: "/ecommerce" },

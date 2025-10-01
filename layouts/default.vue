@@ -161,10 +161,10 @@
     >
       <ParticlesBg
           class="sidebar-default-card__particles"
-          :quantity="1200"
-          :ease="1200"
+          :quantity="120"
+          :ease="120"
           :color="isDark ? '#ffffff' : '#111827'"
-          :staticity="120"
+          :staticity="12"
           refresh
       />
       <div class="main-scroll">
