@@ -1,5 +1,6 @@
 <template>
   <section
+    v-bind="$attrs"
     class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 backdrop-blur-xl"
   >
     <PostMeta
@@ -102,6 +103,10 @@ interface FeedbackState {
   type: "success" | "error";
   message: string;
 }
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = defineProps<{
   post: BlogPost;
