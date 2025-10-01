@@ -178,7 +178,7 @@
 
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent } from "vue";
-import { useDisplay } from "vuetify";
+import { useDisplay, useTheme } from "vuetify";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import { useRequestHeaders } from "#imports";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
@@ -194,6 +194,9 @@ import { useAuthSession } from "~/stores/auth-session";
 import SidebarWeatherCard from "~/components/layout/SidebarWeatherCard.vue";
 import SidebarLeaderboardCard from "~/components/layout/SidebarLeaderboardCard.vue";
 import SidebarRatingCard from "~/components/layout/SidebarRatingCard.vue";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import type { SiteSettings, SiteThemeDefinition } from "~/types/settings";
 
 const AppSidebarRight = defineAsyncComponent({
   loader: () => import("~/components/layout/AppSidebarRight.vue"),
@@ -230,24 +233,76 @@ const isMobile = computed(() => !display.mdAndUp.value);
 const isRail = computed(() => display.mdAndDown.value && !isMobile.value);
 const showRightWidgets = computed(() => route.meta?.showRightWidgets !== false);
 
+const siteSettingsState = useSiteSettingsState();
+const theme = useTheme();
+
+const { data: fetchedSiteSettings } = await useAsyncData("site-settings", () =>
+  $fetch<{ data: SiteSettings }>("/api/settings").then((response) => response.data),
+);
+
+watch(
+  () => fetchedSiteSettings.value,
+  (value) => {
+    if (value) {
+      siteSettingsState.value = value;
+    }
+  },
+  { immediate: true },
+);
+
+const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
+
 const { weather, leaderboard, rating } = useRightSidebarData();
 
-const cssVars = computed(() => ({
-  "--app-bar-height": "50px",
-  "--pink-shadow": isDark.value
-    ? "0px 16px 32px rgba(243, 126, 205, 0.18)"
-    : "0px 20px 45px rgba(243, 126, 205, 0.28)",
-  "--surface-gradient-start": isDark.value
-    ? "rgba(120, 106, 255, 0.28)"
-    : "rgba(125, 196, 255, 0.45)",
-  "--surface-gradient-end": isDark.value ? "rgba(255, 153, 214, 0.24)" : "rgba(255, 183, 236, 0.4)",
-  "--surface-base": isDark.value ? "rgba(12, 14, 24, 0.9)" : "rgba(244, 247, 252, 0.95)",
-  "--card-bg": isDark.value ? "rgba(20, 22, 33, 0.94)" : "rgba(255, 255, 255, 0.92)",
-  "--card-border": isDark.value ? "rgba(255, 255, 255, 0.08)" : "rgba(15, 23, 42, 0.08)",
-  "--card-shadow": isDark.value
-    ? "0 28px 60px -30px rgba(12, 14, 24, 0.9)"
-    : "0 28px 60px -30px rgba(15, 23, 42, 0.45)",
-}));
+const activeTheme = computed<SiteThemeDefinition | null>(() => {
+  const current = siteSettings.value;
+  const found = current.themes.find((theme) => theme.id === current.activeThemeId);
+
+  return found ?? current.themes[0] ?? null;
+});
+
+watch(
+  activeTheme,
+  (value) => {
+    if (!value) return;
+
+    theme.themes.value.light.colors.primary = value.primaryColor;
+    theme.themes.value.dark.colors.primary = value.primaryColor;
+    theme.themes.value.light.colors.secondary = value.accentColor;
+    theme.themes.value.dark.colors.secondary = value.accentColor;
+  },
+  { immediate: true },
+);
+
+const cssVars = computed(() => {
+  const base = {
+    "--app-bar-height": "50px",
+    "--pink-shadow": isDark.value
+      ? "0px 16px 32px rgba(243, 126, 205, 0.18)"
+      : "0px 20px 45px rgba(243, 126, 205, 0.28)",
+    "--surface-gradient-start": isDark.value
+      ? "rgba(120, 106, 255, 0.28)"
+      : "rgba(125, 196, 255, 0.45)",
+    "--surface-gradient-end": isDark.value ? "rgba(255, 153, 214, 0.24)" : "rgba(255, 183, 236, 0.4)",
+    "--surface-base": isDark.value ? "rgba(12, 14, 24, 0.9)" : "rgba(244, 247, 252, 0.95)",
+    "--card-bg": isDark.value ? "rgba(20, 22, 33, 0.94)" : "rgba(255, 255, 255, 0.92)",
+    "--card-border": isDark.value ? "rgba(255, 255, 255, 0.08)" : "rgba(15, 23, 42, 0.08)",
+    "--card-shadow": isDark.value
+      ? "0 28px 60px -30px rgba(12, 14, 24, 0.9)"
+      : "0 28px 60px -30px rgba(15, 23, 42, 0.45)",
+  } as Record<string, string>;
+
+  if (activeTheme.value) {
+    if (!isDark.value) {
+      base["--surface-base"] = activeTheme.value.surfaceColor;
+    }
+
+    base["--brand-primary"] = activeTheme.value.primaryColor;
+    base["--brand-accent"] = activeTheme.value.accentColor;
+  }
+
+  return base;
+});
 
 const appIcons = [
   { name: "mdi-school-outline", label: "layout.appIcons.academy", size: 22, to: "/academy" },
@@ -272,7 +327,7 @@ const sidebarItems = computed<LayoutSidebarItem[]>(() => {
     return buildProfileSidebarItems();
   }
 
-  return buildSidebarItems(canAccessAdmin.value);
+  return buildSidebarItems(siteSettings.value, canAccessAdmin.value);
 });
 
 const activeSidebar = ref("apps");

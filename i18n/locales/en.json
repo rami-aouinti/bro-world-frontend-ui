@@ -84,6 +84,7 @@
         "profilePhotos": "Photos & media",
         "admin": "Administration",
         "adminGeneral": "General",
+        "adminSettings": "Site settings",
         "adminUserManagement": "User management",
         "adminBlog": "Blog",
         "help": "Help",
@@ -1361,6 +1362,66 @@
     "page": {
       "title": "Administration hub",
       "subtitle": "Manage the entire platform, monitor key metrics, and activate the right levers in a few clicks."
+    },
+    "settings": {
+      "metaTitle": "Site settings",
+      "page": {
+        "title": "Site settings",
+        "subtitle": "Configure the brand, theme palette, and navigation structure for your community."
+      },
+      "sections": {
+        "general": {
+          "title": "Brand identity",
+          "subtitle": "Update the site name and tagline displayed across the workspace."
+        },
+        "theme": {
+          "title": "Themes",
+          "subtitle": "Curate available themes and choose which one is active by default.",
+          "active": "Default theme"
+        },
+        "navigation": {
+          "title": "Navigation menu",
+          "subtitle": "Add, reorder, and secure sidebar entries for every audience.",
+          "children": "Child links"
+        }
+      },
+      "fields": {
+        "siteName": "Site name",
+        "tagline": "Tagline",
+        "themeName": "Theme name",
+        "themeDescription": "Description",
+        "themePrimary": "Primary color",
+        "themeAccent": "Accent color",
+        "themeSurface": "Surface color",
+        "menuLabel": "Menu label",
+        "menuPath": "Destination path",
+        "menuIcon": "Icon (optional)",
+        "menuAdmin": "Admin only",
+        "menuVisible": "Visible"
+      },
+      "placeholders": {
+        "siteName": "Enter a public site name",
+        "tagline": "Describe your mission in one sentence"
+      },
+      "actions": {
+        "save": "Save settings",
+        "reset": "Discard changes",
+        "addTheme": "Add theme",
+        "addMenu": "Add menu",
+        "addChild": "Add child link",
+        "removeMenu": "Remove",
+        "moveUp": "Move up",
+        "moveDown": "Move down"
+      },
+      "feedback": {
+        "saved": "Site configuration updated successfully.",
+        "error": "We couldn't update the configuration. Try again later."
+      },
+      "defaults": {
+        "themeName": "New theme",
+        "menuLabel": "New menu",
+        "submenuLabel": "New submenu"
+      }
     },
     "userManagement": {
       "title": "User management",

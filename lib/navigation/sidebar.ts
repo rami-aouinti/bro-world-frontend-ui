@@ -1,81 +1,61 @@
+import type { SiteMenuItem, SiteSettings } from "~/types/settings";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+
 export interface LayoutSidebarItem {
   key: string;
   label: string;
   icon?: string;
   to?: string;
   children?: LayoutSidebarItem[];
+  translate?: boolean;
 }
 
 export const ADMIN_ROLE_KEYS = ["ROLE_ROOT", "ROLE_ADMIN"] as const;
 
-export function buildSidebarItems(canAccessAdmin: boolean): LayoutSidebarItem[] {
-  const items: LayoutSidebarItem[] = [
-    { key: "jobs", label: "layout.sidebar.items.jobs", icon: "mdi-briefcase-search", to: "/job" },
-    {
-      key: "game",
-      label: "layout.sidebar.items.game",
-      icon: "mdi-gamepad-variant-outline",
-      to: "/game",
-    },
-    {
-      key: "ecommerce",
-      label: "layout.sidebar.items.ecommerce",
-      icon: "mdi-shopping-outline",
-      to: "/ecommerce",
-    },
-    {
-      key: "education",
-      label: "layout.sidebar.items.education",
-      icon: "mdi-school-outline",
-      to: "/education",
-    },
-  ];
-
-  items.push(
-    { key: "help", label: "layout.sidebar.items.help", icon: "mdi-lifebuoy", to: "/help" },
-    {
-      key: "about",
-      label: "layout.sidebar.items.about",
-      icon: "mdi-information-outline",
-      to: "/about",
-    },
-    {
-      key: "contact",
-      label: "layout.sidebar.items.contact",
-      icon: "mdi-email-outline",
-      to: "/contact",
-    },
-  );
-
-  if (canAccessAdmin) {
-    items.push({
-      key: "admin",
-      label: "layout.sidebar.items.admin",
-      icon: "mdi-shield-crown",
-      children: [
-        {
-          key: "admin-general",
-          label: "layout.sidebar.items.adminGeneral",
-          icon: "mdi-view-dashboard-outline",
-          to: "/admin",
-        },
-        {
-          key: "admin-user-management",
-          label: "layout.sidebar.items.adminUserManagement",
-          icon: "mdi-account-cog-outline",
-          to: "/admin/user-management",
-        },
-        {
-          key: "admin-blog",
-          label: "layout.sidebar.items.adminBlog",
-          icon: "mdi-post-outline",
-          to: "/admin/blog",
-        },
-      ],
-    });
+function isMenuVisible(menu: SiteMenuItem, canAccessAdmin: boolean): boolean {
+  if (menu.requiresAdmin && !canAccessAdmin) {
+    return false;
   }
 
-  return items;
+  return menu.isVisible !== false;
+}
+
+function toLayoutItem(menu: SiteMenuItem, canAccessAdmin: boolean): LayoutSidebarItem | null {
+  if (!isMenuVisible(menu, canAccessAdmin)) {
+    return null;
+  }
+
+  const children = (menu.children ?? [])
+    .map((child) => toLayoutItem(child, canAccessAdmin))
+    .filter((child): child is LayoutSidebarItem => Boolean(child));
+
+  if (!menu.to && !children.length) {
+    return null;
+  }
+
+  return {
+    key: menu.id,
+    label: menu.label,
+    icon: menu.icon ?? undefined,
+    to: menu.to ?? undefined,
+    translate: menu.translate,
+    children: children.length ? children : undefined,
+  } satisfies LayoutSidebarItem;
+}
+
+function sortMenus(menus: SiteMenuItem[]): SiteMenuItem[] {
+  return [...menus].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
+export function buildSidebarItems(
+  settings: SiteSettings | null | undefined,
+  canAccessAdmin: boolean,
+): LayoutSidebarItem[] {
+  const source = settings?.menus?.length ? settings.menus : getDefaultSiteSettings().menus;
+
+  return sortMenus(source)
+    .map((menu) => toLayoutItem(menu, canAccessAdmin))
+    .filter((item): item is LayoutSidebarItem => Boolean(item));
 }
 
 export function buildProfileSidebarItems(): LayoutSidebarItem[] {
@@ -85,30 +65,35 @@ export function buildProfileSidebarItems(): LayoutSidebarItem[] {
       label: "layout.sidebar.items.profileOverview",
       icon: "mdi-card-account-details-outline",
       to: "/profile",
+      translate: true,
     },
     {
       key: "profile-edit",
       label: "layout.sidebar.items.profileSettings",
       icon: "mdi-cog-outline",
       to: "/profile-edit",
+      translate: true,
     },
     {
       key: "profile-security",
       label: "layout.sidebar.items.profileSecurity",
       icon: "mdi-shield-check-outline",
       to: "/profile-security",
+      translate: true,
     },
     {
       key: "profile-friends",
       label: "layout.sidebar.items.profileFriends",
       icon: "mdi-account-group-outline",
       to: "/profile-friends",
+      translate: true,
     },
     {
       key: "profile-photos",
       label: "layout.sidebar.items.profilePhotos",
       icon: "mdi-image-multiple-outline",
       to: "/profile-photos",
+      translate: true,
     },
   ];
 }
