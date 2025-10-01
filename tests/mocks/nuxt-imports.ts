@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { vi } from "vitest";
 
 import {
@@ -12,6 +12,90 @@ type StateRef<T> = ReturnType<typeof ref<T>>;
 
 const stateRegistry = new Map<string, StateRef<unknown>>();
 const cookieRegistry = new Map<string, StateRef<unknown>>();
+
+type DocsConfig = {
+  site: {
+    name: string;
+    description: string;
+  };
+  header: {
+    border: boolean;
+    links: Array<Record<string, unknown>>;
+    showTitleInMobile: boolean;
+    darkModeToggle: boolean;
+  };
+  banner: {
+    enable: boolean;
+    showClose: boolean;
+    border: boolean;
+  };
+  main: {
+    padded: boolean;
+  };
+  aside: {
+    useLevel: boolean;
+    levelStyle: "aside" | "header";
+  };
+  search: {
+    enable: boolean;
+    inAside: boolean;
+    style: "input" | "button";
+    placeholder: string;
+  };
+  theme: {
+    customizable: boolean;
+    color: string;
+    radius: number;
+  };
+  toc: {
+    enable: boolean;
+  };
+  footer: Record<string, unknown>;
+};
+
+function createDefaultDocsConfig(): DocsConfig {
+  return {
+    site: {
+      name: "Test Site",
+      description: "Mock documentation site for tests.",
+    },
+    header: {
+      border: false,
+      links: [],
+      showTitleInMobile: true,
+      darkModeToggle: true,
+    },
+    banner: {
+      enable: false,
+      showClose: true,
+      border: false,
+    },
+    main: {
+      padded: true,
+    },
+    aside: {
+      useLevel: false,
+      levelStyle: "aside",
+    },
+    search: {
+      enable: false,
+      inAside: false,
+      style: "input",
+      placeholder: "search.placeholder",
+    },
+    theme: {
+      customizable: true,
+      color: "zinc",
+      radius: 0.75,
+    },
+    toc: {
+      enable: true,
+    },
+    footer: {},
+  };
+}
+
+const docsConfig = ref<DocsConfig>(createDefaultDocsConfig());
 
 export function useRequestEvent() {
   return null;
@@ -56,6 +140,54 @@ export function useCookie<T>(name: string, _options?: Record<string, unknown>) {
 
 const notifyMock = vi.fn();
 
+export function useConfig() {
+  return computed(() => docsConfig.value);
+}
+
+export function __setMockDocsConfig(override: Partial<DocsConfig>) {
+  const base = createDefaultDocsConfig();
+  docsConfig.value = {
+    ...base,
+    ...override,
+    site: {
+      ...base.site,
+      ...override.site,
+    },
+    header: {
+      ...base.header,
+      ...override.header,
+    },
+    banner: {
+      ...base.banner,
+      ...override.banner,
+    },
+    main: {
+      ...base.main,
+      ...override.main,
+    },
+    aside: {
+      ...base.aside,
+      ...override.aside,
+    },
+    search: {
+      ...base.search,
+      ...override.search,
+    },
+    theme: {
+      ...base.theme,
+      ...override.theme,
+    },
+    toc: {
+      ...base.toc,
+      ...override.toc,
+    },
+    footer: {
+      ...base.footer,
+      ...override.footer,
+    },
+  };
+}
+
 export function useNuxtApp() {
   return {
     $notify: notifyMock,
@@ -77,6 +209,7 @@ export function useI18n() {
 export function __resetNuxtStateMocks() {
   stateRegistry.clear();
   cookieRegistry.clear();
+  docsConfig.value = createDefaultDocsConfig();
 }
 
 export function __getNuxtStateRef<T>(key: string): StateRef<T> | undefined {
