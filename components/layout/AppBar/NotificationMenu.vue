@@ -145,7 +145,9 @@ const props = defineProps<{
   unreadCount: number;
 }>();
 
-const emit = defineEmits<["mark-all"]>();
+const emit = defineEmits<{
+  (e: 'mark-all'): void
+}>();
 
 const open = ref(false);
 

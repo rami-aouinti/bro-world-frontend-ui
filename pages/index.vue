@@ -7,7 +7,7 @@
       @submit="createPost"
       @attach="onAttach"
     />
-    <StoriesStrip :items="stories" @open="openStory" @create="createStory" />
+    <StoriesStrip v-if="isAuthenticated" :items="stories" @open="openStory" @create="createStory" />
 
     <div
       v-if="pending"
