@@ -180,6 +180,8 @@
 import { watch, computed, ref, defineAsyncComponent } from "vue";
 import { useCookieColorMode } from "#imports";
 import { useDisplay } from "vuetify";
+import { useCookieColorMode } from "~/composables/useCookieColorMode";
+import { useRequestHeaders } from "#imports";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
@@ -199,6 +201,23 @@ const AppSidebarRight = defineAsyncComponent({
   suspensible: false,
 });
 const colorMode = useCookieColorMode();
+const colorSchemeHint = import.meta.server
+  ? useRequestHeaders(["sec-ch-prefers-color-scheme"])["sec-ch-prefers-color-scheme"]
+  : null;
+
+const resolvedColorMode = computed(() => {
+  if (colorMode.value === "auto") {
+    if (import.meta.server) {
+      if (colorSchemeHint === "dark" || colorSchemeHint === "light") {
+        return colorSchemeHint;
+      }
+      return "light";
+    }
+
+    return colorMode.system.value;
+  }
+
+  return colorMode.value;
 const resolvedColorMode = computed(() => {
   const preference = colorMode.value;
 
@@ -325,7 +344,7 @@ watch(
 
 /** Actions UI */
 function toggleTheme() {
-  return isDark.value ? "light" : "dark";
+  colorMode.value = resolvedColorMode.value === "dark" ? "light" : "dark";
 }
 function toggleLeftDrawer() {
   leftDrawer.value = !leftDrawer.value;
