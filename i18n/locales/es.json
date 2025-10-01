@@ -1523,6 +1523,15 @@
       "ariaLabel": "Historias",
       "scrollLeft": "Desplazar historias hacia la izquierda",
       "scrollRight": "Desplazar historias hacia la derecha"
+    },
+    "viewer": {
+      "close": "Cerrar historia",
+      "imageAlt": "Contenido de la historia",
+      "avatarAlt": "Avatar de la historia",
+      "expired": "La historia ya no es visible.",
+      "reactPrompt": "Reacciona a esta historia",
+      "messageLabel": "Enviar un mensaje",
+      "send": "Enviar"
     }
   }
 }

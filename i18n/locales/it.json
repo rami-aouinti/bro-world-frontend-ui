@@ -1523,6 +1523,15 @@
       "ariaLabel": "Storie",
       "scrollLeft": "Scorri le storie a sinistra",
       "scrollRight": "Scorri le storie a destra"
+    },
+    "viewer": {
+      "close": "Chiudi storia",
+      "imageAlt": "Contenuto della storia",
+      "avatarAlt": "Avatar della storia",
+      "expired": "La storia non è più visibile.",
+      "reactPrompt": "Reagisci a questa storia",
+      "messageLabel": "Invia un messaggio",
+      "send": "Invia"
     }
   }
 }

@@ -1,59 +1,3 @@
-<script setup lang="ts">
-/**
- * Props
- * - image: cover de la story
- * - name: nom affiché en bas
- * - avatar: mini photo en haut
- * - state: "create" | "new" | "seen"
- *   - create => carte "Story erstellen" (avec +)
- *   - new    => anneau bleu autour de l'avatar
- *   - seen   => anneau gris
- * - duration: texte optionnel (ex: "0:22")
- */
-const props = withDefaults(
-  defineProps<{
-    image?: string;
-    name?: string;
-    avatar?: string;
-    state?: "create" | "new" | "seen";
-    duration?: string;
-    width?: number | string;
-    height?: number | string;
-    ringColor?: string; // couleur anneau "new"
-  }>(),
-  {
-    state: "new",
-    width: 144,
-    height: 240,
-    ringColor: "#1b74e4", // bleu FB
-  },
-);
-
-const emit = defineEmits<{
-  (e: "click"): void;
-  (e: "create"): void;
-}>();
-
-const { t } = useI18n();
-
-const isCreate = computed(() => props.state === "create");
-const ringStyle = computed(() => {
-  if (isCreate.value) return {};
-  const color = props.state === "new" ? props.ringColor : "rgba(255,255,255,0.4)";
-  return {
-    boxShadow: `0 0 0 3px #fff, 0 0 0 6px ${color}`,
-  } as Record<string, string>;
-});
-
-const createLabel = computed(() => t("stories.card.createLabel"));
-const openStoryLabel = computed(() =>
-  props.name
-    ? t("stories.card.openAria", { name: props.name })
-    : t("stories.card.openAriaFallback"),
-);
-const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openStoryLabel.value));
-</script>
-
 <template>
   <v-sheet
     class="story-card relative overflow-hidden rounded-xl"
@@ -141,6 +85,62 @@ const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openS
     </div>
   </v-sheet>
 </template>
+
+<script setup lang="ts">
+/**
+ * Props
+ * - image: cover de la story
+ * - name: nom affiché en bas
+ * - avatar: mini photo en haut
+ * - state: "create" | "new" | "seen"
+ *   - create => carte "Story erstellen" (avec +)
+ *   - new    => anneau bleu autour de l'avatar
+ *   - seen   => anneau gris
+ * - duration: texte optionnel (ex: "0:22")
+ */
+const props = withDefaults(
+  defineProps<{
+    image?: string;
+    name?: string;
+    avatar?: string;
+    state?: "create" | "new" | "seen";
+    duration?: string;
+    width?: number | string;
+    height?: number | string;
+    ringColor?: string; // couleur anneau "new"
+  }>(),
+  {
+    state: "new",
+    width: 144,
+    height: 240,
+    ringColor: "#1b74e4", // bleu FB
+  },
+);
+
+const emit = defineEmits<{
+  (e: "click"): void;
+  (e: "create"): void;
+}>();
+
+const { t } = useI18n();
+
+const isCreate = computed(() => props.state === "create");
+const ringStyle = computed(() => {
+  if (isCreate.value) return {};
+  const color = props.state === "new" ? props.ringColor : "rgba(255,255,255,0.4)";
+  return {
+    boxShadow: `0 0 0 3px #fff, 0 0 0 6px ${color}`,
+  } as Record<string, string>;
+});
+
+const createLabel = computed(() => t("stories.card.createLabel"));
+const openStoryLabel = computed(() =>
+  props.name
+    ? t("stories.card.openAria", { name: props.name })
+    : t("stories.card.openAriaFallback"),
+);
+const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openStoryLabel.value));
+</script>
 
 <style scoped>
 .story-card {

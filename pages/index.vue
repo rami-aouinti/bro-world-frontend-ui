@@ -16,6 +16,14 @@
         @open="openStory"
         @create="createStory"
       />
+      <StoryViewerModal
+        v-if="isAuthenticated"
+        v-model="isStoryViewerOpen"
+        :story="activeStory"
+        @close="onStoryClosed"
+        @react="handleStoryReaction"
+        @message="handleStoryMessage"
+      />
     </section>
 
     <div
@@ -72,6 +80,7 @@ import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import StoriesStrip from "~/components/stories/StoriesStrip.vue";
+import StoryViewerModal from "~/components/stories/StoryViewerModal.vue";
 
 definePageMeta({
   showRightWidgets: true,
@@ -84,7 +93,23 @@ const user = {
   name: "Rami Aouinti",
   avatarUrl: "https://bro-world-space.com/img/person.png",
 };
-const stories = ref([
+
+interface Story {
+  id: string | number;
+  image?: string;
+  name?: string;
+  avatar?: string;
+  state?: "create" | "new" | "seen";
+  duration?: string;
+}
+
+interface StoryReaction {
+  id: string;
+  emoji: string;
+  label: string;
+}
+
+const stories = ref<Story[]>([
   {
     id: 1,
     image: "https://picsum.photos/seed/1/600/900",
@@ -134,11 +159,54 @@ const stories = ref([
   },
 ]);
 
-function openStory(s: any) {
-  /* navigate/modal */
+const activeStory = ref<Story | null>(null);
+const isStoryViewerOpen = ref(false);
+const lastStoryReaction = ref<{ storyId: Story["id"]; reactionId: StoryReaction["id"] } | null>(null);
+const lastStoryMessage = ref<{ storyId: Story["id"]; message: string } | null>(null);
+
+function openStory(story: Story) {
+  activeStory.value = story;
+  isStoryViewerOpen.value = true;
 }
 function createStory() {
   /* ouvrir éditeur */
+}
+function onStoryClosed() {
+  activeStory.value = null;
+}
+
+function handleStoryReaction({
+  story,
+  reaction,
+}: {
+  story: Story | null;
+  reaction: StoryReaction;
+}) {
+  if (!story) {
+    return;
+  }
+
+  lastStoryReaction.value = {
+    storyId: story.id,
+    reactionId: reaction.id,
+  };
+}
+
+function handleStoryMessage({
+  story,
+  message,
+}: {
+  story: Story | null;
+  message: string;
+}) {
+  if (!story) {
+    return;
+  }
+
+  lastStoryMessage.value = {
+    storyId: story.id,
+    message,
+  };
 }
 function onAttach(type: string) {
   // Ouvre sélecteur média / GIF / etc.
