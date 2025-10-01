@@ -131,7 +131,7 @@ const props = defineProps<{
 const emit = defineEmits(["toggle-left", "toggle-right", "go-back", "refresh", "update:locale"]);
 
 const { t } = useI18n();
-const config = useDocsConfig();
+const config = useConfig();
 const auth = useAuthSession();
 const messenger = useMessengerStore();
 

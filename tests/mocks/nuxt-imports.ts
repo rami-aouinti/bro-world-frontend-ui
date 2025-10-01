@@ -144,10 +144,6 @@ export function useConfig() {
   return computed(() => docsConfig.value);
 }
 
-export function useDocsConfig() {
-  return useConfig();
-}
-
 export function __setMockDocsConfig(override: Partial<DocsConfig>) {
   const base = createDefaultDocsConfig();
   docsConfig.value = {

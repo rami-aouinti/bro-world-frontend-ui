@@ -41,7 +41,7 @@ import { useCookieColorMode } from "~/composables/useCookieColorMode";
 defineOptions({ inheritAttrs: false });
 
 const attrs = useAttrs();
-const config = useDocsConfig();
+const config = useConfig();
 const colorMode = useCookieColorMode();
 
 const isOpen = ref<boolean | undefined>(false);

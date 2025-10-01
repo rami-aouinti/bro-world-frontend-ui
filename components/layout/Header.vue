@@ -190,7 +190,7 @@ type HeaderLink = {
   menuItems?: HeaderLinkMenuItem[];
 };
 
-const config = useDocsConfig();
+const config = useConfig();
 const { i18nEnabled, localePath } = useI18nDocs();
 const { page } = useContent();
 const { t } = useI18n();
