@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-const config = useConfig();
+const config = useDocsConfig();
 const route = useRoute();
 const { themeClass, radius } = useThemes();
 const { locale } = useI18n();

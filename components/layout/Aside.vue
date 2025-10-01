@@ -63,7 +63,7 @@
 defineProps<{ isMobile: boolean }>();
 
 const { navDirFromPath } = useContentHelpers();
-const config = useConfig();
+const config = useDocsConfig();
 const { locale, defaultLocale, navigation } = useI18nDocs();
 
 const tree = computed(() => {
