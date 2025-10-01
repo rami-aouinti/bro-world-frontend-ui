@@ -1896,6 +1896,22 @@
       },
       "validation": {
         "contentRequired": "Le contenu est requis."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données du blog",
+          "page": {
+            "title": "Données de contenu",
+            "subtitle": "Analysez les métriques, les index de recherche et les flux de données qui soutiennent les workflows éditoriaux."
+          }
+        },
+        "crons": {
+          "metaTitle": "Crons du blog",
+          "page": {
+            "title": "Publications planifiées",
+            "subtitle": "Auditez les tâches cron responsables des imports, des diffusions sociales et des fenêtres de publication automatisées."
+          }
+        }
       }
     }
   },

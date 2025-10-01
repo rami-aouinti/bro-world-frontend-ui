@@ -1364,6 +1364,22 @@
       },
       "validation": {
         "contentRequired": "Content is required."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "博客数据",
+          "page": {
+            "title": "内容数据",
+            "subtitle": "查看支持编辑工作流的指标、搜索索引和数据源。"
+          }
+        },
+        "crons": {
+          "metaTitle": "博客定时任务",
+          "page": {
+            "title": "计划发布",
+            "subtitle": "审查负责导入、社交分发和自动发布时间窗口的定时任务。"
+          }
+        }
       }
     },
     "common": {

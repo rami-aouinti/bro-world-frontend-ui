@@ -1566,6 +1566,22 @@
       },
       "validation": {
         "contentRequired": "Content is required."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Dati del blog",
+          "page": {
+            "title": "Dati sui contenuti",
+            "subtitle": "Analizza metriche, indici di ricerca e flussi di dati che alimentano i flussi editoriali."
+          }
+        },
+        "crons": {
+          "metaTitle": "Processi pianificati del blog",
+          "page": {
+            "title": "Pubblicazioni programmate",
+            "subtitle": "Controlla i job cron responsabili di import, condivisioni social e finestre di pubblicazione automatizzate."
+          }
+        }
       }
     },
     "common": {
