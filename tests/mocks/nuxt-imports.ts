@@ -115,6 +115,9 @@ export function useRequestFetch() {
 
 export function useRuntimeConfig() {
   return {
+    public: {
+      siteUrl: "",
+    },
     redis: {
       listTtl: 60,
       itemTtl: 300,

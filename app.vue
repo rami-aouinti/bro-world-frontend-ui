@@ -11,17 +11,43 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { tryUseNuxtApp, useRequestURL } from "#imports";
 
+const nuxtApp = tryUseNuxtApp();
 const config = useConfig();
 const route = useRoute();
 const { themeClass, radius } = useThemes();
 const { locale } = useI18n();
-const runtimeConfig = useRuntimeConfig();
+const runtimeConfig = nuxtApp ? useRuntimeConfig() : null;
+const requestUrl = nuxtApp ? useRequestURL() : null;
 
-const baseUrl = runtimeConfig.public.siteUrl || "https://bro-world-space.com";
-const normalizedBaseUrl = baseUrl.endsWith("/")
-  ? baseUrl.slice(0, -1)
-  : baseUrl;
+const fallbackBaseUrl = "https://bro-world-space.com";
+
+const resolvedBaseUrl = computed(() => {
+  const configuredSiteUrl = runtimeConfig?.public?.siteUrl?.trim();
+
+  if (configuredSiteUrl) {
+    return configuredSiteUrl;
+  }
+
+  const inferredOrigin = requestUrl?.origin ?? null;
+
+  if (inferredOrigin && inferredOrigin !== "null") {
+    return inferredOrigin;
+  }
+
+  return fallbackBaseUrl;
+});
+
+const normalizedBaseUrl = computed(() => {
+  const base = resolvedBaseUrl.value;
+
+  if (base.endsWith("/")) {
+    return base.slice(0, -1);
+  }
+
+  return base;
+});
 
 type SeoMetaFields = {
   title?: string;
@@ -43,10 +69,16 @@ const defaultDescription = computed(
     "Welcome to Bro World — your unique community platform.",
 );
 const canonicalUrl = computed(() => {
+  const base = normalizedBaseUrl.value;
+
+  if (!nuxtApp) {
+    return base;
+  }
+
   try {
-    return new URL(route.fullPath, baseUrl).toString();
+    return new URL(route.fullPath, base).toString();
   } catch {
-    return baseUrl;
+    return base;
   }
 });
 
@@ -76,7 +108,9 @@ const structuredData = computed(() =>
   }),
 );
 
-const socialImageUrl = computed(() => `${normalizedBaseUrl}/social-img.png`);
+const socialImageUrl = computed(
+  () => `${normalizedBaseUrl.value}/social-img.png`,
+);
 
 useHead({
   title,
@@ -88,11 +122,11 @@ useHead({
   link: [
     { rel: "icon", href: "/favicon.ico" },
     { rel: "canonical", href: canonicalUrl.value },
-    { rel: "alternate", hrefLang: "en", href: `${normalizedBaseUrl}/en` },
-    { rel: "alternate", hrefLang: "de", href: `${normalizedBaseUrl}/de` },
-    { rel: "alternate", hrefLang: "fr", href: `${normalizedBaseUrl}/fr` },
-    { rel: "alternate", hrefLang: "ar", href: `${normalizedBaseUrl}/ar` },
-    { rel: "alternate", hrefLang: "x-default", href: `${normalizedBaseUrl}/` },
+    { rel: "alternate", hrefLang: "en", href: `${normalizedBaseUrl.value}/en` },
+    { rel: "alternate", hrefLang: "de", href: `${normalizedBaseUrl.value}/de` },
+    { rel: "alternate", hrefLang: "fr", href: `${normalizedBaseUrl.value}/fr` },
+    { rel: "alternate", hrefLang: "ar", href: `${normalizedBaseUrl.value}/ar` },
+    { rel: "alternate", hrefLang: "x-default", href: `${normalizedBaseUrl.value}/` },
   ],
   meta: [
     {
