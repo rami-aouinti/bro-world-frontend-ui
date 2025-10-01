@@ -82,7 +82,16 @@
         "profilePhotos": "Fotos & Medien",
         "admin": "Verwaltung",
         "adminGeneral": "Allgemein",
+        "adminStatistics": "Statistiken",
+        "adminGeneralSetting": "Allgemeine Einstellung",
+        "adminData": "Daten",
+        "adminCrons": "Crons",
         "adminUserManagement": "Benutzerverwaltung",
+        "adminBlogManagement": "Blog-Management",
+        "adminJobManagement": "Job-Management",
+        "adminEcommerceManagement": "E-Commerce-Management",
+        "adminEducationManagement": "Bildungsmanagement",
+        "adminGameManagement": "Spiele-Management",
         "adminBlog": "Blog",
         "help": "Hilfe",
         "about": "Über uns",
@@ -1414,6 +1423,22 @@
         "username": "Username is required.",
         "email": "A valid email address is required.",
         "roles": "Select at least one role."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "User data",
+          "page": {
+            "title": "User data",
+            "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "User crons",
+          "page": {
+            "title": "Scheduled automations",
+            "subtitle": "Monitor background jobs that sync accounts, cleanse inactive users, and dispatch notifications."
+          }
+        }
       }
     },
     "blogManagement": {
@@ -1421,6 +1446,22 @@
       "page": {
         "title": "Blog-Administration",
         "subtitle": "Veröffentlichen Sie Ankündigungen und kuratieren Sie Community-Geschichten."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Blog data",
+          "page": {
+            "title": "Content data",
+            "subtitle": "Inspect metrics, search indexes, and data feeds powering editorial workflows."
+          }
+        },
+        "crons": {
+          "metaTitle": "Blog crons",
+          "page": {
+            "title": "Scheduled publishing",
+            "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
       }
     },
     "actions": {
@@ -1521,25 +1562,41 @@
           "content": {
             "title": "Content-Management",
             "description": "Planen, veröffentlichen und archivieren Sie Artikel, Events und Lernressourcen.",
-            "tags": ["Redaktions-Workflow", "Freigabe", "Terminplanung"],
+            "tags": [
+              "Redaktions-Workflow",
+              "Freigabe",
+              "Terminplanung"
+            ],
             "status": "12 Inhalte erfordern eine redaktionelle Prüfung."
           },
           "community": {
             "title": "Community & Moderation",
             "description": "Konfigurieren Sie Moderationsregeln, verwalten Sie Meldungen und Sanktionen.",
-            "tags": ["Meldungen", "Sanktionen", "Private Nachrichten"],
+            "tags": [
+              "Meldungen",
+              "Sanktionen",
+              "Private Nachrichten"
+            ],
             "status": "Durchschnittliche Reaktionszeit: 1 h 42."
           },
           "commerce": {
             "title": "Monetarisierung & Angebote",
             "description": "Verwalten Sie Abonnements, Promo-Codes und Geschäftspartnerschaften.",
-            "tags": ["Abonnements", "Abrechnung", "Gutscheine"],
+            "tags": [
+              "Abonnements",
+              "Abrechnung",
+              "Gutscheine"
+            ],
             "status": "Konversionsrate diese Woche um 3,4 % gestiegen."
           },
           "governance": {
             "title": "Governance & Compliance",
             "description": "Prüfen Sie Zugriffe, verwalten Sie privilegierte Rollen und erstellen Sie Compliance-Berichte.",
-            "tags": ["Audit", "Rollen", "Nachverfolgbarkeit"],
+            "tags": [
+              "Audit",
+              "Rollen",
+              "Nachverfolgbarkeit"
+            ],
             "status": "Letztes vollständiges Audit vor 5 Tagen abgeschlossen."
           }
         }
@@ -1683,6 +1740,101 @@
       },
       "validation": {
         "contentRequired": "Content is required."
+      }
+    },
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
+          }
+        }
       }
     }
   },
