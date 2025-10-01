@@ -1,6 +1,6 @@
 <template>
   <main
-    class="py-10"
+    class="py-5"
     aria-labelledby="admin-title"
   >
     <v-container>

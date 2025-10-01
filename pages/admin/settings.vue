@@ -1,5 +1,5 @@
 <template>
-  <main class="py-10" aria-labelledby="admin-settings-title">
+  <main class="py-5" aria-labelledby="admin-settings-title">
     <v-container class="settings-container">
 
       <!-- Header sticky + actions -->
@@ -692,10 +692,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* Layout global + grid */
-.settings-container {
-  max-width: 1200px;
-}
+
 .settings-grid {
   row-gap: 16px;
 }
