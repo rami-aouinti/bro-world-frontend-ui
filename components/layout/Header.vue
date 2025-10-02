@@ -208,8 +208,13 @@ const showToc = computed(() => {
   );
 });
 
-const route = useRoute();
-const baseRouteName = computed(() => useRouteBaseName()(route));
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
+const resolveRouteBaseName = useRouteBaseName();
+const baseRouteName = computed(() => {
+  const route = currentRoute.value ?? router.currentRoute.value;
+  return route ? resolveRouteBaseName(route) : undefined;
+});
 
 function handleMenuItemSelect(item: HeaderLinkMenuItem) {
   if (!item?.to) return;
