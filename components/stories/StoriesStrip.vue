@@ -32,7 +32,7 @@
         class="nav-btn left"
         icon
         size="large"
-        variant="elevated"
+        variant="text"
         :aria-label="t('stories.strip.scrollLeft')"
         @click="scrollBy(-320)"
     >
@@ -44,7 +44,7 @@
         class="nav-btn right"
         icon
         size="large"
-        variant="elevated"
+        variant="text"
         :aria-label="t('stories.strip.scrollRight')"
         @click="scrollBy(320)"
     >

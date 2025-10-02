@@ -1,4 +1,8 @@
 <template>
+  <main
+      class="py-8"
+      aria-labelledby="profile-password-title"
+  >
   <v-card
     class="auth-card border-radius-xl overflow-visible"
     rounded="xl"
@@ -21,16 +25,16 @@
       <AuthResetPasswordForm />
     </div>
   </v-card>
+  </main>
 </template>
 
 <script setup lang="ts">
-import AuthResetPasswordForm from "~/components/auth/ResetPasswordForm.vue";
-
 definePageMeta({
   title: "forgot-password",
   layout: "auth",
   breadcrumb: "disabled",
 });
+import AuthResetPasswordForm from "~/components/auth/ResetPasswordForm.vue";
 </script>
 
 <style scoped>
