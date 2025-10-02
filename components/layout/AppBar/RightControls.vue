@@ -1,8 +1,7 @@
 <template>
   <div class="flex items-center gap-3">
     <button
-      v-if="props.showRightToggle"
-      v-show="!props.isMobile"
+      v-show="props.showRightToggle && !props.isMobile"
       type="button"
       :class="props.iconTriggerClasses"
       aria-label="Open widgets"
@@ -51,8 +50,7 @@
     <slot name="user" />
     <slot name="locale" />
     <button
-      v-if="props.showRightToggle"
-      v-show="props.isMobile"
+      v-show="props.showRightToggle && props.isMobile"
       type="button"
       :class="props.iconTriggerClasses"
       aria-label="Open widgets"
