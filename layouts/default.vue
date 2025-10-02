@@ -253,8 +253,34 @@ const display = useDisplay();
 const { locale, availableLocales } = useI18n();
 const auth = useAuthSession();
 
-const leftDrawer = ref(true);
-const rightDrawer = ref(true);
+const leftDrawerState = ref(true);
+const rightDrawerState = ref(true);
+
+const leftDrawer = computed({
+  get() {
+    if (!isHydrated.value) {
+      return false;
+    }
+
+    return leftDrawerState.value;
+  },
+  set(value: boolean) {
+    leftDrawerState.value = value;
+  },
+});
+
+const rightDrawer = computed({
+  get() {
+    if (!isHydrated.value) {
+      return false;
+    }
+
+    return rightDrawerState.value;
+  },
+  set(value: boolean) {
+    rightDrawerState.value = value;
+  },
+});
 const isMobile = computed(() => {
   if (!isHydrated.value) {
     return false;
@@ -391,6 +417,10 @@ const user = computed(() => auth.currentUser.value ?? null);
 
 /** ✅ Règle d’affichage du contenu: gauche ouverte ET (droite ouverte si demandée) */
 const areSidebarsVisible = computed(() => {
+  if (!isHydrated.value) {
+    return true;
+  }
+
   const leftVisible = leftDrawer.value;
   const rightOk = showRightWidgets.value ? rightDrawer.value : true;
   return leftVisible && rightOk;
