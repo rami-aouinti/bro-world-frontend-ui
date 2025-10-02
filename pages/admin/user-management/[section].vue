@@ -40,14 +40,16 @@ definePageMeta({
   showRightWidgets: false,
 });
 
-const route = useRoute();
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 
 const allowedSections = ["data", "crons"] as const;
 
 type UserManagementSection = (typeof allowedSections)[number];
 
 const section = computed<UserManagementSection>(() => {
-  const value = route.params.section;
+  const params = currentRoute.value?.params ?? {};
+  const value = (params as Record<string, unknown>).section;
   if (typeof value === "string" && allowedSections.includes(value as UserManagementSection)) {
     return value as UserManagementSection;
   }

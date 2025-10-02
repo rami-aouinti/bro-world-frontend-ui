@@ -40,14 +40,16 @@ definePageMeta({
   showRightWidgets: false,
 });
 
-const route = useRoute();
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 
 const allowedSections = ["data", "crons"] as const;
 
 type JobManagementSection = (typeof allowedSections)[number];
 
 const section = computed<JobManagementSection>(() => {
-  const value = route.params.section;
+  const params = currentRoute.value?.params ?? {};
+  const value = (params as Record<string, unknown>).section;
   if (typeof value === "string" && allowedSections.includes(value as JobManagementSection)) {
     return value as JobManagementSection;
   }

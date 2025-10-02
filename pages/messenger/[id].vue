@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { computed, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { callOnce, navigateTo } from "#imports";
 import ConversationsList from "~/components/messenger/ConversationsList.vue";
@@ -38,13 +38,16 @@ import ChatPane from "~/components/messenger/ChatPane.vue";
 import { useMessengerStore } from "~/stores/messenger";
 
 const messenger = useMessengerStore();
-const route = useRoute();
 const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 const { t } = useI18n();
 
 await callOnce(() => messenger.fetchThreads({ limit: 50 }));
 
-const conversationId = computed(() => String(route.params.id ?? ""));
+const conversationId = computed(() => {
+  const params = currentRoute.value?.params ?? {};
+  return String((params as Record<string, unknown>).id ?? "");
+});
 const conversations = computed(() => messenger.orderedConversations.value ?? []);
 const loading = computed(() => messenger.loadingList.value);
 const emptyCtaTo = computed(() => {

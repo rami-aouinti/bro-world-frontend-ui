@@ -69,9 +69,12 @@ const loading = ref(false);
 const error = ref("");
 const success = ref("");
 
-const route = useRoute();
 const router = useRouter();
-const token = computed(() => route.query.token as string);
+const currentRoute = computed(() => router.currentRoute.value);
+const token = computed(() => {
+  const queryToken = currentRoute.value?.query?.token;
+  return typeof queryToken === "string" ? queryToken : "";
+});
 
 const passwordRules = [
   (v: string) => !!v || t("reset.rules.required"),
