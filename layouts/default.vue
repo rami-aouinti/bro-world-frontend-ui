@@ -97,7 +97,19 @@
                   :rating="rating"
                   :user="user"
                 >
-                  <div class="flex flex-col gap-4">
+                  <div
+                    v-if="rightSidebarContent"
+                    :class="rightSidebarContent.wrapperClass ?? 'flex flex-col gap-4'"
+                  >
+                    <component
+                      :is="rightSidebarContent.component"
+                      v-bind="rightSidebarContent.props"
+                    />
+                  </div>
+                  <div
+                    v-else
+                    class="flex flex-col gap-4"
+                  >
                     <SidebarWeatherCard
                       v-if="weather"
                       :weather="weather"
@@ -181,6 +193,7 @@ import { useRequestHeaders, useState } from "#imports";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
 import {
@@ -318,6 +331,7 @@ watch(
 const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
 
 const { weather, leaderboard, rating } = useRightSidebarData();
+const { rightSidebarContent } = useLayoutRightSidebar();
 
 const activeTheme = computed<SiteThemeDefinition | null>(() => {
   const current = siteSettings.value;
