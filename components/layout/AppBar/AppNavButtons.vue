@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center gap-3">
-    <v-btn
+    <button
       v-if="props.isMobile"
       type="button"
       :class="props.iconTriggerClasses"
@@ -10,7 +10,7 @@
         name="mdi:menu"
         :size="24"
       />
-    </v-btn>
+    </button>
 
     <div class="flex items-center gap-8 px-16">
       <button
