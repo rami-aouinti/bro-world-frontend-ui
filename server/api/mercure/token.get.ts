@@ -26,6 +26,17 @@ function resolveErrorMessage(payload: unknown): string | undefined {
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
+  const configuredToken =
+    runtimeConfig.mercure?.token ?? runtimeConfig.public?.mercure?.token ?? null;
+
+  if (configuredToken) {
+    return {
+      token: configuredToken,
+      expiresAt: null,
+      expiresIn: null,
+    } satisfies MercureTokenEnvelope;
+  }
+
   const baseEndpoint = sanitizeBaseEndpoint(
     runtimeConfig.auth?.apiBase ?? "https://bro-world.org/api",
   );

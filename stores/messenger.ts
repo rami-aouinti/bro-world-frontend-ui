@@ -814,6 +814,13 @@ export const useMessengerStore = defineStore("messenger", () => {
   }
 
   async function ensureMercureToken(): Promise<string | null> {
+    const configuredToken =
+      runtimeConfig.mercure?.token ?? runtimeConfig.public?.mercure?.token ?? null;
+
+    if (configuredToken) {
+      return configuredToken;
+    }
+
     const token = auth.mercureToken.value;
 
     if (token) {
