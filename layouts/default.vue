@@ -306,7 +306,9 @@ const rightDrawer = computed({
   },
 });
 
-const drawerInlineStyle = { zIndex: 1004 } as const;
+const drawerInlineStyle = computed(() => ({
+  zIndex: isHydrated.value ? 1004 : 1006,
+}));
 const isMobile = computed(() => {
   if (!isHydrated.value) {
     return initialIsMobile.value;
