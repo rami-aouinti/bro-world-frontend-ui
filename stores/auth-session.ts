@@ -1,7 +1,6 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { useLocalePath } from "#i18n";
 import { useCookie, useRequestFetch, useState } from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
@@ -431,10 +430,15 @@ export const useAuthSession = defineStore("auth-session", () => {
 
     if (redirect && import.meta.client) {
       const router = useRouter();
-      const localePath = useLocalePath();
-      const target = redirectTo ?? localePath("/login");
+      const currentRoute = router.currentRoute.value;
+      const currentPath =
+        typeof currentRoute?.path === "string"
+          ? currentRoute.path
+          : currentRoute?.fullPath ?? "/";
+      const locale = resolveLocaleFromPath(currentPath);
+      const target = redirectTo ?? buildLocalizedPath("/login", locale);
 
-      if (router.currentRoute.value.fullPath !== target) {
+      if (currentRoute?.fullPath !== target) {
         await router.push(target);
       }
     }
