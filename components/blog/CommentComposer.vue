@@ -16,7 +16,7 @@
         rounded
         rows="1"
         auto-grow
-        variant="text"
+        variant="plain"
         :placeholder="placeholderText"
         hide-details
         class="grow-input"
