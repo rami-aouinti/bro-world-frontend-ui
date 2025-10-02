@@ -35,7 +35,10 @@ export default defineNuxtPlugin({
           payload.message || payload.error || error.message || "Unexpected network error";
         const title = payload.title || (status ? `HTTP ${status}` : undefined);
 
-        if (status === 401 || status === 403) {
+        const context = (options.context ?? {}) as Record<string, unknown>;
+        const skipUnauthorizedHandler = Boolean(context.skipUnauthorizedHandler);
+
+        if ((status === 401 || status === 403) && !skipUnauthorizedHandler) {
           const translator = $i18n?.t ?? ((key: string) => key);
           const sessionMessage = translator("auth.sessionExpired");
 
@@ -44,10 +47,7 @@ export default defineNuxtPlugin({
           return;
         }
 
-        const suppressNotification = Boolean(
-          options?.context &&
-            (options.context as Record<string, unknown>).suppressErrorNotification,
-        );
+        const suppressNotification = Boolean(context.suppressErrorNotification);
 
         if (suppressNotification) {
           return;
