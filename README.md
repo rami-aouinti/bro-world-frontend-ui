@@ -56,6 +56,18 @@ For full documentation and usage examples, visit the BroWorld documentation site
 - [Authentication guide](docs/authentication.md) – details the login flow, session
   storage, route guards, and API usage patterns.
 
+## ⚙️ Configuration
+
+Environment variables are used to configure external services such as the API,
+Redis cache, analytics, and testing tools. To get started locally:
+
+1. Copy `.env.example` to `.env`.
+2. Update the values to match your environment (for example, provide your API
+   base URL or analytics identifiers).
+
+Redis, analytics, and advertising settings are optional—leave them empty if you
+do not use those integrations.
+
 ## 🔐 Profile page
 
 - The `/profile` route is protected by the `auth` middleware. Visitors without a valid session are redirected to `/login`, and the intended URL is stored so they return to `/profile` after authenticating.
