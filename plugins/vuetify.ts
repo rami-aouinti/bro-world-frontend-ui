@@ -421,6 +421,20 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const vuetify = createVuetify({
     ssr: true,
+    display: {
+      mobileBreakpoint: "md",
+      thresholds: {
+        xs: 0,
+        sm: 600,
+        md: 960,
+        lg: 1280,
+        xl: 1920,
+      },
+      ssr: {
+        width: 1280,
+        height: 720,
+      },
+    },
     components: {
       VAlert,
       VApp,
