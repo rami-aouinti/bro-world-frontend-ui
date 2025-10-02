@@ -117,6 +117,10 @@ export function useRuntimeConfig() {
   return {
     public: {
       siteUrl: "",
+      redis: {
+        listTtl: 60,
+        itemTtl: 300,
+      },
     },
     redis: {
       listTtl: 60,

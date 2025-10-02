@@ -534,6 +534,10 @@ export default defineNuxtConfig({
       sessionMaxAge: process.env.NUXT_AUTH_SESSION_MAX_AGE ?? String(60 * 60 * 24 * 7),
     },
     public: {
+      redis: {
+        listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
+        itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
+      },
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
       blogApiEndpoint:
