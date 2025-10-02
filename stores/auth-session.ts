@@ -318,6 +318,7 @@ export const useAuthSession = defineStore("auth-session", () => {
         method: "GET",
         context: {
           suppressErrorNotification: true,
+          skipUnauthorizedHandler: true,
         },
       });
 
