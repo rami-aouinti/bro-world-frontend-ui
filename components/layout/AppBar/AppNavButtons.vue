@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-3">
     <button
-      v-if="props.isMobile"
+      v-show="props.isMobile"
       type="button"
       :class="props.iconTriggerClasses"
       @click="emit('toggle-left')"
@@ -34,7 +34,7 @@
         />
       </button>
       <button
-        v-if="!props.isMobile"
+        v-show="!props.isMobile"
         type="button"
         :class="props.iconTriggerClasses"
         @click="emit('toggle-left')"
