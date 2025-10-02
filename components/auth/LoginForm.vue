@@ -1,6 +1,8 @@
 <template>
   <form
     :class="formClasses"
+    data-lpignore="true"
+    data-lastpass-ignore="true"
     @submit.prevent="handleSubmit"
   >
     <div class="login-form__inner">
@@ -33,6 +35,8 @@
           :disabled="isDisabled"
           :aria-invalid="Boolean(formError)"
           :aria-describedby="formError ? formErrorId : undefined"
+          data-lpignore="true"
+          data-lastpass-ignore="true"
           @input="handleFieldInput"
         />
       </div>
@@ -49,6 +53,8 @@
           :disabled="isDisabled"
           :aria-invalid="Boolean(formError)"
           :aria-describedby="formError ? formErrorId : undefined"
+          data-lpignore="true"
+          data-lastpass-ignore="true"
           @input="handleFieldInput"
         />
 
