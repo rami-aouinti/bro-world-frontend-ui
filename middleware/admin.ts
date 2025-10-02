@@ -1,10 +1,11 @@
 import { createError } from "#imports";
+import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
 
 type MiddlewareResult = ReturnType<typeof defineNuxtRouteMiddleware>;
 
-export default defineNuxtRouteMiddleware(async (_to): MiddlewareResult => {
+export default defineNuxtRouteMiddleware(async (to): MiddlewareResult => {
   const auth = useAuthSession();
   await auth.initialize();
 
@@ -25,6 +26,6 @@ export default defineNuxtRouteMiddleware(async (_to): MiddlewareResult => {
     );
   }
 
-  const localePath = useLocalePath();
-  return navigateTo(localePath("/"));
+  const locale = resolveLocaleFromPath(to.path ?? "/");
+  return navigateTo(buildLocalizedPath("/", locale));
 });

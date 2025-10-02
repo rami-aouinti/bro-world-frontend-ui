@@ -1,3 +1,4 @@
+import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { useAuthSession } from "~/stores/auth-session";
 
 export default defineNuxtRouteMiddleware(async (to) => {
@@ -8,8 +9,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
-  const localePath = useLocalePath();
-  const loginPath = localePath("/login");
+  const locale = resolveLocaleFromPath(to.path ?? "/");
+  const loginPath = buildLocalizedPath("/login", locale);
 
   if (to.path === loginPath) {
     return;
