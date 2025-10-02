@@ -69,16 +69,20 @@ export const useAuthSession = defineStore("auth-session", () => {
   const handlingUnauthorizedState = ref(false);
 
   const runtimeConfig = useRuntimeConfig();
+  const privateAuthConfig = import.meta.server ? runtimeConfig.auth ?? {} : {};
+  const publicAuthConfig = runtimeConfig.public?.auth ?? {};
   const sessionTokenCookieName =
-    runtimeConfig.auth?.sessionTokenCookieName ??
-    runtimeConfig.public?.auth?.sessionTokenCookieName ??
+    (privateAuthConfig.sessionTokenCookieName as string | undefined) ??
+    publicAuthConfig.sessionTokenCookieName ??
     "auth_session_token";
   const tokenPresenceCookieName =
-    runtimeConfig.auth?.tokenPresenceCookieName ??
-    runtimeConfig.public?.auth?.tokenPresenceCookieName ??
+    (privateAuthConfig.tokenPresenceCookieName as string | undefined) ??
+    publicAuthConfig.tokenPresenceCookieName ??
     "auth_token_present";
   const userCookieName =
-    runtimeConfig.auth?.userCookieName ?? runtimeConfig.public?.auth?.userCookieName ?? "auth_user";
+    (privateAuthConfig.userCookieName as string | undefined) ??
+    publicAuthConfig.userCookieName ??
+    "auth_user";
   type AuthUserCookie = Pick<
     AuthUser,
     "id" | "username" | "email" | "firstName" | "lastName" | "photo" | "roles" | "enabled"
