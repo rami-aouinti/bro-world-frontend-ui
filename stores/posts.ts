@@ -132,8 +132,11 @@ function resolveFetcher() {
 export const usePostsStore = defineStore("posts", () => {
   const authStore = useAuthStore();
   const runtimeConfig = useRuntimeConfig();
-  const listTtlMs = Math.max(Number(runtimeConfig.redis?.listTtl ?? 60), 1) * 1000;
-  const itemTtlMs = Math.max(Number(runtimeConfig.redis?.itemTtl ?? 300), 1) * 1000;
+  const redisRuntimeConfig = import.meta.client
+    ? runtimeConfig.public?.redis
+    : runtimeConfig.redis ?? runtimeConfig.public?.redis;
+  const listTtlMs = Math.max(Number(redisRuntimeConfig?.listTtl ?? 60), 1) * 1000;
+  const itemTtlMs = Math.max(Number(redisRuntimeConfig?.itemTtl ?? 300), 1) * 1000;
 
   const items = useState<Record<string, PostsStorePost>>("posts-items", () => ({}));
   const listIds = useState<string[]>("posts-list-ids", () => []);
