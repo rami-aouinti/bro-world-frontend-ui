@@ -356,6 +356,7 @@ definePageMeta({
   title: "profile-photos",
   showRightWidgets: false,
   sidebarVariant: "profile",
+  documentDriven: false,
 });
 
 const { t, locale, localeProperties } = useI18n();

@@ -390,6 +390,7 @@ definePageMeta({
   title: "profile-friends",
   showRightWidgets: false,
   sidebarVariant: "profile",
+  documentDriven: false,
 });
 
 const { t, locale, localeProperties } = useI18n();

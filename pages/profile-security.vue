@@ -264,6 +264,7 @@ definePageMeta({
   layout: false,
   showRightWidgets: false,
   sidebarVariant: "profile",
+  documentDriven: false,
 });
 
 const { t, locale } = useI18n();
