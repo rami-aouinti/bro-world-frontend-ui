@@ -19,37 +19,61 @@
         {{ sessionMessage }}
       </v-alert>
 
-      <v-text-field
-        variant="outlined"
-        rounded
-        v-model="username"
-        :placeholder="t('auth.usernameOrEmail')"
-        class="login-field__input text-foreground"
-        :class="fieldAlignment"
-        autocomplete="username"
-        required
-        color="primary"
-        :disabled="isDisabled"
-        @input="handleFieldInput"
-      />
-      <v-text-field
-        variant="outlined"
-        rounded
-        v-model="password"
-        :type="showPassword ? 'text' : 'password'"
-        :placeholder="t('auth.password')"
-        class="login-field__input text-foreground"
-        :class="fieldAlignment"
-        autocomplete="current-password"
-        required
-        color="primary"
-        :disabled="isDisabled"
-        @input="handleFieldInput"
-      />
+      <div :class="fieldContainerClasses">
+        <input
+          v-model="username"
+          class="login-field__input text-foreground"
+          :class="fieldAlignment"
+          type="text"
+          :placeholder="t('auth.usernameOrEmail')"
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+          required
+          :disabled="isDisabled"
+          :aria-invalid="Boolean(formError)"
+          :aria-describedby="formError ? formErrorId : undefined"
+          @input="handleFieldInput"
+        />
+      </div>
+
+      <div :class="fieldContainerClasses">
+        <input
+          v-model="password"
+          class="login-field__input text-foreground"
+          :class="fieldAlignment"
+          :type="passwordInputType"
+          :placeholder="t('auth.password')"
+          autocomplete="current-password"
+          required
+          :disabled="isDisabled"
+          :aria-invalid="Boolean(formError)"
+          :aria-describedby="formError ? formErrorId : undefined"
+          @input="handleFieldInput"
+        />
+
+        <button
+          type="button"
+          class="login-field__action"
+          :disabled="isDisabled"
+          :aria-label="passwordToggleAriaLabel"
+          :aria-pressed="showPassword"
+          @click="togglePassword"
+        >
+          <Icon
+            aria-hidden="true"
+            :name="passwordToggleIcon"
+            class="login-field__action-icon"
+          />
+          <span class="sr-only">{{ passwordToggleAriaLabel }}</span>
+        </button>
+      </div>
       <p
         v-if="formError"
+        :id="formErrorId"
         class="login-form__error"
         role="alert"
+        aria-live="polite"
       >
         {{ formError }}
       </p>
@@ -97,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, useId } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalePath } from "#i18n";
@@ -136,9 +160,16 @@ const username = ref("");
 const password = ref("");
 const showPassword = ref(false);
 const formError = ref("");
+const uniqueId = useId();
+const formErrorId = `login-form-error-${uniqueId}`;
 
 const showPasswordLabel = computed(() => t("auth.showPassword"));
 const hidePasswordLabel = computed(() => t("auth.hidePassword"));
+const passwordInputType = computed(() => (showPassword.value ? "text" : "password"));
+const passwordToggleIcon = computed(() => (showPassword.value ? "mdi-eye-off" : "mdi-eye"));
+const passwordToggleAriaLabel = computed(() =>
+  showPassword.value ? hidePasswordLabel.value : showPasswordLabel.value,
+);
 const sessionMessage = computed(() => auth.sessionMessage.value ?? "");
 
 watch(
@@ -151,6 +182,10 @@ watch(
 );
 
 function togglePassword() {
+  if (isDisabled.value) {
+    return;
+  }
+
   showPassword.value = !showPassword.value;
 }
 
@@ -247,6 +282,7 @@ async function handleSubmit() {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  width: 100%;
   border-radius: 9999px;
   padding: 0.85rem 1.25rem;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(247, 247, 247, 0.8));
@@ -279,13 +315,15 @@ async function handleSubmit() {
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 0.6rem;
+  font-size: 1rem;
   font-weight: 500;
+  line-height: 1.5;
   outline: none;
+  color: inherit;
 }
 
 .login-form--compact .login-field__input {
-  font-size: 0.6rem;
+  font-size: 0.9rem;
 }
 
 .login-field__input::placeholder {
@@ -302,6 +340,7 @@ async function handleSubmit() {
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(236, 72, 153, 0.25);
   color: rgba(71, 85, 105, 0.7);
+  cursor: pointer;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -320,6 +359,15 @@ async function handleSubmit() {
 .login-field__action:not(:disabled):hover {
   transform: translateY(-1px);
   box-shadow: 0 12px 24px rgba(236, 72, 153, 0.25);
+}
+
+.login-field__action:focus-visible {
+  outline: 2px solid rgba(236, 72, 153, 0.6);
+  outline-offset: 2px;
+}
+
+.login-field__action-icon {
+  font-size: 1.15rem;
 }
 
 .login-form__error {
