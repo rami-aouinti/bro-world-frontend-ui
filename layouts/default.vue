@@ -255,9 +255,21 @@ const auth = useAuthSession();
 
 const leftDrawer = ref(true);
 const rightDrawer = ref(true);
-const isMobile = computed(() => !display.mdAndUp.value);
+const isMobile = computed(() => {
+  if (!isHydrated.value) {
+    return false;
+  }
+
+  return !display.mdAndUp.value;
+});
 // rail facultatif: quand mdAndDown mais pas mobile complet
-const isRail = computed(() => display.mdAndDown.value && !isMobile.value);
+const isRail = computed(() => {
+  if (!isHydrated.value) {
+    return false;
+  }
+
+  return display.mdAndDown.value && !isMobile.value;
+});
 const showRightWidgets = computed(() => currentRoute.value?.meta?.showRightWidgets !== false);
 
 const siteSettingsState = useSiteSettingsState();
