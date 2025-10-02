@@ -60,11 +60,11 @@
           :aria-pressed="showPassword"
           @click="togglePassword"
         >
-          <Icon
+          <span
             aria-hidden="true"
-            :name="passwordToggleIcon"
-            class="login-field__action-icon"
-          />
+            class="login-field__action-icon mdi"
+            :class="passwordToggleIcon"
+          ></span>
           <span class="sr-only">{{ passwordToggleAriaLabel }}</span>
         </button>
       </div>
