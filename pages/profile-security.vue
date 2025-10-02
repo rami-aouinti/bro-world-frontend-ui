@@ -58,6 +58,21 @@
                   </div>
 
                   <v-form @submit.prevent="handleSubmit">
+                    <label
+                      :for="usernameFieldId"
+                      class="sr-only"
+                    >
+                      {{ t("auth.usernameOrEmail") }}
+                    </label>
+                    <input
+                      :id="usernameFieldId"
+                      type="text"
+                      name="username"
+                      class="sr-only"
+                      autocomplete="username"
+                      :value="usernameFieldValue"
+                      readonly
+                    />
                     <v-row dense>
                       <v-col
                         cols="12"
@@ -256,7 +271,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, reactive, useId } from "vue";
+import { useAuthSession } from "~/stores/auth-session";
 
 definePageMeta({
   middleware: "auth",
@@ -268,6 +284,11 @@ definePageMeta({
 });
 
 const { t, locale } = useI18n();
+const auth = useAuthSession();
+const usernameFieldId = `profile-security-username-${useId()}`;
+const usernameFieldValue = computed(
+  () => auth.currentUser.value?.username ?? auth.currentUser.value?.email ?? "",
+);
 
 interface SessionEntry {
   id: string;
