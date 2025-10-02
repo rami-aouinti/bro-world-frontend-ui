@@ -129,7 +129,8 @@ const isDark = computed(() => props.isDark);
 const sticky = computed(() => props.sticky);
 const shouldRenderParticles = ref(false);
 const { t } = useI18n();
-const route = useRoute();
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 const auth = useAuthSession();
 const siteSettings = useSiteSettingsState();
 
@@ -151,7 +152,8 @@ const resolvedItems = computed<LayoutSidebarItem[]>(() => props.items ?? variant
 
 const derivedActiveKey = computed(() => {
   const items = resolvedItems.value;
-  const match = findActiveSidebarKey(route.fullPath, items);
+  const fullPath = currentRoute.value?.fullPath ?? "/";
+  const match = findActiveSidebarKey(fullPath, items);
   if (match) return match;
   return findFirstSidebarKey(items) ?? "";
 });

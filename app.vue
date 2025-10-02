@@ -32,7 +32,8 @@ const siteConfig = computed(() => {
     description: site?.description ?? fallbackSiteConfig.description,
   };
 });
-const route = useRoute();
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 const { themeClass, radius } = useThemes();
 const { locale } = useI18n();
 const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
@@ -72,10 +73,10 @@ type SeoMetaFields = {
   keywords?: string;
 };
 
-const matchedMeta = computed<SeoMetaFields>(
-  () => (route.matched?.[0]?.meta as SeoMetaFields) ?? {},
-);
-const currentMeta = computed<SeoMetaFields>(() => route.meta as SeoMetaFields);
+const matchedMeta = computed<SeoMetaFields>(() => {
+  return (currentRoute.value?.matched?.[0]?.meta as SeoMetaFields) ?? {};
+});
+const currentMeta = computed<SeoMetaFields>(() => (currentRoute.value?.meta as SeoMetaFields) ?? {});
 
 const defaultTitle = computed(() => siteConfig.value.name);
 const defaultDescription = computed(() => siteConfig.value.description);
@@ -87,7 +88,8 @@ const canonicalUrl = computed(() => {
   }
 
   try {
-    return new URL(route.fullPath, base).toString();
+    const fullPath = currentRoute.value?.fullPath ?? "/";
+    return new URL(fullPath, base).toString();
   } catch {
     return base;
   }

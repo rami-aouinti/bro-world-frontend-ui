@@ -21,11 +21,11 @@
           :to="link.redirect ?? link._path"
           class="text-foreground/80 hover:bg-muted hover:text-primary flex h-8 items-center gap-2 rounded-md p-2 text-sm"
           :class="[
-            path.startsWith(link._path) &&
+            currentPath.startsWith(link._path) &&
               link._path !== '/' &&
               'bg-muted !text-primary font-medium',
 
-            link._path === '/' && path === '/' && 'bg-muted !text-primary font-medium',
+            link._path === '/' && currentPath === '/' && 'bg-muted !text-primary font-medium',
           ]"
         >
           <AppSmartIcon
@@ -66,11 +66,16 @@ const { navDirFromPath } = useContentHelpers();
 const config = useConfig();
 const { locale, defaultLocale, navigation } = useI18nDocs();
 
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
+
 const tree = computed(() => {
-  const route = useRoute();
-  const path = route.path.split("/");
+  const route = currentRoute.value;
+  const pathSegments = (route?.path ?? "/").split("/");
   if (config.value.aside.useLevel) {
-    const leveledPath = path.splice(0, locale.value === defaultLocale ? 2 : 3).join("/");
+    const leveledPath = pathSegments
+      .splice(0, locale.value === defaultLocale ? 2 : 3)
+      .join("/");
 
     const dir = navDirFromPath(leveledPath, navigation.value);
     return dir ?? [];
@@ -79,5 +84,5 @@ const tree = computed(() => {
   return navigation.value;
 });
 
-const path = computed(() => useRoute().path);
+const currentPath = computed(() => currentRoute.value?.path ?? "/");
 </script>
