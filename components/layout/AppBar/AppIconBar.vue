@@ -9,6 +9,8 @@
         <v-btn
           v-bind="tooltipProps"
           :aria-label="props.t(icon.label)"
+          :class="props.iconTriggerClasses"
+          :theme="props.isDark ? 'dark' : 'light'"
         >
           <AppIcon
             :name="icon.name"
@@ -24,6 +26,7 @@
 const props = defineProps<{
   appIcons: { name: string; label: string }[];
   iconTriggerClasses: string;
+  isDark: boolean;
   t: (k: string) => string;
 }>();
 </script>
