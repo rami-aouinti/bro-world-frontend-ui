@@ -296,15 +296,17 @@
 import { computed } from "vue";
 
 const { t, locale, localeProperties } = useI18n();
-const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {
   const title = t("seo.about.title");
   const description = t("seo.about.description");
-  const canonical = new URL(route.path, baseUrl.value).toString();
+  const canonicalPath = currentRoute.value?.path ?? "/";
+  const canonical = new URL(canonicalPath, baseUrl.value).toString();
   const iso = localeProperties.value?.iso ?? locale.value;
 
   return {

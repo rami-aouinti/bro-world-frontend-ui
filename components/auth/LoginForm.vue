@@ -128,7 +128,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, useId } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalePath } from "#i18n";
 import { useAuthSession } from "~/stores/auth-session";
@@ -146,7 +146,6 @@ const props = withDefaults(
 
 const { t, locale } = useI18n();
 const router = useRouter();
-const route = useRoute();
 const localePath = useLocalePath();
 const { $notify } = useNuxtApp();
 const auth = useAuthSession();
@@ -177,6 +176,12 @@ const passwordToggleAriaLabel = computed(() =>
   showPassword.value ? hidePasswordLabel.value : showPasswordLabel.value,
 );
 const sessionMessage = computed(() => auth.sessionMessage.value ?? "");
+const redirectFromQuery = computed(() => {
+  const currentRoute = router.currentRoute.value;
+  const redirectQuery = currentRoute?.query?.redirect;
+
+  return typeof redirectQuery === "string" ? redirectQuery : null;
+});
 
 watch(
   () => auth.loginError.value,
@@ -244,9 +249,8 @@ async function handleSubmit() {
 
     auth.setSessionMessage(null);
 
-    const redirectFromQuery =
-      typeof route.query.redirect === "string" ? route.query.redirect : null;
-    const redirectTarget = redirectFromQuery || auth.consumeRedirect() || localePath("/");
+    const redirectTarget =
+      redirectFromQuery.value || auth.consumeRedirect() || localePath("/");
 
     $notify({
       type: "success",

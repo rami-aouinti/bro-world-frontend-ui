@@ -40,14 +40,16 @@ definePageMeta({
   showRightWidgets: false,
 });
 
-const route = useRoute();
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 
 const allowedSections = ["data", "crons"] as const;
 
 type EcommerceManagementSection = (typeof allowedSections)[number];
 
 const section = computed<EcommerceManagementSection>(() => {
-  const value = route.params.section;
+  const params = currentRoute.value?.params ?? {};
+  const value = (params as Record<string, unknown>).section;
   if (typeof value === "string" && allowedSections.includes(value as EcommerceManagementSection)) {
     return value as EcommerceManagementSection;
   }
