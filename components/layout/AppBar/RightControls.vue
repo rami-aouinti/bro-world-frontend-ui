@@ -15,6 +15,9 @@
           />
         </button>
       </template>
+      <template #fallback>
+        <span aria-hidden="true" />
+      </template>
     </ClientOnly>
     <MessengerMenu
       :conversations="props.messengerConversations"
@@ -67,6 +70,9 @@
             :size="22"
           />
         </button>
+      </template>
+      <template #fallback>
+        <span aria-hidden="true" />
       </template>
     </ClientOnly>
   </div>
