@@ -1,4 +1,11 @@
-import { onBeforeUnmount, toValue, watchEffect, type Component, type MaybeRefOrGetter } from "vue";
+import {
+  markRaw,
+  onBeforeUnmount,
+  toValue,
+  watchEffect,
+  type Component,
+  type MaybeRefOrGetter,
+} from "vue";
 
 export interface LayoutRightSidebarContent {
   component: Component;
@@ -11,20 +18,31 @@ const STATE_KEY = "layout-right-sidebar-content";
 export function useLayoutRightSidebar() {
   const rightSidebarContent = useState<LayoutRightSidebarContent | null>(STATE_KEY, () => null);
 
+  function normalizeContent(content: LayoutRightSidebarContent | null) {
+    if (!content) {
+      return null;
+    }
+
+    return {
+      ...content,
+      component: markRaw(content.component),
+    } satisfies LayoutRightSidebarContent;
+  }
+
   function setRightSidebarContent(content: LayoutRightSidebarContent | null) {
-    rightSidebarContent.value = content;
+    rightSidebarContent.value = normalizeContent(content);
   }
 
   function registerRightSidebarContent(
     content: MaybeRefOrGetter<LayoutRightSidebarContent | null>,
   ) {
     if (import.meta.server) {
-      rightSidebarContent.value = toValue(content);
+      rightSidebarContent.value = normalizeContent(toValue(content));
       return;
     }
 
     watchEffect(() => {
-      rightSidebarContent.value = toValue(content);
+      rightSidebarContent.value = normalizeContent(toValue(content));
     });
 
     onBeforeUnmount(() => {
