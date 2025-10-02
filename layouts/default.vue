@@ -269,6 +269,11 @@ const initialShowRightWidgets = useState(
   () => currentRoute.value?.meta?.showRightWidgets !== false,
 );
 const display = useDisplay();
+const initialIsMobile = useState("layout-initial-is-mobile", () => display.mobile.value);
+const initialIsRail = useState(
+  "layout-initial-is-rail",
+  () => display.mdAndDown.value && !display.mobile.value,
+);
 const { locale, availableLocales } = useI18n();
 const auth = useAuthSession();
 
@@ -304,18 +309,18 @@ const rightDrawer = computed({
 const drawerInlineStyle = { zIndex: 1004 } as const;
 const isMobile = computed(() => {
   if (!isHydrated.value) {
-    return false;
+    return initialIsMobile.value;
   }
 
-  return !display.mdAndUp.value;
+  return display.mobile.value;
 });
 // rail facultatif: quand mdAndDown mais pas mobile complet
 const isRail = computed(() => {
   if (!isHydrated.value) {
-    return false;
+    return initialIsRail.value;
   }
 
-  return display.mdAndDown.value && !isMobile.value;
+  return display.mdAndDown.value && !display.mobile.value;
 });
 const showRightWidgets = computed(() => {
   if (!isHydrated.value) {
