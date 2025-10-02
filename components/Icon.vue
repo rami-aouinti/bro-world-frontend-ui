@@ -1,18 +1,16 @@
 <template>
   <span
-    v-if="iconSvg"
-    ref="iconEl"
     v-bind="forwardedAttrs"
     :class="['inline-flex items-center justify-center align-middle', attrs.class]"
     :style="[attrs.style as StyleValue | undefined, iconStyle]"
     role="img"
     aria-hidden="true"
-    v-html="iconSvg"
+    v-html="iconContent"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, useAttrs } from "vue";
+import { computed, watch, useAttrs } from "vue";
 import type { StyleValue } from "vue";
 
 const props = withDefaults(
@@ -51,7 +49,7 @@ const forwardedAttrs = computed(() => {
 });
 
 const iconSvg = computed(() => (props.name ? (iconCache.value[props.name] ?? null) : null));
-const iconEl = ref<HTMLElement | null>(null);
+const iconContent = computed(() => iconSvg.value ?? "");
 
 const iconStyle = computed(() => ({
   width: normalizedSize.value,
@@ -94,13 +92,4 @@ watch(
   { immediate: true },
 );
 
-watch(
-  iconSvg,
-  (value) => {
-    if (iconEl.value) {
-      iconEl.value.innerHTML = value ?? "";
-    }
-  },
-  { immediate: true },
-);
 </script>
