@@ -1,17 +1,18 @@
 <template>
   <div class="flex items-center gap-3">
-    <button
-      v-show="props.showRightToggle && !props.isMobile"
-      type="button"
-      :class="props.iconTriggerClasses"
-      aria-label="Open widgets"
-      @click="emit('toggle-right')"
-    >
-      <AppIcon
-        name="mdi-format-align-justify"
-        :size="22"
-      />
-    </button>
+    <template v-if="props.showRightToggle">
+      <button
+        type="button"
+        :class="[props.iconTriggerClasses, 'hidden md:flex']"
+        aria-label="Open widgets"
+        @click="emit('toggle-right')"
+      >
+        <AppIcon
+          name="mdi-format-align-justify"
+          :size="22"
+        />
+      </button>
+    </template>
     <MessengerMenu
       :conversations="props.messengerConversations"
       :icon-trigger-classes="props.iconTriggerClasses"
@@ -50,9 +51,9 @@
     <slot name="user" />
     <slot name="locale" />
     <button
-      v-show="props.showRightToggle && props.isMobile"
+      v-if="props.showRightToggle"
       type="button"
-      :class="props.iconTriggerClasses"
+      :class="[props.iconTriggerClasses, 'md:hidden']"
       aria-label="Open widgets"
       @click="emit('toggle-right')"
     >
