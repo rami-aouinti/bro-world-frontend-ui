@@ -167,6 +167,10 @@ const localePath = useLocalePath();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
+definePageMeta({
+  documentDriven: false,
+});
+
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {

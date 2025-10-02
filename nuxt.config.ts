@@ -188,6 +188,7 @@ function resolveFromRoot(...segments: string[]) {
 }
 
 const require = createRequire(import.meta.url);
+const normalizedLocalPagesDir = resolveFromRoot("pages").replace(/\\/g, "/");
 
 type VuetifyPluginFactory = (options?: { autoImport?: boolean }) => PluginOption | PluginOption[];
 
@@ -424,6 +425,28 @@ export default defineNuxtConfig({
 
   vueuse: {
     ssrHandlers: true,
+  },
+
+  hooks: {
+    "pages:extend"(pages) {
+      for (const page of pages) {
+        const normalizedFilePath = page.file?.replace(/\\/g, "/");
+
+        if (!normalizedFilePath) {
+          continue;
+        }
+
+        if (!normalizedFilePath.startsWith(normalizedLocalPagesDir)) {
+          continue;
+        }
+
+        if (page.meta?.documentDriven !== undefined) {
+          continue;
+        }
+
+        page.meta = { ...page.meta, documentDriven: false };
+      }
+    },
   },
 
   i18n: {
