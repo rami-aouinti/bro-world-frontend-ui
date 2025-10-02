@@ -1,10 +1,9 @@
 <template>
-  <NuxtLayout name="default">
-    <main
-      class="py-4"
-      aria-labelledby="security-title"
-    >
-      <v-container>
+  <main
+    class="py-4"
+    aria-labelledby="security-title"
+  >
+    <v-container>
         <header class="mb-6">
           <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4">
             <div>
@@ -265,9 +264,8 @@
         >
           {{ snackbar.message }}
         </v-snackbar>
-      </v-container>
-    </main>
-  </NuxtLayout>
+    </v-container>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -277,7 +275,6 @@ import { useAuthSession } from "~/stores/auth-session";
 definePageMeta({
   middleware: "auth",
   title: "profile-security",
-  layout: false,
   showRightWidgets: false,
   sidebarVariant: "profile",
   documentDriven: false,

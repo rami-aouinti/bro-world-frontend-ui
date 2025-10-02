@@ -1,33 +1,18 @@
 <template>
-  <NuxtLayout name="default">
-    <template #right-sidebar>
-      <div class="flex flex-col gap-4">
-        <ProfileSidebar
-          :user="sidebarUser"
-          :photos="sidebarPhotos"
-          :friends="sidebarFriends"
-          :friends-count="friendsCount"
-          :life-events="sidebarEvents"
-          @view-all-friends="goToFriendsPage"
-          @view-all-photos="goToPhotosPage"
-          @edit-details="goToEditPage"
-        />
-      </div>
-    </template>
-    <main
-      class="py-4"
-      aria-labelledby="profile-title"
-    >
-      <v-container>
-        <header
-          class="mb-8"
-          aria-describedby="profile-subtitle"
+  <main
+    class="py-4"
+    aria-labelledby="profile-title"
+  >
+    <v-container>
+      <header
+        class="mb-8"
+        aria-describedby="profile-subtitle"
+      >
+        <v-card
+          class="pa-6"
+          rounded="xl"
+          elevation="10"
         >
-          <v-card
-            class="pa-6"
-            rounded="xl"
-            elevation="10"
-          >
             <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
               <v-avatar
                 size="96"
@@ -88,8 +73,8 @@
                 </p>
               </div>
             </div>
-          </v-card>
-        </header>
+        </v-card>
+      </header>
 
         <v-row
           dense
@@ -232,17 +217,17 @@
             </v-row>
           </v-col>
         </v-row>
-      </v-container>
-    </main>
-  </NuxtLayout>
+    </v-container>
+  </main>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 
+import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import type { AuthUser } from "~/types/auth";
-import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
 
 interface ProfileDetails {
   id?: string;
@@ -297,7 +282,6 @@ interface ProfileUser extends AuthUser {
 definePageMeta({
   middleware: "auth",
   title: "profile",
-  layout: false,
   sidebarVariant: "profile",
   documentDriven: false,
 });
@@ -640,6 +624,25 @@ const sidebarFriends = computed<SidebarFriend[]>(() => {
 const sidebarEvents = computed(
   () => [] as { title: string; date?: string; description?: string }[],
 );
+
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
+const sidebarContent = computed(() => ({
+  component: ProfileSidebar,
+  props: {
+    user: sidebarUser.value,
+    photos: sidebarPhotos.value,
+    friends: sidebarFriends.value,
+    friendsCount: friendsCount.value,
+    lifeEvents: sidebarEvents.value,
+    onViewAllFriends: goToFriendsPage,
+    onViewAllPhotos: goToPhotosPage,
+    onEditDetails: goToEditPage,
+  },
+  wrapperClass: "flex flex-col gap-4",
+}));
+
+registerRightSidebarContent(sidebarContent);
 
 function goToFriendsPage() {
   router.push({ name: "profile-friends" });
