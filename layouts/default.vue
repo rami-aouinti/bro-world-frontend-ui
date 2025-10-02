@@ -34,11 +34,10 @@
         class="sidebar-default-card__particles"
         :quantity="50"
         :ease="50"
-        :color="isDark ? '#ffffff' : '#111827'"
         :staticity="12"
         refresh
       />
-      <div class="pane-scroll py-4">
+      <div class="pane-scroll py-4 bg-card">
         <slot
           name="left-sidebar"
           :items="sidebarItems"
@@ -74,7 +73,6 @@
         class="sidebar-default-card__particles"
         :quantity="50"
         :ease="50"
-        :color="isDark ? '#ffffff' : '#111827'"
         :staticity="12"
         refresh
       />
@@ -83,7 +81,7 @@
           <ClientOnly>
             <div
               v-if="rightDrawer"
-              class="pane-scroll px-3 py-4"
+              class="pane-scroll px-3 py-4 bg-card"
             >
               <AppSidebarRight
                 :is-dark="isDark"
@@ -119,7 +117,7 @@
               </AppSidebarRight>
             </div>
             <template #fallback>
-              <div class="pane-scroll px-3 py-4">
+              <div class="pane-scroll px-3 py-4 bg-card">
                 <div class="flex flex-col gap-4">
                   <v-skeleton-loader
                     type="list-item-two-line"
@@ -137,7 +135,7 @@
           </ClientOnly>
         </template>
         <template #fallback>
-          <div class="pane-scroll px-3 py-4">
+          <div class="pane-scroll px-3 py-4 bg-card">
             <div class="flex flex-col gap-4">
               <v-skeleton-loader
                 type="list-item-two-line"
@@ -167,7 +165,7 @@
         :staticity="12"
         refresh
       />
-      <div class="main-scroll">
+      <div class="main-scroll bg-card">
         <div class="app-container">
           <slot />
         </div>

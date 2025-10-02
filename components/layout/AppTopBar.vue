@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    class="app-top-bar"
+    class="app-top-bar bg-card"
     :class="gradientIsDark ? 'text-white' : 'text-black'"
     :color="appBarColor"
     app
