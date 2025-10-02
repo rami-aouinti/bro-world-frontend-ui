@@ -77,9 +77,7 @@ export const useAuthSession = defineStore("auth-session", () => {
     runtimeConfig.public?.auth?.tokenPresenceCookieName ??
     "auth_token_present";
   const userCookieName =
-    runtimeConfig.auth?.userCookieName ??
-    runtimeConfig.public?.auth?.userCookieName ??
-    "auth_user";
+    runtimeConfig.auth?.userCookieName ?? runtimeConfig.public?.auth?.userCookieName ?? "auth_user";
   type AuthUserCookie = Pick<
     AuthUser,
     "id" | "username" | "email" | "firstName" | "lastName" | "photo" | "roles" | "enabled"

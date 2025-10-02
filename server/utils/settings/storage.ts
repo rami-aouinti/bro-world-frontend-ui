@@ -7,12 +7,14 @@ const STORAGE_KEY = "site-settings";
 let seedPromise: Promise<void> | null = null;
 
 function slugify(value: string): string {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 48) || crypto.randomUUID();
+  return (
+    value
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48) || crypto.randomUUID()
+  );
 }
 
 async function ensureSeed(): Promise<void> {
@@ -125,14 +127,18 @@ export async function updateSiteSettings(payload: Partial<SiteSettings>): Promis
   const next: SiteSettings = {
     ...current,
     siteName: payload.siteName?.trim() || current.siteName,
-    tagline: payload.tagline === undefined ? current.tagline ?? null : payload.tagline?.trim() || null,
+    tagline:
+      payload.tagline === undefined ? (current.tagline ?? null) : payload.tagline?.trim() || null,
     activeThemeId: payload.activeThemeId?.trim() || current.activeThemeId,
     themes: payload.themes?.length
       ? payload.themes.map((theme) => sanitizeTheme(theme)).filter(Boolean)
       : current.themes.map((theme) => ({ ...theme })),
     menus: payload.menus?.length
       ? payload.menus.map((menu, index) => sanitizeMenu(menu, index))
-      : current.menus.map((menu) => ({ ...menu, children: menu.children?.map((child) => ({ ...child })) ?? [] })),
+      : current.menus.map((menu) => ({
+          ...menu,
+          children: menu.children?.map((child) => ({ ...child })) ?? [],
+        })),
     updatedAt: new Date().toISOString(),
   };
 

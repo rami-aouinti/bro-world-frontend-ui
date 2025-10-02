@@ -5,7 +5,11 @@
     class="flex items-center gap-2 rounded-xl px-2 py-1 font-semibold text-xl"
   >
     <h1 class="z-2 relative flex items-center gap-1 text-center font-sans font-bold">
-      <span v-if="brandParts.prefix" class="text-inherit">{{ brandParts.prefix }}</span>
+      <span
+        v-if="brandParts.prefix"
+        class="text-inherit"
+        >{{ brandParts.prefix }}</span
+      >
       <ColourfulText
         :colors="colors"
         :text="brandParts.highlight"
@@ -24,7 +28,9 @@ defineProps<{ to?: string }>();
 const { colors } = usePrimaryGradient({ steps: 5, lightDark: [0.88, 0.3] });
 
 const siteSettings = useSiteSettingsState();
-const brandName = computed(() => siteSettings.value?.siteName?.trim() || getDefaultSiteSettings().siteName);
+const brandName = computed(
+  () => siteSettings.value?.siteName?.trim() || getDefaultSiteSettings().siteName,
+);
 
 const brandParts = computed(() => {
   const name = brandName.value;

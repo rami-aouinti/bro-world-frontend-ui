@@ -11,12 +11,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import {
-  hasInjectionContext,
-  tryUseNuxtApp,
-  useAppConfig,
-  useRequestURL,
-} from "#imports";
+import { hasInjectionContext, tryUseNuxtApp, useAppConfig, useRequestURL } from "#imports";
 
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {
@@ -102,16 +97,10 @@ const title = computed(
   () => currentMeta.value.title ?? matchedMeta.value.title ?? defaultTitle.value,
 );
 const description = computed(
-  () =>
-    currentMeta.value.description ??
-    matchedMeta.value.description ??
-    defaultDescription.value,
+  () => currentMeta.value.description ?? matchedMeta.value.description ?? defaultDescription.value,
 );
 const keywords = computed(
-  () =>
-    currentMeta.value.keywords ??
-    matchedMeta.value.keywords ??
-    "social, Bro world, Community",
+  () => currentMeta.value.keywords ?? matchedMeta.value.keywords ?? "social, Bro world, Community",
 );
 
 const structuredData = computed(() =>
@@ -124,9 +113,7 @@ const structuredData = computed(() =>
   }),
 );
 
-const socialImageUrl = computed(
-  () => `${normalizedBaseUrl.value}/social-img.png`,
-);
+const socialImageUrl = computed(() => `${normalizedBaseUrl.value}/social-img.png`);
 
 useHead({
   title,

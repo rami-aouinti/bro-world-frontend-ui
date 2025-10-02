@@ -1562,41 +1562,25 @@
           "content": {
             "title": "Content-Management",
             "description": "Planen, veröffentlichen und archivieren Sie Artikel, Events und Lernressourcen.",
-            "tags": [
-              "Redaktions-Workflow",
-              "Freigabe",
-              "Terminplanung"
-            ],
+            "tags": ["Redaktions-Workflow", "Freigabe", "Terminplanung"],
             "status": "12 Inhalte erfordern eine redaktionelle Prüfung."
           },
           "community": {
             "title": "Community & Moderation",
             "description": "Konfigurieren Sie Moderationsregeln, verwalten Sie Meldungen und Sanktionen.",
-            "tags": [
-              "Meldungen",
-              "Sanktionen",
-              "Private Nachrichten"
-            ],
+            "tags": ["Meldungen", "Sanktionen", "Private Nachrichten"],
             "status": "Durchschnittliche Reaktionszeit: 1 h 42."
           },
           "commerce": {
             "title": "Monetarisierung & Angebote",
             "description": "Verwalten Sie Abonnements, Promo-Codes und Geschäftspartnerschaften.",
-            "tags": [
-              "Abonnements",
-              "Abrechnung",
-              "Gutscheine"
-            ],
+            "tags": ["Abonnements", "Abrechnung", "Gutscheine"],
             "status": "Konversionsrate diese Woche um 3,4 % gestiegen."
           },
           "governance": {
             "title": "Governance & Compliance",
             "description": "Prüfen Sie Zugriffe, verwalten Sie privilegierte Rollen und erstellen Sie Compliance-Berichte.",
-            "tags": [
-              "Audit",
-              "Rollen",
-              "Nachverfolgbarkeit"
-            ],
+            "tags": ["Audit", "Rollen", "Nachverfolgbarkeit"],
             "status": "Letztes vollständiges Audit vor 5 Tagen abgeschlossen."
           }
         }

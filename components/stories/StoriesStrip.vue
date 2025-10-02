@@ -1,52 +1,60 @@
 <template>
   <div class="stories">
     <!-- Viewport centré qui CLIPPE et SCROLLE -->
-    <div ref="viewport" class="stories-viewport" role="listbox" :aria-label="t('stories.strip.ariaLabel')">
+    <div
+      ref="viewport"
+      class="stories-viewport"
+      role="listbox"
+      :aria-label="t('stories.strip.ariaLabel')"
+    >
       <!-- Rail au format shrink-to-fit -->
-      <div ref="scroller" class="stories-scroll">
+      <div
+        ref="scroller"
+        class="stories-scroll"
+      >
         <StoryCard
-            v-if="showCreate"
-            state="create"
-            image=""
-            name=""
-            avatar=""
-            @create="$emit('create')"
+          v-if="showCreate"
+          state="create"
+          image=""
+          name=""
+          avatar=""
+          @create="$emit('create')"
         />
 
         <StoryCard
-            v-for="s in items"
-            :key="s.id ?? s.name"
-            :image="s.image"
-            :name="s.name"
-            :avatar="s.avatar"
-            :state="s.state ?? 'new'"
-            :duration="s.duration"
-            @click="$emit('open', s)"
+          v-for="s in items"
+          :key="s.id ?? s.name"
+          :image="s.image"
+          :name="s.name"
+          :avatar="s.avatar"
+          :state="s.state ?? 'new'"
+          :duration="s.duration"
+          @click="$emit('open', s)"
         />
       </div>
     </div>
 
     <!-- Flèches -->
     <v-btn
-        v-if="hasOverflow"
-        class="nav-btn left"
-        icon
-        size="large"
-        variant="text"
-        :aria-label="t('stories.strip.scrollLeft')"
-        @click="scrollBy(-320)"
+      v-if="hasOverflow"
+      class="nav-btn left"
+      icon
+      size="large"
+      variant="text"
+      :aria-label="t('stories.strip.scrollLeft')"
+      @click="scrollBy(-320)"
     >
       <Icon name="mdi-chevron-left" />
     </v-btn>
 
     <v-btn
-        v-if="hasOverflow"
-        class="nav-btn right"
-        icon
-        size="large"
-        variant="text"
-        :aria-label="t('stories.strip.scrollRight')"
-        @click="scrollBy(320)"
+      v-if="hasOverflow"
+      class="nav-btn right"
+      icon
+      size="large"
+      variant="text"
+      :aria-label="t('stories.strip.scrollRight')"
+      @click="scrollBy(320)"
     >
       <Icon name="mdi-chevron-right" />
     </v-btn>
@@ -63,10 +71,10 @@ type Story = {
   duration?: string;
 };
 
-const props = withDefaults(
-    defineProps<{ items?: Story[]; showCreate?: boolean }>(),
-    { items: () => [], showCreate: true }
-);
+const props = withDefaults(defineProps<{ items?: Story[]; showCreate?: boolean }>(), {
+  items: () => [],
+  showCreate: true,
+});
 
 defineEmits<{ (e: "open", story: Story): void; (e: "create"): void }>();
 
@@ -97,21 +105,23 @@ const hasOverflow = computed(() => {
   max-inline-size: clamp(360px, 80vw, 572px);
   inline-size: 100%;
   margin-inline: auto;
-  overflow-x: auto;                /* SCROLL ICI */
+  overflow-x: auto; /* SCROLL ICI */
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;   /* SNAP sur le conteneur qui scrolle */
+  scroll-snap-type: x mandatory; /* SNAP sur le conteneur qui scrolle */
   scroll-padding-inline: 2px;
   position: relative;
   scrollbar-width: none;
 }
-.stories-viewport::-webkit-scrollbar { display: none; }
+.stories-viewport::-webkit-scrollbar {
+  display: none;
+}
 
 /* Rail : ne s'étire pas, largeur = somme des cartes */
 .stories-scroll {
-  display: inline-flex;            /* shrink-to-fit */
-  width: max-content;              /* largeur = contenu */
+  display: inline-flex; /* shrink-to-fit */
+  width: max-content; /* largeur = contenu */
   gap: 12px;
   padding: 4px 2px;
 }
@@ -128,8 +138,14 @@ const hasOverflow = computed(() => {
   backdrop-filter: blur(6px);
   z-index: 2;
 }
-.nav-btn.left { left: 0; translate: -10px 0; }
-.nav-btn.right { right: 0; translate: 10px 0; }
+.nav-btn.left {
+  left: 0;
+  translate: -10px 0;
+}
+.nav-btn.right {
+  right: 0;
+  translate: 10px 0;
+}
 
 /* (Optionnel) fondu sur les bords */
 .stories-viewport::before,
@@ -142,10 +158,10 @@ const hasOverflow = computed(() => {
 }
 .stories-viewport::before {
   inset-inline-start: 0;
-  background: linear-gradient(to right, rgba(0,0,0,.18), transparent);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.18), transparent);
 }
 .stories-viewport::after {
   inset-inline-end: 0;
-  background: linear-gradient(to left, rgba(0,0,0,.18), transparent);
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.18), transparent);
 }
 </style>

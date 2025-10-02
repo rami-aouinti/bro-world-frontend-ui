@@ -47,7 +47,7 @@
         class="relative"
       >
         <v-avatar
-            style="height: 230px; width: 120px;"
+          style="height: 230px; width: 120px"
           class="bg-white/90 backdrop-blur-sm"
         >
           <v-btn

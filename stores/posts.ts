@@ -134,7 +134,7 @@ export const usePostsStore = defineStore("posts", () => {
   const runtimeConfig = useRuntimeConfig();
   const redisRuntimeConfig = import.meta.client
     ? runtimeConfig.public?.redis
-    : runtimeConfig.redis ?? runtimeConfig.public?.redis;
+    : (runtimeConfig.redis ?? runtimeConfig.public?.redis);
   const listTtlMs = Math.max(Number(redisRuntimeConfig?.listTtl ?? 60), 1) * 1000;
   const itemTtlMs = Math.max(Number(redisRuntimeConfig?.itemTtl ?? 300), 1) * 1000;
 

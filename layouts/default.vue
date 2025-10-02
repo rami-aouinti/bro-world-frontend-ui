@@ -281,7 +281,9 @@ const cssVars = computed(() => {
     "--surface-gradient-start": isDark.value
       ? "rgba(120, 106, 255, 0.28)"
       : "rgba(125, 196, 255, 0.45)",
-    "--surface-gradient-end": isDark.value ? "rgba(255, 153, 214, 0.24)" : "rgba(255, 183, 236, 0.4)",
+    "--surface-gradient-end": isDark.value
+      ? "rgba(255, 153, 214, 0.24)"
+      : "rgba(255, 183, 236, 0.4)",
     "--surface-base": isDark.value ? "rgba(12, 14, 24, 0.9)" : "rgba(244, 247, 252, 0.95)",
     "--card-bg": isDark.value ? "rgba(20, 22, 33, 0.94)" : "rgba(255, 255, 255, 0.92)",
     "--card-border": isDark.value ? "rgba(255, 255, 255, 0.08)" : "rgba(15, 23, 42, 0.08)",

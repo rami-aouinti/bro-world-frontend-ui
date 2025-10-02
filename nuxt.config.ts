@@ -526,11 +526,9 @@ export default defineNuxtConfig({
     auth: {
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
       tokenCookieName: process.env.NUXT_AUTH_TOKEN_COOKIE ?? "auth_token",
-      sessionTokenCookieName:
-        process.env.NUXT_AUTH_SESSION_TOKEN_COOKIE ?? "auth_session_token",
+      sessionTokenCookieName: process.env.NUXT_AUTH_SESSION_TOKEN_COOKIE ?? "auth_session_token",
       userCookieName: process.env.NUXT_AUTH_USER_COOKIE ?? "auth_user",
-      tokenPresenceCookieName:
-        process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
+      tokenPresenceCookieName: process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
       sessionMaxAge: process.env.NUXT_AUTH_SESSION_MAX_AGE ?? String(60 * 60 * 24 * 7),
     },
     public: {
