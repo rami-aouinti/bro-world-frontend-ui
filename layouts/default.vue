@@ -29,6 +29,7 @@
       location="start"
       width="320"
       class="app-drawer"
+      :style="drawerInlineStyle"
     >
       <ParticlesBg
         class="sidebar-default-card__particles"
@@ -68,6 +69,7 @@
       width="340"
       class="app-drawer"
       data-test="app-right-drawer"
+      :style="drawerInlineStyle"
     >
       <ParticlesBg
         class="sidebar-default-card__particles"
@@ -298,6 +300,8 @@ const rightDrawer = computed({
     rightDrawerState.value = value;
   },
 });
+
+const drawerInlineStyle = { zIndex: 1004 } as const;
 const isMobile = computed(() => {
   if (!isHydrated.value) {
     return false;
