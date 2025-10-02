@@ -1,6 +1,5 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
 import { useCookie, useRequestFetch, useState } from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
@@ -66,6 +65,9 @@ export const useAuthSession = defineStore("auth-session", () => {
   const loginErrorState = ref<string | null>(null);
   const sessionMessageState = ref<string | null>(null);
   const handlingUnauthorizedState = ref(false);
+
+  const nuxtApp = useNuxtApp();
+  const translate = (key: string) => nuxtApp.$i18n?.t?.(key) ?? key;
 
   const runtimeConfig = useRuntimeConfig();
   const privateAuthConfig = import.meta.server ? runtimeConfig.auth ?? {} : {};
@@ -402,8 +404,6 @@ export const useAuthSession = defineStore("auth-session", () => {
     }
   }
 
-  const { t } = useI18n();
-
   async function logout(options: LogoutOptions = {}) {
     const { redirect = true, redirectTo = null, notify = true } = options;
     const fetcher = resolveFetcher();
@@ -425,8 +425,8 @@ export const useAuthSession = defineStore("auth-session", () => {
     if (notify) {
       $notify({
         type: "success",
-        title: t("auth.successTitle"),
-        message: t("auth.logoutMessage"),
+        title: translate("auth.successTitle"),
+        message: translate("auth.logoutMessage"),
       });
     }
 
