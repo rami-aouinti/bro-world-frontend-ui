@@ -262,6 +262,10 @@ const isDark = computed(() => resolvedColorMode.value === "dark");
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
+const initialShowRightWidgets = useState(
+  "layout-initial-show-right-widgets",
+  () => currentRoute.value?.meta?.showRightWidgets !== false,
+);
 const display = useDisplay();
 const { locale, availableLocales } = useI18n();
 const auth = useAuthSession();
@@ -309,7 +313,13 @@ const isRail = computed(() => {
 
   return display.mdAndDown.value && !isMobile.value;
 });
-const showRightWidgets = computed(() => currentRoute.value?.meta?.showRightWidgets !== false);
+const showRightWidgets = computed(() => {
+  if (!isHydrated.value) {
+    return initialShowRightWidgets.value;
+  }
+
+  return currentRoute.value?.meta?.showRightWidgets !== false;
+});
 
 const siteSettingsState = useSiteSettingsState();
 const theme = useTheme();
