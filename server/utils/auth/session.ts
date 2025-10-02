@@ -47,10 +47,41 @@ export function getSessionUser(event: H3Event): AuthUser | null {
   }
 }
 
+function sanitizeSessionUser(user: AuthUser): AuthUser {
+  const sanitized: AuthUser = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+  };
+
+  if ("firstName" in user && typeof user.firstName !== "undefined") {
+    sanitized.firstName = user.firstName ?? null;
+  }
+
+  if ("lastName" in user && typeof user.lastName !== "undefined") {
+    sanitized.lastName = user.lastName ?? null;
+  }
+
+  if ("enabled" in user && typeof user.enabled !== "undefined") {
+    sanitized.enabled = user.enabled;
+  }
+
+  if ("photo" in user && typeof user.photo !== "undefined") {
+    sanitized.photo = user.photo ?? null;
+  }
+
+  if (Array.isArray(user.roles)) {
+    sanitized.roles = user.roles;
+  }
+
+  return sanitized;
+}
+
 export function setSession(event: H3Event, token: string, user: AuthUser) {
   const { tokenCookieName, userCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
   const secure = shouldUseSecureCookies(event);
+  const sanitizedUser = sanitizeSessionUser(user);
 
   setCookie(
     event,
@@ -69,7 +100,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   setCookie(
     event,
     userCookieName,
-    JSON.stringify(user),
+    JSON.stringify(sanitizedUser),
     withSecureCookieOptions(
       {
         httpOnly: false,
