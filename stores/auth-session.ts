@@ -68,6 +68,10 @@ export const useAuthSession = defineStore("auth-session", () => {
   const handlingUnauthorizedState = ref(false);
 
   const runtimeConfig = useRuntimeConfig();
+  type AuthUserCookie = Pick<
+    AuthUser,
+    "id" | "username" | "email" | "firstName" | "lastName" | "photo" | "roles" | "enabled"
+  >;
   const sessionTokenCookie = useCookie<string | null>(
     runtimeConfig.auth?.sessionTokenCookieName ?? "auth_session_token",
     withSecureCookieOptions({
@@ -82,7 +86,7 @@ export const useAuthSession = defineStore("auth-session", () => {
       watch: false,
     }),
   );
-  const userCookie = useCookie<AuthUser | null>(
+  const userCookie = useCookie<AuthUserCookie | null>(
     runtimeConfig.auth?.userCookieName ?? "auth_user",
     withSecureCookieOptions({
       sameSite: "lax",
@@ -94,8 +98,36 @@ export const useAuthSession = defineStore("auth-session", () => {
     tokenAvailableState.value = true;
   }
 
+  function sanitizeUserForCookie(user: AuthUser | null): AuthUserCookie | null {
+    if (!user) {
+      return null;
+    }
+
+    const payload: Partial<AuthUserCookie> = {};
+    const fields: (keyof AuthUserCookie)[] = [
+      "id",
+      "username",
+      "email",
+      "firstName",
+      "lastName",
+      "photo",
+      "roles",
+      "enabled",
+    ];
+
+    for (const key of fields) {
+      const value = user[key];
+
+      if (value !== undefined) {
+        payload[key] = value;
+      }
+    }
+
+    return payload as AuthUserCookie;
+  }
+
   if (userCookie.value) {
-    currentUserState.value = userCookie.value;
+    currentUserState.value = userCookie.value as AuthUser;
   }
 
   if (sessionTokenCookie.value) {
@@ -107,7 +139,7 @@ export const useAuthSession = defineStore("auth-session", () => {
     watch(
       currentUserState,
       (value) => {
-        userCookie.value = value;
+        userCookie.value = sanitizeUserForCookie(value);
       },
       { deep: true },
     );
