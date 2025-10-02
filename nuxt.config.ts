@@ -526,8 +526,11 @@ export default defineNuxtConfig({
     auth: {
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
       tokenCookieName: process.env.NUXT_AUTH_TOKEN_COOKIE ?? "auth_token",
+      sessionTokenCookieName:
+        process.env.NUXT_AUTH_SESSION_TOKEN_COOKIE ?? "auth_session_token",
       userCookieName: process.env.NUXT_AUTH_USER_COOKIE ?? "auth_user",
-      tokenPresenceCookieName: process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
+      tokenPresenceCookieName:
+        process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
       sessionMaxAge: process.env.NUXT_AUTH_SESSION_MAX_AGE ?? String(60 * 60 * 24 * 7),
     },
     public: {
@@ -547,6 +550,20 @@ export default defineNuxtConfig({
       siteUrl: "https://bro-world-space.com",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
+      auth: {
+        sessionTokenCookieName:
+          process.env.NUXT_PUBLIC_AUTH_SESSION_TOKEN_COOKIE ??
+          process.env.NUXT_AUTH_SESSION_TOKEN_COOKIE ??
+          "auth_session_token",
+        userCookieName:
+          process.env.NUXT_PUBLIC_AUTH_USER_COOKIE ??
+          process.env.NUXT_AUTH_USER_COOKIE ??
+          "auth_user",
+        tokenPresenceCookieName:
+          process.env.NUXT_PUBLIC_AUTH_TOKEN_PRESENCE_COOKIE ??
+          process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ??
+          "auth_token_present",
+      },
     },
   },
 

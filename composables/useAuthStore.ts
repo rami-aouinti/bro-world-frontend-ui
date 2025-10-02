@@ -20,8 +20,12 @@ export function useAuthStore() {
   const followPendingState = useState<FollowPendingState>("auth-following-pending", () => ({}));
   const followErrorState = useState<string | null>("auth-following-error", () => null);
   const runtimeConfig = useRuntimeConfig();
+  const sessionTokenCookieName =
+    runtimeConfig.auth?.sessionTokenCookieName ??
+    runtimeConfig.public?.auth?.sessionTokenCookieName ??
+    "auth_session_token";
   const sessionTokenCookie = useCookie<string | null>(
-    runtimeConfig.auth?.sessionTokenCookieName ?? "auth_session_token",
+    sessionTokenCookieName,
     withSecureCookieOptions({
       sameSite: "strict",
     }),
