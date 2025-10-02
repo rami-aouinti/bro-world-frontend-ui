@@ -1,18 +1,21 @@
 <template>
   <div class="flex items-center gap-3">
-    <template v-if="props.showRightToggle">
-      <button
-        type="button"
-        :class="[props.iconTriggerClasses, 'hidden md:flex']"
-        aria-label="Open widgets"
-        @click="emit('toggle-right')"
-      >
-        <AppIcon
-          name="mdi-format-align-justify"
-          :size="22"
-        />
-      </button>
-    </template>
+    <ClientOnly>
+      <template #default>
+        <button
+          v-if="props.showRightToggle"
+          type="button"
+          :class="[props.iconTriggerClasses, 'hidden md:flex']"
+          aria-label="Open widgets"
+          @click="emit('toggle-right')"
+        >
+          <AppIcon
+            name="mdi-format-align-justify"
+            :size="22"
+          />
+        </button>
+      </template>
+    </ClientOnly>
     <MessengerMenu
       :conversations="props.messengerConversations"
       :icon-trigger-classes="props.iconTriggerClasses"
@@ -50,18 +53,22 @@
     <DarkModeToggle />
     <slot name="user" />
     <slot name="locale" />
-    <button
-      v-if="props.showRightToggle"
-      type="button"
-      :class="[props.iconTriggerClasses, 'md:hidden']"
-      aria-label="Open widgets"
-      @click="emit('toggle-right')"
-    >
-      <AppIcon
-        name="mdi:dots-vertical"
-        :size="22"
-      />
-    </button>
+    <ClientOnly>
+      <template #default>
+        <button
+          v-if="props.showRightToggle"
+          type="button"
+          :class="[props.iconTriggerClasses, 'md:hidden']"
+          aria-label="Open widgets"
+          @click="emit('toggle-right')"
+        >
+          <AppIcon
+            name="mdi:dots-vertical"
+            :size="22"
+          />
+        </button>
+      </template>
+    </ClientOnly>
   </div>
 </template>
 
