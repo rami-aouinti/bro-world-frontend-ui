@@ -177,12 +177,13 @@
 </template>
 
 <script setup lang="ts">
-import { watch, computed, ref, defineAsyncComponent } from "vue";
+import { watch, computed, ref, defineAsyncComponent, onMounted } from "vue";
 import { useDisplay, useTheme } from "vuetify";
-import { useRequestHeaders } from "#imports";
+import { useRequestHeaders, useState } from "#imports";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
+import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
 import {
   ADMIN_ROLE_KEYS,
@@ -202,21 +203,51 @@ const AppSidebarRight = defineAsyncComponent({
   suspensible: false,
 });
 
-const isDark = computed(() => useColorMode().value == "dark");
+const colorMode = useCookieColorMode();
 
 const colorSchemeHint = import.meta.server
-  ? useRequestHeaders(["sec-ch-prefers-color-scheme"])["sec-ch-prefers-color-scheme"]
+  ? ((useRequestHeaders(["sec-ch-prefers-color-scheme"])["sec-ch-prefers-color-scheme"] ?? null) as
+      | "light"
+      | "dark"
+      | null)
   : null;
 
-const resolvedColorMode = computed(() => {
-  const preference = colorMode.value;
+const initialResolvedColorMode = useState<"light" | "dark">(
+  "layout-initial-color-mode",
+  () => {
+    if (colorMode.value === "dark" || colorMode.value === "light") {
+      return colorMode.value;
+    }
 
-  if (preference === "auto") {
-    return colorMode.system.value ?? "light";
+    if (colorSchemeHint === "dark") {
+      return "dark";
+    }
+
+    return "light";
+  },
+);
+
+const isHydrated = ref(false);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isHydrated.value = true;
+  });
+}
+
+const resolvedColorMode = computed<"light" | "dark">(() => {
+  if (colorMode.value === "dark" || colorMode.value === "light") {
+    return colorMode.value;
   }
 
-  return preference ?? "light";
+  if (!isHydrated.value) {
+    return initialResolvedColorMode.value;
+  }
+
+  return colorMode.system.value === "dark" ? "dark" : "light";
 });
+
+const isDark = computed(() => resolvedColorMode.value === "dark");
 
 const route = useRoute();
 const router = useRouter();
@@ -400,7 +431,6 @@ watch(
 
 /** Actions UI */
 function toggleTheme() {
-  colorMode.value = isDark.value ? "light" : "dark";
   colorMode.value = resolvedColorMode.value === "dark" ? "light" : "dark";
 }
 function toggleLeftDrawer() {
