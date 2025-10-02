@@ -516,6 +516,13 @@ export default defineNuxtConfig({
   ignore: ["components/**/index.ts", "components/**/shaders.ts", "components/**/types.ts"],
 
   runtimeConfig: {
+    mercure: {
+      hubUrl:
+        process.env.NUXT_MERCURE_HUB_URL ?? "https://bro-world.org/.well-known/mercure",
+      token:
+        process.env.NUXT_MERCURE_TOKEN ??
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJodHRwczovL2Jyby13b3JsZC5vcmcvdXNlci9ub3RpZmljYXRpb25zLzEyM2U0NTY3LWU4OWItMTJkMy1hNDU2LTQyNjYxNDE3NDAwMCJdLCJwdWJsaXNoIjpbIioiXX0sImlhdCI6MTcxOTUxNTI4NSwiZXhwIjoxNzE5NTE4ODg1fQ.k2Zf_8YXHk7VfW7SwkpHjSkD7rm4_7yKD_ZZsd_ZIwo",
+    },
     redis: {
       url: process.env.NUXT_REDIS_URL ?? "",
       tls: process.env.NUXT_REDIS_TLS === "true",
@@ -552,6 +559,12 @@ export default defineNuxtConfig({
       siteUrl: "https://bro-world-space.com",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
+      mercure: {
+        hubUrl:
+          process.env.NUXT_PUBLIC_MERCURE_HUB_URL ??
+          process.env.NUXT_MERCURE_HUB_URL ??
+          "https://bro-world.org/.well-known/mercure",
+      },
       auth: {
         sessionTokenCookieName:
           process.env.NUXT_PUBLIC_AUTH_SESSION_TOKEN_COOKIE ??
