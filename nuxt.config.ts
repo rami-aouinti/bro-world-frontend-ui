@@ -543,6 +543,31 @@ export default defineNuxtConfig({
         listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
         itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
       },
+      auth: {
+        sessionTokenCookieName:
+          process.env.NUXT_PUBLIC_AUTH_SESSION_TOKEN_COOKIE ??
+          process.env.NUXT_AUTH_SESSION_TOKEN_COOKIE ??
+          "auth_session_token",
+        tokenPresenceCookieName:
+          process.env.NUXT_PUBLIC_AUTH_TOKEN_PRESENCE_COOKIE ??
+          process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ??
+          "auth_token_present",
+        userCookieName:
+          process.env.NUXT_PUBLIC_AUTH_USER_COOKIE ??
+          process.env.NUXT_AUTH_USER_COOKIE ??
+          "auth_user",
+        socialRedirects: {
+          ...(process.env.NUXT_PUBLIC_AUTH_SOCIAL_REDIRECT_GOOGLE
+            ? { google: process.env.NUXT_PUBLIC_AUTH_SOCIAL_REDIRECT_GOOGLE }
+            : {}),
+          ...(process.env.NUXT_PUBLIC_AUTH_SOCIAL_REDIRECT_GITHUB
+            ? { github: process.env.NUXT_PUBLIC_AUTH_SOCIAL_REDIRECT_GITHUB }
+            : {}),
+          ...(process.env.NUXT_PUBLIC_AUTH_SOCIAL_REDIRECT_MICROSOFT
+            ? { microsoft: process.env.NUXT_PUBLIC_AUTH_SOCIAL_REDIRECT_MICROSOFT }
+            : {}),
+        },
+      },
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
       blogApiEndpoint:
