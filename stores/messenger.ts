@@ -814,8 +814,7 @@ export const useMessengerStore = defineStore("messenger", () => {
   }
 
   async function ensureMercureToken(): Promise<string | null> {
-    const configuredToken =
-      runtimeConfig.mercure?.token ?? runtimeConfig.public?.mercure?.token ?? null;
+    const configuredToken = runtimeConfig.public?.mercure?.token ?? null;
 
     if (configuredToken) {
       return configuredToken;
@@ -841,7 +840,7 @@ export const useMessengerStore = defineStore("messenger", () => {
     }
 
     const userId = auth.currentUser.value?.id;
-    const hubUrl = runtimeConfig.public?.mercure?.hubUrl ?? runtimeConfig.mercure?.hubUrl;
+    const hubUrl = runtimeConfig.public?.mercure?.hubUrl ?? null;
 
     if (!userId || !hubUrl) {
       return null;
@@ -884,7 +883,7 @@ export const useMessengerStore = defineStore("messenger", () => {
       return;
     }
 
-    const hubUrl = runtimeConfig.public?.mercure?.hubUrl ?? runtimeConfig.mercure?.hubUrl;
+    const hubUrl = runtimeConfig.public?.mercure?.hubUrl ?? null;
 
     if (!hubUrl || !connectToMercure) {
       return;
