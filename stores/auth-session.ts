@@ -402,10 +402,11 @@ export const useAuthSession = defineStore("auth-session", () => {
     }
   }
 
+  const { t } = useI18n();
+
   async function logout(options: LogoutOptions = {}) {
     const { redirect = true, redirectTo = null, notify = true } = options;
     const fetcher = resolveFetcher();
-    const { t } = useI18n();
     const { $notify } = useNuxtApp();
 
     try {
