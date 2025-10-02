@@ -549,6 +549,7 @@ import { computed, ref } from "vue";
 definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
+  documentDriven: false,
 });
 
 const { t, tm, locale } = useI18n();

@@ -144,7 +144,9 @@
 import { computed } from "vue";
 
 import ContactForm from "~/components/contact/ContactForm.vue";
-
+definePageMeta({
+  documentDriven: false,
+});
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();

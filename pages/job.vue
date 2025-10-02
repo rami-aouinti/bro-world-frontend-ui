@@ -160,7 +160,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-
+definePageMeta({
+  documentDriven: false,
+});
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const localePath = useLocalePath();

@@ -51,6 +51,7 @@ definePageMeta({
   title: "register",
   layout: "auth",
   breadcrumb: "disabled",
+  documentDriven: false,
 });
 
 const isRedirecting = ref(false);

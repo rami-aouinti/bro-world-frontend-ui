@@ -47,6 +47,7 @@ definePageMeta({
   title: "login",
   layout: "auth",
   breadcrumb: "disabled",
+  documentDriven: false,
 });
 
 const { t } = useI18n();

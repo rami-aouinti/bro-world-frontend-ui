@@ -25,6 +25,7 @@ import { useAuthSession } from "~/stores/auth-session";
 definePageMeta({
   middleware: "auth",
   title: "logout",
+  documentDriven: false,
 });
 
 const auth = useAuthSession();

@@ -552,7 +552,13 @@ import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteMenuItem, SiteSettings } from "~/types/settings";
 
-definePageMeta({ middleware: ["auth", "admin"], showRightWidgets: false });
+definePageMeta(
+    {
+      middleware: ["auth", "admin"],
+      showRightWidgets: false,
+      documentDriven: false,
+    }
+);
 
 interface EditableMenu extends SiteMenuItem {
   children?: EditableMenu[];
