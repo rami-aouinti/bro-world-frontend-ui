@@ -168,7 +168,7 @@
     </v-navigation-drawer>
 
     <v-main
-      v-if="areSidebarsVisible"
+      v-show="areSidebarsVisible"
       class="app-surface"
     >
       <ParticlesBg
