@@ -247,8 +247,8 @@ const resolvedColorMode = computed<"light" | "dark">(() => {
 
 const isDark = computed(() => resolvedColorMode.value === "dark");
 
-const route = useRoute();
 const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value);
 const display = useDisplay();
 const { locale, availableLocales } = useI18n();
 const auth = useAuthSession();
@@ -258,7 +258,7 @@ const rightDrawer = ref(true);
 const isMobile = computed(() => !display.mdAndUp.value);
 // rail facultatif: quand mdAndDown mais pas mobile complet
 const isRail = computed(() => display.mdAndDown.value && !isMobile.value);
-const showRightWidgets = computed(() => route.meta?.showRightWidgets !== false);
+const showRightWidgets = computed(() => currentRoute.value?.meta?.showRightWidgets !== false);
 
 const siteSettingsState = useSiteSettingsState();
 const theme = useTheme();
@@ -348,10 +348,10 @@ const canAccessAdmin = computed(() => {
 });
 
 const sidebarVariant = computed<"default" | "profile">(() =>
-  route.meta?.sidebarVariant === "profile" ? "profile" : "default",
+  currentRoute.value?.meta?.sidebarVariant === "profile" ? "profile" : "default",
 );
 
-const isAdminRoute = computed(() => route.path.startsWith("/admin"));
+const isAdminRoute = computed(() => currentRoute.value?.path?.startsWith("/admin") ?? false);
 
 const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   if (sidebarVariant.value === "profile") {
@@ -408,7 +408,7 @@ watch(showRightWidgets, (value) => {
 });
 
 watch(
-  () => route.fullPath,
+  () => currentRoute.value?.fullPath ?? "",
   (path) => {
     if (isMobile.value) {
       leftDrawer.value = false;
@@ -422,7 +422,8 @@ watch(
 watch(
   sidebarItems,
   (items) => {
-    updateActiveSidebar(route.fullPath, items);
+    const path = currentRoute.value?.fullPath ?? "/";
+    updateActiveSidebar(path, items);
   },
   { immediate: true },
 );

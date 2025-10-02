@@ -20,9 +20,11 @@ export function useAuthStore() {
   const followPendingState = useState<FollowPendingState>("auth-following-pending", () => ({}));
   const followErrorState = useState<string | null>("auth-following-error", () => null);
   const runtimeConfig = useRuntimeConfig();
+  const privateAuthConfig = import.meta.server ? runtimeConfig.auth ?? {} : {};
+  const publicAuthConfig = runtimeConfig.public?.auth ?? {};
   const sessionTokenCookieName =
-    runtimeConfig.auth?.sessionTokenCookieName ??
-    runtimeConfig.public?.auth?.sessionTokenCookieName ??
+    (privateAuthConfig.sessionTokenCookieName as string | undefined) ??
+    publicAuthConfig.sessionTokenCookieName ??
     "auth_session_token";
   const sessionTokenCookie = useCookie<string | null>(
     sessionTokenCookieName,
