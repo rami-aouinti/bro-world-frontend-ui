@@ -3,6 +3,7 @@ import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalePath } from "#i18n";
 import { useCookie, useRequestFetch, useState } from "#imports";
+import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
 import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from "~/types/auth";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
@@ -447,7 +448,6 @@ export const useAuthSession = defineStore("auth-session", () => {
       sessionMessageState.value = message ?? fallbackMessage;
 
       const router = useRouter();
-      const localePath = useLocalePath();
       const currentRoute = router.currentRoute.value;
 
       if (currentRoute?.fullPath) {
@@ -457,7 +457,9 @@ export const useAuthSession = defineStore("auth-session", () => {
       await logout({ redirect: false, notify: false });
 
       const redirectTarget = currentRoute?.fullPath ?? consumeRedirect();
-      const loginRoute = localePath("/login");
+      const resolvedPath = typeof currentRoute?.path === "string" ? currentRoute.path : redirectTarget;
+      const locale = resolveLocaleFromPath(resolvedPath ?? "/");
+      const loginRoute = buildLocalizedPath("/login", locale);
       const query = redirectTarget ? { redirect: redirectTarget } : undefined;
 
       await router.push({ path: loginRoute, query });
