@@ -102,6 +102,7 @@ import AppIconBar from "./AppBar/AppIconBar.vue";
 import UserMenu from "./AppBar/UserMenu.vue";
 import LocaleMenu from "./AppBar/LocaleMenu.vue";
 import RightControls from "./AppBar/RightControls.vue";
+import { useI18nDocs } from "~/composables/useI18nDocs";
 import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
@@ -132,6 +133,7 @@ const emit = defineEmits(["toggle-left", "toggle-right", "go-back", "refresh", "
 
 const { t } = useI18n();
 const config = useConfig();
+const { localePath } = useI18nDocs();
 const auth = useAuthSession();
 const messenger = useMessengerStore();
 
@@ -297,7 +299,7 @@ async function handleUserMenuSelect(item: UserMenuItem) {
     }
     return;
   }
-  if (item.to) navigateTo(useI18nDocs().localePath(item.to));
+  if (item.to) navigateTo(localePath(item.to));
 }
 
 function markAllNotifications() {
