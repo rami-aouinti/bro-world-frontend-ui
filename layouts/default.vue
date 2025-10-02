@@ -168,7 +168,7 @@
     </v-navigation-drawer>
 
     <v-main
-      v-show="areSidebarsVisible"
+      v-show="!isHydrated || areSidebarsVisible"
       class="app-surface"
     >
       <ParticlesBg
