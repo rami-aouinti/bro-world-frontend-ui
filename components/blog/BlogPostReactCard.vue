@@ -61,7 +61,7 @@
     </div>
   </div>
   <div
-    v-if="isAuthenticated"
+    v-if="showAuthenticatedActions"
     class="reaction-bar"
   >
     <!-- Actions -->
@@ -98,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
@@ -111,6 +111,13 @@ type Reaction = PickerReaction;
 
 const auth = useAuthSession();
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const hasMounted = ref(false);
+onMounted(() => {
+  hasMounted.value = true;
+});
+const showAuthenticatedActions = computed(
+  () => hasMounted.value && isAuthenticated.value,
+);
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
 const props = defineProps<{
