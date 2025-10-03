@@ -1,5 +1,5 @@
 import { computed } from "vue";
-import { useI18n } from "#imports";
+import { useI18n } from "vue-i18n";
 
 type RelativeUnit = Intl.RelativeTimeFormatUnit;
 

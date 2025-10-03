@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, toRef } from "vue";
 
-import { useI18n } from "#imports";
+import { useI18n } from "vue-i18n";
 
 import { usePostEditing } from "~/composables/usePostEditing";
 import type { BlogPost } from "~/lib/mock/blog";
