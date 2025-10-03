@@ -18,7 +18,8 @@
         </p>
       </div>
     </div>
-    <AuthorActionMenu
+    <ClientOnly>
+      <AuthorActionMenu
       data-test="author-actions"
       :is-authenticated="canRenderAuthUi"
       :is-author="isAuthor"
@@ -37,6 +38,7 @@
       @edit="(event) => emit('edit', event)"
       @delete="(event) => emit('delete', event)"
     />
+  </ClientOnly>
   </header>
 </template>
 
