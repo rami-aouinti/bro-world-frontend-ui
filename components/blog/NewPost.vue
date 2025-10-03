@@ -93,7 +93,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { useI18n, useNuxtApp } from "#imports";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#imports";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { defineAsyncComponentWithVendorStyles } from "~/lib/material-dashboard-vendors";
 import { useAuthSession } from "~/stores/auth-session";

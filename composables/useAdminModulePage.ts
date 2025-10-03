@@ -1,5 +1,6 @@
-import { useHead, useI18n } from "#imports";
+import { useHead } from "#imports";
 import { computed, unref, type MaybeRef } from "vue";
+import { useI18n } from "vue-i18n";
 
 export function useAdminModulePage(pageKey: MaybeRef<string>) {
   const { t } = useI18n();

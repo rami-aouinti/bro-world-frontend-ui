@@ -2,7 +2,7 @@ import { nextTick, reactive, ref, type Ref, watch } from "vue";
 
 import { useNuxtApp } from "#app";
 
-import { useI18n } from "#imports";
+import { useI18n } from "vue-i18n";
 
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost } from "~/lib/mock/blog";
