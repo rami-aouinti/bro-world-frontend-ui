@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed } from "vue";
 import NotificationMenu from "./NotificationMenu.vue";
 import MessengerMenu from "~/components/messenger/MessengerMenu.vue";
 import type { AppNotification } from "~/types/layout";
@@ -92,21 +92,13 @@ const props = defineProps<{
   messengerUnknownLabel: string;
   messengerLoading: boolean;
 }>();
-const isHydrated = ref(false);
-
-if (import.meta.client) {
-  onMounted(() => {
-    isHydrated.value = true;
-  });
-}
-
 const desktopToggleClasses = computed(
   () => `${props.iconTriggerClasses} hidden md:flex`,
 );
 const mobileToggleClasses = computed(
   () => `${props.iconTriggerClasses} md:hidden`,
 );
-const showToggleButtons = computed(() => isHydrated.value && props.showRightToggle);
+const showToggleButtons = computed(() => props.showRightToggle);
 
 const emit = defineEmits(["toggle-right", "mark-all-notifications"]);
 </script>
