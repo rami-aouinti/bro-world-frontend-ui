@@ -1,26 +1,65 @@
 <template>
-  <v-menu
-    v-model="open"
-    open-on-hover
-    close-on-content-click
-    location="top"
-    offset="8"
-    :scrim="false"
-    :eager="true"
-    content-class="rx-menu-content rx-rounded"
-  >
-    <template #activator="{ props: activatorProps }">
+  <ClientOnly>
+    <template #default>
+      <v-menu
+        v-model="open"
+        open-on-hover
+        close-on-content-click
+        location="top"
+        offset="8"
+        :scrim="false"
+        :eager="true"
+        content-class="rx-menu-content rx-rounded"
+      >
+        <template #activator="{ props: activatorProps }">
+          <button
+            class="meta__btn"
+            :class="`meta__btn--${props.btnSize}`"
+            v-bind="activatorProps"
+            @click.stop="
+              () => {
+                if (!open) emit('like');
+              }
+            "
+            @pointerdown.passive="onPointerDown"
+            @pointerup.passive="onPointerUp"
+          >
+            <Icon
+              name="mdi-thumb-up-outline"
+              start
+            ></Icon>
+            {{ t("blog.reactions.posts.likeAction") }}
+          </button>
+        </template>
+
+        <div
+          class="rx-bubble"
+          role="listbox"
+          :aria-label="t('blog.reactions.posts.reactLabel')"
+        >
+          <button
+            v-for="it in items"
+            :key="it.key"
+            class="rx-item"
+            :aria-label="it.label"
+            role="option"
+            @click.stop="emit('select', it.key)"
+          >
+            <img
+              :src="it.src"
+              :alt="it.label"
+            />
+          </button>
+        </div>
+      </v-menu>
+    </template>
+
+    <template #fallback>
       <button
         class="meta__btn"
         :class="`meta__btn--${props.btnSize}`"
-        v-bind="activatorProps"
-        @click.stop="
-          () => {
-            if (!open) emit('like');
-          }
-        "
-        @pointerdown.passive="onPointerDown"
-        @pointerup.passive="onPointerUp"
+        type="button"
+        @click.stop="emit('like')"
       >
         <Icon
           name="mdi-thumb-up-outline"
@@ -29,27 +68,7 @@
         {{ t("blog.reactions.posts.likeAction") }}
       </button>
     </template>
-
-    <div
-      class="rx-bubble"
-      role="listbox"
-      :aria-label="t('blog.reactions.posts.reactLabel')"
-    >
-      <button
-        v-for="it in items"
-        :key="it.key"
-        class="rx-item"
-        :aria-label="it.label"
-        role="option"
-        @click.stop="emit('select', it.key)"
-      >
-        <img
-          :src="it.src"
-          :alt="it.label"
-        />
-      </button>
-    </div>
-  </v-menu>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -70,9 +89,17 @@ let longPressTimer: number | null = null;
 const { t } = useI18n();
 
 function onPointerDown() {
+  if (!import.meta.client) {
+    return;
+  }
+
   longPressTimer = window.setTimeout(() => (open.value = true), 350);
 }
 function onPointerUp() {
+  if (!import.meta.client) {
+    return;
+  }
+
   if (longPressTimer) {
     clearTimeout(longPressTimer);
     longPressTimer = null;

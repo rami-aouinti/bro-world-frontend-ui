@@ -61,7 +61,7 @@
     </div>
   </div>
   <div
-    v-if="isAuthenticated"
+    v-if="canRenderAuthUi"
     class="reaction-bar"
   >
     <!-- Actions -->
@@ -110,7 +110,9 @@ import type { BlogPost } from "~/lib/mock/blog";
 type Reaction = PickerReaction;
 
 const auth = useAuthSession();
-const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const canRenderAuthUi = computed(
+  () => auth.isReady.value && auth.isAuthenticated.value,
+);
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
 const props = defineProps<{
