@@ -3,7 +3,7 @@
     <button
       v-if="props.showRightToggle"
       type="button"
-      :class="[props.iconTriggerClasses, 'hidden md:flex']"
+      :class="desktopToggleClasses"
       aria-label="Open widgets"
       @click="emit('toggle-right')"
     >
@@ -52,7 +52,7 @@
     <button
       v-if="props.showRightToggle"
       type="button"
-      :class="[props.iconTriggerClasses, 'md:hidden']"
+      :class="mobileToggleClasses"
       aria-label="Open widgets"
       @click="emit('toggle-right')"
     >
@@ -65,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import NotificationMenu from "./NotificationMenu.vue";
 import MessengerMenu from "~/components/messenger/MessengerMenu.vue";
 import type { AppNotification } from "~/types/layout";
@@ -91,5 +92,12 @@ const props = defineProps<{
   messengerUnknownLabel: string;
   messengerLoading: boolean;
 }>();
+const desktopToggleClasses = computed(
+  () => `${props.iconTriggerClasses} hidden md:flex`,
+);
+const mobileToggleClasses = computed(
+  () => `${props.iconTriggerClasses} md:hidden`,
+);
+
 const emit = defineEmits(["toggle-right", "mark-all-notifications"]);
 </script>
