@@ -168,8 +168,8 @@
     </v-navigation-drawer>
 
     <v-main
-      v-show="!isHydrated || areSidebarsVisible"
       class="app-surface"
+      :class="{ hidden: isHydrated && !areSidebarsVisible }"
     >
       <ParticlesBg
         class="sidebar-default-card__particles"
