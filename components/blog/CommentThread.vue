@@ -135,7 +135,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed } from "vue";
+import { reactive, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import type { WatchStopHandle } from "vue";
 import { useI18n } from "vue-i18n";
 import CommentComposer from "~/components/blog/CommentComposer.vue";
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
@@ -145,9 +146,23 @@ import { useRelativeTime } from "~/composables/useRelativeTime";
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
-const canRenderAuthUi = computed(
-  () => auth.isReady.value && auth.isAuthenticated.value,
-);
+const canRenderAuthUi = ref(false);
+let stopAuthWatcher: WatchStopHandle | null = null;
+
+onMounted(() => {
+  stopAuthWatcher = watch(
+    () => auth.isReady.value && auth.isAuthenticated.value,
+    (value) => {
+      canRenderAuthUi.value = value;
+    },
+    { immediate: true },
+  );
+});
+
+onBeforeUnmount(() => {
+  stopAuthWatcher?.();
+  stopAuthWatcher = null;
+});
 export type CommentNode = {
   id: string;
   user: { firstName?: string; lastName?: string; photo?: string };
