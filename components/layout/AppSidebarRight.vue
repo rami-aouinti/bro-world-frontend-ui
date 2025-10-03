@@ -88,8 +88,23 @@ const props = withDefaults(
 
 const sticky = computed(() => props.sticky);
 const isDark = computed(() => props.isDark);
-const auth = useAuthSession();
-const isAuthenticated = computed(() => auth.isAuthenticated.value);
+function tryUseAuthSession() {
+  try {
+    return useAuthSession();
+  } catch (error) {
+    if (import.meta.dev) {
+      console.error(
+        "[AppSidebarRight] Failed to access auth session store. Falling back to guest mode.",
+        error,
+      );
+    }
+
+    return null;
+  }
+}
+
+const auth = tryUseAuthSession();
+const isAuthenticated = computed(() => auth?.isAuthenticated.value ?? false);
 const { t } = useI18n();
 
 const isRedirecting = ref(false);
@@ -140,14 +155,16 @@ watch(
   { immediate: true },
 );
 
-watch(
-  () => auth.isAuthenticated.value,
-  (value) => {
-    if (value) {
-      isRedirecting.value = false;
-    }
-  },
-);
+if (auth) {
+  watch(
+    () => auth.isAuthenticated.value,
+    (value) => {
+      if (value) {
+        isRedirecting.value = false;
+      }
+    },
+  );
+}
 
 function handleSocialRedirect(provider: SocialProvider) {
   const target = resolveSocialRedirect(provider);
