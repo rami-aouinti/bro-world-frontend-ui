@@ -105,6 +105,7 @@ import LocaleMenu from "./AppBar/LocaleMenu.vue";
 import RightControls from "./AppBar/RightControls.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
 import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
+import { useTheme } from "vuetify";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
@@ -153,6 +154,7 @@ const localeMetadata = {
 } as const satisfies Record<string, { label: string; flag: string }>;
 
 /** Dégradés dynamiques depuis primary + mode sombre */
+const theme = useTheme();
 const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
 
 const appBarColor = computed(() =>
