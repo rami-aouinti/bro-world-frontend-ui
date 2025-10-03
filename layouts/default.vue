@@ -15,7 +15,7 @@
       @toggle-theme="toggleTheme"
       @go-back="goBack"
       @refresh="refreshPage"
-      @update:locale="setLocale"
+      @update:locale="handleLocaleChange"
     />
 
     <!-- LEFT DRAWER -->
@@ -295,7 +295,7 @@ const initialIsRail = useState(
   "layout-initial-is-rail",
   () => display.mdAndDown.value && !display.mobile.value,
 );
-const { locale, availableLocales } = useI18n();
+const { locale, availableLocales, setLocale } = useI18n();
 const auth = useAuthSession();
 
 const leftDrawerState = ref(true);
@@ -547,8 +547,8 @@ function handleSidebarSelect(key: string) {
   activeSidebar.value = key;
   if (isMobile.value) leftDrawer.value = false;
 }
-function setLocale(newLocale: string) {
-  locale.value = newLocale;
+async function handleLocaleChange(newLocale: string) {
+  await setLocale(newLocale);
 }
 
 /** Helpers routes */
