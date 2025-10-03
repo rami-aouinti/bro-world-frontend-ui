@@ -211,7 +211,13 @@ const deleteButton = ref<HTMLButtonElement | null>(null);
 const { t } = useI18n();
 
 const auth = useAuthSession();
-const isUserAuthenticated = computed(() => props.isAuthenticated ?? auth.isAuthenticated.value);
+const isUserAuthenticated = computed(() => {
+  if (typeof props.isAuthenticated === "boolean") {
+    return props.isAuthenticated;
+  }
+
+  return auth.isReady.value && auth.isAuthenticated.value;
+});
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);

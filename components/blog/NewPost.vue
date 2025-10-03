@@ -18,7 +18,7 @@
         height="44"
         rounded="pill"
         :ripple="false"
-        :disabled="!isAuthenticated"
+        :disabled="!canUseAuthenticatedUi"
         data-test="new-post-trigger"
         @click="openDialog()"
       >
@@ -27,7 +27,7 @@
     </div>
 
     <v-alert
-      v-if="!isAuthenticated"
+      v-if="!canUseAuthenticatedUi"
       class="mt-3"
       type="info"
       density="compact"
@@ -46,7 +46,7 @@
         :key="action.key"
         variant="text"
         :color="action.color"
-        :disabled="!isAuthenticated"
+        :disabled="!canUseAuthenticatedUi"
         @click="openDialog()"
       >
         <Icon
@@ -64,7 +64,7 @@
     />
   </section>
 
-  <Suspense v-if="dialog && isAuthenticated">
+  <Suspense v-if="dialog && canUseAuthenticatedUi">
     <template #default>
       <NewPostDialog
         v-model:open="dialog"
@@ -124,7 +124,9 @@ const dialog = ref(false);
 const { t } = useI18n();
 const { $notify } = useNuxtApp();
 const auth = useAuthSession();
-const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const canUseAuthenticatedUi = computed(
+  () => auth.isReady.value && auth.isAuthenticated.value,
+);
 
 const placeholderText = computed(
   () => props.placeholder ?? t("blog.newPost.placeholder", { name: props.userName }),
@@ -154,7 +156,7 @@ const loginToPostMessage = computed(() => t("blog.auth.postRequired"));
 const maxLength = computed(() => props.maxLength);
 
 function openDialog() {
-  if (!isAuthenticated.value) {
+  if (!canUseAuthenticatedUi.value) {
     $notify({
       type: "info",
       title: t("blog.newPost.dialog.title"),
