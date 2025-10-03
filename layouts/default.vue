@@ -39,6 +39,12 @@
           :staticity="12"
           refresh
         />
+        <template #fallback>
+          <span
+            class="sidebar-default-card__particles"
+            aria-hidden="true"
+          />
+        </template>
       </ClientOnly>
       <div class="pane-scroll py-4 bg-card">
         <slot
@@ -81,6 +87,12 @@
           :staticity="12"
           refresh
         />
+        <template #fallback>
+          <span
+            class="sidebar-default-card__particles"
+            aria-hidden="true"
+          />
+        </template>
       </ClientOnly>
       <Suspense>
         <template #default>
@@ -184,6 +196,12 @@
           :staticity="12"
           refresh
         />
+        <template #fallback>
+          <span
+            class="sidebar-default-card__particles"
+            aria-hidden="true"
+          />
+        </template>
       </ClientOnly>
       <div class="main-scroll bg-card">
         <div class="app-container">
