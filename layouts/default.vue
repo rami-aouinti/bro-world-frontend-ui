@@ -94,7 +94,10 @@
           />
         </template>
       </ClientOnly>
-      <Suspense>
+      <Suspense
+        @resolve="handleRightDrawerResolve"
+        @pending="handleRightDrawerPending"
+      >
         <template #default>
           <ClientOnly>
             <div
@@ -185,29 +188,49 @@
 
     <v-main
       class="app-surface"
-      :class="{ hidden: isHydrated && !areSidebarsVisible }"
+      :class="{ hidden: isHydrated && areSidebarsReady && !areSidebarsVisible }"
     >
-      <ClientOnly>
-        <ParticlesBg
-          class="sidebar-default-card__particles"
-          :quantity="120"
-          :ease="120"
-          :color="isDark ? '#ffffff' : '#111827'"
-          :staticity="12"
-          refresh
-        />
-        <template #fallback>
-          <span
+      <template v-if="areSidebarsReady">
+        <ClientOnly>
+          <ParticlesBg
             class="sidebar-default-card__particles"
-            aria-hidden="true"
+            :quantity="120"
+            :ease="120"
+            :color="isDark ? '#ffffff' : '#111827'"
+            :staticity="12"
+            refresh
           />
-        </template>
-      </ClientOnly>
-      <div class="main-scroll bg-card">
-        <div class="app-container">
-          <slot />
+          <template #fallback>
+            <span
+              class="sidebar-default-card__particles"
+              aria-hidden="true"
+            />
+          </template>
+        </ClientOnly>
+        <div class="main-scroll bg-card">
+          <div class="app-container">
+            <slot />
+          </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div class="main-scroll bg-card">
+          <div class="app-container py-6">
+            <div class="flex flex-col gap-6">
+              <v-skeleton-loader
+                type="heading"
+                class="rounded-2xl"
+              />
+              <v-skeleton-loader
+                v-for="index in 3"
+                :key="index"
+                type="article"
+                class="rounded-2xl"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
     </v-main>
   </v-app>
 </template>
@@ -301,6 +324,14 @@ const auth = useAuthSession();
 const leftDrawerState = ref(true);
 const rightDrawerState = ref(true);
 
+const isLeftDrawerReady = ref(import.meta.server);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isLeftDrawerReady.value = true;
+  });
+}
+
 const leftDrawer = computed({
   get() {
     if (!isHydrated.value) {
@@ -352,6 +383,8 @@ const showRightWidgets = computed(() => {
 
   return currentRoute.value?.meta?.showRightWidgets !== false;
 });
+
+const isRightDrawerReady = ref(import.meta.server || !showRightWidgets.value);
 
 const siteSettingsState = useSiteSettingsState();
 const theme = useTheme();
@@ -471,6 +504,20 @@ const activeSidebar = ref("apps");
 /** Données de démonstration pour ProfileSidebar */
 const user = computed(() => auth.currentUser.value ?? null);
 
+function handleRightDrawerPending() {
+  if (import.meta.server) return;
+  isRightDrawerReady.value = false;
+}
+
+function handleRightDrawerResolve() {
+  isRightDrawerReady.value = true;
+}
+
+const areSidebarsReady = computed(() => {
+  const rightReady = showRightWidgets.value ? isRightDrawerReady.value : true;
+  return isLeftDrawerReady.value && rightReady;
+});
+
 /** ✅ Règle d’affichage du contenu: gauche ouverte ET (droite ouverte si demandée) */
 const areSidebarsVisible = computed(() => {
   if (!isHydrated.value) {
@@ -500,8 +547,10 @@ watch(
 watch(showRightWidgets, (value) => {
   if (!value) {
     rightDrawer.value = false;
+    isRightDrawerReady.value = true;
     return;
   }
+  isRightDrawerReady.value = import.meta.server;
   if (!isMobile.value) rightDrawer.value = true;
 });
 
