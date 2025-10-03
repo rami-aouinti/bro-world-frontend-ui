@@ -81,6 +81,7 @@
 
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
