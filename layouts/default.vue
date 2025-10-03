@@ -31,13 +31,15 @@
       class="app-drawer"
       :style="drawerInlineStyle"
     >
-      <ParticlesBg
-        class="sidebar-default-card__particles"
-        :quantity="50"
-        :ease="50"
-        :staticity="12"
-        refresh
-      />
+      <ClientOnly>
+        <ParticlesBg
+          class="sidebar-default-card__particles"
+          :quantity="50"
+          :ease="50"
+          :staticity="12"
+          refresh
+        />
+      </ClientOnly>
       <div class="pane-scroll py-4 bg-card">
         <slot
           name="left-sidebar"
@@ -71,13 +73,15 @@
       data-test="app-right-drawer"
       :style="drawerInlineStyle"
     >
-      <ParticlesBg
-        class="sidebar-default-card__particles"
-        :quantity="50"
-        :ease="50"
-        :staticity="12"
-        refresh
-      />
+      <ClientOnly>
+        <ParticlesBg
+          class="sidebar-default-card__particles"
+          :quantity="50"
+          :ease="50"
+          :staticity="12"
+          refresh
+        />
+      </ClientOnly>
       <Suspense>
         <template #default>
           <ClientOnly>
@@ -171,14 +175,16 @@
       class="app-surface"
       :class="{ hidden: isHydrated && !areSidebarsVisible }"
     >
-      <ParticlesBg
-        class="sidebar-default-card__particles"
-        :quantity="120"
-        :ease="120"
-        :color="isDark ? '#ffffff' : '#111827'"
-        :staticity="12"
-        refresh
-      />
+      <ClientOnly>
+        <ParticlesBg
+          class="sidebar-default-card__particles"
+          :quantity="120"
+          :ease="120"
+          :color="isDark ? '#ffffff' : '#111827'"
+          :staticity="12"
+          refresh
+        />
+      </ClientOnly>
       <div class="main-scroll bg-card">
         <div class="app-container">
           <slot />
