@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-3">
     <button
-      v-if="showToggleButtons"
+      v-show="showToggleButtons"
       type="button"
       :class="desktopToggleClasses"
       aria-label="Open widgets"
@@ -50,7 +50,7 @@
     <slot name="user" />
     <slot name="locale" />
     <button
-      v-if="showToggleButtons"
+      v-show="showToggleButtons"
       type="button"
       :class="mobileToggleClasses"
       aria-label="Open widgets"
