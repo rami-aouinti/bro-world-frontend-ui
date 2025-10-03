@@ -125,19 +125,10 @@
       />
     </div>
     <div
-      v-if="canRenderAuthUi"
+      v-if="canRenderAuthUi && composerVisible"
       class="mt-2"
     >
-      <v-btn
-        v-if="!showComposer"
-        color="primary"
-        variant="tonal"
-        @click="showComposer = true"
-      >
-        {{ commentLabel }}
-      </v-btn>
       <comment-composer
-        v-else
         :placeholder="commentPlaceholder"
         :avatar="props.currentUser?.photo"
         @submit="handleSubmit"
