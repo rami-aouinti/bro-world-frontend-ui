@@ -46,6 +46,7 @@
     </div>
     <div ref="commentsSectionRef">
       <CommentThread
+        v-model:composer-visible="isCommentComposerVisible"
         :counts="{ care: 0, love: 0, wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
         :nodes="post.comments_preview || []"
         :current-user="currentUser || []"
@@ -130,6 +131,7 @@ const post = computed(() => props.post);
 const postReacting = ref(false);
 const postReactionError = ref<string | null>(null);
 const commentContent = ref("");
+const isCommentComposerVisible = ref(false);
 const submittingComment = ref(false);
 const commentFeedback = ref<FeedbackState | null>(null);
 const loadedComments = ref<BlogCommentWithReplies[] | null>(null);
@@ -381,9 +383,13 @@ async function handleTogglePostReaction() {
 function handleCommentButtonClick() {
   requestComments();
 
-  nextTick(() => {
-    commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
-  });
+  isCommentComposerVisible.value = !isCommentComposerVisible.value;
+
+  if (isCommentComposerVisible.value) {
+    nextTick(() => {
+      commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
 }
 
 async function handleCommentReaction(commentId: string, reactionType: ReactionAction) {

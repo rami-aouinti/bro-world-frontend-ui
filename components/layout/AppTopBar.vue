@@ -157,37 +157,13 @@ const localeMetadata = {
 const theme = useTheme();
 const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
 
-function hexToRgb(hex: string) {
-  let normalized = hex.replace("#", "");
-  if (normalized.length === 3) {
-    normalized = normalized
-      .split("")
-      .map((char) => char + char)
-      .join("");
-  }
-
-  const value = Number.parseInt(normalized, 16);
-  if (Number.isNaN(value)) return "0, 0, 0";
-  const r = (value >> 16) & 255;
-  const g = (value >> 8) & 255;
-  const b = value & 255;
-
-  return `${r}, ${g}, ${b}`;
-}
-
-const appBarStyle = computed(() => {
-  const { colors, dark } = theme.current.value;
-  const surfaceRgb = hexToRgb(colors.surface);
-  const style: Record<string, string> = {
-    backgroundColor: `rgba(${surfaceRgb}, ${dark ? 0.78 : 0.82})`,
-  };
-
-  if (gradientIsDark.value) {
-    style.color = colors["on-primary"] ?? "#ffffff";
-  }
-
-  return style;
-});
+const appBarColor = computed(() =>
+  props.isDark ? "rgba(12, 10, 22, 0.78)" : "rgba(255, 255, 255, 0.82)",
+);
+const appBarStyle = computed(() => ({
+  backgroundColor: appBarColor.value,
+  color: gradientIsDark.value ? "#ffffff" : "hsl(var(--foreground))",
+}));
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === "input",
 );
