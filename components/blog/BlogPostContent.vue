@@ -138,12 +138,27 @@ const ALLOWED_ATTR = [
 
 const contentEl = ref<HTMLElement | null>(null);
 
-const safeHtml = computed(() =>
-  DOMPurify.sanitize(rawHtml.value, {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR,
-  }),
-);
+const domPurifySanitize = (() => {
+  if (typeof DOMPurify?.sanitize === "function") {
+    return (value: string) =>
+      DOMPurify.sanitize(value, {
+        ALLOWED_TAGS,
+        ALLOWED_ATTR,
+      });
+  }
+
+  if (typeof DOMPurify === "function") {
+    return (value: string) =>
+      DOMPurify(value, {
+        ALLOWED_TAGS,
+        ALLOWED_ATTR,
+      });
+  }
+
+  return (value: string) => value;
+})();
+
+const safeHtml = computed(() => domPurifySanitize(rawHtml.value));
 
 function updateContent(value: string) {
   if (contentEl.value) {
