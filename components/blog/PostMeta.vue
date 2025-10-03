@@ -18,9 +18,10 @@
         </p>
       </div>
     </div>
-    <AuthorActionMenu
+    <ClientOnly>
+      <AuthorActionMenu
       data-test="author-actions"
-      :is-authenticated="isAuthenticated"
+      :is-authenticated="canRenderAuthUi"
       :is-author="isAuthor"
       :is-following="isFollowing"
       :follow-loading="followLoading"
@@ -37,6 +38,7 @@
       @edit="(event) => emit('edit', event)"
       @delete="(event) => emit('delete', event)"
     />
+  </ClientOnly>
   </header>
 </template>
 
@@ -85,7 +87,9 @@ const emit = defineEmits<{
 }>();
 
 const auth = useAuthSession();
-const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const canRenderAuthUi = computed(
+  () => auth.isReady.value && auth.isAuthenticated.value,
+);
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);

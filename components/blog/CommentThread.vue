@@ -36,13 +36,13 @@
       >
         <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
         <ReactionPicker
-          v-if="isAuthenticated"
+          v-if="canRenderAuthUi"
           class="like-size-sm"
           @like="emit('like', node.id)"
           @select="(r) => emit('react', { id: node.id, type: r })"
         />
         <button
-          v-if="isAuthenticated"
+          v-if="canRenderAuthUi"
           class="meta__btn"
           @click="toggleReply(node.id)"
         >
@@ -125,7 +125,7 @@
       />
     </div>
     <comment-composer
-      v-if="isAuthenticated"
+      v-if="canRenderAuthUi"
       class="mt-2"
       :placeholder="commentPlaceholder"
       :avatar="props.currentUser?.photo"
@@ -145,7 +145,9 @@ import { useRelativeTime } from "~/composables/useRelativeTime";
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
-const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const canRenderAuthUi = computed(
+  () => auth.isReady.value && auth.isAuthenticated.value,
+);
 export type CommentNode = {
   id: string;
   user: { firstName?: string; lastName?: string; photo?: string };

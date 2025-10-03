@@ -13,8 +13,11 @@ export function useCookieColorMode() {
     }),
   );
 
+  const initialValue = colorModeCookie.value ?? "auto";
+
   const colorMode = useColorMode<ColorModeValue>({
     storageKey: "color-mode",
+    initialValue,
     storage: {
       getItem: () => colorModeCookie.value ?? "auto",
       setItem: (_, value) => {

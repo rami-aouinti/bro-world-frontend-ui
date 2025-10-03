@@ -223,7 +223,7 @@ const missingClientBundleCollections = clientBundleCollections.filter(
 );
 
 if (missingClientBundleCollections.length > 0) {
-  console.warn(
+  console.info(
     `Nuxt Icon client bundle disabled: missing icon collections ${missingClientBundleCollections.join(", ")}`,
   );
 }
@@ -242,7 +242,7 @@ try {
   require.resolve("@nuxt/ui-pro/nuxt.config");
   nuxtLayers.unshift("@nuxt/ui-pro");
 } catch (error) {
-  console.warn(
+  console.info(
     `@nuxt/ui-pro layer skipped: ${(error as Error | undefined)?.message ?? "Unknown error"}`,
   );
 }
