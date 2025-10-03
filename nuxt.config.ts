@@ -457,7 +457,9 @@ export default defineNuxtConfig({
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: "i18n_redirected",
-      alwaysRedirect: true,
+      // Ensure the language selected by the user is kept when navigating
+      // across the app by avoiding repeated locale re-detections.
+      alwaysRedirect: false,
       fallbackLocale: "en",
     },
     locales: [

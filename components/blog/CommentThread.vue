@@ -195,15 +195,16 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const { formatRelativeTime } = useRelativeTime();
 
-const composerVisible = defineModel<boolean>("composerVisible", { default: false });
+const showComposer = ref(false);
 
 watch(canRenderAuthUi, (value) => {
   if (!value) {
-    composerVisible.value = false;
+    showComposer.value = false;
   }
 });
 
 const depth = computed(() => props.depth ?? 0);
+const commentLabel = computed(() => t("blog.posts.actions.comment"));
 const bubbleOrder: Reaction[] = ["like", "sad", "angry"];
 const topReactions = computed(() =>
   bubbleOrder

@@ -1,8 +1,8 @@
 <template>
   <v-app-bar
-    class="app-top-bar bg-card"
-    :class="gradientIsDark ? 'text-white' : 'text-black'"
-    :color="appBarColor"
+    class="app-top-bar bg-card text-foreground"
+    :class="{ 'text-white': gradientIsDark }"
+    :style="appBarStyle"
     app
     :elevation="10"
     rounded
@@ -158,6 +158,10 @@ const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
 const appBarColor = computed(() =>
   props.isDark ? "rgba(12, 10, 22, 0.78)" : "rgba(255, 255, 255, 0.82)",
 );
+const appBarStyle = computed(() => ({
+  backgroundColor: appBarColor.value,
+  color: gradientIsDark.value ? "#ffffff" : "hsl(var(--foreground))",
+}));
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === "input",
 );
