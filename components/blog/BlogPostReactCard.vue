@@ -112,9 +112,7 @@ import type { BlogPost } from "~/lib/mock/blog";
 type Reaction = PickerReaction;
 
 const auth = useAuthSession();
-const canRenderAuthUi = computed(
-  () => auth.isReady.value && auth.isAuthenticated.value,
-);
+const canRenderAuthUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
 const props = defineProps<{

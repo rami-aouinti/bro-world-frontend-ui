@@ -13,210 +13,210 @@
           rounded="xl"
           elevation="10"
         >
-            <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
-              <v-avatar
-                size="96"
-                class="flex-shrink-0"
-                color="primary"
-                variant="tonal"
+          <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
+            <v-avatar
+              size="96"
+              class="flex-shrink-0"
+              color="primary"
+              variant="tonal"
+            >
+              <v-img
+                :src="avatarSrc"
+                :alt="avatarAlt"
+                cover
+              />
+            </v-avatar>
+            <div class="flex-grow-1 w-100">
+              <div
+                class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-3"
               >
-                <v-img
-                  :src="avatarSrc"
-                  :alt="avatarAlt"
-                  cover
-                />
-              </v-avatar>
-              <div class="flex-grow-1 w-100">
-                <div
-                  class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-3"
-                >
-                  <div>
-                    <h1
-                      id="profile-title"
-                      class="text-h4 font-weight-bold mb-1"
-                    >
-                      {{ displayName }}
-                    </h1>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ usernameLabel }}
-                    </p>
-                  </div>
-                  <div
-                    class="d-flex flex-wrap align-center gap-2"
-                    :aria-label="t('pages.profile.labels.roles')"
-                    role="list"
+                <div>
+                  <h1
+                    id="profile-title"
+                    class="text-h4 font-weight-bold mb-1"
                   >
-                    <template v-if="hasRoles">
-                      <v-chip
-                        v-for="role in roles"
-                        :key="role"
-                        color="primary"
-                        variant="tonal"
-                        size="small"
-                        role="listitem"
-                      >
-                        {{ role }}
-                      </v-chip>
-                    </template>
-                    <span
-                      v-else
-                      class="text-body-2 text-medium-emphasis"
-                      >{{ placeholderValue }}</span
-                    >
-                  </div>
+                    {{ displayName }}
+                  </h1>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ usernameLabel }}
+                  </p>
                 </div>
-                <p
-                  id="profile-subtitle"
-                  class="text-body-1 text-medium-emphasis mt-4 mb-0"
+                <div
+                  class="d-flex flex-wrap align-center gap-2"
+                  :aria-label="t('pages.profile.labels.roles')"
+                  role="list"
                 >
-                  {{ t("pages.profile.subtitle") }}
-                </p>
+                  <template v-if="hasRoles">
+                    <v-chip
+                      v-for="role in roles"
+                      :key="role"
+                      color="primary"
+                      variant="tonal"
+                      size="small"
+                      role="listitem"
+                    >
+                      {{ role }}
+                    </v-chip>
+                  </template>
+                  <span
+                    v-else
+                    class="text-body-2 text-medium-emphasis"
+                    >{{ placeholderValue }}</span
+                  >
+                </div>
               </div>
+              <p
+                id="profile-subtitle"
+                class="text-body-1 text-medium-emphasis mt-4 mb-0"
+              >
+                {{ t("pages.profile.subtitle") }}
+              </p>
             </div>
+          </div>
         </v-card>
       </header>
 
-        <v-row
-          dense
-          align="stretch"
-        >
-          <v-col cols="12">
-            <v-row
-              dense
-              align="stretch"
+      <v-row
+        dense
+        align="stretch"
+      >
+        <v-col cols="12">
+          <v-row
+            dense
+            align="stretch"
+          >
+            <v-col
+              cols="12"
+              md="6"
             >
-              <v-col
-                cols="12"
-                md="6"
+              <section
+                aria-labelledby="contact-section-title"
+                class="h-100"
               >
-                <section
-                  aria-labelledby="contact-section-title"
-                  class="h-100"
+                <v-card
+                  class="pa-6 h-100"
+                  rounded="lg"
+                  variant="tonal"
                 >
-                  <v-card
-                    class="pa-6 h-100"
-                    rounded="lg"
-                    variant="tonal"
+                  <h2
+                    id="contact-section-title"
+                    class="text-h5 font-weight-semibold mb-4"
                   >
-                    <h2
-                      id="contact-section-title"
-                      class="text-h5 font-weight-semibold mb-4"
+                    {{ t("pages.profile.sections.contact") }}
+                  </h2>
+                  <dl class="d-flex flex-column gap-4">
+                    <div
+                      v-for="item in contactItems"
+                      :key="item.id"
                     >
-                      {{ t("pages.profile.sections.contact") }}
-                    </h2>
-                    <dl class="d-flex flex-column gap-4">
-                      <div
-                        v-for="item in contactItems"
-                        :key="item.id"
-                      >
-                        <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
-                        <dd class="text-body-1 font-weight-medium mb-0">
-                          <a
-                            v-if="item.href && item.value !== placeholderValue"
-                            :href="item.href"
-                            class="text-primary text-decoration-none"
-                          >
-                            {{ item.value }}
-                          </a>
-                          <span v-else>{{ item.value }}</span>
-                        </dd>
-                      </div>
-                    </dl>
-                  </v-card>
-                </section>
-              </v-col>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        <a
+                          v-if="item.href && item.value !== placeholderValue"
+                          :href="item.href"
+                          class="text-primary text-decoration-none"
+                        >
+                          {{ item.value }}
+                        </a>
+                        <span v-else>{{ item.value }}</span>
+                      </dd>
+                    </div>
+                  </dl>
+                </v-card>
+              </section>
+            </v-col>
 
-              <v-col
-                cols="12"
-                md="6"
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <section
+                aria-labelledby="profile-section-title"
+                class="h-100"
               >
-                <section
-                  aria-labelledby="profile-section-title"
-                  class="h-100"
+                <v-card
+                  class="pa-6 h-100"
+                  rounded="lg"
+                  variant="tonal"
                 >
-                  <v-card
-                    class="pa-6 h-100"
-                    rounded="lg"
-                    variant="tonal"
+                  <h2
+                    id="profile-section-title"
+                    class="text-h5 font-weight-semibold mb-4"
                   >
-                    <h2
-                      id="profile-section-title"
-                      class="text-h5 font-weight-semibold mb-4"
+                    {{ t("pages.profile.sections.profile") }}
+                  </h2>
+                  <dl class="d-flex flex-column gap-4">
+                    <div
+                      v-for="item in profileItems"
+                      :key="item.id"
                     >
-                      {{ t("pages.profile.sections.profile") }}
-                    </h2>
-                    <dl class="d-flex flex-column gap-4">
-                      <div
-                        v-for="item in profileItems"
-                        :key="item.id"
-                      >
-                        <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
-                        <dd class="text-body-1 font-weight-medium mb-0">{{ item.value }}</dd>
-                      </div>
-                    </dl>
-                  </v-card>
-                </section>
-              </v-col>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">{{ item.value }}</dd>
+                    </div>
+                  </dl>
+                </v-card>
+              </section>
+            </v-col>
 
-              <v-col cols="12">
-                <section
-                  aria-labelledby="social-section-title"
-                  class="h-100"
+            <v-col cols="12">
+              <section
+                aria-labelledby="social-section-title"
+                class="h-100"
+              >
+                <v-card
+                  class="pa-6 h-100"
+                  rounded="lg"
+                  variant="tonal"
                 >
-                  <v-card
-                    class="pa-6 h-100"
-                    rounded="lg"
-                    variant="tonal"
+                  <h2
+                    id="social-section-title"
+                    class="text-h5 font-weight-semibold mb-4"
                   >
-                    <h2
-                      id="social-section-title"
-                      class="text-h5 font-weight-semibold mb-4"
-                    >
-                      {{ t("pages.profile.sections.social") }}
-                    </h2>
-                    <dl
-                      class="d-flex flex-column gap-4"
-                      :aria-label="t('pages.profile.stats.title')"
-                    >
-                      <div>
-                        <dt class="text-body-2 text-medium-emphasis mb-1">
-                          {{ t("pages.profile.labels.friends") }}
-                        </dt>
-                        <dd class="text-body-1 font-weight-medium mb-0">
-                          {{ formattedFriendsCount }}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt class="text-body-2 text-medium-emphasis mb-1">
-                          {{ t("pages.profile.labels.stories") }}
-                        </dt>
-                        <dd class="text-body-1 font-weight-medium mb-0">
-                          {{ formattedStoriesCount }}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt class="text-body-2 text-medium-emphasis mb-1">
-                          {{ t("pages.profile.labels.accountStatus") }}
-                        </dt>
-                        <dd class="text-body-1 font-weight-medium mb-0">
-                          <v-chip
-                            v-if="accountStatus"
-                            :color="accountStatus.color"
-                            size="small"
-                            variant="flat"
-                          >
-                            {{ accountStatus.label }}
-                          </v-chip>
-                          <span v-else>{{ placeholderValue }}</span>
-                        </dd>
-                      </div>
-                    </dl>
-                  </v-card>
-                </section>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
+                    {{ t("pages.profile.sections.social") }}
+                  </h2>
+                  <dl
+                    class="d-flex flex-column gap-4"
+                    :aria-label="t('pages.profile.stats.title')"
+                  >
+                    <div>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">
+                        {{ t("pages.profile.labels.friends") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        {{ formattedFriendsCount }}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">
+                        {{ t("pages.profile.labels.stories") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        {{ formattedStoriesCount }}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt class="text-body-2 text-medium-emphasis mb-1">
+                        {{ t("pages.profile.labels.accountStatus") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        <v-chip
+                          v-if="accountStatus"
+                          :color="accountStatus.color"
+                          size="small"
+                          variant="flat"
+                        >
+                          {{ accountStatus.label }}
+                        </v-chip>
+                        <span v-else>{{ placeholderValue }}</span>
+                      </dd>
+                    </div>
+                  </dl>
+                </v-card>
+              </section>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
     </v-container>
   </main>
 </template>

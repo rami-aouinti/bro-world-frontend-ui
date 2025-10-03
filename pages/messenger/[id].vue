@@ -36,6 +36,7 @@ import { callOnce, navigateTo } from "#imports";
 import ConversationsList from "~/components/messenger/ConversationsList.vue";
 import ChatPane from "~/components/messenger/ChatPane.vue";
 import { useMessengerStore } from "~/stores/messenger";
+
 definePageMeta({
   documentDriven: false,
 });

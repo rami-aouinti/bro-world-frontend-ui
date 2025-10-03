@@ -249,8 +249,7 @@ async function handleSubmit() {
 
     auth.setSessionMessage(null);
 
-    const redirectTarget =
-      redirectFromQuery.value || auth.consumeRedirect() || localePath("/");
+    const redirectTarget = redirectFromQuery.value || auth.consumeRedirect() || localePath("/");
 
     $notify({
       type: "success",

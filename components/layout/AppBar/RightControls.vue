@@ -92,12 +92,8 @@ const props = defineProps<{
   messengerUnknownLabel: string;
   messengerLoading: boolean;
 }>();
-const desktopToggleClasses = computed(
-  () => `${props.iconTriggerClasses} hidden md:flex`,
-);
-const mobileToggleClasses = computed(
-  () => `${props.iconTriggerClasses} md:hidden`,
-);
+const desktopToggleClasses = computed(() => `${props.iconTriggerClasses} hidden md:flex`);
+const mobileToggleClasses = computed(() => `${props.iconTriggerClasses} md:hidden`);
 const showToggleButtons = computed(() => props.showRightToggle);
 
 const emit = defineEmits(["toggle-right", "mark-all-notifications"]);

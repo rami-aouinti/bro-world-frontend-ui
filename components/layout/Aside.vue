@@ -73,9 +73,7 @@ const tree = computed(() => {
   const route = currentRoute.value;
   const pathSegments = (route?.path ?? "/").split("/");
   if (config.value.aside.useLevel) {
-    const leveledPath = pathSegments
-      .splice(0, locale.value === defaultLocale ? 2 : 3)
-      .join("/");
+    const leveledPath = pathSegments.splice(0, locale.value === defaultLocale ? 2 : 3).join("/");
 
     const dir = navDirFromPath(leveledPath, navigation.value);
     return dir ?? [];

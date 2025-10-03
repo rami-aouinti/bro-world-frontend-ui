@@ -44,6 +44,7 @@ import { useI18n } from "vue-i18n";
 import { callOnce, navigateTo } from "#imports";
 import ConversationsList from "~/components/messenger/ConversationsList.vue";
 import { useMessengerStore } from "~/stores/messenger";
+
 definePageMeta({
   documentDriven: false,
 });

@@ -70,7 +70,7 @@ export const useAuthSession = defineStore("auth-session", () => {
   const translate = (key: string) => nuxtApp.$i18n?.t?.(key) ?? key;
 
   const runtimeConfig = useRuntimeConfig();
-  const privateAuthConfig = import.meta.server ? runtimeConfig.auth ?? {} : {};
+  const privateAuthConfig = import.meta.server ? (runtimeConfig.auth ?? {}) : {};
   const publicAuthConfig = runtimeConfig.public?.auth ?? {};
   const sessionTokenCookieName =
     (privateAuthConfig.sessionTokenCookieName as string | undefined) ??
@@ -436,7 +436,7 @@ export const useAuthSession = defineStore("auth-session", () => {
       const currentPath =
         typeof currentRoute?.path === "string"
           ? currentRoute.path
-          : currentRoute?.fullPath ?? "/";
+          : (currentRoute?.fullPath ?? "/");
       const locale = resolveLocaleFromPath(currentPath);
       const target = redirectTo ?? buildLocalizedPath("/login", locale);
 
@@ -467,7 +467,8 @@ export const useAuthSession = defineStore("auth-session", () => {
       await logout({ redirect: false, notify: false });
 
       const redirectTarget = currentRoute?.fullPath ?? consumeRedirect();
-      const resolvedPath = typeof currentRoute?.path === "string" ? currentRoute.path : redirectTarget;
+      const resolvedPath =
+        typeof currentRoute?.path === "string" ? currentRoute.path : redirectTarget;
       const locale = resolveLocaleFromPath(resolvedPath ?? "/");
       const loginRoute = buildLocalizedPath("/login", locale);
       const query = redirectTarget ? { redirect: redirectTarget } : undefined;

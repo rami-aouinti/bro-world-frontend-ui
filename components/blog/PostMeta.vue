@@ -20,25 +20,25 @@
     </div>
     <ClientOnly>
       <AuthorActionMenu
-      data-test="author-actions"
-      :is-authenticated="canRenderAuthUi"
-      :is-author="isAuthor"
-      :is-following="isFollowing"
-      :follow-loading="followLoading"
-      :follow-label="followLabel"
-      :follow-loading-label="followLoadingLabel"
-      :follow-aria-label="followAriaLabel"
-      :following-label="followingLabel"
-      :following-aria-label="followingAriaLabel"
-      :actions-aria-label="actionsAriaLabel"
-      :edit-label="editLabel"
-      :delete-label="deleteLabel"
-      variant="post"
-      @follow="emit('follow')"
-      @edit="(event) => emit('edit', event)"
-      @delete="(event) => emit('delete', event)"
-    />
-  </ClientOnly>
+        data-test="author-actions"
+        :is-authenticated="canRenderAuthUi"
+        :is-author="isAuthor"
+        :is-following="isFollowing"
+        :follow-loading="followLoading"
+        :follow-label="followLabel"
+        :follow-loading-label="followLoadingLabel"
+        :follow-aria-label="followAriaLabel"
+        :following-label="followingLabel"
+        :following-aria-label="followingAriaLabel"
+        :actions-aria-label="actionsAriaLabel"
+        :edit-label="editLabel"
+        :delete-label="deleteLabel"
+        variant="post"
+        @follow="emit('follow')"
+        @edit="(event) => emit('edit', event)"
+        @delete="(event) => emit('delete', event)"
+      />
+    </ClientOnly>
   </header>
 </template>
 
@@ -87,9 +87,7 @@ const emit = defineEmits<{
 }>();
 
 const auth = useAuthSession();
-const canRenderAuthUi = computed(
-  () => auth.isReady.value && auth.isAuthenticated.value,
-);
+const canRenderAuthUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
 const isAuthor = computed(() => props.isAuthor);
 const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);

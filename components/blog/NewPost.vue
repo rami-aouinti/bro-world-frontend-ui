@@ -125,9 +125,7 @@ const dialog = ref(false);
 const { t } = useI18n();
 const { $notify } = useNuxtApp();
 const auth = useAuthSession();
-const canUseAuthenticatedUi = computed(
-  () => auth.isReady.value && auth.isAuthenticated.value,
-);
+const canUseAuthenticatedUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
 
 const placeholderText = computed(
   () => props.placeholder ?? t("blog.newPost.placeholder", { name: props.userName }),

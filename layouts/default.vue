@@ -249,20 +249,17 @@ const colorSchemeHint = import.meta.server
       | null)
   : null;
 
-const initialResolvedColorMode = useState<"light" | "dark">(
-  "layout-initial-color-mode",
-  () => {
-    if (colorMode.value === "dark" || colorMode.value === "light") {
-      return colorMode.value;
-    }
+const initialResolvedColorMode = useState<"light" | "dark">("layout-initial-color-mode", () => {
+  if (colorMode.value === "dark" || colorMode.value === "light") {
+    return colorMode.value;
+  }
 
-    if (colorSchemeHint === "dark") {
-      return "dark";
-    }
+  if (colorSchemeHint === "dark") {
+    return "dark";
+  }
 
-    return "light";
-  },
-);
+  return "light";
+});
 
 const isHydrated = ref(false);
 
