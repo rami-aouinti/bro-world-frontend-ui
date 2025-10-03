@@ -91,6 +91,7 @@ import StoryViewerModal from "~/components/stories/StoryViewerModal.vue";
 
 definePageMeta({
   showRightWidgets: true,
+  documentDriven: false,
 });
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
