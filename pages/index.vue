@@ -1,14 +1,14 @@
 <template>
   <main aria-labelledby="blog-heading">
     <NewPost
-      v-if="isAuthenticated"
+      v-if="canAccessAuthenticatedContent"
       :avatar="user.avatarUrl"
       :user-name="user.name"
       @submit="createPost"
       @attach="onAttach"
     />
     <section
-      v-if="isAuthenticated"
+      v-if="canAccessAuthenticatedContent"
       class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
     >
       <input
@@ -24,7 +24,7 @@
         @create="createStory"
       />
       <StoryViewerModal
-        v-if="isAuthenticated"
+        v-if="canAccessAuthenticatedContent"
         v-model="isStoryViewerOpen"
         :story="activeStory"
         @close="onStoryClosed"
@@ -95,7 +95,9 @@ definePageMeta({
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 const auth = useAuthSession();
-const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const canAccessAuthenticatedContent = computed(
+  () => auth.isReady.value && auth.isAuthenticated.value,
+);
 const user = {
   name: "Rami Aouinti",
   avatarUrl: "https://bro-world-space.com/img/person.png",
