@@ -1,8 +1,8 @@
 <template>
   <v-app-bar
-    class="app-top-bar bg-card"
-    :class="gradientIsDark ? 'text-white' : 'text-black'"
-    :color="appBarColor"
+    class="app-top-bar bg-card text-foreground"
+    :class="{ 'text-white': gradientIsDark }"
+    :style="appBarStyle"
     app
     :elevation="10"
     rounded
@@ -105,6 +105,7 @@ import LocaleMenu from "./AppBar/LocaleMenu.vue";
 import RightControls from "./AppBar/RightControls.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
 import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
+import { useTheme } from "vuetify";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
@@ -153,11 +154,40 @@ const localeMetadata = {
 } as const satisfies Record<string, { label: string; flag: string }>;
 
 /** Dégradés dynamiques depuis primary + mode sombre */
+const theme = useTheme();
 const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
 
-const appBarColor = computed(() =>
-  props.isDark ? "rgba(12, 10, 22, 0.78)" : "rgba(255, 255, 255, 0.82)",
-);
+function hexToRgb(hex: string) {
+  let normalized = hex.replace("#", "");
+  if (normalized.length === 3) {
+    normalized = normalized
+      .split("")
+      .map((char) => char + char)
+      .join("");
+  }
+
+  const value = Number.parseInt(normalized, 16);
+  if (Number.isNaN(value)) return "0, 0, 0";
+  const r = (value >> 16) & 255;
+  const g = (value >> 8) & 255;
+  const b = value & 255;
+
+  return `${r}, ${g}, ${b}`;
+}
+
+const appBarStyle = computed(() => {
+  const { colors, dark } = theme.current.value;
+  const surfaceRgb = hexToRgb(colors.surface);
+  const style: Record<string, string> = {
+    backgroundColor: `rgba(${surfaceRgb}, ${dark ? 0.78 : 0.82})`,
+  };
+
+  if (gradientIsDark.value) {
+    style.color = colors["on-primary"] ?? "#ffffff";
+  }
+
+  return style;
+});
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === "input",
 );
