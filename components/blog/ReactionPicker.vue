@@ -1,26 +1,11 @@
 <template>
-  <v-menu
-    v-model="open"
-    open-on-hover
-    close-on-content-click
-    location="top"
-    offset="8"
-    :scrim="false"
-    :eager="true"
-    content-class="rx-menu-content rx-rounded"
-  >
-    <template #activator="{ props: activatorProps }">
+  <ClientOnly>
+    <template #fallback>
       <button
+        type="button"
         class="meta__btn"
         :class="`meta__btn--${props.btnSize}`"
-        v-bind="activatorProps"
-        @click.stop="
-          () => {
-            if (!open) emit('like');
-          }
-        "
-        @pointerdown.passive="onPointerDown"
-        @pointerup.passive="onPointerUp"
+        @click.stop="emit('like')"
       >
         <Icon
           name="mdi-thumb-up-outline"
@@ -30,26 +15,60 @@
       </button>
     </template>
 
-    <div
-      class="rx-bubble"
-      role="listbox"
-      :aria-label="t('blog.reactions.posts.reactLabel')"
+    <v-menu
+      v-model="open"
+      open-on-hover
+      close-on-content-click
+      location="top"
+      offset="8"
+      :scrim="false"
+      :eager="true"
+      content-class="rx-menu-content rx-rounded"
     >
-      <button
-        v-for="it in items"
-        :key="it.key"
-        class="rx-item"
-        :aria-label="it.label"
-        role="option"
-        @click.stop="emit('select', it.key)"
+      <template #activator="{ props: activatorProps }">
+        <button
+          type="button"
+          class="meta__btn"
+          :class="`meta__btn--${props.btnSize}`"
+          v-bind="activatorProps"
+          @click.stop="
+            () => {
+              if (!open) emit('like');
+            }
+          "
+          @pointerdown.passive="onPointerDown"
+          @pointerup.passive="onPointerUp"
+        >
+          <Icon
+            name="mdi-thumb-up-outline"
+            start
+          ></Icon>
+          {{ t("blog.reactions.posts.likeAction") }}
+        </button>
+      </template>
+
+      <div
+        class="rx-bubble"
+        role="listbox"
+        :aria-label="t('blog.reactions.posts.reactLabel')"
       >
-        <img
-          :src="it.src"
-          :alt="it.label"
-        />
-      </button>
-    </div>
-  </v-menu>
+        <button
+          v-for="it in items"
+          :key="it.key"
+          type="button"
+          class="rx-item"
+          :aria-label="it.label"
+          role="option"
+          @click.stop="emit('select', it.key)"
+        >
+          <img
+            :src="it.src"
+            :alt="it.label"
+          />
+        </button>
+      </div>
+    </v-menu>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
