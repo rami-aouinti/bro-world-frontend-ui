@@ -161,9 +161,15 @@ onMounted(() => {
     { immediate: true },
   );
 });
+const composerVisible = defineModel<boolean>("composerVisible", { default: false });
+
+watch(canRenderAuthUi, (value) => {
+  if (!value) {
+    composerVisible.value = false;
+  }
+});
 
 onBeforeUnmount(() => {
-  stopAuthWatcher?.();
   stopAuthWatcher = null;
 });
 export type CommentNode = {
