@@ -18,25 +18,27 @@
         </p>
       </div>
     </div>
-    <AuthorActionMenu
-      data-test="author-actions"
-      :is-authenticated="isAuthenticated"
-      :is-author="isAuthor"
-      :is-following="isFollowing"
-      :follow-loading="followLoading"
-      :follow-label="followLabel"
-      :follow-loading-label="followLoadingLabel"
-      :follow-aria-label="followAriaLabel"
-      :following-label="followingLabel"
-      :following-aria-label="followingAriaLabel"
-      :actions-aria-label="actionsAriaLabel"
-      :edit-label="editLabel"
-      :delete-label="deleteLabel"
-      variant="post"
-      @follow="emit('follow')"
-      @edit="(event) => emit('edit', event)"
-      @delete="(event) => emit('delete', event)"
-    />
+    <ClientOnly>
+      <AuthorActionMenu
+        data-test="author-actions"
+        :is-authenticated="isAuthenticated"
+        :is-author="isAuthor"
+        :is-following="isFollowing"
+        :follow-loading="followLoading"
+        :follow-label="followLabel"
+        :follow-loading-label="followLoadingLabel"
+        :follow-aria-label="followAriaLabel"
+        :following-label="followingLabel"
+        :following-aria-label="followingAriaLabel"
+        :actions-aria-label="actionsAriaLabel"
+        :edit-label="editLabel"
+        :delete-label="deleteLabel"
+        variant="post"
+        @follow="emit('follow')"
+        @edit="(event) => emit('edit', event)"
+        @delete="(event) => emit('delete', event)"
+      />
+    </ClientOnly>
   </header>
 </template>
 

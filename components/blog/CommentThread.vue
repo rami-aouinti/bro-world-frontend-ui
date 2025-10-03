@@ -35,12 +35,14 @@
         style="margin-top: 10px"
       >
         <span class="meta__time">{{ formatTime(node.publishedAt) }}</span>
-        <ReactionPicker
-          v-if="isAuthenticated"
-          class="like-size-sm"
-          @like="emit('like', node.id)"
-          @select="(r) => emit('react', { id: node.id, type: r })"
-        />
+        <ClientOnly>
+          <ReactionPicker
+            v-if="isAuthenticated"
+            class="like-size-sm"
+            @like="emit('like', node.id)"
+            @select="(r) => emit('react', { id: node.id, type: r })"
+          />
+        </ClientOnly>
         <button
           v-if="isAuthenticated"
           class="meta__btn"
@@ -101,16 +103,18 @@
         </template>
       </div>
 
-      <div
-        v-if="replying[node.id]"
-        class="reply-composer"
-      >
-        <comment-composer
-          :avatar="props.currentUser?.photo"
-          :placeholder="t('blog.comments.replyPlaceholder')"
-          @submit="(t) => emit('submit', t)"
-        />
-      </div>
+      <ClientOnly>
+        <div
+          v-if="replying[node.id]"
+          class="reply-composer"
+        >
+          <comment-composer
+            :avatar="props.currentUser?.photo"
+            :placeholder="t('blog.comments.replyPlaceholder')"
+            @submit="(t) => emit('submit', t)"
+          />
+        </div>
+      </ClientOnly>
 
       <!-- sous-commentaires (récursif) -->
       <CommentThread
@@ -124,13 +128,15 @@
         @more="(id) => emit('more', id)"
       />
     </div>
-    <comment-composer
-      v-if="isAuthenticated"
-      class="mt-2"
-      :placeholder="commentPlaceholder"
-      :avatar="props.currentUser?.photo"
-      @submit="(t) => emit('submit', t)"
-    />
+    <ClientOnly>
+      <comment-composer
+        v-if="isAuthenticated"
+        class="mt-2"
+        :placeholder="commentPlaceholder"
+        :avatar="props.currentUser?.photo"
+        @submit="(t) => emit('submit', t)"
+      />
+    </ClientOnly>
   </div>
 </template>
 

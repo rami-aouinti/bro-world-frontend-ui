@@ -60,41 +60,43 @@
       >
     </div>
   </div>
-  <div
-    v-if="isAuthenticated"
-    class="reaction-bar"
-  >
-    <!-- Actions -->
-    <div class="actions">
-      <ReactionPicker
-        class="like-size-lg"
-        @like="onToggleLike"
-        @select="handleSelect"
-      />
-      <v-btn
-        variant="text"
-        density="comfortable"
-        class="action-btn"
-        @click="$emit('comment')"
-      >
-        <Icon
-          name="mdi-chat-outline"
-          start
-        ></Icon>
-        {{ t("blog.posts.actions.comment") }}
-      </v-btn>
-      <v-btn
-        variant="text"
-        @click="$emit('share')"
-      >
-        <Icon
-          name="mdi-share-outline"
-          start
-        ></Icon>
-        {{ t("blog.posts.actions.share") }}
-      </v-btn>
+  <ClientOnly>
+    <div
+      v-if="isAuthenticated"
+      class="reaction-bar"
+    >
+      <!-- Actions -->
+      <div class="actions">
+        <ReactionPicker
+          class="like-size-lg"
+          @like="onToggleLike"
+          @select="handleSelect"
+        />
+        <v-btn
+          variant="text"
+          density="comfortable"
+          class="action-btn"
+          @click="$emit('comment')"
+        >
+          <Icon
+            name="mdi-chat-outline"
+            start
+          ></Icon>
+          {{ t("blog.posts.actions.comment") }}
+        </v-btn>
+        <v-btn
+          variant="text"
+          @click="$emit('share')"
+        >
+          <Icon
+            name="mdi-share-outline"
+            start
+          ></Icon>
+          {{ t("blog.posts.actions.share") }}
+        </v-btn>
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
