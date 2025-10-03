@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-3">
     <button
-      v-if="isMounted && props.showRightToggle"
+      v-if="props.showRightToggle"
       type="button"
       :class="[props.iconTriggerClasses, 'hidden md:flex']"
       aria-label="Open widgets"
@@ -50,7 +50,7 @@
     <slot name="user" />
     <slot name="locale" />
     <button
-      v-if="isMounted && props.showRightToggle"
+      v-if="props.showRightToggle"
       type="button"
       :class="[props.iconTriggerClasses, 'md:hidden']"
       aria-label="Open widgets"
@@ -69,7 +69,6 @@ import NotificationMenu from "./NotificationMenu.vue";
 import MessengerMenu from "~/components/messenger/MessengerMenu.vue";
 import type { AppNotification } from "~/types/layout";
 import type { MessengerConversation } from "~/types/messenger";
-import { onMounted, ref } from "vue";
 
 const props = defineProps<{
   isMobile: boolean;
@@ -93,12 +92,4 @@ const props = defineProps<{
   messengerLoading: boolean;
 }>();
 const emit = defineEmits(["toggle-right", "mark-all-notifications"]);
-
-const isMounted = ref(false);
-
-if (import.meta.client) {
-  onMounted(() => {
-    isMounted.value = true;
-  });
-}
 </script>
