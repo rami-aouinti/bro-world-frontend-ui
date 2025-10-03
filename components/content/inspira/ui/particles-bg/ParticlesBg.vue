@@ -47,6 +47,8 @@ const context = ref<CanvasRenderingContext2D | null>(null);
 const circles = ref<Circle[]>([]);
 const mouse = reactive<{ x: number; y: number }>({ x: 0, y: 0 });
 const canvasSize = reactive<{ w: number; h: number }>({ w: 0, h: 0 });
+const canvasRect = ref<DOMRect | null>(null);
+let animationFrameId: number | null = null;
 const { x: mouseX, y: mouseY } = useMouse();
 const { pixelRatio } = useDevicePixelRatio();
 
@@ -78,12 +80,16 @@ onMounted(() => {
   }
 
   initCanvas();
-  animate();
+  animationFrameId = window.requestAnimationFrame(animate);
   window.addEventListener("resize", initCanvas);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("resize", initCanvas);
+  if (animationFrameId !== null) {
+    window.cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
 });
 
 watch([mouseX, mouseY], () => {
@@ -96,11 +102,10 @@ function initCanvas() {
 }
 
 function onMouseMove() {
-  if (canvasRef.value) {
-    const rect = canvasRef.value.getBoundingClientRect();
+  if (canvasRect.value) {
     const { w, h } = canvasSize;
-    const x = mouseX.value - rect.left - w / 2;
-    const y = mouseY.value - rect.top - h / 2;
+    const x = mouseX.value - canvasRect.value.left - w / 2;
+    const y = mouseY.value - canvasRect.value.top - h / 2;
 
     const inside = x < w / 2 && x > -w / 2 && y < h / 2 && y > -h / 2;
     if (inside) {
@@ -119,7 +124,8 @@ function resizeCanvas() {
     canvasRef.value.height = canvasSize.h * pixelRatio.value;
     canvasRef.value.style.width = canvasSize.w + "px";
     canvasRef.value.style.height = canvasSize.h + "px";
-    context.value.scale(pixelRatio.value, pixelRatio.value);
+    context.value.setTransform(pixelRatio.value, 0, 0, pixelRatio.value, 0, 0);
+    canvasRect.value = canvasRef.value.getBoundingClientRect();
   }
 }
 
@@ -245,6 +251,6 @@ function animate() {
       );
     }
   });
-  window.requestAnimationFrame(animate);
+  animationFrameId = window.requestAnimationFrame(animate);
 }
 </script>
