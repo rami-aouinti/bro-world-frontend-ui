@@ -124,13 +124,25 @@
         @more="(id) => emit('more', id)"
       />
     </div>
-    <comment-composer
+    <div
       v-if="canRenderAuthUi"
       class="mt-2"
-      :placeholder="commentPlaceholder"
-      :avatar="props.currentUser?.photo"
-      @submit="(t) => emit('submit', t)"
-    />
+    >
+      <v-btn
+        v-if="!showComposer"
+        color="primary"
+        variant="tonal"
+        @click="showComposer = true"
+      >
+        {{ commentLabel }}
+      </v-btn>
+      <comment-composer
+        v-else
+        :placeholder="commentPlaceholder"
+        :avatar="props.currentUser?.photo"
+        @submit="handleSubmit"
+      />
+    </div>
   </div>
 </template>
 
@@ -192,7 +204,16 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const { formatRelativeTime } = useRelativeTime();
 
+const showComposer = ref(false);
+
+watch(canRenderAuthUi, (value) => {
+  if (!value) {
+    showComposer.value = false;
+  }
+});
+
 const depth = computed(() => props.depth ?? 0);
+const commentLabel = computed(() => t("blog.posts.actions.comment"));
 const bubbleOrder: Reaction[] = ["like", "sad", "angry"];
 const topReactions = computed(() =>
   bubbleOrder
@@ -223,6 +244,10 @@ function toggleExpand(id: string) {
 }
 function toggleReply(id: string) {
   replying[id] = !replying[id];
+}
+
+function handleSubmit(text: string) {
+  emit("submit", text);
 }
 function formatTime(value: Date | string | number) {
   return formatRelativeTime(value);
