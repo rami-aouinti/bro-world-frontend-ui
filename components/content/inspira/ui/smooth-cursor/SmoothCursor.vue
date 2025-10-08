@@ -1,18 +1,7 @@
 <template>
   <Motion
     as="div"
-    :style="{
-      position: 'fixed',
-      left: cursorX,
-      top: cursorY,
-      translateX: '-50%',
-      translateY: '-50%',
-      rotate: rotation,
-      scale: scale,
-      zIndex: 100,
-      pointerEvents: 'none',
-      willChange: 'transform',
-    }"
+    :style="cursorStyles"
     :initial="{ scale: 0 }"
     :animate="{ scale: 1 }"
     :transition="{
@@ -26,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Component } from "vue";
+import type { Component, Ref } from "vue";
 import DefaultCursor from "./DefaultCursor.vue";
 import { useSpring, Motion } from "motion-v";
 import { useEventListener, useTimeout } from "@vueuse/core";
@@ -74,6 +63,41 @@ const scale = useSpring(1, {
   stiffness: 500,
   damping: 35,
 });
+
+const cursorXValue = ref(0);
+const cursorYValue = ref(0);
+const rotationValue = ref(0);
+const scaleValue = ref(1);
+
+function toNumber(value: unknown) {
+  const parsed = Number.parseFloat(String(value));
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+function subscribeMotionValue(motionValue: { get: () => unknown; on: (event: string, cb: (value: unknown) => void) => () => void }, target: Ref<number>) {
+  target.value = toNumber(motionValue.get());
+  const unsubscribe = motionValue.on("change", (value) => {
+    target.value = toNumber(value);
+  });
+  return () => unsubscribe?.();
+}
+
+const cleanupMotionListeners: Array<() => void> = [];
+
+cleanupMotionListeners.push(subscribeMotionValue(cursorX, cursorXValue));
+cleanupMotionListeners.push(subscribeMotionValue(cursorY, cursorYValue));
+cleanupMotionListeners.push(subscribeMotionValue(rotation, rotationValue));
+cleanupMotionListeners.push(subscribeMotionValue(scale, scaleValue));
+
+const cursorStyles = computed(() => ({
+  position: "fixed",
+  left: `${cursorXValue.value}px`,
+  top: `${cursorYValue.value}px`,
+  transform: `translate(-50%, -50%) rotate(${rotationValue.value}deg) scale(${scaleValue.value})`,
+  zIndex: 100,
+  pointerEvents: "none",
+  willChange: "transform",
+}));
 
 function updateVelocity(currentPos: Position) {
   const currentTime = Date.now();
@@ -134,6 +158,10 @@ function throttledMouseMove(e: MouseEvent) {
 
 document.body.style.cursor = "none";
 useEventListener(window, "mousemove", throttledMouseMove);
+
+onBeforeUnmount(() => {
+  cleanupMotionListeners.forEach((stop) => stop?.());
+});
 
 onUnmounted(() => {
   if (rafId) cancelAnimationFrame(rafId);
