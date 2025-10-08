@@ -553,6 +553,9 @@ export default defineNuxtConfig({
       listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
       itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
     },
+    reviews: {
+      apiBase: process.env.NUXT_REVIEWS_API_BASE ?? "https://bro-world.org",
+    },
     auth: {
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
       tokenCookieName: process.env.NUXT_AUTH_TOKEN_COOKIE ?? "auth_token",
@@ -612,6 +615,9 @@ export default defineNuxtConfig({
       siteUrl: "https://bro-world-space.com",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
+      reviews: {
+        apiBase: process.env.NUXT_PUBLIC_REVIEWS_API_BASE ?? "https://bro-world.org",
+      },
       mercure: {
         hubUrl:
           process.env.NUXT_PUBLIC_MERCURE_HUB_URL ??
