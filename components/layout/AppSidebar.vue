@@ -18,7 +18,7 @@
         <nav>
           <ul class="flex flex-col gap-3">
             <li
-              v-for="item in resolvedItems"
+              v-for="item in localizedItems"
               :key="item.key"
               class="sidebar-group"
             >
@@ -128,7 +128,8 @@ const props = withDefaults(
 const isDark = computed(() => props.isDark);
 const sticky = computed(() => props.sticky);
 const shouldRenderParticles = ref(false);
-const { t } = useI18n();
+const { t, locale } = useI18n();
+const localePath = useLocalePath();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const auth = useAuthSession();
@@ -150,8 +151,12 @@ const variantItems = computed<LayoutSidebarItem[]>(() => {
 
 const resolvedItems = computed<LayoutSidebarItem[]>(() => props.items ?? variantItems.value);
 
+const localizedItems = computed<LayoutSidebarItem[]>(() =>
+  resolvedItems.value.map((item) => localizeItem(item)),
+);
+
 const derivedActiveKey = computed(() => {
-  const items = resolvedItems.value;
+  const items = localizedItems.value;
   const fullPath = currentRoute.value?.fullPath ?? "/";
   const match = findActiveSidebarKey(fullPath, items);
   if (match) return match;
@@ -163,15 +168,15 @@ const resolvedActiveKey = computed(() => props.activeKey ?? derivedActiveKey.val
 const expandedGroups = ref(new Set<string>());
 
 watch(
-  () => [resolvedActiveKey.value, resolvedItems.value],
+  () => [resolvedActiveKey.value, localizedItems.value],
   ([activeKey]) => {
     let updated = false;
     const next = new Set(expandedGroups.value);
     const availableGroups = new Set(
-      resolvedItems.value.filter((item) => item.children?.length).map((item) => item.key),
+      localizedItems.value.filter((item) => item.children?.length).map((item) => item.key),
     );
 
-    for (const item of resolvedItems.value) {
+    for (const item of localizedItems.value) {
       if (!item.children?.length) continue;
 
       if (isItemActive(item, activeKey)) {
@@ -281,6 +286,32 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
   }
 
   return null;
+}
+
+function localizeItem(item: LayoutSidebarItem): LayoutSidebarItem {
+  const localizedChildren = item.children?.map((child) => localizeItem(child));
+
+  return {
+    ...item,
+    to: resolveLocalizedPath(item.to),
+    children: localizedChildren?.length ? localizedChildren : undefined,
+  } satisfies LayoutSidebarItem;
+}
+
+function resolveLocalizedPath(target?: string): string | undefined {
+  if (!target) return undefined;
+
+  if (/^https?:\/\//.test(target)) {
+    return target;
+  }
+
+  const currentLocale = locale.value;
+
+  if (target === `/${currentLocale}` || target.startsWith(`/${currentLocale}/`)) {
+    return target;
+  }
+
+  return localePath({ path: target });
 }
 </script>
 

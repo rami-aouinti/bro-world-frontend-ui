@@ -18,7 +18,7 @@
             size="small"
             variant="text"
             color="primary"
-            to="/profile-edit"
+            :to="localePath({ path: '/profile-edit' })"
           >
             {{ t("layout.profileSidebar.editBio") }}
           </v-btn>
@@ -54,7 +54,7 @@
             block
             color="primary"
             variant="tonal"
-            to="/profile-edit"
+            :to="localePath({ path: '/profile-edit' })"
           >
             {{ t("layout.profileSidebar.editDetails") }}
           </v-btn>
@@ -82,7 +82,7 @@
             size="small"
             variant="text"
             color="primary"
-            to="/profile-photos"
+            :to="localePath({ path: '/profile-photos' })"
           >
             {{ t("layout.profileSidebar.viewAllPhotos") }}
           </v-btn>
@@ -124,7 +124,7 @@
             size="small"
             variant="text"
             color="primary"
-            to="/profile-friends"
+            :to="localePath({ path: '/profile-friends' })"
           >
             {{ t("layout.profileSidebar.viewAllFriends") }}
           </v-btn>
@@ -198,6 +198,7 @@ defineEmits<{
 }>();
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
