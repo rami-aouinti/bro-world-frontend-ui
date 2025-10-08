@@ -1,56 +1,58 @@
 <template>
-  <Teleport to="body">
-    <AnimatePresence>
-      <div
-        v-if="open"
-        class="fixed inset-0 z-50 h-screen overflow-auto"
-      >
-        <Motion
-          as="div"
-          :initial="{ opacity: 0 }"
-          :animate="{ opacity: 1 }"
-          :exit="{ opacity: 0 }"
-          class="fixed inset-0 size-full bg-black/80 backdrop-blur-lg"
-        />
-        <Motion
-          ref="containerRef"
-          as="div"
-          :initial="{ opacity: 0 }"
-          :animate="{ opacity: 1 }"
-          :exit="{ opacity: 0 }"
-          :layout-id="layout ? `card-${card.title}` : undefined"
-          class="relative z-[60] mx-auto my-10 h-fit max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10 dark:bg-neutral-900"
+  <ClientOnly>
+    <Teleport to="body">
+      <AnimatePresence>
+        <div
+          v-if="open"
+          class="fixed inset-0 z-50 h-screen overflow-auto"
         >
-          <button
-            class="sticky right-0 top-4 ml-auto flex size-8 items-center justify-center rounded-full bg-black dark:bg-white"
-            @click="handleClose"
-          >
-            <Icon
-              name="tabler:x"
-              class="size-6 text-neutral-100 dark:text-neutral-900"
-            />
-          </button>
           <Motion
             as="div"
-            :layout-id="layout ? `category-${card.title}` : undefined"
-            class="text-base font-medium text-black dark:text-white"
-          >
-            {{ card.category }}
-          </Motion>
+            :initial="{ opacity: 0 }"
+            :animate="{ opacity: 1 }"
+            :exit="{ opacity: 0 }"
+            class="fixed inset-0 size-full bg-black/80 backdrop-blur-lg"
+          />
           <Motion
+            ref="containerRef"
             as="div"
-            :layout-id="layout ? `title-${card.title}` : undefined"
-            class="mt-4 text-2xl font-semibold text-neutral-700 md:text-5xl dark:text-white"
+            :initial="{ opacity: 0 }"
+            :animate="{ opacity: 1 }"
+            :exit="{ opacity: 0 }"
+            :layout-id="layout ? `card-${card.title}` : undefined"
+            class="relative z-[60] mx-auto my-10 h-fit max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10 dark:bg-neutral-900"
           >
-            {{ card.title }}
+            <button
+              class="sticky right-0 top-4 ml-auto flex size-8 items-center justify-center rounded-full bg-black dark:bg-white"
+              @click="handleClose"
+            >
+              <Icon
+                name="tabler:x"
+                class="size-6 text-neutral-100 dark:text-neutral-900"
+              />
+            </button>
+            <Motion
+              as="div"
+              :layout-id="layout ? `category-${card.title}` : undefined"
+              class="text-base font-medium text-black dark:text-white"
+            >
+              {{ card.category }}
+            </Motion>
+            <Motion
+              as="div"
+              :layout-id="layout ? `title-${card.title}` : undefined"
+              class="mt-4 text-2xl font-semibold text-neutral-700 md:text-5xl dark:text-white"
+            >
+              {{ card.title }}
+            </Motion>
+            <div class="py-10">
+              <slot></slot>
+            </div>
           </Motion>
-          <div class="py-10">
-            <slot></slot>
-          </div>
-        </Motion>
-      </div>
-    </AnimatePresence>
-  </Teleport>
+        </div>
+      </AnimatePresence>
+    </Teleport>
+  </ClientOnly>
 
   <Motion
     :layout-id="layout ? `card-${card.title}` : undefined"
@@ -129,13 +131,15 @@ onUnmounted(() => {
   window.removeEventListener("keydown", handleKeyDown);
 });
 
-watch(open, (newVal) => {
-  if (newVal) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
-});
+if (import.meta.client) {
+  watch(open, (newVal) => {
+    if (newVal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  });
+}
 
 onClickOutside(containerRef, () => handleClose());
 
