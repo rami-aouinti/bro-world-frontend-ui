@@ -1,5 +1,9 @@
 <template>
-  <v-menu location="bottom end">
+  <v-menu
+      location="bottom end"
+      transition="scale-transition"
+      :offset="8"
+  >
     <template #activator="{ props: languageProps }">
       <button
         type="button"

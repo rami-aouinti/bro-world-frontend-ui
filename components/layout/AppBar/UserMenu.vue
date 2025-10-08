@@ -2,7 +2,7 @@
   <v-menu
       location="bottom end"
       transition="scale-transition"
-      :offset="10"
+      :offset="8"
   >
     <template #activator="{ props: profileProps }">
       <button
