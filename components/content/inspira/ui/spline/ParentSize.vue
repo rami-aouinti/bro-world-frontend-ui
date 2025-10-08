@@ -12,25 +12,30 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, useAttrs } from "vue";
+import type { StyleValue } from "vue";
 import { useDebounceFn, useResizeObserver } from "@vueuse/core";
 import { cn } from "@/lib/utils";
 
-const props = defineProps({
-  class: String,
-  debounceTime: {
-    type: Number,
-    default: 300,
-  },
-  ignoreDimensions: {
-    type: [Array, String],
-    default: () => [],
-  },
-  parentSizeStyles: Object,
-  enableDebounceLeadingCall: {
-    type: Boolean,
-    default: true,
-  },
+defineOptions({
+  inheritAttrs: false,
 });
+
+type DimensionKey = "width" | "height" | "top" | "left";
+
+const props = withDefaults(
+  defineProps<{
+    class?: string;
+    debounceTime?: number;
+    ignoreDimensions?: DimensionKey | DimensionKey[];
+    parentSizeStyles?: StyleValue;
+    enableDebounceLeadingCall?: boolean;
+  }>(),
+  {
+    debounceTime: 300,
+    ignoreDimensions: () => [] as DimensionKey[],
+    enableDebounceLeadingCall: true,
+  },
+);
 
 const attrs = useAttrs();
 const target = ref<HTMLElement | null>(null);
@@ -41,21 +46,44 @@ const state = reactive({
   left: 0,
 });
 
-const mergedStyles = computed(() => ({
-  ...props.parentSizeStyles,
-  ...(attrs.style as object),
-}));
+function toStyleArray(style?: StyleValue): StyleValue[] {
+  if (style == null) {
+    return [];
+  }
+
+  return Array.isArray(style) ? style : [style];
+}
+
+const mergedStyles = computed<StyleValue | undefined>(() => {
+  const combined = [
+    ...toStyleArray(props.parentSizeStyles),
+    ...toStyleArray(attrs.style as StyleValue | undefined),
+  ];
+
+  if (combined.length === 0) {
+    return undefined;
+  }
+
+  return combined.length === 1 ? combined[0] : combined;
+});
 
 const mergedClass = computed(() => ["w-full h-full", props.class]);
 
-const attrsWithoutClassAndStyle = computed(() => {
-  const { class: _, style: __, ...rest } = attrs;
-  return rest;
-});
-
-const normalizedIgnore = computed(() =>
-  Array.isArray(props.ignoreDimensions) ? props.ignoreDimensions : [props.ignoreDimensions],
+const attrsWithoutClassAndStyle = computed(() =>
+  Object.fromEntries(
+    Object.entries(attrs).filter(([key]) => key !== "class" && key !== "style"),
+  ),
 );
+
+const normalizedIgnore = computed<DimensionKey[]>(() => {
+  const value = props.ignoreDimensions;
+
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  return value ? [value] : [];
+});
 
 function updateDimensions(rect: DOMRectReadOnly) {
   const { width, height, top, left } = rect;

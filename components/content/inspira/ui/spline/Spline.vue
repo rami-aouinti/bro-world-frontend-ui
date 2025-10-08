@@ -18,22 +18,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { ref, onMounted, onUnmounted, computed, watch, nextTick } from "vue";
+import type { StyleValue } from "vue";
 import { Application, type SplineEventName } from "@splinetool/runtime";
 import { useDebounceFn, useIntersectionObserver } from "@vueuse/core";
 import ParentSize from "./ParentSize.vue";
 
-const props = defineProps({
-  scene: {
-    type: String,
-    required: true,
-  },
-  onLoad: Function,
-  renderOnDemand: {
-    type: Boolean,
-    default: true,
-  },
-  style: Object,
+defineOptions({
+  inheritAttrs: false,
 });
+
+const props = withDefaults(
+  defineProps<{
+    scene: string;
+    onLoad?: (app: Application | null) => void;
+    renderOnDemand?: boolean;
+    style?: StyleValue;
+  }>(),
+  {
+    renderOnDemand: true,
+  },
+);
 
 const emit = defineEmits([
   "error",
@@ -56,10 +60,19 @@ const isVisible = ref(true);
 // eslint-disable-next-line func-style
 let cleanup: () => void = () => {};
 
-const parentSizeStyles = computed(() => ({
-  overflow: "hidden",
-  ...props.style,
-}));
+function toArrayStyle(style?: StyleValue): StyleValue[] {
+  if (style == null) {
+    return [];
+  }
+
+  return Array.isArray(style) ? style : [style];
+}
+
+const parentSizeStyles = computed<StyleValue>(() => {
+  const styles: StyleValue[] = [{ overflow: "hidden" }, ...toArrayStyle(props.style)];
+
+  return styles.length === 1 ? styles[0] : styles;
+});
 
 const canvasStyle = computed(() => ({
   display: "block",
