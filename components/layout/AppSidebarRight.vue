@@ -6,7 +6,7 @@
     data-test="app-sidebar-right"
   >
     <div
-      v-if="shouldLoadWidgets && !isAuthenticated"
+      v-if="!isAuthenticated"
       class="sidebar-login-card"
     >
       <ParticlesBg
@@ -36,12 +36,12 @@
       </div>
     </div>
 
-    <slot v-else />
+    <slot />
   </aside>
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref, watch } from "vue";
+import { computed, defineAsyncComponent, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 import { useAuthSession } from "~/stores/auth-session";
@@ -109,16 +109,6 @@ const { t } = useI18n();
 
 const isRedirecting = ref(false);
 const shouldRenderParticles = ref(false);
-const shouldLoadWidgets = ref(props.eager);
-
-watch(
-  () => props.eager,
-  (value) => {
-    if (value) {
-      shouldLoadWidgets.value = true;
-    }
-  },
-);
 
 let particlesScheduled = false;
 
@@ -145,15 +135,9 @@ function scheduleParticles() {
   window.setTimeout(enableParticles, 200);
 }
 
-watch(
-  shouldLoadWidgets,
-  (value) => {
-    if (value) {
-      scheduleParticles();
-    }
-  },
-  { immediate: true },
-);
+onMounted(() => {
+  scheduleParticles();
+});
 
 if (auth) {
   watch(
