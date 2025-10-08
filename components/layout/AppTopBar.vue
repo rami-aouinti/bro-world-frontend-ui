@@ -38,54 +38,66 @@
     />
 
     <template #append>
-      <RightControls
-        :is-mobile="props.isMobile"
-        :show-right-toggle="props.showRightToggle"
-        :icon-trigger-classes="iconTriggerClasses"
-        :notifications="notifications"
-        :notification-count="notificationCount"
-        :notifications-title="notificationsTitle"
-        :notifications-subtitle="notificationsSubtitle"
-        :notifications-empty="notificationsEmpty"
-        :notifications-mark-all="notificationsMarkAll"
-        :notifications-button-label="notificationsButtonLabel"
-        :messenger-conversations="messengerPreviewConversations"
-        :messenger-unread-count="messengerUnreadCount"
-        :messenger-button-label="messengerButtonLabel"
-        :messenger-title="messengerTitle"
-        :messenger-subtitle="messengerSubtitle"
-        :messenger-empty="messengerEmpty"
-        :messenger-view-all="messengerViewAll"
-        :messenger-unknown-label="messengerUnknownLabel"
-        :messenger-loading="messengerMenuLoading"
-        @toggle-right="$emit('toggle-right')"
-        @mark-all-notifications="markAllNotifications"
-      >
-        <template #user>
-          <UserMenu
-            :items="userMenuItems"
-            :icon-trigger-classes="iconTriggerClasses"
-            :logging-out="loggingOut"
-            :user="currentUser"
-            :signed-in-text="userSignedInText"
-            :guest-title="userGuestTitle"
-            :guest-subtitle="userGuestSubtitle"
-            @select="handleUserMenuSelect"
-          />
+      <ClientOnly>
+        <RightControls
+          :is-mobile="props.isMobile"
+          :show-right-toggle="props.showRightToggle"
+          :icon-trigger-classes="iconTriggerClasses"
+          :notifications="notifications"
+          :notification-count="notificationCount"
+          :notifications-title="notificationsTitle"
+          :notifications-subtitle="notificationsSubtitle"
+          :notifications-empty="notificationsEmpty"
+          :notifications-mark-all="notificationsMarkAll"
+          :notifications-button-label="notificationsButtonLabel"
+          :messenger-conversations="messengerPreviewConversations"
+          :messenger-unread-count="messengerUnreadCount"
+          :messenger-button-label="messengerButtonLabel"
+          :messenger-title="messengerTitle"
+          :messenger-subtitle="messengerSubtitle"
+          :messenger-empty="messengerEmpty"
+          :messenger-view-all="messengerViewAll"
+          :messenger-unknown-label="messengerUnknownLabel"
+          :messenger-loading="messengerMenuLoading"
+          @toggle-right="$emit('toggle-right')"
+          @mark-all-notifications="markAllNotifications"
+        >
+          <template #user>
+            <UserMenu
+              :items="userMenuItems"
+              :icon-trigger-classes="iconTriggerClasses"
+              :logging-out="loggingOut"
+              :user="currentUser"
+              :signed-in-text="userSignedInText"
+              :guest-title="userGuestTitle"
+              :guest-subtitle="userGuestSubtitle"
+              @select="handleUserMenuSelect"
+            />
+          </template>
+          <template #locale>
+            <LocaleMenu
+              :locales="visibleLocales"
+              :current="props.locale"
+              :icon-trigger-classes="iconTriggerClasses"
+              :format-label="formatLocaleLabel"
+              :locale-metadata="localeMetadata"
+              :title="localeMenuTitle"
+              :subtitle="localeMenuSubtitle"
+              @change="changeLocale"
+            />
+          </template>
+        </RightControls>
+        <template #fallback>
+          <div class="flex items-center gap-3">
+            <span
+              v-for="index in 4"
+              :key="index"
+              class="h-10 w-10 animate-pulse rounded-full bg-muted/40"
+              aria-hidden="true"
+            />
+          </div>
         </template>
-        <template #locale>
-          <LocaleMenu
-            :locales="visibleLocales"
-            :current="props.locale"
-            :icon-trigger-classes="iconTriggerClasses"
-            :format-label="formatLocaleLabel"
-            :locale-metadata="localeMetadata"
-            :title="localeMenuTitle"
-            :subtitle="localeMenuSubtitle"
-            @change="changeLocale"
-          />
-        </template>
-      </RightControls>
+      </ClientOnly>
     </template>
   </v-app-bar>
 </template>
