@@ -46,12 +46,26 @@ const state = reactive({
   left: 0,
 });
 
+function normalizeStyleValue(style: StyleValue): StyleValue {
+  if (Array.isArray(style)) {
+    return style.map((entry) => normalizeStyleValue(entry)) as StyleValue;
+  }
+
+  if (style != null && typeof style === "object") {
+    return { ...(style as Record<string, unknown>) };
+  }
+
+  return style;
+}
+
 function toStyleArray(style?: StyleValue): StyleValue[] {
   if (style == null) {
     return [];
   }
 
-  return Array.isArray(style) ? style : [style];
+  const styles = Array.isArray(style) ? style : [style];
+
+  return styles.map((entry) => normalizeStyleValue(entry));
 }
 
 const mergedStyles = computed<StyleValue | undefined>(() => {
