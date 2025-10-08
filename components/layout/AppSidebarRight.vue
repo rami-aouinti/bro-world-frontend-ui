@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <slot v-else />
+    <slot />
   </aside>
 </template>
 
