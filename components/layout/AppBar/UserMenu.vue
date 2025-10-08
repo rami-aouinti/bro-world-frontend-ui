@@ -33,7 +33,7 @@
           </v-avatar>
         </template>
         <template v-else>
-          <AppIcon name="mdi:person-outline" :size="22" />
+          <Icon name="mdi:person-outline" :size="22" />
         </template>
       </button>
     </template>
@@ -54,7 +54,7 @@
             </span>
           </template>
           <template v-else>
-            <AppIcon name="mdi:account-outline" :size="20" />
+            <Icon name="mdi:account-outline" :size="20" />
           </template>
         </v-avatar>
 
@@ -84,12 +84,12 @@
             <div
                 class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15"
             >
-              <AppIcon :name="item.icon" :size="20" />
+              <Icon :name="item.icon" :size="20" />
             </div>
           </template>
 
           <template #title>
-            <span class="text-[15px] font-medium">{{ item.title }}</span>
+            <span class="text-[15px] font-medium mx-3">{{ item.title }}</span>
           </template>
         </v-list-item>
       </v-list>
