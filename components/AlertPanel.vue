@@ -9,65 +9,70 @@
     <transition-group
       name="slide-fade"
       tag="div"
+      class="alert-panel__list"
     >
-      <v-alert
+      <div
         v-for="alert in queue"
         :key="alert.id"
-        :ref="(el) => setAlertRef(alert.id, el as HTMLElement | null)"
-        :type="alert.type"
-        :title="alert.title"
-        :role="alertRole(alert.type)"
-        :aria-live="ariaLive(alert.type)"
-        border="start"
-        prominent
-        density="compact"
-        tabindex="-1"
-        class="alert-panel__item"
+        class="alert-panel__item-wrapper"
       >
-        <template #prepend>
-          <!-- Exemple : avatar/icône custom -->
-          <v-avatar
-            size="28"
-            class="mr-2"
-          >
-            <Icon
-              name="mdi-shield-alert"
-              class="text-foreground"
-            ></Icon>
-          </v-avatar>
-        </template>
-        <div class="alert-panel__content">
-          <div class="alert-panel__message">{{ alert.message }}</div>
-          <div
-            v-if="alert.actions?.length"
-            class="alert-panel__actions"
-          >
-            <v-btn
-              v-for="(action, index) in alert.actions"
-              :key="`${alert.id}-action-${index}`"
-              variant="tonal"
-              size="small"
-              class="alert-panel__action"
-              @click="handleAction(alert.id, action.onClick)"
+        <v-alert
+          :ref="(el) => setAlertRef(alert.id, el as HTMLElement | null)"
+          :type="alert.type"
+          :title="alert.title"
+          :role="alertRole(alert.type)"
+          :aria-live="ariaLive(alert.type)"
+          border="start"
+          prominent
+          density="compact"
+          tabindex="-1"
+          class="alert-panel__item"
+        >
+          <template #prepend>
+            <!-- Exemple : avatar/icône custom -->
+            <v-avatar
+              size="28"
+              class="mr-2"
             >
-              {{ action.label }}
-            </v-btn>
+              <Icon
+                name="mdi-shield-alert"
+                class="text-foreground"
+              ></Icon>
+            </v-avatar>
+          </template>
+          <div class="alert-panel__content">
+            <div class="alert-panel__message">{{ alert.message }}</div>
+            <div
+              v-if="alert.actions?.length"
+              class="alert-panel__actions"
+            >
+              <v-btn
+                v-for="(action, index) in alert.actions"
+                :key="`${alert.id}-action-${index}`"
+                variant="tonal"
+                size="small"
+                class="alert-panel__action"
+                @click="handleAction(alert.id, action.onClick)"
+              >
+                {{ action.label }}
+              </v-btn>
+            </div>
           </div>
-        </div>
-        <template #append>
-          <!-- Exemple : avatar/icône custom -->
-          <v-avatar
-            size="28"
-            class="mr-2"
-          >
-            <Icon
-              name="mdi-close"
-              class="text-foreground"
-              @click="close(alert.id)"
-            ></Icon>
-          </v-avatar>
-        </template>
-      </v-alert>
+          <template #append>
+            <!-- Exemple : avatar/icône custom -->
+            <v-avatar
+              size="28"
+              class="mr-2"
+            >
+              <Icon
+                name="mdi-close"
+                class="text-foreground"
+                @click="close(alert.id)"
+              ></Icon>
+            </v-avatar>
+          </template>
+        </v-alert>
+      </div>
     </transition-group>
   </div>
 </template>
@@ -206,8 +211,17 @@ onBeforeUnmount(() => {
   gap: 12px;
 }
 
+.alert-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alert-panel__item-wrapper {
+  display: block;
+}
+
 .alert-panel__item {
-  margin-block: 0 12px;
   box-shadow: var(--v-theme-shadow-2, 0 12px 32px rgba(15, 23, 42, 0.16));
   outline: none;
 }
