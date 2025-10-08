@@ -67,12 +67,12 @@
 
     <!-- RIGHT DRAWER -->
     <v-navigation-drawer
-      v-if="showRightWidgets"
+      v-show="showRightWidgets"
       v-model="rightDrawer"
       app
       :permanent="!isMobile"
       :temporary="isMobile"
-      :scrim="isMobile"
+      :scrim="showRightWidgets && isMobile"
       location="end"
       width="340"
       class="app-drawer"
@@ -81,6 +81,7 @@
     >
       <ClientOnly>
         <ParticlesBg
+          v-if="showRightWidgets"
           class="sidebar-default-card__particles"
           :quantity="50"
           :ease="50"
@@ -101,7 +102,7 @@
         <template #default>
           <ClientOnly>
             <div
-              v-if="rightDrawer"
+              v-if="showRightWidgets && rightDrawer"
               class="pane-scroll px-3 py-4 bg-card"
             >
               <AppSidebarRight
@@ -150,7 +151,10 @@
               </AppSidebarRight>
             </div>
             <template #fallback>
-              <div class="pane-scroll px-3 py-4 bg-card">
+              <div
+                v-if="showRightWidgets"
+                class="pane-scroll px-3 py-4 bg-card"
+              >
                 <div class="flex flex-col gap-4">
                   <v-skeleton-loader
                     type="list-item-two-line"
@@ -168,7 +172,10 @@
           </ClientOnly>
         </template>
         <template #fallback>
-          <div class="pane-scroll px-3 py-4 bg-card">
+          <div
+            v-if="showRightWidgets"
+            class="pane-scroll px-3 py-4 bg-card"
+          >
             <div class="flex flex-col gap-4">
               <v-skeleton-loader
                 type="list-item-two-line"
