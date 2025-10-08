@@ -6,12 +6,38 @@ import type {
   SidebarRatingData,
   SidebarRatingRaw,
   SidebarWeatherData,
+  SidebarWeatherRaw,
 } from "@/components/layout/right-sidebar.types";
 
 export function useRightSidebarData() {
   const { tm } = useI18n();
 
-  const weather = computed(() => tm("sidebar.weather") as SidebarWeatherData);
+  const weather = computed<SidebarWeatherData | null>(() => {
+    const raw = tm("sidebar.weather") as SidebarWeatherRaw | undefined;
+
+    if (!raw) {
+      return null;
+    }
+
+    const hasContent = raw.title || raw.location || raw.temperature || raw.subtitle;
+
+    if (!hasContent) {
+      return null;
+    }
+
+    return {
+      badge: raw.badge ?? "",
+      title: raw.title ?? "",
+      subtitle: raw.subtitle ?? "",
+      icon: raw.icon ?? "",
+      location: raw.location ?? "",
+      temperature: raw.temperature ?? "",
+      tip: raw.tip ?? "",
+      locationLabel: raw.locationLabel ?? "",
+      temperatureLabel: raw.temperatureLabel ?? "",
+      tipLabel: raw.tipLabel ?? "",
+    } satisfies SidebarWeatherData;
+  });
 
   const leaderboard = computed<SidebarLeaderboardData>(() => {
     const raw = tm("sidebar.leaderboard") as SidebarLeaderboardRaw | undefined;
