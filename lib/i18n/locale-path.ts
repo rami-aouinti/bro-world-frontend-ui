@@ -1,4 +1,4 @@
-const SUPPORTED_LOCALES = new Set(["en", "de", "fr", "ar", "it", "es", "ru", "zh-cn"]);
+const SUPPORTED_LOCALES = new Set(["en", "de", "fr", "ar", "it", "es", "ru"]);
 
 const DEFAULT_LOCALE = "en";
 

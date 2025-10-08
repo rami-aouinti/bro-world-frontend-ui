@@ -144,7 +144,6 @@ const localeMetadata = {
   it: { label: "Italiano", flag: "it" },
   ru: { label: "Русский", flag: "ru" },
   ar: { label: "العربية", flag: "tn" },
-  "zh-cn": { label: "中文 (简体)", flag: "cn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
 const isDarkColor = computed(() => useColorMode().value == "dark");
 const theme = useTheme();

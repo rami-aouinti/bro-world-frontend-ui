@@ -5,14 +5,13 @@ import fr from "./locales/fr.json";
 import es from "./locales/es.json";
 import it from "./locales/it.json";
 import ru from "./locales/ru.json";
-import zhCN from "./locales/zh-cn.json";
 
 export default defineI18nConfig(() => ({
   legacy: false,
   globalInjection: true,
   locale: "en",
   fallbackLocale: "en",
-  availableLocales: ["en", "fr", "de", "es", "it", "ru", "ar", "zh-cn"],
+  availableLocales: ["en", "fr", "de", "es", "it", "ru", "ar"],
   messages: {
     en,
     fr,
@@ -21,6 +20,5 @@ export default defineI18nConfig(() => ({
     it,
     ru,
     ar,
-    "zh-cn": zhCN,
   },
 }));
