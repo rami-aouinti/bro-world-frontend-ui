@@ -4,13 +4,10 @@
         role="banner"
         aria-label="Top navigation bar"
         :elevation="24"
-        :style="{ '--appbar-gradient': gradientCss }"
+        :theme="isDarkColor ? 'dark' : 'light'"
         rounded
         height="50"
     >
-      <template v-slot:image>
-        <v-img :gradient="gradientString" />
-      </template>
     <AppBrand class="ml-2" />
     <AppNavButtons
       :is-mobile="props.isMobile"
@@ -149,23 +146,8 @@ const localeMetadata = {
   ar: { label: "العربية", flag: "tn" },
   "zh-cn": { label: "中文 (简体)", flag: "cn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
-
-/** Dégradés dynamiques depuis primary + mode sombre */
+const isDarkColor = computed(() => useColorMode().value == "dark");
 const theme = useTheme();
-const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
-const gradientString = computed(() =>
-    gradientIsDark.value
-        ? 'to top right, rgba(30,30,48,.9), rgba(119,84,122,.85)'
-        : 'to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)'
-);
-
-// Pour l’utiliser aussi en CSS (halo)
-const gradientCss = computed(() => `linear-gradient(${gradientString.value})`);
-const appBarStyle = computed(() => ({
-  color: gradientIsDark.value ? "#ffffff" : "hsl(var(--foreground))",
-}));
-
-const appBarColor = computed(() => (gradientIsDark.value ? "dark" : "light"));
 
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === "input",
