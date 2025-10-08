@@ -4,7 +4,7 @@
     class="z-100 bg-primary/80"
   />
   <NuxtLayout>
-    <NuxtPage />
+    <NuxtPage :key="pageKey" />
   </NuxtLayout>
   <AlertPanel />
 </template>
@@ -34,6 +34,7 @@ const siteConfig = computed(() => {
 });
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
+const pageKey = computed(() => currentRoute.value?.fullPath ?? currentRoute.value?.name ?? "");
 const { themeClass, radius } = useThemes();
 const { locale } = useI18n();
 const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
