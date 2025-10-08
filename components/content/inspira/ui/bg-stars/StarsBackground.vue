@@ -8,7 +8,7 @@
     "
     @mousemove="handleMouseMove"
   >
-    <motion.div :style="{ x: springX, y: springY }">
+    <motion.div :style="parallaxStyle">
       <!-- Star Layer 1 -->
       <motion.div
         class="absolute top-0 left-0 w-full h-[2000px]"
@@ -91,7 +91,7 @@
 import type { SpringOptions } from "motion-v";
 import { cn } from "@/lib/utils";
 import { motion, useMotionValue, useSpring } from "motion-v";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 
 interface StarsBackgroundProps {
   factor?: number;
@@ -126,6 +126,42 @@ const offsetY = useMotionValue(1);
 
 const springX = useSpring(offsetX, props.transition);
 const springY = useSpring(offsetY, props.transition);
+const springXValue = ref(springX.get());
+const springYValue = ref(springY.get());
+
+const parallaxStyle = computed(() => ({
+  transform: `translate(${springXValue.value}px, ${springYValue.value}px)`,
+}));
+
+const cleanupListeners: Array<() => void> = [];
+
+function toNumber(value: unknown) {
+  const parsed = Number.parseFloat(String(value));
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+function syncSpringValues() {
+  springXValue.value = toNumber(springX.get());
+  springYValue.value = toNumber(springY.get());
+}
+
+onMounted(() => {
+  syncSpringValues();
+  cleanupListeners.push(
+    springX.on("change", (value) => {
+      springXValue.value = toNumber(value);
+    }),
+  );
+  cleanupListeners.push(
+    springY.on("change", (value) => {
+      springYValue.value = toNumber(value);
+    }),
+  );
+});
+
+onBeforeUnmount(() => {
+  cleanupListeners.forEach((stop) => stop?.());
+});
 
 function handleMouseMove(e: MouseEvent) {
   const centerX = window.innerWidth / 2;
