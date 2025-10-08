@@ -617,21 +617,7 @@ export default defineNuxtConfig({
           process.env.NUXT_PUBLIC_MERCURE_HUB_URL ??
           process.env.NUXT_MERCURE_HUB_URL ??
           "https://bro-world.org/.well-known/mercure",
-      },
-      auth: {
-        sessionTokenCookieName:
-          process.env.NUXT_PUBLIC_AUTH_SESSION_TOKEN_COOKIE ??
-          process.env.NUXT_AUTH_SESSION_TOKEN_COOKIE ??
-          "auth_session_token",
-        userCookieName:
-          process.env.NUXT_PUBLIC_AUTH_USER_COOKIE ??
-          process.env.NUXT_AUTH_USER_COOKIE ??
-          "auth_user",
-        tokenPresenceCookieName:
-          process.env.NUXT_PUBLIC_AUTH_TOKEN_PRESENCE_COOKIE ??
-          process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ??
-          "auth_token_present",
-      },
+      }
     },
   },
 
