@@ -430,8 +430,11 @@ const pronounOptions = ["she/her", "he/him", "they/them", "xe/xem"];
 const languageOptions = [
   { title: "English", value: "en" },
   { title: "Français", value: "fr" },
-  { title: "العربية", value: "ar" },
   { title: "Deutsch", value: "de" },
+  { title: "العربية", value: "ar" },
+  { title: "Italiano", value: "it" },
+  { title: "Español", value: "es" },
+  { title: "Русский", value: "ru" },
 ];
 const timezoneOptions = [
   "Africa/Casablanca",
