@@ -1,37 +1,55 @@
 <template>
   <section
     class="rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+    :aria-busy="isLoading"
   >
     <div class="flex items-start justify-between gap-4">
       <div>
-        <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ weather.badge }}</p>
-        <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ weather.title }}</h3>
-        <p class="mt-2 text-sm text-slate-300">{{ weather.subtitle }}</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ resolvedWeather.badge }}</p>
+        <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.title }}</h3>
+        <p class="mt-2 text-sm text-slate-300">
+          <span v-if="isLoading" class="inline-flex items-center gap-1">
+            <span class="h-2 w-2 animate-pulse rounded-full bg-primary"></span>
+            {{ loadingLabel }}
+          </span>
+          <span v-else>{{ resolvedWeather.subtitle }}</span>
+        </p>
       </div>
       <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-3xl">
-        {{ weather.icon }}
+        {{ resolvedWeather.icon }}
       </div>
     </div>
     <dl class="mt-6 space-y-3 text-sm text-slate-300">
       <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ weather.locationLabel }}</dt>
-        <dd class="font-medium text-white">{{ weather.location }}</dd>
+        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.locationLabel }}</dt>
+        <dd class="font-medium text-white">
+          <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-white/20"></span>
+          <span v-else>{{ resolvedWeather.location }}</span>
+        </dd>
       </div>
       <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
         <dt class="uppercase tracking-wide text-xs text-slate-400">
-          {{ weather.temperatureLabel }}
+          {{ resolvedWeather.temperatureLabel }}
         </dt>
-        <dd class="font-medium text-white">{{ weather.temperature }}</dd>
+        <dd class="font-medium text-white">
+          <span v-if="isLoading" class="inline-flex h-5 w-14 animate-pulse rounded-full bg-white/20"></span>
+          <span v-else>{{ resolvedWeather.temperature }}</span>
+        </dd>
       </div>
       <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ weather.tipLabel }}</dt>
-        <dd class="max-w-[10rem] text-right text-sm leading-snug">{{ weather.tip }}</dd>
+        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.tipLabel }}</dt>
+        <dd class="max-w-[10rem] text-right text-sm leading-snug">
+          <span v-if="isLoading" class="inline-flex h-5 w-24 animate-pulse rounded-full bg-white/20"></span>
+          <span v-else>{{ resolvedWeather.tip }}</span>
+        </dd>
       </div>
     </dl>
   </section>
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+
 interface SidebarWeatherCardProps {
   weather: {
     badge: string;
@@ -47,5 +65,139 @@ interface SidebarWeatherCardProps {
   };
 }
 
-defineProps<SidebarWeatherCardProps>();
+interface WeatherApiResponse {
+  location: {
+    name: string;
+    region: string;
+    country: string;
+  };
+  current: {
+    temp_c: number;
+    condition?: {
+      text?: string;
+    };
+  };
+}
+
+interface WeatherRuntimeConfig {
+  apiKey?: string;
+  defaultLocation?: string;
+}
+
+const props = defineProps<SidebarWeatherCardProps>();
+
+const runtimeConfig = useRuntimeConfig();
+
+const weatherState = useState<
+  | {
+      location: string;
+      temperature: string;
+      condition: string;
+      fetchedAt: number;
+    }
+  | null
+>("sidebar-weather", () => null);
+
+const isLoading = ref(!weatherState.value);
+
+const loadingLabel = computed(() => props.weather?.subtitle ?? "Updating weather");
+
+const resolvedWeather = computed(() => {
+  const current = weatherState.value;
+
+  return {
+    ...props.weather,
+    location: current?.location ?? props.weather.location,
+    temperature: current?.temperature ?? props.weather.temperature,
+    subtitle: current?.condition || props.weather.subtitle,
+  };
+});
+
+const WEATHER_TTL = 10 * 60 * 1000;
+
+function getWeatherConfig(): WeatherRuntimeConfig {
+  const publicConfig = runtimeConfig.public as { weather?: WeatherRuntimeConfig };
+
+  return publicConfig.weather ?? {};
+}
+
+function formatLocation(data: WeatherApiResponse["location"]) {
+  const parts = [data.name, data.region, data.country].filter(Boolean);
+
+  return parts.join(", ");
+}
+
+function applyWeather(data: WeatherApiResponse) {
+  const temperatureValue = Number.isFinite(data.current?.temp_c)
+    ? `${Math.round(data.current.temp_c)}°C`
+    : props.weather.temperature;
+
+  weatherState.value = {
+    location: formatLocation(data.location),
+    temperature: temperatureValue,
+    condition: data.current?.condition?.text ?? props.weather.subtitle,
+    fetchedAt: Date.now(),
+  };
+}
+
+async function fetchWeather(query: string) {
+  const { apiKey } = getWeatherConfig();
+
+  if (!apiKey) {
+    isLoading.value = false;
+
+    return;
+  }
+
+  try {
+    const response = await $fetch<WeatherApiResponse>(
+      "https://api.weatherapi.com/v1/current.json",
+      {
+        query: {
+          key: apiKey,
+          q: query,
+          aqi: "no",
+        },
+      },
+    );
+
+    applyWeather(response);
+  } catch (error) {
+    console.error("Failed to fetch weather data", error);
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+if (import.meta.client) {
+  onMounted(() => {
+    if (weatherState.value && Date.now() - weatherState.value.fetchedAt < WEATHER_TTL) {
+      isLoading.value = false;
+
+      return;
+    }
+
+    const weatherConfig = getWeatherConfig();
+    const defaultLocation = weatherConfig.defaultLocation || props.weather.location;
+
+    function fetchDefaultWeather() {
+      void fetchWeather(defaultLocation);
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          void fetchWeather(`${latitude},${longitude}`);
+        },
+        () => {
+          console.warn("Geolocation permission denied, using default location");
+          fetchDefaultWeather();
+        },
+      );
+    } else {
+      fetchDefaultWeather();
+    }
+  });
+}
 </script>
