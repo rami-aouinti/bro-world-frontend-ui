@@ -11,6 +11,19 @@ export interface SidebarWeatherData {
   tipLabel: string;
 }
 
+export interface SidebarWeatherRaw {
+  badge?: string;
+  title?: string;
+  subtitle?: string;
+  icon?: string;
+  location?: string;
+  temperature?: string;
+  tip?: string;
+  locationLabel?: string;
+  temperatureLabel?: string;
+  tipLabel?: string;
+}
+
 export interface SidebarLeaderboardParticipant {
   position: number;
   name: string;

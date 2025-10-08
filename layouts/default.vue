@@ -405,7 +405,12 @@ watch(
 
 const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
 
-const { weather, leaderboard, rating } = useRightSidebarData();
+const {
+  weather: weatherData,
+  leaderboard,
+  rating,
+} = useRightSidebarData();
+const weather = computed(() => weatherData.value);
 const { rightSidebarContent } = useLayoutRightSidebar();
 
 const activeTheme = computed<SiteThemeDefinition | null>(() => {
