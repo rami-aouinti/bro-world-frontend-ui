@@ -17,7 +17,7 @@
 <script setup lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ref, onMounted, onUnmounted, computed, watch, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch, nextTick, toValue } from "vue";
 import type { StyleValue } from "vue";
 import { Application, type SplineEventName } from "@splinetool/runtime";
 import { useDebounceFn, useIntersectionObserver } from "@vueuse/core";
@@ -60,12 +60,26 @@ const isVisible = ref(true);
 // eslint-disable-next-line func-style
 let cleanup: () => void = () => {};
 
+function flattenStyleEntry(style: StyleValue): StyleValue[] {
+  if (Array.isArray(style)) {
+    return style.flatMap((entry) => flattenStyleEntry(entry as StyleValue));
+  }
+
+  if (style != null && typeof style === "object") {
+    return [{ ...(style as Record<string, unknown>) }];
+  }
+
+  return [style];
+}
+
 function toArrayStyle(style?: StyleValue): StyleValue[] {
-  if (style == null) {
+  const resolved = toValue(style);
+
+  if (resolved == null) {
     return [];
   }
 
-  return Array.isArray(style) ? style : [style];
+  return flattenStyleEntry(resolved as StyleValue);
 }
 
 const parentSizeStyles = computed<StyleValue>(() => {
