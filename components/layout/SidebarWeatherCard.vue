@@ -1,45 +1,63 @@
 <template>
   <section
-    class="rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+    class="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-slate-900/80 via-slate-900/60 to-slate-900/30 p-7 text-slate-200 shadow-[0_28px_85px_-35px_rgba(15,23,42,0.75)] backdrop-blur-2xl"
     :aria-busy="isLoading"
   >
-    <div class="flex items-start justify-between gap-4">
+    <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
+    <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
+
+    <div class="relative flex items-start justify-between gap-6">
       <div>
-        <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ resolvedWeather.badge }}</p>
-        <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.title }}</h3>
-        <p class="mt-2 text-sm text-slate-300">
-          <span v-if="isLoading" class="inline-flex items-center gap-1">
+        <p class="text-[0.65rem] uppercase tracking-[0.4em] text-primary/70">{{ resolvedWeather.badge }}</p>
+        <h3 class="mt-4 text-3xl font-semibold text-white">{{ resolvedWeather.title }}</h3>
+        <p class="mt-3 text-sm text-slate-300">
+          <span v-if="isLoading" class="inline-flex items-center gap-2">
             <span class="h-2 w-2 animate-pulse rounded-full bg-primary"></span>
             {{ loadingLabel }}
           </span>
           <span v-else>{{ resolvedWeather.subtitle }}</span>
         </p>
       </div>
-      <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-3xl">
+      <div
+        class="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/10 text-4xl text-white shadow-inner shadow-primary/20"
+      >
         {{ resolvedWeather.icon }}
       </div>
     </div>
-    <dl class="mt-6 space-y-3 text-sm text-slate-300">
-      <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.locationLabel }}</dt>
-        <dd class="font-medium text-white">
-          <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-white/20"></span>
+
+    <dl
+      class="relative mt-8 grid grid-cols-1 gap-3 text-sm text-slate-200 md:grid-cols-2"
+    >
+      <div
+        class="group flex flex-col justify-between rounded-2xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur hover:border-primary/40"
+      >
+        <dt class="text-[0.6rem] uppercase tracking-[0.35em] text-slate-400 group-hover:text-primary/70">
+          {{ resolvedWeather.locationLabel }}
+        </dt>
+        <dd class="mt-3 text-lg font-semibold text-white md:text-xl">
+          <span v-if="isLoading" class="inline-flex h-5 w-24 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </dd>
       </div>
-      <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">
+      <div
+        class="group flex flex-col justify-between rounded-2xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur hover:border-primary/40"
+      >
+        <dt class="text-[0.6rem] uppercase tracking-[0.35em] text-slate-400 group-hover:text-primary/70">
           {{ resolvedWeather.temperatureLabel }}
         </dt>
-        <dd class="font-medium text-white">
-          <span v-if="isLoading" class="inline-flex h-5 w-14 animate-pulse rounded-full bg-white/20"></span>
+        <dd class="mt-3 text-lg font-semibold text-white md:text-3xl">
+          <span v-if="isLoading" class="inline-flex h-5 w-16 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.temperature }}</span>
         </dd>
       </div>
-      <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.tipLabel }}</dt>
-        <dd class="max-w-[10rem] text-right text-sm leading-snug">
-          <span v-if="isLoading" class="inline-flex h-5 w-24 animate-pulse rounded-full bg-white/20"></span>
+      <div
+        class="group md:col-span-2 md:flex md:items-center md:justify-between rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-left backdrop-blur hover:border-primary/40"
+      >
+        <dt class="text-[0.6rem] uppercase tracking-[0.35em] text-slate-400 group-hover:text-primary/70">
+          {{ resolvedWeather.tipLabel }}
+        </dt>
+        <dd class="mt-3 max-w-[16rem] text-sm leading-snug text-slate-200 md:mt-0 md:text-right">
+          <span v-if="isLoading" class="inline-flex h-5 w-28 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.tip }}</span>
         </dd>
       </div>
