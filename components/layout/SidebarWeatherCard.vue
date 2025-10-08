@@ -3,7 +3,10 @@
     class="rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
     :aria-busy="isLoading"
   >
-    <div class="flex items-start justify-between gap-4">
+    <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
+    <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
+
+    <div class="relative flex items-start justify-between gap-6">
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ resolvedWeather.badge }}</p>
         <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.title }}</h3>

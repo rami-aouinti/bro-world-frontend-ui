@@ -558,9 +558,7 @@ useHead({
   title: computed(() => t("admin.metaTitle")),
 });
 
-const localeMap: Record<string, string> = {
-  "zh-cn": "zh-CN",
-};
+const localeMap: Record<string, string> = {};
 
 const resolvedLocale = computed(() => {
   const current = locale.value;

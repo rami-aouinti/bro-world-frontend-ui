@@ -75,7 +75,7 @@
         </template>
         <template #locale>
           <LocaleMenu
-            :locales="props.locales"
+            :locales="visibleLocales"
             :current="props.locale"
             :icon-trigger-classes="iconTriggerClasses"
             :format-label="formatLocaleLabel"
@@ -116,12 +116,14 @@ type NotificationDefinition = {
   read: boolean;
 };
 
+type LocaleInput = string | { code?: string | null | undefined };
+
 const props = defineProps<{
   appIcons: AppIcon[];
   isDark: boolean;
   isMobile: boolean;
   locale: string;
-  locales: string[];
+  locales: LocaleInput[];
   showRightToggle: boolean;
 }>();
 
@@ -144,7 +146,6 @@ const localeMetadata = {
   it: { label: "Italiano", flag: "it" },
   ru: { label: "Русский", flag: "ru" },
   ar: { label: "العربية", flag: "tn" },
-  "zh-cn": { label: "中文 (简体)", flag: "cn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
 const isDarkColor = computed(() => useColorMode().value == "dark");
 const theme = useTheme();
@@ -249,9 +250,38 @@ const userSignedInText = computed(() => t("layout.userMenu.signedInAs"));
 const userGuestTitle = computed(() => t("layout.userMenu.guestTitle"));
 const userGuestSubtitle = computed(() => t("layout.userMenu.guestSubtitle"));
 
+const addLocaleIfSupported = (set: Set<string>, list: string[], code?: string | null) => {
+  if (!code) {
+    return;
+  }
+
+  const normalized = code.trim();
+
+  if (!normalized || set.has(normalized) || !(normalized in localeMetadata)) {
+    return;
+  }
+
+  set.add(normalized);
+  list.push(normalized);
+};
+
+const visibleLocales = computed(() => {
+  const codes: string[] = [];
+  const seen = new Set<string>();
+
+  for (const entry of props.locales) {
+    const code = typeof entry === "string" ? entry : entry?.code ?? undefined;
+    addLocaleIfSupported(seen, codes, code);
+  }
+
+  addLocaleIfSupported(seen, codes, props.locale);
+
+  return codes;
+});
+
 const localeMenuTitle = computed(() => t("layout.localeMenu.title"));
 const localeMenuSubtitle = computed(() =>
-  t("layout.localeMenu.subtitle", { count: props.locales.length }),
+  t("layout.localeMenu.subtitle", { count: visibleLocales.value.length }),
 );
 
 const userMenuItems = computed<UserMenuItem[]>(() => {
