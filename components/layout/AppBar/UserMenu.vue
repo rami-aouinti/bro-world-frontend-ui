@@ -1,91 +1,95 @@
 <template>
-  <v-menu location="bottom end">
+  <v-menu
+      location="bottom end"
+      transition="scale-transition"
+      :offset="10"
+  >
     <template #activator="{ props: profileProps }">
       <button
-        type="button"
-        :class="iconTriggerClasses"
-        aria-label="Profile"
-        v-bind="profileProps"
+          type="button"
+          :class="[
+          'rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
+          iconTriggerClasses
+        ]"
+          aria-label="Profile"
+          v-bind="profileProps"
       >
         <template v-if="props.user">
           <v-avatar
-            size="28"
-            :class="avatarClasses"
+              size="28"
+              :class="['ring-1 ring-black/5 dark:ring-white/10', avatarClasses]"
           >
             <v-img
-              v-if="props.user.photo"
-              :src="props.user.photo"
-              :alt="heading"
-              cover
+                v-if="props.user.photo"
+                :src="props.user.photo"
+                :alt="heading"
+                cover
             />
             <template v-else>
-              <span class="font-semibold uppercase">
+              <span class="text-[11px] font-semibold uppercase">
                 {{ initials }}
               </span>
             </template>
           </v-avatar>
         </template>
         <template v-else>
-          <AppIcon
-            name="mdi:person-outline"
-            :size="22"
-          />
+          <AppIcon name="mdi:person-outline" :size="22" />
         </template>
       </button>
     </template>
+
     <v-card
-      class="min-w-[260px] overflow-hidden"
-      elevation="12"
+        class="min-w-[280px] rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/10"
+        elevation="0"
     >
+      <!-- Header -->
       <div class="flex items-center gap-3 px-4 py-4">
         <v-avatar
-          size="28"
-          class="bg-primary/10 text-primary"
+            size="32"
+            class="bg-primary/10 text-primary"
         >
           <template v-if="props.user">
-            <span class="font-semibold uppercase">
+            <span class="text-[12px] font-semibold uppercase">
               {{ initials }}
             </span>
           </template>
           <template v-else>
-            <AppIcon
-              name="mdi:account-outline"
-              :size="22"
-            />
+            <AppIcon name="mdi:account-outline" :size="20" />
           </template>
         </v-avatar>
-        <div class="flex flex-col">
-          <p class="text-sm font-semibold leading-tight">
+
+        <div class="min-w-0">
+          <p class="text-sm font-semibold leading-tight truncate">
             {{ heading }}
           </p>
-          <p class="text-xs text-muted-foreground">
+          <p class="text-xs text-muted-foreground truncate">
             {{ subheading }}
           </p>
         </div>
       </div>
-      <v-divider />
-      <v-list
-        class="py-0"
-        density="compact"
-      >
+
+      <v-divider class="opacity-70" />
+
+      <!-- Items -->
+      <v-list class="py-1" density="comfortable">
         <v-list-item
-          v-for="item in props.items"
-          :key="item.title"
-          :title="item.title"
-          :to="item.to"
-          :disabled="item.action === 'logout' && props.loggingOut"
-          class="px-4"
-          @click="emit('select', item)"
+            v-for="item in props.items"
+            :key="item.title"
+            :to="item.to"
+            :disabled="item.action === 'logout' && props.loggingOut"
+            class="group px-2 rounded-xl mx-2 my-0.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5 focus-within:bg-gray-50 dark:focus-within:bg-white/5"
+            @click="emit('select', item)"
         >
           <template #prepend>
             <div
-              class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary"
+                class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15"
             >
-              <AppIcon
-                :name="item.icon"
-                :size="20"
-              />
+              <AppIcon :name="item.icon" :size="20" />
             </div>
+          </template>
+
+          <template #title>
+            <span class="text-[15px] font-medium">{{ item.title }}</span>
           </template>
         </v-list-item>
       </v-list>
@@ -110,48 +114,30 @@ const emit = defineEmits(["select"]);
 
 const heading = computed(() => {
   if (!props.user) return props.guestTitle;
-
   const first = props.user.firstName?.trim();
   const last = props.user.lastName?.trim();
-
-  if (first || last) {
-    return [first, last].filter(Boolean).join(" ");
-  }
-
+  if (first || last) return [first, last].filter(Boolean).join(" ");
   if (props.user.username) return props.user.username;
   if (props.user.email) return props.user.email;
-
   return props.guestTitle;
 });
 
 const subheading = computed(() => {
   if (!props.user) return props.guestSubtitle;
-
   if (props.user.email) return `${props.signedInText} ${props.user.email}`;
   if (props.user.username) return `${props.signedInText} ${props.user.username}`;
-
   return props.signedInText;
 });
 
-const avatarClasses = computed(() => {
-  if (props.user?.photo) {
-    return "bg-transparent";
-  }
-
-  return "bg-primary/10 text-primary";
-});
+const avatarClasses = computed(() => (props.user?.photo ? "bg-transparent" : "bg-primary/10 text-primary"));
 
 const initials = computed(() => {
   if (!props.user) return "";
-
   const letters: string[] = [];
-
   if (props.user.firstName?.trim()) letters.push(props.user.firstName.trim()[0] ?? "");
   if (props.user.lastName?.trim()) letters.push(props.user.lastName.trim()[0] ?? "");
-
   if (letters.length === 0 && props.user.username) letters.push(props.user.username[0] ?? "");
   if (letters.length === 0 && props.user.email) letters.push(props.user.email[0] ?? "");
-
   return letters.join("").slice(0, 2).toUpperCase();
 });
 </script>

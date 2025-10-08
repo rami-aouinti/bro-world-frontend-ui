@@ -1,19 +1,16 @@
 <template>
-  <v-app-bar
-    class="app-top-bar bg-card text-foreground"
-    :class="{ 'text-white': gradientIsDark }"
-    :style="appBarStyle"
-    app
-    :elevation="10"
-    rounded
-    height="50"
-  >
-    <template #image>
-      <v-img
-        cover
-        :gradient="barGradient"
-      ></v-img>
-    </template>
+    <v-app-bar
+        app
+        role="banner"
+        aria-label="Top navigation bar"
+        :elevation="24"
+        :style="{ '--appbar-gradient': gradientCss }"
+        rounded
+        height="50"
+    >
+      <template v-slot:image>
+        <v-img :gradient="gradientString" />
+      </template>
     <AppBrand class="ml-2" />
     <AppNavButtons
       :is-mobile="props.isMobile"
@@ -156,14 +153,20 @@ const localeMetadata = {
 /** Dégradés dynamiques depuis primary + mode sombre */
 const theme = useTheme();
 const { barGradient, isDark: gradientIsDark } = usePrimaryGradient();
-
-const appBarColor = computed(() =>
-  props.isDark ? "rgba(12, 10, 22, 0.78)" : "rgba(255, 255, 255, 0.82)",
+const gradientString = computed(() =>
+    gradientIsDark.value
+        ? 'to top right, rgba(30,30,48,.9), rgba(119,84,122,.85)'
+        : 'to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)'
 );
+
+// Pour l’utiliser aussi en CSS (halo)
+const gradientCss = computed(() => `linear-gradient(${gradientString.value})`);
 const appBarStyle = computed(() => ({
-  backgroundColor: appBarColor.value,
   color: gradientIsDark.value ? "#ffffff" : "hsl(var(--foreground))",
 }));
+
+const appBarColor = computed(() => (gradientIsDark.value ? "dark" : "light"));
+
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === "input",
 );
