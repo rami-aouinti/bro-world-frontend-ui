@@ -2,7 +2,7 @@
   <v-menu
     v-model="open"
     location="bottom end"
-    offset="8"
+    :offset="8"
   >
     <template #activator="{ props: menuProps }">
       <button
