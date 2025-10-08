@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { hasInjectionContext, tryUseNuxtApp, useAppConfig, useRequestURL } from "#imports";
+import { hasInjectionContext, tryUseNuxtApp, useAppConfig, useRequestURL, useRoute } from "#imports";
 
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {
@@ -32,9 +32,8 @@ const siteConfig = computed(() => {
     description: site?.description ?? fallbackSiteConfig.description,
   };
 });
-const router = useRouter();
-const currentRoute = computed(() => router.currentRoute.value);
-const pageKey = computed(() => currentRoute.value?.fullPath ?? currentRoute.value?.name ?? "");
+const route = useRoute();
+const pageKey = computed(() => route.fullPath ?? route.name ?? "");
 const { themeClass, radius } = useThemes();
 const { locale } = useI18n();
 const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
@@ -75,10 +74,10 @@ type SeoMetaFields = {
 };
 
 const matchedMeta = computed<SeoMetaFields>(() => {
-  return (currentRoute.value?.matched?.[0]?.meta as SeoMetaFields) ?? {};
+  return (route.matched?.[0]?.meta as SeoMetaFields) ?? {};
 });
 const currentMeta = computed<SeoMetaFields>(
-  () => (currentRoute.value?.meta as SeoMetaFields) ?? {},
+  () => (route.meta as SeoMetaFields) ?? {},
 );
 
 const defaultTitle = computed(() => siteConfig.value.name);
@@ -91,7 +90,7 @@ const canonicalUrl = computed(() => {
   }
 
   try {
-    const fullPath = currentRoute.value?.fullPath ?? "/";
+    const fullPath = route.fullPath ?? "/";
     return new URL(fullPath, base).toString();
   } catch {
     return base;
