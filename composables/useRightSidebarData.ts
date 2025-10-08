@@ -9,11 +9,13 @@ import type {
   SidebarWeatherRaw,
 } from "@/components/layout/right-sidebar.types";
 
+const SIDEBAR_I18N_NAMESPACE = "blog.sidebar";
+
 export function useRightSidebarData() {
   const { tm } = useI18n();
 
   const weather = computed<SidebarWeatherData | null>(() => {
-    const raw = tm("sidebar.weather") as SidebarWeatherRaw | undefined;
+    const raw = tm(`${SIDEBAR_I18N_NAMESPACE}.weather`) as SidebarWeatherRaw | undefined;
 
     if (!raw) {
       return null;
@@ -40,7 +42,7 @@ export function useRightSidebarData() {
   });
 
   const leaderboard = computed<SidebarLeaderboardData>(() => {
-    const raw = tm("sidebar.leaderboard") as SidebarLeaderboardRaw | undefined;
+    const raw = tm(`${SIDEBAR_I18N_NAMESPACE}.leaderboard`) as SidebarLeaderboardRaw | undefined;
     const order: Array<keyof NonNullable<SidebarLeaderboardRaw["participants"]>> = [
       "first",
       "second",
@@ -70,7 +72,7 @@ export function useRightSidebarData() {
   });
 
   const rating = computed<SidebarRatingData>(() => {
-    const raw = tm("sidebar.rating") as SidebarRatingRaw;
+    const raw = tm(`${SIDEBAR_I18N_NAMESPACE}.rating`) as SidebarRatingRaw;
 
     return {
       title: raw.title ?? "",
