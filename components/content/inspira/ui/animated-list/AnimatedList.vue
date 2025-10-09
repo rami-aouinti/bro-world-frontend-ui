@@ -37,7 +37,16 @@
 
 <script lang="ts" setup>
 import { Motion } from "motion-v";
-import { computed, onBeforeUnmount, onMounted, ref, useSlots } from "vue";
+import {
+  cloneVNode,
+  computed,
+  isVNode,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  useSlots,
+  type VNode,
+} from "vue";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -50,13 +59,15 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const slots = useSlots();
-const displayedItems = ref<{ node: unknown; id: string }[]>([]);
+const displayedItems = ref<{ node: VNode; id: string }[]>([]);
 const nextIndex = ref(0);
 const activeTimeouts = new Set<ReturnType<typeof setTimeout>>();
 let stopRequested = false;
+let uniqueId = 0;
 
 onMounted(() => {
   stopRequested = false;
+  uniqueId = 0;
   void startLoop();
 });
 
@@ -74,13 +85,13 @@ function resolveNotifications() {
   const slotContent = slots.default ? slots.default() : [];
 
   if (!Array.isArray(slotContent) || slotContent.length === 0) {
-    return [] as unknown[];
+    return [] as VNode[];
   }
 
   const firstEntry = slotContent[0];
   const children = Array.isArray(firstEntry?.children) ? firstEntry.children : [];
 
-  return children;
+  return children.filter((child): child is VNode => isVNode(child));
 }
 
 async function startLoop() {
@@ -91,9 +102,17 @@ async function startLoop() {
   }
 
   while (displayedItems.value.length < notifications.length && !stopRequested) {
+    const source = notifications[nextIndex.value];
+
+    if (!source) {
+      return;
+    }
+
+    const id = `${nextIndex.value}-${uniqueId++}`;
+
     displayedItems.value.push({
-      node: notifications[nextIndex.value],
-      id: `${nextIndex.value}-${Date.now()}`,
+      node: cloneVNode(source, { key: id }),
+      id,
     });
     nextIndex.value = (nextIndex.value + 1) % notifications.length;
 
@@ -106,9 +125,18 @@ async function startLoop() {
 
   while (!stopRequested) {
     displayedItems.value.shift();
+
+    const source = notifications[nextIndex.value];
+
+    if (!source) {
+      return;
+    }
+
+    const id = `${nextIndex.value}-${uniqueId++}`;
+
     displayedItems.value.push({
-      node: notifications[nextIndex.value],
-      id: `${nextIndex.value}-${Date.now()}`,
+      node: cloneVNode(source, { key: id }),
+      id,
     });
     nextIndex.value = (nextIndex.value + 1) % notifications.length;
 
