@@ -50,7 +50,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from "vue";
+import type { MaybeRefOrGetter, StyleValue } from "vue";
+import { computed, toValue, useAttrs, useSlots } from "vue";
 import { cn } from "~/lib/utils";
 
 type CardVariant = "solid" | "muted" | "outline" | "glass" | "gradient";
@@ -194,7 +195,12 @@ const restAttrs = computed(() => {
   return rest;
 });
 
-const inlineStyle = computed(() => (attrs as Record<string, unknown> & { style?: unknown }).style);
+const inlineStyle = computed(() => {
+  const style = (attrs as Record<string, unknown> & { style?: unknown }).style;
+  return style == null
+    ? undefined
+    : toValue(style as MaybeRefOrGetter<StyleValue | null | undefined>);
+});
 
 const cardStyle = computed(() => {
   const variant = variantTokens[props.variant];
@@ -224,10 +230,19 @@ const cardStyle = computed(() => {
   };
 });
 
-const styleBinding = computed(
-  () =>
-    [cardStyle.value, inlineStyle.value].filter(Boolean) as Array<string | Record<string, string>>,
-);
+const styleBinding = computed(() => {
+  const inline = inlineStyle.value;
+
+  if (Array.isArray(inline)) {
+    return [cardStyle.value, ...inline] as StyleValue;
+  }
+
+  if (inline) {
+    return [cardStyle.value, inline] as StyleValue;
+  }
+
+  return cardStyle.value as StyleValue;
+});
 
 const cardClasses = computed(() =>
   cn("base-card", props.hoverable && "base-card--hoverable", attrs.class as unknown),
