@@ -38,7 +38,7 @@
     />
 
     <template #append>
-      <ClientOnly>
+      <template v-if="isClient">
         <RightControls
           :is-mobile="props.isMobile"
           :show-right-toggle="props.showRightToggle"
@@ -87,17 +87,17 @@
             />
           </template>
         </RightControls>
-        <template #fallback>
-          <div class="flex items-center gap-3">
-            <span
-              v-for="index in 4"
-              :key="index"
-              class="h-10 w-10 animate-pulse rounded-full bg-muted/40"
-              aria-hidden="true"
-            />
-          </div>
-        </template>
-      </ClientOnly>
+      </template>
+      <template v-else>
+        <div class="flex items-center gap-3">
+          <span
+            v-for="index in 4"
+            :key="index"
+            class="h-10 w-10 animate-pulse rounded-full bg-muted/40"
+            aria-hidden="true"
+          />
+        </div>
+      </template>
     </template>
   </v-app-bar>
 </template>
@@ -250,8 +250,11 @@ const messengerButtonLabel = computed(() => {
   return t("layout.actions.messages");
 });
 
+const isClient = ref(false);
+
 if (import.meta.client) {
   onMounted(() => {
+    isClient.value = true;
     if (!messengerPreviewConversations.value.length) {
       messenger.fetchThreads({ limit: 3 }).catch(() => {});
     }
