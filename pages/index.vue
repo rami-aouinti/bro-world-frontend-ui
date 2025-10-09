@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -179,6 +179,13 @@ const stories = ref<Story[]>([
 
 const activeStory = ref<Story | null>(null);
 const isStoryViewerOpen = ref(false);
+
+watch(showAuthenticatedContent, (value) => {
+  if (!value) {
+    isStoryViewerOpen.value = false;
+    activeStory.value = null;
+  }
+});
 const lastStoryReaction = ref<{ storyId: Story["id"]; reactionId: StoryReaction["id"] } | null>(
   null,
 );
