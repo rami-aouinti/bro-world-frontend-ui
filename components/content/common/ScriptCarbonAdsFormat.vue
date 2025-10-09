@@ -41,6 +41,7 @@ const attrId = `_carbonads_js`;
 const carbonadsEl = ref<HTMLElement | null>(
   import.meta.client ? document.getElementById(attrId) : null,
 );
+const scriptEl = ref<HTMLScriptElement | null>(null);
 // syncs to useScript status
 const status = ref("awaitingLoad");
 const loaded = ref(false);
@@ -74,6 +75,7 @@ function loadCarbon() {
     }
   };
   carbonadsEl.value.appendChild(script);
+  scriptEl.value = script;
 }
 
 const trigger = useScriptTriggerElement({ trigger: props.trigger, el: carbonadsEl });
@@ -93,8 +95,12 @@ const rootAttrs = computed(() => {
 });
 
 onBeforeUnmount(() => {
+  scriptEl.value?.remove();
+  scriptEl.value = null;
+
   if (carbonadsEl.value) {
-    carbonadsEl.value.remove();
+    const injectedAd = carbonadsEl.value.querySelector<HTMLElement>("#carbonads");
+    injectedAd?.remove();
   }
 });
 </script>
