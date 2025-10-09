@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { Motion } from "motion-v";
-import { computed, onMounted, ref, useSlots } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useSlots } from "vue";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -52,37 +52,89 @@ const props = withDefaults(defineProps<Props>(), {
 const slots = useSlots();
 const displayedItems = ref<{ node: unknown; id: string }[]>([]);
 const nextIndex = ref(0);
+const activeTimeouts = new Set<ReturnType<typeof setTimeout>>();
+let stopRequested = false;
 
-onMounted(startLoop);
+onMounted(() => {
+  stopRequested = false;
+  void startLoop();
+});
+
+onBeforeUnmount(() => {
+  stopRequested = true;
+
+  for (const timeoutId of activeTimeouts) {
+    clearTimeout(timeoutId);
+  }
+
+  activeTimeouts.clear();
+});
+
+function resolveNotifications() {
+  const slotContent = slots.default ? slots.default() : [];
+
+  if (!Array.isArray(slotContent) || slotContent.length === 0) {
+    return [] as unknown[];
+  }
+
+  const firstEntry = slotContent[0];
+  const children = Array.isArray(firstEntry?.children) ? firstEntry.children : [];
+
+  return children;
+}
 
 async function startLoop() {
-  const notifications = slots.default ? (slots.default()[0].children ?? []) : [];
-  if (!notifications.length) return;
+  const notifications = resolveNotifications();
 
-  while (displayedItems.value.length < notifications.length) {
+  if (!notifications.length || stopRequested) {
+    return;
+  }
+
+  while (displayedItems.value.length < notifications.length && !stopRequested) {
     displayedItems.value.push({
       node: notifications[nextIndex.value],
       id: `${nextIndex.value}-${Date.now()}`,
     });
     nextIndex.value = (nextIndex.value + 1) % notifications.length;
+
+    if (stopRequested) {
+      return;
+    }
+
     await wait(props.delay);
   }
 
-  while (true) {
+  while (!stopRequested) {
     displayedItems.value.shift();
     displayedItems.value.push({
       node: notifications[nextIndex.value],
       id: `${nextIndex.value}-${Date.now()}`,
     });
     nextIndex.value = (nextIndex.value + 1) % notifications.length;
+
+    if (stopRequested) {
+      return;
+    }
+
     await wait(props.delay);
   }
 }
 
 const itemsToShow = computed(() => displayedItems.value);
 
-async function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function wait(ms: number) {
+  if (stopRequested || typeof ms !== "number" || ms <= 0) {
+    return Promise.resolve();
+  }
+
+  return new Promise<void>((resolve) => {
+    const timeoutId = setTimeout(() => {
+      activeTimeouts.delete(timeoutId);
+      resolve();
+    }, ms);
+
+    activeTimeouts.add(timeoutId);
+  });
 }
 </script>
 
