@@ -124,7 +124,7 @@
                   >
                     <div
                       v-if="rightSidebarContent"
-                      :class="rightSidebarContent.wrapperClass ?? 'flex flex-col gap-4'"
+                      :class="rightSidebarContent.wrapperClass ?? 'flex flex-col gap-6'"
                     >
                       <component
                         :is="rightSidebarContent.component"
@@ -133,7 +133,7 @@
                     </div>
                     <div
                       v-else
-                      class="flex flex-col gap-4"
+                      class="flex flex-col gap-6"
                     >
                       <SidebarWeatherCard
                         v-if="weather"
@@ -158,7 +158,7 @@
                   v-if="showRightWidgets"
                   class="pane-scroll px-3 py-4 bg-card"
                 >
-                  <div class="flex flex-col gap-4">
+                  <div class="flex flex-col gap-6">
                     <v-skeleton-loader
                       type="list-item-two-line"
                       class="rounded-2xl"
@@ -181,7 +181,7 @@
               v-if="showRightWidgets"
               class="pane-scroll px-3 py-4 bg-card"
             >
-              <div class="flex flex-col gap-4">
+              <div class="flex flex-col gap-6">
                 <v-skeleton-loader
                   type="list-item-two-line"
                   class="rounded-2xl"
