@@ -1444,7 +1444,8 @@
       "sections": {
         "general": {
           "title": "Brand identity",
-          "subtitle": "Update the site name and tagline displayed across the workspace."
+          "subtitle": "Update the site name and tagline displayed across the workspace.",
+          "badge": "Core"
         },
         "theme": {
           "title": "Themes",
@@ -1454,6 +1455,7 @@
         "navigation": {
           "title": "Navigation menu",
           "subtitle": "Add, reorder, and secure sidebar entries for every audience.",
+          "badge": "Menus",
           "children": "Child links"
         }
       },
