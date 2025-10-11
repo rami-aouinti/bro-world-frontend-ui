@@ -91,9 +91,9 @@ Une ombre de focus harmonisée est également disponible via `--ui-focus` (`0 0 
 
 ## Typographie
 
-- Police par défaut (`$body-font-family` / `var(--v-font-family-base)`) : `Manrope`, avec retours `Inter`, `Helvetica Neue`, `Arial`, `sans-serif`.
-- Police display (`var(--v-font-family-display)`) pour les titres : `Bricolage Grotesque`, retombant sur `Manrope`, `Inter`, puis les fontes systèmes.
-- Les fontes sont chargées via `assets/styles/index.css` (Google Fonts, `font-display: swap`) et appliquées globalement au `<body>`.
+- Police par défaut (`$body-font-family` / `var(--v-font-family-base)`) : pile système (`system-ui`, `-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, `Helvetica Neue`, `Arial`, `sans-serif`).
+- Police display (`var(--v-font-family-display)`) : identique à la pile système pour garantir un rendu cohérent sans chargement externe.
+- Les fontes système sont utilisées par défaut et évitent tout aller-retour réseau critique au chargement initial.
 
 ### Échelle commune Vuetify ↔ Tailwind
 
