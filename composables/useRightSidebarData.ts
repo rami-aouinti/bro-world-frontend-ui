@@ -12,7 +12,32 @@ import type {
 const SIDEBAR_I18N_NAMESPACE = "blog.sidebar";
 
 export function useRightSidebarData() {
-  const { tm } = useI18n();
+  const { tm, rt } = useI18n();
+
+  function resolveText(value: unknown): string {
+    if (value == null) {
+      return "";
+    }
+
+    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+      return String(value);
+    }
+
+    try {
+      const rendered = rt(value as never);
+      return typeof rendered === "string" ? rendered : String(rendered);
+    } catch (error) {
+      if (import.meta.dev) {
+        console.warn("[useRightSidebarData] Unable to resolve text", value, error);
+      }
+
+      try {
+        return String(value);
+      } catch {
+        return "";
+      }
+    }
+  }
 
   const weather = computed<SidebarWeatherData | null>(() => {
     const raw = tm(`${SIDEBAR_I18N_NAMESPACE}.weather`) as SidebarWeatherRaw | undefined;
@@ -28,16 +53,16 @@ export function useRightSidebarData() {
     }
 
     return {
-      badge: raw.badge ?? "",
-      title: raw.title ?? "",
-      subtitle: raw.subtitle ?? "",
-      icon: raw.icon ?? "",
-      location: raw.location ?? "",
-      temperature: raw.temperature ?? "",
-      tip: raw.tip ?? "",
-      locationLabel: raw.locationLabel ?? "",
-      temperatureLabel: raw.temperatureLabel ?? "",
-      tipLabel: raw.tipLabel ?? "",
+      badge: resolveText(raw.badge),
+      title: resolveText(raw.title),
+      subtitle: resolveText(raw.subtitle),
+      icon: resolveText(raw.icon),
+      location: resolveText(raw.location),
+      temperature: resolveText(raw.temperature),
+      tip: resolveText(raw.tip),
+      locationLabel: resolveText(raw.locationLabel),
+      temperatureLabel: resolveText(raw.temperatureLabel),
+      tipLabel: resolveText(raw.tipLabel),
     } satisfies SidebarWeatherData;
   });
 
@@ -59,14 +84,16 @@ export function useRightSidebarData() {
 
         return {
           position: index + 1,
-          ...participant,
+          name: resolveText(participant.name),
+          role: resolveText(participant.role),
+          score: resolveText(participant.score),
         } satisfies SidebarLeaderboardParticipant;
       })
       .filter((participant): participant is SidebarLeaderboardParticipant => Boolean(participant));
 
     return {
-      title: raw?.title ?? "",
-      live: raw?.live ?? "",
+      title: resolveText(raw?.title),
+      live: resolveText(raw?.live),
       participants,
     };
   });
@@ -75,13 +102,16 @@ export function useRightSidebarData() {
     const raw = tm(`${SIDEBAR_I18N_NAMESPACE}.rating`) as SidebarRatingRaw;
 
     return {
-      title: raw.title ?? "",
-      subtitle: raw.subtitle ?? "",
-      average: raw.average ?? "",
-      total: raw.total ?? 0,
-      icon: raw.icon ?? "",
-      stars: raw.stars ?? 0,
-      categories: Object.values(raw.categories ?? {}),
+      title: resolveText(raw.title),
+      subtitle: resolveText(raw.subtitle),
+      average: resolveText(raw.average),
+      total: typeof raw.total === "number" ? raw.total : Number(raw.total ?? 0),
+      icon: resolveText(raw.icon),
+      stars: typeof raw.stars === "number" ? raw.stars : Number(raw.stars ?? 0),
+      categories: Object.values(raw.categories ?? {}).map((category) => ({
+        label: resolveText(category.label),
+        value: typeof category.value === "number" ? category.value : Number(category.value ?? 0),
+      })),
     };
   });
 
