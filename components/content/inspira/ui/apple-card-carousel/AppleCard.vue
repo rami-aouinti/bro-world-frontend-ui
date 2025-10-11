@@ -4,6 +4,7 @@
       <AnimatePresence>
         <div
           v-if="open"
+          key="modal-overlay"
           class="fixed inset-0 z-50 h-screen overflow-auto"
         >
           <Motion
