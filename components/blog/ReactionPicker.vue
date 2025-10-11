@@ -48,6 +48,8 @@
             <img
               :src="it.src"
               :alt="it.label"
+              width="38"
+              height="38"
             />
           </button>
         </div>

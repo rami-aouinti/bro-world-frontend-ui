@@ -27,6 +27,8 @@
             "
             alt=""
             cover
+            width="22"
+            height="22"
           />
         </v-avatar>
       </div>

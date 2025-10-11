@@ -28,6 +28,8 @@
               :src="story?.avatar"
               :alt="story?.name || t('stories.viewer.avatarAlt')"
               cover
+              width="40"
+              height="40"
             />
           </v-avatar>
           <div class="story-viewer__meta">
@@ -60,6 +62,8 @@
             class="story-viewer__image"
             cover
             :alt="story?.name || t('stories.viewer.imageAlt')"
+            width="480"
+            height="360"
           />
         </transition>
         <div

@@ -16,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+import { useElementBounding } from "@vueuse/core";
 import { ref, inject, computed } from "vue";
 import {
   MOUSE_X_INJECTION_KEY,
@@ -36,16 +37,16 @@ const isVertical = computed(() => orientation === "vertical");
 
 const margin = ref(0);
 
+const { x, y, width, height } = useElementBounding(iconRef);
+
+const horizontalCenter = computed(() => x.value + width.value / 2);
+const verticalCenter = computed(() => y.value + height.value / 2);
+
 function calculateDistance(val: number) {
   if (isVertical.value) {
-    const bounds = iconRef.value?.getBoundingClientRect() || {
-      y: 0,
-      height: 0,
-    };
-    return val - bounds.y - bounds.height / 2;
+    return val - (verticalCenter.value || 0);
   }
-  const bounds = iconRef.value?.getBoundingClientRect() || { x: 0, width: 0 };
-  return val - bounds.x - bounds.width / 2;
+  return val - (horizontalCenter.value || 0);
 }
 
 const iconWidth = computed(() => {

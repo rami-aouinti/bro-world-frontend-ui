@@ -26,6 +26,8 @@
             <v-img
               :src="avatar"
               alt="Avatar"
+              width="40"
+              height="40"
             />
           </v-avatar>
           <div class="d-flex flex-column">
