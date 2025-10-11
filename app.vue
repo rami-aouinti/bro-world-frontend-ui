@@ -34,7 +34,7 @@ const siteConfig = computed(() => {
 });
 const route = useRoute();
 const pageKey = computed(() => route.fullPath ?? route.name ?? "");
-const { themeClass, radius } = useThemes();
+const { themeClass, radius, themePrimaryHex } = useThemes();
 const { locale } = useI18n();
 const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
 const requestUrl = nuxtApp && hasInjectionContext() ? useRequestURL() : null;
@@ -118,6 +118,7 @@ const structuredData = computed(() =>
 );
 
 const socialImageUrl = computed(() => `${normalizedBaseUrl.value}/social-img.png`);
+const themeColor = computed(() => themePrimaryHex.value ?? "#e91e63");
 
 useHead({
   title,
@@ -151,8 +152,8 @@ useHead({
     },
   ],
   bodyAttrs: {
-    class: themeClass.value,
-    style: `--radius: ${radius.value}rem;`,
+    class: () => themeClass.value,
+    style: () => `--radius: ${radius.value}rem;`,
   },
 });
 
@@ -170,7 +171,7 @@ useSeoMeta({
   twitterImage: socialImageUrl,
   twitterCard: "summary_large_image",
   keywords,
-  themeColor: "#e91e63",
+  themeColor,
   robots: "index, follow",
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
   ogLocale: locale,

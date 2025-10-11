@@ -1,4 +1,4 @@
-import { computed, watchEffect } from "vue";
+import { computed, watch, watchEffect } from "vue";
 import { useColorMode } from "@vueuse/core";
 import { useCookie, useHead, useRequestHeaders } from "#imports";
 import { withSecureCookieOptions } from "~/lib/cookies";
@@ -10,6 +10,7 @@ export function useCookieColorMode() {
     "color-mode",
     withSecureCookieOptions({
       sameSite: "lax",
+      default: () => "auto",
     }),
   );
 
@@ -48,6 +49,32 @@ export function useCookieColorMode() {
   if (colorMode.value !== initialValue) {
     colorMode.value = initialValue;
   }
+
+  watch(
+    () => colorMode.value,
+    (value) => {
+      if (colorModeCookie.value !== value) {
+        colorModeCookie.value = value;
+      }
+    },
+    { immediate: true },
+  );
+
+  watch(
+    () => colorModeCookie.value,
+    (value) => {
+      const normalized = value ?? "auto";
+
+      if (value == null) {
+        colorModeCookie.value = normalized;
+        return;
+      }
+
+      if (colorMode.value !== normalized) {
+        colorMode.value = normalized;
+      }
+    },
+  );
 
   const resolvedMode = computed<"light" | "dark">(() => {
     if (colorMode.value === "auto") {
