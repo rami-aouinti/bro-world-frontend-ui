@@ -2,8 +2,8 @@
 <template>
   <div>
     <div
-      v-for="node in nodes"
-      :key="node.id"
+      v-for="(node, index) in nodes"
+      :key="node.id ?? `comment-${index}`"
       :style="{ marginLeft: depth > 0 ? `${46}px` : 0 }"
     >
       <div class="comment">
@@ -59,7 +59,7 @@
         >
           <v-avatar
             v-for="(r, i) in topReactions"
-            :key="r.type"
+            :key="`${r.type}-${i}`"
             size="22"
             class="bubbleReacts"
             :style="{ left: `${i * 14}px`, zIndex: 10 - i }"

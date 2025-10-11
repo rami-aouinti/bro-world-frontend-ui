@@ -9,7 +9,12 @@ import type {
   ReactionPayload,
   UpdatePostPayload,
 } from "./types";
-import type { BlogApiResponse, BlogCommentWithReplies, BlogPost } from "../../../lib/mock/blog";
+import {
+  type BlogApiResponse,
+  type BlogCommentWithReplies,
+  type BlogPost,
+  blogSampleResponse,
+} from "../../../lib/mock/blog";
 import { clearAuthSession, getSessionToken, withAuthHeaders } from "../auth/session";
 
 type PostsVisibility = "public" | "private";
@@ -172,19 +177,24 @@ export async function fetchPostsListFromSource(
     }
   }
 
-  const fallbackResponse = await $fetch<BlogApiResponse>(publicEndpoint, {
-    method: "GET",
-    headers: buildHeaders(event, false),
-  });
-
-  if (!fallbackResponse || !Array.isArray(fallbackResponse.data)) {
-    throw createError({
-      statusCode: 502,
-      statusMessage: "Invalid posts list response.",
+  try {
+    const fallbackResponse = await $fetch<BlogApiResponse>(publicEndpoint, {
+      method: "GET",
+      headers: buildHeaders(event, false),
     });
-  }
 
-  return { payload: fallbackResponse, visibility: "public" };
+    if (!fallbackResponse || !Array.isArray(fallbackResponse.data)) {
+      throw createError({
+        statusCode: 502,
+        statusMessage: "Invalid posts list response.",
+      });
+    }
+
+    return { payload: fallbackResponse, visibility: "public" };
+  } catch (error) {
+    console.error("Falling back to mock posts list", error);
+    return { payload: blogSampleResponse, visibility: "public" };
+  }
 }
 
 export async function fetchPostByIdFromSource(event: H3Event, postId: string): Promise<BlogPost> {
