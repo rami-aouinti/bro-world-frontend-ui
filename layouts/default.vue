@@ -27,7 +27,6 @@
       app
       :permanent="!isMobile"
       :temporary="isMobile"
-      :rail="isRail"
       :scrim="isMobile"
       location="start"
       width="320"
@@ -376,10 +375,6 @@ const initialIsMobile = useState("layout-initial-is-mobile", () => {
 
   return display.mobile.value;
 });
-const initialIsRail = useState(
-  "layout-initial-is-rail",
-  () => display.mdAndDown.value && !initialIsMobile.value,
-);
 const { locale, availableLocales, setLocale } = useI18n();
 const auth = useAuthSession();
 
@@ -434,13 +429,6 @@ const isMobile = computed(() => {
   return display.mobile.value;
 });
 // rail facultatif: quand mdAndDown mais pas mobile complet
-const isRail = computed(() => {
-  if (!isHydrated.value) {
-    return initialIsRail.value;
-  }
-
-  return display.mdAndDown.value && !display.mobile.value;
-});
 const showRightWidgets = computed(() => {
   const hasDynamicSidebarContent = Boolean(rightSidebarContent.value);
 
