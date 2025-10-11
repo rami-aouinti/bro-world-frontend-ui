@@ -336,8 +336,8 @@ const vuetifyTheme = useTheme();
 watch(
   themeName,
   (name) => {
-    if (vuetifyTheme.global.name.value !== name) {
-      vuetifyTheme.global.name.value = name;
+    if (vuetifyTheme.name.value !== name) {
+      vuetifyTheme.change(name);
     }
   },
   { immediate: true },
