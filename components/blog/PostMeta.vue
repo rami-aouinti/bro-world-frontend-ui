@@ -8,7 +8,6 @@
           width="48"
           height="48"
           loading="lazy"
-          decoding="async"
           class="h-full w-full object-cover"
           :loading="imageLoadingMode"
           :fetchpriority="imageFetchPriority"
