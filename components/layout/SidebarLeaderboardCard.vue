@@ -1,11 +1,15 @@
 <template>
-  <SidebarCard class="text-slate-200">
+  <SidebarCard class="text-slate-200 px-3 py-2">
+    <!-- glows -->
+    <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
+    <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
+
     <header class="flex items-center justify-between text-slate-200">
       <h3 class="text-lg font-semibold text-foreground">{{ title }}</h3>
       <span class="text-xs uppercase tracking-[0.3em] text-primary/70">{{ liveLabel }}</span>
     </header>
 
-    <ul class="space-y-4 px-1 py-2">
+    <ul class="space-y-4">
       <li
           v-for="participant in participants"
           :key="participant.name"

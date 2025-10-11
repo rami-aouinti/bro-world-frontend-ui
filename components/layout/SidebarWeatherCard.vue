@@ -24,19 +24,19 @@
       </div>
     </div>
 
-    <dl class="relative z-10 px-4 py-2 text-sm text-slate-300">
-      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3 my-2">
+    <dl class="relative z-10 text-sm text-slate-300">
+      <div class="-mx-[var(--card-x)] flex items-center gap-3 px-1 py-2 my-2 mx-1 rounded-2xl border border-white/5 bg-black/20 px-[var(--card-x)] py-3 text-sm text-slate-300">
         <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.locationLabel }}</dt>
-        <dd class="font-medium text-white">
+        <dd class="font-medium text-foreground text-end">
           <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </dd>
       </div>
-      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3 my-2">
+      <div class="-mx-[var(--card-x)] flex items-center gap-3 px-1 py-2 my-2 mx-1 rounded-2xl border border-white/5 bg-black/20 px-[var(--card-x)] py-3 text-sm text-slate-300">
         <dt class="uppercase tracking-wide text-xs text-slate-400">
           {{ resolvedWeather.temperatureLabel }}
         </dt>
-        <dd class="font-medium text-white">
+        <dd class="font-medium text-foreground text-end">
           <span v-if="isLoading" class="inline-flex h-5 w-14 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.temperature }}</span>
         </dd>

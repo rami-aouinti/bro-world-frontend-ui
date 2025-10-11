@@ -2,9 +2,13 @@
   <SidebarCard
       :dir="isRtl ? 'rtl' : 'ltr'"
       aria-live="polite"
-      class="text-slate-200"
+      class="text-slate-200 px-3 py-2"
   >
-    <header class="flex items-start justify-between">
+    <!-- glows -->
+    <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
+    <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
+
+    <header class="flex items-center justify-between text-slate-200">
       <div>
         <h3 class="text-lg font-semibold text-foreground">
           {{ cardTitle }}

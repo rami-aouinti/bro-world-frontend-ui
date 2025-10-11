@@ -66,7 +66,7 @@ const cardAttrs = computed(() => {
 });
 
 const cardClass = computed(() => [
-  "sidebar-card relative isolate flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-white/5 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl [--card-x:1.5rem]",
+  "sidebar-card relative isolate flex flex-col overflow-hidden rounded-3xl bg-transparent shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]",
   paddingClassMap[props.padding],
   attrs.class as string | string[] | Record<string, boolean> | undefined,
 ]);
