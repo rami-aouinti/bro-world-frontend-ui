@@ -167,13 +167,13 @@ function handleSocialRedirect(provider: SocialProvider) {
 @reference "../../assets/css/tailwind.css";
 
 .app-card {
-  padding: 4px 16px;
+  padding: 1.5rem 1.25rem;
 }
 
 .app-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1.5rem;
 }
 
 .app-sidebar--sticky {
