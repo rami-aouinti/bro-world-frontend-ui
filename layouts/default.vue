@@ -67,7 +67,6 @@
 
     <!-- RIGHT DRAWER -->
     <v-navigation-drawer
-      v-show="showRightWidgets"
       v-model="rightDrawer"
       app
       :permanent="!isMobile"
