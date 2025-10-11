@@ -1,5 +1,6 @@
 import { useNuxtApp } from "#app";
 import { en, fr, de, ar, it, es, ru } from "vuetify/locale";
+import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
 
 export default defineNuxtPlugin(() => {
   const { $i18n } = useNuxtApp();
@@ -19,12 +20,7 @@ export default defineNuxtPlugin(() => {
     const messageLoading = (messages as { loading?: unknown }).loading;
     const normalizedMessages = {
       ...messages,
-      loading:
-        typeof messageLoading === "string"
-          ? messageLoading
-          : typeof existingVuetify.loading === "string"
-            ? (existingVuetify.loading as string)
-            : "Loading…",
+      loading: ensureVuetifyLoading(code, messageLoading, existingVuetify.loading),
     } satisfies typeof messages;
 
     $i18n.setLocaleMessage(code, {

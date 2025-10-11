@@ -63,6 +63,27 @@ import esLocale from "date-fns/locale/es";
 import ruLocale from "date-fns/locale/ru";
 import arLocale from "date-fns/locale/ar-SA";
 import { withSecureCookieOptions } from "~/lib/cookies";
+import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
+
+const vuetifyLocaleMessages = {
+  en,
+  fr,
+  de,
+  ar,
+  it,
+  es,
+  ru,
+} as const;
+
+const normalizedVuetifyLocaleMessages = Object.fromEntries(
+  Object.entries(vuetifyLocaleMessages).map(([code, messages]) => [
+    code,
+    {
+      ...messages,
+      loading: ensureVuetifyLoading(code, (messages as { loading?: unknown }).loading),
+    },
+  ]),
+) as typeof vuetifyLocaleMessages;
 
 export type DataTableHeaders = VDataTable["$props"]["headers"];
 
@@ -498,15 +519,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     locale: {
       locale,
       fallback: "en",
-      messages: {
-        en,
-        fr,
-        de,
-        ar,
-        it,
-        es,
-        ru,
-      },
+      messages: normalizedVuetifyLocaleMessages,
     },
     date: {
       adapter: DateFnsAdapter,
