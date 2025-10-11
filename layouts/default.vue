@@ -375,7 +375,9 @@ const rightDrawer = computed({
   },
 });
 
-const drawerInlineStyle = computed(() => `z-index: ${isHydrated.value ? 1004 : 1006};`);
+const drawerInlineStyle = computed(() => ({
+  "z-index": isHydrated.value ? 1004 : 1006,
+}));
 const isMobile = computed(() => {
   if (!isHydrated.value) {
     return initialIsMobile.value;
@@ -449,14 +451,15 @@ watch(
   { immediate: true },
 );
 
-function toInlineStyle(variables: Record<string, string | undefined>) {
-  return Object.entries(variables)
-    .filter(([, value]) => value != null)
-    .map(([key, value]) => `${key}: ${value}`)
-    .join("; ");
+function filterUndefinedValues<T extends Record<string, string | undefined>>(variables: T) {
+  return Object.fromEntries(
+    Object.entries(variables)
+      .filter(([, value]) => value != null)
+      .map(([key, value]) => [key, value as string]),
+  ) as Record<string, string>;
 }
 
-const cssVars = computed(() => {
+const cssVars = computed<Record<string, string>>(() => {
   const base: Record<string, string | undefined> = {
     "--app-bar-height": "50px",
     "--pink-shadow": isDark.value
@@ -485,7 +488,7 @@ const cssVars = computed(() => {
     base["--brand-accent"] = activeTheme.value.accentColor;
   }
 
-  return toInlineStyle(base);
+  return filterUndefinedValues(base);
 });
 
 const appIcons = [
