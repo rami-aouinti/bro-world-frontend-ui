@@ -333,6 +333,7 @@ const resolvedColorMode = computed<"light" | "dark">(() => {
 });
 
 const isDark = computed(() => resolvedColorMode.value === "dark");
+const themeName = computed(() => (isDark.value ? "dark" : "light"));
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
@@ -430,6 +431,14 @@ const isRightDrawerReady = ref(import.meta.server || !showRightWidgets.value);
 
 const siteSettingsState = useSiteSettingsState();
 const theme = useTheme();
+
+watch(
+  themeName,
+  (value) => {
+    theme.global.name.value = value;
+  },
+  { immediate: true },
+);
 
 const { data: fetchedSiteSettings } = await useAsyncData("site-settings", () =>
   $fetch<{ data: SiteSettings }>("/api/settings").then((response) => response.data),
