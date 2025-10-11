@@ -163,6 +163,65 @@
     "Forum": "Foro",
     "ForumDiscord": "Únete al foro"
   },
+  "blog": {
+    "sidebar": {
+      "weather": {
+        "badge": "En vivo",
+        "title": "HQ de Bro World",
+        "subtitle": "Mantén el paraguas a mano",
+        "icon": "solar:sun-2-bold",
+        "location": "París, FR",
+        "temperature": "18°",
+        "tip": "Se esperan ráfagas de hasta 12 km/h esta tarde.",
+        "locationLabel": "Ubicación",
+        "temperatureLabel": "Temperatura",
+        "tipLabel": "Consejo"
+      },
+      "leaderboard": {
+        "title": "Mejores jugadores",
+        "live": "Clasificación en vivo",
+        "participants": {
+          "first": {
+            "name": "Alex Carter",
+            "role": "Estratega",
+            "score": "982"
+          },
+          "second": {
+            "name": "Mia Laurent",
+            "role": "Apoyo",
+            "score": "945"
+          },
+          "third": {
+            "name": "Leo Nakamura",
+            "role": "Explorador",
+            "score": "918"
+          }
+        }
+      },
+      "rating": {
+        "title": "Valoración de la comunidad",
+        "subtitle": "Experiencia Bro World",
+        "average": "4.9",
+        "total": 428,
+        "icon": "solar:star-bold",
+        "stars": 5,
+        "categories": {
+          "ui": {
+            "label": "Interfaz",
+            "value": 4.9
+          },
+          "gameplay": {
+            "label": "Jugabilidad",
+            "value": 4.8
+          },
+          "community": {
+            "label": "Comunidad",
+            "value": 4.9
+          }
+        }
+      }
+    }
+  },
   "toc": {
     "title": "En esta página",
     "StarOnGitHub": "Dale una estrella en GitHub",

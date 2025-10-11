@@ -163,6 +163,65 @@
     "Forum": "论坛",
     "ForumDiscord": "加入论坛"
   },
+  "blog": {
+    "sidebar": {
+      "weather": {
+        "badge": "实时",
+        "title": "Bro World 总部",
+        "subtitle": "记得带上雨伞",
+        "icon": "solar:sun-2-bold",
+        "location": "法国巴黎",
+        "temperature": "18°",
+        "tip": "下午预计将有最高 12 公里/小时的阵风。",
+        "locationLabel": "位置",
+        "temperatureLabel": "气温",
+        "tipLabel": "提示"
+      },
+      "leaderboard": {
+        "title": "玩家榜",
+        "live": "实时排名",
+        "participants": {
+          "first": {
+            "name": "Alex Carter",
+            "role": "策略师",
+            "score": "982"
+          },
+          "second": {
+            "name": "Mia Laurent",
+            "role": "支援",
+            "score": "945"
+          },
+          "third": {
+            "name": "Leo Nakamura",
+            "role": "侦察",
+            "score": "918"
+          }
+        }
+      },
+      "rating": {
+        "title": "社区评分",
+        "subtitle": "Bro World 体验",
+        "average": "4.9",
+        "total": 428,
+        "icon": "solar:star-bold",
+        "stars": 5,
+        "categories": {
+          "ui": {
+            "label": "界面",
+            "value": 4.9
+          },
+          "gameplay": {
+            "label": "玩法",
+            "value": 4.8
+          },
+          "community": {
+            "label": "社区",
+            "value": 4.9
+          }
+        }
+      }
+    }
+  },
   "toc": {
     "title": "本页",
     "StarOnGitHub": "GitHub 收藏",

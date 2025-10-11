@@ -163,6 +163,65 @@
     "Forum": "Форум",
     "ForumDiscord": "Перейти на форум"
   },
+  "blog": {
+    "sidebar": {
+      "weather": {
+        "badge": "В эфире",
+        "title": "Штаб Bro World",
+        "subtitle": "Держите зонт под рукой",
+        "icon": "solar:sun-2-bold",
+        "location": "Париж, FR",
+        "temperature": "18°",
+        "tip": "После обеда ожидаются порывы ветра до 12 км/ч.",
+        "locationLabel": "Местоположение",
+        "temperatureLabel": "Температура",
+        "tipLabel": "Совет"
+      },
+      "leaderboard": {
+        "title": "Топ-игроки",
+        "live": "Живой рейтинг",
+        "participants": {
+          "first": {
+            "name": "Алекс Картер",
+            "role": "Стратег",
+            "score": "982"
+          },
+          "second": {
+            "name": "Миа Лоран",
+            "role": "Поддержка",
+            "score": "945"
+          },
+          "third": {
+            "name": "Лео Накамура",
+            "role": "Разведчик",
+            "score": "918"
+          }
+        }
+      },
+      "rating": {
+        "title": "Оценка сообщества",
+        "subtitle": "Опыт Bro World",
+        "average": "4.9",
+        "total": 428,
+        "icon": "solar:star-bold",
+        "stars": 5,
+        "categories": {
+          "ui": {
+            "label": "Интерфейс",
+            "value": 4.9
+          },
+          "gameplay": {
+            "label": "Геймплей",
+            "value": 4.8
+          },
+          "community": {
+            "label": "Сообщество",
+            "value": 4.9
+          }
+        }
+      }
+    }
+  },
   "toc": {
     "title": "На этой странице",
     "StarOnGitHub": "Поставить звезду на GitHub",
