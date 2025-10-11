@@ -769,6 +769,7 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
   max-width: min(1120px, 100%);
   margin-inline: auto;
   box-sizing: border-box;
+  padding: 10px;
 }
 .sidebar-default-card__particles {
   position: absolute;
