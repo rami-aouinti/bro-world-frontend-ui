@@ -609,7 +609,7 @@ function applySettings(settings: SiteSettings) {
 function deepCloneMenu(menu: SiteMenuItem): EditableMenu {
   return {
     ...menu,
-    translate: false,
+    translate: menu.translate === true,
     children: menu.children?.map((child) => deepCloneMenu(child)) ?? [],
   };
 }
@@ -627,7 +627,7 @@ function serializeForm(): Partial<SiteSettings> {
 function serializeMenu(menu: EditableMenu, index: number): SiteMenuItem {
   return {
     ...menu,
-    translate: false,
+    translate: menu.translate === true,
     order: index,
     children: menu.children?.map((child, childIndex) => serializeMenu(child, childIndex)) ?? [],
   };
