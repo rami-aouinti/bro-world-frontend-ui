@@ -1,13 +1,13 @@
 <template>
   <section
-      class="relative isolate flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
+      class="relative isolate flex flex-col px-3 py-2 rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
       :aria-busy="isLoading"
   >
     <!-- glows -->
     <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
     <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
 
-    <div class="relative z-10 flex items-start justify-between gap-6">
+    <div class="relative z-10 flex items-start justify-between px-3 py-2">
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ resolvedWeather.badge }}</p>
         <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.title }}</h3>
@@ -24,28 +24,21 @@
       </div>
     </div>
 
-    <dl class="relative z-10 space-y-3 text-sm text-slate-300">
-      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3">
+    <dl class="relative z-10 px-4 py-2 text-sm text-slate-300">
+      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3 my-2">
         <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.locationLabel }}</dt>
         <dd class="font-medium text-white">
           <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </dd>
       </div>
-      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3">
+      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3 my-2">
         <dt class="uppercase tracking-wide text-xs text-slate-400">
           {{ resolvedWeather.temperatureLabel }}
         </dt>
         <dd class="font-medium text-white">
           <span v-if="isLoading" class="inline-flex h-5 w-14 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.temperature }}</span>
-        </dd>
-      </div>
-      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.tipLabel }}</dt>
-        <dd class="max-w-[10rem] text-right text-sm leading-snug">
-          <span v-if="isLoading" class="inline-flex h-5 w-24 animate-pulse rounded-full bg-white/20"></span>
-          <span v-else>{{ resolvedWeather.tip }}</span>
         </dd>
       </div>
     </dl>

@@ -1,7 +1,7 @@
 <template>
   <section
       :dir="isRtl ? 'rtl' : 'ltr'"
-      class="isolate flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
+      class="isolate flex flex-col px-3 py-2 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
       aria-live="polite"
   >
     <header class="flex items-start justify-between">

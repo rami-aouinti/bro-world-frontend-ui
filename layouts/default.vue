@@ -103,7 +103,7 @@
             <ClientOnly>
               <div
                 v-if="showRightWidgets"
-                class="pane-scroll px-3 py-4 bg-card"
+                class="pane-scroll bg-card"
                 :class="{ hidden: !shouldRenderRightSidebarContent }"
                 :aria-hidden="!shouldRenderRightSidebarContent"
               >
