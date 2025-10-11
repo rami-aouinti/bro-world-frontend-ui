@@ -23,14 +23,14 @@
       </div>
     </div>
     <dl class="relative z-10 space-y-3 text-sm text-slate-300">
-      <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
+      <div class="-mx-6 flex items-center justify-between rounded-2xl bg-white/5 px-6 py-3">
         <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.locationLabel }}</dt>
         <dd class="font-medium text-white">
           <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </dd>
       </div>
-      <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
+      <div class="-mx-6 flex items-center justify-between rounded-2xl bg-white/5 px-6 py-3">
         <dt class="uppercase tracking-wide text-xs text-slate-400">
           {{ resolvedWeather.temperatureLabel }}
         </dt>
@@ -39,7 +39,7 @@
           <span v-else>{{ resolvedWeather.temperature }}</span>
         </dd>
       </div>
-      <div class="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
+      <div class="-mx-6 flex items-center justify-between rounded-2xl bg-white/5 px-6 py-3">
         <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.tipLabel }}</dt>
         <dd class="max-w-[10rem] text-right text-sm leading-snug">
           <span v-if="isLoading" class="inline-flex h-5 w-24 animate-pulse rounded-full bg-white/20"></span>

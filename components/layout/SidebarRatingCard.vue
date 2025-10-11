@@ -78,8 +78,8 @@
       </div>
 
       <div
-        v-if="loggedIn"
-        class="flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-2"
+          v-if="loggedIn"
+          class="-mx-6 flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/5 px-6 py-3"
       >
         <v-rating
           v-model="newRating"

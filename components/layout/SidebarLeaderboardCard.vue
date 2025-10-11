@@ -8,7 +8,7 @@
       <li
         v-for="participant in participants"
         :key="participant.name"
-        class="flex items-center gap-3 rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm text-slate-300"
+        class="-mx-6 flex items-center gap-3 rounded-2xl border border-white/5 bg-black/20 px-6 py-3 text-sm text-slate-300"
       >
         <span
           class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-base font-semibold text-primary"
