@@ -435,7 +435,7 @@ const theme = useTheme();
 watch(
   themeName,
   (value) => {
-    theme.global.name.value = value;
+    theme.change(value);
   },
   { immediate: true },
 );
