@@ -158,7 +158,7 @@ const localeMetadata = {
   ru: { label: "Русский", flag: "ru" },
   ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
-const isDarkColor = computed(() => useColorMode().value == "dark");
+const isDarkColor = computed(() => props.isDark);
 const theme = useTheme();
 
 const showInlineSearch = computed(
