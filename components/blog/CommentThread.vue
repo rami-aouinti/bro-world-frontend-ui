@@ -14,6 +14,8 @@
           <v-img
             :src="node.user.photo || 'https://i.pravatar.cc/80?img=5'"
             alt=""
+            width="34"
+            height="34"
           />
         </v-avatar>
         <div class="bubble">
@@ -77,6 +79,8 @@
               "
               alt=""
               cover
+              width="22"
+              height="22"
             />
           </v-avatar>
         </div>

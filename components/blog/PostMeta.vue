@@ -7,6 +7,8 @@
           :alt="`${user.firstName} ${user.lastName}`"
           class="h-full w-full object-cover"
           loading="lazy"
+          width="48"
+          height="48"
         />
       </div>
       <div class="space-y-1">
