@@ -1,7 +1,6 @@
 <template>
   <section
-    class="space-y-2 py-4 my-3 px-2"
-    style="max-width: 590px"
+    class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-auto"
   >
     <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
       {{ props.title }}
