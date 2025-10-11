@@ -10,6 +10,9 @@
           loading="lazy"
           decoding="async"
           class="h-full w-full object-cover"
+          :loading="imageLoadingMode"
+          :fetchpriority="imageFetchPriority"
+          decoding="async"
         />
       </div>
       <div class="space-y-1">
@@ -67,6 +70,7 @@ const props = withDefaults(
     actionsAriaLabel?: string;
     editLabel?: string;
     deleteLabel?: string;
+    preferEagerMediaLoading?: boolean;
   }>(),
   {
     isAuthor: false,
@@ -80,6 +84,7 @@ const props = withDefaults(
     actionsAriaLabel: "Open post actions",
     editLabel: "Edit",
     deleteLabel: "Delete",
+    preferEagerMediaLoading: false,
   },
 );
 
@@ -102,6 +107,9 @@ const followingAriaLabel = computed(() => props.followingAriaLabel);
 const actionsAriaLabel = computed(() => props.actionsAriaLabel);
 const editLabel = computed(() => props.editLabel);
 const deleteLabel = computed(() => props.deleteLabel);
+const preferEagerMediaLoading = computed(() => props.preferEagerMediaLoading);
+const imageLoadingMode = computed(() => (preferEagerMediaLoading.value ? "eager" : "lazy"));
+const imageFetchPriority = computed(() => (preferEagerMediaLoading.value ? "high" : undefined));
 </script>
 
 <style scoped>
