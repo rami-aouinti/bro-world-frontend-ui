@@ -229,7 +229,7 @@
           class="app-container py-6"
           :aria-hidden="areSidebarsReady"
         >
-          <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-4">
             <v-skeleton-loader
               type="heading"
               class="rounded-2xl"
