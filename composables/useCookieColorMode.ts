@@ -36,18 +36,23 @@ export function useCookieColorMode() {
         | null)
     : null;
 
+  const initialResolvedMode: "light" | "dark" =
+    initialValue === "dark"
+      ? "dark"
+      : initialValue === "light"
+        ? "light"
+        : colorSchemeHint === "dark"
+          ? "dark"
+          : "light";
+
+  if (colorMode.value !== initialValue) {
+    colorMode.value = initialValue;
+  }
+
   const resolvedMode = computed<"light" | "dark">(() => {
     if (colorMode.value === "auto") {
       if (import.meta.server) {
-        if (initialValue === "dark") {
-          return "dark";
-        }
-
-        if (colorSchemeHint === "dark") {
-          return "dark";
-        }
-
-        return "light";
+        return initialResolvedMode;
       }
 
       return colorMode.system.value === "dark" ? "dark" : "light";
@@ -57,9 +62,17 @@ export function useCookieColorMode() {
   });
 
   useHead({
-    htmlAttrs: {
-      class: computed(() => (resolvedMode.value === "dark" ? "dark theme--dark" : undefined)),
-    },
+    htmlAttrs: computed(() => {
+      const isDark = resolvedMode.value === "dark";
+      const classes = [isDark ? "dark" : null, `theme--${isDark ? "dark" : "light"}`]
+        .filter(Boolean)
+        .join(" ");
+
+      return {
+        class: classes || undefined,
+        "data-theme": isDark ? "dark" : "light",
+      };
+    }),
   });
 
   if (import.meta.client) {
@@ -69,6 +82,9 @@ export function useCookieColorMode() {
 
       classList.toggle("dark", isDark);
       classList.toggle("theme--dark", isDark);
+      classList.toggle("theme--light", !isDark);
+      document.documentElement.dataset.theme = isDark ? "dark" : "light";
+      document.documentElement.style.colorScheme = isDark ? "dark" : "light";
     });
   }
 
