@@ -62,8 +62,24 @@ export default {
       // => @media (min-width: 640px) { ... }
     },
     fontFamily: {
-      heading: ["Bricolage Grotesque", "Manrope", "Inter", "Helvetica Neue", "Arial", "sans-serif"],
-      sans: ["Manrope", "Inter", "Helvetica Neue", "Arial", "sans-serif"],
+      heading: [
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif",
+      ],
+      sans: [
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif",
+      ],
       mono: ["monospace"],
     },
     extend: {
