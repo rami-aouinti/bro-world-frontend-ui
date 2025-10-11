@@ -1,6 +1,6 @@
 <template>
-  <section
-      class="relative isolate flex flex-col px-3 py-2 rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
+  <SidebarCard
+      class="text-slate-200"
       :aria-busy="isLoading"
   >
     <!-- glows -->
@@ -42,7 +42,7 @@
         </dd>
       </div>
     </dl>
-  </section>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">

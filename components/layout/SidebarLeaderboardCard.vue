@@ -1,7 +1,5 @@
 <template>
-  <section
-      class="isolate flex flex-col px-2 py-2 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
-  >
+  <SidebarCard class="text-slate-200">
     <header class="flex items-center justify-between text-slate-200">
       <h3 class="text-lg font-semibold text-foreground">{{ title }}</h3>
       <span class="text-xs uppercase tracking-[0.3em] text-primary/70">{{ liveLabel }}</span>
@@ -27,7 +25,7 @@
         </span>
       </li>
     </ul>
-  </section>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">
