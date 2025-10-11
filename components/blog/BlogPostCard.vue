@@ -19,6 +19,7 @@
       :actions-aria-label="actionsAriaLabel"
       :edit-label="editLabel"
       :delete-label="deleteLabel"
+      :prefer-eager-media-loading="preferEagerMediaLoading"
       @follow="handleFollow"
       @edit="openEditModal"
       @delete="openDeleteDialog"
@@ -112,6 +113,7 @@ const props = defineProps<{
   defaultAvatar: string;
   reactionEmojis: Record<ReactionType, string>;
   reactionLabels: Record<ReactionType, string>;
+  preferEagerMediaLoading?: boolean;
 }>();
 
 const { t } = useI18n();
@@ -193,6 +195,7 @@ const followingAriaLabel = computed(() =>
 const actionsAriaLabel = computed(() => t("blog.posts.actions.openMenu"));
 const editLabel = computed(() => t("blog.posts.actions.edit"));
 const deleteLabel = computed(() => t("blog.posts.actions.delete"));
+const preferEagerMediaLoading = computed(() => Boolean(props.preferEagerMediaLoading));
 const isPostReacted = computed(() => Boolean(post.value.isReacted));
 
 const comments = computed(() => {
