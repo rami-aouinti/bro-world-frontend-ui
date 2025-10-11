@@ -2,7 +2,7 @@
   <span
     v-bind="forwardedAttrs"
     :class="['inline-flex items-center justify-center align-middle', attrs.class]"
-    :style="[attrs.style as StyleValue | undefined, iconStyle]"
+    :style="mergedStyle"
     role="img"
     aria-hidden="true"
     v-html="iconContent"
@@ -51,11 +51,58 @@ const forwardedAttrs = computed(() => {
 const iconSvg = computed(() => (props.name ? (iconCache.value[props.name] ?? null) : null));
 const iconContent = computed(() => iconSvg.value ?? "");
 
+function sanitizeStyleValue(value: unknown): string | number | undefined {
+  if (value == null) return undefined;
+  if (typeof value === "string" || typeof value === "number") {
+    return value;
+  }
+
+  return undefined;
+}
+
+function sanitizeStyle(style: StyleValue | undefined): StyleValue | undefined {
+  if (!style) {
+    return undefined;
+  }
+
+  if (Array.isArray(style)) {
+    const sanitizedArray = style
+      .map((item) => sanitizeStyle(item as StyleValue | undefined))
+      .filter((item): item is StyleValue => Boolean(item));
+
+    return sanitizedArray.length ? sanitizedArray : undefined;
+  }
+
+  if (typeof style === "object") {
+    const entries = Object.entries(style as Record<string, unknown>)
+      .map(([key, value]) => [key, sanitizeStyleValue(value)] as const)
+      .filter(([, value]) => value !== undefined);
+
+    return entries.length ? Object.fromEntries(entries) : undefined;
+  }
+
+  if (typeof style === "symbol") {
+    return undefined;
+  }
+
+  return style;
+}
+
 const iconStyle = computed(() => ({
   width: normalizedSize.value,
   height: normalizedSize.value,
   color: props.color,
 }));
+
+const mergedStyle = computed<StyleValue | undefined>(() => {
+  const baseStyle = sanitizeStyle(attrs.style as StyleValue | undefined);
+
+  if (!baseStyle) {
+    return iconStyle.value;
+  }
+
+  return [baseStyle, iconStyle.value];
+});
 
 async function resolveIcon(name: string) {
   if (iconCache.value[name] !== undefined) {
