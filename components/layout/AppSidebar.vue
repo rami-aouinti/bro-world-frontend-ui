@@ -301,7 +301,9 @@ function localizeItem(item: LayoutSidebarItem): LayoutSidebarItem {
 function resolveLocalizedPath(target?: string): string | undefined {
   if (!target) return undefined;
 
-  if (/^https?:\/\//.test(target)) {
+  const hasScheme = /^[a-z][a-z0-9+\-.]*:/i.test(target);
+
+  if (hasScheme || target.startsWith("//") || target.startsWith("#")) {
     return target;
   }
 
@@ -311,7 +313,19 @@ function resolveLocalizedPath(target?: string): string | undefined {
     return target;
   }
 
-  return localePath({ path: target });
+  try {
+    return localePath({ path: target });
+  } catch (error) {
+    if (import.meta.dev) {
+      console.warn(
+        "[AppSidebar] Failed to resolve localized path for target",
+        target,
+        error,
+      );
+    }
+
+    return target;
+  }
 }
 </script>
 
