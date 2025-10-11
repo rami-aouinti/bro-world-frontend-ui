@@ -1,17 +1,20 @@
 <template>
-  <section class="flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
+  <section
+      class="isolate flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
+  >
     <header class="flex items-center justify-between text-slate-200">
       <h3 class="text-lg font-semibold text-foreground">{{ title }}</h3>
       <span class="text-xs uppercase tracking-[0.3em] text-primary/70">{{ liveLabel }}</span>
     </header>
+
     <ul class="space-y-4">
       <li
-        v-for="participant in participants"
-        :key="participant.name"
-        class="-mx-6 flex items-center gap-3 rounded-2xl border border-white/5 bg-black/20 px-6 py-3 text-sm text-slate-300"
+          v-for="participant in participants"
+          :key="participant.name"
+          class="-mx-[var(--card-x)] flex items-center gap-3 rounded-2xl border border-white/5 bg-black/20 px-[var(--card-x)] py-3 text-sm text-slate-300"
       >
         <span
-          class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-base font-semibold text-primary"
+            class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-base font-semibold text-primary"
         >
           {{ participant.position }}
         </span>

@@ -1,8 +1,8 @@
 <template>
   <section
-    :dir="isRtl ? 'rtl' : 'ltr'"
-    class="flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl"
-    aria-live="polite"
+      :dir="isRtl ? 'rtl' : 'ltr'"
+      class="isolate flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
+      aria-live="polite"
   >
     <header class="flex items-start justify-between">
       <div>
@@ -28,22 +28,22 @@
 
     <div v-if="isLoading" class="space-y-3">
       <v-skeleton-loader
-        v-for="index in 3"
-        :key="`skeleton-${index}`"
-        type="list-item-two-line"
-        class="rounded-2xl"
+          v-for="index in 3"
+          :key="`skeleton-${index}`"
+          type="list-item-two-line"
+          class="rounded-2xl -mx-[var(--card-x)] px-[var(--card-x)]"
       />
     </div>
 
     <div v-else class="flex flex-col gap-6">
       <div class="flex flex-col items-center gap-3 text-primary">
         <v-rating
-          :model-value="averageRating"
-          color="primary"
-          half-increments
-          readonly
-          size="small"
-          aria-label="Average rating"
+            :model-value="averageRating"
+            color="primary"
+            half-increments
+            readonly
+            size="small"
+            aria-label="Average rating"
         />
         <p class="text-sm text-slate-300">
           {{ reviewCountLabel }}
@@ -52,9 +52,9 @@
 
       <div class="space-y-4">
         <div
-          v-for="bar in ratingBars"
-          :key="bar.key"
-          class="flex items-center gap-3"
+            v-for="bar in ratingBars"
+            :key="bar.key"
+            class="flex items-center gap-3"
         >
           <div class="flex w-16 items-center justify-between text-sm font-medium text-foreground">
             <span>{{ bar.stars }}</span>
@@ -62,9 +62,9 @@
           </div>
           <div class="h-2 flex-1 overflow-hidden rounded-full bg-black/20">
             <div
-              class="h-full rounded-full bg-gradient-to-r from-primary/60 to-primary"
-              :style="{ width: `${bar.percent}%` }"
-              :aria-label="`${bar.percent}% of ratings are ${bar.stars} stars`"
+                class="h-full rounded-full bg-gradient-to-r from-primary/60 to-primary"
+                :style="{ width: `${bar.percent}%` }"
+                :aria-label="`${bar.percent}% of ratings are ${bar.stars} stars`"
             />
           </div>
           <span class="w-10 text-right text-xs text-slate-300">
@@ -79,22 +79,22 @@
 
       <div
           v-if="loggedIn"
-          class="-mx-6 flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/5 px-6 py-3"
+          class="-mx-[var(--card-x)] flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/5 px-[var(--card-x)] py-3"
       >
         <v-rating
-          v-model="newRating"
-          half-increments
-          color="secondary"
-          hover
-          aria-label="Submit your rating"
+            v-model="newRating"
+            half-increments
+            color="secondary"
+            hover
+            aria-label="Submit your rating"
         />
         <v-btn
-          color="primary"
-          variant="flat"
-          icon
-          :loading="isSubmitting"
-          :disabled="newRating === 0 || isSubmitting"
-          @click="submitRating"
+            color="primary"
+            variant="flat"
+            icon
+            :loading="isSubmitting"
+            :disabled="newRating === 0 || isSubmitting"
+            @click="submitRating"
         >
           <v-icon icon="mdi-send" />
         </v-btn>
@@ -133,30 +133,23 @@ interface ReviewStatsResponse {
 const props = defineProps<SidebarRatingCardProps>();
 
 const { t, locale } = useI18n();
-const rtlLocales = ["ar", "he", "fa", "ur"]; // RTL languages supported
+const rtlLocales = ["ar", "he", "fa", "ur"];
 const isRtl = computed(() => rtlLocales.includes(locale.value));
 
 const auth = useAuthSession();
 const loggedIn = computed(() => auth.isAuthenticated.value);
 
 function translateWithFallback(
-  key: string,
-  defaultValue: string,
-  params?: Record<string, unknown>,
+    key: string,
+    defaultValue: string,
+    params?: Record<string, unknown>,
 ) {
   const translated = t(key, params ?? {});
-
   return translated === key ? defaultValue : translated;
 }
 
 function createEmptyDistribution(): ReviewDistribution {
-  return {
-    "4-5": 0,
-    "3-4": 0,
-    "2-3": 0,
-    "1-2": 0,
-    "0-1": 0,
-  };
+  return { "4-5": 0, "3-4": 0, "2-3": 0, "1-2": 0, "0-1": 0 };
 }
 
 const maxRating = 5;
@@ -175,60 +168,60 @@ const {
   refresh: refreshStats,
   error: statsError,
 } = await useAsyncData<ReviewStatsResponse>("sidebar-review-stats", () =>
-  $fetch<ReviewStatsResponse>("/api/review/get"),
+    $fetch<ReviewStatsResponse>("/api/review/get"),
 );
 
 watch(
-  () => statsError.value,
-  (value) => {
-    fetchError.value = value
-      ? translateWithFallback(
-          "sidebar.rating.error",
-          "Unable to load reviews right now.",
-        )
-      : null;
-  },
-  { immediate: true },
+    () => statsError.value,
+    (value) => {
+      fetchError.value = value
+          ? translateWithFallback(
+              "sidebar.rating.error",
+              "Unable to load reviews right now.",
+          )
+          : null;
+    },
+    { immediate: true },
 );
 
 watch(
-  () => statsData.value,
-  (value) => {
-    const nextAverage = Number.parseFloat(String(value?.average_rating ?? "0"));
-    averageRating.value = Number.isFinite(nextAverage)
-      ? Math.min(maxRating, Math.max(0, nextAverage))
-      : 0;
+    () => statsData.value,
+    (value) => {
+      const nextAverage = Number.parseFloat(String(value?.average_rating ?? "0"));
+      averageRating.value = Number.isFinite(nextAverage)
+          ? Math.min(maxRating, Math.max(0, nextAverage))
+          : 0;
 
-    const nextTotal = Number.parseInt(String(value?.total_reviews ?? "0"), 10);
-    totalReviews.value = Number.isFinite(nextTotal) ? nextTotal : 0;
+      const nextTotal = Number.parseInt(String(value?.total_reviews ?? "0"), 10);
+      totalReviews.value = Number.isFinite(nextTotal) ? nextTotal : 0;
 
-    const nextDistribution = value?.distribution ?? null;
-    const normalized = createEmptyDistribution();
+      const nextDistribution = value?.distribution ?? null;
+      const normalized = createEmptyDistribution();
 
-    if (nextDistribution) {
-      for (const key of Object.keys(normalized)) {
-        const raw = nextDistribution[key];
-        normalized[key] = typeof raw === "number" && Number.isFinite(raw) ? raw : 0;
+      if (nextDistribution) {
+        for (const key of Object.keys(normalized)) {
+          const raw = nextDistribution[key];
+          normalized[key] = typeof raw === "number" && Number.isFinite(raw) ? raw : 0;
+        }
       }
-    }
 
-    for (const key of Object.keys(normalized)) {
-      distribution[key] = normalized[key];
-    }
-  },
-  { immediate: true },
+      for (const key of Object.keys(normalized)) {
+        distribution[key] = normalized[key];
+      }
+    },
+    { immediate: true },
 );
 
 const isLoading = computed(() => statsPending.value && !statsData.value);
 
 const cardTitle = computed(() =>
-  translateWithFallback("sidebar.rating.title", props.rating?.title || "Rating overview"),
+    translateWithFallback("sidebar.rating.title", props.rating?.title || "Rating overview"),
 );
 const cardSubtitle = computed(() =>
-  translateWithFallback(
-    "sidebar.rating.subtitle",
-    props.rating?.subtitle || "Member feedback over time",
-  ),
+    translateWithFallback(
+        "sidebar.rating.subtitle",
+        props.rating?.subtitle || "Member feedback over time",
+    ),
 );
 const cardIcon = computed(() => props.rating?.icon || "⭐");
 
@@ -248,7 +241,8 @@ const ratingBars = computed(() => {
 
   return ranges.map((range) => {
     const count = distribution[range.key] ?? 0;
-    const percent = totalReviews.value > 0 ? Math.min(100, Math.max(0, (count / totalReviews.value) * 100)) : 0;
+    const percent =
+        totalReviews.value > 0 ? Math.min(100, Math.max(0, (count / totalReviews.value) * 100)) : 0;
 
     return {
       key: range.key,
@@ -262,26 +256,20 @@ const ratingBars = computed(() => {
 const formattedAverage = computed(() => averageRating.value.toFixed(1));
 
 async function submitRating() {
-  if (!loggedIn.value || newRating.value === 0 || isSubmitting.value) {
-    return;
-  }
+  if (!loggedIn.value || newRating.value === 0 || isSubmitting.value) return;
 
   isSubmitting.value = true;
   submissionError.value = null;
 
   try {
-    await $fetch("/api/review/post", {
-      method: "POST",
-      body: { rating: newRating.value },
-    });
-
+    await $fetch("/api/review/post", { method: "POST", body: { rating: newRating.value } });
     newRating.value = 0;
     await refreshStats();
   } catch (error) {
     console.error("Failed to submit rating", error);
     submissionError.value = t(
-      "sidebar.rating.submitError",
-      "We could not save your rating. Please try again later.",
+        "sidebar.rating.submitError",
+        "We could not save your rating. Please try again later.",
     );
   } finally {
     isSubmitting.value = false;

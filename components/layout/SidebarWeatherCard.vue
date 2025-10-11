@@ -1,8 +1,9 @@
 <template>
   <section
-    class="relative flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
-    :aria-busy="isLoading"
+      class="relative isolate flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
+      :aria-busy="isLoading"
   >
+    <!-- glows -->
     <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
     <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
 
@@ -22,15 +23,16 @@
         {{ resolvedWeather.icon }}
       </div>
     </div>
+
     <dl class="relative z-10 space-y-3 text-sm text-slate-300">
-      <div class="-mx-6 flex items-center justify-between rounded-2xl bg-white/5 px-6 py-3">
+      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3">
         <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.locationLabel }}</dt>
         <dd class="font-medium text-white">
           <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-white/20"></span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </dd>
       </div>
-      <div class="-mx-6 flex items-center justify-between rounded-2xl bg-white/5 px-6 py-3">
+      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3">
         <dt class="uppercase tracking-wide text-xs text-slate-400">
           {{ resolvedWeather.temperatureLabel }}
         </dt>
@@ -39,7 +41,7 @@
           <span v-else>{{ resolvedWeather.temperature }}</span>
         </dd>
       </div>
-      <div class="-mx-6 flex items-center justify-between rounded-2xl bg-white/5 px-6 py-3">
+      <div class="-mx-[var(--card-x)] flex items-center justify-between rounded-2xl bg-white/5 px-[var(--card-x)] py-3">
         <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.tipLabel }}</dt>
         <dd class="max-w-[10rem] text-right text-sm leading-snug">
           <span v-if="isLoading" class="inline-flex h-5 w-24 animate-pulse rounded-full bg-white/20"></span>
@@ -92,13 +94,13 @@ const props = defineProps<SidebarWeatherCardProps>();
 const runtimeConfig = useRuntimeConfig();
 
 const weatherState = useState<
-  | {
-      location: string;
-      temperature: string;
-      condition: string;
-      fetchedAt: number;
-    }
-  | null
+    | {
+  location: string;
+  temperature: string;
+  condition: string;
+  fetchedAt: number;
+}
+    | null
 >("sidebar-weather", () => null);
 
 const isLoading = ref(!weatherState.value);
@@ -120,20 +122,18 @@ const WEATHER_TTL = 10 * 60 * 1000;
 
 function getWeatherConfig(): WeatherRuntimeConfig {
   const publicConfig = runtimeConfig.public as { weather?: WeatherRuntimeConfig };
-
   return publicConfig.weather ?? {};
 }
 
 function formatLocation(data: WeatherApiResponse["location"]) {
   const parts = [data.name, data.region, data.country].filter(Boolean);
-
   return parts.join(", ");
 }
 
 function applyWeather(data: WeatherApiResponse) {
   const temperatureValue = Number.isFinite(data.current?.temp_c)
-    ? `${Math.round(data.current.temp_c)}°C`
-    : props.weather.temperature;
+      ? `${Math.round(data.current.temp_c)}°C`
+      : props.weather.temperature;
 
   weatherState.value = {
     location: formatLocation(data.location),
@@ -148,20 +148,15 @@ async function fetchWeather(query: string) {
 
   if (!apiKey) {
     isLoading.value = false;
-
     return;
   }
 
   try {
     const response = await $fetch<WeatherApiResponse>(
-      "https://api.weatherapi.com/v1/current.json",
-      {
-        query: {
-          key: apiKey,
-          q: query,
-          aqi: "no",
+        "https://api.weatherapi.com/v1/current.json",
+        {
+          query: { key: apiKey, q: query, aqi: "no" },
         },
-      },
     );
 
     applyWeather(response);
@@ -176,7 +171,6 @@ if (import.meta.client) {
   onMounted(() => {
     if (weatherState.value && Date.now() - weatherState.value.fetchedAt < WEATHER_TTL) {
       isLoading.value = false;
-
       return;
     }
 
@@ -189,14 +183,14 @@ if (import.meta.client) {
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          void fetchWeather(`${latitude},${longitude}`);
-        },
-        () => {
-          console.warn("Geolocation permission denied, using default location");
-          fetchDefaultWeather();
-        },
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            void fetchWeather(`${latitude},${longitude}`);
+          },
+          () => {
+            console.warn("Geolocation permission denied, using default location");
+            fetchDefaultWeather();
+          },
       );
     } else {
       fetchDefaultWeather();
