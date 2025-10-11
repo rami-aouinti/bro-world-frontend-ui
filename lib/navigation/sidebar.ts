@@ -20,13 +20,61 @@ function isMenuVisible(menu: SiteMenuItem, canAccessAdmin: boolean): boolean {
   return menu.isVisible !== false;
 }
 
-function toLayoutItem(menu: SiteMenuItem, canAccessAdmin: boolean): LayoutSidebarItem | null {
+function slugifyKey(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function createCandidateKey(menu: SiteMenuItem, fallbackPrefix: string): string {
+  if (menu.id != null) {
+    const id = String(menu.id).trim();
+    if (id) return id;
+  }
+
+  const slugSource =
+    (menu.to != null && String(menu.to).trim()) ||
+    (menu.label != null && String(menu.label).trim()) ||
+    fallbackPrefix;
+
+  const slug = slugSource ? slugifyKey(slugSource) : "";
+
+  if (slug) {
+    return slug;
+  }
+
+  return slugifyKey(fallbackPrefix || "menu-item");
+}
+
+function normalizeKey(base: string, usedKeys: Set<string>): string {
+  let candidate = base;
+  let suffix = 1;
+
+  while (usedKeys.has(candidate)) {
+    candidate = `${base}-${suffix++}`;
+  }
+
+  usedKeys.add(candidate);
+  return candidate;
+}
+
+function toLayoutItem(
+  menu: SiteMenuItem,
+  canAccessAdmin: boolean,
+  usedKeys: Set<string>,
+  fallbackPrefix: string,
+): LayoutSidebarItem | null {
   if (!isMenuVisible(menu, canAccessAdmin)) {
     return null;
   }
 
+  const candidateKey = createCandidateKey(menu, fallbackPrefix);
+  const key = normalizeKey(candidateKey, usedKeys);
+
   const children = (menu.children ?? [])
-    .map((child) => toLayoutItem(child, canAccessAdmin))
+    .map((child, index) => toLayoutItem(child, canAccessAdmin, usedKeys, `${key}-${index}`))
     .filter((child): child is LayoutSidebarItem => Boolean(child));
 
   if (!menu.to && !children.length) {
@@ -34,7 +82,7 @@ function toLayoutItem(menu: SiteMenuItem, canAccessAdmin: boolean): LayoutSideba
   }
 
   return {
-    key: menu.id,
+    key,
     label: menu.label,
     icon: menu.icon ?? undefined,
     to: menu.to ?? undefined,
@@ -52,9 +100,10 @@ export function buildSidebarItems(
   canAccessAdmin: boolean,
 ): LayoutSidebarItem[] {
   const source = settings?.menus?.length ? settings.menus : getDefaultSiteSettings().menus;
+  const usedKeys = new Set<string>();
 
   return sortMenus(source)
-    .map((menu) => toLayoutItem(menu, canAccessAdmin))
+    .map((menu, index) => toLayoutItem(menu, canAccessAdmin, usedKeys, `root-${index}`))
     .filter((item): item is LayoutSidebarItem => Boolean(item));
 }
 
