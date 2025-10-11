@@ -114,6 +114,11 @@
                   v-if="preview.avatarUrl"
                   :alt="preview.title"
                   :src="preview.avatarUrl"
+                  width="40"
+                  height="40"
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover"
                 />
                 <span v-else>
                   {{ preview.initials }}

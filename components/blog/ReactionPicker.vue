@@ -48,8 +48,10 @@
             <img
               :src="it.src"
               :alt="it.label"
-              width="38"
-              height="38"
+              width="72"
+              height="72"
+              loading="lazy"
+              decoding="async"
             />
           </button>
         </div>

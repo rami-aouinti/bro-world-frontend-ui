@@ -37,10 +37,17 @@
 
         <div
           class="relative flex h-fit w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background p-px md:shadow-xl"
+          style="aspect-ratio: 16 / 9"
         >
           <img
             src="https://cdn.inspira-ui.com/images/Inspira-dark.png"
-            class="w-full rounded-md"
+            alt="Preview of the Inspira UI dashboard"
+            width="1280"
+            height="720"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            class="h-full w-full rounded-md object-cover"
           />
           <BorderBeam
             :size="250"
