@@ -1,8 +1,8 @@
 <template>
-  <section
+  <SidebarCard
       :dir="isRtl ? 'rtl' : 'ltr'"
-      class="isolate flex flex-col px-3 py-2 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl overflow-hidden [--card-x:1.5rem]"
       aria-live="polite"
+      class="text-slate-200"
   >
     <header class="flex items-start justify-between">
       <div>
@@ -104,7 +104,7 @@
         {{ submissionError }}
       </p>
     </div>
-  </section>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">
