@@ -197,7 +197,10 @@
       class="app-surface"
       :class="{ hidden: isHydrated && areSidebarsReady && !areSidebarsVisible }"
     >
-      <template v-if="areSidebarsReady">
+      <div
+        v-if="areSidebarsReady"
+        class="main-scroll bg-card"
+      >
         <ClientOnly>
           <ParticlesBg
             class="sidebar-default-card__particles"
@@ -214,30 +217,29 @@
             />
           </template>
         </ClientOnly>
-        <div class="main-scroll bg-card">
-          <div class="app-container">
-            <slot />
+        <div class="app-container">
+          <slot />
+        </div>
+      </div>
+      <div
+        v-else
+        class="main-scroll bg-card"
+      >
+        <div class="app-container py-6">
+          <div class="flex flex-col gap-6">
+            <v-skeleton-loader
+              type="heading"
+              class="rounded-2xl"
+            />
+            <v-skeleton-loader
+              v-for="index in 3"
+              :key="index"
+              type="article"
+              class="rounded-2xl"
+            />
           </div>
         </div>
-      </template>
-      <template v-else>
-        <div class="main-scroll bg-card">
-          <div class="app-container py-6">
-            <div class="flex flex-col gap-6">
-              <v-skeleton-loader
-                type="heading"
-                class="rounded-2xl"
-              />
-              <v-skeleton-loader
-                v-for="index in 3"
-                :key="index"
-                type="article"
-                class="rounded-2xl"
-              />
-            </div>
-          </div>
-        </div>
-      </template>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -713,6 +715,10 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
 .pane-scroll {
   height: calc(100vh - var(--app-bar-height));
   overflow-y: auto;
+}
+
+.main-scroll {
+  position: relative;
 }
 .sidebar-default-card__particles {
   position: absolute;
