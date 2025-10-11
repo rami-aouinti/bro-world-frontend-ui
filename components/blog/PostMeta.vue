@@ -5,8 +5,11 @@
         <img
           :src="user.photo ?? defaultAvatar"
           :alt="`${user.firstName} ${user.lastName}`"
-          class="h-full w-full object-cover"
+          width="48"
+          height="48"
           loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
         />
       </div>
       <div class="space-y-1">
