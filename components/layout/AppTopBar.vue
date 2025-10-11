@@ -5,6 +5,7 @@
         aria-label="Top navigation bar"
         :elevation="24"
         :theme="isDarkColor ? 'dark' : 'light'"
+        :style="appBarStyle"
         rounded
         height="50"
     >
@@ -160,6 +161,49 @@ const localeMetadata = {
 } as const satisfies Record<string, { label: string; flag: string }>;
 const isDarkColor = computed(() => props.isDark);
 const theme = useTheme();
+const { barGradient } = usePrimaryGradient({
+  steps: 5,
+  lightDark: [0.92, 0.36],
+  barAlpha: { light: 0.78, dark: 0.52 },
+});
+
+function applyAlpha(color: string | undefined, alpha: number) {
+  if (!color) {
+    return `rgba(0, 0, 0, ${alpha})`;
+  }
+
+  let hex = color.startsWith("#") ? color.slice(1) : color;
+
+  if (hex.length === 3) {
+    hex = hex
+      .split("")
+      .map((value) => value + value)
+      .join("");
+  }
+
+  const red = Number.parseInt(hex.slice(0, 2), 16);
+  const green = Number.parseInt(hex.slice(2, 4), 16);
+  const blue = Number.parseInt(hex.slice(4, 6), 16);
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+const appBarStyle = computed(() => {
+  const surfaceOpacity = props.isDark ? 0.82 : 0.92;
+  const borderOpacity = props.isDark ? 0.35 : 0.22;
+  const shadowOpacity = props.isDark ? 0.45 : 0.15;
+  const colors = theme.current.value.colors;
+
+  return {
+    backgroundImage: barGradient.value,
+    backgroundColor: applyAlpha(colors.surface, surfaceOpacity),
+    backdropFilter: "blur(18px)",
+    borderBottom: `1px solid ${applyAlpha(colors["outline-variant"], borderOpacity)}`,
+    boxShadow: `0 10px 35px -18px ${applyAlpha(colors["on-surface"], shadowOpacity)}`,
+    transition:
+      "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
+  } satisfies Record<string, string>;
+});
 
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === "input",
