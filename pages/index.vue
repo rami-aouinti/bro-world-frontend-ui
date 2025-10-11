@@ -46,8 +46,8 @@
     <template v-else>
       <div class="flex flex-col gap-4">
         <BlogPostCard
-          v-for="post in posts"
-          :key="post.id"
+          v-for="(post, index) in posts"
+          :key="post.id ?? `post-${index}`"
           data-test="blog-post-card"
           :post="post"
           :default-avatar="defaultAvatar"

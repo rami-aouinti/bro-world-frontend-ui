@@ -9,7 +9,7 @@
       >
         <v-avatar
           v-for="(r, i) in topReactions"
-          :key="r.type"
+          :key="`${r.type}-${i}`"
           size="22"
           class="bubble"
           :style="{ left: `${i * 14}px`, zIndex: 10 - i }"

@@ -22,8 +22,8 @@
         />
 
         <StoryCard
-          v-for="s in items"
-          :key="s.id ?? s.name"
+          v-for="(s, index) in items"
+          :key="s.id ?? s.name ?? index"
           :image="s.image"
           :name="s.name"
           :avatar="s.avatar"
