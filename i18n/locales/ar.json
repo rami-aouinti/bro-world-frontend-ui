@@ -1,4 +1,7 @@
 {
+  "$vuetify": {
+    "loading": "جارٍ التحميل…"
+  },
   "common": {
     "InspiraUIPro": "إنسبيرا UI برو",
     "close": "إغلاق"

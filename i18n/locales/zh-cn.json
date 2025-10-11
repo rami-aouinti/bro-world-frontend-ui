@@ -1,4 +1,7 @@
 {
+  "$vuetify": {
+    "loading": "加载中…"
+  },
   "common": {
     "InspiraUIPro": "Inspira UI 专业版",
     "close": "关闭"

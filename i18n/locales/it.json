@@ -1,4 +1,7 @@
 {
+  "$vuetify": {
+    "loading": "Caricamento…"
+  },
   "common": {
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Chiudi"

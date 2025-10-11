@@ -1,4 +1,7 @@
 {
+  "$vuetify": {
+    "loading": "Chargement…"
+  },
   "common": {
     "InspiraUIPro": "Inspira UI Pro",
     "close": "Fermer"
