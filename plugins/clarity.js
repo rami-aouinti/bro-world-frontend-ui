@@ -1,17 +1,41 @@
 export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig();
-  if (config.public.NUXT_CLARITY_ID) {
-    (function (c, l, a, r, i, t, y) {
-      c[a] =
-        c[a] ||
-        function () {
-          (c[a].q = c[a].q || []).push(arguments);
-        };
-      t = l.createElement(r);
-      t.async = 1;
-      t.src = `https://www.clarity.ms/tag/${config.public.NUXT_CLARITY_ID}`;
-      y = l.getElementsByTagName(r)[0];
-      y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script");
+  if (!import.meta.client) {
+    return;
   }
+
+  const config = useRuntimeConfig();
+  const clarityId = config.public.NUXT_CLARITY_ID?.trim();
+
+  if (!clarityId) {
+    return;
+  }
+
+  const globalObject = typeof window !== "undefined" ? window : null;
+  const doc = typeof document !== "undefined" ? document : null;
+
+  if (!globalObject || !doc) {
+    return;
+  }
+
+  (function (c, l, a, r, i, t, y) {
+    c[a] =
+      c[a] ||
+      function () {
+        (c[a].q = c[a].q || []).push(arguments);
+      };
+    t = l.createElement(r);
+    t.async = 1;
+    t.src = `https://www.clarity.ms/tag/${i}`;
+    y = l.getElementsByTagName(r)[0];
+
+    if (y?.parentNode) {
+      y.parentNode.insertBefore(t, y);
+      return;
+    }
+
+    const head = l.getElementsByTagName("head")[0];
+    const body = l.getElementsByTagName("body")[0];
+
+    (head ?? body ?? l.documentElement).appendChild(t);
+  })(globalObject, doc, "clarity", "script", clarityId);
 });
