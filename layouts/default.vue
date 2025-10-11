@@ -541,6 +541,10 @@ const areSidebarsVisible = computed(() => {
     return true;
   }
 
+  if (isMobile.value) {
+    return true;
+  }
+
   const leftVisible = leftDrawer.value;
   const rightOk = showRightWidgets.value ? rightDrawer.value : true;
   return leftVisible && rightOk;
