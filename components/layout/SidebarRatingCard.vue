@@ -1,7 +1,7 @@
 <template>
   <section
     :dir="isRtl ? 'rtl' : 'ltr'"
-    class="rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl"
+    class="flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl"
     aria-live="polite"
   >
     <header class="flex items-start justify-between">
@@ -26,7 +26,7 @@
       </div>
     </header>
 
-    <div v-if="isLoading" class="mt-6 space-y-3">
+    <div v-if="isLoading" class="space-y-3">
       <v-skeleton-loader
         v-for="index in 3"
         :key="`skeleton-${index}`"
@@ -35,8 +35,8 @@
       />
     </div>
 
-    <template v-else>
-      <div class="mt-6 flex flex-col items-center gap-3 text-primary">
+    <div v-else class="flex flex-col gap-6">
+      <div class="flex flex-col items-center gap-3 text-primary">
         <v-rating
           :model-value="averageRating"
           color="primary"
@@ -50,7 +50,7 @@
         </p>
       </div>
 
-      <div class="mt-6 space-y-4">
+      <div class="space-y-4">
         <div
           v-for="bar in ratingBars"
           :key="bar.key"
@@ -73,13 +73,13 @@
         </div>
       </div>
 
-      <div v-if="fetchError" class="mt-4 rounded-xl bg-red-500/10 px-3 py-2 text-xs text-red-200">
+      <div v-if="fetchError" class="rounded-xl bg-red-500/10 px-3 py-2 text-xs text-red-200">
         {{ fetchError }}
       </div>
 
       <div
         v-if="loggedIn"
-        class="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-2"
+        class="flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-2"
       >
         <v-rating
           v-model="newRating"
@@ -100,10 +100,10 @@
         </v-btn>
       </div>
 
-      <p v-if="submissionError" class="mt-3 text-xs text-red-200">
+      <p v-if="submissionError" class="text-xs text-red-200">
         {{ submissionError }}
       </p>
-    </template>
+    </div>
   </section>
 </template>
 
