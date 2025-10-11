@@ -52,6 +52,7 @@ import {
 import { Ripple } from "vuetify/directives";
 import { VDateInput } from "vuetify/labs/VDateInput";
 import { createVuetify } from "vuetify";
+import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { aliases } from "vuetify/iconsets/mdi";
 import DateFnsAdapter from "@date-io/date-fns";
 import enUSLocale from "date-fns/locale/en-US";
@@ -497,6 +498,15 @@ export default defineNuxtPlugin((nuxtApp) => {
     locale: {
       locale,
       fallback: "en",
+      messages: {
+        en,
+        fr,
+        de,
+        ar,
+        it,
+        es,
+        ru,
+      },
     },
     date: {
       adapter: DateFnsAdapter,
