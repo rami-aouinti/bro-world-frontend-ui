@@ -181,6 +181,65 @@
     "Forum": "Forum",
     "ForumDiscord": "Join the forum"
   },
+  "blog": {
+    "sidebar": {
+      "weather": {
+        "badge": "Live",
+        "title": "Bro World HQ",
+        "subtitle": "Keep your umbrella ready",
+        "icon": "solar:sun-2-bold",
+        "location": "Paris, FR",
+        "temperature": "18°",
+        "tip": "Winds up to 12 km/h expected this afternoon.",
+        "locationLabel": "Location",
+        "temperatureLabel": "Temperature",
+        "tipLabel": "Tip"
+      },
+      "leaderboard": {
+        "title": "Top players",
+        "live": "Live ranking",
+        "participants": {
+          "first": {
+            "name": "Alex Carter",
+            "role": "Strategist",
+            "score": "982"
+          },
+          "second": {
+            "name": "Mia Laurent",
+            "role": "Support",
+            "score": "945"
+          },
+          "third": {
+            "name": "Leo Nakamura",
+            "role": "Scout",
+            "score": "918"
+          }
+        }
+      },
+      "rating": {
+        "title": "Community rating",
+        "subtitle": "Bro World experience",
+        "average": "4.9",
+        "total": 428,
+        "icon": "solar:star-bold",
+        "stars": 5,
+        "categories": {
+          "ui": {
+            "label": "Interface",
+            "value": 4.9
+          },
+          "gameplay": {
+            "label": "Gameplay",
+            "value": 4.8
+          },
+          "community": {
+            "label": "Community",
+            "value": 4.9
+          }
+        }
+      }
+    }
+  },
   "toc": {
     "title": "On This Page",
     "StarOnGitHub": "Star on GitHub",

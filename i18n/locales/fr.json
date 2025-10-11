@@ -164,6 +164,65 @@
     "Forum": "Forum",
     "ForumDiscord": "Rejoindre le forum"
   },
+  "blog": {
+    "sidebar": {
+      "weather": {
+        "badge": "En direct",
+        "title": "QG Bro World",
+        "subtitle": "Gardez votre parapluie à portée",
+        "icon": "solar:sun-2-bold",
+        "location": "Paris, FR",
+        "temperature": "18°",
+        "tip": "Des rafales jusqu'à 12 km/h sont attendues cet après-midi.",
+        "locationLabel": "Lieu",
+        "temperatureLabel": "Température",
+        "tipLabel": "Conseil"
+      },
+      "leaderboard": {
+        "title": "Meilleurs joueurs",
+        "live": "Classement en direct",
+        "participants": {
+          "first": {
+            "name": "Alex Carter",
+            "role": "Stratège",
+            "score": "982"
+          },
+          "second": {
+            "name": "Mia Laurent",
+            "role": "Soutien",
+            "score": "945"
+          },
+          "third": {
+            "name": "Leo Nakamura",
+            "role": "Éclaireur",
+            "score": "918"
+          }
+        }
+      },
+      "rating": {
+        "title": "Note de la communauté",
+        "subtitle": "Expérience Bro World",
+        "average": "4,9",
+        "total": 428,
+        "icon": "solar:star-bold",
+        "stars": 5,
+        "categories": {
+          "ui": {
+            "label": "Interface",
+            "value": 4.9
+          },
+          "gameplay": {
+            "label": "Gameplay",
+            "value": 4.8
+          },
+          "community": {
+            "label": "Communauté",
+            "value": 4.9
+          }
+        }
+      }
+    }
+  },
   "toc": {
     "title": "Sur cette page",
     "StarOnGitHub": "Mettre une étoile sur GitHub",
