@@ -160,7 +160,7 @@ const derivedActiveKey = computed(() => {
   const fullPath = currentRoute.value?.fullPath ?? "/";
   const match = findActiveSidebarKey(fullPath, items);
   if (match) return match;
-  return findFirstSidebarKey(items) ?? "";
+  return "";
 });
 
 const resolvedActiveKey = computed(() => props.activeKey ?? derivedActiveKey.value);
@@ -272,20 +272,6 @@ function getRouteMatchScore(path: string, target: string) {
   }
 
   return 0;
-}
-
-function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
-  for (const item of items) {
-    if (item.children?.length) {
-      const childKey = findFirstSidebarKey(item.children);
-      if (childKey) return childKey;
-      continue;
-    }
-
-    return item.key;
-  }
-
-  return null;
 }
 
 function localizeItem(item: LayoutSidebarItem): LayoutSidebarItem {
