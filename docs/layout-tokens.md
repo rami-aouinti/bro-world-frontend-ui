@@ -2,8 +2,6 @@
 
 The BroWorld application shell uses a small set of design tokens to keep the new layout consistent across breakpoints.
 
-> 📌 Consultez également la [Design System Styleguide](./design-system-styleguide.md) (`/styleguide`) pour visualiser l'implémentation concrète des composants et vérifier leur rendu aux différents breakpoints.
-
 | Token              | Value                                                                                               | Notes                                                                                                                           |
 | ------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `--app-bar-height` | `72px`                                                                                              | Shared by the sticky top app bar and column offsets.                                                                            |
