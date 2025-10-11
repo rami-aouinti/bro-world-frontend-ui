@@ -62,6 +62,9 @@
       "title": "اللغة",
       "subtitle": "متاحة بـ {count} لغات"
     },
+    "search": {
+      "placeholder": "Search..."
+    },
     "appIcons": {
       "academy": "الأكاديمية",
       "briefcase": "العمل",

@@ -62,6 +62,9 @@
       "title": "Язык",
       "subtitle": "Доступно на {count} языках"
     },
+    "search": {
+      "placeholder": "Search..."
+    },
     "appIcons": {
       "academy": "Академия",
       "briefcase": "Работа",

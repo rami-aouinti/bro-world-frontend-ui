@@ -62,6 +62,9 @@
       "title": "语言",
       "subtitle": "提供 {count} 种语言"
     },
+    "search": {
+      "placeholder": "Search..."
+    },
     "appIcons": {
       "academy": "学院",
       "briefcase": "工作",
