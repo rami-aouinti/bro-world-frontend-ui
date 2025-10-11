@@ -16,6 +16,8 @@
       cover
       :alt="name || t('stories.card.imageAlt')"
       class="h-100 w-100"
+      :width="width"
+      :height="height"
     />
 
     <!-- Overlay gradient -->
@@ -39,6 +41,8 @@
             :src="avatar"
             :alt="name || t('stories.card.avatarAlt')"
             cover
+            width="36"
+            height="36"
           />
         </v-avatar>
       </div>

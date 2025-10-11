@@ -7,6 +7,8 @@
       <v-img
         :src="avatar || 'https://i.pravatar.cc/80?img=3'"
         alt=""
+        width="34"
+        height="34"
       />
     </v-avatar>
 

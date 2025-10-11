@@ -8,6 +8,8 @@
         <v-img
           :src="avatar"
           alt="Avatar"
+          width="44"
+          height="44"
         />
       </v-avatar>
 
