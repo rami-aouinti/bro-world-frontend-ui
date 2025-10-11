@@ -204,10 +204,7 @@
       class="app-surface"
       :class="{ hidden: isHydrated && areSidebarsReady && !areSidebarsVisible }"
     >
-      <div
-        v-if="areSidebarsReady"
-        class="main-scroll bg-card"
-      >
+      <div class="main-scroll bg-card">
         <ClientOnly>
           <ParticlesBg
             class="sidebar-default-card__particles"
@@ -224,15 +221,18 @@
             />
           </template>
         </ClientOnly>
-        <div class="app-container">
+        <div
+          v-show="areSidebarsReady"
+          class="app-container"
+          :aria-hidden="!areSidebarsReady"
+        >
           <slot />
         </div>
-      </div>
-      <div
-        v-else
-        class="main-scroll bg-card"
-      >
-        <div class="app-container py-6">
+        <div
+          v-show="!areSidebarsReady"
+          class="app-container py-6"
+          :aria-hidden="areSidebarsReady"
+        >
           <div class="flex flex-col gap-6">
             <v-skeleton-loader
               type="heading"
