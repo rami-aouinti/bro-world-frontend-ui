@@ -768,7 +768,6 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
   width: 100%;
   max-width: min(1120px, 100%);
   margin-inline: auto;
-  padding: clamp(24px, 5vw, 40px) clamp(24px, 5vw, 48px);
   box-sizing: border-box;
 }
 .sidebar-default-card__particles {
