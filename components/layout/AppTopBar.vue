@@ -34,7 +34,6 @@
       :app-icons="props.appIcons"
       :icon-trigger-classes="iconTriggerClasses"
       :is-dark="props.isDark"
-      :t="t"
     />
 
     <template #append>

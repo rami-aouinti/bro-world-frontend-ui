@@ -3,12 +3,12 @@
     <v-tooltip
       v-for="icon in props.appIcons"
       :key="icon.label"
-      :text="props.t(icon.label)"
+      :text="t(icon.label)"
     >
       <template #activator="{ props: tooltipProps }">
         <v-btn
           v-bind="tooltipProps"
-          :aria-label="props.t(icon.label)"
+          :aria-label="t(icon.label)"
           :class="props.iconTriggerClasses"
           :theme="props.isDark ? 'dark' : 'light'"
         >
@@ -23,10 +23,13 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
 const props = defineProps<{
   appIcons: { name: string; label: string }[];
   iconTriggerClasses: string;
   isDark: boolean;
-  t: (k: string) => string;
 }>();
+
+const { t } = useI18n();
 </script>
