@@ -324,6 +324,8 @@ const isDark = computed(() => resolvedColorMode.value === "dark");
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
+const { rightSidebarContent } = useLayoutRightSidebar();
+
 const initialShowRightWidgets = useState(
   "layout-initial-show-right-widgets",
   () => currentRoute.value?.meta?.showRightWidgets !== false,
@@ -391,11 +393,14 @@ const isRail = computed(() => {
   return display.mdAndDown.value && !display.mobile.value;
 });
 const showRightWidgets = computed(() => {
+  const hasDynamicSidebarContent = Boolean(rightSidebarContent.value);
+
   if (!isHydrated.value) {
-    return initialShowRightWidgets.value;
+    return initialShowRightWidgets.value || hasDynamicSidebarContent;
   }
 
-  return currentRoute.value?.meta?.showRightWidgets !== false;
+  const metaAllowsSidebar = currentRoute.value?.meta?.showRightWidgets !== false;
+  return metaAllowsSidebar || hasDynamicSidebarContent;
 });
 
 const isRightDrawerReady = ref(import.meta.server || !showRightWidgets.value);
@@ -425,8 +430,6 @@ const {
   rating,
 } = useRightSidebarData();
 const weather = computed(() => weatherData.value);
-const { rightSidebarContent } = useLayoutRightSidebar();
-
 const activeTheme = computed<SiteThemeDefinition | null>(() => {
   const current = siteSettings.value;
   const found = current.themes.find((theme) => theme.id === current.activeThemeId);
