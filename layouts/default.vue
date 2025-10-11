@@ -100,93 +100,100 @@
         @pending="handleRightDrawerPending"
       >
         <template #default>
-          <ClientOnly>
-            <div
-              v-if="showRightWidgets && rightDrawer"
-              class="pane-scroll px-3 py-4 bg-card"
-            >
-              <AppSidebarRight
-                :is-dark="isDark"
-                :items="sidebarItems"
-                :active-key="activeSidebar"
-                :eager="rightDrawer"
-                @select="handleSidebarSelect"
-              >
-                <slot
-                  name="right-sidebar"
-                  :weather="weather"
-                  :leaderboard="leaderboard"
-                  :rating="rating"
-                  :user="user"
-                >
-                  <div
-                    v-if="rightSidebarContent"
-                    :class="rightSidebarContent.wrapperClass ?? 'flex flex-col gap-4'"
-                  >
-                    <component
-                      :is="rightSidebarContent.component"
-                      v-bind="rightSidebarContent.props"
-                    />
-                  </div>
-                  <div
-                    v-else
-                    class="flex flex-col gap-4"
-                  >
-                    <SidebarWeatherCard
-                      v-if="weather"
-                      :weather="weather"
-                    />
-                    <SidebarLeaderboardCard
-                      v-if="leaderboard"
-                      :title="leaderboard.title"
-                      :live-label="leaderboard.live"
-                      :participants="leaderboard.participants"
-                    />
-                    <SidebarRatingCard
-                      v-if="rating"
-                      :rating="rating"
-                    />
-                  </div>
-                </slot>
-              </AppSidebarRight>
-            </div>
-            <template #fallback>
+          <div class="right-drawer-wrapper">
+            <ClientOnly>
               <div
                 v-if="showRightWidgets"
                 class="pane-scroll px-3 py-4 bg-card"
+                :class="{ hidden: !shouldRenderRightSidebarContent }"
+                :aria-hidden="!shouldRenderRightSidebarContent"
               >
-                <div class="flex flex-col gap-4">
-                  <v-skeleton-loader
-                    type="list-item-two-line"
-                    class="rounded-2xl"
-                  />
-                  <v-skeleton-loader
-                    v-for="index in 2"
-                    :key="index"
-                    type="card"
-                    class="rounded-2xl"
-                  />
-                </div>
+                <AppSidebarRight
+                  v-if="shouldRenderRightSidebarContent"
+                  :is-dark="isDark"
+                  :items="sidebarItems"
+                  :active-key="activeSidebar"
+                  :eager="rightDrawer"
+                  @select="handleSidebarSelect"
+                >
+                  <slot
+                    name="right-sidebar"
+                    :weather="weather"
+                    :leaderboard="leaderboard"
+                    :rating="rating"
+                    :user="user"
+                  >
+                    <div
+                      v-if="rightSidebarContent"
+                      :class="rightSidebarContent.wrapperClass ?? 'flex flex-col gap-4'"
+                    >
+                      <component
+                        :is="rightSidebarContent.component"
+                        v-bind="rightSidebarContent.props"
+                      />
+                    </div>
+                    <div
+                      v-else
+                      class="flex flex-col gap-4"
+                    >
+                      <SidebarWeatherCard
+                        v-if="weather"
+                        :weather="weather"
+                      />
+                      <SidebarLeaderboardCard
+                        v-if="leaderboard"
+                        :title="leaderboard.title"
+                        :live-label="leaderboard.live"
+                        :participants="leaderboard.participants"
+                      />
+                      <SidebarRatingCard
+                        v-if="rating"
+                        :rating="rating"
+                      />
+                    </div>
+                  </slot>
+                </AppSidebarRight>
               </div>
-            </template>
-          </ClientOnly>
+              <template #fallback>
+                <div
+                  v-if="showRightWidgets"
+                  class="pane-scroll px-3 py-4 bg-card"
+                >
+                  <div class="flex flex-col gap-4">
+                    <v-skeleton-loader
+                      type="list-item-two-line"
+                      class="rounded-2xl"
+                    />
+                    <v-skeleton-loader
+                      v-for="index in 2"
+                      :key="index"
+                      type="card"
+                      class="rounded-2xl"
+                    />
+                  </div>
+                </div>
+              </template>
+            </ClientOnly>
+          </div>
         </template>
         <template #fallback>
-          <div
-            v-if="showRightWidgets"
-            class="pane-scroll px-3 py-4 bg-card"
-          >
-            <div class="flex flex-col gap-4">
-              <v-skeleton-loader
-                type="list-item-two-line"
-                class="rounded-2xl"
-              />
-              <v-skeleton-loader
-                v-for="index in 2"
-                :key="index"
-                type="card"
-                class="rounded-2xl"
-              />
+          <div class="right-drawer-wrapper">
+            <div
+              v-if="showRightWidgets"
+              class="pane-scroll px-3 py-4 bg-card"
+            >
+              <div class="flex flex-col gap-4">
+                <v-skeleton-loader
+                  type="list-item-two-line"
+                  class="rounded-2xl"
+                />
+                <v-skeleton-loader
+                  v-for="index in 2"
+                  :key="index"
+                  type="card"
+                  class="rounded-2xl"
+                />
+              </div>
             </div>
           </div>
         </template>
@@ -532,6 +539,10 @@ function handleRightDrawerResolve() {
   isRightDrawerReady.value = true;
 }
 
+const shouldRenderRightSidebarContent = computed(
+  () => showRightWidgets.value && rightDrawer.value,
+);
+
 const areSidebarsReady = computed(() => {
   const rightReady = showRightWidgets.value ? isRightDrawerReady.value : true;
   return isLeftDrawerReady.value && rightReady;
@@ -715,6 +726,10 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
 .pane-scroll {
   height: calc(100vh - var(--app-bar-height));
   overflow-y: auto;
+}
+
+.right-drawer-wrapper {
+  display: contents;
 }
 
 .main-scroll {
