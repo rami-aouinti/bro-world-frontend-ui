@@ -4,6 +4,8 @@
     :style="cssVars"
   >
     <AppTopBar
+      v-if="showNavigation"
+      ref="topBarRef"
       :app-icons="appIcons"
       :is-dark="isDark"
       :is-mobile="isMobile"
@@ -20,6 +22,7 @@
 
     <!-- LEFT DRAWER -->
     <v-navigation-drawer
+      v-if="showNavigation"
       v-model="leftDrawer"
       app
       :permanent="!isMobile"
@@ -67,11 +70,12 @@
 
     <!-- RIGHT DRAWER -->
     <v-navigation-drawer
+      v-if="showNavigation"
       v-model="rightDrawer"
       app
       :permanent="!isMobile"
       :temporary="isMobile"
-      :scrim="showRightWidgets && isMobile"
+      :scrim="canShowRightWidgets && isMobile"
       location="end"
       width="340"
       class="app-drawer"
@@ -80,7 +84,7 @@
     >
       <ClientOnly>
         <ParticlesBg
-          v-if="showRightWidgets"
+          v-if="canShowRightWidgets"
           class="sidebar-default-card__particles"
           :quantity="50"
           :ease="50"
@@ -102,7 +106,7 @@
           <div class="right-drawer-wrapper">
             <ClientOnly>
               <div
-                v-if="showRightWidgets"
+                v-if="canShowRightWidgets"
                 class="pane-scroll bg-card"
                 :class="{ hidden: !shouldRenderRightSidebarContent }"
                 :aria-hidden="!shouldRenderRightSidebarContent"
@@ -155,7 +159,7 @@
               </div>
               <template #fallback>
                 <div
-                  v-if="showRightWidgets"
+                  v-if="canShowRightWidgets"
                   class="pane-scroll px-3 py-4 bg-card"
                 >
                   <div class="flex flex-col gap-6">
@@ -178,7 +182,7 @@
         <template #fallback>
           <div class="right-drawer-wrapper">
             <div
-              v-if="showRightWidgets"
+              v-if="canShowRightWidgets"
               class="pane-scroll px-3 py-4 bg-card"
             >
               <div class="flex flex-col gap-6">
@@ -248,7 +252,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, computed, ref, defineAsyncComponent, onMounted } from "vue";
+import { watch, computed, ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState } from "#imports";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
@@ -345,7 +349,9 @@ watch(
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
+const showNavigation = computed(() => currentRoute.value?.meta?.showNavbar !== false);
 const { rightSidebarContent } = useLayoutRightSidebar();
+const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
 
 const initialShowRightWidgets = useState(
   "layout-initial-show-right-widgets",
@@ -377,14 +383,25 @@ const initialIsRail = useState(
 const { locale, availableLocales, setLocale } = useI18n();
 const auth = useAuthSession();
 
-const leftDrawerState = ref(!initialIsMobile.value);
-const rightDrawerState = ref(!initialIsMobile.value && initialShowRightWidgets.value);
+const leftDrawerState = ref(showNavigation.value && !initialIsMobile.value);
+const rightDrawerState = ref(
+  showNavigation.value && !initialIsMobile.value && initialShowRightWidgets.value,
+);
 
-const isLeftDrawerReady = ref(import.meta.server);
+const isLeftDrawerReady = ref(import.meta.server || !showNavigation.value);
+
+const isTopBarReady = ref(import.meta.server || !showNavigation.value);
 
 if (import.meta.client) {
   onMounted(() => {
+    if (!showNavigation.value) {
+      isLeftDrawerReady.value = true;
+      isTopBarReady.value = true;
+      return;
+    }
+
     isLeftDrawerReady.value = true;
+    isTopBarReady.value = Boolean(topBarRef.value);
   });
 }
 
@@ -435,7 +452,9 @@ const showRightWidgets = computed(() => {
   return metaAllowsSidebar || hasDynamicSidebarContent;
 });
 
-const isRightDrawerReady = ref(import.meta.server || !showRightWidgets.value);
+const canShowRightWidgets = computed(() => showNavigation.value && showRightWidgets.value);
+
+const isRightDrawerReady = ref(import.meta.server || !canShowRightWidgets.value);
 
 const siteSettingsState = useSiteSettingsState();
 const theme = useTheme();
@@ -584,37 +603,87 @@ function handleRightDrawerResolve() {
 }
 
 const shouldRenderRightSidebarContent = computed(
-  () => showRightWidgets.value && rightDrawer.value,
+  () => canShowRightWidgets.value && rightDrawer.value,
 );
 
 const areSidebarsReady = computed(() => {
-  const rightReady = showRightWidgets.value ? isRightDrawerReady.value : true;
-  return isLeftDrawerReady.value && rightReady;
+  if (!showNavigation.value) {
+    return isTopBarReady.value;
+  }
+
+  const rightReady = canShowRightWidgets.value ? isRightDrawerReady.value : true;
+  return isTopBarReady.value && isLeftDrawerReady.value && rightReady;
 });
+
+watch(
+  showNavigation,
+  (visible) => {
+    if (!visible) {
+      isLeftDrawerReady.value = true;
+      isTopBarReady.value = true;
+      return;
+    }
+
+    if (import.meta.client) {
+      isLeftDrawerReady.value = false;
+      isTopBarReady.value = Boolean(topBarRef.value);
+      nextTick(() => {
+        isLeftDrawerReady.value = true;
+      });
+      return;
+    }
+
+    isLeftDrawerReady.value = true;
+    isTopBarReady.value = true;
+  },
+  { immediate: true },
+);
+
+if (import.meta.client) {
+  watch(
+    () => topBarRef.value,
+    (instance) => {
+      if (instance && showNavigation.value) {
+        isTopBarReady.value = true;
+      }
+    },
+    { immediate: true },
+  );
+}
 
 /** Réactivité aux points de rupture / route */
 watch(
-  isMobile,
-  (mobile) => {
+  [isMobile, showNavigation],
+  ([mobile, navigationVisible]) => {
+    if (!navigationVisible) {
+      leftDrawer.value = false;
+      rightDrawer.value = false;
+      return;
+    }
+
     if (mobile) {
       leftDrawer.value = false;
       rightDrawer.value = false;
       return;
     }
+
     leftDrawer.value = true;
-    rightDrawer.value = showRightWidgets.value;
+    rightDrawer.value = canShowRightWidgets.value;
   },
   { immediate: true },
 );
 
-watch(showRightWidgets, (value) => {
+watch(canShowRightWidgets, (value) => {
   if (!value) {
     rightDrawer.value = false;
     isRightDrawerReady.value = true;
     return;
   }
+
   isRightDrawerReady.value = import.meta.server;
-  if (!isMobile.value) rightDrawer.value = true;
+  if (!isMobile.value) {
+    rightDrawer.value = true;
+  }
 });
 
 watch(
@@ -643,10 +712,11 @@ function toggleTheme() {
   colorMode.value = resolvedColorMode.value === "dark" ? "light" : "dark";
 }
 function toggleLeftDrawer() {
+  if (!showNavigation.value) return;
   leftDrawer.value = !leftDrawer.value;
 }
 function toggleRightDrawer() {
-  if (!showRightWidgets.value) return;
+  if (!canShowRightWidgets.value) return;
   rightDrawer.value = !rightDrawer.value;
 }
 function goBack() {
