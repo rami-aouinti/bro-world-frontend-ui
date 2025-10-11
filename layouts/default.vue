@@ -331,6 +331,17 @@ const resolvedColorMode = computed<"light" | "dark">(() => {
 
 const isDark = computed(() => resolvedColorMode.value === "dark");
 const themeName = computed(() => (isDark.value ? "dark" : "light"));
+const vuetifyTheme = useTheme();
+
+watch(
+  themeName,
+  (name) => {
+    if (vuetifyTheme.global.name.value !== name) {
+      vuetifyTheme.global.name.value = name;
+    }
+  },
+  { immediate: true },
+);
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
