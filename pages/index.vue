@@ -53,6 +53,7 @@
           :default-avatar="defaultAvatar"
           :reaction-emojis="reactionEmojis"
           :reaction-labels="reactionLabels"
+          :prefer-eager-media-loading="index === 0"
         />
 
         <div
