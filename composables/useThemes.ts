@@ -2,6 +2,7 @@ import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
 import { withSecureCookieOptions } from "~/lib/cookies";
+import { useCookieColorMode } from "~/composables/useCookieColorMode";
 
 interface ThemeCookieConfig {
   theme: Theme["name"];
@@ -96,7 +97,19 @@ export function useThemes() {
     };
   }
 
-  const isDark = computed(() => useColorMode.value === "dark");
+  const colorMode = useCookieColorMode();
+
+  const isDark = computed(() => {
+    if (colorMode.value === "dark") {
+      return true;
+    }
+
+    if (colorMode.value === "light") {
+      return false;
+    }
+
+    return colorMode.system.value === "dark";
+  });
 
   const themeCookie = useCookie<ThemeCookieConfig>(
     "theme",
