@@ -199,10 +199,7 @@
       </Suspense>
     </v-navigation-drawer>
 
-    <v-main
-      class="app-surface"
-      :class="{ hidden: isHydrated && areSidebarsReady && !areSidebarsVisible }"
-    >
+    <v-main class="app-surface">
       <div class="main-scroll bg-card">
         <ClientOnly>
           <ParticlesBg
@@ -582,21 +579,6 @@ const shouldRenderRightSidebarContent = computed(
 const areSidebarsReady = computed(() => {
   const rightReady = showRightWidgets.value ? isRightDrawerReady.value : true;
   return isLeftDrawerReady.value && rightReady;
-});
-
-/** ✅ Règle d’affichage du contenu: gauche ouverte ET (droite ouverte si demandée) */
-const areSidebarsVisible = computed(() => {
-  if (!isHydrated.value) {
-    return true;
-  }
-
-  if (isMobile.value) {
-    return true;
-  }
-
-  const leftVisible = leftDrawer.value;
-  const rightOk = showRightWidgets.value ? rightDrawer.value : true;
-  return leftVisible && rightOk;
 });
 
 /** Réactivité aux points de rupture / route */
