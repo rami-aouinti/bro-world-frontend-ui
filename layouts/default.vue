@@ -286,6 +286,19 @@ const colorSchemeHint = import.meta.server
       | "dark"
       | null)
   : null;
+const layoutClientHints = import.meta.server
+  ? useRequestHeaders(["sec-ch-viewport-width", "sec-ch-ua-mobile"])
+  : null;
+const viewportWidthHint = import.meta.server
+  ? Number.parseInt(layoutClientHints?.["sec-ch-viewport-width"] ?? "", 10)
+  : null;
+const resolvedViewportWidth =
+  typeof viewportWidthHint === "number" && Number.isFinite(viewportWidthHint)
+    ? viewportWidthHint
+    : null;
+const mobileUaHint = import.meta.server
+  ? layoutClientHints?.["sec-ch-ua-mobile"] ?? null
+  : null;
 
 const initialResolvedColorMode = useState<"light" | "dark">("layout-initial-color-mode", () => {
   if (colorMode.value === "dark" || colorMode.value === "light") {
@@ -330,16 +343,33 @@ const initialShowRightWidgets = useState(
   () => currentRoute.value?.meta?.showRightWidgets !== false,
 );
 const display = useDisplay();
-const initialIsMobile = useState("layout-initial-is-mobile", () => display.mobile.value);
+const initialIsMobile = useState("layout-initial-is-mobile", () => {
+  if (import.meta.server) {
+    if (mobileUaHint === "?1") {
+      return true;
+    }
+
+    if (mobileUaHint === "?0") {
+      return false;
+    }
+
+    if (resolvedViewportWidth !== null) {
+      const { sm } = display.thresholds.value;
+      return resolvedViewportWidth < sm;
+    }
+  }
+
+  return display.mobile.value;
+});
 const initialIsRail = useState(
   "layout-initial-is-rail",
-  () => display.mdAndDown.value && !display.mobile.value,
+  () => display.mdAndDown.value && !initialIsMobile.value,
 );
 const { locale, availableLocales, setLocale } = useI18n();
 const auth = useAuthSession();
 
-const leftDrawerState = ref(true);
-const rightDrawerState = ref(true);
+const leftDrawerState = ref(!initialIsMobile.value);
+const rightDrawerState = ref(!initialIsMobile.value && initialShowRightWidgets.value);
 
 const isLeftDrawerReady = ref(import.meta.server);
 
@@ -351,10 +381,6 @@ if (import.meta.client) {
 
 const leftDrawer = computed({
   get() {
-    if (!isHydrated.value) {
-      return false;
-    }
-
     return leftDrawerState.value;
   },
   set(value: boolean) {
@@ -364,10 +390,6 @@ const leftDrawer = computed({
 
 const rightDrawer = computed({
   get() {
-    if (!isHydrated.value) {
-      return false;
-    }
-
     return rightDrawerState.value;
   },
   set(value: boolean) {
@@ -708,6 +730,8 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
 .app-surface {
   position: relative;
   display: flex;
+  flex: 1 1 auto;
+  align-items: stretch;
   min-height: 100vh;
   background: transparent;
   overflow: hidden;
@@ -739,6 +763,22 @@ function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
 
 .main-scroll {
   position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: calc(100vh - var(--app-bar-height));
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: min(1120px, 100%);
+  margin-inline: auto;
+  padding: clamp(24px, 5vw, 40px) clamp(24px, 5vw, 48px);
+  box-sizing: border-box;
 }
 .sidebar-default-card__particles {
   position: absolute;
