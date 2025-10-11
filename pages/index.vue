@@ -80,15 +80,33 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 import { useAuthSession } from "~/stores/auth-session";
-import StoriesStrip from "~/components/stories/StoriesStrip.vue";
-import StoryViewerModal from "~/components/stories/StoryViewerModal.vue";
+
+const NewPost = defineAsyncComponent({
+  loader: () => import("~/components/blog/NewPost.vue"),
+  suspensible: false,
+});
+
+const BlogPostCard = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostCard.vue"),
+  suspensible: false,
+});
+
+const StoriesStrip = defineAsyncComponent({
+  loader: () => import("~/components/stories/StoriesStrip.vue"),
+  suspensible: false,
+});
+
+const StoryViewerModal = defineAsyncComponent({
+  loader: () => import("~/components/stories/StoryViewerModal.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   showRightWidgets: true,
