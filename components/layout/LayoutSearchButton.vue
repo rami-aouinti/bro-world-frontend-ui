@@ -10,7 +10,7 @@
       @click="isOpen = true"
     >
       <span class="mr-auto overflow-hidden">
-        {{ $t(placeholder) }}
+        {{ placeholder }}
       </span>
       <Kbd class="ml-auto hidden md:block"> <span class="text-xs">⌘</span>K </Kbd>
     </UiButton>
@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, useAttrs } from "vue";
+import { useI18n } from "vue-i18n";
 import { useState } from "#imports";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 
@@ -43,6 +44,7 @@ defineOptions({ inheritAttrs: false });
 const attrs = useAttrs();
 const config = useConfig();
 const colorMode = useCookieColorMode();
+const { t, te } = useI18n();
 
 const isOpen = ref<boolean | undefined>(false);
 const isHydrated = ref(false);
@@ -60,7 +62,23 @@ const searchConfig = computed(() => config.value.search);
 const enable = computed(() => searchConfig.value.enable);
 const inAside = computed(() => searchConfig.value.inAside);
 const style = computed(() => searchConfig.value.style);
-const placeholder = computed(() => searchConfig.value.placeholder);
+const fallbackPlaceholderKey = "layout.search.placeholder";
+
+const placeholder = computed(() => {
+  const configuredPlaceholder = searchConfig.value.placeholder;
+
+  if (typeof configuredPlaceholder === "string") {
+    if (te(configuredPlaceholder)) {
+      return t(configuredPlaceholder);
+    }
+
+    if (configuredPlaceholder.trim().length > 0) {
+      return configuredPlaceholder;
+    }
+  }
+
+  return t(fallbackPlaceholderKey);
+});
 
 const resolvedMode = computed<"light" | "dark">(() => {
   if (colorMode.value === "dark") {

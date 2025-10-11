@@ -62,6 +62,9 @@
       "title": "Langue",
       "subtitle": "Disponible en {count} langues"
     },
+    "search": {
+      "placeholder": "Search..."
+    },
     "appIcons": {
       "academy": "Académie",
       "briefcase": "Travail",

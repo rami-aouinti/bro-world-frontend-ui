@@ -136,7 +136,7 @@ interface ReviewStatsResponse {
 
 const props = defineProps<SidebarRatingCardProps>();
 
-const { t, locale } = useI18n();
+const { t, te, locale } = useI18n();
 const rtlLocales = ["ar", "he", "fa", "ur"];
 const isRtl = computed(() => rtlLocales.includes(locale.value));
 
@@ -148,8 +148,11 @@ function translateWithFallback(
     defaultValue: string,
     params?: Record<string, unknown>,
 ) {
-  const translated = t(key, params ?? {});
-  return translated === key ? defaultValue : translated;
+  if (te(key)) {
+    return t(key, params ?? {});
+  }
+
+  return defaultValue;
 }
 
 function createEmptyDistribution(): ReviewDistribution {
@@ -271,7 +274,7 @@ async function submitRating() {
     await refreshStats();
   } catch (error) {
     console.error("Failed to submit rating", error);
-    submissionError.value = t(
+    submissionError.value = translateWithFallback(
         "sidebar.rating.submitError",
         "We could not save your rating. Please try again later.",
     );
