@@ -1428,7 +1428,7 @@
   },
   "admin": {
     "common": {
-      "comingSoon": "This module is coming soon."
+      "comingSoon": "Ce module arrive bientôt."
     },
     "metaTitle": "Administration",
     "page": {
@@ -1444,7 +1444,8 @@
       "sections": {
         "general": {
           "title": "Identité de marque",
-          "subtitle": "Mettez à jour le nom du site et la signature affichés sur l'ensemble de l'espace."
+          "subtitle": "Mettez à jour le nom du site et la signature affichés sur l'ensemble de l'espace.",
+          "badge": "Essentiel"
         },
         "theme": {
           "title": "Thèmes",
@@ -1454,6 +1455,7 @@
         "navigation": {
           "title": "Menu de navigation",
           "subtitle": "Ajoutez, réorganisez et sécurisez les entrées de la barre latérale.",
+          "badge": "Menus",
           "children": "Liens enfants"
         }
       },
