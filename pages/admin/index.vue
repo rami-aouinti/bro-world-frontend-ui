@@ -66,12 +66,14 @@
             sm="6"
             md="3"
           >
-            <v-card
-              class="pa-5 h-100"
-              rounded="xl"
-              elevation="8"
-              variant="elevated"
-            >
+            <SidebarCard class="text-card-foreground pa-5 h-100">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex justify-space-between align-start">
                 <div>
                   <p class="text-subtitle-2 text-medium-emphasis mb-1">{{ metric.label }}</p>
@@ -105,7 +107,7 @@
                 </v-avatar>
               </div>
               <p class="text-body-2 text-medium-emphasis mb-0 mt-4">{{ metric.description }}</p>
-            </v-card>
+            </SidebarCard>
           </v-col>
         </v-row>
       </section>
@@ -134,11 +136,14 @@
             cols="12"
             md="6"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="xl"
-              variant="tonal"
-            >
+            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex justify-space-between align-start">
                 <div>
                   <h3 class="text-subtitle-1 font-weight-semibold mb-2">{{ control.label }}</h3>
@@ -160,7 +165,7 @@
                 hide-details
               />
               <p class="text-caption text-medium-emphasis mt-3 mb-0">{{ control.helper }}</p>
-            </v-card>
+            </SidebarCard>
           </v-col>
         </v-row>
       </section>
@@ -189,11 +194,14 @@
             cols="12"
             md="4"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="xl"
-              elevation="6"
-            >
+            <SidebarCard class="text-card-foreground pa-6 h-100">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex align-start gap-4">
                 <v-avatar
                   :color="action.color"
@@ -219,7 +227,7 @@
                   </v-btn>
                 </div>
               </div>
-            </v-card>
+            </SidebarCard>
           </v-col>
         </v-row>
       </section>
@@ -248,12 +256,14 @@
             cols="12"
             md="6"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="xl"
-              variant="elevated"
-              elevation="6"
-            >
+            <SidebarCard class="text-card-foreground pa-6 h-100">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex flex-column gap-4">
                 <div class="d-flex align-start gap-3">
                   <v-avatar
@@ -306,7 +316,7 @@
                 </div>
                 <p class="text-caption text-medium-emphasis mb-0">{{ module.status }}</p>
               </div>
-            </v-card>
+            </SidebarCard>
           </v-col>
         </v-row>
       </section>
@@ -324,11 +334,14 @@
             aria-labelledby="admin-activity"
             class="h-100"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="xl"
-              variant="tonal"
-            >
+            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex justify-space-between align-start mb-4">
                 <div>
                   <h2
@@ -380,7 +393,7 @@
                   </div>
                 </div>
               </div>
-            </v-card>
+            </SidebarCard>
           </section>
         </v-col>
         <v-col
@@ -391,11 +404,14 @@
             aria-labelledby="admin-health"
             class="h-100"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="xl"
-              variant="tonal"
-            >
+            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex justify-space-between align-start mb-4">
                 <div>
                   <h2
@@ -468,7 +484,7 @@
                   </div>
                 </div>
               </div>
-            </v-card>
+            </SidebarCard>
           </section>
         </v-col>
       </v-row>
@@ -477,12 +493,14 @@
         aria-labelledby="admin-resources"
         class="mb-6"
       >
-        <v-card
-          class="pa-6"
-          rounded="xl"
-          variant="elevated"
-          elevation="4"
-        >
+        <SidebarCard class="text-card-foreground pa-6">
+          <!-- glows -->
+          <span
+            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
           <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4">
             <div>
               <h2
@@ -537,7 +555,7 @@
               </v-btn>
             </div>
           </div>
-        </v-card>
+        </SidebarCard>
       </section>
     </v-container>
   </main>

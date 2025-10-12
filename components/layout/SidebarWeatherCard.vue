@@ -1,6 +1,6 @@
 <template>
   <SidebarCard
-    class="text-card-foreground"
+    class="text-card-foreground px-3 py-2"
     :aria-busy="isLoading"
   >
     <!-- glows -->
@@ -11,7 +11,7 @@
       class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
     ></span>
 
-    <div class="relative z-10 flex items-start justify-between px-3 py-2">
+    <div class="relative z-10 flex items-start justify-between">
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">
           {{ resolvedWeather.badge }}

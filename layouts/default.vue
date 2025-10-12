@@ -882,7 +882,8 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   align-items: stretch;
   min-height: 100vh;
   background: transparent;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .app-surface::before {

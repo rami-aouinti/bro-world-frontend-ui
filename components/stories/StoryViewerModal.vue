@@ -8,113 +8,121 @@
     :scrim="true"
     width="480"
   >
-    <v-card
-      class="story-viewer__card"
-      elevation="12"
-      rounded="xl"
+    <SidebarCard
+      padding="none"
+      class="story-viewer__card text-card-foreground px-3 py-2 shadow-2xl"
     >
-      <div
-        class="story-viewer__progress"
-        :class="{ active: isStoryVisible }"
-        :style="progressStyle"
-      ></div>
-      <header class="story-viewer__header">
-        <div class="story-viewer__profile">
-          <v-avatar
-            v-if="story?.avatar"
-            size="40"
-          >
-            <v-img
-              :src="story?.avatar"
-              :alt="story?.name || t('stories.viewer.avatarAlt')"
-              cover
-              width="40"
-              height="40"
-            />
-          </v-avatar>
-          <div class="story-viewer__meta">
-            <p class="story-viewer__name">{{ story?.name }}</p>
-            <p
-              v-if="story?.duration"
-              class="story-viewer__duration"
-            >
-              {{ story?.duration }}
-            </p>
-          </div>
-        </div>
-        <v-btn
-          icon
-          variant="text"
-          class="story-viewer__close"
-          :aria-label="t('stories.viewer.close')"
-          @click="close"
-        >
-          <Icon name="mdi-close" />
-        </v-btn>
-      </header>
-
-      <main class="story-viewer__body">
-        <transition name="story-fade">
-          <v-img
-            v-if="isStoryVisible && story?.image"
-            :key="story?.id || story?.image"
-            :src="story?.image"
-            class="story-viewer__image"
-            cover
-            :alt="story?.name || t('stories.viewer.imageAlt')"
-            width="480"
-            height="360"
-          />
-        </transition>
+      <!-- glows -->
+      <span
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
+      <div class="relative z-10 flex h-full flex-col">
         <div
-          v-if="!isStoryVisible"
-          class="story-viewer__expired"
-        >
-          <Icon
-            name="mdi-timer-off"
-            class="mr-2"
-          />
-          <span>{{ t("stories.viewer.expired") }}</span>
-        </div>
-      </main>
-
-      <footer class="story-viewer__footer">
-        <div class="story-viewer__reactions">
-          <p class="story-viewer__prompt">{{ t("stories.viewer.reactPrompt") }}</p>
-          <div class="story-viewer__reaction-buttons">
-            <v-btn
-              v-for="reaction in reactions"
-              :key="reaction.id"
-              class="story-viewer__reaction-btn"
-              variant="text"
-              @click="onReact(reaction)"
+          class="story-viewer__progress"
+          :class="{ active: isStoryVisible }"
+          :style="progressStyle"
+        ></div>
+        <header class="story-viewer__header">
+          <div class="story-viewer__profile">
+            <v-avatar
+              v-if="story?.avatar"
+              size="40"
             >
-              <span class="story-viewer__reaction-emoji">{{ reaction.emoji }}</span>
-              <span class="story-viewer__reaction-label">{{ reaction.label }}</span>
+              <v-img
+                :src="story?.avatar"
+                :alt="story?.name || t('stories.viewer.avatarAlt')"
+                cover
+                width="40"
+                height="40"
+              />
+            </v-avatar>
+            <div class="story-viewer__meta">
+              <p class="story-viewer__name">{{ story?.name }}</p>
+              <p
+                v-if="story?.duration"
+                class="story-viewer__duration"
+              >
+                {{ story?.duration }}
+              </p>
+            </div>
+          </div>
+          <v-btn
+            icon
+            variant="text"
+            class="story-viewer__close"
+            :aria-label="t('stories.viewer.close')"
+            @click="close"
+          >
+            <Icon name="mdi-close" />
+          </v-btn>
+        </header>
+
+        <main class="story-viewer__body">
+          <transition name="story-fade">
+            <v-img
+              v-if="isStoryVisible && story?.image"
+              :key="story?.id || story?.image"
+              :src="story?.image"
+              class="story-viewer__image"
+              cover
+              :alt="story?.name || t('stories.viewer.imageAlt')"
+              width="480"
+              height="360"
+            />
+          </transition>
+          <div
+            v-if="!isStoryVisible"
+            class="story-viewer__expired"
+          >
+            <Icon
+              name="mdi-timer-off"
+              class="mr-2"
+            />
+            <span>{{ t("stories.viewer.expired") }}</span>
+          </div>
+        </main>
+
+        <footer class="story-viewer__footer">
+          <div class="story-viewer__reactions">
+            <p class="story-viewer__prompt">{{ t("stories.viewer.reactPrompt") }}</p>
+            <div class="story-viewer__reaction-buttons">
+              <v-btn
+                v-for="reaction in reactions"
+                :key="reaction.id"
+                class="story-viewer__reaction-btn"
+                variant="text"
+                @click="onReact(reaction)"
+              >
+                <span class="story-viewer__reaction-emoji">{{ reaction.emoji }}</span>
+                <span class="story-viewer__reaction-label">{{ reaction.label }}</span>
+              </v-btn>
+            </div>
+          </div>
+          <div class="story-viewer__message">
+            <v-text-field
+              v-model="message"
+              :label="t('stories.viewer.messageLabel')"
+              hide-details
+              density="comfortable"
+              variant="outlined"
+              color="primary"
+              @keyup.enter="sendMessage"
+            />
+            <v-btn
+              color="primary"
+              class="story-viewer__send"
+              :disabled="!canSendMessage"
+              @click="sendMessage"
+            >
+              {{ t("stories.viewer.send") }}
             </v-btn>
           </div>
-        </div>
-        <div class="story-viewer__message">
-          <v-text-field
-            v-model="message"
-            :label="t('stories.viewer.messageLabel')"
-            hide-details
-            density="comfortable"
-            variant="outlined"
-            color="primary"
-            @keyup.enter="sendMessage"
-          />
-          <v-btn
-            color="primary"
-            class="story-viewer__send"
-            :disabled="!canSendMessage"
-            @click="sendMessage"
-          >
-            {{ t("stories.viewer.send") }}
-          </v-btn>
-        </div>
-      </footer>
-    </v-card>
+        </footer>
+      </div>
+    </SidebarCard>
   </v-dialog>
 </template>
 
@@ -122,6 +130,7 @@
 import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Story, StoryReaction } from "~/types/stories";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const props = withDefaults(
   defineProps<{

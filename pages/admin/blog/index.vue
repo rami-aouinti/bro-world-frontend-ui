@@ -229,7 +229,14 @@
       max-width="720"
       aria-labelledby="create-dialog-title"
     >
-      <v-card>
+      <SidebarCard class="text-card-foreground">
+        <!-- glows -->
+        <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        ></span>
+        <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        ></span>
         <v-card-title
           id="create-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -271,7 +278,7 @@
             {{ t("admin.blog.dialogs.create.submit") }}
           </v-btn>
         </v-card-actions>
-      </v-card>
+      </SidebarCard>
     </v-dialog>
 
     <v-dialog
@@ -279,7 +286,14 @@
       max-width="720"
       aria-labelledby="edit-dialog-title"
     >
-      <v-card>
+      <SidebarCard class="text-card-foreground">
+        <!-- glows -->
+        <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        ></span>
+        <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        ></span>
         <v-card-title
           id="edit-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -321,7 +335,7 @@
             {{ t("admin.blog.dialogs.edit.submit") }}
           </v-btn>
         </v-card-actions>
-      </v-card>
+      </SidebarCard>
     </v-dialog>
 
     <v-dialog
@@ -329,7 +343,14 @@
       max-width="480"
       aria-labelledby="delete-dialog-title"
     >
-      <v-card>
+      <SidebarCard class="text-card-foreground">
+        <!-- glows -->
+        <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        ></span>
+        <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        ></span>
         <v-card-title
           id="delete-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -365,7 +386,7 @@
             {{ t("admin.blog.dialogs.delete.confirm") }}
           </v-btn>
         </v-card-actions>
-      </v-card>
+      </SidebarCard>
     </v-dialog>
 
     <v-dialog
@@ -373,7 +394,14 @@
       max-width="720"
       aria-labelledby="preview-dialog-title"
     >
-      <v-card>
+      <SidebarCard class="text-card-foreground">
+        <!-- glows -->
+        <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        ></span>
+        <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        ></span>
         <v-card-title
           id="preview-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -421,7 +449,7 @@
             {{ t("admin.blog.dialogs.preview.openPublic") }}
           </v-btn>
         </v-card-actions>
-      </v-card>
+      </SidebarCard>
     </v-dialog>
 
     <v-snackbar

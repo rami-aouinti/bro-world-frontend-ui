@@ -8,11 +8,14 @@
         class="mb-10"
         aria-describedby="profile-friends-subtitle"
       >
-        <v-card
-          class="pa-6"
-          rounded="xl"
-          elevation="8"
-        >
+        <SidebarCard class="text-card-foreground pa-6">
+          <!-- glows -->
+          <span
+            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
           <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
             <div class="flex-grow-1">
               <h1
@@ -58,7 +61,7 @@
               </v-btn>
             </div>
           </div>
-        </v-card>
+        </SidebarCard>
       </header>
 
       <section
@@ -108,11 +111,14 @@
             sm="6"
             xl="4"
           >
-            <v-card
-              class="pa-5 h-100"
-              rounded="xl"
-              elevation="6"
-            >
+            <SidebarCard class="text-card-foreground pa-5 h-100">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex align-start gap-4 mb-4">
                 <v-avatar size="64">
                   <v-img
@@ -184,7 +190,7 @@
                   {{ t("pages.profileFriends.actions.message") }}
                 </v-btn>
               </div>
-            </v-card>
+            </SidebarCard>
           </v-col>
         </v-row>
 
@@ -202,11 +208,14 @@
             cols="12"
             lg="8"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="xl"
-              elevation="4"
-            >
+            <SidebarCard class="text-card-foreground pa-6 h-100">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <h2
                 id="friend-suggestions-title"
                 class="text-h5 font-weight-semibold mb-4"
@@ -254,17 +263,20 @@
                   </template>
                 </v-list-item>
               </v-list>
-            </v-card>
+            </SidebarCard>
           </v-col>
           <v-col
             cols="12"
             lg="4"
           >
-            <v-card
-              class="pa-6 h-100"
-              rounded="xl"
-              variant="tonal"
-            >
+            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div class="d-flex flex-column gap-3">
                 <h2 class="text-h6 font-weight-semibold mb-1">
                   {{ t("pages.profileFriends.sections.active") }}
@@ -298,7 +310,7 @@
                   </div>
                 </div>
               </div>
-            </v-card>
+            </SidebarCard>
           </v-col>
         </v-row>
       </section>
@@ -308,7 +320,17 @@
       v-model="showProfileDialog"
       max-width="520"
     >
-      <v-card v-if="selectedFriend">
+      <SidebarCard
+        v-if="selectedFriend"
+        class="text-card-foreground"
+      >
+        <!-- glows -->
+        <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        ></span>
+        <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        ></span>
         <v-card-title class="d-flex align-center gap-3">
           <v-avatar size="56">
             <v-img
@@ -368,7 +390,7 @@
             </v-btn>
           </div>
         </v-card-actions>
-      </v-card>
+      </SidebarCard>
     </v-dialog>
 
     <v-snackbar

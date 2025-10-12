@@ -29,10 +29,17 @@
         </div>
       </header>
 
-      <v-card
-        elevation="8"
-        rounded="xl"
+      <SidebarCard
+        class="text-card-foreground"
+        padding="none"
       >
+        <!-- glows -->
+        <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        ></span>
+        <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        ></span>
         <v-toolbar
           color="transparent"
           class="px-6 pt-4"
@@ -152,14 +159,21 @@
             </div>
           </template>
         </v-data-table>
-      </v-card>
+      </SidebarCard>
 
       <v-dialog
         v-model="createDialog"
         persistent
         max-width="560"
       >
-        <v-card rounded="xl">
+        <SidebarCard class="text-card-foreground">
+          <!-- glows -->
+          <span
+            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
           <v-card-title class="text-h5 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.create.title") }}
           </v-card-title>
@@ -253,14 +267,21 @@
               {{ t("admin.userManagement.dialogs.create.submit") }}
             </v-btn>
           </v-card-actions>
-        </v-card>
+        </SidebarCard>
       </v-dialog>
 
       <v-dialog
         v-model="editDialog"
         max-width="560"
       >
-        <v-card rounded="xl">
+        <SidebarCard class="text-card-foreground">
+          <!-- glows -->
+          <span
+            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
           <v-card-title class="text-h5 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.edit.title") }}
           </v-card-title>
@@ -354,14 +375,21 @@
               {{ t("admin.userManagement.dialogs.edit.submit") }}
             </v-btn>
           </v-card-actions>
-        </v-card>
+        </SidebarCard>
       </v-dialog>
 
       <v-dialog
         v-model="deleteDialog"
         max-width="440"
       >
-        <v-card rounded="lg">
+        <SidebarCard class="text-card-foreground">
+          <!-- glows -->
+          <span
+            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
           <v-card-title class="text-h6 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.delete.title") }}
           </v-card-title>
@@ -387,7 +415,7 @@
               {{ t("admin.userManagement.dialogs.delete.confirm") }}
             </v-btn>
           </v-card-actions>
-        </v-card>
+        </SidebarCard>
       </v-dialog>
     </v-container>
   </main>
