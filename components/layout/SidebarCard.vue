@@ -47,11 +47,12 @@ const props = withDefaults(
     tag: "section",
     padding: "lg" as PaddingSize,
     particles: false,
-    particlesProps: () => ({
-      quantity: 120,
-      ease: 120,
-      staticity: 12,
-    }) as ParticlesProps,
+    particlesProps: () =>
+      ({
+        quantity: 120,
+        ease: 120,
+        staticity: 12,
+      }) as ParticlesProps,
   },
 );
 

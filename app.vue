@@ -123,9 +123,7 @@ type SeoMetaFields = {
 const matchedMeta = computed<SeoMetaFields>(() => {
   return (route.matched?.[0]?.meta as SeoMetaFields) ?? {};
 });
-const currentMeta = computed<SeoMetaFields>(
-  () => (route.meta as SeoMetaFields) ?? {},
-);
+const currentMeta = computed<SeoMetaFields>(() => (route.meta as SeoMetaFields) ?? {});
 
 const defaultTitle = computed(() => siteConfig.value.name);
 const defaultDescription = computed(() => siteConfig.value.description);

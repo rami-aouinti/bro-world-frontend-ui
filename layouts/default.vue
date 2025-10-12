@@ -296,9 +296,7 @@ const resolvedViewportWidth =
   typeof viewportWidthHint === "number" && Number.isFinite(viewportWidthHint)
     ? viewportWidthHint
     : null;
-const mobileUaHint = import.meta.server
-  ? layoutClientHints?.["sec-ch-ua-mobile"] ?? null
-  : null;
+const mobileUaHint = import.meta.server ? (layoutClientHints?.["sec-ch-ua-mobile"] ?? null) : null;
 
 const initialResolvedColorMode = useState<"light" | "dark">("layout-initial-color-mode", () => {
   if (colorMode.value === "dark" || colorMode.value === "light") {
@@ -471,11 +469,7 @@ watch(
 
 const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
 
-const {
-  weather: weatherData,
-  leaderboard,
-  rating,
-} = useRightSidebarData();
+const { weather: weatherData, leaderboard, rating } = useRightSidebarData();
 const weather = computed(() => weatherData.value);
 const activeTheme = computed<SiteThemeDefinition | null>(() => {
   const current = siteSettings.value;
@@ -518,8 +512,7 @@ const layoutInsets = computed(() => {
   const top = "var(--app-bar-height)";
   const isDesktop = !isMobile.value;
   const left = isDesktop && leftDrawer.value ? "320px" : "0px";
-  const right =
-    isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
+  const right = isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
 
   return {
     top,

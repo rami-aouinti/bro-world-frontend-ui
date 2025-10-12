@@ -1,29 +1,29 @@
 <template>
   <v-menu
-      location="bottom end"
-      transition="scale-transition"
-      :offset="8"
+    location="bottom end"
+    transition="scale-transition"
+    :offset="8"
   >
     <template #activator="{ props: profileProps }">
       <button
-          type="button"
-          :class="[
+        type="button"
+        :class="[
           'rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
-          iconTriggerClasses
+          iconTriggerClasses,
         ]"
-          aria-label="Profile"
-          v-bind="profileProps"
+        aria-label="Profile"
+        v-bind="profileProps"
       >
         <template v-if="props.user">
           <v-avatar
-              size="28"
-              :class="['ring-1 ring-black/5 dark:ring-white/10', avatarClasses]"
+            size="28"
+            :class="['ring-1 ring-black/5 dark:ring-white/10', avatarClasses]"
           >
             <v-img
-                v-if="props.user.photo"
-                :src="props.user.photo"
-                :alt="heading"
-                cover
+              v-if="props.user.photo"
+              :src="props.user.photo"
+              :alt="heading"
+              cover
             />
             <template v-else>
               <span class="text-[11px] font-semibold uppercase">
@@ -33,20 +33,23 @@
           </v-avatar>
         </template>
         <template v-else>
-          <Icon name="mdi:person-outline" :size="22" />
+          <Icon
+            name="mdi:person-outline"
+            :size="22"
+          />
         </template>
       </button>
     </template>
 
     <v-card
-        class="min-w-[280px] rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/10"
-        elevation="0"
+      class="min-w-[280px] rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/10"
+      elevation="0"
     >
       <!-- Header -->
       <div class="flex items-center gap-3 px-4 py-4">
         <v-avatar
-            size="32"
-            class="bg-primary/10 text-primary"
+          size="32"
+          class="bg-primary/10 text-primary"
         >
           <template v-if="props.user">
             <span class="text-[12px] font-semibold uppercase">
@@ -54,7 +57,10 @@
             </span>
           </template>
           <template v-else>
-            <Icon name="mdi:account-outline" :size="20" />
+            <Icon
+              name="mdi:account-outline"
+              :size="20"
+            />
           </template>
         </v-avatar>
 
@@ -71,20 +77,26 @@
       <v-divider class="opacity-70" />
 
       <!-- Items -->
-      <v-list class="py-1" density="comfortable">
+      <v-list
+        class="py-1"
+        density="comfortable"
+      >
         <v-list-item
-            v-for="item in props.items"
-            :key="item.title"
-            :to="item.to"
-            :disabled="item.action === 'logout' && props.loggingOut"
-            class="group px-2 rounded-xl mx-2 my-0.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5 focus-within:bg-gray-50 dark:focus-within:bg-white/5"
-            @click="emit('select', item)"
+          v-for="item in props.items"
+          :key="item.title"
+          :to="item.to"
+          :disabled="item.action === 'logout' && props.loggingOut"
+          class="group px-2 rounded-xl mx-2 my-0.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5 focus-within:bg-gray-50 dark:focus-within:bg-white/5"
+          @click="emit('select', item)"
         >
           <template #prepend>
             <div
-                class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15"
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15"
             >
-              <Icon :name="item.icon" :size="20" />
+              <Icon
+                :name="item.icon"
+                :size="20"
+              />
             </div>
           </template>
 
@@ -129,7 +141,9 @@ const subheading = computed(() => {
   return props.signedInText;
 });
 
-const avatarClasses = computed(() => (props.user?.photo ? "bg-transparent" : "bg-primary/10 text-primary"));
+const avatarClasses = computed(() =>
+  props.user?.photo ? "bg-transparent" : "bg-primary/10 text-primary",
+);
 
 const initials = computed(() => {
   if (!props.user) return "";

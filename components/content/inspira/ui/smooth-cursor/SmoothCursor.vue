@@ -74,7 +74,13 @@ function toNumber(value: unknown) {
   return Number.isNaN(parsed) ? 0 : parsed;
 }
 
-function subscribeMotionValue(motionValue: { get: () => unknown; on: (event: string, cb: (value: unknown) => void) => () => void }, target: Ref<number>) {
+function subscribeMotionValue(
+  motionValue: {
+    get: () => unknown;
+    on: (event: string, cb: (value: unknown) => void) => () => void;
+  },
+  target: Ref<number>,
+) {
   target.value = toNumber(motionValue.get());
   const unsubscribe = motionValue.on("change", (value) => {
     target.value = toNumber(value);

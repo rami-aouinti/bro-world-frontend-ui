@@ -1,8 +1,14 @@
 <template>
   <UiPopover>
     <UiPopoverTrigger as-child>
-      <UiButton variant="ghost" size="icon">
-        <Icon name="lucide:paintbrush" size="16" />
+      <UiButton
+        variant="ghost"
+        size="icon"
+      >
+        <Icon
+          name="lucide:paintbrush"
+          size="16"
+        />
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent

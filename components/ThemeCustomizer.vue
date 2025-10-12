@@ -67,7 +67,10 @@
           :class="{ 'border-primary border-2': activeMode === 'light' }"
           @click="setColorPreference('light')"
         >
-          <Icon name="lucide:sun" size="16" />
+          <Icon
+            name="lucide:sun"
+            size="16"
+          />
           <span class="text-xs capitalize">{{ $t("Light") }}</span>
         </UiButton>
         <UiButton
@@ -76,7 +79,10 @@
           :class="{ 'border-primary border-2': activeMode === 'dark' }"
           @click="setColorPreference('dark')"
         >
-          <Icon name="lucide:moon" size="16" />
+          <Icon
+            name="lucide:moon"
+            size="16"
+          />
           <span class="text-xs capitalize">{{ $t("Dark") }}</span>
         </UiButton>
         <UiButton
@@ -85,7 +91,10 @@
           :class="{ 'border-primary border-2': activeMode === 'system' }"
           @click="setColorPreference('system')"
         >
-          <Icon name="lucide:monitor" size="16" />
+          <Icon
+            name="lucide:monitor"
+            size="16"
+          />
           <span class="text-xs capitalize">{{ $t("System") }}</span>
         </UiButton>
       </div>

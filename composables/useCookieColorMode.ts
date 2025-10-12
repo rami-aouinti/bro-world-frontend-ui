@@ -31,10 +31,8 @@ export function useCookieColorMode() {
   });
 
   const colorSchemeHint = import.meta.server
-    ? ((useRequestHeaders(["sec-ch-prefers-color-scheme"])["sec-ch-prefers-color-scheme"] ?? null) as
-        | "light"
-        | "dark"
-        | null)
+    ? ((useRequestHeaders(["sec-ch-prefers-color-scheme"])["sec-ch-prefers-color-scheme"] ??
+        null) as "light" | "dark" | null)
     : null;
 
   const initialResolvedMode: "light" | "dark" =

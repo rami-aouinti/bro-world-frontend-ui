@@ -1,14 +1,14 @@
 <template>
-    <v-app-bar
-        app
-        role="banner"
-        aria-label="Top navigation bar"
-        :elevation="24"
-        :theme="isDarkColor ? 'dark' : 'light'"
-        :style="appBarStyle"
-        rounded
-        height="50"
-    >
+  <v-app-bar
+    app
+    role="banner"
+    aria-label="Top navigation bar"
+    :elevation="24"
+    :theme="isDarkColor ? 'dark' : 'light'"
+    :style="appBarStyle"
+    rounded
+    height="50"
+  >
     <AppBrand class="ml-2" />
     <AppNavButtons
       :is-mobile="props.isMobile"
@@ -272,8 +272,7 @@ const appBarStyle = computed(() => {
     backdropFilter: "blur(18px)",
     borderBottom: `1px solid ${applyAlpha(colors["outline-variant"], borderOpacity)}`,
     boxShadow: `0 10px 35px -18px ${applyAlpha(colors["on-surface"], shadowOpacity)}`,
-    transition:
-      "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
+    transition: "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
   } satisfies Record<string, string>;
 });
 
@@ -400,7 +399,7 @@ const visibleLocales = computed(() => {
   const seen = new Set<string>();
 
   for (const entry of props.locales) {
-    const code = typeof entry === "string" ? entry : entry?.code ?? undefined;
+    const code = typeof entry === "string" ? entry : (entry?.code ?? undefined);
     addLocaleIfSupported(seen, codes, code);
   }
 

@@ -4,16 +4,14 @@
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Main navigation"
   >
-    <div class="sidebar-menu-card">
-      <ParticlesBg
-        v-if="shouldRenderParticles"
-        class="sidebar-menu-card__particles"
-        :quantity="120"
-        :ease="120"
-        :color="isDark ? '#ffffff' : '#111827'"
-        :staticity="12"
-        refresh
-      />
+    <SidebarCard class="text-card-foreground px-3 py-2">
+      <!-- glows -->
+      <span
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
       <div class="sidebar-menu-card__content">
         <nav>
           <ul class="flex flex-col gap-3">
@@ -93,7 +91,7 @@
           </ul>
         </nav>
       </div>
-    </div>
+    </SidebarCard>
   </aside>
 </template>
 
@@ -303,11 +301,7 @@ function resolveLocalizedPath(target?: string): string | undefined {
     return localePath({ path: target });
   } catch (error) {
     if (import.meta.dev) {
-      console.warn(
-        "[AppSidebar] Failed to resolve localized path for target",
-        target,
-        error,
-      );
+      console.warn("[AppSidebar] Failed to resolve localized path for target", target, error);
     }
 
     return target;

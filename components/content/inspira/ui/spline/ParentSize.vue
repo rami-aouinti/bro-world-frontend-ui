@@ -84,9 +84,7 @@ const mergedStyles = computed<StyleValue | undefined>(() => {
 const rootClass = computed(() => cn("w-full h-full", attrs.class as ClassValue));
 
 const attrsWithoutClassAndStyle = computed(() =>
-  Object.fromEntries(
-    Object.entries(attrs).filter(([key]) => key !== "class" && key !== "style"),
-  ),
+  Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== "class" && key !== "style")),
 );
 
 const normalizedIgnore = computed<DimensionKey[]>(() => {

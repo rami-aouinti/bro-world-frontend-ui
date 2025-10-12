@@ -11,7 +11,8 @@ interface ReviewStatsResponse {
 
 function resolveApiBase(event: H3Event) {
   const config = useRuntimeConfig(event);
-  const base = config.reviews?.apiBase || config.public?.reviews?.apiBase || "https://bro-world.org";
+  const base =
+    config.reviews?.apiBase || config.public?.reviews?.apiBase || "https://bro-world.org";
 
   return base.replace(/\/$/, "");
 }
@@ -22,9 +23,13 @@ export default defineEventHandler(async (event) => {
 
   const ttlSeconds = 60 * 60; // 1 hour cache
 
-  const payload = await useCachedFetch<ReviewStatsResponse>("reviews:stats", async () => {
-    return await requestWithRetry<ReviewStatsResponse>("GET", endpoint);
-  }, ttlSeconds);
+  const payload = await useCachedFetch<ReviewStatsResponse>(
+    "reviews:stats",
+    async () => {
+      return await requestWithRetry<ReviewStatsResponse>("GET", endpoint);
+    },
+    ttlSeconds,
+  );
 
   return payload ?? { average_rating: 0, total_reviews: 0, distribution: null };
 });

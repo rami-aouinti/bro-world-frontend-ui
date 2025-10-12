@@ -606,8 +606,7 @@ export default defineNuxtConfig({
       },
       weather: {
         apiKey: process.env.NUXT_PUBLIC_WEATHER_API_KEY ?? "",
-        defaultLocation:
-          process.env.NUXT_PUBLIC_WEATHER_DEFAULT_LOCATION ?? "Berlin, Germany",
+        defaultLocation: process.env.NUXT_PUBLIC_WEATHER_DEFAULT_LOCATION ?? "Berlin, Germany",
       },
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
@@ -633,7 +632,7 @@ export default defineNuxtConfig({
           process.env.NUXT_PUBLIC_MERCURE_HUB_URL ??
           process.env.NUXT_MERCURE_HUB_URL ??
           "https://bro-world.org/.well-known/mercure",
-      }
+      },
     },
   },
 

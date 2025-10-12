@@ -22,8 +22,12 @@
             class="h-10 w-auto"
           />
           <div class="flex flex-col">
-            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">Bro World</span>
-            <span class="text-xl font-semibold text-slate-900 dark:text-slate-100">Nous préparons votre expérience</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-primary/80"
+              >Bro World</span
+            >
+            <span class="text-xl font-semibold text-slate-900 dark:text-slate-100"
+              >Nous préparons votre expérience</span
+            >
           </div>
         </div>
 
@@ -35,9 +39,10 @@
           >
             <span
               class="mt-1 inline-flex size-7 items-center justify-center rounded-full border text-xs font-semibold transition-all"
-              :class="index === activeStep
-                ? 'border-primary bg-primary text-white shadow-[0_8px_16px_-8px_rgba(59,130,246,0.65)]'
-                : 'border-primary/30 bg-white/70 text-primary dark:bg-neutral-900/60'
+              :class="
+                index === activeStep
+                  ? 'border-primary bg-primary text-white shadow-[0_8px_16px_-8px_rgba(59,130,246,0.65)]'
+                  : 'border-primary/30 bg-white/70 text-primary dark:bg-neutral-900/60'
               "
             >
               {{ index + 1 }}

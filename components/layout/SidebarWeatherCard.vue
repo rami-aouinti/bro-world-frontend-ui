@@ -1,18 +1,27 @@
 <template>
   <SidebarCard
-      class="text-card-foreground"
-      :aria-busy="isLoading"
+    class="text-card-foreground"
+    :aria-busy="isLoading"
   >
     <!-- glows -->
-    <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
-    <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
+    <span
+      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+    ></span>
+    <span
+      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+    ></span>
 
     <div class="relative z-10 flex items-start justify-between px-3 py-2">
       <div>
-        <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ resolvedWeather.badge }}</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-primary/80">
+          {{ resolvedWeather.badge }}
+        </p>
         <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.title }}</h3>
         <p class="mt-2 text-sm text-muted-foreground">
-          <span v-if="isLoading" class="inline-flex items-center gap-1">
+          <span
+            v-if="isLoading"
+            class="inline-flex items-center gap-1"
+          >
             <span class="h-2 w-2 animate-pulse rounded-full bg-primary"></span>
             {{ loadingLabel }}
           </span>
@@ -25,19 +34,31 @@
     </div>
 
     <dl class="relative z-10 text-sm text-muted-foreground">
-      <div class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground">
-        <dt class="uppercase tracking-wide text-xs text-muted-foreground">{{ resolvedWeather.locationLabel }}</dt>
+      <div
+        class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground"
+      >
+        <dt class="uppercase tracking-wide text-xs text-muted-foreground">
+          {{ resolvedWeather.locationLabel }}
+        </dt>
         <dd class="font-medium text-foreground text-end">
-          <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-foreground/10"></span>
+          <span
+            v-if="isLoading"
+            class="inline-flex h-5 w-20 animate-pulse rounded-full bg-foreground/10"
+          ></span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </dd>
       </div>
-      <div class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground">
+      <div
+        class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground"
+      >
         <dt class="uppercase tracking-wide text-xs text-muted-foreground">
           {{ resolvedWeather.temperatureLabel }}
         </dt>
         <dd class="font-medium text-foreground text-end">
-          <span v-if="isLoading" class="inline-flex h-5 w-14 animate-pulse rounded-full bg-foreground/10"></span>
+          <span
+            v-if="isLoading"
+            class="inline-flex h-5 w-14 animate-pulse rounded-full bg-foreground/10"
+          ></span>
           <span v-else>{{ resolvedWeather.temperature }}</span>
         </dd>
       </div>
@@ -86,15 +107,12 @@ const props = defineProps<SidebarWeatherCardProps>();
 
 const runtimeConfig = useRuntimeConfig();
 
-const weatherState = useState<
-    | {
+const weatherState = useState<{
   location: string;
   temperature: string;
   condition: string;
   fetchedAt: number;
-}
-    | null
->("sidebar-weather", () => null);
+} | null>("sidebar-weather", () => null);
 
 const isLoading = ref(!weatherState.value);
 
@@ -125,8 +143,8 @@ function formatLocation(data: WeatherApiResponse["location"]) {
 
 function applyWeather(data: WeatherApiResponse) {
   const temperatureValue = Number.isFinite(data.current?.temp_c)
-      ? `${Math.round(data.current.temp_c)}°C`
-      : props.weather.temperature;
+    ? `${Math.round(data.current.temp_c)}°C`
+    : props.weather.temperature;
 
   weatherState.value = {
     location: formatLocation(data.location),
@@ -146,10 +164,10 @@ async function fetchWeather(query: string) {
 
   try {
     const response = await $fetch<WeatherApiResponse>(
-        "https://api.weatherapi.com/v1/current.json",
-        {
-          query: { key: apiKey, q: query, aqi: "no" },
-        },
+      "https://api.weatherapi.com/v1/current.json",
+      {
+        query: { key: apiKey, q: query, aqi: "no" },
+      },
     );
 
     applyWeather(response);
@@ -176,14 +194,14 @@ if (import.meta.client) {
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            void fetchWeather(`${latitude},${longitude}`);
-          },
-          () => {
-            console.warn("Geolocation permission denied, using default location");
-            fetchDefaultWeather();
-          },
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          void fetchWeather(`${latitude},${longitude}`);
+        },
+        () => {
+          console.warn("Geolocation permission denied, using default location");
+          fetchDefaultWeather();
+        },
       );
     } else {
       fetchDefaultWeather();

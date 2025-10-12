@@ -9,7 +9,8 @@ interface SubmitReviewBody {
 
 function resolveApiBase(event: H3Event) {
   const config = useRuntimeConfig(event);
-  const base = config.reviews?.apiBase || config.public?.reviews?.apiBase || "https://bro-world.org";
+  const base =
+    config.reviews?.apiBase || config.public?.reviews?.apiBase || "https://bro-world.org";
 
   return base.replace(/\/$/, "");
 }
