@@ -8,11 +8,14 @@
         class="mb-10"
         aria-describedby="profile-photos-subtitle"
       >
-        <v-card
-          class="pa-6"
-          rounded="xl"
-          elevation="8"
-        >
+        <SidebarCard class="text-card-foreground pa-6">
+          <!-- glows -->
+          <span
+            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
           <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-6">
             <div class="flex-grow-1">
               <h1
@@ -58,7 +61,7 @@
               </v-btn>
             </div>
           </div>
-        </v-card>
+        </SidebarCard>
       </header>
 
       <v-row dense>
@@ -70,11 +73,14 @@
             class="mb-8"
             aria-labelledby="pinned-albums-title"
           >
-            <v-card
-              class="pa-6"
-              rounded="xl"
-              elevation="6"
-            >
+            <SidebarCard class="text-card-foreground pa-6">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div
                 class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-6"
               >
@@ -115,11 +121,14 @@
                   cols="12"
                   md="6"
                 >
-                  <v-card
-                    class="pa-4 h-100"
-                    rounded="xl"
-                    elevation="4"
-                  >
+                  <SidebarCard class="text-card-foreground pa-4 h-100">
+                    <!-- glows -->
+                    <span
+                      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+                    ></span>
+                    <span
+                      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+                    ></span>
                     <div class="rounded-xl overflow-hidden mb-4">
                       <v-img
                         :src="highlightedAlbum.cover"
@@ -142,20 +151,25 @@
                       <span>•</span>
                       <span>{{ highlightedAlbum.location }}</span>
                     </div>
-                  </v-card>
+                  </SidebarCard>
                 </v-col>
                 <v-col
                   cols="12"
                   md="6"
                 >
                   <div class="d-flex flex-column gap-3">
-                    <v-card
+                    <SidebarCard
                       v-for="album in secondaryAlbums"
                       :key="album.id"
-                      class="pa-4"
-                      rounded="xl"
-                      variant="tonal"
+                      class="text-card-foreground pa-4 bg-primary/10"
                     >
+                      <!-- glows -->
+                      <span
+                        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+                      ></span>
+                      <span
+                        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+                      ></span>
                       <div class="d-flex gap-4">
                         <v-img
                           :src="album.cover"
@@ -183,19 +197,22 @@
                           <div class="text-caption text-medium-emphasis">{{ album.updated }}</div>
                         </div>
                       </div>
-                    </v-card>
+                    </SidebarCard>
                   </div>
                 </v-col>
               </v-row>
-            </v-card>
+            </SidebarCard>
           </section>
 
           <section aria-labelledby="photo-gallery-title">
-            <v-card
-              class="pa-6"
-              rounded="xl"
-              elevation="4"
-            >
+            <SidebarCard class="text-card-foreground pa-6">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <div
                 class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4 mb-4"
               >
@@ -254,7 +271,7 @@
               >
                 {{ t("pages.profilePhotos.empty") }}
               </div>
-            </v-card>
+            </SidebarCard>
           </section>
         </v-col>
         <v-col
@@ -262,11 +279,14 @@
           xl="4"
         >
           <aside>
-            <v-card
-              class="pa-6 mb-6"
-              rounded="xl"
-              elevation="4"
-            >
+            <SidebarCard class="text-card-foreground pa-6 mb-6">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <h2 class="text-h6 font-weight-semibold mb-4">
                 {{ t("pages.profilePhotos.timeline.title") }}
               </h2>
@@ -302,13 +322,16 @@
                   </v-expansion-panel-text>
                 </v-expansion-panel>
               </v-expansion-panels>
-            </v-card>
+            </SidebarCard>
 
-            <v-card
-              class="pa-6"
-              rounded="xl"
-              variant="tonal"
-            >
+            <SidebarCard class="text-card-foreground pa-6 bg-primary/10">
+              <!-- glows -->
+              <span
+                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+              ></span>
+              <span
+                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+              ></span>
               <h2 class="text-h6 font-weight-semibold mb-3">
                 {{ t("pages.profilePhotos.sections.timeline") }}
               </h2>
@@ -331,7 +354,7 @@
                   </div>
                 </div>
               </div>
-            </v-card>
+            </SidebarCard>
           </aside>
         </v-col>
       </v-row>

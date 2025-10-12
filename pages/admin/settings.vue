@@ -57,11 +57,14 @@
           cols="12"
           md="6"
         >
-          <v-card
-            class="glass-card pa-6"
-            rounded="xl"
-            elevation="8"
-          >
+          <SidebarCard class="glass-card pa-6 text-card-foreground">
+            <!-- glows -->
+            <span
+              class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+            ></span>
+            <span
+              class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+            ></span>
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -106,7 +109,7 @@
                 hide-details
               />
             </v-form>
-          </v-card>
+          </SidebarCard>
         </v-col>
 
         <!-- Theme -->
@@ -114,11 +117,14 @@
           cols="12"
           md="6"
         >
-          <v-card
-            class="glass-card pa-6 h-100"
-            rounded="xl"
-            elevation="8"
-          >
+          <SidebarCard class="glass-card pa-6 h-100 text-card-foreground">
+            <!-- glows -->
+            <span
+              class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+            ></span>
+            <span
+              class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+            ></span>
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -285,7 +291,7 @@
                 {{ t("admin.settings.actions.addTheme") }}
               </v-btn>
             </div>
-          </v-card>
+          </SidebarCard>
         </v-col>
 
         <!-- Profile -->
@@ -293,11 +299,14 @@
           cols="12"
           md="6"
         >
-          <v-card
-            class="glass-card pa-6 h-100"
-            rounded="xl"
-            elevation="8"
-          >
+          <SidebarCard class="glass-card pa-6 h-100 text-card-foreground">
+            <!-- glows -->
+            <span
+              class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+            ></span>
+            <span
+              class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+            ></span>
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -389,7 +398,7 @@
                 hide-details
               />
             </div>
-          </v-card>
+          </SidebarCard>
         </v-col>
 
         <!-- Appearance -->
@@ -397,11 +406,14 @@
           cols="12"
           md="6"
         >
-          <v-card
-            class="glass-card pa-6 h-100"
-            rounded="xl"
-            elevation="8"
-          >
+          <SidebarCard class="glass-card pa-6 h-100 text-card-foreground">
+            <!-- glows -->
+            <span
+              class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+            ></span>
+            <span
+              class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+            ></span>
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -451,16 +463,19 @@
                 />
               </v-radio-group>
             </div>
-          </v-card>
+          </SidebarCard>
         </v-col>
 
         <!-- Pages -->
         <v-col cols="12">
-          <v-card
-            class="glass-card pa-6"
-            rounded="xl"
-            elevation="8"
-          >
+          <SidebarCard class="glass-card pa-6 text-card-foreground">
+            <!-- glows -->
+            <span
+              class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+            ></span>
+            <span
+              class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+            ></span>
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -535,16 +550,19 @@
                 </div>
               </v-sheet>
             </div>
-          </v-card>
+          </SidebarCard>
         </v-col>
 
         <!-- Navigation -->
         <v-col cols="12">
-          <v-card
-            class="glass-card pa-6"
-            rounded="xl"
-            elevation="8"
-          >
+          <SidebarCard class="glass-card pa-6 text-card-foreground">
+            <!-- glows -->
+            <span
+              class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+            ></span>
+            <span
+              class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+            ></span>
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -778,7 +796,7 @@
                 </v-btn>
               </div>
             </div>
-          </v-card>
+          </SidebarCard>
         </v-col>
       </v-row>
 
