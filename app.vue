@@ -55,14 +55,6 @@ const siteConfig = computed(() => {
 });
 const route = useRoute();
 
-if (import.meta.client) {
-  if (document.readyState === "complete") {
-    queueMicrotask(dismissInitialLoading);
-  } else {
-    window.addEventListener("load", dismissInitialLoading, { once: true });
-  }
-}
-
 if (import.meta.client && nuxtApp) {
   let finishTimer: ReturnType<typeof setTimeout> | null = null;
 
