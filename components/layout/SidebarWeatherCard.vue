@@ -1,6 +1,6 @@
 <template>
   <SidebarCard
-      class="text-slate-200"
+      class="text-card-foreground"
       :aria-busy="isLoading"
   >
     <!-- glows -->
@@ -11,7 +11,7 @@
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">{{ resolvedWeather.badge }}</p>
         <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.title }}</h3>
-        <p class="mt-2 text-sm text-slate-300">
+        <p class="mt-2 text-sm text-muted-foreground">
           <span v-if="isLoading" class="inline-flex items-center gap-1">
             <span class="h-2 w-2 animate-pulse rounded-full bg-primary"></span>
             {{ loadingLabel }}
@@ -24,20 +24,20 @@
       </div>
     </div>
 
-    <dl class="relative z-10 text-sm text-slate-300">
-      <div class="-mx-[var(--card-x)] flex items-center gap-3 px-1 py-2 my-2 mx-1 rounded-2xl border border-white/5 bg-black/20 px-[var(--card-x)] py-3 text-sm text-slate-300">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">{{ resolvedWeather.locationLabel }}</dt>
+    <dl class="relative z-10 text-sm text-muted-foreground">
+      <div class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground">
+        <dt class="uppercase tracking-wide text-xs text-muted-foreground">{{ resolvedWeather.locationLabel }}</dt>
         <dd class="font-medium text-foreground text-end">
-          <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-white/20"></span>
+          <span v-if="isLoading" class="inline-flex h-5 w-20 animate-pulse rounded-full bg-foreground/10"></span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </dd>
       </div>
-      <div class="-mx-[var(--card-x)] flex items-center gap-3 px-1 py-2 my-2 mx-1 rounded-2xl border border-white/5 bg-black/20 px-[var(--card-x)] py-3 text-sm text-slate-300">
-        <dt class="uppercase tracking-wide text-xs text-slate-400">
+      <div class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground">
+        <dt class="uppercase tracking-wide text-xs text-muted-foreground">
           {{ resolvedWeather.temperatureLabel }}
         </dt>
         <dd class="font-medium text-foreground text-end">
-          <span v-if="isLoading" class="inline-flex h-5 w-14 animate-pulse rounded-full bg-white/20"></span>
+          <span v-if="isLoading" class="inline-flex h-5 w-14 animate-pulse rounded-full bg-foreground/10"></span>
           <span v-else>{{ resolvedWeather.temperature }}</span>
         </dd>
       </div>

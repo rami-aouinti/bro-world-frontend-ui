@@ -2,18 +2,18 @@
   <SidebarCard
       :dir="isRtl ? 'rtl' : 'ltr'"
       aria-live="polite"
-      class="text-slate-200 px-3 py-2"
+      class="text-card-foreground px-3 py-2"
   >
     <!-- glows -->
     <span class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"></span>
     <span class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"></span>
 
-    <header class="flex items-center justify-between text-slate-200">
+    <header class="flex items-center justify-between text-card-foreground">
       <div>
         <h3 class="text-lg font-semibold text-foreground">
           {{ cardTitle }}
         </h3>
-        <p class="text-sm text-slate-300">
+        <p class="text-sm text-muted-foreground">
           {{ cardSubtitle }}
         </p>
       </div>
@@ -23,7 +23,7 @@
           <p class="text-3xl font-bold">
             {{ formattedAverage }}
           </p>
-          <p class="text-xs uppercase tracking-[0.3em] text-slate-400">
+          <p class="text-xs uppercase tracking-[0.3em] text-muted-foreground">
             / {{ maxRating }}
           </p>
         </div>
@@ -49,7 +49,7 @@
             size="small"
             aria-label="Average rating"
         />
-        <p class="text-sm text-slate-300">
+        <p class="text-sm text-muted-foreground">
           {{ reviewCountLabel }}
         </p>
       </div>
@@ -64,7 +64,7 @@
             <span>{{ bar.stars }}</span>
             <span>★</span>
           </div>
-          <div class="h-2 flex-1 overflow-hidden rounded-full bg-black/20">
+          <div class="h-2 flex-1 overflow-hidden rounded-full bg-muted/60">
             <div
                 class="h-full rounded-full bg-gradient-to-r from-primary/60 to-primary"
                 role="img"
@@ -72,19 +72,19 @@
                 :aria-label="`${bar.percent}% of ratings are ${bar.stars} stars`"
             />
           </div>
-          <span class="w-10 text-right text-xs text-slate-300">
+          <span class="w-10 text-right text-xs text-muted-foreground">
             {{ bar.count }}
           </span>
         </div>
       </div>
 
-      <div v-if="fetchError" class="rounded-xl bg-red-500/10 px-3 py-2 text-xs text-red-200">
+      <div v-if="fetchError" class="rounded-xl bg-red-500/10 px-3 py-2 text-xs text-destructive">
         {{ fetchError }}
       </div>
 
       <div
           v-if="loggedIn"
-          class="-mx-[var(--card-x)] flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/5 px-[var(--card-x)] py-3"
+          class="-mx-[var(--card-x)] flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3"
       >
         <v-rating
             v-model="newRating"
@@ -105,7 +105,7 @@
         </v-btn>
       </div>
 
-      <p v-if="submissionError" class="text-xs text-red-200">
+      <p v-if="submissionError" class="text-xs text-destructive">
         {{ submissionError }}
       </p>
     </div>
