@@ -44,7 +44,7 @@ const props = withDefaults(
     particlesProps?: ParticlesProps;
   }>(),
   {
-    tag: "section",
+    tag: "div",
     padding: "lg" as PaddingSize,
     particles: false,
     particlesProps: () =>
@@ -80,7 +80,7 @@ const cardAttrs = computed(() => {
 });
 
 const cardClass = computed(() => [
-  "sidebar-card relative isolate flex flex-col overflow-hidden rounded-3xl bg-transparent shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]",
+  "sidebar-card sidebar-menu-card relative isolate flex flex-col overflow-hidden rounded-3xl bg-transparent shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)]",
   paddingClassMap[props.padding],
   attrs.class as string | string[] | Record<string, boolean> | undefined,
 ]);
