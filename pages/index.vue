@@ -81,15 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  defineAsyncComponent,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-  watchEffect,
-} from "vue";
+import { computed, defineAsyncComponent, onUnmounted, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -124,22 +116,9 @@ definePageMeta({
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 const auth = useAuthSession();
-const isClient = ref(false);
-
-onMounted(() => {
-  isClient.value = true;
-});
-
-const isHydrated = ref(false);
-
-if (import.meta.client) {
-  onMounted(() => {
-    isHydrated.value = true;
-  });
-}
 
 const canAccessAuthenticatedContent = computed(
-  () => isHydrated.value && auth.isReady.value && auth.isAuthenticated.value,
+  () => auth.isReady.value && auth.isAuthenticated.value,
 );
 const user = {
   name: "Rami Aouinti",
