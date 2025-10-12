@@ -333,16 +333,6 @@ const isDark = computed(() => resolvedColorMode.value === "dark");
 const themeName = computed(() => (isDark.value ? "dark" : "light"));
 const vuetifyTheme = useTheme();
 
-watch(
-  themeName,
-  (name) => {
-    if (vuetifyTheme.name.value !== name) {
-      vuetifyTheme.change(name);
-    }
-  },
-  { immediate: true },
-);
-
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const showNavigation = computed(() => currentRoute.value?.meta?.showNavbar !== false);
@@ -442,12 +432,13 @@ const canShowRightWidgets = computed(() => showNavigation.value && showRightWidg
 const isRightDrawerReady = ref(import.meta.server || !canShowRightWidgets.value);
 
 const siteSettingsState = useSiteSettingsState();
-const theme = useTheme();
 
 watch(
   themeName,
   (value) => {
-    theme.change(value);
+    if (vuetifyTheme.name.value !== value) {
+      vuetifyTheme.change(value);
+    }
   },
   { immediate: true },
 );
@@ -501,10 +492,10 @@ watch(
   (value) => {
     if (!value) return;
 
-    theme.themes.value.light.colors.primary = value.primaryColor;
-    theme.themes.value.dark.colors.primary = value.primaryColor;
-    theme.themes.value.light.colors.secondary = value.accentColor;
-    theme.themes.value.dark.colors.secondary = value.accentColor;
+    vuetifyTheme.themes.value.light.colors.primary = value.primaryColor;
+    vuetifyTheme.themes.value.dark.colors.primary = value.primaryColor;
+    vuetifyTheme.themes.value.light.colors.secondary = value.accentColor;
+    vuetifyTheme.themes.value.dark.colors.secondary = value.accentColor;
   },
   { immediate: true },
 );
@@ -606,97 +597,107 @@ const areSidebarsReady = computed(() => {
   return isTopBarReady.value && isLeftDrawerReady.value && rightReady;
 });
 
-watch(
-  showNavigation,
-  (visible) => {
-    if (!visible) {
+/**
+ * Centralise la réactivité autour de la navigation.
+ * Chaque watcher met à jour un état réellement consommé :
+ * - readiness : `areSidebarsReady` s'appuie sur `isTopBarReady`, `isLeftDrawerReady` et `isRightDrawerReady`
+ * - tiroirs : `leftDrawer` / `rightDrawer` sont utilisés directement par les `<v-navigation-drawer>`
+ * - surlignage : `activeSidebar` est injecté dans `<AppSidebar>` et `<AppSidebarRight>`
+ */
+function setupNavigationReactivity() {
+  watch(
+    showNavigation,
+    (visible) => {
+      if (!visible) {
+        isLeftDrawerReady.value = true;
+        isTopBarReady.value = true;
+        return;
+      }
+
+      if (import.meta.client) {
+        isLeftDrawerReady.value = false;
+        isTopBarReady.value = Boolean(topBarRef.value);
+        nextTick(() => {
+          isLeftDrawerReady.value = true;
+        });
+        return;
+      }
+
       isLeftDrawerReady.value = true;
       isTopBarReady.value = true;
-      return;
-    }
+    },
+    { immediate: true },
+  );
 
-    if (import.meta.client) {
-      isLeftDrawerReady.value = false;
-      isTopBarReady.value = Boolean(topBarRef.value);
-      nextTick(() => {
-        isLeftDrawerReady.value = true;
-      });
-      return;
-    }
+  if (import.meta.client) {
+    watch(
+      () => topBarRef.value,
+      (instance) => {
+        if (instance && showNavigation.value) {
+          isTopBarReady.value = true;
+        }
+      },
+      { immediate: true },
+    );
+  }
 
-    isLeftDrawerReady.value = true;
-    isTopBarReady.value = true;
-  },
-  { immediate: true },
-);
-
-if (import.meta.client) {
   watch(
-    () => topBarRef.value,
-    (instance) => {
-      if (instance && showNavigation.value) {
-        isTopBarReady.value = true;
+    [isMobile, showNavigation],
+    ([mobile, navigationVisible]) => {
+      if (!navigationVisible) {
+        leftDrawer.value = false;
+        rightDrawer.value = false;
+        return;
       }
+
+      if (mobile) {
+        leftDrawer.value = false;
+        rightDrawer.value = false;
+        return;
+      }
+
+      leftDrawer.value = true;
+      rightDrawer.value = canShowRightWidgets.value;
+    },
+    { immediate: true },
+  );
+
+  watch(canShowRightWidgets, (value) => {
+    if (!value) {
+      rightDrawer.value = false;
+      isRightDrawerReady.value = true;
+      return;
+    }
+
+    isRightDrawerReady.value = import.meta.server;
+    if (!isMobile.value) {
+      rightDrawer.value = true;
+    }
+  });
+
+  watch(
+    () => currentRoute.value?.fullPath ?? "",
+    (path) => {
+      if (isMobile.value) {
+        leftDrawer.value = false;
+        rightDrawer.value = false;
+      }
+      updateActiveSidebar(path, sidebarItems.value);
+    },
+    { immediate: true },
+  );
+
+  watch(
+    sidebarItems,
+    (items) => {
+      const path = currentRoute.value?.fullPath ?? "/";
+      updateActiveSidebar(path, items);
     },
     { immediate: true },
   );
 }
 
-/** Réactivité aux points de rupture / route */
-watch(
-  [isMobile, showNavigation],
-  ([mobile, navigationVisible]) => {
-    if (!navigationVisible) {
-      leftDrawer.value = false;
-      rightDrawer.value = false;
-      return;
-    }
-
-    if (mobile) {
-      leftDrawer.value = false;
-      rightDrawer.value = false;
-      return;
-    }
-
-    leftDrawer.value = true;
-    rightDrawer.value = canShowRightWidgets.value;
-  },
-  { immediate: true },
-);
-
-watch(canShowRightWidgets, (value) => {
-  if (!value) {
-    rightDrawer.value = false;
-    isRightDrawerReady.value = true;
-    return;
-  }
-
-  isRightDrawerReady.value = import.meta.server;
-  if (!isMobile.value) {
-    rightDrawer.value = true;
-  }
-});
-
-watch(
-  () => currentRoute.value?.fullPath ?? "",
-  (path) => {
-    if (isMobile.value) {
-      leftDrawer.value = false;
-      rightDrawer.value = false;
-    }
-    updateActiveSidebar(path, sidebarItems.value);
-  },
-  { immediate: true },
-);
-
-watch(
-  sidebarItems,
-  (items) => {
-    const path = currentRoute.value?.fullPath ?? "/";
-    updateActiveSidebar(path, items);
-  },
-  { immediate: true },
-);
+setupNavigationReactivity();
 
 /** Actions UI */
 function toggleTheme() {
