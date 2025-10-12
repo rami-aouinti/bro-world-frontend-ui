@@ -165,23 +165,17 @@ const localeMetadata = {
   ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
 const isDarkColor = computed(() => props.isDark);
-const appBarStyle = computed(() => {
-  const surfaceOpacity = props.isDark ? 0.82 : 0.92;
-  const borderOpacity = props.isDark ? 0.35 : 0.22;
-  const shadowOpacity = props.isDark ? 0.45 : 0.15;
-  const gradientOpacity = props.isDark ? 0.62 : 0.82;
-  const primaryStopOpacity = props.isDark ? 0.55 : 0.35;
-  const variantStopOpacity = props.isDark ? 0.48 : 0.28;
-
-  return {
-    backgroundImage: `linear-gradient(135deg, rgba(var(--v-theme-surface), ${gradientOpacity}), rgba(var(--v-theme-primary), ${primaryStopOpacity}), rgba(var(--v-theme-surface-variant), ${variantStopOpacity}))`,
-    backgroundColor: `rgba(var(--v-theme-surface), ${surfaceOpacity})`,
-    backdropFilter: "blur(18px)",
-    borderBottom: `1px solid rgba(var(--v-theme-outline-variant), ${borderOpacity})`,
-    boxShadow: `0 10px 35px -18px rgba(var(--v-theme-on-surface), ${shadowOpacity})`,
-    transition: "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
-  } satisfies Record<string, string>;
-});
+const appBarStyle = computed(
+  () =>
+    ({
+      backgroundImage: "none",
+      backgroundColor: "transparent",
+      backdropFilter: "none",
+      borderBottom: "none",
+      boxShadow: "none",
+      transition: "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
+    }) satisfies Record<string, string>,
+);
 
 const navigationLabel = computed(() => t("layout.actions.openNavigation"));
 const goBackLabel = computed(() => t("layout.actions.goBack"));
