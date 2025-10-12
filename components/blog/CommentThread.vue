@@ -110,9 +110,10 @@
         v-if="replying[node.id]"
         class="reply-composer"
       >
-        <comment-composer
+        <PostCommentForm
           :avatar="props.currentUser?.photo"
           :placeholder="t('blog.comments.replyPlaceholder')"
+          :disabled="!canRenderAuthUi"
           @submit="(t) => emit('submit', t)"
         />
       </div>
@@ -133,9 +134,10 @@
       v-if="canRenderAuthUi && composerVisible"
       class="mt-2"
     >
-      <comment-composer
+      <PostCommentForm
         :placeholder="commentPlaceholder"
         :avatar="props.currentUser?.photo"
+        :disabled="!canRenderAuthUi"
         @submit="handleSubmit"
       />
     </div>
@@ -146,11 +148,11 @@
 import { reactive, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import type { WatchStopHandle } from "vue";
 import { useI18n } from "vue-i18n";
-import CommentComposer from "~/components/blog/CommentComposer.vue";
 import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import { useRelativeTime } from "~/composables/useRelativeTime";
+import PostCommentForm from "~/components/forms/PostCommentForm.vue";
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
