@@ -8,7 +8,7 @@
       <button
         type="button"
         :class="iconTriggerClasses"
-        :aria-label="`Language: ${props.formatLabel(props.current)}`"
+        :aria-label="props.buttonLabel"
         v-bind="languageProps"
       >
         <span
@@ -90,6 +90,7 @@ const props = defineProps<{
   title: string;
   subtitle?: string;
   localeMetadata?: LocaleMetadata;
+  buttonLabel: string;
 }>();
 const emit = defineEmits(["change"]);
 

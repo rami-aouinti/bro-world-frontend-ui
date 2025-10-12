@@ -11,7 +11,7 @@
           'rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
           iconTriggerClasses,
         ]"
-        aria-label="Profile"
+        :aria-label="props.profileLabel"
         v-bind="profileProps"
       >
         <template v-if="props.user">
@@ -121,6 +121,7 @@ const props = defineProps<{
   signedInText: string;
   guestTitle: string;
   guestSubtitle: string;
+  profileLabel: string;
 }>();
 const emit = defineEmits(["select"]);
 
