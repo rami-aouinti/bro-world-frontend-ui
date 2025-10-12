@@ -12,6 +12,7 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black: #000 !default;
+// Core palette
 $dark: $gray-900 !default;
 
 $body-color: #7b809a !default;
@@ -29,19 +30,19 @@ $success: #4caf50 !default;
 $warning: #fb8c00 !default;
 $danger: #f44335 !default;
 $light: $gray-200 !default;
-$dark: #212529 !default;
 
 $theme-colors: () !default;
 $theme-colors: map.merge(
   (
     "default": #344767,
-    "pink": $primary,
+    "primary": $primary,
     "warning": $warning,
     "danger": $danger,
     "info": $info,
     "success": $success,
     "secondary": $secondary,
     "light": $gray-200,
+    "dark": $dark,
     "neutral": $white,
   ),
   $theme-colors
@@ -53,7 +54,6 @@ $colors-simple: map.merge(
     "blue": #63b3ed,
     "indigo": #596cff,
     "purple": #6f42c1,
-    "pink": #d63384,
     "red": #f56565,
     "orange": #fd7e14,
     "yellow": #fbd38d,
@@ -96,7 +96,7 @@ $light-gradient-state: #ced4da !default;
 
 // Gradient Colors map
 $theme-gradient-colors: (
-  "pink": (
+  "primary": (
     $primary-gradient,
     $primary-gradient-state,
   ),
@@ -137,7 +137,7 @@ $bg-gradient-variant: map.merge(
       $dark-gradient,
       $dark-gradient-state,
     ),
-    "pink": (
+    "primary": (
       $primary-gradient,
       $primary-gradient-state,
     ),
