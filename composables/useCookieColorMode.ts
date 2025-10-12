@@ -89,12 +89,9 @@ export function useCookieColorMode() {
   useHead({
     htmlAttrs: computed(() => {
       const isDark = resolvedMode.value === "dark";
-      const classes = [isDark ? "dark" : null, `theme--${isDark ? "dark" : "light"}`]
-        .filter(Boolean)
-        .join(" ");
 
       return {
-        class: classes || undefined,
+        class: isDark ? "dark" : undefined,
         "data-theme": isDark ? "dark" : "light",
       };
     }),
@@ -106,8 +103,7 @@ export function useCookieColorMode() {
       const classList = document.documentElement.classList;
 
       classList.toggle("dark", isDark);
-      classList.toggle("theme--dark", isDark);
-      classList.toggle("theme--light", !isDark);
+      classList.remove("theme--dark", "theme--light");
       document.documentElement.dataset.theme = isDark ? "dark" : "light";
       document.documentElement.style.colorScheme = isDark ? "dark" : "light";
     });
