@@ -160,6 +160,14 @@ const localeMetadata = {
 } as const satisfies Record<string, { label: string; flag: string }>;
 const isDarkColor = computed(() => props.isDark);
 const theme = useTheme();
+const targetThemeName = computed(() => (props.isDark ? "dark" : "light"));
+const themeColors = computed(() => {
+  const availableThemes = theme.themes.value;
+  const targetName = targetThemeName.value as keyof typeof availableThemes;
+  const matchedTheme = availableThemes?.[targetName];
+
+  return matchedTheme?.colors ?? theme.current.value.colors;
+});
 function hexToHsl(hex: string) {
   let normalized = hex.startsWith("#") ? hex.slice(1) : hex;
 
@@ -260,7 +268,7 @@ const appBarStyle = computed(() => {
   const surfaceOpacity = props.isDark ? 0.82 : 0.92;
   const borderOpacity = props.isDark ? 0.35 : 0.22;
   const shadowOpacity = props.isDark ? 0.45 : 0.15;
-  const colors = theme.current.value.colors;
+  const colors = themeColors.value;
   const baseColor = colors.surface ?? (props.isDark ? "#0f172a" : "#f1f5f9");
   const startColor = adjustLightness(baseColor, props.isDark ? -0.06 : 0.08);
   const endColor = adjustLightness(baseColor, props.isDark ? -0.22 : -0.04);
