@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import {
   hasInjectionContext,
   tryUseNuxtApp,
@@ -36,8 +36,35 @@ const routeLoading = computed(() => routeLoadingState.value);
 const initialLoadingState = useState("app:initial-loading", () => true);
 const initialLoading = computed(() => initialLoadingState.value);
 
-function dismissInitialLoading() {
-  initialLoadingState.value = false;
+const initialRouteReady = ref(false);
+const initialHydrationComplete = ref(
+  !import.meta.client || !nuxtApp || !nuxtApp.isHydrating,
+);
+
+function maybeDismissInitialLoading(force = false) {
+  if (!initialLoadingState.value) {
+    return;
+  }
+
+  if (force || (initialRouteReady.value && initialHydrationComplete.value)) {
+    initialLoadingState.value = false;
+  }
+}
+
+function markInitialRouteReady() {
+  if (!initialRouteReady.value) {
+    initialRouteReady.value = true;
+  }
+
+  maybeDismissInitialLoading();
+}
+
+function markInitialHydrationComplete() {
+  if (!initialHydrationComplete.value) {
+    initialHydrationComplete.value = true;
+  }
+
+  maybeDismissInitialLoading();
 }
 
 const siteConfig = computed(() => {
@@ -72,7 +99,7 @@ if (import.meta.client && nuxtApp) {
     }
     finishTimer = setTimeout(() => {
       routeLoadingState.value = false;
-      dismissInitialLoading();
+      markInitialRouteReady();
     }, 250);
   }
 
@@ -82,13 +109,21 @@ if (import.meta.client && nuxtApp) {
       finishTimer = null;
     }
     routeLoadingState.value = false;
-    dismissInitialLoading();
+    markInitialRouteReady();
+    markInitialHydrationComplete();
+    maybeDismissInitialLoading(true);
   }
 
   nuxtApp.hook("page:start", handleRouteStart);
   nuxtApp.hook("page:finish", handleRouteStop);
   nuxtApp.hook("page:error", handleRouteError);
-  nuxtApp.hook("app:mounted", dismissInitialLoading);
+  nuxtApp.hook("app:suspense:resolve", markInitialHydrationComplete);
+  nuxtApp.hook("app:mounted", () => {
+    markInitialRouteReady();
+    if (!nuxtApp.isHydrating) {
+      markInitialHydrationComplete();
+    }
+  });
 }
 
 const pageKey = computed(() => route.fullPath ?? route.name ?? "");
