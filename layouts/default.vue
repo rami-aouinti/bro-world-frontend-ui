@@ -864,6 +864,14 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   box-sizing: border-box;
 }
 
+@media (min-width: 960px) {
+  .main-scroll__viewport {
+    position: sticky;
+    top: calc(var(--app-bar-height));
+    height: calc(100vh - var(--app-bar-height));
+  }
+}
+
 .app-container {
   position: relative;
   z-index: 2;
