@@ -202,7 +202,7 @@
     </v-navigation-drawer>
 
     <v-main class="app-surface">
-      <div class="main-scroll pane-scroll">
+      <div class="main-scroll">
         <ClientOnly>
           <ParticlesBg
             class="sidebar-default-card__particles"
@@ -218,7 +218,7 @@
             />
           </template>
         </ClientOnly>
-        <div class="main-scroll__viewport pane-scroll">
+        <div class="main-scroll__viewport">
           <div
             v-show="areSidebarsReady"
             class="app-container"
@@ -813,7 +813,8 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   align-items: stretch;
   min-height: 100vh;
   background: transparent;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .app-surface::before {
@@ -859,17 +860,9 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  min-height: calc(100vh - var(--app-bar-height));
   padding-block: clamp(8px, 2vw, 16px);
   box-sizing: border-box;
-}
-
-@media (min-width: 960px) {
-  .main-scroll__viewport {
-    position: sticky;
-    top: calc(var(--app-bar-height));
-    height: calc(100vh - var(--app-bar-height));
-  }
 }
 
 .app-container {
