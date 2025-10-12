@@ -46,7 +46,7 @@
           />
         </template>
       </ClientOnly>
-      <div class="pane-scroll py-4 bg-card">
+      <div class="pane-scroll py-4">
         <slot
           name="left-sidebar"
           :items="sidebarItems"
@@ -104,7 +104,7 @@
             <ClientOnly>
               <div
                 v-if="canShowRightWidgets"
-                class="pane-scroll bg-card"
+                class="pane-scroll"
                 :class="{ hidden: !shouldRenderRightSidebarContent }"
                 :aria-hidden="!shouldRenderRightSidebarContent"
               >
@@ -157,7 +157,7 @@
               <template #fallback>
                 <div
                   v-if="canShowRightWidgets"
-                  class="pane-scroll px-3 py-4 bg-card"
+                  class="pane-scroll px-3 py-4"
                 >
                   <div class="flex flex-col gap-6">
                     <v-skeleton-loader
@@ -180,7 +180,7 @@
           <div class="right-drawer-wrapper">
             <div
               v-if="canShowRightWidgets"
-              class="pane-scroll px-3 py-4 bg-card"
+              class="pane-scroll px-3 py-4"
             >
               <div class="flex flex-col gap-6">
                 <v-skeleton-loader
@@ -201,7 +201,7 @@
     </v-navigation-drawer>
 
     <v-main class="app-surface">
-      <div class="main-scroll bg-card">
+      <div class="main-scroll">
         <ClientOnly>
           <ParticlesBg
             class="sidebar-default-card__particles"
