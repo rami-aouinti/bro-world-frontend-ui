@@ -384,6 +384,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import type { FriendCard } from "~/types/pages/profile";
 
 definePageMeta({
   middleware: "auth",
@@ -424,20 +425,6 @@ useHead(() => {
     link: [{ rel: "canonical", href: canonical }],
   };
 });
-
-interface FriendCard {
-  id: string;
-  name: string;
-  headline: string;
-  avatar: string;
-  location: string;
-  mutualCount: number;
-  status: "online" | "offline" | "busy" | "focus";
-  tags: string[];
-  segments: ("design" | "product" | "engineering" | "marketing")[];
-  lastActive: string;
-  bio: string;
-}
 
 const allFriends = ref<FriendCard[]>([
   {

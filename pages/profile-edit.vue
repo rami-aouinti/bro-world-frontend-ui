@@ -339,6 +339,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import type { ProfileForm } from "~/types/pages/profile";
 
 definePageMeta({
   middleware: "auth",
@@ -379,28 +380,6 @@ useHead(() => {
     link: [{ rel: "canonical", href: canonical }],
   };
 });
-
-interface ProfileForm {
-  firstName: string;
-  lastName: string;
-  headline: string;
-  pronouns: string | null;
-  language: string;
-  timezone: string | null;
-  email: string;
-  phone: string;
-  location: string;
-  website: string;
-  bio: string;
-  skills: string[];
-  interests: string[];
-  social: {
-    linkedin: string;
-    twitter: string;
-    dribbble: string;
-    behance: string;
-  };
-}
 
 const initialForm: ProfileForm = {
   firstName: "Amina",

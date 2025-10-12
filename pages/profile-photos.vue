@@ -350,6 +350,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import type { AlbumSummary, PhotoItem } from "~/types/pages/profile";
 
 definePageMeta({
   middleware: "auth",
@@ -390,27 +391,6 @@ useHead(() => {
     link: [{ rel: "canonical", href: canonical }],
   };
 });
-
-interface PhotoItem {
-  id: string;
-  src: string;
-  alt: string;
-  title: string;
-  category: string;
-  takenAt: string;
-  ratio: number;
-  filter: string;
-}
-
-interface AlbumSummary {
-  id: string;
-  title: string;
-  description: string;
-  cover: string;
-  count: number;
-  location: string;
-  updated: string;
-}
 
 const highlightedAlbum = reactive<AlbumSummary>({
   id: "field-research",
