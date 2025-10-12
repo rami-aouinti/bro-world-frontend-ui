@@ -1,8 +1,10 @@
 <template>
   <component
     :is="tagName"
+    ref="cardRef"
     v-bind="cardAttrs"
     :class="cardClass"
+    :style="cardStyle"
   >
     <ParticlesBg
       v-if="shouldRenderParticles"
@@ -14,7 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, useAttrs, withDefaults } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  nextTick,
+  onMounted,
+  ref,
+  useAttrs,
+  watch,
+  withDefaults,
+} from "vue";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
 
@@ -53,6 +64,8 @@ const paddingClassMap: Record<PaddingSize, string> = {
   lg: "p-6",
 };
 
+const cardRef = ref<HTMLElement | null>(null);
+
 const cardAttrs = computed(() => {
   const result: Record<string, unknown> = {};
 
@@ -70,6 +83,57 @@ const cardClass = computed(() => [
   paddingClassMap[props.padding],
   attrs.class as string | string[] | Record<string, boolean> | undefined,
 ]);
+
+const paddingValueMap: Record<PaddingSize, string> = {
+  none: "0px",
+  sm: "1rem",
+  md: "1.25rem",
+  lg: "1.5rem",
+};
+
+const cardStyle = ref<Record<string, string>>({
+  "--card-x": paddingValueMap[props.padding] ?? "0px",
+});
+
+watch(
+  () => props.padding,
+  (value) => {
+    cardStyle.value = {
+      ...cardStyle.value,
+      "--card-x": paddingValueMap[value] ?? "0px",
+    };
+  },
+);
+
+if (import.meta.client) {
+  const updatePaddingVariable = () => {
+    void nextTick(() => {
+      if (!cardRef.value) {
+        return;
+      }
+
+      const computedStyle = window.getComputedStyle(cardRef.value);
+      const paddingValue =
+        computedStyle.paddingInlineStart ||
+        computedStyle.paddingLeft ||
+        paddingValueMap[props.padding] ||
+        "0px";
+
+      cardStyle.value = {
+        ...cardStyle.value,
+        "--card-x": paddingValue,
+      };
+    });
+  };
+
+  watch([cardClass, () => props.padding], () => {
+    updatePaddingVariable();
+  });
+
+  onMounted(() => {
+    updatePaddingVariable();
+  });
+}
 
 const shouldRenderParticles = computed(() => props.particles);
 const resolvedParticlesProps = computed(() => props.particlesProps);
