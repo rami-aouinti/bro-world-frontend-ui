@@ -576,7 +576,7 @@ const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   return items;
 });
 
-const activeSidebar = ref("apps");
+const activeSidebar = ref("");
 
 /** Données de démonstration pour ProfileSidebar */
 const user = computed(() => auth.currentUser.value ?? null);
@@ -767,22 +767,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
     return;
   }
 
-  const fallbackKey = findFirstSidebarKey(items);
-  if (fallbackKey) activeSidebar.value = fallbackKey;
-}
-
-function findFirstSidebarKey(items: LayoutSidebarItem[]): string | null {
-  for (const item of items) {
-    if (item.children?.length) {
-      const childKey = findFirstSidebarKey(item.children);
-      if (childKey) return childKey;
-      continue;
-    }
-
-    return item.key;
-  }
-
-  return null;
+  activeSidebar.value = "";
 }
 </script>
 

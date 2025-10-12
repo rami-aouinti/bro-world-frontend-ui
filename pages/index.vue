@@ -132,6 +132,16 @@ onMounted(() => {
 
 const canAccessAuthenticatedContent = computed(
   () => isClient.value && auth.isReady.value && auth.isAuthenticated.value,
+const isHydrated = ref(false);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isHydrated.value = true;
+  });
+}
+
+const canAccessAuthenticatedContent = computed(
+  () => isHydrated.value && auth.isReady.value && auth.isAuthenticated.value,
 );
 const user = {
   name: "Rami Aouinti",
