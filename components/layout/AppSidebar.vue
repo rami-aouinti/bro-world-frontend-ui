@@ -35,6 +35,11 @@
                     :name="item.icon"
                     :size="20"
                   />
+                  <span
+                    v-else
+                    class="sidebar-icon-placeholder"
+                    aria-hidden="true"
+                  ></span>
                   <span class="text-sm font-medium text-foreground">{{ resolveLabel(item) }}</span>
                 </div>
                 <button
@@ -83,6 +88,11 @@
                       :name="child.icon"
                       :size="18"
                     />
+                    <span
+                      v-else
+                      class="sidebar-icon-placeholder sidebar-icon-placeholder--sm"
+                      aria-hidden="true"
+                    ></span>
                     <span class="text-sm text-muted-foreground">{{ resolveLabel(child) }}</span>
                   </NuxtLink>
                 </li>
@@ -429,5 +439,18 @@ function resolveLocalizedPath(target?: string): string | undefined {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+}
+
+.sidebar-icon-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar-icon-placeholder--sm {
+  width: 18px;
+  height: 18px;
 }
 </style>
