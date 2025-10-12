@@ -92,7 +92,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onUnmounted, ref, watch, watchEffect } from "vue";
+import { useIntersectionObserver } from "@vueuse/core";
+import { computed, defineAsyncComponent, onUnmounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -190,8 +191,8 @@ const stories = ref<Story[]>([
 const activeStory = ref<Story | null>(null);
 const isStoryViewerOpen = ref(false);
 
-watch(canAccessAuthenticatedContent, (value) => {
-  if (!value) {
+watchEffect(() => {
+  if (!canAccessAuthenticatedContent.value) {
     isStoryViewerOpen.value = false;
     activeStory.value = null;
   }
@@ -311,10 +312,6 @@ const skeletonBatchSize = computed(() => {
 const loadMoreTrigger = ref<HTMLElement | null>(null);
 
 async function maybeLoadMore() {
-  if (typeof window === "undefined") {
-    return;
-  }
-
   if (!hasMore.value || pending.value || loadingMore.value) {
     return;
   }
@@ -326,31 +323,23 @@ async function maybeLoadMore() {
   }
 }
 
-if (typeof window !== "undefined") {
-  watchEffect((onCleanup) => {
-    const target = loadMoreTrigger.value;
+if (import.meta.client) {
+  useIntersectionObserver(
+    loadMoreTrigger,
+    (entries) => {
+      if (!hasMore.value || pending.value || loadingMore.value) {
+        return;
+      }
 
-    if (!target || pending.value || !hasMore.value || typeof IntersectionObserver === "undefined") {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            void maybeLoadMore();
-          }
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          void maybeLoadMore();
+          break;
         }
-      },
-      { rootMargin: "200px 0px" },
-    );
-
-    observer.observe(target);
-
-    onCleanup(() => {
-      observer.disconnect();
-    });
-  });
+      }
+    },
+    { rootMargin: "200px 0px" },
+  );
 }
 
 await callOnce(() => fetchPosts(1, { params: { pageSize: INITIAL_PAGE_SIZE } }));
