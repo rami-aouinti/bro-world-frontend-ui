@@ -229,14 +229,7 @@
       max-width="720"
       aria-labelledby="create-dialog-title"
     >
-      <SidebarCard class="text-card-foreground">
-        <!-- glows -->
-        <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-        ></span>
-        <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-        ></span>
+      <SidebarCard class="text-card-foreground" glow>
         <v-card-title
           id="create-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -286,14 +279,7 @@
       max-width="720"
       aria-labelledby="edit-dialog-title"
     >
-      <SidebarCard class="text-card-foreground">
-        <!-- glows -->
-        <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-        ></span>
-        <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-        ></span>
+      <SidebarCard class="text-card-foreground" glow>
         <v-card-title
           id="edit-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -343,14 +329,7 @@
       max-width="480"
       aria-labelledby="delete-dialog-title"
     >
-      <SidebarCard class="text-card-foreground">
-        <!-- glows -->
-        <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-        ></span>
-        <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-        ></span>
+      <SidebarCard class="text-card-foreground" glow>
         <v-card-title
           id="delete-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -394,14 +373,7 @@
       max-width="720"
       aria-labelledby="preview-dialog-title"
     >
-      <SidebarCard class="text-card-foreground">
-        <!-- glows -->
-        <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-        ></span>
-        <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-        ></span>
+      <SidebarCard class="text-card-foreground" glow>
         <v-card-title
           id="preview-dialog-title"
           class="text-h6 font-weight-semibold"

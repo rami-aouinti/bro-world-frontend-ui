@@ -7,13 +7,8 @@
       <SidebarCard
         class="text-card-foreground px-3 py-2"
         padding="lg"
+        glow
       >
-        <span
-            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-        ></span>
-        <span
-            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-        ></span>
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
           <div>
             <h1
@@ -82,13 +77,8 @@
           <SidebarCard
             class="text-card-foreground px-3 py-2"
             padding="lg"
+            glow
           >
-            <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-            ></span>
-            <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-            ></span>
             <h2
               id="profile-core-section"
               class="text-h5 font-weight-semibold mb-4"
@@ -157,13 +147,8 @@
           <SidebarCard
             class="text-card-foreground px-3 py-2"
             padding="lg"
+            glow
           >
-            <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-            ></span>
-            <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-            ></span>
             <h2
               id="profile-contact-section"
               class="text-h5 font-weight-semibold mb-4"
@@ -210,13 +195,8 @@
           <SidebarCard
             class="text-card-foreground px-3 py-2"
             padding="lg"
+            glow
           >
-            <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-            ></span>
-            <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-            ></span>
             <h2
               id="profile-about-section"
               class="text-h5 font-weight-semibold mb-4"
@@ -270,13 +250,8 @@
             v-if="canManageSite"
             class="text-card-foreground mb-6 px-3 py-2"
             padding="lg"
+            glow
           >
-            <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-            ></span>
-            <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-            ></span>
             <div class="d-flex align-center justify-space-between mb-4">
               <div>
                 <h2 class="text-h6 font-weight-semibold mb-1">
@@ -333,13 +308,8 @@
           <SidebarCard
             class="text-card-foreground mb-6 px-3 py-2"
             padding="lg"
+            glow
           >
-            <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-            ></span>
-            <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-            ></span>
             <h2 class="text-h6 font-weight-semibold mb-4">
               {{ t("pages.profileEdit.sections.social") }}
             </h2>
@@ -378,13 +348,8 @@
           <SidebarCard
             class="text-card-foreground px-3 py-2"
             padding="lg"
+            glow
           >
-            <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-            ></span>
-            <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-            ></span>
             <h2 class="text-h6 font-weight-semibold mb-3">
               {{ t("pages.profileEdit.sections.contact") }}
             </h2>
