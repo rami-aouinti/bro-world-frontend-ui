@@ -27,7 +27,10 @@
       </button>
       <button
         type="button"
-        :class="[props.iconTriggerClasses, props.refreshing ? 'pointer-events-none opacity-60' : '']"
+        :class="[
+          props.iconTriggerClasses,
+          props.refreshing ? 'pointer-events-none opacity-60' : '',
+        ]"
         :aria-label="props.refreshLabel"
         :aria-busy="props.refreshing"
         :disabled="props.refreshing"
@@ -58,12 +61,12 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-  isMobile: boolean;
-  iconTriggerClasses: string;
-  navigationLabel: string;
-  goBackLabel: string;
-  refreshLabel: string;
-  refreshing?: boolean;
+    isMobile: boolean;
+    iconTriggerClasses: string;
+    navigationLabel: string;
+    goBackLabel: string;
+    refreshLabel: string;
+    refreshing?: boolean;
   }>(),
   {
     refreshing: false,

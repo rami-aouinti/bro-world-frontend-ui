@@ -525,10 +525,13 @@ function resolveSiteTagline(settings: SiteSettings, language: string): string {
     defaultSiteSettings.tagline ??
     "";
 
-  return typeof tagline === "string" ? tagline : tagline ?? "";
+  return typeof tagline === "string" ? tagline : (tagline ?? "");
 }
 
-function cloneLocalizedPages(settings: SiteSettings, language: string): SiteLocalizedSettings["pages"] {
+function cloneLocalizedPages(
+  settings: SiteSettings,
+  language: string,
+): SiteLocalizedSettings["pages"] {
   const normalizedDefault = settings.defaultLanguage || defaultSiteSettings.defaultLanguage;
 
   if (language === normalizedDefault) {
@@ -585,7 +588,9 @@ watch(
     const settings = value ?? defaultSiteSettings;
     siteSettingsForm.siteName = settings.siteName;
     const { languages, defaultLanguage } = syncSiteSettingsDrafts(settings);
-    const preferredLanguage = languages.some((language) => language.code === siteSettingsForm.language)
+    const preferredLanguage = languages.some(
+      (language) => language.code === siteSettingsForm.language,
+    )
       ? siteSettingsForm.language
       : defaultLanguage || languages[0]?.code || defaultSiteSettings.defaultLanguage;
     siteSettingsForm.language = preferredLanguage;
@@ -601,7 +606,10 @@ watch(
     }
 
     if (!(language in siteSettingsForm.taglines)) {
-      siteSettingsForm.taglines[language] = resolveSiteTagline(resolvedSiteSettings.value, language);
+      siteSettingsForm.taglines[language] = resolveSiteTagline(
+        resolvedSiteSettings.value,
+        language,
+      );
     }
   },
 );
@@ -615,9 +623,10 @@ const siteSettingsTagline = computed({
 
 const siteSettingsLanguageOptions = computed(() => {
   const settings = resolvedSiteSettings.value;
-  const map = new Map<string, { code: string; label?: string | null; endonym?: string | null; enabled?: boolean }>(
-    getSiteLanguageSource(settings).map((language) => [language.code, language]),
-  );
+  const map = new Map<
+    string,
+    { code: string; label?: string | null; endonym?: string | null; enabled?: boolean }
+  >(getSiteLanguageSource(settings).map((language) => [language.code, language]));
 
   for (const code of Object.keys(siteSettingsForm.taglines)) {
     if (map.has(code)) continue;

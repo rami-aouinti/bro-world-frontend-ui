@@ -47,7 +47,10 @@
         <div class="settings-header-shadow" />
       </header>
 
-      <v-row class="settings-shell" dense>
+      <v-row
+        class="settings-shell"
+        dense
+      >
         <v-col
           cols="12"
           md="3"
@@ -106,18 +109,13 @@ import { useI18n } from "vue-i18n";
 
 import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
 
-const props = defineProps<{ section: "general" | "themes" | "profile" | "appearance" | "pages" | "navigation" }>();
+const props = defineProps<{
+  section: "general" | "themes" | "profile" | "appearance" | "pages" | "navigation";
+}>();
 
 const { t } = useI18n();
-const {
-  hasChanges,
-  isSaving,
-  pending,
-  reset,
-  save,
-  snackbar,
-  setSnackbar,
-} = useAdminSettingsEditor();
+const { hasChanges, isSaving, pending, reset, save, snackbar, setSnackbar } =
+  useAdminSettingsEditor();
 
 const activeSection = computed(() => props.section);
 
@@ -171,7 +169,9 @@ const sections = computed(() => [
   },
 ]);
 
-const currentSection = computed(() => sections.value.find((section) => section.key === activeSection.value));
+const currentSection = computed(() =>
+  sections.value.find((section) => section.key === activeSection.value),
+);
 
 const stickyHeader = ref<HTMLElement | null>(null);
 const isStuck = ref(false);

@@ -58,27 +58,27 @@
             size="32"
             class="bg-primary/10 text-primary"
           >
-          <template v-if="props.user">
-            <span class="text-[12px] font-semibold uppercase">
-              {{ initials }}
-            </span>
-          </template>
-          <template v-else>
-            <Icon
-              name="mdi:account-outline"
-              :size="20"
-            />
-          </template>
-        </v-avatar>
+            <template v-if="props.user">
+              <span class="text-[12px] font-semibold uppercase">
+                {{ initials }}
+              </span>
+            </template>
+            <template v-else>
+              <Icon
+                name="mdi:account-outline"
+                :size="20"
+              />
+            </template>
+          </v-avatar>
 
-        <div class="min-w-0">
-          <p class="text-sm font-semibold leading-tight truncate">
-            {{ heading }}
-          </p>
-          <p class="text-xs text-muted-foreground truncate">
-            {{ subheading }}
-          </p>
-        </div>
+          <div class="min-w-0">
+            <p class="text-sm font-semibold leading-tight truncate">
+              {{ heading }}
+            </p>
+            <p class="text-xs text-muted-foreground truncate">
+              {{ subheading }}
+            </p>
+          </div>
         </div>
 
         <v-divider class="opacity-70" />

@@ -56,12 +56,16 @@ function getRedisConfig(event?: H3Event): RedisSettingsConfig {
   const runtime = event ? useRuntimeConfig(event) : useRuntimeConfig();
   const redis = (runtime.redis ?? {}) as Partial<RedisSettingsConfig & { keyPrefix?: string }>;
 
-  const ttl = Number.isFinite(redis.settingsTtl) && Number(redis.settingsTtl) > 0 ? Number(redis.settingsTtl) : 300;
+  const ttl =
+    Number.isFinite(redis.settingsTtl) && Number(redis.settingsTtl) > 0
+      ? Number(redis.settingsTtl)
+      : 300;
 
   return {
     url: typeof redis.url === "string" ? redis.url : "",
     tls: Boolean(redis.tls),
-    keyPrefix: typeof redis.keyPrefix === "string" && redis.keyPrefix ? redis.keyPrefix : "bro-world",
+    keyPrefix:
+      typeof redis.keyPrefix === "string" && redis.keyPrefix ? redis.keyPrefix : "bro-world",
     settingsTtl: ttl,
   } satisfies RedisSettingsConfig;
 }
@@ -182,7 +186,12 @@ async function writeToRedisCache(cacheKey: string, settings: SiteSettings): Prom
   const config = getRedisConfig();
 
   try {
-    await client.set(getRedisKey(config, cacheKey), JSON.stringify(settings), "EX", config.settingsTtl);
+    await client.set(
+      getRedisKey(config, cacheKey),
+      JSON.stringify(settings),
+      "EX",
+      config.settingsTtl,
+    );
   } catch (error) {
     console.error("[settings-storage] Failed to persist settings to Redis", error);
   }
@@ -286,7 +295,9 @@ function sanitizeProfileSettings(
     showDetailsSection: payload?.showDetailsSection ?? source.showDetailsSection,
     showSocialSection: payload?.showSocialSection ?? source.showSocialSection,
     defaultBio:
-      payload?.defaultBio === undefined ? source.defaultBio ?? null : payload.defaultBio?.trim() || null,
+      payload?.defaultBio === undefined
+        ? (source.defaultBio ?? null)
+        : payload.defaultBio?.trim() || null,
   } satisfies SiteProfileSettings;
 }
 
@@ -297,10 +308,7 @@ function sanitizeUiSettings(
   const source = current ?? defaultSiteSettings.ui;
 
   const requestedMode = payload?.defaultThemeMode;
-  const normalizedMode:
-    | "light"
-    | "dark"
-    | "system" =
+  const normalizedMode: "light" | "dark" | "system" =
     requestedMode === "light" || requestedMode === "dark" || requestedMode === "system"
       ? requestedMode
       : source.defaultThemeMode;
@@ -319,32 +327,39 @@ function sanitizeContentBlock(
   const source = current ?? fallback;
 
   const title =
-    payload?.title !== undefined ? payload.title?.toString().trim() || fallback.title : source.title ?? fallback.title;
+    payload?.title !== undefined
+      ? payload.title?.toString().trim() || fallback.title
+      : (source.title ?? fallback.title);
   const subtitle =
     payload?.subtitle !== undefined
       ? payload.subtitle?.toString().trim() || null
-      : source.subtitle ?? fallback.subtitle ?? null;
+      : (source.subtitle ?? fallback.subtitle ?? null);
   const body =
     payload?.body !== undefined
       ? payload.body?.toString().trim() || null
-      : source.body ?? fallback.body ?? null;
+      : (source.body ?? fallback.body ?? null);
 
   const hasChanges =
     (payload?.title !== undefined && title !== (source.title ?? fallback.title)) ||
-    (payload?.subtitle !== undefined && subtitle !== (source.subtitle ?? fallback.subtitle ?? null)) ||
+    (payload?.subtitle !== undefined &&
+      subtitle !== (source.subtitle ?? fallback.subtitle ?? null)) ||
     (payload?.body !== undefined && body !== (source.body ?? fallback.body ?? null));
 
   return {
     title,
     subtitle,
     body,
-    updatedAt: hasChanges ? new Date().toISOString() : source.updatedAt ?? fallback.updatedAt,
+    updatedAt: hasChanges ? new Date().toISOString() : (source.updatedAt ?? fallback.updatedAt),
   } satisfies SiteContentBlock;
 }
 
-type LanguageCandidate = Partial<Pick<SiteLanguageDefinition, "code" | "label" | "endonym" | "enabled">>;
+type LanguageCandidate = Partial<
+  Pick<SiteLanguageDefinition, "code" | "label" | "endonym" | "enabled">
+>;
 
-const supportedLanguageMap = new Map(supportedLanguages.map((language) => [language.code, language] as const));
+const supportedLanguageMap = new Map(
+  supportedLanguages.map((language) => [language.code, language] as const),
+);
 
 function sortLanguages(languages: SiteLanguageDefinition[]): SiteLanguageDefinition[] {
   return [...languages].sort((a, b) => {
@@ -359,7 +374,9 @@ function sortLanguages(languages: SiteLanguageDefinition[]): SiteLanguageDefinit
   });
 }
 
-function sanitizeLanguageCandidate(candidate: LanguageCandidate | null | undefined): SiteLanguageDefinition | null {
+function sanitizeLanguageCandidate(
+  candidate: LanguageCandidate | null | undefined,
+): SiteLanguageDefinition | null {
   if (!candidate) {
     return null;
   }
@@ -374,9 +391,13 @@ function sanitizeLanguageCandidate(candidate: LanguageCandidate | null | undefin
   const meta = supportedLanguageMap.get(code) ?? getSupportedLanguage(code);
 
   const labelSource =
-    typeof candidate.label === "string" && candidate.label.trim() ? candidate.label.trim() : meta?.label;
+    typeof candidate.label === "string" && candidate.label.trim()
+      ? candidate.label.trim()
+      : meta?.label;
   const endonymSource =
-    typeof candidate.endonym === "string" && candidate.endonym.trim() ? candidate.endonym.trim() : meta?.endonym;
+    typeof candidate.endonym === "string" && candidate.endonym.trim()
+      ? candidate.endonym.trim()
+      : meta?.endonym;
 
   const label = labelSource ?? endonymSource ?? code.toUpperCase();
   const endonym = endonymSource ?? label;
@@ -434,13 +455,19 @@ function resolveDefaultLanguage(
 ): string {
   const normalizedRequest = typeof requested === "string" ? requested.trim() : "";
 
-  if (normalizedRequest && languages.some((language) => language.code === normalizedRequest && language.enabled)) {
+  if (
+    normalizedRequest &&
+    languages.some((language) => language.code === normalizedRequest && language.enabled)
+  ) {
     return normalizedRequest;
   }
 
   const normalizedFallback = typeof fallback === "string" ? fallback.trim() : "";
 
-  if (normalizedFallback && languages.some((language) => language.code === normalizedFallback && language.enabled)) {
+  if (
+    normalizedFallback &&
+    languages.some((language) => language.code === normalizedFallback && language.enabled)
+  ) {
     return normalizedFallback;
   }
 
@@ -514,7 +541,8 @@ function createLocalizedDefaults(
   defaultTagline: string | null,
   defaultPages: SiteSettings["pages"],
 ): SiteLocalizedSettings {
-  const source = defaults.localized?.[languageCode] ?? defaults.localized?.[defaults.defaultLanguage];
+  const source =
+    defaults.localized?.[languageCode] ?? defaults.localized?.[defaults.defaultLanguage];
 
   return {
     tagline: defaultTagline ?? source?.tagline ?? defaults.tagline ?? null,
@@ -534,15 +562,22 @@ function sanitizeLocalizedEntry(
   defaultTagline: string | null,
   defaultPages: SiteSettings["pages"],
 ): SiteLocalizedSettings {
-  const baseline = fallback ?? defaults.localized?.[languageCode] ?? defaults.localized?.[defaults.defaultLanguage];
+  const baseline =
+    fallback ??
+    defaults.localized?.[languageCode] ??
+    defaults.localized?.[defaults.defaultLanguage];
 
   const tagline = sanitizeLocalizedTagline(
     payload?.tagline,
-    baseline?.tagline ?? defaults.localized?.[defaults.defaultLanguage]?.tagline ?? defaults.tagline ?? null,
+    baseline?.tagline ??
+      defaults.localized?.[defaults.defaultLanguage]?.tagline ??
+      defaults.tagline ??
+      null,
     defaultTagline ?? defaults.tagline ?? null,
   );
 
-  const fallbackPages = baseline?.pages ?? defaults.localized?.[defaults.defaultLanguage]?.pages ?? defaults.pages;
+  const fallbackPages =
+    baseline?.pages ?? defaults.localized?.[defaults.defaultLanguage]?.pages ?? defaults.pages;
 
   return {
     tagline,
@@ -598,7 +633,9 @@ function sanitizeLocalizedSettingsMap(
     );
   }
 
-  const ensuredDefault = result[defaultLanguage] ?? createLocalizedDefaults(defaults, defaultLanguage, defaultTagline, defaultPages);
+  const ensuredDefault =
+    result[defaultLanguage] ??
+    createLocalizedDefaults(defaults, defaultLanguage, defaultTagline, defaultPages);
 
   result[defaultLanguage] = {
     ...ensuredDefault,
@@ -623,9 +660,11 @@ function normalizeSettings(settings: SiteSettings): SiteSettings {
     defaults.defaultLanguage ?? defaultLanguageCode,
   );
 
-  const normalizedThemes = (settings.themes?.length ? settings.themes : defaults.themes).map((theme) => ({
-    ...sanitizeTheme(theme),
-  }));
+  const normalizedThemes = (settings.themes?.length ? settings.themes : defaults.themes).map(
+    (theme) => ({
+      ...sanitizeTheme(theme),
+    }),
+  );
 
   const menusSource = settings.menus?.length ? settings.menus : defaults.menus;
   const sortedMenus = [...menusSource].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -691,7 +730,7 @@ function ensureActiveThemeId(settings: SiteSettings): SiteSettings {
 }
 
 function resolveCacheKey(event: H3Event | undefined) {
-  const userId = event ? getSessionUser(event)?.id ?? null : null;
+  const userId = event ? (getSessionUser(event)?.id ?? null) : null;
   const cacheKey = userId ? `user:${userId}` : "default";
 
   return { cacheKey, userId };
@@ -705,7 +744,9 @@ function resolveConfigurationApiBase(event: H3Event): string {
 }
 
 function isFetchError(error: unknown): error is FetchError<unknown> {
-  return Boolean(error && typeof error === "object" && "response" in (error as Record<string, unknown>));
+  return Boolean(
+    error && typeof error === "object" && "response" in (error as Record<string, unknown>),
+  );
 }
 
 async function readFromConfigurationApi(event: H3Event): Promise<SiteSettings | null> {
@@ -754,7 +795,10 @@ async function readFromConfigurationApi(event: H3Event): Promise<SiteSettings | 
   }
 }
 
-async function persistToConfigurationApi(event: H3Event, settings: SiteSettings): Promise<SiteSettings> {
+async function persistToConfigurationApi(
+  event: H3Event,
+  settings: SiteSettings,
+): Promise<SiteSettings> {
   const token = getSessionToken(event);
 
   if (!token) {
@@ -786,7 +830,8 @@ async function persistToConfigurationApi(event: H3Event, settings: SiteSettings)
 
     const withTimestamps: SiteSettings = {
       ...value,
-      updatedAt: value.updatedAt ?? response.updatedAt ?? settings.updatedAt ?? new Date().toISOString(),
+      updatedAt:
+        value.updatedAt ?? response.updatedAt ?? settings.updatedAt ?? new Date().toISOString(),
     };
 
     return ensureActiveThemeId(normalizeSettings(withTimestamps));
@@ -871,11 +916,15 @@ export async function updateSiteSettings(
   );
 
   const normalizedTagline =
-    payload.tagline === undefined ? current.tagline ?? null : payload.tagline?.trim() || null;
+    payload.tagline === undefined ? (current.tagline ?? null) : payload.tagline?.trim() || null;
 
   const normalizedPages: SiteSettings["pages"] = {
     about: sanitizeContentBlock(payload.pages?.about, current.pages.about, defaults.pages.about),
-    contact: sanitizeContentBlock(payload.pages?.contact, current.pages.contact, defaults.pages.contact),
+    contact: sanitizeContentBlock(
+      payload.pages?.contact,
+      current.pages.contact,
+      defaults.pages.contact,
+    ),
     help: sanitizeContentBlock(payload.pages?.help, current.pages.help, defaults.pages.help),
   };
 

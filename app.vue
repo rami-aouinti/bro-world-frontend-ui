@@ -37,9 +37,7 @@ const initialLoadingState = useState("app:initial-loading", () => true);
 const initialLoading = computed(() => initialLoadingState.value);
 
 const initialRouteReady = ref(false);
-const initialHydrationComplete = ref(
-  !import.meta.client || !nuxtApp || !nuxtApp.isHydrating,
-);
+const initialHydrationComplete = ref(!import.meta.client || !nuxtApp || !nuxtApp.isHydrating);
 
 function maybeDismissInitialLoading(force = false) {
   if (!initialLoadingState.value) {

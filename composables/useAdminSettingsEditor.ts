@@ -3,11 +3,7 @@ import { refreshNuxtData, useAsyncData } from "#imports";
 
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
-import type {
-  SiteMenuItem,
-  SiteSettings,
-  SiteThemeDefinition,
-} from "~/types/settings";
+import type { SiteMenuItem, SiteSettings, SiteThemeDefinition } from "~/types/settings";
 
 export interface EditableMenu extends Omit<SiteMenuItem, "children"> {
   children: EditableMenu[];
@@ -81,7 +77,10 @@ function serializePageContent(page: { title: string; subtitle: string; body: str
 }
 
 function createPageDraft(
-  block: { title?: string | null; subtitle?: string | null; body?: string | null } | null | undefined,
+  block:
+    | { title?: string | null; subtitle?: string | null; body?: string | null }
+    | null
+    | undefined,
 ): EditablePageContent {
   return {
     title: block?.title ?? "",
@@ -137,7 +136,7 @@ function createLocalizedDraft(
     defaults.pages;
 
   return {
-    tagline: typeof taglineSource === "string" ? taglineSource : taglineSource ?? "",
+    tagline: typeof taglineSource === "string" ? taglineSource : (taglineSource ?? ""),
     pages: {
       about: createPageDraft(baselinePages?.about ?? defaults.pages.about),
       contact: createPageDraft(baselinePages?.contact ?? defaults.pages.contact),
@@ -165,7 +164,9 @@ function createFormFromSettings(settings: SiteSettings): AdminSettingsForm {
   const activeLanguage =
     (settings.defaultLanguage && drafts[settings.defaultLanguage]
       ? settings.defaultLanguage
-      : null) || availableCodes[0] || defaults.defaultLanguage;
+      : null) ||
+    availableCodes[0] ||
+    defaults.defaultLanguage;
 
   const activeDraft = drafts[activeLanguage] ?? createEmptyLocalizedDraft();
 
@@ -255,9 +256,8 @@ export function useAdminSettingsEditor() {
   const formState = useState<AdminSettingsForm>("admin-settings-form", () =>
     createFormFromSettings(defaultSettings),
   );
-  const snapshotState = useState<string>(
-    "admin-settings-snapshot",
-    () => JSON.stringify(serializeFormState(formState.value)),
+  const snapshotState = useState<string>("admin-settings-snapshot", () =>
+    JSON.stringify(serializeFormState(formState.value)),
   );
   const isSavingState = useState<boolean>("admin-settings-saving", () => false);
   const snackbarState = useState<SnackbarState>("admin-settings-snackbar", () => ({
@@ -267,13 +267,15 @@ export function useAdminSettingsEditor() {
   }));
   const watchersRegisteredState = useState<boolean>("admin-settings-watchers", () => false);
 
-  const { data: fetchedSettings, pending, refresh, error } = useAsyncData(
-    "admin-site-settings",
-    async () => {
-      const response = await $fetch<{ data: SiteSettings }>("/api/settings");
-      return response.data;
-    },
-  );
+  const {
+    data: fetchedSettings,
+    pending,
+    refresh,
+    error,
+  } = useAsyncData("admin-site-settings", async () => {
+    const response = await $fetch<{ data: SiteSettings }>("/api/settings");
+    return response.data;
+  });
 
   function applySettings(settings: SiteSettings) {
     formState.value = createFormFromSettings(settings);
@@ -356,9 +358,10 @@ export function useAdminSettingsEditor() {
 
   const languageOptions = computed(() => {
     const settings = siteSettingsState.value ?? defaultSettings;
-    const map = new Map<string, { code: string; label?: string | null; endonym?: string | null; enabled?: boolean }>(
-      getLanguageSource(settings, defaultSettings).map((language) => [language.code, language]),
-    );
+    const map = new Map<
+      string,
+      { code: string; label?: string | null; endonym?: string | null; enabled?: boolean }
+    >(getLanguageSource(settings, defaultSettings).map((language) => [language.code, language]));
 
     for (const code of Object.keys(formState.value.localized)) {
       if (map.has(code)) continue;
@@ -367,7 +370,12 @@ export function useAdminSettingsEditor() {
         map.set(code, fallback);
         continue;
       }
-      map.set(code, { code, label: code.toUpperCase(), endonym: code.toUpperCase(), enabled: true });
+      map.set(code, {
+        code,
+        label: code.toUpperCase(),
+        endonym: code.toUpperCase(),
+        enabled: true,
+      });
     }
 
     return Array.from(map.values()).map((language) => ({

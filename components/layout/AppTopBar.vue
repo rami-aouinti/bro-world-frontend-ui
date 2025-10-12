@@ -11,10 +11,10 @@
   >
     <!-- glows -->
     <span
-        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
     ></span>
     <span
-        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
     ></span>
     <AppBrand class="ml-2" />
     <AppNavButtons
@@ -145,13 +145,13 @@ type LocaleInput = string | { code?: string | null | undefined };
 
 const props = withDefaults(
   defineProps<{
-  appIcons: AppIcon[];
-  isDark: boolean;
-  isMobile: boolean;
-  locale: string;
-  locales: LocaleInput[];
-  showRightToggle: boolean;
-  refreshing?: boolean;
+    appIcons: AppIcon[];
+    isDark: boolean;
+    isMobile: boolean;
+    locale: string;
+    locales: LocaleInput[];
+    showRightToggle: boolean;
+    refreshing?: boolean;
   }>(),
   {
     refreshing: false,
@@ -379,7 +379,10 @@ function markAllNotifications() {
   border: 0 !important;
   box-shadow: 0 18px 40px -22px rgba(var(--v-theme-on-surface), 0.4);
   backdrop-filter: none !important;
-  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   --v-theme-overlay-multiplier: 0;
 }
 

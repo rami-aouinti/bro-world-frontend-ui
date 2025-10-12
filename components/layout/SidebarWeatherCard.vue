@@ -16,7 +16,9 @@
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">
           {{ resolvedWeather.badge }}
         </p>
-        <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.temperature }}</h3>
+        <h3 class="mt-3 text-2xl font-semibold text-foreground">
+          {{ resolvedWeather.temperature }}
+        </h3>
         <p class="mt-2 text-sm text-muted-foreground">
           <span
             v-if="isLoading"

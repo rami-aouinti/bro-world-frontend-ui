@@ -9,40 +9,40 @@
       <span
         class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
       ></span>
-            <div class="sidebar-profile-card__content">
-              <v-card-item>
-                <div class="d-flex align-center justify-space-between">
-                  <div class="text-h6 text-foreground">{{ user.name }}</div>
-                  <v-btn
-                    v-if="allowCustomization"
-                    size="small"
-                    variant="text"
-                    color="primary"
-                    :to="localePath({ path: '/profile-edit' })"
-                  >
-                    {{ t("layout.profileSidebar.editBio") }}
-                  </v-btn>
-                </div>
-              </v-card-item>
-              <v-divider />
-              <v-card-text>
-                <div
-                  v-if="displayedBio"
-                  class="text-subtitle-2 mb-3 text-high-emphasis text-center"
-                >
-                  {{ displayedBio }}
-                </div>
+      <div class="sidebar-profile-card__content">
+        <v-card-item>
+          <div class="d-flex align-center justify-space-between">
+            <div class="text-h6 text-foreground">{{ user.name }}</div>
+            <v-btn
+              v-if="allowCustomization"
+              size="small"
+              variant="text"
+              color="primary"
+              :to="localePath({ path: '/profile-edit' })"
+            >
+              {{ t("layout.profileSidebar.editBio") }}
+            </v-btn>
+          </div>
+        </v-card-item>
+        <v-divider />
+        <v-card-text>
+          <div
+            v-if="displayedBio"
+            class="text-subtitle-2 mb-3 text-high-emphasis text-center"
+          >
+            {{ displayedBio }}
+          </div>
 
-                <v-list
-                  v-if="showIntroDetails && introItems.length"
-                  density="compact"
-                  class="py-0"
-                >
-                  <v-list-item
-                    v-for="(item, i) in introItems"
-                    :key="i"
-                    :title="item.title"
-                    :subtitle="item.subtitle"
+          <v-list
+            v-if="showIntroDetails && introItems.length"
+            density="compact"
+            class="py-0"
+          >
+            <v-list-item
+              v-for="(item, i) in introItems"
+              :key="i"
+              :title="item.title"
+              :subtitle="item.subtitle"
             >
               <template #prepend>
                 <Icon :name="item.icon" />
@@ -50,17 +50,17 @@
             </v-list-item>
           </v-list>
 
-                <div class="d-flex ga-3 mt-4">
-                  <v-btn
-                    v-if="allowCustomization"
-                    block
-                    color="primary"
-                    variant="tonal"
-                    :to="localePath({ path: '/profile-edit' })"
-                  >
-                    {{ t("layout.profileSidebar.editDetails") }}
-                  </v-btn>
-                </div>
+          <div class="d-flex ga-3 mt-4">
+            <v-btn
+              v-if="allowCustomization"
+              block
+              color="primary"
+              variant="tonal"
+              :to="localePath({ path: '/profile-edit' })"
+            >
+              {{ t("layout.profileSidebar.editDetails") }}
+            </v-btn>
+          </div>
         </v-card-text>
       </div>
     </SidebarCard>

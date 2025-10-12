@@ -10,9 +10,7 @@
           class="post-card__avatar"
         />
         <div class="post-card__author-meta">
-          <p class="post-card__author-name">
-            {{ post.user.firstName }} {{ post.user.lastName }}
-          </p>
+          <p class="post-card__author-name">{{ post.user.firstName }} {{ post.user.lastName }}</p>
           <p class="post-card__timestamp">
             {{ publishedLabel }}
           </p>
@@ -201,12 +199,8 @@ const currentUser = computed(() => authStore.currentUser.value);
 const isAuthor = computed(
   () => isAuthenticated.value && currentUser.value?.id === post.value.user.id,
 );
-const isFollowing = computed(
-  () => Boolean(authStore.following.value?.[post.value.user.id]),
-);
-const followLoading = computed(
-  () => Boolean(authStore.followPending.value?.[post.value.user.id]),
-);
+const isFollowing = computed(() => Boolean(authStore.following.value?.[post.value.user.id]));
+const followLoading = computed(() => Boolean(authStore.followPending.value?.[post.value.user.id]));
 const canRenderAuthorActions = computed(() => isAuthenticated.value);
 
 const actionsMenuOpen = ref(false);
@@ -230,7 +224,9 @@ watch(
 );
 
 const publishedLabel = computed(() =>
-  t("blog.reactions.posts.publishedOn", { date: new Date(post.value.publishedAt).toLocaleDateString() }),
+  t("blog.reactions.posts.publishedOn", {
+    date: new Date(post.value.publishedAt).toLocaleDateString(),
+  }),
 );
 
 const likeButtonLabel = computed(() =>
@@ -284,9 +280,7 @@ async function handleFollow() {
     const message = error instanceof Error ? error.message : String(error ?? "");
     toast({
       title: t("blog.posts.actions.followErrorTitle"),
-      description:
-        message ||
-        t("blog.posts.actions.followErrorDescription"),
+      description: message || t("blog.posts.actions.followErrorDescription"),
       variant: "destructive",
     });
   }
@@ -317,9 +311,7 @@ async function submitEdit() {
     const message = error instanceof Error ? error.message : String(error ?? "");
     toast({
       title: t("blog.posts.actions.editErrorTitle"),
-      description:
-        message ||
-        t("blog.posts.actions.editErrorDescription"),
+      description: message || t("blog.posts.actions.editErrorDescription"),
       variant: "destructive",
     });
   }
@@ -346,9 +338,7 @@ async function confirmDelete() {
     const message = error instanceof Error ? error.message : String(error ?? "");
     toast({
       title: t("blog.posts.actions.deleteErrorTitle"),
-      description:
-        message ||
-        t("blog.posts.actions.deleteErrorDescription"),
+      description: message || t("blog.posts.actions.deleteErrorDescription"),
       variant: "destructive",
     });
   }

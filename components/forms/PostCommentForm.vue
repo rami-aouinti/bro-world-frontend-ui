@@ -141,9 +141,7 @@ watch(localValue, (value) => {
   emit("update:modelValue", value);
 });
 
-const placeholderText = computed(
-  () => props.placeholder ?? t("blog.comments.placeholder"),
-);
+const placeholderText = computed(() => props.placeholder ?? t("blog.comments.placeholder"));
 const submitLabel = computed(() => t("blog.comments.submit"));
 const emojiAriaLabel = computed(() => t("blog.comments.addEmoji"));
 const mediaAriaLabel = computed(() => t("blog.comments.addMedia"));
@@ -196,9 +194,8 @@ defineExpose({
     formRef.value?.resetValidation?.();
   },
   focus: () => {
-    const textarea: HTMLTextAreaElement | null = formRef.value?.$el?.querySelector?.(
-      "textarea",
-    ) ?? null;
+    const textarea: HTMLTextAreaElement | null =
+      formRef.value?.$el?.querySelector?.("textarea") ?? null;
 
     textarea?.focus();
   },

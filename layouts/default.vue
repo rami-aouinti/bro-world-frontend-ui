@@ -1,7 +1,5 @@
 <template>
-  <v-app
-    :style="appInlineStyle"
-  >
+  <v-app :style="appInlineStyle">
     <AppTopBar
       v-if="showNavigation"
       ref="topBarRef"

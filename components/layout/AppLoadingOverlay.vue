@@ -10,7 +10,11 @@
             {{ t("layout.loadingOverlay.title") }}
           </p>
           <span class="sr-only">{{ t("layout.loadingOverlay.srLabel") }}</span>
-          <div class="app-loading-spinner" role="presentation" aria-hidden="true" />
+          <div
+            class="app-loading-spinner"
+            role="presentation"
+            aria-hidden="true"
+          />
         </div>
       </div>
     </Transition>

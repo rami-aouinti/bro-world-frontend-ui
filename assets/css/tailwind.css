@@ -103,13 +103,13 @@
   body {
     @apply text-foreground;
 
-      :root {
-          --main-bg-color: 9 9 11;
-      }
+    :root {
+      --main-bg-color: 9 9 11;
+    }
 
-      .styleClass {
-          background-color: rgb(var(--main-bg-color, var(--v-theme-background)));
-      };
+    .styleClass {
+      background-color: rgb(var(--main-bg-color, var(--v-theme-background)));
+    }
     background-image: none;
   }
 }

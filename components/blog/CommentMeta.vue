@@ -9,9 +9,7 @@
         class="comment-meta__avatar"
       />
       <div class="comment-meta__text">
-        <p class="comment-meta__name">
-          {{ user.firstName }} {{ user.lastName }}
-        </p>
+        <p class="comment-meta__name">{{ user.firstName }} {{ user.lastName }}</p>
         <p class="comment-meta__published">
           {{ publishedLabel }}
         </p>

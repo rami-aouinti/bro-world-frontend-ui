@@ -88,11 +88,11 @@
             dense
             align="stretch"
           >
-        <v-col
-          v-if="showContactSection"
-          cols="12"
-          md="6"
-        >
+            <v-col
+              v-if="showContactSection"
+              cols="12"
+              md="6"
+            >
               <section
                 aria-labelledby="contact-section-title"
                 class="h-100"
@@ -133,11 +133,11 @@
               </section>
             </v-col>
 
-        <v-col
-          v-if="showDetailsSection"
-          cols="12"
-          md="6"
-        >
+            <v-col
+              v-if="showDetailsSection"
+              cols="12"
+              md="6"
+            >
               <section
                 aria-labelledby="profile-section-title"
                 class="h-100"
@@ -302,7 +302,9 @@ const siteSettings = useSiteSettingsState();
 const profileSettings = computed(
   () => siteSettings.value?.profile ?? getDefaultSiteSettings().profile,
 );
-const allowProfileCustomization = computed(() => profileSettings.value.allowCustomization !== false);
+const allowProfileCustomization = computed(
+  () => profileSettings.value.allowCustomization !== false,
+);
 const showContactSection = computed(() => profileSettings.value.showContactSection !== false);
 const showDetailsSection = computed(() => profileSettings.value.showDetailsSection !== false);
 const showSocialSection = computed(() => profileSettings.value.showSocialSection !== false);
