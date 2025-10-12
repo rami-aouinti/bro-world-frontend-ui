@@ -9,7 +9,6 @@
     class="app-top-bar text-foreground"
     height="50"
   >
-    <!-- glows -->
     <span
       class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
     ></span>
