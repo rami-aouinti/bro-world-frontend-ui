@@ -27,13 +27,16 @@
       </button>
       <button
         type="button"
-        :class="props.iconTriggerClasses"
+        :class="[props.iconTriggerClasses, props.refreshing ? 'pointer-events-none opacity-60' : '']"
         :aria-label="props.refreshLabel"
+        :aria-busy="props.refreshing"
+        :disabled="props.refreshing"
         @click="emit('refresh')"
       >
         <AppIcon
-          name="mdi:refresh"
+          :name="props.refreshing ? 'mdi:loading' : 'mdi:refresh'"
           :size="22"
+          :class="{ 'animate-spin': props.refreshing }"
         />
       </button>
       <button
@@ -53,12 +56,18 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+const props = withDefaults(
+  defineProps<{
   isMobile: boolean;
   iconTriggerClasses: string;
   navigationLabel: string;
   goBackLabel: string;
   refreshLabel: string;
-}>();
+  refreshing?: boolean;
+  }>(),
+  {
+    refreshing: false,
+  },
+);
 const emit = defineEmits(["toggle-left", "go-back", "refresh"]);
 </script>
