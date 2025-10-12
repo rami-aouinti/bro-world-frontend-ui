@@ -99,6 +99,7 @@ import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 import { useAuthSession } from "~/stores/auth-session";
+import type { Story, StoryReaction } from "~/types/pages/index";
 
 const NewPost = defineAsyncComponent({
   loader: () => import("~/components/blog/NewPost.vue"),
@@ -135,21 +136,6 @@ const user = {
   name: "Rami Aouinti",
   avatarUrl: "https://bro-world-space.com/img/person.png",
 };
-
-interface Story {
-  id: string | number;
-  image?: string;
-  name?: string;
-  avatar?: string;
-  state?: "create" | "new" | "seen";
-  duration?: string;
-}
-
-interface StoryReaction {
-  id: string;
-  emoji: string;
-  label: string;
-}
 
 const stories = ref<Story[]>([
   {

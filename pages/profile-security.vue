@@ -271,6 +271,7 @@
 <script setup lang="ts">
 import { computed, reactive, useId } from "vue";
 import { useAuthSession } from "~/stores/auth-session";
+import type { SessionEntry } from "~/types/pages/profile";
 
 definePageMeta({
   middleware: "auth",
@@ -286,14 +287,6 @@ const usernameFieldId = `profile-security-username-${useId()}`;
 const usernameFieldValue = computed(
   () => auth.currentUser.value?.username ?? auth.currentUser.value?.email ?? "",
 );
-
-interface SessionEntry {
-  id: string;
-  device: string;
-  location: string;
-  activity: string;
-  status: string;
-}
 
 const form = reactive({
   currentPassword: "",
