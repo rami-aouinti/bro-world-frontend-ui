@@ -1,44 +1,48 @@
 <template>
   <main aria-labelledby="blog-heading">
-    <NewPost
-      v-if="canAccessAuthenticatedContent"
-      :avatar="user.avatarUrl"
-      :user-name="user.name"
-      @submit="createPost"
-      @attach="onAttach"
-    />
-    <SidebarCard
-      v-if="canAccessAuthenticatedContent"
-      class="text-card-foreground px-3 py-4 my-4"
-    >
-      <!-- glows -->
-      <span
-        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-      ></span>
-      <span
-        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-      ></span>
-      <input
-        ref="storyFileInput"
-        type="file"
-        accept="image/*"
-        class="sr-only"
-        @change="onStorySelected"
-      />
-      <StoriesStrip
-        :items="stories"
-        @open="openStory"
-        @create="createStory"
-      />
-      <StoryViewerModal
-        v-if="canAccessAuthenticatedContent"
-        v-model="isStoryViewerOpen"
-        :story="activeStory"
-        @close="onStoryClosed"
-        @react="handleStoryReaction"
-        @message="handleStoryMessage"
-      />
-    </SidebarCard>
+    <ClientOnly>
+      <template #default>
+        <NewPost
+          v-if="canAccessAuthenticatedContent"
+          :avatar="user.avatarUrl"
+          :user-name="user.name"
+          @submit="createPost"
+          @attach="onAttach"
+        />
+        <SidebarCard
+          v-if="canAccessAuthenticatedContent"
+          class="text-card-foreground px-3 py-4 my-4"
+        >
+          <!-- glows -->
+          <span
+            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
+          <input
+            ref="storyFileInput"
+            type="file"
+            accept="image/*"
+            class="sr-only"
+            @change="onStorySelected"
+          />
+          <StoriesStrip
+            :items="stories"
+            @open="openStory"
+            @create="createStory"
+          />
+          <StoryViewerModal
+            v-if="canAccessAuthenticatedContent"
+            v-model="isStoryViewerOpen"
+            :story="activeStory"
+            @close="onStoryClosed"
+            @react="handleStoryReaction"
+            @message="handleStoryMessage"
+          />
+        </SidebarCard>
+      </template>
+    </ClientOnly>
 
     <div
       v-if="pending"
