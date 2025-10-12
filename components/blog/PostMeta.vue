@@ -46,7 +46,6 @@
         <div
           aria-hidden="true"
           class="flex flex-wrap items-center gap-3 text-sm text-slate-500"
-          data-test="author-actions"
         />
       </template>
     </ClientOnly>

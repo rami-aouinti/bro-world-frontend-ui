@@ -129,6 +129,7 @@ function mountComponent() {
           template:
             "<div><header><slot name='header' /></header><section><slot /></section><footer><slot name='footer' /></footer></div>",
         },
+        SidebarCard: { template: "<div><slot /></div>" },
         RadiantText: {
           template: "<div><slot /></div>",
         },

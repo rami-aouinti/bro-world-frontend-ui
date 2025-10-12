@@ -1,34 +1,55 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { nextTick, ref } from "vue";
+import { createI18n } from "vue-i18n";
 
 import NewPost from "~/components/blog/NewPost.vue";
 import { __getNotifyMock, __resetNuxtNotifyMock } from "#imports";
+import en from "~/i18n/locales/en.json";
+import { createPinia } from "~/lib/pinia-shim";
 
 const notifyMock = __getNotifyMock();
-const authState = ref(false);
+const authReadyState = ref(true);
+const authAuthenticatedState = ref(false);
 
 vi.mock("~/composables/useAuthStore", () => ({
   useAuthStore: () => ({
-    isAuthenticated: authState,
+    isAuthenticated: authAuthenticatedState,
+  }),
+}));
+
+vi.mock("~/stores/auth-session", () => ({
+  useAuthSession: () => ({
+    isReady: authReadyState,
+    isAuthenticated: authAuthenticatedState,
   }),
 }));
 
 function mountComponent() {
+  const pinia = createPinia();
+
   return mount(NewPost, {
     props: {
       userName: "Test User",
       avatar: "/avatar.png",
     },
     global: {
+      plugins: [i18n, pinia],
       stubs: {
         Icon: true,
         BorderBeam: true,
+        SidebarCard: { template: "<div><slot /></div>" },
         VDialog: { template: '<div data-test="stub-dialog"><slot /></div>' },
       },
     },
   });
 }
+
+const i18n = createI18n({
+  legacy: false,
+  locale: "en",
+  messages: { en },
+});
 
 async function resolveAsyncComponents() {
   await Promise.resolve();
@@ -39,7 +60,7 @@ async function resolveAsyncComponents() {
 
 describe("NewPost", () => {
   beforeEach(() => {
-    authState.value = false;
+    authAuthenticatedState.value = false;
     __resetNuxtNotifyMock();
   });
 
@@ -57,7 +78,7 @@ describe("NewPost", () => {
   });
 
   it("loads the dialog asynchronously and emits submit events", async () => {
-    authState.value = true;
+    authAuthenticatedState.value = true;
     const wrapper = mountComponent();
 
     const trigger = wrapper.get('[data-test="new-post-trigger"]');
