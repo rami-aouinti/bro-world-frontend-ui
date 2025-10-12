@@ -116,7 +116,7 @@
           :disabled="newRating === 0 || isSubmitting"
           @click="submitRating"
         >
-          <v-icon icon="mdi-send" />
+          <Icon name="mdi-send" />
         </v-btn>
       </div>
 
