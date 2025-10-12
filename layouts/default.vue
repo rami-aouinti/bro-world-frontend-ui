@@ -218,10 +218,7 @@
             />
           </template>
         </ClientOnly>
-        <div
-          class="main-scroll__viewport"
-          :style="mainInlineStyle"
-        >
+        <div class="main-scroll__viewport">
           <div
             v-show="areSidebarsReady"
             class="app-container"
@@ -819,7 +816,8 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   align-items: stretch;
   min-height: 100vh;
   background: transparent;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .app-surface::before {
@@ -866,8 +864,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--app-bar-height));
-  padding-block-start: calc(var(--layout-inset-top, 0px) + clamp(8px, 2vw, 16px));
-  padding-block-end: clamp(8px, 2vw, 16px);
+  padding-block: clamp(8px, 2vw, 16px);
   box-sizing: border-box;
 }
 
