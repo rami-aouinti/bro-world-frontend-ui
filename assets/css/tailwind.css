@@ -101,7 +101,9 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: rgb(var(--v-theme-background, 9 9 11));
+    background-image: none;
   }
 }
 
