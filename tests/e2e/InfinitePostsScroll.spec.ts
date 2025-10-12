@@ -22,6 +22,13 @@ vi.mock("~/composables/useAuthStore", () => ({
   }),
 }));
 
+vi.mock("~/stores/auth-session", () => ({
+  useAuthSession: () => ({
+    isReady: computed(() => true),
+    isAuthenticated: computed(() => false),
+  }),
+}));
+
 const INITIAL_PAGE_SIZE = 6;
 
 const postsRef = ref<BlogPost[]>([]);
@@ -223,6 +230,7 @@ describe("Home page infinite post loading", () => {
         global: {
           plugins: [i18n],
           stubs: {
+            SidebarCard: { template: "<div><slot /></div>" },
             NewPost: { template: "<div />" },
             BlogPostCard: BlogPostCardStub,
             PostCardSkeleton: PostCardSkeletonStub,

@@ -61,6 +61,15 @@
         @like="handleCommentLike"
         @reply="openReply"
       />
+      <button
+        v-if="!commentsActivated && !commentsLoading"
+        type="button"
+        class="load-comments"
+        data-test="load-comments-button"
+        @click="loadCommentsManually"
+      >
+        {{ loadCommentsLabel }}
+      </button>
     </div>
   </SidebarCard>
 
@@ -93,6 +102,7 @@
 import { computed, defineAsyncComponent, nextTick, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 import PostMeta from "~/components/blog/PostMeta.vue";
 import type {
   BlogCommentWithReplies,
@@ -329,6 +339,7 @@ const deleteDialogTitle = computed(() => t("blog.posts.actions.deleteTitle"));
 const deleteDialogDescription = computed(() => t("blog.posts.actions.deleteDescription"));
 const deleteDialogConfirmLabel = computed(() => t("blog.posts.actions.deleteConfirm"));
 const deleteDialogCancelLabel = computed(() => t("blog.posts.actions.cancel"));
+const loadCommentsLabel = computed(() => t("blog.comments.load"));
 
 watch(
   () => post.value.id,
@@ -481,6 +492,11 @@ function requestComments(options: { force?: boolean } = {}) {
   }
 
   void loadComments({ force: shouldForce });
+}
+
+function loadCommentsManually() {
+  commentsActivated.value = true;
+  void loadComments({ force: true });
 }
 
 watch(

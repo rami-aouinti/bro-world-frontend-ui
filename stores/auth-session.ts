@@ -1,6 +1,6 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { useCookie, useRequestFetch, useState } from "#imports";
+import { useCookie, useNuxtApp, useRequestFetch, useRuntimeConfig, useState } from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
 import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from "~/types/auth";

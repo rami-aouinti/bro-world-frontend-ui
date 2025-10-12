@@ -101,6 +101,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useNuxtApp } from "#imports";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { defineAsyncComponentWithVendorStyles } from "~/lib/material-dashboard-vendors";

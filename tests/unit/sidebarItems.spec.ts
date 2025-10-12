@@ -16,9 +16,12 @@ describe("buildSidebarItems", () => {
     expect(adminEntry).toBeDefined();
     expect(adminEntry?.children?.map((child) => child.key)).toEqual([
       "admin-general",
-      "admin-settings",
+      "admin-blog-management",
       "admin-user-management",
-      "admin-blog",
+      "admin-job-management",
+      "admin-ecommerce-management",
+      "admin-education-management",
+      "admin-game-management",
     ]);
   });
 });
