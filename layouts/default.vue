@@ -930,7 +930,6 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--app-bar-height));
-  padding-block-start: calc(var(--layout-inset-top, 0px) + clamp(8px, 2vw, 16px));
   padding-block-end: clamp(8px, 2vw, 16px);
   box-sizing: border-box;
 }

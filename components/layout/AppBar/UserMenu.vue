@@ -41,9 +41,8 @@
       </button>
     </template>
 
-    <SidebarCard
-      padding="none"
-      class="min-w-[280px] overflow-hidden text-card-foreground px-3 py-2 shadow-xl ring-1 ring-black/5 dark:ring-white/10"
+    <div
+      class="min-w-[280px] overflow-hidden bg-background text-card-foreground px-3 py-2 shadow-xl ring-1 ring-black/5 dark:ring-white/10 rounded-3xl"
     >
       <!-- glows -->
       <span
@@ -86,7 +85,7 @@
 
         <!-- Items -->
         <v-list
-          class="py-1"
+          class="py-1 rounded-xl"
           density="comfortable"
         >
           <v-list-item
@@ -114,7 +113,7 @@
           </v-list-item>
         </v-list>
       </div>
-    </SidebarCard>
+    </div>
   </v-menu>
 </template>
 

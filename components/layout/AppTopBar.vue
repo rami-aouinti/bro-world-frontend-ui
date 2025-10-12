@@ -6,7 +6,6 @@
     :elevation="24"
     rounded
     flat
-    color="transparent"
     class="app-top-bar text-foreground"
     height="50"
   >
@@ -376,7 +375,6 @@ function markAllNotifications() {
 
 <style scoped>
 .app-top-bar {
-  background-color: transparent !important;
   background-image: none !important;
   border: 0 !important;
   box-shadow: 0 18px 40px -22px rgba(var(--v-theme-on-surface), 0.4);
