@@ -304,11 +304,6 @@ export const useAuthSession = defineStore("auth-session", () => {
   }
 
   async function refreshSession() {
-    if (import.meta.server) {
-      readyState.value = true;
-      return isAuthenticated.value;
-    }
-
     if (!tokenAvailableState.value && presenceCookie.value === "1") {
       tokenAvailableState.value = true;
     }
