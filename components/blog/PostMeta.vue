@@ -7,7 +7,6 @@
           :alt="`${user.firstName} ${user.lastName}`"
           width="48"
           height="48"
-          loading="lazy"
           class="h-full w-full object-cover"
           :loading="imageLoadingMode"
           :fetchpriority="imageFetchPriority"
@@ -43,6 +42,13 @@
         @edit="(event) => emit('edit', event)"
         @delete="(event) => emit('delete', event)"
       />
+      <template #fallback>
+        <div
+          aria-hidden="true"
+          class="flex flex-wrap items-center gap-3 text-sm text-slate-500"
+          data-test="author-actions"
+        />
+      </template>
     </ClientOnly>
   </header>
 </template>
