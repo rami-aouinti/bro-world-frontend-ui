@@ -10,6 +10,7 @@
       :locale="locale"
       :locales="availableLocales"
       :show-right-toggle="showRightWidgets"
+      :refreshing="isRefreshing"
       @toggle-left="toggleLeftDrawer"
       @toggle-right="toggleRightDrawer"
       @toggle-theme="toggleTheme"
@@ -252,7 +253,8 @@
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import { useDisplay, useTheme } from "vuetify";
-import { useRequestHeaders, useState } from "#imports";
+import { useRequestHeaders, useState, refreshNuxtData } from "#imports";
+import { useLoadingIndicator } from "#app";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
@@ -364,6 +366,7 @@ const initialIsMobile = useState("layout-initial-is-mobile", () => {
 });
 const { locale, availableLocales, setLocale } = useI18n();
 const auth = useAuthSession();
+const routeLoadingState = useState("route:loading", () => false);
 
 const leftDrawerState = ref(showNavigation.value && !initialIsMobile.value);
 const rightDrawerState = ref(
@@ -373,6 +376,7 @@ const rightDrawerState = ref(
 const isLeftDrawerReady = ref(import.meta.server || !showNavigation.value);
 
 const isTopBarReady = ref(import.meta.server || !showNavigation.value);
+const isRefreshing = ref(false);
 
 if (import.meta.client) {
   onMounted(() => {
@@ -549,6 +553,13 @@ const sidebarVariant = computed<"default" | "profile">(() =>
   currentRoute.value?.meta?.sidebarVariant === "profile" ? "profile" : "default",
 );
 
+type LoadingIndicator = ReturnType<typeof useLoadingIndicator>;
+let loadingIndicator: LoadingIndicator | null = null;
+
+if (import.meta.client) {
+  loadingIndicator = useLoadingIndicator({ throttle: 0 });
+}
+
 const isAdminRoute = computed(() => currentRoute.value?.path?.startsWith("/admin") ?? false);
 
 const sidebarItems = computed<LayoutSidebarItem[]>(() => {
@@ -714,8 +725,28 @@ function toggleRightDrawer() {
 function goBack() {
   router.back();
 }
-function refreshPage() {
-  refreshNuxtData();
+async function refreshPage() {
+  if (isRefreshing.value) {
+    return;
+  }
+
+  isRefreshing.value = true;
+  routeLoadingState.value = true;
+
+  try {
+    if (loadingIndicator) {
+      loadingIndicator.start();
+    }
+    await refreshNuxtData();
+  } catch (error) {
+    console.error("Failed to refresh page data", error);
+  } finally {
+    if (loadingIndicator) {
+      loadingIndicator.finish();
+    }
+    routeLoadingState.value = false;
+    isRefreshing.value = false;
+  }
 }
 function handleSidebarSelect(key: string) {
   activeSidebar.value = key;

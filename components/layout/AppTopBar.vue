@@ -17,6 +17,7 @@
       :navigation-label="navigationLabel"
       :go-back-label="goBackLabel"
       :refresh-label="refreshLabel"
+      :refreshing="props.refreshing"
       @toggle-left="$emit('toggle-left')"
       @go-back="$emit('go-back')"
       @refresh="$emit('refresh')"
@@ -136,14 +137,20 @@ type NotificationDefinition = {
 
 type LocaleInput = string | { code?: string | null | undefined };
 
-const props = defineProps<{
+const props = withDefaults(
+  defineProps<{
   appIcons: AppIcon[];
   isDark: boolean;
   isMobile: boolean;
   locale: string;
   locales: LocaleInput[];
   showRightToggle: boolean;
-}>();
+  refreshing?: boolean;
+  }>(),
+  {
+    refreshing: false,
+  },
+);
 
 const emit = defineEmits(["toggle-left", "toggle-right", "go-back", "refresh", "update:locale"]);
 
