@@ -110,7 +110,6 @@ import UserMenu from "./AppBar/UserMenu.vue";
 import LocaleMenu from "./AppBar/LocaleMenu.vue";
 import RightControls from "./AppBar/RightControls.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
-import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
 import { useTheme } from "vuetify";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
@@ -161,11 +160,80 @@ const localeMetadata = {
 } as const satisfies Record<string, { label: string; flag: string }>;
 const isDarkColor = computed(() => props.isDark);
 const theme = useTheme();
-const { barGradient } = usePrimaryGradient({
-  steps: 5,
-  lightDark: [0.92, 0.36],
-  barAlpha: { light: 0.78, dark: 0.52 },
-});
+function hexToHsl(hex: string) {
+  let normalized = hex.startsWith("#") ? hex.slice(1) : hex;
+
+  if (normalized.length === 3) {
+    normalized = normalized
+      .split("")
+      .map((value) => value + value)
+      .join("");
+  }
+
+  const r = Number.parseInt(normalized.slice(0, 2), 16) / 255;
+  const g = Number.parseInt(normalized.slice(2, 4), 16) / 255;
+  const b = Number.parseInt(normalized.slice(4, 6), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      default:
+        h = (r - g) / d + 4;
+    }
+
+    h /= 6;
+  }
+
+  return { h, s, l };
+}
+
+function hslToHex(h: number, s: number, l: number) {
+  const hueToRgb = (p: number, q: number, t: number) => {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  };
+
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  const r = hueToRgb(p, q, h + 1 / 3);
+  const g = hueToRgb(p, q, h);
+  const b = hueToRgb(p, q, h - 1 / 3);
+
+  const toHex = (value: number) =>
+    Math.round(value * 255)
+      .toString(16)
+      .padStart(2, "0");
+
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+function adjustLightness(hex: string | undefined, delta: number) {
+  if (!hex) {
+    return undefined;
+  }
+
+  const { h, s, l } = hexToHsl(hex);
+  const nextL = Math.min(1, Math.max(0, l + delta));
+  return hslToHex(h, s, nextL);
+}
 
 function applyAlpha(color: string | undefined, alpha: number) {
   if (!color) {
@@ -193,9 +261,13 @@ const appBarStyle = computed(() => {
   const borderOpacity = props.isDark ? 0.35 : 0.22;
   const shadowOpacity = props.isDark ? 0.45 : 0.15;
   const colors = theme.current.value.colors;
+  const baseColor = colors.surface ?? (props.isDark ? "#0f172a" : "#f1f5f9");
+  const startColor = adjustLightness(baseColor, props.isDark ? -0.06 : 0.08);
+  const endColor = adjustLightness(baseColor, props.isDark ? -0.22 : -0.04);
+  const gradientOpacity = props.isDark ? 0.62 : 0.82;
 
   return {
-    backgroundImage: barGradient.value,
+    backgroundImage: `linear-gradient(135deg, ${applyAlpha(startColor, gradientOpacity)}, ${applyAlpha(endColor, gradientOpacity)})`,
     backgroundColor: applyAlpha(colors.surface, surfaceOpacity),
     backdropFilter: "blur(18px)",
     borderBottom: `1px solid ${applyAlpha(colors["outline-variant"], borderOpacity)}`,
