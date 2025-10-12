@@ -42,6 +42,7 @@ const props = withDefaults(
     padding?: PaddingSize;
     particles?: boolean;
     particlesProps?: ParticlesProps;
+    glow?: boolean;
   }>(),
   {
     tag: "div",
@@ -53,6 +54,7 @@ const props = withDefaults(
         ease: 120,
         staticity: 12,
       }) as ParticlesProps,
+    glow: false,
   },
 );
 
@@ -81,6 +83,7 @@ const cardAttrs = computed(() => {
 
 const cardClass = computed(() => [
   "sidebar-card relative isolate flex flex-col overflow-hidden rounded-3xl bg-transparent shadow-[0_15px_15px_-10px_hsl(var(--primary)/0.35)]",
+  { "sidebar-card--glow": props.glow },
   paddingClassMap[props.padding],
   attrs.class as string | string[] | Record<string, boolean> | undefined,
 ]);
@@ -148,5 +151,30 @@ const tagName = computed(() => props.tag);
   position: absolute;
   inset: 0;
   opacity: 0.55;
+}
+
+.sidebar-card--glow::before,
+.sidebar-card--glow::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(64px);
+}
+
+.sidebar-card--glow::before {
+  top: 2rem;
+  left: -3.5rem;
+  width: 10rem;
+  height: 10rem;
+  background-color: hsl(var(--primary) / 0.25);
+}
+
+.sidebar-card--glow::after {
+  top: -2.5rem;
+  right: -4rem;
+  width: 12rem;
+  height: 12rem;
+  background-color: hsl(var(--primary) / 0.35);
 }
 </style>

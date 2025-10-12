@@ -8,14 +8,7 @@
         class="mb-8"
         aria-describedby="profile-subtitle"
       >
-        <SidebarCard class="text-card-foreground px-3 py-2">
-          <!-- glows -->
-          <span
-            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-          ></span>
-          <span
-            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-          ></span>
+        <SidebarCard class="text-card-foreground px-3 py-2" glow>
           <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
             <v-avatar
               size="96"
@@ -97,14 +90,7 @@
                 aria-labelledby="contact-section-title"
                 class="h-100"
               >
-                <SidebarCard class="text-card-foreground px-3 py-2">
-                  <!-- glows -->
-                  <span
-                    class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-                  ></span>
-                  <span
-                    class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-                  ></span>
+                <SidebarCard class="text-card-foreground px-3 py-2" glow>
                   <h2
                     id="contact-section-title"
                     class="text-h5 font-weight-semibold mb-4"
@@ -142,14 +128,7 @@
                 aria-labelledby="profile-section-title"
                 class="h-100"
               >
-                <SidebarCard class="text-card-foreground px-3 py-2">
-                  <!-- glows -->
-                  <span
-                    class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-                  ></span>
-                  <span
-                    class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-                  ></span>
+                <SidebarCard class="text-card-foreground px-3 py-2" glow>
                   <h2
                     id="profile-section-title"
                     class="text-h5 font-weight-semibold mb-4"
@@ -177,14 +156,7 @@
                 aria-labelledby="social-section-title"
                 class="h-100"
               >
-                <SidebarCard class="text-card-foreground px-3 py-2">
-                  <!-- glows -->
-                  <span
-                    class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-                  ></span>
-                  <span
-                    class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-                  ></span>
+                <SidebarCard class="text-card-foreground px-3 py-2" glow>
                   <h2
                     id="social-section-title"
                     class="text-h5 font-weight-semibold mb-4"

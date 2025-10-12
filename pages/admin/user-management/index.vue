@@ -31,15 +31,7 @@
 
       <SidebarCard
         class="text-card-foreground"
-        padding="none"
-      >
-        <!-- glows -->
-        <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-        ></span>
-        <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-        ></span>
+        padding="none" glow>
         <v-toolbar
           color="transparent"
           class="px-6 pt-4"
@@ -166,14 +158,7 @@
         persistent
         max-width="560"
       >
-        <SidebarCard class="text-card-foreground">
-          <!-- glows -->
-          <span
-            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-          ></span>
-          <span
-            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-          ></span>
+        <SidebarCard class="text-card-foreground" glow>
           <v-card-title class="text-h5 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.create.title") }}
           </v-card-title>
@@ -274,14 +259,7 @@
         v-model="editDialog"
         max-width="560"
       >
-        <SidebarCard class="text-card-foreground">
-          <!-- glows -->
-          <span
-            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-          ></span>
-          <span
-            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-          ></span>
+        <SidebarCard class="text-card-foreground" glow>
           <v-card-title class="text-h5 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.edit.title") }}
           </v-card-title>
@@ -382,14 +360,7 @@
         v-model="deleteDialog"
         max-width="440"
       >
-        <SidebarCard class="text-card-foreground">
-          <!-- glows -->
-          <span
-            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-          ></span>
-          <span
-            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-          ></span>
+        <SidebarCard class="text-card-foreground" glow>
           <v-card-title class="text-h6 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.delete.title") }}
           </v-card-title>

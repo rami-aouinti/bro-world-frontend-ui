@@ -8,14 +8,7 @@
         class="mb-10"
         aria-describedby="profile-photos-subtitle"
       >
-        <SidebarCard class="text-card-foreground pa-6">
-          <!-- glows -->
-          <span
-            class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-          ></span>
-          <span
-            class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-          ></span>
+        <SidebarCard class="text-card-foreground pa-6" glow>
           <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-6">
             <div class="flex-grow-1">
               <h1
@@ -73,14 +66,7 @@
             class="mb-8"
             aria-labelledby="pinned-albums-title"
           >
-            <SidebarCard class="text-card-foreground pa-6">
-              <!-- glows -->
-              <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-              ></span>
-              <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-              ></span>
+            <SidebarCard class="text-card-foreground pa-6" glow>
               <div
                 class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-6"
               >
@@ -121,14 +107,7 @@
                   cols="12"
                   md="6"
                 >
-                  <SidebarCard class="text-card-foreground pa-4 h-100">
-                    <!-- glows -->
-                    <span
-                      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-                    ></span>
-                    <span
-                      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-                    ></span>
+                  <SidebarCard class="text-card-foreground pa-4 h-100" glow>
                     <div class="rounded-xl overflow-hidden mb-4">
                       <v-img
                         :src="highlightedAlbum.cover"
@@ -161,15 +140,7 @@
                     <SidebarCard
                       v-for="album in secondaryAlbums"
                       :key="album.id"
-                      class="text-card-foreground pa-4 bg-primary/10"
-                    >
-                      <!-- glows -->
-                      <span
-                        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-                      ></span>
-                      <span
-                        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-                      ></span>
+                      class="text-card-foreground pa-4 bg-primary/10" glow>
                       <div class="d-flex gap-4">
                         <v-img
                           :src="album.cover"
@@ -205,14 +176,7 @@
           </section>
 
           <section aria-labelledby="photo-gallery-title">
-            <SidebarCard class="text-card-foreground pa-6">
-              <!-- glows -->
-              <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-              ></span>
-              <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-              ></span>
+            <SidebarCard class="text-card-foreground pa-6" glow>
               <div
                 class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4 mb-4"
               >
@@ -279,14 +243,7 @@
           xl="4"
         >
           <aside>
-            <SidebarCard class="text-card-foreground pa-6 mb-6">
-              <!-- glows -->
-              <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-              ></span>
-              <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-              ></span>
+            <SidebarCard class="text-card-foreground pa-6 mb-6" glow>
               <h2 class="text-h6 font-weight-semibold mb-4">
                 {{ t("pages.profilePhotos.timeline.title") }}
               </h2>
@@ -324,14 +281,7 @@
               </v-expansion-panels>
             </SidebarCard>
 
-            <SidebarCard class="text-card-foreground pa-6 bg-primary/10">
-              <!-- glows -->
-              <span
-                class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-              ></span>
-              <span
-                class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-              ></span>
+            <SidebarCard class="text-card-foreground pa-6 bg-primary/10" glow>
               <h2 class="text-h6 font-weight-semibold mb-3">
                 {{ t("pages.profilePhotos.sections.timeline") }}
               </h2>
