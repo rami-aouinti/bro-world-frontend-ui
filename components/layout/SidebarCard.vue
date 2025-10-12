@@ -44,7 +44,7 @@ const props = withDefaults(
     particlesProps?: ParticlesProps;
   }>(),
   {
-    tag: "section",
+    tag: "div",
     padding: "lg" as PaddingSize,
     particles: false,
     particlesProps: () =>
