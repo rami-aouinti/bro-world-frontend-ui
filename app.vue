@@ -55,20 +55,6 @@ const siteConfig = computed(() => {
 });
 const route = useRoute();
 
-if (import.meta.client) {
-  function scheduleInitialDismissal() {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(dismissInitialLoading);
-    });
-  }
-
-  if (document.readyState === "complete") {
-    scheduleInitialDismissal();
-  } else {
-    window.addEventListener("load", scheduleInitialDismissal, { once: true });
-  }
-}
-
 if (import.meta.client && nuxtApp) {
   let finishTimer: ReturnType<typeof setTimeout> | null = null;
 
