@@ -1,7 +1,8 @@
 import { createError } from "h3";
+import type { H3Event } from "h3";
 import { useRuntimeConfig } from "#imports";
 import Redis from "ioredis";
-import { useStorage } from "nitropack/runtime";
+import type { FetchError } from "ofetch";
 import type {
   SiteContentBlock,
   SiteMenuItem,
@@ -11,13 +12,15 @@ import type {
   SiteUiSettings,
 } from "~/types/settings";
 import { defaultSiteSettings, getDefaultSiteSettings } from "~/lib/settings/defaults";
+import { getSessionToken, getSessionUser } from "../auth/session";
+import { requestWithRetry } from "../requestWithRetry";
 
-const STORAGE_KEY = "site-settings";
+const CONFIGURATION_KEY = "site.settings";
+const CONFIGURATION_CONTEXT_KEY = "global";
 const MEMORY_TTL_MS = 15_000;
-let seedPromise: Promise<void> | null = null;
 
 const globalScope = globalThis as typeof globalThis & {
-  __broSettingsCache?: { value: SiteSettings; expiresAt: number } | null;
+  __broSettingsCache?: Map<string, { value: SiteSettings; expiresAt: number }>;
   __broSettingsRedisClient?: Redis | null;
   __broSettingsRedisClientPromise?: Promise<Redis | null> | null;
 };
@@ -40,8 +43,8 @@ function slugify(value: string): string {
   );
 }
 
-function getRedisConfig(): RedisSettingsConfig {
-  const runtime = useRuntimeConfig();
+function getRedisConfig(event?: H3Event): RedisSettingsConfig {
+  const runtime = event ? useRuntimeConfig(event) : useRuntimeConfig();
   const redis = (runtime.redis ?? {}) as Partial<RedisSettingsConfig & { keyPrefix?: string }>;
 
   const ttl = Number.isFinite(redis.settingsTtl) && Number(redis.settingsTtl) > 0 ? Number(redis.settingsTtl) : 300;
@@ -54,8 +57,8 @@ function getRedisConfig(): RedisSettingsConfig {
   } satisfies RedisSettingsConfig;
 }
 
-function getRedisKey(config: RedisSettingsConfig): string {
-  return `${config.keyPrefix}:site-settings`;
+function getRedisKey(config: RedisSettingsConfig, cacheKey: string): string {
+  return `${config.keyPrefix}:site-settings:${cacheKey}`;
 }
 
 async function getRedisClient(): Promise<Redis | null> {
@@ -106,56 +109,37 @@ async function getRedisClient(): Promise<Redis | null> {
   return client;
 }
 
-async function ensureSeed(): Promise<void> {
-  if (!seedPromise) {
-    seedPromise = (async () => {
-      const storage = useStorage();
-      const existing = await storage.getItem<SiteSettings | null>(STORAGE_KEY);
-      if (!existing) {
-        const seeded = getDefaultSiteSettings();
-        await storage.setItem(STORAGE_KEY, seeded);
-      }
-    })();
+function getMemoryCache(): Map<string, { value: SiteSettings; expiresAt: number }> {
+  if (!globalScope.__broSettingsCache) {
+    globalScope.__broSettingsCache = new Map();
   }
 
-  await seedPromise;
+  return globalScope.__broSettingsCache;
 }
 
-async function readFromDatabase(): Promise<SiteSettings> {
-  await ensureSeed();
-  const storage = useStorage();
-  const stored = await storage.getItem<SiteSettings | null>(STORAGE_KEY);
+function readFromMemory(cacheKey: string): SiteSettings | null {
+  const cache = getMemoryCache();
+  const cached = cache.get(cacheKey);
 
-  if (!stored) {
-    return getDefaultSiteSettings();
-  }
-
-  return stored;
-}
-
-async function writeToDatabase(settings: SiteSettings): Promise<void> {
-  const storage = useStorage();
-  await storage.setItem(STORAGE_KEY, settings);
-}
-
-function readFromMemory(): SiteSettings | null {
-  const cache = globalScope.__broSettingsCache;
-
-  if (!cache || cache.expiresAt <= Date.now()) {
+  if (!cached || cached.expiresAt <= Date.now()) {
+    if (cached) {
+      cache.delete(cacheKey);
+    }
     return null;
   }
 
-  return structuredClone(cache.value);
+  return structuredClone(cached.value);
 }
 
-function writeToMemory(settings: SiteSettings): void {
-  globalScope.__broSettingsCache = {
+function writeToMemory(cacheKey: string, settings: SiteSettings): void {
+  const cache = getMemoryCache();
+  cache.set(cacheKey, {
     value: structuredClone(settings),
     expiresAt: Date.now() + MEMORY_TTL_MS,
-  };
+  });
 }
 
-async function readFromRedisCache(): Promise<SiteSettings | null> {
+async function readFromRedisCache(cacheKey: string): Promise<SiteSettings | null> {
   const client = await getRedisClient();
 
   if (!client) {
@@ -165,7 +149,7 @@ async function readFromRedisCache(): Promise<SiteSettings | null> {
   const config = getRedisConfig();
 
   try {
-    const raw = await client.get(getRedisKey(config));
+    const raw = await client.get(getRedisKey(config, cacheKey));
 
     if (!raw) {
       return null;
@@ -179,7 +163,7 @@ async function readFromRedisCache(): Promise<SiteSettings | null> {
   }
 }
 
-async function writeToRedisCache(settings: SiteSettings): Promise<void> {
+async function writeToRedisCache(cacheKey: string, settings: SiteSettings): Promise<void> {
   const client = await getRedisClient();
 
   if (!client) {
@@ -189,13 +173,13 @@ async function writeToRedisCache(settings: SiteSettings): Promise<void> {
   const config = getRedisConfig();
 
   try {
-    await client.set(getRedisKey(config), JSON.stringify(settings), "EX", config.settingsTtl);
+    await client.set(getRedisKey(config, cacheKey), JSON.stringify(settings), "EX", config.settingsTtl);
   } catch (error) {
     console.error("[settings-storage] Failed to persist settings to Redis", error);
   }
 }
 
-async function invalidateRedisCache(): Promise<void> {
+async function invalidateRedisCache(cacheKey: string): Promise<void> {
   const client = await getRedisClient();
 
   if (!client) {
@@ -205,7 +189,7 @@ async function invalidateRedisCache(): Promise<void> {
   const config = getRedisConfig();
 
   try {
-    await client.del(getRedisKey(config));
+    await client.del(getRedisKey(config, cacheKey));
   } catch (error) {
     console.error("[settings-storage] Failed to invalidate Redis cache", error);
   }
@@ -402,41 +386,175 @@ function ensureActiveThemeId(settings: SiteSettings): SiteSettings {
   return settings;
 }
 
-async function cacheSettings(settings: SiteSettings): Promise<void> {
-  writeToMemory(settings);
-  await writeToRedisCache(settings);
+function resolveCacheKey(event: H3Event | undefined) {
+  const userId = event ? getSessionUser(event)?.id ?? null : null;
+  const cacheKey = userId ? `user:${userId}` : "default";
+
+  return { cacheKey, userId };
 }
 
-async function invalidateCache(): Promise<void> {
-  globalScope.__broSettingsCache = null;
-  await invalidateRedisCache();
+function resolveConfigurationApiBase(event: H3Event): string {
+  const runtime = useRuntimeConfig(event);
+  const base = runtime.configuration?.apiBase ?? "https://configuration.bro-world.org/api";
+
+  return base.replace(/\/$/, "");
 }
 
-export async function getSiteSettings(): Promise<SiteSettings> {
-  const memoryCached = readFromMemory();
+function isFetchError(error: unknown): error is FetchError<unknown> {
+  return Boolean(error && typeof error === "object" && "response" in (error as Record<string, unknown>));
+}
+
+async function readFromConfigurationApi(event: H3Event): Promise<SiteSettings | null> {
+  const token = getSessionToken(event);
+
+  if (!token) {
+    return null;
+  }
+
+  const base = resolveConfigurationApiBase(event);
+  const url = `${base}/v1/platform/configuration/${encodeURIComponent(CONFIGURATION_KEY)}`;
+
+  try {
+    const response = await requestWithRetry<{
+      configurationValue?: { _value?: SiteSettings };
+      updatedAt?: string;
+    }>("GET", url, { token });
+
+    const value = response?.configurationValue?._value;
+
+    if (!value) {
+      return null;
+    }
+
+    const withTimestamps: SiteSettings = {
+      ...value,
+      updatedAt: value.updatedAt ?? response.updatedAt ?? new Date().toISOString(),
+    };
+
+    return ensureActiveThemeId(normalizeSettings(withTimestamps));
+  } catch (error) {
+    if (isFetchError(error)) {
+      const status = error.response?.status ?? 0;
+
+      if (status === 404) {
+        return null;
+      }
+
+      if (status === 401 || status === 403) {
+        return null;
+      }
+    }
+
+    console.error("[settings-storage] Failed to fetch settings from configuration API", error);
+    return null;
+  }
+}
+
+async function persistToConfigurationApi(event: H3Event, settings: SiteSettings): Promise<SiteSettings> {
+  const token = getSessionToken(event);
+
+  if (!token) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "Authentication required",
+    });
+  }
+
+  const base = resolveConfigurationApiBase(event);
+  const url = `${base}/v1/platform/configuration`;
+
+  try {
+    const response = await requestWithRetry<{
+      configurationValue?: { _value?: SiteSettings };
+      updatedAt?: string;
+    }>("POST", url, {
+      token,
+      body: {
+        configurationKey: CONFIGURATION_KEY,
+        contextKey: CONFIGURATION_CONTEXT_KEY,
+        configurationValue: settings,
+      },
+    });
+
+    const value = response?.configurationValue?._value ?? settings;
+
+    const withTimestamps: SiteSettings = {
+      ...value,
+      updatedAt: value.updatedAt ?? response.updatedAt ?? settings.updatedAt ?? new Date().toISOString(),
+    };
+
+    return ensureActiveThemeId(normalizeSettings(withTimestamps));
+  } catch (error) {
+    if (isFetchError(error)) {
+      const status = error.response?.status ?? 500;
+
+      throw createError({
+        statusCode: status,
+        statusMessage: "Unable to persist settings",
+      });
+    }
+
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Unable to persist settings",
+    });
+  }
+}
+
+async function cacheSettings(cacheKey: string, settings: SiteSettings): Promise<void> {
+  writeToMemory(cacheKey, settings);
+  await writeToRedisCache(cacheKey, settings);
+}
+
+async function invalidateCache(cacheKey: string): Promise<void> {
+  const cache = getMemoryCache();
+  cache.delete(cacheKey);
+  await invalidateRedisCache(cacheKey);
+}
+
+export async function getSiteSettings(event: H3Event): Promise<SiteSettings> {
+  const { cacheKey } = resolveCacheKey(event);
+
+  const memoryCached = readFromMemory(cacheKey);
 
   if (memoryCached) {
     return memoryCached;
   }
 
-  const redisCached = await readFromRedisCache();
+  const redisCached = await readFromRedisCache(cacheKey);
 
   if (redisCached) {
-    writeToMemory(redisCached);
+    writeToMemory(cacheKey, redisCached);
     return redisCached;
   }
 
-  const stored = await readFromDatabase();
-  const normalized = ensureActiveThemeId(normalizeSettings(stored));
+  let fetched: SiteSettings | null = null;
 
-  await cacheSettings(normalized);
+  if (event) {
+    fetched = await readFromConfigurationApi(event);
+  }
+
+  const normalized = ensureActiveThemeId(normalizeSettings(fetched ?? getDefaultSiteSettings()));
+
+  await cacheSettings(cacheKey, normalized);
 
   return normalized;
 }
 
-export async function updateSiteSettings(payload: Partial<SiteSettings>): Promise<SiteSettings> {
-  const currentStored = await readFromDatabase();
-  const current = ensureActiveThemeId(normalizeSettings(currentStored));
+export async function updateSiteSettings(
+  event: H3Event,
+  payload: Partial<SiteSettings>,
+): Promise<SiteSettings> {
+  const { cacheKey, userId } = resolveCacheKey(event);
+
+  if (!userId) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "Authentication required",
+    });
+  }
+
+  const current = await getSiteSettings(event);
   const defaults = getDefaultSiteSettings();
 
   const next: SiteSettings = {
@@ -462,9 +580,10 @@ export async function updateSiteSettings(payload: Partial<SiteSettings>): Promis
 
   const ensured = ensureActiveThemeId(next);
 
-  await writeToDatabase(ensured);
-  await invalidateCache();
-  await cacheSettings(ensured);
+  const persisted = await persistToConfigurationApi(event, ensured);
 
-  return ensured;
+  await invalidateCache(cacheKey);
+  await cacheSettings(cacheKey, persisted);
+
+  return persisted;
 }

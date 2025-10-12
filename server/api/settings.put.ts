@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const updated = await updateSiteSettings(body);
+  const updated = await updateSiteSettings(event, body);
 
   return { data: updated };
 });
