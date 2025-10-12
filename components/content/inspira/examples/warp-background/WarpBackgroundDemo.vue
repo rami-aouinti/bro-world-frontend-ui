@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <WarpBackground>
-      <div class="mx-auto w-72 rounded-lg border bg-card shadow-sm">
+      <div class="mx-auto w-72 rounded-lg border shadow-sm">
         <div class="flex flex-col gap-2 p-4">
           <h3 class="text-xl font-semibold leading-none tracking-tight">
             Congratulations on Your Promotion!

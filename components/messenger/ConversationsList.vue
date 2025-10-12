@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="flex h-full flex-col border-border bg-card"
+    class="flex h-full flex-col border-border"
     :class="['w-full md:w-[320px]', 'border-b md:border-b-0 md:border-r']"
   >
     <div class="border-b border-border px-4 py-3">
