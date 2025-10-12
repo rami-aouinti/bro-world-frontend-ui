@@ -7,6 +7,11 @@
     "close": "Close"
   },
   "layout": {
+    "loadingOverlay": {
+      "srLabel": "Loading Bro World",
+      "title": "Bro World is loading…",
+      "description": "We're preparing the full experience: top bar, panels, and content."
+    },
     "actions": {
       "openNavigation": "Open navigation menu",
       "openWidgets": "Open quick widgets",

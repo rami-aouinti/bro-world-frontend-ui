@@ -3,6 +3,7 @@
     :color="false"
     class="z-100 bg-primary/80"
   />
+  <AppLoadingOverlay :visible="initialLoading" />
   <NuxtLayout>
     <NuxtPage :key="pageKey" />
   </NuxtLayout>
@@ -21,6 +22,7 @@ import {
   useState,
 } from "#imports";
 
+import AppLoadingOverlay from "~/components/layout/AppLoadingOverlay.vue";
 import RouteLoadingOverlay from "~/components/layout/RouteLoadingOverlay.vue";
 
 const nuxtApp = tryUseNuxtApp();
@@ -31,6 +33,12 @@ const fallbackSiteConfig = {
 
 const routeLoadingState = useState("route:loading", () => false);
 const routeLoading = computed(() => routeLoadingState.value);
+const initialLoadingState = useState("app:initial-loading", () => true);
+const initialLoading = computed(() => initialLoadingState.value);
+
+function dismissInitialLoading() {
+  initialLoadingState.value = false;
+}
 
 const siteConfig = computed(() => {
   if (!nuxtApp || !hasInjectionContext()) {
@@ -46,6 +54,14 @@ const siteConfig = computed(() => {
   };
 });
 const route = useRoute();
+
+if (import.meta.client) {
+  if (document.readyState === "complete") {
+    queueMicrotask(dismissInitialLoading);
+  } else {
+    window.addEventListener("load", dismissInitialLoading, { once: true });
+  }
+}
 
 if (import.meta.client && nuxtApp) {
   let finishTimer: ReturnType<typeof setTimeout> | null = null;
@@ -64,6 +80,7 @@ if (import.meta.client && nuxtApp) {
     }
     finishTimer = setTimeout(() => {
       routeLoadingState.value = false;
+      dismissInitialLoading();
     }, 250);
   }
 
@@ -73,11 +90,13 @@ if (import.meta.client && nuxtApp) {
       finishTimer = null;
     }
     routeLoadingState.value = false;
+    dismissInitialLoading();
   }
 
   nuxtApp.hook("page:start", handleRouteStart);
   nuxtApp.hook("page:finish", handleRouteStop);
   nuxtApp.hook("page:error", handleRouteError);
+  nuxtApp.hook("app:mounted", dismissInitialLoading);
 }
 
 const pageKey = computed(() => route.fullPath ?? route.name ?? "");

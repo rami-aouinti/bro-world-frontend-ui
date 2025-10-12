@@ -7,6 +7,11 @@
     "close": "Chiudi"
   },
   "layout": {
+    "loadingOverlay": {
+      "srLabel": "Caricamento di Bro World",
+      "title": "Bro World si sta caricando…",
+      "description": "Stiamo preparando l'esperienza completa: barra superiore, pannelli e contenuti."
+    },
     "actions": {
       "openNavigation": "Apri menu di navigazione",
       "openWidgets": "Apri widget rapidi",
