@@ -16,7 +16,7 @@
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">
           {{ resolvedWeather.badge }}
         </p>
-        <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.title }}</h3>
+        <h3 class="mt-3 text-2xl font-semibold text-foreground">{{ resolvedWeather.temperature }}</h3>
         <p class="mt-2 text-sm text-muted-foreground">
           <span
             v-if="isLoading"
@@ -25,44 +25,13 @@
             <span class="h-2 w-2 animate-pulse rounded-full bg-primary"></span>
             {{ loadingLabel }}
           </span>
-          <span v-else>{{ resolvedWeather.subtitle }}</span>
+          <span v-else>{{ resolvedWeather.location }}</span>
         </p>
       </div>
       <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-3xl">
         {{ resolvedWeather.icon }}
       </div>
     </div>
-
-    <dl class="relative z-10 text-sm text-muted-foreground">
-      <div
-        class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground"
-      >
-        <dt class="uppercase tracking-wide text-xs text-muted-foreground">
-          {{ resolvedWeather.locationLabel }}
-        </dt>
-        <dd class="font-medium text-foreground text-end">
-          <span
-            v-if="isLoading"
-            class="inline-flex h-5 w-20 animate-pulse rounded-full bg-foreground/10"
-          ></span>
-          <span v-else>{{ resolvedWeather.location }}</span>
-        </dd>
-      </div>
-      <div
-        class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 text-sm text-muted-foreground"
-      >
-        <dt class="uppercase tracking-wide text-xs text-muted-foreground">
-          {{ resolvedWeather.temperatureLabel }}
-        </dt>
-        <dd class="font-medium text-foreground text-end">
-          <span
-            v-if="isLoading"
-            class="inline-flex h-5 w-14 animate-pulse rounded-full bg-foreground/10"
-          ></span>
-          <span v-else>{{ resolvedWeather.temperature }}</span>
-        </dd>
-      </div>
-    </dl>
   </SidebarCard>
 </template>
 
