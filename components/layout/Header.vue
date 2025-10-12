@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 z-40 bg-transparent text-foreground"
+    class="bg-background/80 sticky top-0 z-40 backdrop-blur-lg"
     :class="{ 'border-b': config.header.border }"
   >
     <div
