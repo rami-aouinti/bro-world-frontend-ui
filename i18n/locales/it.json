@@ -1273,6 +1273,116 @@
       "title": "Area di amministrazione",
       "subtitle": "Gestisci l’intera piattaforma, monitora le metriche chiave e attiva le leve giuste in pochi clic."
     },
+    "settings": {
+      "metaTitle": "Site settings",
+      "page": {
+        "title": "Site settings",
+        "subtitle": "Configure the brand, theme palette, and navigation structure for your community."
+      },
+      "navigation": {
+        "title": "Sections"
+      },
+      "sections": {
+        "general": {
+          "title": "Brand identity",
+          "subtitle": "Update the site name and tagline displayed across the workspace.",
+          "badge": "Core"
+        },
+        "theme": {
+          "title": "Themes",
+          "subtitle": "Curate available themes and choose which one is active by default.",
+          "active": "Default theme"
+        },
+        "profile": {
+          "title": "Profile personalisation",
+          "subtitle": "Control how members can customise their public profile.",
+          "badge": "Profiles"
+        },
+        "appearance": {
+          "title": "Theme mode",
+          "subtitle": "Set the default mode and manage the theme toggle behaviour.",
+          "badge": "Display"
+        },
+        "pages": {
+          "title": "Static pages",
+          "subtitle": "Edit the hero content displayed on About, Contact, and Help.",
+          "badge": "Content",
+          "labels": {
+            "about": "About page",
+            "contact": "Contact page",
+            "help": "Help centre"
+          },
+          "descriptions": {
+            "about": "Update the mission statement and introduction shown on the About page.",
+            "contact": "Customise the hero copy for your support and contact information.",
+            "help": "Define the messaging that appears at the top of the help centre."
+          }
+        },
+        "navigation": {
+          "title": "Navigation menu",
+          "subtitle": "Add, reorder, and secure sidebar entries for every audience.",
+          "badge": "Menus",
+          "children": "Child links"
+        }
+      },
+      "fields": {
+        "siteName": "Site name",
+        "tagline": "Tagline",
+        "themeName": "Theme name",
+        "themeDescription": "Description",
+        "themePrimary": "Primary color",
+        "themeAccent": "Accent color",
+        "themeSurface": "Surface color",
+        "menuLabel": "Menu label",
+        "menuPath": "Destination path",
+        "menuIcon": "Icon (optional)",
+        "menuAdmin": "Admin only",
+        "menuVisible": "Visible",
+        "profileAllowCustomization": "Allow profile customization",
+        "profileAllowThemeSelection": "Allow profile theme selection",
+        "profileAllowAvatarUploads": "Allow avatar uploads",
+        "profileAllowCoverUploads": "Allow cover uploads",
+        "profileShowContact": "Show contact section",
+        "profileShowDetails": "Show details section",
+        "profileShowSocial": "Show social insights",
+        "profileDefaultBio": "Default bio fallback",
+        "uiAllowThemeSwitching": "Allow visitors to toggle theme",
+        "themeModeSystem": "Follow system",
+        "themeModeLight": "Light mode",
+        "themeModeDark": "Dark mode",
+        "pageTitle": "Title",
+        "pageSubtitle": "Subtitle",
+        "pageBody": "Body content"
+      },
+      "helpers": {
+        "themeModeSystem": "Automatically adapts to each visitor's device preference.",
+        "themeModeLight": "Always display the interface in light mode.",
+        "themeModeDark": "Always display the interface in dark mode."
+      },
+      "placeholders": {
+        "siteName": "Enter a public site name",
+        "tagline": "Describe your mission in one sentence"
+      },
+      "actions": {
+        "save": "Save settings",
+        "reset": "Discard changes",
+        "addTheme": "Add theme",
+        "addMenu": "Add menu",
+        "addChild": "Add child link",
+        "removeMenu": "Remove",
+        "moveUp": "Move up",
+        "moveDown": "Move down"
+      },
+      "feedback": {
+        "saved": "Site configuration updated successfully.",
+        "error": "We couldn't update the configuration. Try again later."
+      },
+      "defaults": {
+        "themeName": "New theme",
+        "menuLabel": "New menu",
+        "submenuLabel": "New submenu"
+      }
+    },
     "userManagement": {
       "title": "User management",
       "subtitle": "Invite, update, or deactivate accounts in real-time.",

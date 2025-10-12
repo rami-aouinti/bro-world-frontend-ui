@@ -1457,6 +1457,9 @@
         "title": "Paramètres du site",
         "subtitle": "Configurez l'identité de marque, la palette de thèmes et la navigation de votre communauté."
       },
+      "navigation": {
+        "title": "Sections"
+      },
       "sections": {
         "general": {
           "title": "Identité de marque",
@@ -1528,6 +1531,11 @@
         "pageTitle": "Titre",
         "pageSubtitle": "Sous-titre",
         "pageBody": "Contenu principal"
+      },
+      "helpers": {
+        "themeModeSystem": "S'adapte automatiquement aux préférences du terminal de chaque visiteur.",
+        "themeModeLight": "Affiche toujours l'interface en mode clair.",
+        "themeModeDark": "Affiche toujours l'interface en mode sombre."
       },
       "placeholders": {
         "siteName": "Saisissez le nom public du site",
