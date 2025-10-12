@@ -56,10 +56,16 @@ const siteConfig = computed(() => {
 const route = useRoute();
 
 if (import.meta.client) {
+  function scheduleInitialDismissal() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(dismissInitialLoading);
+    });
+  }
+
   if (document.readyState === "complete") {
-    queueMicrotask(dismissInitialLoading);
+    scheduleInitialDismissal();
   } else {
-    window.addEventListener("load", dismissInitialLoading, { once: true });
+    window.addEventListener("load", scheduleInitialDismissal, { once: true });
   }
 }
 
