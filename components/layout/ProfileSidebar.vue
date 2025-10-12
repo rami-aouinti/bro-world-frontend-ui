@@ -1,15 +1,14 @@
 <!-- components/ProfileSidebar.vue -->
 <template>
   <div class="sidebar-profile-card">
-    <ParticlesBg
-      v-if="shouldRenderParticles"
-      class="sidebar-profile-card__particles"
-      :quantity="120"
-      :ease="120"
-      :color="isDark ? '#ffffff' : '#111827'"
-      :staticity="12"
-      refresh
-    />
+    <SidebarCard class="text-card-foreground px-3 py-2">
+      <!-- glows -->
+      <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
     <div class="sidebar-profile-card__content">
       <v-card-item>
         <div class="d-flex align-center justify-space-between">
@@ -61,17 +60,17 @@
         </div>
       </v-card-text>
     </div>
+    </SidebarCard>
   </div>
   <div class="sidebar-profile-card">
-    <ParticlesBg
-      v-if="shouldRenderParticles"
-      class="sidebar-profile-card__particles"
-      :quantity="120"
-      :ease="120"
-      :color="isDark ? '#ffffff' : '#111827'"
-      :staticity="12"
-      refresh
-    />
+    <SidebarCard class="text-card-foreground px-3 py-2">
+      <!-- glows -->
+      <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
     <div class="sidebar-profile-card__content">
       <v-card-item>
         <div class="d-flex align-center justify-space-between">
@@ -102,17 +101,17 @@
         </div>
       </v-card-text>
     </div>
+    </SidebarCard>
   </div>
   <div class="sidebar-profile-card">
-    <ParticlesBg
-      v-if="shouldRenderParticles"
-      class="sidebar-profile-card__particles"
-      :quantity="120"
-      :ease="120"
-      :color="isDark ? '#ffffff' : '#111827'"
-      :staticity="12"
-      refresh
-    />
+    <SidebarCard class="text-card-foreground px-3 py-2">
+      <!-- glows -->
+      <span
+          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
     <div class="sidebar-profile-card__content">
       <v-card-item>
         <div class="d-flex align-center justify-space-between">
@@ -153,6 +152,7 @@
         </div>
       </v-card-text>
     </div>
+    </SidebarCard>
   </div>
 </template>
 
@@ -327,9 +327,6 @@ function friendAvatar(friend: Friend) {
   overflow: hidden;
   border-radius: 20px;
   padding: 1.25rem 0.25rem;
-  box-shadow:
-    0 5px 5px rgba(var(--v-theme-primary), 0.2),
-    0 14px 10px rgba(15, 23, 42, 0.12);
 }
 
 .sidebar-profile-card__particles {

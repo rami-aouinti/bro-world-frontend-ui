@@ -1,6 +1,6 @@
 <template>
   <main
-    class="py-4"
+    class="py-2"
     aria-labelledby="profile-title"
   >
     <v-container>
@@ -8,11 +8,14 @@
         class="mb-8"
         aria-describedby="profile-subtitle"
       >
-        <v-card
-          class="pa-6"
-          rounded="xl"
-          elevation="10"
-        >
+        <SidebarCard class="text-card-foreground px-3 py-2">
+          <!-- glows -->
+          <span
+              class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+          ></span>
+          <span
+              class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+          ></span>
           <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
             <v-avatar
               size="96"
@@ -73,7 +76,7 @@
               </p>
             </div>
           </div>
-        </v-card>
+        </SidebarCard>
       </header>
 
       <v-row
@@ -93,11 +96,14 @@
                 aria-labelledby="contact-section-title"
                 class="h-100"
               >
-                <v-card
-                  class="pa-6 h-100"
-                  rounded="lg"
-                  variant="tonal"
-                >
+                <SidebarCard class="text-card-foreground px-3 py-2">
+                  <!-- glows -->
+                  <span
+                      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+                  ></span>
+                  <span
+                      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+                  ></span>
                   <h2
                     id="contact-section-title"
                     class="text-h5 font-weight-semibold mb-4"
@@ -122,7 +128,7 @@
                       </dd>
                     </div>
                   </dl>
-                </v-card>
+                </SidebarCard>
               </section>
             </v-col>
 
@@ -134,11 +140,14 @@
                 aria-labelledby="profile-section-title"
                 class="h-100"
               >
-                <v-card
-                  class="pa-6 h-100"
-                  rounded="lg"
-                  variant="tonal"
-                >
+                <SidebarCard class="text-card-foreground px-3 py-2">
+                  <!-- glows -->
+                  <span
+                      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+                  ></span>
+                  <span
+                      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+                  ></span>
                   <h2
                     id="profile-section-title"
                     class="text-h5 font-weight-semibold mb-4"
@@ -154,7 +163,7 @@
                       <dd class="text-body-1 font-weight-medium mb-0">{{ item.value }}</dd>
                     </div>
                   </dl>
-                </v-card>
+                </SidebarCard>
               </section>
             </v-col>
 
@@ -163,11 +172,14 @@
                 aria-labelledby="social-section-title"
                 class="h-100"
               >
-                <v-card
-                  class="pa-6 h-100"
-                  rounded="lg"
-                  variant="tonal"
-                >
+                <SidebarCard class="text-card-foreground px-3 py-2">
+                  <!-- glows -->
+                  <span
+                      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+                  ></span>
+                  <span
+                      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+                  ></span>
                   <h2
                     id="social-section-title"
                     class="text-h5 font-weight-semibold mb-4"
@@ -211,7 +223,7 @@
                       </dd>
                     </div>
                   </dl>
-                </v-card>
+                </SidebarCard>
               </section>
             </v-col>
           </v-row>

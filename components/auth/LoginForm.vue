@@ -367,11 +367,11 @@ async function handleSubmit() {
 
 .login-field__action:not(:disabled):hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(236, 72, 153, 0.25);
+  box-shadow: 0 18px 40px -24px rgba(var(--v-theme-on-surface), 0.4);
 }
 
 .login-field__action:focus-visible {
-  outline: 2px solid rgba(236, 72, 153, 0.6);
+  outline: 2px solid rgba(var(--v-theme-on-surface), 0.4);
   outline-offset: 2px;
 }
 
@@ -412,7 +412,7 @@ async function handleSubmit() {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   gap: 0.5rem;
-  box-shadow: 0 18px 30px rgba(236, 72, 153, 0.35);
+  box-shadow: 0 18px 30px rgba(var(--v-theme-on-surface), 0.4);
 }
 
 .login-form--compact .login-form__submit {
