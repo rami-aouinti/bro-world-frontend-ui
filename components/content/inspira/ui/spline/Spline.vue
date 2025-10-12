@@ -19,7 +19,7 @@
 
 import { ref, onMounted, onUnmounted, computed, watch, nextTick, toValue } from "vue";
 import type { StyleValue } from "vue";
-import { Application, type SplineEventName } from "@splinetool/runtime";
+import type { Application as SplineApplication, SplineEventName } from "@splinetool/runtime";
 import { useDebounceFn, useIntersectionObserver } from "@vueuse/core";
 import ParentSize from "./ParentSize.vue";
 
@@ -30,7 +30,7 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     scene: string;
-    onLoad?: (app: Application | null) => void;
+    onLoad?: (app: SplineApplication | null) => void;
     renderOnDemand?: boolean;
     style?: StyleValue;
   }>(),
@@ -54,7 +54,7 @@ const emit = defineEmits([
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const isLoading = ref(false);
-const splineApp = ref<Application | null>(null);
+const splineApp = ref<SplineApplication | null>(null);
 const isVisible = ref(true);
 
 // eslint-disable-next-line func-style
@@ -119,12 +119,24 @@ function eventHandler(name: SplineEventName, handler?: (e: any) => void) {
   return () => splineApp.value?.removeEventListener(name, debouncedHandler);
 }
 
+let runtimeImport: Promise<typeof import("@splinetool/runtime")> | null = null;
+
+async function loadSplineRuntime() {
+  if (!runtimeImport) {
+    runtimeImport = import("@splinetool/runtime");
+  }
+
+  return runtimeImport;
+}
+
 async function initSpline() {
   if (!canvasRef.value) return;
 
   isLoading.value = true;
 
   try {
+    const { Application } = await loadSplineRuntime();
+
     // Clean up previous instance if exists
     if (splineApp.value) {
       splineApp.value.dispose();

@@ -968,61 +968,61 @@
       }
     },
     "job": {
-      "title": "Jobs",
-      "subtitle": "Centralise every step of your recruiting funnel to move from sourcing to signing with clarity.",
-      "featuresTitle": "Build a confident hiring pipeline",
+      "title": "Emplois",
+      "subtitle": "Centralisez chaque étape de votre entonnoir de recrutement pour passer du sourcing à la signature en toute clarté.",
+      "featuresTitle": "Construisez un pipeline de recrutement fiable",
       "features": {
         "matching": {
-          "title": "Spot the right talent faster",
-          "description": "Aggregate sourcing activity and prioritise applicants automatically.",
+          "title": "Identifiez plus rapidement les bons talents",
+          "description": "Agrégrez vos activités de sourcing et priorisez automatiquement les candidats.",
           "points": [
-            "Sync job boards, referrals, and internal mobility into one view.",
-            "Score applications with configurable criteria and bias safeguards.",
-            "Highlight talent pools ready for nurture or re-engagement."
+            "Synchronisez job boards, cooptations et mobilité interne dans une vue unique.",
+            "Évaluez les candidatures selon des critères configurables avec des garde-fous contre les biais.",
+            "Mettez en lumière les viviers à activer ou réactiver."
           ]
         },
         "automation": {
-          "title": "Automate team coordination",
-          "description": "Give recruiters, interviewers, and hiring managers a shared command centre.",
+          "title": "Automatisez la coordination des équipes",
+          "description": "Offrez aux recruteurs, intervieweurs et managers un centre de commandement partagé.",
           "points": [
-            "Trigger interview kits and reminders in the right timezone.",
-            "Share structured feedback templates that surface signal over noise.",
-            "Notify stakeholders the moment a candidate advances or stalls."
+            "Déclenchez kits d'entretien et rappels dans le bon fuseau horaire.",
+            "Partagez des modèles de feedback structurés pour faire ressortir les signaux utiles.",
+            "Alertez les parties prenantes dès qu'un candidat progresse ou stagne."
           ]
         },
         "insights": {
-          "title": "Measure hiring impact",
-          "description": "Understand conversion, velocity, and quality without exporting spreadsheets.",
+          "title": "Mesurez l'impact de vos recrutements",
+          "description": "Comprenez conversion, vitesse et qualité sans exporter de feuilles de calcul.",
           "points": [
-            "Track time-to-fill, diversity ratios, and offer acceptance in real time.",
-            "Visualise bottlenecks across regions or job families instantly.",
-            "Share live dashboards with leadership and partners securely."
+            "Suivez le délai de recrutement, les ratios de diversité et le taux d'acceptation des offres en temps réel.",
+            "Visualisez instantanément les goulets d'étranglement par région ou famille de postes.",
+            "Partagez des tableaux de bord en temps réel avec la direction et vos partenaires en toute sécurité."
           ]
         }
       },
-      "workflowTitle": "Your hiring rhythm, visualised",
+      "workflowTitle": "Votre cadence de recrutement, visualisée",
       "workflow": {
         "steps": {
           "publish": {
-            "title": "Publish with confidence",
-            "description": "Launch branded job pages and syndicated listings with reusable templates."
+            "title": "Publiez en toute confiance",
+            "description": "Déployez des pages métiers à votre image et des annonces diffusées via des modèles réutilisables."
           },
           "review": {
-            "title": "Review together",
-            "description": "Collaborate on feedback, calibrate scorecards, and keep the loop accountable."
+            "title": "Analysez ensemble",
+            "description": "Collaborez sur les retours, calibrez vos grilles d'évaluation et responsabilisez chaque intervenant."
           },
           "hire": {
-            "title": "Hire and onboard",
-            "description": "Secure approvals, generate offers, and pass context to onboarding seamlessly."
+            "title": "Recrutez et intégrez",
+            "description": "Obtenez les validations, générez les offres et transmettez le contexte à l'onboarding sans friction."
           }
         }
       },
-      "stepLabel": "Step {number}",
+      "stepLabel": "Étape {number}",
       "cta": {
-        "title": "Design a hiring experience candidates love",
-        "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
-        "button": "Talk to us",
-        "buttonAria": "Open the contact page"
+        "title": "Concevez une expérience de recrutement que les candidats adorent",
+        "description": "Laissez notre équipe adapter BroWorld à votre stack recrutement, vos processus et vos exigences de conformité.",
+        "button": "Contactez-nous",
+        "buttonAria": "Ouvrir la page de contact"
       }
     },
     "game": {
@@ -1416,8 +1416,8 @@
       "description": "Gérez vos identifiants de connexion, l'authentification à deux facteurs et les appareils de confiance."
     },
     "job": {
-      "title": "Jobs",
-      "description": "Plan, track, and optimise hiring programmes."
+      "title": "Emplois",
+      "description": "Planifiez, suivez et optimisez vos programmes de recrutement."
     },
     "game": {
       "title": "Gaming",

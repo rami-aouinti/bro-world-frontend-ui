@@ -1,15 +1,15 @@
 <template>
   <main aria-labelledby="blog-heading">
     <NewPost
-      v-if="showAuthenticatedContent"
+      v-if="canAccessAuthenticatedContent"
       :avatar="user.avatarUrl"
       :user-name="user.name"
       @submit="createPost"
       @attach="onAttach"
     />
     <section
-      v-if="showAuthenticatedContent"
-      class="rounded-3xl my-3 border border-border/60 bg-card/80 p-6 text-foreground shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
+      v-if="canAccessAuthenticatedContent"
+      class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 shadow-[0_25px_55px_-20px_hsl(var(--primary)/0.35)] backdrop-blur-xl"
     >
       <input
         ref="storyFileInput"
@@ -24,7 +24,7 @@
         @create="createStory"
       />
       <StoryViewerModal
-        v-if="showAuthenticatedContent"
+        v-if="canAccessAuthenticatedContent"
         v-model="isStoryViewerOpen"
         :story="activeStory"
         @close="onStoryClosed"
@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
+import { computed, defineAsyncComponent, onUnmounted, ref, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -118,13 +118,6 @@ const defaultAvatar = "https://bro-world-space.com/img/person.png";
 const auth = useAuthSession();
 const canAccessAuthenticatedContent = computed(
   () => auth.isReady.value && auth.isAuthenticated.value,
-);
-const isHydrated = ref(false);
-onMounted(() => {
-  isHydrated.value = true;
-});
-const showAuthenticatedContent = computed(
-  () => isHydrated.value && canAccessAuthenticatedContent.value,
 );
 const user = {
   name: "Rami Aouinti",
@@ -199,7 +192,7 @@ const stories = ref<Story[]>([
 const activeStory = ref<Story | null>(null);
 const isStoryViewerOpen = ref(false);
 
-watch(showAuthenticatedContent, (value) => {
+watch(canAccessAuthenticatedContent, (value) => {
   if (!value) {
     isStoryViewerOpen.value = false;
     activeStory.value = null;

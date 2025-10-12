@@ -5,6 +5,7 @@
     <div class="left">
       <div
         class="bubbles"
+        role="img"
         :aria-label="reactionListLabel"
       >
         <v-avatar

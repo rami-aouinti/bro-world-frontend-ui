@@ -67,6 +67,7 @@
           <div class="h-2 flex-1 overflow-hidden rounded-full bg-muted/60">
             <div
                 class="h-full rounded-full bg-gradient-to-r from-primary/60 to-primary"
+                role="img"
                 :style="{ width: `${bar.percent}%` }"
                 :aria-label="`${bar.percent}% of ratings are ${bar.stars} stars`"
             />

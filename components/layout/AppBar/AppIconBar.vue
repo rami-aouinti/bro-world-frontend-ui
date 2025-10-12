@@ -4,6 +4,7 @@
       v-for="icon in props.appIcons"
       :key="icon.label"
       :text="t(icon.label)"
+      :aria-label="t(icon.label)"
     >
       <template #activator="{ props: tooltipProps }">
         <v-btn
