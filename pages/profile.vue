@@ -1,6 +1,5 @@
 <template>
   <main
-    class="py-2"
     aria-labelledby="profile-title"
   >
     <v-container>
