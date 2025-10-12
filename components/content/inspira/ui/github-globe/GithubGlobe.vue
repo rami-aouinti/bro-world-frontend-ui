@@ -20,7 +20,6 @@ import {
   Scene,
   WebGLRenderer,
 } from "three";
-import contries from "./globe.json";
 import { cn } from "@/lib/utils";
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 
@@ -103,30 +102,42 @@ const globeData = ref<GlobeData[]>();
 
 let numberOfRings: number[] = [];
 
-let renderer: WebGLRenderer;
-let scene: Scene;
-let camera: PerspectiveCamera;
-let controls: OrbitControls;
+let renderer: WebGLRenderer | null = null;
+let scene: Scene | null = null;
+let camera: PerspectiveCamera | null = null;
+let controls: OrbitControls | null = null;
 
-let globe: ThreeGlobe;
+let globe: ThreeGlobe | null = null;
 
-onMounted(() => {
-  setupScene();
-  initGlobe();
-  startAnimation();
-  animate();
+let animationFrameId: number | null = null;
 
-  onWindowResize();
+type GlobeFeatureCollection = { features: unknown[] };
 
-  window.addEventListener("resize", onWindowResize, false);
+let cachedCountries: GlobeFeatureCollection | null = null;
 
-  watch(globeData, () => {
-    if (!globe || !globeData.value) return;
+const stopGlobeWatcher = watch(globeData, () => {
+  if (!globe || !globeData.value) return;
 
-    numberOfRings = genRandomNumbers(0, props.data.length, Math.floor((props.data.length * 4) / 5));
+  numberOfRings = genRandomNumbers(0, props.data.length, Math.floor((props.data.length * 4) / 5));
 
-    globe.ringsData(globeData.value.filter((d, i) => numberOfRings.includes(i)));
-  });
+  globe.ringsData(globeData.value.filter((d, i) => numberOfRings.includes(i)));
+});
+
+onMounted(async () => {
+  try {
+    const countries = await loadCountries();
+
+    setupScene();
+    initGlobe(countries);
+    startAnimation();
+    animate();
+
+    onWindowResize();
+
+    window.addEventListener("resize", onWindowResize, false);
+  } catch (error) {
+    console.error("Failed to initialize Github Globe", error);
+  }
 });
 
 function setupScene() {
@@ -183,14 +194,25 @@ function setupScene() {
   controls.maxPolarAngle = Math.PI - Math.PI / 3;
 }
 
-function initGlobe() {
+async function loadCountries() {
+  if (cachedCountries) {
+    return cachedCountries;
+  }
+
+  const module = await import("./globe.json");
+  const countries = (module.default ?? module) as GlobeFeatureCollection;
+  cachedCountries = countries;
+  return countries;
+}
+
+function initGlobe(countries: GlobeFeatureCollection) {
   buildData();
 
   globe = new ThreeGlobe({
     waitForGlobeReady: true,
     animateIn: true,
   })
-    .hexPolygonsData(contries.features)
+    .hexPolygonsData(countries.features)
     .hexPolygonResolution(3)
     .hexPolygonMargin(0.7)
     .showAtmosphere(defaultGlobeConfig.showAtmosphere!)
@@ -213,11 +235,11 @@ function initGlobe() {
   globeMaterial.emissiveIntensity = defaultGlobeConfig.emissiveIntensity || 0.1;
   globeMaterial.shininess = defaultGlobeConfig.shininess || 0.9;
 
-  scene.add(globe);
+  scene?.add(globe);
 }
 
 function onWindowResize() {
-  if (!githubGlobeRef.value) {
+  if (!githubGlobeRef.value || !camera || !renderer) {
     return;
   }
 
@@ -230,7 +252,7 @@ function onWindowResize() {
   renderer.setSize(width, height);
 }
 function startAnimation() {
-  if (!globe || !globeData.value!) return;
+  if (!globe || !globeData.value) return;
   globe
     .arcsData(props.data)
     .arcStartLat((d: any) => d.startLat * 1)
@@ -261,12 +283,29 @@ function startAnimation() {
 }
 
 function animate() {
+  if (!renderer || !scene || !camera || !globe) {
+    return;
+  }
+
   globe.rotation.y += 0.01; // Rotate globe
 
   renderer.render(scene, camera);
 
-  requestAnimationFrame(animate);
+  animationFrameId = requestAnimationFrame(animate);
 }
+
+onBeforeUnmount(() => {
+  stopGlobeWatcher();
+
+  window.removeEventListener("resize", onWindowResize, false);
+
+  controls?.dispose();
+  renderer?.dispose();
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+});
 
 function buildData() {
   const arcs = props.data;
