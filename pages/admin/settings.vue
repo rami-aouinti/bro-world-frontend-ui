@@ -309,7 +309,7 @@
               </div>
               <v-chip
                 size="small"
-                color="pink"
+                color="primary"
                 variant="tonal"
                 prepend-icon="mdi-account-cog"
               >
