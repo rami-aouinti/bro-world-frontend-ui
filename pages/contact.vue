@@ -143,7 +143,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import ContactForm from "~/components/contact/ContactForm.vue";
+import ContactForm from "~/components/forms/ContactForm.vue";
 
 definePageMeta({
   documentDriven: false,
