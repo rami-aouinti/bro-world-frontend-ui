@@ -400,12 +400,29 @@ function resolveConfigurationApiBase(event: H3Event): string {
   return base.replace(/\/$/, "");
 }
 
+function resolveConfigurationReadToken(event: H3Event): string | null {
+  const sessionToken = getSessionToken(event);
+
+  if (sessionToken) {
+    return sessionToken;
+  }
+
+  const runtime = useRuntimeConfig(event);
+  const serviceToken = runtime.configuration?.serviceToken;
+
+  if (typeof serviceToken === "string" && serviceToken.trim()) {
+    return serviceToken.trim();
+  }
+
+  return null;
+}
+
 function isFetchError(error: unknown): error is FetchError<unknown> {
   return Boolean(error && typeof error === "object" && "response" in (error as Record<string, unknown>));
 }
 
 async function readFromConfigurationApi(event: H3Event): Promise<SiteSettings | null> {
-  const token = getSessionToken(event);
+  const token = resolveConfigurationReadToken(event);
 
   if (!token) {
     return null;
