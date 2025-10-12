@@ -1505,6 +1505,7 @@
       },
       "fields": {
         "siteName": "Nom du site",
+        "language": "Langue du contenu",
         "tagline": "Accroche",
         "themeName": "Nom du thème",
         "themeDescription": "Description",

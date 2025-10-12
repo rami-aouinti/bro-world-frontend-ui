@@ -5,7 +5,10 @@ import type {
   SiteProfileSettings,
   SiteUiSettings,
   SiteContentBlock,
+  SiteLanguageDefinition,
+  SiteLocalizedSettings,
 } from "~/types/settings";
+import { defaultLanguageCode, supportedLanguages } from "~/lib/i18n/languages";
 
 function makeMenu(
   menu: Omit<SiteMenuItem, "order"> & { order?: number },
@@ -50,9 +53,54 @@ function makeContentBlock(block: SiteContentBlock): SiteContentBlock {
 
 const DEFAULT_CONTENT_UPDATED_AT = "2024-01-01T00:00:00.000Z";
 
+const DEFAULT_SITE_NAME = "BroWorld";
+const DEFAULT_TAGLINE = "Build vibrant communities with a bold design system.";
+
+const defaultAboutContent: SiteContentBlock = {
+  title: "The BroWorld mission",
+  subtitle: "Designing social universes for modern communities.",
+  body: "BroWorld empowers product teams to craft immersive, community-driven experiences with rapid iteration and consistent branding.",
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
+const defaultContactContent: SiteContentBlock = {
+  title: "Contact the BroWorld crew",
+  subtitle: "We’re here to help you launch bold social platforms.",
+  body: "Reach us at support@broworld.com for partnership, support, or press enquiries.",
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
+const defaultHelpContent: SiteContentBlock = {
+  title: "Help centre",
+  subtitle: "Guides and resources to master BroWorld’s toolkit.",
+  body: "Browse quick links, tutorials, and FAQs to get answers in minutes.",
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
+const defaultLanguages: SiteLanguageDefinition[] = supportedLanguages.map((language) => ({
+  code: language.code,
+  label: language.label,
+  endonym: language.endonym,
+  enabled: true,
+}));
+
+const defaultLocalizedSettings: Record<string, SiteLocalizedSettings> = Object.fromEntries(
+  defaultLanguages.map((language) => [
+    language.code,
+    {
+      tagline: DEFAULT_TAGLINE,
+      pages: {
+        about: makeContentBlock(defaultAboutContent),
+        contact: makeContentBlock(defaultContactContent),
+        help: makeContentBlock(defaultHelpContent),
+      },
+    } satisfies SiteLocalizedSettings,
+  ]),
+);
+
 export const defaultSiteSettings: SiteSettings = {
-  siteName: "BroWorld",
-  tagline: "Build vibrant communities with a bold design system.",
+  siteName: DEFAULT_SITE_NAME,
+  tagline: DEFAULT_TAGLINE,
   activeThemeId: "aurora",
   themes: [
     makeTheme({
@@ -83,24 +131,9 @@ export const defaultSiteSettings: SiteSettings = {
   profile: makeProfileSettings(),
   ui: makeUiSettings(),
   pages: {
-    about: makeContentBlock({
-      title: "The BroWorld mission",
-      subtitle: "Designing social universes for modern communities.",
-      body: "BroWorld empowers product teams to craft immersive, community-driven experiences with rapid iteration and consistent branding.",
-      updatedAt: DEFAULT_CONTENT_UPDATED_AT,
-    }),
-    contact: makeContentBlock({
-      title: "Contact the BroWorld crew",
-      subtitle: "We’re here to help you launch bold social platforms.",
-      body: "Reach us at support@broworld.com for partnership, support, or press enquiries.",
-      updatedAt: DEFAULT_CONTENT_UPDATED_AT,
-    }),
-    help: makeContentBlock({
-      title: "Help centre",
-      subtitle: "Guides and resources to master BroWorld’s toolkit.",
-      body: "Browse quick links, tutorials, and FAQs to get answers in minutes.",
-      updatedAt: DEFAULT_CONTENT_UPDATED_AT,
-    }),
+    about: makeContentBlock(defaultAboutContent),
+    contact: makeContentBlock(defaultContactContent),
+    help: makeContentBlock(defaultHelpContent),
   },
   menus: [
     makeMenu({
@@ -462,6 +495,9 @@ export const defaultSiteSettings: SiteSettings = {
       ],
     ),
   ],
+  defaultLanguage: defaultLanguageCode,
+  languages: defaultLanguages,
+  localized: defaultLocalizedSettings,
   updatedAt: new Date(0).toISOString(),
 };
 
