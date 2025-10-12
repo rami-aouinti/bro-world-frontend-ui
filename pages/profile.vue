@@ -88,10 +88,11 @@
             dense
             align="stretch"
           >
-            <v-col
-              cols="12"
-              md="6"
-            >
+        <v-col
+          v-if="showContactSection"
+          cols="12"
+          md="6"
+        >
               <section
                 aria-labelledby="contact-section-title"
                 class="h-100"
@@ -132,10 +133,11 @@
               </section>
             </v-col>
 
-            <v-col
-              cols="12"
-              md="6"
-            >
+        <v-col
+          v-if="showDetailsSection"
+          cols="12"
+          md="6"
+        >
               <section
                 aria-labelledby="profile-section-title"
                 class="h-100"
@@ -167,7 +169,10 @@
               </section>
             </v-col>
 
-            <v-col cols="12">
+            <v-col
+              v-if="showSocialSection"
+              cols="12"
+            >
               <section
                 aria-labelledby="social-section-title"
                 class="h-100"
@@ -238,7 +243,9 @@ import { computed } from "vue";
 
 import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useAuthSession } from "~/stores/auth-session";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type {
   FriendEntry,
   FriendProfile,
@@ -290,6 +297,16 @@ useHead(() => {
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 const placeholderValue = computed(() => t("pages.profile.placeholders.missing"));
+
+const siteSettings = useSiteSettingsState();
+const profileSettings = computed(
+  () => siteSettings.value?.profile ?? getDefaultSiteSettings().profile,
+);
+const allowProfileCustomization = computed(() => profileSettings.value.allowCustomization !== false);
+const showContactSection = computed(() => profileSettings.value.showContactSection !== false);
+const showDetailsSection = computed(() => profileSettings.value.showDetailsSection !== false);
+const showSocialSection = computed(() => profileSettings.value.showSocialSection !== false);
+const defaultProfileBio = computed(() => profileSettings.value.defaultBio?.trim() || null);
 
 function asString(value: unknown): string | null {
   if (typeof value !== "string") {
@@ -371,7 +388,15 @@ const phone = computed(() => asString(profileDetails.value?.phone));
 const address = computed(() => asString(profileDetails.value?.address));
 const titleValue = computed(() => asString(profileDetails.value?.title));
 const gender = computed(() => asString(profileDetails.value?.gender));
-const description = computed(() => asString(profileDetails.value?.description));
+const description = computed(() => {
+  const custom = asString(profileDetails.value?.description);
+
+  if (custom) {
+    return custom;
+  }
+
+  return defaultProfileBio.value ?? null;
+});
 const hometown = computed(() => asString(profileDetails.value?.hometown));
 const birthdayFormatted = computed(() => {
   const raw = asString(profileDetails.value?.birthday);
@@ -594,7 +619,7 @@ const sidebarContent = computed(() => ({
     lifeEvents: sidebarEvents.value,
     onViewAllFriends: goToFriendsPage,
     onViewAllPhotos: goToPhotosPage,
-    onEditDetails: goToEditPage,
+    onEditDetails: allowProfileCustomization.value ? goToEditPage : undefined,
   },
   wrapperClass: "flex flex-col gap-4",
 }));
@@ -610,6 +635,10 @@ function goToPhotosPage() {
 }
 
 function goToEditPage() {
+  if (!allowProfileCustomization.value) {
+    return;
+  }
+
   router.push({ name: "profile-edit" });
 }
 </script>

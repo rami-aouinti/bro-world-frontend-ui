@@ -1461,6 +1461,31 @@
           "subtitle": "Composez les thèmes disponibles et choisissez celui appliqué par défaut.",
           "active": "Thème par défaut"
         },
+        "profile": {
+          "title": "Personnalisation du profil",
+          "subtitle": "Définissez ce que les membres peuvent ajuster sur leur profil public.",
+          "badge": "Profils"
+        },
+        "appearance": {
+          "title": "Mode d'affichage",
+          "subtitle": "Choisissez le mode par défaut et la gestion du changement de thème.",
+          "badge": "Affichage"
+        },
+        "pages": {
+          "title": "Pages statiques",
+          "subtitle": "Modifiez le contenu d'introduction des pages À propos, Contact et Aide.",
+          "badge": "Contenu",
+          "labels": {
+            "about": "Page À propos",
+            "contact": "Page Contact",
+            "help": "Centre d'aide"
+          },
+          "descriptions": {
+            "about": "Mettez à jour la mission présentée sur la page À propos.",
+            "contact": "Personnalisez le texte d'accueil de la page de contact.",
+            "help": "Définissez le message affiché en tête du centre d'aide."
+          }
+        },
         "navigation": {
           "title": "Menu de navigation",
           "subtitle": "Ajoutez, réorganisez et sécurisez les entrées de la barre latérale.",
@@ -1480,7 +1505,22 @@
         "menuPath": "Chemin de destination",
         "menuIcon": "Icône (optionnel)",
         "menuAdmin": "Réservé aux admins",
-        "menuVisible": "Visible"
+        "menuVisible": "Visible",
+        "profileAllowCustomization": "Autoriser la personnalisation du profil",
+        "profileAllowThemeSelection": "Autoriser la sélection de thème du profil",
+        "profileAllowAvatarUploads": "Autoriser le téléversement d'avatar",
+        "profileAllowCoverUploads": "Autoriser le téléversement de bannière",
+        "profileShowContact": "Afficher la section contact",
+        "profileShowDetails": "Afficher la section détails",
+        "profileShowSocial": "Afficher les informations sociales",
+        "profileDefaultBio": "Biographie par défaut",
+        "uiAllowThemeSwitching": "Autoriser le changement de thème",
+        "themeModeSystem": "Suivre le système",
+        "themeModeLight": "Mode clair",
+        "themeModeDark": "Mode sombre",
+        "pageTitle": "Titre",
+        "pageSubtitle": "Sous-titre",
+        "pageBody": "Contenu principal"
       },
       "placeholders": {
         "siteName": "Saisissez le nom public du site",

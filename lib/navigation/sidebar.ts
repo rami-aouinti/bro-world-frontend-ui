@@ -1,4 +1,4 @@
-import type { SiteMenuItem, SiteSettings } from "~/types/settings";
+import type { SiteMenuItem, SiteProfileSettings, SiteSettings } from "~/types/settings";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 export interface LayoutSidebarItem {
@@ -107,8 +107,12 @@ export function buildSidebarItems(
     .filter((item): item is LayoutSidebarItem => Boolean(item));
 }
 
-export function buildProfileSidebarItems(): LayoutSidebarItem[] {
-  return [
+export function buildProfileSidebarItems(
+  profileSettings?: SiteProfileSettings | null,
+): LayoutSidebarItem[] {
+  const allowCustomization = profileSettings?.allowCustomization !== false;
+
+  const items: LayoutSidebarItem[] = [
     {
       key: "profile-overview",
       label: "layout.sidebar.items.profileOverview",
@@ -116,13 +120,19 @@ export function buildProfileSidebarItems(): LayoutSidebarItem[] {
       to: "/profile",
       translate: true,
     },
-    {
+  ];
+
+  if (allowCustomization) {
+    items.push({
       key: "profile-edit",
       label: "layout.sidebar.items.profileSettings",
       icon: "mdi-cog-outline",
       to: "/profile-edit",
       translate: true,
-    },
+    });
+  }
+
+  items.push(
     {
       key: "profile-security",
       label: "layout.sidebar.items.profileSecurity",
@@ -144,5 +154,7 @@ export function buildProfileSidebarItems(): LayoutSidebarItem[] {
       to: "/profile-photos",
       translate: true,
     },
-  ];
+  );
+
+  return items;
 }

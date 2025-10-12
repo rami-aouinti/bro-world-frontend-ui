@@ -28,13 +28,13 @@
             id="about-heading"
             class="text-h3 font-weight-bold mb-3"
           >
-            {{ t("pages.about.title") }}
+            {{ aboutTitle }}
           </h1>
           <p
             id="about-subtitle"
             class="text-body-1 text-medium-emphasis mb-0"
           >
-            {{ t("pages.about.subtitle") }}
+            {{ aboutSubtitle }}
           </p>
         </v-sheet>
       </section>
@@ -63,7 +63,7 @@
                 {{ t("pages.about.missionTitle") }}
               </h2>
               <p class="text-body-1 text-medium-emphasis mb-6">
-                {{ t("pages.about.missionBody") }}
+                {{ aboutBody }}
               </p>
               <div class="d-flex flex-wrap gap-3">
                 <v-chip
@@ -294,6 +294,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 definePageMeta({
   documentDriven: false,
@@ -302,6 +304,16 @@ const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
+const siteSettings = useSiteSettingsState();
+
+const aboutContent = computed(
+  () => siteSettings.value?.pages.about ?? getDefaultSiteSettings().pages.about,
+);
+const aboutTitle = computed(() => aboutContent.value.title?.trim() || t("pages.about.title"));
+const aboutSubtitle = computed(
+  () => aboutContent.value.subtitle?.trim() || t("pages.about.subtitle"),
+);
+const aboutBody = computed(() => aboutContent.value.body?.trim() || t("pages.about.missionBody"));
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 

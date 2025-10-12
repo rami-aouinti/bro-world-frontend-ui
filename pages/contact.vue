@@ -36,13 +36,13 @@
                 id="contact-heading"
                 class="text-h3 font-weight-bold mb-3"
               >
-                {{ t("pages.contact.title") }}
+                {{ contactTitle }}
               </h1>
               <p
                 id="contact-intro"
                 class="text-body-1 text-medium-emphasis"
               >
-                {{ t("pages.contact.subtitle") }}
+                {{ contactSubtitle }}
               </p>
             </article>
 
@@ -70,7 +70,7 @@
                   {{ t("pages.contact.details.title") }}
                 </h2>
                 <p class="text-body-2 text-medium-emphasis">
-                  {{ t("pages.contact.details.description") }}
+                  {{ contactSupportBody }}
                 </p>
 
                 <div class="d-flex flex-column gap-4 mt-6">
@@ -142,6 +142,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 import ContactForm from "~/components/forms/ContactForm.vue";
 
@@ -153,6 +155,18 @@ const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const localePath = useLocalePath();
+const siteSettings = useSiteSettingsState();
+
+const contactContent = computed(
+  () => siteSettings.value?.pages.contact ?? getDefaultSiteSettings().pages.contact,
+);
+const contactTitle = computed(() => contactContent.value.title?.trim() || t("pages.contact.title"));
+const contactSubtitle = computed(
+  () => contactContent.value.subtitle?.trim() || t("pages.contact.subtitle"),
+);
+const contactSupportBody = computed(
+  () => contactContent.value.body?.trim() || t("pages.contact.details.description"),
+);
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 

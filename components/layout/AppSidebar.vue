@@ -151,7 +151,7 @@ const canAccessAdmin = computed(() => {
 
 const variantItems = computed<LayoutSidebarItem[]>(() => {
   if (props.variant === "profile") {
-    return buildProfileSidebarItems();
+    return buildProfileSidebarItems(siteSettings.value?.profile);
   }
 
   return buildSidebarItems(siteSettings.value, canAccessAdmin.value);

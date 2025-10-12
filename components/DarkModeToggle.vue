@@ -5,6 +5,8 @@
     type="button"
     :class="buttonClass"
     aria-label="Toggle color mode"
+    :disabled="!isToggleAllowed"
+    :aria-disabled="!isToggleAllowed"
     @click="toggleColorMode"
   >
     <Icon
@@ -24,12 +26,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useCookieColorMode } from "#imports";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 
 const props = defineProps<{ buttonClass?: string }>();
 
 const buttonClass = computed(() => props.buttonClass ?? "");
 
 const colorMode = useCookieColorMode();
+const siteSettings = useSiteSettingsState();
+const isToggleAllowed = computed(() => siteSettings.value?.ui.allowThemeSwitching !== false);
 const resolvedMode = computed<"light" | "dark">(() => {
   if (colorMode.value === "dark" || colorMode.value === "light") {
     return colorMode.value;
@@ -39,6 +44,10 @@ const resolvedMode = computed<"light" | "dark">(() => {
 });
 
 function toggleColorMode() {
+  if (!isToggleAllowed.value) {
+    return;
+  }
+
   colorMode.value = resolvedMode.value === "dark" ? "light" : "dark";
 }
 </script>
