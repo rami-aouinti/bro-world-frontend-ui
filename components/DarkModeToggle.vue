@@ -2,6 +2,9 @@
   <UiButton
     variant="ghost"
     size="icon"
+    type="button"
+    :class="buttonClass"
+    aria-label="Toggle color mode"
     @click="toggleColorMode"
   >
     <Icon
@@ -21,6 +24,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useCookieColorMode } from "#imports";
+
+const props = defineProps<{ buttonClass?: string }>();
+
+const buttonClass = computed(() => props.buttonClass ?? "");
 
 const colorMode = useCookieColorMode();
 const resolvedMode = computed<"light" | "dark">(() => {
