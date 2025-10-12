@@ -1,12 +1,6 @@
 <template>
   <Icon
-    v-if="resolved.type === 'mdi'"
-    v-bind="attrs"
-    :name="resolved.value"
-    :size="size"
-  />
-  <Icon
-    v-else-if="resolved.type === 'other'"
+    v-if="resolved.type !== 'none'"
     v-bind="attrs"
     :name="resolved.value"
     :size="size"
@@ -36,9 +30,9 @@ const resolved = computed(() => {
 
   if (!rawName) return { type: "none" as const, value: "" };
 
-  if (rawName.startsWith("mdi:")) return { type: "mdi" as const, value: `mdi-${rawName.slice(4)}` };
+  if (rawName.startsWith("mdi:")) return { type: "mdi" as const, value: rawName };
 
-  if (rawName.startsWith("mdi-")) return { type: "mdi" as const, value: rawName };
+  if (rawName.startsWith("mdi-")) return { type: "mdi" as const, value: `mdi:${rawName.slice(4)}` };
 
   return { type: "other" as const, value: rawName };
 });
