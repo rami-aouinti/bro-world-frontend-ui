@@ -70,6 +70,7 @@
           class="py-1 rounded-xl"
           density="comfortable"
           lines="two"
+          style="background-color: transparent;"
         >
           <template v-if="props.items.length">
             <v-list-item
