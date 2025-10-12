@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { flushPromises, mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 
-import ContactForm from "~/components/contact/ContactForm.vue";
+import ContactForm from "~/components/forms/ContactForm.vue";
 import en from "~/i18n/locales/en.json";
 
 const notifyMock = vi.fn();

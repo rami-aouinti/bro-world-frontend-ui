@@ -246,33 +246,14 @@
           >
             {{ createErrorMessage }}
           </v-alert>
-          <v-form
+          <BlogPostForm
             ref="createFormRef"
-            @submit.prevent="submitCreate"
-          >
-            <v-text-field
-              v-model="createForm.title"
-              :label="t('admin.blog.dialogs.form.titleLabel')"
-              variant="outlined"
-              hide-details="auto"
-              class="mb-4"
-            />
-            <v-text-field
-              v-model="createForm.summary"
-              :label="t('admin.blog.dialogs.form.summaryLabel')"
-              variant="outlined"
-              hide-details="auto"
-              class="mb-4"
-            />
-            <v-textarea
-              v-model="createForm.content"
-              :label="t('admin.blog.dialogs.form.contentLabel')"
-              :rules="[contentRule]"
-              auto-grow
-              variant="outlined"
-              hide-details="auto"
-            />
-          </v-form>
+            v-model="createFormModel"
+            :labels="blogFormLabels"
+            :content-rules="[contentRule]"
+            :disabled="isCreating"
+            @submit="submitCreate"
+          />
         </v-card-text>
         <v-card-actions class="justify-end">
           <v-btn
@@ -315,29 +296,14 @@
           >
             {{ editError }}
           </v-alert>
-          <v-form @submit.prevent="submitEdit">
-            <v-text-field
-              v-model="editForm.title"
-              :label="t('admin.blog.dialogs.form.titleLabel')"
-              variant="outlined"
-              hide-details="auto"
-              class="mb-4"
-            />
-            <v-text-field
-              v-model="editForm.summary"
-              :label="t('admin.blog.dialogs.form.summaryLabel')"
-              variant="outlined"
-              hide-details="auto"
-              class="mb-4"
-            />
-            <v-textarea
-              v-model="editForm.content"
-              :label="t('admin.blog.dialogs.form.contentLabel')"
-              auto-grow
-              variant="outlined"
-              hide-details="auto"
-            />
-          </v-form>
+          <BlogPostForm
+            ref="editFormRef"
+            v-model="editFormModel"
+            :labels="blogFormLabels"
+            :content-rules="[contentRule]"
+            :disabled="currentEditLoading"
+            @submit="submitEdit"
+          />
         </v-card-text>
         <v-card-actions class="justify-end">
           <v-btn
@@ -472,8 +438,10 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from "vue";
 import { callOnce } from "#imports";
+import BlogPostForm from "~/components/forms/BlogPostForm.vue";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost } from "~/lib/mock/blog";
+import type { BlogPostFormValue } from "~/types/forms/blog";
 import type { AdminPostRaw, AdminPostRow } from "~/types/pages/admin/blog";
 
 definePageMeta({
@@ -659,12 +627,25 @@ const isRefreshing = computed(() => isRevalidating.value);
 const isCreating = computed(() => creatingState.value);
 
 const createDialog = ref(false);
+
 const createForm = reactive({
   title: "",
   summary: "",
   content: "",
 });
 const createFormRef = ref();
+const createFormModel = computed<BlogPostFormValue>({
+  get: () => ({
+    title: createForm.title,
+    summary: createForm.summary,
+    content: createForm.content,
+  }),
+  set: (value) => {
+    createForm.title = value.title;
+    createForm.summary = value.summary;
+    createForm.content = value.content;
+  },
+});
 const localCreateError = ref<string | null>(null);
 const createErrorMessage = computed(() => localCreateError.value ?? createError.value);
 
@@ -674,6 +655,19 @@ const editForm = reactive({
   title: "",
   summary: "",
   content: "",
+});
+const editFormRef = ref();
+const editFormModel = computed<BlogPostFormValue>({
+  get: () => ({
+    title: editForm.title,
+    summary: editForm.summary,
+    content: editForm.content,
+  }),
+  set: (value) => {
+    editForm.title = value.title;
+    editForm.summary = value.summary;
+    editForm.content = value.content;
+  },
 });
 const editError = ref<string | null>(null);
 const editingOriginal = ref<(BlogPost & { __optimistic?: boolean }) | null>(null);
@@ -700,6 +694,12 @@ function setSnackbar(message: string, color: "success" | "error" = "success") {
 function contentRule(value: string) {
   return value?.trim() ? true : t("admin.blog.validation.contentRequired");
 }
+
+const blogFormLabels = computed(() => ({
+  title: t("admin.blog.dialogs.form.titleLabel"),
+  summary: t("admin.blog.dialogs.form.summaryLabel"),
+  content: t("admin.blog.dialogs.form.contentLabel"),
+}));
 
 function openCreateDialog() {
   resetCreateForm();
@@ -760,6 +760,7 @@ function openEditDialog(item: AdminPostRow) {
 function closeEditDialog() {
   editDialog.value = false;
   editingOriginal.value = null;
+  editFormRef.value?.resetValidation?.();
 }
 
 const currentEditLoading = computed(() =>
