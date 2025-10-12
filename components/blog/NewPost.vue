@@ -1,6 +1,6 @@
 <template>
   <!-- Barre compacte -->
-  <SidebarCard class="text-card-foreground px-3 py-2">
+  <SidebarCard class="text-card-foreground px-3 py-4 my-2">
     <!-- glows -->
     <span
       class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"

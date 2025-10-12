@@ -9,7 +9,7 @@
     />
     <SidebarCard
       v-if="canAccessAuthenticatedContent"
-      class="text-card-foreground px-3 py-2"
+      class="text-card-foreground px-3 py-4 my-4"
     >
       <!-- glows -->
       <span
