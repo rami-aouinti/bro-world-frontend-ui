@@ -27,6 +27,19 @@
         </v-chip>
       </div>
 
+      <v-select
+        v-model="form.contentLanguage"
+        :items="languageOptions"
+        item-title="title"
+        item-value="value"
+        :label="t('admin.settings.fields.language')"
+        :disabled="isSaving"
+        variant="outlined"
+        class="mb-4"
+        density="comfortable"
+        hide-details
+      />
+
       <div class="d-flex flex-column gap-4">
         <v-sheet
           v-for="page in pageEditors"
@@ -95,7 +108,7 @@ definePageMeta({
 });
 
 const { t } = useI18n();
-const { form, isSaving } = useAdminSettingsEditor();
+const { form, isSaving, languageOptions } = useAdminSettingsEditor();
 
 const pageEditors = computed(() =>
   editablePageKeys.map((key) => ({

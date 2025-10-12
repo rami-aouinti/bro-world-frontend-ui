@@ -1125,6 +1125,7 @@
       },
       "fields": {
         "siteName": "Site name",
+        "language": "内容语言",
         "tagline": "Tagline",
         "themeName": "Theme name",
         "themeDescription": "Description",

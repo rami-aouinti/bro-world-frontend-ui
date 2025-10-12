@@ -38,6 +38,18 @@
           density="comfortable"
           hide-details
         />
+        <v-select
+          v-model="form.contentLanguage"
+          :items="languageOptions"
+          item-title="title"
+          item-value="value"
+          :label="t('admin.settings.fields.language')"
+          :disabled="isSaving"
+          variant="outlined"
+          class="mb-4"
+          density="comfortable"
+          hide-details
+        />
         <v-textarea
           v-model="form.tagline"
           :label="t('admin.settings.fields.tagline')"
@@ -67,5 +79,5 @@ definePageMeta({
 });
 
 const { t } = useI18n();
-const { form, isSaving } = useAdminSettingsEditor();
+const { form, isSaving, languageOptions } = useAdminSettingsEditor();
 </script>

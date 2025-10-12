@@ -1327,6 +1327,7 @@
       },
       "fields": {
         "siteName": "Site name",
+        "language": "Lingua dei contenuti",
         "tagline": "Tagline",
         "themeName": "Theme name",
         "themeDescription": "Description",

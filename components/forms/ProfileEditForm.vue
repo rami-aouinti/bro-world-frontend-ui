@@ -282,8 +282,18 @@
                 variant="outlined"
                 density="comfortable"
               />
+              <v-select
+                v-model="siteSettingsForm.language"
+                :items="siteSettingsLanguageOptions"
+                item-title="title"
+                item-value="value"
+                :label="t('admin.settings.fields.language')"
+                :disabled="isSiteSettingsSaving"
+                variant="outlined"
+                density="comfortable"
+              />
               <v-textarea
-                v-model="siteSettingsForm.tagline"
+                v-model="siteSettingsTagline"
                 :label="t('admin.settings.fields.tagline')"
                 :placeholder="t('admin.settings.placeholders.tagline')"
                 :disabled="isSiteSettingsSaving"
@@ -390,6 +400,7 @@ import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
+import type { SiteLocalizedSettings, SiteSettings } from "~/types/settings";
 import type { ProfileForm } from "~/types/pages/profile";
 import { useAuthSession } from "~/stores/auth-session";
 
@@ -484,16 +495,88 @@ const { save: saveSiteSettings, isSaving: adminSettingsSaving } = useAdminSettin
 
 const siteSettingsForm = reactive({
   siteName: defaultSiteSettings.siteName,
-  tagline: defaultSiteSettings.tagline ?? "",
+  language: defaultSiteSettings.defaultLanguage,
+  taglines: {} as Record<string, string>,
 });
 
-const siteSettingsSnapshot = ref("{}");
+const resolvedSiteSettings = computed(() => siteSettingsState.value ?? defaultSiteSettings);
 
-function serializeSiteSettings() {
+function getSiteLanguageSource(settings: SiteSettings) {
+  const languages = settings.languages?.length ? settings.languages : defaultSiteSettings.languages;
+  const enabled = languages.filter((language) => language.enabled !== false);
+  const source = enabled.length ? enabled : languages;
+
+  return source.length ? source : defaultSiteSettings.languages;
+}
+
+function resolveSiteTagline(settings: SiteSettings, language: string): string {
+  const normalizedDefault = settings.defaultLanguage || defaultSiteSettings.defaultLanguage;
+  const localizedEntry = settings.localized?.[language];
+  const fallbackEntry =
+    settings.localized?.[normalizedDefault] ??
+    defaultSiteSettings.localized?.[language] ??
+    defaultSiteSettings.localized?.[normalizedDefault] ??
+    defaultSiteSettings.localized?.[defaultSiteSettings.defaultLanguage];
+
+  const tagline =
+    (language === normalizedDefault ? settings.tagline : undefined) ??
+    localizedEntry?.tagline ??
+    fallbackEntry?.tagline ??
+    defaultSiteSettings.tagline ??
+    "";
+
+  return typeof tagline === "string" ? tagline : tagline ?? "";
+}
+
+function cloneLocalizedPages(settings: SiteSettings, language: string): SiteLocalizedSettings["pages"] {
+  const normalizedDefault = settings.defaultLanguage || defaultSiteSettings.defaultLanguage;
+
+  if (language === normalizedDefault) {
+    return {
+      about: { ...settings.pages.about },
+      contact: { ...settings.pages.contact },
+      help: { ...settings.pages.help },
+    } satisfies SiteLocalizedSettings["pages"];
+  }
+
+  const localized =
+    settings.localized?.[language]?.pages ??
+    defaultSiteSettings.localized?.[language]?.pages ??
+    defaultSiteSettings.localized?.[normalizedDefault]?.pages ??
+    defaultSiteSettings.pages;
+
   return {
-    siteName: siteSettingsForm.siteName.trim(),
-    tagline: siteSettingsForm.tagline.trim(),
-  };
+    about: { ...localized.about },
+    contact: { ...localized.contact },
+    help: { ...localized.help },
+  } satisfies SiteLocalizedSettings["pages"];
+}
+
+function syncSiteSettingsDrafts(settings: SiteSettings) {
+  const languages = getSiteLanguageSource(settings);
+  const nextTaglines: Record<string, string> = {};
+
+  for (const language of languages) {
+    nextTaglines[language.code] = resolveSiteTagline(settings, language.code);
+  }
+
+  const defaultLanguage = settings.defaultLanguage || defaultSiteSettings.defaultLanguage;
+
+  if (defaultLanguage && !(defaultLanguage in nextTaglines)) {
+    nextTaglines[defaultLanguage] = resolveSiteTagline(settings, defaultLanguage);
+  }
+
+  for (const key of Object.keys(siteSettingsForm.taglines)) {
+    if (!(key in nextTaglines)) {
+      delete siteSettingsForm.taglines[key];
+    }
+  }
+
+  for (const [code, value] of Object.entries(nextTaglines)) {
+    siteSettingsForm.taglines[code] = value;
+  }
+
+  return { languages, defaultLanguage };
 }
 
 watch(
@@ -501,15 +584,93 @@ watch(
   (value) => {
     const settings = value ?? defaultSiteSettings;
     siteSettingsForm.siteName = settings.siteName;
-    siteSettingsForm.tagline = settings.tagline ?? "";
-    siteSettingsSnapshot.value = JSON.stringify(serializeSiteSettings());
+    const { languages, defaultLanguage } = syncSiteSettingsDrafts(settings);
+    const preferredLanguage = languages.some((language) => language.code === siteSettingsForm.language)
+      ? siteSettingsForm.language
+      : defaultLanguage || languages[0]?.code || defaultSiteSettings.defaultLanguage;
+    siteSettingsForm.language = preferredLanguage;
   },
   { immediate: true },
 );
 
-const siteSettingsChanged = computed(
-  () => JSON.stringify(serializeSiteSettings()) !== siteSettingsSnapshot.value,
+watch(
+  () => siteSettingsForm.language,
+  (language) => {
+    if (!language) {
+      return;
+    }
+
+    if (!(language in siteSettingsForm.taglines)) {
+      siteSettingsForm.taglines[language] = resolveSiteTagline(resolvedSiteSettings.value, language);
+    }
+  },
 );
+
+const siteSettingsTagline = computed({
+  get: () => siteSettingsForm.taglines[siteSettingsForm.language] ?? "",
+  set: (value: string) => {
+    siteSettingsForm.taglines[siteSettingsForm.language] = value;
+  },
+});
+
+const siteSettingsLanguageOptions = computed(() => {
+  const settings = resolvedSiteSettings.value;
+  const map = new Map<string, { code: string; label?: string | null; endonym?: string | null; enabled?: boolean }>(
+    getSiteLanguageSource(settings).map((language) => [language.code, language]),
+  );
+
+  for (const code of Object.keys(siteSettingsForm.taglines)) {
+    if (map.has(code)) continue;
+    const fallback = defaultSiteSettings.languages.find((language) => language.code === code);
+    if (fallback) {
+      map.set(code, fallback);
+      continue;
+    }
+    map.set(code, { code, label: code.toUpperCase(), endonym: code.toUpperCase(), enabled: true });
+  }
+
+  return Array.from(map.values()).map((language) => ({
+    value: language.code,
+    title: language.endonym || language.label || language.code.toUpperCase(),
+  }));
+});
+
+function serializeSiteSettings() {
+  const settings = resolvedSiteSettings.value;
+  const defaultLanguage = settings.defaultLanguage || defaultSiteSettings.defaultLanguage;
+  const payload: Partial<SiteSettings> = {};
+
+  const trimmedSiteName = siteSettingsForm.siteName.trim();
+  if (trimmedSiteName !== settings.siteName.trim()) {
+    payload.siteName = trimmedSiteName;
+  }
+
+  const localizedUpdates: Record<string, SiteLocalizedSettings> = {};
+
+  for (const [code, value] of Object.entries(siteSettingsForm.taglines)) {
+    const trimmed = value.trim();
+    const baseline = resolveSiteTagline(settings, code);
+
+    if (trimmed !== baseline) {
+      localizedUpdates[code] = {
+        tagline: trimmed || null,
+        pages: cloneLocalizedPages(settings, code),
+      } satisfies SiteLocalizedSettings;
+
+      if (code === defaultLanguage) {
+        payload.tagline = trimmed || null;
+      }
+    }
+  }
+
+  if (Object.keys(localizedUpdates).length) {
+    payload.localized = localizedUpdates;
+  }
+
+  return payload;
+}
+
+const siteSettingsChanged = computed(() => Object.keys(serializeSiteSettings()).length > 0);
 
 const isSiteSettingsSaving = computed(() => adminSettingsSaving.value);
 
@@ -563,19 +724,22 @@ async function submitSiteSettings() {
 
   const payload = serializeSiteSettings();
 
-  if (!payload.siteName) {
+  if ("siteName" in payload && !payload.siteName) {
     snackbarMessage.value = t("pages.profileEdit.validation.required");
     snackbarColor.value = "error";
     showSnackbar.value = true;
     return;
   }
 
+  if (!Object.keys(payload).length) {
+    snackbarMessage.value = t("admin.settings.feedback.saved");
+    snackbarColor.value = "success";
+    showSnackbar.value = true;
+    return;
+  }
+
   try {
-    await saveSiteSettings({
-      siteName: payload.siteName,
-      tagline: payload.tagline || null,
-    });
-    siteSettingsSnapshot.value = JSON.stringify(serializeSiteSettings());
+    await saveSiteSettings(payload);
     snackbarMessage.value = t("admin.settings.feedback.saved");
     snackbarColor.value = "success";
     showSnackbar.value = true;
