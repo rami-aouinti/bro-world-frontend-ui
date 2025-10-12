@@ -21,6 +21,8 @@ import {
   useState,
 } from "#imports";
 
+import RouteLoadingOverlay from "~/components/layout/RouteLoadingOverlay.vue";
+
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {
   name: "Bro World",
