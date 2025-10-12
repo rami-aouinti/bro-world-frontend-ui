@@ -1,6 +1,6 @@
 import { getSiteSettings } from "../utils/settings/storage";
 
-export default defineEventHandler(async () => {
-  const settings = await getSiteSettings();
+export default defineEventHandler(async (event) => {
+  const settings = await getSiteSettings(event);
   return { data: settings };
 });

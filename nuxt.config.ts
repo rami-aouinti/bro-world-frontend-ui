@@ -567,6 +567,9 @@ export default defineNuxtConfig({
     reviews: {
       apiBase: process.env.NUXT_REVIEWS_API_BASE ?? "https://bro-world.org",
     },
+    configuration: {
+      apiBase: process.env.NUXT_CONFIGURATION_API_BASE ?? "https://configuration.bro-world.org/api",
+    },
     auth: {
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
       tokenCookieName: process.env.NUXT_AUTH_TOKEN_COOKIE ?? "auth_token",
@@ -627,6 +630,12 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
       reviews: {
         apiBase: process.env.NUXT_PUBLIC_REVIEWS_API_BASE ?? "https://bro-world.org",
+      },
+      configuration: {
+        apiBase:
+          process.env.NUXT_PUBLIC_CONFIGURATION_API_BASE ??
+          process.env.NUXT_CONFIGURATION_API_BASE ??
+          "https://configuration.bro-world.org/api",
       },
       mercure: {
         hubUrl:
