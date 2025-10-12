@@ -45,8 +45,8 @@
         :size="32"
       />
     </button>
-    <ThemePopover />
-    <DarkModeToggle />
+    <ThemePopover :trigger-class="props.iconTriggerClasses" />
+    <DarkModeToggle :button-class="props.iconTriggerClasses" />
     <slot name="user" />
     <slot name="locale" />
     <button
