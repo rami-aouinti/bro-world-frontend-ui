@@ -218,7 +218,10 @@
             />
           </template>
         </ClientOnly>
-        <div class="main-scroll__viewport">
+        <div
+          class="main-scroll__viewport"
+          :style="mainInlineStyle"
+        >
           <div
             v-show="areSidebarsReady"
             class="app-container"
@@ -410,6 +413,9 @@ const rightDrawer = computed({
 
 const drawerInlineStyle = computed(() => ({
   "z-index": isHydrated.value ? 1004 : 1006,
+}));
+const mainInlineStyle = computed(() => ({
+  "--layout-inset-top": layoutInsets.value.top,
 }));
 const isMobile = computed(() => {
   if (!isHydrated.value) {
@@ -860,7 +866,8 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--app-bar-height));
-  padding-block: clamp(8px, 2vw, 16px);
+  padding-block-start: calc(var(--layout-inset-top, 0px) + clamp(8px, 2vw, 16px));
+  padding-block-end: clamp(8px, 2vw, 16px);
   box-sizing: border-box;
 }
 
