@@ -4,10 +4,7 @@
     class="z-100 bg-primary/80"
   />
   <AppLoadingOverlay :visible="initialLoading" />
-  <NuxtLayout
-    v-show="!initialLoading"
-    :aria-hidden="initialLoading"
-  >
+  <NuxtLayout>
     <NuxtPage :key="pageKey" />
   </NuxtLayout>
   <RouteLoadingOverlay :visible="routeLoading" />
