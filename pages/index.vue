@@ -99,7 +99,7 @@ import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 import { useAuthSession } from "~/stores/auth-session";
-import type { Story, StoryReaction } from "~/types/pages/index";
+import type { Story, StoryReaction } from "~/types/stories";
 
 const NewPost = defineAsyncComponent({
   loader: () => import("~/components/blog/NewPost.vue"),

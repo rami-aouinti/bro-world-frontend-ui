@@ -194,18 +194,7 @@ import {
 } from "~/lib/messenger/display";
 import { formatRelativeTime } from "~/lib/datetime/relative-time";
 import type { MessengerConversation } from "~/types/messenger";
-
-interface MessengerPreviewEntry {
-  id: string;
-  title: string;
-  sender: string;
-  snippet: string;
-  timeAgo: string;
-  unread: boolean;
-  unreadCount: number;
-  avatarUrl: string | null;
-  initials: string;
-}
+import type { MessengerPreviewEntry } from "~/types/messenger/ui";
 
 const props = defineProps<{
   iconTriggerClasses: string;
