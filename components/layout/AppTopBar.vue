@@ -13,6 +13,9 @@
     <AppNavButtons
       :is-mobile="props.isMobile"
       :icon-trigger-classes="iconTriggerClasses"
+      :navigation-label="navigationLabel"
+      :go-back-label="goBackLabel"
+      :refresh-label="refreshLabel"
       @toggle-left="$emit('toggle-left')"
       @go-back="$emit('go-back')"
       @refresh="$emit('refresh')"
@@ -59,6 +62,8 @@
           :messenger-view-all="messengerViewAll"
           :messenger-unknown-label="messengerUnknownLabel"
           :messenger-loading="messengerMenuLoading"
+          :widgets-label="widgetsLabel"
+          :cart-label="cartLabel"
           @toggle-right="$emit('toggle-right')"
           @mark-all-notifications="markAllNotifications"
         >
@@ -71,6 +76,7 @@
               :signed-in-text="userSignedInText"
               :guest-title="userGuestTitle"
               :guest-subtitle="userGuestSubtitle"
+              :profile-label="profileLabel"
               @select="handleUserMenuSelect"
             />
           </template>
@@ -83,6 +89,7 @@
               :locale-metadata="localeMetadata"
               :title="localeMenuTitle"
               :subtitle="localeMenuSubtitle"
+              :button-label="localeButtonLabel"
               @change="changeLocale"
             />
           </template>
@@ -175,6 +182,16 @@ const appBarStyle = computed(() => {
     transition: "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
   } satisfies Record<string, string>;
 });
+
+const navigationLabel = computed(() => t("layout.actions.openNavigation"));
+const goBackLabel = computed(() => t("layout.actions.goBack"));
+const refreshLabel = computed(() => t("layout.actions.refresh"));
+const widgetsLabel = computed(() => t("layout.actions.openWidgets"));
+const cartLabel = computed(() => t("layout.actions.cart"));
+const profileLabel = computed(() => t("layout.actions.profile"));
+const localeButtonLabel = computed(() =>
+  t("layout.actions.changeLanguage", { locale: formatLocaleLabel(props.locale) }),
+);
 
 const showInlineSearch = computed(
   () => !config.value.search.inAside && config.value.search.style === "input",

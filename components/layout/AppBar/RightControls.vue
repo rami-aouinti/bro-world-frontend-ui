@@ -4,7 +4,7 @@
       v-show="showToggleButtons"
       type="button"
       :class="desktopToggleClasses"
-      aria-label="Open widgets"
+      :aria-label="props.widgetsLabel"
       @click="emit('toggle-right')"
     >
       <AppIcon
@@ -38,7 +38,7 @@
     <button
       type="button"
       :class="props.iconTriggerClasses"
-      aria-label="Cart"
+      :aria-label="props.cartLabel"
     >
       <AppIcon
         name="mdi:shopping-outline"
@@ -53,7 +53,7 @@
       v-show="showToggleButtons"
       type="button"
       :class="mobileToggleClasses"
-      aria-label="Open widgets"
+      :aria-label="props.widgetsLabel"
       @click="emit('toggle-right')"
     >
       <AppIcon
@@ -91,6 +91,8 @@ const props = defineProps<{
   messengerViewAll: string;
   messengerUnknownLabel: string;
   messengerLoading: boolean;
+  widgetsLabel: string;
+  cartLabel: string;
 }>();
 const desktopToggleClasses = computed(() => `${props.iconTriggerClasses} hidden md:flex`);
 const mobileToggleClasses = computed(() => `${props.iconTriggerClasses} md:hidden`);

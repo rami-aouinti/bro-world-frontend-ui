@@ -4,6 +4,7 @@
       v-show="props.isMobile"
       type="button"
       :class="props.iconTriggerClasses"
+      :aria-label="props.navigationLabel"
       @click="emit('toggle-left')"
     >
       <AppIcon
@@ -16,6 +17,7 @@
       <button
         type="button"
         :class="props.iconTriggerClasses"
+        :aria-label="props.goBackLabel"
         @click="emit('go-back')"
       >
         <AppIcon
@@ -26,6 +28,7 @@
       <button
         type="button"
         :class="props.iconTriggerClasses"
+        :aria-label="props.refreshLabel"
         @click="emit('refresh')"
       >
         <AppIcon
@@ -37,6 +40,7 @@
         v-show="!props.isMobile"
         type="button"
         :class="props.iconTriggerClasses"
+        :aria-label="props.navigationLabel"
         @click="emit('toggle-left')"
       >
         <AppIcon
@@ -52,6 +56,9 @@
 const props = defineProps<{
   isMobile: boolean;
   iconTriggerClasses: string;
+  navigationLabel: string;
+  goBackLabel: string;
+  refreshLabel: string;
 }>();
 const emit = defineEmits(["toggle-left", "go-back", "refresh"]);
 </script>
