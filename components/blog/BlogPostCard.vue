@@ -1,7 +1,7 @@
 <template>
   <section
     v-bind="$attrs"
-    class="rounded-3xl py-4 my-3 px-2 border border-white/5 bg-white/5 p-6 text-slate-200 backdrop-blur-xl"
+    class="rounded-3xl my-3 border border-border/60 bg-card/80 p-6 text-foreground backdrop-blur-xl"
   >
     <PostMeta
       :user="post.user"
