@@ -1,4 +1,11 @@
-import type { SiteSettings, SiteMenuItem, SiteThemeDefinition } from "~/types/settings";
+import type {
+  SiteSettings,
+  SiteMenuItem,
+  SiteThemeDefinition,
+  SiteProfileSettings,
+  SiteUiSettings,
+  SiteContentBlock,
+} from "~/types/settings";
 
 function makeMenu(
   menu: Omit<SiteMenuItem, "order"> & { order?: number },
@@ -14,6 +21,34 @@ function makeMenu(
 function makeTheme(theme: SiteThemeDefinition): SiteThemeDefinition {
   return { ...theme };
 }
+
+function makeProfileSettings(overrides: Partial<SiteProfileSettings> = {}): SiteProfileSettings {
+  return {
+    allowCustomization: true,
+    allowAvatarUploads: true,
+    allowCoverUploads: true,
+    allowThemeSelection: true,
+    showContactSection: true,
+    showDetailsSection: true,
+    showSocialSection: true,
+    defaultBio: "Building vibrant connections across every world.",
+    ...overrides,
+  } satisfies SiteProfileSettings;
+}
+
+function makeUiSettings(overrides: Partial<SiteUiSettings> = {}): SiteUiSettings {
+  return {
+    allowThemeSwitching: true,
+    defaultThemeMode: "system",
+    ...overrides,
+  } satisfies SiteUiSettings;
+}
+
+function makeContentBlock(block: SiteContentBlock): SiteContentBlock {
+  return { ...block };
+}
+
+const DEFAULT_CONTENT_UPDATED_AT = "2024-01-01T00:00:00.000Z";
 
 export const defaultSiteSettings: SiteSettings = {
   siteName: "BroWorld",
@@ -45,6 +80,28 @@ export const defaultSiteSettings: SiteSettings = {
       surfaceColor: "#FFF7ED",
     }),
   ],
+  profile: makeProfileSettings(),
+  ui: makeUiSettings(),
+  pages: {
+    about: makeContentBlock({
+      title: "The BroWorld mission",
+      subtitle: "Designing social universes for modern communities.",
+      body: "BroWorld empowers product teams to craft immersive, community-driven experiences with rapid iteration and consistent branding.",
+      updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+    }),
+    contact: makeContentBlock({
+      title: "Contact the BroWorld crew",
+      subtitle: "We’re here to help you launch bold social platforms.",
+      body: "Reach us at support@broworld.com for partnership, support, or press enquiries.",
+      updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+    }),
+    help: makeContentBlock({
+      title: "Help centre",
+      subtitle: "Guides and resources to master BroWorld’s toolkit.",
+      body: "Browse quick links, tutorials, and FAQs to get answers in minutes.",
+      updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+    }),
+  },
   menus: [
     makeMenu({
       id: "jobs",

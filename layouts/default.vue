@@ -469,6 +469,25 @@ watch(
 
 const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
 
+watch(
+  () => siteSettings.value.ui,
+  (ui) => {
+    if (!ui) return;
+
+    const desiredMode = ui.defaultThemeMode ?? "system";
+
+    if (ui.allowThemeSwitching === false) {
+      colorMode.value = desiredMode === "system" ? "auto" : desiredMode;
+      return;
+    }
+
+    if (desiredMode !== "system" && colorMode.value === "auto") {
+      colorMode.value = desiredMode;
+    }
+  },
+  { immediate: true, deep: true },
+);
+
 const { weather: weatherData, leaderboard, rating } = useRightSidebarData();
 const weather = computed(() => weatherData.value);
 const activeTheme = computed<SiteThemeDefinition | null>(() => {
@@ -580,7 +599,7 @@ const isAdminRoute = computed(() => currentRoute.value?.path?.startsWith("/admin
 
 const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   if (sidebarVariant.value === "profile") {
-    return buildProfileSidebarItems();
+    return buildProfileSidebarItems(siteSettings.value.profile);
   }
 
   const items = buildSidebarItems(siteSettings.value, canAccessAdmin.value);

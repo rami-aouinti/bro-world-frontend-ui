@@ -29,13 +29,13 @@
               id="help-heading"
               class="text-h3 font-weight-bold mb-3"
             >
-              {{ t("pages.help.title") }}
+              {{ helpTitle }}
             </h1>
             <p
               id="help-subtitle"
               class="text-body-1 text-medium-emphasis"
             >
-              {{ t("pages.help.subtitle") }}
+              {{ helpSubtitle }}
             </p>
           </div>
 
@@ -85,7 +85,7 @@
                 {{ t("pages.help.quickLinksTitle") }}
               </h2>
               <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ t("pages.help.subtitle") }}
+                {{ helpBody }}
               </p>
             </div>
           </div>
@@ -221,12 +221,22 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const localePath = useLocalePath();
+const siteSettings = useSiteSettingsState();
+
+const helpContent = computed(
+  () => siteSettings.value?.pages.help ?? getDefaultSiteSettings().pages.help,
+);
+const helpTitle = computed(() => helpContent.value.title?.trim() || t("pages.help.title"));
+const helpSubtitle = computed(() => helpContent.value.subtitle?.trim() || t("pages.help.subtitle"));
+const helpBody = computed(() => helpContent.value.body?.trim() || t("pages.help.subtitle"));
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 

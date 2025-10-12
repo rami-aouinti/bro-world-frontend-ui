@@ -288,6 +288,256 @@
           </v-card>
         </v-col>
 
+        <!-- Profile -->
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-card
+            class="glass-card pa-6 h-100"
+            rounded="xl"
+            elevation="8"
+          >
+            <div class="section-title">
+              <div>
+                <h2 class="text-h5 font-weight-semibold mb-1">
+                  {{ t("admin.settings.sections.profile.title") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("admin.settings.sections.profile.subtitle") }}
+                </p>
+              </div>
+              <v-chip
+                size="small"
+                color="pink"
+                variant="tonal"
+                prepend-icon="mdi-account-cog"
+              >
+                {{ t("admin.settings.sections.profile.badge") || "Profiles" }}
+              </v-chip>
+            </div>
+
+            <v-divider class="my-4" />
+
+            <div class="d-flex flex-column gap-4">
+              <div class="d-flex flex-wrap gap-3">
+                <v-switch
+                  v-model="form.profile.allowCustomization"
+                  color="primary"
+                  inset
+                  :disabled="isSaving"
+                  :label="t('admin.settings.fields.profileAllowCustomization')"
+                />
+                <v-switch
+                  v-model="form.profile.allowThemeSelection"
+                  color="primary"
+                  inset
+                  :disabled="isSaving"
+                  :label="t('admin.settings.fields.profileAllowThemeSelection')"
+                />
+              </div>
+
+              <div class="d-flex flex-wrap gap-3">
+                <v-switch
+                  v-model="form.profile.allowAvatarUploads"
+                  color="primary"
+                  inset
+                  :disabled="isSaving"
+                  :label="t('admin.settings.fields.profileAllowAvatarUploads')"
+                />
+                <v-switch
+                  v-model="form.profile.allowCoverUploads"
+                  color="primary"
+                  inset
+                  :disabled="isSaving"
+                  :label="t('admin.settings.fields.profileAllowCoverUploads')"
+                />
+              </div>
+
+              <div class="d-flex flex-wrap gap-3">
+                <v-switch
+                  v-model="form.profile.showContactSection"
+                  color="primary"
+                  inset
+                  :disabled="isSaving"
+                  :label="t('admin.settings.fields.profileShowContact')"
+                />
+                <v-switch
+                  v-model="form.profile.showDetailsSection"
+                  color="primary"
+                  inset
+                  :disabled="isSaving"
+                  :label="t('admin.settings.fields.profileShowDetails')"
+                />
+                <v-switch
+                  v-model="form.profile.showSocialSection"
+                  color="primary"
+                  inset
+                  :disabled="isSaving"
+                  :label="t('admin.settings.fields.profileShowSocial')"
+                />
+              </div>
+
+              <v-textarea
+                v-model="form.profile.defaultBio"
+                :label="t('admin.settings.fields.profileDefaultBio')"
+                :disabled="isSaving"
+                auto-grow
+                rows="3"
+                variant="outlined"
+                density="comfortable"
+                hide-details
+              />
+            </div>
+          </v-card>
+        </v-col>
+
+        <!-- Appearance -->
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-card
+            class="glass-card pa-6 h-100"
+            rounded="xl"
+            elevation="8"
+          >
+            <div class="section-title">
+              <div>
+                <h2 class="text-h5 font-weight-semibold mb-1">
+                  {{ t("admin.settings.sections.appearance.title") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("admin.settings.sections.appearance.subtitle") }}
+                </p>
+              </div>
+              <v-chip
+                size="small"
+                color="blue"
+                variant="tonal"
+                prepend-icon="mdi-theme-light-dark"
+              >
+                {{ t("admin.settings.sections.appearance.badge") || "Theme" }}
+              </v-chip>
+            </div>
+
+            <v-divider class="my-4" />
+
+            <div class="d-flex flex-column gap-4">
+              <v-switch
+                v-model="form.ui.allowThemeSwitching"
+                color="primary"
+                inset
+                :disabled="isSaving"
+                :label="t('admin.settings.fields.uiAllowThemeSwitching')"
+              />
+
+              <v-radio-group
+                v-model="form.ui.defaultThemeMode"
+                :disabled="isSaving"
+                class="theme-mode-selector"
+              >
+                <v-radio
+                  value="system"
+                  :label="t('admin.settings.fields.themeModeSystem')"
+                />
+                <v-radio
+                  value="light"
+                  :label="t('admin.settings.fields.themeModeLight')"
+                />
+                <v-radio
+                  value="dark"
+                  :label="t('admin.settings.fields.themeModeDark')"
+                />
+              </v-radio-group>
+            </div>
+          </v-card>
+        </v-col>
+
+        <!-- Pages -->
+        <v-col cols="12">
+          <v-card
+            class="glass-card pa-6"
+            rounded="xl"
+            elevation="8"
+          >
+            <div class="section-title">
+              <div>
+                <h2 class="text-h5 font-weight-semibold mb-1">
+                  {{ t("admin.settings.sections.pages.title") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("admin.settings.sections.pages.subtitle") }}
+                </p>
+              </div>
+              <v-chip
+                size="small"
+                color="amber"
+                variant="tonal"
+                prepend-icon="mdi-note-edit-outline"
+              >
+                {{ t("admin.settings.sections.pages.badge") || "Content" }}
+              </v-chip>
+            </div>
+
+            <v-divider class="my-4" />
+
+            <div class="d-flex flex-column gap-4">
+              <v-sheet
+                v-for="page in pageEditors"
+                :key="page.key"
+                class="pa-4 rounded-xl page-editor"
+                border
+              >
+                <div class="d-flex align-center justify-space-between gap-3 mb-3">
+                  <div>
+                    <div class="text-subtitle-1 font-weight-semibold">
+                      {{ page.label }}
+                    </div>
+                    <p class="text-body-2 text-medium-emphasis mb-0">
+                      {{ page.description }}
+                    </p>
+                  </div>
+                  <v-icon
+                    :icon="page.icon"
+                    size="26"
+                    class="text-primary"
+                  />
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+                  <v-text-field
+                    v-model="form.pages[page.key].title"
+                    :label="t('admin.settings.fields.pageTitle')"
+                    :disabled="isSaving"
+                    variant="outlined"
+                    density="comfortable"
+                    hide-details
+                  />
+                  <v-text-field
+                    v-model="form.pages[page.key].subtitle"
+                    :label="t('admin.settings.fields.pageSubtitle')"
+                    :disabled="isSaving"
+                    variant="outlined"
+                    density="comfortable"
+                    hide-details
+                  />
+                  <v-textarea
+                    v-model="form.pages[page.key].body"
+                    :label="t('admin.settings.fields.pageBody')"
+                    :disabled="isSaving"
+                    variant="outlined"
+                    density="comfortable"
+                    auto-grow
+                    rows="4"
+                    hide-details
+                  />
+                </div>
+              </v-sheet>
+            </div>
+          </v-card>
+        </v-col>
+
         <!-- Navigation -->
         <v-col cols="12">
           <v-card
@@ -575,15 +825,63 @@ const { data: fetchedSettings, refresh } = await useAsyncData("admin-site-settin
   $fetch<{ data: SiteSettings }>("/api/settings").then((response) => response.data),
 );
 
+const defaultSettings = getDefaultSiteSettings();
 const form = reactive({
-  siteName: getDefaultSiteSettings().siteName,
-  tagline: getDefaultSiteSettings().tagline ?? "",
-  activeThemeId: getDefaultSiteSettings().activeThemeId,
-  themes: getDefaultSiteSettings().themes.map((theme) => ({ ...theme })),
-  menus: getDefaultSiteSettings().menus.map((menu) => deepCloneMenu(menu)),
+  siteName: defaultSettings.siteName,
+  tagline: defaultSettings.tagline ?? "",
+  activeThemeId: defaultSettings.activeThemeId,
+  themes: defaultSettings.themes.map((theme) => ({ ...theme })),
+  menus: defaultSettings.menus.map((menu) => deepCloneMenu(menu)),
+  profile: {
+    allowCustomization: defaultSettings.profile.allowCustomization,
+    allowAvatarUploads: defaultSettings.profile.allowAvatarUploads,
+    allowCoverUploads: defaultSettings.profile.allowCoverUploads,
+    allowThemeSelection: defaultSettings.profile.allowThemeSelection,
+    showContactSection: defaultSettings.profile.showContactSection,
+    showDetailsSection: defaultSettings.profile.showDetailsSection,
+    showSocialSection: defaultSettings.profile.showSocialSection,
+    defaultBio: defaultSettings.profile.defaultBio ?? "",
+  },
+  ui: {
+    allowThemeSwitching: defaultSettings.ui.allowThemeSwitching,
+    defaultThemeMode: defaultSettings.ui.defaultThemeMode,
+  },
+  pages: {
+    about: {
+      title: defaultSettings.pages.about.title,
+      subtitle: defaultSettings.pages.about.subtitle ?? "",
+      body: defaultSettings.pages.about.body ?? "",
+    },
+    contact: {
+      title: defaultSettings.pages.contact.title,
+      subtitle: defaultSettings.pages.contact.subtitle ?? "",
+      body: defaultSettings.pages.contact.body ?? "",
+    },
+    help: {
+      title: defaultSettings.pages.help.title,
+      subtitle: defaultSettings.pages.help.subtitle ?? "",
+      body: defaultSettings.pages.help.body ?? "",
+    },
+  },
 });
 
 const initialSnapshot = ref(JSON.stringify(serializeForm()));
+
+const pageKeys = ["about", "contact", "help"] as const;
+type EditablePageKey = (typeof pageKeys)[number];
+const pageEditors = computed(() =>
+  pageKeys.map((key) => ({
+    key,
+    icon:
+      key === "about"
+        ? "mdi-information-outline"
+        : key === "contact"
+          ? "mdi-email-outline"
+          : "mdi-lifebuoy",
+    label: t(`admin.settings.sections.pages.labels.${key}`),
+    description: t(`admin.settings.sections.pages.descriptions.${key}`),
+  })),
+);
 
 watch(
   () => fetchedSettings.value,
@@ -603,6 +901,25 @@ function applySettings(settings: SiteSettings) {
   form.activeThemeId = settings.activeThemeId;
   form.themes = settings.themes.map((theme) => ({ ...theme }));
   form.menus = settings.menus.map((menu) => deepCloneMenu(menu));
+  form.profile.allowCustomization = settings.profile.allowCustomization;
+  form.profile.allowAvatarUploads = settings.profile.allowAvatarUploads;
+  form.profile.allowCoverUploads = settings.profile.allowCoverUploads;
+  form.profile.allowThemeSelection = settings.profile.allowThemeSelection;
+  form.profile.showContactSection = settings.profile.showContactSection;
+  form.profile.showDetailsSection = settings.profile.showDetailsSection;
+  form.profile.showSocialSection = settings.profile.showSocialSection;
+  form.profile.defaultBio = settings.profile.defaultBio ?? "";
+  form.ui.allowThemeSwitching = settings.ui.allowThemeSwitching;
+  form.ui.defaultThemeMode = settings.ui.defaultThemeMode;
+  form.pages.about.title = settings.pages.about.title ?? "";
+  form.pages.about.subtitle = settings.pages.about.subtitle ?? "";
+  form.pages.about.body = settings.pages.about.body ?? "";
+  form.pages.contact.title = settings.pages.contact.title ?? "";
+  form.pages.contact.subtitle = settings.pages.contact.subtitle ?? "";
+  form.pages.contact.body = settings.pages.contact.body ?? "";
+  form.pages.help.title = settings.pages.help.title ?? "";
+  form.pages.help.subtitle = settings.pages.help.subtitle ?? "";
+  form.pages.help.body = settings.pages.help.body ?? "";
   initialSnapshot.value = JSON.stringify(serializeForm());
 }
 
@@ -621,6 +938,25 @@ function serializeForm(): Partial<SiteSettings> {
     activeThemeId: form.activeThemeId,
     themes: form.themes.map((theme) => ({ ...theme })),
     menus: form.menus.map((menu, index) => serializeMenu(menu, index)),
+    profile: {
+      allowCustomization: form.profile.allowCustomization,
+      allowAvatarUploads: form.profile.allowAvatarUploads,
+      allowCoverUploads: form.profile.allowCoverUploads,
+      allowThemeSelection: form.profile.allowThemeSelection,
+      showContactSection: form.profile.showContactSection,
+      showDetailsSection: form.profile.showDetailsSection,
+      showSocialSection: form.profile.showSocialSection,
+      defaultBio: form.profile.defaultBio.trim() || null,
+    },
+    ui: {
+      allowThemeSwitching: form.ui.allowThemeSwitching,
+      defaultThemeMode: form.ui.defaultThemeMode,
+    },
+    pages: {
+      about: serializePageContent(form.pages.about),
+      contact: serializePageContent(form.pages.contact),
+      help: serializePageContent(form.pages.help),
+    },
   } satisfies Partial<SiteSettings>;
 }
 
@@ -630,6 +966,14 @@ function serializeMenu(menu: EditableMenu, index: number): SiteMenuItem {
     translate: menu.translate === true,
     order: index,
     children: menu.children?.map((child, childIndex) => serializeMenu(child, childIndex)) ?? [],
+  };
+}
+
+function serializePageContent(page: { title: string; subtitle: string; body: string }) {
+  return {
+    title: page.title.trim(),
+    subtitle: page.subtitle.trim() || null,
+    body: page.body.trim() || null,
   };
 }
 
@@ -849,6 +1193,19 @@ onBeforeUnmount(() => {
 .child-item {
   background: rgba(255, 255, 255, 0.03);
   border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.page-editor {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.theme-mode-selector :deep(.v-selection-control) {
+  margin-inline-end: 12px;
+}
+
+.theme-mode-selector :deep(.v-selection-control:last-of-type) {
+  margin-inline-end: 0;
 }
 
 /* Petits détails */

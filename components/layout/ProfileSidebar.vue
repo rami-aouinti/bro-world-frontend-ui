@@ -9,38 +9,40 @@
       <span
         class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
       ></span>
-      <div class="sidebar-profile-card__content">
-        <v-card-item>
-          <div class="d-flex align-center justify-space-between">
-            <div class="text-h6 text-foreground">{{ user.name }}</div>
-            <v-btn
-              size="small"
-              variant="text"
-              color="primary"
-              :to="localePath({ path: '/profile-edit' })"
-            >
-              {{ t("layout.profileSidebar.editBio") }}
-            </v-btn>
-          </div>
-        </v-card-item>
-        <v-divider />
-        <v-card-text>
-          <div
-            v-if="user.bio"
-            class="text-subtitle-2 mb-3 text-high-emphasis text-center"
-          >
-            {{ user.bio }}
-          </div>
+            <div class="sidebar-profile-card__content">
+              <v-card-item>
+                <div class="d-flex align-center justify-space-between">
+                  <div class="text-h6 text-foreground">{{ user.name }}</div>
+                  <v-btn
+                    v-if="allowCustomization"
+                    size="small"
+                    variant="text"
+                    color="primary"
+                    :to="localePath({ path: '/profile-edit' })"
+                  >
+                    {{ t("layout.profileSidebar.editBio") }}
+                  </v-btn>
+                </div>
+              </v-card-item>
+              <v-divider />
+              <v-card-text>
+                <div
+                  v-if="displayedBio"
+                  class="text-subtitle-2 mb-3 text-high-emphasis text-center"
+                >
+                  {{ displayedBio }}
+                </div>
 
-          <v-list
-            density="compact"
-            class="py-0"
-          >
-            <v-list-item
-              v-for="(item, i) in introItems"
-              :key="i"
-              :title="item.title"
-              :subtitle="item.subtitle"
+                <v-list
+                  v-if="showIntroDetails && introItems.length"
+                  density="compact"
+                  class="py-0"
+                >
+                  <v-list-item
+                    v-for="(item, i) in introItems"
+                    :key="i"
+                    :title="item.title"
+                    :subtitle="item.subtitle"
             >
               <template #prepend>
                 <Icon :name="item.icon" />
@@ -48,21 +50,25 @@
             </v-list-item>
           </v-list>
 
-          <div class="d-flex ga-3 mt-4">
-            <v-btn
-              block
-              color="primary"
-              variant="tonal"
-              :to="localePath({ path: '/profile-edit' })"
-            >
-              {{ t("layout.profileSidebar.editDetails") }}
-            </v-btn>
-          </div>
+                <div class="d-flex ga-3 mt-4">
+                  <v-btn
+                    v-if="allowCustomization"
+                    block
+                    color="primary"
+                    variant="tonal"
+                    :to="localePath({ path: '/profile-edit' })"
+                  >
+                    {{ t("layout.profileSidebar.editDetails") }}
+                  </v-btn>
+                </div>
         </v-card-text>
       </div>
     </SidebarCard>
   </div>
-  <div class="sidebar-profile-card">
+  <div
+    v-if="showFriendsSection"
+    class="sidebar-profile-card"
+  >
     <SidebarCard class="text-card-foreground px-3 py-2">
       <!-- glows -->
       <span
@@ -157,8 +163,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
 type Photo = { id?: string | number; src: string; alt?: string };
@@ -199,6 +207,16 @@ defineEmits<{
 
 const { t } = useI18n();
 const localePath = useLocalePath();
+const siteSettings = useSiteSettingsState();
+
+const profileSettings = computed(
+  () => siteSettings.value?.profile ?? getDefaultSiteSettings().profile,
+);
+
+const allowCustomization = computed(() => profileSettings.value.allowCustomization !== false);
+const showIntroDetails = computed(() => profileSettings.value.showDetailsSection !== false);
+const showFriendsSection = computed(() => profileSettings.value.showSocialSection !== false);
+const defaultBio = computed(() => profileSettings.value.defaultBio?.trim() || null);
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 
@@ -210,6 +228,10 @@ const visibleFriends = computed(() => friendsList.value.slice(0, 9));
 
 const friendsCount = computed(() => props.friendsCount ?? friendsList.value.length);
 const shouldRenderParticles = ref(false);
+const displayedBio = computed(() => {
+  const rawBio = typeof props.user.bio === "string" ? props.user.bio.trim() : "";
+  return rawBio || defaultBio.value;
+});
 const introItems = computed<IntroItem[]>(() => {
   const items: IntroItem[] = [];
   if (props.user.schools?.length) {
