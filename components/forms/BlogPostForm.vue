@@ -43,26 +43,9 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
 
-interface BlogPostFormValue {
-  title: string;
-  summary: string;
-  content: string;
-}
+import type { BlogPostFormProps, BlogPostFormValue } from "~/types/forms/blog";
 
-interface Props {
-  modelValue: BlogPostFormValue;
-  labels: {
-    title: string;
-    summary: string;
-    content: string;
-  };
-  disabled?: boolean;
-  titleRules?: ((value: string) => true | string)[];
-  summaryRules?: ((value: string) => true | string)[];
-  contentRules?: ((value: string) => true | string)[];
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BlogPostFormProps>(), {
   disabled: false,
   titleRules: () => [],
   summaryRules: () => [],

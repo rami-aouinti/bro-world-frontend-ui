@@ -441,6 +441,7 @@ import { callOnce } from "#imports";
 import BlogPostForm from "~/components/forms/BlogPostForm.vue";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost } from "~/lib/mock/blog";
+import type { BlogPostFormValue } from "~/types/forms/blog";
 import type { AdminPostRaw, AdminPostRow } from "~/types/pages/admin/blog";
 
 definePageMeta({
@@ -626,11 +627,6 @@ const isRefreshing = computed(() => isRevalidating.value);
 const isCreating = computed(() => creatingState.value);
 
 const createDialog = ref(false);
-type BlogPostFormValue = {
-  title: string;
-  summary: string;
-  content: string;
-};
 
 const createForm = reactive({
   title: "",
