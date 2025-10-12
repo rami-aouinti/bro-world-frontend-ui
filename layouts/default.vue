@@ -1,6 +1,5 @@
 <template>
   <v-app
-    :style="cssVars"
   >
     <AppTopBar
       v-if="showNavigation"
