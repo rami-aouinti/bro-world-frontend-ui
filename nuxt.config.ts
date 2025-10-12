@@ -569,6 +569,7 @@ export default defineNuxtConfig({
     },
     configuration: {
       apiBase: process.env.NUXT_CONFIGURATION_API_BASE ?? "https://configuration.bro-world.org/api",
+      serviceToken: process.env.NUXT_CONFIGURATION_SERVICE_TOKEN,
     },
     auth: {
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
