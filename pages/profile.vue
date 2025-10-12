@@ -8,7 +8,10 @@
         class="mb-8"
         aria-describedby="profile-subtitle"
       >
-        <SidebarCard class="text-card-foreground px-3 py-2" glow>
+        <SidebarCard
+          class="text-card-foreground px-3 py-2"
+          glow
+        >
           <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
             <v-avatar
               size="96"
@@ -90,7 +93,10 @@
                 aria-labelledby="contact-section-title"
                 class="h-100"
               >
-                <SidebarCard class="text-card-foreground px-3 py-2" glow>
+                <SidebarCard
+                  class="text-card-foreground px-3 py-2"
+                  glow
+                >
                   <h2
                     id="contact-section-title"
                     class="text-h5 font-weight-semibold mb-4"
@@ -128,7 +134,10 @@
                 aria-labelledby="profile-section-title"
                 class="h-100"
               >
-                <SidebarCard class="text-card-foreground px-3 py-2" glow>
+                <SidebarCard
+                  class="text-card-foreground px-3 py-2"
+                  glow
+                >
                   <h2
                     id="profile-section-title"
                     class="text-h5 font-weight-semibold mb-4"
@@ -156,7 +165,10 @@
                 aria-labelledby="social-section-title"
                 class="h-100"
               >
-                <SidebarCard class="text-card-foreground px-3 py-2" glow>
+                <SidebarCard
+                  class="text-card-foreground px-3 py-2"
+                  glow
+                >
                   <h2
                     id="social-section-title"
                     class="text-h5 font-weight-semibold mb-4"

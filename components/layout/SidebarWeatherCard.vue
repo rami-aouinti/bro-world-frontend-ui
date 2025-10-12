@@ -1,8 +1,9 @@
 <template>
   <SidebarCard
     class="text-card-foreground px-3 py-2"
-    :aria-busy="isLoading" glow>
-
+    :aria-busy="isLoading"
+    glow
+  >
     <div class="relative z-10 flex items-start justify-between">
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-primary/80">

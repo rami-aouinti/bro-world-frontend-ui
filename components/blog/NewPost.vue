@@ -1,7 +1,10 @@
 <template>
   <!-- Barre compacte -->
   <div class="my-2">
-    <SidebarCard class="text-card-foreground px-3 py-2" glow>
+    <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+    >
       <div class="d-flex align-center ga-3">
         <v-avatar size="44">
           <v-img

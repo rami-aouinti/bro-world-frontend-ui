@@ -7,7 +7,9 @@
   >
     <SidebarCard
       v-if="!isAuthenticated"
-      class="text-card-foreground px-3 py-2" glow>
+      class="text-card-foreground px-3 py-2"
+      glow
+    >
       <div class="sidebar-login-card__content">
         <h2 class="sidebar-login-card__title text-foreground">Bro World</h2>
         <AuthSocial

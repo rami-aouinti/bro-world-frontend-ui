@@ -1,7 +1,9 @@
 <template>
   <SidebarCard
     v-bind="$attrs"
-    class="text-card-foreground px-3 py-2" glow>
+    class="text-card-foreground px-3 py-2"
+    glow
+  >
     <PostMeta
       :user="post.user"
       :default-avatar="defaultAvatar"

@@ -31,7 +31,9 @@
 
       <SidebarCard
         class="text-card-foreground"
-        padding="none" glow>
+        padding="none"
+        glow
+      >
         <v-toolbar
           color="transparent"
           class="px-6 pt-4"
@@ -158,7 +160,10 @@
         persistent
         max-width="560"
       >
-        <SidebarCard class="text-card-foreground" glow>
+        <SidebarCard
+          class="text-card-foreground"
+          glow
+        >
           <v-card-title class="text-h5 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.create.title") }}
           </v-card-title>
@@ -259,7 +264,10 @@
         v-model="editDialog"
         max-width="560"
       >
-        <SidebarCard class="text-card-foreground" glow>
+        <SidebarCard
+          class="text-card-foreground"
+          glow
+        >
           <v-card-title class="text-h5 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.edit.title") }}
           </v-card-title>
@@ -360,7 +368,10 @@
         v-model="deleteDialog"
         max-width="440"
       >
-        <SidebarCard class="text-card-foreground" glow>
+        <SidebarCard
+          class="text-card-foreground"
+          glow
+        >
           <v-card-title class="text-h6 font-weight-semibold">
             {{ t("admin.userManagement.dialogs.delete.title") }}
           </v-card-title>

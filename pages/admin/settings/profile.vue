@@ -1,6 +1,9 @@
 <template>
   <AdminSettingsLayout section="profile">
-    <SidebarCard class="glass-card pa-6 text-card-foreground" glow>
+    <SidebarCard
+      class="glass-card pa-6 text-card-foreground"
+      glow
+    >
       <div class="section-title mb-4">
         <div>
           <h2 class="text-h5 font-weight-semibold mb-1">

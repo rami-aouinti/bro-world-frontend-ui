@@ -8,7 +8,10 @@
         class="mb-10"
         aria-describedby="profile-friends-subtitle"
       >
-        <SidebarCard class="text-card-foreground pa-6" glow>
+        <SidebarCard
+          class="text-card-foreground pa-6"
+          glow
+        >
           <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
             <div class="flex-grow-1">
               <h1
@@ -104,7 +107,10 @@
             sm="6"
             xl="4"
           >
-            <SidebarCard class="text-card-foreground pa-5 h-100" glow>
+            <SidebarCard
+              class="text-card-foreground pa-5 h-100"
+              glow
+            >
               <div class="d-flex align-start gap-4 mb-4">
                 <v-avatar size="64">
                   <v-img
@@ -194,7 +200,10 @@
             cols="12"
             lg="8"
           >
-            <SidebarCard class="text-card-foreground pa-6 h-100" glow>
+            <SidebarCard
+              class="text-card-foreground pa-6 h-100"
+              glow
+            >
               <h2
                 id="friend-suggestions-title"
                 class="text-h5 font-weight-semibold mb-4"
@@ -248,7 +257,10 @@
             cols="12"
             lg="4"
           >
-            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10" glow>
+            <SidebarCard
+              class="text-card-foreground pa-6 h-100 bg-primary/10"
+              glow
+            >
               <div class="d-flex flex-column gap-3">
                 <h2 class="text-h6 font-weight-semibold mb-1">
                   {{ t("pages.profileFriends.sections.active") }}
@@ -294,7 +306,9 @@
     >
       <SidebarCard
         v-if="selectedFriend"
-        class="text-card-foreground" glow>
+        class="text-card-foreground"
+        glow
+      >
         <v-card-title class="d-flex align-center gap-3">
           <v-avatar size="56">
             <v-img

@@ -101,7 +101,7 @@
             class="py-1 rounded-xl"
             density="comfortable"
             lines="two"
-            style="background-color: transparent;"
+            style="background-color: transparent"
           >
             <v-list-item
               v-for="preview in previews"

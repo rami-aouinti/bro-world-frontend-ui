@@ -229,7 +229,10 @@
       max-width="720"
       aria-labelledby="create-dialog-title"
     >
-      <SidebarCard class="text-card-foreground" glow>
+      <SidebarCard
+        class="text-card-foreground"
+        glow
+      >
         <v-card-title
           id="create-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -279,7 +282,10 @@
       max-width="720"
       aria-labelledby="edit-dialog-title"
     >
-      <SidebarCard class="text-card-foreground" glow>
+      <SidebarCard
+        class="text-card-foreground"
+        glow
+      >
         <v-card-title
           id="edit-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -329,7 +335,10 @@
       max-width="480"
       aria-labelledby="delete-dialog-title"
     >
-      <SidebarCard class="text-card-foreground" glow>
+      <SidebarCard
+        class="text-card-foreground"
+        glow
+      >
         <v-card-title
           id="delete-dialog-title"
           class="text-h6 font-weight-semibold"
@@ -373,7 +382,10 @@
       max-width="720"
       aria-labelledby="preview-dialog-title"
     >
-      <SidebarCard class="text-card-foreground" glow>
+      <SidebarCard
+        class="text-card-foreground"
+        glow
+      >
         <v-card-title
           id="preview-dialog-title"
           class="text-h6 font-weight-semibold"

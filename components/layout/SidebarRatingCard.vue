@@ -2,8 +2,9 @@
   <SidebarCard
     :dir="isRtl ? 'rtl' : 'ltr'"
     aria-live="polite"
-    class="text-card-foreground px-3 py-2" glow>
-
+    class="text-card-foreground px-3 py-2"
+    glow
+  >
     <header class="flex items-center justify-between text-card-foreground">
       <div>
         <h3 class="text-lg font-semibold text-foreground">

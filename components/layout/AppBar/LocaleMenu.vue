@@ -50,7 +50,7 @@
         <v-list
           class="py-1 rounded-xl"
           density="comfortable"
-          style="background-color: transparent;"
+          style="background-color: transparent"
         >
           <v-list-item
             v-for="l in props.locales"

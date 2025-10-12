@@ -1,6 +1,8 @@
 <template>
-  <SidebarCard class="text-card-foreground px-3 py-2" glow>
-
+  <SidebarCard
+    class="text-card-foreground px-3 py-2"
+    glow
+  >
     <header class="flex items-center justify-between text-card-foreground">
       <h3 class="text-lg font-semibold text-foreground">{{ title }}</h3>
       <span class="text-xs uppercase tracking-[0.3em] text-primary/70">{{ liveLabel }}</span>

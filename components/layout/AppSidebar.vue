@@ -4,7 +4,10 @@
     :class="{ 'app-sidebar--sticky': sticky }"
     aria-label="Main navigation"
   >
-    <SidebarCard class="text-card-foreground px-3 py-2" glow>
+    <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+    >
       <div class="sidebar-menu-card__content">
         <nav>
           <ul class="flex flex-col gap-3">

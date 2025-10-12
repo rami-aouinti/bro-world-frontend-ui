@@ -57,7 +57,10 @@
           cols="12"
           md="6"
         >
-          <SidebarCard class="glass-card pa-6 text-card-foreground" glow>
+          <SidebarCard
+            class="glass-card pa-6 text-card-foreground"
+            glow
+          >
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -110,7 +113,10 @@
           cols="12"
           md="6"
         >
-          <SidebarCard class="glass-card pa-6 h-100 text-card-foreground" glow>
+          <SidebarCard
+            class="glass-card pa-6 h-100 text-card-foreground"
+            glow
+          >
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -285,7 +291,10 @@
           cols="12"
           md="6"
         >
-          <SidebarCard class="glass-card pa-6 h-100 text-card-foreground" glow>
+          <SidebarCard
+            class="glass-card pa-6 h-100 text-card-foreground"
+            glow
+          >
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -385,7 +394,10 @@
           cols="12"
           md="6"
         >
-          <SidebarCard class="glass-card pa-6 h-100 text-card-foreground" glow>
+          <SidebarCard
+            class="glass-card pa-6 h-100 text-card-foreground"
+            glow
+          >
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -440,7 +452,10 @@
 
         <!-- Pages -->
         <v-col cols="12">
-          <SidebarCard class="glass-card pa-6 text-card-foreground" glow>
+          <SidebarCard
+            class="glass-card pa-6 text-card-foreground"
+            glow
+          >
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">
@@ -520,7 +535,10 @@
 
         <!-- Navigation -->
         <v-col cols="12">
-          <SidebarCard class="glass-card pa-6 text-card-foreground" glow>
+          <SidebarCard
+            class="glass-card pa-6 text-card-foreground"
+            glow
+          >
             <div class="section-title">
               <div>
                 <h2 class="text-h5 font-weight-semibold mb-1">

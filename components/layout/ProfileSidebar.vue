@@ -1,7 +1,10 @@
 <!-- components/ProfileSidebar.vue -->
 <template>
   <div class="sidebar-profile-card">
-    <SidebarCard class="text-card-foreground px-3 py-2" glow>
+    <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+    >
       <div class="sidebar-profile-card__content">
         <v-card-item>
           <div class="d-flex align-center justify-space-between">
@@ -62,7 +65,10 @@
     v-if="showFriendsSection"
     class="sidebar-profile-card"
   >
-    <SidebarCard class="text-card-foreground px-3 py-2" glow>
+    <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+    >
       <div class="sidebar-profile-card__content">
         <v-card-item>
           <div class="d-flex align-center justify-space-between">
@@ -96,7 +102,10 @@
     </SidebarCard>
   </div>
   <div class="sidebar-profile-card">
-    <SidebarCard class="text-card-foreground px-3 py-2" glow>
+    <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+    >
       <div class="sidebar-profile-card__content">
         <v-card-item>
           <div class="d-flex align-center justify-space-between">

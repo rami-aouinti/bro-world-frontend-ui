@@ -10,7 +10,9 @@
   >
     <SidebarCard
       padding="none"
-      class="story-viewer__card text-card-foreground px-3 py-2 shadow-2xl" glow>
+      class="story-viewer__card text-card-foreground px-3 py-2 shadow-2xl"
+      glow
+    >
       <div class="relative z-10 flex h-full flex-col">
         <div
           class="story-viewer__progress"

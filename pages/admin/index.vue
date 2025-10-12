@@ -66,7 +66,10 @@
             sm="6"
             md="3"
           >
-            <SidebarCard class="text-card-foreground pa-5 h-100" glow>
+            <SidebarCard
+              class="text-card-foreground pa-5 h-100"
+              glow
+            >
               <div class="d-flex justify-space-between align-start">
                 <div>
                   <p class="text-subtitle-2 text-medium-emphasis mb-1">{{ metric.label }}</p>
@@ -129,7 +132,10 @@
             cols="12"
             md="6"
           >
-            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10" glow>
+            <SidebarCard
+              class="text-card-foreground pa-6 h-100 bg-primary/10"
+              glow
+            >
               <div class="d-flex justify-space-between align-start">
                 <div>
                   <h3 class="text-subtitle-1 font-weight-semibold mb-2">{{ control.label }}</h3>
@@ -180,7 +186,10 @@
             cols="12"
             md="4"
           >
-            <SidebarCard class="text-card-foreground pa-6 h-100" glow>
+            <SidebarCard
+              class="text-card-foreground pa-6 h-100"
+              glow
+            >
               <div class="d-flex align-start gap-4">
                 <v-avatar
                   :color="action.color"
@@ -235,7 +244,10 @@
             cols="12"
             md="6"
           >
-            <SidebarCard class="text-card-foreground pa-6 h-100" glow>
+            <SidebarCard
+              class="text-card-foreground pa-6 h-100"
+              glow
+            >
               <div class="d-flex flex-column gap-4">
                 <div class="d-flex align-start gap-3">
                   <v-avatar
@@ -306,7 +318,10 @@
             aria-labelledby="admin-activity"
             class="h-100"
           >
-            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10" glow>
+            <SidebarCard
+              class="text-card-foreground pa-6 h-100 bg-primary/10"
+              glow
+            >
               <div class="d-flex justify-space-between align-start mb-4">
                 <div>
                   <h2
@@ -369,7 +384,10 @@
             aria-labelledby="admin-health"
             class="h-100"
           >
-            <SidebarCard class="text-card-foreground pa-6 h-100 bg-primary/10" glow>
+            <SidebarCard
+              class="text-card-foreground pa-6 h-100 bg-primary/10"
+              glow
+            >
               <div class="d-flex justify-space-between align-start mb-4">
                 <div>
                   <h2
@@ -451,7 +469,10 @@
         aria-labelledby="admin-resources"
         class="mb-6"
       >
-        <SidebarCard class="text-card-foreground pa-6" glow>
+        <SidebarCard
+          class="text-card-foreground pa-6"
+          glow
+        >
           <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4">
             <div>
               <h2
