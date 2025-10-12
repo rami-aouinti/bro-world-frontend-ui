@@ -254,7 +254,6 @@
 import { watch, computed, ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData } from "#imports";
-import { useLoadingIndicator } from "#app";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
