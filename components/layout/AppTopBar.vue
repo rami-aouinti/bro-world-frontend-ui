@@ -121,6 +121,7 @@ import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
+import { createSurfaceLayerTokens } from "~/lib/theme/surface-layer";
 
 type AppIcon = { name: string; label: string; size?: number; to: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
@@ -165,20 +166,17 @@ const localeMetadata = {
   ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
 const isDarkColor = computed(() => props.isDark);
-const appBarStyle = computed(() => {
-  const surfaceOpacity = props.isDark ? 0.82 : 0.92;
-  const borderOpacity = props.isDark ? 0.35 : 0.22;
-  const shadowOpacity = props.isDark ? 0.45 : 0.15;
-  const gradientOpacity = props.isDark ? 0.62 : 0.82;
-  const primaryStopOpacity = props.isDark ? 0.55 : 0.35;
-  const variantStopOpacity = props.isDark ? 0.48 : 0.28;
+const surfaceLayerTokens = computed(() =>
+  createSurfaceLayerTokens(isDarkColor.value),
+);
 
+const appBarStyle = computed(() => {
   return {
-    backgroundImage: `linear-gradient(135deg, rgba(var(--v-theme-surface), ${gradientOpacity}), rgba(var(--v-theme-primary), ${primaryStopOpacity}), rgba(var(--v-theme-surface-variant), ${variantStopOpacity}))`,
-    backgroundColor: `rgba(var(--v-theme-surface), ${surfaceOpacity})`,
+    backgroundImage: surfaceLayerTokens.value.backgroundImage,
+    backgroundColor: surfaceLayerTokens.value.surfaceColor,
     backdropFilter: "blur(18px)",
-    borderBottom: `1px solid rgba(var(--v-theme-outline-variant), ${borderOpacity})`,
-    boxShadow: `0 10px 35px -18px rgba(var(--v-theme-on-surface), ${shadowOpacity})`,
+    borderBottom: `1px solid ${surfaceLayerTokens.value.borderColor}`,
+    boxShadow: `0 10px 35px -18px ${surfaceLayerTokens.value.shadowColor}`,
     transition: "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
   } satisfies Record<string, string>;
 });
