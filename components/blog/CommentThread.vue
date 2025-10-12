@@ -295,7 +295,9 @@ function reactionAriaLabel(node: CommentNode) {
   align-items: flex-start;
 }
 .bubble__inner {
-  background: rgba(var(--v-theme-on-surface), 0.06);
+  background: rgba(var(--v-theme-on-surface), 0.12);
+  color: rgb(var(--v-theme-on-surface));
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.16);
   border-radius: 18px;
   padding: 8px 12px;
   max-width: 680px;
@@ -316,7 +318,7 @@ function reactionAriaLabel(node: CommentNode) {
   flex-wrap: wrap;
 }
 .meta__time {
-  color: rgba(var(--v-theme-on-surface), 0.6);
+  color: rgba(var(--v-theme-on-surface), 0.75);
   font-size: 0.8rem;
 }
 .meta__btn {
