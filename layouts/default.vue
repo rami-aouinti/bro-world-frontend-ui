@@ -411,6 +411,9 @@ const rightDrawer = computed({
 const drawerInlineStyle = computed(() => ({
   "z-index": isHydrated.value ? 1004 : 1006,
 }));
+const mainInlineStyle = computed(() => ({
+  "--layout-inset-top": layoutInsets.value.top,
+}));
 const isMobile = computed(() => {
   if (!isHydrated.value) {
     return initialIsMobile.value;
