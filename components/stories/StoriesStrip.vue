@@ -158,10 +158,10 @@ const hasOverflow = computed(() => {
 }
 .stories-viewport::before {
   inset-inline-start: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.18), transparent);
+  background: transparent;
 }
 .stories-viewport::after {
   inset-inline-end: 0;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.18), transparent);
+  background: transparent;
 }
 </style>
