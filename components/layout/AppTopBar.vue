@@ -3,10 +3,11 @@
     app
     role="banner"
     aria-label="Top navigation bar"
-    :elevation="24"
-    :theme="isDarkColor ? 'dark' : 'light'"
-    :style="appBarStyle"
-    rounded
+    :elevation="0"
+    flat
+    color="transparent"
+    :theme="props.isDark ? 'dark' : 'light'"
+    class="app-top-bar text-foreground"
     height="50"
   >
     <AppBrand class="ml-2" />
@@ -164,19 +165,6 @@ const localeMetadata = {
   ru: { label: "Русский", flag: "ru" },
   ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
-const isDarkColor = computed(() => props.isDark);
-const appBarStyle = computed(
-  () =>
-    ({
-      backgroundImage: "none",
-      backgroundColor: "transparent",
-      backdropFilter: "none",
-      borderBottom: "none",
-      boxShadow: "none",
-      transition: "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
-    }) satisfies Record<string, string>,
-);
-
 const navigationLabel = computed(() => t("layout.actions.openNavigation"));
 const goBackLabel = computed(() => t("layout.actions.goBack"));
 const refreshLabel = computed(() => t("layout.actions.refresh"));
@@ -371,3 +359,31 @@ function markAllNotifications() {
   }));
 }
 </script>
+
+<style scoped>
+.app-top-bar {
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  color: rgb(var(--v-theme-on-background));
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  --v-theme-overlay-multiplier: 0;
+}
+
+.app-top-bar :deep(.v-toolbar__content) {
+  background-color: transparent !important;
+  color: inherit;
+}
+
+.app-top-bar :deep(.v-btn),
+.app-top-bar :deep(.v-icon),
+.app-top-bar :deep(.v-toolbar-title),
+.app-top-bar :deep(.v-list-item-title),
+.app-top-bar :deep(.v-list-item-subtitle),
+.app-top-bar :deep(.v-list-item__prepend),
+.app-top-bar :deep(.v-list-item__append) {
+  color: inherit;
+}
+</style>
