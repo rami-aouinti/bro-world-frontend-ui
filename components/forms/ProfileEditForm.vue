@@ -34,7 +34,7 @@
             </v-btn>
             <v-btn
               color="primary"
-              :loading="isSaving"
+              :loading="isProfileSaving"
               @click="submitForm"
             >
               {{ t("pages.profileEdit.actions.save") }}
@@ -247,6 +247,55 @@
       >
         <aside>
           <v-card
+            v-if="canManageSite"
+            class="pa-6 mb-6"
+            rounded="xl"
+            elevation="6"
+          >
+            <div class="d-flex align-center justify-space-between mb-4">
+              <div>
+                <h2 class="text-h6 font-weight-semibold mb-1">
+                  {{ t("pages.profileEdit.sections.siteSettings") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("pages.profileEdit.helpers.siteSettings") }}
+                </p>
+              </div>
+              <v-btn
+                color="primary"
+                class="text-none"
+                prepend-icon="mdi-content-save-outline"
+                :loading="isSiteSettingsSaving"
+                :disabled="!siteSettingsChanged"
+                @click="submitSiteSettings"
+              >
+                {{ t("admin.settings.actions.save") }}
+              </v-btn>
+            </div>
+
+            <div class="d-flex flex-column gap-3">
+              <v-text-field
+                v-model="siteSettingsForm.siteName"
+                :label="t('admin.settings.fields.siteName')"
+                :placeholder="t('admin.settings.placeholders.siteName')"
+                :disabled="isSiteSettingsSaving"
+                variant="outlined"
+                density="comfortable"
+              />
+              <v-textarea
+                v-model="siteSettingsForm.tagline"
+                :label="t('admin.settings.fields.tagline')"
+                :placeholder="t('admin.settings.placeholders.tagline')"
+                :disabled="isSiteSettingsSaving"
+                variant="outlined"
+                auto-grow
+                rows="3"
+                density="comfortable"
+              />
+            </div>
+          </v-card>
+
+          <v-card
             class="pa-6 mb-6"
             rounded="xl"
             elevation="4"
@@ -334,10 +383,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
+import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
 import type { ProfileForm } from "~/types/pages/profile";
+import { useAuthSession } from "~/stores/auth-session";
 
 const { t } = useI18n();
 
@@ -398,11 +452,52 @@ const interestOptions = [
   "Content strategy",
 ];
 
+const auth = useAuthSession();
+const canManageSite = computed(() => {
+  const roles = auth.currentUser.value?.roles ?? [];
+  return roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
+});
+
+const siteSettingsState = useSiteSettingsState();
+const { save: saveSiteSettings, isSaving: adminSettingsSaving } = useAdminSettingsEditor();
+const defaultSiteSettings = getDefaultSiteSettings();
+
+const siteSettingsForm = reactive({
+  siteName: defaultSiteSettings.siteName,
+  tagline: defaultSiteSettings.tagline ?? "",
+});
+
+const siteSettingsSnapshot = ref("{}");
+
+function serializeSiteSettings() {
+  return {
+    siteName: siteSettingsForm.siteName.trim(),
+    tagline: siteSettingsForm.tagline.trim(),
+  };
+}
+
+watch(
+  () => siteSettingsState.value,
+  (value) => {
+    const settings = value ?? defaultSiteSettings;
+    siteSettingsForm.siteName = settings.siteName;
+    siteSettingsForm.tagline = settings.tagline ?? "";
+    siteSettingsSnapshot.value = JSON.stringify(serializeSiteSettings());
+  },
+  { immediate: true },
+);
+
+const siteSettingsChanged = computed(
+  () => JSON.stringify(serializeSiteSettings()) !== siteSettingsSnapshot.value,
+);
+
+const isSiteSettingsSaving = computed(() => adminSettingsSaving.value);
+
 const errors = reactive<Record<keyof ProfileForm | string, string>>({});
 const showSnackbar = ref(false);
 const snackbarMessage = ref("");
 const snackbarColor = ref("primary");
-const isSaving = ref(false);
+const isProfileSaving = ref(false);
 
 const fullName = computed(() => `${form.firstName} ${form.lastName}`.trim());
 const initials = computed(() => {
@@ -441,8 +536,39 @@ function resetForm() {
   });
 }
 
+async function submitSiteSettings() {
+  if (!canManageSite.value || isSiteSettingsSaving.value) {
+    return;
+  }
+
+  const payload = serializeSiteSettings();
+
+  if (!payload.siteName) {
+    snackbarMessage.value = t("pages.profileEdit.validation.required");
+    snackbarColor.value = "error";
+    showSnackbar.value = true;
+    return;
+  }
+
+  try {
+    await saveSiteSettings({
+      siteName: payload.siteName,
+      tagline: payload.tagline || null,
+    });
+    siteSettingsSnapshot.value = JSON.stringify(serializeSiteSettings());
+    snackbarMessage.value = t("admin.settings.feedback.saved");
+    snackbarColor.value = "success";
+    showSnackbar.value = true;
+  } catch (error) {
+    console.error("Failed to update site settings", error);
+    snackbarMessage.value = t("admin.settings.feedback.error");
+    snackbarColor.value = "error";
+    showSnackbar.value = true;
+  }
+}
+
 async function submitForm() {
-  if (isSaving.value) {
+  if (isProfileSaving.value) {
     return;
   }
 
@@ -456,7 +582,7 @@ async function submitForm() {
   }
 
   try {
-    isSaving.value = true;
+    isProfileSaving.value = true;
     await new Promise((resolve) => setTimeout(resolve, 900));
     snackbarMessage.value = t("pages.profileEdit.feedback.successMessage");
     snackbarColor.value = "success";
@@ -466,7 +592,7 @@ async function submitForm() {
     snackbarColor.value = "error";
     showSnackbar.value = true;
   } finally {
-    isSaving.value = false;
+    isProfileSaving.value = false;
   }
 }
 </script>
