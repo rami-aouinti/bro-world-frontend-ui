@@ -70,6 +70,9 @@ import NotificationMenu from "./NotificationMenu.vue";
 import MessengerMenu from "~/components/messenger/MessengerMenu.vue";
 import type { AppNotification } from "~/types/layout";
 import type { MessengerConversation } from "~/types/messenger";
+import ThemePopover from "../../ThemePopover.vue";
+import DarkModeToggle from "../../DarkModeToggle.vue";
+import AppIcon from "../AppIcon.vue";
 
 const props = defineProps<{
   isMobile: boolean;

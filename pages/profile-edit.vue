@@ -15,7 +15,6 @@ import ProfileEditForm from "~/components/forms/ProfileEditForm.vue";
 definePageMeta({
   middleware: "auth",
   title: "profile-edit",
-  showRightWidgets: false,
   sidebarVariant: "profile",
   documentDriven: false,
 });

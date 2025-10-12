@@ -1,6 +1,5 @@
 <template>
   <main
-    class="py-8"
     aria-labelledby="profile-photos-title"
   >
     <v-container>
@@ -348,7 +347,6 @@ import type { AlbumSummary, PhotoItem } from "~/types/pages/profile";
 definePageMeta({
   middleware: "auth",
   title: "profile-photos",
-  showRightWidgets: false,
   sidebarVariant: "profile",
   documentDriven: false,
 });

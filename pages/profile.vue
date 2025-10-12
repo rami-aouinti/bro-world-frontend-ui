@@ -237,6 +237,7 @@ import type {
   ProfileUser,
   SidebarFriend,
 } from "~/types/pages/profile";
+import SidebarCard from "../components/layout/SidebarCard.vue";
 
 definePageMeta({
   middleware: "auth",

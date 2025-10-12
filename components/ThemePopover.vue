@@ -26,6 +26,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import ThemeCustomizer from "./ThemeCustomizer.vue";
+import Icon from "./Icon.vue";
 
 const props = defineProps<{ triggerClass?: string }>();
 

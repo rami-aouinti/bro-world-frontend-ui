@@ -1,6 +1,5 @@
 <template>
   <main
-    class="py-8"
     aria-labelledby="profile-friends-title"
   >
     <v-container>
@@ -389,7 +388,6 @@ import type { FriendCard } from "~/types/pages/profile";
 definePageMeta({
   middleware: "auth",
   title: "profile-friends",
-  showRightWidgets: false,
   sidebarVariant: "profile",
   documentDriven: false,
 });

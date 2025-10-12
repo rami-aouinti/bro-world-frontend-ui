@@ -106,6 +106,7 @@
 import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
+import Icon from "./Icon.vue";
 
 const { themeClass, theme, radius, setTheme, setRadius } = useThemes();
 const { darkModeToggle } = useConfig().value.header;
