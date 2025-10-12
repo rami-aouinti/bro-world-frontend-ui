@@ -1,12 +1,14 @@
 <template>
   <main aria-labelledby="blog-heading">
-    <NewPost
-      v-if="canAccessAuthenticatedContent"
-      :avatar="user.avatarUrl"
-      :user-name="user.name"
-      @submit="createPost"
-      @attach="onAttach"
-    />
+    <ClientOnly>
+      <NewPost
+        v-if="canAccessAuthenticatedContent"
+        :avatar="user.avatarUrl"
+        :user-name="user.name"
+        @submit="createPost"
+        @attach="onAttach"
+      />
+    </ClientOnly>
     <SidebarCard
       v-if="canAccessAuthenticatedContent"
       class="text-card-foreground px-3 py-4 my-4"
