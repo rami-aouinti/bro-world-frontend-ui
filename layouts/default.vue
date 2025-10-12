@@ -505,9 +505,37 @@ function filterUndefinedValues<T extends Record<string, string | undefined>>(var
   ) as Record<string, string>;
 }
 
+const layoutInsets = computed(() => {
+  if (!showNavigation.value) {
+    return {
+      top: "0px",
+      right: "0px",
+      bottom: "0px",
+      left: "0px",
+    };
+  }
+
+  const top = "var(--app-bar-height)";
+  const isDesktop = !isMobile.value;
+  const left = isDesktop && leftDrawer.value ? "320px" : "0px";
+  const right =
+    isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
+
+  return {
+    top,
+    right,
+    bottom: "0px",
+    left,
+  };
+});
+
 const cssVars = computed<Record<string, string>>(() => {
   const base: Record<string, string | undefined> = {
     "--app-bar-height": "50px",
+    "--v-layout-top": layoutInsets.value.top,
+    "--v-layout-right": layoutInsets.value.right,
+    "--v-layout-bottom": layoutInsets.value.bottom,
+    "--v-layout-left": layoutInsets.value.left,
     "--pink-shadow": isDark.value
       ? "0px 16px 32px rgba(243, 126, 205, 0.18)"
       : "0px 20px 45px rgba(243, 126, 205, 0.28)",
