@@ -124,6 +124,14 @@ definePageMeta({
 
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 const auth = useAuthSession();
+const isClient = ref(false);
+
+onMounted(() => {
+  isClient.value = true;
+});
+
+const canAccessAuthenticatedContent = computed(
+  () => isClient.value && auth.isReady.value && auth.isAuthenticated.value,
 const isHydrated = ref(false);
 
 if (import.meta.client) {
