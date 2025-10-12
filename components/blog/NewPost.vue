@@ -1,75 +1,77 @@
 <template>
   <!-- Barre compacte -->
-  <SidebarCard class="text-card-foreground px-3 py-4 my-2">
-    <!-- glows -->
-    <span
-      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-    ></span>
-    <span
-      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-    ></span>
-    <div class="d-flex align-center ga-3">
-      <v-avatar size="44">
-        <v-img
-          :src="avatar"
-          alt="Avatar"
-          width="44"
+  <div class="my-2">
+    <SidebarCard class="text-card-foreground px-3 py-2">
+      <!-- glows -->
+      <span
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
+      <div class="d-flex align-center ga-3">
+        <v-avatar size="44">
+          <v-img
+            :src="avatar"
+            alt="Avatar"
+            width="44"
+            height="44"
+          />
+        </v-avatar>
+
+        <!-- Champ pilule qui ouvre le modal -->
+        <v-btn
+          class="flex-1 justify-start text-body-2 text-medium-emphasis composer-pill"
+          variant="flat"
           height="44"
-        />
-      </v-avatar>
+          rounded="pill"
+          :ripple="false"
+          :disabled="!canUseAuthenticatedUi"
+          data-test="new-post-trigger"
+          @click="openDialog()"
+        >
+          {{ placeholderText }}
+        </v-btn>
+      </div>
 
-      <!-- Champ pilule qui ouvre le modal -->
-      <v-btn
-        class="flex-1 justify-start text-body-2 text-medium-emphasis composer-pill"
-        variant="flat"
-        height="44"
-        rounded="pill"
-        :ripple="false"
-        :disabled="!canUseAuthenticatedUi"
-        data-test="new-post-trigger"
-        @click="openDialog()"
+      <v-alert
+        v-if="!canUseAuthenticatedUi"
+        class="mt-3"
+        type="info"
+        density="compact"
+        border="start"
+        variant="tonal"
       >
-        {{ placeholderText }}
-      </v-btn>
-    </div>
+        {{ loginToPostMessage }}
+      </v-alert>
 
-    <v-alert
-      v-if="!canUseAuthenticatedUi"
-      class="mt-3"
-      type="info"
-      density="compact"
-      border="start"
-      variant="tonal"
-    >
-      {{ loginToPostMessage }}
-    </v-alert>
+      <v-divider class="my-2" />
 
-    <v-divider class="my-2" />
-
-    <!-- Actions rapides (non obligatoires) -->
-    <div class="d-flex ga-4 flex-wrap justify-center">
-      <v-btn
-        v-for="action in quickActions"
-        :key="action.key"
-        variant="text"
-        :color="action.color"
-        :disabled="!canUseAuthenticatedUi"
-        @click="openDialog()"
-      >
-        <Icon
-          :name="action.icon"
-          class="mr-2"
-        />
-        {{ action.label }}
-      </v-btn>
-    </div>
-    <BorderBeam
-      :size="150"
-      :duration="8"
-      :delay="10"
-      :border-width="2"
-    />
-  </SidebarCard>
+      <!-- Actions rapides (non obligatoires) -->
+      <div class="d-flex ga-4 flex-wrap justify-center">
+        <v-btn
+          v-for="action in quickActions"
+          :key="action.key"
+          variant="text"
+          :color="action.color"
+          :disabled="!canUseAuthenticatedUi"
+          @click="openDialog()"
+        >
+          <Icon
+            :name="action.icon"
+            class="mr-2"
+          />
+          {{ action.label }}
+        </v-btn>
+      </div>
+      <BorderBeam
+        :size="150"
+        :duration="8"
+        :delay="10"
+        :border-width="2"
+      />
+    </SidebarCard>
+  </div>
 
   <Suspense v-if="dialog && canUseAuthenticatedUi">
     <template #default>

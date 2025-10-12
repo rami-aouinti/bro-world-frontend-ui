@@ -34,151 +34,160 @@
         </template>
       </button>
     </template>
-    <v-card
-      class="min-w-[320px] overflow-hidden"
-      elevation="12"
+    <SidebarCard
+      padding="none"
+      class="min-w-[320px] overflow-hidden text-card-foreground px-3 py-2 shadow-xl"
     >
-      <div class="flex items-center justify-between px-4 py-3">
-        <div>
-          <p class="text-sm font-semibold leading-tight">
-            {{ props.title }}
-          </p>
-          <p
-            v-if="props.subtitle"
-            class="text-xs text-muted-foreground"
-          >
-            {{ props.subtitle }}
-          </p>
-        </div>
-        <v-btn
-          variant="text"
-          size="small"
-          class="text-primary"
-          :aria-label="props.viewAllLabel"
-          @click="handleViewAll"
-        >
-          {{ props.viewAllLabel }}
-        </v-btn>
-      </div>
-      <v-divider />
-      <div
-        v-if="props.loading"
-        class="flex flex-col gap-3 px-4 py-6"
-      >
-        <div
-          v-for="index in 3"
-          :key="index"
-          class="flex items-center gap-3"
-        >
-          <v-skeleton-loader
-            class="rounded-full"
-            height="40"
-            type="avatar"
-            width="40"
-          />
-          <div class="flex flex-1 flex-col gap-2">
-            <v-skeleton-loader
-              height="12"
-              type="text"
-            />
-            <v-skeleton-loader
-              height="10"
-              type="text"
-            />
+      <!-- glows -->
+      <span
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
+      <div class="relative z-10 flex flex-col">
+        <div class="flex items-center justify-between rounded-2xl px-4 py-3">
+          <div>
+            <p class="text-sm font-semibold leading-tight">
+              {{ props.title }}
+            </p>
+            <p
+              v-if="props.subtitle"
+              class="text-xs text-muted-foreground"
+            >
+              {{ props.subtitle }}
+            </p>
           </div>
-        </div>
-      </div>
-      <template v-else>
-        <v-list
-          v-if="previews.length"
-          class="py-0"
-          density="compact"
-          lines="two"
-        >
-          <v-list-item
-            v-for="preview in previews"
-            :key="preview.id"
-            :class="[
-              'px-4 py-3 transition-colors',
-              preview.unread ? 'bg-primary/5 dark:bg-primary/15' : '',
-            ]"
-            link
-            @click="openConversation(preview.id)"
+          <v-btn
+            variant="text"
+            size="small"
+            class="text-primary"
+            :aria-label="props.viewAllLabel"
+            @click="handleViewAll"
           >
-            <template #prepend>
-              <v-avatar
-                :size="40"
-                class="bg-muted text-sm font-semibold text-muted-foreground"
-              >
-                <img
-                  v-if="preview.avatarUrl"
-                  :alt="preview.title"
-                  :src="preview.avatarUrl"
-                  width="40"
-                  height="40"
-                  loading="lazy"
-                  decoding="async"
-                  class="h-full w-full object-cover"
-                />
-                <span v-else>
-                  {{ preview.initials }}
-                </span>
-              </v-avatar>
-            </template>
-            <div class="flex flex-col gap-1">
-              <p class="text-sm font-medium leading-tight">
-                {{ preview.title }}
-              </p>
-              <p class="line-clamp-2 text-xs text-muted-foreground leading-relaxed">
-                <span
-                  v-if="preview.sender"
-                  class="font-medium text-foreground"
-                >
-                  {{ preview.sender }}
-                </span>
-                <span v-if="preview.sender && preview.snippet"> &nbsp;&mdash;&nbsp; </span>
-                <span>
-                  {{ preview.snippet || props.emptyText }}
-                </span>
-              </p>
-            </div>
-            <template #append>
-              <div class="flex flex-col items-end gap-2">
-                <span class="text-xs text-muted-foreground">
-                  {{ preview.timeAgo }}
-                </span>
-                <span
-                  v-if="preview.unread && preview.unreadCount"
-                  class="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground"
-                >
-                  {{ preview.unreadCount > 99 ? "99+" : preview.unreadCount }}
-                </span>
-                <span
-                  v-else-if="preview.unread"
-                  class="h-2 w-2 rounded-full bg-primary"
-                />
-              </div>
-            </template>
-          </v-list-item>
-        </v-list>
+            {{ props.viewAllLabel }}
+          </v-btn>
+        </div>
+        <v-divider />
         <div
-          v-else
-          class="flex flex-col items-center justify-center gap-2 px-6 py-8 text-center"
+          v-if="props.loading"
+          class="flex flex-col gap-3 px-4 py-6"
         >
           <div
-            class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary"
+            v-for="index in 3"
+            :key="index"
+            class="flex items-center gap-3"
           >
-            <AppIcon
-              name="mdi:message-plus-outline"
-              :size="28"
+            <v-skeleton-loader
+              class="rounded-full"
+              height="40"
+              type="avatar"
+              width="40"
             />
+            <div class="flex flex-1 flex-col gap-2">
+              <v-skeleton-loader
+                height="12"
+                type="text"
+              />
+              <v-skeleton-loader
+                height="10"
+                type="text"
+              />
+            </div>
           </div>
-          <p class="text-sm font-medium">
-            {{ props.emptyText }}
-          </p>
         </div>
-      </template>
-    </v-card>
+        <template v-else>
+          <v-list
+            v-if="previews.length"
+            class="py-0"
+            density="compact"
+            lines="two"
+          >
+            <v-list-item
+              v-for="preview in previews"
+              :key="preview.id"
+              :class="[
+                'px-4 py-3 transition-colors',
+                preview.unread ? 'bg-primary/5 dark:bg-primary/15' : '',
+              ]"
+              link
+              @click="openConversation(preview.id)"
+            >
+              <template #prepend>
+                <v-avatar
+                  :size="40"
+                  class="bg-muted text-sm font-semibold text-muted-foreground"
+                >
+                  <img
+                    v-if="preview.avatarUrl"
+                    :alt="preview.title"
+                    :src="preview.avatarUrl"
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover"
+                  />
+                  <span v-else>
+                    {{ preview.initials }}
+                  </span>
+                </v-avatar>
+              </template>
+              <div class="flex flex-col gap-1">
+                <p class="text-sm font-medium leading-tight">
+                  {{ preview.title }}
+                </p>
+                <p class="line-clamp-2 text-xs text-muted-foreground leading-relaxed">
+                  <span
+                    v-if="preview.sender"
+                    class="font-medium text-foreground"
+                  >
+                    {{ preview.sender }}
+                  </span>
+                  <span v-if="preview.sender && preview.snippet"> &nbsp;&mdash;&nbsp; </span>
+                  <span>
+                    {{ preview.snippet || props.emptyText }}
+                  </span>
+                </p>
+              </div>
+              <template #append>
+                <div class="flex flex-col items-end gap-2">
+                  <span class="text-xs text-muted-foreground">
+                    {{ preview.timeAgo }}
+                  </span>
+                  <span
+                    v-if="preview.unread && preview.unreadCount"
+                    class="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground"
+                  >
+                    {{ preview.unreadCount > 99 ? "99+" : preview.unreadCount }}
+                  </span>
+                  <span
+                    v-else-if="preview.unread"
+                    class="h-2 w-2 rounded-full bg-primary"
+                  />
+                </div>
+              </template>
+            </v-list-item>
+          </v-list>
+          <div
+            v-else
+            class="flex flex-col items-center justify-center gap-2 px-6 py-8 text-center"
+          >
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary"
+            >
+              <AppIcon
+                name="mdi:message-plus-outline"
+                :size="28"
+              />
+            </div>
+            <p class="text-sm font-medium">
+              {{ props.emptyText }}
+            </p>
+          </div>
+        </template>
+      </div>
+    </SidebarCard>
   </v-menu>
 </template>
 
@@ -195,6 +204,7 @@ import {
 import { formatRelativeTime } from "~/lib/datetime/relative-time";
 import type { MessengerConversation } from "~/types/messenger";
 import type { MessengerPreviewEntry } from "~/types/messenger/ui";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const props = defineProps<{
   iconTriggerClasses: string;
