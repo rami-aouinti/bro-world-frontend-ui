@@ -656,6 +656,11 @@ export default defineNuxtConfig({
   },
   fonts: {
     processCSSVariables: true,
+    defaults: {
+      display: "swap",
+      preload: true,
+      fallbacks: ["system-ui", "Segoe UI", "sans-serif"],
+    },
     families: [
       {
         name: "Plus Jakarta Sans",
