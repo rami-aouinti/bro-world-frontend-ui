@@ -395,12 +395,15 @@ import { useAuthSession } from "~/stores/auth-session";
 
 const { t } = useI18n();
 
+const defaultSiteSettings = getDefaultSiteSettings();
+const siteSettingsState = useSiteSettingsState();
+
 const initialForm: ProfileForm = {
   firstName: "Amina",
   lastName: "Rahman",
   headline: "Lead Product Designer · Flowbase",
   pronouns: "she/her",
-  language: "en",
+  language: defaultSiteSettings.defaultLanguage || "en",
   timezone: "Africa/Casablanca",
   email: "amina.rahman@broworld.space",
   phone: "+212 620-555-012",
@@ -420,15 +423,34 @@ const initialForm: ProfileForm = {
 const form = reactive<ProfileForm>({ ...initialForm });
 
 const pronounOptions = ["she/her", "he/him", "they/them", "xe/xem"];
-const languageOptions = [
-  { title: "English", value: "en" },
-  { title: "Français", value: "fr" },
-  { title: "Deutsch", value: "de" },
-  { title: "العربية", value: "ar" },
-  { title: "Italiano", value: "it" },
-  { title: "Español", value: "es" },
-  { title: "Русский", value: "ru" },
-];
+const languageOptions = computed(() => {
+  const settings = siteSettingsState.value ?? defaultSiteSettings;
+  const languages = settings.languages?.length ? settings.languages : defaultSiteSettings.languages;
+  const activeLanguages = languages.filter((language) => language.enabled !== false);
+  const source = activeLanguages.length ? activeLanguages : languages;
+  const finalSource = source.length ? source : defaultSiteSettings.languages;
+
+  return finalSource.map((language) => ({
+    title: language.endonym || language.label || language.code.toUpperCase(),
+    value: language.code,
+  }));
+});
+
+watch(
+  languageOptions,
+  (options) => {
+    if (!options.length) {
+      form.language = defaultSiteSettings.defaultLanguage;
+      return;
+    }
+
+    if (!options.some((option) => option.value === form.language)) {
+      form.language = options[0]?.value ?? defaultSiteSettings.defaultLanguage;
+    }
+  },
+  { immediate: true },
+);
+
 const timezoneOptions = [
   "Africa/Casablanca",
   "Europe/Paris",
@@ -458,9 +480,7 @@ const canManageSite = computed(() => {
   return roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
 });
 
-const siteSettingsState = useSiteSettingsState();
 const { save: saveSiteSettings, isSaving: adminSettingsSaving } = useAdminSettingsEditor();
-const defaultSiteSettings = getDefaultSiteSettings();
 
 const siteSettingsForm = reactive({
   siteName: defaultSiteSettings.siteName,

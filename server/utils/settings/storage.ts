@@ -5,6 +5,8 @@ import Redis from "ioredis";
 import type { FetchError } from "ofetch";
 import type {
   SiteContentBlock,
+  SiteLanguageDefinition,
+  SiteLocalizedSettings,
   SiteMenuItem,
   SiteProfileSettings,
   SiteSettings,
@@ -12,6 +14,13 @@ import type {
   SiteUiSettings,
 } from "~/types/settings";
 import { defaultSiteSettings, getDefaultSiteSettings } from "~/lib/settings/defaults";
+import {
+  defaultLanguageCode,
+  getSupportedLanguage,
+  supportedLanguageCodes,
+  supportedLanguageOrder,
+  supportedLanguages,
+} from "~/lib/i18n/languages";
 import { getSessionToken, getSessionUser } from "../auth/session";
 import { requestWithRetry } from "../requestWithRetry";
 
@@ -333,8 +342,286 @@ function sanitizeContentBlock(
   } satisfies SiteContentBlock;
 }
 
+type LanguageCandidate = Partial<Pick<SiteLanguageDefinition, "code" | "label" | "endonym" | "enabled">>;
+
+const supportedLanguageMap = new Map(supportedLanguages.map((language) => [language.code, language] as const));
+
+function sortLanguages(languages: SiteLanguageDefinition[]): SiteLanguageDefinition[] {
+  return [...languages].sort((a, b) => {
+    const orderA = supportedLanguageOrder.get(a.code) ?? Number.MAX_SAFE_INTEGER;
+    const orderB = supportedLanguageOrder.get(b.code) ?? Number.MAX_SAFE_INTEGER;
+
+    if (orderA === orderB) {
+      return a.code.localeCompare(b.code);
+    }
+
+    return orderA - orderB;
+  });
+}
+
+function sanitizeLanguageCandidate(candidate: LanguageCandidate | null | undefined): SiteLanguageDefinition | null {
+  if (!candidate) {
+    return null;
+  }
+
+  const rawCode = candidate.code;
+  const code = typeof rawCode === "string" ? rawCode.trim() : "";
+
+  if (!code || !supportedLanguageCodes.includes(code)) {
+    return null;
+  }
+
+  const meta = supportedLanguageMap.get(code) ?? getSupportedLanguage(code);
+
+  const labelSource =
+    typeof candidate.label === "string" && candidate.label.trim() ? candidate.label.trim() : meta?.label;
+  const endonymSource =
+    typeof candidate.endonym === "string" && candidate.endonym.trim() ? candidate.endonym.trim() : meta?.endonym;
+
+  const label = labelSource ?? endonymSource ?? code.toUpperCase();
+  const endonym = endonymSource ?? label;
+  const enabled = candidate.enabled !== false;
+
+  return {
+    code,
+    label,
+    endonym,
+    enabled,
+  } satisfies SiteLanguageDefinition;
+}
+
+function resolveLanguages(
+  requested: LanguageCandidate[] | undefined,
+  fallback: SiteLanguageDefinition[],
+): SiteLanguageDefinition[] {
+  const normalized: SiteLanguageDefinition[] = [];
+  const seen = new Set<string>();
+
+  const candidates = Array.isArray(requested) && requested.length ? requested : fallback;
+
+  for (const candidate of candidates) {
+    const sanitized = sanitizeLanguageCandidate(candidate);
+    if (!sanitized || seen.has(sanitized.code)) continue;
+    normalized.push(sanitized);
+    seen.add(sanitized.code);
+  }
+
+  for (const fallbackEntry of fallback) {
+    if (seen.has(fallbackEntry.code)) continue;
+    const sanitized = sanitizeLanguageCandidate(fallbackEntry);
+    if (!sanitized) continue;
+    normalized.push(sanitized);
+    seen.add(sanitized.code);
+  }
+
+  if (!normalized.length) {
+    for (const language of supportedLanguages) {
+      if (seen.has(language.code)) continue;
+      const sanitized = sanitizeLanguageCandidate(language);
+      if (!sanitized) continue;
+      normalized.push(sanitized);
+      seen.add(sanitized.code);
+    }
+  }
+
+  return sortLanguages(normalized);
+}
+
+function resolveDefaultLanguage(
+  requested: string | undefined,
+  languages: SiteLanguageDefinition[],
+  fallback: string,
+): string {
+  const normalizedRequest = typeof requested === "string" ? requested.trim() : "";
+
+  if (normalizedRequest && languages.some((language) => language.code === normalizedRequest && language.enabled)) {
+    return normalizedRequest;
+  }
+
+  const normalizedFallback = typeof fallback === "string" ? fallback.trim() : "";
+
+  if (normalizedFallback && languages.some((language) => language.code === normalizedFallback && language.enabled)) {
+    return normalizedFallback;
+  }
+
+  const firstEnabled = languages.find((language) => language.enabled);
+  if (firstEnabled) {
+    return firstEnabled.code;
+  }
+
+  return languages[0]?.code ?? defaultLanguageCode;
+}
+
+function ensureDefaultLanguagePresence(
+  languages: SiteLanguageDefinition[],
+  defaultLanguage: string,
+): SiteLanguageDefinition[] {
+  const hasDefault = languages.some((language) => language.code === defaultLanguage);
+  let normalized = languages;
+
+  if (!hasDefault) {
+    const candidate = sanitizeLanguageCandidate({ code: defaultLanguage });
+    if (candidate) {
+      normalized = sortLanguages([...normalized, { ...candidate, enabled: true }]);
+    }
+  }
+
+  return normalized.map((language) =>
+    language.code === defaultLanguage ? { ...language, enabled: true } : language,
+  );
+}
+
+function normalizeLanguages(
+  requestedLanguages: LanguageCandidate[] | undefined,
+  requestedDefault: string | undefined,
+  fallbackLanguages: SiteLanguageDefinition[],
+  fallbackDefault: string,
+): { languages: SiteLanguageDefinition[]; defaultLanguage: string } {
+  const resolved = resolveLanguages(requestedLanguages, fallbackLanguages);
+  const defaultLanguage = resolveDefaultLanguage(requestedDefault, resolved, fallbackDefault);
+  const normalized = ensureDefaultLanguagePresence(resolved, defaultLanguage);
+
+  return {
+    languages: normalized,
+    defaultLanguage,
+  };
+}
+
+function sanitizeLocalizedTagline(
+  payload: string | null | undefined,
+  current: string | null | undefined,
+  fallback: string | null | undefined,
+): string | null {
+  if (payload === undefined) {
+    return current ?? fallback ?? null;
+  }
+
+  if (payload === null) {
+    return null;
+  }
+
+  const trimmed = String(payload).trim();
+  return trimmed || null;
+}
+
+function cloneContentBlock(block: SiteContentBlock): SiteContentBlock {
+  return structuredClone(block);
+}
+
+function createLocalizedDefaults(
+  defaults: SiteSettings,
+  languageCode: string,
+  defaultTagline: string | null,
+  defaultPages: SiteSettings["pages"],
+): SiteLocalizedSettings {
+  const source = defaults.localized?.[languageCode] ?? defaults.localized?.[defaults.defaultLanguage];
+
+  return {
+    tagline: defaultTagline ?? source?.tagline ?? defaults.tagline ?? null,
+    pages: {
+      about: cloneContentBlock(defaultPages.about),
+      contact: cloneContentBlock(defaultPages.contact),
+      help: cloneContentBlock(defaultPages.help),
+    },
+  } satisfies SiteLocalizedSettings;
+}
+
+function sanitizeLocalizedEntry(
+  languageCode: string,
+  payload: SiteLocalizedSettings | undefined,
+  fallback: SiteLocalizedSettings | undefined,
+  defaults: SiteSettings,
+  defaultTagline: string | null,
+  defaultPages: SiteSettings["pages"],
+): SiteLocalizedSettings {
+  const baseline = fallback ?? defaults.localized?.[languageCode] ?? defaults.localized?.[defaults.defaultLanguage];
+
+  const tagline = sanitizeLocalizedTagline(
+    payload?.tagline,
+    baseline?.tagline ?? defaults.localized?.[defaults.defaultLanguage]?.tagline ?? defaults.tagline ?? null,
+    defaultTagline ?? defaults.tagline ?? null,
+  );
+
+  const fallbackPages = baseline?.pages ?? defaults.localized?.[defaults.defaultLanguage]?.pages ?? defaults.pages;
+
+  return {
+    tagline,
+    pages: {
+      about: sanitizeContentBlock(
+        payload?.pages?.about,
+        fallbackPages.about ?? defaults.pages.about,
+        defaults.pages.about,
+      ),
+      contact: sanitizeContentBlock(
+        payload?.pages?.contact,
+        fallbackPages.contact ?? defaults.pages.contact,
+        defaults.pages.contact,
+      ),
+      help: sanitizeContentBlock(
+        payload?.pages?.help,
+        fallbackPages.help ?? defaults.pages.help,
+        defaults.pages.help,
+      ),
+    },
+  } satisfies SiteLocalizedSettings;
+}
+
+function sanitizeLocalizedSettingsMap(
+  localized: Record<string, SiteLocalizedSettings> | undefined,
+  fallback: Record<string, SiteLocalizedSettings> | undefined,
+  languages: SiteLanguageDefinition[],
+  defaults: SiteSettings,
+  defaultLanguage: string,
+  defaultTagline: string | null,
+  defaultPages: SiteSettings["pages"],
+): Record<string, SiteLocalizedSettings> {
+  const allowed = new Set(languages.map((language) => language.code));
+  const fallbackSource = fallback ?? defaults.localized ?? {};
+  const result: Record<string, SiteLocalizedSettings> = {};
+
+  for (const code of allowed) {
+    const payloadEntry = localized?.[code];
+    const fallbackEntry = fallbackSource[code];
+
+    if (!payloadEntry && !fallbackEntry) {
+      result[code] = createLocalizedDefaults(defaults, code, defaultTagline, defaultPages);
+      continue;
+    }
+
+    result[code] = sanitizeLocalizedEntry(
+      code,
+      payloadEntry,
+      fallbackEntry,
+      defaults,
+      defaultTagline,
+      defaultPages,
+    );
+  }
+
+  const ensuredDefault = result[defaultLanguage] ?? createLocalizedDefaults(defaults, defaultLanguage, defaultTagline, defaultPages);
+
+  result[defaultLanguage] = {
+    ...ensuredDefault,
+    tagline: defaultTagline ?? ensuredDefault.tagline ?? defaults.tagline ?? null,
+    pages: {
+      about: cloneContentBlock(defaultPages.about),
+      contact: cloneContentBlock(defaultPages.contact),
+      help: cloneContentBlock(defaultPages.help),
+    },
+  } satisfies SiteLocalizedSettings;
+
+  return result;
+}
+
 function normalizeSettings(settings: SiteSettings): SiteSettings {
   const defaults = getDefaultSiteSettings();
+
+  const { languages: normalizedLanguages, defaultLanguage } = normalizeLanguages(
+    settings.languages as LanguageCandidate[] | undefined,
+    settings.defaultLanguage,
+    defaults.languages,
+    defaults.defaultLanguage ?? defaultLanguageCode,
+  );
 
   const normalizedThemes = (settings.themes?.length ? settings.themes : defaults.themes).map((theme) => ({
     ...sanitizeTheme(theme),
@@ -353,19 +640,36 @@ function normalizeSettings(settings: SiteSettings): SiteSettings {
     help: mergeContentBlock(settings.pages?.help, defaults.pages.help),
   } as SiteSettings["pages"];
 
+  const normalizedSiteName = settings.siteName?.trim() || defaults.siteName;
+  const normalizedTagline = settings.tagline?.trim() || null;
+  const normalizedActiveThemeId = settings.activeThemeId?.trim() || defaults.activeThemeId;
+
+  const normalizedLocalized = sanitizeLocalizedSettingsMap(
+    settings.localized,
+    defaults.localized,
+    normalizedLanguages,
+    defaults,
+    defaultLanguage,
+    normalizedTagline,
+    normalizedPages,
+  );
+
   const updatedAt = settings.updatedAt ?? defaults.updatedAt ?? new Date().toISOString();
 
   return {
     ...defaults,
     ...settings,
-    siteName: settings.siteName?.trim() || defaults.siteName,
-    tagline: settings.tagline?.trim() || null,
-    activeThemeId: settings.activeThemeId?.trim() || defaults.activeThemeId,
+    siteName: normalizedSiteName,
+    tagline: normalizedTagline,
+    activeThemeId: normalizedActiveThemeId,
     themes: normalizedThemes,
     menus: normalizedMenus,
     profile: normalizedProfile,
     ui: normalizedUi,
     pages: normalizedPages,
+    defaultLanguage,
+    languages: normalizedLanguages,
+    localized: normalizedLocalized,
     updatedAt,
   } satisfies SiteSettings;
 }
@@ -559,10 +863,36 @@ export async function updateSiteSettings(
   const current = await getSiteSettings(event);
   const defaults = getDefaultSiteSettings();
 
+  const { languages: normalizedLanguages, defaultLanguage } = normalizeLanguages(
+    payload.languages as LanguageCandidate[] | undefined,
+    payload.defaultLanguage,
+    current.languages?.length ? current.languages : defaults.languages,
+    current.defaultLanguage ?? defaults.defaultLanguage ?? defaultLanguageCode,
+  );
+
+  const normalizedTagline =
+    payload.tagline === undefined ? current.tagline ?? null : payload.tagline?.trim() || null;
+
+  const normalizedPages: SiteSettings["pages"] = {
+    about: sanitizeContentBlock(payload.pages?.about, current.pages.about, defaults.pages.about),
+    contact: sanitizeContentBlock(payload.pages?.contact, current.pages.contact, defaults.pages.contact),
+    help: sanitizeContentBlock(payload.pages?.help, current.pages.help, defaults.pages.help),
+  };
+
+  const normalizedLocalized = sanitizeLocalizedSettingsMap(
+    payload.localized,
+    current.localized,
+    normalizedLanguages,
+    defaults,
+    defaultLanguage,
+    normalizedTagline,
+    normalizedPages,
+  );
+
   const next: SiteSettings = {
     ...current,
     siteName: payload.siteName?.trim() || current.siteName,
-    tagline: payload.tagline === undefined ? current.tagline ?? null : payload.tagline?.trim() || null,
+    tagline: normalizedTagline,
     activeThemeId: payload.activeThemeId?.trim() || current.activeThemeId,
     themes: payload.themes?.length
       ? payload.themes.map((theme) => sanitizeTheme(theme)).filter(Boolean)
@@ -572,11 +902,10 @@ export async function updateSiteSettings(
       : current.menus.map((menu, index) => sanitizeMenu(menu, index)),
     profile: sanitizeProfileSettings(payload.profile, current.profile ?? defaults.profile),
     ui: sanitizeUiSettings(payload.ui, current.ui ?? defaults.ui),
-    pages: {
-      about: sanitizeContentBlock(payload.pages?.about, current.pages.about, defaults.pages.about),
-      contact: sanitizeContentBlock(payload.pages?.contact, current.pages.contact, defaults.pages.contact),
-      help: sanitizeContentBlock(payload.pages?.help, current.pages.help, defaults.pages.help),
-    },
+    pages: normalizedPages,
+    defaultLanguage,
+    languages: normalizedLanguages,
+    localized: normalizedLocalized,
     updatedAt: new Date().toISOString(),
   } satisfies SiteSettings;
 

@@ -21,6 +21,13 @@ export interface SiteMenuItem {
 
 export type SiteThemeMode = "light" | "dark" | "system";
 
+export interface SiteLanguageDefinition {
+  code: string;
+  label: string;
+  endonym: string;
+  enabled: boolean;
+}
+
 export interface SiteProfileSettings {
   allowCustomization: boolean;
   allowAvatarUploads: boolean;
@@ -44,6 +51,15 @@ export interface SiteContentBlock {
   updatedAt: string;
 }
 
+export interface SiteLocalizedSettings {
+  tagline?: string | null;
+  pages: {
+    about: SiteContentBlock;
+    contact: SiteContentBlock;
+    help: SiteContentBlock;
+  };
+}
+
 export interface SiteSettings {
   siteName: string;
   tagline?: string | null;
@@ -52,6 +68,9 @@ export interface SiteSettings {
   menus: SiteMenuItem[];
   profile: SiteProfileSettings;
   ui: SiteUiSettings;
+  defaultLanguage: string;
+  languages: SiteLanguageDefinition[];
+  localized: Record<string, SiteLocalizedSettings>;
   pages: {
     about: SiteContentBlock;
     contact: SiteContentBlock;
