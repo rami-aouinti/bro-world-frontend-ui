@@ -1,5 +1,6 @@
 <template>
   <v-app
+    :style="appInlineStyle"
   >
     <AppTopBar
       v-if="showNavigation"
@@ -218,7 +219,10 @@
             />
           </template>
         </ClientOnly>
-        <div class="main-scroll__viewport">
+        <div
+          class="main-scroll__viewport"
+          :style="mainInlineStyle"
+        >
           <div
             v-show="areSidebarsReady"
             class="app-container"
@@ -254,6 +258,7 @@
 import { watch, computed, ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData } from "#imports";
+import { useResizeObserver } from "@vueuse/core";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
@@ -339,6 +344,10 @@ const currentRoute = computed(() => router.currentRoute.value);
 const showNavigation = computed(() => currentRoute.value?.meta?.showNavbar !== false);
 const { rightSidebarContent } = useLayoutRightSidebar();
 const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
+const DEFAULT_APP_BAR_HEIGHT = 72;
+const DEFAULT_APP_BAR_HEIGHT_VALUE = `${DEFAULT_APP_BAR_HEIGHT}px`;
+const topBarHeight = ref(showNavigation.value ? DEFAULT_APP_BAR_HEIGHT_VALUE : "0px");
+const resolvedAppBarHeight = computed(() => (showNavigation.value ? topBarHeight.value : "0px"));
 
 const initialShowRightWidgets = useState(
   "layout-initial-show-right-widgets",
@@ -377,6 +386,69 @@ const isLeftDrawerReady = ref(import.meta.server || !showNavigation.value);
 const isTopBarReady = ref(import.meta.server || !showNavigation.value);
 const isRefreshing = ref(false);
 
+const appInlineStyle = computed(() => ({
+  "--app-bar-height": resolvedAppBarHeight.value,
+}));
+
+if (import.meta.client) {
+  function getTopBarElement() {
+    const instance = topBarRef.value;
+    if (!instance) return null;
+    const element = instance.$el as HTMLElement | null;
+    return element instanceof HTMLElement ? element : null;
+  }
+
+  function applyTopBarHeight(height: number | null | undefined) {
+    if (!showNavigation.value) {
+      topBarHeight.value = "0px";
+      return;
+    }
+
+    if (typeof height === "number" && Number.isFinite(height) && height > 0) {
+      const nextValue = `${Math.round(height)}px`;
+      if (topBarHeight.value !== nextValue) {
+        topBarHeight.value = nextValue;
+      }
+      return;
+    }
+
+    if (topBarHeight.value !== DEFAULT_APP_BAR_HEIGHT_VALUE) {
+      topBarHeight.value = DEFAULT_APP_BAR_HEIGHT_VALUE;
+    }
+  }
+
+  function measureTopBarHeight() {
+    const element = getTopBarElement();
+    if (!element) {
+      applyTopBarHeight(null);
+      return;
+    }
+
+    applyTopBarHeight(element.getBoundingClientRect().height);
+  }
+
+  onMounted(() => {
+    nextTick(measureTopBarHeight);
+  });
+
+  watch(showNavigation, (visible) => {
+    if (!visible) {
+      topBarHeight.value = "0px";
+      return;
+    }
+
+    nextTick(measureTopBarHeight);
+  });
+
+  const topBarElement = computed(() => getTopBarElement());
+
+  useResizeObserver(topBarElement, (entries) => {
+    const entry = entries[0];
+    if (!entry || !showNavigation.value) return;
+    applyTopBarHeight(entry.contentRect.height);
+  });
+}
+
 if (import.meta.client) {
   onMounted(() => {
     if (!showNavigation.value) {
@@ -409,9 +481,11 @@ const rightDrawer = computed({
 });
 
 const drawerInlineStyle = computed(() => ({
+  "--app-bar-height": resolvedAppBarHeight.value,
   "z-index": isHydrated.value ? 1004 : 1006,
 }));
 const mainInlineStyle = computed(() => ({
+  "--app-bar-height": resolvedAppBarHeight.value,
   "--layout-inset-top": layoutInsets.value.top,
 }));
 const isMobile = computed(() => {
@@ -506,14 +580,6 @@ watch(
   { immediate: true },
 );
 
-function filterUndefinedValues<T extends Record<string, string | undefined>>(variables: T) {
-  return Object.fromEntries(
-    Object.entries(variables)
-      .filter(([, value]) => value != null)
-      .map(([key, value]) => [key, value as string]),
-  ) as Record<string, string>;
-}
-
 const layoutInsets = computed(() => {
   if (!showNavigation.value) {
     return {
@@ -524,7 +590,7 @@ const layoutInsets = computed(() => {
     };
   }
 
-  const top = "var(--app-bar-height)";
+  const top = resolvedAppBarHeight.value || DEFAULT_APP_BAR_HEIGHT_VALUE;
   const isDesktop = !isMobile.value;
   const left = isDesktop && leftDrawer.value ? "320px" : "0px";
   const right = isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
@@ -864,7 +930,8 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--app-bar-height));
-  padding-block: clamp(8px, 2vw, 16px);
+  padding-block-start: calc(var(--layout-inset-top, 0px) + clamp(8px, 2vw, 16px));
+  padding-block-end: clamp(8px, 2vw, 16px);
   box-sizing: border-box;
 }
 
