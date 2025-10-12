@@ -623,20 +623,4 @@ function triggerAction(action: "upload" | "create-album" | "share-collection") {
 }
 </script>
 
-<style scoped>
-.masonry-grid {
-  column-count: 2;
-  column-gap: 1.5rem;
-}
-
-.masonry-item {
-  break-inside: avoid;
-  margin-bottom: 1.5rem;
-}
-
-@media (min-width: 1280px) {
-  .masonry-grid {
-    column-count: 3;
-  }
-}
-</style>
+<style scoped src="~/assets/styles/pages/profile-photos.scss" lang="scss"></style>

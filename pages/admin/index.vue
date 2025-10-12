@@ -817,24 +817,4 @@ const resourceItems = computed(() => [
 ]);
 </script>
 
-<style scoped>
-.gap-2 {
-  gap: 0.5rem;
-}
-
-.gap-3 {
-  gap: 0.75rem;
-}
-
-.gap-4 {
-  gap: 1rem;
-}
-
-.gap-6 {
-  gap: 1.5rem;
-}
-
-.text-none {
-  text-transform: none;
-}
-</style>
+<style scoped src="~/assets/styles/pages/admin/index.scss" lang="scss"></style>
