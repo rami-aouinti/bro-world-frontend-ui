@@ -3,8 +3,7 @@
     app
     role="banner"
     aria-label="Top navigation bar"
-    :elevation="0"
-    flat
+    :elevation="24"
     :theme="isDarkColor ? 'dark' : 'light'"
     :style="appBarStyle"
     rounded
@@ -174,7 +173,6 @@ const appBarStyle = computed(
       backdropFilter: "none",
       borderBottom: "none",
       boxShadow: "none",
-      color: "var(--v-theme-on-background)",
       transition: "background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
     }) satisfies Record<string, string>,
 );
