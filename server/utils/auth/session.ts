@@ -5,6 +5,7 @@ import { shouldUseSecureCookies, withSecureCookieOptions } from "../../../lib/co
 
 interface SessionCookiesConfig {
   tokenCookieName: string;
+  sessionTokenCookieName: string;
   userCookieName: string;
   tokenPresenceCookieName: string;
   maxAge: number;
@@ -20,6 +21,7 @@ function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
 
   return {
     tokenCookieName: authConfig.tokenCookieName ?? "auth_token",
+    sessionTokenCookieName: authConfig.sessionTokenCookieName ?? "auth_session_token",
     userCookieName: authConfig.userCookieName ?? "auth_user",
     tokenPresenceCookieName: authConfig.tokenPresenceCookieName ?? "auth_token_present",
     maxAge,
@@ -78,7 +80,7 @@ function sanitizeSessionUser(user: AuthUser): AuthUser {
 }
 
 export function setSession(event: H3Event, token: string, user: AuthUser) {
-  const { tokenCookieName, userCookieName, tokenPresenceCookieName, maxAge } =
+  const { tokenCookieName, sessionTokenCookieName, userCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
   const secure = shouldUseSecureCookies(event);
   const sanitizedUser = sanitizeSessionUser(user);
@@ -92,6 +94,21 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
         httpOnly: true,
         sameSite: "lax",
         maxAge,
+      },
+      event,
+    ),
+  );
+
+  setCookie(
+    event,
+    sessionTokenCookieName,
+    token,
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: "strict",
+        maxAge,
+        secure,
       },
       event,
     ),
@@ -129,9 +146,11 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
 }
 
 export function clearAuthSession(event: H3Event) {
-  const { tokenCookieName, userCookieName, tokenPresenceCookieName } = resolveCookiesConfig(event);
+  const { tokenCookieName, sessionTokenCookieName, userCookieName, tokenPresenceCookieName } =
+    resolveCookiesConfig(event);
 
   deleteCookie(event, tokenCookieName, { path: "/" });
+  deleteCookie(event, sessionTokenCookieName, { path: "/" });
   deleteCookie(event, userCookieName, { path: "/" });
   deleteCookie(event, tokenPresenceCookieName, { path: "/" });
 }
