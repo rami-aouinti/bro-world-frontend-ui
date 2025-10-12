@@ -32,11 +32,9 @@
         cols="12"
         md="8"
       >
-        <v-card
-          class="pa-6 mb-4"
-          rounded="xl"
-          elevation="8"
-          variant="tonal"
+        <SidebarCard
+          class="text-card-foreground bg-primary/10 mb-4"
+          padding="lg"
         >
           <div class="d-flex flex-column gap-6">
             <section aria-labelledby="password-section-title">
@@ -184,18 +182,16 @@
               </v-table>
             </section>
           </div>
-        </v-card>
+        </SidebarCard>
       </v-col>
 
       <v-col
         cols="12"
         md="4"
       >
-        <v-card
-          class="pa-5 mb-4"
-          rounded="xl"
-          elevation="6"
-          variant="tonal"
+        <SidebarCard
+          class="text-card-foreground bg-primary/10 mb-4"
+          padding="md"
         >
           <div class="d-flex flex-column gap-4">
             <section aria-labelledby="mfa-section-title">
@@ -246,7 +242,7 @@
               </div>
             </section>
           </div>
-        </v-card>
+        </SidebarCard>
       </v-col>
     </v-row>
 
@@ -265,6 +261,7 @@
 import { computed, reactive, useId } from "vue";
 import { useI18n } from "vue-i18n";
 
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import type { SessionEntry } from "~/types/pages/profile";
 

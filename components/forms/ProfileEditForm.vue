@@ -4,10 +4,9 @@
       class="mb-8"
       aria-describedby="profile-edit-subtitle"
     >
-      <v-card
-        class="pa-6"
-        rounded="xl"
-        elevation="8"
+      <SidebarCard
+        class="text-card-foreground"
+        padding="lg"
       >
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
           <div>
@@ -41,7 +40,7 @@
             </v-btn>
           </div>
         </div>
-      </v-card>
+      </SidebarCard>
     </header>
 
     <v-alert
@@ -74,10 +73,9 @@
           class="mb-8"
           aria-labelledby="profile-core-section"
         >
-          <v-card
-            class="pa-6"
-            rounded="xl"
-            elevation="6"
+          <SidebarCard
+            class="text-card-foreground"
+            padding="lg"
           >
             <h2
               id="profile-core-section"
@@ -137,17 +135,16 @@
                 />
               </div>
             </div>
-          </v-card>
+          </SidebarCard>
         </section>
 
         <section
           class="mb-8"
           aria-labelledby="profile-contact-section"
         >
-          <v-card
-            class="pa-6"
-            rounded="xl"
-            elevation="6"
+          <SidebarCard
+            class="text-card-foreground"
+            padding="lg"
           >
             <h2
               id="profile-contact-section"
@@ -188,14 +185,13 @@
                 />
               </div>
             </div>
-          </v-card>
+          </SidebarCard>
         </section>
 
         <section aria-labelledby="profile-about-section">
-          <v-card
-            class="pa-6"
-            rounded="xl"
-            elevation="6"
+          <SidebarCard
+            class="text-card-foreground"
+            padding="lg"
           >
             <h2
               id="profile-about-section"
@@ -237,7 +233,7 @@
                 density="comfortable"
               />
             </div>
-          </v-card>
+          </SidebarCard>
         </section>
       </v-col>
 
@@ -246,11 +242,10 @@
         xl="4"
       >
         <aside>
-          <v-card
+          <SidebarCard
             v-if="canManageSite"
-            class="pa-6 mb-6"
-            rounded="xl"
-            elevation="6"
+            class="text-card-foreground mb-6"
+            padding="lg"
           >
             <div class="d-flex align-center justify-space-between mb-4">
               <div>
@@ -303,12 +298,11 @@
                 density="comfortable"
               />
             </div>
-          </v-card>
+          </SidebarCard>
 
-          <v-card
-            class="pa-6 mb-6"
-            rounded="xl"
-            elevation="4"
+          <SidebarCard
+            class="text-card-foreground mb-6"
+            padding="lg"
           >
             <h2 class="text-h6 font-weight-semibold mb-4">
               {{ t("pages.profileEdit.sections.social") }}
@@ -343,12 +337,11 @@
                 density="comfortable"
               />
             </div>
-          </v-card>
+          </SidebarCard>
 
-          <v-card
-            class="pa-6"
-            rounded="xl"
-            variant="tonal"
+          <SidebarCard
+            class="text-card-foreground bg-primary/10"
+            padding="lg"
           >
             <h2 class="text-h6 font-weight-semibold mb-3">
               {{ t("pages.profileEdit.sections.contact") }}
@@ -376,7 +369,7 @@
                 <div v-if="form.location">{{ form.location }}</div>
               </div>
             </div>
-          </v-card>
+          </SidebarCard>
         </aside>
       </v-col>
     </v-row>
@@ -396,6 +389,7 @@
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
