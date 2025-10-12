@@ -3,7 +3,8 @@
     app
     role="banner"
     aria-label="Top navigation bar"
-    :elevation="20"
+    :elevation="24"
+    rounded
     flat
     color="transparent"
     class="app-top-bar text-foreground"
