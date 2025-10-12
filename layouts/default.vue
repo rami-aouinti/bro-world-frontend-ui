@@ -201,7 +201,7 @@
     </v-navigation-drawer>
 
     <v-main class="app-surface">
-      <div class="main-scroll">
+      <div class="main-scroll pane-scroll">
         <ClientOnly>
           <ParticlesBg
             class="sidebar-default-card__particles"
@@ -801,6 +801,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 .pane-scroll {
   height: calc(100vh - var(--app-bar-height));
   overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
 }
 
 .right-drawer-wrapper {
