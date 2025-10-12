@@ -99,7 +99,7 @@
 
       <div
         v-if="loggedIn"
-        class="-mx-[var(--card-x)] flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3"
+        class="-mx-[var(--card-x)] flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 px-3"
       >
         <v-rating
           v-model="newRating"
