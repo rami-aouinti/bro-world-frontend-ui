@@ -57,6 +57,7 @@
         >
         <div
           class="bubblesReacts"
+          role="img"
           :aria-label="reactionAriaLabel(node)"
         >
           <v-avatar
