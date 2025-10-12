@@ -1,6 +1,5 @@
 <template>
   <v-app
-    :theme="isDark ? 'dark' : 'light'"
     :style="cssVars"
   >
     <AppTopBar
