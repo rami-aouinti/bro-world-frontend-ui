@@ -4,154 +4,154 @@
     <SidebarCard class="text-card-foreground px-3 py-2">
       <!-- glows -->
       <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
       ></span>
       <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
       ></span>
-    <div class="sidebar-profile-card__content">
-      <v-card-item>
-        <div class="d-flex align-center justify-space-between">
-          <div class="text-h6 text-foreground">{{ user.name }}</div>
-          <v-btn
-            size="small"
-            variant="text"
-            color="primary"
-            :to="localePath({ path: '/profile-edit' })"
-          >
-            {{ t("layout.profileSidebar.editBio") }}
-          </v-btn>
-        </div>
-      </v-card-item>
-      <v-divider />
-      <v-card-text>
-        <div
-          v-if="user.bio"
-          class="text-subtitle-2 mb-3 text-high-emphasis text-center"
-        >
-          {{ user.bio }}
-        </div>
-
-        <v-list
-          density="compact"
-          class="py-0"
-        >
-          <v-list-item
-            v-for="(item, i) in introItems"
-            :key="i"
-            :title="item.title"
-            :subtitle="item.subtitle"
-          >
-            <template #prepend>
-              <Icon :name="item.icon" />
-            </template>
-          </v-list-item>
-        </v-list>
-
-        <div class="d-flex ga-3 mt-4">
-          <v-btn
-            block
-            color="primary"
-            variant="tonal"
-            :to="localePath({ path: '/profile-edit' })"
-          >
-            {{ t("layout.profileSidebar.editDetails") }}
-          </v-btn>
-        </div>
-      </v-card-text>
-    </div>
-    </SidebarCard>
-  </div>
-  <div class="sidebar-profile-card">
-    <SidebarCard class="text-card-foreground px-3 py-2">
-      <!-- glows -->
-      <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-      ></span>
-      <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-      ></span>
-    <div class="sidebar-profile-card__content">
-      <v-card-item>
-        <div class="d-flex align-center justify-space-between">
-          <div class="text-subtitle-1 font-weight-semibold text-foreground">
-            {{ t("layout.profileSidebar.photosTitle") }}
-          </div>
-          <v-btn
-            size="small"
-            variant="text"
-            color="primary"
-            :to="localePath({ path: '/profile-photos' })"
-          >
-            {{ t("layout.profileSidebar.viewAllPhotos") }}
-          </v-btn>
-        </div>
-      </v-card-item>
-      <v-card-text>
-        <div class="photos-grid">
-          <v-img
-            v-for="(photo, i) in photos.slice(0, 9)"
-            :key="photo.id ?? i"
-            :src="photo.src"
-            :alt="photo.alt ?? 'photo-' + i"
-            aspect-ratio="1"
-            cover
-            class="rounded-lg"
-          />
-        </div>
-      </v-card-text>
-    </div>
-    </SidebarCard>
-  </div>
-  <div class="sidebar-profile-card">
-    <SidebarCard class="text-card-foreground px-3 py-2">
-      <!-- glows -->
-      <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-      ></span>
-      <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
-      ></span>
-    <div class="sidebar-profile-card__content">
-      <v-card-item>
-        <div class="d-flex align-center justify-space-between">
-          <div class="text-subtitle-1 font-weight-semibold text-foreground">
-            {{ t("layout.profileSidebar.friendsTitle") }}
-            <span class="text-medium-emphasis">· {{ friendsCount }}</span>
-          </div>
-          <v-btn
-            size="small"
-            variant="text"
-            color="primary"
-            :to="localePath({ path: '/profile-friends' })"
-          >
-            {{ t("layout.profileSidebar.viewAllFriends") }}
-          </v-btn>
-        </div>
-      </v-card-item>
-      <v-card-text>
-        <div class="friends-grid">
-          <div
-            v-for="(f, i) in visibleFriends"
-            :key="f.id ?? f.username ?? i"
-            class="friend-card"
-            @click="$emit('open-friend', f)"
-          >
-            <v-avatar
-              size="72"
-              class="mb-2"
+      <div class="sidebar-profile-card__content">
+        <v-card-item>
+          <div class="d-flex align-center justify-space-between">
+            <div class="text-h6 text-foreground">{{ user.name }}</div>
+            <v-btn
+              size="small"
+              variant="text"
+              color="primary"
+              :to="localePath({ path: '/profile-edit' })"
             >
-              <v-img
-                :src="friendAvatar(f)"
-                :alt="friendDisplayName(f)"
-                cover
-              />
-            </v-avatar>
-            <div class="friend-name">{{ friendDisplayName(f) }}</div>
+              {{ t("layout.profileSidebar.editBio") }}
+            </v-btn>
           </div>
-        </div>
-      </v-card-text>
-    </div>
+        </v-card-item>
+        <v-divider />
+        <v-card-text>
+          <div
+            v-if="user.bio"
+            class="text-subtitle-2 mb-3 text-high-emphasis text-center"
+          >
+            {{ user.bio }}
+          </div>
+
+          <v-list
+            density="compact"
+            class="py-0"
+          >
+            <v-list-item
+              v-for="(item, i) in introItems"
+              :key="i"
+              :title="item.title"
+              :subtitle="item.subtitle"
+            >
+              <template #prepend>
+                <Icon :name="item.icon" />
+              </template>
+            </v-list-item>
+          </v-list>
+
+          <div class="d-flex ga-3 mt-4">
+            <v-btn
+              block
+              color="primary"
+              variant="tonal"
+              :to="localePath({ path: '/profile-edit' })"
+            >
+              {{ t("layout.profileSidebar.editDetails") }}
+            </v-btn>
+          </div>
+        </v-card-text>
+      </div>
+    </SidebarCard>
+  </div>
+  <div class="sidebar-profile-card">
+    <SidebarCard class="text-card-foreground px-3 py-2">
+      <!-- glows -->
+      <span
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
+      <div class="sidebar-profile-card__content">
+        <v-card-item>
+          <div class="d-flex align-center justify-space-between">
+            <div class="text-subtitle-1 font-weight-semibold text-foreground">
+              {{ t("layout.profileSidebar.photosTitle") }}
+            </div>
+            <v-btn
+              size="small"
+              variant="text"
+              color="primary"
+              :to="localePath({ path: '/profile-photos' })"
+            >
+              {{ t("layout.profileSidebar.viewAllPhotos") }}
+            </v-btn>
+          </div>
+        </v-card-item>
+        <v-card-text>
+          <div class="photos-grid">
+            <v-img
+              v-for="(photo, i) in photos.slice(0, 9)"
+              :key="photo.id ?? i"
+              :src="photo.src"
+              :alt="photo.alt ?? 'photo-' + i"
+              aspect-ratio="1"
+              cover
+              class="rounded-lg"
+            />
+          </div>
+        </v-card-text>
+      </div>
+    </SidebarCard>
+  </div>
+  <div class="sidebar-profile-card">
+    <SidebarCard class="text-card-foreground px-3 py-2">
+      <!-- glows -->
+      <span
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      ></span>
+      <span
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      ></span>
+      <div class="sidebar-profile-card__content">
+        <v-card-item>
+          <div class="d-flex align-center justify-space-between">
+            <div class="text-subtitle-1 font-weight-semibold text-foreground">
+              {{ t("layout.profileSidebar.friendsTitle") }}
+              <span class="text-medium-emphasis">· {{ friendsCount }}</span>
+            </div>
+            <v-btn
+              size="small"
+              variant="text"
+              color="primary"
+              :to="localePath({ path: '/profile-friends' })"
+            >
+              {{ t("layout.profileSidebar.viewAllFriends") }}
+            </v-btn>
+          </div>
+        </v-card-item>
+        <v-card-text>
+          <div class="friends-grid">
+            <div
+              v-for="(f, i) in visibleFriends"
+              :key="f.id ?? f.username ?? i"
+              class="friend-card"
+              @click="$emit('open-friend', f)"
+            >
+              <v-avatar
+                size="72"
+                class="mb-2"
+              >
+                <v-img
+                  :src="friendAvatar(f)"
+                  :alt="friendDisplayName(f)"
+                  cover
+                />
+              </v-avatar>
+              <div class="friend-name">{{ friendDisplayName(f) }}</div>
+            </div>
+          </div>
+        </v-card-text>
+      </div>
     </SidebarCard>
   </div>
 </template>

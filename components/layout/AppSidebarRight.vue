@@ -5,27 +5,30 @@
     aria-label="Secondary navigation"
     data-test="app-sidebar-right"
   >
-    <SidebarCard v-if="!isAuthenticated" class="text-card-foreground px-3 py-2">
+    <SidebarCard
+      v-if="!isAuthenticated"
+      class="text-card-foreground px-3 py-2"
+    >
       <!-- glows -->
       <span
-          class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
       ></span>
       <span
-          class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
       ></span>
       <div class="sidebar-login-card__content">
         <h2 class="sidebar-login-card__title text-foreground">Bro World</h2>
         <AuthSocial
-            class="sidebar-login-card__socials"
-            size="compact"
-            :loading="isRedirecting"
-            @redirect="handleSocialRedirect"
+          class="sidebar-login-card__socials"
+          size="compact"
+          :loading="isRedirecting"
+          @redirect="handleSocialRedirect"
         />
 
         <div class="sidebar-login-card__form">
           <AuthLoginForm
-              variant="compact"
-              :disabled="isRedirecting"
+            variant="compact"
+            :disabled="isRedirecting"
           />
         </div>
       </div>

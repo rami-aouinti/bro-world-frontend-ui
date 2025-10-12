@@ -3,10 +3,10 @@
   <SidebarCard class="text-card-foreground px-3 py-2">
     <!-- glows -->
     <span
-        class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
     ></span>
     <span
-        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
     ></span>
     <div class="d-flex align-center ga-3">
       <v-avatar size="44">
