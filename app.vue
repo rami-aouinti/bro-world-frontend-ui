@@ -6,18 +6,29 @@
   <NuxtLayout>
     <NuxtPage :key="pageKey" />
   </NuxtLayout>
+  <RouteLoadingOverlay :visible="routeLoading" />
   <AlertPanel />
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { hasInjectionContext, tryUseNuxtApp, useAppConfig, useRequestURL, useRoute } from "#imports";
+import {
+  hasInjectionContext,
+  tryUseNuxtApp,
+  useAppConfig,
+  useRequestURL,
+  useRoute,
+  useState,
+} from "#imports";
 
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {
   name: "Bro World",
   description: "Welcome to Bro World — your unique community platform.",
 };
+
+const routeLoadingState = useState("route:loading", () => false);
+const routeLoading = computed(() => routeLoadingState.value);
 
 const siteConfig = computed(() => {
   if (!nuxtApp || !hasInjectionContext()) {
@@ -33,6 +44,40 @@ const siteConfig = computed(() => {
   };
 });
 const route = useRoute();
+
+if (import.meta.client && nuxtApp) {
+  let finishTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function handleRouteStart() {
+    if (finishTimer) {
+      clearTimeout(finishTimer);
+      finishTimer = null;
+    }
+    routeLoadingState.value = true;
+  }
+
+  function handleRouteStop() {
+    if (finishTimer) {
+      clearTimeout(finishTimer);
+    }
+    finishTimer = setTimeout(() => {
+      routeLoadingState.value = false;
+    }, 250);
+  }
+
+  function handleRouteError() {
+    if (finishTimer) {
+      clearTimeout(finishTimer);
+      finishTimer = null;
+    }
+    routeLoadingState.value = false;
+  }
+
+  nuxtApp.hook("page:start", handleRouteStart);
+  nuxtApp.hook("page:finish", handleRouteStop);
+  nuxtApp.hook("page:error", handleRouteError);
+}
+
 const pageKey = computed(() => route.fullPath ?? route.name ?? "");
 const { themeClass, radius, themePrimaryHex } = useThemes();
 const { locale } = useI18n();
