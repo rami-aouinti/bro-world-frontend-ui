@@ -62,14 +62,9 @@
 </template>
 
 <script setup lang="ts">
-type Story = {
-  id?: string | number;
-  image?: string;
-  name?: string;
-  avatar?: string;
-  state?: "create" | "new" | "seen";
-  duration?: string;
-};
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import type { Story } from "~/types/stories";
 
 const props = withDefaults(defineProps<{ items?: Story[]; showCreate?: boolean }>(), {
   items: () => [],

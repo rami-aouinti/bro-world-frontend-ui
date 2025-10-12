@@ -120,32 +120,20 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from "vue";
-
-interface Story {
-  id?: string | number;
-  image?: string;
-  name?: string;
-  avatar?: string;
-  duration?: string;
-}
-
-interface ReactionOption {
-  id: string;
-  emoji: string;
-  label: string;
-}
+import { useI18n } from "vue-i18n";
+import type { Story, StoryReaction } from "~/types/stories";
 
 const props = withDefaults(
   defineProps<{
     modelValue: boolean;
     story?: Story | null;
     duration?: number;
-    reactions?: ReactionOption[];
+    reactions?: StoryReaction[];
   }>(),
   {
     story: null,
     duration: 3000,
-    reactions: () => [
+    reactions: (): StoryReaction[] => [
       { id: "like", emoji: "👍", label: "Like" },
       { id: "love", emoji: "❤️", label: "Love" },
       { id: "haha", emoji: "😂", label: "Haha" },
@@ -159,7 +147,7 @@ const props = withDefaults(
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
   (e: "close"): void;
-  (e: "react", payload: { story: Story | null; reaction: ReactionOption }): void;
+  (e: "react", payload: { story: Story | null; reaction: StoryReaction }): void;
   (e: "message", payload: { story: Story | null; message: string }): void;
 }>();
 
@@ -207,7 +195,7 @@ function close() {
   model.value = false;
 }
 
-function onReact(reaction: ReactionOption) {
+function onReact(reaction: StoryReaction) {
   if (!props.story) {
     return;
   }

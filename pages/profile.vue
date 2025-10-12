@@ -239,57 +239,14 @@ import { computed } from "vue";
 import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useAuthSession } from "~/stores/auth-session";
-import type { AuthUser } from "~/types/auth";
-
-interface ProfileDetails {
-  id?: string;
-  title?: string | null;
-  phone?: string | null;
-  birthday?: string | null;
-  gender?: string | null;
-  photo?: string | null;
-  description?: string | null;
-  address?: string | null;
-  hometown?: string | null;
-  schools?: string[] | null;
-}
-
-interface FriendProfile {
-  id?: string | null;
-  title?: string | null;
-  photo?: string | null;
-}
-
-interface FriendStory {
-  id?: string | null;
-  mediaPath?: string | null;
-  expiresAt?: string | null;
-}
-
-interface FriendUserDetails {
-  id?: string | null;
-  username?: string | null;
-  firstName?: string | null;
-  lastName?: string | null;
-  email?: string | null;
-  profile?: FriendProfile | null;
-  language?: string | null;
-  locale?: string | null;
-  timezone?: string | null;
-  enabled?: boolean | null;
-}
-
-interface FriendEntry {
-  user?: FriendUserDetails | null;
-  stories?: FriendStory[] | null;
-  status?: number | null;
-}
-
-interface ProfileUser extends AuthUser {
-  profile?: ProfileDetails | null;
-  stories?: unknown[] | null;
-  friends?: Record<string, FriendEntry | null> | FriendEntry[] | null;
-}
+import type {
+  FriendEntry,
+  FriendProfile,
+  FriendStory,
+  ProfileDetails,
+  ProfileUser,
+  SidebarFriend,
+} from "~/types/pages/profile";
 
 definePageMeta({
   middleware: "auth",
@@ -574,18 +531,6 @@ const sidebarPhotos = computed(() => {
 
   return [{ src: photo, alt }];
 });
-
-interface SidebarFriend {
-  id?: string;
-  username?: string | null;
-  firstName?: string | null;
-  lastName?: string | null;
-  name: string;
-  avatar: string;
-  profile: FriendProfile | null;
-  status?: number | null;
-  stories: FriendStory[];
-}
 
 const sidebarFriends = computed<SidebarFriend[]>(() => {
   const placeholder = placeholderValue.value;

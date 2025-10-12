@@ -474,6 +474,7 @@ import { computed, reactive, ref, watch } from "vue";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost } from "~/lib/mock/blog";
+import type { AdminPostRaw, AdminPostRow } from "~/types/pages/admin/blog";
 
 definePageMeta({
   middleware: ["auth", "admin"],
@@ -505,21 +506,6 @@ const deletingState = postsStore.deleting;
 const generalError = postsStore.error;
 
 await callOnce(() => postsStore.fetchPosts());
-
-interface AdminPostRow {
-  id: string;
-  title: string;
-  summary: string;
-  content: string;
-  author: string;
-  publishedLabel: string;
-  publishedTimestamp: number;
-  reactions: number;
-  comments: number;
-  isOptimistic: boolean;
-  publicUrl: string | null;
-  raw: BlogPost & { __optimistic?: boolean };
-}
 
 const search = ref("");
 const itemsPerPage = ref(10);
@@ -593,9 +579,9 @@ const tableItems = computed<AdminPostRow[]>(() => {
       publishedTimestamp,
       reactions: post.reactions_count ?? 0,
       comments: post.totalComments ?? 0,
-      isOptimistic: Boolean((post as AdminPostRow["raw"]).__optimistic),
+      isOptimistic: Boolean((post as AdminPostRaw).__optimistic),
       publicUrl,
-      raw: post as AdminPostRow["raw"],
+      raw: post as AdminPostRaw,
     };
   });
 });
