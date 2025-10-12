@@ -398,6 +398,16 @@ export default defineNuxtConfig({
     gzip: true,
   },
 
+  nitro: {
+    compressPublicAssets: {
+      brotli: true,
+      gzip: true,
+    },
+    prerender: {
+      routes: ["/", "/de", "/fr", "/ar", "/it", "/es", "/ru"],
+    },
+  },
+
   sourcemap: {
     server: true,
     client: true,
