@@ -1083,7 +1083,8 @@
         "profile": "Profile",
         "contact": "Contact",
         "about": "About",
-        "social": "Social links"
+        "social": "Social links",
+        "siteSettings": "Site settings"
       },
       "labels": {
         "firstName": "First name",
@@ -1111,7 +1112,8 @@
       "helpers": {
         "bio": "Share your mission, how you collaborate, or recent wins (280 characters).",
         "skills": "Type to add custom skills or pick from the suggestions.",
-        "summary": "This quick card updates automatically as you edit your details."
+        "summary": "This quick card updates automatically as you edit your details.",
+        "siteSettings": "Update the site name or tagline without leaving your profile."
       },
       "feedback": {
         "successMessage": "Profile details saved successfully.",
@@ -1454,6 +1456,9 @@
       "page": {
         "title": "Site settings",
         "subtitle": "Configure the brand, theme palette, and navigation structure for your community."
+      },
+      "navigation": {
+        "title": "Sections"
       },
       "sections": {
         "general": {

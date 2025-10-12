@@ -2,6 +2,21 @@
   row-gap: 16px;
 }
 
+.settings-shell {
+  row-gap: 24px;
+}
+
+.settings-shell .v-list-item {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-shell .v-list-item--active {
+  transform: translateX(4px);
+  box-shadow: 0 10px 30px -12px rgba(99, 102, 241, 0.45);
+}
+
 /* Header sticky */
 .settings-header {
   position: sticky;
