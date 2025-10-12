@@ -7,6 +7,11 @@
     "close": "Закрыть"
   },
   "layout": {
+    "loadingOverlay": {
+      "srLabel": "Загрузка Bro World",
+      "title": "Bro World загружается…",
+      "description": "Мы готовим полный опыт: верхняя панель, боковые панели и контент."
+    },
     "actions": {
       "openNavigation": "Открыть меню навигации",
       "openWidgets": "Открыть виджеты",
