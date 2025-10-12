@@ -472,7 +472,9 @@ async function persistToConfigurationApi(event: H3Event, settings: SiteSettings)
       body: {
         configurationKey: CONFIGURATION_KEY,
         contextKey: CONFIGURATION_CONTEXT_KEY,
-        configurationValue: settings,
+        configurationValue: {
+          _value: settings,
+        },
       },
     });
 
