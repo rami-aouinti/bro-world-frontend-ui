@@ -3,7 +3,8 @@
     app
     role="banner"
     aria-label="Top navigation bar"
-    :elevation="20"
+    :elevation="24"
+    rounded
     flat
     color="transparent"
     class="app-top-bar text-foreground"
@@ -371,7 +372,7 @@ function markAllNotifications() {
   background-color: transparent !important;
   background-image: none !important;
   border: 0 !important;
-  box-shadow: none !important;
+  box-shadow: 0 18px 40px -22px rgba(var(--v-theme-on-surface), 0.4);
   backdrop-filter: none !important;
   transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   --v-theme-overlay-multiplier: 0;
