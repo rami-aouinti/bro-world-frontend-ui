@@ -26,6 +26,8 @@ import {
   watch,
   withDefaults,
 } from "vue";
+import { useColorMode } from "@vueuse/core";
+import { createSurfaceLayerTokens } from "~/lib/theme/surface-layer";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
 
@@ -92,8 +94,25 @@ const paddingValueMap: Record<PaddingSize, string> = {
   lg: "1.5rem",
 };
 
+const colorMode = useColorMode();
+const isDarkColorMode = computed(() => colorMode.value === "dark");
+const surfaceLayerTokens = computed(() =>
+  createSurfaceLayerTokens(isDarkColorMode.value),
+);
+
+function buildSurfaceStyle() {
+  return {
+    backgroundImage: surfaceLayerTokens.value.backgroundImage,
+    backgroundColor: surfaceLayerTokens.value.surfaceColor,
+    backdropFilter: "blur(18px)",
+    border: `1px solid ${surfaceLayerTokens.value.borderColor}`,
+    boxShadow: `0 15px 15px -10px hsl(var(--primary)/0.35), 0 18px 45px -25px ${surfaceLayerTokens.value.shadowColor}`,
+  } satisfies Record<string, string>;
+}
+
 const cardStyle = ref<Record<string, string>>({
   "--card-x": paddingValueMap[props.padding] ?? "0px",
+  ...buildSurfaceStyle(),
 });
 
 watch(
@@ -104,6 +123,18 @@ watch(
       "--card-x": paddingValueMap[value] ?? "0px",
     };
   },
+  { immediate: true },
+);
+
+watch(
+  surfaceLayerTokens,
+  () => {
+    cardStyle.value = {
+      ...cardStyle.value,
+      ...buildSurfaceStyle(),
+    };
+  },
+  { immediate: true },
 );
 
 if (import.meta.client) {
