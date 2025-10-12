@@ -217,29 +217,31 @@
             />
           </template>
         </ClientOnly>
-        <div
-          v-show="areSidebarsReady"
-          class="app-container"
-          :aria-hidden="!areSidebarsReady"
-        >
-          <slot />
-        </div>
-        <div
-          v-show="!areSidebarsReady"
-          class="app-container py-6"
-          :aria-hidden="areSidebarsReady"
-        >
-          <div class="flex flex-col gap-4">
-            <v-skeleton-loader
-              type="heading"
-              class="rounded-2xl"
-            />
-            <v-skeleton-loader
-              v-for="index in 3"
-              :key="index"
-              type="article"
-              class="rounded-2xl"
-            />
+        <div class="main-scroll__viewport pane-scroll">
+          <div
+            v-show="areSidebarsReady"
+            class="app-container"
+            :aria-hidden="!areSidebarsReady"
+          >
+            <slot />
+          </div>
+          <div
+            v-show="!areSidebarsReady"
+            class="app-container py-6"
+            :aria-hidden="areSidebarsReady"
+          >
+            <div class="flex flex-col gap-4">
+              <v-skeleton-loader
+                type="heading"
+                class="rounded-2xl"
+              />
+              <v-skeleton-loader
+                v-for="index in 3"
+                :key="index"
+                type="article"
+                class="rounded-2xl"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -799,8 +801,12 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 }
 
 .pane-scroll {
-  height: calc(100vh - var(--app-bar-height));
   overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+}
+
+.app-drawer .pane-scroll {
+  height: calc(100vh - var(--app-bar-height));
 }
 
 .right-drawer-wrapper {
@@ -814,6 +820,17 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   min-height: calc(100vh - var(--app-bar-height));
   display: flex;
   flex-direction: column;
+}
+
+.main-scroll__viewport {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-block: clamp(8px, 2vw, 16px);
+  box-sizing: border-box;
 }
 
 .app-container {
