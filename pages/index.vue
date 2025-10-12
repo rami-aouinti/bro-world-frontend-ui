@@ -130,8 +130,6 @@ onMounted(() => {
   isClient.value = true;
 });
 
-const canAccessAuthenticatedContent = computed(
-  () => isClient.value && auth.isReady.value && auth.isAuthenticated.value,
 const isHydrated = ref(false);
 
 if (import.meta.client) {
