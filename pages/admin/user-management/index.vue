@@ -661,8 +661,4 @@ async function confirmDelete() {
 }
 </script>
 
-<style scoped>
-.user-table {
-  border-radius: 24px;
-}
-</style>
+<style scoped src="~/assets/styles/pages/admin/user-management/index.scss" lang="scss"></style>

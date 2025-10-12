@@ -941,16 +941,4 @@ watch(search, () => {
 });
 </script>
 
-<style scoped>
-main {
-  background: linear-gradient(
-    180deg,
-    rgba(var(--v-theme-surface), 1) 0%,
-    rgba(var(--v-theme-surface-variant), 0.25) 100%
-  );
-}
-
-.whitespace-pre-line {
-  white-space: pre-line;
-}
-</style>
+<style scoped src="~/assets/styles/pages/admin/blog/index.scss" lang="scss"></style>

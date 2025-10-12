@@ -643,17 +643,4 @@ function goToEditPage() {
 }
 </script>
 
-<style scoped>
-main {
-  background: transparent;
-}
-
-dl {
-  margin: 0;
-}
-
-dt {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-</style>
+<style scoped src="~/assets/styles/pages/profile.scss" lang="scss"></style>

@@ -38,13 +38,4 @@ definePageMeta({
 });
 </script>
 
-<style scoped>
-.auth-card {
-  max-width: 520px;
-  margin-inline: auto;
-}
-
-.auth-card__form {
-  margin-top: -60px;
-}
-</style>
+<style scoped src="~/assets/styles/pages/forgot-password.scss" lang="scss"></style>

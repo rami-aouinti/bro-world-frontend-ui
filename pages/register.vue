@@ -69,13 +69,4 @@ function handleSocialRedirect(provider: SocialProvider) {
 }
 </script>
 
-<style scoped>
-.auth-card {
-  max-width: 520px;
-  margin-inline: auto;
-}
-
-.auth-card__form {
-  margin-top: -80px;
-}
-</style>
+<style scoped src="~/assets/styles/pages/register.scss" lang="scss"></style>
