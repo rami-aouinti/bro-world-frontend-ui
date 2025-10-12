@@ -297,10 +297,8 @@ function reactionAriaLabel(node: CommentNode) {
   align-items: flex-start;
 }
 .bubble__inner {
-  background: rgba(var(--v-theme-on-surface), 0.12);
-  color: rgb(var(--v-theme-on-surface));
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.16);
-  border-radius: 18px;
+  border: 0 !important;
+  box-shadow: 0 18px 40px -22px rgba(var(--v-theme-on-surface), 0.12);
   padding: 8px 12px;
   max-width: 680px;
 }
