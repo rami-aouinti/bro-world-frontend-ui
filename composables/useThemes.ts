@@ -1,6 +1,7 @@
 import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
+import { useTheme } from "vuetify";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 
@@ -79,11 +80,174 @@ function hslToHex({
       .padStart(2, "0");
   }
 
-  return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+  const hex = `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+
+  return hex.toUpperCase();
+}
+
+function normalizeHexColor(candidate: string | null | undefined) {
+  if (!candidate) {
+    return null;
+  }
+
+  const trimmed = candidate.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  const prefixed = trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
+  const match = prefixed.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/);
+
+  if (!match) {
+    return null;
+  }
+
+  const [, hex] = match;
+
+  if (hex.length === 3) {
+    const expanded = hex
+      .split("")
+      .map((char) => char + char)
+      .join("");
+
+    return `#${expanded}`.toUpperCase();
+  }
+
+  return `#${hex}`.toUpperCase();
+}
+
+function hexToRgb(candidate: string | null | undefined) {
+  const normalized = normalizeHexColor(candidate);
+
+  if (!normalized) {
+    return null;
+  }
+
+  const value = normalized.slice(1);
+  const red = Number.parseInt(value.slice(0, 2), 16);
+  const green = Number.parseInt(value.slice(2, 4), 16);
+  const blue = Number.parseInt(value.slice(4, 6), 16);
+
+  if ([red, green, blue].some((channel) => Number.isNaN(channel))) {
+    return null;
+  }
+
+  return { red, green, blue } as const;
+}
+
+function rgbToHsl({ red, green, blue }: { red: number; green: number; blue: number }) {
+  const r = red / 255;
+  const g = green / 255;
+  const b = blue / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+
+  let hue = 0;
+
+  if (delta !== 0) {
+    switch (max) {
+      case r:
+        hue = ((g - b) / delta) % 6;
+        break;
+      case g:
+        hue = (b - r) / delta + 2;
+        break;
+      default:
+        hue = (r - g) / delta + 4;
+        break;
+    }
+
+    hue *= 60;
+  }
+
+  if (hue < 0) {
+    hue += 360;
+  }
+
+  const lightness = (max + min) / 2;
+  const saturation =
+    delta === 0 ? 0 : delta / (1 - Math.abs(2 * lightness - 1));
+
+  return {
+    hue,
+    saturation: saturation * 100,
+    lightness: lightness * 100,
+  } as const;
+}
+
+function formatHsl({
+  hue,
+  saturation,
+  lightness,
+}: {
+  hue: number;
+  saturation: number;
+  lightness: number;
+}) {
+  const roundedHue = Math.round(hue * 10) / 10;
+  const roundedSaturation = Math.round(saturation * 10) / 10;
+  const roundedLightness = Math.round(lightness * 10) / 10;
+
+  return `${roundedHue} ${roundedSaturation}% ${roundedLightness}%`;
+}
+
+function hexToHsl(candidate: string | null | undefined) {
+  const rgb = hexToRgb(candidate);
+
+  if (!rgb) {
+    return null;
+  }
+
+  return rgbToHsl(rgb);
+}
+
+function relativeLuminance({ red, green, blue }: { red: number; green: number; blue: number }) {
+  function normalizeChannel(value: number) {
+    const channel = value / 255;
+
+    if (channel <= 0.03928) {
+      return channel / 12.92;
+    }
+
+    return ((channel + 0.055) / 1.055) ** 2.4;
+  }
+
+  const r = normalizeChannel(red);
+  const g = normalizeChannel(green);
+  const b = normalizeChannel(blue);
+
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function resolveForegroundHsl(candidate: string | null | undefined) {
+  const rgb = hexToRgb(candidate);
+
+  if (!rgb) {
+    return null;
+  }
+
+  const luminance = relativeLuminance(rgb);
+
+  return luminance > 0.55 ? "0 0% 0%" : "0 0% 100%";
 }
 
 export function useThemes() {
   const config = useConfig();
+  const FALLBACK_PRIMARY_HEX = "#E91E63";
+
+  const PRIMARY_COLOR_OPTIONS = [
+    { hex: "#E91E63", label: "Rose" },
+    { hex: "#6366F1", label: "Indigo" },
+    { hex: "#22C55E", label: "Green" },
+    { hex: "#F97316", label: "Orange" },
+    { hex: "#0EA5E9", label: "Sky" },
+    { hex: "#A855F7", label: "Violet" },
+    { hex: "#F59E0B", label: "Amber" },
+    { hex: "#EF4444", label: "Red" },
+  ] as const;
 
   function resolveThemeDefaults(): ThemeCookieConfig {
     const defaults = config.value.theme ?? {};
@@ -149,13 +313,11 @@ export function useThemes() {
     return primary ? `hsl(${primary})` : null;
   });
 
-  const themePrimary = computed(() => primarySource.value ?? undefined);
-
-  const themePrimaryHex = computed(() => {
+  const defaultThemePrimaryHex = computed(() => {
     const components = parseHslComponents(primarySource.value ?? undefined);
 
     if (!components) {
-      return undefined;
+      return null;
     }
 
     return hslToHex(components);
@@ -168,17 +330,159 @@ export function useThemes() {
     }),
   );
 
-  if (!themePrimaryCookie.value && themePrimaryHex.value) {
-    themePrimaryCookie.value = themePrimaryHex.value;
-  }
-
   watch(
-    themePrimaryHex,
-    (value) => {
-      themePrimaryCookie.value = value ?? null;
+    defaultThemePrimaryHex,
+    (value, oldValue) => {
+      const normalizedDefault = normalizeHexColor(value ?? undefined);
+      const normalizedOldDefault = normalizeHexColor(oldValue ?? undefined);
+      const current = normalizeHexColor(themePrimaryCookie.value);
+
+      if (!normalizedDefault) {
+        return;
+      }
+
+      if (!current) {
+        themePrimaryCookie.value = normalizedDefault;
+        return;
+      }
+
+      if (normalizedOldDefault && current === normalizedOldDefault) {
+        themePrimaryCookie.value = normalizedDefault;
+      }
     },
     { immediate: true },
   );
+
+  const themePrimaryHex = computed<string | undefined>(() => {
+    const normalized = normalizeHexColor(themePrimaryCookie.value);
+
+    if (normalized) {
+      return normalized;
+    }
+
+    const fallback = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
+
+    return fallback ?? undefined;
+  });
+
+  const isCustomThemePrimary = computed(() => {
+    const normalized = normalizeHexColor(themePrimaryCookie.value);
+    const defaultHex = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
+
+    if (!normalized) {
+      return false;
+    }
+
+    if (!defaultHex) {
+      return true;
+    }
+
+    return normalized !== defaultHex;
+  });
+
+  const vuetifyTheme = (() => {
+    try {
+      return useTheme();
+    } catch {
+      return null;
+    }
+  })();
+
+  function applyPrimaryColor(hex: string, sourceHsl?: string | null | undefined) {
+    if (vuetifyTheme) {
+      vuetifyTheme.themes.value.light.colors.primary = hex;
+      vuetifyTheme.themes.value.dark.colors.primary = hex;
+    }
+
+    if (!import.meta.client) {
+      return;
+    }
+
+    const root = document.documentElement;
+    const hslFromSource = (() => {
+      if (!sourceHsl) {
+        return null;
+      }
+
+      const parsed = parseHslComponents(sourceHsl);
+
+      if (!parsed) {
+        return null;
+      }
+
+      return formatHsl(parsed);
+    })();
+
+    const hsl = hslFromSource ?? (() => {
+      const converted = hexToHsl(hex);
+
+      if (!converted) {
+        return null;
+      }
+
+      return formatHsl(converted);
+    })();
+    const foreground = resolveForegroundHsl(hex);
+
+    if (hsl) {
+      root.style.setProperty("--primary", hsl);
+      root.style.setProperty("--color-primary", `hsl(${hsl})`);
+    }
+
+    if (foreground) {
+      root.style.setProperty("--primary-foreground", foreground);
+      root.style.setProperty("--color-primary-foreground", `hsl(${foreground})`);
+    }
+  }
+
+  watch(
+    [
+      () => themePrimaryHex.value ?? FALLBACK_PRIMARY_HEX,
+      () => themePrimary.value ?? null,
+    ],
+    ([value, source]) => {
+      const next = normalizeHexColor(value) ?? FALLBACK_PRIMARY_HEX;
+
+      applyPrimaryColor(next, source);
+    },
+    { immediate: true },
+  );
+
+  function setThemePrimaryHex(value: string) {
+    const normalized = normalizeHexColor(value);
+
+    if (!normalized) {
+      return;
+    }
+
+    themePrimaryCookie.value = normalized;
+  }
+
+  function resetThemePrimaryHex() {
+    const fallback = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
+
+    themePrimaryCookie.value = fallback ?? null;
+  }
+
+  const themePrimary = computed(() => primarySource.value ?? undefined);
+
+  const themePrimaryOptions = computed(() => {
+    const normalizedOptions = PRIMARY_COLOR_OPTIONS.map((option) => ({
+      hex: normalizeHexColor(option.hex) ?? option.hex,
+      label: option.label,
+    }));
+
+    const activeHex = normalizeHexColor(themePrimaryHex.value);
+
+    if (activeHex && !normalizedOptions.some((option) => option.hex === activeHex)) {
+      return [
+        { hex: activeHex, label: "Custom" },
+        ...normalizedOptions,
+      ];
+    }
+
+    return normalizedOptions;
+  });
 
   return {
     themeClass,
@@ -188,5 +492,10 @@ export function useThemes() {
     setRadius,
     themePrimary,
     themePrimaryHex,
+    defaultThemePrimaryHex,
+    isCustomThemePrimary,
+    setThemePrimaryHex,
+    resetThemePrimaryHex,
+    themePrimaryOptions,
   };
 }
