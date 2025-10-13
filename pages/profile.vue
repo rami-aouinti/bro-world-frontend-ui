@@ -224,8 +224,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
-import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useAuthSession } from "~/stores/auth-session";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
@@ -589,44 +588,7 @@ const sidebarFriends = computed<SidebarFriend[]>(() => {
   }, []);
 });
 
-const sidebarEvents = computed(
-  () => [] as { title: string; date?: string; description?: string }[],
-);
-
-const { registerRightSidebarContent } = useLayoutRightSidebar();
-
-const sidebarContent = computed(() => ({
-  component: ProfileSidebar,
-  props: {
-    user: sidebarUser.value,
-    photos: sidebarPhotos.value,
-    friends: sidebarFriends.value,
-    friendsCount: friendsCount.value,
-    lifeEvents: sidebarEvents.value,
-    onViewAllFriends: goToFriendsPage,
-    onViewAllPhotos: goToPhotosPage,
-    onEditDetails: allowProfileCustomization.value ? goToEditPage : undefined,
-  },
-  wrapperClass: "flex flex-col gap-4",
-}));
-
-registerRightSidebarContent(sidebarContent);
-
-function goToFriendsPage() {
-  router.push({ name: "profile-friends" });
-}
-
-function goToPhotosPage() {
-  router.push({ name: "profile-photos" });
-}
-
-function goToEditPage() {
-  if (!allowProfileCustomization.value) {
-    return;
-  }
-
-  router.push({ name: "profile-edit" });
-}
+useProfileSidebarContent();
 </script>
 
 <style scoped src="~/assets/styles/pages/profile.scss" lang="scss"></style>
