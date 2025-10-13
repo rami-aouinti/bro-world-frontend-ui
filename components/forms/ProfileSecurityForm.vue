@@ -34,7 +34,7 @@
       >
         <SidebarCard
           class="text-card-foreground px-3 py-2 mb-4"
-          padding="lg"
+          padding="none"
           glow
         >
           <div class="d-flex flex-column gap-6">
@@ -192,7 +192,7 @@
       >
         <SidebarCard
           class="text-card-foreground px-3 py-2 mb-4"
-          padding="md"
+          padding="none"
           glow
         >
           <div class="d-flex flex-column gap-4">
