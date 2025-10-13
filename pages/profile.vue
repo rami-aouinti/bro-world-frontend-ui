@@ -9,6 +9,7 @@
       >
         <SidebarCard
           class="text-card-foreground px-3 py-2"
+          padding="none"
           glow
         >
           <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
@@ -94,6 +95,7 @@
               >
                 <SidebarCard
                   class="text-card-foreground px-3 py-2"
+                  padding="none"
                   glow
                 >
                   <h2
@@ -135,6 +137,7 @@
               >
                 <SidebarCard
                   class="text-card-foreground px-3 py-2"
+                  padding="none"
                   glow
                 >
                   <h2
@@ -166,6 +169,7 @@
               >
                 <SidebarCard
                   class="text-card-foreground px-3 py-2"
+                  padding="none"
                   glow
                 >
                   <h2
