@@ -59,6 +59,47 @@
         </template>
       </div>
     </div>
+    <div class="space-y-1.5">
+      <UiLabel>{{ $t("admin.settings.fields.themePrimary") }}</UiLabel>
+      <div class="grid grid-cols-4 gap-2">
+        <template
+          v-for="option in primaryColorOptions"
+          :key="option.hex"
+        >
+          <UiButton
+            class="justify-start gap-2"
+            variant="outline"
+            :class="{ 'border-primary border-2': selectedPrimaryHex === option.hex }"
+            type="button"
+            @click="handleSelectPrimary(option.hex)"
+          >
+            <span
+              class="flex size-5 items-center justify-center rounded-full"
+              :style="{ backgroundColor: option.hex }"
+            >
+              <Icon
+                v-if="selectedPrimaryHex === option.hex"
+                name="lucide:check"
+                size="16"
+                class="text-white"
+              />
+            </span>
+            <span class="text-xs capitalize">{{ option.label }}</span>
+          </UiButton>
+        </template>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-mono uppercase text-muted-foreground">{{ selectedPrimaryHex }}</span>
+        <UiButton
+          variant="outline"
+          type="button"
+          :disabled="!isCustomPrimary"
+          @click="handleResetPrimary"
+        >
+          {{ $t("admin.settings.actions.reset") }}
+        </UiButton>
+      </div>
+    </div>
     <div
       v-if="darkModeToggle"
       class="space-y-1.5"
@@ -114,7 +155,19 @@ import { themes } from "shadcn-docs-nuxt/lib/themes";
 import Icon from "./Icon.vue";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 
-const { themeClass, theme, radius, setTheme, setRadius } = useThemes();
+const {
+  themeClass,
+  theme,
+  radius,
+  themePrimaryHex,
+  defaultThemePrimaryHex,
+  isCustomThemePrimary,
+  themePrimaryOptions,
+  setTheme,
+  setRadius,
+  setThemePrimaryHex,
+  resetThemePrimaryHex,
+} = useThemes();
 const { darkModeToggle } = useConfig().value.header;
 const colorMode = useCookieColorMode();
 
@@ -137,6 +190,18 @@ const RADII = [0, 0.25, 0.5, 0.75, 1];
 const themeNames = themes.map((candidate) => candidate.name);
 
 const activeMode = computed(() => (colorMode.value === "auto" ? "system" : colorMode.value));
+
+const primaryColorOptions = computed(() =>
+  themePrimaryOptions.value.map((option) => ({
+    ...option,
+    hex: option.hex.toUpperCase(),
+  })),
+);
+
+const selectedPrimaryHex = computed(
+  () => themePrimaryHex.value?.toUpperCase() ?? defaultThemePrimaryHex.value?.toUpperCase() ?? "#E91E63",
+);
+const isCustomPrimary = computed(() => isCustomThemePrimary.value);
 
 watch(
   theme,
@@ -183,5 +248,13 @@ function backgroundColor(color: Theme["name"]) {
   }
 
   return `hsl(${activeColor})`;
+}
+
+function handleResetPrimary() {
+  resetThemePrimaryHex();
+}
+
+function handleSelectPrimary(hex: string) {
+  setThemePrimaryHex(hex);
 }
 </script>
