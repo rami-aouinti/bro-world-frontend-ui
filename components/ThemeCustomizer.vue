@@ -59,6 +59,28 @@
         </template>
       </div>
     </div>
+    <div class="space-y-1.5">
+      <UiLabel>{{ $t("admin.settings.fields.themePrimary") }}</UiLabel>
+      <div class="flex items-center gap-3">
+        <input
+          v-model="primaryColor"
+          type="color"
+          class="h-10 w-full cursor-pointer rounded-md border border-input bg-background p-1 shadow-sm"
+          :aria-label="$t('admin.settings.fields.themePrimary')"
+        >
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono uppercase text-muted-foreground">{{ primaryColorHex }}</span>
+          <UiButton
+            variant="outline"
+            type="button"
+            :disabled="!isCustomPrimary"
+            @click="handleResetPrimary"
+          >
+            {{ $t("admin.settings.actions.reset") }}
+          </UiButton>
+        </div>
+      </div>
+    </div>
     <div
       v-if="darkModeToggle"
       class="space-y-1.5"
@@ -114,7 +136,18 @@ import { themes } from "shadcn-docs-nuxt/lib/themes";
 import Icon from "./Icon.vue";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 
-const { themeClass, theme, radius, setTheme, setRadius } = useThemes();
+const {
+  themeClass,
+  theme,
+  radius,
+  themePrimaryHex,
+  defaultThemePrimaryHex,
+  isCustomThemePrimary,
+  setTheme,
+  setRadius,
+  setThemePrimaryHex,
+  resetThemePrimaryHex,
+} = useThemes();
 const { darkModeToggle } = useConfig().value.header;
 const colorMode = useCookieColorMode();
 
@@ -137,6 +170,18 @@ const RADII = [0, 0.25, 0.5, 0.75, 1];
 const themeNames = themes.map((candidate) => candidate.name);
 
 const activeMode = computed(() => (colorMode.value === "auto" ? "system" : colorMode.value));
+
+const fallbackPrimary = computed(() => themePrimaryHex.value ?? defaultThemePrimaryHex.value ?? "#E91E63");
+
+const primaryColor = computed({
+  get: () => fallbackPrimary.value,
+  set: (value: string) => {
+    setThemePrimaryHex(value);
+  },
+});
+
+const primaryColorHex = computed(() => primaryColor.value.toUpperCase());
+const isCustomPrimary = computed(() => isCustomThemePrimary.value);
 
 watch(
   theme,
@@ -183,5 +228,9 @@ function backgroundColor(color: Theme["name"]) {
   }
 
   return `hsl(${activeColor})`;
+}
+
+function handleResetPrimary() {
+  resetThemePrimaryHex();
 }
 </script>

@@ -1,6 +1,7 @@
 import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
+import { useTheme } from "vuetify";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 
@@ -79,11 +80,46 @@ function hslToHex({
       .padStart(2, "0");
   }
 
-  return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+  const hex = `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+
+  return hex.toUpperCase();
+}
+
+function normalizeHexColor(candidate: string | null | undefined) {
+  if (!candidate) {
+    return null;
+  }
+
+  const trimmed = candidate.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  const prefixed = trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
+  const match = prefixed.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/);
+
+  if (!match) {
+    return null;
+  }
+
+  const [, hex] = match;
+
+  if (hex.length === 3) {
+    const expanded = hex
+      .split("")
+      .map((char) => char + char)
+      .join("");
+
+    return `#${expanded}`.toUpperCase();
+  }
+
+  return `#${hex}`.toUpperCase();
 }
 
 export function useThemes() {
   const config = useConfig();
+  const FALLBACK_PRIMARY_HEX = "#E91E63";
 
   function resolveThemeDefaults(): ThemeCookieConfig {
     const defaults = config.value.theme ?? {};
@@ -149,13 +185,11 @@ export function useThemes() {
     return primary ? `hsl(${primary})` : null;
   });
 
-  const themePrimary = computed(() => primarySource.value ?? undefined);
-
-  const themePrimaryHex = computed(() => {
+  const defaultThemePrimaryHex = computed(() => {
     const components = parseHslComponents(primarySource.value ?? undefined);
 
     if (!components) {
-      return undefined;
+      return null;
     }
 
     return hslToHex(components);
@@ -168,17 +202,96 @@ export function useThemes() {
     }),
   );
 
-  if (!themePrimaryCookie.value && themePrimaryHex.value) {
-    themePrimaryCookie.value = themePrimaryHex.value;
-  }
-
   watch(
-    themePrimaryHex,
-    (value) => {
-      themePrimaryCookie.value = value ?? null;
+    defaultThemePrimaryHex,
+    (value, oldValue) => {
+      const normalizedDefault = normalizeHexColor(value ?? undefined);
+      const normalizedOldDefault = normalizeHexColor(oldValue ?? undefined);
+      const current = normalizeHexColor(themePrimaryCookie.value);
+
+      if (!normalizedDefault) {
+        return;
+      }
+
+      if (!current) {
+        themePrimaryCookie.value = normalizedDefault;
+        return;
+      }
+
+      if (normalizedOldDefault && current === normalizedOldDefault) {
+        themePrimaryCookie.value = normalizedDefault;
+      }
     },
     { immediate: true },
   );
+
+  const themePrimaryHex = computed<string | undefined>(() => {
+    const normalized = normalizeHexColor(themePrimaryCookie.value);
+
+    if (normalized) {
+      return normalized;
+    }
+
+    const fallback = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
+
+    return fallback ?? undefined;
+  });
+
+  const isCustomThemePrimary = computed(() => {
+    const normalized = normalizeHexColor(themePrimaryCookie.value);
+    const defaultHex = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
+
+    if (!normalized) {
+      return false;
+    }
+
+    if (!defaultHex) {
+      return true;
+    }
+
+    return normalized !== defaultHex;
+  });
+
+  const vuetifyTheme = (() => {
+    try {
+      return useTheme();
+    } catch {
+      return null;
+    }
+  })();
+
+  watch(
+    () => themePrimaryHex.value ?? FALLBACK_PRIMARY_HEX,
+    (value) => {
+      if (!vuetifyTheme) {
+        return;
+      }
+
+      const next = normalizeHexColor(value) ?? FALLBACK_PRIMARY_HEX;
+
+      vuetifyTheme.themes.value.light.colors.primary = next;
+      vuetifyTheme.themes.value.dark.colors.primary = next;
+    },
+    { immediate: true },
+  );
+
+  function setThemePrimaryHex(value: string) {
+    const normalized = normalizeHexColor(value);
+
+    if (!normalized) {
+      return;
+    }
+
+    themePrimaryCookie.value = normalized;
+  }
+
+  function resetThemePrimaryHex() {
+    const fallback = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
+
+    themePrimaryCookie.value = fallback ?? null;
+  }
+
+  const themePrimary = computed(() => primarySource.value ?? undefined);
 
   return {
     themeClass,
@@ -188,5 +301,9 @@ export function useThemes() {
     setRadius,
     themePrimary,
     themePrimaryHex,
+    defaultThemePrimaryHex,
+    isCustomThemePrimary,
+    setThemePrimaryHex,
+    resetThemePrimaryHex,
   };
 }
