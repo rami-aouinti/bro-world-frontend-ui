@@ -1,46 +1,39 @@
 <template>
   <main aria-labelledby="blog-heading">
-    <ClientOnly>
-      <template #default>
-        <NewPost
-          v-if="canAccessAuthenticatedContent"
-          :avatar="user.avatarUrl"
-          :user-name="user.name"
-          @submit="createPost"
-          @attach="onAttach"
-        />
-        <div
-          v-if="canAccessAuthenticatedContent"
-          class="my-4"
+    <template v-if="canAccessAuthenticatedContent">
+      <NewPost
+        :avatar="user.avatarUrl"
+        :user-name="user.name"
+        @submit="createPost"
+        @attach="onAttach"
+      />
+      <div class="my-4">
+        <SidebarCard
+          class="text-card-foreground px-3 py-2"
+          glow
         >
-          <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
-          >
-            <input
-              ref="storyFileInput"
-              type="file"
-              accept="image/*"
-              class="sr-only"
-              @change="onStorySelected"
-            />
-            <StoriesStrip
-              :items="stories"
-              @open="openStory"
-              @create="createStory"
-            />
-            <StoryViewerModal
-              v-if="canAccessAuthenticatedContent"
-              v-model="isStoryViewerOpen"
-              :story="activeStory"
-              @close="onStoryClosed"
-              @react="handleStoryReaction"
-              @message="handleStoryMessage"
-            />
-          </SidebarCard>
-        </div>
-      </template>
-    </ClientOnly>
+          <input
+            ref="storyFileInput"
+            type="file"
+            accept="image/*"
+            class="sr-only"
+            @change="onStorySelected"
+          />
+          <StoriesStrip
+            :items="stories"
+            @open="openStory"
+            @create="createStory"
+          />
+          <StoryViewerModal
+            v-model="isStoryViewerOpen"
+            :story="activeStory"
+            @close="onStoryClosed"
+            @react="handleStoryReaction"
+            @message="handleStoryMessage"
+          />
+        </SidebarCard>
+      </div>
+    </template>
 
     <div
       v-if="pending"
