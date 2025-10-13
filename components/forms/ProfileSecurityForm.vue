@@ -260,12 +260,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, useId } from "vue";
+import { computed, reactive, useId, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-
-import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import type { SessionEntry } from "~/types/pages/profile";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 const { t, locale } = useI18n();
 const auth = useAuthSession();

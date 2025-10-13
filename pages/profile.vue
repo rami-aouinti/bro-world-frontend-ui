@@ -222,9 +222,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
-import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
+import { computed, defineAsyncComponent } from "vue";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useAuthSession } from "~/stores/auth-session";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
@@ -236,7 +235,15 @@ import type {
   ProfileUser,
   SidebarFriend,
 } from "~/types/pages/profile";
-import SidebarCard from "../components/layout/SidebarCard.vue";
+
+const ProfileSidebar = defineAsyncComponent({
+  loader: () => import("~/components/layout/ProfileSidebar.vue"),
+  suspensible: false,
+});
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   middleware: "auth",

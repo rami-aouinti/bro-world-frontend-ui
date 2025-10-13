@@ -448,13 +448,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch, defineAsyncComponent } from "vue";
 import { callOnce } from "#imports";
-import BlogPostForm from "~/components/forms/BlogPostForm.vue";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost } from "~/lib/mock/blog";
 import type { BlogPostFormValue } from "~/types/forms/blog";
 import type { AdminPostRaw, AdminPostRow } from "~/types/pages/admin/blog";
+
+const BlogPostForm = defineAsyncComponent({
+  loader: () => import("~/components/forms/BlogPostForm.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   middleware: ["auth", "admin"],

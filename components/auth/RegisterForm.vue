@@ -166,12 +166,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalePath } from "#i18n";
 
-import Terms from "~/components/auth/Terms.vue";
+const Terms = defineAsyncComponent({
+  loader: () => import("~/components/auth/Terms.vue"),
+  suspensible: false,
+});
 
 const { t, locale } = useI18n();
 const router = useRouter();

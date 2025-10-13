@@ -269,15 +269,25 @@ import {
   buildProfileSidebarItems,
 } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
-import SidebarWeatherCard from "~/components/layout/SidebarWeatherCard.vue";
-import SidebarLeaderboardCard from "~/components/layout/SidebarLeaderboardCard.vue";
-import SidebarRatingCard from "~/components/layout/SidebarRatingCard.vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings, SiteThemeDefinition } from "~/types/settings";
 
 const AppSidebarRight = defineAsyncComponent({
   loader: () => import("~/components/layout/AppSidebarRight.vue"),
+  suspensible: false,
+});
+
+const SidebarWeatherCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarWeatherCard.vue"),
+  suspensible: false,
+});
+const SidebarLeaderboardCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarLeaderboardCard.vue"),
+  suspensible: false,
+});
+const SidebarRatingCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarRatingCard.vue"),
   suspensible: false,
 });
 

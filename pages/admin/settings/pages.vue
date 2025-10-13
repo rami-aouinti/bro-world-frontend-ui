@@ -91,11 +91,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-
-import AdminSettingsLayout from "~/components/admin/settings/AdminSettingsLayout.vue";
 import { editablePageKeys, useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
+
+const AdminSettingsLayout = defineAsyncComponent({
+  loader: () => import("~/components/admin/settings/AdminSettingsLayout.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   middleware: ["auth", "admin"],

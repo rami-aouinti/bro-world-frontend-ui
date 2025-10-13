@@ -36,12 +36,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-
-import AuthLoginForm from "~/components/auth/LoginForm.vue";
-import AuthSocial from "~/components/auth/Social.vue";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
+
+const AuthLoginForm = defineAsyncComponent({
+  loader: () => import("~/components/auth/LoginForm.vue"),
+  suspensible: false,
+});
+const AuthSocial = defineAsyncComponent({
+  loader: () => import("~/components/auth/Social.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   title: "login",

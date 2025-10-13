@@ -29,7 +29,12 @@
 </template>
 
 <script setup lang="ts">
-import AuthResetPasswordForm from "~/components/auth/ResetPasswordForm.vue";
+import { defineAsyncComponent } from "vue";
+
+const AuthResetPasswordForm = defineAsyncComponent({
+  loader: () => import("~/components/auth/ResetPasswordForm.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   title: "forgot-password",

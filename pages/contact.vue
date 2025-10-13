@@ -141,11 +141,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
-import ContactForm from "~/components/forms/ContactForm.vue";
+const ContactForm = defineAsyncComponent({
+  loader: () => import("~/components/forms/ContactForm.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   documentDriven: false,

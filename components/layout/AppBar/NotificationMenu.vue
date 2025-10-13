@@ -129,9 +129,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, defineAsyncComponent } from "vue";
 import type { AppNotification } from "~/types/layout";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 const colorClasses: Record<NonNullable<AppNotification["color"]>, string> = {
   primary: "bg-primary/10 text-primary",

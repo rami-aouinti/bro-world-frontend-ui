@@ -96,7 +96,6 @@ import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
-import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import type { Story, StoryReaction } from "~/types/stories";
 
@@ -117,6 +116,11 @@ const StoriesStrip = defineAsyncComponent({
 
 const StoryViewerModal = defineAsyncComponent({
   loader: () => import("~/components/stories/StoryViewerModal.vue"),
+  suspensible: false,
+});
+
+const PostCardSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/blog/PostCardSkeleton.vue"),
   suspensible: false,
 });
 

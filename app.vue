@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
 import {
   hasInjectionContext,
   tryUseNuxtApp,
@@ -22,8 +22,14 @@ import {
   useState,
 } from "#imports";
 
-import AppLoadingOverlay from "~/components/layout/AppLoadingOverlay.vue";
-import RouteLoadingOverlay from "~/components/layout/RouteLoadingOverlay.vue";
+const AppLoadingOverlay = defineAsyncComponent({
+  loader: () => import("~/components/layout/AppLoadingOverlay.vue"),
+  suspensible: false,
+});
+const RouteLoadingOverlay = defineAsyncComponent({
+  loader: () => import("~/components/layout/RouteLoadingOverlay.vue"),
+  suspensible: false,
+});
 
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {

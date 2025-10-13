@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import SidebarWidget, { type SidebarWidgetData } from "./SidebarWidget.vue";
-import Aside from "~/components/layout/Aside.vue";
 
 const { page } = useContent();
 const config = useConfig();

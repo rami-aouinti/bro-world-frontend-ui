@@ -118,9 +118,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import type { AuthUser } from "~/types/auth";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 const props = defineProps<{
   items: { title: string; icon: string; to?: string; action?: "logout" }[];
