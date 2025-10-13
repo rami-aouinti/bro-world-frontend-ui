@@ -151,6 +151,11 @@ export const useAuthSession = defineStore("auth-session", () => {
     tokenAvailableState.value = true;
   }
 
+  if (import.meta.client && !sessionTokenState.value && sessionTokenCookie.value) {
+    sessionTokenState.value = sessionTokenCookie.value;
+    tokenAvailableState.value = true;
+  }
+
   if (import.meta.client) {
     watch(
       currentUserState,
