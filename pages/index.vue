@@ -125,8 +125,9 @@ definePageMeta({
 const defaultAvatar = "https://bro-world-space.com/img/person.png";
 const auth = useAuthSession();
 
+const isAuthReady = computed(() => auth.isReady.value);
 const canAccessAuthenticatedContent = computed(
-  () => auth.isReady.value && auth.isAuthenticated.value,
+  () => isAuthReady.value && auth.isAuthenticated.value,
 );
 const user = {
   name: "Rami Aouinti",

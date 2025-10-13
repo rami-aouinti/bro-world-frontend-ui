@@ -270,6 +270,33 @@ const rawBaseURL =
 const normalizedBaseURL = rawBaseURL.startsWith("/") ? rawBaseURL : `/${rawBaseURL}`;
 const baseURL = normalizedBaseURL.endsWith("/") ? normalizedBaseURL : `${normalizedBaseURL}/`;
 
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' https: data:",
+  "connect-src 'self' https:",
+  "media-src 'self' https:",
+  "frame-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "require-trusted-types-for 'script'",
+  "trusted-types default",
+  "upgrade-insecure-requests",
+].join("; ");
+
+const securityHeaders: Record<string, string> = {
+  "Content-Security-Policy": contentSecurityPolicy,
+  "Cross-Origin-Opener-Policy": "same-origin",
+  "X-Frame-Options": "DENY",
+  "Permissions-Policy": "geolocation=(self)",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Content-Type-Options": "nosniff",
+};
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   plugins: [
@@ -285,6 +312,12 @@ export default defineNuxtConfig({
     "~/assets/styles/material-dashboard.scss",
     "~/assets/styles/index.css",
   ],
+
+  routeRules: {
+    "/**": {
+      headers: securityHeaders,
+    },
+  },
 
   build: {
     transpile: ["vuetify"],

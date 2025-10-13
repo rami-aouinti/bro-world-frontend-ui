@@ -507,7 +507,17 @@
         "temperature": "18°C",
         "temperatureLabel": "Temperatur",
         "tipLabel": "Tipp",
-        "tip": "Vergiss deinen Regenschirm nicht, um trocken zu bleiben."
+        "tip": "Vergiss deinen Regenschirm nicht, um trocken zu bleiben.",
+        "loading": "Wetter wird aktualisiert …",
+        "actions": {
+          "useCurrentLocation": "Aktuellen Standort verwenden"
+        },
+        "errors": {
+          "unavailable": "Wetteraktualisierungen sind nicht verfügbar.",
+          "denied": "Wir konnten nicht auf deinen Standort zugreifen. Anzeige der Standardvorhersage.",
+          "unsupported": "Dein Browser unterstützt keine Standortbestimmung.",
+          "updateFailed": "Das Wetter kann gerade nicht aktualisiert werden."
+        }
       },
       "leaderboard": {
         "title": "Top 3 im Quiz",

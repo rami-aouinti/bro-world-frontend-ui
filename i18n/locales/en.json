@@ -508,7 +508,17 @@
         "temperature": "18°C",
         "temperatureLabel": "Temperature",
         "tipLabel": "Tip",
-        "tip": "Don't forget your umbrella to stay dry."
+        "tip": "Don't forget your umbrella to stay dry.",
+        "loading": "Updating weather…",
+        "actions": {
+          "useCurrentLocation": "Use current location"
+        },
+        "errors": {
+          "unavailable": "Weather updates are unavailable.",
+          "denied": "We couldn't access your location. Showing the default forecast.",
+          "unsupported": "Geolocation is not supported by your browser.",
+          "updateFailed": "Unable to update the weather right now."
+        }
       },
       "leaderboard": {
         "title": "Top 3 in Quiz",

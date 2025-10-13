@@ -51,7 +51,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { useEventListener, useResizeObserver } from "@vueuse/core";
+import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
 import type { HTMLAttributes } from "vue";
 
 interface Props {
@@ -65,37 +66,70 @@ const props = withDefaults(defineProps<Props>(), {
 
 const cardRef = ref<HTMLElement | null>(null);
 const widthPercentage = ref(0);
-const left = ref(0);
-const localWidth = ref(0);
 const isMouseOver = ref(false);
+const cardRect = shallowRef<DOMRectReadOnly | null>(null);
+
+let measureRaf: number | null = null;
+
+function measureCardRect() {
+  if (!cardRef.value) {
+    cardRect.value = null;
+    return;
+  }
+
+  cardRect.value = cardRef.value.getBoundingClientRect();
+}
+
+function scheduleMeasure() {
+  if (measureRaf !== null) return;
+
+  measureRaf = requestAnimationFrame(() => {
+    measureRaf = null;
+    measureCardRect();
+  });
+}
 
 const rotateDeg = computed(() => (widthPercentage.value - 50) * 0.1);
 
 onMounted(() => {
-  if (cardRef.value) {
-    const rect = cardRef.value.getBoundingClientRect();
-    left.value = rect.left;
-    localWidth.value = rect.width;
-  }
-
-  window.addEventListener("resize", updateMeasurements);
+  scheduleMeasure();
 });
 
-function updateMeasurements() {
-  if (cardRef.value) {
-    const rect = cardRef.value.getBoundingClientRect();
-    left.value = rect.left;
-    localWidth.value = rect.width;
+onBeforeUnmount(() => {
+  if (measureRaf !== null) {
+    cancelAnimationFrame(measureRaf);
+    measureRaf = null;
   }
+});
+
+if (import.meta.client) {
+  useEventListener(window, "resize", scheduleMeasure, { passive: true });
+  useEventListener(window, "scroll", scheduleMeasure, { passive: true });
+  useResizeObserver(cardRef, () => {
+    scheduleMeasure();
+  });
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function updateWidthFromClientX(clientX: number | null | undefined) {
+  if (clientX == null) return;
+
+  const rect = cardRect.value;
+  if (!rect || rect.width === 0) {
+    scheduleMeasure();
+    return;
+  }
+
+  const relativeX = clientX - rect.left;
+  widthPercentage.value = clamp((relativeX / rect.width) * 100, 0, 100);
 }
 
 function mouseMoveHandler(event: MouseEvent) {
   event.preventDefault();
-  if (cardRef.value) {
-    const rect = cardRef.value.getBoundingClientRect(); // Get current position
-    const relativeX = event.clientX - rect.left;
-    widthPercentage.value = (relativeX / rect.width) * 100;
-  }
+  updateWidthFromClientX(event.clientX);
 }
 
 function mouseLeaveHandler() {
@@ -109,14 +143,14 @@ function mouseLeaveHandler() {
 
 function mouseEnterHandler() {
   isMouseOver.value = true;
+  scheduleMeasure();
 }
 
 function touchMoveHandler(event: TouchEvent) {
   event.preventDefault();
-  if (cardRef.value) {
-    const rect = cardRef.value.getBoundingClientRect();
-    const relativeX = event.touches[0]!.clientX - rect.left;
-    widthPercentage.value = (relativeX / rect.width) * 100;
-  }
+  const touch = event.touches[0];
+  if (!touch) return;
+
+  updateWidthFromClientX(touch.clientX);
 }
 </script>

@@ -508,7 +508,17 @@
         "temperature": "18°C",
         "temperatureLabel": "Température",
         "tipLabel": "Conseil",
-        "tip": "N'oubliez pas votre parapluie pour rester au sec."
+        "tip": "N'oubliez pas votre parapluie pour rester au sec.",
+        "loading": "Mise à jour de la météo…",
+        "actions": {
+          "useCurrentLocation": "Utiliser ma position actuelle"
+        },
+        "errors": {
+          "unavailable": "Les mises à jour météo ne sont pas disponibles.",
+          "denied": "Impossible d'accéder à votre position. Affichage des prévisions par défaut.",
+          "unsupported": "Votre navigateur ne prend pas en charge la géolocalisation.",
+          "updateFailed": "Impossible de mettre à jour la météo pour le moment."
+        }
       },
       "leaderboard": {
         "title": "Top 3 du quiz",

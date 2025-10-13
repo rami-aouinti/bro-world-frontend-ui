@@ -22,6 +22,21 @@
           </span>
           <span v-else>{{ resolvedWeather.location }}</span>
         </p>
+        <p
+          v-if="locationError"
+          class="mt-2 text-xs text-red-500"
+        >
+          {{ locationError }}
+        </p>
+        <button
+          v-if="canRequestGeolocation"
+          type="button"
+          class="mt-3 inline-flex items-center gap-2 rounded-full border border-primary/20 px-3 py-1 text-xs font-medium text-primary transition hover:border-primary hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-60"
+          :disabled="isLoading"
+          @click="useCurrentLocation"
+        >
+          {{ useCurrentLocationLabel }}
+        </button>
       </div>
       <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-3xl">
         {{ resolvedWeather.icon }}
@@ -32,6 +47,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 interface SidebarWeatherCardProps {
   weather: {
@@ -70,6 +86,9 @@ interface WeatherRuntimeConfig {
 const props = defineProps<SidebarWeatherCardProps>();
 
 const runtimeConfig = useRuntimeConfig();
+const { t } = useI18n();
+
+const WEATHER_I18N_BASE = "blog.sidebar.weather";
 
 const weatherState = useState<{
   location: string;
@@ -79,8 +98,10 @@ const weatherState = useState<{
 } | null>("sidebar-weather", () => null);
 
 const isLoading = ref(!weatherState.value);
+const geolocationSupported = ref(false);
+const locationError = ref<string | null>(null);
 
-const loadingLabel = computed(() => props.weather?.subtitle ?? "Updating weather");
+const loadingLabel = computed(() => props.weather?.subtitle ?? t(`${WEATHER_I18N_BASE}.loading`));
 
 const resolvedWeather = computed(() => {
   const current = weatherState.value;
@@ -118,13 +139,28 @@ function applyWeather(data: WeatherApiResponse) {
   };
 }
 
+type WeatherErrorKey = "unavailable" | "denied" | "unsupported" | "updateFailed";
+
+function setLocationError(key: WeatherErrorKey) {
+  locationError.value = t(`${WEATHER_I18N_BASE}.errors.${key}`);
+}
+
+const useCurrentLocationLabel = computed(() =>
+  t(`${WEATHER_I18N_BASE}.actions.useCurrentLocation`),
+);
+
 async function fetchWeather(query: string) {
   const { apiKey } = getWeatherConfig();
 
+  locationError.value = null;
+
   if (!apiKey) {
     isLoading.value = false;
+    setLocationError("unavailable");
     return;
   }
+
+  isLoading.value = true;
 
   try {
     const response = await $fetch<WeatherApiResponse>(
@@ -137,39 +173,54 @@ async function fetchWeather(query: string) {
     applyWeather(response);
   } catch (error) {
     console.error("Failed to fetch weather data", error);
+    setLocationError("updateFailed");
   } finally {
     isLoading.value = false;
   }
 }
 
+let fallbackLocation = props.weather.location;
+
+function fetchDefaultWeather() {
+  void fetchWeather(fallbackLocation);
+}
+
 if (import.meta.client) {
   onMounted(() => {
+    geolocationSupported.value = Boolean(navigator.geolocation);
+
     if (weatherState.value && Date.now() - weatherState.value.fetchedAt < WEATHER_TTL) {
       isLoading.value = false;
       return;
     }
 
     const weatherConfig = getWeatherConfig();
-    const defaultLocation = weatherConfig.defaultLocation || props.weather.location;
+    fallbackLocation = weatherConfig.defaultLocation || props.weather.location;
 
-    function fetchDefaultWeather() {
-      void fetchWeather(defaultLocation);
-    }
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          void fetchWeather(`${latitude},${longitude}`);
-        },
-        () => {
-          console.warn("Geolocation permission denied, using default location");
-          fetchDefaultWeather();
-        },
-      );
-    } else {
-      fetchDefaultWeather();
-    }
+    fetchDefaultWeather();
   });
+}
+
+const canRequestGeolocation = computed(() => geolocationSupported.value);
+
+function useCurrentLocation() {
+  if (!import.meta.client || !navigator.geolocation) {
+    setLocationError("unsupported");
+    return;
+  }
+
+  locationError.value = null;
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      void fetchWeather(`${latitude},${longitude}`);
+    },
+    () => {
+      console.warn("Geolocation permission denied, using default location");
+      setLocationError("denied");
+      fetchDefaultWeather();
+    },
+  );
 }
 </script>
