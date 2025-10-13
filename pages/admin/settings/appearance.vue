@@ -130,7 +130,7 @@ const AdminSettingsLayout = defineAsyncComponent({
 
 definePageMeta({
   middleware: ["auth", "admin"],
-  showRightWidgets: false,
+  showRightWidgets: true,
   documentDriven: false,
 });
 
