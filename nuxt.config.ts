@@ -579,6 +579,9 @@ export default defineNuxtConfig({
       tokenPresenceCookieName: process.env.NUXT_AUTH_TOKEN_PRESENCE_COOKIE ?? "auth_token_present",
       sessionMaxAge: process.env.NUXT_AUTH_SESSION_MAX_AGE ?? String(60 * 60 * 24 * 7),
     },
+    users: {
+      apiBase: process.env.NUXT_USERS_API_BASE ?? "https://bro-world.org/api/v1",
+    },
     public: {
       redis: {
         listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
