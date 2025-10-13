@@ -47,48 +47,9 @@
         <div class="settings-header-shadow" />
       </header>
 
-      <v-row
-        class="settings-shell"
-        dense
-      >
-        <v-col
-          cols="12"
-          md="3"
-        >
-          <v-card
-            class="glass-card pa-4 h-100"
-            rounded="xl"
-            elevation="6"
-          >
-            <v-list
-              nav
-              density="comfortable"
-            >
-              <v-list-subheader class="text-subtitle-2 text-medium-emphasis">
-                {{ navigationTitle }}
-              </v-list-subheader>
-              <v-list-item
-                v-for="navSection in sections"
-                :key="navSection.key"
-                :title="navSection.title"
-                :subtitle="navSection.subtitle"
-                :to="navSection.to"
-                :prepend-icon="navSection.icon"
-                :active="navSection.key === activeSection"
-                rounded="lg"
-                color="primary"
-                variant="tonal"
-              />
-            </v-list>
-          </v-card>
-        </v-col>
-        <v-col
-          cols="12"
-          md="9"
-        >
-          <slot />
-        </v-col>
-      </v-row>
+      <div class="settings-shell">
+        <slot />
+      </div>
 
       <v-snackbar
         v-model="snackbar.visible"
@@ -108,6 +69,8 @@ import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import AdminSettingsSidebarContent from "./AdminSettingsSidebarContent.vue";
 
 const props = defineProps<{
   section: "general" | "themes" | "profile" | "appearance" | "pages" | "navigation";
@@ -172,6 +135,20 @@ const sections = computed(() => [
 const currentSection = computed(() =>
   sections.value.find((section) => section.key === activeSection.value),
 );
+
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
+const sidebarContent = computed(() => ({
+  component: AdminSettingsSidebarContent,
+  props: {
+    sections: sections.value,
+    activeSection: activeSection.value,
+    title: navigationTitle.value,
+  },
+  wrapperClass: "flex flex-col gap-6 px-3 py-4",
+}));
+
+registerRightSidebarContent(sidebarContent);
 
 const stickyHeader = ref<HTMLElement | null>(null);
 const isStuck = ref(false);
