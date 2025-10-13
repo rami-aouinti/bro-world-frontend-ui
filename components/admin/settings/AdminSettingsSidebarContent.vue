@@ -1,18 +1,20 @@
 <template>
   <div class="settings-sidebar">
-    <v-card
-      class="glass-card pa-4"
-      rounded="xl"
-      elevation="6"
+    <SidebarCard
+        class="text-card-foreground px-3 py-2"
+        glow
     >
       <v-list
         nav
+        class="py-2 rounded-xl"
         density="comfortable"
+        style="background-color: transparent"
       >
-        <v-list-subheader class="text-subtitle-2 text-medium-emphasis">
+        <v-list-subheader class="text-subtitle-2">
           {{ title }}
         </v-list-subheader>
         <v-list-item
+            class="group mx-2 my-0.5 rounded-xl my-4 transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5"
           v-for="section in sections"
           :key="section.key"
           :title="section.title"
@@ -25,7 +27,7 @@
           variant="tonal"
         />
       </v-list>
-    </v-card>
+    </SidebarCard>
   </div>
 </template>
 

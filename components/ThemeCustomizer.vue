@@ -4,15 +4,12 @@
       glow
   >
     <div class="grid gap-6">
-    <div class="grid space-y-1">
-      <h1 class="text-foreground text-lg font-semibold">
+    <div class="space-y-1">
+      <h5 class="text-foreground text-lg font-semibold">
         {{ $t("Customize") }}
-      </h1>
-      <p class="text-muted-foreground text-sm">
-        {{ $t("Pick a style and color for the docs.") }}
-      </p>
+      </h5>
     </div>
-    <div class="space-y-1.5">
+    <div class="space-y-1">
       <UiLabel>{{ $t("Color") }}</UiLabel>
       <div class="grid grid-cols-4 gap-2">
         <template
@@ -41,7 +38,7 @@
         </template>
       </div>
     </div>
-    <div class="space-y-1.5">
+    <div class="space-y-1">
       <UiLabel>{{ $t("Radius") }}</UiLabel>
       <div class="grid grid-cols-5 gap-2">
         <template
@@ -59,7 +56,7 @@
         </template>
       </div>
     </div>
-    <div class="space-y-1.5">
+    <div class="space-y-1">
       <UiLabel>{{ $t("admin.settings.fields.themePrimary") }}</UiLabel>
       <div class="grid grid-cols-4 gap-2">
         <template

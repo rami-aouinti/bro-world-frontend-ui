@@ -15,12 +15,6 @@
   z-index: 10;
   padding: 12px 0 16px;
   backdrop-filter: saturate(120%) blur(6px);
-  background: linear-gradient(
-    to bottom,
-    rgba(16, 18, 27, 0.75),
-    rgba(16, 18, 27, 0.35) 70%,
-    transparent
-  );
 }
 .settings-header-shadow {
   block-size: 1px;

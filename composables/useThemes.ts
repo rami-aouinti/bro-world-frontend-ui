@@ -240,7 +240,6 @@ export function useThemes() {
 
   const PRIMARY_COLOR_OPTIONS = [
     { hex: "#E91E63", label: "Rose" },
-    { hex: "#6366F1", label: "Indigo" },
     { hex: "#22C55E", label: "Green" },
     { hex: "#F97316", label: "Orange" },
     { hex: "#0EA5E9", label: "Sky" },

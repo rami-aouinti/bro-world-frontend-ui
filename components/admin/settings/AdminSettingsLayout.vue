@@ -1,6 +1,5 @@
 <template>
   <main
-    class="py-5"
     aria-labelledby="admin-settings-title"
   >
     <v-container class="settings-container">
@@ -11,12 +10,12 @@
       >
         <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-4">
           <div>
-            <h1
+            <h4
               id="admin-settings-title"
               class="text-h4 text-lg-h3 font-weight-bold mb-1"
             >
               {{ t("admin.settings.page.title") }}
-            </h1>
+            </h4>
             <p class="text-body-1 text-medium-emphasis mb-0">
               {{ currentSection?.subtitle || t("admin.settings.page.subtitle") }}
             </p>
@@ -25,7 +24,7 @@
             <v-btn
               color="primary"
               variant="flat"
-              class="text-none px-5"
+              class="text-none px-3"
               :loading="isSaving"
               prepend-icon="mdi-content-save-outline"
               :disabled="pending"
