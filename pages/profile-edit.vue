@@ -10,6 +10,7 @@
 import { computed } from "vue";
 
 import ProfileEditForm from "~/components/forms/ProfileEditForm.vue";
+import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
 
 definePageMeta({
   middleware: "auth",
@@ -24,6 +25,8 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
+
+useProfileSidebarContent();
 
 useHead(() => {
   const title = t("seo.profileEdit.title");

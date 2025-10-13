@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import ProfileSecurityForm from "~/components/forms/ProfileSecurityForm.vue";
+import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
 
 definePageMeta({
   middleware: "auth",
@@ -15,4 +16,6 @@ definePageMeta({
   sidebarVariant: "profile",
   documentDriven: false,
 });
+
+useProfileSidebarContent();
 </script>

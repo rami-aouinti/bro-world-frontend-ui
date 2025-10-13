@@ -342,6 +342,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
 import type { AlbumSummary, PhotoItem } from "~/types/pages/profile";
 
 definePageMeta({
@@ -357,6 +358,8 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
+
+useProfileSidebarContent();
 
 useHead(() => {
   const title = t("seo.profilePhotos.title");
