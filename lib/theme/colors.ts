@@ -239,7 +239,7 @@ export function resolvePrimaryColorVariables(
     return formatHsl(parsed);
   })();
 
-  const formattedHex = (() => {
+  const formattedHsl = (() => {
     if (formattedFromSource) {
       return formattedFromSource;
     }
@@ -256,10 +256,10 @@ export function resolvePrimaryColorVariables(
   const foreground = resolveForegroundHsl(normalized);
 
   return {
-    primary: formattedHex,
-    colorPrimary: formattedHex ? `hsl(${formattedHex})` : null,
-    primaryForeground: foreground,
-    colorPrimaryForeground: foreground ? `hsl(${foreground})` : null,
+    primaryHsl: formattedHsl,
+    primaryColor: formattedHsl ? `hsl(${formattedHsl})` : null,
+    primaryForegroundHsl: foreground,
+    primaryForegroundColor: foreground ? `hsl(${foreground})` : null,
   } as const;
 }
 
@@ -279,17 +279,20 @@ export function applyPrimaryColorCssVariables(
 
   const root = document.documentElement;
 
-  if (variables.primary) {
-    root.style.setProperty("--primary", variables.primary);
-    if (variables.colorPrimary) {
-      root.style.setProperty("--color-primary", variables.colorPrimary);
+  // --primary is consumed by Tailwind's generated text-primary/bg-primary utilities,
+  // while the color-prefixed variants are used by legacy global styles that still
+  // expect full color() function values.
+  if (variables.primaryHsl) {
+    root.style.setProperty("--primary", variables.primaryHsl);
+    if (variables.primaryColor) {
+      root.style.setProperty("--color-primary", variables.primaryColor);
     }
   }
 
-  if (variables.primaryForeground) {
-    root.style.setProperty("--primary-foreground", variables.primaryForeground);
-    if (variables.colorPrimaryForeground) {
-      root.style.setProperty("--color-primary-foreground", variables.colorPrimaryForeground);
+  if (variables.primaryForegroundHsl) {
+    root.style.setProperty("--primary-foreground", variables.primaryForegroundHsl);
+    if (variables.primaryForegroundColor) {
+      root.style.setProperty("--color-primary-foreground", variables.primaryForegroundColor);
     }
   }
 }
