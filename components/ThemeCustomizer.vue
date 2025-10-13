@@ -1,5 +1,9 @@
 <template>
-  <div class="grid gap-6">
+  <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+  >
+    <div class="grid gap-6">
     <div class="grid space-y-1">
       <h1 class="text-foreground text-lg font-semibold">
         {{ $t("Customize") }}
@@ -100,6 +104,7 @@
       </div>
     </div>
   </div>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">
@@ -107,6 +112,7 @@ import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
 import Icon from "./Icon.vue";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { themeClass, theme, radius, setTheme, setRadius } = useThemes();
 const { darkModeToggle } = useConfig().value.header;
