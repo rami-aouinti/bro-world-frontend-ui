@@ -55,6 +55,13 @@
         @like="handleCommentLike"
         @reply="openReply"
       />
+      <p
+        v-if="commentsError && !commentsLoading"
+        class="comments-error"
+        role="status"
+      >
+        {{ commentsError }}
+      </p>
       <button
         v-if="!commentsActivated && !commentsLoading"
         type="button"
@@ -246,6 +253,7 @@ function openReply(id: string) {
   /* TODO */
 }
 const loginToReactMessage = computed(() => t("blog.auth.reactionRequired"));
+const loginToViewCommentsMessage = computed(() => t("blog.auth.commentRequired"));
 const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
 const previousFocusedElement = ref<HTMLElement | null>(null);
@@ -453,6 +461,12 @@ async function loadComments(options: { force?: boolean } = {}) {
     return;
   }
 
+  if (!isAuthenticated.value) {
+    commentsError.value = loginToViewCommentsMessage.value;
+    commentsLoading.value = false;
+    return;
+  }
+
   if (activeCommentsRequest.value && !options.force) {
     return activeCommentsRequest.value;
   }
@@ -528,6 +542,21 @@ watch(
   { immediate: true },
 );
 
+watch(
+  isAuthenticated,
+  (value) => {
+    if (value && commentsActivated.value) {
+      const shouldReload = commentsError.value === loginToViewCommentsMessage.value;
+
+      commentsError.value = null;
+
+      if (shouldReload) {
+        void loadComments({ force: true });
+      }
+    }
+  },
+);
+
 function handleEditDialogClose() {
   editModalOpen.value = false;
 
@@ -561,5 +590,11 @@ function handleDeleteDialogClose() {
 .fade-scale-leave-to {
   opacity: 0;
   transform: scale(0.96);
+}
+
+.comments-error {
+  margin: 0.75rem 0 0;
+  color: rgb(var(--v-theme-error));
+  font-size: 0.875rem;
 }
 </style>
