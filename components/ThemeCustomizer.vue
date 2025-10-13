@@ -14,7 +14,7 @@
     </div>
     <div class="space-y-1.5">
       <UiLabel>{{ $t("Color") }}</UiLabel>
-      <div class="grid grid-cols-3 gap-2">
+      <div class="grid grid-cols-4 gap-2">
         <template
           v-for="color in allColors"
           :key="color"

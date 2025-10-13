@@ -15,7 +15,7 @@
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent
-      class="w-[23rem]"
+      class="w-[33rem] bg-background text-card-foreground"
       :align="breakpoints.isGreaterOrEqual('md') ? 'end' : 'center'"
     >
       <ThemeCustomizer />
