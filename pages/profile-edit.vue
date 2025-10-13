@@ -1,6 +1,5 @@
 <template>
   <main
-    class="py-8"
     aria-labelledby="profile-edit-title"
   >
     <ProfileEditForm />
