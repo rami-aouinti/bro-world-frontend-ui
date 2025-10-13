@@ -1137,7 +1137,17 @@
         "temperature": "18°C",
         "temperatureLabel": "Temperatura",
         "tipLabel": "Consejo",
-        "tip": "No olvides tu paraguas para mantenerte seco."
+        "tip": "No olvides tu paraguas para mantenerte seco.",
+        "loading": "Actualizando el clima…",
+        "actions": {
+          "useCurrentLocation": "Usar ubicación actual"
+        },
+        "errors": {
+          "unavailable": "Las actualizaciones del clima no están disponibles.",
+          "denied": "No pudimos acceder a tu ubicación. Mostrando el pronóstico predeterminado.",
+          "unsupported": "Tu navegador no admite la geolocalización.",
+          "updateFailed": "No se puede actualizar el clima en este momento."
+        }
       },
       "leaderboard": {
         "title": "Top 3 del quiz",

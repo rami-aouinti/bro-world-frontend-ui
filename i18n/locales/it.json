@@ -1137,7 +1137,17 @@
         "temperature": "18°C",
         "temperatureLabel": "Temperatura",
         "tipLabel": "Consiglio",
-        "tip": "Non dimenticare l'ombrello per restare asciutto."
+        "tip": "Non dimenticare l'ombrello per restare asciutto.",
+        "loading": "Aggiornamento meteo…",
+        "actions": {
+          "useCurrentLocation": "Usa la posizione attuale"
+        },
+        "errors": {
+          "unavailable": "Gli aggiornamenti meteo non sono disponibili.",
+          "denied": "Non è stato possibile accedere alla tua posizione. Mostriamo la previsione predefinita.",
+          "unsupported": "Il tuo browser non supporta la geolocalizzazione.",
+          "updateFailed": "Impossibile aggiornare il meteo in questo momento."
+        }
       },
       "leaderboard": {
         "title": "Top 3 del quiz",
