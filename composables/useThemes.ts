@@ -365,6 +365,8 @@ export function useThemes() {
     return fallback ?? undefined;
   });
 
+  const themePrimary = computed(() => primarySource.value ?? undefined);
+
   const isCustomThemePrimary = computed(() => {
     const normalized = normalizeHexColor(themePrimaryCookie.value);
     const defaultHex = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
@@ -463,8 +465,6 @@ export function useThemes() {
 
     themePrimaryCookie.value = fallback ?? null;
   }
-
-  const themePrimary = computed(() => primarySource.value ?? undefined);
 
   const themePrimaryOptions = computed(() => {
     const normalizedOptions = PRIMARY_COLOR_OPTIONS.map((option) => ({
