@@ -145,14 +145,29 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import {
+  reactive,
+  ref,
+  computed,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+  defineAsyncComponent,
+} from "vue";
 import type { WatchStopHandle } from "vue";
 import { useI18n } from "vue-i18n";
-import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import { useRelativeTime } from "~/composables/useRelativeTime";
-import PostCommentForm from "~/components/forms/PostCommentForm.vue";
+
+const ReactionPicker = defineAsyncComponent({
+  loader: () => import("~/components/blog/ReactionPicker.vue"),
+  suspensible: false,
+});
+const PostCommentForm = defineAsyncComponent({
+  loader: () => import("~/components/forms/PostCommentForm.vue"),
+  suspensible: false,
+});
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();

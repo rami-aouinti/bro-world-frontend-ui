@@ -121,10 +121,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from "vue";
+import { computed, onBeforeUnmount, ref, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Story, StoryReaction } from "~/types/stories";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 const props = withDefaults(
   defineProps<{

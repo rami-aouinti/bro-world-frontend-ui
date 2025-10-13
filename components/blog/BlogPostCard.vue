@@ -94,10 +94,6 @@
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent, nextTick, ref, shallowRef, watch } from "vue";
-import { useElementVisibility } from "@vueuse/core";
-
-import SidebarCard from "~/components/layout/SidebarCard.vue";
-import PostMeta from "~/components/blog/PostMeta.vue";
 import type {
   BlogCommentWithReplies,
   BlogPost,
@@ -106,9 +102,22 @@ import type {
 } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
-import BlogPostContent from "~/components/blog/BlogPostContent.vue";
 import type { CommentNode } from "~/components/blog/CommentThread.vue";
 import { useRelativeTime } from "~/composables/useRelativeTime";
+import { useElementVisibility } from "@vueuse/core";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
+const PostMeta = defineAsyncComponent({
+  loader: () => import("~/components/blog/PostMeta.vue"),
+  suspensible: false,
+});
+const BlogPostContent = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostContent.vue"),
+  suspensible: false,
+});
 
 interface FeedbackState {
   type: "success" | "error";

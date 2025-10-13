@@ -393,10 +393,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-
-import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
@@ -404,6 +402,11 @@ import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
 import type { SiteLocalizedSettings, SiteSettings } from "~/types/settings";
 import type { ProfileForm } from "~/types/pages/profile";
 import { useAuthSession } from "~/stores/auth-session";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 const { t } = useI18n();
 

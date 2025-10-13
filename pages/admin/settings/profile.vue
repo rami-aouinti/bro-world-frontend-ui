@@ -98,10 +98,14 @@
 </template>
 
 <script setup lang="ts">
+import { defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-
-import AdminSettingsLayout from "~/components/admin/settings/AdminSettingsLayout.vue";
 import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
+
+const AdminSettingsLayout = defineAsyncComponent({
+  loader: () => import("~/components/admin/settings/AdminSettingsLayout.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   middleware: ["auth", "admin"],

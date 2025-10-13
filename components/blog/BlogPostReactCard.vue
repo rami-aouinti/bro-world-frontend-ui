@@ -103,14 +103,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-
-import ReactionPicker from "~/components/blog/ReactionPicker.vue";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
-
 import { useAuthSession } from "~/stores/auth-session";
 import type { BlogPost } from "~/lib/mock/blog";
+
+const ReactionPicker = defineAsyncComponent({
+  loader: () => import("~/components/blog/ReactionPicker.vue"),
+  suspensible: false,
+});
 
 type Reaction = PickerReaction;
 

@@ -29,13 +29,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import { computed, watch, defineAsyncComponent } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { callOnce, navigateTo } from "#imports";
-import ConversationsList from "~/components/messenger/ConversationsList.vue";
-import ChatPane from "~/components/messenger/ChatPane.vue";
 import { useMessengerStore } from "~/stores/messenger";
+
+const ConversationsList = defineAsyncComponent({
+  loader: () => import("~/components/messenger/ConversationsList.vue"),
+  suspensible: false,
+});
+const ChatPane = defineAsyncComponent({
+  loader: () => import("~/components/messenger/ChatPane.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   documentDriven: false,

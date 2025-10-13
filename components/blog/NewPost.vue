@@ -97,13 +97,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useNuxtApp } from "#imports";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { defineAsyncComponentWithVendorStyles } from "~/lib/material-dashboard-vendors";
 import { useAuthSession } from "~/stores/auth-session";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 const NewPostDialog = defineAsyncComponentWithVendorStyles(() => import("./NewPostDialog.vue"));
 

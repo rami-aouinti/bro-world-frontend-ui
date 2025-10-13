@@ -86,8 +86,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
+import { computed, defineAsyncComponent } from "vue";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 type LocaleMetadata = Record<string, { flag?: string }>;
 

@@ -41,11 +41,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
-import AuthRegisterForm from "~/components/auth/RegisterForm.vue";
-import AuthSocial from "~/components/auth/Social.vue";
+import { ref, defineAsyncComponent } from "vue";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
+
+const AuthRegisterForm = defineAsyncComponent({
+  loader: () => import("~/components/auth/RegisterForm.vue"),
+  suspensible: false,
+});
+const AuthSocial = defineAsyncComponent({
+  loader: () => import("~/components/auth/Social.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   title: "register",

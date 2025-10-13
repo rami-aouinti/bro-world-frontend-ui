@@ -191,7 +191,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useAuthSession } from "~/stores/auth-session";
@@ -203,7 +203,11 @@ import {
 import { formatRelativeTime } from "~/lib/datetime/relative-time";
 import type { MessengerConversation } from "~/types/messenger";
 import type { MessengerPreviewEntry } from "~/types/messenger/ui";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
+
+const SidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
 
 const props = defineProps<{
   iconTriggerClasses: string;

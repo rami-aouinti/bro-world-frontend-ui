@@ -53,10 +53,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import AuthorActionMenu from "~/components/blog/AuthorActionMenu.vue";
+import { computed, defineAsyncComponent } from "vue";
 import type { BlogUser } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
+
+const AuthorActionMenu = defineAsyncComponent({
+  loader: () => import("~/components/blog/AuthorActionMenu.vue"),
+  suspensible: false,
+});
 
 const props = withDefaults(
   defineProps<{

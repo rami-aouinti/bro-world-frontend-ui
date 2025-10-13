@@ -65,14 +65,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import NotificationMenu from "./NotificationMenu.vue";
-import MessengerMenu from "~/components/messenger/MessengerMenu.vue";
 import type { AppNotification } from "~/types/layout";
 import type { MessengerConversation } from "~/types/messenger";
 import ThemePopover from "../../ThemePopover.vue";
 import DarkModeToggle from "../../DarkModeToggle.vue";
 import AppIcon from "../AppIcon.vue";
+
+const MessengerMenu = defineAsyncComponent({
+  loader: () => import("~/components/messenger/MessengerMenu.vue"),
+  suspensible: false,
+});
 
 const props = defineProps<{
   isMobile: boolean;

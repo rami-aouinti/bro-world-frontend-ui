@@ -7,9 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 
-import ProfileEditForm from "~/components/forms/ProfileEditForm.vue";
+const ProfileEditForm = defineAsyncComponent({
+  loader: () => import("~/components/forms/ProfileEditForm.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   middleware: "auth",

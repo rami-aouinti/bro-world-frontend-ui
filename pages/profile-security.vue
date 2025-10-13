@@ -7,7 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import ProfileSecurityForm from "~/components/forms/ProfileSecurityForm.vue";
+import { defineAsyncComponent } from "vue";
+
+const ProfileSecurityForm = defineAsyncComponent({
+  loader: () => import("~/components/forms/ProfileSecurityForm.vue"),
+  suspensible: false,
+});
 
 definePageMeta({
   middleware: "auth",
