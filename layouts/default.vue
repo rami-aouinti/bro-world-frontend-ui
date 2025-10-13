@@ -255,7 +255,7 @@
 <script setup lang="ts">
 import { watch, computed, ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import { useDisplay, useTheme } from "vuetify";
-import { useRequestHeaders, useState, refreshNuxtData } from "#imports";
+import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
 import { useResizeObserver } from "@vueuse/core";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
@@ -272,6 +272,8 @@ import { useAuthSession } from "~/stores/auth-session";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings, SiteThemeDefinition } from "~/types/settings";
+import { withSecureCookieOptions } from "~/lib/cookies";
+import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 
 const AppSidebarRight = defineAsyncComponent({
   loader: () => import("~/components/layout/AppSidebarRight.vue"),
@@ -575,6 +577,13 @@ const activeTheme = computed<SiteThemeDefinition | null>(() => {
   return found ?? current.themes[0] ?? null;
 });
 
+const themePrimaryCookie = useCookie<string | null>(
+  "theme-primary",
+  withSecureCookieOptions({
+    sameSite: "lax",
+  }),
+);
+
 watch(
   activeTheme,
   (value) => {
@@ -584,8 +593,31 @@ watch(
     vuetifyTheme.themes.value.dark.colors.primary = value.primaryColor;
     vuetifyTheme.themes.value.light.colors.secondary = value.accentColor;
     vuetifyTheme.themes.value.dark.colors.secondary = value.accentColor;
+
+    const hasCustomPrimary = normalizeHexColor(themePrimaryCookie.value);
+
+    if (!hasCustomPrimary) {
+      applyPrimaryColorCssVariables(value.primaryColor);
+    }
   },
   { immediate: true },
+);
+
+watch(
+  themePrimaryCookie,
+  (value, oldValue) => {
+    if (normalizeHexColor(value)) {
+      return;
+    }
+
+    if (normalizeHexColor(oldValue)) {
+      const theme = activeTheme.value;
+
+      if (theme) {
+        applyPrimaryColorCssVariables(theme.primaryColor);
+      }
+    }
+  },
 );
 
 const layoutInsets = computed(() => {
