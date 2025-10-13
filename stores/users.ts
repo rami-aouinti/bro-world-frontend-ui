@@ -26,6 +26,10 @@ interface UserFormPayload {
   lastName?: string | null;
   enabled?: boolean;
   roles?: string[];
+  language?: string | null;
+  locale?: string | null;
+  timezone?: string | null;
+  profile?: unknown;
 }
 
 function resolveFetcher() {
@@ -38,15 +42,32 @@ function resolveFetcher() {
 
 function buildRequestBody(payload: UserFormPayload) {
   const normalized = normalizeUserPayload(payload);
-
-  return {
+  const body: UserFormPayload = {
     username: normalized.username ?? payload.username,
     email: normalized.email ?? payload.email,
     firstName: normalized.firstName ?? payload.firstName ?? null,
     lastName: normalized.lastName ?? payload.lastName ?? null,
     enabled: normalized.enabled ?? payload.enabled ?? true,
     roles: normalized.roles ?? normalizeRolesInput(payload.roles ?? []),
-  } satisfies UserFormPayload;
+  };
+
+  if (normalized.language !== undefined || payload.language !== undefined) {
+    body.language = (normalized.language ?? payload.language) ?? null;
+  }
+
+  if (normalized.locale !== undefined || payload.locale !== undefined) {
+    body.locale = (normalized.locale ?? payload.locale) ?? null;
+  }
+
+  if (normalized.timezone !== undefined || payload.timezone !== undefined) {
+    body.timezone = (normalized.timezone ?? payload.timezone) ?? null;
+  }
+
+  if (payload.profile !== undefined) {
+    body.profile = payload.profile;
+  }
+
+  return body;
 }
 
 function createOptimisticUser(id: string, payload: UserFormPayload): UsersStoreUser {
@@ -60,6 +81,10 @@ function createOptimisticUser(id: string, payload: UserFormPayload): UsersStoreU
     lastName: normalized.lastName ?? payload.lastName ?? null,
     enabled: normalized.enabled ?? payload.enabled ?? true,
     roles: normalized.roles ?? normalizeRolesInput(payload.roles ?? []),
+    language: payload.language ?? null,
+    locale: payload.locale ?? null,
+    timezone: payload.timezone ?? null,
+    profile: payload.profile ?? null,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     __optimistic: true,
@@ -92,7 +117,11 @@ export const useUsersStore = defineStore("users", () => {
         continue;
       }
 
-      nextItems[user.id] = { ...user, __optimistic: false };
+      nextItems[user.id] = {
+        ...user,
+        roles: Array.isArray(user.roles) ? normalizeRolesInput(user.roles) : [],
+        __optimistic: false,
+      };
       nextIds.push(user.id);
     }
 
@@ -150,7 +179,7 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const response = await fetcher<UsersListResponse>("/api/users", {
+      const response = await fetcher<UsersListResponse>("/api/v1/user", {
         method: "GET",
       });
 
@@ -170,6 +199,52 @@ export const useUsersStore = defineStore("users", () => {
     }
   }
 
+  async function fetchUser(id: string, options: { force?: boolean } = {}) {
+    const trimmedId = id?.trim();
+
+    if (!trimmedId) {
+      throw new Error("A user identifier is required.");
+    }
+
+    const existing = items.value[trimmedId];
+
+    if (existing && !existing.__optimistic && !options.force) {
+      return existing;
+    }
+
+    const fetcher = resolveFetcher();
+    const position = listIds.value.indexOf(trimmedId);
+
+    try {
+      const response = await fetcher<UserResponse>(
+        `/api/v1/user/${encodeURIComponent(trimmedId)}`,
+        {
+          method: "GET",
+        },
+      );
+
+      if (!response?.data) {
+        throw new Error("Invalid user response.");
+      }
+
+      const normalized: UsersStoreUser = {
+        ...response.data,
+        roles: Array.isArray(response.data.roles)
+          ? normalizeRolesInput(response.data.roles)
+          : [],
+        __optimistic: false,
+      };
+
+      upsertUser(normalized, position >= 0 ? position : undefined);
+
+      return normalized;
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      throw new Error(message || "Unable to load user.");
+    }
+  }
+
   async function createUser(payload: UserFormPayload) {
     const optimisticId = `optimistic-${Date.now()}`;
     const optimisticUser = createOptimisticUser(optimisticId, payload);
@@ -182,7 +257,7 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const response = await fetcher<UserResponse>("/api/users", {
+      const response = await fetcher<UserResponse>("/api/v1/user", {
         method: "POST",
         body: buildRequestBody(payload),
       });
@@ -192,7 +267,16 @@ export const useUsersStore = defineStore("users", () => {
       }
 
       removeUserFromState(optimisticId);
-      upsertUser({ ...response.data, __optimistic: false }, 0);
+      upsertUser(
+        {
+          ...response.data,
+          roles: Array.isArray(response.data.roles)
+            ? normalizeRolesInput(response.data.roles)
+            : [],
+          __optimistic: false,
+        },
+        0,
+      );
 
       return response.data;
     } catch (caughtError) {
@@ -238,16 +322,31 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const response = await fetcher<UserResponse>(`/api/users/${encodeURIComponent(trimmedId)}`, {
-        method: "PUT",
-        body: buildRequestBody(payload),
-      });
+      const response = await fetcher<UserResponse>(
+        `/api/v1/user/${encodeURIComponent(trimmedId)}`,
+        {
+          method: "PUT",
+          body: buildRequestBody({
+            ...existing,
+            ...payload,
+          }),
+        },
+      );
 
       if (!response?.data) {
         throw new Error("Invalid update user response.");
       }
 
-      upsertUser({ ...response.data, __optimistic: false }, position);
+      upsertUser(
+        {
+          ...response.data,
+          roles: Array.isArray(response.data.roles)
+            ? normalizeRolesInput(response.data.roles)
+            : [],
+          __optimistic: false,
+        },
+        position,
+      );
 
       return response.data;
     } catch (caughtError) {
@@ -284,7 +383,7 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveFetcher();
 
     try {
-      await fetcher(`/api/users/${encodeURIComponent(trimmedId)}`, {
+      await fetcher(`/api/v1/user/${encodeURIComponent(trimmedId)}`, {
         method: "DELETE",
       });
     } catch (caughtError) {
@@ -313,6 +412,7 @@ export const useUsersStore = defineStore("users", () => {
     deleting: computed(() => deleting.value),
     lastFetched: computed(() => lastFetched.value),
     fetchUsers,
+    fetchUser,
     createUser,
     updateUser,
     deleteUser,

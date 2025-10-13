@@ -553,11 +553,7 @@ function validateForm(form: EditableUserForm, errors: FormErrors) {
     errors.email = t("admin.userManagement.validation.email");
   }
 
-  if (!form.roles.length) {
-    errors.roles = t("admin.userManagement.validation.roles");
-  }
-
-  return !errors.username && !errors.email && !errors.roles;
+  return !errors.username && !errors.email;
 }
 
 function resetErrors(errors: FormErrors) {

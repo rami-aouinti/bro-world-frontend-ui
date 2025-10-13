@@ -1462,6 +1462,25 @@
       "title": "Espace d'administration",
       "subtitle": "Pilotez l'ensemble de la plateforme, suivez les indicateurs clés et activez les bons leviers en quelques clics."
     },
+    "statistics": {
+      "metaTitle": "Statistiques",
+      "page": {
+        "title": "Statistiques de la plateforme",
+        "subtitle": "Surveillez les tendances d’utilisation et les indicateurs essentiels de votre communauté."
+      },
+      "cards": {
+        "users": {
+          "title": "Utilisateurs enregistrés",
+          "description": "Nombre total de comptes actuellement disponibles sur la plateforme."
+        }
+      },
+      "actions": {
+        "refresh": "Actualiser les données"
+      },
+      "errors": {
+        "load": "Impossible de charger les statistiques."
+      }
+    },
     "settings": {
       "metaTitle": "Paramètres du site",
       "page": {
@@ -1631,6 +1650,39 @@
           "page": {
             "title": "User data",
             "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          },
+          "table": {
+            "search": "Rechercher dans l’ensemble de données",
+            "columns": {
+              "username": "Nom d’utilisateur",
+              "firstName": "Prénom",
+              "lastName": "Nom",
+              "email": "E-mail",
+              "language": "Langue",
+              "locale": "Paramètres régionaux",
+              "timezone": "Fuseau horaire",
+              "enabled": "Statut",
+              "actions": "Actions"
+            },
+            "empty": "Aucun enregistrement utilisateur trouvé."
+          },
+          "actions": {
+            "refresh": "Actualiser"
+          },
+          "details": {
+            "title": "Détails de l’utilisateur",
+            "close": "Fermer",
+            "empty": "Sélectionnez un utilisateur pour afficher son profil.",
+            "fields": {
+              "username": "Nom d’utilisateur",
+              "email": "E-mail",
+              "firstName": "Prénom",
+              "lastName": "Nom",
+              "language": "Langue",
+              "locale": "Paramètres régionaux",
+              "timezone": "Fuseau horaire",
+              "enabled": "Statut"
+            }
           }
         },
         "crons": {
