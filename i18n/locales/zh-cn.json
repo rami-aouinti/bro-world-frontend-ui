@@ -513,7 +513,17 @@
         "temperature": "18°C",
         "temperatureLabel": "气温",
         "tipLabel": "提示",
-        "tip": "别忘了带伞保持干爽。"
+        "tip": "别忘了带伞保持干爽。",
+        "loading": "正在更新天气…",
+        "actions": {
+          "useCurrentLocation": "使用当前位置"
+        },
+        "errors": {
+          "unavailable": "天气更新不可用。",
+          "denied": "无法获取您的位置。显示默认天气预报。",
+          "unsupported": "您的浏览器不支持地理位置。",
+          "updateFailed": "暂时无法更新天气信息。"
+        }
       },
       "leaderboard": {
         "title": "测验前三名",
