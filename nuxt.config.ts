@@ -357,7 +357,7 @@ export default defineNuxtConfig({
       compression({ algorithm: "brotliCompress" }),
     ],
     build: {
-      sourcemap: false,
+      sourcemap: true,
       optimizeCSS: true,
       splitChunks: {
         layouts: true,
