@@ -260,66 +260,86 @@
               class="text-card-foreground pa-6 mb-6"
               glow
             >
-              <h2 class="text-h6 font-weight-semibold mb-4">
-                {{ t("pages.profilePhotos.timeline.title") }}
-              </h2>
-              <p class="text-body-2 text-medium-emphasis mb-6">
-                {{ t("pages.profilePhotos.timeline.description") }}
-              </p>
-              <v-expansion-panels
-                multiple
-                variant="accordion"
-              >
-                <v-expansion-panel
+              <div class="d-flex flex-column gap-4">
+                <div>
+                  <h2 class="text-h6 font-weight-semibold mb-2">
+                    {{ t("pages.profilePhotos.timeline.title") }}
+                  </h2>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ t("pages.profilePhotos.timeline.description") }}
+                  </p>
+                </div>
+
+                <div
                   v-for="item in timeline"
                   :key="item.id"
+                  class="pa-4 rounded-xl"
+                  style="background: rgba(var(--v-theme-surface-container-high), 0.6); border: 1px solid rgba(var(--v-theme-primary), 0.15);"
                 >
-                  <v-expansion-panel-title>
-                    <div class="d-flex flex-column">
-                      <span class="text-subtitle-2 font-weight-semibold">{{ item.title }}</span>
-                      <span class="text-caption text-medium-emphasis">{{ item.date }}</span>
+                  <div class="d-flex flex-column gap-3">
+                    <div class="d-flex flex-column gap-1">
+                      <div class="d-flex align-center justify-space-between gap-3">
+                        <span class="text-subtitle-1 font-weight-semibold">{{ item.title }}</span>
+                        <v-chip
+                          color="primary"
+                          size="small"
+                          variant="tonal"
+                          class="text-caption"
+                        >
+                          {{ item.date }}
+                        </v-chip>
+                      </div>
+                      <p class="text-body-2 text-medium-emphasis mb-0">
+                        {{ item.description }}
+                      </p>
                     </div>
-                  </v-expansion-panel-title>
-                  <v-expansion-panel-text>
-                    <p class="text-body-2 text-medium-emphasis mb-3">{{ item.description }}</p>
                     <div class="d-flex flex-wrap gap-2">
                       <v-chip
                         v-for="tag in item.tags"
                         :key="tag"
                         size="x-small"
-                        variant="tonal"
+                        variant="flat"
+                        class="bg-primary/10 text-primary"
                       >
                         {{ tag }}
                       </v-chip>
                     </div>
-                  </v-expansion-panel-text>
-                </v-expansion-panel>
-              </v-expansion-panels>
+                  </div>
+                </div>
+              </div>
             </SidebarCard>
 
             <SidebarCard
               class="text-card-foreground pa-6 bg-primary/10"
               glow
             >
-              <h2 class="text-h6 font-weight-semibold mb-3">
-                {{ t("pages.profilePhotos.sections.timeline") }}
-              </h2>
-              <div class="d-flex flex-column gap-3">
-                <div
-                  v-for="note in quickNotes"
-                  :key="note.id"
-                  class="d-flex gap-3"
-                >
-                  <v-avatar
-                    size="36"
-                    color="primary"
-                    variant="tonal"
+              <div class="d-flex flex-column gap-4">
+                <div>
+                  <h2 class="text-h6 font-weight-semibold mb-1">
+                    {{ t("pages.profilePhotos.sections.timeline") }}
+                  </h2>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ t("pages.profilePhotos.sections.notesDescription") }}
+                  </p>
+                </div>
+                <div class="d-flex flex-column gap-3">
+                  <div
+                    v-for="note in quickNotes"
+                    :key="note.id"
+                    class="d-flex gap-3 align-center pa-4 rounded-xl"
+                    style="background: rgba(var(--v-theme-surface-container-high), 0.75);"
                   >
-                    <span class="text-body-2 font-weight-semibold">{{ note.initials }}</span>
-                  </v-avatar>
-                  <div>
-                    <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
-                    <div class="text-caption text-medium-emphasis">{{ note.subtitle }}</div>
+                    <v-avatar
+                      size="40"
+                      color="primary"
+                      variant="tonal"
+                    >
+                      <span class="text-body-2 font-weight-semibold">{{ note.initials }}</span>
+                    </v-avatar>
+                    <div class="flex-grow-1">
+                      <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
+                      <div class="text-caption text-medium-emphasis">{{ note.subtitle }}</div>
+                    </div>
                   </div>
                 </div>
               </div>

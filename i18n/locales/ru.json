@@ -351,7 +351,8 @@
       "sections": {
         "pinned": "Pinned collections",
         "albums": "Album explorer",
-        "timeline": "Creative notes"
+        "timeline": "Creative notes",
+        "notesDescription": "Updates from collaborators as they prep visual stories."
       },
       "meta": {
         "updated": "Updated {date}",
