@@ -293,6 +293,48 @@ export function useThemes() {
 
   const themePrimary = computed(() => primarySource.value ?? undefined);
 
+  const themePrimaryOptions = computed(() => {
+    const seen = new Map<string, { hex: string; label: string }>();
+
+    for (const candidate of themes) {
+      const primaries = [candidate.cssVars.light?.primary, candidate.cssVars.dark?.primary];
+
+      for (const primary of primaries) {
+        if (!primary) {
+          continue;
+        }
+
+        const components = parseHslComponents(primary);
+
+        if (!components) {
+          continue;
+        }
+
+        const hex = hslToHex(components);
+
+        if (seen.has(hex)) {
+          continue;
+        }
+
+        seen.set(hex, {
+          hex,
+          label: candidate.label ?? candidate.name,
+        });
+      }
+    }
+
+    const fallbackHex = FALLBACK_PRIMARY_HEX.toUpperCase();
+
+    if (!seen.has(fallbackHex)) {
+      seen.set(fallbackHex, {
+        hex: fallbackHex,
+        label: "Default",
+      });
+    }
+
+    return Array.from(seen.values());
+  });
+
   return {
     themeClass,
     theme,
@@ -305,5 +347,6 @@ export function useThemes() {
     isCustomThemePrimary,
     setThemePrimaryHex,
     resetThemePrimaryHex,
+    themePrimaryOptions,
   };
 }

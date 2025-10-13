@@ -61,24 +61,43 @@
     </div>
     <div class="space-y-1.5">
       <UiLabel>{{ $t("admin.settings.fields.themePrimary") }}</UiLabel>
-      <div class="flex items-center gap-3">
-        <input
-          v-model="primaryColor"
-          type="color"
-          class="h-10 w-full cursor-pointer rounded-md border border-input bg-background p-1 shadow-sm"
-          :aria-label="$t('admin.settings.fields.themePrimary')"
+      <div class="grid grid-cols-4 gap-2">
+        <template
+          v-for="option in primaryColorOptions"
+          :key="option.hex"
         >
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-mono uppercase text-muted-foreground">{{ primaryColorHex }}</span>
           <UiButton
+            class="justify-start gap-2"
             variant="outline"
+            :class="{ 'border-primary border-2': selectedPrimaryHex === option.hex }"
             type="button"
-            :disabled="!isCustomPrimary"
-            @click="handleResetPrimary"
+            @click="handleSelectPrimary(option.hex)"
           >
-            {{ $t("admin.settings.actions.reset") }}
+            <span
+              class="flex size-5 items-center justify-center rounded-full"
+              :style="{ backgroundColor: option.hex }"
+            >
+              <Icon
+                v-if="selectedPrimaryHex === option.hex"
+                name="lucide:check"
+                size="16"
+                class="text-white"
+              />
+            </span>
+            <span class="text-xs capitalize">{{ option.label }}</span>
           </UiButton>
-        </div>
+        </template>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-mono uppercase text-muted-foreground">{{ selectedPrimaryHex }}</span>
+        <UiButton
+          variant="outline"
+          type="button"
+          :disabled="!isCustomPrimary"
+          @click="handleResetPrimary"
+        >
+          {{ $t("admin.settings.actions.reset") }}
+        </UiButton>
       </div>
     </div>
     <div
@@ -143,6 +162,7 @@ const {
   themePrimaryHex,
   defaultThemePrimaryHex,
   isCustomThemePrimary,
+  themePrimaryOptions,
   setTheme,
   setRadius,
   setThemePrimaryHex,
@@ -171,16 +191,16 @@ const themeNames = themes.map((candidate) => candidate.name);
 
 const activeMode = computed(() => (colorMode.value === "auto" ? "system" : colorMode.value));
 
-const fallbackPrimary = computed(() => themePrimaryHex.value ?? defaultThemePrimaryHex.value ?? "#E91E63");
+const primaryColorOptions = computed(() =>
+  themePrimaryOptions.value.map((option) => ({
+    ...option,
+    hex: option.hex.toUpperCase(),
+  })),
+);
 
-const primaryColor = computed({
-  get: () => fallbackPrimary.value,
-  set: (value: string) => {
-    setThemePrimaryHex(value);
-  },
-});
-
-const primaryColorHex = computed(() => primaryColor.value.toUpperCase());
+const selectedPrimaryHex = computed(
+  () => themePrimaryHex.value?.toUpperCase() ?? defaultThemePrimaryHex.value?.toUpperCase() ?? "#E91E63",
+);
 const isCustomPrimary = computed(() => isCustomThemePrimary.value);
 
 watch(
@@ -232,5 +252,9 @@ function backgroundColor(color: Theme["name"]) {
 
 function handleResetPrimary() {
   resetThemePrimaryHex();
+}
+
+function handleSelectPrimary(hex: string) {
+  setThemePrimaryHex(hex);
 }
 </script>
