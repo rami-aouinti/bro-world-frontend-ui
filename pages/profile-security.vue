@@ -20,4 +20,6 @@ definePageMeta({
   sidebarVariant: "profile",
   documentDriven: false,
 });
+
+useProfileSidebarContent();
 </script>

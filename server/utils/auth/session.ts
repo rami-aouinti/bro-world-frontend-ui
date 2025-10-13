@@ -29,8 +29,52 @@ function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
 }
 
 export function getSessionToken(event: H3Event): string | null {
-  const { tokenCookieName } = resolveCookiesConfig(event);
-  return getCookie(event, tokenCookieName) ?? null;
+  const { tokenCookieName, sessionTokenCookieName, tokenPresenceCookieName, maxAge } =
+    resolveCookiesConfig(event);
+  const token = getCookie(event, tokenCookieName);
+
+  if (token) {
+    return token;
+  }
+
+  const fallbackToken = getCookie(event, sessionTokenCookieName);
+
+  if (!fallbackToken) {
+    return null;
+  }
+
+  const secure = shouldUseSecureCookies(event);
+
+  setCookie(
+    event,
+    tokenCookieName,
+    fallbackToken,
+    withSecureCookieOptions(
+      {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge,
+      },
+      event,
+    ),
+  );
+
+  setCookie(
+    event,
+    tokenPresenceCookieName,
+    "1",
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: "strict",
+        maxAge,
+        secure,
+      },
+      event,
+    ),
+  );
+
+  return fallbackToken;
 }
 
 export function getSessionUser(event: H3Event): AuthUser | null {
