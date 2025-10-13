@@ -594,7 +594,7 @@ function handleDeleteDialogClose() {
 
 .comments-error {
   margin: 0.75rem 0 0;
-  color: rgb(var(--v-theme-error));
+  color: rgb(var(--v-theme-primary));
   font-size: 0.875rem;
 }
 </style>
