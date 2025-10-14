@@ -96,6 +96,7 @@ const paddingValueMap: Record<PaddingSize, string> = {
 
 const cardStyle = ref<Record<string, string>>({
   "--card-x": paddingValueMap[props.padding] ?? "0px",
+  borderRadius: "var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px))",
 });
 
 watch(

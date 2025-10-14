@@ -105,7 +105,7 @@ main.help-page {
 }
 
 .help-faq__panels :deep(.v-expansion-panel) {
-  border-radius: 18px;
+  border-radius: var(--radius, var(--ui-card-radius));
   margin-bottom: 12px;
   border: 1px solid rgba(var(--v-theme-outline-variant), 0.28);
   background: rgba(var(--v-theme-surface), 0.92);

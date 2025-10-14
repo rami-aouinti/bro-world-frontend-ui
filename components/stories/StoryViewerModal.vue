@@ -328,7 +328,10 @@ onBeforeUnmount(() => {
 .story-viewer__image {
   width: 100%;
   max-height: 360px;
-  border-radius: 16px;
+  border-radius: var(
+    --ui-card-radius,
+    calc(var(--radius, var(--ui-radius)) + 8px)
+  );
 }
 
 .story-viewer__expired {

@@ -352,7 +352,10 @@ async function confirmDelete() {
   gap: 1rem;
   padding: 1rem;
   border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 1rem;
+  border-radius: var(
+    --ui-card-radius,
+    calc(var(--radius, var(--ui-radius)) + 8px)
+  );
   background-color: white;
   color: #111827;
 }
@@ -407,7 +410,10 @@ async function confirmDelete() {
 .post-card__menu-item {
   border: 1px solid rgba(15, 23, 42, 0.1);
   background: white;
-  border-radius: 0.75rem;
+  border-radius: var(
+    --ui-surface-radius,
+    calc(var(--radius, var(--ui-radius)) + 4px)
+  );
   padding: 0.5rem 1rem;
   text-align: left;
 }
@@ -465,7 +471,10 @@ async function confirmDelete() {
 
 .post-card__dialog {
   border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 1rem;
+  border-radius: var(
+    --ui-card-radius,
+    calc(var(--radius, var(--ui-radius)) + 8px)
+  );
   padding: 1rem;
   background: #f8fafc;
   display: flex;
@@ -488,7 +497,7 @@ async function confirmDelete() {
 .post-card__form-field input,
 .post-card__form-field textarea {
   border: 1px solid rgba(15, 23, 42, 0.2);
-  border-radius: 0.5rem;
+  border-radius: var(--radius, var(--ui-radius));
   padding: 0.5rem;
 }
 

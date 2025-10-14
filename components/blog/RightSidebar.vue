@@ -8,7 +8,8 @@
       type="hover"
     >
       <div
-        class="sticky top-24 flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl"
+        class="sticky top-24 flex flex-col gap-6 border border-white/5 bg-white/5 p-6 backdrop-blur-xl"
+        style="border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px))"
       >
         <header class="space-y-2">
           <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
