@@ -387,12 +387,14 @@ export const useAuthSession = defineStore("auth-session", () => {
         },
       });
 
-      if (!response?.user || !response?.token) {
+      const user = response?.user ?? response?.profile;
+
+      if (!user || !response?.token) {
         loginErrorState.value = "Unable to sign in at this time. Please try again later.";
         return false;
       }
 
-      setCurrentUser(response.user);
+      setCurrentUser(user);
       setTokenPresence(true);
       setSessionToken(response.token);
       readyState.value = true;
