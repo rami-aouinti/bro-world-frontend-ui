@@ -1,6 +1,6 @@
 <template>
   <main
-    class="help-page py-12"
+    class="help-page py-6"
     aria-labelledby="help-heading"
   >
     <v-container class="help-container">

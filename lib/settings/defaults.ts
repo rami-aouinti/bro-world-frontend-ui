@@ -172,24 +172,6 @@ export const defaultSiteSettings: SiteSettings = {
       isVisible: true,
       order: 3,
     }),
-    makeMenu({
-      id: "about",
-      label: "layout.sidebar.items.about",
-      icon: "mdi-information-outline",
-      translate: true,
-      to: "/about",
-      isVisible: true,
-      order: 4,
-    }),
-    makeMenu({
-      id: "contact",
-      label: "layout.sidebar.items.contact",
-      icon: "mdi-email-outline",
-      translate: true,
-      to: "/contact",
-      isVisible: true,
-      order: 5,
-    }),
     makeMenu(
       {
         id: "admin",
