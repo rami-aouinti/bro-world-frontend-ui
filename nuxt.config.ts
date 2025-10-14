@@ -400,11 +400,6 @@ export default defineNuxtConfig({
     },
   ],
   extends: nuxtLayers,
-  sitemap: {
-    siteUrl: "https://bro-world-space.com",
-    trailingSlash: false,
-    gzip: true,
-  },
 
   nitro: {
     compressPublicAssets: true,
@@ -462,10 +457,6 @@ export default defineNuxtConfig({
 
   vue: {
     propsDestructure: true,
-  },
-
-  vueuse: {
-    ssrHandlers: true,
   },
 
   hooks: {
@@ -568,20 +559,6 @@ export default defineNuxtConfig({
         },
       },
     },
-  },
-  echarts: {
-    charts: ["LineChart", "BarChart", "PieChart", "RadarChart"],
-    renderer: "svg",
-    components: [
-      "DataZoomComponent",
-      "LegendComponent",
-      "TooltipComponent",
-      "ToolboxComponent",
-      "GridComponent",
-      "TitleComponent",
-      "DatasetComponent",
-      "VisualMapComponent",
-    ],
   },
 
   ignore: ["components/**/index.ts", "components/**/shaders.ts", "components/**/types.ts"],
