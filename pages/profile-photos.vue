@@ -260,7 +260,7 @@
               class="text-card-foreground pa-6 mb-6"
               glow
             >
-              <div class="d-flex flex-column gap-4">
+              <div class="d-flex flex-column gap-5">
                 <div>
                   <h2 class="text-h6 font-weight-semibold mb-2">
                     {{ t("pages.profilePhotos.timeline.title") }}
@@ -270,36 +270,61 @@
                   </p>
                 </div>
 
-                <div
-                  v-for="item in timeline"
-                  :key="item.id"
-                  class="pa-4 rounded-xl"
-                  style="background: rgba(var(--v-theme-surface-container-high), 0.6); border: 1px solid rgba(var(--v-theme-primary), 0.15);"
-                >
-                  <div class="d-flex flex-column gap-3">
-                    <div class="d-flex flex-column gap-1">
-                      <div class="d-flex align-center justify-space-between gap-3">
-                        <span class="text-subtitle-1 font-weight-semibold">{{ item.title }}</span>
+                <div class="d-flex flex-column gap-4">
+                  <div
+                    v-for="milestone in storyMilestones"
+                    :key="milestone.id"
+                    class="pa-4 rounded-xl d-flex flex-column gap-3"
+                    style="background: rgba(var(--v-theme-surface-container-high), 0.68); border: 1px solid rgba(var(--v-theme-primary), 0.14);"
+                  >
+                    <div class="d-flex flex-column gap-3">
+                      <div class="d-flex align-start justify-space-between gap-4">
+                        <div class="d-flex align-start gap-3">
+                          <v-avatar
+                            size="44"
+                            :color="milestone.color"
+                            variant="tonal"
+                          >
+                            <v-icon
+                              :icon="milestone.icon"
+                              size="22"
+                            />
+                          </v-avatar>
+                          <div>
+                            <div class="text-subtitle-1 font-weight-semibold">{{ milestone.title }}</div>
+                            <div class="text-caption text-medium-emphasis">{{ milestone.date }}</div>
+                          </div>
+                        </div>
                         <v-chip
-                          color="primary"
+                          :color="milestone.color"
                           size="small"
-                          variant="tonal"
-                          class="text-caption"
+                          variant="flat"
+                          class="text-caption font-weight-medium"
                         >
-                          {{ item.date }}
+                          {{ milestone.status }}
                         </v-chip>
                       </div>
                       <p class="text-body-2 text-medium-emphasis mb-0">
-                        {{ item.description }}
+                        {{ milestone.description }}
                       </p>
                     </div>
+
+                    <v-progress-linear
+                      :model-value="milestone.progress"
+                      height="6"
+                      rounded
+                      :color="milestone.color"
+                      class="mt-1"
+                    />
+
                     <div class="d-flex flex-wrap gap-2">
                       <v-chip
-                        v-for="tag in item.tags"
+                        v-for="tag in milestone.tags"
                         :key="tag"
                         size="x-small"
-                        variant="flat"
-                        class="bg-primary/10 text-primary"
+                        variant="tonal"
+                        class="text-caption"
+                        color="primary"
                       >
                         {{ tag }}
                       </v-chip>
@@ -324,21 +349,49 @@
                 </div>
                 <div class="d-flex flex-column gap-3">
                   <div
-                    v-for="note in quickNotes"
+                    v-for="note in creativeNotes"
                     :key="note.id"
-                    class="d-flex gap-3 align-center pa-4 rounded-xl"
-                    style="background: rgba(var(--v-theme-surface-container-high), 0.75);"
+                    class="d-flex flex-column gap-3 pa-4 rounded-xl"
+                    style="background: rgba(var(--v-theme-surface-container-high), 0.82);"
                   >
-                    <v-avatar
-                      size="40"
-                      color="primary"
-                      variant="tonal"
-                    >
-                      <span class="text-body-2 font-weight-semibold">{{ note.initials }}</span>
-                    </v-avatar>
-                    <div class="flex-grow-1">
-                      <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
-                      <div class="text-caption text-medium-emphasis">{{ note.subtitle }}</div>
+                    <div class="d-flex flex-column gap-3">
+                      <div class="d-flex align-start justify-space-between gap-3">
+                        <div class="d-flex align-start gap-3">
+                          <v-avatar
+                            size="44"
+                            :color="note.color"
+                            variant="tonal"
+                          >
+                            <span class="text-body-2 font-weight-semibold">{{ note.initials }}</span>
+                          </v-avatar>
+                          <div>
+                            <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
+                            <div class="text-caption text-medium-emphasis">{{ note.byline }}</div>
+                          </div>
+                        </div>
+                        <v-chip
+                          :color="note.color"
+                          size="x-small"
+                          variant="flat"
+                          class="text-caption font-weight-medium"
+                        >
+                          {{ note.category }}
+                        </v-chip>
+                      </div>
+                      <p class="text-body-2 text-medium-emphasis mb-0">
+                        {{ note.preview }}
+                      </p>
+                    </div>
+                    <div class="d-flex align-center justify-space-between text-caption text-medium-emphasis">
+                      <span>{{ note.updated }}</span>
+                      <v-btn
+                        variant="text"
+                        color="primary"
+                        size="small"
+                        append-icon="mdi-arrow-top-right"
+                      >
+                        {{ note.cta }}
+                      </v-btn>
                     </div>
                   </div>
                 </div>
@@ -579,47 +632,104 @@ const displayedPhotos = computed(() => {
   return photoLibrary.filter((photo) => photo.filter === activeFilter.value);
 });
 
-const timeline = reactive([
-  {
-    id: "2024-q2",
-    title: "Research residency",
-    date: "Q2 2024",
-    description:
-      "A week-long residency documenting artisan workshops to inspire new community formats.",
-    tags: ["Research", "Community"],
-  },
-  {
-    id: "2024-launch",
-    title: "BroWorld 2.0 launch",
-    date: "May 2024",
-    description: "Captured stories from partners, beta customers, and the team during launch week.",
-    tags: ["Events", "Product"],
-  },
-  {
-    id: "2023-retreat",
-    title: "Leadership retreat",
-    date: "November 2023",
-    description: "Photo journal from the annual strategy retreat in the mountains.",
-    tags: ["Retreat", "Team"],
-  },
-] satisfies Array<{
+type StoryMilestone = {
   id: string;
   title: string;
   date: string;
   description: string;
+  status: string;
+  progress: number;
+  color: string;
+  icon: string;
   tags: string[];
-}>);
+};
 
-const quickNotes = reactive([
+type CreativeNote = {
+  id: string;
+  initials: string;
+  title: string;
+  byline: string;
+  category: string;
+  preview: string;
+  updated: string;
+  color: string;
+  cta: string;
+};
+
+const storyMilestones = reactive<StoryMilestone[]>([
   {
-    id: "note-1",
-    initials: "AR",
-    title: "Shot list updated",
-    subtitle: "Amina added 3 new prompts",
+    id: "storyboards",
+    title: "Residency storyboards",
+    date: "May 2024",
+    description:
+      "Sequencing portraits and workshop captures into a three-act narrative for the residency film.",
+    status: "In review",
+    progress: 72,
+    color: "primary",
+    icon: "mdi-filmstrip-box-multiple",
+    tags: ["Documentary", "Editorial"],
   },
-  { id: "note-2", initials: "LM", title: "Color grading", subtitle: "Leo shared LUT presets" },
-  { id: "note-3", initials: "NH", title: "Story ideas", subtitle: "Noor drafted interview angles" },
-] satisfies Array<{ id: string; initials: string; title: string; subtitle: string }>);
+  {
+    id: "launch-debrief",
+    title: "Launch week debrief",
+    date: "April 2024",
+    description:
+      "Combining event footage with voiceovers from partners to create a highlight reel for investors.",
+    status: "Editing",
+    progress: 54,
+    color: "secondary",
+    icon: "mdi-lightning-bolt",
+    tags: ["Events", "Recap"],
+  },
+  {
+    id: "retreat-journal",
+    title: "Retreat journal",
+    date: "February 2024",
+    description:
+      "Translating dawn hikes and campfire conversations into a reflective zine for the team archive.",
+    status: "Drafting",
+    progress: 38,
+    color: "success",
+    icon: "mdi-mountain",
+    tags: ["Retreat", "Culture"],
+  },
+]);
+
+const creativeNotes = reactive<CreativeNote[]>([
+  {
+    id: "moodboard",
+    initials: "AR",
+    title: "Moodboard refresh",
+    byline: "Amina Rahman • Visual lead",
+    category: "Mood",
+    preview: "Updated the hero palette with twilight blues and added grain overlays for motion clips.",
+    updated: "2 hours ago",
+    color: "primary",
+    cta: "Open deck",
+  },
+  {
+    id: "soundtrack",
+    initials: "LM",
+    title: "Soundtrack selects",
+    byline: "Leo Moretti • Audio editor",
+    category: "Audio",
+    preview: "Shared three ambient loops that sync with the launch highlight reel pacing.",
+    updated: "Yesterday",
+    color: "secondary",
+    cta: "Listen now",
+  },
+  {
+    id: "story-angles",
+    initials: "NH",
+    title: "Story angles",
+    byline: "Noor Haddad • Producer",
+    category: "Narrative",
+    preview: "Drafted interview prompts focusing on community impact and future residencies.",
+    updated: "3 days ago",
+    color: "warning",
+    cta: "Review notes",
+  },
+]);
 
 const showSnackbar = ref(false);
 const snackbarMessage = ref("");
