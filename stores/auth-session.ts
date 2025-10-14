@@ -370,11 +370,17 @@ export const useAuthSession = defineStore("auth-session", () => {
     const fetcher = resolveFetcher();
 
     try {
+      const payload = {
+        identifier: trimmedIdentifier,
+        username: trimmedIdentifier,
+        password: trimmedPassword,
+      };
+
       const response = await fetcher<AuthLoginEnvelope>("/auth/login", {
         method: "POST",
-        body: {
-          username: trimmedIdentifier,
-          password: trimmedPassword,
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
         },
         context: {
           suppressErrorNotification: true,
