@@ -46,7 +46,7 @@ importers:
         version: 0.11.2(magicast@0.3.5)(pinia@3.0.3(typescript@5.9.3)(vue@3.5.22(typescript@5.9.3)))
       '@splinetool/runtime':
         specifier: ^1.10.56
-        version: 1.10.78
+        version: 1.10.80
       '@types/lodash.template':
         specifier: ^4.5.3
         version: 4.5.3
@@ -2073,8 +2073,8 @@ packages:
   '@speed-highlight/core@1.2.7':
     resolution: {integrity: sha512-0dxmVj4gxg3Jg879kvFS/msl4s9F3T9UXC1InxgOf7t5NvcPD97u/WTA5vL/IxWHMn7qSxBozqrnnE2wvl1m8g==}
 
-  '@splinetool/runtime@1.10.78':
-    resolution: {integrity: sha512-ujFHPfImASzFsShxqTcTtEYbhniXFu1jhyg/geHIKWGphgKLPay7VTRdpFN6YmL3RrKOPWF0FPYEoPzT4+oi+A==}
+  '@splinetool/runtime@1.10.80':
+    resolution: {integrity: sha512-t2jZEthguG75kpr3rmf2axtD68xoZeALRtsm7ObV5Q/9fV1L4w/gcHKUvdPXuPaKZ5R6dwPAqh5psZ8PKRoqGw==}
 
   '@sqlite.org/sqlite-wasm@3.50.4-build1':
     resolution: {integrity: sha512-Qig2Wso7gPkU1PtXwFzndh+CTRzrIFxVGqv6eCetjU7YqxlHItj+GvQYwYTppCRgAPawtRN/4AJcEgB9xDHGug==}
@@ -9917,7 +9917,7 @@ snapshots:
 
   '@speed-highlight/core@1.2.7': {}
 
-  '@splinetool/runtime@1.10.78':
+  '@splinetool/runtime@1.10.80':
     dependencies:
       on-change: 4.0.2
       semver-compare: 1.0.0

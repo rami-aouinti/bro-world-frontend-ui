@@ -353,7 +353,7 @@ const normalizedVuetifyLocaleMessages = Object.fromEntries(
 
 export type DataTableHeaders = VDataTable["$props"]["headers"];
 
-const FALLBACK_PRIMARY_HEX = "#E91E63";
+const FALLBACK_PRIMARY_HEX = "#091b2d";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const primaryCookie = useCookie<string | null>(
