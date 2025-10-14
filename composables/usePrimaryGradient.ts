@@ -14,9 +14,9 @@ function hexToHsl(hex: string) {
   const b = parseInt(hex.slice(4, 6), 16) / 255;
   const max = Math.max(r, g, b),
     min = Math.min(r, g, b);
-  let h = 0,
-    s = 0,
-    l = (max + min) / 2;
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
   if (max !== min) {
     const d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -35,23 +35,26 @@ function hexToHsl(hex: string) {
   return { h, s, l };
 }
 function hslToHex(h: number, s: number, l: number) {
-  const hue2rgb = (p: number, q: number, t: number) => {
-    if (t < 0) t += 1;
-    if (t > 1) t -= 1;
-    if (t < 1 / 6) return p + (q - p) * 6 * t;
-    if (t < 1 / 2) return q;
-    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+  function hue2rgb(p: number, q: number, t: number) {
+    let normalizedT = t;
+
+    if (normalizedT < 0) normalizedT += 1;
+    if (normalizedT > 1) normalizedT -= 1;
+    if (normalizedT < 1 / 6) return p + (q - p) * 6 * normalizedT;
+    if (normalizedT < 1 / 2) return q;
+    if (normalizedT < 2 / 3) return p + (q - p) * (2 / 3 - normalizedT) * 6;
     return p;
-  };
+  }
   const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
   const p = 2 * l - q;
   const r = hue2rgb(p, q, h + 1 / 3);
   const g = hue2rgb(p, q, h);
   const b = hue2rgb(p, q, h - 1 / 3);
-  const toHex = (x: number) =>
-    Math.round(x * 255)
+  function toHex(x: number) {
+    return Math.round(x * 255)
       .toString(16)
       .padStart(2, "0");
+  }
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 function makeScale(hex: string, steps: number, light: number, dark: number) {
