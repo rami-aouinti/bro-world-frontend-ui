@@ -63,53 +63,49 @@
       >
     </div>
   </div>
-  <ClientOnly>
-    <div
-      v-if="showAuthUi"
-      class="reaction-bar"
-    >
-      <!-- Actions -->
-      <div class="actions">
-        <ReactionPicker
-          class="like-size-lg"
-          @like="onToggleLike"
-          @select="handleSelect"
-        />
-        <v-btn
-          variant="text"
-          density="comfortable"
-          class="action-btn"
-          @click="$emit('comment')"
-        >
-          <Icon
-            name="mdi-chat-outline"
-            start
-          ></Icon>
-          {{ t("blog.posts.actions.comment") }}
-        </v-btn>
-        <v-btn
-          variant="text"
-          @click="$emit('share')"
-        >
-          <Icon
-            name="mdi-share-outline"
-            start
-          ></Icon>
-          {{ t("blog.posts.actions.share") }}
-        </v-btn>
-      </div>
+  <div
+    v-if="showAuthUi"
+    class="reaction-bar"
+  >
+    <!-- Actions -->
+    <div class="actions">
+      <ReactionPicker
+        class="like-size-lg"
+        @like="onToggleLike"
+        @select="handleSelect"
+      />
+      <v-btn
+        variant="text"
+        density="comfortable"
+        class="action-btn"
+        @click="$emit('comment')"
+      >
+        <Icon
+          name="mdi-chat-outline"
+          start
+        ></Icon>
+        {{ t("blog.posts.actions.comment") }}
+      </v-btn>
+      <v-btn
+        variant="text"
+        @click="$emit('share')"
+      >
+        <Icon
+          name="mdi-share-outline"
+          start
+        ></Icon>
+        {{ t("blog.posts.actions.share") }}
+      </v-btn>
     </div>
-  </ClientOnly>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent, onBeforeUnmount, watch } from "vue";
-import type { WatchStopHandle } from "vue";
+import { ref, computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import type { BlogPost } from "~/lib/mock/blog";
-import { onNuxtReady } from "#imports";
 
 const ReactionPicker = defineAsyncComponent({
   loader: () => import("~/components/blog/ReactionPicker.vue"),
@@ -119,30 +115,9 @@ const ReactionPicker = defineAsyncComponent({
 type Reaction = PickerReaction;
 
 const auth = useAuthSession();
-const showAuthUi = ref(false);
-
-if (import.meta.client) {
-  let stopWatchingAuth: WatchStopHandle | null = null;
-
-  function refreshAuthUiVisibility() {
-    showAuthUi.value = auth.isReady.value && auth.isAuthenticated.value;
-  }
-
-  onNuxtReady(() => {
-    refreshAuthUiVisibility();
-
-    stopWatchingAuth = watch(
-      () => [auth.isReady.value, auth.isAuthenticated.value],
-      refreshAuthUiVisibility,
-      { flush: "post" },
-    );
-  });
-
-  onBeforeUnmount(() => {
-    stopWatchingAuth?.();
-    stopWatchingAuth = null;
-  });
-}
+const showAuthUi = computed(
+  () => import.meta.client && auth.isReady.value && auth.isAuthenticated.value,
+);
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
 const props = defineProps<{
