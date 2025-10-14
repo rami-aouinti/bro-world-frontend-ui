@@ -1,7 +1,7 @@
 <template>
   <SidebarCard
     v-bind="$attrs"
-    class="text-card-foreground px-3"
+    class="text-card-foreground px-3 py-3"
     glow
   >
     <PostMeta
