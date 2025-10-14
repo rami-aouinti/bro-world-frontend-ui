@@ -197,5 +197,17 @@ export function resolveCredentialPassword(payload: CredentialPayload | undefined
     return "";
   }
 
-  return normalizeCredentialValue(payload.password);
+  const value = payload.password;
+
+  if (Array.isArray(value)) {
+    const [first] = value;
+
+    return typeof first === "string" ? first : "";
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return "";
 }

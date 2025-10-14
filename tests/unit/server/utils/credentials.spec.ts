@@ -23,9 +23,11 @@ describe("credential helpers", () => {
     expect(resolveCredentialIdentifier({ identifier: ["  admin  ", "ignored"] })).toBe("admin");
   });
 
-  it("normalizes the password field", () => {
-    expect(resolveCredentialPassword({ password: "  secret" })).toBe("secret");
-    expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe("hunter2");
+  it("returns the original password value", () => {
+    expect(resolveCredentialPassword({ password: "  secret" })).toBe("  secret");
+    expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe(
+      "  hunter2  ",
+    );
   });
 
   it("returns an empty string when fields are missing", () => {
