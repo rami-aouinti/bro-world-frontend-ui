@@ -357,9 +357,10 @@ export const useAuthSession = defineStore("auth-session", () => {
 
   async function login(credentials: LoginCredentials) {
     const trimmedIdentifier = credentials.identifier.trim();
-    const trimmedPassword = credentials.password.trim();
+    const password = credentials.password;
+    const hasPassword = password.trim().length > 0;
 
-    if (!trimmedIdentifier || !trimmedPassword) {
+    if (!trimmedIdentifier || !hasPassword) {
       loginErrorState.value = "Please provide both your email or username and password.";
       return false;
     }
@@ -372,7 +373,7 @@ export const useAuthSession = defineStore("auth-session", () => {
     try {
       const payload: Record<string, string> = {
         identifier: trimmedIdentifier,
-        password: trimmedPassword,
+        password,
       };
 
       if (trimmedIdentifier.includes("@")) {
