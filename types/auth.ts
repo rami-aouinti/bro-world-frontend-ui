@@ -17,7 +17,13 @@ export interface AuthLoginResponse {
 
 export interface AuthLoginEnvelope {
   token: string;
-  user: AuthUser;
+  /**
+   * Some authentication endpoints return the authenticated user under a
+   * `user` property while others use `profile`. Supporting both here keeps the
+   * consumer code resilient to either payload.
+   */
+  user?: AuthUser;
+  profile?: AuthUser;
 }
 
 export interface AuthSessionEnvelope {
