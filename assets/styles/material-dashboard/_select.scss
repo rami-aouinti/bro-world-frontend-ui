@@ -30,7 +30,7 @@
   transition:
     background 0.3s ease,
     transform 0.2s;
-  border-radius: 16px;
+  border-radius: var(--radius, var(--ui-surface-radius));
 }
 
 .chat-list-item:hover {
@@ -71,5 +71,5 @@
 }
 
 .v-list-item--link:before {
-  border-radius: $border-radius-sm;
+  border-radius: var(--radius, var(--ui-radius-sm));
 }

@@ -15,7 +15,7 @@ import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 
 interface ThemeCookieConfig {
   theme: Theme["name"];
-  radius: number;
+  radius?: number;
 }
 
 export function useThemes() {
@@ -70,7 +70,30 @@ export function useThemes() {
   const theme = computed<Theme["name"]>(
     () => themeCookie.value?.theme ?? resolveThemeDefaults().theme,
   );
-  const radius = computed(() => themeCookie.value?.radius ?? resolveThemeDefaults().radius);
+  const defaultRadius = computed(() => resolveThemeDefaults().radius);
+
+  const themeRadiusCookie = useCookie<number | null>(
+    "theme-radius",
+    withSecureCookieOptions({
+      sameSite: "lax",
+    }),
+  );
+
+  const radius = computed(() => {
+    const cookieRadius = themeRadiusCookie.value;
+
+    if (typeof cookieRadius === "number") {
+      return cookieRadius;
+    }
+
+    const legacyRadius = themeCookie.value?.radius;
+
+    if (typeof legacyRadius === "number" && legacyRadius !== defaultRadius.value) {
+      return legacyRadius;
+    }
+
+    return defaultRadius.value;
+  });
   const themeClass = computed(() => `theme-${theme.value}`);
 
   function setTheme(themeName: Theme["name"]) {
@@ -82,8 +105,12 @@ export function useThemes() {
   }
 
   function setRadius(newRadius: number) {
+    const defaults = resolveThemeDefaults();
+
+    themeRadiusCookie.value = newRadius === defaults.radius ? null : newRadius;
+
     themeCookie.value = {
-      ...resolveThemeDefaults(),
+      ...defaults,
       ...themeCookie.value,
       radius: newRadius,
     };
@@ -192,6 +219,44 @@ export function useThemes() {
         if (oldValue && current === normalizeHexColor(oldValue)) {
           themePrimaryCookie.value = null;
         }
+      },
+      { immediate: true },
+    );
+  }
+
+  if (import.meta.client) {
+    watch(
+      defaultRadius,
+      (next, previous) => {
+        const stored = themeRadiusCookie.value;
+
+        if (stored == null) {
+          return;
+        }
+
+        if (stored === next || stored === previous) {
+          themeRadiusCookie.value = null;
+        }
+      },
+      { immediate: true },
+    );
+
+    watch(
+      () => themeCookie.value?.radius,
+      (legacyRadius) => {
+        if (typeof legacyRadius !== "number") {
+          return;
+        }
+
+        if (legacyRadius === defaultRadius.value) {
+          return;
+        }
+
+        if (typeof themeRadiusCookie.value === "number") {
+          return;
+        }
+
+        themeRadiusCookie.value = legacyRadius;
       },
       { immediate: true },
     );

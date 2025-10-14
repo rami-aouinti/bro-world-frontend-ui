@@ -45,6 +45,7 @@ body {
   --v-sheet-border-radius: var(--ui-radius);
   --v-navigation-drawer-border-radius: var(--ui-card-radius);
   --ui-card-radius: calc(var(--ui-radius) + 8px);
+  --ui-overlay-radius: calc(var(--ui-card-radius) + 4px);
   --ui-surface-radius: calc(var(--ui-radius) + 4px);
 
   /* Focus */
@@ -84,6 +85,36 @@ input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
   border-radius: var(--radius, var(--ui-radius));
+}
+
+.btn,
+button.btn,
+a.btn,
+input.btn,
+label.btn {
+  border-radius: var(--radius, var(--ui-radius)) !important;
+}
+
+:where(.rounded-sm) {
+  border-radius: var(--radius, var(--ui-radius-sm)) !important;
+}
+
+:where(.rounded,
+.rounded-md) {
+  border-radius: var(--radius, var(--ui-radius)) !important;
+}
+
+:where(.rounded-lg) {
+  border-radius: var(--radius, var(--ui-surface-radius)) !important;
+}
+
+:where(.rounded-xl,
+.rounded-2xl) {
+  border-radius: var(--radius, var(--ui-card-radius)) !important;
+}
+
+:where(.rounded-3xl) {
+  border-radius: var(--radius, var(--ui-overlay-radius)) !important;
 }
 
 .v-btn {
