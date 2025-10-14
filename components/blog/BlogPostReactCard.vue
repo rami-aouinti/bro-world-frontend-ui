@@ -117,9 +117,14 @@ const ReactionPicker = defineAsyncComponent({
 type Reaction = PickerReaction;
 
 const auth = useAuthSession();
-const canRenderAuthUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
 const isHydrated = ref(false);
-const showAuthUi = computed(() => isHydrated.value && canRenderAuthUi.value);
+const showAuthUi = computed(() => {
+  if (!isHydrated.value) {
+    return false;
+  }
+
+  return auth.isReady.value && auth.isAuthenticated.value;
+});
 onMounted(() => {
   isHydrated.value = true;
 });
