@@ -1763,6 +1763,15 @@
         "pageSubtitle": "Subtitle",
         "pageBody": "Body content"
       },
+      "themeCustomizer": {
+        "title": "تخصيص",
+        "color": "اللون",
+        "radius": "نصف القطر",
+        "theme": "السمة",
+        "light": "فاتح",
+        "dark": "داكن",
+        "system": "النظام"
+      },
       "helpers": {
         "themeModeSystem": "Automatically adapts to each visitor's device preference.",
         "themeModeLight": "Always display the interface in light mode.",

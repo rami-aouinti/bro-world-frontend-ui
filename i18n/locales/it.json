@@ -1587,6 +1587,15 @@
         "pageSubtitle": "Subtitle",
         "pageBody": "Body content"
       },
+      "themeCustomizer": {
+        "title": "Personalizza",
+        "color": "Colore",
+        "radius": "Raggio",
+        "theme": "Tema",
+        "light": "Chiaro",
+        "dark": "Scuro",
+        "system": "Sistema"
+      },
       "helpers": {
         "themeModeSystem": "Automatically adapts to each visitor's device preference.",
         "themeModeLight": "Always display the interface in light mode.",

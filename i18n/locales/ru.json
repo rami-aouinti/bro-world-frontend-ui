@@ -1587,6 +1587,15 @@
         "pageSubtitle": "Subtitle",
         "pageBody": "Body content"
       },
+      "themeCustomizer": {
+        "title": "Настроить",
+        "color": "Цвет",
+        "radius": "Радиус",
+        "theme": "Тема",
+        "light": "Светлая",
+        "dark": "Тёмная",
+        "system": "Система"
+      },
       "helpers": {
         "themeModeSystem": "Automatically adapts to each visitor's device preference.",
         "themeModeLight": "Always display the interface in light mode.",

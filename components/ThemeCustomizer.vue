@@ -6,11 +6,11 @@
     <div class="grid gap-6">
     <div class="space-y-1">
       <h5 class="text-foreground text-lg font-semibold">
-        {{ $t("Customize") }}
+        {{ $t("admin.settings.themeCustomizer.title") }}
       </h5>
     </div>
     <div class="space-y-1">
-      <UiLabel>{{ $t("Color") }}</UiLabel>
+      <UiLabel>{{ $t("admin.settings.themeCustomizer.color") }}</UiLabel>
       <div class="grid grid-cols-4 gap-2">
         <template
           v-for="color in allColors"
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="space-y-1">
-      <UiLabel>{{ $t("Radius") }}</UiLabel>
+      <UiLabel>{{ $t("admin.settings.themeCustomizer.radius") }}</UiLabel>
       <div class="grid grid-cols-5 gap-2">
         <template
           v-for="r in RADII"
@@ -101,7 +101,7 @@
       v-if="darkModeToggle"
       class="space-y-1.5"
     >
-      <UiLabel>{{ $t("Theme") }}</UiLabel>
+      <UiLabel>{{ $t("admin.settings.themeCustomizer.theme") }}</UiLabel>
       <div class="grid grid-cols-3 gap-2">
         <UiButton
           class="justify-center gap-2"
@@ -113,7 +113,7 @@
             name="lucide:sun"
             size="16"
           />
-          <span class="text-xs capitalize">{{ $t("Light") }}</span>
+          <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.light") }}</span>
         </UiButton>
         <UiButton
           class="justify-center gap-2"
@@ -125,7 +125,7 @@
             name="lucide:moon"
             size="16"
           />
-          <span class="text-xs capitalize">{{ $t("Dark") }}</span>
+          <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.dark") }}</span>
         </UiButton>
         <UiButton
           class="justify-center gap-2"
@@ -137,7 +137,7 @@
             name="lucide:monitor"
             size="16"
           />
-          <span class="text-xs capitalize">{{ $t("System") }}</span>
+          <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.system") }}</span>
         </UiButton>
       </div>
     </div>
