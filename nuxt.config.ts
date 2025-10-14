@@ -11,6 +11,7 @@ import { createRequire } from "node:module";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import compression from "vite-plugin-compression";
 import tailwindcss from "@tailwindcss/vite";
+import vuetify from "vite-plugin-vuetify";
 import type { PluginOption } from "vite";
 import { simplePurgeCssPlugin } from "./lib/vite/simple-purgecss";
 import { aliases } from "vuetify/iconsets/mdi";
@@ -190,20 +191,12 @@ function resolveFromRoot(...segments: string[]) {
 const require = createRequire(import.meta.url);
 const normalizedLocalPagesDir = resolveFromRoot("pages").replace(/\\/g, "/");
 
-type VuetifyPluginFactory = (options?: { autoImport?: boolean }) => PluginOption | PluginOption[];
-
-let vuetifyPlugin: PluginOption | PluginOption[] | null = null;
-
-try {
-  const { default: vuetify } = require("vite-plugin-vuetify") as { default: VuetifyPluginFactory };
-  vuetifyPlugin = vuetify({
-    autoImport: true,
-  });
-} catch (error) {
-  console.warn(
-    `vite-plugin-vuetify not loaded: ${(error as Error | undefined)?.message ?? "unknown error"}`,
-  );
-}
+const vuetifyPlugin = vuetify({
+  autoImport: false,
+  styles: {
+    configFile: "assets/styles/settings.scss",
+  },
+}) as PluginOption | PluginOption[];
 
 const iconCollections = ["mdi", "logos", "heroicons", "lucide", "tabler", "vscode-icons"] as const;
 
@@ -223,7 +216,7 @@ const missingClientBundleCollections = clientBundleCollections.filter(
 );
 
 if (missingClientBundleCollections.length > 0) {
-  console.info(
+  console.warn(
     `Nuxt Icon client bundle disabled: missing icon collections ${missingClientBundleCollections.join(", ")}`,
   );
 }
@@ -242,7 +235,7 @@ try {
   require.resolve("@nuxt/ui-pro/nuxt.config");
   nuxtLayers.unshift("@nuxt/ui-pro");
 } catch (error) {
-  console.info(
+  console.warn(
     `@nuxt/ui-pro layer skipped: ${(error as Error | undefined)?.message ?? "Unknown error"}`,
   );
 }
@@ -271,7 +264,7 @@ const normalizedBaseURL = rawBaseURL.startsWith("/") ? rawBaseURL : `/${rawBaseU
 const baseURL = normalizedBaseURL.endsWith("/") ? normalizedBaseURL : `${normalizedBaseURL}/`;
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV !== "production" },
   plugins: [
     { src: "~/plugins/clarity.js", mode: "client" },
     "~/plugins/vuetify",
@@ -280,7 +273,6 @@ export default defineNuxtConfig({
 
   css: [
     "vuetify/styles",
-    "@mdi/font/css/materialdesignicons.css",
     "flag-icons/css/flag-icons.min.css",
     "~/assets/styles/material-dashboard.scss",
     "~/assets/styles/index.css",
@@ -293,7 +285,7 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
-      ...(vuetifyPlugin ? (Array.isArray(vuetifyPlugin) ? vuetifyPlugin : [vuetifyPlugin]) : []),
+      ...(Array.isArray(vuetifyPlugin) ? vuetifyPlugin : [vuetifyPlugin]),
       tailwindcss(),
       simplePurgeCssPlugin({
         content: [
@@ -365,6 +357,14 @@ export default defineNuxtConfig({
         pages: true,
         commons: true,
       },
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vuetify: ["vuetify"],
+            vendor: ["vue", "vue-router", "pinia"],
+          },
+        },
+      },
     },
   },
 
@@ -400,13 +400,18 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    compressPublicAssets: {
-      brotli: true,
-      gzip: true,
-    },
+    compressPublicAssets: true,
     prerender: {
       routes: ["/", "/de", "/fr", "/ar", "/it", "/es", "/ru"],
     },
+  },
+
+  routeRules: {
+    "/": { isr: 60 },
+    "/about": { isr: 300 },
+    "/contact": { isr: 300 },
+    "/help": { isr: 300 },
+    "/api/**": { swr: 60 },
   },
 
   sourcemap: {
@@ -423,6 +428,7 @@ export default defineNuxtConfig({
     typedPages: true,
     componentIslands: false,
     payloadExtraction: true,
+    renderJsonPayloads: true,
   },
 
   typescript: {
@@ -510,6 +516,7 @@ export default defineNuxtConfig({
   },
 
   image: {
+    format: ["webp", "avif"],
     dir: "public",
     domains: ["images.unsplash.com"],
     screens: {
