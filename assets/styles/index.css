@@ -18,6 +18,14 @@ body {
     Arial,
     sans-serif
   );
+  --ui-radius: var(--radius, var(--ui-radius-md));
+  --v-radius-md: var(--radius, var(--v-radius-md));
+  --v-btn-border-radius: var(--radius, var(--ui-radius));
+  --v-field-border-radius: var(--radius, var(--ui-radius));
+  --v-list-border-radius: var(--radius, var(--ui-radius));
+  --v-card-border-radius: var(--radius, var(--ui-card-radius));
+  --v-sheet-border-radius: var(--radius, var(--ui-radius));
+  --v-navigation-drawer-border-radius: var(--radius, var(--ui-card-radius));
 }
 
 :root {
@@ -30,6 +38,14 @@ body {
   --ui-radius-xl: var(--v-radius-xl);
   --ui-radius-pill: var(--v-radius-pill);
   --ui-radius: var(--ui-radius-md);
+  --v-btn-border-radius: var(--ui-radius);
+  --v-field-border-radius: var(--ui-radius);
+  --v-list-border-radius: var(--ui-radius);
+  --v-card-border-radius: var(--ui-card-radius);
+  --v-sheet-border-radius: var(--ui-radius);
+  --v-navigation-drawer-border-radius: var(--ui-card-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 8px);
+  --ui-surface-radius: calc(var(--ui-radius) + 4px);
 
   /* Focus */
   --ui-focus: 0 0 0 3px rgba(var(--v-theme-primary), 0.35);
@@ -56,6 +72,43 @@ body {
   --ui-spacing-md: var(--ui-spacing-3);
   --ui-spacing-lg: var(--ui-spacing-4);
   --ui-spacing-xl: var(--ui-spacing-6);
+}
+
+form,
+.v-form,
+button,
+[type="button"],
+[type="reset"],
+[type="submit"],
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  border-radius: var(--radius, var(--ui-radius));
+}
+
+.v-btn {
+  border-radius: var(--v-btn-border-radius);
+}
+
+.v-field:not(.v-field--variant-plain):not(.v-field--variant-underlined),
+.v-input:not(.v-input--variant-plain):not(.v-input--variant-underlined) .v-field {
+  border-radius: var(--v-field-border-radius);
+}
+
+.v-list {
+  border-radius: var(--v-list-border-radius);
+}
+
+.v-list-item {
+  border-radius: inherit;
+}
+
+.v-card,
+.v-sheet:not(.v-sheet--tile),
+.v-navigation-drawer,
+.v-dialog > .v-overlay__content,
+.v-menu > .v-overlay__content {
+  border-radius: var(--radius, var(--ui-card-radius));
 }
 
 :where(#__nuxt, .v-application) {

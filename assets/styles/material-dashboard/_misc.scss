@@ -295,27 +295,36 @@ html {
 // Border Radius
 
 .border-radius-xs {
-  border-radius: $border-radius-xs !important;
+  border-radius: var(--ui-radius-xs, $border-radius-xs) !important;
 }
 
 .border-radius-sm {
-  border-radius: $border-radius-sm !important;
+  border-radius: var(--ui-radius-sm, $border-radius-sm) !important;
 }
 
 .border-radius-md {
-  border-radius: $border-radius-md !important;
+  border-radius: var(--radius, $border-radius-md) !important;
 }
 
 .border-radius-lg {
-  border-radius: $border-radius-lg !important;
+  border-radius: var(
+      --ui-surface-radius,
+      calc(var(--radius, $border-radius-md) + 4px)
+    ) !important;
 }
 
 .border-radius-xl {
-  border-radius: $border-radius-xl !important;
+  border-radius: var(
+      --ui-card-radius,
+      calc(var(--radius, $border-radius-md) + 8px)
+    ) !important;
 }
 
 .border-radius-2xl {
-  border-radius: $border-radius-2xl !important;
+  border-radius: var(
+      --ui-card-radius,
+      calc(var(--radius, $border-radius-md) + 12px)
+    ) !important;
 }
 
 // HR variants

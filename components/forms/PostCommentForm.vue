@@ -226,7 +226,7 @@ defineExpose({
 .composer__box {
   flex: 1;
   background: rgba(var(--v-theme-on-surface), 0.04);
-  border-radius: 18px;
+  border-radius: var(--radius, var(--ui-radius));
   padding: 6px 8px;
 }
 

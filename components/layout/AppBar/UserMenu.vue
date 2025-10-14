@@ -42,7 +42,8 @@
     </template>
 
     <div
-      class="min-w-[280px] overflow-hidden bg-background text-card-foreground px-3 py-2 shadow-xl ring-1 ring-black/5 dark:ring-white/10 rounded-3xl"
+      class="min-w-[280px] overflow-hidden bg-background text-card-foreground px-3 py-2 shadow-xl ring-1 ring-black/5 dark:ring-white/10"
+      style="border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px))"
     >
       <span
         class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
