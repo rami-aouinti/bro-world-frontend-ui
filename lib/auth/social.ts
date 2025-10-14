@@ -17,8 +17,3 @@ export function resolveSocialRedirect(provider: SocialProvider): string {
   return overrides[provider] ?? DEFAULT_REDIRECTS[provider];
 }
 
-export const SOCIAL_PROVIDERS: readonly SocialProvider[] = [
-  "google",
-  "github",
-  "microsoft",
-] as const;

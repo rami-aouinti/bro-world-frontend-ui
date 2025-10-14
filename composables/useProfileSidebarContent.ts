@@ -11,7 +11,7 @@ import type {
   SidebarFriend,
 } from "~/types/pages/profile";
 
-const DEFAULT_AVATAR = "https://bro-world-space.com/img/person.png";
+const DEFAULT_AVATAR = "/person.png";
 
 type SidebarLifeEvent = { title: string; date?: string; description?: string };
 

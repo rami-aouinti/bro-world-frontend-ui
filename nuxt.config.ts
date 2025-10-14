@@ -400,11 +400,6 @@ export default defineNuxtConfig({
     },
   ],
   extends: nuxtLayers,
-  sitemap: {
-    siteUrl: "https://bro-world-space.com",
-    trailingSlash: false,
-    gzip: true,
-  },
 
   nitro: {
     compressPublicAssets: true,
@@ -419,6 +414,26 @@ export default defineNuxtConfig({
     "/contact": { isr: 300 },
     "/help": { isr: 300 },
     "/api/**": { swr: 60 },
+    "/_nuxt/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
+    "/img/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
+    "/images/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
+    "/icons/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
   },
 
   // Désactive les maps en prod côté serveur & client
@@ -442,10 +457,6 @@ export default defineNuxtConfig({
 
   vue: {
     propsDestructure: true,
-  },
-
-  vueuse: {
-    ssrHandlers: true,
   },
 
   hooks: {
@@ -522,7 +533,12 @@ export default defineNuxtConfig({
   image: {
     format: ["webp", "avif"],
     dir: "public",
-    domains: ["images.unsplash.com"],
+    domains: [
+      "images.unsplash.com",
+      "picsum.photos",
+      "i.pravatar.cc",
+      "bro-world-space.com",
+    ],
     screens: {
       sm: 320,
       md: 640,
@@ -543,20 +559,6 @@ export default defineNuxtConfig({
         },
       },
     },
-  },
-  echarts: {
-    charts: ["LineChart", "BarChart", "PieChart", "RadarChart"],
-    renderer: "svg",
-    components: [
-      "DataZoomComponent",
-      "LegendComponent",
-      "TooltipComponent",
-      "ToolboxComponent",
-      "GridComponent",
-      "TitleComponent",
-      "DatasetComponent",
-      "VisualMapComponent",
-    ],
   },
 
   ignore: ["components/**/index.ts", "components/**/shaders.ts", "components/**/types.ts"],
