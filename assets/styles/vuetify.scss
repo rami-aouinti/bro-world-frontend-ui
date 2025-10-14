@@ -1,8 +1,4 @@
-@forward "vuetify/settings" with (
-  $utilities: true,
-  $color-pack: true,
-  $layers: true
-);
+@forward "vuetify/settings";
 
 @use "variables/typography";
 @use "variables/icons";
