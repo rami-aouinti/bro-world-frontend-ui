@@ -153,6 +153,7 @@ import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
 import Icon from "./Icon.vue";
+import { hasInjectionContext, tryUseNuxtApp } from "#imports";
 
 const {
   themeClass,
@@ -167,7 +168,21 @@ const {
   setThemePrimaryHex,
   resetThemePrimaryHex,
 } = useThemes();
-const { darkModeToggle } = useConfig().value.header;
+const nuxtApp = tryUseNuxtApp();
+const docsConfig = computed(() => {
+  if (nuxtApp && hasInjectionContext()) {
+    return useConfig().value;
+  }
+
+  return {
+    header: {
+      darkModeToggle: false,
+    },
+  };
+});
+const darkModeToggle = computed(
+  () => docsConfig.value.header?.darkModeToggle ?? false,
+);
 const colorMode = useCookieColorMode();
 
 const allColors: Theme["name"][] = [
