@@ -584,6 +584,7 @@ export default defineNuxtConfig({
     },
     auth: {
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
+      apiToken: process.env.NUXT_AUTH_API_TOKEN ?? "",
       tokenCookieName: process.env.NUXT_AUTH_TOKEN_COOKIE ?? "auth_token",
       sessionTokenCookieName: process.env.NUXT_AUTH_SESSION_TOKEN_COOKIE ?? "auth_session_token",
       userCookieName: process.env.NUXT_AUTH_USER_COOKIE ?? "auth_user",
