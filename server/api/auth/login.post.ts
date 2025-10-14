@@ -19,8 +19,9 @@ export default defineEventHandler(async (event) => {
   const body = normalizeCredentialPayload(rawBody);
   const username = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
+  const hasPassword = password.length > 0;
 
-  if (!username || !password) {
+  if (!username || !hasPassword) {
     throw createError({
       statusCode: 400,
       statusMessage: "Unable to sign in",
@@ -136,11 +137,11 @@ function buildLoginPayload(
 ): Record<string, string> {
   const payload: Record<string, string> = {};
 
-  const passwordFromBody = normalizeField(body?.password);
+  const passwordFromBody = resolveCredentialPassword(body);
 
-  if (passwordFromBody) {
+  if (passwordFromBody.length > 0) {
     payload.password = passwordFromBody;
-  } else if (password) {
+  } else if (password.length > 0) {
     payload.password = password;
   }
 
