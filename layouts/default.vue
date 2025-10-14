@@ -596,9 +596,13 @@ watch(
     vuetifyTheme.themes.value.light.colors.secondary = value.accentColor;
     vuetifyTheme.themes.value.dark.colors.secondary = value.accentColor;
 
-    const hasCustomPrimary = normalizeHexColor(themePrimaryCookie.value);
+    const normalizedThemePrimary = normalizeHexColor(value.primaryColor);
+    const normalizedCookiePrimary = normalizeHexColor(themePrimaryCookie.value);
+    const shouldAdoptThemePrimary =
+      !normalizedCookiePrimary || normalizedCookiePrimary === normalizedThemePrimary;
 
-    if (!hasCustomPrimary) {
+    if (shouldAdoptThemePrimary) {
+      themePrimaryCookie.value = normalizedThemePrimary ?? null;
       applyPrimaryColorCssVariables(value.primaryColor);
     }
   },
