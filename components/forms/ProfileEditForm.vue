@@ -241,16 +241,6 @@
         </section>
       </v-col>
 
-      <v-col
-        cols="12"
-        xl="4"
-      >
-        <ProfileEditSidebarContent
-          :form="form"
-          :full-name="fullName"
-          :initials="initials"
-        />
-      </v-col>
     </v-row>
 
     <v-snackbar

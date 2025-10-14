@@ -27,6 +27,24 @@
       {{ t("pages.profileSecurity.actions.generateCodes") }}
     </v-btn>
   </section>
+  <section aria-labelledby="password-hints-title">
+    <div class="d-flex flex-column gap-3">
+      <h2
+          id="password-hints-title"
+          class="text-h6 font-weight-semibold"
+      >
+        {{ t("pages.profileSecurity.passwordHint.title") }}
+      </h2>
+      <v-alert
+          type="info"
+          color="primary"
+          variant="tonal"
+          density="comfortable"
+      >
+        {{ t("pages.profileSecurity.passwordHint.description") }}
+      </v-alert>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">

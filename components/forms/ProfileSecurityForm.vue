@@ -30,7 +30,6 @@
     >
       <v-col
         cols="12"
-        md="8"
       >
         <SidebarCard
           class="text-card-foreground px-3 py-2 mb-4"
@@ -70,7 +69,7 @@
                 <v-row dense>
                   <v-col
                     cols="12"
-                    md="6"
+                    md="4"
                   >
                     <v-text-field
                       v-model="form.currentPassword"
@@ -85,7 +84,7 @@
                   </v-col>
                   <v-col
                     cols="12"
-                    md="6"
+                    md="4"
                   >
                     <v-text-field
                       v-model="form.newPassword"
@@ -100,7 +99,7 @@
                   </v-col>
                   <v-col
                     cols="12"
-                    md="6"
+                    md="4"
                   >
                     <v-text-field
                       v-model="form.confirmPassword"
@@ -181,45 +180,6 @@
                   </tr>
                 </tbody>
               </v-table>
-            </section>
-          </div>
-        </SidebarCard>
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="4"
-      >
-        <SidebarCard
-          class="text-card-foreground px-3 py-2 mb-4"
-          padding="none"
-          glow
-        >
-          <div class="d-flex flex-column gap-4">
-            <ProfileSecurityTwoFactorSection
-              v-model:enabled="form.mfaEnabled"
-              @generate-codes="generateCodes"
-            />
-
-            <v-divider />
-
-            <section aria-labelledby="password-hints-title">
-              <div class="d-flex flex-column gap-3">
-                <h2
-                  id="password-hints-title"
-                  class="text-h6 font-weight-semibold"
-                >
-                  {{ t("pages.profileSecurity.passwordHint.title") }}
-                </h2>
-                <v-alert
-                  type="info"
-                  color="primary"
-                  variant="tonal"
-                  density="comfortable"
-                >
-                  {{ t("pages.profileSecurity.passwordHint.description") }}
-                </v-alert>
-              </div>
             </section>
           </div>
         </SidebarCard>
