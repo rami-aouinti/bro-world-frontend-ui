@@ -1,4 +1,4 @@
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import type { ComputedRef } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
@@ -28,12 +28,50 @@ export function useThemes() {
     };
   };
 
+  const FALLBACK_DOCS_THEME_COLOR = themes[0]?.name ?? "zinc";
+  const FALLBACK_DOCS_THEME_RADIUS = 0.75;
+  const fallbackDocsConfig: DocsThemeConfig = {
+    theme: {
+      color: FALLBACK_DOCS_THEME_COLOR,
+      radius: FALLBACK_DOCS_THEME_RADIUS,
+    },
+  };
+
+  function normalizeDocsConfig(value: DocsThemeConfig | null | undefined) {
+    const themeConfig = value?.theme ?? {};
+
+    return {
+      theme: {
+        color:
+          (themeConfig.color as Theme["name"] | undefined) ??
+          FALLBACK_DOCS_THEME_COLOR,
+        radius:
+          typeof themeConfig.radius === "number"
+            ? themeConfig.radius
+            : FALLBACK_DOCS_THEME_RADIUS,
+      },
+    } satisfies DocsThemeConfig;
+  }
+
   function resolveDocsConfig(): ComputedRef<DocsThemeConfig> {
+    const docsConfigState = ref<DocsThemeConfig>(
+      normalizeDocsConfig(fallbackDocsConfig),
+    );
     const nuxtApp = tryUseNuxtApp();
 
     if (nuxtApp && hasInjectionContext()) {
       try {
-        return useConfig() as ComputedRef<DocsThemeConfig>;
+        const injectedConfig = useConfig() as ComputedRef<DocsThemeConfig>;
+
+        docsConfigState.value = normalizeDocsConfig(injectedConfig.value);
+
+        watch(
+          injectedConfig,
+          (next) => {
+            docsConfigState.value = normalizeDocsConfig(next);
+          },
+          { immediate: true, deep: true },
+        );
       } catch (error) {
         if (process.dev) {
           console.warn(
@@ -44,12 +82,7 @@ export function useThemes() {
       }
     }
 
-    return computed<DocsThemeConfig>(() => ({
-      theme: {
-        color: themes[0]?.name,
-        radius: 0.75,
-      },
-    }));
+    return computed(() => docsConfigState.value);
   }
 
   const config = resolveDocsConfig();
