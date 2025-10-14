@@ -131,28 +131,30 @@ export function useThemes() {
     }),
   );
 
-  watch(
-    defaultThemePrimaryHex,
-    (value, oldValue) => {
-      const normalizedDefault = normalizeHexColor(value ?? undefined);
-      const normalizedOldDefault = normalizeHexColor(oldValue ?? undefined);
-      const current = normalizeHexColor(themePrimaryCookie.value);
+  if (import.meta.client) {
+    watch(
+      defaultThemePrimaryHex,
+      (value, oldValue) => {
+        const normalizedDefault = normalizeHexColor(value ?? undefined);
+        const normalizedOldDefault = normalizeHexColor(oldValue ?? undefined);
+        const current = normalizeHexColor(themePrimaryCookie.value);
 
-      if (!normalizedDefault) {
-        return;
-      }
+        if (!normalizedDefault) {
+          return;
+        }
 
-      if (!current) {
-        themePrimaryCookie.value = normalizedDefault;
-        return;
-      }
+        if (!current) {
+          themePrimaryCookie.value = normalizedDefault;
+          return;
+        }
 
-      if (normalizedOldDefault && current === normalizedOldDefault) {
-        themePrimaryCookie.value = normalizedDefault;
-      }
-    },
-    { immediate: true },
-  );
+        if (normalizedOldDefault && current === normalizedOldDefault) {
+          themePrimaryCookie.value = normalizedDefault;
+        }
+      },
+      { immediate: true },
+    );
+  }
 
   const themePrimaryHex = computed<string | undefined>(() => {
     const normalized = normalizeHexColor(themePrimaryCookie.value);
