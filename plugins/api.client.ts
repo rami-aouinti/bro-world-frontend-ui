@@ -20,6 +20,28 @@ export default defineNuxtPlugin({
     const api = ofetch.create({
       baseURL,
       credentials: "include",
+      async onRequest({ options }) {
+        const context = (options.context ?? {}) as Record<string, unknown>;
+
+        if (context.skipAuthHeader) {
+          return;
+        }
+
+        const token = auth.sessionToken.value?.trim();
+
+        if (!token) {
+          return;
+        }
+
+        const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
+        const headers = new Headers((options.headers ?? {}) as HeadersInit);
+
+        if (!headers.has("Authorization")) {
+          headers.set("Authorization", resolvedToken);
+        }
+
+        options.headers = headers;
+      },
       async onResponseError({
         response,
         error,
