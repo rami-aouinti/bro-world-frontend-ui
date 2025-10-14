@@ -690,7 +690,7 @@ const storyMilestones = reactive<StoryMilestone[]>([
     status: "Drafting",
     progress: 38,
     color: "success",
-    icon: "mdi-mountain",
+    icon: "mdi-image-filter-hdr",
     tags: ["Retreat", "Culture"],
   },
 ]);
