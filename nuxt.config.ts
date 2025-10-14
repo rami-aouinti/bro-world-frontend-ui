@@ -8,7 +8,6 @@ import { Blob as NodeBlob, File as NodeFile } from "node:buffer";
 import { URL, fileURLToPath } from "node:url";
 import { dirname, resolve as resolvePath } from "node:path";
 import { createRequire } from "node:module";
-import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import compression from "vite-plugin-compression";
 import tailwindcss from "@tailwindcss/vite";
 import vuetify from "vite-plugin-vuetify";
@@ -197,6 +196,8 @@ const vuetifyPlugin = vuetify({
     configFile: "assets/styles/settings.scss",
   },
 }) as PluginOption | PluginOption[];
+const isProd = process.env.NODE_ENV === "production";
+const isAnalyze = process.env.ANALYZE === "true";
 
 const iconCollections = ["mdi", "logos", "heroicons", "lucide", "tabler", "vscode-icons"] as const;
 
@@ -346,11 +347,12 @@ export default defineNuxtConfig({
           ],
         },
       }),
-      cssInjectedByJsPlugin(),
-      compression({ algorithm: "brotliCompress" }),
+      // Compression uniquement en prod (évite du travail inutile en dev)
+      ...(isProd ? [compression({ algorithm: "brotliCompress" })] : []),
     ],
     build: {
-      sourcemap: true,
+      // Pas de sourcemaps en prod : -25/35% de JS à transférer
+      sourcemap: !isProd,
       optimizeCSS: true,
       splitChunks: {
         layouts: true,
@@ -414,10 +416,8 @@ export default defineNuxtConfig({
     "/api/**": { swr: 60 },
   },
 
-  sourcemap: {
-    server: true,
-    client: true,
-  },
+  // Désactive les maps en prod côté serveur & client
+  sourcemap: { server: !isProd, client: !isProd },
 
   ui: {
     icons: ["heroicons", "lucide"],
@@ -426,7 +426,6 @@ export default defineNuxtConfig({
 
   experimental: {
     typedPages: true,
-    componentIslands: false,
     payloadExtraction: true,
     renderJsonPayloads: true,
   },
@@ -696,19 +695,20 @@ export default defineNuxtConfig({
         name: "Plus Jakarta Sans",
         provider: "google",
         global: true,
-        weights: [300, 400, 500, 600, 700],
+        // Réduire les variantes : 400, 600 suffisent souvent
+        weights: [400, 600],
       },
       {
         name: "Space Grotesk",
         provider: "google",
         global: true,
-        weights: [300, 400, 500, 600, 700],
+        weights: [400, 600],
       },
       {
         name: "JetBrains Mono",
         provider: "google",
         global: true,
-        weights: [300, 400, 500, 600, 700],
+        weights: [400, 600],
       },
     ],
   },
