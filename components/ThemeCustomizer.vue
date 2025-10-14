@@ -1,148 +1,145 @@
 <template>
-  <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
-  >
+  <div class="text-card-foreground px-3 py-2">
     <div class="grid gap-6">
-    <div class="space-y-1">
-      <h5 class="text-foreground text-lg font-semibold">
-        {{ $t("admin.settings.themeCustomizer.title") }}
-      </h5>
-    </div>
-    <div class="space-y-1">
-      <UiLabel>{{ $t("admin.settings.themeCustomizer.color") }}</UiLabel>
-      <div class="grid grid-cols-4 gap-2">
-        <template
-          v-for="color in allColors"
-          :key="color"
-        >
-          <UiButton
-            class="justify-start gap-2"
-            variant="outline"
-            :class="{ 'border-primary border-2': theme === color }"
-            @click="setTheme(color)"
-          >
-            <span
-              class="flex size-5 items-center justify-center rounded-full"
-              :style="{ backgroundColor: backgroundColor(color) }"
-            >
-              <Icon
-                v-if="theme === color"
-                name="lucide:check"
-                size="16"
-                class="text-white"
-              />
-            </span>
-            <span class="text-xs capitalize">{{ color }}</span>
-          </UiButton>
-        </template>
+      <div class="space-y-1">
+        <h5 class="text-foreground text-lg font-semibold">
+          {{ $t("admin.settings.themeCustomizer.title") }}
+        </h5>
       </div>
-    </div>
-    <div class="space-y-1">
-      <UiLabel>{{ $t("admin.settings.themeCustomizer.radius") }}</UiLabel>
-      <div class="grid grid-cols-5 gap-2">
-        <template
-          v-for="r in RADII"
-          :key="r"
-        >
+      <div class="space-y-1">
+        <UiLabel>{{ $t("admin.settings.themeCustomizer.color") }}</UiLabel>
+        <div class="grid grid-cols-4 gap-2">
+          <template
+            v-for="color in allColors"
+            :key="color"
+          >
+            <UiButton
+              class="justify-start gap-2"
+              variant="outline"
+              :class="{ 'border-primary border-2': theme === color }"
+              @click="setTheme(color)"
+            >
+              <span
+                class="flex size-5 items-center justify-center rounded-full"
+                :style="{ backgroundColor: backgroundColor(color) }"
+              >
+                <Icon
+                  v-if="theme === color"
+                  name="lucide:check"
+                  size="16"
+                  class="text-white"
+                />
+              </span>
+              <span class="text-xs capitalize">{{ color }}</span>
+            </UiButton>
+          </template>
+        </div>
+      </div>
+      <div class="space-y-1">
+        <UiLabel>{{ $t("admin.settings.themeCustomizer.radius") }}</UiLabel>
+        <div class="grid grid-cols-5 gap-2">
+          <template
+            v-for="r in RADII"
+            :key="r"
+          >
+            <UiButton
+              class="justify-center gap-2"
+              variant="outline"
+              :class="{ 'border-primary border-2': radius === r }"
+              @click="setRadius(r)"
+            >
+              <span class="text-xs capitalize">{{ r }}</span>
+            </UiButton>
+          </template>
+        </div>
+      </div>
+      <div class="space-y-1">
+        <UiLabel>{{ $t("admin.settings.fields.themePrimary") }}</UiLabel>
+        <div class="grid grid-cols-4 gap-2">
+          <template
+            v-for="option in primaryColorOptions"
+            :key="option.hex"
+          >
+            <UiButton
+              class="justify-start gap-2"
+              variant="outline"
+              :class="{ 'border-primary border-2': selectedPrimaryHex === option.hex }"
+              type="button"
+              @click="handleSelectPrimary(option.hex)"
+            >
+              <span
+                class="flex size-5 items-center justify-center rounded-full"
+                :style="{ backgroundColor: option.hex }"
+              >
+                <Icon
+                  v-if="selectedPrimaryHex === option.hex"
+                  name="lucide:check"
+                  size="16"
+                  class="text-white"
+                />
+              </span>
+              <span class="text-xs capitalize">{{ option.label }}</span>
+            </UiButton>
+          </template>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono uppercase text-muted-foreground">{{ selectedPrimaryHex }}</span>
+          <UiButton
+            variant="outline"
+            type="button"
+            :disabled="!isCustomPrimary"
+            @click="handleResetPrimary"
+          >
+            {{ $t("admin.settings.actions.reset") }}
+          </UiButton>
+        </div>
+      </div>
+      <div
+        v-if="darkModeToggle"
+        class="space-y-1.5"
+      >
+        <UiLabel>{{ $t("admin.settings.themeCustomizer.theme") }}</UiLabel>
+        <div class="grid grid-cols-3 gap-2">
           <UiButton
             class="justify-center gap-2"
             variant="outline"
-            :class="{ 'border-primary border-2': radius === r }"
-            @click="setRadius(r)"
+            :class="{ 'border-primary border-2': activeMode === 'light' }"
+            @click="setColorPreference('light')"
           >
-            <span class="text-xs capitalize">{{ r }}</span>
+            <Icon
+              name="lucide:sun"
+              size="16"
+            />
+            <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.light") }}</span>
           </UiButton>
-        </template>
-      </div>
-    </div>
-    <div class="space-y-1">
-      <UiLabel>{{ $t("admin.settings.fields.themePrimary") }}</UiLabel>
-      <div class="grid grid-cols-4 gap-2">
-        <template
-          v-for="option in primaryColorOptions"
-          :key="option.hex"
-        >
           <UiButton
-            class="justify-start gap-2"
+            class="justify-center gap-2"
             variant="outline"
-            :class="{ 'border-primary border-2': selectedPrimaryHex === option.hex }"
-            type="button"
-            @click="handleSelectPrimary(option.hex)"
+            :class="{ 'border-primary border-2': activeMode === 'dark' }"
+            @click="setColorPreference('dark')"
           >
-            <span
-              class="flex size-5 items-center justify-center rounded-full"
-              :style="{ backgroundColor: option.hex }"
-            >
-              <Icon
-                v-if="selectedPrimaryHex === option.hex"
-                name="lucide:check"
-                size="16"
-                class="text-white"
-              />
-            </span>
-            <span class="text-xs capitalize">{{ option.label }}</span>
+            <Icon
+              name="lucide:moon"
+              size="16"
+            />
+            <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.dark") }}</span>
           </UiButton>
-        </template>
-      </div>
-      <div class="flex items-center justify-between">
-        <span class="text-xs font-mono uppercase text-muted-foreground">{{ selectedPrimaryHex }}</span>
-        <UiButton
-          variant="outline"
-          type="button"
-          :disabled="!isCustomPrimary"
-          @click="handleResetPrimary"
-        >
-          {{ $t("admin.settings.actions.reset") }}
-        </UiButton>
-      </div>
-    </div>
-    <div
-      v-if="darkModeToggle"
-      class="space-y-1.5"
-    >
-      <UiLabel>{{ $t("admin.settings.themeCustomizer.theme") }}</UiLabel>
-      <div class="grid grid-cols-3 gap-2">
-        <UiButton
-          class="justify-center gap-2"
-          variant="outline"
-          :class="{ 'border-primary border-2': activeMode === 'light' }"
-          @click="setColorPreference('light')"
-        >
-          <Icon
-            name="lucide:sun"
-            size="16"
-          />
-          <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.light") }}</span>
-        </UiButton>
-        <UiButton
-          class="justify-center gap-2"
-          variant="outline"
-          :class="{ 'border-primary border-2': activeMode === 'dark' }"
-          @click="setColorPreference('dark')"
-        >
-          <Icon
-            name="lucide:moon"
-            size="16"
-          />
-          <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.dark") }}</span>
-        </UiButton>
-        <UiButton
-          class="justify-center gap-2"
-          variant="outline"
-          :class="{ 'border-primary border-2': activeMode === 'system' }"
-          @click="setColorPreference('system')"
-        >
-          <Icon
-            name="lucide:monitor"
-            size="16"
-          />
-          <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.system") }}</span>
-        </UiButton>
+          <UiButton
+            class="justify-center gap-2"
+            variant="outline"
+            :class="{ 'border-primary border-2': activeMode === 'system' }"
+            @click="setColorPreference('system')"
+          >
+            <Icon
+              name="lucide:monitor"
+              size="16"
+            />
+            <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.system") }}</span>
+          </UiButton>
+        </div>
       </div>
     </div>
   </div>
-  </SidebarCard>
 </template>
 
 <script setup lang="ts">
@@ -150,7 +147,6 @@ import { computed, watch } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
 import Icon from "./Icon.vue";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const {
   themeClass,
