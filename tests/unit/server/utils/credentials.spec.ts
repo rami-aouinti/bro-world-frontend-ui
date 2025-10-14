@@ -28,6 +28,7 @@ describe("credential helpers", () => {
     expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe(
       "  hunter2  ",
     );
+    expect(resolveCredentialPassword({ password: "    " })).toBe("    ");
   });
 
   it("returns an empty string when fields are missing", () => {

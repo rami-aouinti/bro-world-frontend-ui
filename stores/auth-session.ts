@@ -358,7 +358,7 @@ export const useAuthSession = defineStore("auth-session", () => {
   async function login(credentials: LoginCredentials) {
     const trimmedIdentifier = credentials.identifier.trim();
     const password = credentials.password;
-    const hasPassword = password.trim().length > 0;
+    const hasPassword = password.length > 0;
 
     if (!trimmedIdentifier || !hasPassword) {
       loginErrorState.value = "Please provide both your email or username and password.";

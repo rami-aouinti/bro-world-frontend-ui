@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   const body = normalizeCredentialPayload(rawBody);
   const username = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
-  const hasPassword = password.trim().length > 0;
+  const hasPassword = password.length > 0;
 
   if (!username || !hasPassword) {
     throw createError({
@@ -139,9 +139,9 @@ function buildLoginPayload(
 
   const passwordFromBody = resolveCredentialPassword(body);
 
-  if (passwordFromBody.trim()) {
+  if (passwordFromBody.length > 0) {
     payload.password = passwordFromBody;
-  } else if (password.trim()) {
+  } else if (password.length > 0) {
     payload.password = password;
   }
 
