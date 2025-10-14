@@ -7,6 +7,9 @@
           :alt="`${post.user.firstName} ${post.user.lastName}`"
           width="48"
           height="48"
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
           class="post-card__avatar"
         />
         <div class="post-card__author-meta">
