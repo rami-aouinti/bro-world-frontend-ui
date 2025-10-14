@@ -4,6 +4,7 @@ import { joinURL } from "ufo";
 import type { AuthLoginResponse, AuthUser } from "~/types/auth";
 import { clearAuthSession, setSession } from "../../utils/auth/session";
 import {
+  type CredentialPayload,
   normalizeCredentialPayload,
   resolveCredentialIdentifier,
   resolveCredentialPassword,
@@ -18,6 +19,16 @@ export default defineEventHandler(async (event) => {
   const body = normalizeCredentialPayload(rawBody);
   const username = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
+
+  if (!username || !password) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Unable to sign in",
+      data: {
+        message: "Please provide both your email or username and password.",
+      },
+    });
+  }
 
   const runtimeConfig = useRuntimeConfig(event);
   const serviceToken = runtimeConfig.auth?.apiToken?.trim();
@@ -37,12 +48,11 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const payload = buildLoginPayload(body, username, password);
+
     const response = await $fetch<AuthLoginResponse>(endpoint, {
       method: "POST",
-      body: {
-        username: username,
-        password: password,
-      },
+      body: payload,
       headers,
     });
 
@@ -107,6 +117,56 @@ export default defineEventHandler(async (event) => {
 
 function isFetchError(error: unknown): error is FetchError<unknown> {
   return Boolean(error && typeof error === "object" && "response" in error);
+}
+
+function normalizeField(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+
+  return trimmed ? trimmed : null;
+}
+
+function buildLoginPayload(
+  body: CredentialPayload | undefined,
+  username: string,
+  password: string,
+): Record<string, string> {
+  const payload: Record<string, string> = {
+    password,
+  };
+
+  const identifierFromBody = normalizeField(body?.identifier);
+  const usernameFromBody = normalizeField(body?.username);
+  const emailFromBody = normalizeField(body?.email);
+
+  if (identifierFromBody) {
+    payload.identifier = identifierFromBody;
+  }
+
+  if (usernameFromBody) {
+    payload.username = usernameFromBody;
+  }
+
+  if (emailFromBody) {
+    payload.email = emailFromBody;
+  }
+
+  if (!payload.identifier) {
+    payload.identifier = username;
+  }
+
+  if (!payload.username) {
+    payload.username = username;
+  }
+
+  if (!payload.email && username.includes("@")) {
+    payload.email = username;
+  }
+
+  return payload;
 }
 
 function resolveLoginErrorMessage(status: number, payload: unknown): string {
