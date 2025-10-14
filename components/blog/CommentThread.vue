@@ -145,16 +145,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  reactive,
-  ref,
-  computed,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  defineAsyncComponent,
-} from "vue";
-import type { WatchStopHandle } from "vue";
+import { reactive, ref, computed, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -171,28 +162,13 @@ const PostCommentForm = defineAsyncComponent({
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
-const canRenderAuthUi = ref(false);
-let stopAuthWatcher: WatchStopHandle | null = null;
-
-onMounted(() => {
-  stopAuthWatcher = watch(
-    () => auth.isReady.value && auth.isAuthenticated.value,
-    (value) => {
-      canRenderAuthUi.value = value;
-    },
-    { immediate: true },
-  );
-});
+const canRenderAuthUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
 const composerVisible = defineModel<boolean>("composerVisible", { default: false });
 
 watch(canRenderAuthUi, (value) => {
   if (!value) {
     composerVisible.value = false;
   }
-});
-
-onBeforeUnmount(() => {
-  stopAuthWatcher = null;
 });
 export type CommentNode = {
   id: string;
