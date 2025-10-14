@@ -649,6 +649,9 @@
         "mutual": "mutual connections",
         "online": "online now"
       },
+      "meta": {
+        "lastActive": "上次活跃 · {time}"
+      },
       "sections": {
         "suggestions": "Suggested connections",
         "active": "Active now"

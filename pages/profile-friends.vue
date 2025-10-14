@@ -111,16 +111,28 @@
               glow
             >
               <div class="d-flex align-start gap-4 mb-4">
-                <v-avatar size="64">
-                  <v-img
-                    :src="friend.avatar"
-                    :alt="friend.name"
-                    cover
-                  />
-                </v-avatar>
+                <NuxtLink
+                  :to="friendProfilePath(friend)"
+                  class="d-inline-flex"
+                >
+                  <v-avatar size="64">
+                    <v-img
+                      :src="friend.avatar"
+                      :alt="friend.name"
+                      cover
+                    />
+                  </v-avatar>
+                </NuxtLink>
                 <div class="flex-grow-1">
                   <div class="d-flex align-center justify-space-between gap-2 mb-1">
-                    <h3 class="text-subtitle-1 font-weight-semibold mb-0">{{ friend.name }}</h3>
+                    <h3 class="text-subtitle-1 font-weight-semibold mb-0">
+                      <NuxtLink
+                        :to="friendProfilePath(friend)"
+                        class="text-decoration-none text-card-foreground"
+                      >
+                        {{ friend.name }}
+                      </NuxtLink>
+                    </h3>
                     <v-chip
                       v-if="friend.status"
                       :color="statusColor(friend.status)"
@@ -168,7 +180,7 @@
                   color="primary"
                   variant="outlined"
                   size="small"
-                  @click="openProfile(friend)"
+                  @click="goToProfile(friend)"
                 >
                   {{ t("pages.profileFriends.actions.viewProfile") }}
                 </v-btn>
@@ -216,6 +228,8 @@
                 <v-list-item
                   v-for="suggestion in suggestions"
                   :key="suggestion.id"
+                  :to="friendProfilePath(suggestion)"
+                  link
                 >
                   <template #prepend>
                     <v-avatar size="48">
@@ -226,9 +240,9 @@
                       />
                     </v-avatar>
                   </template>
-                  <v-list-item-title class="font-weight-semibold">{{
-                    suggestion.name
-                  }}</v-list-item-title>
+                  <v-list-item-title class="font-weight-semibold">
+                    {{ suggestion.name }}
+                  </v-list-item-title>
                   <v-list-item-subtitle>{{ suggestion.headline }}</v-list-item-subtitle>
                   <template #append>
                     <div class="d-flex flex-column align-end gap-2">
@@ -242,7 +256,7 @@
                         color="primary"
                         variant="text"
                         size="small"
-                        @click="triggerAction('connect', suggestion)"
+                        @click.stop="triggerAction('connect', suggestion)"
                       >
                         {{ t("pages.profileFriends.actions.message") }}
                       </v-btn>
@@ -267,19 +281,24 @@
                     :key="friend.id"
                     class="d-flex align-center justify-space-between"
                   >
-                    <div class="d-flex align-center gap-3">
-                      <v-avatar size="40">
-                        <v-img
-                          :src="friend.avatar"
-                          :alt="friend.name"
-                          cover
-                        />
-                      </v-avatar>
-                      <div>
-                        <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
-                        <div class="text-caption text-medium-emphasis">{{ friend.lastActive }}</div>
+                  <NuxtLink
+                    :to="friendProfilePath(friend)"
+                    class="d-flex align-center gap-3 text-decoration-none text-card-foreground"
+                  >
+                    <v-avatar size="40">
+                      <v-img
+                        :src="friend.avatar"
+                        :alt="friend.name"
+                        cover
+                      />
+                    </v-avatar>
+                    <div>
+                      <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
+                      <div class="text-caption text-medium-emphasis">
+                        {{ t("pages.profileFriends.meta.lastActive", { time: friend.lastActive }) }}
                       </div>
                     </div>
+                  </NuxtLink>
                     <v-chip
                       :color="statusColor(friend.status)"
                       size="x-small"
@@ -296,77 +315,6 @@
       </section>
     </v-container>
 
-    <v-dialog
-      v-model="showProfileDialog"
-      max-width="520"
-    >
-      <SidebarCard
-        v-if="selectedFriend"
-        class="text-card-foreground"
-        glow
-      >
-        <v-card-title class="d-flex align-center gap-3">
-          <v-avatar size="56">
-            <v-img
-              :src="selectedFriend.avatar"
-              :alt="selectedFriend.name"
-              cover
-            />
-          </v-avatar>
-          <div>
-            <div class="text-subtitle-1 font-weight-semibold">{{ selectedFriend.name }}</div>
-            <div class="text-body-2 text-medium-emphasis">{{ selectedFriend.headline }}</div>
-          </div>
-        </v-card-title>
-        <v-card-text>
-          <div class="d-flex flex-wrap gap-2 mb-4">
-            <v-chip
-              v-for="tag in selectedFriend.tags"
-              :key="tag"
-              size="small"
-              variant="tonal"
-            >
-              {{ tag }}
-            </v-chip>
-          </div>
-          <p class="text-body-2 text-medium-emphasis mb-4">
-            {{ selectedFriend.bio }}
-          </p>
-          <div class="d-flex align-center gap-2 text-body-2 text-medium-emphasis">
-            <Icon
-              name="mdi-map-marker-outline"
-              size="18"
-            />
-            <span>{{ selectedFriend.location }}</span>
-          </div>
-        </v-card-text>
-        <v-card-actions class="justify-space-between">
-          <v-btn
-            variant="text"
-            color="primary"
-            @click="showProfileDialog = false"
-          >
-            {{ t("common.close") }}
-          </v-btn>
-          <div class="d-flex gap-2">
-            <v-btn
-              variant="outlined"
-              color="primary"
-              @click="triggerAction('schedule', selectedFriend)"
-            >
-              {{ t("pages.profileFriends.actions.schedule") }}
-            </v-btn>
-            <v-btn
-              color="primary"
-              @click="triggerAction('message', selectedFriend)"
-            >
-              {{ t("pages.profileFriends.actions.message") }}
-            </v-btn>
-          </div>
-        </v-card-actions>
-      </SidebarCard>
-    </v-dialog>
-
     <v-snackbar
       v-model="showActionSnackbar"
       timeout="3000"
@@ -382,6 +330,7 @@
 import { computed, ref } from "vue";
 import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { friendCards, featuredFriendIds } from "~/lib/users/mock-friends";
 import type { FriendCard } from "~/types/pages/profile";
 
 definePageMeta({
@@ -425,136 +374,9 @@ useHead(() => {
   };
 });
 
-const allFriends = ref<FriendCard[]>([
-  {
-    id: "amina-rahman",
-    name: "Amina Rahman",
-    headline: "Lead Product Designer · Flowbase",
-    avatar:
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Casablanca, Morocco",
-    mutualCount: 12,
-    status: "online",
-    tags: ["Design systems", "Accessibility"],
-    segments: ["design", "product"],
-    lastActive: "5 min",
-    bio: "Exploring inclusive design for large platforms and mentoring early-career designers.",
-  },
-  {
-    id: "leo-martinez",
-    name: "Leo Martínez",
-    headline: "Senior Frontend Engineer · Alloy",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Madrid, Spain",
-    mutualCount: 18,
-    status: "focus",
-    tags: ["Nuxt", "Design systems"],
-    segments: ["engineering", "product"],
-    lastActive: "Just now",
-    bio: "Leading the design system implementation and coaching cross-functional squads.",
-  },
-  {
-    id: "noor-hassan",
-    name: "Noor Hassan",
-    headline: "Community Strategist · Orbit",
-    avatar:
-      "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Dubai, UAE",
-    mutualCount: 9,
-    status: "online",
-    tags: ["Community", "Storytelling"],
-    segments: ["marketing", "product"],
-    lastActive: "12 min",
-    bio: "Scaling partnerships through curated learning circles and thoughtful rituals.",
-  },
-  {
-    id: "sasha-ivanov",
-    name: "Sasha Ivanov",
-    headline: "Staff Software Engineer · Vertex",
-    avatar:
-      "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Berlin, Germany",
-    mutualCount: 7,
-    status: "busy",
-    tags: ["Performance", "TypeScript"],
-    segments: ["engineering"],
-    lastActive: "25 min",
-    bio: "Improving performance budgets and tooling for globally distributed teams.",
-  },
-  {
-    id: "harper-lee",
-    name: "Harper Lee",
-    headline: "Growth Marketing Lead · Sail",
-    avatar:
-      "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Toronto, Canada",
-    mutualCount: 14,
-    status: "online",
-    tags: ["Lifecycle", "Analytics"],
-    segments: ["marketing"],
-    lastActive: "2 min",
-    bio: "Designing lifecycle journeys and community programs for product-led growth.",
-  },
-  {
-    id: "meera-kapoor",
-    name: "Meera Kapoor",
-    headline: "Principal Product Manager · Aurora",
-    avatar:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Bengaluru, India",
-    mutualCount: 21,
-    status: "focus",
-    tags: ["Roadmaps", "Discovery"],
-    segments: ["product"],
-    lastActive: "8 min",
-    bio: "Championing discovery frameworks and inclusive roadmap rituals across teams.",
-  },
-  {
-    id: "julien-morel",
-    name: "Julien Morel",
-    headline: "Design Operations Manager · Lumen",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Paris, France",
-    mutualCount: 10,
-    status: "offline",
-    tags: ["Ops", "Workshops"],
-    segments: ["design", "product"],
-    lastActive: "2 h",
-    bio: "Connecting research, content, and design practices through workshops and rituals.",
-  },
-  {
-    id: "ayesha-rahim",
-    name: "Ayesha Rahim",
-    headline: "Solutions Engineer · Stripe",
-    avatar:
-      "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Singapore",
-    mutualCount: 11,
-    status: "online",
-    tags: ["Integrations", "Workflows"],
-    segments: ["engineering", "product"],
-    lastActive: "3 min",
-    bio: "Bridging product discovery with implementation for enterprise customers.",
-  },
-  {
-    id: "daniel-cho",
-    name: "Daniel Cho",
-    headline: "Brand Strategist · Northwind",
-    avatar:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80",
-    location: "Seoul, South Korea",
-    mutualCount: 6,
-    status: "offline",
-    tags: ["Narrative", "Workshops"],
-    segments: ["marketing", "design"],
-    lastActive: "5 h",
-    bio: "Building narrative frameworks and brand playbooks for community-led launches.",
-  },
-]);
+const allFriends = ref<FriendCard[]>([...friendCards]);
 
-const featuredIds = new Set(["amina-rahman", "leo-martinez", "meera-kapoor"]);
+const featuredIds = new Set<string>([...featuredFriendIds]);
 
 const heroStats = computed(() => {
   const total = allFriends.value.length;
@@ -625,8 +447,6 @@ const sidebarContent = computed(() => ({
 
 registerRightSidebarContent(sidebarContent);
 
-const showProfileDialog = ref(false);
-const selectedFriend = ref<FriendCard | null>(null);
 const showActionSnackbar = ref(false);
 const snackbarMessage = ref("");
 
@@ -656,9 +476,14 @@ function statusLabel(status: FriendCard["status"]) {
   }
 }
 
-function openProfile(friend: FriendCard) {
-  selectedFriend.value = friend;
-  showProfileDialog.value = true;
+function friendProfilePath(friend: FriendCard | string) {
+  const id = typeof friend === "string" ? friend : friend.id;
+
+  return `/profile/${id}`;
+}
+
+function goToProfile(friend: FriendCard) {
+  router.push(friendProfilePath(friend));
 }
 
 function triggerAction(action: "message" | "schedule" | "connect", friend?: FriendCard) {
