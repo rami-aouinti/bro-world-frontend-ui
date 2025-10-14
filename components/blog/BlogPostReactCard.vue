@@ -103,19 +103,13 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ref,
-  computed,
-  defineAsyncComponent,
-  onMounted,
-  onBeforeUnmount,
-  watch,
-} from "vue";
+import { ref, computed, defineAsyncComponent, onBeforeUnmount, watch } from "vue";
 import type { WatchStopHandle } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import type { BlogPost } from "~/lib/mock/blog";
+import { onNuxtReady } from "#imports";
 
 const ReactionPicker = defineAsyncComponent({
   loader: () => import("~/components/blog/ReactionPicker.vue"),
@@ -134,7 +128,7 @@ if (import.meta.client) {
     showAuthUi.value = auth.isReady.value && auth.isAuthenticated.value;
   }
 
-  onMounted(() => {
+  onNuxtReady(() => {
     refreshAuthUiVisibility();
 
     stopWatchingAuth = watch(
@@ -146,6 +140,7 @@ if (import.meta.client) {
 
   onBeforeUnmount(() => {
     stopWatchingAuth?.();
+    stopWatchingAuth = null;
   });
 }
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
