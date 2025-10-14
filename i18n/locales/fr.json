@@ -862,7 +862,11 @@
       "title": "Edit profile",
       "subtitle": "Refresh your details so collaborators always have the latest context.",
       "sections": {
-        "profile": "Profile",
+        "profile": {
+          "title": "Profil",
+          "bio": "Présentation",
+          "skills": "Compétences principales"
+        },
         "contact": "Contact",
         "about": "About",
         "social": "Social links",

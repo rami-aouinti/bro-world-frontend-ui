@@ -83,7 +83,7 @@
               id="profile-core-section"
               class="text-h5 font-weight-semibold mb-4"
             >
-              {{ t("pages.profileEdit.sections.profile") }}
+              {{ t("pages.profileEdit.sections.profile.title") }}
             </h2>
             <div class="d-flex flex-column gap-4">
               <div class="d-flex flex-column flex-sm-row gap-4">

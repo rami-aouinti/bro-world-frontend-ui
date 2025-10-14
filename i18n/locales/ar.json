@@ -863,7 +863,11 @@
       "title": "Edit profile",
       "subtitle": "Refresh your details so collaborators always have the latest context.",
       "sections": {
-        "profile": "Profile",
+        "profile": {
+          "title": "الملف الشخصي",
+          "bio": "نبذة",
+          "skills": "المهارات المميزة"
+        },
         "contact": "Contact",
         "about": "About",
         "social": "Social links",
