@@ -152,14 +152,11 @@ import {
   watch,
   defineAsyncComponent,
   onMounted,
-  onBeforeUnmount,
 } from "vue";
-import type { WatchStopHandle } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import { useRelativeTime } from "~/composables/useRelativeTime";
-import { useNuxtApp } from "#imports";
 
 const ReactionPicker = defineAsyncComponent({
   loader: () => import("~/components/blog/ReactionPicker.vue"),
@@ -182,9 +179,7 @@ const canRenderAuthUi = computed(() => {
 });
 
 if (import.meta.client) {
-  const nuxtApp = useNuxtApp();
-
-  nuxtApp.hook("app:mounted", () => {
+  onMounted(() => {
     isHydrated.value = true;
   });
 }
