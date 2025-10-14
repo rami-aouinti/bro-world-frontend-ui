@@ -1,5 +1,6 @@
 import type { Registry, RegistryFiles } from "~/registry/schema";
 import { readdir, readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { parseSync } from "@oxc-parser/wasm";
 import { join, resolve } from "pathe";
 import { compileScript, parse } from "vue/compiler-sfc";
@@ -345,7 +346,8 @@ async function getFileDependencies(filename: string, sourceCode: string) {
   } else {
     const parsed = parse(sourceCode, { filename });
     if (parsed.descriptor.script?.content || parsed.descriptor.scriptSetup?.content) {
-      const compiled = compileScript(parsed.descriptor, { id: "" });
+      const hash = createHash("sha256").update(filename).digest("hex");
+      const compiled = compileScript(parsed.descriptor, { id: `data-v-${hash}` });
 
       Object.values(compiled.imports!).forEach((value) => {
         populateDeps(value.source);
