@@ -141,18 +141,18 @@ export function useThemes() {
   const canonicalDefaultPrimaryHex = computed(
     () => defaultThemePrimaryHex.value ?? normalizedFallbackPrimaryHex,
   );
-  const defaultPrimaryHexCandidates = computed(() => {
-    const values = new Set<string>([
-      canonicalDefaultPrimaryHex.value,
-      ...legacyDefaultPrimaryHexes,
-    ]);
-
-    return values;
-  });
-
   const themePrimaryCookieHex = computed(() =>
     normalizeHexColor(themePrimaryCookie.value),
   );
+  const themePrimaryCookieIsLegacyDefault = computed(() => {
+    const normalized = themePrimaryCookieHex.value;
+
+    if (!normalized) {
+      return false;
+    }
+
+    return legacyDefaultPrimaryHexes.includes(normalized);
+  });
   const themePrimaryCookieIsDefault = computed(() => {
     const normalized = themePrimaryCookieHex.value;
 
@@ -160,7 +160,7 @@ export function useThemes() {
       return false;
     }
 
-    return defaultPrimaryHexCandidates.value.has(normalized);
+    return normalized === canonicalDefaultPrimaryHex.value;
   });
 
   if (import.meta.client) {
@@ -173,6 +173,12 @@ export function useThemes() {
           if (themePrimaryCookie.value) {
             themePrimaryCookie.value = null;
           }
+
+          return;
+        }
+
+        if (themePrimaryCookieIsLegacyDefault.value) {
+          themePrimaryCookie.value = null;
 
           return;
         }
@@ -261,7 +267,7 @@ export function useThemes() {
       return;
     }
 
-    if (defaultPrimaryHexCandidates.value.has(normalized)) {
+    if (normalized === canonicalDefaultPrimaryHex.value) {
       themePrimaryCookie.value = null;
 
       return;
