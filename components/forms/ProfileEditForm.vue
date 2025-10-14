@@ -245,80 +245,11 @@
         cols="12"
         xl="4"
       >
-        <aside>
-          <SidebarCard
-            class="text-card-foreground mb-6 px-3 py-2"
-            padding="none"
-            glow
-          >
-            <h2 class="text-h6 font-weight-semibold mb-4">
-              {{ t("pages.profileEdit.sections.social") }}
-            </h2>
-            <div class="d-flex flex-column gap-4">
-              <v-text-field
-                v-model="form.social.linkedin"
-                prepend-inner-icon="mdi-linkedin"
-                :label="t('pages.profileEdit.labels.linkedin')"
-                variant="outlined"
-                density="comfortable"
-              />
-              <v-text-field
-                v-model="form.social.twitter"
-                prepend-inner-icon="mdi-twitter"
-                :label="t('pages.profileEdit.labels.twitter')"
-                variant="outlined"
-                density="comfortable"
-              />
-              <v-text-field
-                v-model="form.social.dribbble"
-                prepend-inner-icon="mdi-basketball"
-                :label="t('pages.profileEdit.labels.dribbble')"
-                variant="outlined"
-                density="comfortable"
-              />
-              <v-text-field
-                v-model="form.social.behance"
-                prepend-inner-icon="mdi-briefcase-outline"
-                :label="t('pages.profileEdit.labels.behance')"
-                variant="outlined"
-                density="comfortable"
-              />
-            </div>
-          </SidebarCard>
-
-          <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            padding="none"
-            glow
-          >
-            <h2 class="text-h6 font-weight-semibold mb-3">
-              {{ t("pages.profileEdit.sections.contact") }}
-            </h2>
-            <p class="text-body-2 text-medium-emphasis mb-4">
-              {{ t("pages.profileEdit.helpers.summary") }}
-            </p>
-            <div class="d-flex flex-column gap-3">
-              <div class="d-flex align-center gap-3">
-                <v-avatar
-                  size="40"
-                  color="primary"
-                  variant="tonal"
-                >
-                  <span class="text-body-2 font-weight-semibold">{{ initials }}</span>
-                </v-avatar>
-                <div>
-                  <div class="text-subtitle-2 font-weight-semibold">{{ fullName }}</div>
-                  <div class="text-caption text-medium-emphasis">{{ form.headline }}</div>
-                </div>
-              </div>
-              <div class="text-body-2 text-medium-emphasis">
-                <div>{{ form.email }}</div>
-                <div v-if="form.phone">{{ form.phone }}</div>
-                <div v-if="form.location">{{ form.location }}</div>
-              </div>
-            </div>
-          </SidebarCard>
-        </aside>
+        <ProfileEditSidebarContent
+          :form="form"
+          :full-name="fullName"
+          :initials="initials"
+        />
       </v-col>
     </v-row>
 
@@ -339,9 +270,14 @@ import { useI18n } from "vue-i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { ProfileForm } from "~/types/pages/profile";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
+const ProfileEditSidebarContent = defineAsyncComponent({
+  loader: () => import("~/components/forms/ProfileEditSidebarContent.vue"),
   suspensible: false,
 });
 
@@ -445,6 +381,20 @@ const initials = computed(() => {
   const fallback = t("pages.profileEdit.labels.firstName");
   return fallback.charAt(0).toUpperCase();
 });
+
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
+const sidebarContent = computed(() => ({
+  component: ProfileEditSidebarContent,
+  props: {
+    form,
+    fullName: fullName.value,
+    initials: initials.value,
+  },
+  wrapperClass: "flex flex-col gap-6",
+}));
+
+registerRightSidebarContent(sidebarContent);
 
 const formErrors = computed(() => Object.values(errors).filter(Boolean));
 
