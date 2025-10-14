@@ -126,7 +126,7 @@
                 :title="attachmentLabels.gif"
                 @click="handleAttach('gif')"
               >
-                <Icon name="mdi-gif" />
+                <Icon name="mdi-image-multiple" />
               </v-btn>
               <v-menu>
                 <template #activator="{ props: menuProps }">
