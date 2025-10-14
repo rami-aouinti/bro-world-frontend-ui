@@ -4,6 +4,7 @@ import { joinURL } from "ufo";
 import type { AuthLoginResponse, AuthUser } from "~/types/auth";
 import { clearAuthSession, setSession } from "../../utils/auth/session";
 import {
+  type CredentialPayload,
   normalizeCredentialPayload,
   resolveCredentialIdentifier,
   resolveCredentialPassword,
@@ -37,12 +38,11 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const payload = buildLoginPayload(body, username, password);
+
     const response = await $fetch<AuthLoginResponse>(endpoint, {
       method: "POST",
-      body: {
-        username: username,
-        password: password,
-      },
+      body: payload,
       headers,
     });
 
@@ -107,6 +107,62 @@ export default defineEventHandler(async (event) => {
 
 function isFetchError(error: unknown): error is FetchError<unknown> {
   return Boolean(error && typeof error === "object" && "response" in error);
+}
+
+function normalizeField(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+
+  return trimmed ? trimmed : null;
+}
+
+function buildLoginPayload(
+  body: CredentialPayload | undefined,
+  username: string,
+  password: string,
+): Record<string, string> {
+  const payload: Record<string, string> = {};
+
+  const passwordFromBody = normalizeField(body?.password);
+
+  if (passwordFromBody) {
+    payload.password = passwordFromBody;
+  } else if (password) {
+    payload.password = password;
+  }
+
+  const identifierFromBody = normalizeField(body?.identifier);
+  const usernameFromBody = normalizeField(body?.username);
+  const emailFromBody = normalizeField(body?.email);
+
+  if (identifierFromBody) {
+    payload.identifier = identifierFromBody;
+  }
+
+  if (usernameFromBody) {
+    payload.username = usernameFromBody;
+  }
+
+  if (emailFromBody) {
+    payload.email = emailFromBody;
+  }
+
+  if (!payload.identifier && username) {
+    payload.identifier = username;
+  }
+
+  if (!payload.username && username) {
+    payload.username = username;
+  }
+
+  if (!payload.email && username && username.includes("@")) {
+    payload.email = username;
+  }
+
+  return payload;
 }
 
 function resolveLoginErrorMessage(status: number, payload: unknown): string {

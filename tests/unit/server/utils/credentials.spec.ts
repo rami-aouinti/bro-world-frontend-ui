@@ -70,5 +70,22 @@ describe("credential helpers", () => {
     expect(
       normalizeCredentialPayload({ body: { username: "nested", password: "secret" } }),
     ).toEqual({ username: "nested", password: "secret" });
+
+    expect(
+      normalizeCredentialPayload({
+        payload: {
+          credentials: { identifier: "carol", password: "passphrase" },
+        },
+      }),
+    ).toEqual({ identifier: "carol", password: "passphrase" });
+
+    const circular: Record<string, unknown> = {};
+    circular.credentials = { email: "loop@example.com", password: "loop" };
+    circular.self = circular;
+
+    expect(normalizeCredentialPayload(circular)).toEqual({
+      email: "loop@example.com",
+      password: "loop",
+    });
   });
 });

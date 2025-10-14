@@ -31,7 +31,10 @@ function decodeBinaryPayload(input: ArrayBuffer | ArrayBufferView): string {
   return decoder.decode(new Uint8Array(input));
 }
 
-function normalizeCredentialRecord(record: Record<string, unknown>): CredentialPayload | undefined {
+function normalizeCredentialRecord(
+  record: Record<string, unknown>,
+  visited: WeakSet<object>,
+): CredentialPayload | undefined {
   let hasCredentialField = false;
   const payload: CredentialPayload = {};
 
@@ -50,7 +53,17 @@ function normalizeCredentialRecord(record: Record<string, unknown>): CredentialP
 
   for (const source of nestedSources) {
     if (source in record) {
-      const nested = normalizeCredentialPayload(record[source]);
+      const nested = normalizeCredentialPayload(record[source], visited);
+
+      if (nested) {
+        return nested;
+      }
+    }
+  }
+
+  for (const value of Object.values(record)) {
+    if (value && typeof value === "object") {
+      const nested = normalizeCredentialPayload(value, visited);
 
       if (nested) {
         return nested;
@@ -75,18 +88,23 @@ function normalizeCredentialSearchParams(params: URLSearchParams): CredentialPay
   return hasCredentialField ? payload : undefined;
 }
 
-export function normalizeCredentialPayload(input: unknown): CredentialPayload | undefined {
+export function normalizeCredentialPayload(
+  input: unknown,
+  seen?: WeakSet<object>,
+): CredentialPayload | undefined {
+  const visited = seen ?? new WeakSet<object>();
+
   if (input == null) {
     return undefined;
   }
 
   if (typeof ArrayBuffer !== "undefined") {
     if (input instanceof ArrayBuffer) {
-      return normalizeCredentialPayload(decodeBinaryPayload(input));
+      return normalizeCredentialPayload(decodeBinaryPayload(input), visited);
     }
 
     if (isArrayBufferView(input)) {
-      return normalizeCredentialPayload(decodeBinaryPayload(input));
+      return normalizeCredentialPayload(decodeBinaryPayload(input), visited);
     }
   }
 
@@ -101,7 +119,7 @@ export function normalizeCredentialPayload(input: unknown): CredentialPayload | 
       const parsed = JSON.parse(trimmed) as unknown;
 
       if (parsed && typeof parsed === "object") {
-        return normalizeCredentialPayload(parsed);
+        return normalizeCredentialPayload(parsed, visited);
       }
     } catch {
       // Ignore JSON parsing errors and fall back to query string parsing.
@@ -131,7 +149,14 @@ export function normalizeCredentialPayload(input: unknown): CredentialPayload | 
 
   if (typeof input === "object") {
     const record = input as Record<string, unknown>;
-    return normalizeCredentialRecord(record);
+
+    if (visited.has(record)) {
+      return undefined;
+    }
+
+    visited.add(record);
+
+    return normalizeCredentialRecord(record, visited);
   }
 
   return undefined;
