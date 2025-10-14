@@ -1,7 +1,6 @@
 <template>
   <!-- Barre compacte -->
-  <div class="my-2">
-    <SidebarCard
+  <SidebarCard
       class="text-card-foreground px-3 py-2"
       glow
     >
@@ -67,7 +66,6 @@
         :border-width="2"
       />
     </SidebarCard>
-  </div>
 
   <Suspense v-if="dialog && canUseAuthenticatedUi">
     <template #default>
