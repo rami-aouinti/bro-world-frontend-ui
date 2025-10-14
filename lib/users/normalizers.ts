@@ -62,5 +62,21 @@ export function normalizeUserPayload(payload: Partial<AuthUser>): NormalizedUser
     normalized.roles = normalizeRolesInput(payload.roles);
   }
 
+  if (typeof payload.language === "string") {
+    normalized.language = payload.language.trim();
+  }
+
+  if (typeof payload.locale === "string") {
+    normalized.locale = payload.locale.trim();
+  }
+
+  if (typeof payload.timezone === "string") {
+    normalized.timezone = payload.timezone.trim();
+  }
+
+  if ("profile" in payload && payload.profile !== undefined) {
+    normalized.profile = payload.profile;
+  }
+
   return normalized;
 }

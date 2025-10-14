@@ -9,8 +9,15 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
 
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+
 const ProfileSecurityForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ProfileSecurityForm.vue"),
+  suspensible: false,
+});
+
+const ProfileSecurityTwoFactorSidebarCard = defineAsyncComponent({
+  loader: () => import("~/components/profile/ProfileSecurityTwoFactorSidebarCard.vue"),
   suspensible: false,
 });
 
@@ -21,5 +28,17 @@ definePageMeta({
   documentDriven: false,
 });
 
-useProfileSidebarContent();
+const { registerRightSidebarContent, setRightSidebarContent } = useLayoutRightSidebar();
+
+if (import.meta.server) {
+  setRightSidebarContent({
+    component: ProfileSecurityTwoFactorSidebarCard,
+    wrapperClass: "flex flex-col gap-4",
+  });
+} else {
+  registerRightSidebarContent({
+    component: ProfileSecurityTwoFactorSidebarCard,
+    wrapperClass: "flex flex-col gap-4",
+  });
+}
 </script>

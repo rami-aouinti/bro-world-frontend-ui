@@ -1055,7 +1055,8 @@
       "sections": {
         "pinned": "Pinned collections",
         "albums": "Album explorer",
-        "timeline": "Creative notes"
+        "timeline": "Creative notes",
+        "notesDescription": "Updates from collaborators as they prep visual stories."
       },
       "meta": {
         "updated": "Updated {date}",
@@ -1461,6 +1462,25 @@
       "title": "Administration hub",
       "subtitle": "Manage the entire platform, monitor key metrics, and activate the right levers in a few clicks."
     },
+    "statistics": {
+      "metaTitle": "Statistics",
+      "page": {
+        "title": "Platform statistics",
+        "subtitle": "Keep an eye on usage trends and key health indicators for your community."
+      },
+      "cards": {
+        "users": {
+          "title": "Registered users",
+          "description": "Total number of accounts currently available across the platform."
+        }
+      },
+      "actions": {
+        "refresh": "Refresh data"
+      },
+      "errors": {
+        "load": "Unable to load statistics."
+      }
+    },
     "settings": {
       "metaTitle": "Site settings",
       "page": {
@@ -1630,6 +1650,39 @@
           "page": {
             "title": "User data",
             "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          },
+          "table": {
+            "search": "Search dataset",
+            "columns": {
+              "username": "Username",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "email": "Email",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status",
+              "actions": "Actions"
+            },
+            "empty": "No user records found."
+          },
+          "actions": {
+            "refresh": "Refresh"
+          },
+          "details": {
+            "title": "User details",
+            "close": "Close",
+            "empty": "Select a user to inspect their profile.",
+            "fields": {
+              "username": "Username",
+              "email": "Email",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status"
+            }
           }
         },
         "crons": {

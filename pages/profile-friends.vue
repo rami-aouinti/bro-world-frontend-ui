@@ -193,12 +193,12 @@
         </div>
       </section>
 
-      <section aria-labelledby="friend-suggestions-title">
+      <section
+        aria-labelledby="friend-suggestions-title"
+        class="lg:hidden"
+      >
         <v-row dense>
-          <v-col
-            cols="12"
-            lg="8"
-          >
+          <v-col cols="12">
             <SidebarCard
               class="text-card-foreground pa-6 h-100"
               glow
@@ -252,10 +252,7 @@
               </v-list>
             </SidebarCard>
           </v-col>
-          <v-col
-            cols="12"
-            lg="4"
-          >
+          <v-col cols="12">
             <SidebarCard
               class="text-card-foreground pa-6 h-100 bg-primary/10"
               glow
@@ -383,7 +380,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
+import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vue";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import type { FriendCard } from "~/types/pages/profile";
 
 definePageMeta({
@@ -400,7 +398,7 @@ const currentRoute = computed(() => router.currentRoute.value);
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
-useProfileSidebarContent();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
 
 useHead(() => {
   const title = t("seo.profileFriends.title");
@@ -614,6 +612,18 @@ const activeNow = computed(() =>
     .filter((friend) => friend.status === "online" || friend.status === "focus")
     .slice(0, 4),
 );
+
+const sidebarContent = computed(() => ({
+  component: ProfileFriendsSidebar,
+  props: {
+    suggestions: suggestions.value,
+    activeNow: activeNow.value,
+    onConnect: (friend: FriendCard) => triggerAction("connect", friend),
+  },
+  wrapperClass: "flex flex-col gap-4",
+}));
+
+registerRightSidebarContent(sidebarContent);
 
 const showProfileDialog = ref(false);
 const selectedFriend = ref<FriendCard | null>(null);

@@ -196,32 +196,10 @@
           glow
         >
           <div class="d-flex flex-column gap-4">
-            <section aria-labelledby="mfa-section-title">
-              <div class="mb-3">
-                <h2
-                  id="mfa-section-title"
-                  class="text-h6 font-weight-semibold mb-1"
-                >
-                  {{ t("pages.profileSecurity.sections.mfa.title") }}
-                </h2>
-                <p class="text-body-2 text-medium-emphasis mb-0">
-                  {{ t("pages.profileSecurity.sections.mfa.description") }}
-                </p>
-              </div>
-              <v-switch
-                v-model="form.mfaEnabled"
-                :label="t('pages.profileSecurity.labels.mfaToggle')"
-                color="primary"
-                inset
-              />
-              <v-btn
-                variant="text"
-                class="mt-2"
-                @click="generateCodes"
-              >
-                {{ t("pages.profileSecurity.actions.generateCodes") }}
-              </v-btn>
-            </section>
+            <ProfileSecurityTwoFactorSection
+              v-model:enabled="form.mfaEnabled"
+              @generate-codes="generateCodes"
+            />
 
             <v-divider />
 
@@ -267,6 +245,11 @@ import type { SessionEntry } from "~/types/pages/profile";
 
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
+
+const ProfileSecurityTwoFactorSection = defineAsyncComponent({
+  loader: () => import("~/components/profile/ProfileSecurityTwoFactorSection.vue"),
   suspensible: false,
 });
 
