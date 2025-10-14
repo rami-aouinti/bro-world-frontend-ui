@@ -103,7 +103,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent, onMounted } from "vue";
+import {
+  ref,
+  computed,
+  defineAsyncComponent,
+  onMounted,
+  onBeforeUnmount,
+  watch,
+} from "vue";
+import type { WatchStopHandle } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -117,17 +125,29 @@ const ReactionPicker = defineAsyncComponent({
 type Reaction = PickerReaction;
 
 const auth = useAuthSession();
-const isHydrated = ref(false);
-const showAuthUi = computed(() => {
-  if (!isHydrated.value) {
-    return false;
+const showAuthUi = ref(false);
+
+if (import.meta.client) {
+  let stopWatchingAuth: WatchStopHandle | null = null;
+
+  function refreshAuthUiVisibility() {
+    showAuthUi.value = auth.isReady.value && auth.isAuthenticated.value;
   }
 
-  return auth.isReady.value && auth.isAuthenticated.value;
-});
-onMounted(() => {
-  isHydrated.value = true;
-});
+  onMounted(() => {
+    refreshAuthUiVisibility();
+
+    stopWatchingAuth = watch(
+      () => [auth.isReady.value, auth.isAuthenticated.value],
+      refreshAuthUiVisibility,
+      { flush: "post" },
+    );
+  });
+
+  onBeforeUnmount(() => {
+    stopWatchingAuth?.();
+  });
+}
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
 const props = defineProps<{
