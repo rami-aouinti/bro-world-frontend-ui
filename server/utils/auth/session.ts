@@ -42,18 +42,6 @@ function isHeadersSentError(error: unknown): boolean {
 }
 
 function safeDeleteCookie(event: H3Event, name: string, options?: Parameters<typeof deleteCookie>[2]) {
-  try {
-    deleteCookie(event, name, options);
-  } catch (error) {
-    if (isHeadersSentError(error)) {
-      return;
-    }
-
-    throw error;
-  }
-}
-
-function safeDeleteCookie(event: H3Event, name: string, options?: Parameters<typeof deleteCookie>[2]) {
   const response = event.node?.res;
 
   if (!response || response.headersSent || response.writableEnded) {
