@@ -14,14 +14,14 @@ function sanitizeBaseEndpoint(raw: string): string {
   return raw.replace(/\/$/, "");
 }
 
-function resolveIdentifier(body: LoginRequestBody): string {
-  return (body.identifier ?? body.username ?? "").trim();
+function resolveIdentifier(body: LoginRequestBody | undefined): string {
+  return (body?.identifier ?? body?.username ?? "").trim();
 }
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody<LoginRequestBody>(event);
+  const body = (await readBody<LoginRequestBody | null>(event)) ?? undefined;
   const identifier = resolveIdentifier(body);
-  const password = (body.password ?? "").trim();
+  const password = (body?.password ?? "").trim();
 
   if (!identifier || !password) {
     throw createError({
