@@ -10,7 +10,7 @@
         class="text-inherit"
         >{{ brandParts.prefix }}</span
       >
-      <ColourfulText
+      <LazyColourfulText
         :colors="colors"
         :text="brandParts.highlight"
       />

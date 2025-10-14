@@ -72,7 +72,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="52">
+          <list size="53">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -125,6 +125,7 @@
             <item index="49" class="java.lang.String" itemvalue="v-table" />
             <item index="50" class="java.lang.String" itemvalue="v-rating" />
             <item index="51" class="java.lang.String" itemvalue="v-list-subheader" />
+            <item index="52" class="java.lang.String" itemvalue="ColourfulText" />
           </list>
         </value>
       </option>
