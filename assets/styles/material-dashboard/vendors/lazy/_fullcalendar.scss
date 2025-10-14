@@ -1472,16 +1472,16 @@ A VERTICAL event
 }
 
 .fc button.fc-button-pink {
-  background-color: $primary !important;
-  border-color: $primary !important;
+  background-color: var(--color-primary, #{$primary}) !important;
+  border-color: var(--color-primary, #{$primary}) !important;
   &:hover,
   &:focus,
   &:not(:disabled):active,
   &:not(:disabled):active:focus {
     transform: $btn-hover-transform;
     box-shadow: $btn-shadow-hover;
-    background-color: $primary;
-    border-color: $primary;
+    background-color: var(--color-primary, #{$primary});
+    border-color: var(--color-primary, #{$primary});
   }
 }
 

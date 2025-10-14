@@ -33,15 +33,27 @@ $gap-scale: (
 
 @each $name, $val in $theme-colors {
   .text-#{$name} {
-    color: $val !important;
+    @if $name == "primary" {
+      color: var(--color-primary, #{$val}) !important;
+    } @else {
+      color: $val !important;
+    }
   }
 
   .bg-#{$name} {
-    background-color: $val !important;
+    @if $name == "primary" {
+      background-color: var(--color-primary, #{$val}) !important;
+    } @else {
+      background-color: $val !important;
+    }
   }
 
   .border-#{$name} {
-    border-color: $val !important;
+    @if $name == "primary" {
+      border-color: var(--color-primary, #{$val}) !important;
+    } @else {
+      border-color: $val !important;
+    }
   }
 }
 
@@ -75,6 +87,8 @@ $gap-scale: (
       color: color.scale($val, $lightness: -8%) !important;
     } @else if $name == "success" {
       color: color.scale($val, $lightness: -11%) !important;
+    } @else if $name == "primary" {
+      color: var(--color-primary, #{$val}) !important;
     } @else {
       color: $val !important;
     }
