@@ -1784,6 +1784,15 @@
         "pageSubtitle": "Subtitle",
         "pageBody": "Body content"
       },
+      "themeCustomizer": {
+        "title": "Customize",
+        "color": "Color",
+        "radius": "Radius",
+        "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
       "helpers": {
         "themeModeSystem": "Automatically adapts to each visitor's device preference.",
         "themeModeLight": "Always display the interface in light mode.",

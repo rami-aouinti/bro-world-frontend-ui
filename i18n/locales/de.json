@@ -1761,6 +1761,15 @@
         "pageSubtitle": "Subtitle",
         "pageBody": "Body content"
       },
+      "themeCustomizer": {
+        "title": "Anpassen",
+        "color": "Farbe",
+        "radius": "Radius",
+        "theme": "Thema",
+        "light": "Hell",
+        "dark": "Dunkel",
+        "system": "System"
+      },
       "helpers": {
         "themeModeSystem": "Automatically adapts to each visitor's device preference.",
         "themeModeLight": "Always display the interface in light mode.",

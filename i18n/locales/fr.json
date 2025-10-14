@@ -1784,6 +1784,15 @@
         "pageSubtitle": "Sous-titre",
         "pageBody": "Contenu principal"
       },
+      "themeCustomizer": {
+        "title": "Personnaliser",
+        "color": "Couleur",
+        "radius": "Rayon",
+        "theme": "Thème",
+        "light": "Clair",
+        "dark": "Sombre",
+        "system": "Système"
+      },
       "helpers": {
         "themeModeSystem": "S'adapte automatiquement aux préférences du terminal de chaque visiteur.",
         "themeModeLight": "Affiche toujours l'interface en mode clair.",

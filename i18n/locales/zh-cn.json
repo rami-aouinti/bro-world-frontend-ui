@@ -1385,6 +1385,15 @@
         "pageSubtitle": "Subtitle",
         "pageBody": "Body content"
       },
+      "themeCustomizer": {
+        "title": "自定义",
+        "color": "颜色",
+        "radius": "圆角",
+        "theme": "主题",
+        "light": "浅色",
+        "dark": "深色",
+        "system": "系统"
+      },
       "helpers": {
         "themeModeSystem": "Automatically adapts to each visitor's device preference.",
         "themeModeLight": "Always display the interface in light mode.",
