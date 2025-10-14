@@ -20,6 +20,16 @@ export default defineEventHandler(async (event) => {
   const username = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
 
+  if (!username || !password) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Unable to sign in",
+      data: {
+        message: "Please provide both your email or username and password.",
+      },
+    });
+  }
+
   const runtimeConfig = useRuntimeConfig(event);
   const serviceToken = runtimeConfig.auth?.apiToken?.trim();
   const forwardedAuthorization = getHeader(event, "authorization");
