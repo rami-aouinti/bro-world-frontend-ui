@@ -231,7 +231,23 @@ function setClassTheme() {
 }
 
 function setStyleRadius() {
-  document.body.style.setProperty("--radius", `${radius.value}rem`);
+  const radiusValue = `${radius.value}rem`;
+
+  const targets = [document.body, document.documentElement];
+
+  for (const target of targets) {
+    if (!target) {
+      continue;
+    }
+
+    target.style.setProperty("--radius", radiusValue);
+    target.style.setProperty("--ui-radius", radiusValue);
+    target.style.setProperty("--ui-radius-md", radiusValue);
+    target.style.setProperty("--v-radius-md", radiusValue);
+    target.style.setProperty("--v-btn-border-radius", radiusValue);
+    target.style.setProperty("--v-field-border-radius", radiusValue);
+    target.style.setProperty("--v-list-border-radius", radiusValue);
+  }
 }
 
 function setColorPreference(mode: "light" | "dark" | "system") {
