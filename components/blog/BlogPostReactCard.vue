@@ -65,7 +65,7 @@
   </div>
   <ClientOnly>
     <div
-      v-if="canRenderAuthUi"
+      v-if="showAuthUi"
       class="reaction-bar"
     >
       <!-- Actions -->
@@ -103,7 +103,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent } from "vue";
+import { ref, computed, defineAsyncComponent, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -118,6 +118,11 @@ type Reaction = PickerReaction;
 
 const auth = useAuthSession();
 const canRenderAuthUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
+const isHydrated = ref(false);
+const showAuthUi = computed(() => isHydrated.value && canRenderAuthUi.value);
+onMounted(() => {
+  isHydrated.value = true;
+});
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
 const props = defineProps<{
