@@ -145,7 +145,16 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed, watch, defineAsyncComponent, onMounted } from "vue";
+import {
+  reactive,
+  ref,
+  computed,
+  watch,
+  defineAsyncComponent,
+  onMounted,
+  onBeforeUnmount,
+} from "vue";
+import type { WatchStopHandle } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -162,17 +171,29 @@ const PostCommentForm = defineAsyncComponent({
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
-const isHydrated = ref(false);
-const canRenderAuthUi = computed(() => {
-  if (!isHydrated.value) {
-    return false;
+const canRenderAuthUi = ref(false);
+
+if (import.meta.client) {
+  let stopWatchingAuth: WatchStopHandle | null = null;
+
+  function refreshCanRenderAuthUi() {
+    canRenderAuthUi.value = auth.isReady.value && auth.isAuthenticated.value;
   }
 
-  return auth.isReady.value && auth.isAuthenticated.value;
-});
-onMounted(() => {
-  isHydrated.value = true;
-});
+  onMounted(() => {
+    refreshCanRenderAuthUi();
+
+    stopWatchingAuth = watch(
+      () => [auth.isReady.value, auth.isAuthenticated.value],
+      refreshCanRenderAuthUi,
+      { flush: "post" },
+    );
+  });
+
+  onBeforeUnmount(() => {
+    stopWatchingAuth?.();
+  });
+}
 const composerVisible = defineModel<boolean>("composerVisible", { default: false });
 
 watch(canRenderAuthUi, (value) => {
