@@ -649,6 +649,9 @@
         "mutual": "mutual connections",
         "online": "online now"
       },
+      "meta": {
+        "lastActive": "上次活跃 · {time}"
+      },
       "sections": {
         "suggestions": "Suggested connections",
         "active": "Active now"
@@ -715,7 +718,11 @@
       "title": "Edit profile",
       "subtitle": "Refresh your details so collaborators always have the latest context.",
       "sections": {
-        "profile": "Profile",
+        "profile": {
+          "title": "个人资料",
+          "bio": "个人介绍",
+          "skills": "关键技能"
+        },
         "contact": "Contact",
         "about": "About",
         "social": "Social links",

@@ -321,6 +321,9 @@
         "mutual": "mutual connections",
         "online": "online now"
       },
+      "meta": {
+        "lastActive": "Последняя активность · {time}"
+      },
       "sections": {
         "suggestions": "Suggested connections",
         "active": "Active now"
@@ -387,7 +390,11 @@
       "title": "Edit profile",
       "subtitle": "Refresh your details so collaborators always have the latest context.",
       "sections": {
-        "profile": "Profile",
+        "profile": {
+          "title": "Профиль",
+          "bio": "О себе",
+          "skills": "Основные навыки"
+        },
         "contact": "Contact",
         "about": "About",
         "social": "Social links",
