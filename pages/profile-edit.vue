@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from "vue";
+import { useI18n } from "vue-i18n";
 
 const ProfileEditForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ProfileEditForm.vue"),

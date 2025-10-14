@@ -446,6 +446,7 @@
 
 <script setup lang="ts">
 import { computed, reactive } from "vue";
+import { useI18n } from "vue-i18n";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();

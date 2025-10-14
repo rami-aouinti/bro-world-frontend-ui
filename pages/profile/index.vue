@@ -229,6 +229,7 @@
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from "vue";
+import { useI18n } from "vue-i18n";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useAuthSession } from "~/stores/auth-session";

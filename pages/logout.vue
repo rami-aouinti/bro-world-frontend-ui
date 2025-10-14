@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import { useAuthSession } from "~/stores/auth-session";
 
 definePageMeta({
