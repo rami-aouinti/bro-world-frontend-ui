@@ -286,13 +286,27 @@ export function useThemes() {
       label: option.label,
     }));
 
+    const canonicalHex = normalizeHexColor(canonicalDefaultPrimaryHex.value);
     const activeHex = normalizeHexColor(themePrimaryHex.value);
 
-    if (activeHex && !normalizedOptions.some((option) => option.hex === activeHex)) {
-      return [
-        { hex: activeHex, label: "Custom" },
-        ...normalizedOptions,
-      ];
+    const extras: { hex: string; label: string }[] = [];
+
+    if (
+      canonicalHex &&
+      !normalizedOptions.some((option) => option.hex === canonicalHex)
+    ) {
+      extras.push({ hex: canonicalHex, label: "Custom" });
+    }
+
+    if (
+      activeHex &&
+      ![...normalizedOptions, ...extras].some((option) => option.hex === activeHex)
+    ) {
+      extras.push({ hex: activeHex, label: "Custom" });
+    }
+
+    if (extras.length) {
+      return [...extras, ...normalizedOptions];
     }
 
     return normalizedOptions;
