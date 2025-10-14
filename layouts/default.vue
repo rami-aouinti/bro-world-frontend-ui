@@ -602,7 +602,9 @@ watch(
       !normalizedCookiePrimary || normalizedCookiePrimary === normalizedThemePrimary;
 
     if (shouldAdoptThemePrimary) {
-      themePrimaryCookie.value = normalizedThemePrimary ?? null;
+      if (import.meta.client) {
+        themePrimaryCookie.value = normalizedThemePrimary ?? null;
+      }
       applyPrimaryColorCssVariables(value.primaryColor);
     }
   },

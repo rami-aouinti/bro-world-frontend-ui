@@ -24,7 +24,6 @@ import {
   ref,
   useAttrs,
   watch,
-  withDefaults,
 } from "vue";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
