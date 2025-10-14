@@ -5,7 +5,7 @@ export interface CredentialPayload {
   password?: unknown;
 }
 
-const CREDENTIAL_KEYS = ["identifier", "username", "email", "password"] as const;
+export const CREDENTIAL_KEYS = ["identifier", "username", "email", "password"] as const;
 
 type CredentialKey = (typeof CREDENTIAL_KEYS)[number];
 
@@ -210,4 +210,49 @@ export function resolveCredentialPassword(payload: CredentialPayload | undefined
   }
 
   return "";
+}
+
+export function coerceCredentialPayload(input: unknown): CredentialPayload | undefined {
+  if (!input || typeof input !== "object") {
+    return undefined;
+  }
+
+  const record = input as Record<string, unknown>;
+  const payload: CredentialPayload = {};
+  let hasCredentialField = false;
+
+  for (const key of CREDENTIAL_KEYS) {
+    if (key in record) {
+      payload[key] = record[key];
+      hasCredentialField = true;
+    }
+  }
+
+  return hasCredentialField ? payload : undefined;
+}
+
+export function mergeCredentialPayloads(
+  sources: Array<CredentialPayload | undefined>,
+): CredentialPayload | undefined {
+  const payload: CredentialPayload = {};
+  let hasCredentialField = false;
+
+  for (const source of sources) {
+    if (!source) {
+      continue;
+    }
+
+    for (const key of CREDENTIAL_KEYS) {
+      if (payload[key] !== undefined) {
+        continue;
+      }
+
+      if (source[key] !== undefined) {
+        payload[key] = source[key];
+        hasCredentialField = true;
+      }
+    }
+  }
+
+  return hasCredentialField ? payload : undefined;
 }

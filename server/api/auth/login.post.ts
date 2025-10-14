@@ -1,10 +1,12 @@
-import { createError, getHeader, readBody } from "h3";
+import { createError, getHeader, getQuery, readBody } from "h3";
 import type { FetchError } from "ofetch";
 import { joinURL } from "ufo";
 import type { AuthLoginResponse, AuthUser } from "~/types/auth";
 import { clearAuthSession, setSession } from "../../utils/auth/session";
 import {
   type CredentialPayload,
+  coerceCredentialPayload,
+  mergeCredentialPayloads,
   normalizeCredentialPayload,
   resolveCredentialIdentifier,
   resolveCredentialPassword,
@@ -16,9 +18,15 @@ function sanitizeBaseEndpoint(raw: string): string {
 
 export default defineEventHandler(async (event) => {
   const rawBody = await readBody<unknown>(event);
-  const body = normalizeCredentialPayload(rawBody);
-  const username = resolveCredentialIdentifier(body);
-  const password = resolveCredentialPassword(body);
+  const rawQuery = getQuery(event);
+  const normalizedBody = normalizeCredentialPayload(rawBody);
+  const normalizedQuery = normalizeCredentialPayload(rawQuery);
+  const coercedBody = coerceCredentialPayload(rawBody);
+  const coercedQuery = coerceCredentialPayload(rawQuery);
+  const credentials =
+    mergeCredentialPayloads([normalizedBody, coercedBody, normalizedQuery, coercedQuery]) ?? undefined;
+  const username = resolveCredentialIdentifier(credentials);
+  const password = resolveCredentialPassword(credentials);
   const hasPassword = password.length > 0;
 
   if (!username || !hasPassword) {
@@ -49,7 +57,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const payload = buildLoginPayload(body, username, password);
+    const payload = buildLoginPayload(credentials, username, password);
 
     const response = await $fetch<AuthLoginResponse>(endpoint, {
       method: "POST",

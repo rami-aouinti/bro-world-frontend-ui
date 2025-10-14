@@ -1,6 +1,8 @@
 import { Buffer } from "node:buffer";
 import { describe, expect, it } from "vitest";
 import {
+  coerceCredentialPayload,
+  mergeCredentialPayloads,
   normalizeCredentialPayload,
   resolveCredentialIdentifier,
   resolveCredentialPassword,
@@ -90,5 +92,23 @@ describe("credential helpers", () => {
       email: "loop@example.com",
       password: "loop",
     });
+  });
+
+  it("coerces and merges credential payloads from multiple sources", () => {
+    expect(coerceCredentialPayload(undefined)).toBeUndefined();
+    expect(coerceCredentialPayload({ foo: "bar" })).toBeUndefined();
+
+    const coerced = coerceCredentialPayload({ identifier: " user ", password: " secret " });
+
+    expect(coerced).toEqual({ identifier: " user ", password: " secret " });
+
+    const merged = mergeCredentialPayloads([
+      undefined,
+      coerced,
+      normalizeCredentialPayload("identifier=jane"),
+      normalizeCredentialPayload({ username: "jane" }),
+    ]);
+
+    expect(merged).toEqual({ identifier: " user ", password: " secret ", username: "jane" });
   });
 });
