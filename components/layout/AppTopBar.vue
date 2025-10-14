@@ -344,7 +344,7 @@ const userMenuItems = computed<UserMenuItem[]>(() => {
       { title: t("auth.Login"), icon: "mdi:login", to: "/login" },
       { title: t("auth.Register"), icon: "mdi:account-plus", to: "/register" },
       { title: t("layout.sidebar.items.about"), icon: "mdi-information-outline", to: "/about" },
-      { title: t("layout.sidebar.items.help"), icon: "mdi:question-plus", to: "/help" },
+      { title: t("layout.sidebar.items.help"), icon: "mdi-lifebuoy", to: "/help" },
       { title: t("layout.sidebar.items.contact"), icon: "mdi-email-outline", to: "/contact" },
     ];
 });
