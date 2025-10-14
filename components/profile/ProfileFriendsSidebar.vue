@@ -1,36 +1,88 @@
 <template>
   <div class="flex flex-col gap-4">
     <SidebarCard
-      class="text-card-foreground pa-6"
+        class="text-card-foreground pa-6 bg-primary/10"
+        glow
+    >
+      <div class="d-flex flex-column gap-3">
+        <h2 class="text-h6 font-weight-semibold mb-1">
+          {{ t("pages.profileFriends.sections.active") }}
+        </h2>
+        <div
+            v-if="activeNow.length"
+            class="d-flex flex-column gap-2"
+        >
+          <div
+              v-for="friend in activeNow"
+              :key="friend.id"
+              class="d-flex align-center justify-space-between"
+          >
+            <div class="d-flex align-center gap-3">
+              <v-avatar size="40">
+                <v-img
+                    :src="friend.avatar"
+                    :alt="friend.name"
+                    cover
+                />
+              </v-avatar>
+              <div>
+                <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
+                <div class="text-caption text-medium-emphasis">{{ friend.lastActive }}</div>
+              </div>
+            </div>
+            <v-chip
+                :color="statusColor(friend.status)"
+                size="x-small"
+                class="font-weight-medium"
+            >
+              {{ statusLabel(friend.status) }}
+            </v-chip>
+          </div>
+        </div>
+        <p
+            v-else
+            class="text-body-2 text-medium-emphasis"
+        >
+          {{ t("pages.profileFriends.empty") }}
+        </p>
+      </div>
+    </SidebarCard>
+
+    <SidebarCard
+      class="text-card-foreground pa-4"
       glow
     >
-      <h2 class="text-h6 font-weight-semibold mb-4">
+      <h2 class="text-h6 font-weight-semibold mb-3">
         {{ t("pages.profileFriends.sections.suggestions") }}
       </h2>
       <v-list
         v-if="suggestions.length"
-        lines="three"
+        lines="two"
+        class="py-1 rounded-xl"
         density="comfortable"
       >
         <v-list-item
+            class="px-2 py-3 transition-colors d-flex align-center gap-3 rounded-xl"
           v-for="suggestion in suggestions"
           :key="suggestion.id"
         >
           <template #prepend>
-            <v-avatar size="48">
-              <v-img
-                :src="suggestion.avatar"
-                :alt="suggestion.name"
-                cover
-              />
-            </v-avatar>
+            <div>
+              <div>
+                <v-avatar size="24">
+                  <v-img
+                      :src="suggestion.avatar"
+                      :alt="suggestion.name"
+                      cover
+                  />
+                </v-avatar>
+              </div>
+              <div class="text-subtitle-2 text-foreground">{{ suggestion.name }}</div>
+            </div>
+
           </template>
-          <v-list-item-title class="font-weight-semibold">
-            {{ suggestion.name }}
-          </v-list-item-title>
-          <v-list-item-subtitle>{{ suggestion.headline }}</v-list-item-subtitle>
           <template #append>
-            <div class="d-flex flex-column align-end gap-2">
+            <div class="d-flex flex-column align-end gap-2 text-foreground">
               <v-chip
                 size="small"
                 variant="tonal"
@@ -55,54 +107,6 @@
       >
         {{ t("pages.profileFriends.empty") }}
       </p>
-    </SidebarCard>
-
-    <SidebarCard
-      class="text-card-foreground pa-6 bg-primary/10"
-      glow
-    >
-      <div class="d-flex flex-column gap-3">
-        <h2 class="text-h6 font-weight-semibold mb-1">
-          {{ t("pages.profileFriends.sections.active") }}
-        </h2>
-        <div
-          v-if="activeNow.length"
-          class="d-flex flex-column gap-2"
-        >
-          <div
-            v-for="friend in activeNow"
-            :key="friend.id"
-            class="d-flex align-center justify-space-between"
-          >
-            <div class="d-flex align-center gap-3">
-              <v-avatar size="40">
-                <v-img
-                  :src="friend.avatar"
-                  :alt="friend.name"
-                  cover
-                />
-              </v-avatar>
-              <div>
-                <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
-                <div class="text-caption text-medium-emphasis">{{ friend.lastActive }}</div>
-              </div>
-            </div>
-            <v-chip
-              :color="statusColor(friend.status)"
-              size="x-small"
-              class="font-weight-medium"
-            >
-              {{ statusLabel(friend.status) }}
-            </v-chip>
-          </div>
-        </div>
-        <p
-          v-else
-          class="text-body-2 text-medium-emphasis"
-        >
-          {{ t("pages.profileFriends.empty") }}
-        </p>
-      </div>
     </SidebarCard>
   </div>
 </template>

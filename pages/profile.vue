@@ -4,7 +4,7 @@
   >
     <v-container>
       <header
-        class="mb-8"
+        class="mb-4"
         aria-describedby="profile-subtitle"
       >
         <SidebarCard
@@ -85,6 +85,66 @@
             align="stretch"
           >
             <v-col
+                v-if="showSocialSection"
+                cols="12"
+            >
+              <section
+                  aria-labelledby="social-section-title"
+                  class="h-100"
+              >
+                <SidebarCard
+                    class="text-card-foreground px-3 py-2"
+                    padding="none"
+                    glow
+                >
+                  <h2
+                      id="social-section-title"
+                      class="text-h5 font-weight-semibold mb-4"
+                  >
+                    {{ t("pages.profile.sections.social") }}
+                  </h2>
+                  <dl
+                      class="d-flex align-center gap-4"
+                      :aria-label="t('pages.profile.stats.title')"
+                  >
+                    <div class="d-flex align-center gap-2">
+                      <dt class="text-body-2 text-medium-emphasis mb-0">
+                        {{ t("pages.profile.labels.friends") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        {{ formattedFriendsCount }}
+                      </dd>
+                    </div>
+                    <div class="d-flex align-center gap-2">
+                      <dt class="text-body-2 text-medium-emphasis mb-0">
+                        {{ t("pages.profile.labels.stories") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        {{ formattedStoriesCount }}
+                      </dd>
+                    </div>
+                    <div class="d-flex align-center gap-2">
+                      <dt class="text-body-2 text-medium-emphasis mb-0">
+                        {{ t("pages.profile.labels.accountStatus") }}
+                      </dt>
+                      <dd class="text-body-1 font-weight-medium mb-0">
+                        <v-chip
+                            v-if="accountStatus"
+                            :color="accountStatus.color"
+                            size="small"
+                            variant="flat"
+                        >
+                          {{ accountStatus.label }}
+                        </v-chip>
+                        <span v-else>{{ placeholderValue }}</span>
+                      </dd>
+                    </div>
+                  </dl>
+                </SidebarCard>
+              </section>
+            </v-col>
+
+            <v-col
               v-if="showContactSection"
               cols="12"
               md="6"
@@ -106,10 +166,11 @@
                   </h2>
                   <dl class="d-flex flex-column gap-4">
                     <div
+                        class="d-flex align-center gap-2"
                       v-for="item in contactItems"
                       :key="item.id"
                     >
-                      <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
+                      <dt class="text-body-2 text-medium-emphasis mb-0">{{ item.label }}</dt>
                       <dd class="text-body-1 font-weight-medium mb-0">
                         <a
                           v-if="item.href && item.value !== placeholderValue"
@@ -148,71 +209,12 @@
                   </h2>
                   <dl class="d-flex flex-column gap-4">
                     <div
+                        class="d-flex align-center gap-2"
                       v-for="item in profileItems"
                       :key="item.id"
                     >
-                      <dt class="text-body-2 text-medium-emphasis mb-1">{{ item.label }}</dt>
+                      <dt class="text-body-2 text-medium-emphasis mb-0">{{ item.label }}</dt>
                       <dd class="text-body-1 font-weight-medium mb-0">{{ item.value }}</dd>
-                    </div>
-                  </dl>
-                </SidebarCard>
-              </section>
-            </v-col>
-
-            <v-col
-              v-if="showSocialSection"
-              cols="12"
-            >
-              <section
-                aria-labelledby="social-section-title"
-                class="h-100"
-              >
-                <SidebarCard
-                  class="text-card-foreground px-3 py-2"
-                  padding="none"
-                  glow
-                >
-                  <h2
-                    id="social-section-title"
-                    class="text-h5 font-weight-semibold mb-4"
-                  >
-                    {{ t("pages.profile.sections.social") }}
-                  </h2>
-                  <dl
-                    class="d-flex flex-column gap-4"
-                    :aria-label="t('pages.profile.stats.title')"
-                  >
-                    <div>
-                      <dt class="text-body-2 text-medium-emphasis mb-1">
-                        {{ t("pages.profile.labels.friends") }}
-                      </dt>
-                      <dd class="text-body-1 font-weight-medium mb-0">
-                        {{ formattedFriendsCount }}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt class="text-body-2 text-medium-emphasis mb-1">
-                        {{ t("pages.profile.labels.stories") }}
-                      </dt>
-                      <dd class="text-body-1 font-weight-medium mb-0">
-                        {{ formattedStoriesCount }}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt class="text-body-2 text-medium-emphasis mb-1">
-                        {{ t("pages.profile.labels.accountStatus") }}
-                      </dt>
-                      <dd class="text-body-1 font-weight-medium mb-0">
-                        <v-chip
-                          v-if="accountStatus"
-                          :color="accountStatus.color"
-                          size="small"
-                          variant="flat"
-                        >
-                          {{ accountStatus.label }}
-                        </v-chip>
-                        <span v-else>{{ placeholderValue }}</span>
-                      </dd>
                     </div>
                   </dl>
                 </SidebarCard>
