@@ -9,9 +9,31 @@ const CREDENTIAL_KEYS = ["identifier", "username", "email", "password"] as const
 
 type CredentialKey = (typeof CREDENTIAL_KEYS)[number];
 
-function normalizeCredentialRecord(record: Record<string, unknown>):
-  | CredentialPayload
-  | undefined {
+function isArrayBufferView(input: unknown): input is ArrayBufferView {
+  return typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView(input);
+}
+
+function decodeBinaryPayload(input: ArrayBuffer | ArrayBufferView): string {
+  if (typeof Buffer !== "undefined") {
+    if (isArrayBufferView(input)) {
+      return Buffer.from(input.buffer, input.byteOffset, input.byteLength).toString("utf8");
+    }
+
+    return Buffer.from(input).toString("utf8");
+  }
+
+  const decoder = new TextDecoder();
+
+  if (isArrayBufferView(input)) {
+    return decoder.decode(input);
+  }
+
+  return decoder.decode(new Uint8Array(input));
+}
+
+function normalizeCredentialRecord(
+  record: Record<string, unknown>,
+): CredentialPayload | undefined {
   let hasCredentialField = false;
   const payload: CredentialPayload = {};
 
@@ -22,7 +44,23 @@ function normalizeCredentialRecord(record: Record<string, unknown>):
     }
   }
 
-  return hasCredentialField ? payload : undefined;
+  if (hasCredentialField) {
+    return payload;
+  }
+
+  const nestedSources = ["body", "data"] as const;
+
+  for (const source of nestedSources) {
+    if (source in record) {
+      const nested = normalizeCredentialPayload(record[source]);
+
+      if (nested) {
+        return nested;
+      }
+    }
+  }
+
+  return undefined;
 }
 
 function normalizeCredentialSearchParams(
@@ -48,6 +86,16 @@ export function normalizeCredentialPayload(input: unknown):
     return undefined;
   }
 
+  if (typeof ArrayBuffer !== "undefined") {
+    if (input instanceof ArrayBuffer) {
+      return normalizeCredentialPayload(decodeBinaryPayload(input));
+    }
+
+    if (isArrayBufferView(input)) {
+      return normalizeCredentialPayload(decodeBinaryPayload(input));
+    }
+  }
+
   if (typeof input === "string") {
     const trimmed = input.trim();
 
@@ -71,6 +119,16 @@ export function normalizeCredentialPayload(input: unknown):
     } catch {
       return undefined;
     }
+  }
+
+  if (typeof FormData !== "undefined" && input instanceof FormData) {
+    const params = new URLSearchParams();
+
+    for (const [key, value] of input.entries()) {
+      params.append(key, typeof value === "string" ? value : "");
+    }
+
+    return normalizeCredentialSearchParams(params);
   }
 
   if (input instanceof URLSearchParams) {

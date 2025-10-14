@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { describe, expect, it } from "vitest";
 import {
   normalizeCredentialPayload,
@@ -61,5 +62,18 @@ describe("credential helpers", () => {
       email: "user@example.com",
       password: "secret",
     });
+
+    const bufferPayload = Buffer.from(
+      JSON.stringify({ username: "buffer-user", password: "hunter2" }),
+    );
+
+    expect(normalizeCredentialPayload(bufferPayload)).toEqual({
+      username: "buffer-user",
+      password: "hunter2",
+    });
+
+    expect(
+      normalizeCredentialPayload({ body: { username: "nested", password: "secret" } }),
+    ).toEqual({ username: "nested", password: "secret" });
   });
 });
