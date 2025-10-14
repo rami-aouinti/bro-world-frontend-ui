@@ -927,7 +927,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   position: relative;
   display: flex;
   flex: 1 1 auto;
-  align-items: stretch;
+  align-items: flex-start;
   min-height: 100vh;
   background: transparent;
   overflow-x: hidden;

@@ -73,6 +73,12 @@
                   v-if="conversation.avatarUrl"
                   :alt="conversation.title"
                   :src="conversation.avatarUrl"
+                  width="44"
+                  height="44"
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  class="h-full w-full object-cover"
                 />
                 <span v-else>
                   {{ conversation.initials }}
