@@ -17,6 +17,7 @@ import {
   hasInjectionContext,
   tryUseNuxtApp,
   useAppConfig,
+  useI18n,
   useRequestURL,
   useRoute,
   useState,
