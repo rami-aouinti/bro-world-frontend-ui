@@ -7,6 +7,7 @@ import { clearAuthSession, setSession } from "../../utils/auth/session";
 interface LoginRequestBody {
   identifier?: string;
   username?: string;
+  email?: string;
   password?: string;
 }
 
@@ -15,7 +16,7 @@ function sanitizeBaseEndpoint(raw: string): string {
 }
 
 function resolveIdentifier(body: LoginRequestBody | undefined): string {
-  return (body?.identifier ?? body?.username ?? "").trim();
+  return (body?.identifier ?? body?.username ?? body?.email ?? "").trim();
 }
 
 export default defineEventHandler(async (event) => {
