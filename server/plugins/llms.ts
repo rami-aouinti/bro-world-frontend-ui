@@ -2,7 +2,6 @@
 
 import { resolve, relative, join } from "pathe";
 import { readdirSync, statSync, readFileSync, existsSync } from "fs";
-import yaml from "yaml";
 import type { NitroApp } from "nitropack";
 
 /**
@@ -30,12 +29,41 @@ function slugify(str: string): string {
  * @param dir - The directory to search for the __dir.yml file.
  * @returns An object with slug and title, or null if no configuration is found.
  */
+function extractDirTitle(ymlContent: string): string | null {
+  for (const rawLine of ymlContent.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) {
+      continue;
+    }
+
+    const match = line.match(/^title\s*:\s*(.+)$/i);
+    if (match) {
+      let value = match[1].trim();
+
+      if (!value.startsWith("\"") && !value.startsWith("'")) {
+        const commentIndex = value.indexOf(" #");
+        if (commentIndex !== -1) {
+          value = value.slice(0, commentIndex).trim();
+        }
+      }
+
+      if ((value.startsWith("\"") && value.endsWith("\"")) || (value.startsWith("'") && value.endsWith("'"))) {
+        value = value.slice(1, -1);
+      }
+
+      return value;
+    }
+  }
+
+  return null;
+}
+
 function parseDirYml(dir: string): DirConfig | null {
   const dirConfigPath = join(dir, "__dir.yml");
   if (existsSync(dirConfigPath)) {
     const ymlContent = readFileSync(dirConfigPath, "utf-8");
-    const yml = yaml.parse(ymlContent);
-    return yml?.title ? { slug: slugify(yml.title), title: yml.title } : null;
+    const title = extractDirTitle(ymlContent);
+    return title ? { slug: slugify(title), title } : null;
   }
   return null;
 }
