@@ -3,26 +3,20 @@ import type { FetchError } from "ofetch";
 import { joinURL } from "ufo";
 import type { AuthLoginResponse, AuthUser } from "../../../types/auth";
 import { clearAuthSession, setSession } from "../../utils/auth/session";
-
-interface LoginRequestBody {
-  identifier?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-}
+import {
+  type CredentialPayload,
+  resolveCredentialIdentifier,
+  resolveCredentialPassword,
+} from "../../utils/auth/credentials";
 
 function sanitizeBaseEndpoint(raw: string): string {
   return raw.replace(/\/$/, "");
 }
 
-function resolveIdentifier(body: LoginRequestBody | undefined): string {
-  return (body?.identifier ?? body?.username ?? body?.email ?? "").trim();
-}
-
 export default defineEventHandler(async (event) => {
-  const body = (await readBody<LoginRequestBody | null>(event)) ?? undefined;
-  const identifier = resolveIdentifier(body);
-  const password = (body?.password ?? "").trim();
+  const body = (await readBody<CredentialPayload | null>(event)) ?? undefined;
+  const identifier = resolveCredentialIdentifier(body);
+  const password = resolveCredentialPassword(body);
 
   if (!identifier || !password) {
     throw createError({
