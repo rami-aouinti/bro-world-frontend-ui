@@ -17,11 +17,11 @@
       <div class="flex items-center gap-2 text-right text-foreground">
         <span
           v-if="cardIcon"
-          class="text-2xl"
+          class="text-xl"
           >{{ cardIcon }}</span
         >
         <div class="text-right">
-          <p class="text-3xl font-bold">
+          <p class="text-2xl font-bold">
             {{ formattedAverage }}
           </p>
           <p class="text-xs uppercase tracking-[0.3em] text-muted-foreground">/ {{ maxRating }}</p>
@@ -85,25 +85,27 @@
 
       <div
         v-if="fetchError"
-        class="rounded-xl bg-red-500/10 px-3 py-2 text-xs text-destructive"
+        class="rounded-xl bg-primary/10 px-3 py-2 text-xs text-destructive"
       >
         {{ fetchError }}
       </div>
 
       <div
         v-if="loggedIn"
-        class="-mx-[var(--card-x)] flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-muted/60 px-[var(--card-x)] py-3 px-3"
+        class="-mx-[var(--card-x)] flex items-center justify-between gap-1 rounded-2xl border border-border/60 bg-primary/10 px-[var(--card-x)] py-1 mx-0"
       >
         <v-rating
           v-model="newRating"
           half-increments
-          color="secondary"
+          size="small"
+          color="primary"
           hover
           aria-label="Submit your rating"
         />
         <v-btn
           color="primary"
-          variant="flat"
+          variant="text"
+          size="small"
           icon
           :loading="isSubmitting"
           :disabled="newRating === 0 || isSubmitting"

@@ -12,7 +12,7 @@
       <li
         v-for="participant in participants"
         :key="participant.name"
-        class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-primary/20 px-[var(--card-x)] py-3 px-2 text-sm text-muted-foreground"
+        class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-primary/10 px-[var(--card-x)] py-3 px-2 text-sm text-muted-foreground"
       >
         <span
           class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-base font-semibold text-primary"
