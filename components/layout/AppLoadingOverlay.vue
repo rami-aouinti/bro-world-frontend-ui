@@ -6,10 +6,9 @@
         class="fixed inset-0 z-[9999] flex items-center justify-center bg-background/95 backdrop-blur-sm"
       >
         <div class="relative flex flex-col items-center gap-8 px-6 text-center">
-          <p class="text-lg font-semibold text-foreground">
+          <h1 class="text-3xl font-semibold text-primary">
             {{ t("layout.loadingOverlay.title") }}
-          </p>
-          <span class="sr-only">{{ t("layout.loadingOverlay.srLabel") }}</span>
+          </h1>
           <div
             class="app-loading-spinner"
             role="presentation"
@@ -62,13 +61,13 @@ const { t } = useI18n();
 }
 
 .app-loading-spinner::before {
-  border: 4px solid rgba(var(--primary), 0.15);
+  border: 14px solid rgba(var(--primary), 0.15);
   opacity: 0.7;
   filter: drop-shadow(0 0 12px rgba(var(--primary), 0.25));
 }
 
 .app-loading-spinner::after {
-  border: 4px solid transparent;
+  border: 14px solid transparent;
   border-top-color: rgba(var(--primary), 0.95);
   border-right-color: rgba(var(--primary), 0.6);
   filter: drop-shadow(0 0 18px rgba(var(--primary), 0.35));
