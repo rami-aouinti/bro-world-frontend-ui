@@ -449,6 +449,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref, watch, defineAsyncComponent } from "vue";
+import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost } from "~/lib/mock/blog";

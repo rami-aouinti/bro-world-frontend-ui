@@ -220,6 +220,7 @@
 <script setup lang="ts">
 import { createError } from "h3";
 import { computed, ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
 import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { friendCards, findFriendById } from "~/lib/users/mock-friends";
