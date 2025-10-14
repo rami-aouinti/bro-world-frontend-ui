@@ -137,6 +137,15 @@ export const defaultSiteSettings: SiteSettings = {
   },
   menus: [
     makeMenu({
+      id: "create-world",
+      label: "layout.sidebar.items.createWorld",
+      icon: "mdi-earth-plus",
+      translate: true,
+      to: "/world-create",
+      isVisible: true,
+      order: -1,
+    }),
+    makeMenu({
       id: "jobs",
       label: "layout.sidebar.items.jobs",
       icon: "mdi-briefcase-search",
