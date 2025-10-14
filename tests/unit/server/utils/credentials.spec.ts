@@ -1,6 +1,8 @@
 import { Buffer } from "node:buffer";
 import { describe, expect, it } from "vitest";
 import {
+  coerceCredentialPayload,
+  mergeCredentialPayloads,
   normalizeCredentialPayload,
   resolveCredentialIdentifier,
   resolveCredentialPassword,
@@ -23,9 +25,12 @@ describe("credential helpers", () => {
     expect(resolveCredentialIdentifier({ identifier: ["  admin  ", "ignored"] })).toBe("admin");
   });
 
-  it("normalizes the password field", () => {
-    expect(resolveCredentialPassword({ password: "  secret" })).toBe("secret");
-    expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe("hunter2");
+  it("returns the original password value", () => {
+    expect(resolveCredentialPassword({ password: "  secret" })).toBe("  secret");
+    expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe(
+      "  hunter2  ",
+    );
+    expect(resolveCredentialPassword({ password: "    " })).toBe("    ");
   });
 
   it("returns an empty string when fields are missing", () => {
@@ -87,5 +92,23 @@ describe("credential helpers", () => {
       email: "loop@example.com",
       password: "loop",
     });
+  });
+
+  it("coerces and merges credential payloads from multiple sources", () => {
+    expect(coerceCredentialPayload(undefined)).toBeUndefined();
+    expect(coerceCredentialPayload({ foo: "bar" })).toBeUndefined();
+
+    const coerced = coerceCredentialPayload({ identifier: " user ", password: " secret " });
+
+    expect(coerced).toEqual({ identifier: " user ", password: " secret " });
+
+    const merged = mergeCredentialPayloads([
+      undefined,
+      coerced,
+      normalizeCredentialPayload("identifier=jane"),
+      normalizeCredentialPayload({ username: "jane" }),
+    ]);
+
+    expect(merged).toEqual({ identifier: " user ", password: " secret ", username: "jane" });
   });
 });
