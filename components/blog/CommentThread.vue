@@ -145,14 +145,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  reactive,
-  ref,
-  computed,
-  watch,
-  defineAsyncComponent,
-  onMounted,
-} from "vue";
+import { reactive, computed, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -169,20 +162,9 @@ const PostCommentForm = defineAsyncComponent({
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
-const isHydrated = ref(import.meta.server);
-const canRenderAuthUi = computed(() => {
-  if (!isHydrated.value) {
-    return false;
-  }
-
-  return auth.isReady.value && auth.isAuthenticated.value;
-});
-
-if (import.meta.client) {
-  onMounted(() => {
-    isHydrated.value = true;
-  });
-}
+const canRenderAuthUi = computed(
+  () => auth.isReady.value && auth.isAuthenticated.value,
+);
 const composerVisible = defineModel<boolean>("composerVisible", { default: false });
 
 if (import.meta.client) {
@@ -226,7 +208,6 @@ const { t } = useI18n();
 const { formatRelativeTime } = useRelativeTime();
 
 const depth = computed(() => props.depth ?? 0);
-const commentLabel = computed(() => t("blog.posts.actions.comment"));
 const bubbleOrder: Reaction[] = ["like", "sad", "angry"];
 const topReactions = computed(() =>
   bubbleOrder
