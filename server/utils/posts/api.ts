@@ -41,6 +41,31 @@ function joinEndpoint(base: string, ...segments: (string | number)[]): string {
   return [sanitizeBaseEndpoint(base), ...cleanedSegments].join("/");
 }
 
+function resolveCommentsPayload(
+  response: unknown,
+): BlogCommentWithReplies[] | undefined {
+  if (Array.isArray(response)) {
+    return response as BlogCommentWithReplies[];
+  }
+
+  if (!response || typeof response !== "object") {
+    return undefined;
+  }
+
+  const container = response as Record<string, unknown>;
+  const possibleKeys = ["data", "comments", "items", "results"];
+
+  for (const key of possibleKeys) {
+    const value = container[key];
+
+    if (Array.isArray(value)) {
+      return value as BlogCommentWithReplies[];
+    }
+  }
+
+  return undefined;
+}
+
 function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
   const publicEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
@@ -344,6 +369,31 @@ export async function reactToCommentAtSource(
   });
 }
 
+function unwrapCommentsPayload(payload: unknown): BlogCommentWithReplies[] | null {
+  if (Array.isArray(payload)) {
+    return payload as BlogCommentWithReplies[];
+  }
+
+  if (!payload || typeof payload !== "object") {
+    return null;
+  }
+
+  const container = payload as Record<string, unknown>;
+  const possibleKeys = ["comments", "data", "result", "results", "items"];
+
+  for (const key of possibleKeys) {
+    if (key in container) {
+      const nested = unwrapCommentsPayload(container[key]);
+
+      if (nested) {
+        return nested;
+      }
+    }
+  }
+
+  return null;
+}
+
 export async function fetchPostCommentsFromSource(
   event: H3Event,
   postId: string,
@@ -360,14 +410,16 @@ export async function fetchPostCommentsFromSource(
       headers: buildHeaders(event, includeAuth),
     });
 
-    if (!Array.isArray(response)) {
+    const comments = unwrapCommentsPayload(response);
+
+    if (!comments) {
       throw createError({
         statusCode: 502,
         statusMessage: "Invalid comments response.",
       });
     }
 
-    return response as BlogCommentWithReplies[];
+    return comments;
   }
 
   const token = getSessionToken(event);
