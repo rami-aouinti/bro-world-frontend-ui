@@ -763,5 +763,9 @@ export default defineNuxtConfig({
       },
     ],
   },
+  gtag: {
+    initMode: "manual",
+    loadingStrategy: "defer",
+  },
   compatibilityDate: "2025-06-10",
 });
