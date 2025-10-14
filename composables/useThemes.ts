@@ -10,6 +10,8 @@ import {
   normalizeHexColor,
   parseHslComponents,
 } from "~/lib/theme/colors";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 
 interface ThemeCookieConfig {
   theme: Theme["name"];
@@ -94,7 +96,7 @@ export function useThemes() {
     return primary ? `hsl(${primary})` : null;
   });
 
-  const defaultThemePrimaryHex = computed(() => {
+  const shadcnThemePrimaryHex = computed(() => {
     const components = parseHslComponents(primarySource.value ?? undefined);
 
     if (!components) {
@@ -103,6 +105,24 @@ export function useThemes() {
 
     return hslToHex(components);
   });
+
+  const fallbackSiteSettings = getDefaultSiteSettings();
+  const siteSettingsState = useSiteSettingsState();
+  const siteSettings = computed(() => siteSettingsState.value ?? fallbackSiteSettings);
+  const activeSiteTheme = computed(() => {
+    const current = siteSettings.value;
+    const found = current.themes.find((theme) => theme.id === current.activeThemeId);
+
+    return found ?? current.themes[0] ?? null;
+  });
+
+  const siteThemePrimaryHex = computed(() =>
+    normalizeHexColor(activeSiteTheme.value?.primaryColor ?? undefined),
+  );
+
+  const defaultThemePrimaryHex = computed(() =>
+    siteThemePrimaryHex.value ?? shadcnThemePrimaryHex.value ?? null,
+  );
 
   const themePrimaryCookie = useCookie<string | null>(
     "theme-primary",
@@ -146,7 +166,19 @@ export function useThemes() {
     return fallback ?? undefined;
   });
 
-  const themePrimary = computed(() => primarySource.value ?? undefined);
+  const themePrimary = computed(() => {
+    const normalizedCookie = normalizeHexColor(themePrimaryCookie.value);
+
+    if (normalizedCookie) {
+      return undefined;
+    }
+
+    if (siteThemePrimaryHex.value) {
+      return undefined;
+    }
+
+    return primarySource.value ?? undefined;
+  });
 
   const isCustomThemePrimary = computed(() => {
     const normalized = normalizeHexColor(themePrimaryCookie.value);
