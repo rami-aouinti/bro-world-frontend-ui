@@ -66,6 +66,24 @@ function safeSetCookie(
   }
 }
 
+function safeDeleteCookie(event: H3Event, name: string, options?: Parameters<typeof deleteCookie>[2]) {
+  const response = event.node?.res;
+
+  if (!response || response.headersSent || response.writableEnded) {
+    return;
+  }
+
+  try {
+    deleteCookie(event, name, options);
+  } catch (error) {
+    if (isHeadersSentError(error)) {
+      return;
+    }
+
+    throw error;
+  }
+}
+
 export function getSessionToken(event: H3Event): string | null {
   const { tokenCookieName, sessionTokenCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
@@ -231,10 +249,10 @@ export function clearAuthSession(event: H3Event) {
   const { tokenCookieName, sessionTokenCookieName, userCookieName, tokenPresenceCookieName } =
     resolveCookiesConfig(event);
 
-  deleteCookie(event, tokenCookieName, { path: "/" });
-  deleteCookie(event, sessionTokenCookieName, { path: "/" });
-  deleteCookie(event, userCookieName, { path: "/" });
-  deleteCookie(event, tokenPresenceCookieName, { path: "/" });
+  safeDeleteCookie(event, tokenCookieName, { path: "/" });
+  safeDeleteCookie(event, sessionTokenCookieName, { path: "/" });
+  safeDeleteCookie(event, userCookieName, { path: "/" });
+  safeDeleteCookie(event, tokenPresenceCookieName, { path: "/" });
 }
 
 export function withAuthHeaders(event: H3Event, headers: Record<string, string> = {}) {
