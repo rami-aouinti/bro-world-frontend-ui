@@ -95,7 +95,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       watch: false,
     }),
   );
-  const primary = primaryCookie.value ?? "#E91E63";
+  const primary = primaryCookie.value;
 
   const localeCookie = useCookie<string | null>(
     "i18n_redirected",

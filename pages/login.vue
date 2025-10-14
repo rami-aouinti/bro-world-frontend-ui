@@ -1,13 +1,11 @@
 <template>
   <div class="login-page">
     <div
-      class="login-card"
       :class="{ 'login-card--loading': isRedirecting }"
     >
       <span class="login-card__glow" />
       <div class="login-card__header">
-        <h1 class="login-card__title">Bro World</h1>
-        <p class="login-card__subtitle">{{ t("auth.socialSubtitle") }}</p>
+        <h1 class="login-card__title text-foreground">Bro World</h1>
         <AuthSocial
           class="login-card__socials"
           :loading="isRedirecting"

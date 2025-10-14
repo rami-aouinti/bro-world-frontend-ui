@@ -1,5 +1,6 @@
 <template>
   <form
+      class="text-foreground"
     :class="formClasses"
     data-lpignore="true"
     data-lastpass-ignore="true"
@@ -38,6 +39,7 @@
           data-lpignore="true"
           data-lastpass-ignore="true"
           @input="handleFieldInput"
+          density="compact"
         />
       </div>
 
@@ -56,6 +58,7 @@
           data-lpignore="true"
           data-lastpass-ignore="true"
           @input="handleFieldInput"
+          density="compact"
         />
 
         <button
