@@ -22,7 +22,7 @@
     .v-navigation-drawer__content {
       .item-active + .v-list-group__items {
         .v-list-item--active > div {
-          background-color: $primary;
+          background-color: var(--color-primary, #{$primary});
         }
       }
     }
@@ -365,7 +365,7 @@
   .item-active {
     background-color: $navbar-vertical-hover-bg-color;
     + .v-list-group__items .v-list-item--active > div {
-      background-color: $primary;
+      background-color: var(--color-primary, #{$primary});
     }
   }
 }

@@ -160,7 +160,7 @@ html {
   }
 
   .border-primary {
-    border-color: $primary;
+    border-color: var(--color-primary, #{$primary});
   }
 
   .opacity-0 {
