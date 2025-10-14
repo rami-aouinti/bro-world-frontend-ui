@@ -43,36 +43,41 @@ export function getSessionToken(event: H3Event): string | null {
     return null;
   }
 
-  const secure = shouldUseSecureCookies(event);
+  const response = event.node?.res;
+  const canSetCookies = response && !response.headersSent && !response.writableEnded;
 
-  setCookie(
-    event,
-    tokenCookieName,
-    fallbackToken,
-    withSecureCookieOptions(
-      {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge,
-      },
-      event,
-    ),
-  );
+  if (canSetCookies) {
+    const secure = shouldUseSecureCookies(event);
 
-  setCookie(
-    event,
-    tokenPresenceCookieName,
-    "1",
-    withSecureCookieOptions(
-      {
-        httpOnly: false,
-        sameSite: "strict",
-        maxAge,
-        secure,
-      },
+    setCookie(
       event,
-    ),
-  );
+      tokenCookieName,
+      fallbackToken,
+      withSecureCookieOptions(
+        {
+          httpOnly: true,
+          sameSite: "lax",
+          maxAge,
+        },
+        event,
+      ),
+    );
+
+    setCookie(
+      event,
+      tokenPresenceCookieName,
+      "1",
+      withSecureCookieOptions(
+        {
+          httpOnly: false,
+          sameSite: "strict",
+          maxAge,
+          secure,
+        },
+        event,
+      ),
+    );
+  }
 
   return fallbackToken;
 }
