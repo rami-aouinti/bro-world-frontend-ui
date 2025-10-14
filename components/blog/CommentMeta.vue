@@ -6,6 +6,9 @@
         :alt="`${user.firstName} ${user.lastName}`"
         width="40"
         height="40"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
         class="comment-meta__avatar"
       />
       <div class="comment-meta__text">
@@ -94,6 +97,12 @@ type CommentMetaProps = {
   editLabel?: string;
   deleteLabel?: string;
 };
+
+defineEmits<{
+  (e: "edit", event: Event): void;
+  (e: "delete", event: Event): void;
+  (e: "follow"): void;
+}>();
 
 const props = withDefaults(defineProps<CommentMetaProps>(), {
   isAuthenticated: false,

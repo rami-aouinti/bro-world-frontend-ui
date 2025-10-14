@@ -55,8 +55,19 @@
         @like="handleCommentLike"
         @reply="openReply"
       />
+      <button
+        v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
+        ref="loginPromptRef"
+        type="button"
+        class="comments-error comments-error--action"
+        aria-live="polite"
+        aria-haspopup="dialog"
+        @click="openLoginDialog"
+      >
+        {{ commentsError }}
+      </button>
       <p
-        v-if="commentsError && !commentsLoading"
+        v-else-if="commentsError && !commentsLoading"
         class="comments-error"
         role="status"
       >
@@ -96,6 +107,15 @@
     :cancel-label="deleteDialogCancelLabel"
     @close="handleDeleteDialogClose"
     @deleted="handleDeleteDialogClose"
+  />
+
+  <component
+    :is="AuthLoginDialog"
+    v-if="loginDialogOpen"
+    v-model="loginDialogOpen"
+    :title="loginDialogTitle"
+    :description="loginDialogDescription"
+    @close="handleLoginDialogClose"
   />
 </template>
 
@@ -168,6 +188,9 @@ const activeCommentsRequest = shallowRef<Promise<void> | null>(null);
 const commentsSectionRef = ref<HTMLElement | null>(null);
 const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
 const commentsActivated = ref(false);
+const loginDialogOpen = ref(false);
+const loginPromptRef = ref<HTMLButtonElement | null>(null);
+const loginDialogPreviousFocusedElement = ref<HTMLElement | null>(null);
 const { formatRelativeTime } = useRelativeTime();
 type Comment = {
   id: string;
@@ -254,6 +277,8 @@ function openReply(id: string) {
 }
 const loginToReactMessage = computed(() => t("blog.auth.reactionRequired"));
 const loginToViewCommentsMessage = computed(() => t("blog.auth.commentRequired"));
+const loginDialogTitle = computed(() => t("auth.signIn"));
+const loginDialogDescription = loginToViewCommentsMessage;
 const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
 const previousFocusedElement = ref<HTMLElement | null>(null);
@@ -342,6 +367,11 @@ const BlogPostDeleteDialog = defineAsyncComponent({
   suspensible: false,
 });
 
+const AuthLoginDialog = defineAsyncComponent({
+  loader: () => import("~/components/auth/LoginDialog.vue"),
+  suspensible: false,
+});
+
 const editModalTitle = computed(() => t("blog.posts.actions.editTitle"));
 const editModalDescription = computed(() => t("blog.posts.actions.editDescription"));
 const editModalSaveLabel = computed(() => t("blog.posts.actions.save"));
@@ -371,6 +401,16 @@ function openEditModal() {
 function openDeleteDialog() {
   previousFocusedElement.value = document.activeElement as HTMLElement | null;
   deleteDialogOpen.value = true;
+}
+
+function openLoginDialog() {
+  if (loginDialogOpen.value) {
+    return;
+  }
+
+  loginDialogPreviousFocusedElement.value =
+    (document.activeElement as HTMLElement | null) ?? loginPromptRef.value;
+  loginDialogOpen.value = true;
 }
 
 async function handleFollow() {
@@ -545,6 +585,10 @@ watch(
 watch(
   isAuthenticated,
   (value) => {
+    if (value && loginDialogOpen.value) {
+      handleLoginDialogClose();
+    }
+
     if (value && commentsActivated.value) {
       const shouldReload = commentsError.value === loginToViewCommentsMessage.value;
 
@@ -576,6 +620,22 @@ function handleDeleteDialogClose() {
     });
   }
 }
+
+function handleLoginDialogClose() {
+  if (loginDialogOpen.value) {
+    loginDialogOpen.value = false;
+  }
+
+  const target = loginDialogPreviousFocusedElement.value ?? loginPromptRef.value;
+
+  if (target) {
+    nextTick(() => {
+      target.focus();
+    });
+  }
+
+  loginDialogPreviousFocusedElement.value = null;
+}
 </script>
 
 <style scoped>
@@ -596,5 +656,31 @@ function handleDeleteDialogClose() {
   margin: 0.75rem 0 0;
   color: rgb(var(--v-theme-primary));
   font-size: 0.875rem;
+  text-align: center;
+}
+
+.comments-error--action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.25rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: inherit;
+}
+
+.comments-error--action:hover {
+  text-decoration: underline;
+}
+
+.comments-error--action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
 }
 </style>
