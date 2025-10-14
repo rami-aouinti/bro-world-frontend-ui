@@ -23,6 +23,7 @@
       v-if="showNavigation"
       v-model="leftDrawer"
       app
+      :mobile="isMobile"
       :permanent="!isMobile"
       :temporary="isMobile"
       :scrim="isMobile"
@@ -70,6 +71,7 @@
       v-if="showNavigation"
       v-model="rightDrawer"
       app
+      :mobile="isMobile"
       :permanent="!isMobile"
       :temporary="isMobile"
       :scrim="canShowRightWidgets && isMobile"
