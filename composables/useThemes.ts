@@ -21,6 +21,7 @@ interface ThemeCookieConfig {
 export function useThemes() {
   const config = useConfig();
   const FALLBACK_PRIMARY_HEX = "#E91E63";
+  const LEGACY_DEFAULT_PRIMARY_HEXES = ["#E91E63"] as const;
 
   const PRIMARY_COLOR_OPTIONS = [
     { hex: "#E91E63", label: "Rose" },
@@ -124,6 +125,12 @@ export function useThemes() {
     siteThemePrimaryHex.value ?? shadcnThemePrimaryHex.value ?? null,
   );
 
+  const normalizedFallbackPrimaryHex =
+    normalizeHexColor(FALLBACK_PRIMARY_HEX) ?? "#E91E63";
+  const legacyDefaultPrimaryHexes = LEGACY_DEFAULT_PRIMARY_HEXES.map((hex) =>
+    normalizeHexColor(hex),
+  ).filter((hex): hex is string => Boolean(hex));
+
   const themePrimaryCookie = useCookie<string | null>(
     "theme-primary",
     withSecureCookieOptions({
@@ -131,25 +138,53 @@ export function useThemes() {
     }),
   );
 
+  const canonicalDefaultPrimaryHex = computed(
+    () => defaultThemePrimaryHex.value ?? normalizedFallbackPrimaryHex,
+  );
+  const defaultPrimaryHexCandidates = computed(() => {
+    const values = new Set<string>([
+      canonicalDefaultPrimaryHex.value,
+      ...legacyDefaultPrimaryHexes,
+    ]);
+
+    return values;
+  });
+
+  const themePrimaryCookieHex = computed(() =>
+    normalizeHexColor(themePrimaryCookie.value),
+  );
+  const themePrimaryCookieIsDefault = computed(() => {
+    const normalized = themePrimaryCookieHex.value;
+
+    if (!normalized) {
+      return false;
+    }
+
+    return defaultPrimaryHexCandidates.value.has(normalized);
+  });
+
   if (import.meta.client) {
     watch(
-      defaultThemePrimaryHex,
-      (value, oldValue) => {
-        const normalizedDefault = normalizeHexColor(value ?? undefined);
-        const normalizedOldDefault = normalizeHexColor(oldValue ?? undefined);
-        const current = normalizeHexColor(themePrimaryCookie.value);
-
-        if (!normalizedDefault) {
-          return;
-        }
+      canonicalDefaultPrimaryHex,
+      (_, oldValue) => {
+        const current = themePrimaryCookieHex.value;
 
         if (!current) {
-          themePrimaryCookie.value = normalizedDefault;
+          if (themePrimaryCookie.value) {
+            themePrimaryCookie.value = null;
+          }
+
           return;
         }
 
-        if (normalizedOldDefault && current === normalizedOldDefault) {
-          themePrimaryCookie.value = normalizedDefault;
+        if (themePrimaryCookieIsDefault.value) {
+          themePrimaryCookie.value = null;
+
+          return;
+        }
+
+        if (oldValue && current === normalizeHexColor(oldValue)) {
+          themePrimaryCookie.value = null;
         }
       },
       { immediate: true },
@@ -157,21 +192,20 @@ export function useThemes() {
   }
 
   const themePrimaryHex = computed<string | undefined>(() => {
-    const normalized = normalizeHexColor(themePrimaryCookie.value);
+    const normalized = themePrimaryCookieHex.value;
 
-    if (normalized) {
+    if (normalized && !themePrimaryCookieIsDefault.value) {
       return normalized;
     }
 
-    const fallback = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
-
-    return fallback ?? undefined;
+    return canonicalDefaultPrimaryHex.value ?? undefined;
   });
 
   const themePrimary = computed(() => {
-    const normalizedCookie = normalizeHexColor(themePrimaryCookie.value);
-
-    if (normalizedCookie) {
+    if (
+      themePrimaryCookieHex.value &&
+      !themePrimaryCookieIsDefault.value
+    ) {
       return undefined;
     }
 
@@ -183,18 +217,11 @@ export function useThemes() {
   });
 
   const isCustomThemePrimary = computed(() => {
-    const normalized = normalizeHexColor(themePrimaryCookie.value);
-    const defaultHex = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
-
-    if (!normalized) {
+    if (!themePrimaryCookieHex.value) {
       return false;
     }
 
-    if (!defaultHex) {
-      return true;
-    }
-
-    return normalized !== defaultHex;
+    return !themePrimaryCookieIsDefault.value;
   });
 
   const vuetifyTheme = (() => {
@@ -234,13 +261,17 @@ export function useThemes() {
       return;
     }
 
+    if (defaultPrimaryHexCandidates.value.has(normalized)) {
+      themePrimaryCookie.value = null;
+
+      return;
+    }
+
     themePrimaryCookie.value = normalized;
   }
 
   function resetThemePrimaryHex() {
-    const fallback = normalizeHexColor(defaultThemePrimaryHex.value ?? undefined);
-
-    themePrimaryCookie.value = fallback ?? null;
+    themePrimaryCookie.value = null;
   }
 
   const themePrimaryOptions = computed(() => {

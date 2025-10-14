@@ -34,6 +34,18 @@ Les autres alias (`primary-container`, `on-primary-container`, etc.) sont expos�
 
 Pour consommer ces couleurs, utilisez `rgb(var(--v-theme-<token>))` dans vos styles.
 
+> ℹ️ **Changer la couleur primaire**
+>
+> Les utilitaires Tailwind (`text-primary`, `bg-primary`, etc.) lisent la variable CSS `--primary` injectée côté client par `useThemes`.
+> Cette valeur provient en priorité du cookie `theme-primary`, puis des réglages du site et enfin du thème par défaut (`FALLBACK_PRIMARY_HEX`).
+>
+> Après avoir modifié la couleur par défaut dans les sources, pensez donc à :
+>
+> - supprimer ou mettre à jour le cookie `theme-primary` (ex. via les outils développeur du navigateur) ;
+> - ajuster la valeur appliquée au chargement via `useThemes` (`composables/useThemes.ts`).
+>
+> Tant que le cookie contient l'ancien rose (`#E91E63`), la variable `--primary` restera rose et `text-primary` suivra cette couleur.
+
 ## Espacements
 
 Une échelle cohérente est exposée via `--v-space-n` (en rem) :
