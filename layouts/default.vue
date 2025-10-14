@@ -203,7 +203,7 @@
     </v-navigation-drawer>
 
     <v-main class="app-surface">
-      <div class="main-scroll">
+      <div class="main-scroll py-4">
         <ClientOnly>
           <ParticlesBg
             class="sidebar-default-card__particles"

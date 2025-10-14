@@ -1,7 +1,7 @@
 import { createError, getHeader, readBody } from "h3";
 import type { FetchError } from "ofetch";
 import { joinURL } from "ufo";
-import type { AuthLoginResponse, AuthUser } from "../../../types/auth";
+import type { AuthLoginResponse, AuthUser } from "~/types/auth";
 import { clearAuthSession, setSession } from "../../utils/auth/session";
 import {
   normalizeCredentialPayload,

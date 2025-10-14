@@ -40,7 +40,7 @@
       class="grid gap-4"
     >
       <PostCardSkeleton
-        v-for="index in 4"
+        v-for="index in 2"
         :key="index"
       />
     </div>

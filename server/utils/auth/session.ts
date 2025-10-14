@@ -28,6 +28,44 @@ function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
   };
 }
 
+type CookieOptions = Parameters<typeof setCookie>[3];
+
+function isHeadersSentError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const nodeError = error as NodeJS.ErrnoException;
+
+  return (
+    nodeError.code === "ERR_HTTP_HEADERS_SENT" ||
+    error.message.includes("Cannot append headers after they are sent")
+  );
+}
+
+function safeSetCookie(
+  event: H3Event,
+  name: string,
+  value: string,
+  options?: CookieOptions,
+) {
+  const response = event.node?.res;
+
+  if (!response || response.headersSent || response.writableEnded) {
+    return;
+  }
+
+  try {
+    setCookie(event, name, value, options);
+  } catch (error) {
+    if (isHeadersSentError(error)) {
+      return;
+    }
+
+    throw error;
+  }
+}
+
 export function getSessionToken(event: H3Event): string | null {
   const { tokenCookieName, sessionTokenCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
@@ -43,41 +81,36 @@ export function getSessionToken(event: H3Event): string | null {
     return null;
   }
 
-  const response = event.node?.res;
-  const canSetCookies = response && !response.headersSent && !response.writableEnded;
+  const secure = shouldUseSecureCookies(event);
 
-  if (canSetCookies) {
-    const secure = shouldUseSecureCookies(event);
-
-    setCookie(
+  safeSetCookie(
+    event,
+    tokenCookieName,
+    fallbackToken,
+    withSecureCookieOptions(
+      {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge,
+      },
       event,
-      tokenCookieName,
-      fallbackToken,
-      withSecureCookieOptions(
-        {
-          httpOnly: true,
-          sameSite: "lax",
-          maxAge,
-        },
-        event,
-      ),
-    );
+    ),
+  );
 
-    setCookie(
+  safeSetCookie(
+    event,
+    tokenPresenceCookieName,
+    "1",
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: "strict",
+        maxAge,
+        secure,
+      },
       event,
-      tokenPresenceCookieName,
-      "1",
-      withSecureCookieOptions(
-        {
-          httpOnly: false,
-          sameSite: "strict",
-          maxAge,
-          secure,
-        },
-        event,
-      ),
-    );
-  }
+    ),
+  );
 
   return fallbackToken;
 }
@@ -134,7 +167,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   const secure = shouldUseSecureCookies(event);
   const sanitizedUser = sanitizeSessionUser(user);
 
-  setCookie(
+  safeSetCookie(
     event,
     tokenCookieName,
     token,
@@ -148,7 +181,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
     ),
   );
 
-  setCookie(
+  safeSetCookie(
     event,
     sessionTokenCookieName,
     token,
@@ -163,7 +196,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
     ),
   );
 
-  setCookie(
+  safeSetCookie(
     event,
     userCookieName,
     JSON.stringify(sanitizedUser),
@@ -178,7 +211,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
     ),
   );
 
-  setCookie(
+  safeSetCookie(
     event,
     tokenPresenceCookieName,
     "1",
