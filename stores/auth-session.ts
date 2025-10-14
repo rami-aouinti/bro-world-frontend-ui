@@ -370,11 +370,16 @@ export const useAuthSession = defineStore("auth-session", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const payload = {
+      const payload: Record<string, string> = {
         identifier: trimmedIdentifier,
-        username: trimmedIdentifier,
         password: trimmedPassword,
       };
+
+      if (trimmedIdentifier.includes("@")) {
+        payload.email = trimmedIdentifier;
+      } else {
+        payload.username = trimmedIdentifier;
+      }
 
       const response = await fetcher<AuthLoginEnvelope>("/auth/login", {
         method: "POST",
