@@ -134,9 +134,15 @@ function buildLoginPayload(
   username: string,
   password: string,
 ): Record<string, string> {
-  const payload: Record<string, string> = {
-    password,
-  };
+  const payload: Record<string, string> = {};
+
+  const passwordFromBody = normalizeField(body?.password);
+
+  if (passwordFromBody) {
+    payload.password = passwordFromBody;
+  } else if (password) {
+    payload.password = password;
+  }
 
   const identifierFromBody = normalizeField(body?.identifier);
   const usernameFromBody = normalizeField(body?.username);
@@ -154,15 +160,15 @@ function buildLoginPayload(
     payload.email = emailFromBody;
   }
 
-  if (!payload.identifier) {
+  if (!payload.identifier && username) {
     payload.identifier = username;
   }
 
-  if (!payload.username) {
+  if (!payload.username && username) {
     payload.username = username;
   }
 
-  if (!payload.email && username.includes("@")) {
+  if (!payload.email && username && username.includes("@")) {
     payload.email = username;
   }
 
