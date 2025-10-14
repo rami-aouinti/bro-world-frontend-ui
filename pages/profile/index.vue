@@ -291,7 +291,7 @@ useHead(() => {
   };
 });
 
-const defaultAvatar = "https://bro-world-space.com/img/person.png";
+const defaultAvatar = "/person.png";
 const placeholderValue = computed(() => t("pages.profile.placeholders.missing"));
 
 const siteSettings = useSiteSettingsState();

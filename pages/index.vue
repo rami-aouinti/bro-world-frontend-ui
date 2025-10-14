@@ -122,7 +122,7 @@ definePageMeta({
   documentDriven: false,
 });
 
-const defaultAvatar = "https://bro-world-space.com/img/person.png";
+const defaultAvatar = "/person.png";
 const auth = useAuthSession();
 
 const isAuthReady = computed(() => auth.isReady.value);
@@ -131,7 +131,7 @@ const canAccessAuthenticatedContent = computed(
 );
 const user = {
   name: "Rami Aouinti",
-  avatarUrl: "https://bro-world-space.com/img/person.png",
+  avatarUrl: "/person.png",
 };
 
 const stories = ref<Story[]>([
