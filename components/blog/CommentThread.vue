@@ -159,6 +159,7 @@ import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import { useRelativeTime } from "~/composables/useRelativeTime";
+import { useNuxtApp } from "#imports";
 
 const ReactionPicker = defineAsyncComponent({
   loader: () => import("~/components/blog/ReactionPicker.vue"),
@@ -171,36 +172,35 @@ const PostCommentForm = defineAsyncComponent({
 
 type Reaction = PickerReaction;
 const auth = useAuthSession();
-const canRenderAuthUi = ref(false);
-
-if (import.meta.client) {
-  let stopWatchingAuth: WatchStopHandle | null = null;
-
-  function refreshCanRenderAuthUi() {
-    canRenderAuthUi.value = auth.isReady.value && auth.isAuthenticated.value;
+const isHydrated = ref(import.meta.server);
+const canRenderAuthUi = computed(() => {
+  if (!isHydrated.value) {
+    return false;
   }
 
-  onMounted(() => {
-    refreshCanRenderAuthUi();
+  return auth.isReady.value && auth.isAuthenticated.value;
+});
 
-    stopWatchingAuth = watch(
-      () => [auth.isReady.value, auth.isAuthenticated.value],
-      refreshCanRenderAuthUi,
-      { flush: "post" },
-    );
-  });
+if (import.meta.client) {
+  const nuxtApp = useNuxtApp();
 
-  onBeforeUnmount(() => {
-    stopWatchingAuth?.();
+  nuxtApp.hook("app:mounted", () => {
+    isHydrated.value = true;
   });
 }
 const composerVisible = defineModel<boolean>("composerVisible", { default: false });
 
-watch(canRenderAuthUi, (value) => {
-  if (!value) {
-    composerVisible.value = false;
-  }
-});
+if (import.meta.client) {
+  watch(
+    canRenderAuthUi,
+    (value) => {
+      if (!value) {
+        composerVisible.value = false;
+      }
+    },
+    { immediate: true, flush: "post" },
+  );
+}
 export type CommentNode = {
   id: string;
   user: { firstName?: string; lastName?: string; photo?: string };
@@ -229,14 +229,6 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const { formatRelativeTime } = useRelativeTime();
-
-const showComposer = ref(false);
-
-watch(canRenderAuthUi, (value) => {
-  if (!value) {
-    showComposer.value = false;
-  }
-});
 
 const depth = computed(() => props.depth ?? 0);
 const commentLabel = computed(() => t("blog.posts.actions.comment"));
