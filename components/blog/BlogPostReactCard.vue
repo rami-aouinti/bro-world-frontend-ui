@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent } from "vue";
+import { ref, computed, defineAsyncComponent, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -115,8 +115,16 @@ const ReactionPicker = defineAsyncComponent({
 type Reaction = PickerReaction;
 
 const auth = useAuthSession();
+const isHydrated = ref(import.meta.server);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isHydrated.value = true;
+  });
+}
+
 const showAuthUi = computed(
-  () => import.meta.client && auth.isReady.value && auth.isAuthenticated.value,
+  () => isHydrated.value && auth.isReady.value && auth.isAuthenticated.value,
 );
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
