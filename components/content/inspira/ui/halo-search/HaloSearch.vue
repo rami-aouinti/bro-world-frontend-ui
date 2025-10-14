@@ -51,6 +51,12 @@ const props = defineProps<Props>();
   display: flex;
   align-items: center;
   justify-content: center;
+  --halo-radius-base: var(
+    --ui-card-radius,
+    calc(var(--radius, var(--ui-radius)) + 8px)
+  );
+  --halo-radius-mid: calc(var(--halo-radius-base) - 1px);
+  --halo-radius-inner: calc(var(--halo-radius-base) - 2px);
 }
 
 #search-wrapper {
@@ -75,7 +81,7 @@ const props = defineProps<Props>();
   border: none;
   width: 301px;
   height: 56px;
-  border-radius: 10px;
+  border-radius: var(--halo-radius-inner);
   color: white;
   padding-right: 60px;
   padding-left: 16px;
@@ -101,14 +107,14 @@ const props = defineProps<Props>();
   position: absolute;
   overflow: hidden;
   z-index: -1;
-  border-radius: 12px;
+  border-radius: var(--halo-radius-base);
   filter: blur(3px);
 }
 
 .inner-glow {
   max-height: 63px;
   max-width: 307px;
-  border-radius: 10px;
+  border-radius: var(--halo-radius-inner);
   filter: blur(2px);
 }
 
@@ -139,7 +145,7 @@ const props = defineProps<Props>();
 .main-border {
   max-height: 59px;
   max-width: 303px;
-  border-radius: 11px;
+  border-radius: var(--halo-radius-mid);
   filter: blur(0.5px);
 }
 
@@ -253,7 +259,7 @@ const props = defineProps<Props>();
   overflow: hidden;
   top: 7px;
   right: 7px;
-  border-radius: 12px;
+  border-radius: var(--halo-radius-base);
 }
 
 .search-btn-border::before {

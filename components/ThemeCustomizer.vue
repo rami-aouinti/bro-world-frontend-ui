@@ -232,6 +232,8 @@ function setClassTheme() {
 
 function setStyleRadius() {
   const radiusValue = `${radius.value}rem`;
+  const cardRadiusValue = `calc(${radius.value}rem + 8px)`;
+  const surfaceRadiusValue = `calc(${radius.value}rem + 4px)`;
 
   const targets = [document.body, document.documentElement];
 
@@ -242,11 +244,15 @@ function setStyleRadius() {
 
     target.style.setProperty("--radius", radiusValue);
     target.style.setProperty("--ui-radius", radiusValue);
-    target.style.setProperty("--ui-radius-md", radiusValue);
+    target.style.setProperty("--ui-card-radius", cardRadiusValue);
+    target.style.setProperty("--ui-surface-radius", surfaceRadiusValue);
     target.style.setProperty("--v-radius-md", radiusValue);
     target.style.setProperty("--v-btn-border-radius", radiusValue);
     target.style.setProperty("--v-field-border-radius", radiusValue);
     target.style.setProperty("--v-list-border-radius", radiusValue);
+    target.style.setProperty("--v-card-border-radius", cardRadiusValue);
+    target.style.setProperty("--v-sheet-border-radius", radiusValue);
+    target.style.setProperty("--v-navigation-drawer-border-radius", cardRadiusValue);
   }
 }
 

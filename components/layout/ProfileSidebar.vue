@@ -335,7 +335,10 @@ function friendAvatar(friend: Friend) {
 .sidebar-profile-card {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: var(
+    --ui-card-radius,
+    calc(var(--radius, var(--ui-radius)) + 8px)
+  );
   padding: 0.25rem 0.25rem;
 }
 

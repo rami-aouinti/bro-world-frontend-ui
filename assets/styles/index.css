@@ -19,11 +19,13 @@ body {
     sans-serif
   );
   --ui-radius: var(--radius, var(--ui-radius-md));
-  --ui-radius-md: var(--radius, var(--ui-radius-md));
   --v-radius-md: var(--radius, var(--v-radius-md));
   --v-btn-border-radius: var(--radius, var(--ui-radius));
   --v-field-border-radius: var(--radius, var(--ui-radius));
   --v-list-border-radius: var(--radius, var(--ui-radius));
+  --v-card-border-radius: var(--radius, var(--ui-card-radius));
+  --v-sheet-border-radius: var(--radius, var(--ui-radius));
+  --v-navigation-drawer-border-radius: var(--radius, var(--ui-card-radius));
 }
 
 :root {
@@ -39,6 +41,11 @@ body {
   --v-btn-border-radius: var(--ui-radius);
   --v-field-border-radius: var(--ui-radius);
   --v-list-border-radius: var(--ui-radius);
+  --v-card-border-radius: var(--ui-card-radius);
+  --v-sheet-border-radius: var(--ui-radius);
+  --v-navigation-drawer-border-radius: var(--ui-card-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 8px);
+  --ui-surface-radius: calc(var(--ui-radius) + 4px);
 
   /* Focus */
   --ui-focus: 0 0 0 3px rgba(var(--v-theme-primary), 0.35);
@@ -67,6 +74,8 @@ body {
   --ui-spacing-xl: var(--ui-spacing-6);
 }
 
+form,
+.v-form,
 button,
 [type="button"],
 [type="reset"],
@@ -82,10 +91,7 @@ textarea {
 }
 
 .v-field:not(.v-field--variant-plain):not(.v-field--variant-underlined),
-.v-text-field .v-field,
-.v-textarea .v-field,
-.v-select .v-field,
-.v-combobox .v-field {
+.v-input:not(.v-input--variant-plain):not(.v-input--variant-underlined) .v-field {
   border-radius: var(--v-field-border-radius);
 }
 
@@ -95,6 +101,14 @@ textarea {
 
 .v-list-item {
   border-radius: inherit;
+}
+
+.v-card,
+.v-sheet:not(.v-sheet--tile),
+.v-navigation-drawer,
+.v-dialog > .v-overlay__content,
+.v-menu > .v-overlay__content {
+  border-radius: var(--radius, var(--ui-card-radius));
 }
 
 :where(#__nuxt, .v-application) {

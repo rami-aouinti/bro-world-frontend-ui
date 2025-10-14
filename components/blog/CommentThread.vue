@@ -339,7 +339,10 @@ function reactionAriaLabel(node: CommentNode) {
 .box {
   flex: 1;
   background: rgba(var(--v-theme-on-surface), 0.04);
-  border-radius: 18px;
+  border-radius: var(
+    --ui-card-radius,
+    calc(var(--radius, var(--ui-radius)) + 8px)
+  );
   padding: 4px 6px;
 }
 .grow-input :deep(textarea) {

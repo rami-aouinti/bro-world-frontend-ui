@@ -11,7 +11,8 @@
       >
         <div
           ref="dialogRef"
-          class="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
+          class="w-full max-w-lg border border-white/10 bg-slate-950/95 p-6 text-left text-slate-100 shadow-xl"
+          style="border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px))"
           tabindex="-1"
         >
           <header class="space-y-2">

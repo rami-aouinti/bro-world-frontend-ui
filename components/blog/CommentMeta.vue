@@ -188,7 +188,7 @@ function toggleMenu() {
 
 .comment-meta__menu-item {
   border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 0.5rem;
+  border-radius: var(--radius, var(--ui-radius));
   background: white;
   padding: 0.25rem 0.75rem;
   text-align: left;

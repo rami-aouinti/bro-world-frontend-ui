@@ -682,7 +682,10 @@ definePageMeta({
 <style scoped>
 .plugin-card {
   padding: 1rem;
-  border-radius: 0.75rem;
+  border-radius: var(
+    --ui-surface-radius,
+    calc(var(--radius, var(--ui-radius)) + 4px)
+  );
   background-color: rgba(var(--v-theme-surface-variant), 0.4);
 }
 
