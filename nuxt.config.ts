@@ -688,6 +688,14 @@ export default defineNuxtConfig({
           href: "https://fonts.gstatic.com",
           crossorigin: "",
         },
+        {
+          rel: "preconnect",
+          href: "https://cdn.jsdelivr.net",
+        },
+        {
+          rel: "preconnect",
+          href: "https://cdn.inspira-ui.com",
+        },
       ],
     },
     baseURL,
