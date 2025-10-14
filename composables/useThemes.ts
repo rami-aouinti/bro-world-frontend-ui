@@ -1,7 +1,9 @@
 import { computed, watch } from "vue";
+import type { ComputedRef } from "vue";
 import type { Theme } from "shadcn-docs-nuxt/lib/themes";
 import { themes } from "shadcn-docs-nuxt/lib/themes";
 import { useTheme } from "vuetify";
+import { hasInjectionContext, tryUseNuxtApp } from "#imports";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import {
@@ -19,7 +21,29 @@ interface ThemeCookieConfig {
 }
 
 export function useThemes() {
-  const config = useConfig();
+  type DocsThemeConfig = {
+    theme?: {
+      color?: Theme["name"];
+      radius?: number;
+    };
+  };
+
+  function resolveDocsConfig(): ComputedRef<DocsThemeConfig> {
+    const nuxtApp = tryUseNuxtApp();
+
+    if (nuxtApp && hasInjectionContext()) {
+      return useConfig() as ComputedRef<DocsThemeConfig>;
+    }
+
+    return computed<DocsThemeConfig>(() => ({
+      theme: {
+        color: themes[0]?.name,
+        radius: 0.75,
+      },
+    }));
+  }
+
+  const config = resolveDocsConfig();
   const FALLBACK_PRIMARY_HEX = "#E91E63";
   const LEGACY_DEFAULT_PRIMARY_HEXES = ["#E91E63"] as const;
 
