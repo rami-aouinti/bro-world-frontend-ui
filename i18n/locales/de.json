@@ -792,6 +792,9 @@
         "mutual": "mutual connections",
         "online": "online now"
       },
+      "meta": {
+        "lastActive": "Zuletzt aktiv · {time}"
+      },
       "sections": {
         "suggestions": "Suggested connections",
         "active": "Active now"
