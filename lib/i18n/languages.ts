@@ -1,5 +1,3 @@
-import type { SiteLanguageDefinition } from "~/types/settings";
-
 export interface SupportedLanguageMeta {
   code: string;
   label: string;
@@ -30,14 +28,3 @@ export function getSupportedLanguage(code: string): SupportedLanguageMeta | unde
   return supportedLanguages.find((language) => language.code === code);
 }
 
-export function toSiteLanguageDefinition(
-  meta: SupportedLanguageMeta,
-  overrides: Partial<Pick<SiteLanguageDefinition, "label" | "endonym" | "enabled">> = {},
-): SiteLanguageDefinition {
-  return {
-    code: meta.code,
-    label: (overrides.label ?? meta.label).trim(),
-    endonym: (overrides.endonym ?? meta.endonym).trim(),
-    enabled: overrides.enabled ?? true,
-  } satisfies SiteLanguageDefinition;
-}
