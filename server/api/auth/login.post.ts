@@ -1,4 +1,4 @@
-import { createError, readBody } from "h3";
+import { createError, getHeader, readBody } from "h3";
 import type { FetchError } from "ofetch";
 import { joinURL } from "ufo";
 import type { AuthLoginResponse, AuthUser } from "../../../types/auth";
@@ -34,10 +34,21 @@ export default defineEventHandler(async (event) => {
   }
 
   const runtimeConfig = useRuntimeConfig(event);
+  const serviceToken = runtimeConfig.auth?.apiToken?.trim();
+  const forwardedAuthorization = getHeader(event, "authorization");
   const baseEndpoint = sanitizeBaseEndpoint(
     runtimeConfig.auth?.apiBase ?? "https://bro-world.org/api",
   );
   const endpoint = joinURL(baseEndpoint, "/v1/auth/login");
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (forwardedAuthorization?.trim()) {
+    headers.Authorization = forwardedAuthorization;
+  } else if (serviceToken) {
+    headers.Authorization = `Bearer ${serviceToken}`;
+  }
 
   try {
     const response = await $fetch<AuthLoginResponse>(endpoint, {
@@ -47,9 +58,7 @@ export default defineEventHandler(async (event) => {
         username: identifier,
         password,
       },
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
     });
 
     if (!response?.token || !response?.profile) {
