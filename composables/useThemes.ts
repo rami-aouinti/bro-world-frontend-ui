@@ -32,7 +32,16 @@ export function useThemes() {
     const nuxtApp = tryUseNuxtApp();
 
     if (nuxtApp && hasInjectionContext()) {
-      return useConfig() as ComputedRef<DocsThemeConfig>;
+      try {
+        return useConfig() as ComputedRef<DocsThemeConfig>;
+      } catch (error) {
+        if (process.dev) {
+          console.warn(
+            "Failed to access docs configuration via useConfig; falling back to defaults.",
+            error,
+          );
+        }
+      }
     }
 
     return computed<DocsThemeConfig>(() => ({
