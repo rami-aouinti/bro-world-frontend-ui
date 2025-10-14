@@ -334,7 +334,7 @@ const userMenuItems = computed<UserMenuItem[]>(() => {
       items.push({ title: t("layout.userMenu.admin"), icon: "mdi-shield-crown", to: "/admin" });
     }
     items.push({ title: t("layout.sidebar.items.about"), icon: "mdi-information-outline", to: "/about" });
-    items.push({ title: t("layout.sidebar.items.help"), icon: "mdi-question-crown", to: "/help" });
+    items.push({ title: t("layout.sidebar.items.help"), icon: "mdi-lifebuoy", to: "/help" });
     items.push({ title: t("layout.sidebar.items.contact"), icon: "mdi-email-outline", to: "/contact" });
 
     items.push({ title: t("auth.signOut"), icon: "mdi:logout", to: "logout" });
