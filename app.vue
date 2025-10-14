@@ -213,7 +213,7 @@ const structuredData = computed(() =>
 );
 
 const socialImageUrl = computed(() => `${normalizedBaseUrl.value}/social-img.png`);
-const themeColor = computed(() => themePrimaryHex.value ?? "#e91e63");
+const themeColor = computed(() => themePrimaryHex.value ?? "#03203d");
 
 useHead({
   title,
