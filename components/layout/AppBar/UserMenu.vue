@@ -76,7 +76,7 @@
               {{ heading }}
             </p>
             <p class="text-xs text-muted-foreground truncate">
-              {{ subheading }}
+              Bro World
             </p>
           </div>
         </div>
