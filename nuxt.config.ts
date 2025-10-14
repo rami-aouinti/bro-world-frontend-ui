@@ -237,18 +237,6 @@ const iconClientBundleConfig =
 
 const nuxtLayers: string[] = ["shadcn-docs-nuxt"];
 
-try {
-  require.resolve("@nuxt/ui-pro/nuxt.config");
-  nuxtLayers.unshift("@nuxt/ui-pro");
-} catch (error) {
-  const { code, message } = (error as NodeJS.ErrnoException | undefined) ?? {};
-  const reason = code === "MODULE_NOT_FOUND"
-    ? "module '@nuxt/ui-pro' not found. Install @nuxt/ui-pro to enable this layer."
-    : message ?? "Unknown error";
-
-  console.warn(`@nuxt/ui-pro layer skipped: ${reason}`);
-}
-
 if (typeof osWithAvailableParallelism.availableParallelism !== "function") {
   Object.defineProperty(osWithAvailableParallelism, "availableParallelism", {
     configurable: true,

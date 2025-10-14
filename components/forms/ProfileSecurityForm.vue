@@ -1,5 +1,4 @@
 <template>
-  <v-container>
     <header class="mb-6">
       <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4">
         <div>
@@ -192,7 +191,6 @@
     >
       {{ snackbar.message }}
     </v-snackbar>
-  </v-container>
 </template>
 
 <script setup lang="ts">
