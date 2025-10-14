@@ -63,10 +63,18 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     if (isFetchError(error)) {
-      const status = error.response?.status ?? 500;
+      const status = resolveFetchErrorStatus(error) ?? 500;
       const message = resolveLoginErrorMessage(status, error.data);
 
       if (status === 401 || status === 400 || status === 429) {
+        throw createError({
+          statusCode: status,
+          statusMessage: "Unable to sign in",
+          data: { message },
+        });
+      }
+
+      if (status >= 400 && status < 500) {
         throw createError({
           statusCode: status,
           statusMessage: "Unable to sign in",
@@ -121,3 +129,107 @@ function resolveLoginErrorMessage(status: number, payload: unknown): string {
 
   return "Unable to sign in at this time. Please try again later.";
 }
+
+function resolveFetchErrorStatus(error: FetchError<unknown>): number | null {
+  const statusFromResponse = error.response?.status;
+
+  if (typeof statusFromResponse === "number" && Number.isInteger(statusFromResponse)) {
+    return statusFromResponse;
+  }
+
+  const statusFromError = getStatusFromError(error);
+
+  if (statusFromError !== null) {
+    return statusFromError;
+  }
+
+  const statusFromPayload = resolveStatusFromPayload(error.data);
+
+  if (statusFromPayload !== null) {
+    return statusFromPayload;
+  }
+
+  const statusFromMessage = extractStatusCode(error.message);
+
+  if (statusFromMessage !== null) {
+    return statusFromMessage;
+  }
+
+  return null;
+}
+
+function getStatusFromError(error: FetchError<unknown>): number | null {
+  for (const key of ["status", "statusCode"] as const) {
+    const value = (error as Record<(typeof key) | string, unknown>)[key];
+
+    if (typeof value === "number" && Number.isInteger(value)) {
+      return value;
+    }
+  }
+
+  return null;
+}
+
+function resolveStatusFromPayload(payload: unknown): number | null {
+  if (typeof payload === "number" && Number.isInteger(payload)) {
+    return payload;
+  }
+
+  if (!payload || typeof payload !== "object") {
+    if (typeof payload === "string") {
+      return extractStatusCode(payload);
+    }
+
+    return null;
+  }
+
+  for (const key of ["statusCode", "status", "code"] as const) {
+    const value = (payload as Record<(typeof key) | string, unknown>)[key];
+
+    if (typeof value === "number" && Number.isInteger(value)) {
+      return value;
+    }
+
+    if (typeof value === "string") {
+      const parsed = Number.parseInt(value, 10);
+
+      if (!Number.isNaN(parsed)) {
+        return parsed;
+      }
+    }
+  }
+
+  const maybeMessage = (payload as { message?: unknown }).message;
+
+  if (typeof maybeMessage === "string") {
+    return extractStatusCode(maybeMessage);
+  }
+
+  return null;
+}
+
+function extractStatusCode(message: string | null | undefined): number | null {
+  if (!message) {
+    return null;
+  }
+
+  const match = message.match(/\b([1-5][0-9]{2})\b/);
+
+  if (!match) {
+    return null;
+  }
+
+  const code = Number.parseInt(match[1] ?? "", 10);
+
+  if (Number.isNaN(code)) {
+    return null;
+  }
+
+  if (code >= 400 && code < 600) {
+    return code;
+  }
+
+  return null;
+}
+
+export { resolveFetchErrorStatus, resolveLoginErrorMessage };
