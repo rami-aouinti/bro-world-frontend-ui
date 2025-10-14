@@ -1,10 +1,9 @@
 <template>
   <main
-    class="py-5"
     aria-labelledby="admin-title"
   >
     <v-container>
-      <header class="mb-10">
+      <header class="mb-5">
         <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-4">
           <div>
             <h1
@@ -43,7 +42,7 @@
 
       <section
         aria-labelledby="admin-stats"
-        class="mb-12"
+        class="mb-5"
       >
         <div
           class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4"
@@ -110,7 +109,7 @@
 
       <section
         aria-labelledby="admin-controls"
-        class="mb-12"
+        class="mb-5"
       >
         <div
           class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4"
@@ -164,7 +163,7 @@
 
       <section
         aria-labelledby="admin-actions"
-        class="mb-12"
+        class="mb-5"
       >
         <div
           class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4"
@@ -222,7 +221,7 @@
 
       <section
         aria-labelledby="admin-modules"
-        class="mb-12"
+        class="mb-5"
       >
         <div
           class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4"
@@ -245,7 +244,7 @@
             md="6"
           >
             <SidebarCard
-              class="text-card-foreground pa-6 h-100"
+              class="text-card-foreground pa-4 h-100"
               glow
             >
               <div class="d-flex flex-column gap-4">
@@ -264,21 +263,6 @@
                     <h3 class="text-subtitle-1 font-weight-semibold mb-1">{{ module.title }}</h3>
                     <p class="text-body-2 text-medium-emphasis mb-0">{{ module.description }}</p>
                   </div>
-                </div>
-                <div
-                  class="d-flex flex-wrap gap-2"
-                  role="list"
-                >
-                  <v-chip
-                    v-for="tag in module.tags"
-                    :key="tag"
-                    role="listitem"
-                    color="primary"
-                    variant="tonal"
-                    size="small"
-                  >
-                    {{ tag }}
-                  </v-chip>
                 </div>
                 <div class="d-flex flex-column gap-2">
                   <v-btn
@@ -308,7 +292,7 @@
       <v-row
         dense
         align="stretch"
-        class="mb-12"
+        class="mb-5"
       >
         <v-col
           cols="12"
