@@ -13,6 +13,7 @@
       />
     </button>
     <MessengerMenu
+        v-if="isAuthenticated"
       :conversations="props.messengerConversations"
       :icon-trigger-classes="props.iconTriggerClasses"
       :title="props.messengerTitle"
@@ -25,7 +26,8 @@
       :loading="props.messengerLoading"
     />
     <NotificationMenu
-      :items="props.notifications"
+        v-if="isAuthenticated"
+        :items="props.notifications"
       :icon-trigger-classes="props.iconTriggerClasses"
       :title="props.notificationsTitle"
       :subtitle="props.notificationsSubtitle"
@@ -72,6 +74,7 @@ import type { MessengerConversation } from "~/types/messenger";
 import ThemePopover from "../../ThemePopover.vue";
 import DarkModeToggle from "../../DarkModeToggle.vue";
 import AppIcon from "../AppIcon.vue";
+import {useAuthStore} from "~/composables/useAuthStore";
 
 const MessengerMenu = defineAsyncComponent({
   loader: () => import("~/components/messenger/MessengerMenu.vue"),
@@ -105,5 +108,8 @@ const desktopToggleClasses = computed(() => `${props.iconTriggerClasses} hidden 
 const mobileToggleClasses = computed(() => `${props.iconTriggerClasses} md:hidden`);
 const showToggleButtons = computed(() => props.showRightToggle);
 
+
+const authStore = useAuthStore();
+const isAuthenticated = computed(() => authStore.isAuthenticated.value);
 const emit = defineEmits(["toggle-right", "mark-all-notifications"]);
 </script>
