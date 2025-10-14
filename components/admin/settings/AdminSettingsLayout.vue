@@ -1,7 +1,5 @@
 <template>
-  <main
-    aria-labelledby="admin-settings-title"
-  >
+  <main aria-labelledby="admin-settings-title">
     <v-container class="settings-container">
       <header
         ref="stickyHeader"

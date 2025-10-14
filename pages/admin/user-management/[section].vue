@@ -31,7 +31,9 @@
             density="comfortable"
             flat
           >
-            <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-3 w-100">
+            <div
+              class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-3 w-100"
+            >
               <v-text-field
                 v-model="tableSearch"
                 :label="t('admin.userManagement.sections.data.table.search')"

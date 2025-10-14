@@ -582,24 +582,21 @@ watch(
   { immediate: true },
 );
 
-watch(
-  isAuthenticated,
-  (value) => {
-    if (value && loginDialogOpen.value) {
-      handleLoginDialogClose();
+watch(isAuthenticated, (value) => {
+  if (value && loginDialogOpen.value) {
+    handleLoginDialogClose();
+  }
+
+  if (value && commentsActivated.value) {
+    const shouldReload = commentsError.value === loginToViewCommentsMessage.value;
+
+    commentsError.value = null;
+
+    if (shouldReload) {
+      void loadComments({ force: true });
     }
-
-    if (value && commentsActivated.value) {
-      const shouldReload = commentsError.value === loginToViewCommentsMessage.value;
-
-      commentsError.value = null;
-
-      if (shouldReload) {
-        void loadComments({ force: true });
-      }
-    }
-  },
-);
+  }
+});
 
 function handleEditDialogClose() {
   editModalOpen.value = false;

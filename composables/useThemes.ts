@@ -42,21 +42,15 @@ export function useThemes() {
 
     return {
       theme: {
-        color:
-          (themeConfig.color as Theme["name"] | undefined) ??
-          FALLBACK_DOCS_THEME_COLOR,
+        color: (themeConfig.color as Theme["name"] | undefined) ?? FALLBACK_DOCS_THEME_COLOR,
         radius:
-          typeof themeConfig.radius === "number"
-            ? themeConfig.radius
-            : FALLBACK_DOCS_THEME_RADIUS,
+          typeof themeConfig.radius === "number" ? themeConfig.radius : FALLBACK_DOCS_THEME_RADIUS,
       },
     } satisfies DocsThemeConfig;
   }
 
   function resolveDocsConfig(): ComputedRef<DocsThemeConfig> {
-    const docsConfigState = ref<DocsThemeConfig>(
-      normalizeDocsConfig(fallbackDocsConfig),
-    );
+    const docsConfigState = ref<DocsThemeConfig>(normalizeDocsConfig(fallbackDocsConfig));
     const nuxtApp = tryUseNuxtApp();
 
     if (nuxtApp && hasInjectionContext()) {
@@ -214,12 +208,11 @@ export function useThemes() {
     normalizeHexColor(activeSiteTheme.value?.primaryColor ?? undefined),
   );
 
-  const defaultThemePrimaryHex = computed(() =>
-    siteThemePrimaryHex.value ?? shadcnThemePrimaryHex.value ?? null,
+  const defaultThemePrimaryHex = computed(
+    () => siteThemePrimaryHex.value ?? shadcnThemePrimaryHex.value ?? null,
   );
 
-  const normalizedFallbackPrimaryHex =
-    normalizeHexColor(FALLBACK_PRIMARY_HEX) ?? "#E91E63";
+  const normalizedFallbackPrimaryHex = normalizeHexColor(FALLBACK_PRIMARY_HEX) ?? "#E91E63";
   const legacyDefaultPrimaryHexes = LEGACY_DEFAULT_PRIMARY_HEXES.map((hex) =>
     normalizeHexColor(hex),
   ).filter((hex): hex is string => Boolean(hex));
@@ -234,9 +227,7 @@ export function useThemes() {
   const canonicalDefaultPrimaryHex = computed(
     () => defaultThemePrimaryHex.value ?? normalizedFallbackPrimaryHex,
   );
-  const themePrimaryCookieHex = computed(() =>
-    normalizeHexColor(themePrimaryCookie.value),
-  );
+  const themePrimaryCookieHex = computed(() => normalizeHexColor(themePrimaryCookie.value));
   const themePrimaryCookieIsLegacyDefault = computed(() => {
     const normalized = themePrimaryCookieHex.value;
 
@@ -339,10 +330,7 @@ export function useThemes() {
   });
 
   const themePrimary = computed(() => {
-    if (
-      themePrimaryCookieHex.value &&
-      !themePrimaryCookieIsDefault.value
-    ) {
+    if (themePrimaryCookieHex.value && !themePrimaryCookieIsDefault.value) {
       return undefined;
     }
 
@@ -379,10 +367,7 @@ export function useThemes() {
   }
 
   watch(
-    [
-      () => themePrimaryHex.value ?? FALLBACK_PRIMARY_HEX,
-      () => themePrimary.value ?? null,
-    ],
+    [() => themePrimaryHex.value ?? FALLBACK_PRIMARY_HEX, () => themePrimary.value ?? null],
     ([value, source]) => {
       const next = normalizeHexColor(value) ?? FALLBACK_PRIMARY_HEX;
 
@@ -422,10 +407,7 @@ export function useThemes() {
 
     const extras: { hex: string; label: string }[] = [];
 
-    if (
-      canonicalHex &&
-      !normalizedOptions.some((option) => option.hex === canonicalHex)
-    ) {
+    if (canonicalHex && !normalizedOptions.some((option) => option.hex === canonicalHex)) {
       extras.push({ hex: canonicalHex, label: "Custom" });
     }
 

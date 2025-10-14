@@ -16,15 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  defineAsyncComponent,
-  nextTick,
-  onMounted,
-  ref,
-  useAttrs,
-  watch,
-} from "vue";
+import { computed, defineAsyncComponent, nextTick, onMounted, ref, useAttrs, watch } from "vue";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
 

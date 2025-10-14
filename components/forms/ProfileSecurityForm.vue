@@ -28,9 +28,7 @@
       align="stretch"
       dense
     >
-      <v-col
-        cols="12"
-      >
+      <v-col cols="12">
         <SidebarCard
           class="text-card-foreground px-3 py-2 mb-4"
           padding="none"

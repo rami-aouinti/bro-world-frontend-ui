@@ -611,22 +611,19 @@ watch(
   { immediate: true },
 );
 
-watch(
-  themePrimaryCookie,
-  (value, oldValue) => {
-    if (normalizeHexColor(value)) {
-      return;
-    }
+watch(themePrimaryCookie, (value, oldValue) => {
+  if (normalizeHexColor(value)) {
+    return;
+  }
 
-    if (normalizeHexColor(oldValue)) {
-      const theme = activeTheme.value;
+  if (normalizeHexColor(oldValue)) {
+    const theme = activeTheme.value;
 
-      if (theme) {
-        applyPrimaryColorCssVariables(theme.primaryColor);
-      }
+    if (theme) {
+      applyPrimaryColorCssVariables(theme.primaryColor);
     }
-  },
-);
+  }
+});
 
 const layoutInsets = computed(() => {
   if (!showNavigation.value) {

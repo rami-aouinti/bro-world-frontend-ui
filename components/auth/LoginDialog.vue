@@ -32,7 +32,10 @@
               :aria-label="closeLabel"
               @click="emitClose"
             >
-              <span aria-hidden="true" class="mdi mdi-close" />
+              <span
+                aria-hidden="true"
+                class="mdi mdi-close"
+              />
             </button>
           </header>
           <div class="login-dialog__body">
@@ -212,7 +215,10 @@ function handleKeydown(event: KeyboardEvent) {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(15, 23, 42, 0.6);
   color: inherit;
-  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .login-dialog__close:hover {

@@ -99,8 +99,7 @@ label.btn {
   border-radius: var(--radius, var(--ui-radius-sm)) !important;
 }
 
-:where(.rounded,
-.rounded-md) {
+:where(.rounded, .rounded-md) {
   border-radius: var(--radius, var(--ui-radius)) !important;
 }
 
@@ -108,8 +107,7 @@ label.btn {
   border-radius: var(--radius, var(--ui-surface-radius)) !important;
 }
 
-:where(.rounded-xl,
-.rounded-2xl) {
+:where(.rounded-xl, .rounded-2xl) {
   border-radius: var(--radius, var(--ui-card-radius)) !important;
 }
 

@@ -1,7 +1,5 @@
 <template>
-  <main
-    aria-labelledby="profile-edit-title"
-  >
+  <main aria-labelledby="profile-edit-title">
     <ProfileEditForm />
   </main>
 </template>

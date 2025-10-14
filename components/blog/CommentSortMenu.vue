@@ -99,10 +99,7 @@ function pick(v: SortKey) {
 /* Le conteneur téléporté du menu (sinon fond transparent) */
 :global(.v-overlay__content.cs-menu) {
   background: rgb(var(--v-theme-surface)); /* <-- fix important */
-  border-radius: var(
-    --ui-card-radius,
-    calc(var(--radius, var(--ui-radius)) + 8px)
-  );
+  border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
   box-shadow:
     0 10px 28px rgba(0, 0, 0, 0.22),
     0 2px 8px rgba(0, 0, 0, 0.1);
@@ -114,10 +111,7 @@ function pick(v: SortKey) {
 /* Bulle interne (utile si tu veux padding séparé) */
 .cs-bubble {
   background: transparent; /* le fond est porté par .v-overlay__content.cs-menu */
-  border-radius: var(
-    --ui-card-radius,
-    calc(var(--radius, var(--ui-radius)) + 8px)
-  );
+  border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
   padding: 10px 0;
   min-width: 360px;
 }

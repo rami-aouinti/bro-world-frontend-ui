@@ -1,42 +1,40 @@
 <template>
   <div class="login-page">
-    <div
-      :class="{ 'login-card--loading': isRedirecting }"
-    >
+    <div :class="{ 'login-card--loading': isRedirecting }">
       <SidebarCard
-          aria-live="polite"
-          class="text-card-foreground px-3 py-2"
-          glow>
+        aria-live="polite"
+        class="text-card-foreground px-3 py-2"
+        glow
+      >
         <header class="text-card-foreground">
-      <span class="login-card__glow" />
-      <div class="login-card__header">
-        <h1 class="login-card__title text-foreground">Bro World</h1>
-        <AuthSocial
-            class="login-card__socials"
-            :loading="isRedirecting"
-            @redirect="handleSocialRedirect"
-        />
-      </div>
+          <span class="login-card__glow" />
+          <div class="login-card__header">
+            <h1 class="login-card__title text-foreground">Bro World</h1>
+            <AuthSocial
+              class="login-card__socials"
+              :loading="isRedirecting"
+              @redirect="handleSocialRedirect"
+            />
+          </div>
 
-      <div class="login-card__form">
-        <AuthLoginForm :disabled="isRedirecting" />
-      </div>
+          <div class="login-card__form">
+            <AuthLoginForm :disabled="isRedirecting" />
+          </div>
 
-      <transition name="login-card__overlay-fade">
-        <div
-            v-if="isRedirecting"
-            class="login-card__overlay"
-        >
-          <v-progress-circular
-              indeterminate
-              color="primary"
-              size="64"
-          />
-        </div>
-      </transition>
+          <transition name="login-card__overlay-fade">
+            <div
+              v-if="isRedirecting"
+              class="login-card__overlay"
+            >
+              <v-progress-circular
+                indeterminate
+                color="primary"
+                size="64"
+              />
+            </div>
+          </transition>
         </header>
       </SidebarCard>
-
     </div>
   </div>
 </template>

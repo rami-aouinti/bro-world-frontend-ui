@@ -1,26 +1,26 @@
 <template>
   <motion.span
-      v-for="(char, index) in props.text"
-      :key="`${char}-${count}-${index}`"
-      :initial="{
+    v-for="(char, index) in props.text"
+    :key="`${char}-${count}-${index}`"
+    :initial="{
       y: 0,
       opacity: 0.2,
       color: props.startColor,
       scale: 1,
       filter: 'blur(5px)',
     }"
-      :transition="{
+    :transition="{
       duration: props.duration,
       delay: index * 0.05,
     }"
-      :animate="{
+    :animate="{
       y: [0, -3, 0],
       opacity: [1, 0.8, 1],
       scale: [1, 1.01, 1],
       filter: ['blur(0px)', 'blur(5px)', 'blur(0px)'],
       color: currentColors[index % currentColors.length],
     }"
-      :exit="{
+    :exit="{
       y: -3,
       opacity: 1,
       scale: 1,

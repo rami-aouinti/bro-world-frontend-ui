@@ -1,7 +1,5 @@
 <template>
-  <main
-    aria-labelledby="security-title"
-  >
+  <main aria-labelledby="security-title">
     <ProfileSecurityForm />
   </main>
 </template>

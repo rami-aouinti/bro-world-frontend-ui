@@ -51,10 +51,7 @@ const props = defineProps<Props>();
   display: flex;
   align-items: center;
   justify-content: center;
-  --halo-radius-base: var(
-    --ui-card-radius,
-    calc(var(--radius, var(--ui-radius)) + 8px)
-  );
+  --halo-radius-base: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
   --halo-radius-mid: calc(var(--halo-radius-base) - 1px);
   --halo-radius-inner: calc(var(--halo-radius-base) - 2px);
 }

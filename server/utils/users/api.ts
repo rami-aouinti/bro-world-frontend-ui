@@ -154,7 +154,7 @@ function unwrapUsersList(payload: UsersListSource) {
   const source = Array.isArray(payload)
     ? payload
     : payload && typeof payload === "object" && Array.isArray((payload as UsersListEnvelope).data)
-      ? (payload as UsersListEnvelope).data ?? []
+      ? ((payload as UsersListEnvelope).data ?? [])
       : [];
 
   for (const entry of source) {
@@ -166,7 +166,9 @@ function unwrapUsersList(payload: UsersListSource) {
   }
 
   const count =
-    payload && typeof payload === "object" && typeof (payload as UsersListEnvelope).count === "number"
+    payload &&
+    typeof payload === "object" &&
+    typeof (payload as UsersListEnvelope).count === "number"
       ? (payload as UsersListEnvelope).count || 0
       : data.length;
 
@@ -222,11 +224,7 @@ export async function createUserThroughApi(event: H3Event, payload: Partial<Auth
   return unwrapUser(response);
 }
 
-export async function updateUserThroughApi(
-  event: H3Event,
-  id: string,
-  payload: Partial<AuthUser>,
-) {
+export async function updateUserThroughApi(event: H3Event, id: string, payload: Partial<AuthUser>) {
   const trimmedId = id?.trim();
 
   if (!trimmedId) {
@@ -264,11 +262,9 @@ export async function deleteUserThroughApi(event: H3Event, id: string) {
 }
 
 export async function fetchUsersCountFromSource(event: H3Event) {
-  const response = await requestUsersApi<{ count?: number | null }>(
-    event,
-    "/user/count",
-    { method: "GET" },
-  );
+  const response = await requestUsersApi<{ count?: number | null }>(event, "/user/count", {
+    method: "GET",
+  });
 
   const count = typeof response?.count === "number" ? response.count : 0;
 

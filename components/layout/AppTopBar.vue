@@ -303,11 +303,7 @@ const userSignedInText = computed(() => t("layout.userMenu.signedInAs"));
 const userGuestTitle = computed(() => t("layout.userMenu.guestTitle"));
 const userGuestSubtitle = computed(() => t("layout.userMenu.guestSubtitle"));
 
-function addLocaleIfSupported(
-  set: Set<string>,
-  list: string[],
-  code?: string | null,
-) {
+function addLocaleIfSupported(set: Set<string>, list: string[], code?: string | null) {
   if (!code) {
     return;
   }
@@ -350,20 +346,28 @@ const userMenuItems = computed<UserMenuItem[]>(() => {
     if (canAccessAdmin.value) {
       items.push({ title: t("layout.userMenu.admin"), icon: "mdi-shield-crown", to: "/admin" });
     }
-    items.push({ title: t("layout.sidebar.items.about"), icon: "mdi-information-outline", to: "/about" });
+    items.push({
+      title: t("layout.sidebar.items.about"),
+      icon: "mdi-information-outline",
+      to: "/about",
+    });
     items.push({ title: t("layout.sidebar.items.help"), icon: "mdi-lifebuoy", to: "/help" });
-    items.push({ title: t("layout.sidebar.items.contact"), icon: "mdi-email-outline", to: "/contact" });
+    items.push({
+      title: t("layout.sidebar.items.contact"),
+      icon: "mdi-email-outline",
+      to: "/contact",
+    });
 
     items.push({ title: t("auth.signOut"), icon: "mdi:logout", to: "logout" });
     return items;
   }
-    return [
-      { title: t("auth.Login"), icon: "mdi:login", to: "/login" },
-      { title: t("auth.Register"), icon: "mdi:account-plus", to: "/register" },
-      { title: t("layout.sidebar.items.about"), icon: "mdi-information-outline", to: "/about" },
-      { title: t("layout.sidebar.items.help"), icon: "mdi-lifebuoy", to: "/help" },
-      { title: t("layout.sidebar.items.contact"), icon: "mdi-email-outline", to: "/contact" },
-    ];
+  return [
+    { title: t("auth.Login"), icon: "mdi:login", to: "/login" },
+    { title: t("auth.Register"), icon: "mdi:account-plus", to: "/register" },
+    { title: t("layout.sidebar.items.about"), icon: "mdi-information-outline", to: "/about" },
+    { title: t("layout.sidebar.items.help"), icon: "mdi-lifebuoy", to: "/help" },
+    { title: t("layout.sidebar.items.contact"), icon: "mdi-email-outline", to: "/contact" },
+  ];
 });
 
 function formatLocaleLabel(v: string) {

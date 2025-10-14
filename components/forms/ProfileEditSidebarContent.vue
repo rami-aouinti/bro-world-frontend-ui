@@ -102,10 +102,7 @@ const form = computed(() => props.form);
 const fullName = computed(() => props.fullName);
 const initials = computed(() => props.initials);
 
-function updateSocial(
-  network: keyof ProfileForm["social"],
-  value: string,
-) {
+function updateSocial(network: keyof ProfileForm["social"], value: string) {
   form.value.social[network] = value;
 }
 </script>

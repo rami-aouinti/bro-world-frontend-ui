@@ -240,7 +240,6 @@
           </SidebarCard>
         </section>
       </v-col>
-
     </v-row>
 
     <v-snackbar

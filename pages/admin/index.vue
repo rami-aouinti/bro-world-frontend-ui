@@ -1,7 +1,5 @@
 <template>
-  <main
-    aria-labelledby="admin-title"
-  >
+  <main aria-labelledby="admin-title">
     <v-container>
       <header class="mb-5">
         <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-4">

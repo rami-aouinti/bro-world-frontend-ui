@@ -4,12 +4,7 @@ import { useI18n } from "vue-i18n";
 import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useAuthSession } from "~/stores/auth-session";
-import type {
-  FriendEntry,
-  FriendStory,
-  ProfileUser,
-  SidebarFriend,
-} from "~/types/pages/profile";
+import type { FriendEntry, FriendStory, ProfileUser, SidebarFriend } from "~/types/pages/profile";
 
 const DEFAULT_AVATAR = "/person.png";
 

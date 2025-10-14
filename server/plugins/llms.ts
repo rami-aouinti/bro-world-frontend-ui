@@ -40,14 +40,17 @@ function extractDirTitle(ymlContent: string): string | null {
     if (match) {
       let value = match[1].trim();
 
-      if (!value.startsWith("\"") && !value.startsWith("'")) {
+      if (!value.startsWith('"') && !value.startsWith("'")) {
         const commentIndex = value.indexOf(" #");
         if (commentIndex !== -1) {
           value = value.slice(0, commentIndex).trim();
         }
       }
 
-      if ((value.startsWith("\"") && value.endsWith("\"")) || (value.startsWith("'") && value.endsWith("'"))) {
+      if (
+        (value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
         value = value.slice(1, -1);
       }
 

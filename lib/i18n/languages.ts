@@ -27,4 +27,3 @@ export const defaultLanguageCode = "en";
 export function getSupportedLanguage(code: string): SupportedLanguageMeta | undefined {
   return supportedLanguages.find((language) => language.code === code);
 }
-

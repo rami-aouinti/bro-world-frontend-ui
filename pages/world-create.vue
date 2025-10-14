@@ -278,7 +278,10 @@
           >
             {{ t("pages.createWorld.plugins.title") }}
           </h2>
-          <p class="text-body-2 text-medium-emphasis mx-auto mb-0" style="max-width: 620px">
+          <p
+            class="text-body-2 text-medium-emphasis mx-auto mb-0"
+            style="max-width: 620px"
+          >
             {{ t("pages.createWorld.plugins.subtitle") }}
           </p>
         </header>
@@ -366,7 +369,10 @@
           >
             {{ t("pages.createWorld.workflow.title") }}
           </h2>
-          <p class="text-body-2 text-medium-emphasis mx-auto mb-0" style="max-width: 600px">
+          <p
+            class="text-body-2 text-medium-emphasis mx-auto mb-0"
+            style="max-width: 600px"
+          >
             {{ t("pages.createWorld.workflow.subtitle") }}
           </p>
         </header>
@@ -423,7 +429,10 @@
               >
                 {{ t("pages.createWorld.cta.title") }}
               </h2>
-              <p class="text-body-1 text-white text-opacity-80 mb-0" style="max-width: 520px">
+              <p
+                class="text-body-1 text-white text-opacity-80 mb-0"
+                style="max-width: 520px"
+              >
                 {{ t("pages.createWorld.cta.description") }}
               </p>
             </div>
@@ -502,9 +511,7 @@ const pluginCategories = computed(() => [
       {
         name: t("pages.createWorld.plugins.categories.community.plugins.lobby.name"),
         tag: t("pages.createWorld.plugins.categories.community.plugins.lobby.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.community.plugins.lobby.description",
-        ),
+        description: t("pages.createWorld.plugins.categories.community.plugins.lobby.description"),
         points: [
           t("pages.createWorld.plugins.categories.community.plugins.lobby.points.0"),
           t("pages.createWorld.plugins.categories.community.plugins.lobby.points.1"),
@@ -514,9 +521,7 @@ const pluginCategories = computed(() => [
       {
         name: t("pages.createWorld.plugins.categories.community.plugins.events.name"),
         tag: t("pages.createWorld.plugins.categories.community.plugins.events.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.community.plugins.events.description",
-        ),
+        description: t("pages.createWorld.plugins.categories.community.plugins.events.description"),
         points: [
           t("pages.createWorld.plugins.categories.community.plugins.events.points.0"),
           t("pages.createWorld.plugins.categories.community.plugins.events.points.1"),
@@ -546,9 +551,7 @@ const pluginCategories = computed(() => [
       {
         name: t("pages.createWorld.plugins.categories.economy.plugins.market.name"),
         tag: t("pages.createWorld.plugins.categories.economy.plugins.market.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.economy.plugins.market.description",
-        ),
+        description: t("pages.createWorld.plugins.categories.economy.plugins.market.description"),
         points: [
           t("pages.createWorld.plugins.categories.economy.plugins.market.points.0"),
           t("pages.createWorld.plugins.categories.economy.plugins.market.points.1"),
@@ -558,9 +561,7 @@ const pluginCategories = computed(() => [
       {
         name: t("pages.createWorld.plugins.categories.economy.plugins.crafting.name"),
         tag: t("pages.createWorld.plugins.categories.economy.plugins.crafting.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.economy.plugins.crafting.description",
-        ),
+        description: t("pages.createWorld.plugins.categories.economy.plugins.crafting.description"),
         points: [
           t("pages.createWorld.plugins.categories.economy.plugins.crafting.points.0"),
           t("pages.createWorld.plugins.categories.economy.plugins.crafting.points.1"),
@@ -570,9 +571,7 @@ const pluginCategories = computed(() => [
       {
         name: t("pages.createWorld.plugins.categories.economy.plugins.rewards.name"),
         tag: t("pages.createWorld.plugins.categories.economy.plugins.rewards.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.economy.plugins.rewards.description",
-        ),
+        description: t("pages.createWorld.plugins.categories.economy.plugins.rewards.description"),
         points: [
           t("pages.createWorld.plugins.categories.economy.plugins.rewards.points.0"),
           t("pages.createWorld.plugins.categories.economy.plugins.rewards.points.1"),
@@ -682,10 +681,7 @@ definePageMeta({
 <style scoped>
 .plugin-card {
   padding: 1rem;
-  border-radius: var(
-    --ui-surface-radius,
-    calc(var(--radius, var(--ui-radius)) + 4px)
-  );
+  border-radius: var(--ui-surface-radius, calc(var(--radius, var(--ui-radius)) + 4px));
   background-color: rgba(var(--v-theme-surface-variant), 0.4);
 }
 

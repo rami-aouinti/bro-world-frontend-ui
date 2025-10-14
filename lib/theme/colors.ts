@@ -215,10 +215,7 @@ export function resolveForegroundHsl(candidate: string | null | undefined) {
   return luminance > 0.55 ? "0 0% 0%" : "0 0% 100%";
 }
 
-export function resolvePrimaryColorVariables(
-  hex: string,
-  sourceHsl?: string | null | undefined,
-) {
+export function resolvePrimaryColorVariables(hex: string, sourceHsl?: string | null | undefined) {
   const normalized = normalizeHexColor(hex);
 
   if (!normalized) {
@@ -263,10 +260,7 @@ export function resolvePrimaryColorVariables(
   } as const;
 }
 
-export function applyPrimaryColorCssVariables(
-  hex: string,
-  sourceHsl?: string | null | undefined,
-) {
+export function applyPrimaryColorCssVariables(hex: string, sourceHsl?: string | null | undefined) {
   if (!import.meta.client) {
     return;
   }

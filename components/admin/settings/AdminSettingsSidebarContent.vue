@@ -1,8 +1,8 @@
 <template>
   <div class="settings-sidebar">
     <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        glow
+      class="text-card-foreground px-3 py-2"
+      glow
     >
       <v-list
         nav
@@ -14,7 +14,7 @@
           {{ title }}
         </v-list-subheader>
         <v-list-item
-            class="group mx-2 my-0.5 rounded-xl my-4 transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5"
+          class="group mx-2 my-0.5 rounded-xl my-4 transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5"
           v-for="section in sections"
           :key="section.key"
           :title="section.title"

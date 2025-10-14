@@ -1,10 +1,10 @@
 <template>
   <div class="text-card-foreground px-3 py-1">
-     <span
-         class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
-     ></span>
     <span
-        class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
+      class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
+    ></span>
+    <span
+      class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
     ></span>
     <div class="grid gap-1">
       <div class="space-y-1">
@@ -13,46 +13,48 @@
         </h5>
       </div>
       <div
-          v-if="darkModeToggle"
-          class="space-y-1.5"
+        v-if="darkModeToggle"
+        class="space-y-1.5"
       >
         <UiLabel>{{ $t("admin.settings.themeCustomizer.theme") }}</UiLabel>
         <div class="grid grid-cols-3 gap-2 border-primary border-2 pa-2 rounded">
           <UiButton
-              class="justify-center gap-2"
-              variant="outline"
-              :class="{ 'border-primary border-2': activeMode === 'light' }"
-              @click="setColorPreference('light')"
+            class="justify-center gap-2"
+            variant="outline"
+            :class="{ 'border-primary border-2': activeMode === 'light' }"
+            @click="setColorPreference('light')"
           >
             <Icon
-                name="lucide:sun"
-                size="16"
+              name="lucide:sun"
+              size="16"
             />
             <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.light") }}</span>
           </UiButton>
           <UiButton
-              class="justify-center gap-2"
-              variant="outline"
-              :class="{ 'border-primary border-2': activeMode === 'dark' }"
-              @click="setColorPreference('dark')"
+            class="justify-center gap-2"
+            variant="outline"
+            :class="{ 'border-primary border-2': activeMode === 'dark' }"
+            @click="setColorPreference('dark')"
           >
             <Icon
-                name="lucide:moon"
-                size="16"
+              name="lucide:moon"
+              size="16"
             />
             <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.dark") }}</span>
           </UiButton>
           <UiButton
-              class="justify-center gap-2"
-              variant="outline"
-              :class="{ 'border-primary border-2': activeMode === 'system' }"
-              @click="setColorPreference('system')"
+            class="justify-center gap-2"
+            variant="outline"
+            :class="{ 'border-primary border-2': activeMode === 'system' }"
+            @click="setColorPreference('system')"
           >
             <Icon
-                name="lucide:monitor"
-                size="16"
+              name="lucide:monitor"
+              size="16"
             />
-            <span class="text-xs capitalize">{{ $t("admin.settings.themeCustomizer.system") }}</span>
+            <span class="text-xs capitalize">{{
+              $t("admin.settings.themeCustomizer.system")
+            }}</span>
           </UiButton>
         </div>
       </div>
@@ -133,7 +135,9 @@
           </template>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-xs font-mono uppercase text-muted-foreground">{{ selectedPrimaryHex }}</span>
+          <span class="text-xs font-mono uppercase text-muted-foreground">{{
+            selectedPrimaryHex
+          }}</span>
           <UiButton
             variant="outline"
             type="button"
@@ -180,9 +184,7 @@ const docsConfig = computed(() => {
     },
   };
 });
-const darkModeToggle = computed(
-  () => docsConfig.value.header?.darkModeToggle ?? false,
-);
+const darkModeToggle = computed(() => docsConfig.value.header?.darkModeToggle ?? false);
 const colorMode = useCookieColorMode();
 
 const allColors: Theme["name"][] = [
@@ -213,7 +215,10 @@ const primaryColorOptions = computed(() =>
 );
 
 const selectedPrimaryHex = computed(
-  () => themePrimaryHex.value?.toUpperCase() ?? defaultThemePrimaryHex.value?.toUpperCase() ?? "#03203d",
+  () =>
+    themePrimaryHex.value?.toUpperCase() ??
+    defaultThemePrimaryHex.value?.toUpperCase() ??
+    "#03203d",
 );
 const isCustomPrimary = computed(() => isCustomThemePrimary.value);
 

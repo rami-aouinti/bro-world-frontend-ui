@@ -16,4 +16,3 @@ export function resolveSocialRedirect(provider: SocialProvider): string {
 
   return overrides[provider] ?? DEFAULT_REDIRECTS[provider];
 }
-

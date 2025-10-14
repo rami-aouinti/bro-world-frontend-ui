@@ -31,9 +31,7 @@ function decodeBinaryPayload(input: ArrayBuffer | ArrayBufferView): string {
   return decoder.decode(new Uint8Array(input));
 }
 
-function normalizeCredentialRecord(
-  record: Record<string, unknown>,
-): CredentialPayload | undefined {
+function normalizeCredentialRecord(record: Record<string, unknown>): CredentialPayload | undefined {
   let hasCredentialField = false;
   const payload: CredentialPayload = {};
 
@@ -63,9 +61,7 @@ function normalizeCredentialRecord(
   return undefined;
 }
 
-function normalizeCredentialSearchParams(
-  params: URLSearchParams,
-): CredentialPayload | undefined {
+function normalizeCredentialSearchParams(params: URLSearchParams): CredentialPayload | undefined {
   let hasCredentialField = false;
   const payload: CredentialPayload = {};
 
@@ -79,9 +75,7 @@ function normalizeCredentialSearchParams(
   return hasCredentialField ? payload : undefined;
 }
 
-export function normalizeCredentialPayload(input: unknown):
-  | CredentialPayload
-  | undefined {
+export function normalizeCredentialPayload(input: unknown): CredentialPayload | undefined {
   if (input == null) {
     return undefined;
   }
@@ -155,9 +149,7 @@ function normalizeCredentialValue(value: unknown): string {
   return "";
 }
 
-export function resolveCredentialIdentifier(
-  payload: CredentialPayload | undefined,
-): string {
+export function resolveCredentialIdentifier(payload: CredentialPayload | undefined): string {
   if (!payload) {
     return "";
   }
@@ -175,9 +167,7 @@ export function resolveCredentialIdentifier(
   return "";
 }
 
-export function resolveCredentialPassword(
-  payload: CredentialPayload | undefined,
-): string {
+export function resolveCredentialPassword(payload: CredentialPayload | undefined): string {
   if (!payload) {
     return "";
   }

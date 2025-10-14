@@ -57,7 +57,9 @@
                   name="mdi-timer-sand"
                   size="20"
                 />
-                <span>{{ t("pages.profileFriends.meta.lastActive", { time: friend.lastActive }) }}</span>
+                <span>{{
+                  t("pages.profileFriends.meta.lastActive", { time: friend.lastActive })
+                }}</span>
               </div>
             </div>
           </div>
@@ -143,7 +145,7 @@
               >
                 <div
                   class="rounded-circle d-flex align-center justify-center bg-primary/10"
-                  style="width: 40px; height: 40px;"
+                  style="width: 40px; height: 40px"
                 >
                   <Icon
                     :name="item.icon"
@@ -187,7 +189,10 @@
               :to="friendProfilePath(suggestion)"
               class="d-flex flex-column align-center pa-4 text-decoration-none text-card-foreground"
             >
-              <v-avatar size="72" class="mb-3">
+              <v-avatar
+                size="72"
+                class="mb-3"
+              >
                 <v-img
                   :src="suggestion.avatar"
                   :alt="suggestion.name"
@@ -247,9 +252,7 @@ watchEffect(() => {
   }
 });
 
-const baseUrl = computed(
-  () => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com",
-);
+const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 const currentRoute = computed(() => router.currentRoute.value);
 
 useHead(() => {
@@ -283,9 +286,7 @@ useHead(() => {
 
 const backLink = computed(() => "/profile-friends");
 
-const suggestions = computed(() =>
-  friendCards.filter((entry) => entry.id !== friendId.value),
-);
+const suggestions = computed(() => friendCards.filter((entry) => entry.id !== friendId.value));
 
 const relatedConnections = computed(() => suggestions.value.slice(0, 8));
 
@@ -329,9 +330,7 @@ const connectionHighlights = computed(() => {
     }>;
   }
 
-  const segments = friend.value.segments
-    .map((segment) => segmentLabels.value[segment])
-    .join(" • ");
+  const segments = friend.value.segments.map((segment) => segmentLabels.value[segment]).join(" • ");
 
   return [
     {
@@ -395,10 +394,7 @@ function friendProfilePath(friend: FriendCard | string) {
   return `/profile/${id}`;
 }
 
-function triggerAction(
-  action: "message" | "schedule" | "connect",
-  target?: FriendCard,
-) {
+function triggerAction(action: "message" | "schedule" | "connect", target?: FriendCard) {
   const name = target?.name;
 
   if (action === "message") {

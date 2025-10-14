@@ -1,7 +1,5 @@
 <template>
-  <main
-    aria-labelledby="profile-title"
-  >
+  <main aria-labelledby="profile-title">
     <v-container>
       <header
         class="mb-4"
@@ -85,27 +83,27 @@
             align="stretch"
           >
             <v-col
-                v-if="showSocialSection"
-                cols="12"
+              v-if="showSocialSection"
+              cols="12"
             >
               <section
-                  aria-labelledby="social-section-title"
-                  class="h-100"
+                aria-labelledby="social-section-title"
+                class="h-100"
               >
                 <SidebarCard
-                    class="text-card-foreground px-3 py-2"
-                    padding="none"
-                    glow
+                  class="text-card-foreground px-3 py-2"
+                  padding="none"
+                  glow
                 >
                   <h2
-                      id="social-section-title"
-                      class="text-h5 font-weight-semibold mb-4"
+                    id="social-section-title"
+                    class="text-h5 font-weight-semibold mb-4"
                   >
                     {{ t("pages.profile.sections.social") }}
                   </h2>
                   <dl
-                      class="d-flex align-center gap-4"
-                      :aria-label="t('pages.profile.stats.title')"
+                    class="d-flex align-center gap-4"
+                    :aria-label="t('pages.profile.stats.title')"
                   >
                     <div class="d-flex align-center gap-2">
                       <dt class="text-body-2 text-medium-emphasis mb-0">
@@ -129,10 +127,10 @@
                       </dt>
                       <dd class="text-body-1 font-weight-medium mb-0">
                         <v-chip
-                            v-if="accountStatus"
-                            :color="accountStatus.color"
-                            size="small"
-                            variant="flat"
+                          v-if="accountStatus"
+                          :color="accountStatus.color"
+                          size="small"
+                          variant="flat"
                         >
                           {{ accountStatus.label }}
                         </v-chip>
@@ -166,7 +164,7 @@
                   </h2>
                   <dl class="d-flex flex-column gap-4">
                     <div
-                        class="d-flex align-center gap-2"
+                      class="d-flex align-center gap-2"
                       v-for="item in contactItems"
                       :key="item.id"
                     >
@@ -209,7 +207,7 @@
                   </h2>
                   <dl class="d-flex flex-column gap-4">
                     <div
-                        class="d-flex align-center gap-2"
+                      class="d-flex align-center gap-2"
                       v-for="item in profileItems"
                       :key="item.id"
                     >

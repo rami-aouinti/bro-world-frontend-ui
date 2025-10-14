@@ -4,7 +4,9 @@
     :aria-labelledby="titleId"
   >
     <v-container>
-      <header class="mb-8 d-flex flex-column flex-md-row align-md-center justify-space-between gap-4">
+      <header
+        class="mb-8 d-flex flex-column flex-md-row align-md-center justify-space-between gap-4"
+      >
         <div>
           <h1
             :id="titleId"
@@ -101,20 +103,18 @@ definePageMeta({
 const { t } = useI18n();
 const titleId = "admin-statistics-title";
 
-const {
-  data,
-  pending,
-  error,
-  refresh,
-} = await useAsyncData("admin-statistics-users-count", async () => {
-  const response = await $fetch<{ count?: number }>("/api/v1/user/count", {
-    method: "GET",
-  });
+const { data, pending, error, refresh } = await useAsyncData(
+  "admin-statistics-users-count",
+  async () => {
+    const response = await $fetch<{ count?: number }>("/api/v1/user/count", {
+      method: "GET",
+    });
 
-  return {
-    count: typeof response?.count === "number" ? response.count : 0,
-  };
-});
+    return {
+      count: typeof response?.count === "number" ? response.count : 0,
+    };
+  },
+);
 
 const refreshing = ref(false);
 

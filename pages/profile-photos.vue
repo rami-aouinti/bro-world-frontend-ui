@@ -1,7 +1,5 @@
 <template>
-  <main
-    aria-labelledby="profile-photos-title"
-  >
+  <main aria-labelledby="profile-photos-title">
     <v-container>
       <header
         class="mb-10"
@@ -275,7 +273,10 @@
                     v-for="milestone in storyMilestones"
                     :key="milestone.id"
                     class="pa-4 rounded-xl d-flex flex-column gap-3"
-                    style="background: rgba(var(--v-theme-surface-container-high), 0.68); border: 1px solid rgba(var(--v-theme-primary), 0.14);"
+                    style="
+                      background: rgba(var(--v-theme-surface-container-high), 0.68);
+                      border: 1px solid rgba(var(--v-theme-primary), 0.14);
+                    "
                   >
                     <div class="d-flex flex-column gap-3">
                       <div class="d-flex align-start justify-space-between gap-4">
@@ -291,8 +292,12 @@
                             />
                           </v-avatar>
                           <div>
-                            <div class="text-subtitle-1 font-weight-semibold">{{ milestone.title }}</div>
-                            <div class="text-caption text-medium-emphasis">{{ milestone.date }}</div>
+                            <div class="text-subtitle-1 font-weight-semibold">
+                              {{ milestone.title }}
+                            </div>
+                            <div class="text-caption text-medium-emphasis">
+                              {{ milestone.date }}
+                            </div>
                           </div>
                         </div>
                         <v-chip
@@ -352,7 +357,7 @@
                     v-for="note in creativeNotes"
                     :key="note.id"
                     class="d-flex flex-column gap-3 pa-4 rounded-xl"
-                    style="background: rgba(var(--v-theme-surface-container-high), 0.82);"
+                    style="background: rgba(var(--v-theme-surface-container-high), 0.82)"
                   >
                     <div class="d-flex flex-column gap-3">
                       <div class="d-flex align-start justify-space-between gap-3">
@@ -362,7 +367,9 @@
                             :color="note.color"
                             variant="tonal"
                           >
-                            <span class="text-body-2 font-weight-semibold">{{ note.initials }}</span>
+                            <span class="text-body-2 font-weight-semibold">{{
+                              note.initials
+                            }}</span>
                           </v-avatar>
                           <div>
                             <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
@@ -382,7 +389,9 @@
                         {{ note.preview }}
                       </p>
                     </div>
-                    <div class="d-flex align-center justify-space-between text-caption text-medium-emphasis">
+                    <div
+                      class="d-flex align-center justify-space-between text-caption text-medium-emphasis"
+                    >
                       <span>{{ note.updated }}</span>
                       <v-btn
                         variant="text"
@@ -703,7 +712,8 @@ const creativeNotes = reactive<CreativeNote[]>([
     title: "Moodboard refresh",
     byline: "Amina Rahman • Visual lead",
     category: "Mood",
-    preview: "Updated the hero palette with twilight blues and added grain overlays for motion clips.",
+    preview:
+      "Updated the hero palette with twilight blues and added grain overlays for motion clips.",
     updated: "2 hours ago",
     color: "primary",
     cta: "Open deck",

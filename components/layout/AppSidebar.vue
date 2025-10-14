@@ -341,10 +341,7 @@ function resolveLocalizedPath(target?: string): string | undefined {
 .sidebar-item {
   @apply flex items-center justify-between text-left transition;
   padding: 0.75rem 1rem;
-  border-radius: var(
-    --ui-card-radius,
-    calc(var(--radius, var(--ui-radius)) + 8px)
-  );
+  border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
   @apply hover:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
   --tw-bg-opacity: 0.7;
 }
@@ -419,10 +416,7 @@ function resolveLocalizedPath(target?: string): string | undefined {
 .sidebar-menu-card {
   position: relative;
   overflow: hidden;
-  border-radius: var(
-    --ui-card-radius,
-    calc(var(--radius, var(--ui-radius)) + 8px)
-  );
+  border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
   padding: 1.75rem 1.25rem;
 }
 

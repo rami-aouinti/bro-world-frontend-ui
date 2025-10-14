@@ -8,32 +8,24 @@ import {
 
 describe("credential helpers", () => {
   it("returns trimmed identifier from any supported field", () => {
-    expect(
-      resolveCredentialIdentifier({ identifier: "   john@example.com  " }),
-    ).toBe("john@example.com");
-    expect(resolveCredentialIdentifier({ username: "  johndoe" })).toBe(
-      "johndoe",
+    expect(resolveCredentialIdentifier({ identifier: "   john@example.com  " })).toBe(
+      "john@example.com",
     );
+    expect(resolveCredentialIdentifier({ username: "  johndoe" })).toBe("johndoe");
     expect(resolveCredentialIdentifier({ email: " jane " })).toBe("jane");
   });
 
   it("returns first non-empty identifier value", () => {
-    expect(
-      resolveCredentialIdentifier({ identifier: "   ", username: " user " }),
-    ).toBe("user");
+    expect(resolveCredentialIdentifier({ identifier: "   ", username: " user " })).toBe("user");
   });
 
   it("normalizes identifier arrays by using their first item", () => {
-    expect(
-      resolveCredentialIdentifier({ identifier: ["  admin  ", "ignored"] }),
-    ).toBe("admin");
+    expect(resolveCredentialIdentifier({ identifier: ["  admin  ", "ignored"] })).toBe("admin");
   });
 
   it("normalizes the password field", () => {
     expect(resolveCredentialPassword({ password: "  secret" })).toBe("secret");
-    expect(
-      resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] }),
-    ).toBe("hunter2");
+    expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe("hunter2");
   });
 
   it("returns an empty string when fields are missing", () => {
@@ -42,17 +34,20 @@ describe("credential helpers", () => {
   });
 
   it("normalizes different credential payload formats", () => {
-    expect(
-      normalizeCredentialPayload({ username: "jane", password: "secret" }),
-    ).toEqual({ username: "jane", password: "secret" });
+    expect(normalizeCredentialPayload({ username: "jane", password: "secret" })).toEqual({
+      username: "jane",
+      password: "secret",
+    });
 
-    expect(
-      normalizeCredentialPayload("{\"identifier\":\"john\",\"password\":\"hunter2\"}"),
-    ).toEqual({ identifier: "john", password: "hunter2" });
+    expect(normalizeCredentialPayload('{"identifier":"john","password":"hunter2"}')).toEqual({
+      identifier: "john",
+      password: "hunter2",
+    });
 
-    expect(
-      normalizeCredentialPayload("username=john-root&password=password-root"),
-    ).toEqual({ username: "john-root", password: "password-root" });
+    expect(normalizeCredentialPayload("username=john-root&password=password-root")).toEqual({
+      username: "john-root",
+      password: "password-root",
+    });
 
     const searchParams = new URLSearchParams();
     searchParams.set("email", "user@example.com");

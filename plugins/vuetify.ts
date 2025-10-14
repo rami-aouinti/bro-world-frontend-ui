@@ -363,8 +363,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       watch: false,
     }),
   );
-  const primary =
-    normalizeHexColor(primaryCookie.value ?? undefined) ?? FALLBACK_PRIMARY_HEX;
+  const primary = normalizeHexColor(primaryCookie.value ?? undefined) ?? FALLBACK_PRIMARY_HEX;
 
   const localeCookie = useCookie<string | null>(
     "i18n_redirected",

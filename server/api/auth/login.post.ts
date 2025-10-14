@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
   const username = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
 
-
   const runtimeConfig = useRuntimeConfig(event);
   const serviceToken = runtimeConfig.auth?.apiToken?.trim();
   const forwardedAuthorization = getHeader(event, "authorization");
@@ -56,7 +55,6 @@ export default defineEventHandler(async (event) => {
 
     const profile = response.profile as AuthUser;
 
-    console.log(response)
     setSession(event, response.token, profile);
 
     return {

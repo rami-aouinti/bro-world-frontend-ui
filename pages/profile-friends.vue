@@ -1,7 +1,5 @@
 <template>
-  <main
-    aria-labelledby="profile-friends-title"
-  >
+  <main aria-labelledby="profile-friends-title">
     <v-container>
       <header
         class="mb-10"
@@ -281,24 +279,26 @@
                     :key="friend.id"
                     class="d-flex align-center justify-space-between"
                   >
-                  <NuxtLink
-                    :to="friendProfilePath(friend)"
-                    class="d-flex align-center gap-3 text-decoration-none text-card-foreground"
-                  >
-                    <v-avatar size="40">
-                      <v-img
-                        :src="friend.avatar"
-                        :alt="friend.name"
-                        cover
-                      />
-                    </v-avatar>
-                    <div>
-                      <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
-                      <div class="text-caption text-medium-emphasis">
-                        {{ t("pages.profileFriends.meta.lastActive", { time: friend.lastActive }) }}
+                    <NuxtLink
+                      :to="friendProfilePath(friend)"
+                      class="d-flex align-center gap-3 text-decoration-none text-card-foreground"
+                    >
+                      <v-avatar size="40">
+                        <v-img
+                          :src="friend.avatar"
+                          :alt="friend.name"
+                          cover
+                        />
+                      </v-avatar>
+                      <div>
+                        <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
+                        <div class="text-caption text-medium-emphasis">
+                          {{
+                            t("pages.profileFriends.meta.lastActive", { time: friend.lastActive })
+                          }}
+                        </div>
                       </div>
-                    </div>
-                  </NuxtLink>
+                    </NuxtLink>
                     <v-chip
                       :color="statusColor(friend.status)"
                       size="x-small"

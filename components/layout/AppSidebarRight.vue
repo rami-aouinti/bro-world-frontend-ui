@@ -174,10 +174,7 @@ function handleSocialRedirect(provider: SocialProvider) {
 .sidebar-login-card {
   position: relative;
   overflow: hidden;
-  border-radius: var(
-    --ui-card-radius,
-    calc(var(--radius, var(--ui-radius)) + 8px)
-  );
+  border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
   padding: 1.75rem 1.25rem;
   box-shadow:
     0 5px 5px rgba(var(--v-theme-primary), 0.2),

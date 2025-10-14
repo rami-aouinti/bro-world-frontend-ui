@@ -41,7 +41,11 @@ function isHeadersSentError(error: unknown): boolean {
   );
 }
 
-function safeDeleteCookie(event: H3Event, name: string, options?: Parameters<typeof deleteCookie>[2]) {
+function safeDeleteCookie(
+  event: H3Event,
+  name: string,
+  options?: Parameters<typeof deleteCookie>[2],
+) {
   const response = event.node?.res;
 
   if (!response || response.headersSent || response.writableEnded) {
@@ -161,8 +165,13 @@ function sanitizeSessionUser(user: AuthUser): AuthUser {
 }
 
 export function setSession(event: H3Event, token: string, user: AuthUser) {
-  const { tokenCookieName, sessionTokenCookieName, userCookieName, tokenPresenceCookieName, maxAge } =
-    resolveCookiesConfig(event);
+  const {
+    tokenCookieName,
+    sessionTokenCookieName,
+    userCookieName,
+    tokenPresenceCookieName,
+    maxAge,
+  } = resolveCookiesConfig(event);
   const secure = shouldUseSecureCookies(event);
   const sanitizedUser = sanitizeSessionUser(user);
 

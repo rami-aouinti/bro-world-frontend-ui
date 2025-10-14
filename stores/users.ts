@@ -52,15 +52,15 @@ function buildRequestBody(payload: UserFormPayload) {
   };
 
   if (normalized.language !== undefined || payload.language !== undefined) {
-    body.language = (normalized.language ?? payload.language) ?? null;
+    body.language = normalized.language ?? payload.language ?? null;
   }
 
   if (normalized.locale !== undefined || payload.locale !== undefined) {
-    body.locale = (normalized.locale ?? payload.locale) ?? null;
+    body.locale = normalized.locale ?? payload.locale ?? null;
   }
 
   if (normalized.timezone !== undefined || payload.timezone !== undefined) {
-    body.timezone = (normalized.timezone ?? payload.timezone) ?? null;
+    body.timezone = normalized.timezone ?? payload.timezone ?? null;
   }
 
   if (payload.profile !== undefined) {
@@ -229,9 +229,7 @@ export const useUsersStore = defineStore("users", () => {
 
       const normalized: UsersStoreUser = {
         ...response.data,
-        roles: Array.isArray(response.data.roles)
-          ? normalizeRolesInput(response.data.roles)
-          : [],
+        roles: Array.isArray(response.data.roles) ? normalizeRolesInput(response.data.roles) : [],
         __optimistic: false,
       };
 
@@ -270,9 +268,7 @@ export const useUsersStore = defineStore("users", () => {
       upsertUser(
         {
           ...response.data,
-          roles: Array.isArray(response.data.roles)
-            ? normalizeRolesInput(response.data.roles)
-            : [],
+          roles: Array.isArray(response.data.roles) ? normalizeRolesInput(response.data.roles) : [],
           __optimistic: false,
         },
         0,
@@ -340,9 +336,7 @@ export const useUsersStore = defineStore("users", () => {
       upsertUser(
         {
           ...response.data,
-          roles: Array.isArray(response.data.roles)
-            ? normalizeRolesInput(response.data.roles)
-            : [],
+          roles: Array.isArray(response.data.roles) ? normalizeRolesInput(response.data.roles) : [],
           __optimistic: false,
         },
         position,

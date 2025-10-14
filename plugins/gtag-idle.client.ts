@@ -10,10 +10,7 @@ type PublicGtagConfig = {
   url?: string | null;
 };
 
-type IdleScheduler = (
-  callback: IdleRequestCallback,
-  options?: IdleRequestOptions,
-) => number;
+type IdleScheduler = (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
 
 type WindowWithIdle = Window & { requestIdleCallback?: IdleScheduler };
 
@@ -67,7 +64,9 @@ export default defineNuxtPlugin(() => {
     return;
   }
 
-  const source = withQuery(gtag.url ?? "https://www.googletagmanager.com/gtag/js", { id: activeId });
+  const source = withQuery(gtag.url ?? "https://www.googletagmanager.com/gtag/js", {
+    id: activeId,
+  });
   let hasScheduled = false;
   let hasLoaded = false;
 
