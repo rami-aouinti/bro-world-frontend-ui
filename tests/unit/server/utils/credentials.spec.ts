@@ -1,5 +1,7 @@
+import { Buffer } from "node:buffer";
 import { describe, expect, it } from "vitest";
 import {
+  normalizeCredentialPayload,
   resolveCredentialIdentifier,
   resolveCredentialPassword,
 } from "~/server/utils/auth/credentials";
@@ -37,5 +39,41 @@ describe("credential helpers", () => {
   it("returns an empty string when fields are missing", () => {
     expect(resolveCredentialIdentifier(undefined)).toBe("");
     expect(resolveCredentialPassword(undefined)).toBe("");
+  });
+
+  it("normalizes different credential payload formats", () => {
+    expect(
+      normalizeCredentialPayload({ username: "jane", password: "secret" }),
+    ).toEqual({ username: "jane", password: "secret" });
+
+    expect(
+      normalizeCredentialPayload("{\"identifier\":\"john\",\"password\":\"hunter2\"}"),
+    ).toEqual({ identifier: "john", password: "hunter2" });
+
+    expect(
+      normalizeCredentialPayload("username=john-root&password=password-root"),
+    ).toEqual({ username: "john-root", password: "password-root" });
+
+    const searchParams = new URLSearchParams();
+    searchParams.set("email", "user@example.com");
+    searchParams.set("password", "secret");
+
+    expect(normalizeCredentialPayload(searchParams)).toEqual({
+      email: "user@example.com",
+      password: "secret",
+    });
+
+    const bufferPayload = Buffer.from(
+      JSON.stringify({ username: "buffer-user", password: "hunter2" }),
+    );
+
+    expect(normalizeCredentialPayload(bufferPayload)).toEqual({
+      username: "buffer-user",
+      password: "hunter2",
+    });
+
+    expect(
+      normalizeCredentialPayload({ body: { username: "nested", password: "secret" } }),
+    ).toEqual({ username: "nested", password: "secret" });
   });
 });
