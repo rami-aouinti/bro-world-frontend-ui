@@ -7,17 +7,22 @@
     rounded="xl"
     role="button"
     :aria-label="cardAriaLabel"
+    :style="cardCssVars"
     @click="isCreate ? emit('create') : emit('click')"
   >
     <!-- Image de fond -->
-    <v-img
+    <NuxtImg
       v-if="image"
       :src="image"
-      cover
       :alt="name || t('stories.card.imageAlt')"
-      class="h-100 w-100"
-      :width="width"
-      :height="height"
+      :width="cardWidth"
+      :height="cardHeight"
+      :sizes="storySizes"
+      format="webp"
+      quality="80"
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover"
     />
 
     <!-- Overlay gradient -->
@@ -37,12 +42,18 @@
           class="bg-white"
           :style="ringStyle"
         >
-          <v-img
+          <NuxtImg
+            v-if="avatar"
             :src="avatar"
             :alt="name || t('stories.card.avatarAlt')"
-            cover
-            width="36"
-            height="36"
+            :width="avatarSize"
+            :height="avatarSize"
+            :sizes="avatarSizes"
+            format="webp"
+            quality="80"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover"
           />
         </v-avatar>
       </div>
@@ -128,6 +139,36 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
+const avatarSize = 36;
+
+function resolveDimension(value: number | string | undefined, fallback: number) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const numeric = Number.parseInt(value, 10);
+    if (Number.isFinite(numeric)) {
+      return numeric;
+    }
+  }
+
+  return fallback;
+}
+
+const cardWidth = computed(() => resolveDimension(props.width, 144));
+const cardHeight = computed(() => resolveDimension(props.height, 240));
+const storyAspectRatio = computed(() => {
+  if (cardWidth.value > 0 && cardHeight.value > 0) {
+    return `${cardWidth.value} / ${cardHeight.value}`;
+  }
+
+  return "3 / 5";
+});
+const cardCssVars = computed(() => ({ "--story-aspect-ratio": storyAspectRatio.value }));
+const storySizes = computed(() => `${cardWidth.value}px`);
+const avatarSizes = `${avatarSize}px`;
+
 const isCreate = computed(() => props.state === "create");
 const ringStyle = computed(() => {
   if (isCreate.value) return {};
@@ -148,6 +189,7 @@ const cardAriaLabel = computed(() => (isCreate.value ? createLabel.value : openS
 
 <style scoped>
 .story-card {
+  aspect-ratio: var(--story-aspect-ratio, 3 / 5);
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease;
