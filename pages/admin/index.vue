@@ -671,7 +671,7 @@ const quickActions = computed(() => [
     id: "community-update",
     title: t("admin.sections.quickActions.items.communityUpdate.title"),
     description: t("admin.sections.quickActions.items.communityUpdate.description"),
-    icon: "mdi-email-send",
+    icon: "mdi-email-outline",
     color: "purple",
   },
 ]);

@@ -66,7 +66,7 @@
                 :aria-label="gifAriaLabel"
                 :disabled="disabled"
               >
-                <Icon name="mdi-gif" />
+                <Icon name="mdi-image-multiple" />
               </v-btn>
             </slot>
           </div>
