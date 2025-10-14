@@ -57,6 +57,7 @@ import { VDateInput } from "vuetify/labs/VDateInput";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
+import { normalizeHexColor } from "~/lib/theme/colors";
 import {
   mdiAccountCog,
   mdiAccountGroup,
@@ -352,6 +353,8 @@ const normalizedVuetifyLocaleMessages = Object.fromEntries(
 
 export type DataTableHeaders = VDataTable["$props"]["headers"];
 
+const FALLBACK_PRIMARY_HEX = "#E91E63";
+
 export default defineNuxtPlugin((nuxtApp) => {
   const primaryCookie = useCookie<string | null>(
     "theme-primary",
@@ -360,7 +363,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       watch: false,
     }),
   );
-  const primary = primaryCookie.value;
+  const primary =
+    normalizeHexColor(primaryCookie.value ?? undefined) ?? FALLBACK_PRIMARY_HEX;
 
   const localeCookie = useCookie<string | null>(
     "i18n_redirected",
