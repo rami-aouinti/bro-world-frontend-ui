@@ -676,6 +676,17 @@ export default defineNuxtConfig({
           content: process.env.NUXT_ADSENSE_ACCOUNT,
         },
       ],
+      link: [
+        {
+          rel: "preconnect",
+          href: "https://fonts.googleapis.com",
+        },
+        {
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+          crossorigin: "",
+        },
+      ],
     },
     baseURL,
   },
@@ -694,7 +705,25 @@ export default defineNuxtConfig({
     defaults: {
       display: "swap",
       preload: true,
-      fallbacks: ["system-ui", "Segoe UI", "sans-serif"],
+      fallbacks: {
+        "sans-serif": [
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
+        ],
+        "system-ui": [
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Helvetica Neue",
+          "Arial",
+        ],
+      },
     },
     families: [
       {
@@ -703,18 +732,24 @@ export default defineNuxtConfig({
         global: true,
         // Réduire les variantes : 400, 600 suffisent souvent
         weights: [400, 600],
+        fallbacks: ["system-ui", "Segoe UI", "Arial"],
+        display: "swap",
       },
       {
         name: "Space Grotesk",
         provider: "google",
         global: true,
         weights: [400, 600],
+        fallbacks: ["system-ui", "Segoe UI", "Arial"],
+        display: "swap",
       },
       {
         name: "JetBrains Mono",
         provider: "google",
         global: true,
         weights: [400, 600],
+        fallbacks: ["system-ui", "SFMono-Regular", "Menlo", "monospace"],
+        display: "swap",
       },
     ],
   },
