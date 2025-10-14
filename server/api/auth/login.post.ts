@@ -16,7 +16,7 @@ function sanitizeBaseEndpoint(raw: string): string {
 export default defineEventHandler(async (event) => {
   const rawBody = await readBody<unknown>(event);
   const body = normalizeCredentialPayload(rawBody);
-  const identifier = resolveCredentialIdentifier(body);
+  const username = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
 
 
@@ -41,8 +41,8 @@ export default defineEventHandler(async (event) => {
     const response = await $fetch<AuthLoginResponse>(endpoint, {
       method: "POST",
       body: {
-        username: identifier,
-        password,
+        username: username,
+        password: password,
       },
       headers,
     });
