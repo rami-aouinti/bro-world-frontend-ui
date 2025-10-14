@@ -28,8 +28,6 @@ const currentRoute = computed(() => router.currentRoute.value);
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
-useProfileSidebarContent();
-
 useHead(() => {
   const title = t("seo.profileEdit.title");
   const description = t("seo.profileEdit.description");
