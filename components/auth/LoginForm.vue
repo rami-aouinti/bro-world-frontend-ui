@@ -298,7 +298,7 @@ async function handleSubmit() {
   cursor: pointer;
   transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
 }
-.login-field--compact .login-field__action{ inline-size: 36px; block-size: 36px; }
+.login-field--compact .login-field__action{ inline-size: 36px; block-size: 22px; }
 
 .login-field__action:not(:disabled):hover{
   transform: translateY(-1px);
@@ -326,7 +326,7 @@ async function handleSubmit() {
 
 /* Submit */
 .login-form__submit{
-  background-color: #1a252f;
+  background-color: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -337,7 +337,7 @@ async function handleSubmit() {
   letter-spacing: .05em;
   text-transform: uppercase;
   gap: .5rem;
-  box-shadow: 0 40px 44px rgba(15,23,42,.18);
+  box-shadow: 0 5px 5px rgba(var(--v-theme-primary));
 }
 
 .login-form__signup{ margin: .5rem 0 0; font-size: .95rem; color: rgba(71,85,105,.95); }
