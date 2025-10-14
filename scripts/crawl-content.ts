@@ -140,7 +140,15 @@ async function crawlExample(rootPath: string) {
 async function crawlBlock(rootPath: string) {
   const type = `registry:block` as const;
 
-  const dir = await readdir(rootPath, { withFileTypes: true });
+  let dir;
+  try {
+    dir = await readdir(rootPath, { withFileTypes: true });
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException)?.code === "ENOENT") {
+      return [];
+    }
+    throw error;
+  }
 
   const registry: Registry = [];
 
