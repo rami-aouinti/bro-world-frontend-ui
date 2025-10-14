@@ -7,6 +7,7 @@ import os from "node:os";
 import { Blob as NodeBlob, File as NodeFile } from "node:buffer";
 import { URL, fileURLToPath } from "node:url";
 import { dirname, resolve as resolvePath } from "node:path";
+import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import compression from "vite-plugin-compression";
@@ -184,8 +185,12 @@ const osWithAvailableParallelism = os as typeof os & {
 };
 
 const currentDir = dirname(fileURLToPath(new URL(".", import.meta.url)));
+const projectRoot = [currentDir, process.cwd()].find((dir) =>
+  existsSync(resolvePath(dir, "package.json")),
+);
+
 function resolveFromRoot(...segments: string[]) {
-  return resolvePath(currentDir, ...segments);
+  return resolvePath(projectRoot ?? currentDir, ...segments);
 }
 
 const require = createRequire(import.meta.url);
