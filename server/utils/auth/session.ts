@@ -28,8 +28,6 @@ function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
   };
 }
 
-type CookieOptions = Parameters<typeof setCookie>[3];
-
 function isHeadersSentError(error: unknown): boolean {
   if (!(error instanceof Error)) {
     return false;
@@ -43,20 +41,9 @@ function isHeadersSentError(error: unknown): boolean {
   );
 }
 
-function safeSetCookie(
-  event: H3Event,
-  name: string,
-  value: string,
-  options?: CookieOptions,
-) {
-  const response = event.node?.res;
-
-  if (!response || response.headersSent || response.writableEnded) {
-    return;
-  }
-
+function safeDeleteCookie(event: H3Event, name: string, options?: Parameters<typeof deleteCookie>[2]) {
   try {
-    setCookie(event, name, value, options);
+    deleteCookie(event, name, options);
   } catch (error) {
     if (isHeadersSentError(error)) {
       return;
@@ -101,34 +88,40 @@ export function getSessionToken(event: H3Event): string | null {
 
   const secure = shouldUseSecureCookies(event);
 
-  safeSetCookie(
-    event,
-    tokenCookieName,
-    fallbackToken,
-    withSecureCookieOptions(
-      {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge,
-      },
+  try {
+    setCookie(
       event,
-    ),
-  );
+      tokenCookieName,
+      fallbackToken,
+      withSecureCookieOptions(
+        {
+          httpOnly: true,
+          sameSite: "lax",
+          maxAge,
+        },
+        event,
+      ),
+    );
 
-  safeSetCookie(
-    event,
-    tokenPresenceCookieName,
-    "1",
-    withSecureCookieOptions(
-      {
-        httpOnly: false,
-        sameSite: "strict",
-        maxAge,
-        secure,
-      },
+    setCookie(
       event,
-    ),
-  );
+      tokenPresenceCookieName,
+      "1",
+      withSecureCookieOptions(
+        {
+          httpOnly: false,
+          sameSite: "strict",
+          maxAge,
+          secure,
+        },
+        event,
+      ),
+    );
+  } catch (error) {
+    if (!isHeadersSentError(error)) {
+      throw error;
+    }
+  }
 
   return fallbackToken;
 }
@@ -185,64 +178,70 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   const secure = shouldUseSecureCookies(event);
   const sanitizedUser = sanitizeSessionUser(user);
 
-  safeSetCookie(
-    event,
-    tokenCookieName,
-    token,
-    withSecureCookieOptions(
-      {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge,
-      },
+  try {
+    setCookie(
       event,
-    ),
-  );
+      tokenCookieName,
+      token,
+      withSecureCookieOptions(
+        {
+          httpOnly: true,
+          sameSite: "lax",
+          maxAge,
+        },
+        event,
+      ),
+    );
 
-  safeSetCookie(
-    event,
-    sessionTokenCookieName,
-    token,
-    withSecureCookieOptions(
-      {
-        httpOnly: false,
-        sameSite: "strict",
-        maxAge,
-        secure,
-      },
+    setCookie(
       event,
-    ),
-  );
+      sessionTokenCookieName,
+      token,
+      withSecureCookieOptions(
+        {
+          httpOnly: false,
+          sameSite: "strict",
+          maxAge,
+          secure,
+        },
+        event,
+      ),
+    );
 
-  safeSetCookie(
-    event,
-    userCookieName,
-    JSON.stringify(sanitizedUser),
-    withSecureCookieOptions(
-      {
-        httpOnly: false,
-        sameSite: "lax",
-        maxAge,
-        secure,
-      },
+    setCookie(
       event,
-    ),
-  );
+      userCookieName,
+      JSON.stringify(sanitizedUser),
+      withSecureCookieOptions(
+        {
+          httpOnly: false,
+          sameSite: "lax",
+          maxAge,
+          secure,
+        },
+        event,
+      ),
+    );
 
-  safeSetCookie(
-    event,
-    tokenPresenceCookieName,
-    "1",
-    withSecureCookieOptions(
-      {
-        httpOnly: false,
-        sameSite: "strict",
-        maxAge,
-        secure,
-      },
+    setCookie(
       event,
-    ),
-  );
+      tokenPresenceCookieName,
+      "1",
+      withSecureCookieOptions(
+        {
+          httpOnly: false,
+          sameSite: "strict",
+          maxAge,
+          secure,
+        },
+        event,
+      ),
+    );
+  } catch (error) {
+    if (!isHeadersSentError(error)) {
+      throw error;
+    }
+  }
 }
 
 export function clearAuthSession(event: H3Event) {
