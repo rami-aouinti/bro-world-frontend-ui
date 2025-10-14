@@ -4,7 +4,7 @@ import { joinURL } from "ufo";
 import type { AuthLoginResponse, AuthUser } from "../../../types/auth";
 import { clearAuthSession, setSession } from "../../utils/auth/session";
 import {
-  type CredentialPayload,
+  normalizeCredentialPayload,
   resolveCredentialIdentifier,
   resolveCredentialPassword,
 } from "../../utils/auth/credentials";
@@ -14,7 +14,8 @@ function sanitizeBaseEndpoint(raw: string): string {
 }
 
 export default defineEventHandler(async (event) => {
-  const body = (await readBody<CredentialPayload | null>(event)) ?? undefined;
+  const rawBody = await readBody<unknown>(event);
+  const body = normalizeCredentialPayload(rawBody);
   const identifier = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
 
