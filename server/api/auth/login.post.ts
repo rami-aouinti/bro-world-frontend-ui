@@ -19,15 +19,6 @@ export default defineEventHandler(async (event) => {
   const identifier = resolveCredentialIdentifier(body);
   const password = resolveCredentialPassword(body);
 
-  if (!identifier || !password) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "Missing credentials",
-      data: {
-        message: "Please provide both your email or username and password.",
-      },
-    });
-  }
 
   const runtimeConfig = useRuntimeConfig(event);
   const serviceToken = runtimeConfig.auth?.apiToken?.trim();
@@ -50,7 +41,6 @@ export default defineEventHandler(async (event) => {
     const response = await $fetch<AuthLoginResponse>(endpoint, {
       method: "POST",
       body: {
-        identifier,
         username: identifier,
         password,
       },
@@ -66,6 +56,7 @@ export default defineEventHandler(async (event) => {
 
     const profile = response.profile as AuthUser;
 
+    console.log(response)
     setSession(event, response.token, profile);
 
     return {
