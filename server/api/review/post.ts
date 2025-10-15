@@ -1,7 +1,7 @@
 import type { H3Event } from "h3";
 import { createError, defineEventHandler, readBody } from "h3";
 import { requestWithRetry } from "~/server/utils/requestWithRetry";
-import { getSessionToken } from "~/server/utils/auth/session";
+import { getSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
 
 interface SubmitReviewBody {
   rating?: number;
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   const endpoint = `${base}/api/v1/review`;
 
   return await requestWithRetry("POST", endpoint, {
-    token,
     body: { rating: value },
+    headers: withAuthHeaders(event, { "Content-Type": "application/json" }),
   });
 });
