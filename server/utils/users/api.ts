@@ -4,6 +4,7 @@ import { joinURL } from "ufo";
 import type { FetchOptions } from "ofetch";
 import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
+import { getSessionToken } from "../auth/session";
 
 export interface UsersApiUser extends AuthUser {
   language?: string | null;
@@ -45,6 +46,7 @@ async function requestUsersApi<T>(
 
   const serviceToken = config.users?.apiToken?.trim();
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();
+  const sessionToken = getSessionToken(event)?.trim();
   const { headers: initialHeaders, ...requestOptions } = options;
   const headers = new Headers(initialHeaders ?? {});
 
@@ -57,6 +59,12 @@ async function requestUsersApi<T>(
       const value = serviceToken.startsWith("Bearer ")
         ? serviceToken
         : `Bearer ${serviceToken}`;
+
+      headers.set("authorization", value);
+    } else if (sessionToken) {
+      const value = sessionToken.startsWith("Bearer ")
+        ? sessionToken
+        : `Bearer ${sessionToken}`;
 
       headers.set("authorization", value);
     }

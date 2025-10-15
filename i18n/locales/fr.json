@@ -1788,6 +1788,10 @@
           "actions": "Actions"
         }
       },
+      "errors": {
+        "unauthorized": "Vous n'avez pas l'autorisation d'afficher les utilisateurs. Connectez-vous avec un compte administrateur.",
+        "generic": "Impossible de charger la liste des utilisateurs. Veuillez réessayer plus tard."
+      },
       "status": {
         "active": "Actif",
         "disabled": "Désactivé"

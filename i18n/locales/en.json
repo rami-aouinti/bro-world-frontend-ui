@@ -1840,6 +1840,10 @@
           "actions": "Actions"
         }
       },
+      "errors": {
+        "unauthorized": "You don't have permission to view users. Sign in with an administrator account.",
+        "generic": "We couldn't load the users list. Please try again later."
+      },
       "status": {
         "active": "Active",
         "disabled": "Disabled"
