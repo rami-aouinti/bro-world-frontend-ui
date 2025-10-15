@@ -88,6 +88,49 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return prototype === Object.prototype || prototype === null;
 }
 
+function deepEqual(a: unknown, b: unknown): boolean {
+  if (a === b) {
+    return true;
+  }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    for (let index = 0; index < a.length; index += 1) {
+      if (!deepEqual(a[index], b[index])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  if (isPlainObject(a) && isPlainObject(b)) {
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+
+    for (const key of keysA) {
+      if (!Object.prototype.hasOwnProperty.call(b, key)) {
+        return false;
+      }
+
+      if (!deepEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  return Object.is(a, b);
+}
+
 function normalizeForStableSerialization(value: unknown, seen = new WeakSet<object>()): unknown {
   if (Array.isArray(value)) {
     return value.map((entry) => normalizeForStableSerialization(entry, seen));
@@ -236,43 +279,124 @@ export const usePostsStore = defineStore("posts", () => {
 
     const activeIds = new Set(finalIds);
 
-    const nextItems = { ...items.value };
-    const nextTimestamps = { ...itemTimestamps.value };
+    const pageTimestamp = pageTimestamps.value[normalizedPage];
+    const pageIdsMatch = existingPageIds.length === incomingIds.length && existingPageIds.every((id, index) => id === incomingIds[index]);
+    const listOrderMatch = finalIds.length === listIds.value.length && finalIds.every((id, index) => id === listIds.value[index]);
+    const timestampsMatch =
+      typeof pageTimestamp === "number" &&
+      pageTimestamp === now &&
+      incomingIds.every((id) => itemTimestamps.value[id] === now);
+    const hasOptimisticEntries = incomingIds.some((id) => items.value[id]?.__optimistic);
 
-    for (const [id] of Object.entries(nextItems)) {
+    if (pageIdsMatch && listOrderMatch && timestampsMatch && !hasOptimisticEntries) {
+      if (pageSize.value !== normalizedLimit) {
+        pageSize.value = normalizedLimit;
+      }
+
+      if (totalCount.value !== normalizedCount) {
+        totalCount.value = normalizedCount;
+      }
+
+      if (normalizedPage === 1 && cachedAt.value !== now) {
+        cachedAt.value = now;
+      }
+
+      if (currentPage.value < normalizedPage) {
+        currentPage.value = normalizedPage;
+      }
+
+      lastFetched.value = Date.now();
+      return;
+    }
+
+    let nextItems: Record<string, PostsStorePost> | null = null;
+    let nextTimestamps: Record<string, number> | null = null;
+
+    const ensureItems = () => {
+      if (!nextItems) {
+        nextItems = { ...items.value };
+      }
+
+      return nextItems;
+    };
+
+    const ensureTimestamps = () => {
+      if (!nextTimestamps) {
+        nextTimestamps = { ...itemTimestamps.value };
+      }
+
+      return nextTimestamps;
+    };
+
+    for (const id of Object.keys(items.value)) {
       if (!activeIds.has(id)) {
-        delete nextItems[id];
-        delete nextTimestamps[id];
+        const itemsTarget = ensureItems();
+        const timestampsTarget = ensureTimestamps();
+
+        delete itemsTarget[id];
+        delete timestampsTarget[id];
       }
     }
 
     for (const post of incomingPosts) {
-      nextItems[post.id] = { ...post, __optimistic: false };
-      nextTimestamps[post.id] = now;
+      const normalizedPost: PostsStorePost = { ...post, __optimistic: false };
+      const currentItem = (nextItems ?? items.value)[post.id];
+
+      if (!currentItem || currentItem.__optimistic || !deepEqual(currentItem, normalizedPost)) {
+        const itemsTarget = ensureItems();
+        itemsTarget[post.id] = normalizedPost;
+      }
+
+      const currentTimestamp = (nextTimestamps ?? itemTimestamps.value)[post.id];
+
+      if (currentTimestamp !== now) {
+        const timestampsTarget = ensureTimestamps();
+        timestampsTarget[post.id] = now;
+      }
     }
 
-    items.value = nextItems;
-    listIds.value = finalIds;
-    itemTimestamps.value = nextTimestamps;
+    if (nextItems) {
+      items.value = nextItems;
+    }
 
-    pageMap.value = {
-      ...pageMap.value,
-      [normalizedPage]: incomingIds,
-    };
+    if (!listOrderMatch) {
+      listIds.value = finalIds;
+    }
 
-    pageTimestamps.value = {
-      ...pageTimestamps.value,
-      [normalizedPage]: now,
-    };
+    if (nextTimestamps) {
+      itemTimestamps.value = nextTimestamps;
+    }
 
-    pageSize.value = normalizedLimit;
-    totalCount.value = normalizedCount;
+    if (!pageIdsMatch) {
+      pageMap.value = {
+        ...pageMap.value,
+        [normalizedPage]: incomingIds,
+      };
+    }
 
-    if (normalizedPage === 1) {
+    if (pageTimestamp !== now) {
+      pageTimestamps.value = {
+        ...pageTimestamps.value,
+        [normalizedPage]: now,
+      };
+    }
+
+    if (pageSize.value !== normalizedLimit) {
+      pageSize.value = normalizedLimit;
+    }
+
+    if (totalCount.value !== normalizedCount) {
+      totalCount.value = normalizedCount;
+    }
+
+    if (normalizedPage === 1 && cachedAt.value !== now) {
       cachedAt.value = now;
     }
 
-    currentPage.value = Math.max(currentPage.value, normalizedPage);
+    if (currentPage.value < normalizedPage) {
+      currentPage.value = normalizedPage;
+    }
+
     lastFetched.value = Date.now();
   }
 
