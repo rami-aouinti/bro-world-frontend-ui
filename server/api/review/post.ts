@@ -16,9 +16,7 @@ function resolveApiBase(event: H3Event) {
 }
 
 export default defineEventHandler(async (event) => {
-  const token = requireSessionToken(event, {
-    message: "You need to sign in to submit a rating.",
-  });
+  const token = requireSessionToken(event);
 
   const body = await readBody<SubmitReviewBody>(event);
   const value = typeof body?.rating === "number" ? body.rating : Number(body?.rating ?? 0);
