@@ -63,6 +63,29 @@ function safeDeleteCookie(
   }
 }
 
+function safeSetCookie(
+  event: H3Event,
+  name: string,
+  value: string,
+  options?: Parameters<typeof setCookie>[3],
+) {
+  const response = event.node?.res;
+
+  if (!response || response.headersSent || response.writableEnded) {
+    return;
+  }
+
+  try {
+    setCookie(event, name, value, options);
+  } catch (error) {
+    if (isHeadersSentError(error)) {
+      return;
+    }
+
+    throw error;
+  }
+}
+
 export function getSessionToken(event: H3Event): string | null {
   const { tokenCookieName, sessionTokenCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
@@ -80,40 +103,34 @@ export function getSessionToken(event: H3Event): string | null {
 
   const secure = shouldUseSecureCookies(event);
 
-  try {
-    setCookie(
+  safeSetCookie(
+    event,
+    tokenCookieName,
+    fallbackToken,
+    withSecureCookieOptions(
+      {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge,
+      },
       event,
-      tokenCookieName,
-      fallbackToken,
-      withSecureCookieOptions(
-        {
-          httpOnly: true,
-          sameSite: "lax",
-          maxAge,
-        },
-        event,
-      ),
-    );
+    ),
+  );
 
-    setCookie(
+  safeSetCookie(
+    event,
+    tokenPresenceCookieName,
+    "1",
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: "strict",
+        maxAge,
+        secure,
+      },
       event,
-      tokenPresenceCookieName,
-      "1",
-      withSecureCookieOptions(
-        {
-          httpOnly: false,
-          sameSite: "strict",
-          maxAge,
-          secure,
-        },
-        event,
-      ),
-    );
-  } catch (error) {
-    if (!isHeadersSentError(error)) {
-      throw error;
-    }
-  }
+    ),
+  );
 
   return fallbackToken;
 }
@@ -175,70 +192,64 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   const secure = shouldUseSecureCookies(event);
   const sanitizedUser = sanitizeSessionUser(user);
 
-  try {
-    setCookie(
+  safeSetCookie(
+    event,
+    tokenCookieName,
+    token,
+    withSecureCookieOptions(
+      {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge,
+      },
       event,
-      tokenCookieName,
-      token,
-      withSecureCookieOptions(
-        {
-          httpOnly: true,
-          sameSite: "lax",
-          maxAge,
-        },
-        event,
-      ),
-    );
+    ),
+  );
 
-    setCookie(
+  safeSetCookie(
+    event,
+    sessionTokenCookieName,
+    token,
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: "strict",
+        maxAge,
+        secure,
+      },
       event,
-      sessionTokenCookieName,
-      token,
-      withSecureCookieOptions(
-        {
-          httpOnly: false,
-          sameSite: "strict",
-          maxAge,
-          secure,
-        },
-        event,
-      ),
-    );
+    ),
+  );
 
-    setCookie(
+  safeSetCookie(
+    event,
+    userCookieName,
+    JSON.stringify(sanitizedUser),
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: "lax",
+        maxAge,
+        secure,
+      },
       event,
-      userCookieName,
-      JSON.stringify(sanitizedUser),
-      withSecureCookieOptions(
-        {
-          httpOnly: false,
-          sameSite: "lax",
-          maxAge,
-          secure,
-        },
-        event,
-      ),
-    );
+    ),
+  );
 
-    setCookie(
+  safeSetCookie(
+    event,
+    tokenPresenceCookieName,
+    "1",
+    withSecureCookieOptions(
+      {
+        httpOnly: false,
+        sameSite: "strict",
+        maxAge,
+        secure,
+      },
       event,
-      tokenPresenceCookieName,
-      "1",
-      withSecureCookieOptions(
-        {
-          httpOnly: false,
-          sameSite: "strict",
-          maxAge,
-          secure,
-        },
-        event,
-      ),
-    );
-  } catch (error) {
-    if (!isHeadersSentError(error)) {
-      throw error;
-    }
-  }
+    ),
+  );
 }
 
 export function clearAuthSession(event: H3Event) {
