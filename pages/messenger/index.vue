@@ -57,9 +57,10 @@ const pageDescription = computed(() => t("seo.messenger.description"));
 
 definePageMeta(() => ({
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 await callOnce(() => messenger.fetchThreads({ limit: 50 }));
 
 const latestConversationId = messenger.latestConversationId.value;

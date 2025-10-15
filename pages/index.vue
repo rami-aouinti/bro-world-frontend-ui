@@ -262,9 +262,10 @@ const pageDescription = computed(() => t("blog.hero.description"));
 definePageMeta(() => ({
   showRightWidgets: true,
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const reactionLabels = computed<Record<ReactionType, string>>(() => ({
   like: t("blog.reactions.reactionTypes.like"),
   love: t("blog.reactions.reactionTypes.love"),

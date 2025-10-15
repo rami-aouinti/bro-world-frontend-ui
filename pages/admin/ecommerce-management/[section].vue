@@ -60,8 +60,9 @@ const pageDescription = computed(() => subtitle.value);
 definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const headingId = computed(() => `admin-ecommerce-management-${section.value}-title`);
 </script>

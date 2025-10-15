@@ -253,9 +253,10 @@ definePageMeta(() => ({
   title: "profile",
   sidebarVariant: "profile",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const auth = useAuthSession();
 const { t, locale, localeProperties } = useI18n();
 const router = useRouter();

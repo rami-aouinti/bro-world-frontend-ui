@@ -25,9 +25,10 @@ definePageMeta(() => ({
   title: "profile-edit",
   sidebarVariant: "profile",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {

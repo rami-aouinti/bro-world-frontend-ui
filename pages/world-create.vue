@@ -468,9 +468,10 @@ const pageDescription = computed(() => t("seo.createWorld.description"));
 
 definePageMeta(() => ({
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const worldForm = reactive({
   name: "",
   slug: "",

@@ -246,9 +246,10 @@ definePageMeta(() => ({
   title: "profile-friend-details",
   sidebarVariant: "profile",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 watchEffect(() => {
   if (!friend.value) {
     throw createError({ statusCode: 404, statusMessage: "Profile not found" });

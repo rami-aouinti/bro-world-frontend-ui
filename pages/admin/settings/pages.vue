@@ -107,6 +107,8 @@ definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: true,
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const { form, isSaving, languageOptions } = useAdminSettingsEditor();
