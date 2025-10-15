@@ -104,8 +104,8 @@
         "adminSettings": "Paramètres du site",
         "adminUserManagement": "Gestion des utilisateurs",
         "adminBlogManagement": "Gestion du blog",
-        "adminJobManagement": "Gestion des emplois",
-        "adminEcommerceManagement": "Gestion e-commerce",
+        "adminJobManagement": "Gestion des offres d'emploi",
+        "adminEcommerceManagement": "Gestion du e-commerce",
         "adminEducationManagement": "Gestion de l'éducation",
         "adminGameManagement": "Gestion des jeux",
         "adminBlog": "Blog",
@@ -1697,7 +1697,7 @@
         },
         "navigation": {
           "title": "Menu de navigation",
-          "subtitle": "Ajoutez, réorganisez et sécurisez les entrées de la barre latérale.",
+          "subtitle": "Ajoutez, réorganisez et sécurisez les entrées de la barre latérale pour chaque audience.",
           "badge": "Menus",
           "children": "Liens enfants"
         }

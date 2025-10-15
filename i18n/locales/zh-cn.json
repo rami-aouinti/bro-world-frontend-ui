@@ -98,6 +98,7 @@
         "adminGeneralSetting": "通用设置",
         "adminData": "数据",
         "adminCrons": "定时任务",
+        "adminSettings": "站点设置",
         "adminUserManagement": "用户管理",
         "adminBlogManagement": "博客管理",
         "adminJobManagement": "职位管理",
