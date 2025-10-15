@@ -124,7 +124,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
-const defaultAvatar = "https://i.pravatar.cc/80?img=3";
+const defaultAvatar = "/images/placeholders/avatar-3.svg";
 const formRef = ref();
 const localValue = ref(props.modelValue);
 

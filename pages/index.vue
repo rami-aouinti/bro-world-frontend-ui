@@ -134,53 +134,49 @@ const user = {
   avatarUrl: "/images/avatars/avatar-default.svg",
 };
 
+const storyBackgrounds = [
+  "/images/placeholders/story-1.svg",
+  "/images/placeholders/story-2.svg",
+  "/images/placeholders/story-3.svg",
+];
+
+const storyAvatars = [
+  "/images/placeholders/avatar-1.svg",
+  "/images/placeholders/avatar-2.svg",
+  "/images/placeholders/avatar-3.svg",
+  "/images/placeholders/avatar-4.svg",
+];
+
 const stories = ref<Story[]>([
   {
     id: 1,
-    image: "https://picsum.photos/seed/1/600/900",
+    image: storyBackgrounds[0],
     name: "Asma Hmida",
-    avatar: "https://i.pravatar.cc/64?img=5",
+    avatar: storyAvatars[0],
     state: "new",
     duration: "0:22",
   },
   {
     id: 2,
-    image: "https://picsum.photos/seed/2/600/900",
+    image: storyBackgrounds[1],
     name: "Ichrak Ben Youcef",
-    avatar: "https://i.pravatar.cc/64?img=7",
+    avatar: storyAvatars[1],
     state: "seen",
   },
   {
     id: 3,
-    image: "https://picsum.photos/seed/3/600/900",
+    image: storyBackgrounds[2],
     name: "Rim Abdelwahed",
-    avatar: "https://i.pravatar.cc/64?img=9",
+    avatar: storyAvatars[2],
     state: "new",
     duration: "1:03",
   },
   {
     id: 4,
-    image: "https://picsum.photos/seed/3/600/900",
-    name: "Rim Abdelwahed",
-    avatar: "https://i.pravatar.cc/64?img=9",
-    state: "new",
-    duration: "1:03",
-  },
-  {
-    id: 5,
-    image: "https://picsum.photos/seed/3/600/900",
-    name: "Rim Abdelwahed",
-    avatar: "https://i.pravatar.cc/64?img=9",
-    state: "new",
-    duration: "1:03",
-  },
-  {
-    id: 6,
-    image: "https://picsum.photos/seed/3/600/900",
-    name: "Rim Abdelwahed",
-    avatar: "https://i.pravatar.cc/64?img=9",
-    state: "new",
-    duration: "1:03",
+    image: storyBackgrounds[0],
+    name: "Youssef Ben Salem",
+    avatar: storyAvatars[3],
+    state: "seen",
   },
 ]);
 

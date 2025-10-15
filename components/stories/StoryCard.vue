@@ -18,7 +18,7 @@
       :width="cardWidth"
       :height="cardHeight"
       :sizes="storySizes"
-      format="webp"
+      :format="storyImageFormat"
       quality="80"
       loading="lazy"
       decoding="async"
@@ -49,7 +49,7 @@
             :width="avatarSize"
             :height="avatarSize"
             :sizes="avatarSizes"
-            format="webp"
+            :format="avatarImageFormat"
             quality="80"
             loading="lazy"
             decoding="async"
@@ -168,6 +168,14 @@ const storyAspectRatio = computed(() => {
 const cardCssVars = computed(() => ({ "--story-aspect-ratio": storyAspectRatio.value }));
 const storySizes = computed(() => `${cardWidth.value}px`);
 const avatarSizes = `${avatarSize}px`;
+const storyImageFormat = computed(() => {
+  const src = props.image ?? "";
+  return src.endsWith(".svg") ? undefined : "webp";
+});
+const avatarImageFormat = computed(() => {
+  const src = props.avatar ?? "";
+  return src.endsWith(".svg") ? undefined : "webp";
+});
 
 const isCreate = computed(() => props.state === "create");
 const ringStyle = computed(() => {

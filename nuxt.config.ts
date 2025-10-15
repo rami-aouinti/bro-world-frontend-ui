@@ -527,7 +527,7 @@ export default defineNuxtConfig({
   image: {
     format: ["webp", "avif"],
     dir: "public",
-    domains: ["images.unsplash.com", "picsum.photos", "i.pravatar.cc", "bro-world-space.com"],
+    domains: ["images.unsplash.com", "bro-world-space.com"],
     screens: {
       sm: 320,
       md: 640,

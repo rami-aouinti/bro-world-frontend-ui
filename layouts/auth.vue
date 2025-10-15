@@ -12,9 +12,11 @@
   min-height: 100vh;
   position: relative;
   padding: clamp(1.5rem, 3vw, 3rem);
-  background-image: url("https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1950&q=80");
-  background-size: cover;
-  background-position: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.2), transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.25), transparent 50%),
+    linear-gradient(135deg, #1e293b, #0f172a 55%, #1d4ed8);
+  color: #fff;
   overflow: hidden;
 }
 
