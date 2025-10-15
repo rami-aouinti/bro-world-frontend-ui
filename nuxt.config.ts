@@ -241,9 +241,12 @@ try {
   require.resolve("@nuxt/ui-pro/nuxt.config");
   nuxtLayers.unshift("@nuxt/ui-pro");
 } catch (error) {
-  console.warn(
-    `@nuxt/ui-pro layer skipped: ${(error as Error | undefined)?.message ?? "Unknown error"}`,
-  );
+  const { code, message } = (error as NodeJS.ErrnoException | undefined) ?? {};
+  const reason = code === "MODULE_NOT_FOUND"
+    ? "module '@nuxt/ui-pro' not found. Install @nuxt/ui-pro to enable this layer."
+    : message ?? "Unknown error";
+
+  console.warn(`@nuxt/ui-pro layer skipped: ${reason}`);
 }
 
 if (typeof osWithAvailableParallelism.availableParallelism !== "function") {
