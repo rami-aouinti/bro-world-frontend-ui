@@ -117,31 +117,18 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue";
 import { onNuxtReady } from "#app";
 import AppBrand from "./AppBar/AppBrand.vue";
 import AppNavButtons from "./AppBar/AppNavButtons.vue";
 import AppIconBar from "./AppBar/AppIconBar.vue";
+import RightControls from "./AppBar/RightControls.vue";
+import UserMenu from "./AppBar/UserMenu.vue";
+import LocaleMenu from "./AppBar/LocaleMenu.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
-
-const RightControls = defineAsyncComponent({
-  loader: () => import("./AppBar/RightControls.vue"),
-  suspensible: false,
-});
-
-const UserMenu = defineAsyncComponent({
-  loader: () => import("./AppBar/UserMenu.vue"),
-  suspensible: false,
-});
-
-const LocaleMenu = defineAsyncComponent({
-  loader: () => import("./AppBar/LocaleMenu.vue"),
-  suspensible: false,
-});
 
 type AppIcon = { name: string; label: string; size?: number; to: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
