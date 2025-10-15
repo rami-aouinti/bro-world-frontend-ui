@@ -169,7 +169,7 @@
 import { computed, ref, defineAsyncComponent } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { useLocalePath } from "#i18n";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 const Terms = defineAsyncComponent({
   loader: () => import("~/components/auth/Terms.vue"),
@@ -178,7 +178,7 @@ const Terms = defineAsyncComponent({
 
 const { t, locale } = useI18n();
 const router = useRouter();
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const { $notify } = useNuxtApp();
 
 const isRtl = computed(() => ["ar", "he", "fa", "ur"].includes(locale.value));

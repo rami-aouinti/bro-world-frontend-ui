@@ -456,11 +456,12 @@
 <script setup lang="ts">
 import { computed, reactive } from "vue";
 import { useI18n } from "vue-i18n";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const currentRoute = computed(() => router.currentRoute.value);
 
 const worldForm = reactive({

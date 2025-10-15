@@ -144,6 +144,7 @@
 import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 const ContactForm = defineAsyncComponent({
@@ -158,7 +159,7 @@ const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const siteSettings = useSiteSettingsState();
 
 const contactContent = computed(

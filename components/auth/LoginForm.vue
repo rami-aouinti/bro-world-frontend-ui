@@ -132,7 +132,7 @@
 import { computed, ref, watch, useId } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { useLocalePath } from "#i18n";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useAuthSession } from "~/stores/auth-session";
 
 const props = withDefaults(
@@ -148,7 +148,7 @@ const props = withDefaults(
 
 const { t, locale } = useI18n();
 const router = useRouter();
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const { $notify } = useNuxtApp();
 const auth = useAuthSession();
 
