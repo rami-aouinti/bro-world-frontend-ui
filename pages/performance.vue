@@ -42,6 +42,11 @@ definePageMeta({
   documentDriven: false,
 });
 
+import PerformanceHero from "~/components/performance/PerformanceHero.vue";
+import MetricGrid from "~/components/performance/MetricGrid.vue";
+import OpportunityList from "~/components/performance/OpportunityList.vue";
+import ImprovementTimeline from "~/components/performance/ImprovementTimeline.vue";
+
 const { t, tm, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
