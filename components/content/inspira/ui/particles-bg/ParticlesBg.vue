@@ -10,7 +10,15 @@
 
 <script setup lang="ts">
 import { useMouse, useDevicePixelRatio } from "@vueuse/core";
-import { ref, onMounted, onBeforeUnmount, watch, computed, reactive } from "vue";
+import {
+  ref,
+  onMounted,
+  onBeforeUnmount,
+  watch,
+  computed,
+  reactive,
+  type WatchStopHandle,
+} from "vue";
 
 type Circle = {
   x: number;
@@ -51,6 +59,12 @@ const canvasRect = ref<DOMRect | null>(null);
 let animationFrameId: number | null = null;
 const { x: mouseX, y: mouseY } = useMouse();
 const { pixelRatio } = useDevicePixelRatio();
+const isAnimating = ref(false);
+let stopMouseWatch: WatchStopHandle | null = null;
+let resizeListenerActive = false;
+let motionMediaQuery: MediaQueryList | null = null;
+let idleCallbackId: number | null = null;
+let startTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const color = computed(() => {
   // Remove the leading '#' if it's present
@@ -74,26 +88,172 @@ const color = computed(() => {
   return `${r} ${g} ${b}`;
 });
 
-onMounted(() => {
-  if (canvasRef.value) {
-    context.value = canvasRef.value.getContext("2d");
+function cleanupMouseWatch() {
+  if (stopMouseWatch) {
+    stopMouseWatch();
+    stopMouseWatch = null;
+  }
+}
+
+function enableMouseTracking() {
+  if (stopMouseWatch) {
+    return;
   }
 
-  initCanvas();
-  animationFrameId = window.requestAnimationFrame(animate);
-  window.addEventListener("resize", initCanvas);
-});
+  stopMouseWatch = watch([mouseX, mouseY], () => {
+    onMouseMove();
+  });
+}
 
-onBeforeUnmount(() => {
+function addResizeListener() {
+  if (resizeListenerActive) {
+    return;
+  }
+
+  window.addEventListener("resize", initCanvas, { passive: true });
+  resizeListenerActive = true;
+}
+
+function removeResizeListener() {
+  if (!resizeListenerActive) {
+    return;
+  }
+
   window.removeEventListener("resize", initCanvas);
+  resizeListenerActive = false;
+}
+
+type IdleDeadline = {
+  didTimeout: boolean;
+  timeRemaining: () => number;
+};
+
+type IdleCallback = (deadline: IdleDeadline) => void;
+
+type IdleOptions = { timeout?: number };
+
+type IdleScheduler = (callback: IdleCallback, options?: IdleOptions) => number;
+
+type IdleWindow = Window & {
+  requestIdleCallback?: IdleScheduler;
+  cancelIdleCallback?: (handle: number) => void;
+};
+
+function cancelScheduledStart() {
+  if (!import.meta.client) {
+    idleCallbackId = null;
+    startTimeoutId = null;
+    return;
+  }
+
+  const idleWindow = window as IdleWindow;
+
+  if (idleCallbackId !== null && typeof idleWindow.cancelIdleCallback === "function") {
+    idleWindow.cancelIdleCallback(idleCallbackId);
+  }
+
+  if (startTimeoutId !== null) {
+    window.clearTimeout(startTimeoutId);
+  }
+
+  idleCallbackId = null;
+  startTimeoutId = null;
+}
+
+function stopAnimation() {
+  if (!isAnimating.value) {
+    return;
+  }
+
+  isAnimating.value = false;
+
   if (animationFrameId !== null) {
     window.cancelAnimationFrame(animationFrameId);
     animationFrameId = null;
   }
+
+  cleanupMouseWatch();
+  removeResizeListener();
+  circles.value.length = 0;
+  clearContext();
+}
+
+function startAnimation() {
+  if (isAnimating.value) {
+    return;
+  }
+
+  if (!canvasRef.value) {
+    return;
+  }
+
+  if (!context.value) {
+    context.value = canvasRef.value.getContext("2d");
+  }
+
+  initCanvas();
+  enableMouseTracking();
+  addResizeListener();
+  isAnimating.value = true;
+  animationFrameId = window.requestAnimationFrame(animate);
+}
+
+function scheduleStart() {
+  if (isAnimating.value) {
+    return;
+  }
+
+  cancelScheduledStart();
+
+  const idleWindow = window as IdleWindow;
+
+  function begin() {
+    cancelScheduledStart();
+    startAnimation();
+  }
+
+  if (typeof idleWindow.requestIdleCallback === "function") {
+    idleCallbackId = idleWindow.requestIdleCallback(() => begin(), { timeout: 1500 });
+    return;
+  }
+
+  startTimeoutId = window.setTimeout(begin, 240);
+}
+
+function handleReducedMotionChange(event: MediaQueryListEvent) {
+  if (event.matches) {
+    cancelScheduledStart();
+    stopAnimation();
+    return;
+  }
+
+  scheduleStart();
+}
+
+onMounted(() => {
+  if (!import.meta.client) {
+    return;
+  }
+
+  motionMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (motionMediaQuery.matches) {
+    return;
+  }
+
+  scheduleStart();
+
+  motionMediaQuery.addEventListener("change", handleReducedMotionChange);
 });
 
-watch([mouseX, mouseY], () => {
-  onMouseMove();
+onBeforeUnmount(() => {
+  cancelScheduledStart();
+  stopAnimation();
+
+  if (motionMediaQuery) {
+    motionMediaQuery.removeEventListener("change", handleReducedMotionChange);
+    motionMediaQuery = null;
+  }
 });
 
 function initCanvas() {
@@ -116,7 +276,11 @@ function onMouseMove() {
 }
 
 function resizeCanvas() {
-  if (canvasContainerRef.value && canvasRef.value && context.value) {
+  if (canvasContainerRef.value && canvasRef.value) {
+    if (!context.value) {
+      context.value = canvasRef.value.getContext("2d");
+    }
+
     circles.value.length = 0;
     canvasSize.w = canvasContainerRef.value.offsetWidth;
     canvasSize.h = canvasContainerRef.value.offsetHeight;
@@ -124,7 +288,7 @@ function resizeCanvas() {
     canvasRef.value.height = canvasSize.h * pixelRatio.value;
     canvasRef.value.style.width = canvasSize.w + "px";
     canvasRef.value.style.height = canvasSize.h + "px";
-    context.value.setTransform(pixelRatio.value, 0, 0, pixelRatio.value, 0, 0);
+    context.value?.setTransform(pixelRatio.value, 0, 0, pixelRatio.value, 0, 0);
     canvasRect.value = canvasRef.value.getBoundingClientRect();
   }
 }
@@ -178,7 +342,18 @@ function clearContext() {
 
 function drawParticles() {
   clearContext();
-  const particleCount = props.quantity;
+  const width = canvasSize.w;
+  let density = 1;
+
+  if (width > 0 && width < 420) {
+    density = 0.45;
+  } else if (width < 768) {
+    density = 0.7;
+  } else if (width < 1280) {
+    density = 0.85;
+  }
+
+  const particleCount = Math.max(8, Math.round(props.quantity * density));
   for (let i = 0; i < particleCount; i++) {
     const circle = circleParams();
     drawCircle(circle);
@@ -197,6 +372,10 @@ function remapValue(
 }
 
 function animate() {
+  if (!isAnimating.value) {
+    return;
+  }
+
   clearContext();
   circles.value.forEach((circle, i) => {
     // Handle the alpha value
@@ -251,6 +430,10 @@ function animate() {
       );
     }
   });
+  if (!isAnimating.value) {
+    return;
+  }
+
   animationFrameId = window.requestAnimationFrame(animate);
 }
 </script>
