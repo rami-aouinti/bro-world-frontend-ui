@@ -34,7 +34,7 @@
         </template>
         <template v-else>
           <Icon
-            name="mdi:person-outline"
+            name="mdi:account-outline"
             :size="22"
           />
         </template>
