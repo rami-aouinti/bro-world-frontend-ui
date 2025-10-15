@@ -396,11 +396,16 @@ async function submitRating() {
         : null);
 
     submissionError.value =
-      normalizedMessage ||
+      normalizedMessage ??
       translateWithFallback(
         "sidebar.rating.submitError",
         "We could not save your rating. Please try again later.",
       );
+
+    if (status === 401 || status === 403) {
+      await auth.handleUnauthorized(normalizedMessage ?? undefined);
+      return;
+    }
   } finally {
     isSubmitting.value = false;
   }
