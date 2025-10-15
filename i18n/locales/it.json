@@ -1643,6 +1643,10 @@
           "actions": "Actions"
         }
       },
+      "errors": {
+        "unauthorized": "Non hai l'autorizzazione per visualizzare gli utenti. Accedi con un account amministratore.",
+        "generic": "Non è stato possibile caricare l'elenco degli utenti. Riprova più tardi."
+      },
       "status": {
         "active": "Active",
         "disabled": "Disabled"

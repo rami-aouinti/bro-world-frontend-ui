@@ -447,7 +447,11 @@ const editForm = reactive<EditableUserForm>(createEmptyForm());
 const createErrors = reactive<FormErrors>({});
 const editErrors = reactive<FormErrors>({});
 
-await callOnce(() => store.fetchUsers());
+try {
+  await callOnce(() => store.fetchUsers());
+} catch (caughtError) {
+  localError.value = store.error.value || resolveUsersErrorMessage(caughtError);
+}
 
 const users = computed(() => store.users.value);
 const isLoading = computed(() => store.pending.value);
@@ -524,6 +528,55 @@ function formatDate(value?: string | null) {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(new Date(parsed));
+}
+
+function resolveUsersErrorMessage(error: unknown) {
+  const status = getErrorStatusCode(error);
+
+  if (status === 401 || status === 403) {
+    return t("admin.userManagement.errors.unauthorized");
+  }
+
+  if (store.error.value) {
+    return store.error.value;
+  }
+
+  const message =
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : "";
+
+  return message || t("admin.userManagement.errors.generic");
+}
+
+function getErrorStatusCode(error: unknown): number | null {
+  if (!error || typeof error !== "object") {
+    return null;
+  }
+
+  const candidate = error as Record<string, unknown>;
+
+  const directStatus = candidate.status;
+  if (typeof directStatus === "number") {
+    return directStatus;
+  }
+
+  const statusCode = candidate.statusCode;
+  if (typeof statusCode === "number") {
+    return statusCode;
+  }
+
+  const response = candidate.response;
+  if (response && typeof response === "object") {
+    const responseStatus = (response as Record<string, unknown>).status;
+    if (typeof responseStatus === "number") {
+      return responseStatus;
+    }
+  }
+
+  return null;
 }
 
 function clearFieldError(errors: FormErrors, field: keyof FormErrors) {
