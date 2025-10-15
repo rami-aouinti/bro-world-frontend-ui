@@ -16,7 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, nextTick, onMounted, ref, useAttrs, watch } from "vue";
+import { useResizeObserver } from "@vueuse/core";
+import { computed, defineAsyncComponent, onBeforeUnmount, ref, useAttrs, watch } from "vue";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
 
@@ -102,32 +103,50 @@ watch(
 );
 
 if (import.meta.client) {
-  const updatePaddingVariable = () => {
-    void nextTick(() => {
-      if (!cardRef.value) {
-        return;
-      }
-
-      const computedStyle = window.getComputedStyle(cardRef.value);
-      const paddingValue =
-        computedStyle.paddingInlineStart ||
-        computedStyle.paddingLeft ||
-        paddingValueMap[props.padding] ||
-        "0px";
-
+  function applyPaddingMeasurement(padding: number) {
+    const nextValue = `${Math.max(0, padding)}px`;
+    if (cardStyle.value["--card-x"] !== nextValue) {
       cardStyle.value = {
         ...cardStyle.value,
-        "--card-x": paddingValue,
+        "--card-x": nextValue,
       };
-    });
-  };
+    }
+  }
 
-  watch([cardClass, () => props.padding], () => {
-    updatePaddingVariable();
+  const { stop: stopObserver } = useResizeObserver(cardRef, (entries) => {
+    const entry = entries[0];
+    if (!entry) {
+      return;
+    }
+
+    const target = entry.target as HTMLElement;
+
+    const borderBox = Array.isArray(entry.borderBoxSize)
+      ? entry.borderBoxSize[0]
+      : entry.borderBoxSize;
+    const contentBox = Array.isArray(entry.contentBoxSize)
+      ? entry.contentBoxSize[0]
+      : entry.contentBoxSize;
+
+    let padding: number | null = null;
+
+    if (borderBox && contentBox) {
+      padding = (borderBox.inlineSize - contentBox.inlineSize) / 2;
+    } else if (entry.contentRect) {
+      const clientWidth = target.clientWidth;
+      const contentWidth = entry.contentRect.width;
+      if (typeof clientWidth === "number" && typeof contentWidth === "number") {
+        padding = (clientWidth - contentWidth) / 2;
+      }
+    }
+
+    if (padding !== null && Number.isFinite(padding) && padding >= 0) {
+      applyPaddingMeasurement(padding);
+    }
   });
 
-  onMounted(() => {
-    updatePaddingVariable();
+  onBeforeUnmount(() => {
+    stopObserver();
   });
 }
 
