@@ -436,15 +436,30 @@ const activeNow = computed(() =>
     .slice(0, 4),
 );
 
-const sidebarContent = computed(() => ({
-  component: ProfileFriendsSidebar,
-  props: {
-    suggestions: suggestions.value,
-    activeNow: activeNow.value,
-    onConnect: (friend: FriendCard) => triggerAction("connect", friend),
-  },
-  wrapperClass: "flex flex-col gap-4",
-}));
+const sidebarConnectHandler = (friend: FriendCard) => triggerAction("connect", friend);
+
+const sidebarContent = computed(() => {
+  const base = {
+    component: ProfileFriendsSidebar,
+    props: {
+      suggestions: suggestions.value,
+      activeNow: activeNow.value,
+    },
+    wrapperClass: "flex flex-col gap-4",
+  } as const;
+
+  if (import.meta.client) {
+    return {
+      ...base,
+      props: {
+        ...base.props,
+        onConnect: sidebarConnectHandler,
+      },
+    };
+  }
+
+  return base;
+});
 
 registerRightSidebarContent(sidebarContent);
 
