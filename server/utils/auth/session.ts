@@ -17,9 +17,24 @@ type SessionEventContext = {
   [SESSION_COOKIE_SYNC_SKIP_FLAG]?: boolean;
 };
 
+function isResponseWritable(event: H3Event): boolean {
+  const response = event.node?.res;
+
+  if (!response) {
+    return false;
+  }
+
+  return !response.headersSent && !response.writableEnded && !response.writableFinished;
+}
+
 function shouldSyncSessionCookies(event: H3Event): boolean {
   const context = event.context as SessionEventContext;
-  return !context[SESSION_COOKIE_SYNC_SKIP_FLAG];
+
+  if (context[SESSION_COOKIE_SYNC_SKIP_FLAG]) {
+    return false;
+  }
+
+  return isResponseWritable(event);
 }
 
 function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
@@ -59,7 +74,7 @@ function safeDeleteCookie(
 ) {
   const response = event.node?.res;
 
-  if (!response || response.headersSent || response.writableEnded) {
+  if (!response || response.headersSent || response.writableEnded || response.writableFinished) {
     return;
   }
 
@@ -82,7 +97,7 @@ function safeSetCookie(
 ) {
   const response = event.node?.res;
 
-  if (!response || response.headersSent || response.writableEnded) {
+  if (!response || response.headersSent || response.writableEnded || response.writableFinished) {
     return;
   }
 
