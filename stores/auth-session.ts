@@ -1,14 +1,21 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import type { Router } from "vue-router";
-import { useCookie, useNuxtApp, useRequestFetch, useRuntimeConfig, useState } from "#imports";
+import {
+  useCookie,
+  useNuxtApp,
+  useRequestHeaders,
+  useRuntimeConfig,
+  useState,
+} from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
 import type { AuthLoginEnvelope, AuthUser } from "~/types/auth";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
-import { $fetch } from "ofetch";
-import type { FetchOptions } from "ofetch";
+import { createApiFetcher, type ApiRequestOptions } from "~/lib/api/http-client";
+import { resolveApiFetcher } from "~/lib/api/fetcher";
+import { createAxios } from "~/lib/vendor/axios";
 
 interface LoginCredentials {
   identifier: string;
@@ -21,122 +28,7 @@ interface LogoutOptions {
   notify?: boolean;
 }
 
-type Fetcher = <T>(request: string, options?: FetchOptions) => Promise<T>;
-
-function isJsonSerializableBody(body: unknown): body is Record<string, unknown> | unknown[] {
-  if (body == null) {
-    return false;
-  }
-
-  if (typeof body === "string" || typeof body === "number" || typeof body === "boolean") {
-    return false;
-  }
-
-  if (typeof body !== "object") {
-    return false;
-  }
-
-  if (Array.isArray(body)) {
-    return true;
-  }
-
-  if (typeof FormData !== "undefined" && body instanceof FormData) {
-    return false;
-  }
-
-  if (body instanceof URLSearchParams) {
-    return false;
-  }
-
-  if (typeof Blob !== "undefined" && body instanceof Blob) {
-    return false;
-  }
-
-  if (
-    typeof ArrayBuffer !== "undefined" &&
-    (body instanceof ArrayBuffer || ArrayBuffer.isView(body as ArrayBufferView))
-  ) {
-    return false;
-  }
-
-  if (typeof ReadableStream !== "undefined" && body instanceof ReadableStream) {
-    return false;
-  }
-
-  return true;
-}
-
-function hasHeader(headers: Record<string, string>, name: string): boolean {
-  const target = name.toLowerCase();
-
-  return Object.keys(headers).some((key) => key.toLowerCase() === target);
-}
-
-function normalizeHeaders(init: FetchOptions["headers"]): Record<string, string> {
-  if (!init) {
-    return {};
-  }
-
-  const entries: Array<[string, string]> = [];
-
-  if (typeof Headers !== "undefined" && init instanceof Headers) {
-    for (const [key, value] of init.entries()) {
-      if (!key) continue;
-      entries.push([key, value]);
-    }
-  } else if (Array.isArray(init)) {
-    for (const [key, value] of init) {
-      if (!key || value == null) continue;
-      entries.push([String(key), String(value)]);
-    }
-  } else if (typeof init === "object") {
-    for (const [key, value] of Object.entries(init as Record<string, unknown>)) {
-      if (!key || value == null) continue;
-      entries.push([key, String(value)]);
-    }
-  }
-
-  const headers: Record<string, string> = {};
-
-  for (const [key, value] of entries) {
-    headers[key] = value;
-  }
-
-  return headers;
-}
-
-function normalizeFetchOptions(options: FetchOptions): FetchOptions {
-  if (!isJsonSerializableBody(options.body)) {
-    return options;
-  }
-
-  const headers = normalizeHeaders(options.headers);
-
-  if (!hasHeader(headers, "content-type")) {
-    headers["Content-Type"] = "application/json";
-  }
-
-  return {
-    ...options,
-    body: JSON.stringify(options.body),
-    headers,
-  };
-}
-
-function joinUrl(base: string, path: string): string {
-  if (!base) {
-    return path;
-  }
-
-  const trimmedBase = base.endsWith("/") ? base.slice(0, -1) : base;
-  const trimmedPath = path.startsWith("/") ? path.slice(1) : path;
-
-  return `${trimmedBase}/${trimmedPath}`;
-}
-
-function isAbsoluteUrl(url: string): boolean {
-  return /^(?:[a-z]+:)?\/\//i.test(url);
-}
+type Fetcher = <T>(request: string, options?: ApiRequestOptions) => Promise<T>;
 
 function resolveFetcher(): Fetcher {
   if (import.meta.server) {
@@ -145,28 +37,32 @@ function resolveFetcher(): Fetcher {
       (runtimeConfig.auth?.apiBase as string | undefined)?.trim() ||
       (runtimeConfig.public?.apiBase as string | undefined)?.trim() ||
       "/api";
-    const baseFetcher = useRequestFetch() as Fetcher;
+    const forwardedHeaders = useRequestHeaders(["cookie", "authorization"]);
+    const client = createAxios({
+      baseURL,
+      withCredentials: true,
+    });
 
-    return async function wrappedServerFetcher<T>(
-      request: string,
-      options?: FetchOptions,
-    ): Promise<T> {
-      const normalizedOptions = options ? normalizeFetchOptions(options) : options;
-      const resolvedRequest = isAbsoluteUrl(request) ? request : joinUrl(baseURL, request);
+    client.interceptors.request.use((config) => {
+      const headers = { ...(config.headers ?? {}) };
 
-      return baseFetcher<T>(resolvedRequest, normalizedOptions);
-    };
+      if (forwardedHeaders.cookie && !headers.Cookie) {
+        headers.Cookie = forwardedHeaders.cookie;
+      }
+
+      if (forwardedHeaders.authorization && !headers.Authorization) {
+        headers.Authorization = forwardedHeaders.authorization;
+      }
+
+      config.headers = headers;
+
+      return config;
+    });
+
+    return createApiFetcher(client);
   }
 
-  const baseFetcher = useNuxtApp().$api as Fetcher;
-
-  return async function wrappedClientFetcher<T>(
-    request: string,
-    options?: FetchOptions,
-  ): Promise<T> {
-    const normalizedOptions = options ? normalizeFetchOptions(options) : options;
-    return baseFetcher<T>(request, normalizedOptions);
-  };
+  return resolveApiFetcher();
 }
 
 function extractErrorMessage(error: unknown): string {
@@ -446,13 +342,12 @@ export const useAuthSession = defineStore("auth-session", () => {
     }
 
     try {
-      const responseFetcher = import.meta.server
-        ? (useRequestFetch() as Fetcher)
-        : ($fetch as Fetcher);
+      const responseFetcher = resolveFetcher();
       const response = await responseFetcher<MercureTokenEnvelope>("/api/mercure/token", {
         method: "GET",
         context: {
           suppressErrorNotification: true,
+          isPrivate: true,
         },
       });
 

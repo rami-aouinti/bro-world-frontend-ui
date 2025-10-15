@@ -1,26 +1,65 @@
-import { ofetch } from "ofetch";
-import type { FetchOptions } from "ofetch";
-import { useNuxtApp, useRequestFetch, useRuntimeConfig } from "#imports";
+import { useNuxtApp, useRequestHeaders, useRuntimeConfig } from "#imports";
+import { createApiFetcher, type ApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
+import { createAxios } from "~/lib/vendor/axios";
+import { useAuthSession } from "~/stores/auth-session";
 
-export type ApiFetcher = <T>(request: string, options?: FetchOptions) => Promise<T>;
+let fallbackFetcher: ApiFetcher | null = null;
 
 export function resolveApiFetcher(): ApiFetcher {
-  if (import.meta.server) {
-    return useRequestFetch() as ApiFetcher;
-  }
-
   const nuxtApp = useNuxtApp();
-  const api = nuxtApp.$api as ApiFetcher | undefined;
+  const providedFetcher = nuxtApp.$api as ApiFetcher | undefined;
 
-  if (api) {
-    return api;
+  if (providedFetcher) {
+    return providedFetcher;
   }
 
-  const runtimeConfig = useRuntimeConfig();
-  const baseURL = (runtimeConfig.public?.apiBase as string | undefined) ?? "/api";
+  if (!fallbackFetcher) {
+    const runtimeConfig = useRuntimeConfig();
+    const baseURL = (runtimeConfig.public?.apiBase as string | undefined) ?? "/api";
+    const auth = useAuthSession();
+    const forwardedHeaders = import.meta.server ? useRequestHeaders(["cookie", "authorization"]) : null;
+    const client = createAxios({
+      baseURL,
+      withCredentials: true,
+    });
 
-  return ofetch.create({
-    baseURL,
-    credentials: "include",
-  }) as ApiFetcher;
+    client.interceptors.request.use((config) => {
+      const context = (config.context ?? {}) as ApiRequestContext;
+      const headers = { ...(config.headers ?? {}) };
+
+      if (import.meta.server && forwardedHeaders) {
+        if (forwardedHeaders.cookie && !headers.Cookie) {
+          headers.Cookie = forwardedHeaders.cookie;
+        }
+
+        if (forwardedHeaders.authorization && !headers.Authorization) {
+          headers.Authorization = forwardedHeaders.authorization;
+        }
+      }
+
+      if (!context.skipAuthHeader) {
+        const shouldAttachToken = context.isPrivate !== false;
+
+        if (shouldAttachToken) {
+          const token = auth.sessionToken.value?.trim();
+
+          if (token) {
+            const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
+
+            if (!headers.Authorization || headers.Authorization === forwardedHeaders?.authorization) {
+              headers.Authorization = resolvedToken;
+            }
+          }
+        }
+      }
+
+      config.headers = headers;
+
+      return config;
+    });
+
+    fallbackFetcher = createApiFetcher(client);
+  }
+
+  return fallbackFetcher;
 }

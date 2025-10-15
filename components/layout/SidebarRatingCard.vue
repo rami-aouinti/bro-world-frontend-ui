@@ -151,9 +151,11 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import type { FetchError, FetchOptions } from "ofetch";
+import { AxiosError } from "~/lib/vendor/axios";
 import { useAuthSession } from "~/stores/auth-session";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import { resolveApiFetcher } from "~/lib/api/fetcher";
+import type { ApiRequestOptions } from "~/lib/api/http-client";
 
 interface SidebarRatingCardProps {
   rating?: {
@@ -182,19 +184,18 @@ const isRtl = computed(() => rtlLocales.includes(locale.value));
 const auth = useAuthSession();
 const loggedIn = computed(() => auth.isAuthenticated.value);
 const nuxtApp = useNuxtApp();
-const runtimeConfig = useRuntimeConfig();
 const localePath = useResolvedLocalePath();
 
-type ApiClient = <T>(path: string, options?: FetchOptions) => Promise<T>;
+type ApiClient = <T>(path: string, options?: ApiRequestOptions) => Promise<T>;
 const apiClient = nuxtApp.$api as ApiClient | undefined;
 
-function apiFetch<T>(path: string, options?: FetchOptions) {
+function apiFetch<T>(path: string, options?: ApiRequestOptions) {
   if (import.meta.client && apiClient) {
     return apiClient<T>(path, options);
   }
 
-  const baseURL = runtimeConfig.public?.apiBase ?? "/api";
-  return $fetch<T>(`${baseURL}${path}`, options);
+  const fetcher = resolveApiFetcher();
+  return fetcher<T>(path, options);
 }
 
 function translateWithFallback(
@@ -387,9 +388,9 @@ async function submitRating() {
     await refreshStats();
   } catch (error) {
     console.error("Failed to submit rating", error);
-    const fetchError = error as FetchError<{ message?: unknown }>;
-    const status = fetchError?.response?.status ?? null;
-    const payload = fetchError?.response?._data?.message;
+    const fetchError = error as AxiosError<{ message?: unknown }>;
+    const status = fetchError.response?.status ?? null;
+    const payload = fetchError.response?.data?.message;
     const payloadMessage =
       typeof payload === "string" && payload.trim().length > 0 ? payload.trim() : null;
 
