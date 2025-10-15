@@ -33,17 +33,17 @@
             :key="themeOption.id"
             :value="themeOption.id"
           >
-            <template #default="{ isSelected, toggle }">
-              <v-hover v-slot="{ isHovering, props: hoverProps }">
+            <template #default="slot">
+              <v-hover v-slot="hover">
                 <v-sheet
-                  v-bind="hoverProps"
+                  v-bind="hover?.props"
                   rounded="xl"
                   class="theme-card pa-4 transition"
                   :class="[
-                    isSelected ? 'theme-card--active' : 'theme-card--idle',
-                    isHovering ? 'elevation-6' : 'elevation-2',
+                    slot?.isSelected ? 'theme-card--active' : 'theme-card--idle',
+                    hover?.isHovering ? 'elevation-6' : 'elevation-2',
                   ]"
-                  @click="toggle"
+                  @click="slot?.toggle?.()"
                 >
                   <div class="d-flex justify-space-between align-start gap-4">
                     <div class="flex-grow-1">
@@ -58,7 +58,7 @@
                         />
                         <div class="d-flex align-center">
                           <v-chip
-                            v-if="isSelected"
+                            v-if="slot?.isSelected"
                             color="primary"
                             variant="flat"
                             size="small"
