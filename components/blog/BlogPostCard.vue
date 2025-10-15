@@ -48,6 +48,7 @@
     </div>
     <div ref="commentsSectionRef">
       <CommentThread
+        v-if="shouldRenderCommentThread"
         v-model:composer-visible="isCommentComposerVisible"
         :counts="{ care: 0, love: 0, wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
         :nodes="post.comments_preview || []"
@@ -198,6 +199,9 @@ const activeCommentsRequest = shallowRef<Promise<void> | null>(null);
 const commentsSectionRef = ref<HTMLElement | null>(null);
 const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
 const commentsActivated = ref(false);
+const shouldRenderCommentThread = computed(
+  () => commentsActivated.value || isCommentsSectionVisible.value,
+);
 const loginDialogOpen = ref(false);
 const loginPromptRef = ref<HTMLButtonElement | null>(null);
 const loginDialogPreviousFocusedElement = ref<HTMLElement | null>(null);

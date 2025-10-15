@@ -24,15 +24,17 @@ vi.mock("~/composables/usePostsStore", () => ({
   }),
 }));
 
+const authState = {
+  currentUser: ref(null),
+  isAuthenticated: ref(true),
+  following: ref<Record<string, boolean>>({}),
+  followPending: ref<Record<string, boolean>>({}),
+  followAuthor: vi.fn(),
+  resetFollowError: vi.fn(),
+};
+
 vi.mock("~/composables/useAuthStore", () => ({
-  useAuthStore: () => ({
-    currentUser: ref(null),
-    isAuthenticated: ref(false),
-    following: ref({}),
-    followPending: ref({}),
-    followAuthor: vi.fn(),
-    resetFollowError: vi.fn(),
-  }),
+  useAuthStore: () => authState,
 }));
 
 vi.mock("#app", () => ({
@@ -157,6 +159,7 @@ describe("BlogPostCard", () => {
     getCommentsMock.mockReset();
     getCommentsMock.mockResolvedValue([]);
     notifyMock.mockReset();
+    authState.isAuthenticated.value = true;
   });
 
   it("loads comments when the section becomes visible", async () => {
