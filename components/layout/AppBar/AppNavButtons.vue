@@ -14,7 +14,7 @@
     </button>
 
     <div
-      class="flex items-center gap-3 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8"
+      :class="navGroupClasses"
     >
       <button
         type="button"
@@ -61,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+
 const props = withDefaults(
   defineProps<{
     isMobile: boolean;
@@ -75,4 +77,22 @@ const props = withDefaults(
   },
 );
 const emit = defineEmits(["toggle-left", "go-back", "refresh"]);
+
+const isHydrated = ref(false);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isHydrated.value = true;
+  });
+}
+
+const navGroupClasses = computed(() => {
+  if (!isHydrated.value) {
+    return props.isMobile
+      ? "flex items-center gap-3 px-4"
+      : "flex items-center gap-8 px-16";
+  }
+
+  return "flex items-center gap-3 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8";
+});
 </script>
