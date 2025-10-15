@@ -274,14 +274,7 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings, SiteThemeDefinition } from "~/types/settings";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
-
-type AppTopBarComponent = typeof import("@/components/layout/AppTopBar.vue")
-  ["default"];
-
-const AppTopBar = defineAsyncComponent<AppTopBarComponent>({
-  loader: () => import("@/components/layout/AppTopBar.vue"),
-  suspensible: false,
-});
+import AppTopBar from "@/components/layout/AppTopBar.vue";
 
 const AppSidebar = defineAsyncComponent({
   loader: () => import("@/components/layout/AppSidebar.vue"),
@@ -366,7 +359,7 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const showNavigation = computed(() => currentRoute.value?.meta?.showNavbar !== false);
 const { rightSidebarContent } = useLayoutRightSidebar();
-const topBarRef = ref<InstanceType<AppTopBarComponent> | null>(null);
+const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
 const DEFAULT_APP_BAR_HEIGHT = 72;
 const DEFAULT_APP_BAR_HEIGHT_VALUE = `${DEFAULT_APP_BAR_HEIGHT}px`;
 const topBarHeight = ref(showNavigation.value ? DEFAULT_APP_BAR_HEIGHT_VALUE : "0px");
