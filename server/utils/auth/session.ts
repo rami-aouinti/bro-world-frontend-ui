@@ -1,4 +1,4 @@
-import { deleteCookie, getCookie, getHeader, setCookie } from "h3";
+import { createError, deleteCookie, getCookie, getHeader, setCookie } from "h3";
 import type { H3Event } from "h3";
 import type { AuthUser } from "~/types/auth";
 import { shouldUseSecureCookies, withSecureCookieOptions } from "~/lib/cookies";
@@ -315,4 +315,27 @@ export function withAuthHeaders(event: H3Event, headers: Record<string, string> 
     ...headers,
     Authorization: `Bearer ${token}`,
   };
+}
+
+interface RequireSessionTokenOptions {
+  statusCode?: number;
+  statusMessage?: string;
+  message?: string;
+}
+
+export function requireSessionToken(event: H3Event, options: RequireSessionTokenOptions = {}) {
+  const token = getSessionToken(event);
+
+  if (token) {
+    return token;
+  }
+
+  const { statusCode = 401, statusMessage = "Authentication required", message } = options;
+  const data = message ? { message } : undefined;
+
+  throw createError({
+    statusCode,
+    statusMessage,
+    data,
+  });
 }

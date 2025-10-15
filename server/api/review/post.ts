@@ -1,7 +1,7 @@
 import type { H3Event } from "h3";
 import { createError, defineEventHandler, readBody } from "h3";
 import { requestWithRetry } from "~/server/utils/requestWithRetry";
-import { getSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
+import { requireSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
 
 interface SubmitReviewBody {
   rating?: number;
@@ -16,15 +16,9 @@ function resolveApiBase(event: H3Event) {
 }
 
 export default defineEventHandler(async (event) => {
-  const token = getSessionToken(event);
-
-  if (!token) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Authentication required",
-      data: { message: "You need to sign in to submit a rating." },
-    });
-  }
+  const token = requireSessionToken(event, {
+    message: "You need to sign in to submit a rating.",
+  });
 
   const body = await readBody<SubmitReviewBody>(event);
   const value = typeof body?.rating === "number" ? body.rating : Number(body?.rating ?? 0);
@@ -41,6 +35,7 @@ export default defineEventHandler(async (event) => {
   const endpoint = `${base}/api/v1/review`;
 
   return await requestWithRetry("POST", endpoint, {
+    token,
     body: { rating: value },
     headers: withAuthHeaders(event, { "Content-Type": "application/json" }),
   });
