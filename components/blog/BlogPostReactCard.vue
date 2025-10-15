@@ -115,7 +115,9 @@ const ReactionPicker = defineAsyncComponent({
 type Reaction = PickerReaction;
 
 const auth = useAuthSession();
-const isHydrated = ref(import.meta.server);
+// Start with hydration-sensitive UI disabled so SSR and CSR markup stay in sync
+// until the client is ready to take over.
+const isHydrated = ref(false);
 
 if (import.meta.client) {
   onMounted(() => {
