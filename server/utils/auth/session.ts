@@ -2,6 +2,7 @@ import { deleteCookie, getCookie, setCookie } from "h3";
 import type { H3Event } from "h3";
 import type { AuthUser } from "~/types/auth";
 import { shouldUseSecureCookies, withSecureCookieOptions } from "~/lib/cookies";
+import { isHeadersSentError } from "../http/errors";
 
 interface SessionCookiesConfig {
   tokenCookieName: string;
@@ -52,19 +53,6 @@ function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
     tokenPresenceCookieName: authConfig.tokenPresenceCookieName ?? "auth_token_present",
     maxAge,
   };
-}
-
-function isHeadersSentError(error: unknown): boolean {
-  if (!(error instanceof Error)) {
-    return false;
-  }
-
-  const nodeError = error as NodeJS.ErrnoException;
-
-  return (
-    nodeError.code === "ERR_HTTP_HEADERS_SENT" ||
-    error.message.includes("Cannot append headers after they are sent")
-  );
 }
 
 function safeDeleteCookie(
