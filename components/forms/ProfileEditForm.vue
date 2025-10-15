@@ -211,7 +211,7 @@
                 rows="5"
                 variant="outlined"
                 density="comfortable"
-                :counter="280"
+                :counter="BIO_MAX_LENGTH"
                 :error-messages="fieldError('bio')"
               />
               <v-combobox
@@ -242,12 +242,12 @@
     </v-row>
 
     <v-snackbar
-      v-model="showSnackbar"
-      :color="snackbarColor"
+      v-model="snackbar.visible"
+      :color="snackbar.color"
       timeout="3000"
       variant="flat"
     >
-      {{ snackbarMessage }}
+      {{ snackbar.message }}
     </v-snackbar>
 </template>
 
@@ -269,6 +269,18 @@ const ProfileEditSidebarContent = defineAsyncComponent({
 });
 
 const { t } = useI18n();
+
+const BIO_MAX_LENGTH = 280;
+const requiredFields: Array<keyof ProfileForm> = ["firstName", "lastName", "language", "email"];
+const trackedErrorFields = [...requiredFields, "bio"] as const;
+
+type SnackbarColor = "primary" | "success" | "error";
+
+interface SnackbarState {
+  visible: boolean;
+  message: string;
+  color: SnackbarColor;
+}
 
 const defaultSiteSettings = getDefaultSiteSettings();
 const siteSettingsState = useSiteSettingsState();
@@ -350,9 +362,11 @@ const interestOptions = [
 ];
 
 const errors = reactive<Record<keyof ProfileForm | string, string>>({});
-const showSnackbar = ref(false);
-const snackbarMessage = ref("");
-const snackbarColor = ref("primary");
+const snackbar = reactive<SnackbarState>({
+  visible: false,
+  message: "",
+  color: "primary",
+});
 const isProfileSaving = ref(false);
 
 const fullName = computed(() => `${form.firstName} ${form.lastName}`.trim());
@@ -385,25 +399,52 @@ registerRightSidebarContent(sidebarContent);
 
 const formErrors = computed(() => Object.values(errors).filter(Boolean));
 
+const validationMessages = computed(() => ({
+  required: t("pages.profileEdit.validation.required"),
+  bioLimit: t("pages.profileEdit.validation.bioLimit"),
+}));
+
 function fieldError(field: keyof ProfileForm | string) {
   return errors[field] ? [errors[field]] : [];
 }
 
-function validate() {
-  errors.firstName = form.firstName ? "" : t("pages.profileEdit.validation.required");
-  errors.lastName = form.lastName ? "" : t("pages.profileEdit.validation.required");
-  errors.language = form.language ? "" : t("pages.profileEdit.validation.required");
-  errors.email = form.email ? "" : t("pages.profileEdit.validation.required");
-  errors.bio = form.bio.length <= 280 ? "" : t("pages.profileEdit.validation.bioLimit");
+function clearErrors(fields?: readonly (keyof ProfileForm | string)[]) {
+  const keys = fields ?? (Object.keys(errors) as Array<keyof ProfileForm | string>);
 
-  return Object.values(errors).every((value) => !value);
+  keys.forEach((field) => {
+    errors[field] = "";
+  });
+}
+
+function setError(field: keyof ProfileForm | string, message: string) {
+  errors[field] = message;
+}
+
+function validate() {
+  clearErrors(trackedErrorFields);
+
+  const { required, bioLimit } = validationMessages.value;
+
+  requiredFields.forEach((field) => {
+    setError(field, form[field] ? "" : required);
+  });
+
+  if (form.bio.length > BIO_MAX_LENGTH) {
+    setError("bio", bioLimit);
+  }
+
+  return !Object.values(errors).some(Boolean);
 }
 
 function resetForm() {
   Object.assign(form, initialForm);
-  Object.keys(errors).forEach((key) => {
-    errors[key] = "";
-  });
+  clearErrors();
+}
+
+function openSnackbar(color: SnackbarColor, messageKey: string) {
+  snackbar.message = t(messageKey);
+  snackbar.color = color;
+  snackbar.visible = true;
 }
 
 async function submitForm() {
@@ -414,22 +455,16 @@ async function submitForm() {
   const isValid = validate();
 
   if (!isValid) {
-    snackbarMessage.value = t("pages.profileEdit.feedback.errorMessage");
-    snackbarColor.value = "error";
-    showSnackbar.value = true;
+    openSnackbar("error", "pages.profileEdit.feedback.errorMessage");
     return;
   }
 
   try {
     isProfileSaving.value = true;
     await new Promise((resolve) => setTimeout(resolve, 900));
-    snackbarMessage.value = t("pages.profileEdit.feedback.successMessage");
-    snackbarColor.value = "success";
-    showSnackbar.value = true;
+    openSnackbar("success", "pages.profileEdit.feedback.successMessage");
   } catch (error) {
-    snackbarMessage.value = t("pages.profileEdit.feedback.errorMessage");
-    snackbarColor.value = "error";
-    showSnackbar.value = true;
+    openSnackbar("error", "pages.profileEdit.feedback.errorMessage");
   } finally {
     isProfileSaving.value = false;
   }
