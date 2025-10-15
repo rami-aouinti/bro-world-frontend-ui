@@ -1,13 +1,12 @@
 <template>
   <form
-    class="mx-auto max-w-xl"
+    class="register-form mx-auto max-w-xl"
     @submit.prevent="handleSubmit"
   >
     <div class="card-padding">
       <v-text-field
         v-model="email"
         density="compact"
-        rounded="xl"
         :label="t('register.email')"
         :class="fieldAlignment"
         required
@@ -18,7 +17,6 @@
       <v-text-field
         v-model="password"
         density="compact"
-        rounded="xl"
         :type="showPassword ? 'text' : 'password'"
         :label="t('register.password')"
         required
@@ -31,7 +29,6 @@
       <v-text-field
         v-model="repeatPassword"
         density="compact"
-        rounded="xl"
         :type="showRepeatPassword ? 'text' : 'password'"
         :label="t('register.repeatPassword')"
         required
@@ -275,6 +272,21 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+.register-form {
+  --v-field-border-radius: var(--radius, var(--ui-radius));
+}
+
+.register-form :deep(.v-field) {
+  border-radius: var(--v-field-border-radius);
+}
+
+.register-form :deep(.v-field__outline),
+.register-form :deep(.v-field__overlay) {
+  border-radius: inherit;
+}
+</style>
 
 <style scoped>
 .rtl-block {

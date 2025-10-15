@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="profile-security-form">
     <header class="mb-6">
       <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4">
         <div>
@@ -285,3 +285,18 @@ function subtractDays(date: Date, days: number) {
   return new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
 }
 </script>
+
+<style scoped>
+.profile-security-form {
+  --v-field-border-radius: var(--radius, var(--ui-radius));
+}
+
+.profile-security-form :deep(.v-field) {
+  border-radius: var(--v-field-border-radius);
+}
+
+.profile-security-form :deep(.v-field__outline),
+.profile-security-form :deep(.v-field__overlay) {
+  border-radius: inherit;
+}
+</style>
