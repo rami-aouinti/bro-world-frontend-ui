@@ -159,11 +159,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, hasInjectionContext } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
-const { t, locale, localeProperties } = useI18n();
+const nuxtApp = useNuxtApp();
+const i18n = hasInjectionContext() ? useI18n() : (nuxtApp.$i18n as ReturnType<typeof useI18n>);
+const { t, locale, localeProperties } = i18n;
 const runtimeConfig = useRuntimeConfig();
 const localePath = useResolvedLocalePath();
 const router = useRouter();
