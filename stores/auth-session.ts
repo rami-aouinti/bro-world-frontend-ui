@@ -6,6 +6,7 @@ import { defineStore } from "~/lib/pinia-shim";
 import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from "~/types/auth";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
+import type { FetchOptions } from "ofetch";
 
 interface LoginCredentials {
   identifier: string;
@@ -18,13 +19,115 @@ interface LogoutOptions {
   notify?: boolean;
 }
 
-function resolveFetcher() {
-  if (import.meta.server) {
-    return useRequestFetch();
+type Fetcher = <T>(request: string, options?: FetchOptions) => Promise<T>;
+
+function isJsonSerializableBody(body: unknown): body is Record<string, unknown> | unknown[] {
+  if (body == null) {
+    return false;
   }
 
-  const { $api } = useNuxtApp();
-  return $api;
+  if (typeof body === "string" || typeof body === "number" || typeof body === "boolean") {
+    return false;
+  }
+
+  if (typeof body !== "object") {
+    return false;
+  }
+
+  if (Array.isArray(body)) {
+    return true;
+  }
+
+  if (typeof FormData !== "undefined" && body instanceof FormData) {
+    return false;
+  }
+
+  if (body instanceof URLSearchParams) {
+    return false;
+  }
+
+  if (typeof Blob !== "undefined" && body instanceof Blob) {
+    return false;
+  }
+
+  if (
+    typeof ArrayBuffer !== "undefined" &&
+    (body instanceof ArrayBuffer || ArrayBuffer.isView(body as ArrayBufferView))
+  ) {
+    return false;
+  }
+
+  if (typeof ReadableStream !== "undefined" && body instanceof ReadableStream) {
+    return false;
+  }
+
+  return true;
+}
+
+function hasHeader(headers: Record<string, string>, name: string): boolean {
+  const target = name.toLowerCase();
+
+  return Object.keys(headers).some((key) => key.toLowerCase() === target);
+}
+
+function normalizeHeaders(init: FetchOptions["headers"]): Record<string, string> {
+  if (!init) {
+    return {};
+  }
+
+  const entries: Array<[string, string]> = [];
+
+  if (typeof Headers !== "undefined" && init instanceof Headers) {
+    for (const [key, value] of init.entries()) {
+      if (!key) continue;
+      entries.push([key, value]);
+    }
+  } else if (Array.isArray(init)) {
+    for (const [key, value] of init) {
+      if (!key || value == null) continue;
+      entries.push([String(key), String(value)]);
+    }
+  } else if (typeof init === "object") {
+    for (const [key, value] of Object.entries(init as Record<string, unknown>)) {
+      if (!key || value == null) continue;
+      entries.push([key, String(value)]);
+    }
+  }
+
+  const headers: Record<string, string> = {};
+
+  for (const [key, value] of entries) {
+    headers[key] = value;
+  }
+
+  return headers;
+}
+
+function normalizeFetchOptions(options: FetchOptions): FetchOptions {
+  if (!isJsonSerializableBody(options.body)) {
+    return options;
+  }
+
+  const headers = normalizeHeaders(options.headers);
+
+  if (!hasHeader(headers, "content-type")) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  return {
+    ...options,
+    body: JSON.stringify(options.body),
+    headers,
+  };
+}
+
+function resolveFetcher(): Fetcher {
+  const baseFetcher = (import.meta.server ? useRequestFetch() : useNuxtApp().$api) as Fetcher;
+
+  return async function wrappedFetcher<T>(request: string, options?: FetchOptions): Promise<T> {
+    const normalizedOptions = options ? normalizeFetchOptions(options) : options;
+    return baseFetcher<T>(request, normalizedOptions);
+  };
 }
 
 function extractErrorMessage(error: unknown): string {
@@ -371,20 +474,22 @@ export const useAuthSession = defineStore("auth-session", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const payload: Record<string, string> = {
-        identifier: trimmedIdentifier,
-        password,
-      };
+      const payload = new URLSearchParams();
+      payload.set("identifier", trimmedIdentifier);
+      payload.set("password", password);
 
       if (trimmedIdentifier.includes("@")) {
-        payload.email = trimmedIdentifier;
+        payload.set("email", trimmedIdentifier);
       } else {
-        payload.username = trimmedIdentifier;
+        payload.set("username", trimmedIdentifier);
       }
 
       const response = await fetcher<AuthLoginEnvelope>("/auth/login", {
         method: "POST",
         body: payload,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
         context: {
           suppressErrorNotification: true,
         },
