@@ -296,7 +296,9 @@ const activeNow = computed(() =>
 
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 
-const sidebarConnectHandler = (friend: FriendCard) => triggerAction("connect", friend);
+function sidebarConnectHandler(friend: FriendCard) {
+  triggerAction("connect", friend);
+}
 
 const sidebarContent = computed(() => {
   const base = {

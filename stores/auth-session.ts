@@ -209,7 +209,10 @@ export const useAuthSession = defineStore("auth-session", () => {
   const handlingUnauthorizedState = ref(false);
 
   const nuxtApp = useNuxtApp();
-  const translate = (key: string) => nuxtApp.$i18n?.t?.(key) ?? key;
+
+  function translate(key: string) {
+    return nuxtApp.$i18n?.t?.(key) ?? key;
+  }
 
   function resolveRouter(): Router | null {
     const injectedRouter = nuxtApp.$router as Router | undefined;

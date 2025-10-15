@@ -70,7 +70,7 @@ export default defineNuxtPlugin(() => {
   let hasScheduled = false;
   let hasLoaded = false;
 
-  const loadAnalytics = () => {
+  function loadAnalytics() {
     if (hasLoaded) {
       return;
     }
@@ -90,9 +90,9 @@ export default defineNuxtPlugin(() => {
     script.async = true;
     script.dataset.lazyGtag = "true";
     document.head.appendChild(script);
-  };
+  }
 
-  const scheduleLoad = () => {
+  function scheduleLoad() {
     if (hasScheduled) {
       return;
     }
@@ -108,7 +108,7 @@ export default defineNuxtPlugin(() => {
 
     window.addEventListener("load", () => loadAnalytics(), { once: true });
     window.setTimeout(() => loadAnalytics(), 4000);
-  };
+  }
 
   if (document.readyState === "complete") {
     scheduleLoad();
