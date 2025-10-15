@@ -3,7 +3,7 @@
     <header class="post-card__header">
       <div class="post-card__author">
         <img
-          :src="post.user.photo ?? defaultAvatar"
+          :src="authorAvatar"
           :alt="`${post.user.firstName} ${post.user.lastName}`"
           width="48"
           height="48"
@@ -173,6 +173,7 @@ import { toast } from "~/components/content/common/toast";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 interface ReactionLabels {
   like: string;
@@ -255,6 +256,10 @@ const fieldLabels = computed(() => ({
   summary: t("blog.posts.actions.fields.summary"),
   content: t("blog.posts.actions.fields.content"),
 }));
+const avatarSize = 48;
+const authorAvatar = computed(
+  () => optimizeAvatarUrl(post.value.user.photo ?? null, avatarSize) ?? props.defaultAvatar,
+);
 
 function toggleActionsMenu() {
   actionsMenuOpen.value = !actionsMenuOpen.value;

@@ -7,7 +7,7 @@
       <div class="d-flex align-center ga-3">
         <v-avatar size="44">
           <v-img
-            :src="avatar"
+            :src="avatarSrc"
             alt="Avatar"
             width="44"
             height="44"
@@ -69,16 +69,16 @@
 
   <Suspense v-if="dialog && canUseAuthenticatedUi">
     <template #default>
-      <NewPostDialog
-        v-model:open="dialog"
-        :avatar="avatar"
-        :user-name="userName"
-        :placeholder="placeholderText"
-        :max-length="maxLength"
-        @submit="handleDialogSubmit"
-        @close="handleDialogClose"
-        @attach="handleAttach"
-      />
+        <NewPostDialog
+          v-model:open="dialog"
+          :avatar="avatarSrc"
+          :user-name="userName"
+          :placeholder="placeholderText"
+          :max-length="maxLength"
+          @submit="handleDialogSubmit"
+          @close="handleDialogClose"
+          @attach="handleAttach"
+        />
     </template>
     <template #fallback>
       <div
@@ -101,6 +101,7 @@ import { useNuxtApp } from "#imports";
 import { defineAsyncComponentWithVendorStyles } from "~/lib/material-dashboard-vendors";
 import { useAuthSession } from "~/stores/auth-session";
 import BorderBeam from "~/components/special-effects/BorderBeam.vue";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
@@ -134,6 +135,8 @@ const { t } = useI18n();
 const { $notify } = useNuxtApp();
 const auth = useAuthSession();
 const canUseAuthenticatedUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
+const avatarSize = 44;
+const avatarSrc = computed(() => optimizeAvatarUrl(props.avatar ?? null, avatarSize) ?? props.avatar);
 
 const placeholderText = computed(
   () => props.placeholder ?? t("blog.newPost.placeholder", { name: props.userName }),

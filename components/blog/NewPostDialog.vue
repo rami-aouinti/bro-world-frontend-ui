@@ -24,7 +24,7 @@
         <div class="d-flex align-start ga-3 mb-2">
           <v-avatar size="40">
             <v-img
-              :src="avatar"
+              :src="avatarSrc"
               alt="Avatar"
               width="40"
               height="40"
@@ -167,6 +167,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 type AudienceOption = "friends" | "public" | "private";
 
@@ -200,6 +201,9 @@ const dialogOpen = computed({
 
 const message = ref("");
 const audience = ref<AudienceOption>("friends");
+
+const avatarSize = 40;
+const avatarSrc = computed(() => optimizeAvatarUrl(props.avatar ?? null, avatarSize) ?? props.avatar);
 
 const { t } = useI18n();
 

@@ -2,7 +2,7 @@
   <div class="comment-meta">
     <div class="comment-meta__info">
       <img
-        :src="user.photo ?? defaultAvatar"
+        :src="avatarSrc"
         :alt="`${user.firstName} ${user.lastName}`"
         width="40"
         height="40"
@@ -82,6 +82,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import type { BlogUser } from "~/lib/mock/blog";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 type CommentMetaProps = {
   user: BlogUser;
@@ -127,6 +128,10 @@ const followLoadingLabel = computed(() => props.followLoadingLabel);
 const followingLabel = computed(() => props.followingLabel);
 const editLabel = computed(() => props.editLabel);
 const deleteLabel = computed(() => props.deleteLabel);
+const avatarSize = 40;
+const avatarSrc = computed(
+  () => optimizeAvatarUrl(props.user.photo ?? null, avatarSize) ?? props.defaultAvatar,
+);
 
 function toggleMenu() {
   menuOpen.value = !menuOpen.value;

@@ -12,7 +12,7 @@
           class="mr-2"
         >
           <v-img
-            :src="node.user.photo || fallbackAvatar"
+            :src="resolveCommentAvatar(node.user.photo)"
             alt=""
             width="34"
             height="34"
@@ -102,7 +102,7 @@
         class="reply-composer"
       >
         <PostCommentForm
-          :avatar="props.currentUser?.photo"
+          :avatar="resolveComposerAvatar(props.currentUser?.photo)"
           :placeholder="t('blog.comments.replyPlaceholder')"
           :disabled="!canRenderAuthUi"
           @submit="(t) => emit('submit', t)"
@@ -127,7 +127,7 @@
     >
       <PostCommentForm
         :placeholder="commentPlaceholder"
-        :avatar="props.currentUser?.photo"
+        :avatar="resolveComposerAvatar(props.currentUser?.photo)"
         :disabled="!canRenderAuthUi"
         @submit="handleSubmit"
       />
@@ -150,6 +150,7 @@ import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import { useRelativeTime } from "~/composables/useRelativeTime";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const ReactionPicker = defineAsyncComponent({
   loader: () => import("~/components/blog/ReactionPicker.vue"),
@@ -178,6 +179,16 @@ const canRenderAuthUi = computed(
   () => isHydrated.value && auth.isReady.value && auth.isAuthenticated.value,
 );
 const composerVisible = defineModel<boolean>("composerVisible", { default: false });
+
+const avatarSize = 34;
+
+function resolveCommentAvatar(src: string | null | undefined): string {
+  return optimizeAvatarUrl(src ?? null, avatarSize) ?? fallbackAvatar;
+}
+
+function resolveComposerAvatar(src: string | null | undefined): string | undefined {
+  return optimizeAvatarUrl(src ?? null, avatarSize) ?? undefined;
+}
 
 let stopAuthWatcher: WatchStopHandle | null = null;
 

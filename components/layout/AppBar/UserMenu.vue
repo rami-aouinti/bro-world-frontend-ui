@@ -20,8 +20,8 @@
             :class="['ring-1 ring-black/5 dark:ring-white/10', avatarClasses]"
           >
             <v-img
-              v-if="props.user.photo"
-              :src="props.user.photo"
+              v-if="avatarSrc"
+              :src="avatarSrc"
               :alt="heading"
               cover
             />
@@ -56,6 +56,7 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from "vue";
 import type { AuthUser } from "~/types/auth";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const UserMenuContent = defineAsyncComponent({
   loader: () => import("./UserMenuContent.vue"),
@@ -104,4 +105,6 @@ const initials = computed(() => {
   if (letters.length === 0 && props.user.email) letters.push(props.user.email[0] ?? "");
   return letters.join("").slice(0, 2).toUpperCase();
 });
+const avatarSize = 56;
+const avatarSrc = computed(() => optimizeAvatarUrl(props.user?.photo ?? null, avatarSize));
 </script>
