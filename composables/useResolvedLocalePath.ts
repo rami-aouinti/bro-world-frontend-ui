@@ -1,7 +1,7 @@
 import type { RouteLocationRaw } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalePath } from "#i18n";
-import { buildLocalizedHref } from "~/lib/i18n/locale-path";
+import { buildLocalizedHref, stripLocaleFromPath } from "~/lib/i18n/locale-path";
 
 export function useResolvedLocalePath() {
   const { locale } = useI18n();
@@ -17,8 +17,8 @@ export function useResolvedLocalePath() {
     }
 
     if (typeof target === "object" && "path" in target && typeof target.path === "string") {
-      const localizedPath = buildLocalizedHref(target.path, locale.value);
-      return resolveLocalePath({ ...target, path: localizedPath });
+      const sanitizedPath = stripLocaleFromPath(target.path);
+      return resolveLocalePath({ ...target, path: sanitizedPath });
     }
 
     return resolveLocalePath(target);

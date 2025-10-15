@@ -10,7 +10,7 @@ function normalizePath(path: string): string {
   return path.startsWith("/") ? path : `/${path}`;
 }
 
-function stripLocaleFromPath(path: string): string {
+export function stripLocaleFromPath(path: string): string {
   const normalizedPath = normalizePath(path);
   const segments = normalizedPath.split("/").filter(Boolean);
 

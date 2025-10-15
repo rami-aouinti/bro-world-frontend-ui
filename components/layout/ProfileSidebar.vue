@@ -14,7 +14,7 @@
               size="small"
               variant="text"
               color="primary"
-              :to="localePath({ path: '/profile-edit' })"
+              :to="localePath('/profile-edit')"
             >
               {{ t("layout.profileSidebar.editBio") }}
             </v-btn>
@@ -52,7 +52,7 @@
               block
               color="primary"
               variant="tonal"
-              :to="localePath({ path: '/profile-edit' })"
+              :to="localePath('/profile-edit')"
             >
               {{ t("layout.profileSidebar.editDetails") }}
             </v-btn>
@@ -79,7 +79,7 @@
               size="small"
               variant="text"
               color="primary"
-              :to="localePath({ path: '/profile-photos' })"
+              :to="localePath('/profile-photos')"
             >
               {{ t("layout.profileSidebar.viewAllPhotos") }}
             </v-btn>
@@ -117,7 +117,7 @@
               size="small"
               variant="text"
               color="primary"
-              :to="localePath({ path: '/profile-friends' })"
+              :to="localePath('/profile-friends')"
             >
               {{ t("layout.profileSidebar.viewAllFriends") }}
             </v-btn>

@@ -305,7 +305,7 @@ function resolveLocalizedPath(target?: string): string | undefined {
   }
 
   try {
-    return localePath({ path: target });
+    return localePath(target);
   } catch (error) {
     if (import.meta.dev) {
       console.warn("[AppSidebar] Failed to resolve localized path for target", target, error);
