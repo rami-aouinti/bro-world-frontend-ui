@@ -206,7 +206,7 @@ const showIntroDetails = computed(() => profileSettings.value.showDetailsSection
 const showFriendsSection = computed(() => profileSettings.value.showSocialSection !== false);
 const defaultBio = computed(() => profileSettings.value.defaultBio?.trim() || null);
 
-const defaultAvatar = "/person.png";
+const defaultAvatar = "/images/avatars/avatar-default.svg";
 
 const friendsList = computed<Friend[]>(() =>
   Array.isArray(props.friends) ? props.friends.filter(Boolean) : [],

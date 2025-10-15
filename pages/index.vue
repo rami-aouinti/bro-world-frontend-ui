@@ -122,7 +122,7 @@ definePageMeta({
   documentDriven: false,
 });
 
-const defaultAvatar = "/person.png";
+const defaultAvatar = "/images/avatars/avatar-default.svg";
 const auth = useAuthSession();
 
 const isAuthReady = computed(() => auth.isReady.value);
@@ -131,7 +131,7 @@ const canAccessAuthenticatedContent = computed(
 );
 const user = {
   name: "Rami Aouinti",
-  avatarUrl: "/person.png",
+  avatarUrl: "/images/avatars/avatar-default.svg",
 };
 
 const stories = ref<Story[]>([

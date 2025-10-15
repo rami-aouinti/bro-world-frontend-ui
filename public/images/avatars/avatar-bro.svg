@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title>Bro World avatar</title>
+  <defs>
+    <linearGradient id="gradient-bro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#f43f5e" />
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="48" fill="url(#gradient-bro)" />
+  <text
+    x="48"
+    y="58"
+    font-size="36"
+    font-family="'Inter', 'Segoe UI', sans-serif"
+    font-weight="700"
+    text-anchor="middle"
+    fill="#fff7ed"
+    letter-spacing="1"
+  >BW</text>
+</svg>
