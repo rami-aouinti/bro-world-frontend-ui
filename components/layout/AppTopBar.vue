@@ -50,6 +50,19 @@
     <template #append>
       <div class="app-top-bar__append">
         <ClientOnly>
+          <template #fallback>
+            <div
+              class="app-top-bar__append-placeholder"
+              aria-hidden="true"
+            >
+              <span
+                v-for="index in placeholderCount"
+                :key="index"
+                class="app-top-bar__placeholder animate-pulse"
+              />
+              <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
+            </div>
+          </template>
           <RightControls
             :is-mobile="props.isMobile"
             :show-right-toggle="props.showRightToggle"
@@ -102,19 +115,6 @@
               />
             </template>
           </RightControls>
-          <template #fallback>
-            <div
-              class="app-top-bar__append-placeholder"
-              aria-hidden="true"
-            >
-              <span
-                v-for="index in placeholderCount"
-                :key="index"
-                class="app-top-bar__placeholder animate-pulse"
-              />
-              <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
-            </div>
-          </template>
         </ClientOnly>
       </div>
     </template>
