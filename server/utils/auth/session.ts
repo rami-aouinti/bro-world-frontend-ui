@@ -11,6 +11,17 @@ interface SessionCookiesConfig {
   maxAge: number;
 }
 
+export const SESSION_COOKIE_SYNC_SKIP_FLAG = "__broSkipSessionCookieSync" as const;
+
+type SessionEventContext = {
+  [SESSION_COOKIE_SYNC_SKIP_FLAG]?: boolean;
+};
+
+function shouldSyncSessionCookies(event: H3Event): boolean {
+  const context = event.context as SessionEventContext;
+  return !context[SESSION_COOKIE_SYNC_SKIP_FLAG];
+}
+
 function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
   const runtimeConfig = useRuntimeConfig(event);
   const authConfig = runtimeConfig.auth ?? {};
@@ -103,34 +114,36 @@ export function getSessionToken(event: H3Event): string | null {
 
   const secure = shouldUseSecureCookies(event);
 
-  safeSetCookie(
-    event,
-    tokenCookieName,
-    fallbackToken,
-    withSecureCookieOptions(
-      {
-        httpOnly: true,
-        sameSite: "lax",
-        maxAge,
-      },
+  if (shouldSyncSessionCookies(event)) {
+    safeSetCookie(
       event,
-    ),
-  );
+      tokenCookieName,
+      fallbackToken,
+      withSecureCookieOptions(
+        {
+          httpOnly: true,
+          sameSite: "lax",
+          maxAge,
+        },
+        event,
+      ),
+    );
 
-  safeSetCookie(
-    event,
-    tokenPresenceCookieName,
-    "1",
-    withSecureCookieOptions(
-      {
-        httpOnly: false,
-        sameSite: "strict",
-        maxAge,
-        secure,
-      },
+    safeSetCookie(
       event,
-    ),
-  );
+      tokenPresenceCookieName,
+      "1",
+      withSecureCookieOptions(
+        {
+          httpOnly: false,
+          sameSite: "strict",
+          maxAge,
+          secure,
+        },
+        event,
+      ),
+    );
+  }
 
   return fallbackToken;
 }
