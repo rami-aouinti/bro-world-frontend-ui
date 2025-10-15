@@ -557,6 +557,7 @@ export default defineNuxtConfig({
       // Pas de sourcemaps en prod : -25/35% de JS à transférer
       sourcemap: !isProd,
       optimizeCSS: true,
+      target: "es2022",
       splitChunks: {
         layouts: true,
         pages: true,
@@ -569,6 +570,11 @@ export default defineNuxtConfig({
             vendor: ["vue", "vue-router", "pinia"],
           },
         },
+      },
+    },
+    optimizeDeps: {
+      esbuildOptions: {
+        target: "es2022",
       },
     },
   },
