@@ -117,21 +117,21 @@ const VARIANT_CONFIG: Record<
   }
 > = {
   post: {
-    wrapper: "flex flex-wrap items-center gap-3 text-sm text-slate-500",
+    wrapper: "flex flex-wrap items-center gap-3 text-sm text-muted-foreground",
     menuButton:
-      "inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-slate-500 transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+      "inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-lg text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     menuPanel:
-      "absolute right-0 z-20 mt-2 w-44 rounded-xl border border-slate-200 bg-white p-1 shadow-xl",
+      "absolute right-0 z-20 mt-2 w-44 rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-xl",
     editButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-popover-foreground transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     deleteButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-rose-600 transition-colors hover:bg-rose-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400",
+      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-destructive transition-colors hover:bg-destructive/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive",
     followButton:
-      "inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
+      "inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
     followLoadingWrapper: "inline-flex items-center gap-2",
-    spinner: "h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white",
+    spinner: "h-3 w-3 animate-spin rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground",
     followingChip:
-      "inline-flex items-center justify-center rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-xs font-medium uppercase tracking-wide text-slate-600",
+      "inline-flex items-center justify-center rounded-full border border-border bg-muted px-4 py-2 text-xs font-medium uppercase tracking-wide text-muted-foreground",
     defaults: {
       menuTriggerTestId: "post-actions-trigger",
       editButtonTestId: "post-action-edit",
@@ -141,21 +141,21 @@ const VARIANT_CONFIG: Record<
     },
   },
   comment: {
-    wrapper: "flex flex-wrap items-center gap-2 text-xs text-slate-500",
+    wrapper: "flex flex-wrap items-center gap-2 text-xs text-muted-foreground",
     menuButton:
-      "inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-base text-slate-500 transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+      "inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-base text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     menuPanel:
-      "absolute right-0 z-20 mt-2 w-40 rounded-xl border border-slate-200 bg-white p-1 shadow-xl",
+      "absolute right-0 z-20 mt-2 w-40 rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-xl",
     editButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs text-popover-foreground transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     deleteButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs text-rose-600 transition-colors hover:bg-rose-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400",
+      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs text-destructive transition-colors hover:bg-destructive/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive",
     followButton:
-      "inline-flex items-center justify-center rounded-full bg-primary px-3 py-1.5 font-semibold text-white transition-colors duration-200 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
+      "inline-flex items-center justify-center rounded-full bg-primary px-3 py-1.5 font-semibold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
     followLoadingWrapper: "inline-flex items-center gap-2",
-    spinner: "h-2.5 w-2.5 animate-spin rounded-full border-2 border-white/30 border-t-white",
+    spinner: "h-2.5 w-2.5 animate-spin rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground",
     followingChip:
-      "inline-flex items-center justify-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1.5 font-medium uppercase tracking-wide text-slate-600",
+      "inline-flex items-center justify-center rounded-full border border-border bg-muted px-3 py-1.5 font-medium uppercase tracking-wide text-muted-foreground",
     defaults: {
       menuTriggerTestId: "comment-actions-trigger",
       editButtonTestId: "comment-action-edit",
