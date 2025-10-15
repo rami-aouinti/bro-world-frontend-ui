@@ -47,8 +47,8 @@
       :is-dark="props.isDark"
     />
 
-    <template #append>
-      <div class="app-top-bar__append">
+    <template #append="{ props: appendSlotProps }">
+      <div v-bind="appendSlotProps" class="app-top-bar__append">
         <ClientOnly>
           <RightControls
             :is-mobile="props.isMobile"
