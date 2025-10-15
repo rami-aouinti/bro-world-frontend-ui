@@ -148,11 +148,7 @@ function buildMessage(conversationId: string, seed: MessageSeed): MessengerMessa
   const sender = resolveParticipant(seed.senderId);
   const createdAt = toIsoDate(seed.createdAt);
   const readAt =
-    typeof seed.readAt === "string"
-      ? toIsoDate(seed.readAt)
-      : seed.read
-        ? createdAt
-        : null;
+    typeof seed.readAt === "string" ? toIsoDate(seed.readAt) : seed.read ? createdAt : null;
 
   return {
     id: seed.id ?? generateId("msg"),
@@ -201,7 +197,9 @@ function addMessageToConversation(
 }
 
 function computeUnreadCount(state: ConversationState): number {
-  return state.messages.filter((message) => message.sender.id !== CURRENT_USER_ID && !message.readAt).length;
+  return state.messages.filter(
+    (message) => message.sender.id !== CURRENT_USER_ID && !message.readAt,
+  ).length;
 }
 
 function registerConversation(seed: ConversationSeed) {
@@ -246,13 +244,15 @@ const conversationSeeds: ConversationSeed[] = [
       },
       {
         senderId: CURRENT_USER_ID,
-        content: "Of course! The community was so energized. Are we still posting the recap later today?",
+        content:
+          "Of course! The community was so energized. Are we still posting the recap later today?",
         createdAt: new Date(now - 1000 * 60 * 60 * 19).toISOString(),
         read: true,
       },
       {
         senderId: "user-alex",
-        content: "Yes! I just uploaded final screenshots to the drive. Let me know if anything's missing.",
+        content:
+          "Yes! I just uploaded final screenshots to the drive. Let me know if anything's missing.",
         createdAt: new Date(now - 1000 * 60 * 60 * 18).toISOString(),
         read: false,
       },
@@ -283,7 +283,8 @@ const conversationSeeds: ConversationSeed[] = [
       },
       {
         senderId: "user-taylor",
-        content: "Could you also remind people to bring spare controllers? We were short last time.",
+        content:
+          "Could you also remind people to bring spare controllers? We were short last time.",
         createdAt: new Date(now - 1000 * 60 * 60 * 3).toISOString(),
         read: false,
       },
@@ -312,7 +313,10 @@ const conversationSeeds: ConversationSeed[] = [
 
 conversationSeeds.forEach(registerConversation);
 
-export function listConversations(limit: number, offset: number): {
+export function listConversations(
+  limit: number,
+  offset: number,
+): {
   conversations: MessengerConversation[];
   total: number;
 } {
@@ -376,7 +380,7 @@ export function getConversationMessages(
   const startIndex = Math.max(0, endIndex - normalizedLimit);
   const slice = sortedMessages.slice(startIndex, endIndex);
   const hasMore = startIndex > 0;
-  const nextBefore = hasMore ? slice[0]?.id ?? null : null;
+  const nextBefore = hasMore ? (slice[0]?.id ?? null) : null;
 
   return {
     messages: slice.map(cloneMessage),

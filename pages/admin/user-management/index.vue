@@ -541,12 +541,7 @@ function resolveUsersErrorMessage(error: unknown) {
     return store.error.value;
   }
 
-  const message =
-    error instanceof Error
-      ? error.message
-      : typeof error === "string"
-        ? error
-        : "";
+  const message = error instanceof Error ? error.message : typeof error === "string" ? error : "";
 
   return message || t("admin.userManagement.errors.generic");
 }

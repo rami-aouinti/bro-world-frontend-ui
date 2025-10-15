@@ -82,9 +82,13 @@ const cssVars = computed(() => ({
   animation: border-beam-spin var(--border-beam-duration) linear infinite;
   animation-delay: var(--border-beam-delay);
   filter: blur(0.5px);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
   mask-composite: exclude;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   opacity: 0.85;
 }

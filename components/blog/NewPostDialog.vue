@@ -203,7 +203,9 @@ const message = ref("");
 const audience = ref<AudienceOption>("friends");
 
 const avatarSize = 40;
-const avatarSrc = computed(() => optimizeAvatarUrl(props.avatar ?? null, avatarSize) ?? props.avatar);
+const avatarSrc = computed(
+  () => optimizeAvatarUrl(props.avatar ?? null, avatarSize) ?? props.avatar,
+);
 
 const { t } = useI18n();
 

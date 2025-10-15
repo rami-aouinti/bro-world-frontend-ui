@@ -1,7 +1,4 @@
-export function optimizeAvatarUrl(
-  input: string | null | undefined,
-  size: number,
-): string | null {
+export function optimizeAvatarUrl(input: string | null | undefined, size: number): string | null {
   if (!input) {
     return null;
   }

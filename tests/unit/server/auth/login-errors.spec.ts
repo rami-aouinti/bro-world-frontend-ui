@@ -1,9 +1,7 @@
 import type { FetchError } from "ofetch";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
-let resolveFetchErrorStatus: (
-  error: FetchError<unknown>,
-) => number | null;
+let resolveFetchErrorStatus: (error: FetchError<unknown>) => number | null;
 let resolveLoginErrorMessage: (status: number, payload: unknown) => string;
 
 beforeAll(async () => {

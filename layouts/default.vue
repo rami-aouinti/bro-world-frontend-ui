@@ -251,10 +251,14 @@
         </div>
       </div>
     </v-main>
+    <Analytics />
+    <SpeedInsights />
   </v-app>
 </template>
 
 <script setup lang="ts">
+import { Analytics } from "@vercel/analytics/vue";
+import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { watch, computed, ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";

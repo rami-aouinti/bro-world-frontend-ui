@@ -3,211 +3,211 @@
     v-if="friend"
     aria-labelledby="friend-profile-title"
   >
-      <div class="mb-6">
+    <div class="mb-6">
+      <v-btn
+        variant="text"
+        color="primary"
+        prepend-icon="mdi:arrow-left"
+        :to="backLink"
+      >
+        {{ t("layout.actions.goBack") }}
+      </v-btn>
+    </div>
+
+    <SidebarCard
+      class="text-card-foreground pa-6 mb-8"
+      glow
+    >
+      <div class="d-flex flex-column flex-md-row gap-6 align-md-center">
+        <v-avatar size="104">
+          <v-img
+            :src="friend.avatar"
+            :alt="friend.name"
+            cover
+          />
+        </v-avatar>
+        <div class="flex-grow-1">
+          <h1
+            id="friend-profile-title"
+            class="text-h4 font-weight-bold mb-2"
+          >
+            {{ friend.name }}
+          </h1>
+          <p class="text-body-1 text-medium-emphasis mb-4">
+            {{ friend.headline }}
+          </p>
+          <div class="d-flex flex-wrap gap-4 text-medium-emphasis">
+            <div class="d-flex align-center gap-2">
+              <Icon
+                name="mdi-map-marker-outline"
+                size="20"
+              />
+              <span>{{ friend.location }}</span>
+            </div>
+            <div class="d-flex align-center gap-2">
+              <Icon
+                name="mdi-account-multiple-outline"
+                size="20"
+              />
+              <span>{{ friend.mutualCount }} {{ t("pages.profileFriends.stats.mutual") }}</span>
+            </div>
+            <div class="d-flex align-center gap-2">
+              <Icon
+                name="mdi-timer-sand"
+                size="20"
+              />
+              <span>{{
+                t("pages.profileFriends.meta.lastActive", { time: friend.lastActive })
+              }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column gap-3 w-100 w-md-auto">
+          <v-chip
+            :color="statusColor(friend.status)"
+            size="small"
+            class="font-weight-medium align-self-start"
+          >
+            {{ statusLabel(friend.status) }}
+          </v-chip>
+          <div class="d-flex flex-column flex-sm-row gap-3">
+            <v-btn
+              color="primary"
+              class="flex-grow-1"
+              @click="triggerAction('message', friend)"
+            >
+              {{ t("pages.profileFriends.actions.message") }}
+            </v-btn>
+            <v-btn
+              variant="tonal"
+              color="primary"
+              class="flex-grow-1"
+              @click="triggerAction('schedule', friend)"
+            >
+              {{ t("pages.profileFriends.actions.schedule") }}
+            </v-btn>
+          </div>
+        </div>
+      </div>
+    </SidebarCard>
+
+    <v-row
+      dense
+      class="mb-8"
+      align="stretch"
+    >
+      <v-col
+        cols="12"
+        md="8"
+      >
+        <SidebarCard
+          class="text-card-foreground pa-6 h-100"
+          glow
+        >
+          <h2 class="text-h5 font-weight-semibold mb-4">
+            {{ t("pages.profileEdit.sections.profile.bio") }}
+          </h2>
+          <p class="text-body-1 text-medium-emphasis mb-6">
+            {{ friend.bio }}
+          </p>
+          <h3 class="text-subtitle-1 font-weight-semibold mb-3">
+            {{ t("pages.profileEdit.sections.profile.skills") }}
+          </h3>
+          <div class="d-flex flex-wrap gap-2">
+            <v-chip
+              v-for="tag in friend.tags"
+              :key="tag"
+              size="small"
+              variant="tonal"
+            >
+              {{ tag }}
+            </v-chip>
+          </div>
+        </SidebarCard>
+      </v-col>
+      <v-col
+        cols="12"
+        md="4"
+      >
+        <SidebarCard
+          class="text-card-foreground pa-6 h-100"
+          glow
+        >
+          <h2 class="text-h6 font-weight-semibold mb-4">
+            {{ t("pages.profileFriends.highlights.title") }}
+          </h2>
+          <div class="d-flex flex-column gap-4">
+            <div
+              v-for="item in connectionHighlights"
+              :key="item.id"
+              class="d-flex align-start gap-3"
+            >
+              <div
+                class="rounded-circle d-flex align-center justify-center bg-primary/10"
+                style="width: 40px; height: 40px"
+              >
+                <Icon
+                  :name="item.icon"
+                  size="22"
+                  class="text-primary"
+                />
+              </div>
+              <div>
+                <div class="text-subtitle-2 font-weight-medium">{{ item.title }}</div>
+                <div class="text-body-2 text-medium-emphasis">{{ item.subtitle }}</div>
+              </div>
+            </div>
+          </div>
+        </SidebarCard>
+      </v-col>
+    </v-row>
+
+    <SidebarCard
+      class="text-card-foreground pa-6"
+      glow
+    >
+      <div class="d-flex align-center justify-space-between gap-3 mb-4">
+        <h2 class="text-h6 font-weight-semibold mb-0">
+          {{ t("pages.profileFriends.sections.suggestions") }}
+        </h2>
         <v-btn
           variant="text"
           color="primary"
-          prepend-icon="mdi:arrow-left"
+          class="ml-auto"
           :to="backLink"
         >
           {{ t("layout.actions.goBack") }}
         </v-btn>
       </div>
-
-      <SidebarCard
-        class="text-card-foreground pa-6 mb-8"
-        glow
-      >
-        <div class="d-flex flex-column flex-md-row gap-6 align-md-center">
-          <v-avatar size="104">
-            <v-img
-              :src="friend.avatar"
-              :alt="friend.name"
-              cover
-            />
-          </v-avatar>
-          <div class="flex-grow-1">
-            <h1
-              id="friend-profile-title"
-              class="text-h4 font-weight-bold mb-2"
-            >
-              {{ friend.name }}
-            </h1>
-            <p class="text-body-1 text-medium-emphasis mb-4">
-              {{ friend.headline }}
-            </p>
-            <div class="d-flex flex-wrap gap-4 text-medium-emphasis">
-              <div class="d-flex align-center gap-2">
-                <Icon
-                  name="mdi-map-marker-outline"
-                  size="20"
-                />
-                <span>{{ friend.location }}</span>
-              </div>
-              <div class="d-flex align-center gap-2">
-                <Icon
-                  name="mdi-account-multiple-outline"
-                  size="20"
-                />
-                <span>{{ friend.mutualCount }} {{ t("pages.profileFriends.stats.mutual") }}</span>
-              </div>
-              <div class="d-flex align-center gap-2">
-                <Icon
-                  name="mdi-timer-sand"
-                  size="20"
-                />
-                <span>{{
-                  t("pages.profileFriends.meta.lastActive", { time: friend.lastActive })
-                }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex flex-column gap-3 w-100 w-md-auto">
-            <v-chip
-              :color="statusColor(friend.status)"
-              size="small"
-              class="font-weight-medium align-self-start"
-            >
-              {{ statusLabel(friend.status) }}
-            </v-chip>
-            <div class="d-flex flex-column flex-sm-row gap-3">
-              <v-btn
-                color="primary"
-                class="flex-grow-1"
-                @click="triggerAction('message', friend)"
-              >
-                {{ t("pages.profileFriends.actions.message") }}
-              </v-btn>
-              <v-btn
-                variant="tonal"
-                color="primary"
-                class="flex-grow-1"
-                @click="triggerAction('schedule', friend)"
-              >
-                {{ t("pages.profileFriends.actions.schedule") }}
-              </v-btn>
-            </div>
-          </div>
-        </div>
-      </SidebarCard>
-
-      <v-row
-        dense
-        class="mb-8"
-        align="stretch"
-      >
-        <v-col
-          cols="12"
-          md="8"
+      <v-slide-group show-arrows>
+        <v-slide-group-item
+          v-for="suggestion in relatedConnections"
+          :key="suggestion.id"
         >
-          <SidebarCard
-            class="text-card-foreground pa-6 h-100"
-            glow
+          <NuxtLink
+            :to="friendProfilePath(suggestion)"
+            class="d-flex flex-column align-center pa-4 text-decoration-none text-card-foreground"
           >
-            <h2 class="text-h5 font-weight-semibold mb-4">
-              {{ t("pages.profileEdit.sections.profile.bio") }}
-            </h2>
-            <p class="text-body-1 text-medium-emphasis mb-6">
-              {{ friend.bio }}
-            </p>
-            <h3 class="text-subtitle-1 font-weight-semibold mb-3">
-              {{ t("pages.profileEdit.sections.profile.skills") }}
-            </h3>
-            <div class="d-flex flex-wrap gap-2">
-              <v-chip
-                v-for="tag in friend.tags"
-                :key="tag"
-                size="small"
-                variant="tonal"
-              >
-                {{ tag }}
-              </v-chip>
-            </div>
-          </SidebarCard>
-        </v-col>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <SidebarCard
-            class="text-card-foreground pa-6 h-100"
-            glow
-          >
-            <h2 class="text-h6 font-weight-semibold mb-4">
-              {{ t("pages.profileFriends.highlights.title") }}
-            </h2>
-            <div class="d-flex flex-column gap-4">
-              <div
-                v-for="item in connectionHighlights"
-                :key="item.id"
-                class="d-flex align-start gap-3"
-              >
-                <div
-                  class="rounded-circle d-flex align-center justify-center bg-primary/10"
-                  style="width: 40px; height: 40px"
-                >
-                  <Icon
-                    :name="item.icon"
-                    size="22"
-                    class="text-primary"
-                  />
-                </div>
-                <div>
-                  <div class="text-subtitle-2 font-weight-medium">{{ item.title }}</div>
-                  <div class="text-body-2 text-medium-emphasis">{{ item.subtitle }}</div>
-                </div>
-              </div>
-            </div>
-          </SidebarCard>
-        </v-col>
-      </v-row>
-
-      <SidebarCard
-        class="text-card-foreground pa-6"
-        glow
-      >
-        <div class="d-flex align-center justify-space-between gap-3 mb-4">
-          <h2 class="text-h6 font-weight-semibold mb-0">
-            {{ t("pages.profileFriends.sections.suggestions") }}
-          </h2>
-          <v-btn
-            variant="text"
-            color="primary"
-            class="ml-auto"
-            :to="backLink"
-          >
-            {{ t("layout.actions.goBack") }}
-          </v-btn>
-        </div>
-        <v-slide-group show-arrows>
-          <v-slide-group-item
-            v-for="suggestion in relatedConnections"
-            :key="suggestion.id"
-          >
-            <NuxtLink
-              :to="friendProfilePath(suggestion)"
-              class="d-flex flex-column align-center pa-4 text-decoration-none text-card-foreground"
+            <v-avatar
+              size="72"
+              class="mb-3"
             >
-              <v-avatar
-                size="72"
-                class="mb-3"
-              >
-                <v-img
-                  :src="suggestion.avatar"
-                  :alt="suggestion.name"
-                  cover
-                />
-              </v-avatar>
-              <div class="text-subtitle-2 font-weight-medium text-center mb-1">
-                {{ suggestion.name }}
-              </div>
-              <div class="text-caption text-medium-emphasis text-center">
-                {{ suggestion.headline }}
-              </div>
-            </NuxtLink>
-          </v-slide-group-item>
-        </v-slide-group>
-      </SidebarCard>
+              <v-img
+                :src="suggestion.avatar"
+                :alt="suggestion.name"
+                cover
+              />
+            </v-avatar>
+            <div class="text-subtitle-2 font-weight-medium text-center mb-1">
+              {{ suggestion.name }}
+            </div>
+            <div class="text-caption text-medium-emphasis text-center">
+              {{ suggestion.headline }}
+            </div>
+          </NuxtLink>
+        </v-slide-group-item>
+      </v-slide-group>
+    </SidebarCard>
 
     <v-snackbar
       v-model="showActionSnackbar"

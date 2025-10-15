@@ -259,10 +259,7 @@ const reactionSummaries = computed(() => {
       return;
     }
 
-    const total = Object.values(node.reactions ?? {}).reduce(
-      (sum, count) => sum + (count ?? 0),
-      0,
-    );
+    const total = Object.values(node.reactions ?? {}).reduce((sum, count) => sum + (count ?? 0), 0);
     const ariaLabel =
       total <= 0
         ? t("blog.reactions.posts.reactLabel")
@@ -313,10 +310,7 @@ function getReactionTotal(node: CommentNode) {
 }
 
 function reactionAriaLabel(node: CommentNode) {
-  return (
-    reactionSummaries.value.get(node.id)?.ariaLabel ??
-    t("blog.reactions.posts.reactLabel")
-  );
+  return reactionSummaries.value.get(node.id)?.ariaLabel ?? t("blog.reactions.posts.reactLabel");
 }
 </script>
 

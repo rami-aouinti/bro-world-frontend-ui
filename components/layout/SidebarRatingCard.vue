@@ -288,19 +288,11 @@ const cardSubtitle = computed(() =>
 const cardIcon = computed(() => props.rating?.icon || "⭐");
 const loginPath = computed(() => localePath("/login"));
 const signInPrompt = computed(() =>
-  translateWithFallback(
-    "sidebar.rating.signInPrompt",
-    "Sign in to submit your rating.",
-  ),
+  translateWithFallback("sidebar.rating.signInPrompt", "Sign in to submit your rating."),
 );
-const signInCta = computed(() =>
-  translateWithFallback("sidebar.rating.signInCta", "Sign in"),
-);
+const signInCta = computed(() => translateWithFallback("sidebar.rating.signInCta", "Sign in"));
 const signInAriaLabel = computed(() =>
-  translateWithFallback(
-    "sidebar.rating.signInAriaLabel",
-    "Sign in to submit your rating",
-  ),
+  translateWithFallback("sidebar.rating.signInAriaLabel", "Sign in to submit your rating"),
 );
 const ratingFormWrapperClasses = [
   "-mx-[var(--card-x)]",

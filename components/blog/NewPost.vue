@@ -1,84 +1,84 @@
 <template>
   <!-- Barre compacte -->
   <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
-    >
-      <div class="d-flex align-center ga-3">
-        <v-avatar size="44">
-          <v-img
-            :src="avatarSrc"
-            alt="Avatar"
-            width="44"
-            height="44"
-          />
-        </v-avatar>
-
-        <!-- Champ pilule qui ouvre le modal -->
-        <v-btn
-          class="flex-1 justify-start text-body-2 text-medium-emphasis composer-pill"
-          variant="flat"
+    class="text-card-foreground px-3 py-2"
+    glow
+  >
+    <div class="d-flex align-center ga-3">
+      <v-avatar size="44">
+        <v-img
+          :src="avatarSrc"
+          alt="Avatar"
+          width="44"
           height="44"
-          rounded="pill"
-          :ripple="false"
-          :disabled="!canUseAuthenticatedUi"
-          data-test="new-post-trigger"
-          @click="openDialog()"
-        >
-          {{ placeholderText }}
-        </v-btn>
-      </div>
+        />
+      </v-avatar>
 
-      <v-alert
-        v-if="!canUseAuthenticatedUi"
-        class="mt-3"
-        type="info"
-        density="compact"
-        border="start"
-        variant="tonal"
+      <!-- Champ pilule qui ouvre le modal -->
+      <v-btn
+        class="flex-1 justify-start text-body-2 text-medium-emphasis composer-pill"
+        variant="flat"
+        height="44"
+        rounded="pill"
+        :ripple="false"
+        :disabled="!canUseAuthenticatedUi"
+        data-test="new-post-trigger"
+        @click="openDialog()"
       >
-        {{ loginToPostMessage }}
-      </v-alert>
+        {{ placeholderText }}
+      </v-btn>
+    </div>
 
-      <v-divider class="my-2" />
+    <v-alert
+      v-if="!canUseAuthenticatedUi"
+      class="mt-3"
+      type="info"
+      density="compact"
+      border="start"
+      variant="tonal"
+    >
+      {{ loginToPostMessage }}
+    </v-alert>
 
-      <!-- Actions rapides (non obligatoires) -->
-      <div class="d-flex ga-4 flex-wrap justify-center">
-        <v-btn
-          v-for="action in quickActions"
-          :key="action.key"
-          variant="text"
-          :color="action.color"
-          :disabled="!canUseAuthenticatedUi"
-          @click="openDialog()"
-        >
-          <Icon
-            :name="action.icon"
-            class="mr-2"
-          />
-          {{ action.label }}
-        </v-btn>
-      </div>
-      <BorderBeam
-        :size="150"
-        :duration="8"
-        :delay="10"
-        :border-width="2"
-      />
-    </SidebarCard>
+    <v-divider class="my-2" />
+
+    <!-- Actions rapides (non obligatoires) -->
+    <div class="d-flex ga-4 flex-wrap justify-center">
+      <v-btn
+        v-for="action in quickActions"
+        :key="action.key"
+        variant="text"
+        :color="action.color"
+        :disabled="!canUseAuthenticatedUi"
+        @click="openDialog()"
+      >
+        <Icon
+          :name="action.icon"
+          class="mr-2"
+        />
+        {{ action.label }}
+      </v-btn>
+    </div>
+    <BorderBeam
+      :size="150"
+      :duration="8"
+      :delay="10"
+      :border-width="2"
+    />
+  </SidebarCard>
 
   <Suspense v-if="dialog && canUseAuthenticatedUi">
     <template #default>
-        <NewPostDialog
-          v-model:open="dialog"
-          :avatar="avatarSrc"
-          :user-name="userName"
-          :placeholder="placeholderText"
-          :max-length="maxLength"
-          @submit="handleDialogSubmit"
-          @close="handleDialogClose"
-          @attach="handleAttach"
-        />
+      <NewPostDialog
+        v-model:open="dialog"
+        :avatar="avatarSrc"
+        :user-name="userName"
+        :placeholder="placeholderText"
+        :max-length="maxLength"
+        @submit="handleDialogSubmit"
+        @close="handleDialogClose"
+        @attach="handleAttach"
+      />
     </template>
     <template #fallback>
       <div
@@ -136,7 +136,9 @@ const { $notify } = useNuxtApp();
 const auth = useAuthSession();
 const canUseAuthenticatedUi = computed(() => auth.isReady.value && auth.isAuthenticated.value);
 const avatarSize = 44;
-const avatarSrc = computed(() => optimizeAvatarUrl(props.avatar ?? null, avatarSize) ?? props.avatar);
+const avatarSrc = computed(
+  () => optimizeAvatarUrl(props.avatar ?? null, avatarSize) ?? props.avatar,
+);
 
 const placeholderText = computed(
   () => props.placeholder ?? t("blog.newPost.placeholder", { name: props.userName }),

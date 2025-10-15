@@ -67,7 +67,7 @@ export function useThemes() {
           { immediate: true, deep: true },
         );
       } catch (error) {
-        if (process.dev) {
+        if (import.meta.dev) {
           console.warn(
             "Failed to access docs configuration via useConfig; falling back to defaults.",
             error,

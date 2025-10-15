@@ -13,9 +13,7 @@
       />
     </button>
 
-    <div
-      :class="navGroupClasses"
-    >
+    <div :class="navGroupClasses">
       <button
         type="button"
         :class="props.iconTriggerClasses"
@@ -88,9 +86,7 @@ if (import.meta.client) {
 
 const navGroupClasses = computed(() => {
   if (!isHydrated.value) {
-    return props.isMobile
-      ? "flex items-center gap-3 px-4"
-      : "flex items-center gap-12 px-16";
+    return props.isMobile ? "flex items-center gap-3 px-4" : "flex items-center gap-12 px-16";
   }
 
   return "flex items-center gap-12 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8";

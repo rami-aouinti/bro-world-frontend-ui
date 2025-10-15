@@ -1,254 +1,254 @@
 <template>
-    <header
-      class="mb-6"
-      aria-describedby="profile-edit-subtitle"
+  <header
+    class="mb-6"
+    aria-describedby="profile-edit-subtitle"
+  >
+    <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      padding="none"
+      glow
     >
-      <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        padding="none"
-        glow
-      >
-        <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
-          <div>
-            <h1
-              id="profile-edit-title"
-              class="text-h4 font-weight-bold mb-2"
-            >
-              {{ t("pages.profileEdit.title") }}
-            </h1>
-            <p
-              id="profile-edit-subtitle"
-              class="text-body-1 text-medium-emphasis mb-0"
-            >
-              {{ t("pages.profileEdit.subtitle") }}
-            </p>
-          </div>
-          <div class="d-flex gap-3">
-            <v-btn
-              variant="outlined"
-              color="primary"
-              @click="resetForm"
-            >
-              {{ t("pages.profileEdit.actions.cancel") }}
-            </v-btn>
-            <v-btn
-              color="primary"
-              :loading="isProfileSaving"
-              @click="submitForm"
-            >
-              {{ t("pages.profileEdit.actions.save") }}
-            </v-btn>
-          </div>
+      <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
+        <div>
+          <h1
+            id="profile-edit-title"
+            class="text-h4 font-weight-bold mb-2"
+          >
+            {{ t("pages.profileEdit.title") }}
+          </h1>
+          <p
+            id="profile-edit-subtitle"
+            class="text-body-1 text-medium-emphasis mb-0"
+          >
+            {{ t("pages.profileEdit.subtitle") }}
+          </p>
         </div>
-      </SidebarCard>
-    </header>
+        <div class="d-flex gap-3">
+          <v-btn
+            variant="outlined"
+            color="primary"
+            @click="resetForm"
+          >
+            {{ t("pages.profileEdit.actions.cancel") }}
+          </v-btn>
+          <v-btn
+            color="primary"
+            :loading="isProfileSaving"
+            @click="submitForm"
+          >
+            {{ t("pages.profileEdit.actions.save") }}
+          </v-btn>
+        </div>
+      </div>
+    </SidebarCard>
+  </header>
 
-    <v-alert
-      v-if="formErrors.length"
-      type="error"
-      variant="tonal"
-      class="mb-6"
-      border="start"
-      border-color="error"
-    >
-      <ul class="pl-6 mb-0 d-flex flex-column gap-2">
-        <li
-          v-for="error in formErrors"
-          :key="error"
-        >
-          {{ error }}
-        </li>
-      </ul>
-    </v-alert>
-
-    <v-row
-      dense
-      align="stretch"
-    >
-      <v-col
-        cols="12"
-        xl="8"
+  <v-alert
+    v-if="formErrors.length"
+    type="error"
+    variant="tonal"
+    class="mb-6"
+    border="start"
+    border-color="error"
+  >
+    <ul class="pl-6 mb-0 d-flex flex-column gap-2">
+      <li
+        v-for="error in formErrors"
+        :key="error"
       >
-        <section
-          class="mb-8"
-          aria-labelledby="profile-core-section"
+        {{ error }}
+      </li>
+    </ul>
+  </v-alert>
+
+  <v-row
+    dense
+    align="stretch"
+  >
+    <v-col
+      cols="12"
+      xl="8"
+    >
+      <section
+        class="mb-8"
+        aria-labelledby="profile-core-section"
+      >
+        <SidebarCard
+          class="text-card-foreground px-3 py-2"
+          padding="none"
+          glow
         >
-          <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            padding="none"
-            glow
+          <h2
+            id="profile-core-section"
+            class="text-h5 font-weight-semibold mb-4"
           >
-            <h2
-              id="profile-core-section"
-              class="text-h5 font-weight-semibold mb-4"
-            >
-              {{ t("pages.profileEdit.sections.profile.title") }}
-            </h2>
-            <div class="d-flex flex-column gap-4">
-              <div class="d-flex flex-column flex-sm-row gap-4">
-                <v-text-field
-                  v-model="form.firstName"
-                  :label="t('pages.profileEdit.labels.firstName')"
-                  :error-messages="fieldError('firstName')"
-                  variant="outlined"
-                  density="comfortable"
-                  required
-                />
-                <v-text-field
-                  v-model="form.lastName"
-                  :label="t('pages.profileEdit.labels.lastName')"
-                  :error-messages="fieldError('lastName')"
-                  variant="outlined"
-                  density="comfortable"
-                  required
-                />
-              </div>
+            {{ t("pages.profileEdit.sections.profile.title") }}
+          </h2>
+          <div class="d-flex flex-column gap-4">
+            <div class="d-flex flex-column flex-sm-row gap-4">
               <v-text-field
-                v-model="form.headline"
-                :label="t('pages.profileEdit.labels.headline')"
+                v-model="form.firstName"
+                :label="t('pages.profileEdit.labels.firstName')"
+                :error-messages="fieldError('firstName')"
                 variant="outlined"
                 density="comfortable"
-                :error-messages="fieldError('headline')"
+                required
               />
-              <div class="d-flex flex-column flex-sm-row gap-4">
-                <v-select
-                  v-model="form.pronouns"
-                  :items="pronounOptions"
-                  :label="t('pages.profileEdit.labels.pronouns')"
-                  variant="outlined"
-                  density="comfortable"
-                />
-                <v-select
-                  v-model="form.language"
-                  :items="languageOptions"
-                  :label="t('pages.profileEdit.labels.language')"
-                  variant="outlined"
-                  density="comfortable"
-                  required
-                  :error-messages="fieldError('language')"
-                />
-                <v-select
-                  v-model="form.timezone"
-                  :items="timezoneOptions"
-                  :label="t('pages.profileEdit.labels.timezone')"
-                  variant="outlined"
-                  density="comfortable"
-                />
-              </div>
-            </div>
-          </SidebarCard>
-        </section>
-
-        <section
-          class="mb-8"
-          aria-labelledby="profile-contact-section"
-        >
-          <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            padding="none"
-            glow
-          >
-            <h2
-              id="profile-contact-section"
-              class="text-h5 font-weight-semibold mb-4"
-            >
-              {{ t("pages.profileEdit.sections.contact") }}
-            </h2>
-            <div class="d-flex flex-column gap-4">
-              <div class="d-flex flex-column flex-sm-row gap-4">
-                <v-text-field
-                  v-model="form.email"
-                  :label="t('pages.profileEdit.labels.email')"
-                  variant="outlined"
-                  density="comfortable"
-                  required
-                  :error-messages="fieldError('email')"
-                />
-                <v-text-field
-                  v-model="form.phone"
-                  :label="t('pages.profileEdit.labels.phone')"
-                  variant="outlined"
-                  density="comfortable"
-                  :error-messages="fieldError('phone')"
-                />
-              </div>
-              <div class="d-flex flex-column flex-sm-row gap-4">
-                <v-text-field
-                  v-model="form.location"
-                  :label="t('pages.profileEdit.labels.location')"
-                  variant="outlined"
-                  density="comfortable"
-                />
-                <v-text-field
-                  v-model="form.website"
-                  :label="t('pages.profileEdit.labels.website')"
-                  variant="outlined"
-                  density="comfortable"
-                />
-              </div>
-            </div>
-          </SidebarCard>
-        </section>
-
-        <section aria-labelledby="profile-about-section">
-          <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            padding="none"
-            glow
-          >
-            <h2
-              id="profile-about-section"
-              class="text-h5 font-weight-semibold mb-4"
-            >
-              {{ t("pages.profileEdit.sections.about") }}
-            </h2>
-            <div class="d-flex flex-column gap-4">
-              <v-textarea
-                v-model="form.bio"
-                :label="t('pages.profileEdit.labels.bio')"
-                :hint="t('pages.profileEdit.helpers.bio')"
-                persistent-hint
-                rows="5"
+              <v-text-field
+                v-model="form.lastName"
+                :label="t('pages.profileEdit.labels.lastName')"
+                :error-messages="fieldError('lastName')"
                 variant="outlined"
                 density="comfortable"
-                :counter="BIO_MAX_LENGTH"
-                :error-messages="fieldError('bio')"
+                required
               />
-              <v-combobox
-                v-model="form.skills"
-                :items="skillOptions"
-                :label="t('pages.profileEdit.labels.skills')"
-                :hint="t('pages.profileEdit.helpers.skills')"
-                multiple
-                chips
-                closable-chips
+            </div>
+            <v-text-field
+              v-model="form.headline"
+              :label="t('pages.profileEdit.labels.headline')"
+              variant="outlined"
+              density="comfortable"
+              :error-messages="fieldError('headline')"
+            />
+            <div class="d-flex flex-column flex-sm-row gap-4">
+              <v-select
+                v-model="form.pronouns"
+                :items="pronounOptions"
+                :label="t('pages.profileEdit.labels.pronouns')"
                 variant="outlined"
                 density="comfortable"
               />
               <v-select
-                v-model="form.interests"
-                :items="interestOptions"
-                :label="t('pages.profileEdit.labels.interests')"
-                multiple
-                chips
-                closable-chips
+                v-model="form.language"
+                :items="languageOptions"
+                :label="t('pages.profileEdit.labels.language')"
+                variant="outlined"
+                density="comfortable"
+                required
+                :error-messages="fieldError('language')"
+              />
+              <v-select
+                v-model="form.timezone"
+                :items="timezoneOptions"
+                :label="t('pages.profileEdit.labels.timezone')"
                 variant="outlined"
                 density="comfortable"
               />
             </div>
-          </SidebarCard>
-        </section>
-      </v-col>
-    </v-row>
+          </div>
+        </SidebarCard>
+      </section>
 
-    <v-snackbar
-      v-model="snackbar.visible"
-      :color="snackbar.color"
-      timeout="3000"
-      variant="flat"
-    >
-      {{ snackbar.message }}
-    </v-snackbar>
+      <section
+        class="mb-8"
+        aria-labelledby="profile-contact-section"
+      >
+        <SidebarCard
+          class="text-card-foreground px-3 py-2"
+          padding="none"
+          glow
+        >
+          <h2
+            id="profile-contact-section"
+            class="text-h5 font-weight-semibold mb-4"
+          >
+            {{ t("pages.profileEdit.sections.contact") }}
+          </h2>
+          <div class="d-flex flex-column gap-4">
+            <div class="d-flex flex-column flex-sm-row gap-4">
+              <v-text-field
+                v-model="form.email"
+                :label="t('pages.profileEdit.labels.email')"
+                variant="outlined"
+                density="comfortable"
+                required
+                :error-messages="fieldError('email')"
+              />
+              <v-text-field
+                v-model="form.phone"
+                :label="t('pages.profileEdit.labels.phone')"
+                variant="outlined"
+                density="comfortable"
+                :error-messages="fieldError('phone')"
+              />
+            </div>
+            <div class="d-flex flex-column flex-sm-row gap-4">
+              <v-text-field
+                v-model="form.location"
+                :label="t('pages.profileEdit.labels.location')"
+                variant="outlined"
+                density="comfortable"
+              />
+              <v-text-field
+                v-model="form.website"
+                :label="t('pages.profileEdit.labels.website')"
+                variant="outlined"
+                density="comfortable"
+              />
+            </div>
+          </div>
+        </SidebarCard>
+      </section>
+
+      <section aria-labelledby="profile-about-section">
+        <SidebarCard
+          class="text-card-foreground px-3 py-2"
+          padding="none"
+          glow
+        >
+          <h2
+            id="profile-about-section"
+            class="text-h5 font-weight-semibold mb-4"
+          >
+            {{ t("pages.profileEdit.sections.about") }}
+          </h2>
+          <div class="d-flex flex-column gap-4">
+            <v-textarea
+              v-model="form.bio"
+              :label="t('pages.profileEdit.labels.bio')"
+              :hint="t('pages.profileEdit.helpers.bio')"
+              persistent-hint
+              rows="5"
+              variant="outlined"
+              density="comfortable"
+              :counter="BIO_MAX_LENGTH"
+              :error-messages="fieldError('bio')"
+            />
+            <v-combobox
+              v-model="form.skills"
+              :items="skillOptions"
+              :label="t('pages.profileEdit.labels.skills')"
+              :hint="t('pages.profileEdit.helpers.skills')"
+              multiple
+              chips
+              closable-chips
+              variant="outlined"
+              density="comfortable"
+            />
+            <v-select
+              v-model="form.interests"
+              :items="interestOptions"
+              :label="t('pages.profileEdit.labels.interests')"
+              multiple
+              chips
+              closable-chips
+              variant="outlined"
+              density="comfortable"
+            />
+          </div>
+        </SidebarCard>
+      </section>
+    </v-col>
+  </v-row>
+
+  <v-snackbar
+    v-model="snackbar.visible"
+    :color="snackbar.color"
+    timeout="3000"
+    variant="flat"
+  >
+    {{ snackbar.message }}
+  </v-snackbar>
 </template>
 
 <script setup lang="ts">

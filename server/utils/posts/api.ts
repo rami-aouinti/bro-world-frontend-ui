@@ -41,9 +41,7 @@ function joinEndpoint(base: string, ...segments: (string | number)[]): string {
   return [sanitizeBaseEndpoint(base), ...cleanedSegments].join("/");
 }
 
-function resolveCommentsPayload(
-  response: unknown,
-): BlogCommentWithReplies[] | undefined {
+function resolveCommentsPayload(response: unknown): BlogCommentWithReplies[] | undefined {
   if (Array.isArray(response)) {
     return response as BlogCommentWithReplies[];
   }

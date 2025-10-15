@@ -27,9 +27,7 @@ describe("credential helpers", () => {
 
   it("returns the original password value", () => {
     expect(resolveCredentialPassword({ password: "  secret" })).toBe("  secret");
-    expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe(
-      "  hunter2  ",
-    );
+    expect(resolveCredentialPassword({ password: ["  hunter2  ", "ignored"] })).toBe("  hunter2  ");
     expect(resolveCredentialPassword({ password: "    " })).toBe("    ");
   });
 

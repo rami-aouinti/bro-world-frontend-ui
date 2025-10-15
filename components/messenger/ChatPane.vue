@@ -252,7 +252,9 @@ const avatar = computed(() => {
   );
 });
 const avatarPixelSize = 44;
-const avatarImage = computed(() => optimizeAvatarUrl(avatar.value.url ?? null, avatarPixelSize * 2));
+const avatarImage = computed(() =>
+  optimizeAvatarUrl(avatar.value.url ?? null, avatarPixelSize * 2),
+);
 
 function isOwnMessage(message: MessengerMessage) {
   const userId = auth.currentUser.value?.id;

@@ -17,9 +17,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody<ReadBody | null | undefined>(event);
-  const lastMessageId = typeof body?.lastMessageId === "string" && body.lastMessageId.trim()
-    ? body.lastMessageId
-    : null;
+  const lastMessageId =
+    typeof body?.lastMessageId === "string" && body.lastMessageId.trim()
+      ? body.lastMessageId
+      : null;
 
   const updated = markConversationRead(id, lastMessageId);
 

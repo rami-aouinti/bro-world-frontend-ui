@@ -1,35 +1,33 @@
 <template>
   <main aria-labelledby="profile-title">
     <header
-        class="mb-6"
-        aria-describedby="profile-subtitle"
+      class="mb-6"
+      aria-describedby="profile-subtitle"
     >
       <SidebarCard
-          class="text-card-foreground px-3 py-2"
-          padding="none"
-          glow
+        class="text-card-foreground px-3 py-2"
+        padding="none"
+        glow
       >
         <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
           <v-avatar
-              size="96"
-              class="flex-shrink-0"
-              color="primary"
-              variant="tonal"
+            size="96"
+            class="flex-shrink-0"
+            color="primary"
+            variant="tonal"
           >
             <v-img
-                :src="avatarSrc"
-                :alt="avatarAlt"
-                cover
+              :src="avatarSrc"
+              :alt="avatarAlt"
+              cover
             />
           </v-avatar>
           <div class="flex-grow-1 w-100">
-            <div
-                class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-3"
-            >
+            <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-3">
               <div>
                 <h1
-                    id="profile-title"
-                    class="text-h4 font-weight-bold mb-1"
+                  id="profile-title"
+                  class="text-h4 font-weight-bold mb-1"
                 >
                   {{ displayName }}
                 </h1>
@@ -38,32 +36,32 @@
                 </p>
               </div>
               <div
-                  class="d-flex flex-wrap align-center gap-2"
-                  :aria-label="t('pages.profile.labels.roles')"
-                  role="list"
+                class="d-flex flex-wrap align-center gap-2"
+                :aria-label="t('pages.profile.labels.roles')"
+                role="list"
               >
                 <template v-if="hasRoles">
                   <v-chip
-                      v-for="role in roles"
-                      :key="role"
-                      color="primary"
-                      variant="tonal"
-                      size="small"
-                      role="listitem"
+                    v-for="role in roles"
+                    :key="role"
+                    color="primary"
+                    variant="tonal"
+                    size="small"
+                    role="listitem"
                   >
                     {{ role }}
                   </v-chip>
                 </template>
                 <span
-                    v-else
-                    class="text-body-2 text-medium-emphasis"
-                >{{ placeholderValue }}</span
+                  v-else
+                  class="text-body-2 text-medium-emphasis"
+                  >{{ placeholderValue }}</span
                 >
               </div>
             </div>
             <p
-                id="profile-subtitle"
-                class="text-body-1 text-medium-emphasis mt-4 mb-0"
+              id="profile-subtitle"
+              class="text-body-1 text-medium-emphasis mt-4 mb-0"
             >
               {{ t("pages.profile.subtitle") }}
             </p>
@@ -73,36 +71,36 @@
     </header>
 
     <v-row
-        dense
-        align="stretch"
+      dense
+      align="stretch"
     >
       <v-col cols="12">
         <v-row
-            dense
-            align="stretch"
+          dense
+          align="stretch"
         >
           <v-col
-              v-if="showSocialSection"
-              cols="12"
+            v-if="showSocialSection"
+            cols="12"
           >
             <section
-                aria-labelledby="social-section-title"
-                class="h-100"
+              aria-labelledby="social-section-title"
+              class="h-100"
             >
               <SidebarCard
-                  class="text-card-foreground px-3 py-2"
-                  padding="none"
-                  glow
+                class="text-card-foreground px-3 py-2"
+                padding="none"
+                glow
               >
                 <h2
-                    id="social-section-title"
-                    class="text-h5 font-weight-semibold mb-4"
+                  id="social-section-title"
+                  class="text-h5 font-weight-semibold mb-4"
                 >
                   {{ t("pages.profile.sections.social") }}
                 </h2>
                 <dl
-                    class="d-flex align-center gap-4"
-                    :aria-label="t('pages.profile.stats.title')"
+                  class="d-flex align-center gap-4"
+                  :aria-label="t('pages.profile.stats.title')"
                 >
                   <div class="d-flex align-center gap-2">
                     <dt class="text-body-2 text-medium-emphasis mb-0">
@@ -126,10 +124,10 @@
                     </dt>
                     <dd class="text-body-1 font-weight-medium mb-0">
                       <v-chip
-                          v-if="accountStatus"
-                          :color="accountStatus.color"
-                          size="small"
-                          variant="flat"
+                        v-if="accountStatus"
+                        :color="accountStatus.color"
+                        size="small"
+                        variant="flat"
                       >
                         {{ accountStatus.label }}
                       </v-chip>
@@ -142,37 +140,37 @@
           </v-col>
 
           <v-col
-              v-if="showContactSection"
-              cols="12"
-              md="6"
+            v-if="showContactSection"
+            cols="12"
+            md="6"
           >
             <section
-                aria-labelledby="contact-section-title"
-                class="h-100"
+              aria-labelledby="contact-section-title"
+              class="h-100"
             >
               <SidebarCard
-                  class="text-card-foreground px-3 py-2"
-                  padding="none"
-                  glow
+                class="text-card-foreground px-3 py-2"
+                padding="none"
+                glow
               >
                 <h2
-                    id="contact-section-title"
-                    class="text-h5 font-weight-semibold mb-4"
+                  id="contact-section-title"
+                  class="text-h5 font-weight-semibold mb-4"
                 >
                   {{ t("pages.profile.sections.contact") }}
                 </h2>
                 <dl class="d-flex flex-column gap-4">
                   <div
-                      class="d-flex align-center gap-2"
-                      v-for="item in contactItems"
-                      :key="item.id"
+                    v-for="item in contactItems"
+                    :key="item.id"
+                    class="d-flex align-center gap-2"
                   >
                     <dt class="text-body-2 text-medium-emphasis mb-0">{{ item.label }}</dt>
                     <dd class="text-body-1 font-weight-medium mb-0">
                       <a
-                          v-if="item.href && item.value !== placeholderValue"
-                          :href="item.href"
-                          class="text-primary text-decoration-none"
+                        v-if="item.href && item.value !== placeholderValue"
+                        :href="item.href"
+                        class="text-primary text-decoration-none"
                       >
                         {{ item.value }}
                       </a>
@@ -185,30 +183,30 @@
           </v-col>
 
           <v-col
-              v-if="showDetailsSection"
-              cols="12"
-              md="6"
+            v-if="showDetailsSection"
+            cols="12"
+            md="6"
           >
             <section
-                aria-labelledby="profile-section-title"
-                class="h-100"
+              aria-labelledby="profile-section-title"
+              class="h-100"
             >
               <SidebarCard
-                  class="text-card-foreground px-3 py-2"
-                  padding="none"
-                  glow
+                class="text-card-foreground px-3 py-2"
+                padding="none"
+                glow
               >
                 <h2
-                    id="profile-section-title"
-                    class="text-h5 font-weight-semibold mb-4"
+                  id="profile-section-title"
+                  class="text-h5 font-weight-semibold mb-4"
                 >
                   {{ t("pages.profile.sections.profile") }}
                 </h2>
                 <dl class="d-flex flex-column gap-4">
                   <div
-                      class="d-flex align-center gap-2"
-                      v-for="item in profileItems"
-                      :key="item.id"
+                    v-for="item in profileItems"
+                    :key="item.id"
+                    class="d-flex align-center gap-2"
                   >
                     <dt class="text-body-2 text-medium-emphasis mb-0">{{ item.label }}</dt>
                     <dd class="text-body-1 font-weight-medium mb-0">{{ item.value }}</dd>

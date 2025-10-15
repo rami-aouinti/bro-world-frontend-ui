@@ -130,7 +130,6 @@ const desktopToggleClasses = computed(() => `${props.iconTriggerClasses} hidden 
 const mobileToggleClasses = computed(() => `${props.iconTriggerClasses} md:hidden`);
 const showToggleButtons = computed(() => props.showRightToggle);
 
-
 const authStore = useAuthStore();
 const isAuthenticated = computed(() => authStore.isAuthenticated.value);
 const emit = defineEmits(["toggle-right", "mark-all-notifications"]);
