@@ -154,6 +154,7 @@
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
@@ -194,7 +195,7 @@ defineEmits<{
 }>();
 
 const { t } = useI18n();
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const siteSettings = useSiteSettingsState();
 
 const profileSettings = computed(
