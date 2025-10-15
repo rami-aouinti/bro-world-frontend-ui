@@ -227,8 +227,20 @@ export const usePostsStore = defineStore("posts", () => {
     const removalSet = new Set(existingPageIds);
     const retainedIds = listIds.value.filter((id) => !removalSet.has(id));
 
-    const finalIds =
+    const orderedIds =
       normalizedPage === 1 ? [...incomingIds, ...retainedIds] : [...retainedIds, ...incomingIds];
+    const finalIds: string[] = [];
+    const seenIds = new Set<string>();
+
+    for (const id of orderedIds) {
+      if (seenIds.has(id)) {
+        continue;
+      }
+
+      seenIds.add(id);
+      finalIds.push(id);
+    }
+
     const activeIds = new Set(finalIds);
 
     const nextItems = { ...items.value };
