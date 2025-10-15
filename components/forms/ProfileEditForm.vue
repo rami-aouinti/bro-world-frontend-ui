@@ -435,3 +435,18 @@ async function submitForm() {
   }
 }
 </script>
+
+<style scoped>
+.profile-edit-form {
+  --v-field-border-radius: var(--radius, var(--ui-radius));
+}
+
+.profile-edit-form :deep(.v-field) {
+  border-radius: var(--v-field-border-radius);
+}
+
+.profile-edit-form :deep(.v-field__outline),
+.profile-edit-form :deep(.v-field__overlay) {
+  border-radius: inherit;
+}
+</style>
