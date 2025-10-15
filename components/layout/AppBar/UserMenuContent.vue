@@ -50,7 +50,7 @@
         <v-list-item
           v-for="item in props.items"
           :key="item.title"
-          :to="item.to"
+          :to="resolveItemLink(item)"
           :disabled="item.action === 'logout' && props.loggingOut"
           class="group mx-2 my-0.5 rounded-xl px-2 transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5"
           @click="emit('select', item)"
@@ -76,6 +76,7 @@
 </template>
 
 <script setup lang="ts">
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import type { AuthUser } from "~/types/auth";
 
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
@@ -92,4 +93,11 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "select", item: UserMenuItem): void;
 }>();
+
+const localePath = useResolvedLocalePath();
+
+function resolveItemLink(item: UserMenuItem) {
+  if (!item.to) return undefined;
+  return localePath(item.to);
+}
 </script>
