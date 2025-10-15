@@ -238,6 +238,33 @@ const topReactions = computed(() =>
     .sort((a, b) => b.count - a.count)
     .slice(0, 3),
 );
+
+const reactionSummaries = computed(() => {
+  const summaries = new Map<string, { total: number; ariaLabel: string }>();
+
+  function computeForNode(node?: CommentNode) {
+    if (!node) {
+      return;
+    }
+
+    const total = Object.values(node.reactions ?? {}).reduce(
+      (sum, count) => sum + (count ?? 0),
+      0,
+    );
+    const ariaLabel =
+      total <= 0
+        ? t("blog.reactions.posts.reactLabel")
+        : t("blog.reactions.comments.reactionCount", { count: total });
+
+    summaries.set(node.id, { total, ariaLabel });
+
+    node.children?.forEach((child) => computeForNode(child));
+  }
+
+  props.nodes?.forEach((node) => computeForNode(node));
+
+  return summaries;
+});
 // états UI par id
 const expanded = reactive<Record<string, boolean>>({});
 const replying = reactive<Record<string, boolean>>({});
@@ -270,17 +297,14 @@ function formatTime(value: Date | string | number) {
 }
 
 function getReactionTotal(node: CommentNode) {
-  return Object.values(node.reactions ?? {}).reduce((sum, count) => sum + (count ?? 0), 0);
+  return reactionSummaries.value.get(node.id)?.total ?? 0;
 }
 
 function reactionAriaLabel(node: CommentNode) {
-  const total = getReactionTotal(node);
-
-  if (total <= 0) {
-    return t("blog.reactions.posts.reactLabel");
-  }
-
-  return t("blog.reactions.comments.reactionCount", { count: total });
+  return (
+    reactionSummaries.value.get(node.id)?.ariaLabel ??
+    t("blog.reactions.posts.reactLabel")
+  );
 }
 </script>
 
