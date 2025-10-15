@@ -607,6 +607,13 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: true,
+    publicAssets: [
+      {
+        baseURL: "/",
+        dir: resolveFromRoot("public"),
+        maxAge: 60 * 60 * 24 * 365,
+      },
+    ],
     prerender: {
       routes: ["/", "/de", "/fr", "/ar", "/it", "/es", "/ru"],
     },
