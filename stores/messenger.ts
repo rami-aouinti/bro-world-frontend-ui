@@ -12,7 +12,8 @@ import type {
   MessengerSendMessagePayload,
   MessengerThreadEnvelope,
 } from "~/types/messenger";
-import { useRequestFetch, useRuntimeConfig, useState } from "#imports";
+import { useRuntimeConfig, useState } from "#imports";
+import { resolveApiFetcher } from "~/lib/api/fetcher";
 
 interface FetchThreadsOptions {
   limit?: number;
@@ -42,14 +43,6 @@ interface SendMessageState {
 
 const DEFAULT_PREVIEW_LIMIT = 3;
 const DEFAULT_LIST_LIMIT = 50;
-
-function resolveFetcher() {
-  if (import.meta.server) {
-    return useRequestFetch();
-  }
-
-  return $fetch;
-}
 
 function isIsoDate(value: string | undefined | null) {
   if (!value) {
@@ -156,7 +149,7 @@ function createOptimisticMessage(
 export const useMessengerStore = defineStore("messenger", () => {
   const auth = useAuthSession();
   const runtimeConfig = useRuntimeConfig();
-  const fetcher = resolveFetcher();
+  const fetcher = resolveApiFetcher();
   const connectToMercure = import.meta.client ? useMercure() : null;
 
   const conversations = useState<Record<string, NormalizedConversation>>(

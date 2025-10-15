@@ -1,8 +1,9 @@
 import { computed } from "vue";
-import { useRequestFetch, useState } from "#imports";
+import { useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import type { AuthUser } from "~/types/auth";
 import { normalizeRolesInput, normalizeUserPayload } from "~/lib/users/normalizers";
+import { resolveApiFetcher } from "~/lib/api/fetcher";
 
 export interface UsersStoreUser extends AuthUser {
   createdAt?: string | null;
@@ -30,14 +31,6 @@ interface UserFormPayload {
   locale?: string | null;
   timezone?: string | null;
   profile?: unknown;
-}
-
-function resolveFetcher() {
-  if (import.meta.server) {
-    return useRequestFetch();
-  }
-
-  return $fetch;
 }
 
 function buildRequestBody(payload: UserFormPayload) {
@@ -176,7 +169,7 @@ export const useUsersStore = defineStore("users", () => {
     pending.value = true;
     error.value = null;
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       const response = await fetcher<UsersListResponse>("/api/v1/user", {
@@ -212,7 +205,7 @@ export const useUsersStore = defineStore("users", () => {
       return existing;
     }
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
     const position = listIds.value.indexOf(trimmedId);
 
     try {
@@ -252,7 +245,7 @@ export const useUsersStore = defineStore("users", () => {
 
     upsertUser(optimisticUser);
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       const response = await fetcher<UserResponse>("/api/v1/user", {
@@ -315,7 +308,7 @@ export const useUsersStore = defineStore("users", () => {
 
     upsertUser(optimisticUser, position);
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       const response = await fetcher<UserResponse>(
@@ -374,7 +367,7 @@ export const useUsersStore = defineStore("users", () => {
 
     const position = removeUserFromState(trimmedId);
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       await fetcher(`/api/v1/user/${encodeURIComponent(trimmedId)}`, {
