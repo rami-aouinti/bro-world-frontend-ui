@@ -362,7 +362,22 @@ const ratingBars = computed(() => {
 const formattedAverage = computed(() => averageRating.value.toFixed(1));
 
 async function submitRating() {
-  if (!loggedIn.value || newRating.value === 0 || isSubmitting.value) return;
+  if (isSubmitting.value || newRating.value === 0) return;
+
+  if (!loggedIn.value) {
+    const message = translateWithFallback(
+      "sidebar.rating.signInRequired",
+      "You need to sign in to submit a rating.",
+    );
+
+    submissionError.value = message;
+
+    if (import.meta.client) {
+      await auth.handleUnauthorized(message);
+    }
+
+    return;
+  }
 
   isSubmitting.value = true;
   submissionError.value = null;
