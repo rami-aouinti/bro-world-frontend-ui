@@ -118,6 +118,7 @@
 
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
+import { onNuxtReady } from "#app";
 import AppBrand from "./AppBar/AppBrand.vue";
 import AppNavButtons from "./AppBar/AppNavButtons.vue";
 import AppIconBar from "./AppBar/AppIconBar.vue";
@@ -291,7 +292,7 @@ const messengerButtonLabel = computed(() => {
 const isClient = ref(false);
 
 if (import.meta.client) {
-  onMounted(() => {
+  onNuxtReady(() => {
     isClient.value = true;
     if (!messengerPreviewConversations.value.length) {
       messenger.fetchThreads({ limit: 3 }).catch(() => {});

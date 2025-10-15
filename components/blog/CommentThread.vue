@@ -151,10 +151,10 @@ import {
   watch,
   defineAsyncComponent,
   ref,
-  onMounted,
   onBeforeUnmount,
   type WatchStopHandle,
 } from "vue";
+import { onNuxtReady } from "#app";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -181,7 +181,7 @@ const composerVisible = defineModel<boolean>("composerVisible", { default: false
 let stopAuthWatcher: WatchStopHandle | null = null;
 
 if (import.meta.client) {
-  onMounted(() => {
+  onNuxtReady(() => {
     isHydrated.value = true;
 
     stopAuthWatcher = watch(
