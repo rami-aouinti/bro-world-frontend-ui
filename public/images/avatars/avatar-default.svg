@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title>Default avatar</title>
+  <defs>
+    <linearGradient id="gradient-default" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(15,23,42,0.25)" />
+    </filter>
+  </defs>
+  <rect width="96" height="96" rx="48" fill="url(#gradient-default)" filter="url(#shadow)" />
+  <g transform="translate(0,6)" fill="#fff">
+    <circle cx="48" cy="28" r="16" opacity="0.92" />
+    <path d="M48 46c-17.673 0-32 12.536-32 28a4 4 0 0 0 4 4h56a4 4 0 0 0 4-4c0-15.464-14.327-28-32-28z" opacity="0.85" />
+  </g>
+</svg>

@@ -6,7 +6,7 @@ import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import type { FriendEntry, FriendStory, ProfileUser, SidebarFriend } from "~/types/pages/profile";
 
-const DEFAULT_AVATAR = "/person.png";
+const DEFAULT_AVATAR = "/images/avatars/avatar-default.svg";
 
 type SidebarLifeEvent = { title: string; date?: string; description?: string };
 

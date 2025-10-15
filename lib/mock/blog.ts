@@ -61,6 +61,8 @@ export interface BlogApiResponse {
   count: number;
 }
 
+const defaultAvatar = "/images/avatars/avatar-default.svg";
+
 export const blogSampleResponse: BlogApiResponse = {
   data: [
     {
@@ -84,7 +86,7 @@ export const blogSampleResponse: BlogApiResponse = {
         username: "john",
         email: "john.doe@test.com",
         enabled: false,
-        photo: "/person.png",
+        photo: defaultAvatar,
       },
       reactions_preview: [
         {
@@ -97,7 +99,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-api",
             email: "john.doe-api@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
         },
         {
@@ -110,7 +112,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john",
             email: "john.doe@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
         },
       ],
@@ -126,7 +128,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john",
             email: "john.doe@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
           isReacted: null,
           totalComments: 0,
@@ -143,7 +145,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john-logged",
                 email: "john.doe-logged@test.com",
                 enabled: false,
-                photo: "/person.png",
+                photo: defaultAvatar,
               },
             },
             {
@@ -156,7 +158,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john",
                 email: "john.doe@test.com",
                 enabled: false,
-                photo: "/person.png",
+                photo: defaultAvatar,
               },
             },
           ],
@@ -172,7 +174,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-api",
             email: "john.doe-api@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
           isReacted: null,
           totalComments: 0,
@@ -189,7 +191,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john-admin",
                 email: "john.doe-admin@test.com",
                 enabled: false,
-                photo: "https://bro-world.org/uploads/avatar/team-4-68763f1b4e9728.49066840.jpg",
+                photo: "/images/avatars/avatar-admin.svg",
               },
             },
             {
@@ -202,7 +204,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john",
                 email: "john.doe@test.com",
                 enabled: false,
-                photo: "/person.png",
+                photo: defaultAvatar,
               },
             },
           ],
@@ -232,7 +234,7 @@ export const blogSampleResponse: BlogApiResponse = {
         username: "john-api",
         email: "john.doe-api@test.com",
         enabled: false,
-        photo: "/person.png",
+        photo: defaultAvatar,
       },
       reactions_preview: [
         {
@@ -245,7 +247,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-user",
             email: "john.doe-user@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
         },
         {
@@ -258,7 +260,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-api",
             email: "john.doe-api@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
         },
       ],
@@ -274,7 +276,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john",
             email: "john.doe@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
           isReacted: null,
           totalComments: 0,
@@ -291,7 +293,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john-admin",
                 email: "john.doe-admin@test.com",
                 enabled: false,
-                photo: "https://bro-world.org/uploads/avatar/team-4-68763f1b4e9728.49066840.jpg",
+                photo: "/images/avatars/avatar-admin.svg",
               },
             },
             {
@@ -304,7 +306,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john-root",
                 email: "john.doe-root@test.com",
                 enabled: false,
-                photo: "https://bro-world.org/uploads/avatar/team-4-686c002aeab759.31816587.jpg",
+                photo: "/images/avatars/avatar-bro.svg",
               },
             },
           ],
@@ -321,7 +323,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-user",
             email: "john.doe-user@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
           isReacted: null,
           totalComments: 0,
@@ -338,7 +340,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john",
                 email: "john.doe@test.com",
                 enabled: false,
-                photo: "/person.png",
+                photo: defaultAvatar,
               },
             },
             {
@@ -351,7 +353,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john-user",
                 email: "john.doe-user@test.com",
                 enabled: false,
-                photo: "/person.png",
+                photo: defaultAvatar,
               },
             },
           ],
@@ -381,7 +383,7 @@ export const blogSampleResponse: BlogApiResponse = {
         username: "john-user",
         email: "john.doe-user@test.com",
         enabled: false,
-        photo: "/person.png",
+        photo: defaultAvatar,
       },
       reactions_preview: [
         {
@@ -394,7 +396,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-user",
             email: "john.doe-user@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
         },
         {
@@ -407,7 +409,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-logged",
             email: "john.doe-logged@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
         },
       ],
@@ -422,7 +424,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-user",
             email: "john.doe-user@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
           isReacted: null,
           totalComments: 0,
@@ -439,7 +441,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john",
                 email: "john.doe@test.com",
                 enabled: false,
-                photo: "/person.png",
+                photo: defaultAvatar,
               },
             },
             {
@@ -452,7 +454,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john-user",
                 email: "john.doe-user@test.com",
                 enabled: false,
-                photo: "/person.png",
+                photo: defaultAvatar,
               },
             },
           ],
@@ -468,7 +470,7 @@ export const blogSampleResponse: BlogApiResponse = {
             username: "john-logged",
             email: "john.doe-logged@test.com",
             enabled: false,
-            photo: "/person.png",
+            photo: defaultAvatar,
           },
           isReacted: null,
           totalComments: 0,
@@ -485,7 +487,7 @@ export const blogSampleResponse: BlogApiResponse = {
                 username: "john-root",
                 email: "john.doe-root@test.com",
                 enabled: false,
-                photo: "https://bro-world.org/uploads/avatar/team-4-686c002aeab759.31816587.jpg",
+                photo: "/images/avatars/avatar-bro.svg",
               },
             },
           ],

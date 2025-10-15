@@ -290,7 +290,7 @@ useHead(() => {
   };
 });
 
-const defaultAvatar = "/person.png";
+const defaultAvatar = "/images/avatars/avatar-default.svg";
 const placeholderValue = computed(() => t("pages.profile.placeholders.missing"));
 
 const siteSettings = useSiteSettingsState();
