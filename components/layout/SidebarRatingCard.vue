@@ -186,12 +186,9 @@ const loggedIn = computed(() => auth.isAuthenticated.value);
 const nuxtApp = useNuxtApp();
 const localePath = useResolvedLocalePath();
 
-type ApiClient = <T>(path: string, options?: ApiRequestOptions) => Promise<T>;
-const apiClient = nuxtApp.$api as ApiClient | undefined;
-
 function apiFetch<T>(path: string, options?: ApiRequestOptions) {
-  if (import.meta.client && apiClient) {
-    return apiClient<T>(path, options);
+  if (import.meta.client && nuxtApp.$api) {
+    return nuxtApp.$api<T>(path, options);
   }
 
   const fetcher = resolveApiFetcher();
