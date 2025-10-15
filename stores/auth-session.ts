@@ -160,7 +160,10 @@ function resolveFetcher(): Fetcher {
 
   const baseFetcher = useNuxtApp().$api as Fetcher;
 
-  return async function wrappedClientFetcher<T>(request: string, options?: FetchOptions): Promise<T> {
+  return async function wrappedClientFetcher<T>(
+    request: string,
+    options?: FetchOptions,
+  ): Promise<T> {
     const normalizedOptions = options ? normalizeFetchOptions(options) : options;
     return baseFetcher<T>(request, normalizedOptions);
   };
@@ -446,15 +449,12 @@ export const useAuthSession = defineStore("auth-session", () => {
       const responseFetcher = import.meta.server
         ? (useRequestFetch() as Fetcher)
         : ($fetch as Fetcher);
-      const response = await responseFetcher<MercureTokenEnvelope>(
-        "/api/mercure/token",
-        {
-          method: "GET",
-          context: {
-            suppressErrorNotification: true,
-          },
+      const response = await responseFetcher<MercureTokenEnvelope>("/api/mercure/token", {
+        method: "GET",
+        context: {
+          suppressErrorNotification: true,
         },
-      );
+      });
 
       if (!response?.token) {
         setMercureToken(null);

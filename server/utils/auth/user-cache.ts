@@ -19,11 +19,14 @@ const globalScope = globalThis as typeof globalThis & {
 
 function getRedisConfig(event: H3Event): RedisSessionUserConfig {
   const runtimeConfig = useRuntimeConfig(event);
-  const redis = (runtimeConfig.redis ?? {}) as Partial<RedisSessionUserConfig & { sessionTtl?: number }>;
+  const redis = (runtimeConfig.redis ?? {}) as Partial<
+    RedisSessionUserConfig & { sessionTtl?: number }
+  >;
   const sessionMaxAgeCandidate = Number.parseInt(runtimeConfig.auth?.sessionMaxAge ?? "", 10);
-  const defaultTtl = Number.isFinite(sessionMaxAgeCandidate) && sessionMaxAgeCandidate > 0
-    ? sessionMaxAgeCandidate
-    : 60 * 60 * 24 * 7;
+  const defaultTtl =
+    Number.isFinite(sessionMaxAgeCandidate) && sessionMaxAgeCandidate > 0
+      ? sessionMaxAgeCandidate
+      : 60 * 60 * 24 * 7;
   const configuredTtl = Number(redis.sessionTtl);
 
   return {
@@ -160,10 +163,7 @@ export async function writeCachedSessionUser(
   }
 }
 
-export async function deleteCachedSessionUser(
-  event: H3Event,
-  sessionToken: string,
-): Promise<void> {
+export async function deleteCachedSessionUser(event: H3Event, sessionToken: string): Promise<void> {
   const client = await getRedisClient(event);
 
   if (!client) {

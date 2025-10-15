@@ -280,8 +280,12 @@ export const usePostsStore = defineStore("posts", () => {
     const activeIds = new Set(finalIds);
 
     const pageTimestamp = pageTimestamps.value[normalizedPage];
-    const pageIdsMatch = existingPageIds.length === incomingIds.length && existingPageIds.every((id, index) => id === incomingIds[index]);
-    const listOrderMatch = finalIds.length === listIds.value.length && finalIds.every((id, index) => id === listIds.value[index]);
+    const pageIdsMatch =
+      existingPageIds.length === incomingIds.length &&
+      existingPageIds.every((id, index) => id === incomingIds[index]);
+    const listOrderMatch =
+      finalIds.length === listIds.value.length &&
+      finalIds.every((id, index) => id === listIds.value[index]);
     const timestampsMatch =
       typeof pageTimestamp === "number" &&
       pageTimestamp === now &&

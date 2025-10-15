@@ -51,7 +51,9 @@
         class="mb-10"
         aria-labelledby="performance-metrics"
       >
-        <header class="d-flex flex-column flex-md-row align-md-center justify-space-between mb-6 gap-4">
+        <header
+          class="d-flex flex-column flex-md-row align-md-center justify-space-between mb-6 gap-4"
+        >
           <div>
             <h2
               id="performance-metrics"
@@ -348,7 +350,9 @@ const pillars = computed(() => {
   ] as const;
 
   return definitions.map((definition) => {
-    const points = tm(`pages.performance.pillars.items.${definition.key}.points`) as string[] | undefined;
+    const points = tm(`pages.performance.pillars.items.${definition.key}.points`) as
+      | string[]
+      | undefined;
 
     return {
       key: definition.key,
@@ -408,7 +412,8 @@ const audits = computed(() => [
   position: relative;
   overflow: hidden;
   padding: clamp(2.5rem, 4vw, 4rem);
-  background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 55%),
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 55%),
     radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.12), transparent 60%),
     rgba(15, 23, 42, 0.7);
   color: inherit;

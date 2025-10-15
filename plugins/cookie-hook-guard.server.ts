@@ -19,9 +19,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       } catch (error) {
         if (isHeadersSentError(error)) {
           if (import.meta.dev) {
-            console.warn(
-              "[cookies] Skipped writing cookie after response was already sent.",
-            );
+            console.warn("[cookies] Skipped writing cookie after response was already sent.");
           }
 
           return;

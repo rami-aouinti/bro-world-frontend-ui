@@ -22,7 +22,9 @@ const STATE_KEY = "layout-right-sidebar-content";
 export function useLayoutRightSidebar() {
   const rightSidebarContent = useState<LayoutRightSidebarState | null>(STATE_KEY, () => null);
 
-  function normalizeContent(content: LayoutRightSidebarContent | null): LayoutRightSidebarState | null {
+  function normalizeContent(
+    content: LayoutRightSidebarContent | null,
+  ): LayoutRightSidebarState | null {
     if (!content) {
       return null;
     }

@@ -56,15 +56,11 @@ async function requestUsersApi<T>(
     if (forwardedAuthorization) {
       headers.set("authorization", forwardedAuthorization);
     } else if (serviceToken) {
-      const value = serviceToken.startsWith("Bearer ")
-        ? serviceToken
-        : `Bearer ${serviceToken}`;
+      const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
 
       headers.set("authorization", value);
     } else if (sessionToken) {
-      const value = sessionToken.startsWith("Bearer ")
-        ? sessionToken
-        : `Bearer ${sessionToken}`;
+      const value = sessionToken.startsWith("Bearer ") ? sessionToken : `Bearer ${sessionToken}`;
 
       headers.set("authorization", value);
     }

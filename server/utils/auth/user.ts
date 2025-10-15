@@ -37,12 +37,10 @@ export function normalizeSessionUser(payload: unknown): AuthUser | null {
 
   const record = payload as Record<string, unknown>;
   const id = typeof record.id === "string" && record.id.trim() ? record.id.trim() : null;
-  const username = typeof record.username === "string" && record.username.trim()
-    ? record.username.trim()
-    : null;
-  const email = typeof record.email === "string" && record.email.trim()
-    ? record.email.trim()
-    : null;
+  const username =
+    typeof record.username === "string" && record.username.trim() ? record.username.trim() : null;
+  const email =
+    typeof record.email === "string" && record.email.trim() ? record.email.trim() : null;
 
   if (!id || !username || !email) {
     return null;

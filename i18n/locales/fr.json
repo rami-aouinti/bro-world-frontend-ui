@@ -2089,41 +2089,25 @@
           "content": {
             "title": "Gestion du contenu",
             "description": "Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.",
-            "tags": [
-              "Workflow éditorial",
-              "Validation",
-              "Programmation"
-            ],
+            "tags": ["Workflow éditorial", "Validation", "Programmation"],
             "status": "12 contenus nécessitent une revue éditoriale."
           },
           "community": {
             "title": "Communauté & modération",
             "description": "Paramétrez les règles de modération, gérez les signalements et les sanctions.",
-            "tags": [
-              "Signalements",
-              "Sanctions",
-              "Messages privés"
-            ],
+            "tags": ["Signalements", "Sanctions", "Messages privés"],
             "status": "Temps moyen de réponse : 1 h 42."
           },
           "commerce": {
             "title": "Monétisation & offres",
             "description": "Administrez les abonnements, codes promotionnels et partenariats commerciaux.",
-            "tags": [
-              "Abonnements",
-              "Facturation",
-              "Coupons"
-            ],
+            "tags": ["Abonnements", "Facturation", "Coupons"],
             "status": "Taux de conversion en hausse de 3,4 % cette semaine."
           },
           "governance": {
             "title": "Gouvernance & conformité",
             "description": "Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.",
-            "tags": [
-              "Audit",
-              "Rôles",
-              "Traçabilité"
-            ],
+            "tags": ["Audit", "Rôles", "Traçabilité"],
             "status": "Dernier audit complet réalisé il y a 5 jours."
           }
         }

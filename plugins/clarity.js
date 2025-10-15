@@ -22,9 +22,10 @@ export default defineNuxtPlugin(() => {
 
   const connection = globalObject.navigator?.connection ?? null;
   const isSaveDataEnabled = Boolean(connection?.saveData);
-  const isVerySlowConnection = typeof connection?.effectiveType === "string"
-    ? /(^|\b)(slow-)?2g($|\b)/i.test(connection.effectiveType)
-    : false;
+  const isVerySlowConnection =
+    typeof connection?.effectiveType === "string"
+      ? /(^|\b)(slow-)?2g($|\b)/i.test(connection.effectiveType)
+      : false;
 
   if (isSaveDataEnabled) {
     return;

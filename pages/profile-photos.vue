@@ -1,413 +1,411 @@
 <template>
   <main aria-labelledby="profile-photos-title">
-      <header
-        class="mb-6"
-        aria-describedby="profile-photos-subtitle"
+    <header
+      class="mb-6"
+      aria-describedby="profile-photos-subtitle"
+    >
+      <SidebarCard
+        class="text-card-foreground pa-6"
+        glow
       >
-        <SidebarCard
-          class="text-card-foreground pa-6"
-          glow
-        >
-          <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-6">
-            <div class="flex-grow-1">
-              <h1
-                id="profile-photos-title"
-                class="text-h4 font-weight-bold mb-2"
+        <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-6">
+          <div class="flex-grow-1">
+            <h1
+              id="profile-photos-title"
+              class="text-h4 font-weight-bold mb-2"
+            >
+              {{ t("pages.profilePhotos.title") }}
+            </h1>
+            <p
+              id="profile-photos-subtitle"
+              class="text-body-1 text-medium-emphasis mb-4"
+            >
+              {{ t("pages.profilePhotos.subtitle") }}
+            </p>
+            <div class="d-flex flex-wrap gap-4">
+              <div
+                v-for="stat in collectionStats"
+                :key="stat.id"
+                class="d-flex flex-column"
               >
-                {{ t("pages.profilePhotos.title") }}
-              </h1>
-              <p
-                id="profile-photos-subtitle"
-                class="text-body-1 text-medium-emphasis mb-4"
-              >
-                {{ t("pages.profilePhotos.subtitle") }}
-              </p>
-              <div class="d-flex flex-wrap gap-4">
-                <div
-                  v-for="stat in collectionStats"
-                  :key="stat.id"
-                  class="d-flex flex-column"
-                >
-                  <span class="text-h5 font-weight-semibold">{{ stat.value }}</span>
-                  <span class="text-body-2 text-medium-emphasis">{{ stat.label }}</span>
-                </div>
+                <span class="text-h5 font-weight-semibold">{{ stat.value }}</span>
+                <span class="text-body-2 text-medium-emphasis">{{ stat.label }}</span>
               </div>
             </div>
-            <div class="d-flex flex-column flex-sm-row align-stretch gap-3">
-              <v-btn
-                color="primary"
-                size="large"
-                class="flex-grow-1"
-                @click="triggerAction('upload')"
+          </div>
+          <div class="d-flex flex-column flex-sm-row align-stretch gap-3">
+            <v-btn
+              color="primary"
+              size="large"
+              class="flex-grow-1"
+              @click="triggerAction('upload')"
+            >
+              {{ t("pages.profilePhotos.actions.upload") }}
+            </v-btn>
+            <v-btn
+              variant="tonal"
+              color="primary"
+              size="large"
+              class="flex-grow-1"
+              @click="triggerAction('create-album')"
+            >
+              {{ t("pages.profilePhotos.actions.createAlbum") }}
+            </v-btn>
+          </div>
+        </div>
+      </SidebarCard>
+    </header>
+
+    <v-row dense>
+      <v-col
+        cols="12"
+        xl="8"
+      >
+        <section
+          class="mb-8"
+          aria-labelledby="pinned-albums-title"
+        >
+          <SidebarCard
+            class="text-card-foreground pa-6"
+            glow
+          >
+            <div
+              class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-6"
+            >
+              <div>
+                <h2
+                  id="pinned-albums-title"
+                  class="text-h5 font-weight-semibold mb-1"
+                >
+                  {{ t("pages.profilePhotos.sections.pinned") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("pages.profilePhotos.meta.updated", { date: highlightedAlbum.updated }) }}
+                </p>
+              </div>
+              <v-chip-group
+                v-model="activeFilter"
+                selected-class="bg-primary text-primary-on-surface"
+                class="flex-wrap"
               >
-                {{ t("pages.profilePhotos.actions.upload") }}
-              </v-btn>
+                <v-chip
+                  v-for="filter in filters"
+                  :key="filter.id"
+                  :value="filter.id"
+                  variant="outlined"
+                  size="small"
+                  class="text-body-2"
+                >
+                  {{ filter.label }}
+                </v-chip>
+              </v-chip-group>
+            </div>
+
+            <v-row
+              dense
+              align="stretch"
+            >
+              <v-col
+                cols="12"
+                md="6"
+              >
+                <SidebarCard
+                  class="text-card-foreground pa-4 h-100"
+                  glow
+                >
+                  <div class="rounded-xl overflow-hidden mb-4">
+                    <v-img
+                      :src="highlightedAlbum.cover"
+                      :alt="highlightedAlbum.title"
+                      aspect-ratio="4/3"
+                      cover
+                    />
+                  </div>
+                  <h3 class="text-subtitle-1 font-weight-semibold mb-1">
+                    {{ highlightedAlbum.title }}
+                  </h3>
+                  <p class="text-body-2 text-medium-emphasis mb-4">
+                    {{ highlightedAlbum.description }}
+                  </p>
+                  <div class="d-flex flex-wrap gap-2 text-body-2 text-medium-emphasis">
+                    <span
+                      >{{ highlightedAlbum.count }}
+                      {{ t("pages.profilePhotos.meta.photoCount") }}</span
+                    >
+                    <span>•</span>
+                    <span>{{ highlightedAlbum.location }}</span>
+                  </div>
+                </SidebarCard>
+              </v-col>
+              <v-col
+                cols="12"
+                md="6"
+              >
+                <div class="d-flex flex-column gap-3">
+                  <SidebarCard
+                    v-for="album in secondaryAlbums"
+                    :key="album.id"
+                    class="text-card-foreground pa-4 bg-primary/10"
+                    glow
+                  >
+                    <div class="d-flex gap-4">
+                      <v-img
+                        :src="album.cover"
+                        :alt="album.title"
+                        class="rounded-lg"
+                        aspect-ratio="1"
+                        width="96"
+                        cover
+                      />
+                      <div class="flex-grow-1">
+                        <div class="d-flex align-center justify-space-between mb-1">
+                          <h3 class="text-subtitle-1 font-weight-semibold mb-0">
+                            {{ album.title }}
+                          </h3>
+                          <v-chip
+                            size="small"
+                            variant="tonal"
+                          >
+                            {{ album.count }}
+                          </v-chip>
+                        </div>
+                        <p class="text-body-2 text-medium-emphasis mb-2">
+                          {{ album.description }}
+                        </p>
+                        <div class="text-caption text-medium-emphasis">{{ album.updated }}</div>
+                      </div>
+                    </div>
+                  </SidebarCard>
+                </div>
+              </v-col>
+            </v-row>
+          </SidebarCard>
+        </section>
+
+        <section aria-labelledby="photo-gallery-title">
+          <SidebarCard
+            class="text-card-foreground pa-6"
+            glow
+          >
+            <div
+              class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4 mb-4"
+            >
+              <div>
+                <h2
+                  id="photo-gallery-title"
+                  class="text-h5 font-weight-semibold mb-1"
+                >
+                  {{ t("pages.profilePhotos.sections.albums") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("pages.profilePhotos.cta.share") }}
+                </p>
+              </div>
               <v-btn
-                variant="tonal"
+                variant="outlined"
                 color="primary"
-                size="large"
-                class="flex-grow-1"
-                @click="triggerAction('create-album')"
+                size="small"
+                @click="triggerAction('share-collection')"
               >
                 {{ t("pages.profilePhotos.actions.createAlbum") }}
               </v-btn>
             </div>
-          </div>
-        </SidebarCard>
-      </header>
 
-      <v-row dense>
-        <v-col
-          cols="12"
-          xl="8"
-        >
-          <section
-            class="mb-8"
-            aria-labelledby="pinned-albums-title"
-          >
-            <SidebarCard
-              class="text-card-foreground pa-6"
-              glow
-            >
+            <div class="masonry-grid">
               <div
-                class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-6"
+                v-for="photo in displayedPhotos"
+                :key="photo.id"
+                class="masonry-item"
               >
-                <div>
-                  <h2
-                    id="pinned-albums-title"
-                    class="text-h5 font-weight-semibold mb-1"
-                  >
-                    {{ t("pages.profilePhotos.sections.pinned") }}
-                  </h2>
-                  <p class="text-body-2 text-medium-emphasis mb-0">
-                    {{ t("pages.profilePhotos.meta.updated", { date: highlightedAlbum.updated }) }}
-                  </p>
+                <v-img
+                  :src="photo.src"
+                  :alt="photo.alt"
+                  class="rounded-xl"
+                  aspect-ratio="photo.ratio"
+                  cover
+                />
+                <div class="mt-2 d-flex flex-column gap-1">
+                  <div class="d-flex align-center justify-space-between">
+                    <span class="text-subtitle-2 font-weight-medium">{{ photo.title }}</span>
+                    <v-chip
+                      size="x-small"
+                      variant="tonal"
+                    >
+                      {{ photo.category }}
+                    </v-chip>
+                  </div>
+                  <span class="text-caption text-medium-emphasis">{{ photo.takenAt }}</span>
                 </div>
-                <v-chip-group
-                  v-model="activeFilter"
-                  selected-class="bg-primary text-primary-on-surface"
-                  class="flex-wrap"
-                >
-                  <v-chip
-                    v-for="filter in filters"
-                    :key="filter.id"
-                    :value="filter.id"
-                    variant="outlined"
-                    size="small"
-                    class="text-body-2"
-                  >
-                    {{ filter.label }}
-                  </v-chip>
-                </v-chip-group>
+              </div>
+            </div>
+
+            <div
+              v-if="displayedPhotos.length === 0"
+              class="text-body-1 text-medium-emphasis text-center py-8"
+            >
+              {{ t("pages.profilePhotos.empty") }}
+            </div>
+          </SidebarCard>
+        </section>
+      </v-col>
+      <v-col
+        cols="12"
+        xl="4"
+      >
+        <aside>
+          <SidebarCard
+            class="text-card-foreground pa-6 mb-6"
+            glow
+          >
+            <div class="d-flex flex-column gap-5">
+              <div>
+                <h2 class="text-h6 font-weight-semibold mb-2">
+                  {{ t("pages.profilePhotos.timeline.title") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("pages.profilePhotos.timeline.description") }}
+                </p>
               </div>
 
-              <v-row
-                dense
-                align="stretch"
-              >
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <SidebarCard
-                    class="text-card-foreground pa-4 h-100"
-                    glow
-                  >
-                    <div class="rounded-xl overflow-hidden mb-4">
-                      <v-img
-                        :src="highlightedAlbum.cover"
-                        :alt="highlightedAlbum.title"
-                        aspect-ratio="4/3"
-                        cover
-                      />
-                    </div>
-                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
-                      {{ highlightedAlbum.title }}
-                    </h3>
-                    <p class="text-body-2 text-medium-emphasis mb-4">
-                      {{ highlightedAlbum.description }}
-                    </p>
-                    <div class="d-flex flex-wrap gap-2 text-body-2 text-medium-emphasis">
-                      <span
-                        >{{ highlightedAlbum.count }}
-                        {{ t("pages.profilePhotos.meta.photoCount") }}</span
-                      >
-                      <span>•</span>
-                      <span>{{ highlightedAlbum.location }}</span>
-                    </div>
-                  </SidebarCard>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="6"
+              <div class="d-flex flex-column gap-4">
+                <div
+                  v-for="milestone in storyMilestones"
+                  :key="milestone.id"
+                  class="pa-4 rounded-xl d-flex flex-column gap-3"
+                  style="
+                    background: rgba(var(--v-theme-surface-container-high), 0.68);
+                    border: 1px solid rgba(var(--v-theme-primary), 0.14);
+                  "
                 >
                   <div class="d-flex flex-column gap-3">
-                    <SidebarCard
-                      v-for="album in secondaryAlbums"
-                      :key="album.id"
-                      class="text-card-foreground pa-4 bg-primary/10"
-                      glow
-                    >
-                      <div class="d-flex gap-4">
-                        <v-img
-                          :src="album.cover"
-                          :alt="album.title"
-                          class="rounded-lg"
-                          aspect-ratio="1"
-                          width="96"
-                          cover
-                        />
-                        <div class="flex-grow-1">
-                          <div class="d-flex align-center justify-space-between mb-1">
-                            <h3 class="text-subtitle-1 font-weight-semibold mb-0">
-                              {{ album.title }}
-                            </h3>
-                            <v-chip
-                              size="small"
-                              variant="tonal"
-                            >
-                              {{ album.count }}
-                            </v-chip>
-                          </div>
-                          <p class="text-body-2 text-medium-emphasis mb-2">
-                            {{ album.description }}
-                          </p>
-                          <div class="text-caption text-medium-emphasis">{{ album.updated }}</div>
-                        </div>
-                      </div>
-                    </SidebarCard>
-                  </div>
-                </v-col>
-              </v-row>
-            </SidebarCard>
-          </section>
-
-          <section aria-labelledby="photo-gallery-title">
-            <SidebarCard
-              class="text-card-foreground pa-6"
-              glow
-            >
-              <div
-                class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4 mb-4"
-              >
-                <div>
-                  <h2
-                    id="photo-gallery-title"
-                    class="text-h5 font-weight-semibold mb-1"
-                  >
-                    {{ t("pages.profilePhotos.sections.albums") }}
-                  </h2>
-                  <p class="text-body-2 text-medium-emphasis mb-0">
-                    {{ t("pages.profilePhotos.cta.share") }}
-                  </p>
-                </div>
-                <v-btn
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  @click="triggerAction('share-collection')"
-                >
-                  {{ t("pages.profilePhotos.actions.createAlbum") }}
-                </v-btn>
-              </div>
-
-              <div class="masonry-grid">
-                <div
-                  v-for="photo in displayedPhotos"
-                  :key="photo.id"
-                  class="masonry-item"
-                >
-                  <v-img
-                    :src="photo.src"
-                    :alt="photo.alt"
-                    class="rounded-xl"
-                    aspect-ratio="photo.ratio"
-                    cover
-                  />
-                  <div class="mt-2 d-flex flex-column gap-1">
-                    <div class="d-flex align-center justify-space-between">
-                      <span class="text-subtitle-2 font-weight-medium">{{ photo.title }}</span>
-                      <v-chip
-                        size="x-small"
-                        variant="tonal"
-                      >
-                        {{ photo.category }}
-                      </v-chip>
-                    </div>
-                    <span class="text-caption text-medium-emphasis">{{ photo.takenAt }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                v-if="displayedPhotos.length === 0"
-                class="text-body-1 text-medium-emphasis text-center py-8"
-              >
-                {{ t("pages.profilePhotos.empty") }}
-              </div>
-            </SidebarCard>
-          </section>
-        </v-col>
-        <v-col
-          cols="12"
-          xl="4"
-        >
-          <aside>
-            <SidebarCard
-              class="text-card-foreground pa-6 mb-6"
-              glow
-            >
-              <div class="d-flex flex-column gap-5">
-                <div>
-                  <h2 class="text-h6 font-weight-semibold mb-2">
-                    {{ t("pages.profilePhotos.timeline.title") }}
-                  </h2>
-                  <p class="text-body-2 text-medium-emphasis mb-0">
-                    {{ t("pages.profilePhotos.timeline.description") }}
-                  </p>
-                </div>
-
-                <div class="d-flex flex-column gap-4">
-                  <div
-                    v-for="milestone in storyMilestones"
-                    :key="milestone.id"
-                    class="pa-4 rounded-xl d-flex flex-column gap-3"
-                    style="
-                      background: rgba(var(--v-theme-surface-container-high), 0.68);
-                      border: 1px solid rgba(var(--v-theme-primary), 0.14);
-                    "
-                  >
-                    <div class="d-flex flex-column gap-3">
-                      <div class="d-flex align-start justify-space-between gap-4">
-                        <div class="d-flex align-start gap-3">
-                          <v-avatar
-                            size="44"
-                            :color="milestone.color"
-                            variant="tonal"
-                          >
-                            <v-icon
-                              :icon="milestone.icon"
-                              size="22"
-                            />
-                          </v-avatar>
-                          <div>
-                            <div class="text-subtitle-1 font-weight-semibold">
-                              {{ milestone.title }}
-                            </div>
-                            <div class="text-caption text-medium-emphasis">
-                              {{ milestone.date }}
-                            </div>
-                          </div>
-                        </div>
-                        <v-chip
+                    <div class="d-flex align-start justify-space-between gap-4">
+                      <div class="d-flex align-start gap-3">
+                        <v-avatar
+                          size="44"
                           :color="milestone.color"
-                          size="small"
-                          variant="flat"
-                          class="text-caption font-weight-medium"
+                          variant="tonal"
                         >
-                          {{ milestone.status }}
-                        </v-chip>
-                      </div>
-                      <p class="text-body-2 text-medium-emphasis mb-0">
-                        {{ milestone.description }}
-                      </p>
-                    </div>
-
-                    <v-progress-linear
-                      :model-value="milestone.progress"
-                      height="6"
-                      rounded
-                      :color="milestone.color"
-                      class="mt-1"
-                    />
-
-                    <div class="d-flex flex-wrap gap-2">
-                      <v-chip
-                        v-for="tag in milestone.tags"
-                        :key="tag"
-                        size="x-small"
-                        variant="tonal"
-                        class="text-caption"
-                        color="primary"
-                      >
-                        {{ tag }}
-                      </v-chip>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </SidebarCard>
-
-            <SidebarCard
-              class="text-card-foreground pa-6 bg-primary/10"
-              glow
-            >
-              <div class="d-flex flex-column gap-4">
-                <div>
-                  <h2 class="text-h6 font-weight-semibold mb-1">
-                    {{ t("pages.profilePhotos.sections.timeline") }}
-                  </h2>
-                  <p class="text-body-2 text-medium-emphasis mb-0">
-                    {{ t("pages.profilePhotos.sections.notesDescription") }}
-                  </p>
-                </div>
-                <div class="d-flex flex-column gap-3">
-                  <div
-                    v-for="note in creativeNotes"
-                    :key="note.id"
-                    class="d-flex flex-column gap-3 pa-4 rounded-xl"
-                    style="background: rgba(var(--v-theme-surface-container-high), 0.82)"
-                  >
-                    <div class="d-flex flex-column gap-3">
-                      <div class="d-flex align-start justify-space-between gap-3">
-                        <div class="d-flex align-start gap-3">
-                          <v-avatar
-                            size="44"
-                            :color="note.color"
-                            variant="tonal"
-                          >
-                            <span class="text-body-2 font-weight-semibold">{{
-                              note.initials
-                            }}</span>
-                          </v-avatar>
-                          <div>
-                            <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
-                            <div class="text-caption text-medium-emphasis">{{ note.byline }}</div>
+                          <v-icon
+                            :icon="milestone.icon"
+                            size="22"
+                          />
+                        </v-avatar>
+                        <div>
+                          <div class="text-subtitle-1 font-weight-semibold">
+                            {{ milestone.title }}
+                          </div>
+                          <div class="text-caption text-medium-emphasis">
+                            {{ milestone.date }}
                           </div>
                         </div>
-                        <v-chip
-                          :color="note.color"
-                          size="x-small"
-                          variant="flat"
-                          class="text-caption font-weight-medium"
-                        >
-                          {{ note.category }}
-                        </v-chip>
                       </div>
-                      <p class="text-body-2 text-medium-emphasis mb-0">
-                        {{ note.preview }}
-                      </p>
-                    </div>
-                    <div
-                      class="d-flex align-center justify-space-between text-caption text-medium-emphasis"
-                    >
-                      <span>{{ note.updated }}</span>
-                      <v-btn
-                        variant="text"
-                        color="primary"
+                      <v-chip
+                        :color="milestone.color"
                         size="small"
-                        append-icon="mdi-arrow-top-right"
+                        variant="flat"
+                        class="text-caption font-weight-medium"
                       >
-                        {{ note.cta }}
-                      </v-btn>
+                        {{ milestone.status }}
+                      </v-chip>
                     </div>
+                    <p class="text-body-2 text-medium-emphasis mb-0">
+                      {{ milestone.description }}
+                    </p>
+                  </div>
+
+                  <v-progress-linear
+                    :model-value="milestone.progress"
+                    height="6"
+                    rounded
+                    :color="milestone.color"
+                    class="mt-1"
+                  />
+
+                  <div class="d-flex flex-wrap gap-2">
+                    <v-chip
+                      v-for="tag in milestone.tags"
+                      :key="tag"
+                      size="x-small"
+                      variant="tonal"
+                      class="text-caption"
+                      color="primary"
+                    >
+                      {{ tag }}
+                    </v-chip>
                   </div>
                 </div>
               </div>
-            </SidebarCard>
-          </aside>
-        </v-col>
-      </v-row>
+            </div>
+          </SidebarCard>
+
+          <SidebarCard
+            class="text-card-foreground pa-6 bg-primary/10"
+            glow
+          >
+            <div class="d-flex flex-column gap-4">
+              <div>
+                <h2 class="text-h6 font-weight-semibold mb-1">
+                  {{ t("pages.profilePhotos.sections.timeline") }}
+                </h2>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ t("pages.profilePhotos.sections.notesDescription") }}
+                </p>
+              </div>
+              <div class="d-flex flex-column gap-3">
+                <div
+                  v-for="note in creativeNotes"
+                  :key="note.id"
+                  class="d-flex flex-column gap-3 pa-4 rounded-xl"
+                  style="background: rgba(var(--v-theme-surface-container-high), 0.82)"
+                >
+                  <div class="d-flex flex-column gap-3">
+                    <div class="d-flex align-start justify-space-between gap-3">
+                      <div class="d-flex align-start gap-3">
+                        <v-avatar
+                          size="44"
+                          :color="note.color"
+                          variant="tonal"
+                        >
+                          <span class="text-body-2 font-weight-semibold">{{ note.initials }}</span>
+                        </v-avatar>
+                        <div>
+                          <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
+                          <div class="text-caption text-medium-emphasis">{{ note.byline }}</div>
+                        </div>
+                      </div>
+                      <v-chip
+                        :color="note.color"
+                        size="x-small"
+                        variant="flat"
+                        class="text-caption font-weight-medium"
+                      >
+                        {{ note.category }}
+                      </v-chip>
+                    </div>
+                    <p class="text-body-2 text-medium-emphasis mb-0">
+                      {{ note.preview }}
+                    </p>
+                  </div>
+                  <div
+                    class="d-flex align-center justify-space-between text-caption text-medium-emphasis"
+                  >
+                    <span>{{ note.updated }}</span>
+                    <v-btn
+                      variant="text"
+                      color="primary"
+                      size="small"
+                      append-icon="mdi-arrow-top-right"
+                    >
+                      {{ note.cta }}
+                    </v-btn>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SidebarCard>
+        </aside>
+      </v-col>
+    </v-row>
 
     <v-snackbar
       v-model="showSnackbar"

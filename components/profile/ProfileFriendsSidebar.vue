@@ -62,9 +62,9 @@
         density="comfortable"
       >
         <v-list-item
-          class="px-2 py-3 transition-colors d-flex align-center gap-3 rounded-xl"
           v-for="suggestion in suggestions"
           :key="suggestion.id"
+          class="px-2 py-3 transition-colors d-flex align-center gap-3 rounded-xl"
         >
           <template #prepend>
             <div>

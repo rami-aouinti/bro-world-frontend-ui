@@ -14,9 +14,9 @@
           {{ title }}
         </v-list-subheader>
         <v-list-item
-          class="group mx-2 my-0.5 rounded-xl my-4 transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5"
           v-for="section in sections"
           :key="section.key"
+          class="group mx-2 my-0.5 rounded-xl my-4 transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5"
           :title="section.title"
           :subtitle="section.subtitle"
           :to="section.to"

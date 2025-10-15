@@ -24,7 +24,8 @@ export default defineEventHandler(async (event) => {
   const coercedBody = coerceCredentialPayload(rawBody);
   const coercedQuery = coerceCredentialPayload(rawQuery);
   const credentials =
-    mergeCredentialPayloads([normalizedBody, coercedBody, normalizedQuery, coercedQuery]) ?? undefined;
+    mergeCredentialPayloads([normalizedBody, coercedBody, normalizedQuery, coercedQuery]) ??
+    undefined;
   const username = resolveCredentialIdentifier(credentials);
   const password = resolveCredentialPassword(credentials);
   const hasPassword = password.length > 0;
@@ -235,7 +236,7 @@ function resolveFetchErrorStatus(error: FetchError<unknown>): number | null {
 
 function getStatusFromError(error: FetchError<unknown>): number | null {
   for (const key of ["status", "statusCode"] as const) {
-    const value = (error as Record<(typeof key) | string, unknown>)[key];
+    const value = (error as Record<typeof key | string, unknown>)[key];
 
     if (typeof value === "number" && Number.isInteger(value)) {
       return value;
@@ -259,7 +260,7 @@ function resolveStatusFromPayload(payload: unknown): number | null {
   }
 
   for (const key of ["statusCode", "status", "code"] as const) {
-    const value = (payload as Record<(typeof key) | string, unknown>)[key];
+    const value = (payload as Record<typeof key | string, unknown>)[key];
 
     if (typeof value === "number" && Number.isInteger(value)) {
       return value;
