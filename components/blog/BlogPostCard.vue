@@ -129,9 +129,11 @@ import type {
 } from "~/lib/mock/blog";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useAuthStore } from "~/composables/useAuthStore";
-import type { CommentNode } from "~/components/blog/CommentThread.vue";
 import { useRelativeTime } from "~/composables/useRelativeTime";
 import { useElementVisibility } from "@vueuse/core";
+
+import BlogPostReactCard from "~/components/blog/BlogPostReactCard.vue";
+import CommentThread, { type CommentNode } from "~/components/blog/CommentThread.vue";
 
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
@@ -342,16 +344,6 @@ function handleCommentLike(commentId: string) {
     });
   });
 }
-const BlogPostReactCard = defineAsyncComponent({
-  loader: () => import("~/components/blog/BlogPostReactCard.vue"),
-  suspensible: false,
-});
-
-const CommentThread = defineAsyncComponent({
-  loader: () => import("~/components/blog/CommentThread.vue"),
-  suspensible: false,
-});
-
 const CommentSortMenu = defineAsyncComponent({
   loader: () => import("~/components/blog/CommentSortMenu.vue"),
   suspensible: false,
