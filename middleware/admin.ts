@@ -7,11 +7,12 @@ type MiddlewareResult = ReturnType<typeof defineNuxtRouteMiddleware>;
 
 export default defineNuxtRouteMiddleware(async (to): MiddlewareResult => {
   const auth = useAuthSession();
-  await auth.initialize();
+  const authenticated = await auth.initialize();
 
   const roles = auth.currentUser.value?.roles ?? [];
   const hasAccess =
-    auth.isAuthenticated.value && roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
+    (authenticated || auth.isAuthenticated.value) &&
+    roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
 
   if (hasAccess) {
     return;
