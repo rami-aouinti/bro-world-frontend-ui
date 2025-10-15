@@ -100,9 +100,9 @@
 import { computed, ref, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#imports";
-import { useAuthStore } from "~/composables/useAuthStore";
 import { defineAsyncComponentWithVendorStyles } from "~/lib/material-dashboard-vendors";
 import { useAuthSession } from "~/stores/auth-session";
+import BorderBeam from "~/components/special-effects/BorderBeam.vue";
 
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
