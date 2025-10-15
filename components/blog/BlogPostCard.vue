@@ -121,19 +121,17 @@
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent, nextTick, ref, shallowRef, watch } from "vue";
+import { useElementVisibility } from "@vueuse/core";
+import { useAuthStore } from "~/composables/useAuthStore";
+import { usePostsStore } from "~/composables/usePostsStore";
+import { useRelativeTime } from "~/composables/useRelativeTime";
 import type {
   BlogCommentWithReplies,
   BlogPost,
   ReactionAction,
   ReactionType,
 } from "~/lib/mock/blog";
-import { usePostsStore } from "~/composables/usePostsStore";
-import { useAuthStore } from "~/composables/useAuthStore";
-import { useRelativeTime } from "~/composables/useRelativeTime";
-import { useElementVisibility } from "@vueuse/core";
-
-import BlogPostReactCard from "~/components/blog/BlogPostReactCard.vue";
-import CommentThread, { type CommentNode } from "~/components/blog/CommentThread.vue";
+import type { CommentNode } from "~/components/blog/CommentThread.vue";
 
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
@@ -145,6 +143,16 @@ const PostMeta = defineAsyncComponent({
 });
 const BlogPostContent = defineAsyncComponent({
   loader: () => import("~/components/blog/BlogPostContent.vue"),
+  suspensible: false,
+});
+
+const BlogPostReactCard = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostReactCard.vue"),
+  suspensible: false,
+});
+
+const CommentThread = defineAsyncComponent({
+  loader: () => import("~/components/blog/CommentThread.vue"),
   suspensible: false,
 });
 
