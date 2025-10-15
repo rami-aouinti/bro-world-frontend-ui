@@ -1643,6 +1643,10 @@
           "actions": "Actions"
         }
       },
+      "errors": {
+        "unauthorized": "No tienes permiso para ver a los usuarios. Inicia sesión con una cuenta de administrador.",
+        "generic": "No pudimos cargar la lista de usuarios. Inténtalo de nuevo más tarde."
+      },
       "status": {
         "active": "Active",
         "disabled": "Disabled"

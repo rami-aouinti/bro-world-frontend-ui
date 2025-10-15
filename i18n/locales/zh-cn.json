@@ -1441,6 +1441,10 @@
           "actions": "Actions"
         }
       },
+      "errors": {
+        "unauthorized": "您没有查看用户的权限。请使用管理员账户登录。",
+        "generic": "无法加载用户列表。请稍后重试。"
+      },
       "status": {
         "active": "Active",
         "disabled": "Disabled"

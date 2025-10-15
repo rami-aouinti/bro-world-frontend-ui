@@ -1819,6 +1819,10 @@
           "actions": "Actions"
         }
       },
+      "errors": {
+        "unauthorized": "ليس لديك صلاحية لعرض المستخدمين. سجّل الدخول باستخدام حساب مسؤول.",
+        "generic": "تعذّر تحميل قائمة المستخدمين. يرجى المحاولة لاحقًا."
+      },
       "status": {
         "active": "Active",
         "disabled": "Disabled"
