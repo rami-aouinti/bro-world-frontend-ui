@@ -157,6 +157,20 @@ const isRtl = computed(() => rtlLocales.includes(locale.value));
 const auth = useAuthSession();
 const loggedIn = computed(() => auth.isAuthenticated.value);
 
+function resolveAuthHeaders(): Record<string, string> | undefined {
+  const token = auth.sessionToken.value?.trim();
+
+  if (!token) {
+    return undefined;
+  }
+
+  const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
+
+  return {
+    Authorization: resolvedToken,
+  };
+}
+
 function translateWithFallback(
   key: string,
   defaultValue: string,
@@ -280,15 +294,42 @@ async function submitRating() {
   submissionError.value = null;
 
   try {
-    await $fetch("/api/review/post", { method: "POST", body: { rating: newRating.value } });
+    const headers = resolveAuthHeaders();
+
+    if (!headers) {
+      throw new Error("Missing session token");
+    }
+
+    await $fetch("/api/review/post", {
+      method: "POST",
+      body: { rating: newRating.value },
+      headers,
+    });
     newRating.value = 0;
     await refreshStats();
   } catch (error) {
     console.error("Failed to submit rating", error);
-    submissionError.value = translateWithFallback(
-      "sidebar.rating.submitError",
-      "We could not save your rating. Please try again later.",
-    );
+    const payload = (error as { data?: { message?: unknown } })?.data?.message;
+    const payloadMessage =
+      typeof payload === "string"
+        ? payload.trim()
+        : null;
+
+    const normalizedMessage = payloadMessage && payloadMessage.length > 0
+      ? payloadMessage
+      : error instanceof Error && error.message === "Missing session token"
+        ? translateWithFallback(
+            "sidebar.rating.signInRequired",
+            "You need to sign in to submit a rating.",
+          )
+        : null;
+
+    submissionError.value =
+      normalizedMessage ||
+      translateWithFallback(
+        "sidebar.rating.submitError",
+        "We could not save your rating. Please try again later.",
+      );
   } finally {
     isSubmitting.value = false;
   }
