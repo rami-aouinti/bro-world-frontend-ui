@@ -1,5 +1,6 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import type { Router } from "vue-router";
 import { useCookie, useNuxtApp, useRequestFetch, useRuntimeConfig, useState } from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
@@ -206,6 +207,24 @@ export const useAuthSession = defineStore("auth-session", () => {
 
   const nuxtApp = useNuxtApp();
   const translate = (key: string) => nuxtApp.$i18n?.t?.(key) ?? key;
+
+  function resolveRouter(): Router | null {
+    const injectedRouter = nuxtApp.$router as Router | undefined;
+
+    if (injectedRouter) {
+      return injectedRouter;
+    }
+
+    if (!import.meta.client) {
+      return null;
+    }
+
+    try {
+      return useRouter();
+    } catch {
+      return null;
+    }
+  }
 
   const runtimeConfig = useRuntimeConfig();
   const privateAuthConfig = import.meta.server ? (runtimeConfig.auth ?? {}) : {};
@@ -609,21 +628,31 @@ export const useAuthSession = defineStore("auth-session", () => {
       const fallbackMessage = "Your session has expired. Please sign in again.";
       sessionMessageState.value = message ?? fallbackMessage;
 
-      const router = useRouter();
-      const currentRoute = router.currentRoute.value;
+      const router = resolveRouter();
+      const currentRoute = router?.currentRoute?.value;
 
       if (currentRoute?.fullPath) {
         setRedirect(currentRoute.fullPath);
       }
 
+      const existingRedirect = redirectState.value;
+
       await logout({ redirect: false, notify: false });
 
-      const redirectTarget = currentRoute?.fullPath ?? consumeRedirect();
+      const redirectTarget = currentRoute?.fullPath ?? existingRedirect ?? null;
       const resolvedPath =
         typeof currentRoute?.path === "string" ? currentRoute.path : redirectTarget;
       const locale = resolveLocaleFromPath(resolvedPath ?? "/");
       const loginRoute = buildLocalizedPath("/login", locale);
       const query = redirectTarget ? { redirect: redirectTarget } : undefined;
+
+      if (!router) {
+        if (redirectTarget) {
+          setRedirect(redirectTarget);
+        }
+
+        return;
+      }
 
       await router.push({ path: loginRoute, query });
     } finally {
