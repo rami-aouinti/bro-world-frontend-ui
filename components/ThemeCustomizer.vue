@@ -250,29 +250,44 @@ function setClassTheme() {
   classList.add(themeClass.value);
 }
 
-function setStyleRadius() {
-  const radiusValue = `${radius.value}rem`;
-  const cardRadiusValue = `calc(${radius.value}rem + 8px)`;
-  const surfaceRadiusValue = `calc(${radius.value}rem + 4px)`;
+type CssVariableEntry = [name: string, value: string];
 
+function createRadiusCssVariables(radiusInRem: number): CssVariableEntry[] {
+  const base = `${radiusInRem}rem`;
+  const card = `calc(${radiusInRem}rem + 8px)`;
+  const surface = `calc(${radiusInRem}rem + 4px)`;
+
+  return [
+    ["--radius", base],
+    ["--ui-radius", base],
+    ["--ui-card-radius", card],
+    ["--ui-surface-radius", surface],
+    ["--v-radius-md", base],
+    ["--v-btn-border-radius", base],
+    ["--v-field-border-radius", base],
+    ["--v-list-border-radius", base],
+    ["--v-card-border-radius", card],
+    ["--v-sheet-border-radius", base],
+    ["--v-navigation-drawer-border-radius", card],
+  ];
+}
+
+function applyCssVariables(target: HTMLElement, variables: CssVariableEntry[]) {
+  for (const [name, value] of variables) {
+    target.style.setProperty(name, value);
+  }
+}
+
+function setStyleRadius() {
   const targets = [document.body, document.documentElement];
+  const radiusVariables = createRadiusCssVariables(radius.value);
 
   for (const target of targets) {
     if (!target) {
       continue;
     }
 
-    target.style.setProperty("--radius", radiusValue);
-    target.style.setProperty("--ui-radius", radiusValue);
-    target.style.setProperty("--ui-card-radius", cardRadiusValue);
-    target.style.setProperty("--ui-surface-radius", surfaceRadiusValue);
-    target.style.setProperty("--v-radius-md", radiusValue);
-    target.style.setProperty("--v-btn-border-radius", radiusValue);
-    target.style.setProperty("--v-field-border-radius", radiusValue);
-    target.style.setProperty("--v-list-border-radius", radiusValue);
-    target.style.setProperty("--v-card-border-radius", cardRadiusValue);
-    target.style.setProperty("--v-sheet-border-radius", radiusValue);
-    target.style.setProperty("--v-navigation-drawer-border-radius", cardRadiusValue);
+    applyCssVariables(target, radiusVariables);
   }
 }
 
