@@ -12,7 +12,7 @@
           class="mr-2"
         >
           <v-img
-            :src="node.user.photo || 'https://i.pravatar.cc/80?img=5'"
+            :src="node.user.photo || fallbackAvatar"
             alt=""
             width="34"
             height="34"
@@ -68,21 +68,12 @@
             :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
             variant="flat"
           >
-            <!-- remplace par tes propres images si tu en as -->
-            <v-img
-              :src="
-                {
-                  like: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
-                  sad: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
-                  angry:
-                    'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png',
-                }[r.type]
-              "
-              alt=""
-              cover
-              width="22"
-              height="22"
-            />
+            <span
+              class="bubbleReactsEmoji"
+              aria-hidden="true"
+            >
+              {{ reactionEmojiMap[r.type] }}
+            </span>
           </v-avatar>
         </div>
       </div>
@@ -170,6 +161,16 @@ const PostCommentForm = defineAsyncComponent({
 });
 
 type Reaction = PickerReaction;
+const fallbackAvatar = "/images/placeholders/avatar-2.svg";
+const reactionEmojiMap: Record<Reaction, string> = {
+  like: "👍",
+  love: "❤️",
+  care: "🤗",
+  haha: "😂",
+  wow: "😮",
+  sad: "😢",
+  angry: "😡",
+};
 const auth = useAuthSession();
 const isHydrated = ref(false);
 
@@ -326,6 +327,13 @@ function reactionAriaLabel(node: CommentNode) {
   border-radius: 9999px;
   overflow: hidden;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+.bubbleReactsEmoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  line-height: 1;
 }
 .bubble {
   display: flex;

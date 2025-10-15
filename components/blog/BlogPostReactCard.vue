@@ -16,21 +16,12 @@
           :style="{ left: `${i * 14}px`, zIndex: 10 - i }"
           variant="flat"
         >
-          <!-- remplace par tes propres images si tu en as -->
-          <v-img
-            :src="
-              {
-                like: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f44d.png',
-                sad: 'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f62d.png',
-                angry:
-                  'https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f620.png',
-              }[r.type]
-            "
-            alt=""
-            cover
-            width="22"
-            height="22"
-          />
+          <span
+            class="bubble-emoji"
+            aria-hidden="true"
+          >
+            {{ reactionEmojiMap[r.type] }}
+          </span>
         </v-avatar>
       </div>
 
@@ -114,6 +105,16 @@ const ReactionPicker = defineAsyncComponent({
 });
 
 type Reaction = PickerReaction;
+
+const reactionEmojiMap: Record<Reaction, string> = {
+  like: "👍",
+  love: "❤️",
+  care: "🤗",
+  haha: "😂",
+  wow: "😮",
+  sad: "😢",
+  angry: "😡",
+};
 
 const auth = useAuthSession();
 // Start with hydration-sensitive UI disabled so SSR and CSR markup stay in sync
@@ -262,6 +263,13 @@ const reactionListLabel = computed(() => {
   border-radius: 9999px;
   overflow: hidden;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+.bubble-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  line-height: 1;
 }
 .total {
   font-weight: 600;

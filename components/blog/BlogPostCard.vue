@@ -293,13 +293,15 @@ const editModalOpen = ref(false);
 const deleteDialogOpen = ref(false);
 const previousFocusedElement = ref<HTMLElement | null>(null);
 
+const placeholderAvatar = "/images/placeholders/avatar-1.svg";
+
 const tree = ref<CommentNode[]>([
   {
     id: "c1",
     user: {
       firstName: "عبد السلام المرخي",
       lastName: "عبد السلام المرخي",
-      photo: "https://i.pravatar.cc/80?img=12",
+      photo: placeholderAvatar,
     },
     message: "سلكناها حفيدة الحسن…",
     createdAt: Date.now() - 11 * 3600 * 1000,
@@ -309,7 +311,7 @@ const tree = ref<CommentNode[]>([
         user: {
           firstName: "عبد السلام المرخي",
           lastName: "عبد السلام المرخي",
-          photo: "https://i.pravatar.cc/80?img=12",
+          photo: placeholderAvatar,
         },
         message: "… خلي العالم يعرف",
         createdAt: Date.now() - 11 * 3600 * 1000,
@@ -319,7 +321,7 @@ const tree = ref<CommentNode[]>([
             user: {
               firstName: "عبد السلام المرخي",
               lastName: "عبد السلام المرخي",
-              photo: "https://i.pravatar.cc/80?img=12",
+              photo: placeholderAvatar,
             },
             message: "Aly Bouzwida Ben Ammar 😭",
             createdAt: Date.now() - 10 * 3600 * 1000,
@@ -333,7 +335,7 @@ const tree = ref<CommentNode[]>([
     user: {
       firstName: "عبد السلام المرخي",
       lastName: "عبد السلام المرخي",
-      photo: "https://i.pravatar.cc/80?img=12",
+      photo: placeholderAvatar,
     },
     message: "هيهات منا الذلة",
     createdAt: Date.now() - 11 * 3600 * 1000,

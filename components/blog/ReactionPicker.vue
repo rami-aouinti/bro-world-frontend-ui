@@ -45,14 +45,12 @@
             role="option"
             @click.stop="emit('select', it.key)"
           >
-            <img
-              :src="it.src"
-              :alt="it.label"
-              width="72"
-              height="72"
-              loading="lazy"
-              decoding="async"
-            />
+            <span
+              class="rx-emoji"
+              aria-hidden="true"
+            >
+              {{ it.emoji }}
+            </span>
           </button>
         </div>
       </v-menu>
@@ -115,40 +113,40 @@ const items = computed(
     [
       {
         key: "like",
-        src: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44d.png",
+        emoji: "👍",
         label: t("blog.reactions.reactionTypes.like"),
       },
       {
         key: "love",
-        src: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2764.png",
+        emoji: "❤️",
         label: t("blog.reactions.reactionTypes.love"),
       },
       {
         key: "care",
-        src: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f970.png",
+        emoji: "🤗",
         label: t("blog.reactions.reactionTypes.care"),
       },
       {
         key: "haha",
-        src: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f606.png",
+        emoji: "😂",
         label: t("blog.reactions.reactionTypes.haha"),
       },
       {
         key: "wow",
-        src: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f62e.png",
+        emoji: "😮",
         label: t("blog.reactions.reactionTypes.wow"),
       },
       {
         key: "sad",
-        src: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f622.png",
+        emoji: "😢",
         label: t("blog.reactions.reactionTypes.sad"),
       },
       {
         key: "angry",
-        src: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f620.png",
+        emoji: "😡",
         label: t("blog.reactions.reactionTypes.angry"),
       },
-    ] satisfies { key: Reaction; src: string; label: string }[],
+    ] satisfies { key: Reaction; emoji: string; label: string }[],
 );
 </script>
 
@@ -207,9 +205,9 @@ const items = computed(
   cursor: pointer;
   transition: transform 0.12s ease;
 }
-.rx-item img {
-  width: 38px;
-  height: 38px;
+.rx-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
 }
 .rx-item:hover {
   transform: translateY(-4px) scale(1.05);
