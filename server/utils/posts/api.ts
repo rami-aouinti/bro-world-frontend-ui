@@ -348,22 +348,41 @@ export async function fetchPostCommentsFromSource(
   event: H3Event,
   postId: string,
 ): Promise<BlogCommentWithReplies[]> {
-  requireAuthToken(event);
+  async function requestComments(
+    visibility: PostsVisibility,
+    includeAuth: boolean,
+  ): Promise<BlogCommentWithReplies[]> {
+    const base = resolvePostEndpoint(event, visibility);
+    const endpoint = joinEndpoint(base, postId, "comments");
 
-  const base = resolvePostEndpoint(event, "private");
-  const endpoint = joinEndpoint(base, postId, "comments");
-
-  const response = await $fetch<unknown>(endpoint, {
-    method: "GET",
-    headers: withAuthHeaders(event),
-  });
-
-  if (!Array.isArray(response)) {
-    throw createError({
-      statusCode: 502,
-      statusMessage: "Invalid comments response.",
+    const response = await $fetch<unknown>(endpoint, {
+      method: "GET",
+      headers: buildHeaders(event, includeAuth),
     });
+
+    if (!Array.isArray(response)) {
+      throw createError({
+        statusCode: 502,
+        statusMessage: "Invalid comments response.",
+      });
+    }
+
+    return response as BlogCommentWithReplies[];
   }
 
-  return response as BlogCommentWithReplies[];
+  const token = getSessionToken(event);
+
+  if (token) {
+    try {
+      return await requestComments("private", true);
+    } catch (error) {
+      if (!isAuthorizationError(error)) {
+        throw error;
+      }
+
+      clearAuthSession(event);
+    }
+  }
+
+  return await requestComments("public", false);
 }
