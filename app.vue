@@ -33,6 +33,10 @@ const RouteLoadingOverlay = defineAsyncComponent({
   loader: () => import("~/components/layout/RouteLoadingOverlay.vue"),
   suspensible: false,
 });
+const AlertPanel = defineAsyncComponent({
+  loader: () => import("~/components/AlertPanel.vue"),
+  suspensible: false,
+});
 
 const nuxtApp = tryUseNuxtApp();
 const fallbackSiteConfig = {
