@@ -1127,95 +1127,125 @@
       }
     },
     "performance": {
-      "badge": "Performance",
-      "title": "Performance insights",
-      "subtitle": "How BroWorld keeps the experience fast on every device.",
-      "updated": "Last verified 08 April 2025",
-      "metrics": {
-        "title": "Key budgets",
-        "subtitle": "Benchmarks tracked across CI and scheduled audits.",
-        "jsExecution": {
-          "label": "JavaScript execution",
-          "value": "2.8 s",
-          "description": "Lighthouse Mobile profile (6× CPU, 4× network) on the home feed.",
-          "trend": "Down 0.4 s after async analytics bootstrap."
-        },
-        "bundleSize": {
-          "label": "Initial JavaScript payload",
-          "value": "183 KB",
-          "description": "Compressed vendor + application chunks served on first load.",
-          "trend": "Reduced 28% by trimming legacy dashboard styles."
-        },
-        "lcp": {
-          "label": "Largest Contentful Paint",
-          "value": "1.9 s",
-          "description": "Median Fast 3G run measured via WebPageTest on `/`.",
-          "trend": "Stable across the last 10 deployments."
-        }
+      "badge": "Performance report",
+      "title": "Experience quality snapshot",
+      "subtitle": "A focused look at how the home feed performs on real devices.",
+      "updated": "Audit captured 08 April 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "Overall score"
       },
-      "pillars": {
-        "title": "Optimisation pillars",
-        "subtitle": "Tactics we rely on to protect the experience at scale.",
+      "metrics": {
+        "title": "Core experience metrics",
+        "subtitle": "Based on mobile Lighthouse runs (emulated Moto G Power).",
+        "status": {
+          "good": "On track",
+          "average": "Watch list",
+          "poor": "Needs attention"
+        },
         "items": {
-          "scripting": {
-            "title": "Main-thread prioritisation",
-            "description": "We keep interactivity budgets focused on first-party code.",
-            "points": [
-              "Defer analytics and session replays until `requestIdleCallback`.",
-              "Queue non-essential modules behind the `visibilitychange` event.",
-              "Use granular Pinia stores to avoid unnecessary reactivity work."
-            ]
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "The first meaningful pixels paint in under a second.",
+            "trend": "Consistent for the last 7 deployments.",
+            "status": "good"
           },
-          "rendering": {
-            "title": "Rendering discipline",
-            "description": "Animations and hydration remain smooth on mid-range devices.",
-            "points": [
-              "Lazy-load rich media cards below the fold with IntersectionObserver.",
-              "Precompute critical gradients and prefer CSS transforms over layout shifts.",
-              "Leverage Suspense boundaries so expensive widgets hydrate in isolation."
-            ]
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "Hero media loads after the skeleton but still within Core Web Vitals.",
+            "trend": "Optimise by preloading the featured image sprite.",
+            "status": "average"
           },
-          "media": {
-            "title": "Media & delivery",
-            "description": "Assets are optimised per device to minimise transfer cost.",
-            "points": [
-              "Serve Nuxt Image presets with AVIF/WebP fallbacks.",
-              "Streamline confetti and globe effects through Web Workers or OffscreenCanvas.",
-              "Respect Save-Data to skip autoplaying background experiences."
-            ]
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Long tasks during hydration keep the thread busy.",
+            "trend": "Caused by eager loading of optional widgets.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "Visual completeness is acceptable but can be improved.",
+            "trend": "Greatly benefits from prioritised CSS delivery.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "Cards and story rail shift as late content arrives.",
+            "trend": "Anchor media with fixed aspect ratios to stabilise the feed.",
+            "status": "poor"
           }
         }
       },
-      "audits": {
-        "title": "Audit checkpoints",
-        "subtitle": "We codify these expectations so regressions surface quickly.",
-        "columns": {
-          "metric": "Metric",
-          "target": "Target",
-          "current": "Current",
-          "status": "Status"
-        },
-        "rows": {
-          "lighthouse": {
-            "label": "Lighthouse mobile score",
-            "context": "CI smoke test on Nuxt preview build",
-            "target": "≥ 90",
-            "current": "92",
-            "status": "Passing"
+      "opportunities": {
+        "title": "High-impact opportunities",
+        "subtitle": "Prioritised fixes that address the red metrics first.",
+        "items": {
+          "layout": {
+            "title": "Stabilise media and widget slots",
+            "description": "Reserve space for hero banners, carousels, and dynamic ads.",
+            "impact": "High impact",
+            "action": "Adopt intrinsic aspect ratios and skeleton heights for feed items."
           },
-          "mainThread": {
-            "label": "Main-thread work (95th percentile)",
-            "context": "Chrome tracing on synthetic feed interactions",
-            "target": "< 3.5 s",
-            "current": "3.1 s",
-            "status": "Within budget"
+          "script": {
+            "title": "Defer non-critical scripts",
+            "description": "Split analytics, reactions, and messaging panels out of the main chunk.",
+            "impact": "High impact",
+            "action": "Hydrate optional widgets on interaction using `defineAsyncComponent`."
           },
-          "largestContentfulPaint": {
-            "label": "Largest Contentful Paint",
-            "context": "Real-user monitoring, desktop & mobile combined",
-            "target": "< 2.5 s",
-            "current": "2.1 s",
-            "status": "Monitoring"
+          "assets": {
+            "title": "Optimise hero imagery",
+            "description": "Compress the hero collage and serve AVIF sources by default.",
+            "impact": "Medium impact",
+            "action": "Preload the first feed image and stream others via lazy loading."
+          },
+          "monitoring": {
+            "title": "Expand Core Web Vitals coverage",
+            "description": "Break metrics down per route and device bucket.",
+            "impact": "Foundational",
+            "action": "Ship `web-vitals` beacons to the analytics lake for regression tracking."
+          }
+        }
+      },
+      "timeline": {
+        "title": "Improvement timeline",
+        "subtitle": "A realistic rollout to ship and verify the fixes.",
+        "items": {
+          "week1": {
+            "date": "Week 1",
+            "title": "Eliminate layout shift",
+            "description": "Audit all feed cards and stories for deterministic sizing.",
+            "actions": [
+              "Add aspect ratios to story thumbnails and post illustrations.",
+              "Lock advertisement containers behind placeholder skeletons."
+            ]
+          },
+          "week2": {
+            "date": "Week 2",
+            "title": "Break up long tasks",
+            "description": "Move optional logic into idle callbacks and async boundaries.",
+            "actions": [
+              "Code-split the messenger drawer and reaction tray.",
+              "Adopt `requestIdleCallback` before booting analytics SDKs."
+            ]
+          },
+          "week3": {
+            "date": "Week 3",
+            "title": "Verify gains with RUM",
+            "description": "Roll out Core Web Vitals reporting to production cohorts.",
+            "actions": [
+              "Send vitals to the monitoring lake with build metadata.",
+              "Alert on LCP/TBT regressions above 10% week-over-week."
+            ]
           }
         }
       }
