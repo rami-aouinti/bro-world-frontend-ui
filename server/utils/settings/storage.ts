@@ -22,6 +22,7 @@ import {
   supportedLanguages,
 } from "~/lib/i18n/languages";
 import { getSessionToken, getSessionUser } from "../auth/session";
+import { readCachedSessionUser } from "../auth/user-cache";
 import { requestWithRetry } from "../requestWithRetry";
 
 const CONFIGURATION_KEY = "site.settings";
@@ -729,8 +730,22 @@ function ensureActiveThemeId(settings: SiteSettings): SiteSettings {
   return settings;
 }
 
-function resolveCacheKey(event: H3Event | undefined) {
-  const userId = event ? (getSessionUser(event)?.id ?? null) : null;
+async function resolveCacheKey(event: H3Event | undefined) {
+  let userId: string | null = null;
+
+  if (event) {
+    userId = getSessionUser(event)?.id ?? null;
+
+    if (!userId) {
+      const token = getSessionToken(event);
+
+      if (token) {
+        const cached = await readCachedSessionUser(event, token);
+        userId = cached?.id ?? null;
+      }
+    }
+  }
+
   const cacheKey = userId ? `user:${userId}` : "default";
 
   return { cacheKey, userId };
@@ -864,7 +879,7 @@ async function invalidateCache(cacheKey: string): Promise<void> {
 }
 
 export async function getSiteSettings(event: H3Event): Promise<SiteSettings> {
-  const { cacheKey } = resolveCacheKey(event);
+  const { cacheKey } = await resolveCacheKey(event);
 
   const memoryCached = readFromMemory(cacheKey);
 
@@ -896,7 +911,7 @@ export async function updateSiteSettings(
   event: H3Event,
   payload: Partial<SiteSettings>,
 ): Promise<SiteSettings> {
-  const { cacheKey, userId } = resolveCacheKey(event);
+  const { cacheKey, userId } = await resolveCacheKey(event);
 
   if (!userId) {
     throw createError({

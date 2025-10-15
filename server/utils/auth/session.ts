@@ -4,6 +4,8 @@ import type { AuthUser } from "~/types/auth";
 import { shouldUseSecureCookies, withSecureCookieOptions } from "~/lib/cookies";
 import { isHeadersSentError } from "../http/errors";
 import { deleteCachedMercureToken } from "../mercure/cache";
+import { deleteCachedSessionUser, writeCachedSessionUser } from "./user-cache";
+import { normalizeSessionUser, sanitizeSessionUser } from "./user";
 
 interface SessionCookiesConfig {
   tokenCookieName: string;
@@ -171,41 +173,12 @@ export function getSessionUser(event: H3Event): AuthUser | null {
   }
 
   try {
-    return JSON.parse(raw) as AuthUser;
+    const parsed = JSON.parse(raw) as unknown;
+    return normalizeSessionUser(parsed);
   } catch (error) {
     console.warn("Unable to parse auth user cookie", error);
     return null;
   }
-}
-
-function sanitizeSessionUser(user: AuthUser): AuthUser {
-  const sanitized: AuthUser = {
-    id: user.id,
-    username: user.username,
-    email: user.email,
-  };
-
-  if ("firstName" in user && typeof user.firstName !== "undefined") {
-    sanitized.firstName = user.firstName ?? null;
-  }
-
-  if ("lastName" in user && typeof user.lastName !== "undefined") {
-    sanitized.lastName = user.lastName ?? null;
-  }
-
-  if ("enabled" in user && typeof user.enabled !== "undefined") {
-    sanitized.enabled = user.enabled;
-  }
-
-  if ("photo" in user && typeof user.photo !== "undefined") {
-    sanitized.photo = user.photo ?? null;
-  }
-
-  if (Array.isArray(user.roles)) {
-    sanitized.roles = user.roles;
-  }
-
-  return sanitized;
 }
 
 export function setSession(event: H3Event, token: string, user: AuthUser) {
@@ -277,6 +250,8 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
       event,
     ),
   );
+
+  void writeCachedSessionUser(event, token, sanitizedUser);
 }
 
 export function clearAuthSession(event: H3Event) {
@@ -301,6 +276,7 @@ export function clearAuthSession(event: H3Event) {
 
   if (sessionToken) {
     void deleteCachedMercureToken(event, sessionToken);
+    void deleteCachedSessionUser(event, sessionToken);
   }
 }
 

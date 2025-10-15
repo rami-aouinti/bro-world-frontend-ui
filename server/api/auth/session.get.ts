@@ -1,9 +1,15 @@
-import { clearAuthSession, getSessionToken, getSessionUser } from "../../utils/auth/session";
+import {
+  clearAuthSession,
+  getSessionToken,
+  getSessionUser,
+  setSession,
+} from "../../utils/auth/session";
 import type { AuthSessionEnvelope } from "../../../types/auth";
+import { readCachedSessionUser } from "../../utils/auth/user-cache";
 
 export default defineEventHandler(async (event) => {
   const token = getSessionToken(event);
-  const user = getSessionUser(event);
+  let user = getSessionUser(event);
 
   if (!token) {
     if (user) {
@@ -16,6 +22,15 @@ export default defineEventHandler(async (event) => {
     };
 
     return response;
+  }
+
+  if (token && !user) {
+    const cached = await readCachedSessionUser(event, token);
+
+    if (cached) {
+      setSession(event, token, cached);
+      user = cached;
+    }
   }
 
   const response: AuthSessionEnvelope = {
