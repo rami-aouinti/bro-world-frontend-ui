@@ -128,6 +128,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import type { FetchError, FetchOptions } from "ofetch";
 import { useAuthSession } from "~/stores/auth-session";
 
 interface SidebarRatingCardProps {
@@ -156,19 +157,19 @@ const isRtl = computed(() => rtlLocales.includes(locale.value));
 
 const auth = useAuthSession();
 const loggedIn = computed(() => auth.isAuthenticated.value);
+const nuxtApp = useNuxtApp();
+const runtimeConfig = useRuntimeConfig();
 
-function resolveAuthHeaders(): Record<string, string> | undefined {
-  const token = auth.sessionToken.value?.trim();
+type ApiClient = <T>(path: string, options?: FetchOptions) => Promise<T>;
+const apiClient = nuxtApp.$api as ApiClient | undefined;
 
-  if (!token) {
-    return undefined;
+function apiFetch<T>(path: string, options?: FetchOptions) {
+  if (import.meta.client && apiClient) {
+    return apiClient<T>(path, options);
   }
 
-  const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
-
-  return {
-    Authorization: resolvedToken,
-  };
+  const baseURL = runtimeConfig.public?.apiBase ?? "/api";
+  return $fetch<T>(`${baseURL}${path}`, options);
 }
 
 function translateWithFallback(
@@ -203,7 +204,11 @@ const {
   refresh: refreshStats,
   error: statsError,
 } = await useAsyncData<ReviewStatsResponse>("sidebar-review-stats", () =>
-  $fetch<ReviewStatsResponse>("/api/review/get"),
+  apiFetch<ReviewStatsResponse>("/review/get", {
+    context: {
+      suppressErrorNotification: true,
+    },
+  }),
 );
 
 watch(
@@ -294,35 +299,32 @@ async function submitRating() {
   submissionError.value = null;
 
   try {
-    const headers = resolveAuthHeaders();
-
-    if (!headers) {
-      throw new Error("Missing session token");
-    }
-
-    await $fetch("/api/review/post", {
+    await apiFetch("/review/post", {
       method: "POST",
       body: { rating: newRating.value },
-      headers,
+      context: {
+        skipUnauthorizedHandler: true,
+        suppressErrorNotification: true,
+      },
     });
     newRating.value = 0;
     await refreshStats();
   } catch (error) {
     console.error("Failed to submit rating", error);
-    const payload = (error as { data?: { message?: unknown } })?.data?.message;
+    const fetchError = error as FetchError<{ message?: unknown }>;
+    const status = fetchError?.response?.status ?? null;
+    const payload = fetchError?.response?._data?.message;
     const payloadMessage =
-      typeof payload === "string"
-        ? payload.trim()
-        : null;
+      typeof payload === "string" && payload.trim().length > 0 ? payload.trim() : null;
 
-    const normalizedMessage = payloadMessage && payloadMessage.length > 0
-      ? payloadMessage
-      : error instanceof Error && error.message === "Missing session token"
+    const normalizedMessage =
+      payloadMessage ??
+      (status && (status === 401 || status === 403)
         ? translateWithFallback(
             "sidebar.rating.signInRequired",
             "You need to sign in to submit a rating.",
           )
-        : null;
+        : null);
 
     submissionError.value =
       normalizedMessage ||
