@@ -194,13 +194,8 @@ import {
   mdiWeatherSunny,
 } from "@mdi/js";
 import DateFnsAdapter from "@date-io/date-fns";
+import type { Locale } from "date-fns";
 import enUSLocale from "date-fns/locale/en-US";
-import frLocale from "date-fns/locale/fr";
-import deLocale from "date-fns/locale/de";
-import itLocale from "date-fns/locale/it";
-import esLocale from "date-fns/locale/es";
-import ruLocale from "date-fns/locale/ru";
-import arLocale from "date-fns/locale/ar-SA";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
 
@@ -360,7 +355,37 @@ export type DataTableHeaders = VDataTable["$props"]["headers"];
 
 const FALLBACK_PRIMARY_HEX = "#091b2d";
 
-export default defineNuxtPlugin((nuxtApp) => {
+const dateFnsLocaleLoaders: Record<string, () => Promise<Locale>> = {
+  fr: () => import("date-fns/locale/fr/index.js").then((module) => module.default),
+  de: () => import("date-fns/locale/de/index.js").then((module) => module.default),
+  it: () => import("date-fns/locale/it/index.js").then((module) => module.default),
+  es: () => import("date-fns/locale/es/index.js").then((module) => module.default),
+  ru: () => import("date-fns/locale/ru/index.js").then((module) => module.default),
+  ar: () => import("date-fns/locale/ar-SA/index.js").then((module) => module.default),
+} satisfies Record<string, () => Promise<Locale>>;
+
+async function resolveDateFnsLocale(code: string | null): Promise<Locale | null> {
+  if (!code) {
+    return null;
+  }
+
+  const loader = dateFnsLocaleLoaders[code];
+  if (!loader) {
+    return null;
+  }
+
+  try {
+    return await loader();
+  } catch (error) {
+    if (import.meta.dev) {
+      console.warn(`Failed to load date-fns locale for "${code}":`, error);
+    }
+
+    return null;
+  }
+}
+
+export default defineNuxtPlugin(async (nuxtApp) => {
   const primaryCookie = useCookie<string | null>(
     "theme-primary",
     withSecureCookieOptions({
@@ -378,6 +403,15 @@ export default defineNuxtPlugin((nuxtApp) => {
     }),
   );
   const locale = localeCookie.value ?? "en";
+  const resolvedDateLocale = await resolveDateFnsLocale(locale);
+
+  const dateLocales: Record<string, Locale> = {
+    en: enUSLocale,
+  };
+
+  if (resolvedDateLocale) {
+    dateLocales[locale] = resolvedDateLocale;
+  }
 
   const sharedVariables = {
     "font-family-base":
@@ -805,15 +839,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
     date: {
       adapter: DateFnsAdapter,
-      locale: {
-        en: enUSLocale,
-        fr: frLocale,
-        de: deLocale,
-        ar: arLocale,
-        it: itLocale,
-        es: esLocale,
-        ru: ruLocale,
-      },
+      locale: dateLocales,
     },
     defaults: {
       VBtn: {
