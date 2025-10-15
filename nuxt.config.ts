@@ -795,6 +795,7 @@ export default defineNuxtConfig({
     },
     users: {
       apiBase: process.env.NUXT_USERS_API_BASE ?? "https://bro-world.org/api/v1",
+      apiToken: process.env.NUXT_USERS_API_TOKEN ?? "",
     },
     public: {
       redis: {

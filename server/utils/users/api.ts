@@ -1,4 +1,4 @@
-import { createError } from "h3";
+import { createError, getHeader } from "h3";
 import type { H3Event } from "h3";
 import { joinURL } from "ufo";
 import type { FetchOptions } from "ofetch";
@@ -42,13 +42,29 @@ async function requestUsersApi<T>(
 ): Promise<T> {
   const endpoint = joinURL(getUsersApiBase(event), path);
 
+  const serviceToken = config.users?.apiToken?.trim();
+  const forwardedAuthorization = getHeader(event, "authorization")?.trim();
+  const { headers: initialHeaders, ...requestOptions } = options;
+  const headers = new Headers(initialHeaders ?? {});
+
+  headers.set("accept", "application/json");
+
+  if (!headers.has("authorization")) {
+    if (forwardedAuthorization) {
+      headers.set("authorization", forwardedAuthorization);
+    } else if (serviceToken) {
+      const value = serviceToken.startsWith("Bearer ")
+        ? serviceToken
+        : `Bearer ${serviceToken}`;
+
+      headers.set("authorization", value);
+    }
+  }
+
   try {
     return await $fetch<T>(endpoint, {
-      ...options,
-      headers: {
-        accept: "application/json",
-        ...(options.headers ?? {}),
-      },
+      ...requestOptions,
+      headers: Object.fromEntries(headers.entries()),
     });
   } catch (error) {
     const statusCode =
