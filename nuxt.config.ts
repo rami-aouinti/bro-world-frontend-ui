@@ -412,6 +412,10 @@ export default defineNuxtConfig({
     "/about": { isr: 300 },
     "/contact": { isr: 300 },
     "/help": { isr: 300 },
+    "/api/auth/**": {
+      // Auth endpoints need to write cookies, avoid SWR background cache.
+      cache: false,
+    },
     "/api/**": { swr: 60 },
     "/_nuxt/**": {
       headers: {
