@@ -13,7 +13,7 @@
       />
     </button>
     <MessengerMenu
-        v-if="isAuthenticated"
+      v-if="isAuthenticated"
       :conversations="props.messengerConversations"
       :icon-trigger-classes="props.iconTriggerClasses"
       :title="props.messengerTitle"
@@ -25,9 +25,22 @@
       :unknown-label="props.messengerUnknownLabel"
       :loading="props.messengerLoading"
     />
+    <button
+      v-else
+      type="button"
+      :class="[props.iconTriggerClasses, 'opacity-60']"
+      :aria-label="props.messengerButtonLabel"
+      aria-disabled="true"
+      disabled
+    >
+      <AppIcon
+        name="mdi:message-outline"
+        :size="26"
+      />
+    </button>
     <NotificationMenu
-        v-if="isAuthenticated"
-        :items="props.notifications"
+      v-if="isAuthenticated"
+      :items="props.notifications"
       :icon-trigger-classes="props.iconTriggerClasses"
       :title="props.notificationsTitle"
       :subtitle="props.notificationsSubtitle"
@@ -37,6 +50,19 @@
       :unread-count="props.notificationCount"
       @mark-all="emit('mark-all-notifications')"
     />
+    <button
+      v-else
+      type="button"
+      :class="[props.iconTriggerClasses, 'opacity-60']"
+      :aria-label="props.notificationsButtonLabel"
+      aria-disabled="true"
+      disabled
+    >
+      <AppIcon
+        name="mdi:bell-outline"
+        :size="26"
+      />
+    </button>
     <button
       type="button"
       :class="props.iconTriggerClasses"
