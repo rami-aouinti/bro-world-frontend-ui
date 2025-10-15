@@ -29,22 +29,9 @@ If you are using `CardItem` inside a `div`, add `style="transform-style: preserv
 :CodeViewerTab{filename="CardBody.vue" language="vue" componentName="CardBody" type="ui" id="card-3d"}
 :CodeViewerTab{filename="CardItem.vue" language="vue" componentName="CardItem" type="ui" id="card-3d"}
 
-```ts [useMouseState.ts]
-import { ref, readonly } from "vue";
-
-export function useMouseState() {
-  const isMouseEntered = ref(false);
-
-  function setMouseEntered(value: boolean) {
-    isMouseEntered.value = value;
-  }
-
-  return {
-    isMouseEntered: readonly(isMouseEntered),
-    setMouseEntered,
-  };
-}
-```
+> **注意**
+>
+> `CardContainer` 组件已经在内部管理鼠标状态，因此无需额外的可组合函数。
 
 ::
 
