@@ -1,26 +1,98 @@
-import { ofetch } from "ofetch";
-import type { FetchOptions } from "ofetch";
-import { useNuxtApp, useRequestFetch, useRuntimeConfig } from "#imports";
+import axios from "axios";
+import type { AxiosInstance } from "axios";
+import { useNuxtApp, useRequestHeaders, useRuntimeConfig } from "#imports";
+import { createApiFetcher, type ApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
+import { useAuthSession } from "~/stores/auth-session";
 
-export type ApiFetcher = <T>(request: string, options?: FetchOptions) => Promise<T>;
+type ForwardedHeaders = Partial<Record<"cookie" | "authorization", string>> | null;
+
+let clientFallback: ApiFetcher | null = null;
+
+function attachAuthInterceptor(
+  client: AxiosInstance,
+  auth: ReturnType<typeof useAuthSession>,
+  forwardedHeaders: ForwardedHeaders,
+) {
+  client.interceptors.request.use((config) => {
+    const context = (config.context ?? {}) as ApiRequestContext;
+    const headers = { ...(config.headers ?? {}) };
+
+    if (import.meta.server && forwardedHeaders) {
+      if (forwardedHeaders.cookie && !headers.Cookie) {
+        headers.Cookie = forwardedHeaders.cookie;
+      }
+
+      if (forwardedHeaders.authorization && !headers.Authorization) {
+        headers.Authorization = forwardedHeaders.authorization;
+      }
+    }
+
+    if (!context.skipAuthHeader) {
+      const shouldAttachToken = context.isPrivate !== false;
+
+      if (shouldAttachToken) {
+        const token = auth.sessionToken.value?.trim();
+
+        if (token) {
+          const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
+
+          if (!headers.Authorization || headers.Authorization === forwardedHeaders?.authorization) {
+            headers.Authorization = resolvedToken;
+          }
+        }
+      }
+    }
+
+    config.headers = headers;
+
+    return config;
+  });
+}
 
 export function resolveApiFetcher(): ApiFetcher {
-  if (import.meta.server) {
-    return useRequestFetch() as ApiFetcher;
-  }
-
   const nuxtApp = useNuxtApp();
-  const api = nuxtApp.$api as ApiFetcher | undefined;
+  const providedFetcher = nuxtApp.$api as ApiFetcher | undefined;
 
-  if (api) {
-    return api;
+  if (providedFetcher) {
+    return providedFetcher;
   }
 
   const runtimeConfig = useRuntimeConfig();
   const baseURL = (runtimeConfig.public?.apiBase as string | undefined) ?? "/api";
 
-  return ofetch.create({
-    baseURL,
-    credentials: "include",
-  }) as ApiFetcher;
+  if (import.meta.server) {
+    const appWithFetcher = nuxtApp as typeof nuxtApp & { _apiFetcher?: ApiFetcher };
+
+    if (appWithFetcher._apiFetcher) {
+      return appWithFetcher._apiFetcher;
+    }
+
+    const auth = useAuthSession();
+    const forwardedHeaders = useRequestHeaders(["cookie", "authorization"]);
+    const client = axios.create({
+      baseURL,
+      withCredentials: true,
+    });
+
+    attachAuthInterceptor(client, auth, forwardedHeaders);
+
+    const fetcher = createApiFetcher(client);
+    appWithFetcher._apiFetcher = fetcher;
+
+    return fetcher;
+  }
+
+  if (!clientFallback) {
+    const auth = useAuthSession();
+    const client = axios.create({
+      baseURL,
+      withCredentials: true,
+    });
+
+    attachAuthInterceptor(client, auth, null);
+
+    clientFallback = createApiFetcher(client);
+  }
+
+  return clientFallback;
 }

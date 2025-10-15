@@ -1,5 +1,6 @@
-import type { FetchError, FetchOptions, FetchResponse } from "ofetch";
-import { ofetch } from "ofetch";
+import axios, { AxiosError } from "axios";
+import { createApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
+import { useRequestHeaders } from "#imports";
 import { useAuthSession } from "~/stores/auth-session";
 
 interface ErrorPayload {
@@ -15,50 +16,61 @@ export default defineNuxtPlugin({
     const runtimeConfig = useRuntimeConfig();
     const baseURL = runtimeConfig.public?.apiBase ?? "/api";
     const auth = useAuthSession();
+    const forwardedHeaders = import.meta.server ? useRequestHeaders(["cookie", "authorization"]) : null;
     const { $i18n } = nuxtApp as unknown as { $i18n?: { t: (key: string) => string } };
-
-    const api = ofetch.create({
+    const client = axios.create({
       baseURL,
-      credentials: "include",
-      async onRequest({ options }) {
-        const context = (options.context ?? {}) as Record<string, unknown>;
+      withCredentials: true,
+    });
 
-        if (context.skipAuthHeader) {
-          return;
+    client.interceptors.request.use((config) => {
+      const context = (config.context ?? {}) as ApiRequestContext;
+      const headers = { ...(config.headers ?? {}) };
+
+      if (import.meta.server && forwardedHeaders) {
+        if (forwardedHeaders.cookie && !headers.Cookie) {
+          headers.Cookie = forwardedHeaders.cookie;
         }
 
-        const token = auth.sessionToken.value?.trim();
+        if (forwardedHeaders.authorization && !headers.Authorization) {
+          headers.Authorization = forwardedHeaders.authorization;
+        }
+      }
 
-        if (!token) {
-          return;
+      if (!context.skipAuthHeader) {
+        const shouldAttachToken = context.isPrivate !== false;
+
+        if (shouldAttachToken) {
+          const token = auth.sessionToken.value?.trim();
+
+          if (token) {
+            const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
+
+            if (!headers.Authorization || headers.Authorization === forwardedHeaders?.authorization) {
+              headers.Authorization = resolvedToken;
+            }
+          }
+        }
+      }
+
+      config.headers = headers;
+
+      return config;
+    });
+
+    client.interceptors.response.use(
+      (response) => response,
+      async (error: unknown) => {
+        if (!(error instanceof AxiosError)) {
+          throw error;
         }
 
-        const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
-        const headers = new Headers((options.headers ?? {}) as HeadersInit);
-
-        if (!headers.has("Authorization")) {
-          headers.set("Authorization", resolvedToken);
-        }
-
-        options.headers = headers;
-      },
-      async onResponseError({
-        response,
-        error,
-        options,
-      }: {
-        response?: FetchResponse<ErrorPayload>;
-        error: FetchError<ErrorPayload>;
-        options: FetchOptions;
-      }) {
-        const status = response?.status;
-        const payload = (response?._data ?? {}) as ErrorPayload;
-        const message =
-          payload.message || payload.error || error.message || "Unexpected network error";
+        const status = error.response?.status;
+        const payload = (error.response?.data ?? {}) as ErrorPayload;
+        const message = payload.message || payload.error || error.message || "Unexpected network error";
         const title = payload.title || (status ? `HTTP ${status}` : undefined);
-
-        const context = (options.context ?? {}) as Record<string, unknown>;
-        const skipUnauthorizedHandler = Boolean(context.skipUnauthorizedHandler);
+        const context = (error.config?.context ?? {}) as ApiRequestContext;
+        const skipUnauthorizedHandler = Boolean(context?.skipUnauthorizedHandler);
 
         if ((status === 401 || status === 403) && !skipUnauthorizedHandler) {
           const translator = $i18n?.t ?? ((key: string) => key);
@@ -66,23 +78,25 @@ export default defineNuxtPlugin({
 
           await auth.handleUnauthorized(sessionMessage);
 
-          return;
+          throw error;
         }
 
-        const suppressNotification = Boolean(context.suppressErrorNotification);
+        const suppressNotification = Boolean(context?.suppressErrorNotification);
 
-        if (suppressNotification) {
-          return;
+        if (!suppressNotification) {
+          nuxtApp.$notify({
+            type: "error",
+            title,
+            message,
+            timeout: null,
+          });
         }
 
-        nuxtApp.$notify({
-          type: "error",
-          title,
-          message,
-          timeout: null,
-        });
+        throw error;
       },
-    });
+    );
+
+    const api = createApiFetcher(client);
 
     return {
       provide: {
