@@ -166,8 +166,11 @@ import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 const { t, locale, localeProperties } = useI18n();
 const pageDescription = computed(() => t("seo.job.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   documentDriven: false,
+});
+
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const runtimeConfig = useRuntimeConfig();
