@@ -14,7 +14,7 @@ import {
   type BlogCommentWithReplies,
   type BlogPost,
   blogSampleResponse,
-} from "../../../lib/mock/blog";
+} from "~/lib/mock/blog";
 import { clearAuthSession, getSessionToken, withAuthHeaders } from "../auth/session";
 
 type PostsVisibility = "public" | "private";

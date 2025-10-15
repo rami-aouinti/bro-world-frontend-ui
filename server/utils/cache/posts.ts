@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import Redis from "ioredis";
 import type { H3Event } from "h3";
-import type { BlogApiResponse, BlogPost } from "../../../lib/mock/blog";
+import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
 import type { NormalizedPostsListQuery } from "../posts/types";
 
 type PostsVisibility = "public" | "private";
