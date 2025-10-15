@@ -252,14 +252,18 @@
       </div>
     </v-main>
     <Analytics />
-    <SpeedInsights />
+    <ClientOnly>
+      <component
+        :is="LazySpeedInsights"
+        v-if="shouldRenderSpeedInsights"
+      />
+    </ClientOnly>
   </v-app>
 </template>
 
 <script setup lang="ts">
 import { Analytics } from "@vercel/analytics/vue";
-import { SpeedInsights } from "@vercel/speed-insights/nuxt";
-import { watch, computed, ref, defineAsyncComponent, onMounted, nextTick } from "vue";
+import { computed, defineAsyncComponent, defineComponent, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
 import { useResizeObserver } from "@vueuse/core";
@@ -302,6 +306,38 @@ const SidebarRatingCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarRatingCard.vue"),
   suspensible: false,
 });
+
+const LazySpeedInsights = defineAsyncComponent({
+  loader: async () => {
+    if (import.meta.server) {
+      return defineComponent({
+        name: "SpeedInsightsPlaceholder",
+        render: () => null,
+      });
+    }
+
+    const module = await import("@vercel/speed-insights/nuxt");
+    return module.SpeedInsights;
+  },
+  suspensible: false,
+});
+
+const shouldRenderSpeedInsights = ref(false);
+
+if (import.meta.client) {
+  const scheduleIdle = window.requestIdleCallback
+    ? (callback: () => void) =>
+        window.requestIdleCallback((_deadline) => {
+          callback();
+        })
+    : (callback: () => void) => window.setTimeout(callback, 1);
+
+  onMounted(() => {
+    scheduleIdle(() => {
+      shouldRenderSpeedInsights.value = true;
+    });
+  });
+}
 
 const colorMode = useCookieColorMode();
 
