@@ -49,7 +49,7 @@
 
     <template #append>
       <div class="app-top-bar__append">
-        <template v-if="isClient">
+        <ClientOnly>
           <RightControls
             :is-mobile="props.isMobile"
             :show-right-toggle="props.showRightToggle"
@@ -102,27 +102,26 @@
               />
             </template>
           </RightControls>
-        </template>
-        <template v-else>
-          <div
-            class="app-top-bar__append-placeholder"
-            aria-hidden="true"
-          >
-            <span
-              v-for="index in placeholderCount"
-              :key="index"
-              class="app-top-bar__placeholder animate-pulse"
-            />
-            <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
-          </div>
-        </template>
+          <template #fallback>
+            <div
+              class="app-top-bar__append-placeholder"
+              aria-hidden="true"
+            >
+              <span
+                v-for="index in placeholderCount"
+                :key="index"
+                class="app-top-bar__placeholder animate-pulse"
+              />
+              <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
+            </div>
+          </template>
+        </ClientOnly>
       </div>
     </template>
   </v-app-bar>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { onNuxtReady } from "#app";
 import AppBrand from "./AppBar/AppBrand.vue";
 import AppNavButtons from "./AppBar/AppNavButtons.vue";
@@ -284,13 +283,7 @@ const messengerButtonLabel = computed(() => {
   return t("layout.actions.messages");
 });
 
-const isClient = ref(false);
-
 if (import.meta.client) {
-  onMounted(() => {
-    isClient.value = true;
-  });
-
   onNuxtReady(() => {
     if (!messengerPreviewConversations.value.length) {
       messenger.fetchThreads({ limit: 3 }).catch(() => {});
