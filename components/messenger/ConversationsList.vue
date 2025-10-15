@@ -151,6 +151,7 @@ import {
   resolveMessageSender,
 } from "~/lib/messenger/display";
 import type { MessengerConversation } from "~/types/messenger";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const props = defineProps<{
   conversations: MessengerConversation[];
@@ -168,6 +169,7 @@ const emit = defineEmits<{
 const auth = useAuthSession();
 const { locale } = useI18n();
 const query = ref("");
+const avatarPixelSize = 44;
 
 const normalizedConversations = computed(() => {
   const currentUserId = auth.currentUser.value?.id ?? null;
@@ -181,7 +183,7 @@ const normalizedConversations = computed(() => {
     return {
       id: conversation.id,
       title,
-      avatarUrl: avatar.url,
+      avatarUrl: optimizeAvatarUrl(avatar.url ?? null, avatarPixelSize * 2),
       initials: avatar.initials,
       snippet: lastMessage?.content ?? "",
       sender: resolveMessageSender(lastMessage, ""),

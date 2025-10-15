@@ -62,14 +62,14 @@
       </div>
       <template v-else>
         <v-list
-          v-if="props.previews.length"
+          v-if="optimizedPreviews.length"
           class="rounded-xl py-1"
           density="comfortable"
           lines="two"
           style="background-color: transparent"
         >
           <v-list-item
-            v-for="preview in props.previews"
+            v-for="preview in optimizedPreviews"
             :key="preview.id"
             :class="[
               'px-4 py-3 transition-colors',
@@ -156,7 +156,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import type { MessengerPreviewEntry } from "~/types/messenger/ui";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const props = defineProps<{
   title: string;
@@ -171,4 +173,12 @@ const emit = defineEmits<{
   (e: "view-all"): void;
   (e: "open-conversation", id: string): void;
 }>();
+
+const avatarPixelSize = 40;
+const optimizedPreviews = computed(() =>
+  props.previews.map((preview) => ({
+    ...preview,
+    avatarUrl: optimizeAvatarUrl(preview.avatarUrl ?? null, avatarPixelSize * 2),
+  })),
+);
 </script>

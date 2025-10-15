@@ -10,9 +10,9 @@
           class="bg-muted text-sm font-semibold text-muted-foreground"
         >
           <img
-            v-if="avatar.url"
+            v-if="avatarImage"
             :alt="conversationTitle"
-            :src="avatar.url"
+            :src="avatarImage"
             width="44"
             height="44"
             loading="lazy"
@@ -177,6 +177,7 @@ import { useMessengerStore } from "~/stores/messenger";
 import { formatRelativeTime } from "~/lib/datetime/relative-time";
 import { resolveConversationAvatar, resolveConversationTitle } from "~/lib/messenger/display";
 import type { MessengerMessage } from "~/types/messenger";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const props = defineProps<{
   composerPlaceholder: string;
@@ -250,6 +251,8 @@ const avatar = computed(() => {
     props.unknownLabel.slice(0, 2).toUpperCase(),
   );
 });
+const avatarPixelSize = 44;
+const avatarImage = computed(() => optimizeAvatarUrl(avatar.value.url ?? null, avatarPixelSize * 2));
 
 function isOwnMessage(message: MessengerMessage) {
   const userId = auth.currentUser.value?.id;

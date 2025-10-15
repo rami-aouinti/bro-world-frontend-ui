@@ -60,6 +60,7 @@ import {
 import { formatRelativeTime } from "~/lib/datetime/relative-time";
 import type { MessengerConversation } from "~/types/messenger";
 import type { MessengerPreviewEntry } from "~/types/messenger/ui";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const MessengerMenuContent = defineAsyncComponent({
   loader: () => import("./MessengerMenuContent.vue"),
@@ -84,6 +85,7 @@ const auth = useAuthSession();
 const currentUserId = computed(() => auth.currentUser.value?.id ?? null);
 const fallbackInitials = computed(() => props.unknownLabel.slice(0, 2).toUpperCase());
 const open = ref(false);
+const avatarPixelSize = 40;
 
 const previews = computed<MessengerPreviewEntry[]>(() => {
   const userId = currentUserId.value;
@@ -103,7 +105,7 @@ const previews = computed<MessengerPreviewEntry[]>(() => {
       snippet,
       unread: (conversation.unreadCount ?? 0) > 0,
       unreadCount: conversation.unreadCount ?? 0,
-      avatarUrl: avatar.url,
+      avatarUrl: optimizeAvatarUrl(avatar.url ?? null, avatarPixelSize * 2),
       initials: avatar.initials,
       timeAgo: formatRelativeTime(
         conversation.lastMessage?.createdAt ?? conversation.updatedAt,

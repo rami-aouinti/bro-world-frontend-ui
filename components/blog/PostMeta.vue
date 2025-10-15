@@ -3,7 +3,7 @@
     <div class="flex items-center gap-3">
       <div class="h-12 w-12 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
         <img
-          :src="user.photo ?? defaultAvatar"
+          :src="avatarSrc"
           :alt="`${user.firstName} ${user.lastName}`"
           width="48"
           height="48"
@@ -62,6 +62,7 @@
 import { computed, defineAsyncComponent } from "vue";
 import type { BlogUser } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const AuthorActionMenu = defineAsyncComponent({
   loader: () => import("~/components/blog/AuthorActionMenu.vue"),
@@ -124,6 +125,10 @@ const deleteLabel = computed(() => props.deleteLabel);
 const preferEagerMediaLoading = computed(() => props.preferEagerMediaLoading);
 const imageLoadingMode = computed(() => (preferEagerMediaLoading.value ? "eager" : "lazy"));
 const imageFetchPriority = computed(() => (preferEagerMediaLoading.value ? "high" : undefined));
+const avatarSize = 48;
+const avatarSrc = computed(
+  () => optimizeAvatarUrl(props.user.photo ?? null, avatarSize) ?? props.defaultAvatar,
+);
 </script>
 
 <style scoped>

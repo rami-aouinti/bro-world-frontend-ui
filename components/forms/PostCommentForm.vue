@@ -13,7 +13,7 @@
         class="composer__avatar"
       >
         <v-img
-          :src="avatar || defaultAvatar"
+          :src="avatarSrc"
           alt=""
           width="34"
           height="34"
@@ -94,6 +94,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 interface Props {
   modelValue?: string;
@@ -127,6 +128,11 @@ const { t } = useI18n();
 const defaultAvatar = "/images/placeholders/avatar-3.svg";
 const formRef = ref();
 const localValue = ref(props.modelValue);
+const avatarSize = 34;
+
+const avatarSrc = computed(
+  () => optimizeAvatarUrl(props.avatar ?? null, avatarSize) ?? defaultAvatar,
+);
 
 watch(
   () => props.modelValue,
