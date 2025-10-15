@@ -1,4 +1,5 @@
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import type { NavItem } from "@ztl-uwu/nuxt-content";
 import type { SearchResult } from "minisearch";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";

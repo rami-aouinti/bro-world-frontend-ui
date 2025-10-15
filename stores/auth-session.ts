@@ -6,6 +6,7 @@ import { defineStore } from "~/lib/pinia-shim";
 import type { AuthLoginEnvelope, AuthUser } from "~/types/auth";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
+import { $fetch } from "ofetch";
 import type { FetchOptions } from "ofetch";
 
 interface LoginCredentials {
@@ -422,15 +423,19 @@ export const useAuthSession = defineStore("auth-session", () => {
       return null;
     }
 
-    const fetcher = resolveFetcher();
-
     try {
-      const response = await fetcher<MercureTokenEnvelope>("/mercure/token", {
-        method: "GET",
-        context: {
-          suppressErrorNotification: true,
+      const responseFetcher = import.meta.server
+        ? (useRequestFetch() as Fetcher)
+        : ($fetch as Fetcher);
+      const response = await responseFetcher<MercureTokenEnvelope>(
+        "/api/mercure/token",
+        {
+          method: "GET",
+          context: {
+            suppressErrorNotification: true,
+          },
         },
-      });
+      );
 
       if (!response?.token) {
         setMercureToken(null);

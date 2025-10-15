@@ -2,7 +2,11 @@ import { createError } from "h3";
 import type { FetchError } from "ofetch";
 import { joinURL } from "ufo";
 import type { MercureTokenEnvelope } from "../../../types/mercure";
-import { withAuthHeaders } from "../../utils/auth/session";
+import { getSessionToken, withAuthHeaders } from "../../utils/auth/session";
+import {
+  readCachedMercureToken,
+  writeCachedMercureToken,
+} from "../../utils/mercure/cache";
 
 function sanitizeBaseEndpoint(raw: string): string {
   return raw.replace(/\/$/, "");
@@ -28,13 +32,34 @@ export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
   const configuredToken =
     runtimeConfig.mercure?.token ?? runtimeConfig.public?.mercure?.token ?? null;
+  const sessionToken = getSessionToken(event);
 
   if (configuredToken) {
-    return {
+    const response = {
       token: configuredToken,
       expiresAt: null,
       expiresIn: null,
     } satisfies MercureTokenEnvelope;
+
+    if (sessionToken) {
+      await writeCachedMercureToken(event, sessionToken, response);
+    }
+
+    return response;
+  }
+
+  if (!sessionToken) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "Unauthorized Mercure token request",
+      data: { message: "Authentication required." },
+    });
+  }
+
+  const cached = await readCachedMercureToken(event, sessionToken);
+
+  if (cached?.token) {
+    return cached;
   }
 
   const baseEndpoint = sanitizeBaseEndpoint(
@@ -54,6 +79,8 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Invalid Mercure token response.",
       });
     }
+
+    await writeCachedMercureToken(event, sessionToken, response);
 
     return response;
   } catch (error) {
