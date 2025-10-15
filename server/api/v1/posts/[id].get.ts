@@ -7,6 +7,7 @@ import {
   queueRevalidation,
 } from "../../../utils/cache/posts";
 import { fetchPostByIdFromSource } from "../../../utils/posts/api";
+import { SESSION_COOKIE_SYNC_SKIP_FLAG } from "../../../utils/auth/session";
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params ?? {};
@@ -31,8 +32,15 @@ export default defineEventHandler(async (event) => {
 
       event.waitUntil(
         queueRevalidation(getPostItemCacheKey(event, trimmedId), async () => {
-          const fresh = await fetchPostByIdFromSource(event, trimmedId);
-          await cachePostById(event, fresh);
+          const context = event.context as { [SESSION_COOKIE_SYNC_SKIP_FLAG]?: boolean };
+          context[SESSION_COOKIE_SYNC_SKIP_FLAG] = true;
+
+          try {
+            const fresh = await fetchPostByIdFromSource(event, trimmedId);
+            await cachePostById(event, fresh);
+          } finally {
+            delete context[SESSION_COOKIE_SYNC_SKIP_FLAG];
+          }
         }),
       );
 

@@ -9,7 +9,7 @@ import {
   queueRevalidation,
 } from "../../../utils/cache/posts";
 import { fetchPostsListFromSource } from "../../../utils/posts/api";
-import { getSessionToken } from "../../../utils/auth/session";
+import { getSessionToken, SESSION_COOKIE_SYNC_SKIP_FLAG } from "../../../utils/auth/session";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
@@ -31,16 +31,23 @@ export default defineEventHandler(async (event) => {
 
       event.waitUntil(
         queueRevalidation(cacheKey, async () => {
-          const fresh = await fetchPostsListFromSource(event, normalizedQuery);
-          await cachePostsList(event, normalizedQuery, fresh.payload, fresh.visibility);
+          const context = event.context as { [SESSION_COOKIE_SYNC_SKIP_FLAG]?: boolean };
+          context[SESSION_COOKIE_SYNC_SKIP_FLAG] = true;
 
-          await Promise.all(
-            (fresh.payload.data ?? []).map(async (post) => {
-              if (post?.id) {
-                await cachePostById(event, post);
-              }
-            }),
-          );
+          try {
+            const fresh = await fetchPostsListFromSource(event, normalizedQuery);
+            await cachePostsList(event, normalizedQuery, fresh.payload, fresh.visibility);
+
+            await Promise.all(
+              (fresh.payload.data ?? []).map(async (post) => {
+                if (post?.id) {
+                  await cachePostById(event, post);
+                }
+              }),
+            );
+          } finally {
+            delete context[SESSION_COOKIE_SYNC_SKIP_FLAG];
+          }
         }),
       );
 
