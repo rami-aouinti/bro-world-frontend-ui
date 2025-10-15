@@ -112,6 +112,7 @@ import {
 } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 type SidebarVariant = "default" | "profile";
 
@@ -133,7 +134,7 @@ const isDark = computed(() => props.isDark);
 const sticky = computed(() => props.sticky);
 const shouldRenderParticles = ref(false);
 const { t, locale } = useI18n();
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const auth = useAuthSession();
@@ -304,7 +305,7 @@ function resolveLocalizedPath(target?: string): string | undefined {
   }
 
   try {
-    return localePath({ path: target });
+    return localePath(target);
   } catch (error) {
     if (import.meta.dev) {
       console.warn("[AppSidebar] Failed to resolve localized path for target", target, error);

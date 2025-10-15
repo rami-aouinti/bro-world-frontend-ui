@@ -1,6 +1,7 @@
 import { computed } from "vue";
 import type { NavItem } from "@ztl-uwu/nuxt-content";
 import type { SearchResult } from "minisearch";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 /**
  * Wrapper around useI18n that gracefully handles the documentation navigation
@@ -103,7 +104,7 @@ export function useI18nDocs() {
     return isLocaleSpecificPath(nextItem._path, locale.value) ? nextItem : null;
   });
 
-  const localePath = i18nEnabled ? useLocalePath() : (path: string) => path;
+  const resolveLocalePath = i18nEnabled ? useResolvedLocalePath() : (path: string) => path;
 
   const localizeSearchResult = i18nEnabled
     ? (result: SearchResult[]) =>
@@ -128,7 +129,7 @@ export function useI18nDocs() {
     navigation: localizedNavigation,
     prev: localizedPrev,
     next: localizedNext,
-    localePath,
+    localePath: resolveLocalePath,
     localizeSearchResult,
     switchLocalePath,
   };
