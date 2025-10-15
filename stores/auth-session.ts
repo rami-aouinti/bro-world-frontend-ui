@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { useCookie, useNuxtApp, useRequestFetch, useRuntimeConfig, useState } from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
-import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from "~/types/auth";
+import type { AuthLoginEnvelope, AuthUser } from "~/types/auth";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import type { FetchOptions } from "ofetch";
@@ -188,18 +188,6 @@ function extractErrorMessage(error: unknown): string {
   }
 
   return "Unable to sign in at this time. Please try again later.";
-}
-
-function resolveResponseStatus(error: unknown): number | null {
-  if (error && typeof error === "object") {
-    const maybeStatus = (error as { response?: { status?: unknown } }).response?.status;
-
-    if (typeof maybeStatus === "number" && Number.isFinite(maybeStatus)) {
-      return maybeStatus;
-    }
-  }
-
-  return null;
 }
 
 export const useAuthSession = defineStore("auth-session", () => {
@@ -462,46 +450,31 @@ export const useAuthSession = defineStore("auth-session", () => {
       tokenAvailableState.value = true;
     }
 
-    const fetcher = resolveFetcher();
+    const hasSessionToken = Boolean(sessionTokenState.value);
+    const hasCurrentUser = Boolean(currentUserState.value);
 
-    try {
-      const response = await fetcher<AuthSessionEnvelope>("/auth/session", {
-        method: "GET",
-        context: {
-          suppressErrorNotification: true,
-          skipUnauthorizedHandler: true,
-        },
-      });
-
-      if (response?.authenticated && response.user) {
-        setCurrentUser(response.user);
-        setTokenPresence(true);
-        readyState.value = true;
-        await fetchMercureToken();
-        return true;
-      }
-
-      clearSession();
-      readyState.value = true;
-      return false;
-    } catch (error) {
-      console.error("Failed to refresh auth session", error);
-      const status = resolveResponseStatus(error);
-
-      if (status === 401 || status === 403) {
-        clearSession();
-        return false;
-      }
-
-      readyState.value = true;
-
-      if (tokenAvailableState.value && currentUserState.value) {
-        return true;
-      }
-
-      clearSession();
-      return false;
+    if (!hasCurrentUser && userCookie.value) {
+      setCurrentUser(userCookie.value as AuthUser);
     }
+
+    if (hasSessionToken || sessionTokenCookie.value) {
+      const resolvedToken = sessionTokenState.value ?? sessionTokenCookie.value;
+
+      if (resolvedToken && !hasSessionToken) {
+        sessionTokenState.value = resolvedToken;
+      }
+
+      setTokenPresence(Boolean(resolvedToken));
+
+      readyState.value = true;
+      await fetchMercureToken();
+
+      return Boolean(currentUserState.value);
+    }
+
+    clearSession();
+    readyState.value = true;
+    return false;
   }
 
   async function initialize() {
