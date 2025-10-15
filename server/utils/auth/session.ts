@@ -1,4 +1,4 @@
-import { deleteCookie, getCookie, setCookie } from "h3";
+import { deleteCookie, getCookie, getHeader, setCookie } from "h3";
 import type { H3Event } from "h3";
 import type { AuthUser } from "~/types/auth";
 import { shouldUseSecureCookies, withSecureCookieOptions } from "~/lib/cookies";
@@ -101,6 +101,16 @@ function safeSetCookie(
 }
 
 export function getSessionToken(event: H3Event): string | null {
+  const authorizationHeader = getHeader(event, "authorization");
+
+  if (authorizationHeader) {
+    const match = authorizationHeader.match(/^[Bb]earer\s+(.+)$/);
+
+    if (match?.[1]) {
+      return match[1].trim() || null;
+    }
+  }
+
   const { tokenCookieName, sessionTokenCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
   const token = getCookie(event, tokenCookieName);
