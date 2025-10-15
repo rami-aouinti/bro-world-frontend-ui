@@ -14,7 +14,7 @@
               size="small"
               variant="text"
               color="primary"
-              :to="localePath({ path: '/profile-edit' })"
+              :to="localePath('/profile-edit')"
             >
               {{ t("layout.profileSidebar.editBio") }}
             </v-btn>
@@ -52,7 +52,7 @@
               block
               color="primary"
               variant="tonal"
-              :to="localePath({ path: '/profile-edit' })"
+              :to="localePath('/profile-edit')"
             >
               {{ t("layout.profileSidebar.editDetails") }}
             </v-btn>
@@ -79,7 +79,7 @@
               size="small"
               variant="text"
               color="primary"
-              :to="localePath({ path: '/profile-photos' })"
+              :to="localePath('/profile-photos')"
             >
               {{ t("layout.profileSidebar.viewAllPhotos") }}
             </v-btn>
@@ -117,7 +117,7 @@
               size="small"
               variant="text"
               color="primary"
-              :to="localePath({ path: '/profile-friends' })"
+              :to="localePath('/profile-friends')"
             >
               {{ t("layout.profileSidebar.viewAllFriends") }}
             </v-btn>
@@ -154,6 +154,7 @@
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
@@ -194,7 +195,7 @@ defineEmits<{
 }>();
 
 const { t } = useI18n();
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const siteSettings = useSiteSettingsState();
 
 const profileSettings = computed(

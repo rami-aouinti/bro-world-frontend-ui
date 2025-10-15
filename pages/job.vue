@@ -161,13 +161,14 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 definePageMeta({
   documentDriven: false,
 });
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
-const localePath = useLocalePath();
+const localePath = useResolvedLocalePath();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
