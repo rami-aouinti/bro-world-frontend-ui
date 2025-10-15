@@ -100,13 +100,15 @@ const AdminSettingsLayout = defineAsyncComponent({
   suspensible: false,
 });
 
-definePageMeta({
+const { t } = useI18n();
+const pageDescription = computed(() => t("admin.settings.sections.pages.subtitle"));
+
+definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: true,
   documentDriven: false,
-});
-
-const { t } = useI18n();
+  description: pageDescription.value,
+}));
 const { form, isSaving, languageOptions } = useAdminSettingsEditor();
 
 const pageEditors = computed(() =>

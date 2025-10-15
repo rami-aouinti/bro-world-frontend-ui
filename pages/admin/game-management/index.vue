@@ -32,12 +32,15 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useAdminModulePage } from "~/composables/useAdminModulePage";
 
-definePageMeta({
+const { t, title, subtitle } = useAdminModulePage("admin.gameManagement");
+const pageDescription = computed(() => subtitle.value);
+
+definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-});
-
-const { t, title, subtitle } = useAdminModulePage("admin.gameManagement");
+  description: pageDescription.value,
+}));
 </script>

@@ -98,11 +98,6 @@ import StoriesStrip from "~/components/stories/StoriesStrip.vue";
 import StoryViewerModal from "~/components/stories/StoryViewerModal.vue";
 import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 
-definePageMeta({
-  showRightWidgets: true,
-  documentDriven: false,
-});
-
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const auth = useAuthSession();
 
@@ -261,6 +256,14 @@ const reactionEmojis: Record<ReactionType, string> = {
 };
 
 const { t } = useI18n();
+
+const pageDescription = computed(() => t("blog.hero.description"));
+
+definePageMeta(() => ({
+  showRightWidgets: true,
+  documentDriven: false,
+  description: pageDescription.value,
+}));
 
 const reactionLabels = computed<Record<ReactionType, string>>(() => ({
   like: t("blog.reactions.reactionTypes.like"),

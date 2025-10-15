@@ -1801,6 +1801,26 @@
     "performance": {
       "title": "Performance",
       "description": "Track the budgets and audits keeping BroWorld fast for every community."
+    },
+    "login": {
+      "title": "Log in",
+      "description": "Access your Bro World account to continue collaborating with the community."
+    },
+    "register": {
+      "title": "Create account",
+      "description": "Join Bro World to share ideas, launch new worlds, and stay close to your team."
+    },
+    "forgotPassword": {
+      "title": "Reset password",
+      "description": "Recover access to your Bro World account with a secure reset link."
+    },
+    "logout": {
+      "title": "Sign out",
+      "description": "Sign out of Bro World and keep your account secure on shared devices."
+    },
+    "messenger": {
+      "title": "Messenger",
+      "description": "Chat with teammates, share updates, and keep conversations organised."
     }
   },
   "admin": {

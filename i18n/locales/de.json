@@ -1672,6 +1672,30 @@
     "education": {
       "title": "Education",
       "description": "Design collaborative, data-informed learning experiences."
+    },
+    "performance": {
+      "title": "Performance",
+      "description": "Verfolge Budgets und Prüfungen, damit Bro World für jede Community schnell bleibt."
+    },
+    "login": {
+      "title": "Anmelden",
+      "description": "Melde dich bei deinem Bro-World-Konto an, um weiter mit der Community zusammenzuarbeiten."
+    },
+    "register": {
+      "title": "Konto erstellen",
+      "description": "Tritt Bro World bei, teile Ideen, starte neue Welten und bleib deinem Team nahe."
+    },
+    "forgotPassword": {
+      "title": "Passwort zurücksetzen",
+      "description": "Stelle über einen sicheren Link den Zugriff auf dein Bro-World-Konto wieder her."
+    },
+    "logout": {
+      "title": "Abmelden",
+      "description": "Melde dich bei Bro World ab und schütze dein Konto auf gemeinsam genutzten Geräten."
+    },
+    "messenger": {
+      "title": "Messenger",
+      "description": "Chatte mit Teammitgliedern, teile Updates und behalte Unterhaltungen im Blick."
     }
   },
   "admin": {

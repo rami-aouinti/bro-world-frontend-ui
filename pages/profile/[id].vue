@@ -229,13 +229,6 @@ import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { friendCards, findFriendById } from "~/lib/users/mock-friends";
 import type { FriendCard } from "~/types/pages/profile";
 
-definePageMeta({
-  middleware: "auth",
-  title: "profile-friend-details",
-  sidebarVariant: "profile",
-  documentDriven: false,
-});
-
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
@@ -243,6 +236,18 @@ const route = useRoute();
 
 const friendId = computed(() => String(route.params.id));
 const friend = computed(() => findFriendById(friendId.value));
+
+const pageDescription = computed(
+  () => friend.value?.bio?.trim() || t("seo.profileFriends.description"),
+);
+
+definePageMeta(() => ({
+  middleware: "auth",
+  title: "profile-friend-details",
+  sidebarVariant: "profile",
+  documentDriven: false,
+  description: pageDescription.value,
+}));
 
 watchEffect(() => {
   if (!friend.value) {
@@ -259,7 +264,7 @@ useHead(() => {
   }
 
   const title = `${friend.value.name} · ${t("pages.profileFriends.title")}`;
-  const description = friend.value.bio || t("pages.profileFriends.subtitle");
+  const description = pageDescription.value;
   const canonicalPath = currentRoute.value?.path ?? `/profile/${friendId.value}`;
   const canonical = new URL(canonicalPath, baseUrl.value).toString();
   const iso = localeProperties.value?.iso ?? locale.value;
@@ -267,18 +272,14 @@ useHead(() => {
   return {
     title,
     meta: [
-      { key: "description", name: "description", content: description },
       { key: "og:title", property: "og:title", content: title },
-      { key: "og:description", property: "og:description", content: description },
       { key: "og:type", property: "og:type", content: "website" },
       { key: "og:url", property: "og:url", content: canonical },
       { key: "og:locale", property: "og:locale", content: iso },
       { key: "twitter:card", name: "twitter:card", content: "summary_large_image" },
       { key: "twitter:title", name: "twitter:title", content: title },
-      { key: "twitter:description", name: "twitter:description", content: description },
       { key: "twitter:url", name: "twitter:url", content: canonical },
     ],
-    link: [{ rel: "canonical", href: canonical }],
   };
 });
 

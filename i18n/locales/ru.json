@@ -1498,6 +1498,30 @@
     "education": {
       "title": "Education",
       "description": "Design collaborative, data-informed learning experiences."
+    },
+    "performance": {
+      "title": "Производительность",
+      "description": "Следите за бюджетами и аудитами, чтобы Bro World оставался быстрым для каждой комьюнити."
+    },
+    "login": {
+      "title": "Войти",
+      "description": "Войдите в свой аккаунт Bro World и продолжайте сотрудничать с сообществом."
+    },
+    "register": {
+      "title": "Создать аккаунт",
+      "description": "Присоединяйтесь к Bro World, чтобы делиться идеями, запускать новые миры и оставаться рядом со своей командой."
+    },
+    "forgotPassword": {
+      "title": "Сбросить пароль",
+      "description": "Восстановите доступ к аккаунту Bro World с помощью защищенной ссылки для сброса."
+    },
+    "logout": {
+      "title": "Выйти",
+      "description": "Выйдите из Bro World и защитите свой аккаунт на общих устройствах."
+    },
+    "messenger": {
+      "title": "Мессенджер",
+      "description": "Общайтесь с командой, делитесь обновлениями и держите разговоры в порядке."
     }
   },
   "admin": {

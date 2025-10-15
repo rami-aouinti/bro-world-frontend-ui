@@ -5,7 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 
@@ -19,12 +20,16 @@ const ProfileSecurityTwoFactorSidebarCard = defineAsyncComponent({
   suspensible: false,
 });
 
-definePageMeta({
+const { t } = useI18n();
+const pageDescription = computed(() => t("seo.profileSecurity.description"));
+
+definePageMeta(() => ({
   middleware: "auth",
   title: "profile-security",
   sidebarVariant: "profile",
   documentDriven: false,
-});
+  description: pageDescription.value,
+}));
 
 const { registerRightSidebarContent, setRightSidebarContent } = useLayoutRightSidebar();
 

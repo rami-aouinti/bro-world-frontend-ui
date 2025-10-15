@@ -95,12 +95,14 @@
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
-definePageMeta({
+const { t } = useI18n();
+const pageDescription = computed(() => t("admin.statistics.page.subtitle"));
+
+definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-});
-
-const { t } = useI18n();
+  description: pageDescription.value,
+}));
 const titleId = "admin-statistics-title";
 
 const { data, pending, error, refresh } = await useAsyncData(

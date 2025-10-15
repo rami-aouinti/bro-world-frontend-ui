@@ -44,13 +44,17 @@ const ChatPane = defineAsyncComponent({
   suspensible: false,
 });
 
-definePageMeta({
-  documentDriven: false,
-});
 const messenger = useMessengerStore();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const { t } = useI18n();
+
+const pageDescription = computed(() => t("seo.messenger.description"));
+
+definePageMeta(() => ({
+  documentDriven: false,
+  description: pageDescription.value,
+}));
 
 await callOnce(() => messenger.fetchThreads({ limit: 50 }));
 

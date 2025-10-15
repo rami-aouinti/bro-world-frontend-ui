@@ -1674,6 +1674,30 @@
     "education": {
       "title": "Education",
       "description": "Design collaborative, data-informed learning experiences."
+    },
+    "performance": {
+      "title": "الأداء",
+      "description": "تتبع الميزانيات والمراجعات للحفاظ على سرعة برو وورلد لكل مجتمع."
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "description": "ادخل إلى حسابك في برو وورلد لمتابعة التعاون مع المجتمع."
+    },
+    "register": {
+      "title": "إنشاء حساب",
+      "description": "انضم إلى برو وورلد لمشاركة الأفكار وإطلاق عوالم جديدة والبقاء قريبًا من فريقك."
+    },
+    "forgotPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "description": "استعد الوصول إلى حسابك في برو وورلد عبر رابط إعادة تعيين آمن."
+    },
+    "logout": {
+      "title": "تسجيل الخروج",
+      "description": "سجّل الخروج من برو وورلد واحم حسابك على الأجهزة المشتركة."
+    },
+    "messenger": {
+      "title": "الرسائل",
+      "description": "تواصل مع أعضاء الفريق وشارك التحديثات وحافظ على تنظيم المحادثات."
     }
   },
   "admin": {

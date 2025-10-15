@@ -41,7 +41,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineAsyncComponent } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
+import { useI18n } from "vue-i18n";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
 const AuthRegisterForm = defineAsyncComponent({
@@ -53,14 +54,17 @@ const AuthSocial = defineAsyncComponent({
   suspensible: false,
 });
 
-definePageMeta({
+const isRedirecting = ref(false);
+const { t } = useI18n();
+const pageDescription = computed(() => t("seo.register.description"));
+
+definePageMeta(() => ({
   title: "register",
   layout: "auth",
   breadcrumb: "disabled",
   documentDriven: false,
-});
-
-const isRedirecting = ref(false);
+  description: pageDescription.value,
+}));
 
 function handleSocialRedirect(provider: SocialProvider) {
   const target = resolveSocialRedirect(provider);

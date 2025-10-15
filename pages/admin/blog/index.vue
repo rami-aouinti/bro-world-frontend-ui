@@ -461,12 +461,14 @@ const BlogPostForm = defineAsyncComponent({
   suspensible: false,
 });
 
-definePageMeta({
+const { t, locale } = useI18n();
+const pageDescription = computed(() => t("admin.blog.subtitle"));
+
+definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-});
-
-const { t, locale } = useI18n();
+  description: pageDescription.value,
+}));
 const numberFormatter = computed(() => new Intl.NumberFormat(locale.value));
 const dateFormatter = computed(
   () =>
