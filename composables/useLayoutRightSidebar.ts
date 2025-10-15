@@ -6,6 +6,7 @@ import {
   type Component,
   type MaybeRefOrGetter,
 } from "vue";
+import { skipHydrate } from "#imports";
 
 export interface LayoutRightSidebarContent {
   component: Component;
@@ -17,6 +18,7 @@ const STATE_KEY = "layout-right-sidebar-content";
 
 export function useLayoutRightSidebar() {
   const rightSidebarContent = useState<LayoutRightSidebarContent | null>(STATE_KEY, () => null);
+  skipHydrate(rightSidebarContent);
 
   function normalizeContent(content: LayoutRightSidebarContent | null) {
     if (!content) {
