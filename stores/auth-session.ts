@@ -156,6 +156,18 @@ function extractErrorMessage(error: unknown): string {
   return "Unable to sign in at this time. Please try again later.";
 }
 
+function resolveResponseStatus(error: unknown): number | null {
+  if (error && typeof error === "object") {
+    const maybeStatus = (error as { response?: { status?: unknown } }).response?.status;
+
+    if (typeof maybeStatus === "number" && Number.isFinite(maybeStatus)) {
+      return maybeStatus;
+    }
+  }
+
+  return null;
+}
+
 export const useAuthSession = defineStore("auth-session", () => {
   const currentUserState = useState<AuthUser | null>("auth-current-user", () => null);
   const tokenAvailableState = useState<boolean>("auth-token-available", () => false);
@@ -440,8 +452,20 @@ export const useAuthSession = defineStore("auth-session", () => {
       return false;
     } catch (error) {
       console.error("Failed to refresh auth session", error);
-      clearSession();
+      const status = resolveResponseStatus(error);
+
+      if (status === 401 || status === 403) {
+        clearSession();
+        return false;
+      }
+
       readyState.value = true;
+
+      if (tokenAvailableState.value && currentUserState.value) {
+        return true;
+      }
+
+      clearSession();
       return false;
     }
   }
