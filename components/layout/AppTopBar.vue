@@ -48,70 +48,75 @@
     />
 
     <template #append>
-      <template v-if="isClient">
-        <RightControls
-          :is-mobile="props.isMobile"
-          :show-right-toggle="props.showRightToggle"
-          :icon-trigger-classes="iconTriggerClasses"
-          :notifications="notifications"
-          :notification-count="notificationCount"
-          :notifications-title="notificationsTitle"
-          :notifications-subtitle="notificationsSubtitle"
-          :notifications-empty="notificationsEmpty"
-          :notifications-mark-all="notificationsMarkAll"
-          :notifications-button-label="notificationsButtonLabel"
-          :messenger-conversations="messengerPreviewConversations"
-          :messenger-unread-count="messengerUnreadCount"
-          :messenger-button-label="messengerButtonLabel"
-          :messenger-title="messengerTitle"
-          :messenger-subtitle="messengerSubtitle"
-          :messenger-empty="messengerEmpty"
-          :messenger-view-all="messengerViewAll"
-          :messenger-unknown-label="messengerUnknownLabel"
-          :messenger-loading="messengerMenuLoading"
-          :widgets-label="widgetsLabel"
-          :cart-label="cartLabel"
-          @toggle-right="$emit('toggle-right')"
-          @mark-all-notifications="markAllNotifications"
-        >
-          <template #user>
-            <UserMenu
-              :items="userMenuItems"
-              :icon-trigger-classes="iconTriggerClasses"
-              :logging-out="loggingOut"
-              :user="currentUser"
-              :signed-in-text="userSignedInText"
-              :guest-title="userGuestTitle"
-              :guest-subtitle="userGuestSubtitle"
-              :profile-label="profileLabel"
-              @select="handleUserMenuSelect"
-            />
-          </template>
-          <template #locale>
-            <LocaleMenu
-              :locales="visibleLocales"
-              :current="props.locale"
-              :icon-trigger-classes="iconTriggerClasses"
-              :format-label="formatLocaleLabel"
-              :locale-metadata="localeMetadata"
-              :title="localeMenuTitle"
-              :subtitle="localeMenuSubtitle"
-              :button-label="localeButtonLabel"
-              @change="changeLocale"
-            />
-          </template>
-        </RightControls>
-      </template>
-      <template v-else>
-        <div class="flex items-center gap-3">
-          <span
-            v-for="index in 4"
-            :key="index"
-            class="h-10 w-10 animate-pulse rounded-full bg-muted/40"
+      <div class="app-top-bar__append">
+        <template v-if="isClient">
+          <RightControls
+            :is-mobile="props.isMobile"
+            :show-right-toggle="props.showRightToggle"
+            :icon-trigger-classes="iconTriggerClasses"
+            :notifications="notifications"
+            :notification-count="notificationCount"
+            :notifications-title="notificationsTitle"
+            :notifications-subtitle="notificationsSubtitle"
+            :notifications-empty="notificationsEmpty"
+            :notifications-mark-all="notificationsMarkAll"
+            :notifications-button-label="notificationsButtonLabel"
+            :messenger-conversations="messengerPreviewConversations"
+            :messenger-unread-count="messengerUnreadCount"
+            :messenger-button-label="messengerButtonLabel"
+            :messenger-title="messengerTitle"
+            :messenger-subtitle="messengerSubtitle"
+            :messenger-empty="messengerEmpty"
+            :messenger-view-all="messengerViewAll"
+            :messenger-unknown-label="messengerUnknownLabel"
+            :messenger-loading="messengerMenuLoading"
+            :widgets-label="widgetsLabel"
+            :cart-label="cartLabel"
+            @toggle-right="$emit('toggle-right')"
+            @mark-all-notifications="markAllNotifications"
+          >
+            <template #user>
+              <UserMenu
+                :items="userMenuItems"
+                :icon-trigger-classes="iconTriggerClasses"
+                :logging-out="loggingOut"
+                :user="currentUser"
+                :signed-in-text="userSignedInText"
+                :guest-title="userGuestTitle"
+                :guest-subtitle="userGuestSubtitle"
+                :profile-label="profileLabel"
+                @select="handleUserMenuSelect"
+              />
+            </template>
+            <template #locale>
+              <LocaleMenu
+                :locales="visibleLocales"
+                :current="props.locale"
+                :icon-trigger-classes="iconTriggerClasses"
+                :format-label="formatLocaleLabel"
+                :locale-metadata="localeMetadata"
+                :title="localeMenuTitle"
+                :subtitle="localeMenuSubtitle"
+                :button-label="localeButtonLabel"
+                @change="changeLocale"
+              />
+            </template>
+          </RightControls>
+        </template>
+        <template v-else>
+          <div
+            class="app-top-bar__append-placeholder"
             aria-hidden="true"
-          />
-        </div>
-      </template>
+          >
+            <span
+              v-for="index in placeholderCount"
+              :key="index"
+              class="app-top-bar__placeholder animate-pulse"
+            />
+            <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
+          </div>
+        </template>
+      </div>
     </template>
   </v-app-bar>
 </template>
@@ -250,6 +255,8 @@ const notificationsTitle = computed(() => t("layout.notificationsMenu.title"));
 const notificationsSubtitle = computed(() => t("layout.notificationsMenu.subtitle"));
 const notificationsEmpty = computed(() => t("layout.notificationsMenu.empty"));
 const notificationsMarkAll = computed(() => t("layout.notificationsMenu.markAll"));
+const placeholderCount = 6;
+
 const notificationsButtonLabel = computed(() => {
   const count = notificationCount.value;
   if (count > 0) {
@@ -417,5 +424,38 @@ function markAllNotifications() {
 .app-top-bar :deep(.v-list-item__prepend),
 .app-top-bar :deep(.v-list-item__append) {
   color: inherit;
+}
+
+.app-top-bar__append {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  min-width: min(100%, 320px);
+}
+
+.app-top-bar__append-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.app-top-bar__placeholder {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-color: rgba(var(--v-theme-on-surface), 0.16);
+}
+
+.app-top-bar__placeholder--wide {
+  width: 3.25rem;
+}
+
+@media (max-width: 960px) {
+  .app-top-bar__append {
+    min-width: 0;
+  }
 }
 </style>
