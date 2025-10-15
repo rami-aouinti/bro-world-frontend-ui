@@ -121,10 +121,44 @@ function normalizeFetchOptions(options: FetchOptions): FetchOptions {
   };
 }
 
-function resolveFetcher(): Fetcher {
-  const baseFetcher = (import.meta.server ? useRequestFetch() : useNuxtApp().$api) as Fetcher;
+function joinUrl(base: string, path: string): string {
+  if (!base) {
+    return path;
+  }
 
-  return async function wrappedFetcher<T>(request: string, options?: FetchOptions): Promise<T> {
+  const trimmedBase = base.endsWith("/") ? base.slice(0, -1) : base;
+  const trimmedPath = path.startsWith("/") ? path.slice(1) : path;
+
+  return `${trimmedBase}/${trimmedPath}`;
+}
+
+function isAbsoluteUrl(url: string): boolean {
+  return /^(?:[a-z]+:)?\/\//i.test(url);
+}
+
+function resolveFetcher(): Fetcher {
+  if (import.meta.server) {
+    const runtimeConfig = useRuntimeConfig();
+    const baseURL =
+      (runtimeConfig.auth?.apiBase as string | undefined)?.trim() ||
+      (runtimeConfig.public?.apiBase as string | undefined)?.trim() ||
+      "/api";
+    const baseFetcher = useRequestFetch() as Fetcher;
+
+    return async function wrappedServerFetcher<T>(
+      request: string,
+      options?: FetchOptions,
+    ): Promise<T> {
+      const normalizedOptions = options ? normalizeFetchOptions(options) : options;
+      const resolvedRequest = isAbsoluteUrl(request) ? request : joinUrl(baseURL, request);
+
+      return baseFetcher<T>(resolvedRequest, normalizedOptions);
+    };
+  }
+
+  const baseFetcher = useNuxtApp().$api as Fetcher;
+
+  return async function wrappedClientFetcher<T>(request: string, options?: FetchOptions): Promise<T> {
     const normalizedOptions = options ? normalizeFetchOptions(options) : options;
     return baseFetcher<T>(request, normalizedOptions);
   };
