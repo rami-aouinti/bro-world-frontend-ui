@@ -1,4 +1,4 @@
-import { AxiosError, createAxios } from "~/lib/vendor/axios";
+import axios, { AxiosError } from "axios";
 import { createApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
 import { useRequestHeaders } from "#imports";
 import { useAuthSession } from "~/stores/auth-session";
@@ -18,7 +18,7 @@ export default defineNuxtPlugin({
     const auth = useAuthSession();
     const forwardedHeaders = import.meta.server ? useRequestHeaders(["cookie", "authorization"]) : null;
     const { $i18n } = nuxtApp as unknown as { $i18n?: { t: (key: string) => string } };
-    const client = createAxios({
+    const client = axios.create({
       baseURL,
       withCredentials: true,
     });

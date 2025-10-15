@@ -15,7 +15,7 @@ import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { createApiFetcher, type ApiRequestOptions } from "~/lib/api/http-client";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
-import { createAxios } from "~/lib/vendor/axios";
+import axios from "axios";
 
 interface LoginCredentials {
   identifier: string;
@@ -38,7 +38,7 @@ function resolveFetcher(): Fetcher {
       (runtimeConfig.public?.apiBase as string | undefined)?.trim() ||
       "/api";
     const forwardedHeaders = useRequestHeaders(["cookie", "authorization"]);
-    const client = createAxios({
+    const client = axios.create({
       baseURL,
       withCredentials: true,
     });

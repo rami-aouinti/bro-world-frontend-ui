@@ -1,10 +1,10 @@
-import { createAxios } from "~/lib/vendor/axios";
+import axios from "axios";
 import type {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosRequestHeaders,
   AxiosResponse,
-} from "~/lib/vendor/axios";
+} from "axios";
 
 export interface ApiRequestContext {
   skipAuthHeader?: boolean;
@@ -186,7 +186,7 @@ function createCrudOperations(
 }
 
 export function createApiFetcher(client?: AxiosInstance): ApiFetcher {
-  const axiosClient = client ?? createAxios();
+  const axiosClient = client ?? axios.create();
 
   const fetcher = (async <T>(url: string, options?: ApiRequestOptions) => {
     const requestConfig = normalizeOptions(options);

@@ -38,6 +38,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "@vueuse/core": "^13.9.0",
+    "axios": "^1.7.9",
     "canvas-confetti": "^1.9.3",
     "chartjs-adapter-date-fns": "^3.0.0",
     "class-variance-authority": "^0.7.1",

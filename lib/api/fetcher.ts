@@ -1,6 +1,7 @@
+import axios from "axios";
+import type { AxiosInstance } from "axios";
 import { useNuxtApp, useRequestHeaders, useRuntimeConfig } from "#imports";
 import { createApiFetcher, type ApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
-import { createAxios, type AxiosInstance } from "~/lib/vendor/axios";
 import { useAuthSession } from "~/stores/auth-session";
 
 type ForwardedHeaders = Partial<Record<"cookie" | "authorization", string>> | null;
@@ -68,7 +69,7 @@ export function resolveApiFetcher(): ApiFetcher {
 
     const auth = useAuthSession();
     const forwardedHeaders = useRequestHeaders(["cookie", "authorization"]);
-    const client = createAxios({
+    const client = axios.create({
       baseURL,
       withCredentials: true,
     });
@@ -83,7 +84,7 @@ export function resolveApiFetcher(): ApiFetcher {
 
   if (!clientFallback) {
     const auth = useAuthSession();
-    const client = createAxios({
+    const client = axios.create({
       baseURL,
       withCredentials: true,
     });
