@@ -1,7 +1,6 @@
 <template>
-  <v-container class="profile-edit-form">
     <header
-      class="mb-8"
+      class="mb-6"
       aria-describedby="profile-edit-subtitle"
     >
       <SidebarCard
@@ -250,7 +249,6 @@
     >
       {{ snackbarMessage }}
     </v-snackbar>
-  </v-container>
 </template>
 
 <script setup lang="ts">

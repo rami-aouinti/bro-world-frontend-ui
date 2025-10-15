@@ -3,7 +3,6 @@
     v-if="friend"
     aria-labelledby="friend-profile-title"
   >
-    <v-container>
       <div class="mb-6">
         <v-btn
           variant="text"
@@ -209,7 +208,6 @@
           </v-slide-group-item>
         </v-slide-group>
       </SidebarCard>
-    </v-container>
 
     <v-snackbar
       v-model="showActionSnackbar"
