@@ -172,7 +172,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
 
@@ -181,13 +181,15 @@ const AdminSettingsLayout = defineAsyncComponent({
   suspensible: false,
 });
 
-definePageMeta({
+const { t } = useI18n();
+const pageDescription = computed(() => t("admin.settings.sections.theme.subtitle"));
+
+definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: true,
   documentDriven: false,
-});
-
-const { t } = useI18n();
+  description: pageDescription.value,
+}));
 const { form, isSaving, addTheme, removeTheme } = useAdminSettingsEditor();
 
 function handleAddTheme() {

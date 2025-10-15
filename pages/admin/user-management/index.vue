@@ -425,12 +425,14 @@ interface FormErrors {
   form?: string;
 }
 
-definePageMeta({
+const { t, locale } = useI18n();
+const pageDescription = computed(() => t("admin.userManagement.page.subtitle"));
+
+definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-});
-
-const { t, locale } = useI18n();
+  description: pageDescription.value,
+}));
 const store = useUsersStore();
 const search = ref("");
 const createDialog = ref(false);

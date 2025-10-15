@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineAsyncComponent } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
@@ -53,14 +53,16 @@ const AuthSocial = defineAsyncComponent({
   suspensible: false,
 });
 
-definePageMeta({
+const { t } = useI18n();
+const pageDescription = computed(() => t("seo.login.description"));
+
+definePageMeta(() => ({
   title: "login",
   layout: "auth",
   breadcrumb: "disabled",
   documentDriven: false,
-});
-
-const { t } = useI18n();
+  description: pageDescription.value,
+}));
 const isRedirecting = ref(false);
 
 function handleSocialRedirect(provider: SocialProvider) {

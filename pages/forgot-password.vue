@@ -29,18 +29,23 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent } from "vue";
+import { useI18n } from "vue-i18n";
 
 const AuthResetPasswordForm = defineAsyncComponent({
   loader: () => import("~/components/auth/ResetPasswordForm.vue"),
   suspensible: false,
 });
 
-definePageMeta({
+const { t } = useI18n();
+const pageDescription = computed(() => t("seo.forgotPassword.description"));
+
+definePageMeta(() => ({
   title: "forgot-password",
   layout: "auth",
   breadcrumb: "disabled",
-});
+  description: pageDescription.value,
+}));
 </script>
 
 <style scoped src="~/assets/styles/pages/forgot-password.scss" lang="scss"></style>

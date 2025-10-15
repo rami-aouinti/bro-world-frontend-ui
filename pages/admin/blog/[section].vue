@@ -35,11 +35,6 @@
 import { computed } from "vue";
 import { useAdminModulePage } from "~/composables/useAdminModulePage";
 
-definePageMeta({
-  middleware: ["auth", "admin"],
-  showRightWidgets: false,
-});
-
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
@@ -60,6 +55,13 @@ const section = computed<BlogSection>(() => {
 const pageKey = computed(() => `admin.blog.sections.${section.value}`);
 
 const { t, title, subtitle } = useAdminModulePage(pageKey);
+const pageDescription = computed(() => subtitle.value);
+
+definePageMeta(() => ({
+  middleware: ["auth", "admin"],
+  showRightWidgets: false,
+  description: pageDescription.value,
+}));
 
 const headingId = computed(() => `admin-blog-${section.value}-title`);
 </script>

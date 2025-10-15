@@ -1620,6 +1620,30 @@
     "education": {
       "title": "Éducation",
       "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données."
+    },
+    "performance": {
+      "title": "Performance",
+      "description": "Suivez les budgets et audits qui maintiennent Bro World rapide pour chaque communauté."
+    },
+    "login": {
+      "title": "Connexion",
+      "description": "Connectez-vous à votre compte Bro World pour continuer à collaborer avec la communauté."
+    },
+    "register": {
+      "title": "Créer un compte",
+      "description": "Rejoignez Bro World pour partager des idées, lancer de nouveaux mondes et rester proche de votre équipe."
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Récupérez l’accès à votre compte Bro World grâce à un lien de réinitialisation sécurisé."
+    },
+    "logout": {
+      "title": "Déconnexion",
+      "description": "Déconnectez-vous de Bro World et protégez votre compte sur les appareils partagés."
+    },
+    "messenger": {
+      "title": "Messagerie",
+      "description": "Discutez avec votre équipe, partagez des nouvelles et gardez vos conversations organisées."
     }
   },
   "admin": {

@@ -1296,6 +1296,30 @@
     "education": {
       "title": "Education",
       "description": "Design collaborative, data-informed learning experiences."
+    },
+    "performance": {
+      "title": "性能",
+      "description": "跟踪预算和审计，让 Bro World 在每个社区都保持高速。"
+    },
+    "login": {
+      "title": "登录",
+      "description": "登录您的 Bro World 帐号，继续与社区协作。"
+    },
+    "register": {
+      "title": "创建帐号",
+      "description": "加入 Bro World，分享创意、打造新世界，并与团队保持紧密联系。"
+    },
+    "forgotPassword": {
+      "title": "重置密码",
+      "description": "通过安全的重置链接，重新获得对 Bro World 帐号的访问权。"
+    },
+    "logout": {
+      "title": "退出登录",
+      "description": "退出 Bro World，并在共享设备上保护您的帐号安全。"
+    },
+    "messenger": {
+      "title": "消息",
+      "description": "与团队交流、分享更新，让对话井然有序。"
     }
   },
   "admin": {

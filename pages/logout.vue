@@ -20,19 +20,23 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAuthSession } from "~/stores/auth-session";
-
-definePageMeta({
-  middleware: "auth",
-  title: "logout",
-  documentDriven: false,
-});
 
 const auth = useAuthSession();
 const router = useRouter();
 const { t } = useI18n();
 const { localePath } = useI18nDocs();
+
+const pageDescription = computed(() => t("seo.logout.description"));
+
+definePageMeta(() => ({
+  middleware: "auth",
+  title: "logout",
+  documentDriven: false,
+  description: pageDescription.value,
+}));
 
 const isProcessing = ref(true);
 const statusMessage = ref(t("auth.signOut"));
