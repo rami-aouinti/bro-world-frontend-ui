@@ -17,14 +17,25 @@ export default defineNuxtPlugin(() => {
     return;
   }
 
+  let hasStartedLoad = false;
   let hasScheduledLoad = false;
 
-  const loadClarity = () => {
-    if (hasScheduledLoad) {
+  const connection = globalObject.navigator?.connection ?? null;
+  const isSaveDataEnabled = Boolean(connection?.saveData);
+  const isVerySlowConnection = typeof connection?.effectiveType === "string"
+    ? /(^|\b)(slow-)?2g($|\b)/i.test(connection.effectiveType)
+    : false;
+
+  if (isSaveDataEnabled) {
+    return;
+  }
+
+  function loadClarity() {
+    if (hasStartedLoad) {
       return;
     }
 
-    hasScheduledLoad = true;
+    hasStartedLoad = true;
 
     (function (c, l, a, r, i, t, y) {
       c[a] =
@@ -48,14 +59,78 @@ export default defineNuxtPlugin(() => {
 
       (head ?? body ?? l.documentElement).appendChild(t);
     })(globalObject, doc, "clarity", "script", clarityId);
-  };
+  }
 
-  const idleCallback = globalObject.requestIdleCallback;
+  function scheduleWhenIdle() {
+    if (hasScheduledLoad) {
+      return;
+    }
 
-  if (typeof idleCallback === "function") {
-    idleCallback(loadClarity, { timeout: 4000 });
+    hasScheduledLoad = true;
+
+    const idleCallback = globalObject.requestIdleCallback;
+
+    if (typeof idleCallback === "function") {
+      idleCallback(() => loadClarity(), { timeout: 6000 });
+      return;
+    }
+
+    globalObject.setTimeout(() => loadClarity(), 3000);
+  }
+
+  function scheduleAfterLoad() {
+    if (doc.readyState === "complete") {
+      scheduleWhenIdle();
+      return;
+    }
+
+    function onWindowLoad() {
+      globalObject.removeEventListener("load", onWindowLoad);
+      scheduleWhenIdle();
+    }
+
+    globalObject.addEventListener("load", onWindowLoad, { once: true });
+
+    const fallback = globalObject.setTimeout(() => {
+      globalObject.removeEventListener("load", onWindowLoad);
+      scheduleWhenIdle();
+    }, 8000);
+
+    globalObject.addEventListener(
+      "load",
+      () => {
+        globalObject.clearTimeout(fallback);
+      },
+      { once: true },
+    );
+  }
+
+  function scheduleOnVisibility() {
+    if (!doc.hidden) {
+      scheduleAfterLoad();
+      return;
+    }
+
+    function handleVisibility() {
+      doc.removeEventListener("visibilitychange", handleVisibility);
+      scheduleAfterLoad();
+    }
+
+    doc.addEventListener("visibilitychange", handleVisibility, { once: true });
+  }
+
+  function scheduleAfterInteraction() {
+    globalObject.removeEventListener("pointerdown", scheduleAfterInteraction);
+    globalObject.removeEventListener("keydown", scheduleAfterInteraction);
+    scheduleOnVisibility();
+  }
+
+  if (isVerySlowConnection) {
+    globalObject.addEventListener("pointerdown", scheduleAfterInteraction, { once: true });
+    globalObject.addEventListener("keydown", scheduleAfterInteraction, { once: true });
+    globalObject.setTimeout(() => scheduleOnVisibility(), 10000);
     return;
   }
 
-  globalObject.setTimeout(loadClarity, 2000);
+  scheduleOnVisibility();
 });
