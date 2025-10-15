@@ -3,6 +3,7 @@ import type { H3Event } from "h3";
 import type { AuthUser } from "~/types/auth";
 import { shouldUseSecureCookies, withSecureCookieOptions } from "~/lib/cookies";
 import { isHeadersSentError } from "../http/errors";
+import { deleteCachedMercureToken } from "../mercure/cache";
 
 interface SessionCookiesConfig {
   tokenCookieName: string;
@@ -279,6 +280,17 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
 }
 
 export function clearAuthSession(event: H3Event) {
+  const context = event.context as SessionEventContext;
+  const previousSkip = context[SESSION_COOKIE_SYNC_SKIP_FLAG];
+  context[SESSION_COOKIE_SYNC_SKIP_FLAG] = true;
+  const sessionToken = getSessionToken(event);
+
+  if (typeof previousSkip === "undefined") {
+    delete context[SESSION_COOKIE_SYNC_SKIP_FLAG];
+  } else {
+    context[SESSION_COOKIE_SYNC_SKIP_FLAG] = previousSkip;
+  }
+
   const { tokenCookieName, sessionTokenCookieName, userCookieName, tokenPresenceCookieName } =
     resolveCookiesConfig(event);
 
@@ -286,6 +298,10 @@ export function clearAuthSession(event: H3Event) {
   safeDeleteCookie(event, sessionTokenCookieName, { path: "/" });
   safeDeleteCookie(event, userCookieName, { path: "/" });
   safeDeleteCookie(event, tokenPresenceCookieName, { path: "/" });
+
+  if (sessionToken) {
+    void deleteCachedMercureToken(event, sessionToken);
+  }
 }
 
 export function withAuthHeaders(event: H3Event, headers: Record<string, string> = {}) {

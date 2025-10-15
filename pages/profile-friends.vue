@@ -1,8 +1,7 @@
 <template>
   <main aria-labelledby="profile-friends-title">
-    <v-container>
       <header
-        class="mb-10"
+        class="mb-6"
         aria-describedby="profile-friends-subtitle"
       >
         <SidebarCard
@@ -313,7 +312,6 @@
           </v-col>
         </v-row>
       </section>
-    </v-container>
 
     <v-snackbar
       v-model="showActionSnackbar"

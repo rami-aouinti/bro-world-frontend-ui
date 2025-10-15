@@ -1,7 +1,6 @@
 <template>
-  <v-container>
     <header
-      class="mb-8"
+      class="mb-6"
       aria-describedby="profile-edit-subtitle"
     >
       <SidebarCard
@@ -250,7 +249,6 @@
     >
       {{ snackbarMessage }}
     </v-snackbar>
-  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -437,3 +435,18 @@ async function submitForm() {
   }
 }
 </script>
+
+<style scoped>
+.profile-edit-form {
+  --v-field-border-radius: var(--radius, var(--ui-radius));
+}
+
+.profile-edit-form :deep(.v-field) {
+  border-radius: var(--v-field-border-radius);
+}
+
+.profile-edit-form :deep(.v-field__outline),
+.profile-edit-form :deep(.v-field__overlay) {
+  border-radius: inherit;
+}
+</style>

@@ -1,8 +1,7 @@
 <template>
   <main aria-labelledby="profile-photos-title">
-    <v-container>
       <header
-        class="mb-10"
+        class="mb-6"
         aria-describedby="profile-photos-subtitle"
       >
         <SidebarCard
@@ -409,7 +408,6 @@
           </aside>
         </v-col>
       </v-row>
-    </v-container>
 
     <v-snackbar
       v-model="showSnackbar"

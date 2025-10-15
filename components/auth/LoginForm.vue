@@ -266,7 +266,7 @@ async function handleSubmit() {
   gap: 0.75rem;
   width: 100%;
   min-height: 56px;
-  border-radius: 9999px;
+  border-radius: var(--radius, var(--ui-radius-pill));
   padding: 0.85rem 1.25rem;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: saturate(130%) blur(12px);
@@ -330,7 +330,7 @@ async function handleSubmit() {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px;
+  border-radius: var(--radius, var(--ui-radius-pill));
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(236, 72, 153, 0.25);
   color: rgba(71, 85, 105, 0.8);
@@ -389,7 +389,7 @@ async function handleSubmit() {
   align-items: center;
   justify-content: center;
   inline-size: 100%;
-  border-radius: 9999px;
+  border-radius: var(--radius, var(--ui-radius-pill));
   padding: 0.95rem 1.25rem;
   font-weight: 800;
   letter-spacing: 0.05em;
