@@ -1,5 +1,5 @@
 <template>
-  <div class="px-16">
+  <div class="px-4 sm:px-6 md:px-8">
     <v-tooltip
       v-for="icon in props.appIcons"
       :key="icon.label"
