@@ -474,22 +474,21 @@ export const useAuthSession = defineStore("auth-session", () => {
     const fetcher = resolveFetcher();
 
     try {
-      const payload: Record<string, string> = {
-        identifier: trimmedIdentifier,
-        password,
-      };
+      const payload = new URLSearchParams();
+      payload.set("identifier", trimmedIdentifier);
+      payload.set("password", password);
 
       if (trimmedIdentifier.includes("@")) {
-        payload.email = trimmedIdentifier;
+        payload.set("email", trimmedIdentifier);
       } else {
-        payload.username = trimmedIdentifier;
+        payload.set("username", trimmedIdentifier);
       }
 
       const response = await fetcher<AuthLoginEnvelope>("/auth/login", {
         method: "POST",
         body: payload,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         context: {
           suppressErrorNotification: true,
