@@ -344,7 +344,27 @@ const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-worl
 
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 
-useHead(() => {
+useHead(createProfileFriendsHead);
+
+const allFriends = ref<FriendCard[]>([...friendCards]);
+
+const featuredIds = new Set<string>([...featuredFriendIds]);
+
+const heroStats = computed(computeHeroStats);
+
+const filterOptions = computed(resolveFilterOptions);
+
+const activeFilter = ref<string>("all");
+
+const filteredFriends = computed(resolveFilteredFriends);
+
+const suggestions = computed(resolveSuggestions);
+
+const activeNow = computed(resolveActiveNow);
+
+const sidebarContent = computed(resolveSidebarContent);
+
+function createProfileFriendsHead() {
   const title = t("seo.profileFriends.title");
   const description = t("seo.profileFriends.description");
   const canonicalPath = currentRoute.value?.path ?? "/";
@@ -367,13 +387,9 @@ useHead(() => {
     ],
     link: [{ rel: "canonical", href: canonical }],
   };
-});
+}
 
-const allFriends = ref<FriendCard[]>([...friendCards]);
-
-const featuredIds = new Set<string>([...featuredFriendIds]);
-
-const heroStats = computed(() => {
+function computeHeroStats() {
   const total = allFriends.value.length;
   const mutual = allFriends.value.reduce((sum, friend) => sum + friend.mutualCount, 0);
   const online = allFriends.value.filter((friend) => friend.status === "online").length;
@@ -396,19 +412,19 @@ const heroStats = computed(() => {
       value: formatter.format(online),
     },
   ];
-});
+}
 
-const filterOptions = computed(() => [
-  { id: "all", label: t("pages.profileFriends.filters.all") },
-  { id: "design", label: t("pages.profileFriends.filters.design") },
-  { id: "product", label: t("pages.profileFriends.filters.product") },
-  { id: "engineering", label: t("pages.profileFriends.filters.engineering") },
-  { id: "marketing", label: t("pages.profileFriends.filters.marketing") },
-]);
+function resolveFilterOptions() {
+  return [
+    { id: "all", label: t("pages.profileFriends.filters.all") },
+    { id: "design", label: t("pages.profileFriends.filters.design") },
+    { id: "product", label: t("pages.profileFriends.filters.product") },
+    { id: "engineering", label: t("pages.profileFriends.filters.engineering") },
+    { id: "marketing", label: t("pages.profileFriends.filters.marketing") },
+  ];
+}
 
-const activeFilter = ref<string>("all");
-
-const filteredFriends = computed(() => {
+function resolveFilteredFriends() {
   if (activeFilter.value === "all") {
     return allFriends.value.filter((friend) => featuredIds.has(friend.id));
   }
@@ -418,21 +434,23 @@ const filteredFriends = computed(() => {
       featuredIds.has(friend.id) &&
       friend.segments.includes(activeFilter.value as FriendCard["segments"][number]),
   );
-});
+}
 
-const suggestions = computed(() =>
-  allFriends.value.filter((friend) => !featuredIds.has(friend.id)),
-);
+function resolveSuggestions() {
+  return allFriends.value.filter((friend) => !featuredIds.has(friend.id));
+}
 
-const activeNow = computed(() =>
-  allFriends.value
+function resolveActiveNow() {
+  return allFriends.value
     .filter((friend) => friend.status === "online" || friend.status === "focus")
-    .slice(0, 4),
-);
+    .slice(0, 4);
+}
 
-const sidebarConnectHandler = (friend: FriendCard) => triggerAction("connect", friend);
+function sidebarConnectHandler(friend: FriendCard) {
+  triggerAction("connect", friend);
+}
 
-const sidebarContent = computed(() => {
+function resolveSidebarContent() {
   const base = {
     component: ProfileFriendsSidebar,
     props: {
@@ -453,7 +471,7 @@ const sidebarContent = computed(() => {
   }
 
   return base;
-});
+}
 
 registerRightSidebarContent(sidebarContent);
 

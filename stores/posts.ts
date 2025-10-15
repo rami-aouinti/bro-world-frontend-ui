@@ -316,21 +316,21 @@ export const usePostsStore = defineStore("posts", () => {
     let nextItems: Record<string, PostsStorePost> | null = null;
     let nextTimestamps: Record<string, number> | null = null;
 
-    const ensureItems = () => {
-      if (!nextItems) {
-        nextItems = { ...items.value };
+      function ensureItems() {
+        if (!nextItems) {
+          nextItems = { ...items.value };
+        }
+
+        return nextItems;
       }
 
-      return nextItems;
-    };
+      function ensureTimestamps() {
+        if (!nextTimestamps) {
+          nextTimestamps = { ...itemTimestamps.value };
+        }
 
-    const ensureTimestamps = () => {
-      if (!nextTimestamps) {
-        nextTimestamps = { ...itemTimestamps.value };
+        return nextTimestamps;
       }
-
-      return nextTimestamps;
-    };
 
     for (const id of Object.keys(items.value)) {
       if (!activeIds.has(id)) {

@@ -124,12 +124,12 @@
 
 <script setup lang="ts">
 import { onNuxtReady } from "#app";
-import AppBrand from "./AppBar/AppBrand.vue";
-import AppNavButtons from "./AppBar/AppNavButtons.vue";
-import AppIconBar from "./AppBar/AppIconBar.vue";
-import RightControls from "./AppBar/RightControls.vue";
-import UserMenu from "./AppBar/UserMenu.vue";
-import LocaleMenu from "./AppBar/LocaleMenu.vue";
+import AppBrand from "./app-bar/AppBrand.vue";
+import AppNavButtons from "./app-bar/AppNavButtons.vue";
+import AppIconBar from "./app-bar/AppIconBar.vue";
+import RightControls from "./app-bar/RightControls.vue";
+import UserMenu from "./app-bar/UserMenu.vue";
+import LocaleMenu from "./app-bar/LocaleMenu.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";

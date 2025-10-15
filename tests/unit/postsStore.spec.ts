@@ -24,6 +24,16 @@ function createDeferred<T>() {
   return { promise, resolve, reject };
 }
 
+interface PostsListResponse {
+  data: BlogPost[];
+  page: number;
+  limit: number;
+  count: number;
+  cachedAt: number;
+  revalidatedAt: number | null;
+  fromCache: boolean;
+}
+
 describe("posts store", () => {
   beforeEach(() => {
     __resetNuxtStateMocks();
@@ -142,7 +152,7 @@ describe("posts store", () => {
       store = usePostsStore();
     });
 
-    const deferred = createDeferred<any>();
+    const deferred = createDeferred<PostsListResponse>();
     fetchSpy.mockImplementationOnce(() => deferred.promise);
 
     const firstFetch = store.fetchPosts({
