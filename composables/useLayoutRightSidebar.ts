@@ -13,20 +13,24 @@ export interface LayoutRightSidebarContent {
   wrapperClass?: string;
 }
 
+type LayoutRightSidebarState = Omit<LayoutRightSidebarContent, "component"> & {
+  component?: Component;
+};
+
 const STATE_KEY = "layout-right-sidebar-content";
 
 export function useLayoutRightSidebar() {
-  const rightSidebarContent = useState<LayoutRightSidebarContent | null>(STATE_KEY, () => null);
+  const rightSidebarContent = useState<LayoutRightSidebarState | null>(STATE_KEY, () => null);
 
-  function normalizeContent(content: LayoutRightSidebarContent | null) {
+  function normalizeContent(content: LayoutRightSidebarContent | null): LayoutRightSidebarState | null {
     if (!content) {
       return null;
     }
 
     return {
       ...content,
-      component: markRaw(content.component),
-    } satisfies LayoutRightSidebarContent;
+      component: import.meta.server ? undefined : markRaw(content.component),
+    } satisfies LayoutRightSidebarState;
   }
 
   function setRightSidebarContent(content: LayoutRightSidebarContent | null) {
