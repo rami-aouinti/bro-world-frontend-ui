@@ -1,8 +1,9 @@
 import { computed, reactive, shallowRef } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
-import { useRequestFetch, useRuntimeConfig, useState } from "#imports";
+import { useRuntimeConfig, useState } from "#imports";
 import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/mock/blog";
 import { useAuthStore } from "~/composables/useAuthStore";
+import { resolveApiFetcher } from "~/lib/api/fetcher";
 
 interface PostsListResponse {
   data: BlogPost[];
@@ -119,14 +120,6 @@ function stableStringify(value: unknown) {
   } catch {
     return JSON.stringify(value);
   }
-}
-
-function resolveFetcher() {
-  if (import.meta.server) {
-    return useRequestFetch();
-  }
-
-  return $fetch;
 }
 
 export const usePostsStore = defineStore("posts", () => {
@@ -366,7 +359,7 @@ export const usePostsStore = defineStore("posts", () => {
       return existingRequest.promise;
     }
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     if (!options.background) {
       if (loadMore) {
@@ -520,7 +513,7 @@ export const usePostsStore = defineStore("posts", () => {
       return existing;
     }
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       const response = await fetcher<PostResponse>(
@@ -588,7 +581,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     upsertPost(optimisticPost);
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       const response = await fetcher<PostResponse>("/api/v1/posts", {
@@ -673,7 +666,7 @@ export const usePostsStore = defineStore("posts", () => {
       [trimmedId]: true,
     };
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       const response = await fetcher<PostResponse>(
@@ -735,7 +728,7 @@ export const usePostsStore = defineStore("posts", () => {
       [trimmedId]: true,
     };
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       await fetcher(`/api/v1/posts/${encodeURIComponent(trimmedId)}`, {
@@ -782,7 +775,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("You must be logged in to react to posts.");
     }
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       await fetcher(`/api/v1/posts/${encodeURIComponent(trimmedId)}/reactions`, {
@@ -806,7 +799,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Post identifier is required.");
     }
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       const response = await fetcher<BlogCommentWithReplies[] | unknown>(
@@ -844,7 +837,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("You must be logged in to add comments.");
     }
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       await fetcher(`/api/v1/posts/${encodeURIComponent(trimmedId)}/comments`, {
@@ -881,7 +874,7 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("You must be logged in to react to comments.");
     }
 
-    const fetcher = resolveFetcher();
+    const fetcher = resolveApiFetcher();
 
     try {
       await fetcher(
