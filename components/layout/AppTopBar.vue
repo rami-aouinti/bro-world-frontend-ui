@@ -15,7 +15,7 @@
     <span
       class="pointer-events-none absolute -right-16 -top-10 h-48 w-48 rounded-full bg-primary/35 blur-3xl"
     ></span>
-    <AppBrand class="ml-2 mr-6" />
+    <AppBrand class="ml-2 mr-6 px-6" />
     <AppNavButtons
       class="ml-2"
       :is-mobile="props.isMobile"

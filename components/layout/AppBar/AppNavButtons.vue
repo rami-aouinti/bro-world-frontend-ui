@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-3">
+  <div class="flex items-center gap-6">
     <button
       v-show="props.isMobile"
       type="button"
@@ -90,9 +90,9 @@ const navGroupClasses = computed(() => {
   if (!isHydrated.value) {
     return props.isMobile
       ? "flex items-center gap-3 px-4"
-      : "flex items-center gap-8 px-16";
+      : "flex items-center gap-12 px-16";
   }
 
-  return "flex items-center gap-3 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8";
+  return "flex items-center gap-12 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8";
 });
 </script>
