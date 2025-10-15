@@ -29,6 +29,7 @@ import {
   VImg,
   VList,
   VListItem,
+  VListItemSubtitle,
   VListItemTitle,
   VMain,
   VMenu,
