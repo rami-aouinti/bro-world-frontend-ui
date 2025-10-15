@@ -40,6 +40,7 @@ async function requestUsersApi<T>(
   path: string,
   options: UsersFetchOptions = {},
 ): Promise<T> {
+  const config = useRuntimeConfig(event);
   const endpoint = joinURL(getUsersApiBase(event), path);
 
   const serviceToken = config.users?.apiToken?.trim();
