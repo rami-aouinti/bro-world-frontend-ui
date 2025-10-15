@@ -101,7 +101,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent, onMounted } from "vue";
+import { ref, computed, defineAsyncComponent } from "vue";
+import { onNuxtReady } from "#app";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -120,7 +121,7 @@ const auth = useAuthSession();
 const isHydrated = ref(false);
 
 if (import.meta.client) {
-  onMounted(() => {
+  onNuxtReady(() => {
     isHydrated.value = true;
   });
 }
