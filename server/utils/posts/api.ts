@@ -41,6 +41,31 @@ function joinEndpoint(base: string, ...segments: (string | number)[]): string {
   return [sanitizeBaseEndpoint(base), ...cleanedSegments].join("/");
 }
 
+function resolveCommentsPayload(
+  response: unknown,
+): BlogCommentWithReplies[] | undefined {
+  if (Array.isArray(response)) {
+    return response as BlogCommentWithReplies[];
+  }
+
+  if (!response || typeof response !== "object") {
+    return undefined;
+  }
+
+  const container = response as Record<string, unknown>;
+  const possibleKeys = ["data", "comments", "items", "results"];
+
+  for (const key of possibleKeys) {
+    const value = container[key];
+
+    if (Array.isArray(value)) {
+      return value as BlogCommentWithReplies[];
+    }
+  }
+
+  return undefined;
+}
+
 function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
   const publicEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
