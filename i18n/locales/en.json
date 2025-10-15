@@ -89,6 +89,7 @@
         "game": "Gaming",
         "ecommerce": "E-commerce",
         "education": "Education",
+        "performance": "Performance",
         "profile": "Profile",
         "profileOverview": "Overview",
         "profileSettings": "Account settings",
@@ -1125,6 +1126,100 @@
         "buttonAria": "Open the contact page"
       }
     },
+    "performance": {
+      "badge": "Performance",
+      "title": "Performance insights",
+      "subtitle": "How BroWorld keeps the experience fast on every device.",
+      "updated": "Last verified 08 April 2025",
+      "metrics": {
+        "title": "Key budgets",
+        "subtitle": "Benchmarks tracked across CI and scheduled audits.",
+        "jsExecution": {
+          "label": "JavaScript execution",
+          "value": "2.8 s",
+          "description": "Lighthouse Mobile profile (6× CPU, 4× network) on the home feed.",
+          "trend": "Down 0.4 s after async analytics bootstrap."
+        },
+        "bundleSize": {
+          "label": "Initial JavaScript payload",
+          "value": "183 KB",
+          "description": "Compressed vendor + application chunks served on first load.",
+          "trend": "Reduced 28% by trimming legacy dashboard styles."
+        },
+        "lcp": {
+          "label": "Largest Contentful Paint",
+          "value": "1.9 s",
+          "description": "Median Fast 3G run measured via WebPageTest on `/`.",
+          "trend": "Stable across the last 10 deployments."
+        }
+      },
+      "pillars": {
+        "title": "Optimisation pillars",
+        "subtitle": "Tactics we rely on to protect the experience at scale.",
+        "items": {
+          "scripting": {
+            "title": "Main-thread prioritisation",
+            "description": "We keep interactivity budgets focused on first-party code.",
+            "points": [
+              "Defer analytics and session replays until `requestIdleCallback`.",
+              "Queue non-essential modules behind the `visibilitychange` event.",
+              "Use granular Pinia stores to avoid unnecessary reactivity work."
+            ]
+          },
+          "rendering": {
+            "title": "Rendering discipline",
+            "description": "Animations and hydration remain smooth on mid-range devices.",
+            "points": [
+              "Lazy-load rich media cards below the fold with IntersectionObserver.",
+              "Precompute critical gradients and prefer CSS transforms over layout shifts.",
+              "Leverage Suspense boundaries so expensive widgets hydrate in isolation."
+            ]
+          },
+          "media": {
+            "title": "Media & delivery",
+            "description": "Assets are optimised per device to minimise transfer cost.",
+            "points": [
+              "Serve Nuxt Image presets with AVIF/WebP fallbacks.",
+              "Streamline confetti and globe effects through Web Workers or OffscreenCanvas.",
+              "Respect Save-Data to skip autoplaying background experiences."
+            ]
+          }
+        }
+      },
+      "audits": {
+        "title": "Audit checkpoints",
+        "subtitle": "We codify these expectations so regressions surface quickly.",
+        "columns": {
+          "metric": "Metric",
+          "target": "Target",
+          "current": "Current",
+          "status": "Status"
+        },
+        "rows": {
+          "lighthouse": {
+            "label": "Lighthouse mobile score",
+            "context": "CI smoke test on Nuxt preview build",
+            "target": "≥ 90",
+            "current": "92",
+            "status": "Passing"
+          },
+          "mainThread": {
+            "label": "Main-thread work (95th percentile)",
+            "context": "Chrome tracing on synthetic feed interactions",
+            "target": "< 3.5 s",
+            "current": "3.1 s",
+            "status": "Within budget"
+          },
+          "largestContentfulPaint": {
+            "label": "Largest Contentful Paint",
+            "context": "Real-user monitoring, desktop & mobile combined",
+            "target": "< 2.5 s",
+            "current": "2.1 s",
+            "status": "Monitoring"
+          }
+        }
+      }
+    },
     "help": {
       "title": "Help",
       "subtitle": "Find answers and resources",
@@ -1672,6 +1767,10 @@
     "education": {
       "title": "Education",
       "description": "Design collaborative, data-informed learning experiences."
+    },
+    "performance": {
+      "title": "Performance",
+      "description": "Track the budgets and audits keeping BroWorld fast for every community."
     }
   },
   "admin": {

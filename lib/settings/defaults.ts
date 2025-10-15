@@ -181,6 +181,15 @@ export const defaultSiteSettings: SiteSettings = {
       isVisible: true,
       order: 3,
     }),
+    makeMenu({
+      id: "performance",
+      label: "layout.sidebar.items.performance",
+      icon: "mdi-speedometer",
+      translate: true,
+      to: "/performance",
+      isVisible: true,
+      order: 4,
+    }),
     makeMenu(
       {
         id: "admin",
