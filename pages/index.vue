@@ -84,7 +84,7 @@
 
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { computed, defineAsyncComponent, onUnmounted, ref, watchEffect } from "vue";
+import { computed, onUnmounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -92,30 +92,11 @@ import type { ReactionType } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
 import type { Story, StoryReaction } from "~/types/stories";
 
-const NewPost = defineAsyncComponent({
-  loader: () => import("~/components/blog/NewPost.vue"),
-  suspensible: false,
-});
-
-const BlogPostCard = defineAsyncComponent({
-  loader: () => import("~/components/blog/BlogPostCard.vue"),
-  suspensible: false,
-});
-
-const StoriesStrip = defineAsyncComponent({
-  loader: () => import("~/components/stories/StoriesStrip.vue"),
-  suspensible: false,
-});
-
-const StoryViewerModal = defineAsyncComponent({
-  loader: () => import("~/components/stories/StoryViewerModal.vue"),
-  suspensible: false,
-});
-
-const PostCardSkeleton = defineAsyncComponent({
-  loader: () => import("~/components/blog/PostCardSkeleton.vue"),
-  suspensible: false,
-});
+import NewPost from "~/components/blog/NewPost.vue";
+import BlogPostCard from "~/components/blog/BlogPostCard.vue";
+import StoriesStrip from "~/components/stories/StoriesStrip.vue";
+import StoryViewerModal from "~/components/stories/StoryViewerModal.vue";
+import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 
 definePageMeta({
   showRightWidgets: true,
