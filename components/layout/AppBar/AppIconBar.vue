@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 sm:px-6 md:px-8">
+  <div :class="iconBarClasses">
     <v-tooltip
       v-for="icon in props.appIcons"
       :key="icon.label"
@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
@@ -33,4 +34,16 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+
+const isHydrated = ref(false);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isHydrated.value = true;
+  });
+}
+
+const iconBarClasses = computed(() =>
+  isHydrated.value ? "px-4 sm:px-6 md:px-8" : "px-16",
+);
 </script>
