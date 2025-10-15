@@ -18,10 +18,12 @@ import {
   tryUseNuxtApp,
   useAppConfig,
   useI18n,
+  useRuntimeConfig,
   useRequestURL,
   useRoute,
   useState,
 } from "#imports";
+import { useSwitchLocalePath } from "#i18n";
 
 const AppLoadingOverlay = defineAsyncComponent({
   loader: () => import("~/components/layout/AppLoadingOverlay.vue"),
@@ -133,7 +135,7 @@ if (import.meta.client && nuxtApp) {
 
 const pageKey = computed(() => route.fullPath ?? route.name ?? "");
 const { themeClass, radius, themePrimaryHex } = useThemes();
-const { locale } = useI18n();
+const { locale, locales } = useI18n();
 const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
 const requestUrl = nuxtApp && hasInjectionContext() ? useRequestURL() : null;
 
@@ -216,6 +218,82 @@ const structuredData = computed(() =>
 const socialImageUrl = computed(() => `${normalizedBaseUrl.value}/social-img.png`);
 const themeColor = computed(() => themePrimaryHex.value ?? "#03203d");
 
+const switchLocalePath = hasInjectionContext() ? useSwitchLocalePath() : null;
+
+type LocaleEntry = { code?: string };
+
+const availableLocales = computed(() => {
+  const rawLocales = locales as unknown;
+
+  if (Array.isArray(rawLocales)) {
+    return rawLocales as LocaleEntry[];
+  }
+
+  if (rawLocales && typeof rawLocales === "object" && "value" in rawLocales) {
+    const value = (rawLocales as { value?: LocaleEntry[] }).value;
+    if (Array.isArray(value)) {
+      return value;
+    }
+  }
+
+  return [] as LocaleEntry[];
+});
+
+const alternateLocaleLinks = computed(() => {
+  if (!switchLocalePath) {
+    return [] as { rel: "alternate"; hrefLang: string; href: string }[];
+  }
+
+  const base = normalizedBaseUrl.value;
+  const links: { rel: "alternate"; hrefLang: string; href: string }[] = [];
+  const seen = new Set<string>();
+
+  for (const localeEntry of availableLocales.value) {
+    const code = localeEntry.code;
+
+    if (!code || seen.has(code)) {
+      continue;
+    }
+
+    const localizedPath = switchLocalePath(code);
+
+    if (!localizedPath) {
+      continue;
+    }
+
+    let href: string;
+
+    try {
+      href = new URL(localizedPath, base).toString();
+    } catch {
+      href = localizedPath;
+    }
+
+    links.push({ rel: "alternate", hrefLang: code, href });
+    seen.add(code);
+  }
+
+  if (!seen.has("x-default")) {
+    let defaultHref: string;
+
+    try {
+      defaultHref = new URL("/", base).toString();
+    } catch {
+      defaultHref = "/";
+    }
+
+    links.push({ rel: "alternate", hrefLang: "x-default", href: defaultHref });
+  }
+
+  return links;
+});
+
+const headLinks = computed(() => [
+  { rel: "icon", href: "/favicon.ico" },
+  { rel: "canonical", href: canonicalUrl.value },
+  ...alternateLocaleLinks.value,
+]);
+
 useHead({
   title,
   titleTemplate: (value) => (value ? `${value} | Bro World` : "Bro World"),
@@ -223,15 +301,7 @@ useHead({
     dir: computed(() => (locale.value === "ar" ? "rtl" : "ltr")),
     lang: computed(() => locale.value),
   },
-  link: [
-    { rel: "icon", href: "/favicon.ico" },
-    { rel: "canonical", href: canonicalUrl.value },
-    { rel: "alternate", hrefLang: "en", href: `${normalizedBaseUrl.value}/en` },
-    { rel: "alternate", hrefLang: "de", href: `${normalizedBaseUrl.value}/de` },
-    { rel: "alternate", hrefLang: "fr", href: `${normalizedBaseUrl.value}/fr` },
-    { rel: "alternate", hrefLang: "ar", href: `${normalizedBaseUrl.value}/ar` },
-    { rel: "alternate", hrefLang: "x-default", href: `${normalizedBaseUrl.value}/` },
-  ],
+  link: headLinks,
   meta: [
     {
       name: "google-site-verification",
