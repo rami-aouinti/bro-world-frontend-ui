@@ -575,6 +575,7 @@ export default defineNuxtConfig({
       listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
       itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
       settingsTtl: Number.parseInt(process.env.NUXT_REDIS_SETTINGS_TTL ?? "300", 10),
+      mercureTtl: Number.parseInt(process.env.NUXT_REDIS_MERCURE_TTL ?? "600", 10),
     },
     reviews: {
       apiBase: process.env.NUXT_REVIEWS_API_BASE ?? "https://bro-world.org",
