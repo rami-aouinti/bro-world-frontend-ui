@@ -92,7 +92,7 @@
 
       <div
         v-if="loggedIn"
-        class="-mx-[var(--card-x)] flex items-center justify-between gap-1 rounded-2xl border border-border/60 bg-primary/10 px-[var(--card-x)] py-1 mx-0"
+        :class="ratingFormWrapperClasses"
       >
         <v-rating
           v-model="newRating"
@@ -115,6 +115,29 @@
         </v-btn>
       </div>
 
+      <div
+        v-else
+        :class="signInPromptClasses"
+      >
+        <p class="text-sm text-muted-foreground">
+          {{ signInPrompt }}
+        </p>
+        <v-btn
+          color="primary"
+          variant="flat"
+          size="small"
+          class="font-semibold"
+          :to="loginPath"
+          :aria-label="signInAriaLabel"
+        >
+          <Icon
+            name="mdi-login"
+            class="mr-1 text-base"
+          />
+          {{ signInCta }}
+        </v-btn>
+      </div>
+
       <p
         v-if="submissionError"
         class="text-xs text-destructive"
@@ -130,6 +153,7 @@ import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import type { FetchError, FetchOptions } from "ofetch";
 import { useAuthSession } from "~/stores/auth-session";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 interface SidebarRatingCardProps {
   rating?: {
@@ -159,6 +183,7 @@ const auth = useAuthSession();
 const loggedIn = computed(() => auth.isAuthenticated.value);
 const nuxtApp = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
+const localePath = useResolvedLocalePath();
 
 type ApiClient = <T>(path: string, options?: FetchOptions) => Promise<T>;
 const apiClient = nuxtApp.$api as ApiClient | undefined;
@@ -261,6 +286,50 @@ const cardSubtitle = computed(() =>
   ),
 );
 const cardIcon = computed(() => props.rating?.icon || "⭐");
+const loginPath = computed(() => localePath("/login"));
+const signInPrompt = computed(() =>
+  translateWithFallback(
+    "sidebar.rating.signInPrompt",
+    "Sign in to submit your rating.",
+  ),
+);
+const signInCta = computed(() =>
+  translateWithFallback("sidebar.rating.signInCta", "Sign in"),
+);
+const signInAriaLabel = computed(() =>
+  translateWithFallback(
+    "sidebar.rating.signInAriaLabel",
+    "Sign in to submit your rating",
+  ),
+);
+const ratingFormWrapperClasses = [
+  "-mx-[var(--card-x)]",
+  "mx-0",
+  "flex",
+  "items-center",
+  "justify-between",
+  "gap-1",
+  "rounded-2xl",
+  "border",
+  "border-border/60",
+  "bg-primary/10",
+  "px-[var(--card-x)]",
+  "py-1",
+];
+const signInPromptClasses = [
+  "-mx-[var(--card-x)]",
+  "flex",
+  "items-center",
+  "justify-between",
+  "gap-3",
+  "rounded-2xl",
+  "border",
+  "border-dashed",
+  "border-border/60",
+  "bg-muted/40",
+  "px-[var(--card-x)]",
+  "py-2",
+];
 
 const reviewCountLabel = computed(() => {
   const count = totalReviews.value;
