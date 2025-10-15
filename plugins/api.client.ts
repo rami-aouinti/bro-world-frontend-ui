@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { createApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
-import { useRequestHeaders } from "#imports";
+import { useRequestHeaders, useRequestURL } from "#imports";
 import { useAuthSession } from "~/stores/auth-session";
 
 interface ErrorPayload {
@@ -14,7 +14,10 @@ export default defineNuxtPlugin({
   dependsOn: ["pinia-plugin"],
   setup(nuxtApp) {
     const runtimeConfig = useRuntimeConfig();
-    const baseURL = runtimeConfig.public?.apiBase ?? "/api";
+    const rawBaseURL = (runtimeConfig.public?.apiBase as string | undefined) ?? "/api";
+    const baseURL = import.meta.server
+      ? new URL(rawBaseURL, useRequestURL().origin).toString()
+      : rawBaseURL;
     const auth = useAuthSession();
     const forwardedHeaders = import.meta.server ? useRequestHeaders(["cookie", "authorization"]) : null;
     const { $i18n } = nuxtApp as unknown as { $i18n?: { t: (key: string) => string } };

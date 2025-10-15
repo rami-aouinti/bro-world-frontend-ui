@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { AxiosInstance } from "axios";
-import { useNuxtApp, useRequestHeaders, useRuntimeConfig } from "#imports";
+import { useNuxtApp, useRequestHeaders, useRequestURL, useRuntimeConfig } from "#imports";
 import { createApiFetcher, type ApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
 import { useAuthSession } from "~/stores/auth-session";
 
@@ -58,7 +58,10 @@ export function resolveApiFetcher(): ApiFetcher {
   }
 
   const runtimeConfig = useRuntimeConfig();
-  const baseURL = (runtimeConfig.public?.apiBase as string | undefined) ?? "/api";
+  const rawBaseURL = (runtimeConfig.public?.apiBase as string | undefined) ?? "/api";
+  const baseURL = import.meta.server
+    ? new URL(rawBaseURL, useRequestURL().origin).toString()
+    : rawBaseURL;
 
   if (import.meta.server) {
     const appWithFetcher = nuxtApp as typeof nuxtApp & { _apiFetcher?: ApiFetcher };
