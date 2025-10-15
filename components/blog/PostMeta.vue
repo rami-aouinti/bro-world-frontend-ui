@@ -46,7 +46,13 @@
         <div
           aria-hidden="true"
           class="flex flex-wrap items-center gap-3 text-sm text-slate-500"
-        />
+        >
+          <span
+            class="invisible inline-flex h-10 min-w-[112px] items-center justify-center rounded-full px-4 py-2"
+          >
+            &nbsp;
+          </span>
+        </div>
       </template>
     </ClientOnly>
   </header>
