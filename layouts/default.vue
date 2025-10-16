@@ -435,7 +435,19 @@ const vuetifyTheme = useTheme();
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
-const showNavigation = computed(() => currentRoute.value?.meta?.showNavbar !== false);
+
+const initialShowNavigation = useState(
+  "layout-initial-show-navigation",
+  () => currentRoute.value?.meta?.showNavbar !== false,
+);
+
+const showNavigation = computed(() => {
+  if (!isHydrated.value) {
+    return initialShowNavigation.value;
+  }
+
+  return currentRoute.value?.meta?.showNavbar !== false;
+});
 const { rightSidebarContent } = useLayoutRightSidebar();
 const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
 const DEFAULT_APP_BAR_HEIGHT = 72;
