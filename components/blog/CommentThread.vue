@@ -376,7 +376,7 @@ function reactionAriaLabel(node: CommentNode) {
   padding: 2px 4px;
   cursor: pointer;
   color: rgba(var(--v-theme-on-surface), 0.85);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
