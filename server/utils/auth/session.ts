@@ -6,6 +6,7 @@ import { isHeadersSentError } from "../http/errors";
 import { deleteCachedMercureToken } from "../mercure/cache";
 import { deleteCachedSessionUser, writeCachedSessionUser } from "./user-cache";
 import { normalizeSessionUser, sanitizeSessionUser } from "./user";
+import { serializeAuthUserCookie } from "~/lib/auth/user-cookie";
 
 interface SessionCookiesConfig {
   tokenCookieName: string;
@@ -219,6 +220,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   } = resolveCookiesConfig(event);
   const secure = shouldUseSecureCookies(event);
   const sanitizedUser = sanitizeSessionUser(user);
+  const serializedUserCookie = serializeAuthUserCookie(sanitizedUser);
 
   safeSetCookie(
     event,
@@ -249,20 +251,22 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
     ),
   );
 
-  safeSetCookie(
-    event,
-    userCookieName,
-    JSON.stringify(sanitizedUser),
-    withSecureCookieOptions(
-      {
-        httpOnly: false,
-        sameSite: "lax",
-        maxAge,
-        secure,
-      },
+  if (serializedUserCookie) {
+    safeSetCookie(
       event,
-    ),
-  );
+      userCookieName,
+      serializedUserCookie,
+      withSecureCookieOptions(
+        {
+          httpOnly: false,
+          sameSite: "lax",
+          maxAge,
+          secure,
+        },
+        event,
+      ),
+    );
+  }
 
   safeSetCookie(
     event,

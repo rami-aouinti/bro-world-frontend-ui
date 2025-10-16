@@ -60,36 +60,6 @@ export function sanitizeSessionUser(user: AuthUser): AuthUser {
     }
   }
 
-  if ("profile" in source) {
-    const profile = source.profile;
-
-    if (profile && typeof profile === "object") {
-      mutableSanitized.profile = profile;
-    } else if (profile === null) {
-      mutableSanitized.profile = null;
-    }
-  }
-
-  if ("stories" in source) {
-    const stories = source.stories;
-
-    if (Array.isArray(stories)) {
-      mutableSanitized.stories = stories;
-    } else if (stories === null) {
-      mutableSanitized.stories = null;
-    }
-  }
-
-  if ("friends" in source) {
-    const friends = source.friends;
-
-    if (Array.isArray(friends) || (friends && typeof friends === "object")) {
-      mutableSanitized.friends = friends;
-    } else if (friends === null) {
-      mutableSanitized.friends = null;
-    }
-  }
-
   return sanitized;
 }
 
@@ -157,36 +127,6 @@ export function normalizeSessionUser(payload: unknown): AuthUser | null {
     (user as Record<string, unknown>).timezone = record.timezone;
   } else if (record.timezone === null) {
     (user as Record<string, unknown>).timezone = null;
-  }
-
-  if ("profile" in record) {
-    const profile = record.profile;
-
-    if (profile && typeof profile === "object") {
-      (user as Record<string, unknown>).profile = profile;
-    } else if (profile === null) {
-      (user as Record<string, unknown>).profile = null;
-    }
-  }
-
-  if ("stories" in record) {
-    const stories = record.stories;
-
-    if (Array.isArray(stories)) {
-      (user as Record<string, unknown>).stories = stories;
-    } else if (stories === null) {
-      (user as Record<string, unknown>).stories = null;
-    }
-  }
-
-  if ("friends" in record) {
-    const friends = record.friends;
-
-    if (Array.isArray(friends) || (friends && typeof friends === "object")) {
-      (user as Record<string, unknown>).friends = friends;
-    } else if (friends === null) {
-      (user as Record<string, unknown>).friends = null;
-    }
   }
 
   return sanitizeSessionUser(user);
