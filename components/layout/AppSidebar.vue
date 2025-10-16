@@ -170,27 +170,57 @@ const derivedActiveKey = computed(() => {
 
 const resolvedActiveKey = computed(() => props.activeKey ?? derivedActiveKey.value);
 
-const expandedGroups = ref(new Set<string>());
+function isItemActive(item: LayoutSidebarItem, key: string): boolean {
+  if (item.key === key) return true;
+
+  if (item.children) return item.children.some((child) => isItemActive(child, key));
+
+  return false;
+}
+
+function getDefaultExpandedGroups(
+  items: LayoutSidebarItem[],
+  activeKey: string,
+): Set<string> {
+  const result = new Set<string>();
+
+  for (const item of items) {
+    if (!item.children?.length) continue;
+
+    if (isItemActive(item, activeKey)) {
+      result.add(item.key);
+    }
+
+    const childDefaults = getDefaultExpandedGroups(item.children, activeKey);
+    for (const key of childDefaults) {
+      result.add(key);
+    }
+  }
+
+  return result;
+}
+
+const expandedGroups = ref<Set<string>>(
+  getDefaultExpandedGroups(localizedItems.value, resolvedActiveKey.value),
+);
 
 watch(
   () => [resolvedActiveKey.value, localizedItems.value],
   ([activeKey]) => {
     let updated = false;
     const next = new Set(expandedGroups.value);
+    const defaultGroups = getDefaultExpandedGroups(localizedItems.value, activeKey);
+
+    for (const key of defaultGroups) {
+      if (!next.has(key)) {
+        next.add(key);
+        updated = true;
+      }
+    }
+
     const availableGroups = new Set(
       localizedItems.value.filter((item) => item.children?.length).map((item) => item.key),
     );
-
-    for (const item of localizedItems.value) {
-      if (!item.children?.length) continue;
-
-      if (isItemActive(item, activeKey)) {
-        if (!next.has(item.key)) {
-          next.add(item.key);
-          updated = true;
-        }
-      }
-    }
 
     for (const groupKey of Array.from(next)) {
       if (!availableGroups.has(groupKey)) {
@@ -203,14 +233,6 @@ watch(
   },
   { immediate: true, deep: true },
 );
-
-function isItemActive(item: LayoutSidebarItem, key: string): boolean {
-  if (item.key === key) return true;
-
-  if (item.children) return item.children.some((child) => isItemActive(child, key));
-
-  return false;
-}
 
 function toggleGroup(key: string) {
   const next = new Set(expandedGroups.value);
