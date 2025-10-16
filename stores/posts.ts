@@ -1149,24 +1149,24 @@ export const usePostsStore = defineStore("posts", () => {
 
       let lastError: unknown = null;
 
-      for (const target of fetchTargets) {
-        try {
-          const rawResponse = await fetcher<unknown>(target, {
-            method: "GET",
-            query: queryParams,
-          });
-
-          const response = normalizePostsListResponse(rawResponse);
-          setPostsFromResponse(response);
-          return response.data;
-        } catch (requestError) {
-          lastError = requestError;
-        }
-      }
-
-      const finalError =
-        lastError instanceof Error ? lastError : new Error(String(lastError ?? ""));
       try {
+        for (const target of fetchTargets) {
+          try {
+            const rawResponse = await fetcher<unknown>(target, {
+              method: "GET",
+              query: queryParams,
+            });
+
+            const response = normalizePostsListResponse(rawResponse);
+            setPostsFromResponse(response);
+            return response.data;
+          } catch (requestError) {
+            lastError = requestError;
+          }
+        }
+
+        const finalError =
+          lastError instanceof Error ? lastError : new Error(String(lastError ?? ""));
         const rawMessage = finalError.message ?? String(lastError ?? "");
         const message = sanitizeErrorMessage(rawMessage);
 
