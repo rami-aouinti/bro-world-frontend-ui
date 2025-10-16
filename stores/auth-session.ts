@@ -483,8 +483,11 @@ export const useAuthSession = defineStore("auth-session", () => {
 
     const shouldSyncFromServer =
       presenceCookie.value === "1" &&
-      !sessionTokenState.value &&
-      !sessionTokenCookie.value;
+      (
+        !sessionTokenState.value ||
+        !sessionTokenCookie.value ||
+        (!currentUserState.value && !userCookie.value)
+      );
 
     if (shouldSyncFromServer) {
       serverSession = await synchronizeSessionFromServer();
@@ -494,8 +497,12 @@ export const useAuthSession = defineStore("auth-session", () => {
           sessionTokenState.value = sessionTokenCookie.value;
         }
 
-        if (!currentUserState.value && userCookie.value) {
-          setCurrentUser(userCookie.value as AuthUser);
+        if (!currentUserState.value) {
+          if (serverSession.user) {
+            setCurrentUser(serverSession.user);
+          } else if (userCookie.value) {
+            setCurrentUser(userCookie.value as AuthUser);
+          }
         }
       } else if (serverSession && !serverSession.authenticated) {
         clearSession();
