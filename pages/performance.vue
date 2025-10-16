@@ -43,7 +43,7 @@ import MetricGrid from "~/components/performance/MetricGrid.vue";
 import OpportunityList from "~/components/performance/OpportunityList.vue";
 import ImprovementTimeline from "~/components/performance/ImprovementTimeline.vue";
 
-const { t, tm, locale, localeProperties } = useI18n();
+const { t, tm, rt, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
@@ -100,7 +100,66 @@ interface MetricConfig {
   status: "good" | "average" | "poor";
 }
 
-const metricsDefinition = computed(() => tm("pages.performance.metrics.items") as Record<string, MetricConfig | undefined> | undefined);
+function renderLocalizedValue(value: unknown, fallback = ""): string {
+  if (value == null) {
+    return fallback;
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+
+  try {
+    const rendered = rt(value as never);
+    if (typeof rendered === "string") {
+      return rendered;
+    }
+
+    if (typeof rendered === "number" || typeof rendered === "boolean") {
+      return String(rendered);
+    }
+  } catch {
+    // Ignore conversion failures and fall back to the provided default.
+  }
+
+  return fallback;
+}
+
+function renderOptionalLocalizedValue(value: unknown): string | undefined {
+  const rendered = renderLocalizedValue(value, "");
+  return rendered !== "" ? rendered : undefined;
+}
+
+function normalizeMetricStatus(
+  value: unknown,
+  fallback: MetricConfig["status"] = "average",
+): MetricConfig["status"] {
+  const normalized = renderLocalizedValue(value, fallback).toLowerCase();
+  if (normalized === "good" || normalized === "average" || normalized === "poor") {
+    return normalized as MetricConfig["status"];
+  }
+
+  return fallback;
+}
+
+function renderStringList(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => renderLocalizedValue(item, ""))
+    .filter((item): item is string => item !== "");
+}
+
+const metricsDefinition = computed(
+  () =>
+    tm("pages.performance.metrics.items") as Record<string, Partial<Record<keyof MetricConfig, unknown>> | undefined> | undefined,
+);
 
 const metricCards = computed(() => {
   const icons: Record<string, string> = {
@@ -113,16 +172,20 @@ const metricCards = computed(() => {
 
   const entries = metricsDefinition.value ?? {};
 
-  return Object.entries(entries).map(([key, value]) => ({
-    key,
-    icon: icons[key] ?? "mdi-chart-timeline-variant",
-    label: value?.label ?? key,
-    value: value?.value ?? "--",
-    unit: value?.unit,
-    description: value?.description ?? "",
-    status: (value?.status ?? "average") as MetricConfig["status"],
-    trend: value?.trend ?? "",
-  }));
+  return Object.entries(entries).map(([key, value]) => {
+    const details = value ?? {};
+
+    return {
+      key,
+      icon: icons[key] ?? "mdi-chart-timeline-variant",
+      label: renderLocalizedValue(details.label, key),
+      value: renderLocalizedValue(details.value, "--"),
+      unit: renderOptionalLocalizedValue(details.unit),
+      description: renderLocalizedValue(details.description, ""),
+      status: normalizeMetricStatus(details.status),
+      trend: renderLocalizedValue(details.trend, ""),
+    } satisfies MetricConfig & { key: string; icon: string };
+  });
 });
 
 const metricsTitle = computed(() => t("pages.performance.metrics.title"));
@@ -139,7 +202,11 @@ interface OpportunityItem {
 }
 
 const opportunitiesDefinition = computed(
-  () => tm("pages.performance.opportunities.items") as Record<string, Omit<OpportunityItem, "key" | "icon" | "color"> | undefined> | undefined,
+  () =>
+    tm("pages.performance.opportunities.items") as Record<
+      string,
+      Partial<Record<keyof Omit<OpportunityItem, "key" | "icon" | "color">, unknown>> | undefined
+    > | undefined,
 );
 
 const opportunities = computed<OpportunityItem[]>(() => {
@@ -151,15 +218,19 @@ const opportunities = computed<OpportunityItem[]>(() => {
   };
 
   const entries = opportunitiesDefinition.value ?? {};
-  return Object.entries(entries).map(([key, value]) => ({
-    key,
-    title: value?.title ?? key,
-    description: value?.description ?? "",
-    impact: value?.impact ?? "",
-    action: value?.action ?? "",
-    icon: iconMap[key]?.icon ?? "mdi-alert-decagram-outline",
-    color: iconMap[key]?.color ?? "warning",
-  }));
+  return Object.entries(entries).map(([key, value]) => {
+    const details = value ?? {};
+
+    return {
+      key,
+      title: renderLocalizedValue(details.title, key),
+      description: renderLocalizedValue(details.description, ""),
+      impact: renderLocalizedValue(details.impact, ""),
+      action: renderLocalizedValue(details.action, ""),
+      icon: iconMap[key]?.icon ?? "mdi-alert-decagram-outline",
+      color: iconMap[key]?.color ?? "warning",
+    } satisfies OpportunityItem;
+  });
 });
 
 const opportunitiesTitle = computed(() => t("pages.performance.opportunities.title"));
@@ -173,17 +244,27 @@ interface TimelineMilestone {
   actions: string[];
 }
 
-const timelineDefinition = computed(() => tm("pages.performance.timeline.items") as Record<string, Omit<TimelineMilestone, "key"> | undefined> | undefined);
+const timelineDefinition = computed(
+  () =>
+    tm("pages.performance.timeline.items") as Record<
+      string,
+      Partial<Record<keyof Omit<TimelineMilestone, "key">, unknown>> | undefined
+    > | undefined,
+);
 
 const timelineMilestones = computed<TimelineMilestone[]>(() => {
   const entries = timelineDefinition.value ?? {};
-  return Object.entries(entries).map(([key, value]) => ({
-    key,
-    date: value?.date ?? "",
-    title: value?.title ?? key,
-    description: value?.description ?? "",
-    actions: value?.actions ?? [],
-  }));
+  return Object.entries(entries).map(([key, value]) => {
+    const details = value ?? {};
+
+    return {
+      key,
+      date: renderLocalizedValue(details.date, ""),
+      title: renderLocalizedValue(details.title, key),
+      description: renderLocalizedValue(details.description, ""),
+      actions: renderStringList(details.actions),
+    } satisfies TimelineMilestone;
+  });
 });
 
 const timelineTitle = computed(() => t("pages.performance.timeline.title"));
