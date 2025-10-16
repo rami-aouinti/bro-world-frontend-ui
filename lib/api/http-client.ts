@@ -248,17 +248,7 @@ export function createApiFetcher(client?: AxiosInstance): ApiFetcher {
     const resolvedUrl = resolveRequestUrl(baseURL, url);
     let withCredentials = false;
 
-    if (typeof withCredentials !== "boolean") {
-      if (!import.meta.server) {
-        const credentialsTarget = resolvedUrl || baseURL;
 
-        if (credentialsTarget) {
-          withCredentials = shouldSendCredentials(credentialsTarget);
-        }
-      } else if (typeof axiosClient.defaults.withCredentials === "boolean") {
-        withCredentials = axiosClient.defaults.withCredentials;
-      }
-    }
 
     const response = await axiosClient.request<T>({
       ...requestConfig,
