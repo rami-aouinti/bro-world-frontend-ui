@@ -467,6 +467,8 @@ const pageDescription = computed(() => t("admin.blog.subtitle"));
 definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const numberFormatter = computed(() => new Intl.NumberFormat(locale.value));

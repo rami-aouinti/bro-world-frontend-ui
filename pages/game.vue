@@ -163,9 +163,7 @@ import { computed, hasInjectionContext } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
-const nuxtApp = useNuxtApp();
-const i18n = hasInjectionContext() ? useI18n() : (nuxtApp.$i18n as ReturnType<typeof useI18n>);
-const { t, locale, localeProperties } = i18n;
+const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const localePath = useResolvedLocalePath();
 const router = useRouter();
@@ -175,9 +173,11 @@ const pageDescription = computed(() => t("seo.game.description"));
 
 definePageMeta(() => ({
   documentDriven: false,
-  description: pageDescription.value,
 }));
 
+useSeoMeta(() => ({
+  description: pageDescription.value,
+}));
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {

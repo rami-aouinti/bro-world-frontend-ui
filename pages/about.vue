@@ -308,9 +308,10 @@ const pageDescription = computed(() => t("seo.about.description"));
 
 definePageMeta(() => ({
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const siteSettings = useSiteSettingsState();
 
 const aboutContent = computed(

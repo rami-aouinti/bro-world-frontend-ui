@@ -61,6 +61,8 @@ definePageMeta(() => ({
   layout: "auth",
   breadcrumb: "disabled",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const isRedirecting = ref(false);

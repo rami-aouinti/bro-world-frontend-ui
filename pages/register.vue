@@ -63,9 +63,10 @@ definePageMeta(() => ({
   layout: "auth",
   breadcrumb: "disabled",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 function handleSocialRedirect(provider: SocialProvider) {
   const target = resolveSocialRedirect(provider);
 

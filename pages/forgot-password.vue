@@ -44,6 +44,8 @@ definePageMeta(() => ({
   title: "forgot-password",
   layout: "auth",
   breadcrumb: "disabled",
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 </script>

@@ -168,6 +168,8 @@ const pageDescription = computed(() => t("seo.ecommerce.description"));
 
 definePageMeta(() => ({
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const runtimeConfig = useRuntimeConfig();

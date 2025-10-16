@@ -237,9 +237,10 @@ const pageDescription = computed(() => t("seo.help.description"));
 
 definePageMeta(() => ({
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const helpContent = computed(
   () => siteSettings.value?.pages.help ?? getDefaultSiteSettings().pages.help,
 );

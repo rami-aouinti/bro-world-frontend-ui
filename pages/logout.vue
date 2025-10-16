@@ -35,9 +35,10 @@ definePageMeta(() => ({
   middleware: "auth",
   title: "logout",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const isProcessing = ref(true);
 const statusMessage = ref(t("auth.signOut"));
 
