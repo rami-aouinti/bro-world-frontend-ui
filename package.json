@@ -123,6 +123,15 @@
   "pnpm": {
     "overrides": {
       "source-map": "npm:source-map-js@1.2.1"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@tailwindcss/oxide",
+      "@vercel/speed-insights",
+      "esbuild",
+      "sharp",
+      "unrs-resolver",
+      "vue-demi"
+    ]
   }
 }
