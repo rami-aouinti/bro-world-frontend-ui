@@ -30,6 +30,245 @@ interface PostsStorePost extends BlogPost {
   __optimistic?: boolean;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function toFiniteNumber(value: unknown): number | undefined {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number.parseFloat(value);
+
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return undefined;
+}
+
+function toTimestamp(value: unknown): number | undefined {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+
+    if (!trimmed) {
+      return undefined;
+    }
+
+    const numeric = Number(trimmed);
+
+    if (Number.isFinite(numeric)) {
+      return numeric;
+    }
+
+    const parsed = Date.parse(trimmed);
+
+    if (!Number.isNaN(parsed)) {
+      return parsed;
+    }
+  }
+
+  return undefined;
+}
+
+function toBoolean(value: unknown): boolean | undefined {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "number") {
+    if (value === 1) {
+      return true;
+    }
+
+    if (value === 0) {
+      return false;
+    }
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+
+    if (!normalized) {
+      return undefined;
+    }
+
+    if (["true", "1", "yes"].includes(normalized)) {
+      return true;
+    }
+
+    if (["false", "0", "no"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return undefined;
+}
+
+function pickFirstValue<T>(
+  sources: Array<Record<string, unknown> | undefined>,
+  keys: string[],
+  resolver: (value: unknown) => T | undefined,
+): T | undefined {
+  for (const source of sources) {
+    if (!source) {
+      continue;
+    }
+
+    for (const key of keys) {
+      if (!(key in source)) {
+        continue;
+      }
+
+      const resolved = resolver(source[key]);
+
+      if (typeof resolved !== "undefined") {
+        return resolved;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+function tryResolvePosts(
+  value: unknown,
+  visited: Set<unknown> = new Set(),
+): { posts: BlogPost[]; source: Record<string, unknown> | undefined } | null {
+  if (visited.has(value)) {
+    return null;
+  }
+
+  visited.add(value);
+
+  if (Array.isArray(value)) {
+    return { posts: value as BlogPost[], source: undefined };
+  }
+
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  const candidates = ["data", "items", "results", "posts", "content"] as const;
+
+  for (const key of candidates) {
+    const candidate = value[key];
+
+    if (Array.isArray(candidate)) {
+      return { posts: candidate as BlogPost[], source: value };
+    }
+  }
+
+  const nested = value.data;
+
+  if (nested && typeof nested === "object" && nested !== value) {
+    const resolved = tryResolvePosts(nested, visited);
+
+    if (resolved) {
+      return { posts: resolved.posts, source: resolved.source ?? (isRecord(nested) ? nested : undefined) };
+    }
+  }
+
+  return null;
+}
+
+function normalizePostsListResponse(raw: unknown): PostsListResponse {
+  const resolution = tryResolvePosts(raw);
+
+  if (!resolution) {
+    throw new Error("Invalid posts response format.");
+  }
+
+  const { posts, source } = resolution;
+  const normalizedPosts = posts.filter((post): post is BlogPost => Boolean(post?.id));
+  const rootSource = isRecord(raw) ? (raw as Record<string, unknown>) : undefined;
+  const metaSources: Array<Record<string, unknown> | undefined> = [
+    rootSource,
+    source,
+  ];
+
+  if (rootSource) {
+    if (isRecord(rootSource.meta)) {
+      metaSources.push(rootSource.meta);
+    }
+
+    if (isRecord(rootSource.pagination)) {
+      metaSources.push(rootSource.pagination);
+    }
+  }
+
+  if (source && source !== rootSource) {
+    if (isRecord(source.meta)) {
+      metaSources.push(source.meta);
+    }
+
+    if (isRecord(source.pagination)) {
+      metaSources.push(source.pagination);
+    }
+  }
+
+  const resolvedPage = pickFirstValue(metaSources, ["page", "currentPage", "current_page"], toFiniteNumber);
+  const resolvedLimit = pickFirstValue(
+    metaSources,
+    ["limit", "perPage", "per_page", "pageSize", "page_size"],
+    toFiniteNumber,
+  );
+  const resolvedCount = pickFirstValue(
+    metaSources,
+    ["count", "total", "totalCount", "total_count", "totalItems", "total_items"],
+    toFiniteNumber,
+  );
+  const resolvedCachedAt = pickFirstValue(
+    metaSources,
+    ["cachedAt", "cached_at", "cached_at_ms", "cached"],
+    toTimestamp,
+  );
+  const resolvedRevalidatedAt = pickFirstValue(
+    metaSources,
+    ["revalidatedAt", "revalidated_at", "validatedAt", "validated_at"],
+    toTimestamp,
+  );
+  const resolvedFromCache = pickFirstValue(
+    metaSources,
+    ["fromCache", "from_cache", "cached", "isCached", "is_cached"],
+    toBoolean,
+  );
+
+  const fallbackCount = normalizedPosts.length;
+  const limit =
+    typeof resolvedLimit === "number" && resolvedLimit > 0
+      ? Math.floor(resolvedLimit)
+      : fallbackCount;
+  const count =
+    typeof resolvedCount === "number" && resolvedCount >= 0
+      ? Math.floor(resolvedCount)
+      : fallbackCount;
+
+  return {
+    data: normalizedPosts,
+    page:
+      typeof resolvedPage === "number" && resolvedPage > 0 ? Math.floor(resolvedPage) : 1,
+    limit,
+    count,
+    cachedAt:
+      typeof resolvedCachedAt === "number" && Number.isFinite(resolvedCachedAt)
+        ? resolvedCachedAt
+        : null,
+    revalidatedAt:
+      typeof resolvedRevalidatedAt === "number" && Number.isFinite(resolvedRevalidatedAt)
+        ? resolvedRevalidatedAt
+        : null,
+    fromCache: Boolean(resolvedFromCache),
+  } satisfies PostsListResponse;
+}
+
 function clonePost(post: PostsStorePost) {
   try {
     return structuredClone(post) as PostsStorePost;
@@ -507,15 +746,12 @@ export const usePostsStore = defineStore("posts", () => {
 
     const requestPromise = (async () => {
       try {
-        const response = await fetcher<PostsListResponse>("/api/v1/posts", {
+        const rawResponse = await fetcher<unknown>("/api/v1/posts", {
           method: "GET",
           query: params,
         });
 
-        if (!response || !Array.isArray(response.data)) {
-          throw new Error("Invalid posts response format.");
-        }
-
+        const response = normalizePostsListResponse(rawResponse);
         setPostsFromResponse(response);
         return response.data;
       } catch (caughtError) {
