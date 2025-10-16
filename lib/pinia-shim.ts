@@ -10,6 +10,12 @@ interface PiniaInstance {
 
 const PINIA_SYMBOL = Symbol("pinia");
 
+let activePinia: PiniaInstance | null = null;
+
+function setActivePinia(pinia: PiniaInstance | null) {
+  activePinia = pinia;
+}
+
 export function createPinia(): PiniaInstance {
   const stores = new Map<string, unknown>();
   const state = reactive<Record<string, unknown>>({});
@@ -23,6 +29,7 @@ export function createPinia(): PiniaInstance {
       pinia._a = app;
       app.provide(PINIA_SYMBOL, pinia);
       app.config.globalProperties.$pinia = pinia;
+      setActivePinia(pinia);
     },
     _a: null,
     _s: stores,
@@ -34,13 +41,16 @@ export function createPinia(): PiniaInstance {
 
 export function defineStore<StoreReturn>(id: string, setup: () => StoreReturn): () => StoreReturn {
   return function useStore() {
-    const pinia = inject<PiniaInstance | undefined>(PINIA_SYMBOL);
+    const injectedPinia = inject<PiniaInstance | undefined>(PINIA_SYMBOL);
+    const pinia = injectedPinia ?? activePinia;
 
     if (!pinia) {
       throw new Error(
         "[pinia-shim] Pinia instance is not available. Ensure the Pinia plugin is registered.",
       );
     }
+
+    setActivePinia(pinia);
 
     if (!pinia._s.has(id)) {
       const scope = effectScope(true);
