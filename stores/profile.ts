@@ -1,5 +1,5 @@
 import { computed, ref, type Ref } from "vue";
-import { useState } from "#imports";
+import { tryUseNuxtApp, useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import type { FriendEntry, FriendStory, ProfileUser } from "~/types/pages/profile";
 import type { Story } from "~/types/stories";
@@ -8,18 +8,22 @@ const DEFAULT_AVATAR = "/images/avatars/avatar-default.svg";
 const CACHE_TTL_MS = 60_000;
 
 function useStoreState<T>(key: string, init: () => T): Ref<T> {
-  try {
-    return useState<T>(key, init);
-  } catch (error) {
-    if (import.meta.dev) {
-      console.warn(
-        `[profile-store] Falling back to local state for "${key}".`,
-        error,
-      );
-    }
+  const nuxtApp = tryUseNuxtApp();
 
-    return ref(init()) as Ref<T>;
+  if (nuxtApp) {
+    try {
+      return useState<T>(key, init);
+    } catch (error) {
+      if (import.meta.dev) {
+        console.warn(
+          `[profile-store] Falling back to local state for "${key}".`,
+          error,
+        );
+      }
+    }
   }
+
+  return ref(init()) as Ref<T>;
 }
 
 type ProfileResponseEnvelope = {
