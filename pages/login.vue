@@ -44,14 +44,10 @@ import { computed, ref, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
-const AuthLoginForm = defineAsyncComponent({
-  loader: () => import("~/components/auth/LoginForm.vue"),
-  suspensible: false,
-});
-const AuthSocial = defineAsyncComponent({
-  loader: () => import("~/components/auth/Social.vue"),
-  suspensible: false,
-});
+const AuthLoginForm = defineAsyncComponent(
+  () => import("~/components/auth/LoginForm.vue"),
+);
+const AuthSocial = defineAsyncComponent(() => import("~/components/auth/Social.vue"));
 
 const { t } = useI18n();
 const pageDescription = computed(() => t("seo.login.description"));
