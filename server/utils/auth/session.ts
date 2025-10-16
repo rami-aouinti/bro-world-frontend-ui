@@ -103,65 +103,93 @@ function safeSetCookie(
   }
 }
 
-export function getSessionToken(event: H3Event): string | null {
-  const authorizationHeader = getHeader(event, "authorization");
-
-  if (authorizationHeader) {
-    const match = authorizationHeader.match(/^[Bb]earer\s+(.+)$/);
-
-    if (match?.[1]) {
-      return match[1].trim() || null;
-    }
+function sanitizeTokenValue(raw: string | null | undefined): string | null {
+  if (!raw) {
+    return null;
   }
 
+  const trimmed = raw.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  const bearerMatch = trimmed.match(/^[Bb]earer\s+(.+)$/);
+
+  if (bearerMatch?.[1]) {
+    const bearerToken = bearerMatch[1].trim();
+
+    return bearerToken || null;
+  }
+
+  return trimmed;
+}
+
+function extractBearerToken(raw: string | null | undefined): string | null {
+  if (!raw) {
+    return null;
+  }
+
+  const match = raw.match(/^[Bb]earer\s+(.+)$/);
+
+  if (!match?.[1]) {
+    return null;
+  }
+
+  const token = match[1].trim();
+
+  return token || null;
+}
+
+export function getSessionToken(event: H3Event): string | null {
   const { tokenCookieName, sessionTokenCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
-  const token = getCookie(event, tokenCookieName);
+  const token = sanitizeTokenValue(getCookie(event, tokenCookieName));
 
   if (token) {
     return token;
   }
 
-  const fallbackToken = getCookie(event, sessionTokenCookieName);
+  const fallbackToken = sanitizeTokenValue(getCookie(event, sessionTokenCookieName));
 
-  if (!fallbackToken) {
-    return null;
+  if (fallbackToken) {
+    const secure = shouldUseSecureCookies(event);
+
+    if (shouldSyncSessionCookies(event)) {
+      safeSetCookie(
+        event,
+        tokenCookieName,
+        fallbackToken,
+        withSecureCookieOptions(
+          {
+            httpOnly: true,
+            sameSite: "lax",
+            maxAge,
+          },
+          event,
+        ),
+      );
+
+      safeSetCookie(
+        event,
+        tokenPresenceCookieName,
+        "1",
+        withSecureCookieOptions(
+          {
+            httpOnly: false,
+            sameSite: "strict",
+            maxAge,
+            secure,
+          },
+          event,
+        ),
+      );
+    }
+
+    return fallbackToken;
   }
 
-  const secure = shouldUseSecureCookies(event);
-
-  if (shouldSyncSessionCookies(event)) {
-    safeSetCookie(
-      event,
-      tokenCookieName,
-      fallbackToken,
-      withSecureCookieOptions(
-        {
-          httpOnly: true,
-          sameSite: "lax",
-          maxAge,
-        },
-        event,
-      ),
-    );
-
-    safeSetCookie(
-      event,
-      tokenPresenceCookieName,
-      "1",
-      withSecureCookieOptions(
-        {
-          httpOnly: false,
-          sameSite: "strict",
-          maxAge,
-          secure,
-        },
-        event,
-      ),
-    );
-  }
-
-  return fallbackToken;
+  return extractBearerToken(getHeader(event, "authorization"));
 }
 
 export function getSessionUser(event: H3Event): AuthUser | null {

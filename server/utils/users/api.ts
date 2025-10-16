@@ -245,12 +245,12 @@ async function requestUsersApi<T>(
   headers.set("accept", "application/json");
 
   if (!headers.has("authorization")) {
-    if (forwardedAuthorization) {
-      headers.set("authorization", forwardedAuthorization);
-    } else if (sessionToken) {
+    if (sessionToken) {
       const value = sessionToken.startsWith("Bearer ") ? sessionToken : `Bearer ${sessionToken}`;
 
       headers.set("authorization", value);
+    } else if (forwardedAuthorization) {
+      headers.set("authorization", forwardedAuthorization);
     } else if (serviceToken) {
       const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
 
@@ -271,12 +271,27 @@ async function requestUsersApi<T>(
           ? ((error as { response: { status: number } }).response.status ?? 502)
           : 502;
 
-    const message =
-      typeof (error as { data?: { message?: string } })?.data?.message === "string"
-        ? (error as { data: { message: string } }).data.message
-        : error instanceof Error
-          ? error.message
-          : "Users API request failed.";
+    const payload = (error as { data?: { message?: unknown; error?: unknown } })?.data ?? {};
+    const rawMessage =
+      typeof payload.message === "string"
+        ? payload.message
+        : typeof payload.error === "string"
+          ? payload.error
+          : undefined;
+    const fallbackMessage =
+      error instanceof Error ? error.message : "Users API request failed.";
+
+    let message = rawMessage || fallbackMessage;
+
+    if (statusCode === 401) {
+      message = "Authentication is required to access this resource.";
+    } else if (statusCode === 403) {
+      message = "You do not have permission to perform this action.";
+    } else if (statusCode === 404) {
+      message = "The requested resource could not be found.";
+    } else if (statusCode >= 500) {
+      message = "The users service is currently unavailable. Please try again later.";
+    }
 
     throw createError({
       statusCode,
