@@ -833,23 +833,28 @@ function setupNavigationReactivity() {
         return;
       }
 
+      if (!isHydrated.value) {
+        return;
+      }
+
       isTopBarReady.value = Boolean(topBarRef.value);
       nextTick(() => {
         isLeftDrawerReady.value = true;
       });
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 
   if (import.meta.client) {
     watch(
       () => topBarRef.value,
       (instance) => {
+        if (!isHydrated.value) return;
         if (instance && showNavigation.value) {
           isTopBarReady.value = true;
         }
       },
-      { immediate: true },
+      { immediate: false },
     );
   }
 
@@ -871,7 +876,7 @@ function setupNavigationReactivity() {
       leftDrawer.value = true;
       rightDrawer.value = canShowRightWidgets.value;
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 
   watch(canShowRightWidgets, (value) => {
@@ -896,7 +901,7 @@ function setupNavigationReactivity() {
       }
       updateActiveSidebar(path, sidebarItems.value);
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 
   watch(
@@ -905,7 +910,7 @@ function setupNavigationReactivity() {
       const path = currentRoute.value?.fullPath ?? "/";
       updateActiveSidebar(path, items);
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 }
 
