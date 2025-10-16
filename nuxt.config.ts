@@ -589,12 +589,6 @@ export default defineNuxtConfig({
       // Compression uniquement en prod (évite du travail inutile en dev)
       ...(isProd ? [compression({ algorithm: "brotliCompress" })] : []),
     ],
-    resolve: {
-      alias: {
-        // La version CJS n'expose pas d'export par défaut en mode dev.
-        dayjs: require.resolve("dayjs/esm/index.js"),
-      },
-    },
     build: {
       // Pas de sourcemaps en prod : -25/35% de JS à transférer
       sourcemap: !isProd,
