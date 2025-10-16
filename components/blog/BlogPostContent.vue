@@ -1,32 +1,20 @@
 <template>
-  <section
-    class="blog-post-content mx-auto w-full max-w-[590px] space-y-3 px-2 py-4"
-    aria-label="Blog post content"
-  >
-    <h2
-      v-if="normalizedTitle"
-      class="text-xl font-semibold leading-tight text-foreground sm:text-2xl"
-    >
-      {{ normalizedTitle }}
+  <section class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-auto">
+    <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
+      {{ props.title }}
     </h2>
     <p
-      v-if="normalizedSummary"
-      class="text-base leading-relaxed text-muted-foreground"
+      v-if="props.summary"
+      class="text-base leading-relaxed text-slate-500"
     >
-      {{ normalizedSummary }}
+      {{ props.summary }}
     </p>
-    <!-- eslint-disable vue/no-v-html -->
-    <div
-      v-if="safeHtml"
-      class="prose prose-neutral dark:prose-invert max-w-none text-base text-foreground/90 [&>p]:leading-relaxed"
-      v-html="safeHtml"
-    />
-    <!-- eslint-enable vue/no-v-html -->
+    <div ref="contentEl"></div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import DOMPurify from "dompurify";
 
 const props = defineProps<{
@@ -35,30 +23,7 @@ const props = defineProps<{
   content?: string;
 }>();
 
-function normalizeText(value?: string | null) {
-  if (typeof value !== "string") {
-    return "";
-  }
-
-  const trimmed = value.trim();
-  return trimmed ? trimmed : "";
-}
-
-function basicSanitize(value: string) {
-  return value
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
-    .replace(/on[a-z]+\s*=\s*"[^"]*"/gi, "")
-    .replace(/on[a-z]+\s*=\s*'[^']*'/gi, "")
-    .replace(/on[a-z]+\s*=\s*[^\s>]+/gi, "")
-    .replace(/javascript:/gi, "");
-}
-
-const normalizedTitle = computed(() => normalizeText(props.title));
-const normalizedSummary = computed(() => normalizeText(props.summary));
-const rawHtml = computed(() => normalizeText(props.content));
-
-const hasBrowserDom = typeof window !== "undefined" && typeof document !== "undefined";
+const rawHtml = computed(() => props.content ?? "");
 const ALLOWED_TAGS = [
   // texte & inline
   "p",
@@ -168,11 +133,9 @@ const ALLOWED_ATTR = [
   "value",
 ];
 
-const domPurifySanitize = (() => {
-  if (!hasBrowserDom) {
-    return null;
-  }
+const contentEl = ref<HTMLElement | null>(null);
 
+const domPurifySanitize = (() => {
   if (typeof DOMPurify?.sanitize === "function") {
     return (value: string) =>
       DOMPurify.sanitize(value, {
@@ -189,19 +152,24 @@ const domPurifySanitize = (() => {
       });
   }
 
-  return null;
+  return (value: string) => value;
 })();
 
-const safeHtml = computed(() => {
-  const value = rawHtml.value;
+const safeHtml = computed(() => domPurifySanitize(rawHtml.value));
 
-  if (!value) {
-    return "";
+function updateContent(value: string) {
+  if (contentEl.value) {
+    contentEl.value.innerHTML = value;
   }
+}
 
-  const sanitized = domPurifySanitize ? domPurifySanitize(value) : basicSanitize(value);
-  return sanitized.trim();
-});
+watch(
+  safeHtml,
+  (value) => {
+    updateContent(value);
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped></style>

@@ -373,11 +373,16 @@ function reactionAriaLabel(node: CommentNode) {
 .meta__btn {
   background: none;
   border: 0;
-  padding: 0;
+  padding: 2px 4px;
   cursor: pointer;
   color: rgba(var(--v-theme-on-surface), 0.85);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  line-height: 1;
 }
 .meta__btn.more {
   letter-spacing: 2px;

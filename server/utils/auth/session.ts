@@ -3,6 +3,7 @@ import type { H3Event } from "h3";
 import type { AuthUser } from "~/types/auth";
 import { shouldUseSecureCookies, withSecureCookieOptions } from "~/lib/cookies";
 import { isHeadersSentError } from "../http/errors";
+import { deleteCachedProfile } from "../cache/profile";
 import { deleteCachedMercureToken } from "../mercure/cache";
 import { deleteCachedSessionUser, writeCachedSessionUser } from "./user-cache";
 import { normalizeSessionUser, sanitizeSessionUser } from "./user";
@@ -308,6 +309,7 @@ export function clearAuthSession(event: H3Event) {
 
   if (sessionToken) {
     void deleteCachedMercureToken(event, sessionToken);
+    void deleteCachedProfile(event, sessionToken);
     void deleteCachedSessionUser(event, sessionToken);
   }
 }

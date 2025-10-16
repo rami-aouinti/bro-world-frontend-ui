@@ -7,6 +7,11 @@ import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
 import { profileEventsSample } from "~/lib/mock/profile";
 import { usersListSample } from "~/lib/mock/users";
+import {
+  deleteCachedProfile,
+  readCachedProfile,
+  writeCachedProfile,
+} from "../cache/profile";
 import type {
   FriendEntry,
   FriendStory,
@@ -59,6 +64,62 @@ type ProfileEventsEnvelope = {
 };
 
 type ProfileEventsSource = ProfileEvent[] | ProfileEventsEnvelope | null | undefined;
+
+const mockFallbackWarnings = new Set<string>();
+
+function extractErrorReason(error: unknown): string | null {
+  if (!error) {
+    return null;
+  }
+
+  if (typeof error === "string") {
+    const trimmed = error.trim();
+
+    return trimmed.length > 0 ? trimmed : null;
+  }
+
+  if (error instanceof Error) {
+    const trimmed = error.message.trim();
+
+    return trimmed.length > 0 ? trimmed : null;
+  }
+
+  if (typeof error === "object") {
+    const messageCandidate =
+      (error as { data?: { message?: unknown } }).data?.message ??
+      (error as { message?: unknown }).message;
+
+    if (typeof messageCandidate === "string") {
+      const trimmed = messageCandidate.trim();
+
+      if (trimmed.length > 0) {
+        return trimmed;
+      }
+    }
+  }
+
+  return null;
+}
+
+function warnMockFallback(key: string, subject: string, error: unknown) {
+  if (mockFallbackWarnings.has(key)) {
+    return;
+  }
+
+  mockFallbackWarnings.add(key);
+
+  const reason = extractErrorReason(error);
+  const details =
+    reason && !reason.endsWith(".") ? `${reason}.` : reason ?? "";
+  const hint =
+    "Sign in to your account or configure the users service API credentials to load live data.";
+
+  const message = details
+    ? `[mock] Falling back to mock ${subject}. ${details} ${hint}`
+    : `[mock] Falling back to mock ${subject}. ${hint}`;
+
+  console.warn(message);
+}
 
 function formatCalendarDateTime(date: Date, useUTC: boolean): string {
   const year = useUTC ? date.getUTCFullYear() : date.getFullYear();
@@ -542,24 +603,51 @@ export async function fetchUsersListFromSource(event: H3Event) {
       throw error;
     }
 
-    console.warn("Falling back to mock users list", error);
+    warnMockFallback("users-list", "users list", error);
 
     return unwrapUsersList(usersListSample);
   }
 }
 
 export async function fetchCurrentProfileFromSource(event: H3Event) {
-  const sessionUser = getSessionUser(event);
+  const sessionToken = requireSessionToken(event, {
+    statusMessage: "Authentication is required to access this resource.",
+    message: "Authentication is required to access this resource.",
+  });
 
-  if (!sessionUser) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Authentication is required to access this resource.",
-      data: { message: "Authentication is required to access this resource." },
-    });
+  const cached = await readCachedProfile(event, sessionToken);
+
+  if (cached) {
+    return cached;
   }
 
-  return unwrapProfile(sessionUser as ProfileSource);
+  try {
+    const payload = await requestUsersApi<ProfileSource>(event, "/profile", { method: "GET" });
+    const profile = unwrapProfile(payload);
+
+    await writeCachedProfile(event, sessionToken, profile);
+
+    return profile;
+  } catch (error) {
+    if (isAuthorizationError(error)) {
+      void deleteCachedProfile(event, sessionToken);
+      throw error;
+    }
+
+    const sessionUser = getSessionUser(event);
+
+    if (sessionUser) {
+      try {
+        const profile = unwrapProfile(sessionUser as ProfileSource);
+        await writeCachedProfile(event, sessionToken, profile);
+        return profile;
+      } catch (fallbackError) {
+        console.error("Failed to normalize session user profile", fallbackError);
+      }
+    }
+
+    throw error;
+  }
 }
 
 export async function fetchProfileEventsFromSource(event: H3Event, query: QueryObject = {}) {
@@ -575,7 +663,7 @@ export async function fetchProfileEventsFromSource(event: H3Event, query: QueryO
       throw error;
     }
 
-    console.warn("Falling back to mock profile events", error);
+    warnMockFallback("profile-events", "profile events", error);
 
     return normalizeProfileEvents(profileEventsSample);
   }
