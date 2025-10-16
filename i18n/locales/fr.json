@@ -111,7 +111,8 @@
         "adminBlog": "Blog",
         "help": "Aide",
         "about": "À propos",
-        "contact": "Contact"
+        "contact": "Contact",
+        "performance": "Performance"
       }
     },
     "widgets": {
