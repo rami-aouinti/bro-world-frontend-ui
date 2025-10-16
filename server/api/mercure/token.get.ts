@@ -1,7 +1,7 @@
 import { createError } from "h3";
 import type { FetchError } from "ofetch";
 import { joinURL } from "ufo";
-import type { MercureTokenEnvelope } from "../../../types/mercure";
+import type { MercureTokenEnvelope } from "~/types/mercure";
 import { getSessionToken, withAuthHeaders } from "../../utils/auth/session";
 import { readCachedMercureToken, writeCachedMercureToken } from "../../utils/mercure/cache";
 
