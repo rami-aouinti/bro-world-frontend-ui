@@ -342,7 +342,6 @@ export const useProfileStore = defineStore("profile", () => {
     const request = fetcher<ProfileResponse>("/v1/profile", {
       method: "GET",
       isPrivate: true,
-      withCredentials: false,
       context: {
         suppressErrorNotification: true,
       },
