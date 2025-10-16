@@ -78,6 +78,14 @@ describe("posts store", () => {
         listTtl: 60,
         itemTtl: 300,
       },
+      public: {
+        apiBase: "/api",
+        postsApiBase: "https://fallback.test/",
+        redis: {
+          listTtl: 60,
+          itemTtl: 300,
+        },
+      },
     }));
     vi.stubGlobal("structuredClone", <T>(value: T) => JSON.parse(JSON.stringify(value)) as T);
   });
@@ -216,6 +224,59 @@ describe("posts store", () => {
     expect(store.cachedAt.value).toBe(Date.parse(cachedAtIso));
   });
 
+  it("falls back to the configured posts API base when the initial request fails", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const posts = [makePost("post-1")];
+    const error = new Error("<html>Not Found</html>");
+
+    fetchSpy.mockImplementationOnce(() => Promise.reject(error));
+    fetchSpy.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: posts,
+        page: 1,
+        limit: 10,
+        count: posts.length,
+      }),
+    );
+
+    const result = await store.fetchPosts();
+
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+    expect(fetchSpy).toHaveBeenNthCalledWith(
+      1,
+      "/api/v1/posts",
+      expect.objectContaining({
+        method: "GET",
+        query: expect.objectContaining({ page: 1 }),
+      }),
+    );
+    expect(fetchSpy).toHaveBeenNthCalledWith(
+      2,
+      "https://fallback.test/api/v1/posts",
+      expect.objectContaining({
+        method: "GET",
+        query: expect.objectContaining({ page: 1 }),
+      }),
+    );
+
+    expect(result.map((post) => post.id)).toEqual(["post-1"]);
+    expect(store.posts.value.map((post) => post.id)).toEqual(["post-1"]);
+    expect(store.error.value).toBeNull();
+  });
+
   it("surfaces API error messages when the response lacks post data", async () => {
     const { usePostsStore } = await import("~/stores/posts");
 
@@ -231,12 +292,10 @@ describe("posts store", () => {
       store = usePostsStore();
     });
 
-    fetchSpy.mockResolvedValueOnce({
-      message: "Unauthenticated.",
-    });
+    fetchSpy.mockImplementation(() => Promise.resolve({ message: "Unauthenticated." }));
 
     await expect(store.fetchPosts()).rejects.toThrow("Unauthenticated.");
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
     expect(store.error.value).toBe("Unauthenticated.");
   });
 
@@ -256,9 +315,10 @@ describe("posts store", () => {
     });
 
     const htmlPayload = "<!DOCTYPE html><html><body>Not found</body></html>";
-    fetchSpy.mockRejectedValueOnce(new Error(htmlPayload));
+    fetchSpy.mockImplementation(() => Promise.reject(new Error(htmlPayload)));
 
     await expect(store.fetchPosts()).rejects.toThrow("Unable to fetch posts.");
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
     expect(store.error.value).toBe("Unable to fetch posts.");
   });
 

@@ -117,6 +117,8 @@ export function useRuntimeConfig() {
   return {
     public: {
       siteUrl: "",
+      apiBase: "/api",
+      postsApiBase: "https://fallback.test/",
       redis: {
         listTtl: 60,
         itemTtl: 300,
