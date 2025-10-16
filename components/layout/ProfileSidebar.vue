@@ -151,11 +151,13 @@
 </template>
 
 <script lang="ts" setup>
+import { useDevicePixelRatio } from "@vueuse/core";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 type IntroItem = { icon: string; title: string; subtitle?: string };
 type Photo = { id?: string | number; src: string; alt?: string };
@@ -197,6 +199,17 @@ defineEmits<{
 const { t } = useI18n();
 const localePath = useResolvedLocalePath();
 const siteSettings = useSiteSettingsState();
+const { pixelRatio } = useDevicePixelRatio({ initialValue: 1 });
+
+const normalizedPixelRatio = computed(() => {
+  const ratio = pixelRatio.value ?? 1;
+
+  if (!Number.isFinite(ratio) || ratio <= 0) {
+    return 1;
+  }
+
+  return Math.min(3, ratio);
+});
 
 const profileSettings = computed(
   () => siteSettings.value?.profile ?? getDefaultSiteSettings().profile,
@@ -208,6 +221,11 @@ const showFriendsSection = computed(() => profileSettings.value.showSocialSectio
 const defaultBio = computed(() => profileSettings.value.defaultBio?.trim() || null);
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
+const friendAvatarDisplaySize = 72;
+
+const friendAvatarPixelSize = computed(() =>
+  Math.max(friendAvatarDisplaySize, Math.round(friendAvatarDisplaySize * normalizedPixelRatio.value)),
+);
 
 const friendsList = computed<Friend[]>(() =>
   Array.isArray(props.friends) ? props.friends.filter(Boolean) : [],
@@ -298,15 +316,13 @@ function resolveProfilePhoto(profile: FriendProfile) {
 function friendAvatar(friend: Friend) {
   const fromProfile = resolveProfilePhoto(friend.profile);
 
-  if (fromProfile) {
-    return fromProfile;
-  }
+  const raw = fromProfile
+    ? fromProfile
+    : typeof friend.avatar === "string" && friend.avatar.trim()
+      ? friend.avatar.trim()
+      : defaultAvatar;
 
-  if (typeof friend.avatar === "string" && friend.avatar.trim()) {
-    return friend.avatar.trim();
-  }
-
-  return defaultAvatar;
+  return optimizeAvatarUrl(raw, friendAvatarPixelSize.value) ?? raw ?? defaultAvatar;
 }
 </script>
 

@@ -226,12 +226,14 @@
 </template>
 
 <script setup lang="ts">
+import { useDevicePixelRatio } from "@vueuse/core";
 import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useAuthSession } from "~/stores/auth-session";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 import type {
   FriendEntry,
   FriendProfile,
@@ -358,7 +360,24 @@ const hasRoles = computed(() => roles.value.length > 0);
 
 const profileDetails = computed(() => user.value?.profile ?? null);
 
-const avatarSrc = computed(() => {
+const avatarDisplaySize = 96;
+const { pixelRatio } = useDevicePixelRatio({ initialValue: 1 });
+
+const normalizedPixelRatio = computed(() => {
+  const ratio = pixelRatio.value ?? 1;
+
+  if (!Number.isFinite(ratio) || ratio <= 0) {
+    return 1;
+  }
+
+  return Math.min(3, ratio);
+});
+
+const avatarPixelSize = computed(() =>
+  Math.max(avatarDisplaySize, Math.round(avatarDisplaySize * normalizedPixelRatio.value)),
+);
+
+const rawAvatarSrc = computed(() => {
   const profilePhoto = asString(profileDetails.value?.photo);
 
   if (profilePhoto) {
@@ -372,6 +391,13 @@ const avatarSrc = computed(() => {
   }
 
   return defaultAvatar;
+});
+
+const avatarSrc = computed(() => {
+  const raw = rawAvatarSrc.value;
+  const optimized = optimizeAvatarUrl(raw, avatarPixelSize.value);
+
+  return optimized ?? raw ?? defaultAvatar;
 });
 
 const avatarAlt = computed(() => {

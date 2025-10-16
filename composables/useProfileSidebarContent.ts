@@ -1,3 +1,4 @@
+import { useDevicePixelRatio } from "@vueuse/core";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -5,8 +6,11 @@ import ProfileSidebar from "~/components/layout/ProfileSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import type { FriendEntry, FriendStory, ProfileUser, SidebarFriend } from "~/types/pages/profile";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 const DEFAULT_AVATAR = "/images/avatars/avatar-default.svg";
+const PROFILE_AVATAR_DISPLAY_SIZE = 96;
+const FRIEND_AVATAR_DISPLAY_SIZE = 72;
 
 type SidebarLifeEvent = { title: string; date?: string; description?: string };
 
@@ -23,8 +27,33 @@ export function useProfileSidebarContent() {
   const auth = useAuthSession();
   const { t } = useI18n();
   const { registerRightSidebarContent } = useLayoutRightSidebar();
+  const { pixelRatio } = useDevicePixelRatio({ initialValue: 1 });
 
   const placeholderValue = computed(() => t("pages.profile.placeholders.missing"));
+
+  const normalizedPixelRatio = computed(() => {
+    const ratio = pixelRatio.value ?? 1;
+
+    if (!Number.isFinite(ratio) || ratio <= 0) {
+      return 1;
+    }
+
+    return Math.min(3, ratio);
+  });
+
+  const profileAvatarPixelSize = computed(() =>
+    Math.max(
+      PROFILE_AVATAR_DISPLAY_SIZE,
+      Math.round(PROFILE_AVATAR_DISPLAY_SIZE * normalizedPixelRatio.value),
+    ),
+  );
+
+  const friendAvatarPixelSize = computed(() =>
+    Math.max(
+      FRIEND_AVATAR_DISPLAY_SIZE,
+      Math.round(FRIEND_AVATAR_DISPLAY_SIZE * normalizedPixelRatio.value),
+    ),
+  );
 
   const user = computed<ProfileUser | null>(() => auth.currentUser.value as ProfileUser | null);
   const profileDetails = computed(() => user.value?.profile ?? null);
@@ -53,7 +82,7 @@ export function useProfileSidebarContent() {
     return placeholderValue.value;
   });
 
-  const avatarSrc = computed(() => {
+  const rawAvatarSrc = computed(() => {
     const profilePhoto = asString(profileDetails.value?.photo);
 
     if (profilePhoto) {
@@ -67,6 +96,13 @@ export function useProfileSidebarContent() {
     }
 
     return DEFAULT_AVATAR;
+  });
+
+  const avatarSrc = computed(() => {
+    const raw = rawAvatarSrc.value;
+    const optimized = optimizeAvatarUrl(raw, profileAvatarPixelSize.value);
+
+    return optimized ?? raw ?? DEFAULT_AVATAR;
   });
 
   const sidebarUser = computed(() => {
@@ -141,7 +177,9 @@ export function useProfileSidebarContent() {
       const profilePhoto = asString(profile?.photo);
       const fallbackPhoto = asString((friend as { photo?: string | null })?.photo);
 
-      const avatar = profilePhoto ?? fallbackPhoto ?? DEFAULT_AVATAR;
+      const rawAvatar = profilePhoto ?? fallbackPhoto ?? DEFAULT_AVATAR;
+      const avatar =
+        optimizeAvatarUrl(rawAvatar, friendAvatarPixelSize.value) ?? rawAvatar ?? DEFAULT_AVATAR;
 
       const display = [firstName, lastName].filter(Boolean).join(" ") || username || placeholder;
 
