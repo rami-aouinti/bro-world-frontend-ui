@@ -3,29 +3,12 @@ import { createSSRApp, h } from "vue";
 
 import { createPinia } from "~/lib/pinia-shim";
 import type { ProfileUser } from "~/types/pages/profile";
-import {
-  __requestFetchSpy,
-  __resetNuxtStateMocks,
-  __resetRequestFetchMock,
-} from "#imports";
-
-const fetchSpy = __requestFetchSpy;
-
-vi.mock("~/lib/api/fetcher", () => ({
-  resolveApiFetcher: () => fetchSpy,
-}));
+import { __resetNuxtStateMocks } from "#imports";
 
 describe("profile store", () => {
   beforeEach(() => {
     __resetNuxtStateMocks();
-    __resetRequestFetchMock();
-    fetchSpy.mockReset();
-    vi.stubGlobal("$fetch", fetchSpy);
-    vi.stubGlobal("useRuntimeConfig", () => ({
-      public: {
-        apiBase: "/api",
-      },
-    }));
+    vi.unstubAllGlobals();
   });
 
   afterEach(() => {
@@ -70,24 +53,17 @@ describe("profile store", () => {
 
     store.setProfile(profile);
 
-    fetchSpy.mockRejectedValueOnce({
-      statusCode: 401,
-      statusMessage: "Authentication is required to access this resource.",
-      data: {
-        message: "Authentication is required to access this resource.",
-      },
-    });
-
     const consoleErrorSpy = vi
       .spyOn(console, "error")
       .mockImplementation(() => undefined);
+
+    store.clearProfile();
 
     const result = await store.fetchProfile();
 
     expect(result).toBeNull();
     expect(store.profile.value).toBeNull();
     expect(store.error.value).toBeNull();
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
     expect(consoleErrorSpy).not.toHaveBeenCalled();
 
     consoleErrorSpy.mockRestore();

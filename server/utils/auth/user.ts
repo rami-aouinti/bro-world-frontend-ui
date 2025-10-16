@@ -27,6 +27,69 @@ export function sanitizeSessionUser(user: AuthUser): AuthUser {
     sanitized.roles = user.roles;
   }
 
+  const mutableSanitized = sanitized as Record<string, unknown>;
+  const source = user as Record<string, unknown>;
+
+  if ("language" in source) {
+    const language = source.language;
+
+    if (typeof language === "string") {
+      mutableSanitized.language = language;
+    } else if (language === null) {
+      mutableSanitized.language = null;
+    }
+  }
+
+  if ("locale" in source) {
+    const locale = source.locale;
+
+    if (typeof locale === "string") {
+      mutableSanitized.locale = locale;
+    } else if (locale === null) {
+      mutableSanitized.locale = null;
+    }
+  }
+
+  if ("timezone" in source) {
+    const timezone = source.timezone;
+
+    if (typeof timezone === "string") {
+      mutableSanitized.timezone = timezone;
+    } else if (timezone === null) {
+      mutableSanitized.timezone = null;
+    }
+  }
+
+  if ("profile" in source) {
+    const profile = source.profile;
+
+    if (profile && typeof profile === "object") {
+      mutableSanitized.profile = profile;
+    } else if (profile === null) {
+      mutableSanitized.profile = null;
+    }
+  }
+
+  if ("stories" in source) {
+    const stories = source.stories;
+
+    if (Array.isArray(stories)) {
+      mutableSanitized.stories = stories;
+    } else if (stories === null) {
+      mutableSanitized.stories = null;
+    }
+  }
+
+  if ("friends" in source) {
+    const friends = source.friends;
+
+    if (Array.isArray(friends) || (friends && typeof friends === "object")) {
+      mutableSanitized.friends = friends;
+    } else if (friends === null) {
+      mutableSanitized.friends = null;
+    }
+  }
+
   return sanitized;
 }
 
@@ -76,6 +139,54 @@ export function normalizeSessionUser(payload: unknown): AuthUser | null {
 
   if (Array.isArray(record.roles)) {
     user.roles = record.roles.map((role) => String(role ?? ""));
+  }
+
+  if (typeof record.language === "string") {
+    (user as Record<string, unknown>).language = record.language;
+  } else if (record.language === null) {
+    (user as Record<string, unknown>).language = null;
+  }
+
+  if (typeof record.locale === "string") {
+    (user as Record<string, unknown>).locale = record.locale;
+  } else if (record.locale === null) {
+    (user as Record<string, unknown>).locale = null;
+  }
+
+  if (typeof record.timezone === "string") {
+    (user as Record<string, unknown>).timezone = record.timezone;
+  } else if (record.timezone === null) {
+    (user as Record<string, unknown>).timezone = null;
+  }
+
+  if ("profile" in record) {
+    const profile = record.profile;
+
+    if (profile && typeof profile === "object") {
+      (user as Record<string, unknown>).profile = profile;
+    } else if (profile === null) {
+      (user as Record<string, unknown>).profile = null;
+    }
+  }
+
+  if ("stories" in record) {
+    const stories = record.stories;
+
+    if (Array.isArray(stories)) {
+      (user as Record<string, unknown>).stories = stories;
+    } else if (stories === null) {
+      (user as Record<string, unknown>).stories = null;
+    }
+  }
+
+  if ("friends" in record) {
+    const friends = record.friends;
+
+    if (Array.isArray(friends) || (friends && typeof friends === "object")) {
+      (user as Record<string, unknown>).friends = friends;
+    } else if (friends === null) {
+      (user as Record<string, unknown>).friends = null;
+    }
   }
 
   return sanitizeSessionUser(user);

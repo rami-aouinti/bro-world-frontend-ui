@@ -2,6 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { H3Event } from "h3";
 
 const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
+const getSessionUserMock = vi.hoisted(() =>
+  vi.fn<[H3Event], Record<string, unknown> | null>(),
+);
 const useRuntimeConfigMock = vi.hoisted(() =>
   vi.fn(() => ({
     auth: {},
@@ -11,6 +14,7 @@ const useRuntimeConfigMock = vi.hoisted(() =>
 
 vi.mock("~/server/utils/auth/session", () => ({
   getSessionToken: getSessionTokenMock,
+  getSessionUser: getSessionUserMock,
 }));
 
 vi.mock("#imports", () => ({
@@ -28,6 +32,7 @@ const originalFetch = globalScope.$fetch;
 
 beforeEach(() => {
   getSessionTokenMock.mockReset();
+  getSessionUserMock.mockReset();
   useRuntimeConfigMock.mockReset();
 });
 
@@ -45,6 +50,7 @@ describe("fetchProfileEventsFromSource", () => {
     globalScope.$fetch = fetchMock;
     useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue(null);
+    getSessionUserMock.mockReturnValue(null);
 
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
     const query = { limit: "5" };
@@ -61,15 +67,12 @@ describe("fetchProfileEventsFromSource", () => {
   });
 
   it("prefers the session token over a forwarded authorization header", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      id: "123",
-      username: "demo",
-      email: "demo@example.com",
-    });
+    const fetchMock = vi.fn().mockResolvedValue([]);
 
     globalScope.$fetch = fetchMock;
     useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue("new-session-token");
+    getSessionUserMock.mockReturnValue(null);
 
     const event = {
       node: {
@@ -81,7 +84,7 @@ describe("fetchProfileEventsFromSource", () => {
       },
     } as unknown as H3Event;
 
-    await fetchCurrentProfileFromSource(event);
+    await fetchProfileEventsFromSource(event);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
@@ -91,15 +94,12 @@ describe("fetchProfileEventsFromSource", () => {
   });
 
   it("falls back to the forwarded authorization header when no session token is available", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      id: "123",
-      username: "demo",
-      email: "demo@example.com",
-    });
+    const fetchMock = vi.fn().mockResolvedValue([]);
 
     globalScope.$fetch = fetchMock;
     useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue(null);
+    getSessionUserMock.mockReturnValue(null);
 
     const event = {
       node: {
@@ -111,36 +111,63 @@ describe("fetchProfileEventsFromSource", () => {
       },
     } as unknown as H3Event;
 
-    await fetchCurrentProfileFromSource(event);
+    await fetchProfileEventsFromSource(event);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
-
     const [, options] = fetchMock.mock.calls[0];
-
     expect(options?.headers?.authorization).toBe("Bearer forwarded-token");
   });
 });
 
 describe("fetchCurrentProfileFromSource", () => {
-  it("throws an authentication error with a descriptive message", async () => {
-    const fetchMock = vi.fn().mockRejectedValue({
-      statusCode: 401,
-      data: {},
-    });
-
-    globalScope.$fetch = fetchMock;
-    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
-    getSessionTokenMock.mockReturnValue(null);
-
+  it("returns the normalized profile from the authenticated session user", async () => {
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+    const sessionUser = {
+      id: "123",
+      username: "demo",
+      email: "demo@example.com",
+      firstName: "Demo",
+      friends: {
+        alice: {
+          user: { id: "alice-id", username: "alice" },
+          stories: [{ id: "story-1" }, null],
+          status: 2,
+        },
+      },
+      stories: [{ id: "own-story" }, null],
+      profile: { id: "profile-1", title: "Admin" },
+    };
+
+    getSessionUserMock.mockReturnValue(sessionUser);
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(result).toMatchObject({
+      id: "123",
+      username: "demo",
+      email: "demo@example.com",
+      firstName: "Demo",
+      profile: { id: "profile-1", title: "Admin" },
+    });
+    expect(result.stories).toEqual([{ id: "own-story" }]);
+    expect(result.friends).toEqual([
+      {
+        user: { id: "alice-id", username: "alice" },
+        stories: [{ id: "story-1" }],
+        status: 2,
+      },
+    ]);
+  });
+
+  it("throws an authentication error when no session user is available", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+
+    getSessionUserMock.mockReturnValue(null);
 
     await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
       statusCode: 401,
       statusMessage: "Authentication is required to access this resource.",
-      message: "Authentication is required to access this resource.",
-      data: {
-        message: "Authentication is required to access this resource.",
-      },
+      data: { message: "Authentication is required to access this resource." },
     });
   });
 });

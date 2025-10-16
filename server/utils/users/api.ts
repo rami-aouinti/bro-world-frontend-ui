@@ -11,7 +11,7 @@ import type {
   ProfileEvent,
   ProfileUser,
 } from "~/types/pages/profile";
-import { getSessionToken } from "../auth/session";
+import { getSessionToken, getSessionUser } from "../auth/session";
 
 export interface UsersApiUser extends AuthUser {
   language?: string | null;
@@ -425,9 +425,17 @@ export async function fetchUsersListFromSource(event: H3Event) {
 }
 
 export async function fetchCurrentProfileFromSource(event: H3Event) {
-  const payload = await requestUsersApi<ProfileSource>(event, "/profile", { method: "GET" });
+  const sessionUser = getSessionUser(event);
 
-  return unwrapProfile(payload);
+  if (!sessionUser) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "Authentication is required to access this resource.",
+      data: { message: "Authentication is required to access this resource." },
+    });
+  }
+
+  return unwrapProfile(sessionUser as ProfileSource);
 }
 
 export async function fetchProfileEventsFromSource(event: H3Event, query: QueryObject = {}) {

@@ -1,7 +1,6 @@
 import { computed, ref, type Ref } from "vue";
 import { useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
-import { resolveApiFetcher } from "~/lib/api/fetcher";
 import type { FriendEntry, FriendStory, ProfileUser } from "~/types/pages/profile";
 import type { Story } from "~/types/stories";
 
@@ -318,7 +317,7 @@ export const useProfileStore = defineStore("profile", () => {
   }
 
   async function fetchProfile(options: FetchProfileOptions = {}) {
-    const { force = false, background = false } = options;
+    const { force = false } = options;
     const now = Date.now();
 
     if (
@@ -334,38 +333,14 @@ export const useProfileStore = defineStore("profile", () => {
       return activeRequest;
     }
 
-    const fetcher = resolveApiFetcher();
-
     pendingState.value = true;
     errorState.value = null;
 
-    const request = fetcher<ProfileResponse>("/v1/profile", {
-      method: "GET",
-      isPrivate: true,
-      context: {
-        suppressErrorNotification: true,
-      },
-    })
-      .then((response) => {
-        const profile = resolveProfileResponse(response);
+    const request = Promise.resolve()
+      .then(() => {
+        const profile = resolveProfileResponse(profileState.value);
 
         if (!profile) {
-          throw new Error("Invalid profile response.");
-        }
-
-        profileState.value = profile;
-        lastFetchedState.value = Date.now();
-        errorState.value = null;
-
-        return profile;
-      })
-      .catch((caughtError) => {
-        const statusCode =
-          typeof (caughtError as { statusCode?: number })?.statusCode === "number"
-            ? (caughtError as { statusCode: number }).statusCode
-            : undefined;
-
-        if (statusCode === 401) {
           profileState.value = null;
           errorState.value = null;
           lastFetchedState.value = null;
@@ -373,19 +348,14 @@ export const useProfileStore = defineStore("profile", () => {
           return profileState.value;
         }
 
-        const message =
-          caughtError instanceof Error
-            ? caughtError.message
-            : String(caughtError ?? "");
-
-        errorState.value = message || "Unable to load profile.";
-
-        if (background) {
-          console.error("Failed to fetch profile", caughtError);
-          return profileState.value;
+        if (profile !== profileState.value) {
+          profileState.value = profile;
         }
 
-        throw caughtError;
+        lastFetchedState.value = Date.now();
+        errorState.value = null;
+
+        return profile;
       })
       .finally(() => {
         pendingState.value = false;
