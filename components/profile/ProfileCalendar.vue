@@ -261,15 +261,28 @@ const colorMap: Record<string, string> = {
 const calendarEvents = computed<CalendarDisplayEvent[]>(() => {
   const events = eventsData.value ?? [];
 
-  return events.map((event) => ({
-    ...event,
-    color: resolveEventColor(event.color),
-    start: event.start,
-    end: event.end ?? event.start,
-    allDay: Boolean(event.allDay),
-    description: event.description ?? undefined,
-    location: event.location ?? undefined,
-  }));
+  return events
+    .map((event) => {
+      const allDay = Boolean(event.allDay);
+      const start = normalizeCalendarTimestamp(event.start, allDay);
+
+      if (!start) {
+        return null;
+      }
+
+      const end = normalizeCalendarTimestamp(event.end ?? event.start, allDay) ?? start;
+
+      return {
+        ...event,
+        color: resolveEventColor(event.color),
+        start,
+        end,
+        allDay,
+        description: event.description ?? undefined,
+        location: event.location ?? undefined,
+      } satisfies CalendarDisplayEvent;
+    })
+    .filter((event): event is CalendarDisplayEvent => Boolean(event));
 });
 
 const upcomingEvents = computed(() => {
@@ -368,6 +381,57 @@ function parseDate(value: string | undefined | null): Date | null {
   }
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function normalizeCalendarTimestamp(value: string | null | undefined, allDay: boolean): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  const match = trimmed.match(
+    /^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?$/,
+  );
+
+  if (match) {
+    const [, rawYear, rawMonth, rawDay, rawHour, rawMinute] = match;
+
+    const year = rawYear.padStart(4, "0");
+    const month = rawMonth.padStart(2, "0");
+    const day = rawDay.padStart(2, "0");
+
+    if (rawHour != null && rawMinute != null && !allDay) {
+      const hour = rawHour.padStart(2, "0");
+      const minute = rawMinute.padStart(2, "0");
+      return `${year}-${month}-${day} ${hour}:${minute}`;
+    }
+
+    return `${year}-${month}-${day}`;
+  }
+
+  const date = new Date(trimmed);
+
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  const year = `${date.getFullYear()}`;
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+
+  if (allDay) {
+    return `${year}-${month}-${day}`;
+  }
+
+  const hours = `${date.getHours()}`.padStart(2, "0");
+  const minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 
 function resolveEventColor(rawColor: string | null | undefined): string {
