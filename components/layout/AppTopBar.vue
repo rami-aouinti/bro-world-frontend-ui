@@ -50,20 +50,7 @@
 
     <template #append>
       <div class="app-top-bar__append">
-        <ClientOnly>
-          <template #fallback>
-            <div
-              class="app-top-bar__append-placeholder"
-              aria-hidden="true"
-            >
-              <span
-                v-for="index in placeholderCount"
-                :key="index"
-                class="app-top-bar__placeholder animate-pulse"
-              />
-              <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
-            </div>
-          </template>
+        <template v-if="isClientReady">
           <RightControls
             :is-mobile="props.isMobile"
             :show-right-toggle="props.showRightToggle"
@@ -116,7 +103,19 @@
               />
             </template>
           </RightControls>
-        </ClientOnly>
+        </template>
+        <div
+          v-else
+          class="app-top-bar__append-placeholder"
+          aria-hidden="true"
+        >
+          <span
+            v-for="index in placeholderCount"
+            :key="index"
+            class="app-top-bar__placeholder animate-pulse"
+          />
+          <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
+        </div>
       </div>
     </template>
   </v-app-bar>
@@ -256,6 +255,13 @@ const notificationsSubtitle = computed(() => t("layout.notificationsMenu.subtitl
 const notificationsEmpty = computed(() => t("layout.notificationsMenu.empty"));
 const notificationsMarkAll = computed(() => t("layout.notificationsMenu.markAll"));
 const placeholderCount = 6;
+const isClientReady = ref(false);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isClientReady.value = true;
+  });
+}
 
 const notificationsButtonLabel = computed(() => {
   const count = notificationCount.value;
