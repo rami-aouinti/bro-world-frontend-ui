@@ -591,7 +591,6 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    "@nuxt/fonts",
     "@nuxt/image",
     "nuxt-gtag",
     "@nuxt/ui",
@@ -1009,6 +1008,11 @@ export default defineNuxtConfig({
           crossorigin: "",
         },
         {
+          rel: "stylesheet",
+          href:
+            "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Space+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap",
+        },
+        {
           rel: "preconnect",
           href: "https://cdn.jsdelivr.net",
         },
@@ -1030,62 +1034,19 @@ export default defineNuxtConfig({
       description: "The complete BroWorld documentation.",
     },
   },
-  fonts: {
-    processCSSVariables: true,
-    defaults: {
-      display: "swap",
-      preload: true,
-      fallbacks: {
-        "sans-serif": [
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Helvetica Neue",
-          "Arial",
-          "sans-serif",
-        ],
-        "system-ui": [
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Helvetica Neue",
-          "Arial",
-        ],
-      },
-    },
-    families: [
-      {
-        name: "Plus Jakarta Sans",
-        provider: "google",
-        global: true,
-        // Réduire les variantes : 400, 600 suffisent souvent
-        weights: [400, 600],
-        fallbacks: ["system-ui", "Segoe UI", "Arial"],
-        display: "swap",
-      },
-      {
-        name: "Space Grotesk",
-        provider: "google",
-        global: true,
-        weights: [400, 600],
-        fallbacks: ["system-ui", "Segoe UI", "Arial"],
-        display: "swap",
-      },
-      {
-        name: "JetBrains Mono",
-        provider: "google",
-        global: true,
-        weights: [400, 600],
-        fallbacks: ["system-ui", "SFMono-Regular", "Menlo", "monospace"],
-        display: "swap",
-      },
-    ],
-  },
   gtag: {
     initMode: "manual",
     loadingStrategy: "defer",
+  },
+  fonts: {
+    families: [],
+    providers: {
+      google: false,
+      googleicons: false,
+      bunny: false,
+      fontshare: false,
+      fontsource: false,
+    },
   },
   compatibilityDate: "2025-06-10",
 });
