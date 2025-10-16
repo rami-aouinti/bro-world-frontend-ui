@@ -32,7 +32,7 @@
       class="app-drawer"
       :style="drawerInlineStyle"
     >
-      <ClientOnly>
+      <template v-if="isHydrated">
         <ParticlesBg
           class="sidebar-default-card__particles"
           :quantity="50"
@@ -40,13 +40,12 @@
           :staticity="12"
           refresh
         />
-        <template #fallback>
-          <span
-            class="sidebar-default-card__particles"
-            aria-hidden="true"
-          />
-        </template>
-      </ClientOnly>
+      </template>
+      <span
+        v-else
+        class="sidebar-default-card__particles"
+        aria-hidden="true"
+      />
       <div class="pane-scroll py-4">
         <slot
           name="left-sidebar"
@@ -81,29 +80,27 @@
       data-test="app-right-drawer"
       :style="drawerInlineStyle"
     >
-      <ClientOnly>
+      <template v-if="isHydrated && canShowRightWidgets">
         <ParticlesBg
-          v-if="canShowRightWidgets"
           class="sidebar-default-card__particles"
           :quantity="50"
           :ease="50"
           :staticity="12"
           refresh
         />
-        <template #fallback>
-          <span
-            class="sidebar-default-card__particles"
-            aria-hidden="true"
-          />
-        </template>
-      </ClientOnly>
+      </template>
+      <span
+        v-else-if="canShowRightWidgets"
+        class="sidebar-default-card__particles"
+        aria-hidden="true"
+      />
       <Suspense
         @resolve="handleRightDrawerResolve"
         @pending="handleRightDrawerPending"
       >
         <template #default>
           <div class="right-drawer-wrapper">
-            <ClientOnly>
+            <template v-if="isHydrated">
               <div
                 v-if="canShowRightWidgets"
                 class="pane-scroll"
@@ -156,26 +153,26 @@
                   </slot>
                 </AppSidebarRight>
               </div>
-              <template #fallback>
-                <div
-                  v-if="canShowRightWidgets"
-                  class="pane-scroll px-3 py-4"
-                >
-                  <div class="flex flex-col gap-6">
-                    <v-skeleton-loader
-                      type="list-item-two-line"
-                      class="rounded-2xl"
-                    />
-                    <v-skeleton-loader
-                      v-for="index in 2"
-                      :key="index"
-                      type="card"
-                      class="rounded-2xl"
-                    />
-                  </div>
+            </template>
+            <template v-else>
+              <div
+                v-if="canShowRightWidgets"
+                class="pane-scroll px-3 py-4"
+              >
+                <div class="flex flex-col gap-6">
+                  <v-skeleton-loader
+                    type="list-item-two-line"
+                    class="rounded-2xl"
+                  />
+                  <v-skeleton-loader
+                    v-for="index in 2"
+                    :key="index"
+                    type="card"
+                    class="rounded-2xl"
+                  />
                 </div>
-              </template>
-            </ClientOnly>
+              </div>
+            </template>
           </div>
         </template>
         <template #fallback>
@@ -204,7 +201,7 @@
 
     <v-main class="app-surface">
       <div class="main-scroll py-4">
-        <ClientOnly>
+        <template v-if="isHydrated">
           <ParticlesBg
             class="sidebar-default-card__particles"
             :quantity="120"
@@ -212,13 +209,12 @@
             :staticity="12"
             refresh
           />
-          <template #fallback>
-            <span
-              class="sidebar-default-card__particles"
-              aria-hidden="true"
-            />
-          </template>
-        </ClientOnly>
+        </template>
+        <span
+          v-else
+          class="sidebar-default-card__particles"
+          aria-hidden="true"
+        />
         <div
           class="main-scroll__viewport"
           :style="mainInlineStyle"
