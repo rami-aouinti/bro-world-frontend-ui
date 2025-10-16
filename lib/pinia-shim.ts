@@ -1,4 +1,4 @@
-import { effectScope, inject, reactive } from "vue";
+import { effectScope, getCurrentInstance, inject, reactive } from "vue";
 import type { App } from "vue";
 
 interface PiniaInstance {
@@ -9,6 +9,11 @@ interface PiniaInstance {
 }
 
 const PINIA_SYMBOL = Symbol("pinia");
+let activePinia: PiniaInstance | null = null;
+
+function setActivePinia(pinia: PiniaInstance | null) {
+  activePinia = pinia;
+}
 
 export function createPinia(): PiniaInstance {
   const stores = new Map<string, unknown>();
@@ -23,18 +28,30 @@ export function createPinia(): PiniaInstance {
       pinia._a = app;
       app.provide(PINIA_SYMBOL, pinia);
       app.config.globalProperties.$pinia = pinia;
+      setActivePinia(pinia);
     },
     _a: null,
     _s: stores,
     state,
   };
 
+  setActivePinia(pinia);
+
   return pinia;
 }
 
 export function defineStore<StoreReturn>(id: string, setup: () => StoreReturn): () => StoreReturn {
   return function useStore() {
-    const pinia = inject<PiniaInstance | undefined>(PINIA_SYMBOL);
+    const instance = getCurrentInstance();
+    let pinia: PiniaInstance | undefined;
+
+    if (instance) {
+      pinia = inject<PiniaInstance | undefined>(PINIA_SYMBOL);
+    }
+
+    if (!pinia && activePinia) {
+      pinia = activePinia;
+    }
 
     if (!pinia) {
       throw new Error(
