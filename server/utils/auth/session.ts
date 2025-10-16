@@ -43,6 +43,29 @@ function shouldSyncSessionCookies(event: H3Event): boolean {
   return isResponseWritable(event);
 }
 
+function resolveSessionCookieCandidates(name: string): string[] {
+  const trimmed = name?.trim();
+
+  if (!trimmed) {
+    return [];
+  }
+
+  const candidates = [trimmed];
+  const suffixes: readonly string[] = ["_token", "-token"];
+
+  for (const suffix of suffixes) {
+    if (trimmed.endsWith(suffix)) {
+      const alternative = trimmed.slice(0, -suffix.length);
+
+      if (alternative && !candidates.includes(alternative)) {
+        candidates.push(alternative);
+      }
+    }
+  }
+
+  return candidates;
+}
+
 function resolveCookiesConfig(event: H3Event): SessionCookiesConfig {
   const runtimeConfig = useRuntimeConfig(event);
   const authConfig = runtimeConfig.auth ?? {};
@@ -152,7 +175,19 @@ export function getSessionToken(event: H3Event): string | null {
     return token;
   }
 
-  const fallbackToken = sanitizeTokenValue(getCookie(event, sessionTokenCookieName));
+  const sessionCookieCandidates = resolveSessionCookieCandidates(sessionTokenCookieName);
+  let fallbackToken: string | null = null;
+  let fallbackSource: string | null = null;
+
+  for (const candidate of sessionCookieCandidates) {
+    const value = sanitizeTokenValue(getCookie(event, candidate));
+
+    if (value) {
+      fallbackToken = value;
+      fallbackSource = candidate;
+      break;
+    }
+  }
 
   if (fallbackToken) {
     const secure = shouldUseSecureCookies(event);
@@ -186,6 +221,23 @@ export function getSessionToken(event: H3Event): string | null {
           event,
         ),
       );
+
+      if (fallbackSource !== sessionTokenCookieName) {
+        safeSetCookie(
+          event,
+          sessionTokenCookieName,
+          fallbackToken,
+          withSecureCookieOptions(
+            {
+              httpOnly: false,
+              sameSite: "strict",
+              maxAge,
+              secure,
+            },
+            event,
+          ),
+        );
+      }
     }
 
     return fallbackToken;
