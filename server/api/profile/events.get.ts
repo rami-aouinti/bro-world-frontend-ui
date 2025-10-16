@@ -5,8 +5,15 @@ import { fetchProfileEventsFromSource } from "../../utils/users/api";
 function resolveStatusCode(error: unknown): number {
   if (error && typeof error === "object") {
     const status = (error as { statusCode?: number }).statusCode;
+    const altStatus = (error as { status?: number }).status;
 
-    return status;
+    if (typeof status === "number") {
+      return status;
+    }
+
+    if (typeof altStatus === "number") {
+      return altStatus;
+    }
 
     const responseStatus = (error as { response?: { status?: number } }).response?.status;
 
