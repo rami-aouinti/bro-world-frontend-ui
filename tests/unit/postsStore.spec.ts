@@ -240,6 +240,28 @@ describe("posts store", () => {
     expect(store.error.value).toBe("Unauthenticated.");
   });
 
+  it("falls back to a generic message when the API responds with HTML", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const htmlPayload = "<!DOCTYPE html><html><body>Not found</body></html>";
+    fetchSpy.mockRejectedValueOnce(new Error(htmlPayload));
+
+    await expect(store.fetchPosts()).rejects.toThrow("Unable to fetch posts.");
+    expect(store.error.value).toBe("Unable to fetch posts.");
+  });
+
   it("restores the post when deletePost fails", async () => {
     const { usePostsStore } = await import("~/stores/posts");
 

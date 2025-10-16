@@ -5,6 +5,22 @@ import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/moc
 import { useAuthStore } from "~/composables/useAuthStore";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 
+function sanitizeErrorMessage(message: string): string {
+  const trimmed = message.trim();
+
+  if (!trimmed) {
+    return "";
+  }
+
+  const lowerCased = trimmed.toLowerCase();
+  const looksLikeHtml =
+    lowerCased.startsWith("<!doctype html") ||
+    lowerCased.startsWith("<html") ||
+    lowerCased.includes("<body");
+
+  return looksLikeHtml ? "" : trimmed;
+}
+
 interface PostsListResponse {
   data: BlogPost[];
   page: number;
@@ -1042,8 +1058,9 @@ export const usePostsStore = defineStore("posts", () => {
         setPostsFromResponse(response);
         return response.data;
       } catch (caughtError) {
-        const message =
+        const rawMessage =
           caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+        const message = sanitizeErrorMessage(rawMessage);
 
         if (fetchState.hasForeground) {
           error.value = message || "Unable to fetch posts.";
