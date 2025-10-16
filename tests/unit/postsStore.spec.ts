@@ -265,7 +265,7 @@ describe("posts store", () => {
     );
     expect(fetchSpy).toHaveBeenNthCalledWith(
       2,
-      "https://fallback.test/api/v1/posts",
+      "https://fallback.test/public/post",
       expect.objectContaining({
         method: "GET",
         query: expect.objectContaining({ page: 1 }),
