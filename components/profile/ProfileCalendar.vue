@@ -156,7 +156,7 @@
                       v-for="event in upcomingEvents"
                       :key="event.id"
                       :active="selectedEvent?.id === event.id"
-                      active-color="primary"
+                      color="primary"
                       rounded="xl"
                       link
                       @click="selectEvent(event)"
