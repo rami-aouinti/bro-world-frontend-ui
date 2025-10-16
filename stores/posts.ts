@@ -156,6 +156,15 @@ function tryResolvePosts(
     return null;
   }
 
+  const recordValues = Object.values(value);
+
+  if (
+    recordValues.length > 0 &&
+    recordValues.every((entry) => isRecord(entry) && typeof entry.id === "string")
+  ) {
+    return { posts: recordValues as BlogPost[], source: value };
+  }
+
   const candidates = [
     "data",
     "items",
