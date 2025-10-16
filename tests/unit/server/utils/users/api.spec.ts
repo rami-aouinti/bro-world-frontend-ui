@@ -161,6 +161,37 @@ describe("fetchProfileEventsFromSource", () => {
     expect(options?.headers?.authorization).toBe("Bearer forwarded-token");
   });
 
+  it("normalizes ISO timestamps returned by the API", async () => {
+    const fetchMock = vi.fn().mockResolvedValue([
+      {
+        id: "iso-event",
+        title: "ISO Event",
+        start: "2025-02-03T15:00:00.000Z",
+        end: "2025-02-03T16:30:00.000Z",
+        location: "HQ",
+      },
+    ]);
+
+    globalScope.$fetch = fetchMock;
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+    getSessionUserMock.mockReturnValue(null);
+
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+
+    const result = await fetchProfileEventsFromSource(event);
+
+    expect(result).toEqual([
+      {
+        id: "iso-event",
+        title: "ISO Event",
+        start: "2025-02-03 15:00",
+        end: "2025-02-03 16:30",
+        location: "HQ",
+      },
+    ]);
+  });
+
   it("returns mock events when the users API request is unauthorized", async () => {
     const fetchMock = vi
       .fn()
