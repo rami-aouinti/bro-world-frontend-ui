@@ -249,6 +249,7 @@ const {
   fetcher<ProfileEvent[]>("https://bro-world.org/api/v1/profile/events", {
     method: "GET",
     isPrivate: true,
+    withCredentials: false,
     context: {
       suppressErrorNotification: true,
     },
