@@ -152,6 +152,7 @@
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { AxiosError } from "axios";
+import type { FetchError } from "ofetch";
 import { useAuthSession } from "~/stores/auth-session";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
@@ -209,6 +210,54 @@ function translateWithFallback(
 
 function createEmptyDistribution(): ReviewDistribution {
   return { "4-5": 0, "3-4": 0, "2-3": 0, "1-2": 0, "0-1": 0 };
+}
+
+function extractErrorMessage(value: unknown): string | null {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+
+    return trimmed.length > 0 ? trimmed : null;
+  }
+
+  return null;
+}
+
+function isFetchError(error: unknown): error is FetchError<{ message?: unknown }> {
+  if (!error || typeof error !== "object") {
+    return false;
+  }
+
+  return "response" in error && "data" in error;
+}
+
+function resolveErrorDetails(error: unknown) {
+  let status: number | null = null;
+  let payloadMessage: string | null = null;
+
+  if (error instanceof AxiosError) {
+    status = error.response?.status ?? null;
+    payloadMessage = extractErrorMessage((error.response?.data as { message?: unknown } | undefined)?.message);
+  } else if (isFetchError(error)) {
+    const fetchError = error as FetchError<{ message?: unknown }>;
+    status = fetchError.response?.status ?? null;
+    payloadMessage = extractErrorMessage(fetchError.data?.message);
+  } else if (error && typeof error === "object") {
+    const rawStatus =
+      (error as { statusCode?: unknown; status?: unknown }).statusCode ??
+      (error as { statusCode?: unknown; status?: unknown }).status;
+    const maybeMessage = (error as { data?: { message?: unknown } }).data?.message;
+
+    if (typeof rawStatus === "number") {
+      status = rawStatus;
+    } else if (typeof rawStatus === "string") {
+      const parsed = Number.parseInt(rawStatus, 10);
+      status = Number.isFinite(parsed) ? parsed : null;
+    }
+
+    payloadMessage = extractErrorMessage(maybeMessage);
+  }
+
+  return { status, payloadMessage };
 }
 
 const maxRating = 5;
@@ -385,11 +434,7 @@ async function submitRating() {
     await refreshStats();
   } catch (error) {
     console.error("Failed to submit rating", error);
-    const fetchError = error as AxiosError<{ message?: unknown }>;
-    const status = fetchError.response?.status ?? null;
-    const payload = fetchError.response?.data?.message;
-    const payloadMessage =
-      typeof payload === "string" && payload.trim().length > 0 ? payload.trim() : null;
+    const { status, payloadMessage } = resolveErrorDetails(error);
 
     const normalizedMessage =
       payloadMessage ??
