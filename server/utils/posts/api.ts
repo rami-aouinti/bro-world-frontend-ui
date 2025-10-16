@@ -66,9 +66,9 @@ function resolveCommentsPayload(response: unknown): BlogCommentWithReplies[] | u
 
 function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
-  const publicEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
+  const publicEndpoint = config.public.blogApiEndpoint || "https://bro-world.org/api/v1/posts";
   const privateEndpoint =
-    config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/v1/platform/post";
+    config.public.blogPrivateApiEndpoint || "https://bro-world.org/api/v1/posts";
 
   return visibility === "private" ? privateEndpoint : publicEndpoint;
 }
@@ -86,19 +86,27 @@ function deriveCommentEndpoint(baseEndpoint: string | undefined): string | undef
     return baseEndpoint.replace(/post\/?$/, "comment");
   }
 
-  return `${baseEndpoint.replace(/\/$/, "")}/comment`;
+  if (/\/posts\/?$/.test(baseEndpoint)) {
+    return baseEndpoint.replace(/posts\/?$/, "comments");
+  }
+
+  return `${baseEndpoint.replace(/\/$/, "")}/comments`;
+}
+
+function resolvePostCommentSegment(baseEndpoint: string): "comment" | "comments" {
+  return /\/posts\/?$/.test(baseEndpoint) ? "comments" : "comment";
 }
 
 function resolveCommentEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
   const publicEndpoint =
     config.public.blogCommentApiEndpoint ||
-    deriveCommentEndpoint(config.public.blogApiEndpoint) ||
-    "https://blog.bro-world.org/public/comment";
+      deriveCommentEndpoint(config.public.blogApiEndpoint) ||
+    "https://bro-world.org/api/v1/comments";
   const privateEndpoint =
     config.public.blogPrivateCommentApiEndpoint ||
-    deriveCommentEndpoint(config.public.blogPrivateApiEndpoint) ||
-    "https://blog.bro-world.org/v1/platform/comment";
+      deriveCommentEndpoint(config.public.blogPrivateApiEndpoint) ||
+    "https://bro-world.org/api/v1/comments";
 
   return visibility === "private" ? privateEndpoint : publicEndpoint;
 }
@@ -326,7 +334,7 @@ export async function addCommentAtSource(
     typeof payload.parentCommentId === "string" ? payload.parentCommentId.trim() : "";
   const endpoint = parentId
     ? joinEndpoint(commentBase, parentId, "comment")
-    : joinEndpoint(postBase, postId, "comment");
+    : joinEndpoint(postBase, postId, resolvePostCommentSegment(postBase));
 
   return $fetch(endpoint, {
     method: "POST",
@@ -402,7 +410,7 @@ export async function fetchPostCommentsFromSource(
     includeAuth: boolean,
   ): Promise<BlogCommentWithReplies[]> {
     const base = resolvePostEndpoint(event, visibility);
-    const endpoint = joinEndpoint(base, postId, "comments");
+    const endpoint = joinEndpoint(base, postId, resolvePostCommentSegment(base));
 
     const response = await $fetch<unknown>(endpoint, {
       method: "GET",

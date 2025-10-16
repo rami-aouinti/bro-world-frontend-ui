@@ -963,20 +963,20 @@ export default defineNuxtConfig({
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
       blogApiEndpoint:
-        process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://blog.bro-world.org/public/post",
+        process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://bro-world.org/api/v1/posts",
       blogCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_COMMENT_API_ENDPOINT ??
-        "https://blog.bro-world.org/public/comment",
+        "https://bro-world.org/api/v1/comments",
       blogPrivateApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_API_ENDPOINT ??
-        "https://blog.bro-world.org/v1/platform/post",
+        "https://bro-world.org/api/v1/posts",
       blogPrivateCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_COMMENT_API_ENDPOINT ??
-        "https://blog.bro-world.org/v1/platform/comment",
+        "https://bro-world.org/api/v1/comments",
       siteUrl: "https://bro-world-space.com",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
-      postsApiBase: process.env.NUXT_PUBLIC_POSTS_API_BASE ?? "https://blog.bro-world.org",
+      postsApiBase: process.env.NUXT_PUBLIC_POSTS_API_BASE ?? "https://bro-world.org",
       reviews: {
         apiBase: process.env.NUXT_PUBLIC_REVIEWS_API_BASE ?? "https://bro-world.org",
       },
@@ -992,7 +992,7 @@ export default defineNuxtConfig({
           process.env.NUXT_MERCURE_HUB_URL ??
           "https://bro-world.org/.well-known/mercure",
       },
-      apiBlogBase: "https://blog.bro-world.org",
+      apiBlogBase: "https://bro-world.org",
       apiJobBase: "https://job.bro-world.org",
       groqApiKey: process.env.GROQ_API_KEY,
       tinyMceApiKey: process.env.TINYMCE_API_KEY || "no-api-key",
