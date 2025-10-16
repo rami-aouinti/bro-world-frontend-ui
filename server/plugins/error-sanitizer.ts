@@ -70,7 +70,7 @@ export default defineNitroPlugin((nitroApp) => {
     sanitizeErrorPayload(error);
   });
 
-  nitroApp.hooks.hook("beforeResponse", (_event, response) => {
+  nitroApp.hooks.hook("render:response", (response) => {
     if (!response || response.body == null) {
       return;
     }
