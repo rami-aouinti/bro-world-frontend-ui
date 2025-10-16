@@ -3,6 +3,7 @@ import type { AxiosInstance } from "axios";
 import { useNuxtApp, useRequestHeaders, useRequestURL, useRuntimeConfig } from "#imports";
 import { createApiFetcher, type ApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
 import { useAuthSession } from "~/stores/auth-session";
+import { shouldSendCredentials } from "~/lib/api/credentials";
 
 type ForwardedHeaders = Partial<Record<"cookie" | "authorization", string>> | null;
 
@@ -74,7 +75,7 @@ export function resolveApiFetcher(): ApiFetcher {
     const forwardedHeaders = useRequestHeaders(["cookie", "authorization"]);
     const client = axios.create({
       baseURL,
-      withCredentials: true,
+      withCredentials: shouldSendCredentials(baseURL),
     });
 
     attachAuthInterceptor(client, auth, forwardedHeaders);
@@ -89,7 +90,7 @@ export function resolveApiFetcher(): ApiFetcher {
     const auth = useAuthSession();
     const client = axios.create({
       baseURL,
-      withCredentials: true,
+      withCredentials: shouldSendCredentials(baseURL),
     });
 
     attachAuthInterceptor(client, auth, null);
