@@ -5,6 +5,7 @@ import type {
   AxiosRequestHeaders,
   AxiosResponse,
 } from "axios";
+import { shouldSendCredentials } from "~/lib/api/credentials";
 
 export interface ApiRequestContext {
   skipAuthHeader?: boolean;
@@ -146,6 +147,58 @@ function normalizeOptions(options?: ApiRequestOptions): AxiosRequestConfig {
   } satisfies AxiosRequestConfig;
 }
 
+const absoluteUrlPattern = /^[a-z][a-z\d+\-.]*:\/\//i;
+
+function resolveRequestUrl(baseURL: string | undefined, requestURL: string): string | undefined {
+  const trimmedRequest = requestURL?.trim();
+  const trimmedBase = baseURL?.trim();
+  const globalLocation = typeof window !== "undefined" ? window.location : globalThis.location;
+
+  if (trimmedRequest) {
+    if (absoluteUrlPattern.test(trimmedRequest)) {
+      return trimmedRequest;
+    }
+
+    if (trimmedRequest.startsWith("//")) {
+      if (globalLocation?.protocol) {
+        return `${globalLocation.protocol}${trimmedRequest}`;
+      }
+
+      if (trimmedBase && absoluteUrlPattern.test(trimmedBase)) {
+        try {
+          const base = new URL(trimmedBase);
+          return `${base.protocol}${trimmedRequest}`;
+        } catch {
+          return undefined;
+        }
+      }
+
+      return undefined;
+    }
+  }
+
+  if (trimmedBase && absoluteUrlPattern.test(trimmedBase)) {
+    try {
+      return new URL(trimmedRequest ?? "", trimmedBase).toString();
+    } catch {
+      return trimmedBase;
+    }
+  }
+
+  if (globalLocation?.origin) {
+    try {
+      const resolvedBase = trimmedBase
+        ? new URL(trimmedBase, globalLocation.origin).toString()
+        : globalLocation.origin;
+      return new URL(trimmedRequest ?? "", resolvedBase).toString();
+    } catch {
+      // Ignore errors and fall through to returning the trimmed values.
+    }
+  }
+
+  return trimmedRequest || trimmedBase;
+}
+
 function createCrudOperations(
   client: ApiFetcher,
   basePath: string,
@@ -190,7 +243,28 @@ export function createApiFetcher(client?: AxiosInstance): ApiFetcher {
 
   const fetcher = (async <T>(url: string, options?: ApiRequestOptions) => {
     const requestConfig = normalizeOptions(options);
-    const response = await axiosClient.request<T>({ ...requestConfig, url });
+    const baseURL =
+      typeof axiosClient.defaults.baseURL === "string" ? axiosClient.defaults.baseURL : undefined;
+    const resolvedUrl = resolveRequestUrl(baseURL, url);
+    let withCredentials = requestConfig.withCredentials;
+
+    if (typeof withCredentials !== "boolean") {
+      if (!import.meta.server) {
+        const credentialsTarget = resolvedUrl || baseURL;
+
+        if (credentialsTarget) {
+          withCredentials = shouldSendCredentials(credentialsTarget);
+        }
+      } else if (typeof axiosClient.defaults.withCredentials === "boolean") {
+        withCredentials = axiosClient.defaults.withCredentials;
+      }
+    }
+
+    const response = await axiosClient.request<T>({
+      ...requestConfig,
+      url,
+      withCredentials,
+    });
     return response.data;
   }) as ApiFetcher;
 
