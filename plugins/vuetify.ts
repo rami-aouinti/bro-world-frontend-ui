@@ -764,6 +764,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       VImg,
       VList,
       VListItem,
+      VListItemSubtitle,
       VListItemTitle,
       VListSubheader,
       VMain,
