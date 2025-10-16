@@ -156,23 +156,37 @@ function tryResolvePosts(
     return null;
   }
 
-  const candidates = ["data", "items", "results", "posts", "content"] as const;
+  const candidates = [
+    "data",
+    "items",
+    "results",
+    "posts",
+    "content",
+    "entries",
+    "list",
+    "rows",
+  ] as const;
 
   for (const key of candidates) {
+    if (!(key in value)) {
+      continue;
+    }
+
     const candidate = value[key];
 
     if (Array.isArray(candidate)) {
       return { posts: candidate as BlogPost[], source: value };
     }
-  }
 
-  const nested = value.data;
+    if (candidate && typeof candidate === "object" && candidate !== value) {
+      const resolved = tryResolvePosts(candidate, visited);
 
-  if (nested && typeof nested === "object" && nested !== value) {
-    const resolved = tryResolvePosts(nested, visited);
+      if (resolved) {
+        const sourceRecord =
+          resolved.source ?? (isRecord(candidate) ? (candidate as Record<string, unknown>) : undefined);
 
-    if (resolved) {
-      return { posts: resolved.posts, source: resolved.source ?? (isRecord(nested) ? nested : undefined) };
+        return { posts: resolved.posts, source: sourceRecord };
+      }
     }
   }
 
