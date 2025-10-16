@@ -251,8 +251,11 @@
         </div>
       </div>
     </v-main>
-    <Analytics />
     <ClientOnly>
+      <component
+        :is="LazyAnalytics"
+        v-if="shouldRenderAnalytics"
+      />
       <component
         :is="LazySpeedInsights"
         v-if="shouldRenderSpeedInsights"
@@ -262,7 +265,6 @@
 </template>
 
 <script setup lang="ts">
-import { Analytics } from "@vercel/analytics/vue";
 import { computed, defineAsyncComponent, defineComponent, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
@@ -307,6 +309,21 @@ const SidebarRatingCard = defineAsyncComponent({
   suspensible: false,
 });
 
+const LazyAnalytics = defineAsyncComponent({
+  loader: async () => {
+    if (import.meta.server) {
+      return defineComponent({
+        name: "VercelAnalyticsPlaceholder",
+        render: () => null,
+      });
+    }
+
+    const module = await import("@vercel/analytics/vue");
+    return module.Analytics;
+  },
+  suspensible: false,
+});
+
 const LazySpeedInsights = defineAsyncComponent({
   loader: async () => {
     if (import.meta.server) {
@@ -322,20 +339,39 @@ const LazySpeedInsights = defineAsyncComponent({
   suspensible: false,
 });
 
+const shouldRenderAnalytics = ref(false);
 const shouldRenderSpeedInsights = ref(false);
 
-if (import.meta.client) {
-  const scheduleIdle = window.requestIdleCallback
-    ? (callback: () => void) =>
-        window.requestIdleCallback((_deadline) => {
-          callback();
-        })
-    : (callback: () => void) => window.setTimeout(callback, 1);
+type IdleScheduler = (callback: () => void, options?: { timeout?: number }) => void;
 
+const scheduleIdleRender: IdleScheduler | null = import.meta.client
+  ? (callback, options) => {
+      const idleWindow = window as typeof window & {
+        requestIdleCallback?: (
+          cb: (deadline: { didTimeout: boolean; timeRemaining: () => number }) => void,
+          opts?: { timeout?: number },
+        ) => number;
+      };
+
+      if (typeof idleWindow.requestIdleCallback === "function") {
+        idleWindow.requestIdleCallback(() => callback(), options);
+        return;
+      }
+
+      const timeout = typeof options?.timeout === "number" ? options.timeout : 1;
+      window.setTimeout(callback, timeout);
+    }
+  : null;
+
+if (import.meta.client) {
   onMounted(() => {
-    scheduleIdle(() => {
+    scheduleIdleRender?.(() => {
+      shouldRenderAnalytics.value = true;
+    }, { timeout: 4500 });
+
+    scheduleIdleRender?.(() => {
       shouldRenderSpeedInsights.value = true;
-    });
+    }, { timeout: 6500 });
   });
 }
 
