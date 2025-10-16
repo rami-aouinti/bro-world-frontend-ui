@@ -11,11 +11,13 @@ import {
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
 import type { AuthLoginEnvelope, AuthUser } from "~/types/auth";
+import type { ProfileUser } from "~/types/pages/profile";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { createApiFetcher, type ApiRequestOptions } from "~/lib/api/http-client";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import axios from "axios";
+import { useProfileStore } from "~/stores/profile";
 
 interface LoginCredentials {
   identifier: string;
@@ -251,6 +253,13 @@ export const useAuthSession = defineStore("auth-session", () => {
 
   function setCurrentUser(user: AuthUser | null) {
     currentUserState.value = user;
+
+    try {
+      const profileStore = useProfileStore();
+      profileStore.setProfile(user as ProfileUser | null);
+    } catch (error) {
+      console.error("Failed to sync profile store", error);
+    }
   }
 
   function setTokenPresence(present: boolean) {
@@ -286,6 +295,13 @@ export const useAuthSession = defineStore("auth-session", () => {
     if (import.meta.client) {
       presenceCookie.value = null;
       userCookie.value = null;
+    }
+
+    try {
+      const profileStore = useProfileStore();
+      profileStore.clearProfile();
+    } catch (error) {
+      console.error("Failed to clear profile store", error);
     }
   }
 
@@ -391,6 +407,32 @@ export const useAuthSession = defineStore("auth-session", () => {
       readyState.value = true;
       await fetchMercureToken();
 
+      const profileStore = useProfileStore();
+
+      if (!currentUserState.value) {
+        try {
+          const profile = await profileStore.fetchProfile({ force: true });
+
+          if (profile) {
+            setCurrentUser(profile);
+          }
+        } catch (error) {
+          console.error("Failed to refresh profile", error);
+        }
+      } else if (!profileStore.profile.value) {
+        profileStore.setProfile(currentUserState.value as ProfileUser);
+        void profileStore
+          .fetchProfile({ background: true })
+          .then((profile) => {
+            if (profile) {
+              setCurrentUser(profile);
+            }
+          })
+          .catch((error) => {
+            console.error("Background profile refresh failed", error);
+          });
+      }
+
       return Boolean(currentUserState.value);
     }
 
@@ -462,6 +504,19 @@ export const useAuthSession = defineStore("auth-session", () => {
       sessionMessageState.value = null;
 
       await fetchMercureToken();
+
+      const profileStore = useProfileStore();
+
+      void profileStore
+        .fetchProfile({ force: true, background: true })
+        .then((profile) => {
+          if (profile) {
+            setCurrentUser(profile);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch profile after login", error);
+        });
 
       return true;
     } catch (error) {

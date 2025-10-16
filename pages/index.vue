@@ -18,8 +18,8 @@
 
     <template v-if="canAccessAuthenticatedContent">
       <NewPost
-        :avatar="user.avatarUrl"
-        :user-name="user.name"
+        :avatar="userAvatar"
+        :user-name="userName"
         @submit="createPost"
         @attach="onAttach"
       />
@@ -106,6 +106,7 @@ import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
+import { useProfileStore } from "~/stores/profile";
 import type { Story, StoryReaction } from "~/types/stories";
 
 import NewPost from "~/components/blog/NewPost.vue";
@@ -116,61 +117,59 @@ import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const auth = useAuthSession();
+const profileStore = useProfileStore();
 
 const isAuthReady = computed(() => auth.isReady.value);
 const canAccessAuthenticatedContent = computed(
   () => isAuthReady.value && auth.isAuthenticated.value,
 );
-const user = {
-  name: "Rami Aouinti",
-  avatarUrl: "/images/avatars/avatar-default.svg",
-};
+function asString(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
 
-const storyBackgrounds = [
-  "/images/placeholders/story-1.svg",
-  "/images/placeholders/story-2.svg",
-  "/images/placeholders/story-3.svg",
-];
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
 
-const storyAvatars = [
-  "/images/placeholders/avatar-1.svg",
-  "/images/placeholders/avatar-2.svg",
-  "/images/placeholders/avatar-3.svg",
-  "/images/placeholders/avatar-4.svg",
-];
+const profileStories = computed(() => profileStore.storyItems.value);
+const localStories = ref<Story[]>([]);
+const stories = computed<Story[]>(() => [...localStories.value, ...profileStories.value]);
 
-const stories = ref<Story[]>([
-  {
-    id: 1,
-    image: storyBackgrounds[0],
-    name: "Asma Hmida",
-    avatar: storyAvatars[0],
-    state: "new",
-    duration: "0:22",
-  },
-  {
-    id: 2,
-    image: storyBackgrounds[1],
-    name: "Ichrak Ben Youcef",
-    avatar: storyAvatars[1],
-    state: "seen",
-  },
-  {
-    id: 3,
-    image: storyBackgrounds[2],
-    name: "Rim Abdelwahed",
-    avatar: storyAvatars[2],
-    state: "new",
-    duration: "1:03",
-  },
-  {
-    id: 4,
-    image: storyBackgrounds[0],
-    name: "Youssef Ben Salem",
-    avatar: storyAvatars[3],
-    state: "seen",
-  },
-]);
+const profileDisplayName = computed(() => {
+  const preferred = asString(profileStore.preferredName.value);
+
+  if (preferred) {
+    return preferred;
+  }
+
+  const currentUser = auth.currentUser.value;
+
+  if (!currentUser) {
+    return null;
+  }
+
+  const first = asString((currentUser as { firstName?: string | null }).firstName);
+  const last = asString((currentUser as { lastName?: string | null }).lastName);
+  const parts = [first, last].filter(Boolean) as string[];
+
+  if (parts.length > 0) {
+    return parts.join(" ");
+  }
+
+  const username = asString((currentUser as { username?: string | null }).username);
+
+  if (username) {
+    return username;
+  }
+
+  const email = asString((currentUser as { email?: string | null }).email);
+
+  return email;
+});
+
+const userName = computed(() => profileDisplayName.value ?? "");
+const userAvatar = computed(() => profileStore.avatarUrl.value || defaultAvatar);
 
 const activeStory = ref<Story | null>(null);
 const isStoryViewerOpen = ref(false);
@@ -179,6 +178,17 @@ watchEffect(() => {
   if (!canAccessAuthenticatedContent.value) {
     isStoryViewerOpen.value = false;
     activeStory.value = null;
+    if (localStories.value.length > 0) {
+      if (import.meta.client) {
+        localStories.value.forEach((story) => {
+          if (typeof story.image === "string" && storyObjectUrls.has(story.image)) {
+            URL.revokeObjectURL(story.image);
+            storyObjectUrls.delete(story.image);
+          }
+        });
+      }
+      localStories.value = [];
+    }
   }
 });
 const lastStoryReaction = ref<{ storyId: Story["id"]; reactionId: StoryReaction["id"] } | null>(
@@ -241,15 +251,15 @@ function onStorySelected(event: Event) {
   const imageUrl = URL.createObjectURL(file);
   storyObjectUrls.add(imageUrl);
 
-  stories.value = [
+  localStories.value = [
     {
       id: Date.now(),
       image: imageUrl,
-      name: user.name,
-      avatar: user.avatarUrl,
+      name: userName.value || undefined,
+      avatar: userAvatar.value,
       state: "new",
     },
-    ...stories.value,
+    ...localStories.value,
   ];
 
   if (input) {
@@ -258,7 +268,9 @@ function onStorySelected(event: Event) {
 }
 
 onUnmounted(() => {
-  storyObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+  if (import.meta.client) {
+    storyObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+  }
   storyObjectUrls.clear();
 });
 const reactionEmojis: Record<ReactionType, string> = {
