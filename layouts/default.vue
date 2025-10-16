@@ -479,9 +479,9 @@ const rightDrawerState = ref(
   showNavigation.value && !initialIsMobile.value && initialShowRightWidgets.value,
 );
 
-const isLeftDrawerReady = ref(import.meta.server || !showNavigation.value);
+const isLeftDrawerReady = ref(!showNavigation.value);
 
-const isTopBarReady = ref(import.meta.server || !showNavigation.value);
+const isTopBarReady = ref(!showNavigation.value);
 const isRefreshing = ref(false);
 
 const appInlineStyle = computed(() => ({
@@ -607,7 +607,7 @@ const showRightWidgets = computed(() => {
 
 const canShowRightWidgets = computed(() => showNavigation.value && showRightWidgets.value);
 
-const isRightDrawerReady = ref(import.meta.server || !canShowRightWidgets.value);
+const isRightDrawerReady = ref(!canShowRightWidgets.value);
 
 const siteSettingsState = useSiteSettingsState();
 
@@ -830,17 +830,17 @@ function setupNavigationReactivity() {
         return;
       }
 
-      if (import.meta.client) {
-        isLeftDrawerReady.value = false;
-        isTopBarReady.value = Boolean(topBarRef.value);
-        nextTick(() => {
-          isLeftDrawerReady.value = true;
-        });
+      isLeftDrawerReady.value = false;
+
+      if (import.meta.server) {
+        isTopBarReady.value = false;
         return;
       }
 
-      isLeftDrawerReady.value = true;
-      isTopBarReady.value = true;
+      isTopBarReady.value = Boolean(topBarRef.value);
+      nextTick(() => {
+        isLeftDrawerReady.value = true;
+      });
     },
     { immediate: true },
   );
@@ -885,7 +885,7 @@ function setupNavigationReactivity() {
       return;
     }
 
-    isRightDrawerReady.value = import.meta.server;
+    isRightDrawerReady.value = false;
     if (!isMobile.value) {
       rightDrawer.value = true;
     }
