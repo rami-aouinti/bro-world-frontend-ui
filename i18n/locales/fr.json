@@ -683,7 +683,25 @@
       "sections": {
         "contact": "Contact",
         "profile": "Profil",
-        "social": "Réseaux"
+        "social": "Réseaux",
+        "calendar": "Calendrier"
+      },
+      "calendar": {
+        "subtitle": "Gardez un œil sur votre planning à venir.",
+        "viewLabel": "Changer la vue du calendrier",
+        "views": {
+          "month": "Mois",
+          "week": "Semaine",
+          "day": "Jour"
+        },
+        "errorTitle": "Impossible de charger les événements",
+        "errorFallback": "Nous n'avons pas pu charger vos événements. Veuillez réessayer.",
+        "retry": "Réessayer",
+        "privateLabel": "Privé",
+        "allDay": "Toute la journée",
+        "upcoming": "Événements à venir",
+        "emptyTitle": "Aucun événement prévu",
+        "emptyDescription": "Ajoutez des événements à votre calendrier pour les voir ici."
       },
       "labels": {
         "email": "E-mail",

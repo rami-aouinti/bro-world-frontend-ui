@@ -744,7 +744,25 @@
       "sections": {
         "contact": "Contact",
         "profile": "Profile",
-        "social": "Social"
+        "social": "Social",
+        "calendar": "التقويم"
+      },
+      "calendar": {
+        "subtitle": "تابع جدولك القادم بسهولة.",
+        "viewLabel": "تغيير عرض التقويم",
+        "views": {
+          "month": "شهر",
+          "week": "أسبوع",
+          "day": "يوم"
+        },
+        "errorTitle": "تعذر تحميل الأحداث",
+        "errorFallback": "لم نتمكن من تحميل أحداثك. حاول مرة أخرى.",
+        "retry": "إعادة المحاولة",
+        "privateLabel": "خاص",
+        "allDay": "طوال اليوم",
+        "upcoming": "الأحداث القادمة",
+        "emptyTitle": "لا توجد أحداث مجدولة",
+        "emptyDescription": "أضف أحداثًا إلى التقويم لتظهر هنا."
       },
       "labels": {
         "email": "Email",

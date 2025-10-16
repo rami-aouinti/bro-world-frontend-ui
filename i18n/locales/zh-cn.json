@@ -599,7 +599,25 @@
       "sections": {
         "contact": "联系方式",
         "profile": "个人资料",
-        "social": "社交"
+        "social": "社交",
+        "calendar": "日历"
+      },
+      "calendar": {
+        "subtitle": "随时掌握即将到来的行程。",
+        "viewLabel": "切换日历视图",
+        "views": {
+          "month": "月",
+          "week": "周",
+          "day": "日"
+        },
+        "errorTitle": "无法加载事件",
+        "errorFallback": "无法加载你的事件，请重试。",
+        "retry": "重试",
+        "privateLabel": "私人",
+        "allDay": "全天",
+        "upcoming": "即将到来的事件",
+        "emptyTitle": "暂无计划的事件",
+        "emptyDescription": "添加事件到日历即可在此查看。"
       },
       "labels": {
         "email": "电子邮箱",

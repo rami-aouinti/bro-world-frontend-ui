@@ -742,7 +742,25 @@
       "sections": {
         "contact": "Kontakt",
         "profile": "Profil",
-        "social": "Soziales"
+        "social": "Soziales",
+        "calendar": "Kalender"
+      },
+      "calendar": {
+        "subtitle": "Behalte deinen kommenden Zeitplan im Blick.",
+        "viewLabel": "Kalenderansicht ändern",
+        "views": {
+          "month": "Monat",
+          "week": "Woche",
+          "day": "Tag"
+        },
+        "errorTitle": "Termine konnten nicht geladen werden",
+        "errorFallback": "Wir konnten deine Termine nicht laden. Bitte versuche es erneut.",
+        "retry": "Erneut versuchen",
+        "privateLabel": "Privat",
+        "allDay": "Ganztägig",
+        "upcoming": "Bevorstehende Termine",
+        "emptyTitle": "Keine Termine geplant",
+        "emptyDescription": "Füge Termine zu deinem Kalender hinzu, um sie hier zu sehen."
       },
       "labels": {
         "email": "E-Mail",
