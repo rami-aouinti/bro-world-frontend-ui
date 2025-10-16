@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "pnpm build:registry && pnpm build:nuxt && pnpm build:copy",
+    "build": "pnpm build:registry && nuxt build && pnpm build:copy",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -16,7 +16,6 @@
     "dev:registry": "REGISTRY_URL=http://localhost:5173/r tsx ./scripts/build-registry.mts",
     "build:registry": "tsx ./scripts/build-registry.mts",
     "build:copy": "mkdir -p dist && cp public/_routes.json dist/_routes.json",
-    "build:nuxt": "node --max-old-space-size=4096 ./node_modules/nuxt/bin/nuxt.mjs build",
     "test": "vitest",
     "test:unit": "vitest run"
   },
