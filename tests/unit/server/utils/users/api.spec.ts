@@ -120,3 +120,27 @@ describe("fetchProfileEventsFromSource", () => {
     expect(options?.headers?.authorization).toBe("Bearer forwarded-token");
   });
 });
+
+describe("fetchCurrentProfileFromSource", () => {
+  it("throws an authentication error with a descriptive message", async () => {
+    const fetchMock = vi.fn().mockRejectedValue({
+      statusCode: 401,
+      data: {},
+    });
+
+    globalScope.$fetch = fetchMock;
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+
+    await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
+      statusCode: 401,
+      statusMessage: "Authentication is required to access this resource.",
+      message: "Authentication is required to access this resource.",
+      data: {
+        message: "Authentication is required to access this resource.",
+      },
+    });
+  });
+});

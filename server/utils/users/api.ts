@@ -295,7 +295,8 @@ async function requestUsersApi<T>(
 
     throw createError({
       statusCode,
-      statusMessage: "Users API request failed",
+      statusMessage: message,
+      message,
       data: { message },
     });
   }
