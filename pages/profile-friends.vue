@@ -323,15 +323,98 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { callOnce } from "#imports";
 import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
-import { friendCards, featuredFriendIds } from "~/lib/users/mock-friends";
-import type { FriendCard } from "~/types/pages/profile";
+import { useProfileStore } from "~/stores/profile";
+import type { FriendCard, FriendEntry } from "~/types/pages/profile";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
+const profileStore = useProfileStore();
+
+const DEFAULT_AVATAR = "/images/avatars/avatar-default.svg";
+const placeholderValue = computed(() => t("pages.profile.placeholders.missing"));
+
+function asString(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
+
+function mapFriendStatus(status: number | null | undefined): FriendCard["status"] {
+  switch (status) {
+    case 1:
+      return "online";
+    case 2:
+      return "focus";
+    case 0:
+      return "offline";
+    default:
+      return "busy";
+  }
+}
+
+function createFriendCard(entry: FriendEntry, index: number): FriendCard | null {
+  const friend = entry?.user;
+
+  if (!friend) {
+    return null;
+  }
+
+  const id = asString(friend.id) ?? friend.username ?? `friend-${index}`;
+  const firstName = asString(friend.firstName);
+  const lastName = asString(friend.lastName);
+  const fullName = [firstName, lastName].filter(Boolean).join(" ");
+  const username = asString(friend.username);
+  const email = asString(friend.email);
+  const name = fullName || username || email || placeholderValue.value;
+  const headline = asString(friend.profile?.title) || placeholderValue.value;
+  const avatar =
+    asString(friend.profile?.photo) ||
+    asString((friend as { photo?: string | null }).photo) ||
+    DEFAULT_AVATAR;
+  const location = asString(friend.timezone) || asString(friend.locale) || placeholderValue.value;
+  const mutualCount = Array.isArray(entry.stories) ? entry.stories.length : 0;
+  const status = mapFriendStatus(entry.status ?? null);
+  const tags: string[] = [];
+
+  if (headline && headline !== placeholderValue.value) {
+    tags.push(headline);
+  }
+
+  const segments: FriendCard["segments"] = [];
+
+  if (status === "online") {
+    segments.push("engineering");
+  } else if (status === "focus") {
+    segments.push("product");
+  } else if (status === "busy") {
+    segments.push("marketing");
+  } else {
+    segments.push("design");
+  }
+
+  const lastActive = statusLabel(status);
+
+  return {
+    id,
+    name,
+    headline,
+    avatar,
+    location,
+    mutualCount,
+    status,
+    tags,
+    segments,
+    lastActive,
+  };
+}
 
 const pageDescription = computed(() => t("seo.profileFriends.description"));
 
@@ -350,9 +433,32 @@ const { registerRightSidebarContent } = useLayoutRightSidebar();
 
 useHead(createProfileFriendsHead);
 
-const allFriends = ref<FriendCard[]>([...friendCards]);
+await callOnce(async () => {
+  try {
+    await profileStore.fetchProfile({ background: true });
+  } catch (error) {
+    console.error("Failed to load profile data", error);
+  }
+});
 
-const featuredIds = new Set<string>([...featuredFriendIds]);
+const allFriends = computed<FriendCard[]>(() => {
+  const entries = profileStore.friendEntries.value;
+
+  return entries.reduce<FriendCard[]>((acc, entry, index) => {
+    const card = createFriendCard(entry, index);
+
+    if (card) {
+      acc.push(card);
+    }
+
+    return acc;
+  }, []);
+});
+
+const highlightedFriends = computed(() =>
+  allFriends.value.slice(0, Math.min(allFriends.value.length, 6)),
+);
+const featuredIdSet = computed(() => new Set(highlightedFriends.value.map((friend) => friend.id)));
 
 const heroStats = computed(computeHeroStats);
 
@@ -362,7 +468,9 @@ const activeFilter = ref<string>("all");
 
 const filteredFriends = computed(resolveFilteredFriends);
 
-const suggestions = computed(resolveSuggestions);
+const suggestions = computed(() =>
+  allFriends.value.slice(highlightedFriends.value.length),
+);
 
 const activeNow = computed(resolveActiveNow);
 
@@ -390,7 +498,7 @@ function createProfileFriendsHead() {
 
 function computeHeroStats() {
   const total = allFriends.value.length;
-  const mutual = allFriends.value.reduce((sum, friend) => sum + friend.mutualCount, 0);
+  const mutual = allFriends.value.filter((friend) => friend.status !== "offline").length;
   const online = allFriends.value.filter((friend) => friend.status === "online").length;
   const formatter = new Intl.NumberFormat(locale.value || "en-US");
 
@@ -424,19 +532,16 @@ function resolveFilterOptions() {
 }
 
 function resolveFilteredFriends() {
+  const featuredIds = featuredIdSet.value;
+  const highlighted = highlightedFriends.value;
+
   if (activeFilter.value === "all") {
-    return allFriends.value.filter((friend) => featuredIds.has(friend.id));
+    return highlighted;
   }
 
-  return allFriends.value.filter(
-    (friend) =>
-      featuredIds.has(friend.id) &&
-      friend.segments.includes(activeFilter.value as FriendCard["segments"][number]),
-  );
-}
+  const target = activeFilter.value as FriendCard["segments"][number];
 
-function resolveSuggestions() {
-  return allFriends.value.filter((friend) => !featuredIds.has(friend.id));
+  return highlighted.filter((friend) => friend.segments.includes(target));
 }
 
 function resolveActiveNow() {
