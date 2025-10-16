@@ -1101,6 +1101,9 @@ export const usePostsStore = defineStore("posts", () => {
         }
       }
 
+      const defaultPublicEndpoint = "/public/post";
+      const defaultPrivateEndpoint = "/api/v1/platform/post";
+
       addFetchTarget("/api/v1/posts");
 
       const baseURL =
@@ -1114,8 +1117,11 @@ export const usePostsStore = defineStore("posts", () => {
 
       let fallbackTarget: string | null = null;
 
+      const isAuthenticated = authStore.isAuthenticated.value;
+      const fallbackPath = isAuthenticated ? defaultPrivateEndpoint : defaultPublicEndpoint;
+
       if (fallbackBase) {
-        fallbackTarget = tryResolveUrl("/api/v1/posts", fallbackBase);
+        fallbackTarget = tryResolveUrl(fallbackPath, fallbackBase);
         const primaryTarget =
           baseURL && baseURL.trim() ? tryResolveUrl("/api/v1/posts", baseURL) : null;
 
@@ -1124,7 +1130,6 @@ export const usePostsStore = defineStore("posts", () => {
         }
       }
 
-      const isAuthenticated = authStore.isAuthenticated.value;
       const privateBlogEndpoint = isAuthenticated
         ? (runtimeConfig.public?.blogPrivateApiEndpoint as string | undefined)
         : undefined;
