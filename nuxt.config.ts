@@ -14,6 +14,12 @@ import tailwindcss from "@tailwindcss/vite";
 import vuetify from "vite-plugin-vuetify";
 import type { PluginOption } from "vite";
 import { simplePurgeCssPlugin } from "./lib/vite/simple-purgecss";
+import {
+  CACHE_NAMESPACE_ADMIN,
+  CACHE_NAMESPACE_BLOG,
+  CACHE_NAMESPACE_PUBLIC,
+  CACHE_NAMESPACE_USER,
+} from "./lib/cache/namespaces";
 import { aliases } from "vuetify/iconsets/mdi";
 
 type FetchHeadersInit = Record<string, string | number | readonly string[]>;
@@ -617,6 +623,24 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: true,
+    storage: {
+      [CACHE_NAMESPACE_PUBLIC]: {
+        driver: "memory",
+        base: "cache/public",
+      },
+      [CACHE_NAMESPACE_USER]: {
+        driver: "memory",
+        base: "cache/user",
+      },
+      [CACHE_NAMESPACE_ADMIN]: {
+        driver: "memory",
+        base: "cache/admin",
+      },
+      [CACHE_NAMESPACE_BLOG]: {
+        driver: "memory",
+        base: "cache/blog",
+      },
+    },
     publicAssets: [
       {
         baseURL: "/",

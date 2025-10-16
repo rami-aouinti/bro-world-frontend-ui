@@ -2,6 +2,7 @@ import { createHash } from "crypto";
 import type { H3Event } from "h3";
 import Redis from "ioredis";
 import { useRuntimeConfig } from "#imports";
+import { CACHE_NAMESPACE_USER, createPrefixedCacheKey } from "~/lib/cache/namespaces";
 import type { MercureTokenEnvelope } from "~/types/mercure";
 
 interface RedisMercureConfig {
@@ -96,7 +97,14 @@ function getCacheKey(config: RedisMercureConfig, sessionToken: string): string {
 
   const digest = createHash("sha256").update(normalized).digest("hex");
 
-  return `${config.keyPrefix}:auth:session:${digest}:mercure-token`;
+  return createPrefixedCacheKey(
+    config.keyPrefix,
+    CACHE_NAMESPACE_USER,
+    "auth",
+    "session",
+    digest,
+    "mercure-token",
+  );
 }
 
 function resolveExpirationTimestamp(payload: MercureTokenEnvelope): number | null {
