@@ -60,6 +60,62 @@ type ProfileEventsEnvelope = {
 
 type ProfileEventsSource = ProfileEvent[] | ProfileEventsEnvelope | null | undefined;
 
+const mockFallbackWarnings = new Set<string>();
+
+function extractErrorReason(error: unknown): string | null {
+  if (!error) {
+    return null;
+  }
+
+  if (typeof error === "string") {
+    const trimmed = error.trim();
+
+    return trimmed.length > 0 ? trimmed : null;
+  }
+
+  if (error instanceof Error) {
+    const trimmed = error.message.trim();
+
+    return trimmed.length > 0 ? trimmed : null;
+  }
+
+  if (typeof error === "object") {
+    const messageCandidate =
+      (error as { data?: { message?: unknown } }).data?.message ??
+      (error as { message?: unknown }).message;
+
+    if (typeof messageCandidate === "string") {
+      const trimmed = messageCandidate.trim();
+
+      if (trimmed.length > 0) {
+        return trimmed;
+      }
+    }
+  }
+
+  return null;
+}
+
+function warnMockFallback(key: string, subject: string, error: unknown) {
+  if (mockFallbackWarnings.has(key)) {
+    return;
+  }
+
+  mockFallbackWarnings.add(key);
+
+  const reason = extractErrorReason(error);
+  const details =
+    reason && !reason.endsWith(".") ? `${reason}.` : reason ?? "";
+  const hint =
+    "Sign in to your account or configure the users service API credentials to load live data.";
+
+  const message = details
+    ? `[mock] Falling back to mock ${subject}. ${details} ${hint}`
+    : `[mock] Falling back to mock ${subject}. ${hint}`;
+
+  console.warn(message);
+}
+
 function formatCalendarDateTime(date: Date, useUTC: boolean): string {
   const year = useUTC ? date.getUTCFullYear() : date.getFullYear();
   const month = (useUTC ? date.getUTCMonth() : date.getMonth()) + 1;
@@ -542,7 +598,7 @@ export async function fetchUsersListFromSource(event: H3Event) {
       throw error;
     }
 
-    console.warn("Falling back to mock users list", error);
+    warnMockFallback("users-list", "users list", error);
 
     return unwrapUsersList(usersListSample);
   }
@@ -575,7 +631,7 @@ export async function fetchProfileEventsFromSource(event: H3Event, query: QueryO
       throw error;
     }
 
-    console.warn("Falling back to mock profile events", error);
+    warnMockFallback("profile-events", "profile events", error);
 
     return normalizeProfileEvents(profileEventsSample);
   }
