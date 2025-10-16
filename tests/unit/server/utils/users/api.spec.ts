@@ -215,8 +215,7 @@ describe("fetchProfileEventsFromSource", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(result).toEqual(profileEventsSample);
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "Falling back to mock profile events",
-      expect.anything(),
+      expect.stringContaining("[mock] Falling back to mock profile events."),
     );
   });
 });
@@ -239,8 +238,7 @@ describe("fetchUsersListFromSource", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(result).toEqual({ data: usersListSample, count: usersListSample.length });
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "Falling back to mock users list",
-      expect.anything(),
+      expect.stringContaining("[mock] Falling back to mock users list."),
     );
   });
 });
