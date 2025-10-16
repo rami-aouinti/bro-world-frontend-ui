@@ -31,11 +31,11 @@ const { localePath } = useI18nDocs();
 
 const pageDescription = computed(() => t("seo.logout.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: "auth",
   title: "logout",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

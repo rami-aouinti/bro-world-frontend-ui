@@ -51,9 +51,9 @@ const { t } = useI18n();
 
 const pageDescription = computed(() => t("seo.messenger.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

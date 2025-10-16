@@ -248,12 +248,12 @@ const SidebarCard = defineAsyncComponent({
 
 const pageDescription = computed(() => t("seo.profile.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: "auth",
   title: "profile",
   sidebarVariant: "profile",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

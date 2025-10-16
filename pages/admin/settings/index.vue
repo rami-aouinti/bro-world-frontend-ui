@@ -75,10 +75,10 @@ const AdminSettingsLayout = defineAsyncComponent({
 const { t } = useI18n();
 const pageDescription = computed(() => t("admin.settings.page.subtitle"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: ["auth", "admin"],
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

@@ -58,12 +58,12 @@ const isRedirecting = ref(false);
 const { t } = useI18n();
 const pageDescription = computed(() => t("seo.register.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   title: "register",
   layout: "auth",
   breadcrumb: "disabled",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

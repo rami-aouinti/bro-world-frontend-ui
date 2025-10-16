@@ -23,12 +23,12 @@ const ProfileSecurityTwoFactorSidebarCard = defineAsyncComponent({
 const { t } = useI18n();
 const pageDescription = computed(() => t("seo.profileSecurity.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: "auth",
   title: "profile-security",
   sidebarVariant: "profile",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

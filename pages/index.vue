@@ -259,10 +259,10 @@ const { t } = useI18n();
 
 const pageDescription = computed(() => t("blog.hero.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   showRightWidgets: true,
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

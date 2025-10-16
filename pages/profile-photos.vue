@@ -431,12 +431,12 @@ const currentRoute = computed(() => router.currentRoute.value);
 
 const pageDescription = computed(() => t("seo.profilePhotos.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: "auth",
   title: "profile-photos",
   sidebarVariant: "profile",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

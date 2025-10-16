@@ -40,11 +40,11 @@ const AuthResetPasswordForm = defineAsyncComponent({
 const { t } = useI18n();
 const pageDescription = computed(() => t("seo.forgotPassword.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   title: "forgot-password",
   layout: "auth",
   breadcrumb: "disabled",
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

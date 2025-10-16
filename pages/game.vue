@@ -171,9 +171,9 @@ const currentRoute = computed(() => router.currentRoute.value);
 
 const pageDescription = computed(() => t("seo.game.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   documentDriven: false,
-}));
+});
 
 useSeoMeta(() => ({
   description: pageDescription.value,
