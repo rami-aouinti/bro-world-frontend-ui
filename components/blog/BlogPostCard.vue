@@ -214,9 +214,7 @@ const activeCommentsRequest = shallowRef<Promise<void> | null>(null);
 const commentsSectionRef = ref<HTMLElement | null>(null);
 const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
 const commentsActivated = ref(false);
-const shouldRenderCommentThread = computed(
-  () => commentsActivated.value || isCommentsSectionVisible.value,
-);
+const shouldRenderCommentThread = computed(() => commentsActivated.value);
 const loginDialogOpen = ref(false);
 const loginPromptRef = ref<HTMLButtonElement | null>(null);
 const loginDialogPreviousFocusedElement = ref<HTMLElement | null>(null);
@@ -588,14 +586,36 @@ function requestComments(options: { force?: boolean } = {}) {
 
 function loadCommentsManually() {
   commentsActivated.value = true;
-  void loadComments({ force: true });
+  const shouldForce = !Array.isArray(loadedComments.value);
+
+  void loadComments({ force: shouldForce });
+}
+
+function prefetchComments() {
+  if (!isCommentsSectionVisible.value) {
+    return;
+  }
+
+  if (commentsActivated.value || commentsLoading.value) {
+    return;
+  }
+
+  if (!isAuthenticated.value) {
+    return;
+  }
+
+  if (Array.isArray(loadedComments.value)) {
+    return;
+  }
+
+  void loadComments();
 }
 
 watch(
   isCommentsSectionVisible,
   (visible) => {
     if (visible) {
-      requestComments();
+      prefetchComments();
     }
   },
   { immediate: true },
@@ -610,8 +630,8 @@ watch(
     activeCommentsRequest.value = null;
     commentsActivated.value = false;
 
-    if (id && isCommentsSectionVisible.value) {
-      requestComments();
+    if (id) {
+      prefetchComments();
     }
   },
   { immediate: true },
@@ -630,6 +650,10 @@ watch(isAuthenticated, (value) => {
     if (shouldReload) {
       void loadComments({ force: true });
     }
+  }
+
+  if (value) {
+    prefetchComments();
   }
 });
 
