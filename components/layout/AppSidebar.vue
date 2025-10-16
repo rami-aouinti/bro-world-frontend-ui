@@ -200,15 +200,15 @@ function getDefaultExpandedGroups(
   return result;
 }
 
-const expandedGroups = ref<Set<string>>(
-  getDefaultExpandedGroups(localizedItems.value, resolvedActiveKey.value),
+const expandedGroupKeys = ref<string[]>(
+  Array.from(getDefaultExpandedGroups(localizedItems.value, resolvedActiveKey.value)),
 );
 
 watch(
   () => [resolvedActiveKey.value, localizedItems.value],
   ([activeKey]) => {
     let updated = false;
-    const next = new Set(expandedGroups.value);
+    const next = new Set(expandedGroupKeys.value);
     const defaultGroups = getDefaultExpandedGroups(localizedItems.value, activeKey);
 
     for (const key of defaultGroups) {
@@ -229,22 +229,22 @@ watch(
       }
     }
 
-    if (updated) expandedGroups.value = next;
+    if (updated) expandedGroupKeys.value = Array.from(next);
   },
   { immediate: true, deep: true },
 );
 
 function toggleGroup(key: string) {
-  const next = new Set(expandedGroups.value);
+  const next = new Set(expandedGroupKeys.value);
 
   if (next.has(key)) next.delete(key);
   else next.add(key);
 
-  expandedGroups.value = next;
+  expandedGroupKeys.value = Array.from(next);
 }
 
 function isGroupExpanded(key: string) {
-  return expandedGroups.value.has(key);
+  return expandedGroupKeys.value.includes(key);
 }
 
 function handleParentSelect(item: LayoutSidebarItem) {
