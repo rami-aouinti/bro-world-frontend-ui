@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { createApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
 import { useRequestHeaders, useRequestURL } from "#imports";
 import { useAuthSession } from "~/stores/auth-session";
+import { shouldSendCredentials } from "~/lib/api/credentials";
 
 interface ErrorPayload {
   message?: string;
@@ -23,7 +24,7 @@ export default defineNuxtPlugin({
     const { $i18n } = nuxtApp as unknown as { $i18n?: { t: (key: string) => string } };
     const client = axios.create({
       baseURL,
-      withCredentials: true,
+      withCredentials: shouldSendCredentials(baseURL),
     });
 
     client.interceptors.request.use((config) => {
