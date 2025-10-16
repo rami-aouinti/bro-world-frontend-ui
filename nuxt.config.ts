@@ -972,7 +972,7 @@ export default defineNuxtConfig({
         "https://blog.bro-world.org/api/v1/comments",
       blogPrivateApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_API_ENDPOINT ??
-        "http://blog.bro-world.org/api/v1/platform/post",
+        "https://blog.bro-world.org/api/v1/platform/post",
       blogPrivateCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_COMMENT_API_ENDPOINT ??
         "https://blog.bro-world.org/api/v1/comments",
