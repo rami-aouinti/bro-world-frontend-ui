@@ -1127,6 +1127,130 @@
         "button": "Schedule a consultation",
         "buttonAria": "Open the contact page"
       }
+    },
+    "performance": {
+      "badge": "Informe de rendimiento",
+      "title": "Instantánea de calidad de experiencia",
+      "subtitle": "Un vistazo centrado en cómo rinde el feed de inicio en dispositivos reales.",
+      "updated": "Auditoría tomada el 8 de abril de 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "Puntuación global"
+      },
+      "metrics": {
+        "title": "Métricas clave de experiencia",
+        "subtitle": "Basado en ejecuciones móviles de Lighthouse (Moto G Power emulado).",
+        "status": {
+          "good": "En buen camino",
+          "average": "En observación",
+          "poor": "Requiere atención"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "Los primeros píxeles significativos aparecen en menos de un segundo.",
+            "trend": "Constante durante los últimos 7 despliegues.",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "El elemento destacado carga después del esqueleto pero sigue dentro de Web Vitals.",
+            "trend": "Optimizar precargando el sprite de la imagen destacada.",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Las tareas largas durante la hidratación mantienen ocupado el hilo.",
+            "trend": "Provocado por la carga anticipada de widgets opcionales.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "La completitud visual es aceptable pero se puede mejorar.",
+            "trend": "Mejora notable al priorizar la entrega de CSS.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "Las tarjetas y el carril de historias se desplazan cuando llega contenido tardío.",
+            "trend": "Fijar los medios con relaciones de aspecto para estabilizar el feed.",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "Oportunidades de alto impacto",
+        "subtitle": "Correcciones priorizadas para abordar primero las métricas en rojo.",
+        "items": {
+          "layout": {
+            "title": "Estabilizar espacios de medios y widgets",
+            "description": "Reservar espacio para banners, carruseles y anuncios dinámicos.",
+            "impact": "Alto impacto",
+            "action": "Adoptar relaciones de aspecto intrínsecas y alturas de esqueleto para los elementos del feed."
+          },
+          "script": {
+            "title": "Diferir scripts no críticos",
+            "description": "Dividir analíticas, reacciones y paneles de mensajería fuera del paquete principal.",
+            "impact": "Alto impacto",
+            "action": "Hidratar widgets opcionales al interactuar usando `defineAsyncComponent`."
+          },
+          "assets": {
+            "title": "Optimizar imágenes destacadas",
+            "description": "Comprimir el collage principal y servir fuentes AVIF por defecto.",
+            "impact": "Impacto medio",
+            "action": "Precargar la primera imagen del feed y cargar las demás de forma diferida."
+          },
+          "monitoring": {
+            "title": "Ampliar la cobertura de Core Web Vitals",
+            "description": "Desglosar las métricas por ruta y segmento de dispositivo.",
+            "impact": "Fundacional",
+            "action": "Enviar señales de `web-vitals` al lago analítico para rastrear regresiones."
+          }
+        }
+      },
+      "timeline": {
+        "title": "Cronograma de mejora",
+        "subtitle": "Un despliegue realista para lanzar y verificar los cambios.",
+        "items": {
+          "week1": {
+            "date": "Semana 1",
+            "title": "Eliminar el desplazamiento de diseño",
+            "description": "Auditar todas las tarjetas y historias para tamaños deterministas.",
+            "actions": [
+              "Añadir relaciones de aspecto a miniaturas e ilustraciones de publicaciones.",
+              "Bloquear contenedores publicitarios tras esqueletos de marcador."
+            ]
+          },
+          "week2": {
+            "date": "Semana 2",
+            "title": "Dividir las tareas largas",
+            "description": "Mover la lógica opcional a callbacks inactivos y límites asíncronos.",
+            "actions": [
+              "Dividir el cajón de mensajería y la bandeja de reacciones.",
+              "Usar `requestIdleCallback` antes de iniciar los SDK de analítica."
+            ]
+          },
+          "week3": {
+            "date": "Semana 3",
+            "title": "Verificar las mejoras con RUM",
+            "description": "Desplegar el reporte de Core Web Vitals a cohortes en producción.",
+            "actions": [
+              "Enviar métricas al lago de monitorización con metadatos de compilación.",
+              "Alertar sobre regresiones de LCP/TBT superiores al 10 % semana a semana."
+            ]
+          }
+        }
+      }
     }
   },
   "messenger": {

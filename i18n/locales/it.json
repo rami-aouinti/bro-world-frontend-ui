@@ -1127,6 +1127,130 @@
         "button": "Schedule a consultation",
         "buttonAria": "Open the contact page"
       }
+    },
+    "performance": {
+      "badge": "Report prestazioni",
+      "title": "Istante della qualità dell'esperienza",
+      "subtitle": "Uno sguardo mirato a come rende il feed principale su dispositivi reali.",
+      "updated": "Audit eseguito l'8 aprile 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "Punteggio complessivo"
+      },
+      "metrics": {
+        "title": "Metriche chiave dell'esperienza",
+        "subtitle": "Basato su esecuzioni Lighthouse mobile (Moto G Power emulato).",
+        "status": {
+          "good": "In linea",
+          "average": "Da monitorare",
+          "poor": "Serve attenzione"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "I primi pixel significativi appaiono in meno di un secondo.",
+            "trend": "Stabile negli ultimi 7 rilasci.",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "Il media hero si carica dopo lo scheletro ma resta nei limiti dei Web Vitals.",
+            "trend": "Ottimizza precaricando lo sprite dell'immagine in evidenza.",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Le attività lunghe durante l'hydration impegnano il thread.",
+            "trend": "Causato dal caricamento anticipato di widget opzionali.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "La completezza visiva è accettabile ma può migliorare.",
+            "trend": "Beneficia molto dalla consegna prioritaria del CSS.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "Card e rail delle storie si spostano quando arrivano contenuti tardivi.",
+            "trend": "Ancorare i media con rapporti d'aspetto fissi per stabilizzare il feed.",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "Opportunità ad alto impatto",
+        "subtitle": "Correzioni prioritarie per affrontare prima le metriche in rosso.",
+        "items": {
+          "layout": {
+            "title": "Stabilizzare spazi media e widget",
+            "description": "Riservare spazio a banner, caroselli e annunci dinamici.",
+            "impact": "Alto impatto",
+            "action": "Usare rapporti d'aspetto intrinseci e altezze degli scheletri per gli elementi del feed."
+          },
+          "script": {
+            "title": "Rinviare gli script non critici",
+            "description": "Separare analisi, reazioni e pannelli di messaggistica dal bundle principale.",
+            "impact": "Alto impatto",
+            "action": "Idratare i widget opzionali all'interazione usando `defineAsyncComponent`."
+          },
+          "assets": {
+            "title": "Ottimizzare le immagini hero",
+            "description": "Comprimere il collage principale e servire sorgenti AVIF di default.",
+            "impact": "Impatto medio",
+            "action": "Precaricare la prima immagine del feed e caricare in differita le altre."
+          },
+          "monitoring": {
+            "title": "Ampliare la copertura dei Core Web Vitals",
+            "description": "Suddividere le metriche per percorso e fascia di dispositivo.",
+            "impact": "Fondamentale",
+            "action": "Inviare i segnali `web-vitals` al data lake analitico per monitorare le regressioni."
+          }
+        }
+      },
+      "timeline": {
+        "title": "Cronologia di miglioramento",
+        "subtitle": "Un rollout realistico per distribuire e verificare le correzioni.",
+        "items": {
+          "week1": {
+            "date": "Settimana 1",
+            "title": "Eliminare gli spostamenti di layout",
+            "description": "Verificare tutte le card e le storie per dimensioni determinate.",
+            "actions": [
+              "Aggiungere rapporti d'aspetto a miniature e illustrazioni dei post.",
+              "Bloccare i contenitori pubblicitari dietro segnaposto scheletrici."
+            ]
+          },
+          "week2": {
+            "date": "Settimana 2",
+            "title": "Spezzare le attività lunghe",
+            "description": "Spostare la logica opzionale in callback inattivi e confini asincroni.",
+            "actions": [
+              "Suddividere il cassetto della messaggistica e il vassoio delle reazioni.",
+              "Usare `requestIdleCallback` prima di avviare gli SDK di analisi."
+            ]
+          },
+          "week3": {
+            "date": "Settimana 3",
+            "title": "Verificare i miglioramenti con il RUM",
+            "description": "Estendere il reporting Core Web Vitals alle coorti in produzione.",
+            "actions": [
+              "Inviare le metriche al lago di monitoraggio con i metadati di build.",
+              "Allertare su regressioni LCP/TBT superiori al 10% settimana su settimana."
+            ]
+          }
+        }
+      }
     }
   },
   "messenger": {

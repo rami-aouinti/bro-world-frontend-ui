@@ -1637,6 +1637,130 @@
         "button": "Schedule a consultation",
         "buttonAria": "Open the contact page"
       }
+    },
+    "performance": {
+      "badge": "Performance-Bericht",
+      "title": "Momentaufnahme der Erlebnisqualität",
+      "subtitle": "Ein fokussierter Blick darauf, wie der Home-Feed auf echten Geräten performt.",
+      "updated": "Audit erfasst am 8. April 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "Gesamtpunktzahl"
+      },
+      "metrics": {
+        "title": "Zentrale Erlebniskennzahlen",
+        "subtitle": "Basierend auf mobilen Lighthouse-Läufen (emuliertes Moto G Power).",
+        "status": {
+          "good": "Im Plan",
+          "average": "Beobachten",
+          "poor": "Handlungsbedarf"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "Die ersten relevanten Pixel erscheinen in unter einer Sekunde.",
+            "trend": "Konstant über die letzten 7 Deployments.",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "Das Hero-Medium lädt nach dem Skelett, bleibt aber innerhalb der Web-Vitals-Grenzen.",
+            "trend": "Sprite des Highlight-Bilds vorladen, um weiter zu optimieren.",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Lange Tasks während der Hydration blockieren den Thread.",
+            "trend": "Verursacht durch frühes Laden optionaler Widgets.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "Die visuelle Vollständigkeit ist solide, bietet aber Optimierungspotenzial.",
+            "trend": "Profitiert stark von priorisierter CSS-Auslieferung.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "Karten und Story-Leiste verschieben sich, wenn späte Inhalte eintreffen.",
+            "trend": "Medien mit festen Seitenverhältnissen verankern, um den Feed zu stabilisieren.",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "Hebel mit hoher Wirkung",
+        "subtitle": "Priorisierte Maßnahmen, die zuerst die roten Kennzahlen adressieren.",
+        "items": {
+          "layout": {
+            "title": "Medien- und Widget-Flächen stabilisieren",
+            "description": "Platz für Banner, Karussells und dynamische Anzeigen reservieren.",
+            "impact": "Hoher Impact",
+            "action": "Intrinsische Seitenverhältnisse und Skelett-Höhen für Feed-Elemente verwenden."
+          },
+          "script": {
+            "title": "Nicht kritische Skripte verzögern",
+            "description": "Analytik, Reaktionen und Messenger-Panels aus dem Hauptbundle auslagern.",
+            "impact": "Hoher Impact",
+            "action": "Optionale Widgets bei Interaktion mit `defineAsyncComponent` hydratisieren."
+          },
+          "assets": {
+            "title": "Hero-Grafiken optimieren",
+            "description": "Das Hero-Collage komprimieren und standardmäßig AVIF-Quellen ausliefern.",
+            "impact": "Mittlerer Impact",
+            "action": "Das erste Feed-Bild vorladen und weitere Bilder verzögert laden."
+          },
+          "monitoring": {
+            "title": "Core Web Vitals-Abdeckung ausbauen",
+            "description": "Kennzahlen nach Route und Gerätekategorie aufschlüsseln.",
+            "impact": "Grundlegend",
+            "action": "`web-vitals`-Signale in den Analytics-See senden, um Regressionen zu verfolgen."
+          }
+        }
+      },
+      "timeline": {
+        "title": "Zeitplan für Verbesserungen",
+        "subtitle": "Ein realistischer Rollout, um Maßnahmen auszuliefern und zu verifizieren.",
+        "items": {
+          "week1": {
+            "date": "Woche 1",
+            "title": "Layout-Verschiebungen eliminieren",
+            "description": "Alle Feed-Karten und Stories auf deterministische Größen prüfen.",
+            "actions": [
+              "Story-Thumbnails und Beitragsillustrationen mit Seitenverhältnissen versehen.",
+              "Anzeigen-Container hinter Platzhalter-Skeletten fixieren."
+            ]
+          },
+          "week2": {
+            "date": "Woche 2",
+            "title": "Lange Tasks aufbrechen",
+            "description": "Optionale Logik in Idle-Callbacks und asynchrone Grenzen verschieben.",
+            "actions": [
+              "Messenger-Schublade und Reaktionsleiste per Code-Splitting trennen.",
+              "`requestIdleCallback` vor dem Start von Analytics-SDKs nutzen."
+            ]
+          },
+          "week3": {
+            "date": "Woche 3",
+            "title": "Gewinne mit RUM verifizieren",
+            "description": "Core Web Vitals-Reporting für Produktionskohorten ausrollen.",
+            "actions": [
+              "Kennzahlen mit Build-Metadaten an den Monitoring-See senden.",
+              "Bei LCP/TBT-Regressions über 10 % Woche für Woche alarmieren."
+            ]
+          }
+        }
+      }
     }
   },
   "seo": {
