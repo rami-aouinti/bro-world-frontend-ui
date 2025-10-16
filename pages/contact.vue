@@ -155,9 +155,9 @@ const ContactForm = defineAsyncComponent({
 const { t, locale, localeProperties } = useI18n();
 const pageDescription = computed(() => t("seo.contact.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

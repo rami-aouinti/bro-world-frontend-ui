@@ -170,9 +170,9 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const pageDescription = computed(() => t("seo.education.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

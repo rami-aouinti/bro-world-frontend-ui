@@ -57,10 +57,10 @@ const pageKey = computed(() => `admin.gameManagement.sections.${section.value}`)
 const { t, title, subtitle } = useAdminModulePage(pageKey);
 const pageDescription = computed(() => subtitle.value);
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

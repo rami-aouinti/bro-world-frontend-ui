@@ -235,9 +235,9 @@ const siteSettings = useSiteSettingsState();
 
 const pageDescription = computed(() => t("seo.help.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

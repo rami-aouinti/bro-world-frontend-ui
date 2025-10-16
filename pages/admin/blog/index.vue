@@ -464,10 +464,10 @@ const BlogPostForm = defineAsyncComponent({
 const { t, locale } = useI18n();
 const pageDescription = computed(() => t("admin.blog.subtitle"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

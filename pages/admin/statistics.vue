@@ -98,10 +98,10 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const pageDescription = computed(() => t("admin.statistics.page.subtitle"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

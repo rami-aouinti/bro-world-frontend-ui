@@ -20,12 +20,12 @@ const currentRoute = computed(() => router.currentRoute.value);
 
 const pageDescription = computed(() => t("seo.profileEdit.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: "auth",
   title: "profile-edit",
   sidebarVariant: "profile",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

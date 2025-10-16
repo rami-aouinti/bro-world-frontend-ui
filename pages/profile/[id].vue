@@ -241,12 +241,12 @@ const pageDescription = computed(
   () => friend.value?.bio?.trim() || t("seo.profileFriends.description"),
 );
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: "auth",
   title: "profile-friend-details",
   sidebarVariant: "profile",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

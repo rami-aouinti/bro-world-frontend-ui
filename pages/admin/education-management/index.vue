@@ -38,10 +38,10 @@ import { useAdminModulePage } from "~/composables/useAdminModulePage";
 const { t, title, subtitle } = useAdminModulePage("admin.educationManagement");
 const pageDescription = computed(() => subtitle.value);
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

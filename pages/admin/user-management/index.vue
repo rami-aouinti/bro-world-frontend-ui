@@ -428,10 +428,10 @@ interface FormErrors {
 const { t, locale } = useI18n();
 const pageDescription = computed(() => t("admin.userManagement.page.subtitle"));
 
-definePageMeta(() => ({
+definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

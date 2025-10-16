@@ -56,12 +56,12 @@ const AuthSocial = defineAsyncComponent({
 const { t } = useI18n();
 const pageDescription = computed(() => t("seo.login.description"));
 
-definePageMeta(() => ({
+definePageMeta({
   title: "login",
   layout: "auth",
   breadcrumb: "disabled",
   documentDriven: false,
-}));
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));
