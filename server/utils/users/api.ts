@@ -59,6 +59,89 @@ type ProfileEventsEnvelope = {
 
 type ProfileEventsSource = ProfileEvent[] | ProfileEventsEnvelope | null | undefined;
 
+function formatCalendarDateTime(date: Date, useUTC: boolean): string {
+  const year = useUTC ? date.getUTCFullYear() : date.getFullYear();
+  const month = (useUTC ? date.getUTCMonth() : date.getMonth()) + 1;
+  const day = useUTC ? date.getUTCDate() : date.getDate();
+  const hours = useUTC ? date.getUTCHours() : date.getHours();
+  const minutes = useUTC ? date.getUTCMinutes() : date.getMinutes();
+
+  const monthString = String(month).padStart(2, "0");
+  const dayString = String(day).padStart(2, "0");
+  const hourString = String(hours).padStart(2, "0");
+  const minuteString = String(minutes).padStart(2, "0");
+
+  return `${year}-${monthString}-${dayString} ${hourString}:${minuteString}`;
+}
+
+function sanitizeEventTimestamp(raw: unknown): string | null {
+  if (raw == null) {
+    return null;
+  }
+
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+
+    if (!trimmed) {
+      return null;
+    }
+
+    if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(trimmed)) {
+      const [year, month, day] = trimmed.split("-");
+
+      const normalizedYear = year.padStart(4, "0");
+      const normalizedMonth = month.padStart(2, "0");
+      const normalizedDay = day.padStart(2, "0");
+
+      return `${normalizedYear}-${normalizedMonth}-${normalizedDay}`;
+    }
+
+    if (/^\d{4}-\d{1,2}-\d{1,2}[ T]\d{1,2}:\d{2}$/.test(trimmed)) {
+      const [datePart, timePart] = trimmed.replace("T", " ").split(" ");
+      const [year, month, day] = datePart.split("-");
+      const [hours, minutes] = timePart.split(":");
+
+      const normalizedYear = year.padStart(4, "0");
+      const normalizedMonth = month.padStart(2, "0");
+      const normalizedDay = day.padStart(2, "0");
+      const normalizedHours = hours.padStart(2, "0");
+      const normalizedMinutes = minutes.padStart(2, "0");
+
+      return `${normalizedYear}-${normalizedMonth}-${normalizedDay} ${normalizedHours}:${normalizedMinutes}`;
+    }
+
+    const parsed = new Date(trimmed);
+
+    if (Number.isNaN(parsed.getTime())) {
+      return null;
+    }
+
+    const includesTimezone = /[+-]\d{2}:?\d{2}$|Z$/i.test(trimmed);
+
+    return formatCalendarDateTime(parsed, includesTimezone);
+  }
+
+  if (raw instanceof Date) {
+    if (Number.isNaN(raw.getTime())) {
+      return null;
+    }
+
+    return formatCalendarDateTime(raw, false);
+  }
+
+  if (typeof raw === "number" && Number.isFinite(raw)) {
+    const parsed = new Date(raw);
+
+    if (Number.isNaN(parsed.getTime())) {
+      return null;
+    }
+
+    return formatCalendarDateTime(parsed, false);
+  }
+
+  return null;
+}
+
 function isAuthorizationError(error: unknown): boolean {
   const status =
     typeof (error as { statusCode?: number })?.statusCode === "number"
@@ -80,7 +163,7 @@ function normalizeProfileEvent(raw: unknown): ProfileEvent | null {
   const record = raw as Record<string, unknown>;
   const idCandidate = record.id;
   const titleCandidate = record.title;
-  const startCandidate = record.start;
+  const start = sanitizeEventTimestamp(record.start);
 
   const id = typeof idCandidate === "string" && idCandidate.trim()
     ? idCandidate.trim()
@@ -88,7 +171,6 @@ function normalizeProfileEvent(raw: unknown): ProfileEvent | null {
       ? String(idCandidate)
       : "";
   const title = typeof titleCandidate === "string" ? titleCandidate : "";
-  const start = typeof startCandidate === "string" ? startCandidate : "";
 
   if (!id || !title || !start) {
     return null;
@@ -106,8 +188,10 @@ function normalizeProfileEvent(raw: unknown): ProfileEvent | null {
     event.description = null;
   }
 
-  if (typeof record.end === "string") {
-    event.end = record.end;
+  const end = sanitizeEventTimestamp(record.end);
+
+  if (end) {
+    event.end = end;
   } else if (record.end === null) {
     event.end = null;
   }
