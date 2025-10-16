@@ -44,6 +44,18 @@ export interface FriendEntry {
   status?: number | null;
 }
 
+export interface ProfileEvent {
+  id: string;
+  title: string;
+  description?: string | null;
+  start: string;
+  end?: string | null;
+  allDay?: boolean | null;
+  color?: string | null;
+  location?: string | null;
+  isPrivate?: boolean | null;
+}
+
 export interface ProfileUser extends AuthUser {
   profile?: ProfileDetails | null;
   stories?: unknown[] | null;

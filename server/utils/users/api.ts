@@ -2,11 +2,13 @@ import { createError, getHeader } from "h3";
 import type { H3Event } from "h3";
 import { joinURL } from "ufo";
 import type { FetchOptions } from "ofetch";
+import type { QueryObject } from "ufo";
 import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
 import type {
   FriendEntry,
   FriendStory,
+  ProfileEvent,
   ProfileUser,
 } from "~/types/pages/profile";
 import { getSessionToken } from "../auth/session";
@@ -43,6 +45,92 @@ type ProfileSource =
     }
   | null
   | undefined;
+
+type ProfileEventsEnvelope = {
+  data?: ProfileEvent[] | null;
+  events?: ProfileEvent[] | null;
+};
+
+type ProfileEventsSource = ProfileEvent[] | ProfileEventsEnvelope | null | undefined;
+
+function normalizeProfileEvent(raw: unknown): ProfileEvent | null {
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+
+  const record = raw as Record<string, unknown>;
+  const idCandidate = record.id;
+  const titleCandidate = record.title;
+  const startCandidate = record.start;
+
+  const id = typeof idCandidate === "string" && idCandidate.trim()
+    ? idCandidate.trim()
+    : idCandidate != null
+      ? String(idCandidate)
+      : "";
+  const title = typeof titleCandidate === "string" ? titleCandidate : "";
+  const start = typeof startCandidate === "string" ? startCandidate : "";
+
+  if (!id || !title || !start) {
+    return null;
+  }
+
+  const event: ProfileEvent = {
+    id,
+    title,
+    start,
+  };
+
+  if (typeof record.description === "string") {
+    event.description = record.description;
+  } else if (record.description === null) {
+    event.description = null;
+  }
+
+  if (typeof record.end === "string") {
+    event.end = record.end;
+  } else if (record.end === null) {
+    event.end = null;
+  }
+
+  if (typeof record.allDay === "boolean") {
+    event.allDay = record.allDay;
+  }
+
+  if (typeof record.color === "string") {
+    event.color = record.color;
+  } else if (record.color === null) {
+    event.color = null;
+  }
+
+  if (typeof record.location === "string") {
+    event.location = record.location;
+  } else if (record.location === null) {
+    event.location = null;
+  }
+
+  if (typeof record.isPrivate === "boolean") {
+    event.isPrivate = record.isPrivate;
+  }
+
+  return event;
+}
+
+function normalizeProfileEvents(payload: ProfileEventsSource): ProfileEvent[] {
+  const candidates = Array.isArray(payload)
+    ? payload
+    : payload && typeof payload === "object"
+      ? Array.isArray((payload as ProfileEventsEnvelope).events)
+        ? (payload as ProfileEventsEnvelope).events ?? []
+        : Array.isArray((payload as ProfileEventsEnvelope).data)
+          ? (payload as ProfileEventsEnvelope).data ?? []
+          : []
+      : [];
+
+  return candidates
+    .map((entry) => normalizeProfileEvent(entry))
+    .filter((entry): entry is ProfileEvent => Boolean(entry));
+}
 
 function isProfileUser(candidate: unknown): candidate is ProfileUser {
   if (!candidate || typeof candidate !== "object") {
@@ -321,6 +409,15 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
   const payload = await requestUsersApi<ProfileSource>(event, "/profile", { method: "GET" });
 
   return unwrapProfile(payload);
+}
+
+export async function fetchProfileEventsFromSource(event: H3Event, query: QueryObject = {}) {
+  const payload = await requestUsersApi<ProfileEventsSource>(event, "/profile/events", {
+    method: "GET",
+    query,
+  });
+
+  return normalizeProfileEvents(payload);
 }
 
 export async function fetchUserFromSource(event: H3Event, id: string) {
