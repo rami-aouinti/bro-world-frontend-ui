@@ -4,9 +4,7 @@
     class="z-100 bg-primary/80"
   />
   <AppLoadingOverlay :visible="initialLoading" />
-  <NuxtLayout>
-    <NuxtPage :key="pageKey" />
-  </NuxtLayout>
+  <NuxtPage :key="pageKey" />
   <RouteLoadingOverlay :visible="routeLoading" />
   <AlertPanel />
 </template>
