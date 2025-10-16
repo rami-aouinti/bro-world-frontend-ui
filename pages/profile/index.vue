@@ -254,19 +254,20 @@ const ProfileCalendar = defineAsyncComponent({
   suspensible: false,
 });
 
-const pageDescription = computed(() => t("seo.profile.description"));
-
 definePageMeta({
   middleware: "auth",
   title: "profile",
   sidebarVariant: "profile",
   documentDriven: false,
 });
+const { t, locale, localeProperties } = useI18n();
+
+const pageDescription = computed(() => t("seo.profile.description"));
+
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const auth = useAuthSession();
-const { t, locale, localeProperties } = useI18n();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const runtimeConfig = useRuntimeConfig();
