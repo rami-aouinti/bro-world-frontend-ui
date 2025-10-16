@@ -92,8 +92,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
+import { useAuthSession } from "~/stores/auth-session";
 
 const { t } = useI18n();
 const pageDescription = computed(() => t("admin.statistics.page.subtitle"));
@@ -107,6 +109,9 @@ useSeoMeta(() => ({
 }));
 const titleId = "admin-statistics-title";
 
+const auth = useAuthSession();
+const route = useRoute();
+
 const { data, pending, error, refresh } = await useAsyncData(
   "admin-statistics-users-count",
   async () => {
@@ -117,6 +122,66 @@ const { data, pending, error, refresh } = await useAsyncData(
     return {
       count: typeof response?.count === "number" ? response.count : 0,
     };
+  },
+);
+
+function resolveErrorStatus(errorCandidate: unknown): number | null {
+  if (!errorCandidate || typeof errorCandidate !== "object") {
+    return null;
+  }
+
+  const value = errorCandidate as {
+    statusCode?: number;
+    status?: number;
+    response?: { status?: number } | null;
+  };
+
+  if (typeof value.statusCode === "number") {
+    return value.statusCode;
+  }
+
+  if (typeof value.status === "number") {
+    return value.status;
+  }
+
+  const responseStatus = value.response?.status;
+
+  return typeof responseStatus === "number" ? responseStatus : null;
+}
+
+async function redirectToLoginIfUnauthenticated(errorCandidate: unknown) {
+  if (!import.meta.client) {
+    return;
+  }
+
+  if (resolveErrorStatus(errorCandidate) !== 401) {
+    return;
+  }
+
+  const redirectTarget = typeof route.fullPath === "string" ? route.fullPath : route.path;
+  const locale = resolveLocaleFromPath(route.path ?? "/");
+  const loginPath = buildLocalizedPath("/login", locale);
+
+  if (redirectTarget) {
+    auth.setRedirect(redirectTarget);
+  }
+
+  await navigateTo({
+    path: loginPath,
+    query: redirectTarget ? { redirect: redirectTarget } : undefined,
+  });
+}
+
+await redirectToLoginIfUnauthenticated(error.value);
+
+watch(
+  () => error.value,
+  (currentError) => {
+    if (!currentError) {
+      return;
+    }
+
+    void redirectToLoginIfUnauthenticated(currentError);
   },
 );
 
