@@ -194,7 +194,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, useId, defineAsyncComponent } from "vue";
+import { computed, onMounted, reactive, useId, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAuthSession } from "~/stores/auth-session";
 import type { SessionEntry } from "~/types/pages/profile";
@@ -228,12 +228,25 @@ const snackbar = reactive({
   message: "",
 });
 
+const initialNow = useState<number>("profile-security-initial-now", () => Date.now());
+const timezone = useState<string>("profile-security-timezone", () => "UTC");
+
+if (import.meta.client) {
+  onMounted(() => {
+    const resolvedTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (resolvedTimeZone) {
+      timezone.value = resolvedTimeZone;
+    }
+  });
+}
+
 const activeSessions = computed<SessionEntry[]>(() => {
   const formatter = new Intl.DateTimeFormat(locale.value, {
     dateStyle: "medium",
     timeStyle: "short",
+    timeZone: timezone.value,
   });
-  const now = new Date();
+  const now = new Date(initialNow.value);
 
   return [
     {
