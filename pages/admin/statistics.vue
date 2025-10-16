@@ -94,7 +94,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { useAuthSession } from "~/stores/auth-session";
 
 const { t } = useI18n();
@@ -110,8 +109,6 @@ useSeoMeta(() => ({
 const titleId = "admin-statistics-title";
 
 const auth = useAuthSession();
-const route = useRoute();
-
 const { data, pending, error, refresh } = await useAsyncData(
   "admin-statistics-users-count",
   async () => {
@@ -158,18 +155,9 @@ async function redirectToLoginIfUnauthenticated(errorCandidate: unknown) {
     return;
   }
 
-  const redirectTarget = typeof route.fullPath === "string" ? route.fullPath : route.path;
-  const locale = resolveLocaleFromPath(route.path ?? "/");
-  const loginPath = buildLocalizedPath("/login", locale);
+  const message = (errorCandidate as { data?: { message?: string } } | null)?.data?.message;
 
-  if (redirectTarget) {
-    auth.setRedirect(redirectTarget);
-  }
-
-  await navigateTo({
-    path: loginPath,
-    query: redirectTarget ? { redirect: redirectTarget } : undefined,
-  });
+  await auth.handleUnauthorized(message);
 }
 
 await redirectToLoginIfUnauthenticated(error.value);
