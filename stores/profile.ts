@@ -46,20 +46,49 @@ function isProfileUser(value: unknown): value is ProfileUser {
 }
 
 function resolveProfileResponse(response: ProfileResponse): ProfileUser | null {
-  if (isProfileUser(response)) {
-    return response;
-  }
+  const stack: ProfileResponse[] = [response];
+  const visited = new WeakSet<Record<string, unknown>>();
 
-  if (!response || typeof response !== "object") {
-    return null;
-  }
+  while (stack.length > 0) {
+    const candidate = stack.pop();
 
-  const envelope = response as ProfileResponseEnvelope;
-  const candidates = [envelope.data, envelope.profile, envelope.user];
+    if (!candidate) {
+      continue;
+    }
 
-  for (const candidate of candidates) {
     if (isProfileUser(candidate)) {
       return candidate;
+    }
+
+    if (typeof candidate !== "object") {
+      continue;
+    }
+
+    if (Array.isArray(candidate)) {
+      for (const item of candidate) {
+        if (item) {
+          stack.push(item as ProfileResponse);
+        }
+      }
+
+      continue;
+    }
+
+    const record = candidate as Record<string, unknown>;
+
+    if (visited.has(record)) {
+      continue;
+    }
+
+    visited.add(record);
+
+    const envelope = record as ProfileResponseEnvelope;
+    const nested = [envelope.data, envelope.profile, envelope.user];
+
+    for (const item of nested) {
+      if (item) {
+        stack.push(item);
+      }
     }
   }
 
