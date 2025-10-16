@@ -1,4 +1,4 @@
-import { computed } from "vue";
+import { computed, ref, type Ref } from "vue";
 import { useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
@@ -7,6 +7,21 @@ import type { Story } from "~/types/stories";
 
 const DEFAULT_AVATAR = "/images/avatars/avatar-default.svg";
 const CACHE_TTL_MS = 60_000;
+
+function useStoreState<T>(key: string, init: () => T): Ref<T> {
+  try {
+    return useState<T>(key, init);
+  } catch (error) {
+    if (import.meta.dev) {
+      console.warn(
+        `[profile-store] Falling back to local state for "${key}".`,
+        error,
+      );
+    }
+
+    return ref(init()) as Ref<T>;
+  }
+}
 
 type ProfileResponseEnvelope = {
   data?: ProfileUser | null;
@@ -174,10 +189,13 @@ function formatStoryDuration(expiresAt: string | null | undefined): string | und
 }
 
 export const useProfileStore = defineStore("profile", () => {
-  const profileState = useState<ProfileUser | null>("profile-data", () => null);
-  const pendingState = useState<boolean>("profile-pending", () => false);
-  const errorState = useState<string | null>("profile-error", () => null);
-  const lastFetchedState = useState<number | null>("profile-last-fetched", () => null);
+  const profileState = useStoreState<ProfileUser | null>("profile-data", () => null);
+  const pendingState = useStoreState<boolean>("profile-pending", () => false);
+  const errorState = useStoreState<string | null>("profile-error", () => null);
+  const lastFetchedState = useStoreState<number | null>(
+    "profile-last-fetched",
+    () => null,
+  );
 
   let activeRequest: Promise<ProfileUser | null> | null = null;
 
