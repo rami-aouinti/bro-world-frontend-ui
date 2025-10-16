@@ -246,7 +246,7 @@ function parseQueryMeta(link: unknown): Record<string, unknown> | null {
   }
 
   try {
-    const url = new URL(link, "https://bro.world.local");
+    const url = new URL(link, "https://blog.bro-world.org");
     const params = url.searchParams;
     const meta: Record<string, unknown> = {};
 
