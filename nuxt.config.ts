@@ -198,6 +198,25 @@ function resolveFromRoot(...segments: string[]) {
   return resolvePath(projectRoot ?? currentDir, ...segments);
 }
 
+const redisUrl = process.env.NUXT_REDIS_URL?.trim();
+const redisTls = process.env.NUXT_REDIS_TLS === "true";
+
+function createCacheStorageDriver(base: string) {
+  if (redisUrl) {
+    return {
+      driver: "redis" as const,
+      base,
+      url: redisUrl,
+      tls: redisTls,
+    };
+  }
+
+  return {
+    driver: "memory" as const,
+    base,
+  };
+}
+
 const require = createRequire(import.meta.url);
 const normalizedLocalPagesDir = resolveFromRoot("pages").replace(/\\/g, "/");
 
@@ -624,22 +643,10 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     storage: {
-      [CACHE_NAMESPACE_PUBLIC]: {
-        driver: "memory",
-        base: "cache/public",
-      },
-      [CACHE_NAMESPACE_USER]: {
-        driver: "memory",
-        base: "cache/user",
-      },
-      [CACHE_NAMESPACE_ADMIN]: {
-        driver: "memory",
-        base: "cache/admin",
-      },
-      [CACHE_NAMESPACE_BLOG]: {
-        driver: "memory",
-        base: "cache/blog",
-      },
+      [CACHE_NAMESPACE_PUBLIC]: createCacheStorageDriver("cache/public"),
+      [CACHE_NAMESPACE_USER]: createCacheStorageDriver("cache/user"),
+      [CACHE_NAMESPACE_ADMIN]: createCacheStorageDriver("cache/admin"),
+      [CACHE_NAMESPACE_BLOG]: createCacheStorageDriver("cache/blog"),
     },
     publicAssets: [
       {
