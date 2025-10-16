@@ -630,7 +630,7 @@ export default defineNuxtConfig({
   alias: {
     pinia: resolveFromRoot("lib/pinia-shim.ts"),
     "@braintree/sanitize-url": resolveFromRoot("lib/shims/sanitize-url.ts"),
-    dayjs: require.resolve("dayjs/esm/index.js"),
+    dayjs: "dayjs/esm",
   },
 
   components: [
