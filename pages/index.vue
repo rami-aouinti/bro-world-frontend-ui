@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -109,11 +109,30 @@ import { useAuthSession } from "~/stores/auth-session";
 import { useProfileStore } from "~/stores/profile";
 import type { Story, StoryReaction } from "~/types/stories";
 
-import NewPost from "~/components/blog/NewPost.vue";
-import BlogPostCard from "~/components/blog/BlogPostCard.vue";
-import StoriesStrip from "~/components/stories/StoriesStrip.vue";
-import StoryViewerModal from "~/components/stories/StoryViewerModal.vue";
-import PostCardSkeleton from "~/components/blog/PostCardSkeleton.vue";
+const NewPost = defineAsyncComponent({
+  loader: () => import("~/components/blog/NewPost.vue"),
+  suspensible: false,
+});
+
+const BlogPostCard = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostCard.vue"),
+  suspensible: false,
+});
+
+const StoriesStrip = defineAsyncComponent({
+  loader: () => import("~/components/stories/StoriesStrip.vue"),
+  suspensible: false,
+});
+
+const StoryViewerModal = defineAsyncComponent({
+  loader: () => import("~/components/stories/StoryViewerModal.vue"),
+  suspensible: false,
+});
+
+const PostCardSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/blog/PostCardSkeleton.vue"),
+  suspensible: false,
+});
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const auth = useAuthSession();
