@@ -12,7 +12,7 @@ import { createRequire } from "node:module";
 import compression from "vite-plugin-compression";
 import tailwindcss from "@tailwindcss/vite";
 import vuetify from "vite-plugin-vuetify";
-import type { PluginOption } from "vite";
+import { normalizePath, type PluginOption } from "vite";
 import { simplePurgeCssPlugin } from "./lib/vite/simple-purgecss";
 import {
   CACHE_NAMESPACE_ADMIN,
@@ -218,6 +218,34 @@ function createCacheStorageDriver(base: string) {
 }
 
 const require = createRequire(import.meta.url);
+const dayjsEsmIndexPath = normalizePath(require.resolve("dayjs/esm/index.js"));
+const dayjsEsmDir = dirname(dayjsEsmIndexPath);
+
+function createDayjsEsmResolver(): PluginOption {
+  const stripJsExtension = (specifier: string) => specifier.replace(/\.(?:mjs|cjs|js)$/i, "");
+
+  return {
+    name: "dayjs-esm-resolver",
+    enforce: "pre",
+    resolveId(source) {
+      if (source === "dayjs" || source === "dayjs/esm" || source === "dayjs/esm/index.js") {
+        return dayjsEsmIndexPath;
+      }
+
+      if (source.startsWith("dayjs/plugin/")) {
+        const pluginName = stripJsExtension(source.slice("dayjs/plugin/".length));
+        return normalizePath(resolvePath(dayjsEsmDir, "plugin", pluginName, "index.js"));
+      }
+
+      if (source.startsWith("dayjs/locale/")) {
+        const localeName = stripJsExtension(source.slice("dayjs/locale/".length));
+        return normalizePath(resolvePath(dayjsEsmDir, "locale", `${localeName}.js`));
+      }
+
+      return null;
+    },
+  };
+}
 const normalizedLocalPagesDir = resolveFromRoot("pages").replace(/\\/g, "/");
 
 type HtmlAttribute = {
@@ -525,6 +553,7 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
+      createDayjsEsmResolver(),
       ...(Array.isArray(vuetifyPlugin) ? vuetifyPlugin : [vuetifyPlugin]),
       tailwindcss(),
       simplePurgeCssPlugin({
@@ -630,7 +659,6 @@ export default defineNuxtConfig({
   alias: {
     pinia: resolveFromRoot("lib/pinia-shim.ts"),
     "@braintree/sanitize-url": resolveFromRoot("lib/shims/sanitize-url.ts"),
-    dayjs: "dayjs/esm",
   },
 
   components: [
