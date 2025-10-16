@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { computed, onUnmounted, ref, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -373,9 +373,11 @@ if (import.meta.client) {
   );
 }
 
-await callOnce(async () => {
+async function loadInitialPosts() {
   try {
     await fetchPosts(1, { params: { pageSize: INITIAL_PAGE_SIZE } });
+    initialLoadError.value = null;
+    isLoadErrorDismissed.value = false;
   } catch (caughtError) {
     const message =
       caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
@@ -384,5 +386,17 @@ await callOnce(async () => {
     isLoadErrorDismissed.value = false;
     console.error("Failed to fetch posts", caughtError);
   }
-});
+}
+
+await callOnce(loadInitialPosts);
+
+if (import.meta.client) {
+  onMounted(async () => {
+    if (posts.value.length > 0 || pending.value || loadingMore.value) {
+      return;
+    }
+
+    await loadInitialPosts();
+  });
+}
 </script>
