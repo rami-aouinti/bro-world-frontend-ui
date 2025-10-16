@@ -172,7 +172,7 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      const response = await fetcher<UsersListResponse>("/api/v1/user", {
+      const response = await fetcher<UsersListResponse>("/v1/user", {
         method: "GET",
       });
 
@@ -210,7 +210,7 @@ export const useUsersStore = defineStore("users", () => {
 
     try {
       const response = await fetcher<UserResponse>(
-        `/api/v1/user/${encodeURIComponent(trimmedId)}`,
+        `/v1/user/${encodeURIComponent(trimmedId)}`,
         {
           method: "GET",
         },
@@ -248,7 +248,7 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      const response = await fetcher<UserResponse>("/api/v1/user", {
+      const response = await fetcher<UserResponse>("/v1/user", {
         method: "POST",
         body: buildRequestBody(payload),
       });
@@ -312,7 +312,7 @@ export const useUsersStore = defineStore("users", () => {
 
     try {
       const response = await fetcher<UserResponse>(
-        `/api/v1/user/${encodeURIComponent(trimmedId)}`,
+        `/v1/user/${encodeURIComponent(trimmedId)}`,
         {
           method: "PUT",
           body: buildRequestBody({
@@ -370,7 +370,7 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      await fetcher(`/api/v1/user/${encodeURIComponent(trimmedId)}`, {
+      await fetcher(`/v1/user/${encodeURIComponent(trimmedId)}`, {
         method: "DELETE",
       });
     } catch (caughtError) {

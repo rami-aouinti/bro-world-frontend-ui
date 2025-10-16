@@ -1293,7 +1293,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     try {
       const response = await fetcher<PostResponse>(
-        `/api/v1/posts/${encodeURIComponent(trimmedId)}`,
+        `/v1/posts/${encodeURIComponent(trimmedId)}`,
         {
           method: "GET",
         },
@@ -1360,7 +1360,7 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      const response = await fetcher<PostResponse>("/api/v1/posts", {
+      const response = await fetcher<PostResponse>("/v1/posts", {
         method: "POST",
         body: {
           title: sanitizeTextInput(payload.title),
@@ -1446,7 +1446,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     try {
       const response = await fetcher<PostResponse>(
-        `/api/v1/posts/${encodeURIComponent(trimmedId)}`,
+        `/v1/posts/${encodeURIComponent(trimmedId)}`,
         {
           method: "PATCH",
           body: updates,
@@ -1507,7 +1507,7 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      await fetcher(`/api/v1/posts/${encodeURIComponent(trimmedId)}`, {
+      await fetcher(`/v1/posts/${encodeURIComponent(trimmedId)}`, {
         method: "DELETE",
       });
     } catch (caughtError) {
@@ -1554,7 +1554,7 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      await fetcher(`/api/v1/posts/${encodeURIComponent(trimmedId)}/reactions`, {
+      await fetcher(`/v1/posts/${encodeURIComponent(trimmedId)}/reactions`, {
         method: "POST",
         body: { reactionType: payload },
       });
@@ -1579,7 +1579,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     try {
       const response = await fetcher<BlogCommentWithReplies[] | unknown>(
-        `/api/v1/posts/${encodeURIComponent(trimmedId)}/comments`,
+        `/v1/posts/${encodeURIComponent(trimmedId)}/comments`,
         {
           method: "GET",
         },
@@ -1616,7 +1616,7 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      await fetcher(`/api/v1/posts/${encodeURIComponent(trimmedId)}/comments`, {
+      await fetcher(`/v1/posts/${encodeURIComponent(trimmedId)}/comments`, {
         method: "POST",
         body: {
           content: trimmedContent,
@@ -1654,7 +1654,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     try {
       await fetcher(
-        `/api/v1/posts/${encodeURIComponent(trimmedId)}/comments/${encodeURIComponent(trimmedCommentId)}/reactions`,
+        `/v1/posts/${encodeURIComponent(trimmedId)}/comments/${encodeURIComponent(trimmedCommentId)}/reactions`,
         {
           method: "POST",
           body: { reactionType: trimmedReaction },
