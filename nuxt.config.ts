@@ -629,6 +629,7 @@ export default defineNuxtConfig({
   ],
   alias: {
     pinia: resolveFromRoot("lib/pinia-shim.ts"),
+    dayjs: "dayjs/esm/index.js",
   },
 
   components: [
