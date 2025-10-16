@@ -90,7 +90,7 @@
             dominant-baseline="middle"
             text-anchor="middle"
           >
-            {{ score }}
+            {{ scoreLabel }}
           </text>
           <text
             x="50%"
@@ -116,16 +116,32 @@ const props = defineProps<{
   description: string;
   badge: string;
   lastUpdated: string;
-  score: number;
-  maxScore?: number;
+  score: number | string;
+  maxScore?: number | string;
 }>();
 
-const maxScore = computed(() => Math.max(props.maxScore ?? 100, props.score));
+function toNumber(value: number | string | undefined, fallback: number) {
+  const parsed = Number.parseFloat(
+    typeof value === "number" ? String(value) : value ?? "",
+  );
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+const scoreValue = computed(() => toNumber(props.score, 0));
+const scoreLabel = computed(() => {
+  if (Number.isFinite(scoreValue.value)) {
+    return scoreValue.value.toString();
+  }
+  return typeof props.score === "string" ? props.score : String(props.score ?? "");
+});
+const maxScoreValue = computed(() =>
+  Math.max(toNumber(props.maxScore, 100), scoreValue.value),
+);
 const gaugeCircumference = computed(() => 2 * Math.PI * 90);
 const gaugeOffset = computed(() => {
   const normalizedScore = Math.max(
     0,
-    Math.min(props.score / maxScore.value, 1),
+    Math.min(scoreValue.value / maxScoreValue.value, 1),
   );
   return gaugeCircumference.value * (1 - normalizedScore);
 });
