@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { computed, onMounted, onUnmounted, ref, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -135,6 +135,26 @@ function asString(value: unknown): string | null {
 const profileStories = computed(() => profileStore.storyItems.value);
 const localStories = ref<Story[]>([]);
 const stories = computed<Story[]>(() => [...localStories.value, ...profileStories.value]);
+
+const storyObjectUrls = new Set<string>();
+
+function revokeStoryObjectUrls() {
+  if (!import.meta.client || storyObjectUrls.size === 0) {
+    return;
+  }
+
+  storyObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+  storyObjectUrls.clear();
+}
+
+function resetLocalStories() {
+  if (localStories.value.length === 0) {
+    return;
+  }
+
+  revokeStoryObjectUrls();
+  localStories.value = [];
+}
 
 const profileDisplayName = computed(() => {
   const preferred = asString(profileStore.preferredName.value);
@@ -174,29 +194,24 @@ const userAvatar = computed(() => profileStore.avatarUrl.value || defaultAvatar)
 const activeStory = ref<Story | null>(null);
 const isStoryViewerOpen = ref(false);
 
-watchEffect(() => {
-  if (!canAccessAuthenticatedContent.value) {
+watch(
+  canAccessAuthenticatedContent,
+  (canAccess) => {
+    if (canAccess) {
+      return;
+    }
+
     isStoryViewerOpen.value = false;
     activeStory.value = null;
-    if (localStories.value.length > 0) {
-      if (import.meta.client) {
-        localStories.value.forEach((story) => {
-          if (typeof story.image === "string" && storyObjectUrls.has(story.image)) {
-            URL.revokeObjectURL(story.image);
-            storyObjectUrls.delete(story.image);
-          }
-        });
-      }
-      localStories.value = [];
-    }
-  }
-});
+    resetLocalStories();
+  },
+  { immediate: true },
+);
 const lastStoryReaction = ref<{ storyId: Story["id"]; reactionId: StoryReaction["id"] } | null>(
   null,
 );
 const lastStoryMessage = ref<{ storyId: Story["id"]; message: string } | null>(null);
 const storyFileInput = ref<HTMLInputElement | null>(null);
-const storyObjectUrls = new Set<string>();
 
 function openStory(story: Story) {
   activeStory.value = story;
@@ -268,10 +283,7 @@ function onStorySelected(event: Event) {
 }
 
 onUnmounted(() => {
-  if (import.meta.client) {
-    storyObjectUrls.forEach((url) => URL.revokeObjectURL(url));
-  }
-  storyObjectUrls.clear();
+  revokeStoryObjectUrls();
 });
 const reactionEmojis: Record<ReactionType, string> = {
   like: "👍",
@@ -318,6 +330,7 @@ const loadMoreTrigger = ref<HTMLElement | null>(null);
 const initialLoadError = ref<string | null>(null);
 
 const isLoadErrorDismissed = ref(false);
+const loadMoreRequestInFlight = ref(false);
 
 const loadErrorMessage = computed(() => {
   if (isLoadErrorDismissed.value) {
@@ -330,12 +343,18 @@ const loadErrorMessage = computed(() => {
   return storeError || localError;
 });
 
-watchEffect(() => {
-  if (!error.value) {
-    initialLoadError.value = null;
+watch(
+  () => error.value,
+  (storeError) => {
+    if (!storeError) {
+      initialLoadError.value = null;
+      return;
+    }
+
     isLoadErrorDismissed.value = false;
-  }
-});
+  },
+  { immediate: true },
+);
 
 function dismissLoadError() {
   isLoadErrorDismissed.value = true;
@@ -343,14 +362,17 @@ function dismissLoadError() {
 }
 
 async function maybeLoadMore() {
-  if (!hasMore.value || pending.value || loadingMore.value) {
+  if (loadMoreRequestInFlight.value || !hasMore.value || pending.value || loadingMore.value) {
     return;
   }
 
   try {
+    loadMoreRequestInFlight.value = true;
     await fetchMorePosts({ params: { pageSize: INITIAL_PAGE_SIZE } });
   } catch (error) {
     console.error("Failed to load more posts", error);
+  } finally {
+    loadMoreRequestInFlight.value = false;
   }
 }
 

@@ -5,7 +5,7 @@
     glow
   >
     <PostMeta
-      :user="post.user"
+      :user="postUser"
       :default-avatar="defaultAvatar"
       :published-label="publishedLabel"
       :is-authenticated="isAuthenticated"
@@ -51,8 +51,8 @@
         v-if="shouldRenderCommentThread"
         v-model:composer-visible="isCommentComposerVisible"
         :counts="{ care: 0, love: 0, wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
-        :nodes="post.comments_preview || []"
-        :current-user="currentUser || []"
+        :nodes="commentThreadNodes"
+        :current-user="currentUserForThread"
         @like="handleCommentLike"
         @reply="openReply"
       />
@@ -175,6 +175,9 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const postUserAriaName = computed(
+  () => postUserDisplayName.value || postUser.value?.username || postUser.value?.email || t("blog.posts.actions.follow"),
+);
 const { $notify } = useNuxtApp();
 const { reactToPost, addComment, reactToComment, getComments } = usePostsStore();
 const {
@@ -186,6 +189,18 @@ const {
   resetFollowError,
 } = useAuthStore();
 const post = computed(() => props.post);
+const postId = computed(() => post.value.id?.trim() ?? "");
+const postUser = computed(() => post.value.user);
+const postUserDisplayName = computed(() => {
+  const user = postUser.value;
+  const parts = [user?.firstName, user?.lastName].filter(Boolean) as string[];
+
+  if (parts.length > 0) {
+    return parts.join(" ");
+  }
+
+  return user?.username || user?.email || "";
+});
 const postReacting = ref(false);
 const postReactionError = ref<string | null>(null);
 const commentContent = ref("");
@@ -218,7 +233,7 @@ type Comment = {
 const sortBy = ref<"relevant" | "newest" | "all">("relevant");
 
 const sorted = computed(() => {
-  const arr = [...comments.value];
+  const arr = [...commentThreadNodes.value];
 
   if (sortBy.value === "newest") {
     return arr.sort((a, b) => b.createdAt - a.createdAt);
@@ -238,22 +253,22 @@ const publishedLabel = computed(() => formatRelativeTime(post.value.publishedAt)
 
 const isAuthenticated = computed(() => isAuthenticatedComputed.value);
 const isAuthor = computed(
-  () => isAuthenticated.value && currentUser.value?.id === post.value.user.id,
+  () => isAuthenticated.value && currentUser.value?.id === postUser.value.id,
 );
-const isFollowing = computed(() => Boolean(following.value?.[post.value.user.id]));
-const followLoading = computed(() => Boolean(followPending.value?.[post.value.user.id]));
+const isFollowing = computed(() => Boolean(following.value?.[postUser.value.id]));
+const followLoading = computed(() => Boolean(followPending.value?.[postUser.value.id]));
 
 const followLabel = computed(() => t("blog.posts.actions.follow"));
 const followLoadingLabel = computed(() => t("blog.posts.actions.following"));
 const followAriaLabel = computed(() =>
   t("blog.posts.actions.followAria", {
-    name: `${post.value.user.firstName} ${post.value.user.lastName}`,
+    name: postUserAriaName.value,
   }),
 );
 const followingLabel = computed(() => t("blog.posts.actions.following"));
 const followingAriaLabel = computed(() =>
   t("blog.posts.actions.followingAria", {
-    name: `${post.value.user.firstName} ${post.value.user.lastName}`,
+    name: postUserAriaName.value,
   }),
 );
 const actionsAriaLabel = computed(() => t("blog.posts.actions.openMenu"));
@@ -262,7 +277,8 @@ const deleteLabel = computed(() => t("blog.posts.actions.delete"));
 const preferEagerMediaLoading = computed(() => Boolean(props.preferEagerMediaLoading));
 const isPostReacted = computed(() => Boolean(post.value.isReacted));
 
-const comments = computed(() => {
+const emptyCommentNodes: BlogCommentWithReplies[] = [];
+const commentThreadNodes = computed(() => {
   if (Array.isArray(loadedComments.value)) {
     return loadedComments.value;
   }
@@ -283,8 +299,9 @@ const comments = computed(() => {
     return childComments as typeof post.value.comments_preview;
   }
 
-  return post.value.comments_preview ?? [];
+  return post.value.comments_preview ?? emptyCommentNodes;
 });
+const currentUserForThread = computed(() => currentUser.value ?? undefined);
 
 function openReply(id: string) {
   /* TODO */
@@ -389,7 +406,7 @@ const deleteDialogCancelLabel = computed(() => t("blog.posts.actions.cancel"));
 const loadCommentsLabel = computed(() => t("blog.comments.load"));
 
 watch(
-  () => post.value.id,
+  postId,
   () => {
     commentContent.value = "";
     commentFeedback.value = null;
@@ -426,13 +443,13 @@ async function handleFollow() {
 
   try {
     resetFollowError();
-    await followAuthor(post.value.user.id);
+    await followAuthor(postUser.value.id);
 
     $notify({
       type: "success",
       title: t("blog.posts.actions.followSuccessTitle"),
       message: t("blog.posts.actions.followSuccessDescription", {
-        name: `${post.value.user.firstName} ${post.value.user.lastName}`,
+        name: postUserAriaName.value,
       }),
     });
   } catch (error) {
@@ -462,7 +479,13 @@ async function handleTogglePostReaction() {
 
   try {
     const action: ReactionAction = isPostReacted.value ? "dislike" : "like";
-    await reactToPost(post.value.id, action);
+    const id = postId.value;
+
+    if (!id) {
+      throw new Error(t("blog.reactions.posts.reactionError"));
+    }
+
+    await reactToPost(id, action);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
     postReactionError.value = message || t("blog.reactions.posts.reactionError");
@@ -489,7 +512,13 @@ async function handleCommentReaction(commentId: string, reactionType: ReactionAc
   }
 
   try {
-    await reactToComment(post.value.id, commentId, reactionType);
+    const id = postId.value;
+
+    if (!id) {
+      throw new Error(t("blog.comments.reactionError"));
+    }
+
+    await reactToComment(id, commentId, reactionType);
     await loadComments({ force: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error ?? "");
@@ -498,9 +527,9 @@ async function handleCommentReaction(commentId: string, reactionType: ReactionAc
 }
 
 async function loadComments(options: { force?: boolean } = {}) {
-  const postId = post.value.id?.trim();
+  const id = postId.value;
 
-  if (!postId) {
+  if (!id) {
     loadedComments.value = [];
     commentsError.value = null;
     commentsLoading.value = false;
@@ -522,7 +551,7 @@ async function loadComments(options: { force?: boolean } = {}) {
 
   const request = (async () => {
     try {
-      const response = await getComments(postId);
+      const response = await getComments(id);
       loadedComments.value = Array.isArray(response) ? response : [];
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error ?? "");
@@ -539,7 +568,7 @@ async function loadComments(options: { force?: boolean } = {}) {
 }
 
 function requestComments(options: { force?: boolean } = {}) {
-  if (!post.value.id) {
+  if (!postId.value) {
     return;
   }
 
@@ -573,15 +602,15 @@ watch(
 );
 
 watch(
-  () => post.value.id,
-  () => {
+  postId,
+  (id) => {
     loadedComments.value = null;
     commentsError.value = null;
     commentsLoading.value = false;
     activeCommentsRequest.value = null;
     commentsActivated.value = false;
 
-    if (post.value.id && isCommentsSectionVisible.value) {
+    if (id && isCommentsSectionVisible.value) {
       requestComments();
     }
   },
