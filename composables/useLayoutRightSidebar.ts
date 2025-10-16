@@ -2,7 +2,7 @@ import {
   markRaw,
   onBeforeUnmount,
   toValue,
-  watchEffect,
+  watch,
   type Component,
   type MaybeRefOrGetter,
 } from "vue";
@@ -47,9 +47,13 @@ export function useLayoutRightSidebar() {
       return;
     }
 
-    watchEffect(() => {
-      rightSidebarContent.value = normalizeContent(toValue(content));
-    });
+    watch(
+      () => toValue(content),
+      (value) => {
+        rightSidebarContent.value = normalizeContent(value);
+      },
+      { immediate: true, flush: "post" },
+    );
 
     onBeforeUnmount(() => {
       rightSidebarContent.value = null;
