@@ -3,6 +3,7 @@ import { tryUseNuxtApp, useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import type { FriendEntry, FriendStory, ProfileUser } from "~/types/pages/profile";
 import type { Story } from "~/types/stories";
+import { resolveApiFetcher } from "~/lib/api/fetcher";
 
 const DEFAULT_AVATAR = "/images/avatars/avatar-default.svg";
 const CACHE_TTL_MS = 60_000;
@@ -306,7 +307,10 @@ export const useProfileStore = defineStore("profile", () => {
   function setProfile(data: ProfileUser | null) {
     profileState.value = data;
 
-    if (!data) {
+    if (data) {
+      lastFetchedState.value = Date.now();
+      errorState.value = null;
+    } else {
       lastFetchedState.value = null;
       errorState.value = null;
     }
@@ -320,8 +324,41 @@ export const useProfileStore = defineStore("profile", () => {
     activeRequest = null;
   }
 
+  function isUnauthorizedError(error: unknown): boolean {
+    const statusCode =
+      typeof (error as { statusCode?: number })?.statusCode === "number"
+        ? (error as { statusCode: number }).statusCode
+        : typeof (error as { response?: { status?: number } })?.response?.status === "number"
+          ? ((error as { response: { status: number } }).response.status ?? null)
+          : null;
+
+    return statusCode === 401;
+  }
+
+  function extractErrorMessage(error: unknown): string {
+    if (error && typeof error === "object") {
+      const maybeMessage = (error as { data?: { message?: unknown } }).data?.message;
+
+      if (typeof maybeMessage === "string" && maybeMessage.trim()) {
+        return maybeMessage;
+      }
+
+      const responseMessage = (error as { message?: unknown }).message;
+
+      if (typeof responseMessage === "string" && responseMessage.trim()) {
+        return responseMessage;
+      }
+    }
+
+    if (error instanceof Error && error.message) {
+      return error.message;
+    }
+
+    return "Unable to load profile. Please try again later.";
+  }
+
   async function fetchProfile(options: FetchProfileOptions = {}) {
-    const { force = false } = options;
+    const { force = false, background = false } = options;
     const now = Date.now();
 
     if (
@@ -333,38 +370,50 @@ export const useProfileStore = defineStore("profile", () => {
       return profileState.value;
     }
 
-    if (pendingState.value && activeRequest) {
+    if (activeRequest) {
       return activeRequest;
     }
 
-    pendingState.value = true;
-    errorState.value = null;
+    const request = (async () => {
+      if (!background) {
+        pendingState.value = true;
+      }
 
-    const request = Promise.resolve()
-      .then(() => {
-        const profile = resolveProfileResponse(profileState.value);
+      errorState.value = null;
+
+      try {
+        const fetcher = resolveApiFetcher();
+        const response = await fetcher<ProfileResponse>("/v1/profile", {
+          method: "GET",
+          context: { suppressErrorNotification: true },
+        });
+
+        const profile = resolveProfileResponse(response);
 
         if (!profile) {
-          profileState.value = null;
-          errorState.value = null;
-          lastFetchedState.value = null;
-
-          return profileState.value;
+          throw new Error("Invalid profile payload");
         }
 
-        if (profile !== profileState.value) {
-          profileState.value = profile;
-        }
-
-        lastFetchedState.value = Date.now();
-        errorState.value = null;
+        setProfile(profile);
 
         return profile;
-      })
-      .finally(() => {
-        pendingState.value = false;
+      } catch (error) {
+        if (isUnauthorizedError(error)) {
+          setProfile(null);
+          return null;
+        }
+
+        errorState.value = extractErrorMessage(error);
+
+        throw error;
+      } finally {
+        if (!background) {
+          pendingState.value = false;
+        }
+
         activeRequest = null;
-      });
+      }
+    })();
 
     activeRequest = request;
 

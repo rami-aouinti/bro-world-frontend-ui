@@ -203,6 +203,10 @@ export function useNuxtApp() {
   };
 }
 
+export function tryUseNuxtApp() {
+  return useNuxtApp();
+}
+
 export function useI18n() {
   return {
     t: (key: string, params?: Record<string, unknown>) => {

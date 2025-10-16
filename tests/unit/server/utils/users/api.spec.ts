@@ -12,6 +12,39 @@ const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
 const getSessionUserMock = vi.hoisted(() =>
   vi.fn<[H3Event], Record<string, unknown> | null>(),
 );
+const requireSessionTokenMock = vi.hoisted(() =>
+  vi.fn(
+    (
+      event: H3Event,
+      options: { statusCode?: number; statusMessage?: string; message?: string } = {},
+    ) => {
+      const token = getSessionTokenMock(event);
+
+      if (token) {
+        return token;
+      }
+
+      const statusCode = options.statusCode ?? 401;
+      const statusMessage = options.statusMessage ?? "Authentication required";
+      const message = options.message;
+
+      throw createError({
+        statusCode,
+        statusMessage,
+        data: message ? { message } : undefined,
+      });
+    },
+  ),
+);
+const readCachedProfileMock = vi.hoisted(() =>
+  vi.fn<[H3Event, string], Promise<Record<string, unknown> | null>>(),
+);
+const writeCachedProfileMock = vi.hoisted(() =>
+  vi.fn<[H3Event, string, Record<string, unknown>], Promise<void>>(),
+);
+const deleteCachedProfileMock = vi.hoisted(() =>
+  vi.fn<[H3Event, string], Promise<void>>(),
+);
 const withAuthHeadersMock = vi.hoisted(() =>
   vi.fn((event: H3Event, headers: Record<string, string> = {}) => {
     const token = getSessionTokenMock(event);
@@ -36,7 +69,14 @@ const useRuntimeConfigMock = vi.hoisted(() =>
 vi.mock("~/server/utils/auth/session", () => ({
   getSessionToken: getSessionTokenMock,
   getSessionUser: getSessionUserMock,
+  requireSessionToken: requireSessionTokenMock,
   withAuthHeaders: withAuthHeadersMock,
+}));
+
+vi.mock("~/server/utils/cache/profile", () => ({
+  readCachedProfile: readCachedProfileMock,
+  writeCachedProfile: writeCachedProfileMock,
+  deleteCachedProfile: deleteCachedProfileMock,
 }));
 
 vi.mock("#imports", () => ({
@@ -51,6 +91,10 @@ const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 beforeEach(() => {
   getSessionTokenMock.mockReset();
   getSessionUserMock.mockReset();
+  requireSessionTokenMock.mockClear();
+  readCachedProfileMock.mockReset();
+  writeCachedProfileMock.mockReset();
+  deleteCachedProfileMock.mockReset();
   withAuthHeadersMock.mockReset();
   useRuntimeConfigMock.mockReset();
   consoleWarnSpy.mockClear();
@@ -244,49 +288,125 @@ describe("fetchUsersListFromSource", () => {
 });
 
 describe("fetchCurrentProfileFromSource", () => {
-  it("returns the normalized profile from the authenticated session user", async () => {
+  it("returns the cached profile when available", async () => {
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
-    const sessionUser = {
-      id: "123",
-      username: "demo",
-      email: "demo@example.com",
-      firstName: "Demo",
-      friends: {
-        alice: {
-          user: { id: "alice-id", username: "alice" },
-          stories: [{ id: "story-1" }, null],
-          status: 2,
-        },
-      },
-      stories: [{ id: "own-story" }, null],
-      profile: { id: "profile-1", title: "Admin" },
+    const cachedProfile = {
+      id: "cached-id",
+      username: "cached-user",
+      email: "cached@example.com",
+      friends: [],
+      stories: [],
     };
 
-    getSessionUserMock.mockReturnValue(sessionUser);
+    getSessionTokenMock.mockReturnValue("session-token");
+    readCachedProfileMock.mockResolvedValue(cachedProfile);
 
     const result = await fetchCurrentProfileFromSource(event);
 
-    expect(result).toMatchObject({
-      id: "123",
-      username: "demo",
-      email: "demo@example.com",
-      firstName: "Demo",
-      profile: { id: "profile-1", title: "Admin" },
-    });
+    expect(result).toEqual(cachedProfile);
+    expect(readCachedProfileMock).toHaveBeenCalledWith(event, "session-token");
+    expect(writeCachedProfileMock).not.toHaveBeenCalled();
+  });
+
+  it("fetches the profile from the API and caches it when no cache is present", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+    const apiProfile = {
+      data: {
+        id: "123",
+        username: "demo",
+        email: "demo@example.com",
+        friends: { one: { user: { id: "friend-1", username: "friend" }, stories: [] } },
+        stories: [{ id: "story-1" }],
+      },
+    };
+
+    getSessionTokenMock.mockReturnValue("session-token");
+    readCachedProfileMock.mockResolvedValue(null);
+
+    const fetchMock = vi.fn().mockResolvedValue(apiProfile);
+    globalScope.$fetch = fetchMock;
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [endpoint] = fetchMock.mock.calls[0];
+    expect(endpoint).toBe("https://bro-world.org/api/v1/profile");
+    expect(writeCachedProfileMock).toHaveBeenCalledWith(
+      event,
+      "session-token",
+      expect.objectContaining({ id: "123", username: "demo" }),
+    );
+    expect(result).toMatchObject({ id: "123", username: "demo", email: "demo@example.com" });
+    expect(result.friends).toEqual([
+      {
+        user: { id: "friend-1", username: "friend" },
+        stories: [],
+      },
+    ]);
+    expect(result.stories).toEqual([{ id: "story-1" }]);
+  });
+
+  it("falls back to the session user when the API request fails", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+    const sessionUser = {
+      id: "fallback-id",
+      username: "fallback",
+      email: "fallback@example.com",
+      friends: { bob: { user: { id: "bob", username: "bob" }, stories: [{ id: "story-bob" }] } },
+      stories: [{ id: "own-story" }],
+    };
+
+    getSessionTokenMock.mockReturnValue("session-token");
+    readCachedProfileMock.mockResolvedValue(null);
+    getSessionUserMock.mockReturnValue(sessionUser);
+
+    const fetchMock = vi
+      .fn()
+      .mockRejectedValue(createError({ statusCode: 502, statusMessage: "Bad Gateway" }));
+    globalScope.$fetch = fetchMock;
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(writeCachedProfileMock).toHaveBeenCalledWith(
+      event,
+      "session-token",
+      expect.objectContaining({ id: "fallback-id" }),
+    );
+    expect(result).toMatchObject({ id: "fallback-id", username: "fallback" });
     expect(result.stories).toEqual([{ id: "own-story" }]);
     expect(result.friends).toEqual([
       {
-        user: { id: "alice-id", username: "alice" },
-        stories: [{ id: "story-1" }],
-        status: 2,
+        user: { id: "bob", username: "bob" },
+        stories: [{ id: "story-bob" }],
       },
     ]);
   });
 
-  it("throws an authentication error when no session user is available", async () => {
+  it("clears cached entries and propagates authorization errors", async () => {
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
 
+    getSessionTokenMock.mockReturnValue("session-token");
+    readCachedProfileMock.mockResolvedValue(null);
     getSessionUserMock.mockReturnValue(null);
+
+    const fetchMock = vi
+      .fn()
+      .mockRejectedValue(createError({ statusCode: 401, statusMessage: "Unauthorized" }));
+    globalScope.$fetch = fetchMock;
+
+    await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
+      statusCode: 401,
+      statusMessage: "Authentication is required to access this resource.",
+    });
+
+    expect(deleteCachedProfileMock).toHaveBeenCalledWith(event, "session-token");
+  });
+
+  it("throws an authentication error when no session token is available", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+
+    getSessionTokenMock.mockReturnValue(null);
 
     await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
       statusCode: 401,

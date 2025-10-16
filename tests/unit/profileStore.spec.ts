@@ -5,10 +5,17 @@ import { createPinia } from "~/lib/pinia-shim";
 import type { ProfileUser } from "~/types/pages/profile";
 import { __resetNuxtStateMocks } from "#imports";
 
+const apiFetcherMock = vi.hoisted(() => vi.fn());
+
+vi.mock("~/lib/api/fetcher", () => ({
+  resolveApiFetcher: vi.fn(() => apiFetcherMock),
+}));
+
 describe("profile store", () => {
   beforeEach(() => {
     __resetNuxtStateMocks();
     vi.unstubAllGlobals();
+    apiFetcherMock.mockReset();
   });
 
   afterEach(() => {
@@ -53,19 +60,18 @@ describe("profile store", () => {
 
     store.setProfile(profile);
 
-    const consoleErrorSpy = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => undefined);
+    apiFetcherMock.mockRejectedValue({ response: { status: 401 } });
 
     store.clearProfile();
 
-    const result = await store.fetchProfile();
+    const result = await store.fetchProfile({ force: true });
 
     expect(result).toBeNull();
     expect(store.profile.value).toBeNull();
     expect(store.error.value).toBeNull();
-    expect(consoleErrorSpy).not.toHaveBeenCalled();
-
-    consoleErrorSpy.mockRestore();
+    expect(apiFetcherMock).toHaveBeenCalledWith(
+      "/v1/profile",
+      expect.objectContaining({ method: "GET" }),
+    );
   });
 });
