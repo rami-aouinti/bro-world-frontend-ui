@@ -435,7 +435,19 @@ const vuetifyTheme = useTheme();
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
-const showNavigation = computed(() => currentRoute.value?.meta?.showNavbar !== false);
+
+const initialShowNavigation = useState(
+  "layout-initial-show-navigation",
+  () => currentRoute.value?.meta?.showNavbar !== false,
+);
+
+const showNavigation = computed(() => {
+  if (!isHydrated.value) {
+    return initialShowNavigation.value;
+  }
+
+  return currentRoute.value?.meta?.showNavbar !== false;
+});
 const { rightSidebarContent } = useLayoutRightSidebar();
 const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
 const DEFAULT_APP_BAR_HEIGHT = 72;
@@ -836,27 +848,28 @@ function setupNavigationReactivity() {
         return;
       }
 
+      if (!isHydrated.value) {
+        return;
+      }
+
       isTopBarReady.value = Boolean(topBarRef.value);
       nextTick(() => {
         isLeftDrawerReady.value = true;
       });
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 
   if (import.meta.client) {
     watch(
-      () => [isHydrated.value, topBarRef.value],
-      ([hydrated, instance]) => {
-        if (!hydrated) {
-          return;
-        }
-
+      () => topBarRef.value,
+      (instance) => {
+        if (!isHydrated.value) return;
         if (instance && showNavigation.value) {
           isTopBarReady.value = true;
         }
       },
-      { immediate: true },
+      { immediate: false },
     );
   }
 
@@ -882,7 +895,7 @@ function setupNavigationReactivity() {
       leftDrawer.value = true;
       rightDrawer.value = canShowRight;
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 
   watch(
@@ -919,7 +932,7 @@ function setupNavigationReactivity() {
       }
       updateActiveSidebar(path, sidebarItems.value);
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 
   watch(
@@ -932,7 +945,7 @@ function setupNavigationReactivity() {
       const path = currentRoute.value?.fullPath ?? "/";
       updateActiveSidebar(path, items);
     },
-    { immediate: true },
+    { immediate: import.meta.server },
   );
 
   if (import.meta.server) {
