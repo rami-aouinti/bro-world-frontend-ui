@@ -818,17 +818,16 @@ const areSidebarsReady = computed(() => {
  */
 function setupNavigationReactivity() {
   watch(
-    showNavigation,
-    (visible) => {
+    () => [isHydrated.value, showNavigation.value],
+    ([hydrated, visible]) => {
       if (!visible) {
         isLeftDrawerReady.value = true;
         isTopBarReady.value = true;
         return;
       }
 
-      isLeftDrawerReady.value = false;
-
-      if (import.meta.server) {
+      if (!hydrated) {
+        isLeftDrawerReady.value = false;
         isTopBarReady.value = false;
         return;
       }
@@ -843,8 +842,12 @@ function setupNavigationReactivity() {
 
   if (import.meta.client) {
     watch(
-      () => topBarRef.value,
-      (instance) => {
+      () => [isHydrated.value, topBarRef.value],
+      ([hydrated, instance]) => {
+        if (!hydrated) {
+          return;
+        }
+
         if (instance && showNavigation.value) {
           isTopBarReady.value = true;
         }
@@ -854,8 +857,12 @@ function setupNavigationReactivity() {
   }
 
   watch(
-    [isMobile, showNavigation],
-    ([mobile, navigationVisible]) => {
+    () => [isHydrated.value, isMobile.value, showNavigation.value, canShowRightWidgets.value],
+    ([hydrated, mobile, navigationVisible, canShowRight]) => {
+      if (!hydrated) {
+        return;
+      }
+
       if (!navigationVisible) {
         leftDrawer.value = false;
         rightDrawer.value = false;
@@ -869,27 +876,39 @@ function setupNavigationReactivity() {
       }
 
       leftDrawer.value = true;
-      rightDrawer.value = canShowRightWidgets.value;
+      rightDrawer.value = canShowRight;
     },
     { immediate: true },
   );
 
-  watch(canShowRightWidgets, (value) => {
-    if (!value) {
-      rightDrawer.value = false;
-      isRightDrawerReady.value = true;
-      return;
-    }
+  watch(
+    () => [isHydrated.value, canShowRightWidgets.value, isMobile.value],
+    ([hydrated, value, mobile]) => {
+      if (!hydrated) {
+        return;
+      }
 
-    isRightDrawerReady.value = false;
-    if (!isMobile.value) {
-      rightDrawer.value = true;
-    }
-  });
+      if (!value) {
+        rightDrawer.value = false;
+        isRightDrawerReady.value = true;
+        return;
+      }
+
+      isRightDrawerReady.value = false;
+      if (!mobile) {
+        rightDrawer.value = true;
+      }
+    },
+    { immediate: true },
+  );
 
   watch(
-    () => currentRoute.value?.fullPath ?? "",
-    (path) => {
+    () => [isHydrated.value, currentRoute.value?.fullPath ?? ""],
+    ([hydrated, path]) => {
+      if (!hydrated) {
+        return;
+      }
+
       if (isMobile.value) {
         leftDrawer.value = false;
         rightDrawer.value = false;
@@ -900,13 +919,22 @@ function setupNavigationReactivity() {
   );
 
   watch(
-    sidebarItems,
-    (items) => {
+    () => [isHydrated.value, sidebarItems.value],
+    ([hydrated, items]) => {
+      if (!hydrated) {
+        return;
+      }
+
       const path = currentRoute.value?.fullPath ?? "/";
       updateActiveSidebar(path, items);
     },
     { immediate: true },
   );
+
+  if (import.meta.server) {
+    const initialPath = currentRoute.value?.fullPath ?? "/";
+    updateActiveSidebar(initialPath, sidebarItems.value);
+  }
 }
 
 setupNavigationReactivity();
