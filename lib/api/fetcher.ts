@@ -75,7 +75,7 @@ export function resolveApiFetcher(): ApiFetcher {
     const forwardedHeaders = useRequestHeaders(["cookie", "authorization"]);
     const client = axios.create({
       baseURL,
-      withCredentials: shouldSendCredentials(baseURL),
+      withCredentials: false,
     });
 
     attachAuthInterceptor(client, auth, forwardedHeaders);

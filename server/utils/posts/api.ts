@@ -228,6 +228,7 @@ export async function fetchPostByIdFromSource(event: H3Event, postId: string): P
 
   const response = await $fetch<BlogPost>(endpoint, {
     method: "GET",
+    withCredentials: false,
     headers: buildHeaders(event, Boolean(token)),
   });
 

@@ -246,7 +246,7 @@ export function createApiFetcher(client?: AxiosInstance): ApiFetcher {
     const baseURL =
       typeof axiosClient.defaults.baseURL === "string" ? axiosClient.defaults.baseURL : undefined;
     const resolvedUrl = resolveRequestUrl(baseURL, url);
-    let withCredentials = requestConfig.withCredentials;
+    let withCredentials = false;
 
     if (typeof withCredentials !== "boolean") {
       if (!import.meta.server) {
