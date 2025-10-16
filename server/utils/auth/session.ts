@@ -18,9 +18,11 @@ interface SessionCookiesConfig {
 }
 
 export const SESSION_COOKIE_SYNC_SKIP_FLAG = "__broSkipSessionCookieSync" as const;
+const SESSION_TOKEN_CONTEXT_KEY = "__broSessionToken" as const;
 
 type SessionEventContext = {
   [SESSION_COOKIE_SYNC_SKIP_FLAG]?: boolean;
+  [SESSION_TOKEN_CONTEXT_KEY]?: string | null;
 };
 
 function isResponseWritable(event: H3Event): boolean {
@@ -150,6 +152,25 @@ function sanitizeTokenValue(raw: string | null | undefined): string | null {
   return trimmed;
 }
 
+function readSessionTokenFromContext(event: H3Event): string | null {
+  const context = event.context as SessionEventContext;
+  const raw = context[SESSION_TOKEN_CONTEXT_KEY];
+
+  return sanitizeTokenValue(raw);
+}
+
+function writeSessionTokenToContext(event: H3Event, token: string | null | undefined) {
+  const context = event.context as SessionEventContext;
+  const sanitized = sanitizeTokenValue(token);
+
+  if (sanitized) {
+    context[SESSION_TOKEN_CONTEXT_KEY] = sanitized;
+    return;
+  }
+
+  delete context[SESSION_TOKEN_CONTEXT_KEY];
+}
+
 function extractBearerToken(raw: string | null | undefined): string | null {
   if (!raw) {
     return null;
@@ -167,11 +188,18 @@ function extractBearerToken(raw: string | null | undefined): string | null {
 }
 
 export function getSessionToken(event: H3Event): string | null {
+  const contextToken = readSessionTokenFromContext(event);
+
+  if (contextToken) {
+    return contextToken;
+  }
+
   const { tokenCookieName, sessionTokenCookieName, tokenPresenceCookieName, maxAge } =
     resolveCookiesConfig(event);
   const token = sanitizeTokenValue(getCookie(event, tokenCookieName));
 
   if (token) {
+    writeSessionTokenToContext(event, token);
     return token;
   }
 
@@ -240,10 +268,15 @@ export function getSessionToken(event: H3Event): string | null {
       }
     }
 
+    writeSessionTokenToContext(event, fallbackToken);
     return fallbackToken;
   }
 
-  return extractBearerToken(getHeader(event, "authorization"));
+  const headerToken = extractBearerToken(getHeader(event, "authorization"));
+
+  writeSessionTokenToContext(event, headerToken);
+
+  return headerToken;
 }
 
 export function getSessionUser(event: H3Event): AuthUser | null {
@@ -274,11 +307,14 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   const secure = shouldUseSecureCookies(event);
   const sanitizedUser = sanitizeSessionUser(user);
   const serializedUserCookie = serializeAuthUserCookie(sanitizedUser);
+  const normalizedToken = sanitizeTokenValue(token) ?? token;
+
+  writeSessionTokenToContext(event, normalizedToken);
 
   safeSetCookie(
     event,
     tokenCookieName,
-    token,
+    normalizedToken,
     withSecureCookieOptions(
       {
         httpOnly: true,
@@ -292,7 +328,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
   safeSetCookie(
     event,
     sessionTokenCookieName,
-    token,
+    normalizedToken,
     withSecureCookieOptions(
       {
         httpOnly: false,
@@ -336,7 +372,7 @@ export function setSession(event: H3Event, token: string, user: AuthUser) {
     ),
   );
 
-  void writeCachedSessionUser(event, token, sanitizedUser);
+  void writeCachedSessionUser(event, normalizedToken, sanitizedUser);
 }
 
 export function clearAuthSession(event: H3Event) {
@@ -344,6 +380,8 @@ export function clearAuthSession(event: H3Event) {
   const previousSkip = context[SESSION_COOKIE_SYNC_SKIP_FLAG];
   context[SESSION_COOKIE_SYNC_SKIP_FLAG] = true;
   const sessionToken = getSessionToken(event);
+
+  writeSessionTokenToContext(event, null);
 
   if (typeof previousSkip === "undefined") {
     delete context[SESSION_COOKIE_SYNC_SKIP_FLAG];
