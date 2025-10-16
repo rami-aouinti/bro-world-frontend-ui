@@ -49,11 +49,14 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error("Failed to load profile events", error);
 
+    const message = resolveErrorMessage(error);
+
     throw createError({
       statusCode: resolveStatusCode(error),
-      statusMessage: "Profile events request failed",
+      statusMessage: message,
+      message,
       data: {
-        message: resolveErrorMessage(error),
+        message,
       },
     });
   }

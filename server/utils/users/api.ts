@@ -251,12 +251,12 @@ async function requestUsersApi<T>(
         authHeaders.Authorization ?? authHeaders.authorization ?? `Bearer ${sessionToken}`;
 
       headers.set("authorization", value);
-    } else if (forwardedAuthorization) {
-      headers.set("authorization", forwardedAuthorization);
     } else if (serviceToken) {
       const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
 
       headers.set("authorization", value);
+    } else if (forwardedAuthorization) {
+      headers.set("authorization", forwardedAuthorization);
     }
   }
 

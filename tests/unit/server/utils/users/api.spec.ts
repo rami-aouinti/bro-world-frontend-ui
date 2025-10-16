@@ -9,6 +9,20 @@ const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
 const getSessionUserMock = vi.hoisted(() =>
   vi.fn<[H3Event], Record<string, unknown> | null>(),
 );
+const withAuthHeadersMock = vi.hoisted(() =>
+  vi.fn((event: H3Event, headers: Record<string, string> = {}) => {
+    const token = getSessionTokenMock(event);
+
+    if (!token) {
+      return headers;
+    }
+
+    return {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    };
+  }),
+);
 const useRuntimeConfigMock = vi.hoisted(() =>
   vi.fn(() => ({
     auth: {},
@@ -19,6 +33,7 @@ const useRuntimeConfigMock = vi.hoisted(() =>
 vi.mock("~/server/utils/auth/session", () => ({
   getSessionToken: getSessionTokenMock,
   getSessionUser: getSessionUserMock,
+  withAuthHeaders: withAuthHeadersMock,
 }));
 
 vi.mock("#imports", () => ({
@@ -32,6 +47,7 @@ const originalFetch = globalScope.$fetch;
 beforeEach(() => {
   getSessionTokenMock.mockReset();
   getSessionUserMock.mockReset();
+  withAuthHeadersMock.mockReset();
   useRuntimeConfigMock.mockReset();
 });
 
@@ -92,7 +108,32 @@ describe("fetchProfileEventsFromSource", () => {
     expect(options?.headers?.authorization).toBe("Bearer new-session-token");
   });
 
-  it("falls back to the forwarded authorization header when no session token is available", async () => {
+  it("uses the service token when no session token is available", async () => {
+    const fetchMock = vi.fn().mockResolvedValue([]);
+
+    globalScope.$fetch = fetchMock;
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: { apiToken: "bro" } });
+    getSessionTokenMock.mockReturnValue(null);
+    getSessionUserMock.mockReturnValue(null);
+
+    const event = {
+      node: {
+        req: {
+          headers: {
+            authorization: "Bearer forwarded-token",
+          },
+        },
+      },
+    } as unknown as H3Event;
+
+    await fetchProfileEventsFromSource(event);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [, options] = fetchMock.mock.calls[0];
+    expect(options?.headers?.authorization).toBe("Bearer bro");
+  });
+
+  it("falls back to the forwarded authorization header when no tokens are available", async () => {
     const fetchMock = vi.fn().mockResolvedValue([]);
 
     globalScope.$fetch = fetchMock;
