@@ -231,7 +231,8 @@ async function requestUsersApi<T>(
   options: UsersFetchOptions = {},
 ): Promise<T> {
   const config = useRuntimeConfig(event);
-  const endpoint = joinURL(getUsersApiBase(event), path);
+  const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
+  const endpoint = joinURL(getUsersApiBase(event), normalizedPath);
 
   const serviceToken = config.users?.apiToken?.trim();
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();
