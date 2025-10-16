@@ -1,5 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { H3Event } from "h3";
+import {
+  fetchCurrentProfileFromSource,
+  fetchProfileEventsFromSource,
+} from "~/server/utils/users/api";
 
 const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
 const getSessionUserMock = vi.hoisted(() =>
@@ -20,11 +24,6 @@ vi.mock("~/server/utils/auth/session", () => ({
 vi.mock("#imports", () => ({
   useRuntimeConfig: useRuntimeConfigMock,
 }));
-
-import {
-  fetchCurrentProfileFromSource,
-  fetchProfileEventsFromSource,
-} from "~/server/utils/users/api";
 
 const globalScope = globalThis as Record<string, unknown>;
 const hadOriginalFetch = Object.prototype.hasOwnProperty.call(globalScope, "$fetch");

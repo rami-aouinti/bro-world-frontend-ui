@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { createApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
-import { useRequestHeaders, useRequestURL } from "#imports";
+import { useCookie, useRequestHeaders, useRequestURL } from "#imports";
 import { useAuthSession } from "~/stores/auth-session";
 import { shouldSendCredentials } from "~/lib/api/credentials";
 
@@ -8,6 +8,16 @@ interface ErrorPayload {
   message?: string;
   error?: string;
   title?: string;
+}
+
+function sanitizeToken(raw: string | null | undefined): string | null {
+  if (typeof raw !== "string") {
+    return null;
+  }
+
+  const trimmed = raw.trim();
+
+  return trimmed.length > 0 ? trimmed : null;
 }
 
 export default defineNuxtPlugin({
@@ -22,6 +32,9 @@ export default defineNuxtPlugin({
     const auth = useAuthSession();
     const forwardedHeaders = import.meta.server ? useRequestHeaders(["cookie", "authorization"]) : null;
     const { $i18n } = nuxtApp as unknown as { $i18n?: { t: (key: string) => string } };
+    const sessionCookieName =
+      (runtimeConfig.public?.auth?.sessionTokenCookieName as string | undefined) ?? "auth_session_token";
+    const sessionCookie = useCookie<string | null>(sessionCookieName, { watch: false });
     const client = axios.create({
       baseURL,
       withCredentials: shouldSendCredentials(baseURL),
@@ -45,7 +58,7 @@ export default defineNuxtPlugin({
         const shouldAttachToken = context.isPrivate !== false;
 
         if (shouldAttachToken) {
-          const token = auth.sessionToken.value?.trim();
+          const token = sanitizeToken(auth.sessionToken.value) ?? sanitizeToken(sessionCookie.value);
 
           if (token) {
             const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
