@@ -15,6 +15,12 @@ function setActivePinia(pinia: PiniaInstance | null) {
   activePinia = pinia;
 }
 
+let activePinia: PiniaInstance | null = null;
+
+function setActivePinia(pinia: PiniaInstance | null) {
+  activePinia = pinia;
+}
+
 export function createPinia(): PiniaInstance {
   const stores = new Map<string, unknown>();
   const state = reactive<Record<string, unknown>>({});
@@ -58,6 +64,8 @@ export function defineStore<StoreReturn>(id: string, setup: () => StoreReturn): 
         "[pinia-shim] Pinia instance is not available. Ensure the Pinia plugin is registered.",
       );
     }
+
+    setActivePinia(pinia);
 
     if (!pinia._s.has(id)) {
       const scope = effectScope(true);
