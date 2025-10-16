@@ -911,7 +911,7 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_REVIEWS_API_BASE ?? "https://bro-world.org",
     },
     configuration: {
-      apiBase: process.env.NUXT_CONFIGURATION_API_BASE ?? "https://configuration.bro-world.org/api",
+      apiBase: process.env.NUXT_CONFIGURATION_API_BASE ?? "https://configuration.bro-world.org",
     },
     auth: {
       apiBase: process.env.NUXT_AUTH_API_BASE ?? "https://bro-world.org/api",
@@ -972,7 +972,7 @@ export default defineNuxtConfig({
         "https://blog.bro-world.org/api/v1/comments",
       blogPrivateApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_API_ENDPOINT ??
-        "https://blog.bro-world.org/api/v1/platform/post",
+        "https://blog.bro-world.org/v1/platform/post",
       blogPrivateCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_COMMENT_API_ENDPOINT ??
         "https://blog.bro-world.org/api/v1/comments",
@@ -987,7 +987,7 @@ export default defineNuxtConfig({
         apiBase:
           process.env.NUXT_PUBLIC_CONFIGURATION_API_BASE ??
           process.env.NUXT_CONFIGURATION_API_BASE ??
-          "https://configuration.bro-world.org/api",
+          "https://configuration.bro-world.org",
       },
       mercure: {
         hubUrl:

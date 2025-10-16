@@ -1102,7 +1102,7 @@ export const usePostsStore = defineStore("posts", () => {
       }
 
       const defaultPublicEndpoint = "/public/post";
-      const defaultPrivateEndpoint = "/api/v1/platform/post";
+      const defaultPrivateEndpoint = "/v1/platform/post";
 
       addFetchTarget("/api/v1/posts");
 

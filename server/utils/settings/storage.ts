@@ -765,7 +765,7 @@ async function resolveCacheKey(event: H3Event | undefined) {
 
 function resolveConfigurationApiBase(event: H3Event): string {
   const runtime = useRuntimeConfig(event);
-  const base = runtime.configuration?.apiBase ?? "https://configuration.bro-world.org/api";
+  const base = runtime.configuration?.apiBase ?? "https://configuration.bro-world.org";
 
   return base.replace(/\/$/, "");
 }
