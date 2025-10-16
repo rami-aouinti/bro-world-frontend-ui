@@ -219,18 +219,7 @@
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
-
-interface ProfileEvent {
-  id: string;
-  title: string;
-  description?: string | null;
-  start: string;
-  end: string;
-  allDay?: boolean;
-  color?: string | null;
-  location?: string | null;
-  isPrivate?: boolean;
-}
+import type { ProfileEvent } from "~/types/pages/profile";
 
 interface CalendarDisplayEvent extends ProfileEvent {
   color: string;
@@ -246,7 +235,7 @@ const {
   error,
   refresh,
 } = await useAsyncData("profile-calendar-events", () =>
-  fetcher<ProfileEvent[]>("https://bro-world.org/api/v1/profile/events", {
+  fetcher<ProfileEvent[]>("/profile/events", {
     method: "GET",
     isPrivate: true,
     withCredentials: false,
