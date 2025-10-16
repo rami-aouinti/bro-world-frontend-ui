@@ -717,7 +717,13 @@ if (import.meta.client) {
   loadingIndicator = useLoadingIndicator({ throttle: 0 });
 }
 
-const isAdminRoute = computed(() => currentRoute.value?.path?.startsWith("/admin") ?? false);
+const isAdminRoute = computed(() => {
+  const path = currentRoute.value?.path ?? "";
+  if (!path) return false;
+
+  const segments = path.split("/").filter(Boolean);
+  return segments.includes("admin");
+});
 
 const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   if (sidebarVariant.value === "profile") {
