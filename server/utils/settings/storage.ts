@@ -24,6 +24,12 @@ import {
 import { getSessionToken, getSessionUser } from "../auth/session";
 import { readCachedSessionUser } from "../auth/user-cache";
 import { requestWithRetry } from "../requestWithRetry";
+import {
+  CACHE_NAMESPACE_PUBLIC,
+  type CacheKeyPart,
+  createCacheKey,
+  createPrefixedCacheKey,
+} from "~/lib/cache/namespaces";
 
 const CONFIGURATION_KEY = "site.settings";
 const CONFIGURATION_CONTEXT_KEY = "global";
@@ -34,6 +40,8 @@ const globalScope = globalThis as typeof globalThis & {
   __broSettingsRedisClient?: Redis | null;
   __broSettingsRedisClientPromise?: Promise<Redis | null> | null;
 };
+
+type CacheKeySegments = CacheKeyPart[];
 
 interface RedisSettingsConfig {
   url: string;
@@ -71,8 +79,8 @@ function getRedisConfig(event?: H3Event): RedisSettingsConfig {
   } satisfies RedisSettingsConfig;
 }
 
-function getRedisKey(config: RedisSettingsConfig, cacheKey: string): string {
-  return `${config.keyPrefix}:site-settings:${cacheKey}`;
+function getRedisKey(config: RedisSettingsConfig, segments: CacheKeySegments): string {
+  return createPrefixedCacheKey(config.keyPrefix, CACHE_NAMESPACE_PUBLIC, ...segments);
 }
 
 async function getRedisClient(): Promise<Redis | null> {
@@ -153,7 +161,7 @@ function writeToMemory(cacheKey: string, settings: SiteSettings): void {
   });
 }
 
-async function readFromRedisCache(cacheKey: string): Promise<SiteSettings | null> {
+async function readFromRedisCache(segments: CacheKeySegments): Promise<SiteSettings | null> {
   const client = await getRedisClient();
 
   if (!client) {
@@ -163,7 +171,7 @@ async function readFromRedisCache(cacheKey: string): Promise<SiteSettings | null
   const config = getRedisConfig();
 
   try {
-    const raw = await client.get(getRedisKey(config, cacheKey));
+    const raw = await client.get(getRedisKey(config, segments));
 
     if (!raw) {
       return null;
@@ -177,7 +185,10 @@ async function readFromRedisCache(cacheKey: string): Promise<SiteSettings | null
   }
 }
 
-async function writeToRedisCache(cacheKey: string, settings: SiteSettings): Promise<void> {
+async function writeToRedisCache(
+  segments: CacheKeySegments,
+  settings: SiteSettings,
+): Promise<void> {
   const client = await getRedisClient();
 
   if (!client) {
@@ -188,7 +199,7 @@ async function writeToRedisCache(cacheKey: string, settings: SiteSettings): Prom
 
   try {
     await client.set(
-      getRedisKey(config, cacheKey),
+      getRedisKey(config, segments),
       JSON.stringify(settings),
       "EX",
       config.settingsTtl,
@@ -198,7 +209,7 @@ async function writeToRedisCache(cacheKey: string, settings: SiteSettings): Prom
   }
 }
 
-async function invalidateRedisCache(cacheKey: string): Promise<void> {
+async function invalidateRedisCache(segments: CacheKeySegments): Promise<void> {
   const client = await getRedisClient();
 
   if (!client) {
@@ -208,7 +219,7 @@ async function invalidateRedisCache(cacheKey: string): Promise<void> {
   const config = getRedisConfig();
 
   try {
-    await client.del(getRedisKey(config, cacheKey));
+    await client.del(getRedisKey(config, segments));
   } catch (error) {
     console.error("[settings-storage] Failed to invalidate Redis cache", error);
   }
@@ -746,9 +757,10 @@ async function resolveCacheKey(event: H3Event | undefined) {
     }
   }
 
-  const cacheKey = userId ? `user:${userId}` : "default";
+  const segments: CacheKeySegments = userId ? ["user", userId] : ["default"];
+  const cacheKey = createCacheKey(CACHE_NAMESPACE_PUBLIC, ...segments);
 
-  return { cacheKey, userId };
+  return { cacheKey, segments, userId };
 }
 
 function resolveConfigurationApiBase(event: H3Event): string {
@@ -867,19 +879,23 @@ async function persistToConfigurationApi(
   }
 }
 
-async function cacheSettings(cacheKey: string, settings: SiteSettings): Promise<void> {
+async function cacheSettings(
+  cacheKey: string,
+  segments: CacheKeySegments,
+  settings: SiteSettings,
+): Promise<void> {
   writeToMemory(cacheKey, settings);
-  await writeToRedisCache(cacheKey, settings);
+  await writeToRedisCache(segments, settings);
 }
 
-async function invalidateCache(cacheKey: string): Promise<void> {
+async function invalidateCache(cacheKey: string, segments: CacheKeySegments): Promise<void> {
   const cache = getMemoryCache();
   cache.delete(cacheKey);
-  await invalidateRedisCache(cacheKey);
+  await invalidateRedisCache(segments);
 }
 
 export async function getSiteSettings(event: H3Event): Promise<SiteSettings> {
-  const { cacheKey } = await resolveCacheKey(event);
+  const { cacheKey, segments } = await resolveCacheKey(event);
 
   const memoryCached = readFromMemory(cacheKey);
 
@@ -887,7 +903,7 @@ export async function getSiteSettings(event: H3Event): Promise<SiteSettings> {
     return memoryCached;
   }
 
-  const redisCached = await readFromRedisCache(cacheKey);
+  const redisCached = await readFromRedisCache(segments);
 
   if (redisCached) {
     writeToMemory(cacheKey, redisCached);
@@ -902,7 +918,7 @@ export async function getSiteSettings(event: H3Event): Promise<SiteSettings> {
 
   const normalized = ensureActiveThemeId(normalizeSettings(fetched ?? getDefaultSiteSettings()));
 
-  await cacheSettings(cacheKey, normalized);
+  await cacheSettings(cacheKey, segments, normalized);
 
   return normalized;
 }
@@ -911,7 +927,7 @@ export async function updateSiteSettings(
   event: H3Event,
   payload: Partial<SiteSettings>,
 ): Promise<SiteSettings> {
-  const { cacheKey, userId } = await resolveCacheKey(event);
+  const { cacheKey, segments, userId } = await resolveCacheKey(event);
 
   if (!userId) {
     throw createError({
@@ -977,8 +993,8 @@ export async function updateSiteSettings(
 
   const persisted = await persistToConfigurationApi(event, ensured);
 
-  await invalidateCache(cacheKey);
-  await cacheSettings(cacheKey, persisted);
+  await invalidateCache(cacheKey, segments);
+  await cacheSettings(cacheKey, segments, persisted);
 
   return persisted;
 }

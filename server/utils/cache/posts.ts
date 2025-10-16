@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import Redis from "ioredis";
 import type { H3Event } from "h3";
 import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+import { CACHE_NAMESPACE_BLOG, createPrefixedCacheKey } from "~/lib/cache/namespaces";
 import type { NormalizedPostsListQuery } from "../posts/types";
 
 type PostsVisibility = "public" | "private";
@@ -221,15 +222,15 @@ export function normalizeListQuery(
 }
 
 function getListTag(prefix: string) {
-  return `${prefix}:posts:tag:all`;
+  return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "tag", "all");
 }
 
 function getItemTag(prefix: string, postId: string) {
-  return `${prefix}:posts:tag:item:${postId}`;
+  return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "tag", "item", postId);
 }
 
 function getAuthorTag(prefix: string, authorId: string) {
-  return `${prefix}:posts:tag:author:${authorId}`;
+  return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "tag", "author", authorId);
 }
 
 export function getPostsListCacheKey(
@@ -241,12 +242,22 @@ export function getPostsListCacheKey(
   const sortHash = buildHash(params.sort || "default");
   const filterHash = buildHash(stableSerialize(params.filter));
 
-  return `${prefix}:posts:list:${params.page}:${params.pageSize}:${sortHash}:${filterHash}:${visibility}`;
+  return createPrefixedCacheKey(
+    prefix,
+    CACHE_NAMESPACE_BLOG,
+    "posts",
+    "list",
+    params.page,
+    params.pageSize,
+    sortHash,
+    filterHash,
+    visibility,
+  );
 }
 
 export function getPostItemCacheKey(event: H3Event, postId: string) {
   const prefix = getCachePrefix(event);
-  return `${prefix}:posts:item:${postId}`;
+  return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "item", postId);
 }
 
 async function readCache<T>(event: H3Event, key: string): Promise<CachedEntry<T> | null> {

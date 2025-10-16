@@ -14,6 +14,12 @@ import tailwindcss from "@tailwindcss/vite";
 import vuetify from "vite-plugin-vuetify";
 import type { PluginOption } from "vite";
 import { simplePurgeCssPlugin } from "./lib/vite/simple-purgecss";
+import {
+  CACHE_NAMESPACE_ADMIN,
+  CACHE_NAMESPACE_BLOG,
+  CACHE_NAMESPACE_PUBLIC,
+  CACHE_NAMESPACE_USER,
+} from "./lib/cache/namespaces";
 import { aliases } from "vuetify/iconsets/mdi";
 
 type FetchHeadersInit = Record<string, string | number | readonly string[]>;
@@ -190,6 +196,25 @@ const projectRoot = [currentDir, process.cwd()].find((dir) =>
 
 function resolveFromRoot(...segments: string[]) {
   return resolvePath(projectRoot ?? currentDir, ...segments);
+}
+
+const redisUrl = process.env.NUXT_REDIS_URL?.trim();
+const redisTls = process.env.NUXT_REDIS_TLS === "true";
+
+function createCacheStorageDriver(base: string) {
+  if (redisUrl) {
+    return {
+      driver: "redis" as const,
+      base,
+      url: redisUrl,
+      tls: redisTls,
+    };
+  }
+
+  return {
+    driver: "memory" as const,
+    base,
+  };
 }
 
 const require = createRequire(import.meta.url);
@@ -617,6 +642,12 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: true,
+    storage: {
+      [CACHE_NAMESPACE_PUBLIC]: createCacheStorageDriver("cache/public"),
+      [CACHE_NAMESPACE_USER]: createCacheStorageDriver("cache/user"),
+      [CACHE_NAMESPACE_ADMIN]: createCacheStorageDriver("cache/admin"),
+      [CACHE_NAMESPACE_BLOG]: createCacheStorageDriver("cache/blog"),
+    },
     publicAssets: [
       {
         baseURL: "/",

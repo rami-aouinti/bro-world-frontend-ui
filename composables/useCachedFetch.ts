@@ -1,4 +1,6 @@
 import { useStorage } from "nitropack/runtime";
+import type { CacheNamespace } from "~/lib/cache/namespaces";
+import { CACHE_NAMESPACE_PUBLIC } from "~/lib/cache/namespaces";
 
 type Resolver<T> = () => Promise<T>;
 
@@ -16,8 +18,9 @@ export async function useCachedFetch<T>(
   key: string,
   resolver: Resolver<T>,
   ttlSeconds = 300,
+  namespace: CacheNamespace = CACHE_NAMESPACE_PUBLIC,
 ): Promise<T> {
-  const storage = useStorage();
+  const storage = useStorage(namespace);
   const storageKey = resolveStorageKey(key);
   const now = Date.now();
 

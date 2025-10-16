@@ -3,6 +3,7 @@ import Redis from "ioredis";
 import type { H3Event } from "h3";
 import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
+import { CACHE_NAMESPACE_USER, createPrefixedCacheKey } from "~/lib/cache/namespaces";
 import { normalizeSessionUser, sanitizeSessionUser } from "./user";
 
 interface RedisSessionUserConfig {
@@ -95,7 +96,14 @@ function buildCacheKey(config: RedisSessionUserConfig, sessionToken: string): st
 
   const digest = createHash("sha256").update(normalized).digest("hex");
 
-  return `${config.keyPrefix}:auth:session:${digest}:user`;
+  return createPrefixedCacheKey(
+    config.keyPrefix,
+    CACHE_NAMESPACE_USER,
+    "auth",
+    "session",
+    digest,
+    "user",
+  );
 }
 
 export async function readCachedSessionUser(
