@@ -11,7 +11,7 @@ import type {
   ProfileEvent,
   ProfileUser,
 } from "~/types/pages/profile";
-import { getSessionToken, getSessionUser } from "../auth/session";
+import { getSessionToken, getSessionUser, withAuthHeaders } from "../auth/session";
 
 export interface UsersApiUser extends AuthUser {
   language?: string | null;
@@ -246,7 +246,9 @@ async function requestUsersApi<T>(
 
   if (!headers.has("authorization")) {
     if (sessionToken) {
-      const value = sessionToken.startsWith("Bearer ") ? sessionToken : `Bearer ${sessionToken}`;
+      const authHeaders = withAuthHeaders(event);
+      const value =
+        authHeaders.Authorization ?? authHeaders.authorization ?? `Bearer ${sessionToken}`;
 
       headers.set("authorization", value);
     } else if (forwardedAuthorization) {
