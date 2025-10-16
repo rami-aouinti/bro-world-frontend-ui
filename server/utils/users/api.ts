@@ -11,7 +11,12 @@ import type {
   ProfileEvent,
   ProfileUser,
 } from "~/types/pages/profile";
-import { getSessionToken, getSessionUser, withAuthHeaders } from "../auth/session";
+import {
+  getSessionToken,
+  getSessionUser,
+  requireSessionToken,
+  withAuthHeaders,
+} from "../auth/session";
 
 export interface UsersApiUser extends AuthUser {
   language?: string | null;
@@ -225,6 +230,16 @@ function getUsersApiBase(event: H3Event) {
   return base.endsWith("/") ? base.slice(0, -1) : base;
 }
 
+type RuntimeConfig = ReturnType<typeof useRuntimeConfig>;
+
+function resolveUsersServiceToken(config: RuntimeConfig): string | null {
+  return (
+    [config.users?.apiToken, config.auth?.apiToken]
+      .map((candidate) => (typeof candidate === "string" ? candidate.trim() : ""))
+      .find((token) => token.length > 0) || null
+  );
+}
+
 async function requestUsersApi<T>(
   event: H3Event,
   path: string,
@@ -236,9 +251,7 @@ async function requestUsersApi<T>(
 
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();
   const sessionToken = getSessionToken(event)?.trim();
-  const serviceToken = [config.users?.apiToken, config.auth?.apiToken]
-    .map((candidate) => (typeof candidate === "string" ? candidate.trim() : ""))
-    .find((token) => token.length > 0);
+  const serviceToken = resolveUsersServiceToken(config);
   const { headers: initialHeaders, ...requestOptions } = options;
   const headers = new Headers(initialHeaders ?? {});
 
@@ -516,6 +529,17 @@ export async function deleteUserThroughApi(event: H3Event, id: string) {
 }
 
 export async function fetchUsersCountFromSource(event: H3Event) {
+  const config = useRuntimeConfig(event);
+  const serviceToken = resolveUsersServiceToken(config);
+  const forwardedAuthorization = getHeader(event, "authorization")?.trim();
+
+  if (!serviceToken && !forwardedAuthorization) {
+    requireSessionToken(event, {
+      statusMessage: "Authentication is required to access this resource.",
+      message: "Authentication is required to access this resource.",
+    });
+  }
+
   const response = await requestUsersApi<{ count?: number | null }>(event, "/user/count", {
     method: "GET",
   });
