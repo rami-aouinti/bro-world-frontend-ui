@@ -411,23 +411,62 @@ export async function fetchPostCommentsFromSource(
     includeAuth: boolean,
   ): Promise<BlogCommentWithReplies[]> {
     const base = resolvePostEndpoint(event, visibility);
-    const endpoint = joinEndpoint(base, postId, resolvePostCommentSegment(base));
+    const primaryEndpoint = joinEndpoint(base, postId, resolvePostCommentSegment(base));
+    const commentBase = resolveCommentEndpoint(event, visibility);
+    const fallbackEndpoints: string[] = [];
 
-    const response = await $fetch<unknown>(endpoint, {
-      method: "GET",
-      headers: buildHeaders(event, includeAuth),
-    });
+    const alternateSegments: ("comment" | "comments")[] = ["comment", "comments"];
 
-    const comments = unwrapCommentsPayload(response);
+    for (const segment of alternateSegments) {
+      const candidate = joinEndpoint(base, postId, segment);
 
-    if (!comments) {
-      throw createError({
-        statusCode: 502,
-        statusMessage: "Invalid comments response.",
-      });
+      if (candidate !== primaryEndpoint) {
+        fallbackEndpoints.push(candidate);
+      }
     }
 
-    return comments;
+    if (commentBase !== base) {
+      fallbackEndpoints.push(joinEndpoint(commentBase, postId));
+
+      for (const segment of alternateSegments) {
+        fallbackEndpoints.push(joinEndpoint(commentBase, postId, segment));
+      }
+    }
+
+    const endpointsToTry = [primaryEndpoint, ...new Set(fallbackEndpoints)];
+
+    let lastError: unknown = undefined;
+
+    for (const endpoint of endpointsToTry) {
+      try {
+        const response = await $fetch<unknown>(endpoint, {
+          method: "GET",
+          headers: buildHeaders(event, includeAuth),
+        });
+
+        const comments = unwrapCommentsPayload(response);
+
+        if (!comments) {
+          throw createError({
+            statusCode: 502,
+            statusMessage: "Invalid comments response.",
+          });
+        }
+
+        return comments;
+      } catch (error) {
+        if (!isFetchError(error) || error.response?.status !== 404) {
+          throw error;
+        }
+
+        lastError = error;
+      }
+    }
+
+    throw lastError ?? createError({
+      statusCode: 502,
+      statusMessage: "Unable to load comments.",
+    });
   }
 
   const token = getSessionToken(event);
