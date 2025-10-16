@@ -165,6 +165,7 @@ function tryResolvePosts(
     "entries",
     "list",
     "rows",
+    "hydra:member",
   ] as const;
 
   for (const key of candidates) {
@@ -214,6 +215,133 @@ function tryResolvePosts(
   return null;
 }
 
+function parseQueryMeta(link: unknown): Record<string, unknown> | null {
+  if (typeof link !== "string" || !link.includes("?")) {
+    return null;
+  }
+
+  try {
+    const url = new URL(link, "https://bro.world.local");
+    const params = url.searchParams;
+    const meta: Record<string, unknown> = {};
+
+    const pageParam =
+      params.get("page") ??
+      params.get("page[number]") ??
+      params.get("page_index") ??
+      params.get("pageNumber");
+
+    if (pageParam) {
+      meta.page = pageParam;
+    }
+
+    const limitParam =
+      params.get("limit") ??
+      params.get("pageSize") ??
+      params.get("page[size]") ??
+      params.get("perPage") ??
+      params.get("per_page") ??
+      params.get("itemsPerPage") ??
+      params.get("items_per_page");
+
+    if (limitParam) {
+      meta.limit = limitParam;
+    }
+
+    const countParam =
+      params.get("count") ??
+      params.get("total") ??
+      params.get("totalItems") ??
+      params.get("total_items");
+
+    if (countParam) {
+      meta.count = countParam;
+    }
+
+    return Object.keys(meta).length > 0 ? meta : null;
+  } catch {
+    return null;
+  }
+}
+
+function collectHydraMeta(source: Record<string, unknown> | undefined) {
+  const meta: Record<string, unknown>[] = [];
+
+  if (!source) {
+    return meta;
+  }
+
+  const baseMeta: Record<string, unknown> = {};
+
+  if ("hydra:totalItems" in source) {
+    baseMeta.count = source["hydra:totalItems"];
+  }
+
+  if ("hydra:itemsPerPage" in source) {
+    baseMeta.limit = source["hydra:itemsPerPage"];
+  }
+
+  if (Object.keys(baseMeta).length > 0) {
+    meta.push(baseMeta);
+  }
+
+  const potentialLinks: unknown[] = [];
+
+  if ("@id" in source) {
+    potentialLinks.push(source["@id"]);
+  }
+
+  if ("hydra:view" in source) {
+    const view = source["hydra:view"];
+
+    function enqueueViewLinks(input: unknown): void {
+      if (!input) {
+        return;
+      }
+
+      if (typeof input === "string") {
+        potentialLinks.push(input);
+        return;
+      }
+
+      if (Array.isArray(input)) {
+        input.forEach((item) => enqueueViewLinks(item));
+        return;
+      }
+
+      if (isRecord(input)) {
+        const record = input as Record<string, unknown>;
+        const viewLinks = [
+          record["@id"],
+          record["hydra:first"],
+          record["hydra:last"],
+          record["hydra:next"],
+          record["hydra:previous"],
+          record["hydra:prev"],
+        ];
+
+        viewLinks.forEach((link) => {
+          if (link) {
+            potentialLinks.push(link);
+          }
+        });
+      }
+    }
+
+    enqueueViewLinks(view);
+  }
+
+  for (const link of potentialLinks) {
+    const parsed = parseQueryMeta(link);
+
+    if (parsed) {
+      meta.push(parsed);
+    }
+  }
+
+  return meta;
+}
+
 function normalizePostsListResponse(raw: unknown): PostsListResponse {
   let normalizedInput = raw;
 
@@ -240,6 +368,12 @@ function normalizePostsListResponse(raw: unknown): PostsListResponse {
     rootSource,
     source,
   ];
+
+  metaSources.push(...collectHydraMeta(rootSource));
+
+  if (source && source !== rootSource) {
+    metaSources.push(...collectHydraMeta(source));
+  }
 
   if (rootSource) {
     if (isRecord(rootSource.meta)) {
