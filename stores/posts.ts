@@ -1057,7 +1057,52 @@ export const usePostsStore = defineStore("posts", () => {
     };
 
     const requestPromise = (async () => {
-      const fetchTargets = new Set<string>(["/api/v1/posts"]);
+      const queryParams: Record<string, unknown> = { ...params };
+
+      if (!("limit" in queryParams) && "pageSize" in queryParams) {
+        queryParams.limit = queryParams.pageSize;
+      }
+
+      const fetchTargets = new Set<string>();
+
+      function tryResolveUrl(target: string, relativeBase?: string) {
+        try {
+          return new URL(target).toString();
+        } catch {
+          if (relativeBase) {
+            try {
+              return new URL(target, relativeBase).toString();
+            } catch {
+              const normalizedBase = relativeBase.replace(/\/+$/, "");
+              const normalizedTarget = target.replace(/^\/+/, "");
+              return `${normalizedBase}/${normalizedTarget}`;
+            }
+          }
+
+          return target;
+        }
+      }
+
+      function addFetchTarget(target: string | null | undefined, relativeBase?: string) {
+        if (!target) {
+          return;
+        }
+
+        const trimmed = target.trim();
+
+        if (!trimmed) {
+          return;
+        }
+
+        const resolved = tryResolveUrl(trimmed, relativeBase);
+
+        if (!fetchTargets.has(resolved)) {
+          fetchTargets.add(resolved);
+        }
+      }
+
+      addFetchTarget("/api/v1/posts");
+
       const baseURL =
         typeof fetcher.client?.defaults?.baseURL === "string"
           ? fetcher.client.defaults.baseURL
@@ -1067,25 +1112,34 @@ export const usePostsStore = defineStore("posts", () => {
           ? runtimeConfig.public.postsApiBase.trim()
           : "";
 
+      let fallbackTarget: string | null = null;
+
       if (fallbackBase) {
-        try {
-          const fallbackUrl = new URL("/api/v1/posts", fallbackBase).toString();
-          let primaryUrl: string | null = null;
+        fallbackTarget = tryResolveUrl("/api/v1/posts", fallbackBase);
+        const primaryTarget =
+          baseURL && baseURL.trim() ? tryResolveUrl("/api/v1/posts", baseURL) : null;
 
-          if (baseURL && baseURL.trim()) {
-            try {
-              primaryUrl = new URL("/api/v1/posts", baseURL).toString();
-            } catch {
-              primaryUrl = null;
-            }
-          }
-
-          if (!primaryUrl || primaryUrl !== fallbackUrl) {
-            fetchTargets.add(fallbackUrl);
-          }
-        } catch {
-          // Ignore invalid fallback base URLs
+        if (primaryTarget && primaryTarget === fallbackTarget) {
+          fallbackTarget = null;
         }
+      }
+
+      const isAuthenticated = authStore.isAuthenticated.value;
+      const privateBlogEndpoint = isAuthenticated
+        ? (runtimeConfig.public?.blogPrivateApiEndpoint as string | undefined)
+        : undefined;
+      const publicBlogEndpoint = runtimeConfig.public?.blogApiEndpoint as string | undefined;
+
+      if (privateBlogEndpoint) {
+        addFetchTarget(privateBlogEndpoint);
+      }
+
+      if (fallbackTarget) {
+        addFetchTarget(fallbackTarget);
+      }
+
+      if (publicBlogEndpoint) {
+        addFetchTarget(publicBlogEndpoint);
       }
 
       let lastError: unknown = null;
@@ -1094,7 +1148,7 @@ export const usePostsStore = defineStore("posts", () => {
         try {
           const rawResponse = await fetcher<unknown>(target, {
             method: "GET",
-            query: params,
+            query: queryParams,
           });
 
           const response = normalizePostsListResponse(rawResponse);

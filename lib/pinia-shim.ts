@@ -48,6 +48,8 @@ export function createPinia(): PiniaInstance {
     state,
   };
 
+  setActivePinia(pinia);
+
   return pinia;
 }
 
