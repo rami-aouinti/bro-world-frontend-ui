@@ -41,6 +41,8 @@ const pageDescription = computed(() => subtitle.value);
 definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 </script>

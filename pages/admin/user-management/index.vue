@@ -431,6 +431,8 @@ const pageDescription = computed(() => t("admin.userManagement.page.subtitle"));
 definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const store = useUsersStore();

@@ -28,9 +28,10 @@ definePageMeta(() => ({
   title: "profile-security",
   sidebarVariant: "profile",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const { registerRightSidebarContent, setRightSidebarContent } = useLayoutRightSidebar();
 
 if (import.meta.server) {

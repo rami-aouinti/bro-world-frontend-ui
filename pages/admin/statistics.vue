@@ -101,6 +101,8 @@ const pageDescription = computed(() => t("admin.statistics.page.subtitle"));
 definePageMeta(() => ({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const titleId = "admin-statistics-title";

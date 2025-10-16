@@ -340,9 +340,10 @@ definePageMeta(() => ({
   title: "profile-friends",
   sidebarVariant: "profile",
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 const { registerRightSidebarContent } = useLayoutRightSidebar();

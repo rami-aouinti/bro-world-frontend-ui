@@ -157,6 +157,8 @@ const pageDescription = computed(() => t("seo.contact.description"));
 
 definePageMeta(() => ({
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const runtimeConfig = useRuntimeConfig();

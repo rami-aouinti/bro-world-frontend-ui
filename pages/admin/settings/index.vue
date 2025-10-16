@@ -78,6 +78,8 @@ const pageDescription = computed(() => t("admin.settings.page.subtitle"));
 definePageMeta(() => ({
   middleware: ["auth", "admin"],
   documentDriven: false,
+}));
+useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const { form, isSaving, languageOptions } = useAdminSettingsEditor();
