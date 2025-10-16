@@ -67,9 +67,9 @@ function resolveCommentsPayload(response: unknown): BlogCommentWithReplies[] | u
 function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
   const publicEndpoint =
-    config.public.blogApiEndpoint || "https://blog.bro-world.org/api/v1/posts";
+    config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
   const privateEndpoint =
-    config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/api/v1/posts";
+    config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/api/v1/platform/post";
 
   return visibility === "private" ? privateEndpoint : publicEndpoint;
 }

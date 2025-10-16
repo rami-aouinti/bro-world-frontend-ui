@@ -966,13 +966,13 @@ export default defineNuxtConfig({
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
       blogApiEndpoint:
-        process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://blog.bro-world.org/api/v1/posts",
+        process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://blog.bro-world.org/public/post",
       blogCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_COMMENT_API_ENDPOINT ??
         "https://blog.bro-world.org/api/v1/comments",
       blogPrivateApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_API_ENDPOINT ??
-        "https://blog.bro-world.org/api/v1/posts",
+        "http://blog.bro-world.org/api/v1/platform/post",
       blogPrivateCommentApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_PRIVATE_COMMENT_API_ENDPOINT ??
         "https://blog.bro-world.org/api/v1/comments",
