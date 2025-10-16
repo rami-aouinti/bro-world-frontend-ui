@@ -10,7 +10,7 @@ import {
 } from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
-import type { AuthLoginEnvelope, AuthUser } from "~/types/auth";
+import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from "~/types/auth";
 import type { ProfileUser } from "~/types/pages/profile";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
@@ -173,6 +173,56 @@ export const useAuthSession = defineStore("auth-session", () => {
 
   if (presenceCookie.value === "1") {
     tokenAvailableState.value = true;
+  }
+
+  function escapeCookieName(name: string): string {
+    return name.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
+  }
+
+  function readDocumentCookie(name: string): string | null {
+    if (!import.meta.client || typeof document === "undefined") {
+      return null;
+    }
+
+    const pattern = new RegExp(`(?:^|;\\s*)${escapeCookieName(name)}=([^;]*)`);
+    const match = document.cookie.match(pattern);
+
+    if (!match?.[1]) {
+      return null;
+    }
+
+    try {
+      return decodeURIComponent(match[1]);
+    } catch {
+      return match[1];
+    }
+  }
+
+  function syncCookiesFromDocument() {
+    if (!import.meta.client) {
+      return;
+    }
+
+    const rawToken = readDocumentCookie(sessionTokenCookieName);
+    sessionTokenCookie.value = rawToken ?? null;
+
+    const rawPresence = readDocumentCookie(tokenPresenceCookieName);
+    presenceCookie.value = rawPresence ?? null;
+
+    const rawUser = readDocumentCookie(userCookieName);
+
+    if (!rawUser) {
+      userCookie.value = null;
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(rawUser) as AuthUserCookie;
+      userCookie.value = parsed;
+    } catch (error) {
+      console.error("Failed to parse auth user cookie", error);
+      userCookie.value = null;
+    }
   }
 
   function sanitizeUserForCookie(user: AuthUser | null): AuthUserCookie | null {
@@ -383,26 +433,85 @@ export const useAuthSession = defineStore("auth-session", () => {
     }
   }
 
+  async function synchronizeSessionFromServer(): Promise<AuthSessionEnvelope | null> {
+    try {
+      const fetcher = resolveFetcher();
+      const response = await fetcher<AuthSessionEnvelope>("/auth/session", {
+        method: "GET",
+        context: {
+          isPrivate: true,
+          skipAuthHeader: true,
+          suppressErrorNotification: true,
+        },
+      });
+
+      if (import.meta.client) {
+        syncCookiesFromDocument();
+      }
+
+      if (response?.authenticated) {
+        setTokenPresence(true);
+
+        if (response.user) {
+          setCurrentUser(response.user);
+        } else if (!currentUserState.value && userCookie.value) {
+          setCurrentUser(userCookie.value as AuthUser);
+        }
+      }
+
+      return response ?? null;
+    } catch (error) {
+      console.error("Failed to synchronize auth session", error);
+      return null;
+    }
+  }
+
   async function refreshSession() {
     if (!tokenAvailableState.value && presenceCookie.value === "1") {
       tokenAvailableState.value = true;
     }
 
-    const hasSessionToken = Boolean(sessionTokenState.value);
-    const hasCurrentUser = Boolean(currentUserState.value);
-
-    if (!hasCurrentUser && userCookie.value) {
+    if (!currentUserState.value && userCookie.value) {
       setCurrentUser(userCookie.value as AuthUser);
     }
 
-    if (hasSessionToken || sessionTokenCookie.value) {
-      const resolvedToken = sessionTokenState.value ?? sessionTokenCookie.value;
+    if (!sessionTokenState.value && sessionTokenCookie.value) {
+      sessionTokenState.value = sessionTokenCookie.value;
+    }
 
-      if (resolvedToken && !hasSessionToken) {
+    let serverSession: AuthSessionEnvelope | null = null;
+
+    const shouldSyncFromServer =
+      presenceCookie.value === "1" &&
+      !sessionTokenState.value &&
+      !sessionTokenCookie.value;
+
+    if (shouldSyncFromServer) {
+      serverSession = await synchronizeSessionFromServer();
+
+      if (serverSession?.authenticated) {
+        if (!sessionTokenState.value && sessionTokenCookie.value) {
+          sessionTokenState.value = sessionTokenCookie.value;
+        }
+
+        if (!currentUserState.value && userCookie.value) {
+          setCurrentUser(userCookie.value as AuthUser);
+        }
+      } else if (serverSession && !serverSession.authenticated) {
+        clearSession();
+        readyState.value = true;
+        return false;
+      }
+    }
+
+    const resolvedToken = sessionTokenState.value ?? sessionTokenCookie.value ?? null;
+
+    if (resolvedToken) {
+      if (!sessionTokenState.value) {
         sessionTokenState.value = resolvedToken;
       }
 
-      setTokenPresence(Boolean(resolvedToken));
+      setTokenPresence(true);
 
       readyState.value = true;
       await fetchMercureToken();
@@ -436,7 +545,10 @@ export const useAuthSession = defineStore("auth-session", () => {
       return Boolean(currentUserState.value);
     }
 
-    clearSession();
+    if (!shouldSyncFromServer || serverSession?.authenticated === false || presenceCookie.value !== "1") {
+      clearSession();
+    }
+
     readyState.value = true;
     return false;
   }
