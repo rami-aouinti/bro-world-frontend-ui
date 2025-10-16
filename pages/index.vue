@@ -1,5 +1,21 @@
 <template>
   <main aria-labelledby="blog-heading">
+    <v-alert
+      v-if="loadErrorMessage"
+      data-test="posts-load-error"
+      type="error"
+      variant="tonal"
+      border="start"
+      border-color="error"
+      class="mb-4"
+      role="alert"
+      closable
+      :close-label="t('common.close')"
+      @click:close="dismissLoadError"
+    >
+      {{ loadErrorMessage }}
+    </v-alert>
+
     <template v-if="canAccessAuthenticatedContent">
       <NewPost
         :avatar="user.avatarUrl"
@@ -278,7 +294,7 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
 
 const INITIAL_PAGE_SIZE = 6;
 
-const { posts, pending, loadingMore, hasMore, fetchPosts, fetchMorePosts, createPost, pageSize } =
+const { posts, pending, loadingMore, hasMore, error, fetchPosts, fetchMorePosts, createPost, pageSize } =
   usePostsStore();
 
 const skeletonBatchSize = computed(() => {
@@ -287,6 +303,32 @@ const skeletonBatchSize = computed(() => {
 });
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
+const initialLoadError = ref<string | null>(null);
+
+const isLoadErrorDismissed = ref(false);
+
+const loadErrorMessage = computed(() => {
+  if (isLoadErrorDismissed.value) {
+    return "";
+  }
+
+  const storeError = typeof error.value === "string" ? error.value.trim() : "";
+  const localError = typeof initialLoadError.value === "string" ? initialLoadError.value.trim() : "";
+
+  return storeError || localError;
+});
+
+watchEffect(() => {
+  if (!error.value) {
+    initialLoadError.value = null;
+    isLoadErrorDismissed.value = false;
+  }
+});
+
+function dismissLoadError() {
+  isLoadErrorDismissed.value = true;
+  initialLoadError.value = null;
+}
 
 async function maybeLoadMore() {
   if (!hasMore.value || pending.value || loadingMore.value) {
@@ -319,5 +361,16 @@ if (import.meta.client) {
   );
 }
 
-await callOnce(() => fetchPosts(1, { params: { pageSize: INITIAL_PAGE_SIZE } }));
+await callOnce(async () => {
+  try {
+    await fetchPosts(1, { params: { pageSize: INITIAL_PAGE_SIZE } });
+  } catch (caughtError) {
+    const message =
+      caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+
+    initialLoadError.value = message.trim() || t("blog.feed.loadError");
+    isLoadErrorDismissed.value = false;
+    console.error("Failed to fetch posts", caughtError);
+  }
+});
 </script>
