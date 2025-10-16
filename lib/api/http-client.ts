@@ -246,9 +246,8 @@ export function createApiFetcher(client?: AxiosInstance): ApiFetcher {
     const baseURL =
       typeof axiosClient.defaults.baseURL === "string" ? axiosClient.defaults.baseURL : undefined;
     const resolvedUrl = resolveRequestUrl(baseURL, url);
-    let withCredentials = false;
-
-
+    const requestTarget = resolvedUrl ?? baseURL ?? url;
+    const withCredentials = shouldSendCredentials(requestTarget);
 
     const response = await axiosClient.request<T>({
       ...requestConfig,

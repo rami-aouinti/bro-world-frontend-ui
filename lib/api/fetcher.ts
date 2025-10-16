@@ -1,18 +1,36 @@
 import axios from "axios";
 import type { AxiosInstance } from "axios";
-import { useNuxtApp, useRequestHeaders, useRequestURL, useRuntimeConfig } from "#imports";
+import {
+  useCookie,
+  useNuxtApp,
+  useRequestHeaders,
+  useRequestURL,
+  useRuntimeConfig,
+} from "#imports";
 import { createApiFetcher, type ApiFetcher, type ApiRequestContext } from "~/lib/api/http-client";
 import { useAuthSession } from "~/stores/auth-session";
 import { shouldSendCredentials } from "~/lib/api/credentials";
+import type { Ref } from "vue";
 
 type ForwardedHeaders = Partial<Record<"cookie" | "authorization", string>> | null;
 
 let clientFallback: ApiFetcher | null = null;
 
+function sanitizeToken(rawToken: string | null | undefined): string | null {
+  if (typeof rawToken !== "string") {
+    return null;
+  }
+
+  const trimmed = rawToken.trim();
+
+  return trimmed.length > 0 ? trimmed : null;
+}
+
 function attachAuthInterceptor(
   client: AxiosInstance,
   auth: ReturnType<typeof useAuthSession>,
   forwardedHeaders: ForwardedHeaders,
+  sessionCookie: Ref<string | null> | null,
 ) {
   client.interceptors.request.use((config) => {
     const context = (config.context ?? {}) as ApiRequestContext;
@@ -32,7 +50,11 @@ function attachAuthInterceptor(
       const shouldAttachToken = context.isPrivate !== false;
 
       if (shouldAttachToken) {
-        const token = auth.sessionToken.value?.trim();
+        let token = sanitizeToken(auth.sessionToken.value);
+
+        if (!token && sessionCookie?.value) {
+          token = sanitizeToken(sessionCookie.value);
+        }
 
         if (token) {
           const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
@@ -78,7 +100,7 @@ export function resolveApiFetcher(): ApiFetcher {
       withCredentials: false,
     });
 
-    attachAuthInterceptor(client, auth, forwardedHeaders);
+    attachAuthInterceptor(client, auth, forwardedHeaders, null);
 
     const fetcher = createApiFetcher(client);
     appWithFetcher._apiFetcher = fetcher;
@@ -88,12 +110,18 @@ export function resolveApiFetcher(): ApiFetcher {
 
   if (!clientFallback) {
     const auth = useAuthSession();
+    const sessionCookieName =
+      (runtimeConfig.public?.auth?.sessionTokenCookieName as string | undefined) ??
+      "auth_session_token";
+    const sessionCookie = import.meta.client
+      ? useCookie<string | null>(sessionCookieName, { watch: false })
+      : null;
     const client = axios.create({
       baseURL,
       withCredentials: shouldSendCredentials(baseURL),
     });
 
-    attachAuthInterceptor(client, auth, null);
+    attachAuthInterceptor(client, auth, null, sessionCookie);
 
     clientFallback = createApiFetcher(client);
   }
