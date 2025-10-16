@@ -234,9 +234,11 @@ async function requestUsersApi<T>(
   const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
   const endpoint = joinURL(getUsersApiBase(event), normalizedPath);
 
-  const serviceToken = config.users?.apiToken?.trim();
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();
   const sessionToken = getSessionToken(event)?.trim();
+  const serviceToken = [config.users?.apiToken, config.auth?.apiToken]
+    .map((candidate) => (typeof candidate === "string" ? candidate.trim() : ""))
+    .find((token) => token.length > 0);
   const { headers: initialHeaders, ...requestOptions } = options;
   const headers = new Headers(initialHeaders ?? {});
 
@@ -245,12 +247,12 @@ async function requestUsersApi<T>(
   if (!headers.has("authorization")) {
     if (forwardedAuthorization) {
       headers.set("authorization", forwardedAuthorization);
-    } else if (serviceToken) {
-      const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
-
-      headers.set("authorization", value);
     } else if (sessionToken) {
       const value = sessionToken.startsWith("Bearer ") ? sessionToken : `Bearer ${sessionToken}`;
+
+      headers.set("authorization", value);
+    } else if (serviceToken) {
+      const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
 
       headers.set("authorization", value);
     }
