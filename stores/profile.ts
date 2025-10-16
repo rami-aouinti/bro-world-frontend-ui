@@ -8,7 +8,48 @@ import type { Story } from "~/types/stories";
 const DEFAULT_AVATAR = "/images/avatars/avatar-default.svg";
 const CACHE_TTL_MS = 60_000;
 
-type ProfileResponse = ProfileUser;
+type ProfileResponseEnvelope = {
+  data?: ProfileUser | null;
+  profile?: ProfileUser | null;
+  user?: ProfileUser | null;
+};
+
+type ProfileResponse = ProfileUser | ProfileResponseEnvelope | null | undefined;
+
+function isProfileUser(value: unknown): value is ProfileUser {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const candidate = value as Record<string, unknown>;
+
+  return (
+    typeof candidate.id === "string" ||
+    typeof candidate.username === "string" ||
+    typeof candidate.email === "string"
+  );
+}
+
+function resolveProfileResponse(response: ProfileResponse): ProfileUser | null {
+  if (isProfileUser(response)) {
+    return response;
+  }
+
+  if (!response || typeof response !== "object") {
+    return null;
+  }
+
+  const envelope = response as ProfileResponseEnvelope;
+  const candidates = [envelope.data, envelope.profile, envelope.user];
+
+  for (const candidate of candidates) {
+    if (isProfileUser(candidate)) {
+      return candidate;
+    }
+  }
+
+  return null;
+}
 
 type FetchProfileOptions = {
   force?: boolean;
@@ -258,15 +299,17 @@ export const useProfileStore = defineStore("profile", () => {
       },
     })
       .then((response) => {
-        if (!response || typeof response !== "object") {
+        const profile = resolveProfileResponse(response);
+
+        if (!profile) {
           throw new Error("Invalid profile response.");
         }
 
-        profileState.value = response;
+        profileState.value = profile;
         lastFetchedState.value = Date.now();
         errorState.value = null;
 
-        return response;
+        return profile;
       })
       .catch((caughtError) => {
         const message =
