@@ -1273,6 +1273,130 @@
         "button": "Schedule a consultation",
         "buttonAria": "Open the contact page"
       }
+    },
+    "performance": {
+      "badge": "性能报告",
+      "title": "体验质量快照",
+      "subtitle": "聚焦首页信息流在真实设备上的表现。",
+      "updated": "审核于 2025 年 4 月 8 日完成",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "综合得分"
+      },
+      "metrics": {
+        "title": "核心体验指标",
+        "subtitle": "基于移动端 Lighthouse 运行结果（模拟 Moto G Power）。",
+        "status": {
+          "good": "表现良好",
+          "average": "需要关注",
+          "poor": "需优先处理"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "首个有意义像素在一秒内呈现。",
+            "trend": "在最近 7 次发布中保持稳定。",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "主视觉在骨架屏之后加载，但仍符合核心指标。",
+            "trend": "预加载精选图像精灵以进一步优化。",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Hydration 期间的长任务占满主线程。",
+            "trend": "由可选组件的提前加载导致。",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "视觉完成度尚可，仍有优化空间。",
+            "trend": "优先传输 CSS 可以显著改善。",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "延迟内容到来时，卡片和故事栏会发生位移。",
+            "trend": "使用固定宽高比锚定媒体，稳定信息流。",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "高影响力机会",
+        "subtitle": "优先修复，先处理标红指标。",
+        "items": {
+          "layout": {
+            "title": "稳定媒体与组件位置",
+            "description": "为横幅、轮播和动态广告预留空间。",
+            "impact": "高影响",
+            "action": "为信息流元素采用固有宽高比和骨架高度。"
+          },
+          "script": {
+            "title": "延后非关键脚本",
+            "description": "将分析、反应和消息面板拆出主包。",
+            "impact": "高影响",
+            "action": "通过 `defineAsyncComponent` 在交互时才 hydrate 可选组件。"
+          },
+          "assets": {
+            "title": "优化主视觉图像",
+            "description": "压缩主拼图并默认提供 AVIF 源。",
+            "impact": "中等影响",
+            "action": "预加载信息流第一张图片，其余启用延迟加载。"
+          },
+          "monitoring": {
+            "title": "扩展 Core Web Vitals 覆盖",
+            "description": "按路由和设备分段拆解指标。",
+            "impact": "基础",
+            "action": "将 `web-vitals` 数据发送到分析数据湖以跟踪回归。"
+          }
+        }
+      },
+      "timeline": {
+        "title": "改进时间线",
+        "subtitle": "务实的发布节奏，交付并验证修复。",
+        "items": {
+          "week1": {
+            "date": "第 1 周",
+            "title": "消除布局位移",
+            "description": "审计所有信息流卡片和故事，确保尺寸可预期。",
+            "actions": [
+              "为故事缩略图和帖子插图添加宽高比。",
+              "在骨架占位符后固定广告容器。"
+            ]
+          },
+          "week2": {
+            "date": "第 2 周",
+            "title": "拆分长任务",
+            "description": "将可选逻辑移动到空闲回调和异步边界。",
+            "actions": [
+              "对消息抽屉和反应托盘进行代码拆分。",
+              "在启动分析 SDK 前使用 `requestIdleCallback`。"
+            ]
+          },
+          "week3": {
+            "date": "第 3 周",
+            "title": "通过 RUM 验证收益",
+            "description": "向生产人群发布 Core Web Vitals 上报。",
+            "actions": [
+              "携带构建元数据把指标发送到监控数据湖。",
+              "当 LCP/TBT 周环比回退超过 10% 时告警。"
+            ]
+          }
+        }
+      }
     }
   },
   "seo": {

@@ -1641,8 +1641,128 @@
       "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données."
     },
     "performance": {
-      "title": "Performance",
-      "description": "Suivez les budgets et audits qui maintiennent Bro World rapide pour chaque communauté."
+      "badge": "Rapport de performance",
+      "title": "Instantané de la qualité d'expérience",
+      "subtitle": "Un focus sur les performances du fil d'actualités sur des appareils réels.",
+      "updated": "Audit réalisé le 8 avril 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "Score global"
+      },
+      "metrics": {
+        "title": "Indicateurs clés d'expérience",
+        "subtitle": "Basé sur des analyses Lighthouse mobiles (Moto G Power émulé).",
+        "status": {
+          "good": "Sous contrôle",
+          "average": "À surveiller",
+          "poor": "Nécessite une action"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "Les premiers pixels significatifs s'affichent en moins d'une seconde.",
+            "trend": "Stable lors des 7 derniers déploiements.",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "Le média principal charge après le squelette mais reste dans les seuils Web Vitals.",
+            "trend": "Optimiser en préchargeant le sprite de l'image vedette.",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Des tâches longues pendant l'hydratation monopolisent le thread.",
+            "trend": "Causé par le chargement anticipé de widgets optionnels.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "La complétude visuelle est correcte mais peut être améliorée.",
+            "trend": "Gagne fortement à prioriser la livraison du CSS.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "Les cartes et le rail d'histoires bougent quand le contenu arrive tard.",
+            "trend": "Fixer les médias avec des ratios d'aspect pour stabiliser le fil.",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "Opportunités à fort impact",
+        "subtitle": "Correctifs prioritaires pour adresser les indicateurs en rouge.",
+        "items": {
+          "layout": {
+            "title": "Stabiliser les emplacements média et widgets",
+            "description": "Réserver de l'espace pour les bannières, carrousels et publicités dynamiques.",
+            "impact": "Fort impact",
+            "action": "Adopter des ratios d'aspect et hauteurs de squelette pour les éléments du fil."
+          },
+          "script": {
+            "title": "Différer les scripts non critiques",
+            "description": "Scinder l'analytics, les réactions et la messagerie hors du bundle principal.",
+            "impact": "Fort impact",
+            "action": "Hydrater les widgets optionnels à l'interaction via `defineAsyncComponent`."
+          },
+          "assets": {
+            "title": "Optimiser les visuels vedettes",
+            "description": "Compresser le collage principal et servir des sources AVIF par défaut.",
+            "impact": "Impact moyen",
+            "action": "Précharger la première image du fil et diffuser les autres en chargement différé."
+          },
+          "monitoring": {
+            "title": "Étendre la couverture Core Web Vitals",
+            "description": "Segmenter les métriques par route et type d'appareil.",
+            "impact": "Fondamental",
+            "action": "Envoyer les mesures `web-vitals` vers le lac analytique pour suivre les régressions."
+          }
+        }
+      },
+      "timeline": {
+        "title": "Feuille de route d'amélioration",
+        "subtitle": "Un déploiement réaliste pour livrer et vérifier les correctifs.",
+        "items": {
+          "week1": {
+            "date": "Semaine 1",
+            "title": "Éliminer les décalages de mise en page",
+            "description": "Auditer toutes les cartes et stories pour un dimensionnement déterministe.",
+            "actions": [
+              "Ajouter des ratios d'aspect aux miniatures et illustrations.",
+              "Bloquer les conteneurs publicitaires derrière des placeholders."
+            ]
+          },
+          "week2": {
+            "date": "Semaine 2",
+            "title": "Fragmenter les longues tâches",
+            "description": "Déporter la logique optionnelle dans des callbacks idle et des frontières async.",
+            "actions": [
+              "Découper le tiroir messagerie et le panneau des réactions.",
+              "Utiliser `requestIdleCallback` avant d'initialiser les SDK analytics."
+            ]
+          },
+          "week3": {
+            "date": "Semaine 3",
+            "title": "Vérifier les gains via le RUM",
+            "description": "Déployer le suivi Core Web Vitals aux cohortes de production.",
+            "actions": [
+              "Envoyer les métriques au lac de monitoring avec les métadonnées de build.",
+              "Alerter sur les régressions LCP/TBT au-delà de 10 % semaine après semaine."
+            ]
+          }
+        }
+      }
     },
     "login": {
       "title": "Connexion",
