@@ -945,6 +945,7 @@ export default defineNuxtConfig({
       siteUrl: "https://bro-world-space.com",
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL ?? "https://bro-world-space.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE ?? "/api",
+      postsApiBase: process.env.NUXT_PUBLIC_POSTS_API_BASE ?? "https://bro-world.org/api/v1/",
       reviews: {
         apiBase: process.env.NUXT_PUBLIC_REVIEWS_API_BASE ?? "https://bro-world.org",
       },

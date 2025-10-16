@@ -1018,13 +1018,13 @@ export const usePostsStore = defineStore("posts", () => {
     page: number,
     options: FetchOptions & { background?: boolean; loadMore?: boolean } = {},
   ) {
-    const { loadMore, ...restOptions } = options;
+    const { loadMore, background } = options;
     const params = { ...(options.params ?? {}), page };
-    const fetchKey = createFetchKey({ ...restOptions, params });
+    const fetchKey = createFetchKey({ params, force: options.force, background });
     const existingRequest = activeFetches.get(fetchKey);
 
     if (existingRequest) {
-      if (options.background) {
+      if (background) {
         existingRequest.hasBackground = true;
       } else if (loadMore) {
         existingRequest.hasLoadMore = true;
@@ -1040,7 +1040,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     const fetcher = resolveApiFetcher();
 
-    if (!options.background) {
+    if (!background) {
       if (loadMore) {
         loadingMore.value = true;
       } else {
@@ -1051,24 +1051,64 @@ export const usePostsStore = defineStore("posts", () => {
 
     const fetchState: ActiveFetchState = {
       promise: Promise.resolve([] as BlogPost[]),
-      hasBackground: Boolean(options.background),
-      hasForeground: !options.background && !loadMore,
+      hasBackground: Boolean(background),
+      hasForeground: !background && !loadMore,
       hasLoadMore: Boolean(loadMore),
     };
 
     const requestPromise = (async () => {
-      try {
-        const rawResponse = await fetcher<unknown>("/api/v1/posts", {
-          method: "GET",
-          query: params,
-        });
+      const fetchTargets = new Set<string>(["/api/v1/posts"]);
+      const baseURL =
+        typeof fetcher.client?.defaults?.baseURL === "string"
+          ? fetcher.client.defaults.baseURL
+          : undefined;
+      const fallbackBase =
+        typeof runtimeConfig.public?.postsApiBase === "string"
+          ? runtimeConfig.public.postsApiBase.trim()
+          : "";
 
-        const response = normalizePostsListResponse(rawResponse);
-        setPostsFromResponse(response);
-        return response.data;
-      } catch (caughtError) {
-        const rawMessage =
-          caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+      if (fallbackBase) {
+        try {
+          const fallbackUrl = new URL("/api/v1/posts", fallbackBase).toString();
+          let primaryUrl: string | null = null;
+
+          if (baseURL && baseURL.trim()) {
+            try {
+              primaryUrl = new URL("/api/v1/posts", baseURL).toString();
+            } catch {
+              primaryUrl = null;
+            }
+          }
+
+          if (!primaryUrl || primaryUrl !== fallbackUrl) {
+            fetchTargets.add(fallbackUrl);
+          }
+        } catch {
+          // Ignore invalid fallback base URLs
+        }
+      }
+
+      let lastError: unknown = null;
+
+      for (const target of fetchTargets) {
+        try {
+          const rawResponse = await fetcher<unknown>(target, {
+            method: "GET",
+            query: params,
+          });
+
+          const response = normalizePostsListResponse(rawResponse);
+          setPostsFromResponse(response);
+          return response.data;
+        } catch (requestError) {
+          lastError = requestError;
+        }
+      }
+
+      const finalError =
+        lastError instanceof Error ? lastError : new Error(String(lastError ?? ""));
+      try {
+        const rawMessage = finalError.message ?? String(lastError ?? "");
         const message = sanitizeErrorMessage(rawMessage);
 
         if (fetchState.hasForeground) {
