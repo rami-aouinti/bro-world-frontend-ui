@@ -224,28 +224,34 @@
           :style="mainInlineStyle"
         >
           <div
-            v-show="areSidebarsReady"
-            class="app-container"
-            :aria-hidden="!areSidebarsReady"
+            class="app-container-wrapper"
+            :class="{ 'app-container-wrapper--loading': !areSidebarsReady }"
           >
-            <slot />
-          </div>
-          <div
-            v-show="!areSidebarsReady"
-            class="app-container py-6"
-            :aria-hidden="areSidebarsReady"
-          >
-            <div class="flex flex-col gap-4">
-              <v-skeleton-loader
-                type="heading"
-                class="rounded-2xl"
-              />
-              <v-skeleton-loader
-                v-for="index in 3"
-                :key="index"
-                type="article"
-                class="rounded-2xl"
-              />
+            <div
+              class="app-container app-container--content"
+              :class="{ 'app-container--content-hidden': !areSidebarsReady }"
+              :aria-hidden="!areSidebarsReady"
+              :inert="!areSidebarsReady ? '' : undefined"
+            >
+              <slot />
+            </div>
+            <div
+              v-if="!areSidebarsReady"
+              class="app-container app-container--skeleton py-6"
+              aria-hidden="true"
+            >
+              <div class="flex flex-col gap-4">
+                <v-skeleton-loader
+                  type="heading"
+                  class="rounded-2xl"
+                />
+                <v-skeleton-loader
+                  v-for="index in 3"
+                  :key="index"
+                  type="article"
+                  class="rounded-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -1074,6 +1080,36 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   margin-inline: auto;
   box-sizing: border-box;
   padding: 10px;
+}
+
+.app-container-wrapper {
+  position: relative;
+}
+
+.app-container-wrapper--loading {
+  min-height: 100%;
+}
+
+.app-container--content {
+  transition: opacity 180ms ease-in-out;
+}
+
+.app-container--content-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.app-container--skeleton {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.app-container--skeleton > * {
+  pointer-events: none;
 }
 .sidebar-default-card__particles {
   position: absolute;
