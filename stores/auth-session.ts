@@ -362,7 +362,7 @@ export const useAuthSession = defineStore("auth-session", () => {
 
     try {
       const responseFetcher = resolveFetcher();
-      const response = await responseFetcher<MercureTokenEnvelope>("/api/mercure/token", {
+      const response = await responseFetcher<MercureTokenEnvelope>("/mercure/token", {
         method: "GET",
         context: {
           suppressErrorNotification: true,

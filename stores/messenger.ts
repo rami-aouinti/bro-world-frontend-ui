@@ -432,7 +432,7 @@ export const useMessengerStore = defineStore("messenger", () => {
     try {
       errorState.value = null;
       const response = await fetcher<MessengerThreadEnvelope | MessengerConversation[]>(
-        "/api/v1/messenger/threads",
+        "/v1/messenger/threads",
         {
           method: "GET",
           params,
@@ -470,7 +470,7 @@ export const useMessengerStore = defineStore("messenger", () => {
       errorState.value = null;
       const response = await fetcher<
         MessengerConversationEnvelope | (MessengerConversation & { messages?: MessengerMessage[] })
-      >(`/api/v1/messenger/threads/${conversationId}`);
+      >(`/v1/messenger/threads/${conversationId}`);
 
       const payload = (response as MessengerConversationEnvelope)?.data
         ? (response as MessengerConversationEnvelope).data
@@ -524,7 +524,7 @@ export const useMessengerStore = defineStore("messenger", () => {
 
     try {
       const response = await fetcher<MessengerMessagesEnvelope | MessengerMessage[]>(
-        `/api/v1/messenger/threads/${conversationId}/messages`,
+        `/v1/messenger/threads/${conversationId}/messages`,
         {
           method: "GET",
           params: {
@@ -599,7 +599,7 @@ export const useMessengerStore = defineStore("messenger", () => {
     markConversationReadLocal(conversationId, lastMessage);
 
     try {
-      await fetcher(`/api/v1/messenger/threads/${conversationId}/read`, {
+      await fetcher(`/v1/messenger/threads/${conversationId}/read`, {
         method: "POST",
         body: lastMessage ? { lastMessageId: lastMessage } : undefined,
       });
@@ -639,7 +639,7 @@ export const useMessengerStore = defineStore("messenger", () => {
 
     try {
       const response = await fetcher<MessengerMessage>(
-        `/api/v1/messenger/threads/${conversationId}/messages`,
+        `/v1/messenger/threads/${conversationId}/messages`,
         {
           method: "POST",
           body: {

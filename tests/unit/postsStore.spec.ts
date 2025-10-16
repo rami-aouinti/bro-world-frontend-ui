@@ -129,7 +129,7 @@ describe("posts store", () => {
 
     expect(fetchSpy).toHaveBeenCalledTimes(1);
     expect(fetchSpy).toHaveBeenCalledWith(
-      "/api/v1/posts",
+      "/v1/posts",
       expect.objectContaining({
         method: "GET",
         query: expect.objectContaining({ page: 1, perPage: 5 }),
@@ -257,7 +257,7 @@ describe("posts store", () => {
     expect(fetchSpy).toHaveBeenCalledTimes(2);
     expect(fetchSpy).toHaveBeenNthCalledWith(
       1,
-      "/api/v1/posts",
+      "/v1/posts",
       expect.objectContaining({
         method: "GET",
         query: expect.objectContaining({ page: 1 }),
@@ -367,7 +367,7 @@ describe("posts store", () => {
     await expect(store.deletePost(post1.id)).rejects.toThrow("network error");
 
     expect(fetchSpy).toHaveBeenCalledWith(
-      `/api/v1/posts/${post1.id}`,
+      `/v1/posts/${post1.id}`,
       expect.objectContaining({ method: "DELETE" }),
     );
     expect(listRef!.value).toEqual([post2.id, post1.id, post3.id]);
