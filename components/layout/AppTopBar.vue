@@ -50,79 +50,78 @@
 
     <template #append>
       <div class="app-top-bar__append">
-        <ClientOnly>
-          <RightControls
-            :is-mobile="props.isMobile"
-            :show-right-toggle="props.showRightToggle"
-            :icon-trigger-classes="iconTriggerClasses"
-            :notifications="notifications"
-            :notification-count="notificationCount"
-            :notifications-title="notificationsTitle"
-            :notifications-subtitle="notificationsSubtitle"
-            :notifications-empty="notificationsEmpty"
-            :notifications-mark-all="notificationsMarkAll"
-            :notifications-button-label="notificationsButtonLabel"
-            :messenger-conversations="messengerPreviewConversations"
-            :messenger-unread-count="messengerUnreadCount"
-            :messenger-button-label="messengerButtonLabel"
-            :messenger-title="messengerTitle"
-            :messenger-subtitle="messengerSubtitle"
-            :messenger-empty="messengerEmpty"
-            :messenger-view-all="messengerViewAll"
-            :messenger-unknown-label="messengerUnknownLabel"
-            :messenger-loading="messengerMenuLoading"
-            :widgets-label="widgetsLabel"
-            :cart-label="cartLabel"
-            @toggle-right="$emit('toggle-right')"
-            @mark-all-notifications="markAllNotifications"
-          >
-            <template #user>
-              <UserMenu
-                :items="userMenuItems"
-                :icon-trigger-classes="iconTriggerClasses"
-                :logging-out="loggingOut"
-                :user="currentUser"
-                :signed-in-text="userSignedInText"
-                :guest-title="userGuestTitle"
-                :guest-subtitle="userGuestSubtitle"
-                :profile-label="profileLabel"
-                @select="handleUserMenuSelect"
-              />
-            </template>
-            <template #locale>
-              <LocaleMenu
-                :locales="visibleLocales"
-                :current="props.locale"
-                :icon-trigger-classes="iconTriggerClasses"
-                :format-label="formatLocaleLabel"
-                :locale-metadata="localeMetadata"
-                :title="localeMenuTitle"
-                :subtitle="localeMenuSubtitle"
-                :button-label="localeButtonLabel"
-                @change="changeLocale"
-              />
-            </template>
-          </RightControls>
-          <template #fallback>
-            <div
-              class="app-top-bar__append-placeholder"
-              aria-hidden="true"
-            >
-              <span
-                v-for="index in placeholderCount"
-                :key="index"
-                class="app-top-bar__placeholder animate-pulse"
-              />
-              <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
-            </div>
+        <RightControls
+          v-if="isHydrated"
+          :is-mobile="props.isMobile"
+          :show-right-toggle="props.showRightToggle"
+          :icon-trigger-classes="iconTriggerClasses"
+          :notifications="notifications"
+          :notification-count="notificationCount"
+          :notifications-title="notificationsTitle"
+          :notifications-subtitle="notificationsSubtitle"
+          :notifications-empty="notificationsEmpty"
+          :notifications-mark-all="notificationsMarkAll"
+          :notifications-button-label="notificationsButtonLabel"
+          :messenger-conversations="messengerPreviewConversations"
+          :messenger-unread-count="messengerUnreadCount"
+          :messenger-button-label="messengerButtonLabel"
+          :messenger-title="messengerTitle"
+          :messenger-subtitle="messengerSubtitle"
+          :messenger-empty="messengerEmpty"
+          :messenger-view-all="messengerViewAll"
+          :messenger-unknown-label="messengerUnknownLabel"
+          :messenger-loading="messengerMenuLoading"
+          :widgets-label="widgetsLabel"
+          :cart-label="cartLabel"
+          @toggle-right="$emit('toggle-right')"
+          @mark-all-notifications="markAllNotifications"
+        >
+          <template #user>
+            <UserMenu
+              :items="userMenuItems"
+              :icon-trigger-classes="iconTriggerClasses"
+              :logging-out="loggingOut"
+              :user="currentUser"
+              :signed-in-text="userSignedInText"
+              :guest-title="userGuestTitle"
+              :guest-subtitle="userGuestSubtitle"
+              :profile-label="profileLabel"
+              @select="handleUserMenuSelect"
+            />
           </template>
-        </ClientOnly>
+          <template #locale>
+            <LocaleMenu
+              :locales="visibleLocales"
+              :current="props.locale"
+              :icon-trigger-classes="iconTriggerClasses"
+              :format-label="formatLocaleLabel"
+              :locale-metadata="localeMetadata"
+              :title="localeMenuTitle"
+              :subtitle="localeMenuSubtitle"
+              :button-label="localeButtonLabel"
+              @change="changeLocale"
+            />
+          </template>
+        </RightControls>
+        <div
+          v-else
+          class="app-top-bar__append-placeholder"
+          aria-hidden="true"
+        >
+          <span
+            v-for="index in placeholderCount"
+            :key="index"
+            class="app-top-bar__placeholder animate-pulse"
+          />
+          <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
+        </div>
       </div>
     </template>
   </v-app-bar>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { onNuxtReady } from "#app";
 import AppBrand from "./app-bar/AppBrand.vue";
 import AppNavButtons from "./app-bar/AppNavButtons.vue";
@@ -256,6 +255,13 @@ const notificationsSubtitle = computed(() => t("layout.notificationsMenu.subtitl
 const notificationsEmpty = computed(() => t("layout.notificationsMenu.empty"));
 const notificationsMarkAll = computed(() => t("layout.notificationsMenu.markAll"));
 const placeholderCount = 6;
+const isHydrated = ref(false);
+
+if (import.meta.client) {
+  onMounted(() => {
+    isHydrated.value = true;
+  });
+}
 
 const notificationsButtonLabel = computed(() => {
   const count = notificationCount.value;
