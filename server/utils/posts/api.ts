@@ -66,9 +66,10 @@ function resolveCommentsPayload(response: unknown): BlogCommentWithReplies[] | u
 
 function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
-  const publicEndpoint = config.public.blogApiEndpoint || "https://bro-world.org/api/v1/posts";
+  const publicEndpoint =
+    config.public.blogApiEndpoint || "https://blog.bro-world.org/api/v1/posts";
   const privateEndpoint =
-    config.public.blogPrivateApiEndpoint || "https://bro-world.org/api/v1/posts";
+    config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/api/v1/posts";
 
   return visibility === "private" ? privateEndpoint : publicEndpoint;
 }
@@ -102,11 +103,11 @@ function resolveCommentEndpoint(event: H3Event, visibility: PostsVisibility): st
   const publicEndpoint =
     config.public.blogCommentApiEndpoint ||
       deriveCommentEndpoint(config.public.blogApiEndpoint) ||
-    "https://bro-world.org/api/v1/comments";
+    "https://blog.bro-world.org/api/v1/comments";
   const privateEndpoint =
     config.public.blogPrivateCommentApiEndpoint ||
       deriveCommentEndpoint(config.public.blogPrivateApiEndpoint) ||
-    "https://bro-world.org/api/v1/comments";
+    "https://blog.bro-world.org/api/v1/comments";
 
   return visibility === "private" ? privateEndpoint : publicEndpoint;
 }
