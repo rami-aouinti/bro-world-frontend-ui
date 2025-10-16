@@ -181,15 +181,6 @@ export const defaultSiteSettings: SiteSettings = {
       isVisible: true,
       order: 3,
     }),
-    makeMenu({
-      id: "performance",
-      label: "layout.sidebar.items.performance",
-      icon: "mdi-speedometer",
-      translate: true,
-      to: "/performance",
-      isVisible: true,
-      order: 4,
-    }),
     makeMenu(
       {
         id: "admin",
@@ -198,7 +189,7 @@ export const defaultSiteSettings: SiteSettings = {
         translate: true,
         requiresAdmin: true,
         isVisible: true,
-        order: 6,
+        order: 4,
       },
       [
         makeMenu(
@@ -233,6 +224,16 @@ export const defaultSiteSettings: SiteSettings = {
               order: 1,
             },
             {
+              id: "admin-general-performance",
+              label: "layout.sidebar.items.performance",
+              icon: "mdi-speedometer",
+              translate: true,
+              to: "/admin/performance",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 2,
+            },
+            {
               id: "admin-general-settings",
               label: "layout.sidebar.items.adminSettings",
               icon: "mdi-cog-outline",
@@ -240,7 +241,7 @@ export const defaultSiteSettings: SiteSettings = {
               to: "/admin/settings",
               requiresAdmin: true,
               isVisible: true,
-              order: 2,
+              order: 3,
             },
           ],
         ),
