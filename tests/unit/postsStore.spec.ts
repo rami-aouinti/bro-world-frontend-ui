@@ -12,6 +12,10 @@ import {
 
 const fetchSpy = __requestFetchSpy;
 
+vi.mock("~/lib/api/fetcher", () => ({
+  resolveApiFetcher: () => fetchSpy,
+}));
+
 function createDeferred<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void;
   let reject!: (reason?: unknown) => void;
@@ -29,9 +33,38 @@ interface PostsListResponse {
   page: number;
   limit: number;
   count: number;
-  cachedAt: number;
+  cachedAt: number | null;
   revalidatedAt: number | null;
   fromCache: boolean;
+}
+
+function makePost(id: string, overrides: Partial<BlogPost> = {}): BlogPost {
+  return {
+    id,
+    title: `Title ${id}`,
+    summary: `Summary ${id}`,
+    content: `Content ${id}`,
+    url: null,
+    slug: `slug-${id}`,
+    medias: [],
+    isReacted: null,
+    publishedAt: new Date(2024, 0, Number(id.replace("post-", "")) + 1).toISOString(),
+    sharedFrom: null,
+    reactions_count: 1,
+    totalComments: 0,
+    user: {
+      id: `user-${id}`,
+      firstName: "Jane",
+      lastName: "Doe",
+      username: `jane-${id}`,
+      email: "jane@example.com",
+      enabled: true,
+      photo: null,
+    },
+    reactions_preview: [],
+    comments_preview: [],
+    ...overrides,
+  };
 }
 
 describe("posts store", () => {
@@ -51,6 +84,136 @@ describe("posts store", () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+  });
+
+  it("normalizes nested paginated responses from the API", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const posts = [makePost("post-1"), makePost("post-2")];
+    const cachedAtIso = new Date().toISOString();
+
+    fetchSpy.mockResolvedValueOnce({
+      data: {
+        data: posts,
+        meta: {
+          current_page: 1,
+          per_page: 5,
+          total: 20,
+          cached_at: cachedAtIso,
+          from_cache: "true",
+        },
+      },
+    });
+
+    const result = await store.fetchPosts({ params: { perPage: 5 } });
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "/api/v1/posts",
+      expect.objectContaining({
+        method: "GET",
+        query: expect.objectContaining({ page: 1, perPage: 5 }),
+      }),
+    );
+
+    expect(result.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.posts.value.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.pageSize.value).toBe(5);
+    expect(store.totalCount.value).toBe(20);
+    expect(store.currentPage.value).toBe(1);
+    expect(store.cachedAt.value).toBe(Date.parse(cachedAtIso));
+  });
+
+  it("discovers posts arrays nested beneath arbitrary keys", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const posts = [makePost("post-1"), makePost("post-2")];
+
+    fetchSpy.mockResolvedValueOnce({
+      payload: {
+        response: {
+          bundle: {
+            records: {
+              nodes: posts,
+              pagination: {
+                currentPage: 2,
+                perPage: 2,
+                totalCount: 10,
+                fromCache: false,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const result = await store.fetchPosts(2, { params: { perPage: 2 } });
+
+    expect(result.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.posts.value.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.pageSize.value).toBe(2);
+    expect(store.totalCount.value).toBe(10);
+    expect(store.currentPage.value).toBe(2);
+  });
+
+  it("parses JSON string responses returned by the HTTP client", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const posts = [makePost("post-1")];
+    const cachedAtIso = new Date().toISOString();
+
+    fetchSpy.mockResolvedValueOnce(
+      JSON.stringify({
+        data: posts,
+        meta: {
+          current_page: 1,
+          per_page: 1,
+          total: 1,
+          cached_at: cachedAtIso,
+        },
+      }),
+    );
+
+    const result = await store.fetchPosts();
+
+    expect(result.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.cachedAt.value).toBe(Date.parse(cachedAtIso));
   });
 
   it("restores the post when deletePost fails", async () => {
@@ -75,35 +238,6 @@ describe("posts store", () => {
     expect(itemsRef).toBeDefined();
     expect(listRef).toBeDefined();
     expect(timestampsRef).toBeDefined();
-
-    function makePost(id: string, overrides: Partial<BlogPost> = {}): BlogPost {
-      return {
-        id,
-        title: `Title ${id}`,
-        summary: `Summary ${id}`,
-        content: `Content ${id}`,
-        url: null,
-        slug: `slug-${id}`,
-        medias: [],
-        isReacted: null,
-        publishedAt: new Date(2024, 0, Number(id.replace("post-", "")) + 1).toISOString(),
-        sharedFrom: null,
-        reactions_count: 1,
-        totalComments: 0,
-        user: {
-          id: `user-${id}`,
-          firstName: "Jane",
-          lastName: "Doe",
-          username: `jane-${id}`,
-          email: "jane@example.com",
-          enabled: true,
-          photo: null,
-        },
-        reactions_preview: [],
-        comments_preview: [],
-        ...overrides,
-      };
-    }
 
     const post1 = makePost("post-1");
     const post2 = makePost("post-2");
