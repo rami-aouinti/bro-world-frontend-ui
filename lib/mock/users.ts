@@ -1,0 +1,118 @@
+import type { UsersApiUser } from "~/server/utils/users/api";
+
+export const usersListSample: UsersApiUser[] = [
+  {
+    id: "amina-rahman",
+    username: "amina.rahman",
+    email: "amina.rahman@example.com",
+    firstName: "Amina",
+    lastName: "Rahman",
+    roles: ["member"],
+    language: "en",
+    locale: "en-US",
+    timezone: "Africa/Casablanca",
+    enabled: true,
+    createdAt: "2024-01-18T09:30:00Z",
+    updatedAt: "2024-02-02T11:45:00Z",
+    profile: {
+      title: "Lead Product Designer",
+      photo:
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=160&h=160&q=80",
+    },
+  },
+  {
+    id: "leo-martinez",
+    username: "leo.martinez",
+    email: "leo.martinez@example.com",
+    firstName: "Leo",
+    lastName: "Martínez",
+    roles: ["moderator"],
+    language: "es",
+    locale: "es-ES",
+    timezone: "Europe/Madrid",
+    enabled: true,
+    createdAt: "2023-11-04T16:10:00Z",
+    updatedAt: "2024-01-27T08:55:00Z",
+    profile: {
+      title: "Senior Frontend Engineer",
+      photo:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=160&h=160&q=80",
+    },
+  },
+  {
+    id: "noor-hassan",
+    username: "noor.hassan",
+    email: "noor.hassan@example.com",
+    firstName: "Noor",
+    lastName: "Hassan",
+    roles: ["member"],
+    language: "en",
+    locale: "en-GB",
+    timezone: "Asia/Dubai",
+    enabled: true,
+    createdAt: "2024-02-01T12:05:00Z",
+    updatedAt: "2024-02-05T06:15:00Z",
+    profile: {
+      title: "Community Strategist",
+      photo:
+        "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=160&h=160&q=80",
+    },
+  },
+  {
+    id: "meera-kapoor",
+    username: "meera.kapoor",
+    email: "meera.kapoor@example.com",
+    firstName: "Meera",
+    lastName: "Kapoor",
+    roles: ["admin"],
+    language: "en",
+    locale: "en-IN",
+    timezone: "Asia/Kolkata",
+    enabled: true,
+    createdAt: "2023-09-12T07:20:00Z",
+    updatedAt: "2024-02-03T14:35:00Z",
+    profile: {
+      title: "Principal Product Manager",
+      photo:
+        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80",
+    },
+  },
+  {
+    id: "julien-morel",
+    username: "julien.morel",
+    email: "julien.morel@example.com",
+    firstName: "Julien",
+    lastName: "Morel",
+    roles: ["member"],
+    language: "fr",
+    locale: "fr-FR",
+    timezone: "Europe/Paris",
+    enabled: false,
+    createdAt: "2023-12-22T18:25:00Z",
+    updatedAt: "2024-01-31T10:10:00Z",
+    profile: {
+      title: "Design Operations Manager",
+      photo:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&w=160&h=160&q=80",
+    },
+  },
+  {
+    id: "ayesha-rahim",
+    username: "ayesha.rahim",
+    email: "ayesha.rahim@example.com",
+    firstName: "Ayesha",
+    lastName: "Rahim",
+    roles: ["member"],
+    language: "en",
+    locale: "en-SG",
+    timezone: "Asia/Singapore",
+    enabled: true,
+    createdAt: "2024-01-08T05:40:00Z",
+    updatedAt: "2024-02-04T09:05:00Z",
+    profile: {
+      title: "Solutions Engineer",
+      photo:
+        "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?auto=format&fit=facearea&w=160&h=160&q=80",
+    },
+  },
+];

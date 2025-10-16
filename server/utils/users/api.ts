@@ -6,6 +6,7 @@ import type { QueryObject } from "ufo";
 import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
 import { profileEventsSample } from "~/lib/mock/profile";
+import { usersListSample } from "~/lib/mock/users";
 import type {
   FriendEntry,
   FriendStory,
@@ -533,8 +534,18 @@ function unwrapUser(payload: UserSource): UsersApiUser {
 }
 
 export async function fetchUsersListFromSource(event: H3Event) {
-  const payload = await requestUsersApi<UsersListSource>(event, "/user", { method: "GET" });
-  return unwrapUsersList(payload);
+  try {
+    const payload = await requestUsersApi<UsersListSource>(event, "/user", { method: "GET" });
+    return unwrapUsersList(payload);
+  } catch (error) {
+    if (!isAuthorizationError(error)) {
+      throw error;
+    }
+
+    console.warn("Falling back to mock users list", error);
+
+    return unwrapUsersList(usersListSample);
+  }
 }
 
 export async function fetchCurrentProfileFromSource(event: H3Event) {

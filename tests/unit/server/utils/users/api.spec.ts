@@ -3,8 +3,10 @@ import { createError, type H3Event } from "h3";
 import {
   fetchCurrentProfileFromSource,
   fetchProfileEventsFromSource,
+  fetchUsersListFromSource,
 } from "~/server/utils/users/api";
 import { profileEventsSample } from "~/lib/mock/profile";
+import { usersListSample } from "~/lib/mock/users";
 
 const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
 const getSessionUserMock = vi.hoisted(() =>
@@ -44,12 +46,14 @@ vi.mock("#imports", () => ({
 const globalScope = globalThis as Record<string, unknown>;
 const hadOriginalFetch = Object.prototype.hasOwnProperty.call(globalScope, "$fetch");
 const originalFetch = globalScope.$fetch;
+const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
 beforeEach(() => {
   getSessionTokenMock.mockReset();
   getSessionUserMock.mockReset();
   withAuthHeadersMock.mockReset();
   useRuntimeConfigMock.mockReset();
+  consoleWarnSpy.mockClear();
 });
 
 afterEach(() => {
@@ -60,9 +64,11 @@ afterEach(() => {
   }
 });
 
-describe("fetchProfileEventsFromSource", () => {
-  const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+afterAll(() => {
+  consoleWarnSpy.mockRestore();
+});
 
+describe("fetchProfileEventsFromSource", () => {
   it("uses the users API base when requesting profile events", async () => {
     const fetchMock = vi.fn().mockResolvedValue([]);
     globalScope.$fetch = fetchMock;
@@ -210,6 +216,30 @@ describe("fetchProfileEventsFromSource", () => {
     expect(result).toEqual(profileEventsSample);
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       "Falling back to mock profile events",
+      expect.anything(),
+    );
+  });
+});
+
+describe("fetchUsersListFromSource", () => {
+  it("falls back to mock users when the API request is unauthorized", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockRejectedValue(createError({ statusCode: 401, statusMessage: "Unauthorized" }));
+
+    globalScope.$fetch = fetchMock;
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+    getSessionUserMock.mockReturnValue(null);
+
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+
+    const result = await fetchUsersListFromSource(event);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result).toEqual({ data: usersListSample, count: usersListSample.length });
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "Falling back to mock users list",
       expect.anything(),
     );
   });
