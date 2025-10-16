@@ -339,7 +339,7 @@ export const useProfileStore = defineStore("profile", () => {
     pendingState.value = true;
     errorState.value = null;
 
-    const request = fetcher<ProfileResponse>("/api/v1/profile", {
+    const request = fetcher<ProfileResponse>("/v1/profile", {
       method: "GET",
       isPrivate: true,
       withCredentials: false,
