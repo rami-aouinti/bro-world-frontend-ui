@@ -216,6 +216,30 @@ describe("posts store", () => {
     expect(store.cachedAt.value).toBe(Date.parse(cachedAtIso));
   });
 
+  it("surfaces API error messages when the response lacks post data", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    fetchSpy.mockResolvedValueOnce({
+      message: "Unauthenticated.",
+    });
+
+    await expect(store.fetchPosts()).rejects.toThrow("Unauthenticated.");
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(store.error.value).toBe("Unauthenticated.");
+  });
+
   it("restores the post when deletePost fails", async () => {
     const { usePostsStore } = await import("~/stores/posts");
 
