@@ -312,17 +312,46 @@ export function clearAuthSession(event: H3Event) {
   }
 }
 
-export function withAuthHeaders(event: H3Event, headers: Record<string, string> = {}) {
-  const token = getSessionToken(event);
+interface AuthHeaderOptions {
+  includeCookies?: boolean;
+}
 
-  if (!token) {
-    return headers;
-  }
+function hasHeader(headers: Record<string, string>, name: string): boolean {
+  const target = name.toLowerCase();
+
+  return Object.keys(headers).some((key) => key.toLowerCase() === target);
+}
+
+export function getAuthCookieNames(event: H3Event) {
+  const { tokenCookieName, sessionTokenCookieName } = resolveCookiesConfig(event);
 
   return {
-    ...headers,
-    Authorization: `Bearer ${token}`,
+    tokenCookieName,
+    sessionTokenCookieName,
   };
+}
+
+export function withAuthHeaders(
+  event: H3Event,
+  headers: Record<string, string> = {},
+  options: AuthHeaderOptions = {},
+) {
+  const result = { ...headers };
+  const token = getSessionToken(event);
+
+  if (token && !hasHeader(result, "authorization")) {
+    result.Authorization = `Bearer ${token}`;
+  }
+
+  if (options.includeCookies && !hasHeader(result, "cookie")) {
+    const forwardedCookies = getHeader(event, "cookie");
+
+    if (forwardedCookies) {
+      result.Cookie = forwardedCookies;
+    }
+  }
+
+  return result;
 }
 
 interface RequireSessionTokenOptions {

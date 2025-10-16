@@ -1,7 +1,7 @@
 import type { H3Event } from "h3";
-import { createError, defineEventHandler, readBody } from "h3";
+import { createError, defineEventHandler, getHeader, readBody } from "h3";
 import { requestWithRetry } from "~/server/utils/requestWithRetry";
-import { getSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
+import { getAuthCookieNames, getSessionToken, withAuthHeaders } from "~/server/utils/auth/session";
 
 interface SubmitReviewBody {
   rating?: number;
@@ -17,8 +17,28 @@ function resolveApiBase(event: H3Event) {
 
 export default defineEventHandler(async (event) => {
   const token = getSessionToken(event);
+  const forwardedCookies = getHeader(event, "cookie") ?? "";
+  const { tokenCookieName, sessionTokenCookieName } = getAuthCookieNames(event);
+  const hasSessionCookie = forwardedCookies
+    .split(";")
+    .map((cookie) => cookie.trim())
+    .some((cookie) => {
+      if (!cookie) {
+        return false;
+      }
 
-  if (!token) {
+      if (tokenCookieName && cookie.startsWith(`${tokenCookieName}=`)) {
+        return true;
+      }
+
+      if (sessionTokenCookieName && cookie.startsWith(`${sessionTokenCookieName}=`)) {
+        return true;
+      }
+
+      return false;
+    });
+
+  if (!token && !hasSessionCookie) {
     throw createError({
       statusCode: 401,
       statusMessage: "Authentication required",
@@ -43,6 +63,10 @@ export default defineEventHandler(async (event) => {
   return await requestWithRetry("POST", endpoint, {
     token,
     body: { rating: value },
-    headers: withAuthHeaders(event, { "Content-Type": "application/json" }),
+    headers: withAuthHeaders(
+      event,
+      { "Content-Type": "application/json" },
+      { includeCookies: true },
+    ),
   });
 });
