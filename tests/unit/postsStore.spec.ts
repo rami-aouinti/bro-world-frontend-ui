@@ -136,6 +136,86 @@ describe("posts store", () => {
     expect(store.cachedAt.value).toBe(Date.parse(cachedAtIso));
   });
 
+  it("discovers posts arrays nested beneath arbitrary keys", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const posts = [makePost("post-1"), makePost("post-2")];
+
+    fetchSpy.mockResolvedValueOnce({
+      payload: {
+        response: {
+          bundle: {
+            records: {
+              nodes: posts,
+              pagination: {
+                currentPage: 2,
+                perPage: 2,
+                totalCount: 10,
+                fromCache: false,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const result = await store.fetchPosts(2, { params: { perPage: 2 } });
+
+    expect(result.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.posts.value.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.pageSize.value).toBe(2);
+    expect(store.totalCount.value).toBe(10);
+    expect(store.currentPage.value).toBe(2);
+  });
+
+  it("parses JSON string responses returned by the HTTP client", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const posts = [makePost("post-1")];
+    const cachedAtIso = new Date().toISOString();
+
+    fetchSpy.mockResolvedValueOnce(
+      JSON.stringify({
+        data: posts,
+        meta: {
+          current_page: 1,
+          per_page: 1,
+          total: 1,
+          cached_at: cachedAtIso,
+        },
+      }),
+    );
+
+    const result = await store.fetchPosts();
+
+    expect(result.map((post) => post.id)).toEqual(posts.map((post) => post.id));
+    expect(store.cachedAt.value).toBe(Date.parse(cachedAtIso));
+  });
+
   it("restores the post when deletePost fails", async () => {
     const { usePostsStore } = await import("~/stores/posts");
 

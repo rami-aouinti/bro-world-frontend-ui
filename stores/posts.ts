@@ -190,11 +190,42 @@ function tryResolvePosts(
     }
   }
 
+  for (const [key, candidate] of Object.entries(value)) {
+    if (candidates.includes(key as (typeof candidates)[number])) {
+      continue;
+    }
+
+    if (Array.isArray(candidate)) {
+      return { posts: candidate as BlogPost[], source: value };
+    }
+
+    if (candidate && typeof candidate === "object" && candidate !== value) {
+      const resolved = tryResolvePosts(candidate, visited);
+
+      if (resolved) {
+        const sourceRecord =
+          resolved.source ?? (isRecord(candidate) ? (candidate as Record<string, unknown>) : undefined);
+
+        return { posts: resolved.posts, source: sourceRecord };
+      }
+    }
+  }
+
   return null;
 }
 
 function normalizePostsListResponse(raw: unknown): PostsListResponse {
-  const resolution = tryResolvePosts(raw);
+  let normalizedInput = raw;
+
+  if (typeof normalizedInput === "string") {
+    try {
+      normalizedInput = JSON.parse(normalizedInput) as unknown;
+    } catch {
+      // fall through with the original string when parsing fails
+    }
+  }
+
+  const resolution = tryResolvePosts(normalizedInput);
 
   if (!resolution) {
     throw new Error("Invalid posts response format.");
@@ -202,7 +233,9 @@ function normalizePostsListResponse(raw: unknown): PostsListResponse {
 
   const { posts, source } = resolution;
   const normalizedPosts = posts.filter((post): post is BlogPost => Boolean(post?.id));
-  const rootSource = isRecord(raw) ? (raw as Record<string, unknown>) : undefined;
+  const rootSource = isRecord(normalizedInput)
+    ? (normalizedInput as Record<string, unknown>)
+    : undefined;
   const metaSources: Array<Record<string, unknown> | undefined> = [
     rootSource,
     source,
