@@ -4,6 +4,11 @@ import { joinURL } from "ufo";
 import type { FetchOptions } from "ofetch";
 import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
+import type {
+  FriendEntry,
+  FriendStory,
+  ProfileUser,
+} from "~/types/pages/profile";
 import { getSessionToken } from "../auth/session";
 
 export interface UsersApiUser extends AuthUser {
@@ -28,6 +33,102 @@ type UsersListSource = UsersApiUser[] | UsersListEnvelope | null | undefined;
 type UserSource = UsersApiUser | UserEnvelope | null | undefined;
 
 type UsersFetchOptions = FetchOptions<"json">;
+
+type ProfileSource =
+  | ProfileUser
+  | {
+      data?: ProfileUser | null;
+      profile?: ProfileUser | null;
+      user?: ProfileUser | null;
+    }
+  | null
+  | undefined;
+
+function isProfileUser(candidate: unknown): candidate is ProfileUser {
+  if (!candidate || typeof candidate !== "object") {
+    return false;
+  }
+
+  const value = candidate as Record<string, unknown>;
+
+  return (
+    typeof value.id === "string" ||
+    typeof value.username === "string" ||
+    typeof value.email === "string"
+  );
+}
+
+function normalizeFriendStories(raw: unknown): FriendStory[] {
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+
+  return raw.filter((story): story is FriendStory => Boolean(story));
+}
+
+function normalizeFriendEntry(entry: FriendEntry | null | undefined): FriendEntry | null {
+  if (!entry || typeof entry !== "object") {
+    return null;
+  }
+
+  const sanitized: FriendEntry = { ...entry };
+
+  sanitized.stories = normalizeFriendStories(entry.stories);
+
+  return sanitized;
+}
+
+function normalizeFriendEntries(raw: ProfileUser["friends"]): FriendEntry[] {
+  if (!raw) {
+    return [];
+  }
+
+  const entries = Array.isArray(raw) ? raw : Object.values(raw);
+
+  return entries
+    .map((entry) => normalizeFriendEntry(entry))
+    .filter((entry): entry is FriendEntry => Boolean(entry));
+}
+
+function normalizeStories(raw: unknown): FriendStory[] {
+  return normalizeFriendStories(raw);
+}
+
+function unwrapProfile(payload: ProfileSource): ProfileUser {
+  if (isProfileUser(payload)) {
+    return {
+      ...payload,
+      friends: normalizeFriendEntries(payload.friends),
+      stories: normalizeStories(payload.stories),
+    };
+  }
+
+  if (payload && typeof payload === "object") {
+    const envelope = payload as {
+      data?: ProfileUser | null;
+      profile?: ProfileUser | null;
+      user?: ProfileUser | null;
+    };
+
+    const candidates = [envelope.data, envelope.profile, envelope.user];
+
+    for (const candidate of candidates) {
+      if (isProfileUser(candidate)) {
+        return {
+          ...candidate,
+          friends: normalizeFriendEntries(candidate.friends),
+          stories: normalizeStories(candidate.stories),
+        };
+      }
+    }
+  }
+
+  throw createError({
+    statusCode: 502,
+    statusMessage: "Users API request failed",
+    data: { message: "Invalid profile payload." },
+  });
+}
 
 function getUsersApiBase(event: H3Event) {
   const config = useRuntimeConfig(event);
@@ -214,6 +315,12 @@ function unwrapUser(payload: UserSource): UsersApiUser {
 export async function fetchUsersListFromSource(event: H3Event) {
   const payload = await requestUsersApi<UsersListSource>(event, "/user", { method: "GET" });
   return unwrapUsersList(payload);
+}
+
+export async function fetchCurrentProfileFromSource(event: H3Event) {
+  const payload = await requestUsersApi<ProfileSource>(event, "/profile", { method: "GET" });
+
+  return unwrapProfile(payload);
 }
 
 export async function fetchUserFromSource(event: H3Event, id: string) {
