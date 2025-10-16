@@ -24,13 +24,13 @@ export function optimizeAvatarUrl(input: string | null | undefined, size: number
       return url.toString();
     }
 
-    if (host.endsWith("bro-world.org")) {
+    if (host.endsWith("bro-world.org") || host.endsWith("bro-world-space.com")) {
       url.searchParams.set("size", `${normalizedSize}x${normalizedSize}`);
-      return url.toString();
-    }
 
-    if (host.endsWith("bro-world-space.com")) {
-      url.searchParams.set("size", `${normalizedSize}x${normalizedSize}`);
+      if (!url.searchParams.has("format")) {
+        url.searchParams.set("format", "webp");
+      }
+
       return url.toString();
     }
 
