@@ -1,9 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { H3Event } from "h3";
+import { createError, type H3Event } from "h3";
 import {
   fetchCurrentProfileFromSource,
   fetchProfileEventsFromSource,
 } from "~/server/utils/users/api";
+import { profileEventsSample } from "~/lib/mock/profile";
 
 const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
 const getSessionUserMock = vi.hoisted(() =>
@@ -60,6 +61,8 @@ afterEach(() => {
 });
 
 describe("fetchProfileEventsFromSource", () => {
+  const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
   it("uses the users API base when requesting profile events", async () => {
     const fetchMock = vi.fn().mockResolvedValue([]);
     globalScope.$fetch = fetchMock;
@@ -156,6 +159,28 @@ describe("fetchProfileEventsFromSource", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [, options] = fetchMock.mock.calls[0];
     expect(options?.headers?.authorization).toBe("Bearer forwarded-token");
+  });
+
+  it("returns mock events when the users API request is unauthorized", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockRejectedValue(createError({ statusCode: 401, statusMessage: "Unauthorized" }));
+
+    globalScope.$fetch = fetchMock;
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+    getSessionUserMock.mockReturnValue(null);
+
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+
+    const result = await fetchProfileEventsFromSource(event);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(profileEventsSample);
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "Falling back to mock profile events",
+      expect.anything(),
+    );
   });
 });
 

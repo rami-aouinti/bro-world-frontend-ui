@@ -5,6 +5,7 @@ import type { FetchOptions } from "ofetch";
 import type { QueryObject } from "ufo";
 import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
+import { profileEventsSample } from "~/lib/mock/profile";
 import type {
   FriendEntry,
   FriendStory,
@@ -57,6 +58,19 @@ type ProfileEventsEnvelope = {
 };
 
 type ProfileEventsSource = ProfileEvent[] | ProfileEventsEnvelope | null | undefined;
+
+function isAuthorizationError(error: unknown): boolean {
+  const status =
+    typeof (error as { statusCode?: number })?.statusCode === "number"
+      ? (error as { statusCode: number }).statusCode
+      : typeof (error as { status?: number })?.status === "number"
+        ? (error as { status: number }).status
+        : typeof (error as { response?: { status?: number } })?.response?.status === "number"
+          ? ((error as { response: { status?: number } }).response?.status ?? NaN)
+          : NaN;
+
+  return status === 401 || status === 403;
+}
 
 function normalizeProfileEvent(raw: unknown): ProfileEvent | null {
   if (!raw || typeof raw !== "object") {
@@ -454,12 +468,22 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
 }
 
 export async function fetchProfileEventsFromSource(event: H3Event, query: QueryObject = {}) {
-  const payload = await requestUsersApi<ProfileEventsSource>(event, "/profile/events", {
-    method: "GET",
-    query,
-  });
+  try {
+    const payload = await requestUsersApi<ProfileEventsSource>(event, "/profile/events", {
+      method: "GET",
+      query,
+    });
 
-  return normalizeProfileEvents(payload);
+    return normalizeProfileEvents(payload);
+  } catch (error) {
+    if (!isAuthorizationError(error)) {
+      throw error;
+    }
+
+    console.warn("Falling back to mock profile events", error);
+
+    return normalizeProfileEvents(profileEventsSample);
+  }
 }
 
 export async function fetchUserFromSource(event: H3Event, id: string) {
