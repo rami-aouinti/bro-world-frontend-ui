@@ -342,6 +342,102 @@ function collectHydraMeta(source: Record<string, unknown> | undefined) {
   return meta;
 }
 
+const errorMessageKeys = [
+  "message",
+  "error",
+  "error_message",
+  "errorMessage",
+  "error_description",
+  "errorDescription",
+  "detail",
+  "description",
+  "hydra:description",
+  "hydra:title",
+] as const;
+
+function extractErrorMessage(value: unknown, visited: Set<unknown> = new Set()): string | null {
+  if (value === null || typeof value === "undefined") {
+    return null;
+  }
+
+  if (visited.has(value)) {
+    return null;
+  }
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed ? trimmed : null;
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return null;
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const message = extractErrorMessage(item, visited);
+
+      if (message) {
+        return message;
+      }
+    }
+
+    return null;
+  }
+
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  visited.add(value);
+
+  for (const key of errorMessageKeys) {
+    if (!(key in value)) {
+      continue;
+    }
+
+    const resolved = extractErrorMessage(value[key], visited);
+
+    if (resolved) {
+      return resolved;
+    }
+  }
+
+  if ("errors" in value) {
+    const errorsValue = value.errors;
+
+    if (typeof errorsValue === "string") {
+      const trimmed = errorsValue.trim();
+
+      if (trimmed) {
+        return trimmed;
+      }
+    }
+
+    if (Array.isArray(errorsValue)) {
+      const parts = errorsValue
+        .map((item) => extractErrorMessage(item, visited))
+        .filter((part): part is string => Boolean(part?.trim()));
+
+      if (parts.length > 0) {
+        return parts.join("\n");
+      }
+    }
+
+    if (isRecord(errorsValue)) {
+      const parts = Object.values(errorsValue)
+        .map((item) => extractErrorMessage(item, visited))
+        .filter((part): part is string => Boolean(part?.trim()));
+
+      if (parts.length > 0) {
+        return parts.join("\n");
+      }
+    }
+  }
+
+  return null;
+}
+
 function normalizePostsListResponse(raw: unknown): PostsListResponse {
   let normalizedInput = raw;
 
@@ -349,8 +445,18 @@ function normalizePostsListResponse(raw: unknown): PostsListResponse {
     try {
       normalizedInput = JSON.parse(normalizedInput) as unknown;
     } catch {
-      // fall through with the original string when parsing fails
+      const trimmed = normalizedInput.trim();
+
+      if (trimmed) {
+        throw new Error(trimmed);
+      }
     }
+  }
+
+  const extractedError = extractErrorMessage(normalizedInput);
+
+  if (extractedError) {
+    throw new Error(extractedError);
   }
 
   const resolution = tryResolvePosts(normalizedInput);
