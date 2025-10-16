@@ -16,7 +16,7 @@ import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { createApiFetcher, type ApiRequestOptions } from "~/lib/api/http-client";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useProfileStore } from "~/stores/profile";
 import { buildAuthUserCookie, type AuthUserCookie } from "~/lib/auth/user-cookie";
 
@@ -398,6 +398,11 @@ export const useAuthSession = defineStore("auth-session", () => {
 
       return persistMercureToken(response);
     } catch (error) {
+      if (isAxiosError(error) && error.response?.status === 404) {
+        setMercureToken(null);
+        return null;
+      }
+
       console.error("Failed to fetch Mercure token", error);
       setMercureToken(null);
       return null;
