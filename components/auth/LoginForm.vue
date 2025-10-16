@@ -38,6 +38,7 @@
           :aria-describedby="formError ? formErrorId : undefined"
           data-lpignore="true"
           data-lastpass-ignore="true"
+          data-lastpass-icon="false"
           @input="handleFieldInput"
         />
       </div>
@@ -56,6 +57,7 @@
           :aria-describedby="formError ? formErrorId : undefined"
           data-lpignore="true"
           data-lastpass-ignore="true"
+          data-lastpass-icon="false"
           @input="handleFieldInput"
         />
 
