@@ -360,6 +360,19 @@ export const useProfileStore = defineStore("profile", () => {
         return profile;
       })
       .catch((caughtError) => {
+        const statusCode =
+          typeof (caughtError as { statusCode?: number })?.statusCode === "number"
+            ? (caughtError as { statusCode: number }).statusCode
+            : undefined;
+
+        if (statusCode === 401) {
+          profileState.value = null;
+          errorState.value = null;
+          lastFetchedState.value = null;
+
+          return profileState.value;
+        }
+
         const message =
           caughtError instanceof Error
             ? caughtError.message
