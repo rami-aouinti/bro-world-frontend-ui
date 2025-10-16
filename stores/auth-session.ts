@@ -18,6 +18,7 @@ import { createApiFetcher, type ApiRequestOptions } from "~/lib/api/http-client"
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import axios from "axios";
 import { useProfileStore } from "~/stores/profile";
+import { buildAuthUserCookie, type AuthUserCookie } from "~/lib/auth/user-cookie";
 
 interface LoginCredentials {
   identifier: string;
@@ -145,10 +146,6 @@ export const useAuthSession = defineStore("auth-session", () => {
     (privateAuthConfig.userCookieName as string | undefined) ??
     publicAuthConfig.userCookieName ??
     "auth_user";
-  type AuthUserCookie = Pick<
-    AuthUser,
-    "id" | "username" | "email" | "firstName" | "lastName" | "photo" | "roles" | "enabled"
-  >;
   const sessionTokenCookie = useCookie<string | null>(
     sessionTokenCookieName,
     withSecureCookieOptions({
@@ -225,33 +222,7 @@ export const useAuthSession = defineStore("auth-session", () => {
     }
   }
 
-  function sanitizeUserForCookie(user: AuthUser | null): AuthUserCookie | null {
-    if (!user) {
-      return null;
-    }
-
-    const payload: Partial<AuthUserCookie> = {};
-    const fields: (keyof AuthUserCookie)[] = [
-      "id",
-      "username",
-      "email",
-      "firstName",
-      "lastName",
-      "photo",
-      "roles",
-      "enabled",
-    ];
-
-    for (const key of fields) {
-      const value = user[key];
-
-      if (value !== undefined) {
-        payload[key] = value;
-      }
-    }
-
-    return payload as AuthUserCookie;
-  }
+  const sanitizeUserForCookie = (user: AuthUser | null) => buildAuthUserCookie(user);
 
   if (userCookie.value) {
     currentUserState.value = userCookie.value as AuthUser;
