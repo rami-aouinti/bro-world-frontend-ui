@@ -271,7 +271,25 @@
       "sections": {
         "contact": "Contatti",
         "profile": "Profilo",
-        "social": "Social"
+        "social": "Social",
+        "calendar": "Calendario"
+      },
+      "calendar": {
+        "subtitle": "Tieniti aggiornato sul tuo prossimo programma.",
+        "viewLabel": "Cambia vista calendario",
+        "views": {
+          "month": "Mese",
+          "week": "Settimana",
+          "day": "Giorno"
+        },
+        "errorTitle": "Impossibile caricare gli eventi",
+        "errorFallback": "Non siamo riusciti a caricare i tuoi eventi. Riprova.",
+        "retry": "Riprova",
+        "privateLabel": "Privato",
+        "allDay": "Tutto il giorno",
+        "upcoming": "Prossimi eventi",
+        "emptyTitle": "Nessun evento programmato",
+        "emptyDescription": "Aggiungi eventi al tuo calendario per vederli qui."
       },
       "labels": {
         "email": "Email",

@@ -1307,7 +1307,25 @@
       "sections": {
         "contact": "Contact",
         "profile": "Profile",
-        "social": "Social"
+        "social": "Social",
+        "calendar": "Calendar"
+      },
+      "calendar": {
+        "subtitle": "Stay on top of your upcoming schedule.",
+        "viewLabel": "Change calendar view",
+        "views": {
+          "month": "Month",
+          "week": "Week",
+          "day": "Day"
+        },
+        "errorTitle": "Unable to load events",
+        "errorFallback": "We couldn't load your events. Please try again.",
+        "retry": "Retry",
+        "privateLabel": "Private",
+        "allDay": "All-day",
+        "upcoming": "Upcoming events",
+        "emptyTitle": "No events scheduled",
+        "emptyDescription": "Add events to your calendar to see them here."
       },
       "labels": {
         "email": "Email",

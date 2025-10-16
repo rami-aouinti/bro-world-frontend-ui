@@ -215,6 +215,10 @@
               </SidebarCard>
             </section>
           </v-col>
+
+          <v-col cols="12">
+            <ProfileCalendar />
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -243,6 +247,10 @@ const ProfileSidebar = defineAsyncComponent({
 });
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
+  suspensible: false,
+});
+const ProfileCalendar = defineAsyncComponent({
+  loader: () => import("~/components/profile/ProfileCalendar.vue"),
   suspensible: false,
 });
 
