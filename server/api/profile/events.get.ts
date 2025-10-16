@@ -6,9 +6,7 @@ function resolveStatusCode(error: unknown): number {
   if (error && typeof error === "object") {
     const status = (error as { statusCode?: number }).statusCode;
 
-    if (typeof status === "number") {
-      return status;
-    }
+    return status;
 
     const responseStatus = (error as { response?: { status?: number } }).response?.status;
 
