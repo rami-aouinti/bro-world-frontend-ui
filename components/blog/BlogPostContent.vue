@@ -1,8 +1,8 @@
 <template>
   <section class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-auto">
-    <h4 class="font-semibold leading-tight text-foreground">
+    <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
       {{ props.title }}
-    </h4>
+    </h2>
     <p
       v-if="props.summary"
       class="text-base leading-relaxed text-slate-500"
