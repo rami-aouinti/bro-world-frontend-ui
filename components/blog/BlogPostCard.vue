@@ -41,7 +41,7 @@
       @comment="handleCommentButtonClick"
     />
     <div
-      v-if="post.totalComments > 2"
+      v-if="post.totalComments > 2 && shouldRenderCommentThread"
       class="header"
     >
       <CommentSortMenu v-model="sortBy" />
@@ -460,15 +460,20 @@ async function handleTogglePostReaction() {
 }
 
 function handleCommentButtonClick() {
+  const nextActive = !commentsActivated.value;
+
+  commentsActivated.value = nextActive;
+  isCommentComposerVisible.value = nextActive;
+
+  if (!nextActive) {
+    return;
+  }
+
   requestComments();
 
-  isCommentComposerVisible.value = !isCommentComposerVisible.value;
-
-  if (isCommentComposerVisible.value) {
-    nextTick(() => {
-      commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-  }
+  nextTick(() => {
+    commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
 }
 
 async function handleCommentReaction(commentId: string, reactionType: ReactionAction) {
