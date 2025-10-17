@@ -14,7 +14,7 @@
       >
         {{ currentLabel }}
         <Icon
-          name="mdi-chevron-down"
+          name="mdi:chevron-down"
           size="16"
           class="ml-1"
         />

@@ -10,11 +10,11 @@
       <v-card-title class="d-flex align-center justify-space-between">
         <span class="text-h6 font-weight-semibold">{{ dialogTitle }}</span>
         <v-btn
-          icon="mdi-close"
+          icon="mdi:close"
           variant="text"
           @click="handleClose"
         >
-          <Icon name="mdi-close" />
+          <Icon name="mdi:close" />
         </v-btn>
       </v-card-title>
 
@@ -40,11 +40,11 @@
                   size="small"
                   variant="tonal"
                   rounded="pill"
-                  prepend-icon="mdi-account-multiple"
+                  prepend-icon="mdi:account-multiple"
                   class="text-capitalize"
                 >
                   <Icon
-                    name="mdi-account-multiple"
+                    name="mdi:account-multiple"
                     class="me-2"
                   />
                   {{ audienceLabel }}
@@ -94,7 +94,7 @@
                 :title="attachmentLabels.media"
                 @click="handleAttach('media')"
               >
-                <Icon name="mdi-image-multiple" />
+                <Icon name="mdi:image-multiple" />
               </v-btn>
               <v-btn
                 icon
@@ -102,7 +102,7 @@
                 :title="attachmentLabels.tag"
                 @click="handleAttach('tag')"
               >
-                <Icon name="mdi-account-plus-outline" />
+                <Icon name="mdi:account-plus-outline" />
               </v-btn>
               <v-btn
                 icon
@@ -110,7 +110,7 @@
                 :title="attachmentLabels.feeling"
                 @click="handleAttach('feeling')"
               >
-                <Icon name="mdi-emoticon-happy-outline" />
+                <Icon name="mdi:emoticon-happy-outline" />
               </v-btn>
               <v-btn
                 icon
@@ -118,7 +118,7 @@
                 :title="attachmentLabels.location"
                 @click="handleAttach('location')"
               >
-                <Icon name="mdi-map-marker" />
+                <Icon name="mdi:map-marker" />
               </v-btn>
               <v-btn
                 icon
@@ -126,7 +126,7 @@
                 :title="attachmentLabels.gif"
                 @click="handleAttach('gif')"
               >
-                <Icon name="mdi-image-multiple" />
+                <Icon name="mdi:image-multiple" />
               </v-btn>
               <v-menu>
                 <template #activator="{ props: menuProps }">
@@ -134,7 +134,7 @@
                     icon
                     variant="text"
                     v-bind="menuProps"
-                    ><v-icon icon="mdi-dots-horizontal"
+                    ><v-icon icon="mdi:dots-horizontal"
                   /></v-btn>
                 </template>
                 <v-list density="compact">
@@ -210,13 +210,13 @@ const avatarSrc = computed(
 const { t } = useI18n();
 
 const audienceOptions = computed(() => [
-  { value: "public" as const, label: t("blog.newPost.audience.public"), icon: "mdi-earth" },
+  { value: "public" as const, label: t("blog.newPost.audience.public"), icon: "mdi:earth" },
   {
     value: "friends" as const,
     label: t("blog.newPost.audience.friends"),
-    icon: "mdi-account-multiple",
+    icon: "mdi:account-multiple",
   },
-  { value: "private" as const, label: t("blog.newPost.audience.private"), icon: "mdi-lock" },
+  { value: "private" as const, label: t("blog.newPost.audience.private"), icon: "mdi:lock" },
 ]);
 
 const attachmentLabels = computed(() => ({

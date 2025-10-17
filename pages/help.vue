@@ -16,7 +16,7 @@
           <div class="help-hero__header">
             <div class="help-hero__badge">
               <v-icon
-                icon="mdi-lifebuoy"
+                icon="mdi:lifebuoy"
                 size="22"
                 class="mr-2"
                 aria-hidden="true"
@@ -43,7 +43,7 @@
             <v-text-field
               v-model="query"
               :label="t('pages.help.searchPlaceholder')"
-              prepend-inner-icon="mdi-magnify"
+              prepend-inner-icon="mdi:magnify"
               variant="outlined"
               density="comfortable"
               clearable
@@ -278,7 +278,7 @@ const actions = computed(() => [
     description: t("pages.help.actions.reportBugDescription"),
     cta: t("pages.help.actions.reportBugCta"),
     href: "https://github.com/bro-world/bro-world-frontend-ui/issues/new/choose",
-    icon: "mdi-bug-outline",
+    icon: "mdi:bug-outline",
     target: "_blank",
     rel: "noopener noreferrer",
     ariaLabel: t("pages.help.actions.reportBugAria"),
@@ -288,7 +288,7 @@ const actions = computed(() => [
     description: t("pages.help.actions.accountPrivacyDescription"),
     cta: t("pages.help.actions.accountPrivacyCta"),
     to: localePath("/forgot-password"),
-    icon: "mdi-shield-account-outline",
+    icon: "mdi:shield-account-outline",
     ariaLabel: t("pages.help.actions.accountPrivacyAria"),
   },
   {
@@ -296,7 +296,7 @@ const actions = computed(() => [
     description: t("pages.help.actions.contactSupportDescription"),
     cta: t("pages.help.actions.contactSupportCta"),
     to: localePath("/contact"),
-    icon: "mdi-lifebuoy",
+    icon: "mdi:lifebuoy",
     ariaLabel: t("pages.help.actions.contactSupportAria"),
   },
 ]);

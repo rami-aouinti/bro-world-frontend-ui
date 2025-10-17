@@ -25,7 +25,7 @@
             @pointerup.passive="onPointerUp"
           >
             <Icon
-              name="mdi-thumb-up-outline"
+              name="mdi:thumb-up-outline"
               start
             ></Icon>
             {{ t("blog.reactions.posts.likeAction") }}
@@ -64,7 +64,7 @@
         @click.stop="emit('like')"
       >
         <Icon
-          name="mdi-thumb-up-outline"
+          name="mdi:thumb-up-outline"
           start
         ></Icon>
         {{ t("blog.reactions.posts.likeAction") }}

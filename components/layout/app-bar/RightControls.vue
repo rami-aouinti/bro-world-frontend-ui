@@ -8,7 +8,7 @@
       @click="emit('toggle-right')"
     >
       <AppIcon
-        name="mdi-format-align-justify"
+        name="mdi:format-align-justify"
         :size="22"
       />
     </button>

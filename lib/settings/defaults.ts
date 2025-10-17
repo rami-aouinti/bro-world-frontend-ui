@@ -307,7 +307,7 @@ export const defaultSiteSettings: SiteSettings = {
     makeMenu({
       id: "create-world",
       label: "layout.sidebar.items.createWorld",
-      icon: "mdi-earth-plus",
+      icon: "mdi:earth-plus",
       translate: true,
       to: "/world-create",
       isVisible: true,
@@ -316,7 +316,7 @@ export const defaultSiteSettings: SiteSettings = {
     makeMenu({
       id: "jobs",
       label: "layout.sidebar.items.jobs",
-      icon: "mdi-briefcase-search",
+      icon: "mdi:briefcase-search",
       translate: true,
       to: "/job",
       isVisible: true,
@@ -325,7 +325,7 @@ export const defaultSiteSettings: SiteSettings = {
     makeMenu({
       id: "game",
       label: "layout.sidebar.items.game",
-      icon: "mdi-gamepad-variant-outline",
+      icon: "mdi:gamepad-variant-outline",
       translate: true,
       to: "/game",
       isVisible: true,
@@ -334,7 +334,7 @@ export const defaultSiteSettings: SiteSettings = {
     makeMenu({
       id: "ecommerce",
       label: "layout.sidebar.items.ecommerce",
-      icon: "mdi-shopping-outline",
+      icon: "mdi:shopping-outline",
       translate: true,
       to: "/ecommerce",
       isVisible: true,
@@ -343,7 +343,7 @@ export const defaultSiteSettings: SiteSettings = {
     makeMenu({
       id: "education",
       label: "layout.sidebar.items.education",
-      icon: "mdi-school-outline",
+      icon: "mdi:school-outline",
       translate: true,
       to: "/education",
       isVisible: true,
@@ -353,7 +353,7 @@ export const defaultSiteSettings: SiteSettings = {
       {
         id: "admin",
         label: "layout.sidebar.items.admin",
-        icon: "mdi-shield-crown",
+        icon: "mdi:shield-crown",
         translate: true,
         requiresAdmin: true,
         isVisible: true,
@@ -364,7 +364,7 @@ export const defaultSiteSettings: SiteSettings = {
           {
             id: "admin-general",
             label: "layout.sidebar.items.adminGeneral",
-            icon: "mdi-view-dashboard-outline",
+            icon: "mdi:view-dashboard-outline",
             translate: true,
             requiresAdmin: true,
             isVisible: true,
@@ -374,7 +374,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-general-overview",
               label: "layout.sidebar.items.adminGeneral",
-              icon: "mdi-view-dashboard-outline",
+              icon: "mdi:view-dashboard-outline",
               translate: true,
               to: "/admin",
               requiresAdmin: true,
@@ -384,7 +384,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-general-statistics",
               label: "layout.sidebar.items.adminStatistics",
-              icon: "mdi-chart-box-outline",
+              icon: "mdi:chart-box-outline",
               translate: true,
               to: "/admin/statistics",
               requiresAdmin: true,
@@ -394,7 +394,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-general-performance",
               label: "layout.sidebar.items.performance",
-              icon: "mdi-speedometer",
+              icon: "mdi:speedometer",
               translate: true,
               to: "/admin/performance",
               requiresAdmin: true,
@@ -404,7 +404,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-general-settings",
               label: "layout.sidebar.items.adminSettings",
-              icon: "mdi-cog-outline",
+              icon: "mdi:cog-outline",
               translate: true,
               to: "/admin/settings",
               requiresAdmin: true,
@@ -417,7 +417,7 @@ export const defaultSiteSettings: SiteSettings = {
           {
             id: "admin-blog-management",
             label: "layout.sidebar.items.adminBlogManagement",
-            icon: "mdi-post-outline",
+            icon: "mdi:post-outline",
             translate: true,
             requiresAdmin: true,
             isVisible: true,
@@ -427,7 +427,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-blog-general",
               label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi-tune",
+              icon: "mdi:tune",
               translate: true,
               to: "/admin/blog",
               requiresAdmin: true,
@@ -437,7 +437,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-blog-data",
               label: "layout.sidebar.items.adminData",
-              icon: "mdi-database-outline",
+              icon: "mdi:database-outline",
               translate: true,
               to: "/admin/blog/data",
               requiresAdmin: true,
@@ -447,7 +447,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-blog-crons",
               label: "layout.sidebar.items.adminCrons",
-              icon: "mdi-clock-outline",
+              icon: "mdi:clock-outline",
               translate: true,
               to: "/admin/blog/crons",
               requiresAdmin: true,
@@ -460,7 +460,7 @@ export const defaultSiteSettings: SiteSettings = {
           {
             id: "admin-user-management",
             label: "layout.sidebar.items.adminUserManagement",
-            icon: "mdi-account-cog-outline",
+            icon: "mdi:account-cog-outline",
             translate: true,
             requiresAdmin: true,
             isVisible: true,
@@ -470,7 +470,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-user-general",
               label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi-tune",
+              icon: "mdi:tune",
               translate: true,
               to: "/admin/user-management",
               requiresAdmin: true,
@@ -480,7 +480,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-user-data",
               label: "layout.sidebar.items.adminData",
-              icon: "mdi-database-outline",
+              icon: "mdi:database-outline",
               translate: true,
               to: "/admin/user-management/data",
               requiresAdmin: true,
@@ -490,7 +490,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-user-crons",
               label: "layout.sidebar.items.adminCrons",
-              icon: "mdi-clock-outline",
+              icon: "mdi:clock-outline",
               translate: true,
               to: "/admin/user-management/crons",
               requiresAdmin: true,
@@ -503,7 +503,7 @@ export const defaultSiteSettings: SiteSettings = {
           {
             id: "admin-job-management",
             label: "layout.sidebar.items.adminJobManagement",
-            icon: "mdi-briefcase-outline",
+            icon: "mdi:briefcase-outline",
             translate: true,
             requiresAdmin: true,
             isVisible: true,
@@ -513,7 +513,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-job-general",
               label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi-tune",
+              icon: "mdi:tune",
               translate: true,
               to: "/admin/job-management",
               requiresAdmin: true,
@@ -523,7 +523,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-job-data",
               label: "layout.sidebar.items.adminData",
-              icon: "mdi-database-outline",
+              icon: "mdi:database-outline",
               translate: true,
               to: "/admin/job-management/data",
               requiresAdmin: true,
@@ -533,7 +533,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-job-crons",
               label: "layout.sidebar.items.adminCrons",
-              icon: "mdi-clock-outline",
+              icon: "mdi:clock-outline",
               translate: true,
               to: "/admin/job-management/crons",
               requiresAdmin: true,
@@ -546,7 +546,7 @@ export const defaultSiteSettings: SiteSettings = {
           {
             id: "admin-ecommerce-management",
             label: "layout.sidebar.items.adminEcommerceManagement",
-            icon: "mdi-shopping-outline",
+            icon: "mdi:shopping-outline",
             translate: true,
             requiresAdmin: true,
             isVisible: true,
@@ -556,7 +556,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-ecommerce-general",
               label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi-tune",
+              icon: "mdi:tune",
               translate: true,
               to: "/admin/ecommerce-management",
               requiresAdmin: true,
@@ -566,7 +566,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-ecommerce-data",
               label: "layout.sidebar.items.adminData",
-              icon: "mdi-database-outline",
+              icon: "mdi:database-outline",
               translate: true,
               to: "/admin/ecommerce-management/data",
               requiresAdmin: true,
@@ -576,7 +576,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-ecommerce-crons",
               label: "layout.sidebar.items.adminCrons",
-              icon: "mdi-clock-outline",
+              icon: "mdi:clock-outline",
               translate: true,
               to: "/admin/ecommerce-management/crons",
               requiresAdmin: true,
@@ -589,7 +589,7 @@ export const defaultSiteSettings: SiteSettings = {
           {
             id: "admin-education-management",
             label: "layout.sidebar.items.adminEducationManagement",
-            icon: "mdi-school-outline",
+            icon: "mdi:school-outline",
             translate: true,
             requiresAdmin: true,
             isVisible: true,
@@ -599,7 +599,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-education-general",
               label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi-tune",
+              icon: "mdi:tune",
               translate: true,
               to: "/admin/education-management",
               requiresAdmin: true,
@@ -609,7 +609,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-education-data",
               label: "layout.sidebar.items.adminData",
-              icon: "mdi-database-outline",
+              icon: "mdi:database-outline",
               translate: true,
               to: "/admin/education-management/data",
               requiresAdmin: true,
@@ -619,7 +619,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-education-crons",
               label: "layout.sidebar.items.adminCrons",
-              icon: "mdi-clock-outline",
+              icon: "mdi:clock-outline",
               translate: true,
               to: "/admin/education-management/crons",
               requiresAdmin: true,
@@ -632,7 +632,7 @@ export const defaultSiteSettings: SiteSettings = {
           {
             id: "admin-game-management",
             label: "layout.sidebar.items.adminGameManagement",
-            icon: "mdi-gamepad-variant-outline",
+            icon: "mdi:gamepad-variant-outline",
             translate: true,
             requiresAdmin: true,
             isVisible: true,
@@ -642,7 +642,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-game-general",
               label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi-tune",
+              icon: "mdi:tune",
               translate: true,
               to: "/admin/game-management",
               requiresAdmin: true,
@@ -652,7 +652,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-game-data",
               label: "layout.sidebar.items.adminData",
-              icon: "mdi-database-outline",
+              icon: "mdi:database-outline",
               translate: true,
               to: "/admin/game-management/data",
               requiresAdmin: true,
@@ -662,7 +662,7 @@ export const defaultSiteSettings: SiteSettings = {
             {
               id: "admin-game-crons",
               label: "layout.sidebar.items.adminCrons",
-              icon: "mdi-clock-outline",
+              icon: "mdi:clock-outline",
               translate: true,
               to: "/admin/game-management/crons",
               requiresAdmin: true,

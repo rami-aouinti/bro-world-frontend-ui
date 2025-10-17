@@ -37,7 +37,7 @@
               <v-text-field
                 v-model="tableSearch"
                 :label="t('admin.userManagement.sections.data.table.search')"
-                prepend-inner-icon="mdi-magnify"
+                prepend-inner-icon="mdi:magnify"
                 variant="outlined"
                 density="comfortable"
                 hide-details
@@ -46,7 +46,7 @@
               <v-btn
                 color="primary"
                 variant="tonal"
-                prepend-icon="mdi-refresh"
+                prepend-icon="mdi:refresh"
                 class="text-none"
                 :loading="refreshing"
                 @click="refreshUsers"
@@ -122,13 +122,13 @@
 
             <template #[`item.actions`]="{ item }">
               <v-btn
-                icon="mdi-eye"
+                icon="mdi:eye"
                 size="small"
                 variant="text"
                 color="primary"
                 @click="openDetails(item.id)"
               >
-                <Icon name="mdi-eye" />
+                <Icon name="mdi:eye" />
               </v-btn>
             </template>
 

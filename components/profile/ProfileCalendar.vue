@@ -119,7 +119,7 @@
                       class="d-flex align-center gap-2"
                     >
                       <v-icon
-                        icon="mdi-map-marker"
+                        icon="mdi:map-marker"
                         size="small"
                       />
                       <span class="text-body-2">{{ selectedEvent.location }}</span>
@@ -132,7 +132,7 @@
                     </div>
                     <div class="d-flex align-center gap-2">
                       <v-icon
-                        icon="mdi-clock-outline"
+                        icon="mdi:clock-outline"
                         size="small"
                       />
                       <span class="text-body-2">
@@ -168,7 +168,7 @@
                           variant="tonal"
                         >
                           <v-icon
-                            icon="mdi-calendar"
+                            icon="mdi:calendar"
                             size="small"
                           />
                         </v-avatar>
@@ -195,7 +195,7 @@
                 variant="tonal"
               >
                 <v-icon
-                  icon="mdi-calendar-blank"
+                  icon="mdi:calendar-blank"
                   size="36"
                 />
               </v-avatar>

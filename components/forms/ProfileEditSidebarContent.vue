@@ -11,7 +11,7 @@
       <div class="d-flex flex-column gap-4">
         <v-text-field
           :model-value="form.social.linkedin"
-          prepend-inner-icon="mdi-linkedin"
+          prepend-inner-icon="mdi:linkedin"
           :label="t('pages.profileEdit.labels.linkedin')"
           variant="outlined"
           density="comfortable"
@@ -19,7 +19,7 @@
         />
         <v-text-field
           :model-value="form.social.twitter"
-          prepend-inner-icon="mdi-twitter"
+          prepend-inner-icon="mdi:twitter"
           :label="t('pages.profileEdit.labels.twitter')"
           variant="outlined"
           density="comfortable"
@@ -27,7 +27,7 @@
         />
         <v-text-field
           :model-value="form.social.dribbble"
-          prepend-inner-icon="mdi-basketball"
+          prepend-inner-icon="mdi:basketball"
           :label="t('pages.profileEdit.labels.dribbble')"
           variant="outlined"
           density="comfortable"
@@ -35,7 +35,7 @@
         />
         <v-text-field
           :model-value="form.social.behance"
-          prepend-inner-icon="mdi-briefcase-outline"
+          prepend-inner-icon="mdi:briefcase-outline"
           :label="t('pages.profileEdit.labels.behance')"
           variant="outlined"
           density="comfortable"

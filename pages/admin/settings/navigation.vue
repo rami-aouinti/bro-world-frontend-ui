@@ -17,7 +17,7 @@
           size="small"
           color="teal"
           variant="tonal"
-          prepend-icon="mdi-compass-outline"
+          prepend-icon="mdi:compass-outline"
         >
           {{ t("admin.settings.sections.navigation.badge") || "Menus" }}
         </v-chip>
@@ -41,7 +41,7 @@
                 variant="outlined"
                 density="comfortable"
                 hide-details
-                prepend-inner-icon="mdi-label-outline"
+                prepend-inner-icon="mdi:label-outline"
               />
               <v-text-field
                 v-model="menu.to"
@@ -50,7 +50,7 @@
                 variant="outlined"
                 density="comfortable"
                 hide-details
-                prepend-inner-icon="mdi-link-variant"
+                prepend-inner-icon="mdi:link-variant"
               />
               <v-text-field
                 v-model="menu.icon"
@@ -59,7 +59,7 @@
                 variant="outlined"
                 density="comfortable"
                 hide-details
-                prepend-inner-icon="mdi-shape-outline"
+                prepend-inner-icon="mdi:shape-outline"
               />
             </div>
 
@@ -84,7 +84,7 @@
               <v-btn
                 variant="text"
                 color="primary"
-                prepend-icon="mdi-arrow-up"
+                prepend-icon="mdi:arrow-up"
                 class="text-none"
                 :disabled="isSaving"
                 @click="moveMenu(index, -1)"
@@ -94,7 +94,7 @@
               <v-btn
                 variant="text"
                 color="primary"
-                prepend-icon="mdi-arrow-down"
+                prepend-icon="mdi:arrow-down"
                 class="text-none"
                 :disabled="isSaving"
                 @click="moveMenu(index, 1)"
@@ -104,7 +104,7 @@
               <v-btn
                 variant="text"
                 color="error"
-                prepend-icon="mdi-delete"
+                prepend-icon="mdi:delete"
                 class="text-none"
                 :disabled="isSaving"
                 @click="removeMenu(index)"
@@ -114,7 +114,7 @@
               <v-btn
                 variant="tonal"
                 color="primary"
-                prepend-icon="mdi-plus"
+                prepend-icon="mdi:plus"
                 class="text-none"
                 :disabled="isSaving"
                 @click="handleAddChildMenu(index, menu.requiresAdmin ?? false)"
@@ -145,7 +145,7 @@
                     variant="outlined"
                     density="comfortable"
                     hide-details
-                    prepend-inner-icon="mdi-subdirectory-arrow-right"
+                    prepend-inner-icon="mdi:subdirectory-arrow-right"
                   />
                   <v-text-field
                     v-model="child.to"
@@ -154,7 +154,7 @@
                     variant="outlined"
                     density="comfortable"
                     hide-details
-                    prepend-inner-icon="mdi-link-variant"
+                    prepend-inner-icon="mdi:link-variant"
                   />
                   <v-text-field
                     v-model="child.icon"
@@ -163,7 +163,7 @@
                     variant="outlined"
                     density="comfortable"
                     hide-details
-                    prepend-inner-icon="mdi-shape-outline"
+                    prepend-inner-icon="mdi:shape-outline"
                   />
                 </div>
 
@@ -171,7 +171,7 @@
                   <v-btn
                     variant="text"
                     color="primary"
-                    prepend-icon="mdi-arrow-up"
+                    prepend-icon="mdi:arrow-up"
                     class="text-none"
                     :disabled="isSaving"
                     @click="moveChildMenu(index, childIndex, -1)"
@@ -181,7 +181,7 @@
                   <v-btn
                     variant="text"
                     color="primary"
-                    prepend-icon="mdi-arrow-down"
+                    prepend-icon="mdi:arrow-down"
                     class="text-none"
                     :disabled="isSaving"
                     @click="moveChildMenu(index, childIndex, 1)"
@@ -191,7 +191,7 @@
                   <v-btn
                     variant="text"
                     color="error"
-                    prepend-icon="mdi-delete"
+                    prepend-icon="mdi:delete"
                     class="text-none"
                     :disabled="isSaving"
                     @click="removeChildMenu(index, childIndex)"
@@ -227,7 +227,7 @@
             color="primary"
             class="text-none ml-auto"
             :disabled="isSaving"
-            prepend-icon="mdi-playlist-plus"
+            prepend-icon="mdi:playlist-plus"
             @click="handleAddMenu"
           >
             {{ t("admin.settings.actions.addMenu") }}
@@ -273,7 +273,7 @@ const {
 function handleAddMenu() {
   addMenu({
     label: t("admin.settings.defaults.menuLabel"),
-    icon: "mdi-dots-grid",
+    icon: "mdi:dots-grid",
     to: "/",
     requiresAdmin: false,
     translate: false,
@@ -284,7 +284,7 @@ function handleAddMenu() {
 function handleAddChildMenu(parentIndex: number, inheritsAdmin: boolean) {
   addChildMenu(parentIndex, {
     label: t("admin.settings.defaults.submenuLabel"),
-    icon: "mdi-rhombus-medium",
+    icon: "mdi:rhombus-medium",
     to: "/",
     requiresAdmin: inheritsAdmin,
     translate: false,

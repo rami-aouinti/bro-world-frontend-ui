@@ -111,7 +111,7 @@
           :disabled="newRating === 0 || isSubmitting"
           @click="submitRating"
         >
-          <Icon name="mdi-send" />
+          <Icon name="mdi:send" />
         </v-btn>
       </div>
 
@@ -131,7 +131,7 @@
           :aria-label="signInAriaLabel"
         >
           <Icon
-            name="mdi-login"
+            name="mdi:login"
             class="mr-1 text-base"
           />
           {{ signInCta }}

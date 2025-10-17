@@ -202,7 +202,7 @@ useHead(() => {
 
 const featureCards = computed(() => [
   {
-    icon: "mdi-briefcase-search-outline",
+    icon: "mdi:briefcase-search-outline",
     title: t("pages.job.features.matching.title"),
     description: t("pages.job.features.matching.description"),
     points: [
@@ -212,7 +212,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-robot-happy-outline",
+    icon: "mdi:robot-happy-outline",
     title: t("pages.job.features.automation.title"),
     description: t("pages.job.features.automation.description"),
     points: [
@@ -222,7 +222,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-chart-line-variant",
+    icon: "mdi:chart-line-variant",
     title: t("pages.job.features.insights.title"),
     description: t("pages.job.features.insights.description"),
     points: [

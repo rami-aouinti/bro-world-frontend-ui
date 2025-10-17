@@ -11,7 +11,7 @@
         :class="fieldAlignment"
         required
         class="font-size-input input-style"
-        append-inner-icon="mdi-email"
+        append-inner-icon="mdi:email"
         :disabled="loading"
       />
       <v-text-field
@@ -23,7 +23,7 @@
         class="font-size-input input-style"
         :class="fieldAlignment"
         :disabled="loading"
-        :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        :append-inner-icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'"
         @click:append-inner="togglePassword"
       />
       <v-text-field
@@ -35,7 +35,7 @@
         class="font-size-input input-style"
         :class="fieldAlignment"
         :disabled="loading"
-        :append-inner-icon="showRepeatPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        :append-inner-icon="showRepeatPassword ? 'mdi:eye-off' : 'mdi:eye'"
         @click:append-inner="toggleRepeatPassword"
       />
 

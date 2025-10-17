@@ -201,7 +201,7 @@ useHead(() => {
 
 const featureCards = computed(() => [
   {
-    icon: "mdi-storefront-outline",
+    icon: "mdi:storefront-outline",
     title: t("pages.ecommerce.features.catalog.title"),
     description: t("pages.ecommerce.features.catalog.description"),
     points: [
@@ -211,7 +211,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-credit-card-check-outline",
+    icon: "mdi:credit-card-check-outline",
     title: t("pages.ecommerce.features.checkout.title"),
     description: t("pages.ecommerce.features.checkout.description"),
     points: [
@@ -221,7 +221,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-bullhorn-outline",
+    icon: "mdi:bullhorn-outline",
     title: t("pages.ecommerce.features.marketing.title"),
     description: t("pages.ecommerce.features.marketing.description"),
     points: [

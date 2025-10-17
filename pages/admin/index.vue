@@ -21,7 +21,7 @@
             <v-btn
               color="primary"
               variant="flat"
-              prepend-icon="mdi-shield-account"
+              prepend-icon="mdi:shield-account"
               class="text-none"
             >
               {{ t("admin.actions.newAdminRole") }}
@@ -29,7 +29,7 @@
             <v-btn
               color="primary"
               variant="tonal"
-              prepend-icon="mdi-file-chart"
+              prepend-icon="mdi:file-chart"
               class="text-none"
             >
               {{ t("admin.actions.exportReport") }}
@@ -79,7 +79,7 @@
                       class="font-weight-medium"
                     >
                       <Icon
-                        :name="metric.trendIsPositive ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold'"
+                        :name="metric.trendIsPositive ? 'mdi:arrow-up-bold' : 'mdi:arrow-down-bold'"
                         size="16"
                         class="me-1"
                       />
@@ -206,7 +206,7 @@
                     variant="flat"
                     class="text-none"
                     block
-                    prepend-icon="mdi-play-circle"
+                    prepend-icon="mdi:play-circle"
                   >
                     {{ t("admin.sections.quickActions.button") }}
                   </v-btn>
@@ -267,7 +267,7 @@
                     color="primary"
                     variant="flat"
                     class="text-none"
-                    prepend-icon="mdi-open-in-new"
+                    prepend-icon="mdi:open-in-new"
                   >
                     {{ t("admin.sections.modules.openButton") }}
                   </v-btn>
@@ -275,7 +275,7 @@
                     color="primary"
                     variant="tonal"
                     class="text-none"
-                    prepend-icon="mdi-clipboard-text"
+                    prepend-icon="mdi:clipboard-text"
                   >
                     {{ t("admin.sections.modules.policiesButton") }}
                   </v-btn>
@@ -320,7 +320,7 @@
                   color="primary"
                   variant="text"
                   class="text-none"
-                  prepend-icon="mdi-history"
+                  prepend-icon="mdi:history"
                 >
                   {{ t("admin.sections.activity.cta") }}
                 </v-btn>
@@ -386,7 +386,7 @@
                   color="primary"
                   variant="text"
                   class="text-none"
-                  prepend-icon="mdi-connection"
+                  prepend-icon="mdi:connection"
                 >
                   {{ t("admin.sections.health.cta") }}
                 </v-btn>
@@ -472,7 +472,7 @@
                 color="primary"
                 variant="flat"
                 class="text-none"
-                prepend-icon="mdi-book-open-page-variant"
+                prepend-icon="mdi:book-open-page-variant"
               >
                 {{ t("admin.sections.resources.knowledgeBase") }}
               </v-btn>
@@ -480,7 +480,7 @@
                 color="primary"
                 variant="tonal"
                 class="text-none"
-                prepend-icon="mdi-shield-check"
+                prepend-icon="mdi:shield-check"
               >
                 {{ t("admin.sections.resources.complianceAudit") }}
               </v-btn>
@@ -503,7 +503,7 @@
                 color="primary"
                 variant="text"
                 class="text-none"
-                prepend-icon="mdi-download"
+                prepend-icon="mdi:download"
               >
                 {{ t("admin.sections.resources.download") }}
               </v-btn>
@@ -564,7 +564,7 @@ const metrics = computed(() => [
     trend: t("admin.sections.stats.metrics.users.trend"),
     trendIsPositive: true,
     caption: t("admin.sections.stats.metrics.users.caption"),
-    icon: "mdi-account-group",
+    icon: "mdi:account-group",
     description: t("admin.sections.stats.metrics.users.description"),
   },
   {
@@ -574,7 +574,7 @@ const metrics = computed(() => [
     trend: t("admin.sections.stats.metrics.content.trend"),
     trendIsPositive: true,
     caption: t("admin.sections.stats.metrics.content.caption"),
-    icon: "mdi-text-box-multiple",
+    icon: "mdi:text-box-multiple",
     description: t("admin.sections.stats.metrics.content.description"),
   },
   {
@@ -584,7 +584,7 @@ const metrics = computed(() => [
     trend: t("admin.sections.stats.metrics.reports.trend"),
     trendIsPositive: true,
     caption: t("admin.sections.stats.metrics.reports.caption"),
-    icon: "mdi-shield-check",
+    icon: "mdi:shield-check",
     description: t("admin.sections.stats.metrics.reports.description"),
   },
   {
@@ -594,7 +594,7 @@ const metrics = computed(() => [
     trend: t("admin.sections.stats.metrics.availability.trend"),
     trendIsPositive: true,
     caption: t("admin.sections.stats.metrics.availability.caption"),
-    icon: "mdi-chart-areaspline",
+    icon: "mdi:chart-areaspline",
     description: t("admin.sections.stats.metrics.availability.description"),
   },
 ]);
@@ -610,7 +610,7 @@ const controlToggles = computed(() => [
     label: t("admin.sections.controls.toggles.maintenance.label"),
     description: t("admin.sections.controls.toggles.maintenance.description"),
     helper: t("admin.sections.controls.toggles.maintenance.helper"),
-    icon: "mdi-tools",
+    icon: "mdi:tools",
     enabledLabel: t("admin.sections.controls.toggles.maintenance.enabled"),
     disabledLabel: t("admin.sections.controls.toggles.maintenance.disabled"),
     activeColor: "warning",
@@ -621,7 +621,7 @@ const controlToggles = computed(() => [
     label: t("admin.sections.controls.toggles.registrations.label"),
     description: t("admin.sections.controls.toggles.registrations.description"),
     helper: t("admin.sections.controls.toggles.registrations.helper"),
-    icon: "mdi-account-plus",
+    icon: "mdi:account-plus",
     enabledLabel: t("admin.sections.controls.toggles.registrations.enabled"),
     disabledLabel: t("admin.sections.controls.toggles.registrations.disabled"),
     activeColor: "success",
@@ -632,7 +632,7 @@ const controlToggles = computed(() => [
     label: t("admin.sections.controls.toggles.moderation.label"),
     description: t("admin.sections.controls.toggles.moderation.description"),
     helper: t("admin.sections.controls.toggles.moderation.helper"),
-    icon: "mdi-robot-outline",
+    icon: "mdi:robot-outline",
     enabledLabel: t("admin.sections.controls.toggles.moderation.enabled"),
     disabledLabel: t("admin.sections.controls.toggles.moderation.disabled"),
     activeColor: "info",
@@ -643,7 +643,7 @@ const controlToggles = computed(() => [
     label: t("admin.sections.controls.toggles.broadcast.label"),
     description: t("admin.sections.controls.toggles.broadcast.description"),
     helper: t("admin.sections.controls.toggles.broadcast.helper"),
-    icon: "mdi-bullhorn",
+    icon: "mdi:bullhorn",
     enabledLabel: t("admin.sections.controls.toggles.broadcast.enabled"),
     disabledLabel: t("admin.sections.controls.toggles.broadcast.disabled"),
     activeColor: "primary",
@@ -656,21 +656,21 @@ const quickActions = computed(() => [
     id: "content-review",
     title: t("admin.sections.quickActions.items.contentReview.title"),
     description: t("admin.sections.quickActions.items.contentReview.description"),
-    icon: "mdi-check-decagram",
+    icon: "mdi:check-decagram",
     color: "primary",
   },
   {
     id: "security-scan",
     title: t("admin.sections.quickActions.items.securityScan.title"),
     description: t("admin.sections.quickActions.items.securityScan.description"),
-    icon: "mdi-shield-lock",
+    icon: "mdi:shield-lock",
     color: "secondary",
   },
   {
     id: "community-update",
     title: t("admin.sections.quickActions.items.communityUpdate.title"),
     description: t("admin.sections.quickActions.items.communityUpdate.description"),
-    icon: "mdi-email-outline",
+    icon: "mdi:email-outline",
     color: "purple",
   },
 ]);
@@ -684,7 +684,7 @@ const adminModules = computed(() => [
     id: "content",
     title: t("admin.sections.modules.items.content.title"),
     description: t("admin.sections.modules.items.content.description"),
-    icon: "mdi-file-document-edit",
+    icon: "mdi:file-document-edit",
     tags: getModuleTags("content") ?? [],
     status: t("admin.sections.modules.items.content.status"),
   },
@@ -692,7 +692,7 @@ const adminModules = computed(() => [
     id: "community",
     title: t("admin.sections.modules.items.community.title"),
     description: t("admin.sections.modules.items.community.description"),
-    icon: "mdi-account-group-outline",
+    icon: "mdi:account-group-outline",
     tags: getModuleTags("community") ?? [],
     status: t("admin.sections.modules.items.community.status"),
   },
@@ -700,7 +700,7 @@ const adminModules = computed(() => [
     id: "commerce",
     title: t("admin.sections.modules.items.commerce.title"),
     description: t("admin.sections.modules.items.commerce.description"),
-    icon: "mdi-cash-sync",
+    icon: "mdi:cash-sync",
     tags: getModuleTags("commerce") ?? [],
     status: t("admin.sections.modules.items.commerce.status"),
   },
@@ -708,7 +708,7 @@ const adminModules = computed(() => [
     id: "governance",
     title: t("admin.sections.modules.items.governance.title"),
     description: t("admin.sections.modules.items.governance.description"),
-    icon: "mdi-gavel",
+    icon: "mdi:gavel",
     tags: getModuleTags("governance") ?? [],
     status: t("admin.sections.modules.items.governance.status"),
   },
@@ -720,7 +720,7 @@ const activityFeed = computed(() => [
     title: t("admin.sections.activity.items.1.title"),
     description: t("admin.sections.activity.items.1.description"),
     time: t("admin.sections.activity.items.1.time"),
-    icon: "mdi-clipboard-check",
+    icon: "mdi:clipboard-check",
     color: "success",
   },
   {
@@ -728,7 +728,7 @@ const activityFeed = computed(() => [
     title: t("admin.sections.activity.items.2.title"),
     description: t("admin.sections.activity.items.2.description"),
     time: t("admin.sections.activity.items.2.time"),
-    icon: "mdi-account-key",
+    icon: "mdi:account-key",
     color: "primary",
   },
   {
@@ -736,7 +736,7 @@ const activityFeed = computed(() => [
     title: t("admin.sections.activity.items.3.title"),
     description: t("admin.sections.activity.items.3.description"),
     time: t("admin.sections.activity.items.3.time"),
-    icon: "mdi-alert-decagram",
+    icon: "mdi:alert-decagram",
     color: "error",
   },
 ]);
@@ -748,7 +748,7 @@ const systemStatus = computed(() => [
     description: t("admin.sections.health.items.api.description"),
     status: t("admin.sections.health.items.api.status"),
     uptime: 99,
-    icon: "mdi-api",
+    icon: "mdi:api",
     color: "success",
   },
   {
@@ -757,7 +757,7 @@ const systemStatus = computed(() => [
     description: t("admin.sections.health.items.payments.description"),
     status: t("admin.sections.health.items.payments.status"),
     uptime: 96,
-    icon: "mdi-credit-card-sync",
+    icon: "mdi:credit-card-sync",
     color: "warning",
   },
   {
@@ -766,7 +766,7 @@ const systemStatus = computed(() => [
     description: t("admin.sections.health.items.notifications.description"),
     status: t("admin.sections.health.items.notifications.status"),
     uptime: 98,
-    icon: "mdi-bell-ring",
+    icon: "mdi:bell-ring",
     color: "info",
   },
 ]);

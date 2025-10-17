@@ -17,7 +17,7 @@
           size="small"
           color="blue"
           variant="tonal"
-          prepend-icon="mdi-theme-light-dark"
+          prepend-icon="mdi:theme-light-dark"
         >
           {{ t("admin.settings.sections.appearance.badge") || "Theme" }}
         </v-chip>
@@ -49,7 +49,7 @@
                   color="primary"
                   variant="tonal"
                 >
-                  <v-icon icon="mdi-monitor-dashboard" />
+                  <v-icon icon="mdi:monitor-dashboard" />
                 </v-avatar>
                 <div>
                   <div class="text-subtitle-2 font-weight-semibold">
@@ -74,7 +74,7 @@
                   color="amber"
                   variant="tonal"
                 >
-                  <v-icon icon="mdi-weather-sunny" />
+                  <v-icon icon="mdi:weather-sunny" />
                 </v-avatar>
                 <div>
                   <div class="text-subtitle-2 font-weight-semibold">
@@ -99,7 +99,7 @@
                   color="deep-purple"
                   variant="tonal"
                 >
-                  <v-icon icon="mdi-weather-night" />
+                  <v-icon icon="mdi:weather-night" />
                 </v-avatar>
                 <div>
                   <div class="text-subtitle-2 font-weight-semibold">

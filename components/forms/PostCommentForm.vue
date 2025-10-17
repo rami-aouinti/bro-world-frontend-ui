@@ -48,7 +48,7 @@
                 :aria-label="emojiAriaLabel"
                 :disabled="disabled"
               >
-                <Icon name="mdi-emoticon-happy-outline" />
+                <Icon name="mdi:emoticon-happy-outline" />
               </v-btn>
               <v-btn
                 icon
@@ -57,7 +57,7 @@
                 :aria-label="mediaAriaLabel"
                 :disabled="disabled"
               >
-                <Icon name="mdi-image-outline" />
+                <Icon name="mdi:image-outline" />
               </v-btn>
               <v-btn
                 icon
@@ -66,7 +66,7 @@
                 :aria-label="gifAriaLabel"
                 :disabled="disabled"
               >
-                <Icon name="mdi-image-multiple" />
+                <Icon name="mdi:image-multiple" />
               </v-btn>
             </slot>
           </div>

@@ -50,7 +50,7 @@
             :aria-label="t('stories.viewer.close')"
             @click="close"
           >
-            <Icon name="mdi-close" />
+            <Icon name="mdi:close" />
           </v-btn>
         </header>
 
@@ -72,7 +72,7 @@
             class="story-viewer__expired"
           >
             <Icon
-              name="mdi-timer-off"
+              name="mdi:timer-off"
               class="mr-2"
             />
             <span>{{ t("stories.viewer.expired") }}</span>

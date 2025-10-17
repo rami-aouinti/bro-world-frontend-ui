@@ -116,7 +116,7 @@ export function buildProfileSidebarItems(
     {
       key: "profile-overview",
       label: "layout.sidebar.items.profileOverview",
-      icon: "mdi-card-account-details-outline",
+      icon: "mdi:card-account-details-outline",
       to: "/profile",
       translate: true,
     },
@@ -126,7 +126,7 @@ export function buildProfileSidebarItems(
     items.push({
       key: "profile-edit",
       label: "layout.sidebar.items.profileSettings",
-      icon: "mdi-cog-outline",
+      icon: "mdi:cog-outline",
       to: "/profile-edit",
       translate: true,
     });
@@ -136,21 +136,21 @@ export function buildProfileSidebarItems(
     {
       key: "profile-security",
       label: "layout.sidebar.items.profileSecurity",
-      icon: "mdi-shield-check-outline",
+      icon: "mdi:shield-check-outline",
       to: "/profile-security",
       translate: true,
     },
     {
       key: "profile-friends",
       label: "layout.sidebar.items.profileFriends",
-      icon: "mdi-account-group-outline",
+      icon: "mdi:account-group-outline",
       to: "/profile-friends",
       translate: true,
     },
     {
       key: "profile-photos",
       label: "layout.sidebar.items.profilePhotos",
-      icon: "mdi-image-multiple-outline",
+      icon: "mdi:image-multiple-outline",
       to: "/profile-photos",
       translate: true,
     },

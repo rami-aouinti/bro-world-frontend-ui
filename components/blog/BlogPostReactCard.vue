@@ -34,7 +34,7 @@
 
     <div class="right">
       <Icon
-        name="mdi-chat-outline"
+        name="mdi:chat-outline"
         size="18"
       ></Icon>
       <span
@@ -44,7 +44,7 @@
       >
       <Icon
         class="ml-2"
-        name="mdi-share-outline"
+        name="mdi:share-outline"
         size="18"
       ></Icon>
       <span
@@ -72,7 +72,7 @@
         @click="$emit('comment')"
       >
         <Icon
-          name="mdi-chat-outline"
+          name="mdi:chat-outline"
           start
         ></Icon>
         {{ t("blog.posts.actions.comment") }}
@@ -82,7 +82,7 @@
         @click="$emit('share')"
       >
         <Icon
-          name="mdi-share-outline"
+          name="mdi:share-outline"
           start
         ></Icon>
         {{ t("blog.posts.actions.share") }}

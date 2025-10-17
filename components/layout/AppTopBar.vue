@@ -343,17 +343,17 @@ const userMenuItems = computed<UserMenuItem[]>(() => {
     ];
 
     if (canAccessAdmin.value) {
-      items.push({ title: t("layout.userMenu.admin"), icon: "mdi-shield-crown", to: "/admin" });
+      items.push({ title: t("layout.userMenu.admin"), icon: "mdi:shield-crown", to: "/admin" });
     }
     items.push({
       title: t("layout.sidebar.items.about"),
-      icon: "mdi-information-outline",
+      icon: "mdi:information-outline",
       to: "/about",
     });
-    items.push({ title: t("layout.sidebar.items.help"), icon: "mdi-lifebuoy", to: "/help" });
+    items.push({ title: t("layout.sidebar.items.help"), icon: "mdi:lifebuoy", to: "/help" });
     items.push({
       title: t("layout.sidebar.items.contact"),
-      icon: "mdi-email-outline",
+      icon: "mdi:email-outline",
       to: "/contact",
     });
 
@@ -363,9 +363,9 @@ const userMenuItems = computed<UserMenuItem[]>(() => {
   return [
     { title: t("auth.Login"), icon: "mdi:login", to: "/login" },
     { title: t("auth.Register"), icon: "mdi:account-plus", to: "/register" },
-    { title: t("layout.sidebar.items.about"), icon: "mdi-information-outline", to: "/about" },
-    { title: t("layout.sidebar.items.help"), icon: "mdi-lifebuoy", to: "/help" },
-    { title: t("layout.sidebar.items.contact"), icon: "mdi-email-outline", to: "/contact" },
+    { title: t("layout.sidebar.items.about"), icon: "mdi:information-outline", to: "/about" },
+    { title: t("layout.sidebar.items.help"), icon: "mdi:lifebuoy", to: "/help" },
+    { title: t("layout.sidebar.items.contact"), icon: "mdi:email-outline", to: "/contact" },
   ];
 });
 

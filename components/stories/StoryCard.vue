@@ -72,7 +72,7 @@
             variant="text"
             :aria-label="createLabel"
           >
-            <Icon name="mdi-plus"></Icon>
+            <Icon name="mdi:plus"></Icon>
           </v-btn>
         </v-avatar>
       </div>

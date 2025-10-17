@@ -85,7 +85,7 @@
           >
             <Icon
               v-if="expanded[node.id]"
-              name="mdi-message"
+              name="mdi:message"
               >{{ `${node.children!.length} ` }}</Icon
             >
             {{

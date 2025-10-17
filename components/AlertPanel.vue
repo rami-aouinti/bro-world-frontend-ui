@@ -35,7 +35,7 @@
               class="mr-2"
             >
               <Icon
-                name="mdi-shield-alert"
+                name="mdi:shield-alert"
                 class="text-foreground"
               ></Icon>
             </v-avatar>
@@ -65,7 +65,7 @@
               class="mr-2"
             >
               <Icon
-                name="mdi-close"
+                name="mdi:close"
                 class="text-foreground"
                 @click="close(alert.id)"
               ></Icon>

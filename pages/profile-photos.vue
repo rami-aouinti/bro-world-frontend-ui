@@ -394,7 +394,7 @@
                       variant="text"
                       color="primary"
                       size="small"
-                      append-icon="mdi-arrow-top-right"
+                      append-icon="mdi:arrow-top-right"
                     >
                       {{ note.cta }}
                     </v-btn>
@@ -671,7 +671,7 @@ const storyMilestones = reactive<StoryMilestone[]>([
     status: "In review",
     progress: 72,
     color: "primary",
-    icon: "mdi-filmstrip-box-multiple",
+    icon: "mdi:filmstrip-box-multiple",
     tags: ["Documentary", "Editorial"],
   },
   {
@@ -683,7 +683,7 @@ const storyMilestones = reactive<StoryMilestone[]>([
     status: "Editing",
     progress: 54,
     color: "secondary",
-    icon: "mdi-lightning-bolt",
+    icon: "mdi:lightning-bolt",
     tags: ["Events", "Recap"],
   },
   {
@@ -695,7 +695,7 @@ const storyMilestones = reactive<StoryMilestone[]>([
     status: "Drafting",
     progress: 38,
     color: "success",
-    icon: "mdi-image-filter-hdr",
+    icon: "mdi:image-filter-hdr",
     tags: ["Retreat", "Culture"],
   },
 ]);

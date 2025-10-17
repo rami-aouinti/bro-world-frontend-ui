@@ -46,19 +46,19 @@ const { t } = useI18n();
 const baseButtons = [
   {
     provider: "google",
-    icon: "mdi-google",
+    icon: "mdi:google",
     gradient: "linear-gradient(135deg, #ff8a00 0%, #ff2d55 100%)",
     iconColor: "#ffffff",
   },
   {
     provider: "github",
-    icon: "mdi-github",
+    icon: "mdi:github",
     gradient: "linear-gradient(135deg, #232526 0%, #414345 100%)",
     iconColor: "#ffffff",
   },
   {
     provider: "microsoft",
-    icon: "mdi-microsoft",
+    icon: "mdi:microsoft",
     gradient: "linear-gradient(135deg, #00b4db 0%, #0083b0 100%)",
     iconColor: "#ffffff",
   },

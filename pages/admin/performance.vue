@@ -44,18 +44,18 @@ import OpportunityList from "~/components/performance/OpportunityList.vue";
 import ImprovementTimeline from "~/components/performance/ImprovementTimeline.vue";
 
 const METRIC_ICON_MAP = Object.freeze({
-  fcp: "mdi-flash", // First Contentful Paint
-  lcp: "mdi-clock-fast",
-  tbt: "mdi-timer-sand",
-  speedIndex: "mdi-speedometer-medium",
-  cls: "mdi-crop-square",
+  fcp: "mdi:flash", // First Contentful Paint
+  lcp: "mdi:clock-fast",
+  tbt: "mdi:timer-sand",
+  speedIndex: "mdi:speedometer-medium",
+  cls: "mdi:crop-square",
 } satisfies Record<string, string>);
 
 const OPPORTUNITY_ICON_MAP = Object.freeze({
-  layout: { icon: "mdi-table-arrow-down", color: "primary" },
-  script: { icon: "mdi-script-text-play-outline", color: "secondary" },
-  assets: { icon: "mdi-file-download-outline", color: "info" },
-  monitoring: { icon: "mdi-chart-box-outline", color: "success" },
+  layout: { icon: "mdi:table-arrow-down", color: "primary" },
+  script: { icon: "mdi:script-text-play-outline", color: "secondary" },
+  assets: { icon: "mdi:file-download-outline", color: "info" },
+  monitoring: { icon: "mdi:chart-box-outline", color: "success" },
 } satisfies Record<string, { icon: string; color: string }>);
 
 const { t, tm, rt, locale, localeProperties } = useI18n();
@@ -229,7 +229,7 @@ const metricsDefinition = computed(
 const metricCards = computed(() => {
   return Object.entries(metricsDefinition.value).map(([key, value]) => {
     const details = value ?? {};
-    const icon = METRIC_ICON_MAP[key] ?? "mdi-chart-timeline-variant";
+    const icon = METRIC_ICON_MAP[key] ?? "mdi:chart-timeline-variant";
 
     return {
       key,
@@ -269,7 +269,7 @@ const opportunities = computed<OpportunityItem[]>(() => {
   return Object.entries(opportunitiesDefinition.value).map(([key, value]) => {
     const details = value ?? {};
     const iconDefinition = OPPORTUNITY_ICON_MAP[key] ?? {
-      icon: "mdi-alert-decagram-outline",
+      icon: "mdi:alert-decagram-outline",
       color: "warning",
     };
 

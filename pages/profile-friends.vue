@@ -156,14 +156,14 @@
             >
               <div class="d-flex align-center gap-2">
                 <Icon
-                  name="mdi-map-marker-outline"
+                  name="mdi:map-marker-outline"
                   size="18"
                 />
                 <span>{{ friend.location }}</span>
               </div>
               <div class="d-flex align-center gap-2">
                 <Icon
-                  name="mdi-account-multiple-outline"
+                  name="mdi:account-multiple-outline"
                   size="18"
                 />
                 <span>{{ friend.mutualCount }} {{ t("pages.profileFriends.stats.mutual") }}</span>

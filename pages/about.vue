@@ -15,7 +15,7 @@
         >
           <div class="about-hero__badge">
             <v-icon
-              icon="mdi-rocket-launch-outline"
+              icon="mdi:rocket-launch-outline"
               size="22"
               class="mr-2"
               aria-hidden="true"
@@ -347,17 +347,17 @@ useHead(() => {
 
 const missionPoints = computed(() => [
   {
-    icon: "mdi-rocket-launch-outline",
+    icon: "mdi:rocket-launch-outline",
     title: t("pages.about.missionPoints.builders.title"),
     body: t("pages.about.missionPoints.builders.body"),
   },
   {
-    icon: "mdi-account-heart-outline",
+    icon: "mdi:account-heart-outline",
     title: t("pages.about.missionPoints.community.title"),
     body: t("pages.about.missionPoints.community.body"),
   },
   {
-    icon: "mdi-update",
+    icon: "mdi:update",
     title: t("pages.about.missionPoints.iteration.title"),
     body: t("pages.about.missionPoints.iteration.body"),
   },
@@ -434,7 +434,7 @@ const resourceLinks = computed(() => [
   {
     label: t("pages.about.links.github"),
     href: "https://github.com/bro-world/bro-world-frontend-ui",
-    icon: "mdi-github",
+    icon: "mdi:github",
     target: "_blank",
     rel: "noopener noreferrer",
     ariaLabel: t("pages.about.links.githubAria"),
@@ -442,7 +442,7 @@ const resourceLinks = computed(() => [
   {
     label: t("pages.about.links.docs"),
     href: "https://bro-world-space.com/docs/",
-    icon: "mdi-file-document-outline",
+    icon: "mdi:file-document-outline",
     target: "_blank",
     rel: "noopener noreferrer",
     ariaLabel: t("pages.about.links.docsAria"),
@@ -450,7 +450,7 @@ const resourceLinks = computed(() => [
   {
     label: t("pages.about.links.community"),
     href: "https://github.com/bro-world/bro-world-frontend-ui/discussions",
-    icon: "mdi-account-group-outline",
+    icon: "mdi:account-group-outline",
     target: "_blank",
     rel: "noopener noreferrer",
     ariaLabel: t("pages.about.links.communityAria"),

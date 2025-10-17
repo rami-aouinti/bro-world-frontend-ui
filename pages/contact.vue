@@ -23,7 +23,7 @@
             >
               <div class="contact-badge">
                 <v-icon
-                  icon="mdi-message-processing-outline"
+                  icon="mdi:message-processing-outline"
                   size="22"
                   class="mr-2"
                   aria-hidden="true"
@@ -202,7 +202,7 @@ useHead(() => {
 
 const supportChannels = computed(() => [
   {
-    icon: "mdi-email-edit-outline",
+    icon: "mdi:email-edit-outline",
     title: t("pages.contact.details.email"),
     description: t("pages.contact.details.emailDescription"),
     href: "mailto:support@broworld.com",
@@ -210,7 +210,7 @@ const supportChannels = computed(() => [
     ctaLabel: t("pages.contact.details.emailCtaLabel"),
   },
   {
-    icon: "mdi-account-group-outline",
+    icon: "mdi:account-group-outline",
     title: t("pages.contact.details.community"),
     description: t("pages.contact.details.communityDescription"),
     href: "https://github.com/bro-world/bro-world-frontend-ui/discussions",
@@ -220,7 +220,7 @@ const supportChannels = computed(() => [
     ctaLabel: t("pages.contact.details.communityCtaLabel"),
   },
   {
-    icon: "mdi-book-open-page-variant-outline",
+    icon: "mdi:book-open-page-variant-outline",
     title: t("pages.contact.details.docs"),
     description: t("pages.contact.details.docsDescription"),
     to: localePath("/getting-started/introduction"),
