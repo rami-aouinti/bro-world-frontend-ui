@@ -52,7 +52,7 @@
         v-if="shouldRenderCommentThread"
         v-model:composer-visible="isCommentComposerVisible"
         :counts="{ care: 0, love: 0, wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
-        :nodes="commentThreadNodes"
+        :nodes="sortedCommentThreadNodes"
         :current-user="currentUserForThread"
         @like="handleCommentLike"
         @reply="openReply"
@@ -203,34 +203,7 @@ const loginDialogOpen = ref(false);
 const loginPromptRef = ref<HTMLButtonElement | null>(null);
 const loginDialogPreviousFocusedElement = ref<HTMLElement | null>(null);
 const { formatRelativeTime } = useRelativeTime();
-type Comment = {
-  id: string;
-  author: string;
-  message: string;
-  createdAt: number; // timestamp ms
-  likes: number;
-  replies: number;
-  isFriend?: boolean;
-};
 const sortBy = ref<"relevant" | "newest" | "all">("relevant");
-
-const sorted = computed(() => {
-  const arr = [...commentThreadNodes.value];
-
-  if (sortBy.value === "newest") {
-    return arr.sort((a, b) => b.createdAt - a.createdAt);
-  }
-
-  if (sortBy.value === "relevant") {
-    function score(comment: Comment) {
-      return (comment.isFriend ? 1000 : 0) + comment.likes * 5 + comment.replies * 8;
-    }
-
-    return arr.sort((a, b) => score(b) - score(a));
-  }
-
-  return arr;
-});
 const publishedLabel = computed(() => formatRelativeTime(post.value.publishedAt));
 
 const isAuthenticated = computed(() => isAuthenticatedComputed.value);
@@ -283,6 +256,72 @@ const commentThreadNodes = computed(() => {
 
   return post.value.comments_preview ?? emptyCommentNodes;
 });
+const sortedCommentThreadNodes = computed(() => {
+  if (sortBy.value === "newest") {
+    return sortCommentsByPublishedAt(commentThreadNodes.value);
+  }
+
+  return commentThreadNodes.value;
+});
+
+function sortCommentsByPublishedAt(nodes: BlogCommentWithReplies[]): BlogCommentWithReplies[] {
+  return [...nodes]
+    .map((node) => {
+      const sortedChildren = resolveSortedChildren(node);
+
+      if (!sortedChildren) {
+        return { ...node };
+      }
+
+      const clone: BlogCommentWithReplies = {
+        ...node,
+        children: sortedChildren,
+      };
+
+      if (Array.isArray(node.comments)) {
+        clone.comments = sortedChildren;
+      }
+
+      if (Array.isArray(node.replies)) {
+        clone.replies = sortedChildren;
+      }
+
+      return clone;
+    })
+    .sort((a, b) => getPublishedTimestamp(b.publishedAt) - getPublishedTimestamp(a.publishedAt));
+}
+
+function resolveSortedChildren(node: BlogCommentWithReplies): BlogCommentWithReplies[] | undefined {
+  const collections = [node.children, node.comments, node.replies];
+
+  for (const collection of collections) {
+    if (Array.isArray(collection) && collection.length > 0) {
+      return sortCommentsByPublishedAt(collection);
+    }
+  }
+
+  return undefined;
+}
+
+function getPublishedTimestamp(input: BlogCommentWithReplies["publishedAt"]): number {
+  if (typeof input === "number") {
+    return input;
+  }
+
+  if (input instanceof Date) {
+    return input.getTime();
+  }
+
+  if (typeof input === "string") {
+    const parsed = Date.parse(input);
+
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return 0;
+}
 const currentUserForThread = computed(() => currentUser.value ?? undefined);
 const currentUserDisplayName = computed(() => {
   const user = currentUser.value;
@@ -320,53 +359,6 @@ const deleteDialogOpen = ref(false);
 const previousFocusedElement = ref<HTMLElement | null>(null);
 
 const placeholderAvatar = "/images/placeholders/avatar-1.svg";
-
-const tree = ref<CommentNode[]>([
-  {
-    id: "c1",
-    user: {
-      firstName: "عبد السلام المرخي",
-      lastName: "عبد السلام المرخي",
-      photo: placeholderAvatar,
-    },
-    message: "سلكناها حفيدة الحسن…",
-    createdAt: Date.now() - 11 * 3600 * 1000,
-    children: [
-      {
-        id: "c1-1",
-        user: {
-          firstName: "عبد السلام المرخي",
-          lastName: "عبد السلام المرخي",
-          photo: placeholderAvatar,
-        },
-        message: "… خلي العالم يعرف",
-        createdAt: Date.now() - 11 * 3600 * 1000,
-        children: [
-          {
-            id: "c1-1-1",
-            user: {
-              firstName: "عبد السلام المرخي",
-              lastName: "عبد السلام المرخي",
-              photo: placeholderAvatar,
-            },
-            message: "Aly Bouzwida Ben Ammar 😭",
-            createdAt: Date.now() - 10 * 3600 * 1000,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "c2",
-    user: {
-      firstName: "عبد السلام المرخي",
-      lastName: "عبد السلام المرخي",
-      photo: placeholderAvatar,
-    },
-    message: "هيهات منا الذلة",
-    createdAt: Date.now() - 11 * 3600 * 1000,
-  },
-]);
 
 function handleCommentLike(commentId: string) {
   void handleCommentReaction(commentId, "like").catch((error: unknown) => {
@@ -643,6 +635,12 @@ function prefetchComments() {
 
   void loadComments();
 }
+
+watch(sortBy, (value) => {
+  if (value === "all" || value === "newest") {
+    requestComments();
+  }
+});
 
 watch(
   isCommentsSectionVisible,
