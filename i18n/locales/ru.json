@@ -1436,6 +1436,28 @@
         "comment": "Комментировать",
         "share": "Поделиться"
       },
+      "shareMenu": {
+        "feed": "Поделиться в ленте",
+        "story": "Поделиться в истории",
+        "messenger": "Отправить в Messenger",
+        "whatsapp": "Отправить в WhatsApp",
+        "page": "Поделиться на странице",
+        "group": "Поделиться в группе",
+        "profile": "Поделиться на профиле друга",
+        "comingSoonTitle": "Пока недоступно",
+        "comingSoonDescription": "Эта опция обмена появится позже."
+      },
+      "shareDialog": {
+        "title": "Создать публикацию",
+        "placeholder": "Расскажите что-нибудь об этом...",
+        "placeholderNamed": "Расскажите что-нибудь об этом, {name}...",
+        "defaultName": "Вы",
+        "submit": "Поделиться",
+        "cancel": "Отмена",
+        "feedAudience": "Лента",
+        "successTitle": "Публикация поделена",
+        "successMessage": "Ваше обновление добавлено в ленту."
+      },
       "loading": "Загрузка публикации"
     },
     "comments": {

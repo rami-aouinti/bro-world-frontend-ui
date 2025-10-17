@@ -314,6 +314,28 @@
         "comment": "Commenter",
         "share": "Partager"
       },
+      "shareMenu": {
+        "feed": "Partager dans le fil",
+        "story": "Partager dans votre story",
+        "messenger": "Envoyer sur Messenger",
+        "whatsapp": "Envoyer sur WhatsApp",
+        "page": "Partager sur une page",
+        "group": "Partager dans un groupe",
+        "profile": "Partager sur le profil d'un ami",
+        "comingSoonTitle": "Pas encore disponible",
+        "comingSoonDescription": "Cette option de partage arrive bientôt."
+      },
+      "shareDialog": {
+        "title": "Créer une publication",
+        "placeholder": "Dites quelque chose à ce sujet...",
+        "placeholderNamed": "Dites quelque chose à ce sujet, {name}...",
+        "defaultName": "Vous",
+        "submit": "Partager",
+        "cancel": "Annuler",
+        "feedAudience": "Fil",
+        "successTitle": "Publication partagée",
+        "successMessage": "Votre mise à jour a été ajoutée à votre fil."
+      },
       "loading": "Chargement de la publication"
     },
     "comments": {

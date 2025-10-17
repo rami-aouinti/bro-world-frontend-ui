@@ -449,6 +449,28 @@
         "comment": "تعليق",
         "share": "مشاركة"
       },
+      "shareMenu": {
+        "feed": "المشاركة على الخلاصة",
+        "story": "المشاركة في قصتك",
+        "messenger": "الإرسال عبر Messenger",
+        "whatsapp": "الإرسال عبر واتساب",
+        "page": "المشاركة على صفحة",
+        "group": "المشاركة في مجموعة",
+        "profile": "المشاركة على ملف صديق",
+        "comingSoonTitle": "غير متاح بعد",
+        "comingSoonDescription": "سيتم توفير خيار المشاركة هذا قريبًا."
+      },
+      "shareDialog": {
+        "title": "إنشاء منشور",
+        "placeholder": "قل شيئًا عن هذا...",
+        "placeholderNamed": "قل شيئًا عن هذا، {name}...",
+        "defaultName": "أنت",
+        "submit": "مشاركة",
+        "cancel": "إلغاء",
+        "feedAudience": "الخلاصة",
+        "successTitle": "تمت مشاركة المنشور",
+        "successMessage": "تمت إضافة تحديثك إلى خلاصتك."
+      },
       "loading": "جارٍ تحميل المنشور"
     },
     "comments": {

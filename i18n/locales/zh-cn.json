@@ -453,6 +453,28 @@
         "comment": "评论",
         "share": "分享"
       },
+      "shareMenu": {
+        "feed": "分享到动态",
+        "story": "分享到你的限时动态",
+        "messenger": "通过 Messenger 发送",
+        "whatsapp": "通过 WhatsApp 发送",
+        "page": "分享到专页",
+        "group": "分享到社群",
+        "profile": "分享到好友的主页",
+        "comingSoonTitle": "尚未开放",
+        "comingSoonDescription": "此分享选项即将推出。"
+      },
+      "shareDialog": {
+        "title": "创建帖子",
+        "placeholder": "说点什么吧...",
+        "placeholderNamed": "说点什么吧，{name}...",
+        "defaultName": "你",
+        "submit": "分享",
+        "cancel": "取消",
+        "feedAudience": "动态",
+        "successTitle": "帖子已分享",
+        "successMessage": "你的更新已发布到你的动态。"
+      },
       "loading": "正在加载帖子"
     },
     "comments": {

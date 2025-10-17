@@ -1436,6 +1436,28 @@
         "comment": "Comentar",
         "share": "Compartir"
       },
+      "shareMenu": {
+        "feed": "Compartir en el feed",
+        "story": "Compartir en tu historia",
+        "messenger": "Enviar por Messenger",
+        "whatsapp": "Enviar por WhatsApp",
+        "page": "Compartir en una página",
+        "group": "Compartir en un grupo",
+        "profile": "Compartir en el perfil de un amigo",
+        "comingSoonTitle": "Aún no disponible",
+        "comingSoonDescription": "Esta opción para compartir estará disponible pronto."
+      },
+      "shareDialog": {
+        "title": "Crear publicación",
+        "placeholder": "Di algo sobre esto...",
+        "placeholderNamed": "Di algo sobre esto, {name}...",
+        "defaultName": "Tú",
+        "submit": "Compartir",
+        "cancel": "Cancelar",
+        "feedAudience": "Feed",
+        "successTitle": "Publicación compartida",
+        "successMessage": "Tu actualización se agregó a tu feed."
+      },
       "loading": "Cargando publicación"
     },
     "comments": {
