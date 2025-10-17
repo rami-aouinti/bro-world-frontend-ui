@@ -315,26 +315,26 @@
         "share": "Partager"
       },
       "shareMenu": {
-        "feed": "Share to feed",
-        "story": "Share to your story",
-        "messenger": "Send in Messenger",
-        "whatsapp": "Send on WhatsApp",
-        "page": "Share to a Page",
-        "group": "Share to a group",
-        "profile": "Share to a friend's profile",
-        "comingSoonTitle": "Not yet available",
-        "comingSoonDescription": "This sharing option is coming soon."
+        "feed": "Partager dans le fil",
+        "story": "Partager dans votre story",
+        "messenger": "Envoyer sur Messenger",
+        "whatsapp": "Envoyer sur WhatsApp",
+        "page": "Partager sur une page",
+        "group": "Partager dans un groupe",
+        "profile": "Partager sur le profil d'un ami",
+        "comingSoonTitle": "Pas encore disponible",
+        "comingSoonDescription": "Cette option de partage arrive bientôt."
       },
       "shareDialog": {
-        "title": "Create post",
-        "placeholder": "Say something about this...",
-        "placeholderNamed": "Say something about this, {name}...",
-        "defaultName": "You",
-        "submit": "Share",
-        "cancel": "Cancel",
-        "feedAudience": "Feed",
-        "successTitle": "Post shared",
-        "successMessage": "Your update was added to your feed."
+        "title": "Créer une publication",
+        "placeholder": "Dites quelque chose à ce sujet...",
+        "placeholderNamed": "Dites quelque chose à ce sujet, {name}...",
+        "defaultName": "Vous",
+        "submit": "Partager",
+        "cancel": "Annuler",
+        "feedAudience": "Fil",
+        "successTitle": "Publication partagée",
+        "successMessage": "Votre mise à jour a été ajoutée à votre fil."
       },
       "loading": "Chargement de la publication"
     },

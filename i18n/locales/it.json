@@ -1437,26 +1437,26 @@
         "share": "Condividi"
       },
       "shareMenu": {
-        "feed": "Share to feed",
-        "story": "Share to your story",
-        "messenger": "Send in Messenger",
-        "whatsapp": "Send on WhatsApp",
-        "page": "Share to a Page",
-        "group": "Share to a group",
-        "profile": "Share to a friend's profile",
-        "comingSoonTitle": "Not yet available",
-        "comingSoonDescription": "This sharing option is coming soon."
+        "feed": "Condividi nel feed",
+        "story": "Condividi nella tua storia",
+        "messenger": "Invia su Messenger",
+        "whatsapp": "Invia su WhatsApp",
+        "page": "Condividi su una pagina",
+        "group": "Condividi in un gruppo",
+        "profile": "Condividi sul profilo di un amico",
+        "comingSoonTitle": "Non ancora disponibile",
+        "comingSoonDescription": "Questa opzione di condivisione sarà presto disponibile."
       },
       "shareDialog": {
-        "title": "Create post",
-        "placeholder": "Say something about this...",
-        "placeholderNamed": "Say something about this, {name}...",
-        "defaultName": "You",
-        "submit": "Share",
-        "cancel": "Cancel",
+        "title": "Crea post",
+        "placeholder": "Dì qualcosa su questo...",
+        "placeholderNamed": "Dì qualcosa su questo, {name}...",
+        "defaultName": "Tu",
+        "submit": "Condividi",
+        "cancel": "Annulla",
         "feedAudience": "Feed",
-        "successTitle": "Post shared",
-        "successMessage": "Your update was added to your feed."
+        "successTitle": "Post condiviso",
+        "successMessage": "Il tuo aggiornamento è stato aggiunto al tuo feed."
       },
       "loading": "Caricamento del post"
     },

@@ -1437,26 +1437,26 @@
         "share": "Поделиться"
       },
       "shareMenu": {
-        "feed": "Share to feed",
-        "story": "Share to your story",
-        "messenger": "Send in Messenger",
-        "whatsapp": "Send on WhatsApp",
-        "page": "Share to a Page",
-        "group": "Share to a group",
-        "profile": "Share to a friend's profile",
-        "comingSoonTitle": "Not yet available",
-        "comingSoonDescription": "This sharing option is coming soon."
+        "feed": "Поделиться в ленте",
+        "story": "Поделиться в истории",
+        "messenger": "Отправить в Messenger",
+        "whatsapp": "Отправить в WhatsApp",
+        "page": "Поделиться на странице",
+        "group": "Поделиться в группе",
+        "profile": "Поделиться на профиле друга",
+        "comingSoonTitle": "Пока недоступно",
+        "comingSoonDescription": "Эта опция обмена появится позже."
       },
       "shareDialog": {
-        "title": "Create post",
-        "placeholder": "Say something about this...",
-        "placeholderNamed": "Say something about this, {name}...",
-        "defaultName": "You",
-        "submit": "Share",
-        "cancel": "Cancel",
-        "feedAudience": "Feed",
-        "successTitle": "Post shared",
-        "successMessage": "Your update was added to your feed."
+        "title": "Создать публикацию",
+        "placeholder": "Расскажите что-нибудь об этом...",
+        "placeholderNamed": "Расскажите что-нибудь об этом, {name}...",
+        "defaultName": "Вы",
+        "submit": "Поделиться",
+        "cancel": "Отмена",
+        "feedAudience": "Лента",
+        "successTitle": "Публикация поделена",
+        "successMessage": "Ваше обновление добавлено в ленту."
       },
       "loading": "Загрузка публикации"
     },
