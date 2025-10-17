@@ -206,7 +206,7 @@ function withSvgPrefix(path: string) {
 
 const featureCards = computed(() => [
   {
-    icon: withSvgPrefix(mdiStorefrontOutline),
+    icon: "mdi:storefront-outline",
     title: t("pages.ecommerce.features.catalog.title"),
     description: t("pages.ecommerce.features.catalog.description"),
     points: [
@@ -216,7 +216,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: withSvgPrefix(mdiCreditCardCheckOutline),
+    icon: "mdi:credit-card-check-outline",
     title: t("pages.ecommerce.features.checkout.title"),
     description: t("pages.ecommerce.features.checkout.description"),
     points: [
@@ -226,7 +226,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: withSvgPrefix(mdiBullhornOutline),
+    icon: "mdi:bullhorn-outline",
     title: t("pages.ecommerce.features.marketing.title"),
     description: t("pages.ecommerce.features.marketing.description"),
     points: [

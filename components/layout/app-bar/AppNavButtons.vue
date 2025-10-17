@@ -50,7 +50,7 @@
         @click="emit('toggle-left')"
       >
         <AppIcon
-          name="mdi-format-align-justify"
+          name="mdi:format-align-justify"
           :size="22"
         />
       </button>

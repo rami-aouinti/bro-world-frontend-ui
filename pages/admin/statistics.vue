@@ -24,7 +24,7 @@
         <v-btn
           color="primary"
           variant="tonal"
-          prepend-icon="mdi-refresh"
+          prepend-icon="mdi:refresh"
           class="text-none"
           :loading="isRefreshing"
           @click="reload"
@@ -79,7 +79,7 @@
                 size="56"
               >
                 <Icon
-                  name="mdi-account-group"
+                  name="mdi:account-group"
                   size="32"
                 />
               </v-avatar>

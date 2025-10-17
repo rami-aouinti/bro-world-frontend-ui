@@ -17,7 +17,7 @@
           size="small"
           color="primary"
           variant="tonal"
-          prepend-icon="mdi-cog-outline"
+          prepend-icon="mdi:cog-outline"
         >
           {{ t("admin.settings.sections.general.badge") || "Core" }}
         </v-chip>

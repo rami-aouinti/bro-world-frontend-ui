@@ -200,7 +200,7 @@ useHead(() => {
 
 const featureCards = computed(() => [
   {
-    icon: "mdi-book-open-page-variant-outline",
+    icon: "mdi:book-open-page-variant-outline",
     title: t("pages.education.features.curriculum.title"),
     description: t("pages.education.features.curriculum.description"),
     points: [
@@ -210,7 +210,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-account-multiple-check-outline",
+    icon: "mdi:account-multiple-check-outline",
     title: t("pages.education.features.collaboration.title"),
     description: t("pages.education.features.collaboration.description"),
     points: [
@@ -220,7 +220,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-chart-box-outline",
+    icon: "mdi:chart-box-outline",
     title: t("pages.education.features.analytics.title"),
     description: t("pages.education.features.analytics.description"),
     points: [

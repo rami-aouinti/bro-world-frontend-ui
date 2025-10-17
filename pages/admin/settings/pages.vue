@@ -17,7 +17,7 @@
           size="small"
           color="indigo"
           variant="tonal"
-          prepend-icon="mdi-book-open-page-variant"
+          prepend-icon="mdi:book-open-page-variant"
         >
           {{ t("admin.settings.sections.pages.badge") || "Content" }}
         </v-chip>
@@ -118,10 +118,10 @@ const pageEditors = computed(() =>
     key,
     icon:
       key === "about"
-        ? "mdi-information-outline"
+        ? "mdi:information-outline"
         : key === "contact"
-          ? "mdi-email-outline"
-          : "mdi-lifebuoy",
+          ? "mdi:email-outline"
+          : "mdi:lifebuoy",
     label: t(`admin.settings.sections.pages.labels.${key}`),
     description: t(`admin.settings.sections.pages.descriptions.${key}`),
   })),

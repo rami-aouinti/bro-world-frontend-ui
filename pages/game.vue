@@ -202,7 +202,7 @@ useHead(() => {
 
 const featureCards = computed(() => [
   {
-    icon: "mdi-account-group-outline",
+    icon: "mdi:account-group-outline",
     title: t("pages.game.features.community.title"),
     description: t("pages.game.features.community.description"),
     points: [
@@ -212,7 +212,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-controller-classic-outline",
+    icon: "mdi:controller-classic-outline",
     title: t("pages.game.features.monetization.title"),
     description: t("pages.game.features.monetization.description"),
     points: [
@@ -222,7 +222,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-trophy-outline",
+    icon: "mdi:trophy-outline",
     title: t("pages.game.features.events.title"),
     description: t("pages.game.features.events.description"),
     points: [

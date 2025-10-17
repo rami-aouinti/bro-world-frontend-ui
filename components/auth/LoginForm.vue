@@ -175,7 +175,7 @@ const formErrorId = `login-form-error-${uniqueId}`;
 const showPasswordLabel = computed(() => t("auth.showPassword"));
 const hidePasswordLabel = computed(() => t("auth.hidePassword"));
 const passwordInputType = computed(() => (showPassword.value ? "text" : "password"));
-const passwordToggleIcon = computed(() => (showPassword.value ? "mdi-eye-off" : "mdi-eye"));
+const passwordToggleIcon = computed(() => (showPassword.value ? "mdi:eye-off" : "mdi:eye"));
 const passwordToggleAriaLabel = computed(() =>
   showPassword.value ? hidePasswordLabel.value : showPasswordLabel.value,
 );

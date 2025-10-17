@@ -24,7 +24,7 @@
               variant="flat"
               class="text-none px-3"
               :loading="isSaving"
-              prepend-icon="mdi-content-save-outline"
+              prepend-icon="mdi:content-save-outline"
               :disabled="pending"
               @click="handleSave"
             >
@@ -33,7 +33,7 @@
             <v-btn
               variant="text"
               class="text-none"
-              prepend-icon="mdi-restore"
+              prepend-icon="mdi:restore"
               :disabled="isSaving || !hasChanges"
               @click="reset"
             >
@@ -88,42 +88,42 @@ const sections = computed(() => [
   {
     key: "general",
     to: "/admin/settings",
-    icon: "mdi-cog-outline",
+    icon: "mdi:cog-outline",
     title: t("admin.settings.sections.general.title"),
     subtitle: t("admin.settings.sections.general.subtitle"),
   },
   {
     key: "themes",
     to: "/admin/settings/themes",
-    icon: "mdi-palette-outline",
+    icon: "mdi:palette-outline",
     title: t("admin.settings.sections.theme.title"),
     subtitle: t("admin.settings.sections.theme.subtitle"),
   },
   {
     key: "profile",
     to: "/admin/settings/profile",
-    icon: "mdi-account-cog",
+    icon: "mdi:account-cog",
     title: t("admin.settings.sections.profile.title"),
     subtitle: t("admin.settings.sections.profile.subtitle"),
   },
   {
     key: "appearance",
     to: "/admin/settings/appearance",
-    icon: "mdi-theme-light-dark",
+    icon: "mdi:theme-light-dark",
     title: t("admin.settings.sections.appearance.title"),
     subtitle: t("admin.settings.sections.appearance.subtitle"),
   },
   {
     key: "pages",
     to: "/admin/settings/pages",
-    icon: "mdi-book-open-page-variant",
+    icon: "mdi:book-open-page-variant",
     title: t("admin.settings.sections.pages.title"),
     subtitle: t("admin.settings.sections.pages.subtitle"),
   },
   {
     key: "navigation",
     to: "/admin/settings/navigation",
-    icon: "mdi-compass-outline",
+    icon: "mdi:compass-outline",
     title: t("admin.settings.sections.navigation.title"),
     subtitle: t("admin.settings.sections.navigation.subtitle"),
   },

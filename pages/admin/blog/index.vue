@@ -25,7 +25,7 @@
           <v-btn
             color="primary"
             variant="tonal"
-            prepend-icon="mdi-refresh"
+            prepend-icon="mdi:refresh"
             class="text-none"
             :loading="isRefreshing"
             :disabled="isBusy"
@@ -33,7 +33,7 @@
             @click="handleRefresh"
           >
             <Icon
-              name="mdi-refresh"
+              name="mdi:refresh"
               class="me-2"
             />
             {{ t("admin.blog.actions.refresh") }}
@@ -41,14 +41,14 @@
           <v-btn
             color="primary"
             variant="flat"
-            prepend-icon="mdi-plus"
+            prepend-icon="mdi:plus"
             class="text-none"
             :loading="isCreating"
             :aria-label="t('admin.blog.actions.createAria')"
             @click="openCreateDialog"
           >
             <Icon
-              name="mdi-plus"
+              name="mdi:plus"
               class="me-2"
             />
             {{ t("admin.blog.actions.create") }}
@@ -81,7 +81,7 @@
           v-model="search"
           :label="t('admin.blog.table.searchLabel')"
           :placeholder="t('admin.blog.table.searchPlaceholder')"
-          prepend-inner-icon="mdi-magnify"
+          prepend-inner-icon="mdi:magnify"
           variant="outlined"
           density="comfortable"
           clearable
@@ -161,45 +161,45 @@
             <v-btn
               variant="text"
               color="primary"
-              icon="mdi-eye-outline"
+              icon="mdi:eye-outline"
               :aria-label="t('admin.blog.table.previewAria', { title: item.title })"
               @click="openPreview(item)"
             >
-              <Icon name="mdi-eye-outline" />
+              <Icon name="mdi:eye-outline" />
             </v-btn>
             <v-btn
               variant="text"
               color="primary"
-              icon="mdi-pencil-outline"
+              icon="mdi:pencil-outline"
               :loading="isUpdating(item.id)"
               :disabled="isUpdating(item.id) || isDeleting(item.id)"
               :aria-label="t('admin.blog.table.editAria', { title: item.title })"
               @click="openEditDialog(item)"
             >
-              <Icon name="mdi-pencil-outline" />
+              <Icon name="mdi:pencil-outline" />
             </v-btn>
             <v-btn
               variant="text"
               color="error"
-              icon="mdi-delete-outline"
+              icon="mdi:delete-outline"
               :loading="isDeleting(item.id)"
               :disabled="isUpdating(item.id) || isDeleting(item.id)"
               :aria-label="t('admin.blog.table.deleteAria', { title: item.title })"
               @click="confirmDelete(item)"
             >
-              <Icon name="mdi-delete-outline" />
+              <Icon name="mdi:delete-outline" />
             </v-btn>
             <v-btn
               v-if="item.publicUrl"
               variant="text"
               color="primary"
-              icon="mdi-open-in-new"
+              icon="mdi:open-in-new"
               :href="item.publicUrl"
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="t('admin.blog.table.viewAria', { title: item.title })"
             >
-              <Icon name="mdi-open-in-new" />
+              <Icon name="mdi:open-in-new" />
             </v-btn>
           </div>
         </template>
@@ -428,7 +428,7 @@
             :href="previewPost.publicUrl"
             target="_blank"
             rel="noopener noreferrer"
-            prepend-icon="mdi-open-in-new"
+            prepend-icon="mdi:open-in-new"
           >
             {{ t("admin.blog.dialogs.preview.openPublic") }}
           </v-btn>

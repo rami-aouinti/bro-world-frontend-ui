@@ -39,21 +39,21 @@
           <div class="d-flex flex-wrap gap-4 text-medium-emphasis">
             <div class="d-flex align-center gap-2">
               <Icon
-                name="mdi-map-marker-outline"
+                name="mdi:map-marker-outline"
                 size="20"
               />
               <span>{{ friend.location }}</span>
             </div>
             <div class="d-flex align-center gap-2">
               <Icon
-                name="mdi-account-multiple-outline"
+                name="mdi:account-multiple-outline"
                 size="20"
               />
               <span>{{ friend.mutualCount }} {{ t("pages.profileFriends.stats.mutual") }}</span>
             </div>
             <div class="d-flex align-center gap-2">
               <Icon
-                name="mdi-timer-sand"
+                name="mdi:timer-sand"
                 size="20"
               />
               <span>{{
@@ -352,7 +352,7 @@ const connectionHighlights = computed(() => {
   return [
     {
       id: "status",
-      icon: "mdi-radar",
+      icon: "mdi:radar",
       title: statusLabel(friend.value.status),
       subtitle: t("pages.profileFriends.meta.lastActive", {
         time: friend.value.lastActive,
@@ -360,19 +360,19 @@ const connectionHighlights = computed(() => {
     },
     {
       id: "location",
-      icon: "mdi-map-marker-outline",
+      icon: "mdi:map-marker-outline",
       title: friend.value.location,
       subtitle: t("pages.profileEdit.labels.location"),
     },
     {
       id: "segments",
-      icon: "mdi-briefcase-outline",
+      icon: "mdi:briefcase-outline",
       title: segments,
       subtitle: t("pages.profileFriends.filters.all"),
     },
     {
       id: "tags",
-      icon: "mdi-tag-multiple-outline",
+      icon: "mdi:tag-multiple-outline",
       title: friend.value.tags.join(" • "),
       subtitle: t("pages.profileEdit.sections.profile.skills"),
     },

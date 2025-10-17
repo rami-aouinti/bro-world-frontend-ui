@@ -17,7 +17,7 @@
           size="small"
           color="purple"
           variant="tonal"
-          prepend-icon="mdi-palette-outline"
+          prepend-icon="mdi:palette-outline"
         >
           UI
         </v-chip>
@@ -67,7 +67,7 @@
                             {{ t("admin.settings.sections.theme.active") }}
                           </v-chip>
                           <v-btn
-                            icon="mdi-delete"
+                            icon="mdi:delete"
                             variant="text"
                             color="error"
                             :disabled="isSaving || form.themes.length <= 1"
@@ -161,7 +161,7 @@
           color="primary"
           class="text-none"
           :disabled="isSaving"
-          prepend-icon="mdi-palette"
+          prepend-icon="mdi:palette"
           @click="handleAddTheme"
         >
           {{ t("admin.settings.actions.addTheme") }}

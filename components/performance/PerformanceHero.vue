@@ -11,7 +11,7 @@
       <div class="performance-hero__content">
         <div class="performance-hero__badge" role="status">
           <v-icon
-            icon="mdi-speedometer"
+            icon="mdi:speedometer"
             size="22"
             class="mr-2"
             aria-hidden="true"
@@ -31,7 +31,7 @@
         </p>
         <div class="performance-hero__meta">
           <v-icon
-            icon="mdi-update"
+            icon="mdi:update"
             size="18"
             class="mr-1"
             aria-hidden="true"

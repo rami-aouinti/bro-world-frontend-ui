@@ -242,16 +242,16 @@ const displayedBio = computed(() => {
 const introItems = computed<IntroItem[]>(() => {
   const items: IntroItem[] = [];
   if (props.user.schools?.length) {
-    props.user.schools.forEach((s) => items.push({ icon: "mdi-school-outline", title: s }));
+    props.user.schools.forEach((s) => items.push({ icon: "mdi:school-outline", title: s }));
   }
   if (props.user.livesIn)
     items.push({
-      icon: "mdi-home-map-marker",
+      icon: "mdi:home-map-marker",
       title: t("layout.profileSidebar.livesIn", { location: props.user.livesIn }),
     });
   if (props.user.from)
     items.push({
-      icon: "mdi-map-marker",
+      icon: "mdi:map-marker",
       title: t("layout.profileSidebar.from", { location: props.user.from }),
     });
   return items;

@@ -7,7 +7,7 @@
       v-model="email"
       :label="t('reset.email')"
       type="email"
-      append-inner-icon="mdi-email"
+      append-inner-icon="mdi:email"
       required
       :disabled="loading"
     />
@@ -15,7 +15,7 @@
       v-model="password"
       :label="t('reset.newPassword')"
       :type="showPassword ? 'text' : 'password'"
-      :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+      :append-inner-icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'"
       :rules="passwordRules"
       required
       :disabled="loading"
@@ -26,7 +26,7 @@
       v-model="confirmPassword"
       :label="t('reset.confirmPassword')"
       :type="showPassword ? 'text' : 'password'"
-      :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+      :append-inner-icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'"
       :rules="[confirmPasswordRule]"
       required
       :disabled="loading"

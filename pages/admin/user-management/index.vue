@@ -20,7 +20,7 @@
           <v-btn
             color="primary"
             variant="flat"
-            prepend-icon="mdi-account-plus"
+            prepend-icon="mdi:account-plus"
             class="text-none"
             @click="openCreateDialog"
           >
@@ -44,7 +44,7 @@
             <v-text-field
               v-model="search"
               :label="t('admin.userManagement.table.search')"
-              prepend-inner-icon="mdi-magnify"
+              prepend-inner-icon="mdi:magnify"
               variant="outlined"
               density="comfortable"
               hide-details
@@ -122,7 +122,7 @@
           <template #[`item.actions`]="{ item }">
             <div class="d-flex gap-2">
               <v-btn
-                icon="mdi-pencil"
+                icon="mdi:pencil"
                 size="small"
                 variant="text"
                 color="primary"
@@ -130,17 +130,17 @@
                 :loading="isUpdating(item.id)"
                 @click="openEditDialog(item.id)"
               >
-                <Icon name="mdi-pencil" />
+                <Icon name="mdi:pencil" />
               </v-btn>
               <v-btn
-                icon="mdi-delete"
+                icon="mdi:delete"
                 size="small"
                 variant="text"
                 color="error"
                 :loading="isDeleting(item.id)"
                 @click="openDeleteDialog(item.id)"
               >
-                <Icon name="mdi-delete" />
+                <Icon name="mdi:delete" />
               </v-btn>
             </div>
           </template>

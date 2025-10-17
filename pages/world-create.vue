@@ -513,7 +513,7 @@ const tagSuggestions = computed(() => [
 const pluginCategories = computed(() => [
   {
     key: "community",
-    icon: "mdi-earth",
+    icon: "mdi:earth",
     title: t("pages.createWorld.plugins.categories.community.title"),
     description: t("pages.createWorld.plugins.categories.community.description"),
     plugins: [
@@ -553,7 +553,7 @@ const pluginCategories = computed(() => [
   },
   {
     key: "economy",
-    icon: "mdi-currency-usd",
+    icon: "mdi:currency-usd",
     title: t("pages.createWorld.plugins.categories.economy.title"),
     description: t("pages.createWorld.plugins.categories.economy.description"),
     plugins: [
@@ -591,7 +591,7 @@ const pluginCategories = computed(() => [
   },
   {
     key: "governance",
-    icon: "mdi-shield-account",
+    icon: "mdi:shield-account",
     title: t("pages.createWorld.plugins.categories.governance.title"),
     description: t("pages.createWorld.plugins.categories.governance.description"),
     plugins: [
@@ -637,17 +637,17 @@ const pluginCategories = computed(() => [
 
 const creationSteps = computed(() => [
   {
-    icon: "mdi-lightbulb-on-outline",
+    icon: "mdi:lightbulb-on-outline",
     title: t("pages.createWorld.workflow.steps.vision.title"),
     description: t("pages.createWorld.workflow.steps.vision.description"),
   },
   {
-    icon: "mdi-rocket-launch-outline",
+    icon: "mdi:rocket-launch-outline",
     title: t("pages.createWorld.workflow.steps.launch.title"),
     description: t("pages.createWorld.workflow.steps.launch.description"),
   },
   {
-    icon: "mdi-chart-bell-curve",
+    icon: "mdi:chart-bell-curve",
     title: t("pages.createWorld.workflow.steps.expand.title"),
     description: t("pages.createWorld.workflow.steps.expand.description"),
   },

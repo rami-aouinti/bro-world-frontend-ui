@@ -452,7 +452,7 @@ export function useAdminSettingsEditor() {
     formState.value.menus.push({
       id: menu.id ?? crypto.randomUUID(),
       label: menu.label,
-      icon: menu.icon ?? "mdi-dots-grid",
+      icon: menu.icon ?? "mdi:dots-grid",
       to: menu.to ?? "/",
       requiresAdmin: menu.requiresAdmin ?? false,
       translate: menu.translate ?? false,
@@ -482,7 +482,7 @@ export function useAdminSettingsEditor() {
     parent.children.push({
       id: menu.id ?? crypto.randomUUID(),
       label: menu.label,
-      icon: menu.icon ?? "mdi-rhombus-medium",
+      icon: menu.icon ?? "mdi:rhombus-medium",
       to: menu.to ?? "/",
       requiresAdmin: menu.requiresAdmin ?? parent.requiresAdmin ?? false,
       translate: menu.translate ?? false,

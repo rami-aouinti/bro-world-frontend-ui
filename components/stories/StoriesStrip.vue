@@ -44,7 +44,7 @@
       :aria-label="t('stories.strip.scrollLeft')"
       @click="scrollBy(-320)"
     >
-      <Icon name="mdi-chevron-left" />
+      <Icon name="mdi:chevron-left" />
     </v-btn>
 
     <v-btn
@@ -56,7 +56,7 @@
       :aria-label="t('stories.strip.scrollRight')"
       @click="scrollBy(320)"
     >
-      <Icon name="mdi-chevron-right" />
+      <Icon name="mdi:chevron-right" />
     </v-btn>
   </div>
 </template>

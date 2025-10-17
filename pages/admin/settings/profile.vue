@@ -17,7 +17,7 @@
           size="small"
           color="pink"
           variant="tonal"
-          prepend-icon="mdi-account-cog"
+          prepend-icon="mdi:account-cog"
         >
           {{ t("admin.settings.sections.profile.badge") || "Profiles" }}
         </v-chip>
