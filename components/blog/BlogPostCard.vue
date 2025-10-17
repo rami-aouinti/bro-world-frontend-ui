@@ -121,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, nextTick, ref, shallowRef, watch } from "vue";
+import { computed, nextTick, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
@@ -133,29 +133,6 @@ import type {
   ReactionType,
 } from "~/lib/mock/blog";
 import type { CommentNode } from "~/components/blog/CommentThread.vue";
-
-const SidebarCard = defineAsyncComponent({
-  loader: () => import("~/components/layout/SidebarCard.vue"),
-  suspensible: false,
-});
-const PostMeta = defineAsyncComponent({
-  loader: () => import("~/components/blog/PostMeta.vue"),
-  suspensible: false,
-});
-const BlogPostContent = defineAsyncComponent({
-  loader: () => import("~/components/blog/BlogPostContent.vue"),
-  suspensible: false,
-});
-
-const BlogPostReactCard = defineAsyncComponent({
-  loader: () => import("~/components/blog/BlogPostReactCard.vue"),
-  suspensible: false,
-});
-
-const CommentThread = defineAsyncComponent({
-  loader: () => import("~/components/blog/CommentThread.vue"),
-  suspensible: false,
-});
 
 interface FeedbackState {
   type: "success" | "error";
