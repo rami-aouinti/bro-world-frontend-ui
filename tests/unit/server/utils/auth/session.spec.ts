@@ -4,13 +4,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const getCookieMock = vi.hoisted(() => vi.fn<[H3Event, string], string | null | undefined>());
 const setCookieMock = vi.hoisted(() => vi.fn());
 const getHeaderMock = vi.hoisted(() => vi.fn<[H3Event, string], string | null | undefined>());
+const createErrorMock = vi.hoisted(() => vi.fn());
 
 vi.mock("h3", () => ({
   getCookie: getCookieMock,
   setCookie: setCookieMock,
   getHeader: getHeaderMock,
   deleteCookie: vi.fn(),
-  createError: vi.fn(),
+  createError: createErrorMock,
 }));
 
 const useRuntimeConfigMock = vi.hoisted(() => vi.fn(() => ({ auth: {} })));
@@ -34,7 +35,7 @@ vi.mock("~/lib/cookies", () => ({
   withSecureCookieOptions: withSecureCookieOptionsMock,
 }));
 
-import { getSessionToken } from "~/server/utils/auth/session";
+import { getSessionToken, requireSessionToken } from "~/server/utils/auth/session";
 
 function createEvent(): H3Event {
   return {
@@ -52,29 +53,33 @@ function createEvent(): H3Event {
   } as unknown as H3Event;
 }
 
+beforeEach(() => {
+  getCookieMock.mockReset();
+  setCookieMock.mockReset();
+  getHeaderMock.mockReset();
+  useRuntimeConfigMock.mockReset();
+  shouldUseSecureCookiesMock.mockReset();
+  withSecureCookieOptionsMock.mockReset();
+  createErrorMock.mockReset();
+
+  useRuntimeConfigMock.mockReturnValue({ auth: {} });
+  shouldUseSecureCookiesMock.mockReturnValue(false);
+  withSecureCookieOptionsMock.mockImplementation((options: Record<string, unknown> = {}) => ({
+    path: "/",
+    secure: typeof options.secure === "boolean" ? options.secure : false,
+    ...options,
+  }));
+  getCookieMock.mockImplementation(() => null);
+  getHeaderMock.mockReturnValue(null);
+  createErrorMock.mockImplementation((options: unknown) => options);
+  vi.stubGlobal("useRuntimeConfig", useRuntimeConfigMock);
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
 describe("getSessionToken", () => {
-  beforeEach(() => {
-    getCookieMock.mockReset();
-    setCookieMock.mockReset();
-    getHeaderMock.mockReset();
-    useRuntimeConfigMock.mockReset();
-    shouldUseSecureCookiesMock.mockReset();
-    withSecureCookieOptionsMock.mockReset();
-
-    useRuntimeConfigMock.mockReturnValue({ auth: {} });
-    shouldUseSecureCookiesMock.mockReturnValue(false);
-    withSecureCookieOptionsMock.mockImplementation((options: Record<string, unknown> = {}) => ({
-      path: "/",
-      secure: typeof options.secure === "boolean" ? options.secure : false,
-      ...options,
-    }));
-    getHeaderMock.mockReturnValue(null);
-    vi.stubGlobal("useRuntimeConfig", useRuntimeConfigMock);
-  });
-
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
 
   it("uses alternative session cookie names when syncing tokens", () => {
     const event = createEvent();
@@ -116,5 +121,65 @@ describe("getSessionToken", () => {
       secure: false,
       path: "/",
     });
+  });
+});
+
+describe("requireSessionToken", () => {
+  it("throws an authentication error when no token is present", () => {
+    const event = createEvent();
+    let thrown: unknown;
+
+    try {
+      requireSessionToken(event);
+    } catch (error) {
+      thrown = error;
+    }
+
+    expect(thrown).toMatchObject({
+      statusCode: 401,
+      statusMessage: "Authentication required",
+      message: "Authentication required",
+      data: { message: "Authentication required" },
+    });
+
+    expect(createErrorMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        statusCode: 401,
+        statusMessage: "Authentication required",
+        message: "Authentication required",
+      }),
+    );
+  });
+
+  it("respects custom status and data messages", () => {
+    const event = createEvent();
+
+    let thrown: unknown;
+
+    try {
+      requireSessionToken(event, {
+        statusCode: 403,
+        statusMessage: "Forbidden", // should be preserved as the HTTP status text
+        message: "Custom message",
+      });
+    } catch (error) {
+      thrown = error;
+    }
+
+    expect(thrown).toMatchObject({
+      statusCode: 403,
+      statusMessage: "Forbidden",
+      message: "Custom message",
+      data: { message: "Custom message" },
+    });
+
+    expect(createErrorMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        statusCode: 403,
+        statusMessage: "Forbidden",
+        message: "Custom message",
+        data: { message: "Custom message" },
+      }),
+    );
   });
 });
