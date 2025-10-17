@@ -1656,7 +1656,23 @@
     },
     "ecommerce": {
       "title": "E-commerce",
-      "description": "Lancez et faites évoluer des parcours de vente modernes."
+      "description": "Lancez et faites évoluer des parcours de vente modernes.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
     },
     "education": {
       "title": "Éducation",
@@ -2274,25 +2290,41 @@
           "content": {
             "title": "Gestion du contenu",
             "description": "Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.",
-            "tags": ["Workflow éditorial", "Validation", "Programmation"],
+            "tags": [
+              "Workflow éditorial",
+              "Validation",
+              "Programmation"
+            ],
             "status": "12 contenus nécessitent une revue éditoriale."
           },
           "community": {
             "title": "Communauté & modération",
             "description": "Paramétrez les règles de modération, gérez les signalements et les sanctions.",
-            "tags": ["Signalements", "Sanctions", "Messages privés"],
+            "tags": [
+              "Signalements",
+              "Sanctions",
+              "Messages privés"
+            ],
             "status": "Temps moyen de réponse : 1 h 42."
           },
           "commerce": {
             "title": "Monétisation & offres",
             "description": "Administrez les abonnements, codes promotionnels et partenariats commerciaux.",
-            "tags": ["Abonnements", "Facturation", "Coupons"],
+            "tags": [
+              "Abonnements",
+              "Facturation",
+              "Coupons"
+            ],
             "status": "Taux de conversion en hausse de 3,4 % cette semaine."
           },
           "governance": {
             "title": "Gouvernance & conformité",
             "description": "Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.",
-            "tags": ["Audit", "Rôles", "Traçabilité"],
+            "tags": [
+              "Audit",
+              "Rôles",
+              "Traçabilité"
+            ],
             "status": "Dernier audit complet réalisé il y a 5 jours."
           }
         }
@@ -2476,6 +2508,208 @@
       "reactPrompt": "Réagissez à cette story",
       "messageLabel": "Envoyer un message",
       "send": "Envoyer"
+    }
+  },
+  "demo": {
+    "ecommerce": {
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewDetails": "View details"
+      },
+      "badges": {
+        "bestseller": "Bestseller",
+        "new": "New arrival",
+        "staffPick": "Team favourite",
+        "limited": "Limited run"
+      },
+      "specifications": {
+        "power": "Power",
+        "material": "Material",
+        "dimensions": "Dimensions",
+        "capacity": "Capacity",
+        "compatibility": "Compatibility",
+        "connectivity": "Connectivity"
+      },
+      "inventory": {
+        "inStock": "{count} units in stock",
+        "lowStock": "Only {count} left",
+        "outOfStock": "Out of stock",
+        "defaultMessage": "Check availability with our team"
+      },
+      "summary": {
+        "title": "Order summary",
+        "quantity": "Qty: {count}",
+        "subtotal": "Subtotal",
+        "tax": "Estimated tax",
+        "shipping": "Shipping",
+        "total": "Total"
+      },
+      "catalog": {
+        "title": "Discover the demo storefront",
+        "subtitle": "Browse modular workspace companions, mindful wellbeing tech, and elevated travel gear in one place.",
+        "backToOverview": "Return to overview",
+        "goToCart": "View cart ({count})",
+        "filters": {
+          "all": "All categories"
+        },
+        "searchLabel": "Search catalog",
+        "emptyTitle": "No products match",
+        "emptySubtitle": "We couldn’t find any items matching “{query}”. Reset your filters to explore the full demo range.",
+        "resetFilters": "Reset filters",
+        "breadcrumb": "Catalog"
+      },
+      "product": {
+        "rating": "{rating} ★ ({reviews} reviews)",
+        "quantityLabel": "Quantity",
+        "viewCart": "View cart",
+        "detailsTitle": "Why it works",
+        "specificationsTitle": "Specifications",
+        "goToCheckout": "Proceed to checkout",
+        "backToCatalog": "Back to catalog"
+      },
+      "cart": {
+        "title": "Your cart",
+        "subtitle": "Keep building your bundle or head straight to checkout when you’re ready.",
+        "breadcrumb": "Cart",
+        "table": {
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "Unit price",
+          "total": "Line total",
+          "actions": "Remove item"
+        },
+        "nextStepsTitle": "Next steps",
+        "nextStepsDescription": "Complete checkout or continue exploring the catalog for more add-ons.",
+        "continueShopping": "Continue shopping",
+        "proceedToCheckout": "Proceed to checkout",
+        "checkoutCta": "Go to checkout",
+        "clearCart": "Clear cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add products from the catalog to see them listed here.",
+        "shopNow": "Shop the catalog"
+      },
+      "checkout": {
+        "title": "Secure checkout",
+        "subtitle": "Confirm delivery, payment, and review details to wrap up your demo order.",
+        "breadcrumb": "Checkout",
+        "empty": "There are no items in your cart yet.",
+        "shopLink": "Browse catalog",
+        "steps": {
+          "shipping": "Shipping",
+          "shippingSubtitle": "Address and delivery",
+          "payment": "Payment",
+          "paymentSubtitle": "Billing details",
+          "review": "Review",
+          "reviewSubtitle": "Confirm & submit"
+        },
+        "shippingTitle": "Delivery information",
+        "paymentTitle": "Payment method",
+        "reviewTitle": "Final review",
+        "reviewShipping": "Shipping",
+        "reviewPayment": "Payment",
+        "reviewHint": "Everything look good? You can always return to previous steps before placing the order.",
+        "backToCart": "Back to cart",
+        "continueToPayment": "Continue to payment",
+        "backToShipping": "Back to shipping",
+        "reviewOrder": "Review order",
+        "summaryContinue": "Review order",
+        "backToPayment": "Back to payment",
+        "placeOrder": "Place order",
+        "browseMore": "Browse more products",
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email",
+          "address": "Address",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "delivery": "Delivery option",
+          "notes": "Order notes",
+          "cardNumber": "Card number",
+          "expiry": "Expiry",
+          "cvc": "CVC",
+          "saveCard": "Securely save this card for next time"
+        },
+        "delivery": {
+          "standard": "Standard (free, 3-5 days)",
+          "express": "Express (paid, 24-48h)"
+        },
+        "exampleOrdersTitle": "Recent demo orders",
+        "maskedCard": "Visa ending ••••{last4}"
+      },
+      "orders": {
+        "status": {
+          "processing": "Processing",
+          "fulfilled": "Fulfilled",
+          "cancelled": "Cancelled",
+          "draft": "Draft"
+        },
+        "primary": {
+          "customer": "Jamie Ortiz · Paris, France",
+          "notes": "Repeat customer restock of workplace favourites."
+        },
+        "restock": {
+          "customer": "Taylor Singh · Copenhagen, Denmark",
+          "notes": "Event gifting set scheduled for warehouse dispatch."
+        }
+      },
+      "categories": {
+        "workspace": {
+          "name": "Workspace",
+          "description": "Lighting, ergonomics, and focus rituals for hybrid teams."
+        },
+        "wellbeing": {
+          "name": "Wellbeing",
+          "description": "Support healthy routines with adaptive tech and insights."
+        },
+        "travel": {
+          "name": "Travel",
+          "description": "Go-anywhere carry essentials for the modern explorer."
+        }
+      },
+      "products": {
+        "auroraDeskLamp": {
+          "name": "Aurora adaptive desk lamp",
+          "summary": "Dynamic lighting scenes that sync with circadian rhythms and deep work blocks.",
+          "description": "Aurora blends ambient LEDs with warm task lighting, adaptive brightness, and voice control. Teams personalise presets for focus sessions or cosy after-hours.",
+          "specs": {
+            "power": "18W LED array",
+            "material": "Anodised aluminium and recycled polymer",
+            "dimensions": "45 × 12 × 38 cm"
+          }
+        },
+        "focusHubPro": {
+          "name": "Focus Hub Pro",
+          "summary": "Modular workspace dock with wireless charging, acoustic shielding, and ambient soundscapes.",
+          "description": "Focus Hub Pro anchors hot desks with integrated power, device cradles, and configurable dividers. Built-in soundscapes and white noise adapt to busy floors.",
+          "specs": {
+            "connectivity": "Dual USB-C, 2× Qi wireless pads, Wi-Fi 6 hub",
+            "dimensions": "52 × 22 × 18 cm",
+            "material": "Felt acoustic panels and alloy frame"
+          }
+        },
+        "pulseSmartBottle": {
+          "name": "Pulse smart hydration bottle",
+          "summary": "Hydration tracking with adaptive reminders, mineral insights, and team challenges.",
+          "description": "Pulse keeps crews energised with sip detection, mineral analysis, and app nudges. Sync hydration streaks with wellbeing programmes to boost morale.",
+          "specs": {
+            "capacity": "750 ml",
+            "material": "Double-wall stainless steel",
+            "compatibility": "iOS, Android, and BroWorld wellbeing dashboards"
+          }
+        },
+        "atlasWeekender": {
+          "name": "Atlas recycled weekender",
+          "summary": "Cabin-friendly carry crafted from regenerated ocean plastic with modular packing cubes.",
+          "description": "Atlas keeps teams travel-ready with quick-access tech pockets, convertible straps, and padded laptop storage. Each bag reuses 28 plastic bottles.",
+          "specs": {
+            "capacity": "38 L",
+            "material": "Recycled ocean-bound nylon",
+            "dimensions": "55 × 26 × 24 cm"
+          }
+        }
+      }
     }
   }
 }
