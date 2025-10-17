@@ -655,7 +655,52 @@
         "allDay": "Todo el día",
         "upcoming": "Próximos eventos",
         "emptyTitle": "No hay eventos programados",
-        "emptyDescription": "Agrega eventos a tu calendario para verlos aquí."
+        "emptyDescription": "Agrega eventos a tu calendario para verlos aquí.",
+        "actions": {
+          "add": "Nuevo evento",
+          "edit": "Editar",
+          "delete": "Eliminar"
+        },
+        "form": {
+          "createTitle": "Crear evento",
+          "createDescription": "Programa un nuevo momento directamente desde tu calendario.",
+          "editTitle": "Editar evento",
+          "editDescription": "Actualiza los detalles de este evento.",
+          "fields": {
+            "title": "Título",
+            "startDate": "Fecha de inicio",
+            "endDate": "Fecha de finalización",
+            "startTime": "Hora de inicio",
+            "endTime": "Hora de finalización",
+            "allDay": "Evento de todo el día",
+            "color": "Categoría",
+            "location": "Ubicación",
+            "description": "Descripción",
+            "isPrivate": "Marcar como privado"
+          },
+          "actions": {
+            "cancel": "Cancelar",
+            "create": "Crear evento",
+            "save": "Guardar cambios"
+          },
+          "validation": {
+            "title": "Escribe un título para el evento.",
+            "startDate": "Elige cuándo comienza el evento.",
+            "startTime": "Selecciona una hora de inicio.",
+            "endTime": "La hora de finalización debe ser posterior a la inicial.",
+            "range": "El final del evento debe ser posterior al inicio."
+          }
+        },
+        "delete": {
+          "title": "Eliminar evento",
+          "description": "¿Seguro que quieres eliminar \"{title}\"? Esta acción no se puede deshacer."
+        },
+        "colors": {
+          "meetings": "Reuniones",
+          "personal": "Personal",
+          "travel": "Viajes",
+          "focus": "Concentración"
+        }
       },
       "labels": {
         "email": "Correo electrónico",
