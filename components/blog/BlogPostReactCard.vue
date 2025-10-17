@@ -33,25 +33,25 @@
     </div>
 
     <div class="right">
-      <Icon
-        name="mdi:chat-outline"
-        size="18"
-      ></Icon>
-      <span
-        v-if="(comments ?? 0) > 0"
-        class="ml-1"
-        >{{ comments }}</span
+      <button
+        type="button"
+        class="metric-button"
+        :aria-label="t('blog.posts.actions.comment')"
+        @click="$emit('comment')"
       >
-      <Icon
-        class="ml-2"
-        name="mdi:share-outline"
-        size="18"
-      ></Icon>
-      <span
-        v-if="(shares ?? 0) > 0"
-        class="ml-1"
-        >{{ shares }}</span
-      >
+        <Icon
+          name="mdi:chat-outline"
+          size="18"
+        ></Icon>
+        <span v-if="(comments ?? 0) > 0">{{ comments }}</span>
+      </button>
+      <div class="metric">
+        <Icon
+          name="mdi:share-outline"
+          size="18"
+        ></Icon>
+        <span v-if="(shares ?? 0) > 0">{{ shares }}</span>
+      </div>
     </div>
   </div>
   <div
@@ -295,6 +295,32 @@ const reactionListLabel = computed(() => {
   min-width: 40px;
   justify-content: flex-end;
   color: rgba(var(--v-theme-on-surface), 0.7);
+}
+
+.metric-button,
+.metric {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.metric {
+  margin-left: 8px;
+}
+
+.metric-button {
+  cursor: pointer;
+}
+
+.metric-button:focus-visible {
+  outline: 2px solid rgba(var(--v-theme-primary), 0.7);
+  outline-offset: 2px;
+  border-radius: 9999px;
 }
 .comment-actions {
   position: relative;
