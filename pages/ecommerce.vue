@@ -160,6 +160,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { mdiBullhornOutline, mdiCreditCardCheckOutline, mdiStorefrontOutline } from "@mdi/js";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
@@ -199,9 +200,13 @@ useHead(() => {
   };
 });
 
+function withSvgPrefix(path: string) {
+  return path.startsWith("svg:") ? path : `svg:${path}`;
+}
+
 const featureCards = computed(() => [
   {
-    icon: "mdi-storefront-outline",
+    icon: withSvgPrefix(mdiStorefrontOutline),
     title: t("pages.ecommerce.features.catalog.title"),
     description: t("pages.ecommerce.features.catalog.description"),
     points: [
@@ -211,7 +216,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-credit-card-check-outline",
+    icon: withSvgPrefix(mdiCreditCardCheckOutline),
     title: t("pages.ecommerce.features.checkout.title"),
     description: t("pages.ecommerce.features.checkout.description"),
     points: [
@@ -221,7 +226,7 @@ const featureCards = computed(() => [
     ],
   },
   {
-    icon: "mdi-bullhorn-outline",
+    icon: withSvgPrefix(mdiBullhornOutline),
     title: t("pages.ecommerce.features.marketing.title"),
     description: t("pages.ecommerce.features.marketing.description"),
     points: [
