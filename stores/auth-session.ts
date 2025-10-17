@@ -1,24 +1,17 @@
 import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import type { Router } from "vue-router";
-import {
-  useCookie,
-  useNuxtApp,
-  useRequestHeaders,
-  useRuntimeConfig,
-  useState,
-} from "#imports";
+import { useNuxtApp, useRequestHeaders, useRuntimeConfig, useState } from "#imports";
 import { buildLocalizedPath, resolveLocaleFromPath } from "~/lib/i18n/locale-path";
 import { defineStore } from "~/lib/pinia-shim";
 import type { AuthLoginEnvelope, AuthSessionEnvelope, AuthUser } from "~/types/auth";
 import type { ProfileUser } from "~/types/pages/profile";
 import type { MercureTokenEnvelope, MercureTokenState } from "~/types/mercure";
-import { withSecureCookieOptions } from "~/lib/cookies";
 import { createApiFetcher, type ApiRequestOptions } from "~/lib/api/http-client";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import axios, { isAxiosError } from "axios";
 import { useProfileStore } from "~/stores/profile";
-import { buildAuthUserCookie, type AuthUserCookie } from "~/lib/auth/user-cookie";
+import { sanitizeAuthToken, useSessionCookies } from "~/lib/auth/session-cookies";
 
 interface LoginCredentials {
   identifier: string;
@@ -95,12 +88,22 @@ function extractErrorMessage(error: unknown): string {
 }
 
 export const useAuthSession = defineStore("auth-session", () => {
-  const currentUserState = useState<AuthUser | null>("auth-current-user", () => null);
-  const tokenAvailableState = useState<boolean>("auth-token-available", () => false);
+  const sessionCookies = useSessionCookies();
+  const currentUserState = useState<AuthUser | null>(
+    "auth-current-user",
+    () => (sessionCookies.user.value as AuthUser | null) ?? null,
+  );
+  const tokenAvailableState = useState<boolean>(
+    "auth-token-available",
+    () => sessionCookies.hasPresence.value,
+  );
   const readyState = useState<boolean>("auth-ready", () => import.meta.server);
   const redirectState = useState<string | null>("auth-redirect-target", () => null);
   const mercureTokenState = useState<MercureTokenState | null>("auth-mercure-token", () => null);
-  const sessionTokenState = useState<string | null>("auth-session-token", () => null);
+  const sessionTokenState = useState<string | null>(
+    "auth-session-token",
+    () => sessionCookies.token.value,
+  );
 
   const loginPendingState = ref(false);
   const loginErrorState = ref<string | null>(null);
@@ -131,110 +134,21 @@ export const useAuthSession = defineStore("auth-session", () => {
     }
   }
 
-  const runtimeConfig = useRuntimeConfig();
-  const privateAuthConfig = import.meta.server ? (runtimeConfig.auth ?? {}) : {};
-  const publicAuthConfig = runtimeConfig.public?.auth ?? {};
-  const sessionTokenCookieName =
-    (privateAuthConfig.sessionTokenCookieName as string | undefined) ??
-    publicAuthConfig.sessionTokenCookieName ??
-    "auth_session_token";
-  const tokenPresenceCookieName =
-    (privateAuthConfig.tokenPresenceCookieName as string | undefined) ??
-    publicAuthConfig.tokenPresenceCookieName ??
-    "auth_token_present";
-  const userCookieName =
-    (privateAuthConfig.userCookieName as string | undefined) ??
-    publicAuthConfig.userCookieName ??
-    "auth_user";
-  const sessionTokenCookie = useCookie<string | null>(
-    sessionTokenCookieName,
-    withSecureCookieOptions({
-      sameSite: "strict",
-      watch: false,
-    }),
-  );
-  const presenceCookie = useCookie<string | null>(
-    tokenPresenceCookieName,
-    withSecureCookieOptions({
-      sameSite: "strict",
-      watch: false,
-    }),
-  );
-  const userCookie = useCookie<AuthUserCookie | null>(
-    userCookieName,
-    withSecureCookieOptions({
-      sameSite: "lax",
-      watch: false,
-    }),
-  );
-
-  if (presenceCookie.value === "1") {
+  if (sessionCookies.hasPresence.value) {
     tokenAvailableState.value = true;
   }
 
-  function escapeCookieName(name: string): string {
-    return name.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
+  if (sessionCookies.user.value) {
+    currentUserState.value = sessionCookies.user.value as AuthUser;
   }
 
-  function readDocumentCookie(name: string): string | null {
-    if (!import.meta.client || typeof document === "undefined") {
-      return null;
-    }
-
-    const pattern = new RegExp(`(?:^|;\\s*)${escapeCookieName(name)}=([^;]*)`);
-    const match = document.cookie.match(pattern);
-
-    if (!match?.[1]) {
-      return null;
-    }
-
-    try {
-      return decodeURIComponent(match[1]);
-    } catch {
-      return match[1];
-    }
-  }
-
-  function syncCookiesFromDocument() {
-    if (!import.meta.client) {
-      return;
-    }
-
-    const rawToken = readDocumentCookie(sessionTokenCookieName);
-    sessionTokenCookie.value = rawToken ?? null;
-
-    const rawPresence = readDocumentCookie(tokenPresenceCookieName);
-    presenceCookie.value = rawPresence ?? null;
-
-    const rawUser = readDocumentCookie(userCookieName);
-
-    if (!rawUser) {
-      userCookie.value = null;
-      return;
-    }
-
-    try {
-      const parsed = JSON.parse(rawUser) as AuthUserCookie;
-      userCookie.value = parsed;
-    } catch (error) {
-      console.error("Failed to parse auth user cookie", error);
-      userCookie.value = null;
-    }
-  }
-
-  const sanitizeUserForCookie = (user: AuthUser | null) => buildAuthUserCookie(user);
-
-  if (userCookie.value) {
-    currentUserState.value = userCookie.value as AuthUser;
-  }
-
-  if (sessionTokenCookie.value) {
-    sessionTokenState.value = sessionTokenCookie.value;
+  if (sessionCookies.token.value) {
+    sessionTokenState.value = sessionCookies.token.value;
     tokenAvailableState.value = true;
   }
 
-  if (import.meta.client && !sessionTokenState.value && sessionTokenCookie.value) {
-    sessionTokenState.value = sessionTokenCookie.value;
+  if (!sessionTokenState.value && sessionCookies.token.value) {
+    sessionTokenState.value = sessionCookies.token.value;
     tokenAvailableState.value = true;
   }
 
@@ -242,20 +156,28 @@ export const useAuthSession = defineStore("auth-session", () => {
     watch(
       currentUserState,
       (value) => {
-        userCookie.value = sanitizeUserForCookie(value);
+        sessionCookies.setUser(value);
       },
       { deep: true },
     );
 
-    watch(tokenAvailableState, (value) => {
-      presenceCookie.value = value ? "1" : null;
-    });
-
     watch(
       sessionTokenState,
       (value) => {
-        sessionTokenCookie.value = value;
+        if (sessionCookies.token.value !== value) {
+          sessionCookies.setToken(value);
+        }
         tokenAvailableState.value = Boolean(value);
+      },
+      { immediate: true },
+    );
+
+    watch(
+      tokenAvailableState,
+      (value) => {
+        if (sessionCookies.hasPresence.value !== value) {
+          sessionCookies.setTokenPresence(value);
+        }
       },
       { immediate: true },
     );
@@ -274,6 +196,7 @@ export const useAuthSession = defineStore("auth-session", () => {
 
   function setCurrentUser(user: AuthUser | null) {
     currentUserState.value = user;
+    sessionCookies.setUser(user);
 
     try {
       const profileStore = useProfileStore();
@@ -285,6 +208,7 @@ export const useAuthSession = defineStore("auth-session", () => {
 
   function setTokenPresence(present: boolean) {
     tokenAvailableState.value = present;
+    sessionCookies.setTokenPresence(present);
   }
 
   function setMercureToken(token: MercureTokenState | null) {
@@ -292,9 +216,10 @@ export const useAuthSession = defineStore("auth-session", () => {
   }
 
   function setSessionToken(token: string | null) {
-    sessionTokenState.value = token;
-    sessionTokenCookie.value = token;
-    tokenAvailableState.value = Boolean(token);
+    const sanitized = sanitizeAuthToken(token);
+    sessionTokenState.value = sanitized;
+    sessionCookies.setToken(sanitized);
+    tokenAvailableState.value = Boolean(sanitized);
   }
 
   function setSessionMessage(message: string | null) {
@@ -312,11 +237,6 @@ export const useAuthSession = defineStore("auth-session", () => {
     setSessionToken(null);
     loginErrorState.value = null;
     readyState.value = true;
-
-    if (import.meta.client) {
-      presenceCookie.value = null;
-      userCookie.value = null;
-    }
 
     try {
       const profileStore = useProfileStore();
@@ -422,7 +342,7 @@ export const useAuthSession = defineStore("auth-session", () => {
       });
 
       if (import.meta.client) {
-        syncCookiesFromDocument();
+        sessionCookies.syncFromDocument();
       }
 
       if (response?.authenticated) {
@@ -430,8 +350,8 @@ export const useAuthSession = defineStore("auth-session", () => {
 
         if (response.user) {
           setCurrentUser(response.user);
-        } else if (!currentUserState.value && userCookie.value) {
-          setCurrentUser(userCookie.value as AuthUser);
+        } else if (!currentUserState.value && sessionCookies.user.value) {
+          setCurrentUser(sessionCookies.user.value as AuthUser);
         }
       }
 
@@ -443,41 +363,41 @@ export const useAuthSession = defineStore("auth-session", () => {
   }
 
   async function refreshSession() {
-    if (!tokenAvailableState.value && presenceCookie.value === "1") {
+    if (!tokenAvailableState.value && sessionCookies.hasPresence.value) {
       tokenAvailableState.value = true;
     }
 
-    if (!currentUserState.value && userCookie.value) {
-      setCurrentUser(userCookie.value as AuthUser);
+    if (!currentUserState.value && sessionCookies.user.value) {
+      setCurrentUser(sessionCookies.user.value as AuthUser);
     }
 
-    if (!sessionTokenState.value && sessionTokenCookie.value) {
-      sessionTokenState.value = sessionTokenCookie.value;
+    if (!sessionTokenState.value && sessionCookies.token.value) {
+      sessionTokenState.value = sessionCookies.token.value;
     }
 
     let serverSession: AuthSessionEnvelope | null = null;
 
     const shouldSyncFromServer =
-      presenceCookie.value === "1" &&
+      sessionCookies.hasPresenceCookie.value &&
       (
         !sessionTokenState.value ||
-        !sessionTokenCookie.value ||
-        (!currentUserState.value && !userCookie.value)
+        !sessionCookies.token.value ||
+        (!currentUserState.value && !sessionCookies.user.value)
       );
 
     if (shouldSyncFromServer) {
       serverSession = await synchronizeSessionFromServer();
 
       if (serverSession?.authenticated) {
-        if (!sessionTokenState.value && sessionTokenCookie.value) {
-          sessionTokenState.value = sessionTokenCookie.value;
+        if (!sessionTokenState.value && sessionCookies.token.value) {
+          sessionTokenState.value = sessionCookies.token.value;
         }
 
         if (!currentUserState.value) {
           if (serverSession.user) {
             setCurrentUser(serverSession.user);
-          } else if (userCookie.value) {
-            setCurrentUser(userCookie.value as AuthUser);
+          } else if (sessionCookies.user.value) {
+            setCurrentUser(sessionCookies.user.value as AuthUser);
           }
         }
       } else if (serverSession && !serverSession.authenticated) {
@@ -487,7 +407,7 @@ export const useAuthSession = defineStore("auth-session", () => {
       }
     }
 
-    const resolvedToken = sessionTokenState.value ?? sessionTokenCookie.value ?? null;
+    const resolvedToken = sessionTokenState.value ?? sessionCookies.token.value ?? null;
 
     if (resolvedToken) {
       if (!sessionTokenState.value) {
@@ -528,7 +448,11 @@ export const useAuthSession = defineStore("auth-session", () => {
       return Boolean(currentUserState.value);
     }
 
-    if (!shouldSyncFromServer || serverSession?.authenticated === false || presenceCookie.value !== "1") {
+    if (
+      !shouldSyncFromServer ||
+      serverSession?.authenticated === false ||
+      !sessionCookies.hasPresenceCookie.value
+    ) {
       clearSession();
     }
 
