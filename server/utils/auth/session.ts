@@ -452,6 +452,33 @@ interface RequireSessionTokenOptions {
   message?: string;
 }
 
+interface WaitForSessionTokenOptions {
+  timeout?: number;
+  interval?: number;
+}
+
+export async function waitForSessionToken(
+  event: H3Event,
+  options: WaitForSessionTokenOptions = {},
+) {
+  const { timeout = 1_000, interval = 50 } = options;
+  const deadline = Date.now() + Math.max(timeout, 0);
+  let token = getSessionToken(event);
+
+  if (token || timeout <= 0) {
+    return token;
+  }
+
+  const delay = Math.max(0, interval);
+
+  while (!token && Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    token = getSessionToken(event);
+  }
+
+  return token;
+}
+
 export function requireSessionToken(event: H3Event, options: RequireSessionTokenOptions = {}) {
   const token = getSessionToken(event);
 
