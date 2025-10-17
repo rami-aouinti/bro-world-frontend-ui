@@ -814,7 +814,7 @@ const shouldRenderRightSidebarContent = computed(
 
 const areSidebarsReady = computed(() => {
   if (!isHydrated.value) {
-    return !showNavigation.value;
+    return true;
   }
 
   if (!showNavigation.value) {
