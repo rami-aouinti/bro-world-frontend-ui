@@ -1247,6 +1247,113 @@
         "description": "Laissez notre équipe adapter BroWorld à votre stack recrutement, vos processus et vos exigences de conformité.",
         "button": "Contactez-nous",
         "buttonAria": "Ouvrir la page de contact"
+      },
+      "openings": {
+        "title": "Postes ouverts",
+        "subtitle": "Découvrez les rôles pour lesquels nous recrutons activement et projetez-vous dans les missions dès le premier jour.",
+        "updated": "Mise à jour chaque semaine",
+        "updatedLabel": "Fréquence de rafraîchissement des offres",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Design Produit",
+            "location": "Paris, France (Hybrid)",
+            "type": "CDI",
+            "salary": "58k€ - 72k€ · 0,05 % BSPCE",
+            "description": "Imaginez des expériences multi-plateformes pour les recruteurs et les candidats, web et mobile.",
+            "tags": [
+              "Design System",
+              "Figma",
+              "Recherche utilisateur"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste de Senior Product Designer",
+              "hint": "Portfolio requis"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Produit & IA",
+            "location": "Remote - EMEA",
+            "type": "CDI",
+            "salary": "70k€ - 90k€ · bonus",
+            "description": "Construisez des copilotes IA qui automatisent le sourcing, le screening et la planification.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste d'AI Recruiter Strategist",
+              "hint": "Expérience des workflows LLM"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "CDI",
+            "salary": "65k€ fixe · 50 % variable",
+            "description": "Pilotez la génération de pipeline et accompagnez les AEs sur des deals complexes.",
+            "tags": [
+              "B2B SaaS",
+              "Vente Enterprise",
+              "Forecast"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste d'Enterprise Sales Lead",
+              "hint": "Bilingue français/anglais"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "CDI",
+            "salary": "45k€ - 55k€",
+            "description": "Accompagnez les équipes Talent lors de l'onboarding, du lancement des workflows et du suivi d'adoption.",
+            "tags": [
+              "Implementation",
+              "Conduite du changement",
+              "Intégrations ATS"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste de Customer Success Partner",
+              "hint": "Expérience des déploiements HRIS/ATS"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Déposez votre candidature",
+        "subtitle": "Partagez quelques informations et notre équipe Talent reviendra vers vous avec la suite du process.",
+        "highlights": [
+          "Une démo personnalisée de BroWorld selon votre maturité recrutement.",
+          "Des échanges avec les personnes avec qui vous collaborerez.",
+          "Un retour sous deux jours ouvrés, même si nous ne pouvons pas avancer tout de suite."
+        ],
+        "form": {
+          "nameLabel": "Nom complet",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Email professionnel",
+          "emailPlaceholder": "elisa.dupont(at)entreprise.com",
+          "roleLabel": "Poste qui vous intéresse",
+          "rolePlaceholder": "ex : Product Designer",
+          "messageLabel": "Parlez-nous de votre parcours",
+          "messagePlaceholder": "Partagez vos projets récents, vos réussites ou ce qui vous motive chez BroWorld.",
+          "consentLabel": "J'accepte d'être contacté·e pour des opportunités actuelles et futures chez BroWorld.",
+          "submit": "Envoyer la candidature",
+          "success": "Merci ! Notre équipe Talent étudiera votre profil et vous recontactera très vite.",
+          "rules": {
+            "required": "Ce champ est obligatoire.",
+            "email": "Veuillez saisir un email valide.",
+            "consent": "Merci de confirmer que nous pouvons vous contacter."
+          }
+        }
       }
     },
     "game": {
