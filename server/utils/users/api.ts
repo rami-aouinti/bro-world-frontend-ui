@@ -610,27 +610,42 @@ export async function fetchUsersListFromSource(event: H3Event) {
 }
 
 export async function fetchCurrentProfileFromSource(event: H3Event) {
-  const sessionToken = requireSessionToken(event, {
-    statusMessage: "Authentication is required to access this resource.",
-    message: "Authentication is required to access this resource.",
-  });
+  const forwardedAuthorization = getHeader(event, "authorization")?.trim();
+  const config = useRuntimeConfig(event);
+  const serviceToken = resolveUsersServiceToken(config);
 
-  const cached = await readCachedProfile(event, sessionToken);
+  let sessionToken = getSessionToken(event);
 
-  if (cached) {
-    return cached;
+  if (!sessionToken && !forwardedAuthorization && !serviceToken) {
+    sessionToken = requireSessionToken(event, {
+      statusMessage: "Authentication is required to access this resource.",
+      message: "Authentication is required to access this resource.",
+    });
+  }
+
+  if (sessionToken) {
+    const cached = await readCachedProfile(event, sessionToken);
+
+    if (cached) {
+      return cached;
+    }
   }
 
   try {
     const payload = await requestUsersApi<ProfileSource>(event, "/profile", { method: "GET" });
     const profile = unwrapProfile(payload);
 
-    await writeCachedProfile(event, sessionToken, profile);
+    if (sessionToken) {
+      await writeCachedProfile(event, sessionToken, profile);
+    }
 
     return profile;
   } catch (error) {
     if (isAuthorizationError(error)) {
-      void deleteCachedProfile(event, sessionToken);
+      if (sessionToken) {
+        void deleteCachedProfile(event, sessionToken);
+      }
+
       throw error;
     }
 
@@ -639,7 +654,9 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
     if (sessionUser) {
       try {
         const profile = unwrapProfile(sessionUser as ProfileSource);
-        await writeCachedProfile(event, sessionToken, profile);
+        if (sessionToken) {
+          await writeCachedProfile(event, sessionToken, profile);
+        }
         return profile;
       } catch (fallbackError) {
         console.error("Failed to normalize session user profile", fallbackError);
