@@ -855,7 +855,18 @@
         "allDay": "Ganztägig",
         "upcoming": "Bevorstehende Termine",
         "emptyTitle": "Keine Termine geplant",
-        "emptyDescription": "Füge Termine zu deinem Kalender hinzu, um sie hier zu sehen."
+        "emptyDescription": "Füge Termine zu deinem Kalender hinzu, um sie hier zu sehen.",
+        "actions": {
+          "add": "Neues Ereignis",
+          "edit": "Bearbeiten",
+          "delete": "Löschen"
+        },
+        "colors": {
+          "meetings": "Besprechungen",
+          "personal": "Persönlich",
+          "travel": "Reisen",
+          "focus": "Fokus"
+        }
       },
       "labels": {
         "email": "E-Mail",

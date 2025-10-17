@@ -857,7 +857,18 @@
         "allDay": "طوال اليوم",
         "upcoming": "الأحداث القادمة",
         "emptyTitle": "لا توجد أحداث مجدولة",
-        "emptyDescription": "أضف أحداثًا إلى التقويم لتظهر هنا."
+        "emptyDescription": "أضف أحداثًا إلى التقويم لتظهر هنا.",
+        "actions": {
+          "add": "حدث جديد",
+          "edit": "تعديل",
+          "delete": "حذف"
+        },
+        "colors": {
+          "meetings": "اجتماعات",
+          "personal": "شخصي",
+          "travel": "سفر",
+          "focus": "تركيز"
+        }
       },
       "labels": {
         "email": "Email",

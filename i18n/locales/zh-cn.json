@@ -712,7 +712,18 @@
         "allDay": "全天",
         "upcoming": "即将到来的事件",
         "emptyTitle": "暂无计划的事件",
-        "emptyDescription": "添加事件到日历即可在此查看。"
+        "emptyDescription": "添加事件到日历即可在此查看。",
+        "actions": {
+          "add": "新事件",
+          "edit": "编辑",
+          "delete": "删除"
+        },
+        "colors": {
+          "meetings": "会议",
+          "personal": "个人",
+          "travel": "旅行",
+          "focus": "专注"
+        }
       },
       "labels": {
         "email": "电子邮箱",

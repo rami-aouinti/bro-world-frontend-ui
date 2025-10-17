@@ -855,7 +855,18 @@
         "allDay": "Toute la journée",
         "upcoming": "Événements à venir",
         "emptyTitle": "Aucun événement prévu",
-        "emptyDescription": "Ajoutez des événements à votre calendrier pour les voir ici."
+        "emptyDescription": "Ajoutez des événements à votre calendrier pour les voir ici.",
+        "actions": {
+          "add": "Nouvel événement",
+          "edit": "Modifier",
+          "delete": "Supprimer"
+        },
+        "colors": {
+          "meetings": "Réunions",
+          "personal": "Personnel",
+          "travel": "Voyage",
+          "focus": "Concentration"
+        }
       },
       "labels": {
         "email": "E-mail",
