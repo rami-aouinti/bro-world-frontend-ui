@@ -95,18 +95,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineAsyncComponent } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#imports";
 import { defineAsyncComponentWithVendorStyles } from "~/lib/material-dashboard-vendors";
 import { useAuthSession } from "~/stores/auth-session";
 import BorderBeam from "~/components/special-effects/BorderBeam.vue";
 import { optimizeAvatarUrl } from "~/lib/images/avatar";
-
-const SidebarCard = defineAsyncComponent({
-  loader: () => import("~/components/layout/SidebarCard.vue"),
-  suspensible: false,
-});
 
 const NewPostDialog = defineAsyncComponentWithVendorStyles(() => import("./NewPostDialog.vue"));
 
