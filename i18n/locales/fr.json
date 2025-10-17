@@ -89,6 +89,7 @@
         "game": "Jeux vidéo",
         "ecommerce": "E-commerce",
         "education": "Éducation",
+        "academy": "Académie",
         "profile": "Profil",
         "profileOverview": "Vue d'ensemble",
         "profileSettings": "Paramètres du compte",
@@ -645,7 +646,133 @@
         "community": "Forum communautaire",
         "githubAria": "Ouvrir le dépôt GitHub dans un nouvel onglet",
         "docsAria": "Lire la documentation dans un nouvel onglet",
-        "communityAria": "Rejoindre le forum communautaire dans un nouvel onglet"
+      "communityAria": "Rejoindre le forum communautaire dans un nouvel onglet"
+      }
+    },
+    "academy": {
+      "title": "Académie Bro World",
+      "subtitle": "Développez les compétences pour bâtir des communautés immersives grâce à des parcours ciblés.",
+      "courses": {
+        "title": "Formations phares",
+        "badgesLabel": "Badges du cours",
+        "duration": "Durée",
+        "level": "Niveau",
+        "items": {
+          "strategy": {
+            "title": "Fondamentaux de la stratégie d’expérience",
+            "description": "Concevez vision, positionnement et indicateurs pour des expériences à grande échelle.",
+            "duration": "6 semaines • 3 h par semaine",
+            "level": "Intermédiaire",
+            "badges": {
+              "0": "Ateliers stratégie en direct",
+              "1": "Revues entre pairs",
+              "2": "Modèles de playbook"
+            }
+          },
+          "production": {
+            "title": "Systèmes et opérations de production",
+            "description": "Structurez équipes, rituels et pipelines de mise en production pour des mondes vivants.",
+            "duration": "8 semaines • 4 h par semaine",
+            "level": "Avancé",
+            "badges": {
+              "0": "Revues opérationnelles",
+              "1": "Explorations d’outillage",
+              "2": "Exercices de gestion des risques"
+            }
+          },
+          "leadership": {
+            "title": "Leadership et animation de communauté",
+            "description": "Développez des habitudes de leadership inclusif et accompagnez des équipes créatives distribuées.",
+            "duration": "5 semaines • 2 h par semaine",
+            "level": "Intermédiaire",
+            "badges": {
+              "0": "Cliniques de leadership",
+              "1": "Scénarios communautaires",
+              "2": "Coaching exécutif"
+            }
+          }
+        }
+      },
+      "exercises": {
+        "title": "Parcours de pratique",
+        "duration": "Durée",
+        "deliverables": "Livrables",
+        "resources": "Ressources",
+        "items": {
+          "simulation": {
+            "title": "Simulation de lancement",
+            "duration": "3 jours",
+            "deliverables": "Rapport de scénario et débrief leadership",
+            "resources": "Tableau de bord live ops, permanences mentors"
+          },
+          "sprint": {
+            "title": "Sprint d’innovation",
+            "duration": "1 semaine",
+            "deliverables": "Pitch de prototype et plan de métriques",
+            "resources": "Kits d’atelier, bac à sable analytique"
+          },
+          "capstone": {
+            "title": "Défi capstone",
+            "duration": "4 semaines",
+            "deliverables": "Plan d’activation de bout en bout",
+            "resources": "Revues du comité, accès aux outils"
+          }
+        }
+      },
+      "certifications": {
+        "title": "Parcours de certification",
+        "provider": "Organisme",
+        "requirements": "Pré-requis",
+        "validity": "Validité",
+        "items": {
+          "coaching": {
+            "name": "Coach Bro World certifié",
+            "provider": "Équipe pédagogique Bro World Academy",
+            "requirements": "Valider la résidence de coaching et réussir l’évaluation en direct",
+            "validity": "2 ans"
+          },
+          "facilitation": {
+            "name": "Spécialiste facilitation de communauté",
+            "provider": "Équipe pédagogique Bro World Academy",
+            "requirements": "Terminer les laboratoires de facilitation et remettre des enregistrements d’ateliers",
+            "validity": "3 ans"
+          },
+          "strategy": {
+            "name": "Architecte d’expérience stratégique",
+            "provider": "Équipe pédagogique Bro World Academy",
+            "requirements": "Présenter le projet capstone et passer la revue de portfolio",
+            "validity": "3 ans"
+          }
+        }
+      },
+      "process": {
+        "title": "Comment fonctionne l’académie",
+        "description": "Un parcours guidé mêlant enseignements en direct, pratique et validation.",
+        "stepLabel": "Étape {number}",
+        "steps": {
+          "intake": {
+            "title": "Diagnostic et objectifs",
+            "description": "Définissez vos ambitions, cartographiez vos compétences et rencontrez votre mentor."
+          },
+          "immersion": {
+            "title": "Apprentissages immersifs",
+            "description": "Participez aux sessions en direct, leçons asynchrones et studios collaboratifs."
+          },
+          "practice": {
+            "title": "Pratique accompagnée",
+            "description": "Appliquez les cadres sur des projets réels avec des retours itératifs."
+          },
+          "assessment": {
+            "title": "Évaluation et reconnaissance",
+            "description": "Présentez vos résultats et obtenez des certifications reconnues par nos experts."
+          }
+        }
+      },
+      "cta": {
+        "title": "Rejoindre la prochaine cohorte de l’académie",
+        "description": "Réservez votre place pour recevoir le calendrier, les détails du programme et les étapes d’inscription.",
+        "button": "Discuter avec notre équipe",
+        "buttonAria": "Contacter l’équipe de Bro World Academy"
       }
     },
     "help": {
@@ -1661,6 +1788,10 @@
     "education": {
       "title": "Éducation",
       "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données."
+    },
+    "academy": {
+      "title": "Académie",
+      "description": "Découvrez les parcours d’apprentissage structurés, exercices et certifications de Bro World."
     },
     "performance": {
       "badge": "Rapport de performance",
