@@ -1,4 +1,4 @@
-import { createError, getHeader } from "h3";
+import { appendHeader, createError, getHeader } from "h3";
 import type { H3Event } from "h3";
 import { joinURL } from "ufo";
 import type { FetchOptions } from "ofetch";
@@ -615,12 +615,24 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
   const config = useRuntimeConfig(event);
   const serviceToken = resolveUsersServiceToken(config);
 
+  appendHeader(event, "vary", "Authorization");
+
   let sessionToken = getSessionToken(event);
 
   if (!sessionToken && !forwardedAuthorization && !serviceToken) {
     sessionToken = await waitForSessionToken(event);
 
     if (!sessionToken) {
+      const sessionUser = getSessionUser(event);
+
+      if (sessionUser) {
+        try {
+          return unwrapProfile(sessionUser as ProfileSource);
+        } catch (fallbackError) {
+          console.error("Failed to normalize session user profile", fallbackError);
+        }
+      }
+
       sessionToken = requireSessionToken(event, {
         statusMessage: "Authentication is required to access this resource.",
         message: "Authentication is required to access this resource.",
