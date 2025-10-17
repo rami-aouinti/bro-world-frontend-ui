@@ -5,7 +5,7 @@ import type { FetchOptions } from "ofetch";
 import type { QueryObject } from "ufo";
 import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
-import { profileEventsSample } from "~/lib/mock/profile";
+import { profileEventsSample, profileSample } from "~/lib/mock/profile";
 import { usersListSample } from "~/lib/mock/users";
 import {
   deleteCachedProfile,
@@ -18,12 +18,7 @@ import type {
   ProfileEvent,
   ProfileUser,
 } from "~/types/pages/profile";
-import {
-  getSessionToken,
-  getSessionUser,
-  requireSessionToken, waitForSessionToken,
-  withAuthHeaders,
-} from "../auth/session";
+import { getSessionToken, getSessionUser, waitForSessionToken, withAuthHeaders } from "../auth/session";
 
 export interface UsersApiUser extends AuthUser {
   language?: string | null;
@@ -435,12 +430,19 @@ async function requestUsersApi<T>(
   if (!headers.has("authorization")) {
     const authHeaders = withUsersAuthHeaders(event);
     const value = authHeaders.Authorization ?? authHeaders.authorization;
+    const sessionToken = getSessionToken(event);
+    const normalizedServiceToken =
+      serviceToken && serviceToken.trim().length > 0
+        ? serviceToken.startsWith("Bearer ")
+          ? serviceToken
+          : `Bearer ${serviceToken}`
+        : null;
 
-    if (value) {
+    if (sessionToken && value) {
       headers.set("authorization", value);
-    } else if (serviceToken) {
-      const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
-
+    } else if (normalizedServiceToken) {
+      headers.set("authorization", normalizedServiceToken);
+    } else if (value) {
       headers.set("authorization", value);
     }
   }
@@ -630,6 +632,10 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
 
   let sessionToken = getSessionToken(event);
 
+  if (forwardedAuthorization || serviceToken) {
+    sessionToken = null;
+  }
+
   if (!sessionToken && !forwardedAuthorization && !serviceToken) {
     sessionToken = await waitForSessionToken(event);
 
@@ -644,10 +650,13 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
         }
       }
 
-      sessionToken = requireSessionToken(event, {
-        statusMessage: "Authentication is required to access this resource.",
-        message: "Authentication is required to access this resource.",
-      });
+      warnMockFallback(
+        "profile",
+        "profile",
+        "Authentication is required to access this resource.",
+      );
+
+      return unwrapProfile(profileSample);
     }
   }
 
