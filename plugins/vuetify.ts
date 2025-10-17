@@ -60,12 +60,18 @@ import {
   VToolbar,
   VTooltip,
 } from "vuetify/components";
+import { defineComponent, h } from "vue";
 import { Ripple } from "vuetify/directives";
 import { VCalendar } from "vuetify/labs/VCalendar";
 import { VDateInput } from "vuetify/labs/VDateInput";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
-import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
+import { aliases } from "vuetify/iconsets/mdi-svg";
+import {
+  VSvgIcon,
+  makeIconProps,
+  type IconValue,
+} from "vuetify/lib/composables/icons";
 import { normalizeHexColor } from "~/lib/theme/colors";
 import {
   mdiAccountCog,
@@ -418,6 +424,78 @@ const minimalAliases = createMdiAliasVariants({
   "mdi-view-dashboard-outline": withSvgPrefix(mdiViewDashboardOutline),
   "mdi-weather-night": withSvgPrefix(mdiWeatherNight),
   "mdi-weather-sunny": withSvgPrefix(mdiWeatherSunny),
+});
+
+function stripSvgPrefix(value: string): string {
+  return value.startsWith("svg:") ? value.slice(4) : value;
+}
+
+function resolveMdiIconValue(value: IconValue): IconValue {
+  if (typeof value !== "string") {
+    return value;
+  }
+
+  const normalized = value.trim();
+
+  if (!normalized) {
+    return normalized;
+  }
+
+  const lookupKeys = new Set<string>([normalized]);
+
+  if (normalized.startsWith("mdi:")) {
+    const suffix = normalized.slice(4);
+    lookupKeys.add(`mdi-${suffix}`);
+    lookupKeys.add(suffix);
+  } else if (normalized.startsWith("mdi-")) {
+    const suffix = normalized.slice(4);
+    lookupKeys.add(`mdi:${suffix}`);
+    lookupKeys.add(suffix);
+  } else {
+    lookupKeys.add(`mdi:${normalized}`);
+    lookupKeys.add(`mdi-${normalized}`);
+  }
+
+  for (const key of lookupKeys) {
+    const alias = minimalAliases[key];
+
+    if (alias == null) {
+      continue;
+    }
+
+    if (typeof alias === "string") {
+      return stripSvgPrefix(alias);
+    }
+
+    if (Array.isArray(alias)) {
+      return alias.map((entry) =>
+        Array.isArray(entry)
+          ? [stripSvgPrefix(entry[0]), entry[1]]
+          : stripSvgPrefix(entry),
+      );
+    }
+
+    return alias;
+  }
+
+  return stripSvgPrefix(normalized);
+}
+
+const MdiSvgIcon = defineComponent({
+  name: "AppMdiSvgIcon",
+  props: makeIconProps(),
+  setup(props, { attrs, slots }) {
+    return () =>
+      h(
+        VSvgIcon,
+        {
+          ...attrs,
+          tag: props.tag,
+          icon: resolveMdiIconValue(props.icon ?? ""),
+        },
+        slots,
+      );
+  },
 });
 
 const vuetifyLocaleMessages = {
@@ -913,7 +991,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       defaultSet: "mdi",
       aliases: minimalAliases,
       sets: {
-        mdi,
+        mdi: {
+          component: MdiSvgIcon,
+        },
       },
     },
   });
