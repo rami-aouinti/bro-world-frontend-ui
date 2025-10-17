@@ -22,6 +22,7 @@ import {
   getSessionToken,
   getSessionUser,
   requireSessionToken,
+  waitForSessionToken,
   withAuthHeaders,
 } from "../auth/session";
 
@@ -617,10 +618,14 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
   let sessionToken = getSessionToken(event);
 
   if (!sessionToken && !forwardedAuthorization && !serviceToken) {
-    sessionToken = requireSessionToken(event, {
-      statusMessage: "Authentication is required to access this resource.",
-      message: "Authentication is required to access this resource.",
-    });
+    sessionToken = await waitForSessionToken(event);
+
+    if (!sessionToken) {
+      sessionToken = requireSessionToken(event, {
+        statusMessage: "Authentication is required to access this resource.",
+        message: "Authentication is required to access this resource.",
+      });
+    }
   }
 
   if (sessionToken) {
