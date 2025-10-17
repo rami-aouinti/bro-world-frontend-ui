@@ -613,10 +613,11 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();
   const config = useRuntimeConfig(event);
   const serviceToken = resolveUsersServiceToken(config);
+  const shouldUseSessionCache = !forwardedAuthorization && !serviceToken;
 
-  let sessionToken = getSessionToken(event);
+  let sessionToken = shouldUseSessionCache ? getSessionToken(event) : null;
 
-  if (!sessionToken && !forwardedAuthorization && !serviceToken) {
+  if (shouldUseSessionCache && !sessionToken) {
     sessionToken = requireSessionToken(event, {
       statusMessage: "Authentication is required to access this resource.",
       message: "Authentication is required to access this resource.",
@@ -649,7 +650,7 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
       throw error;
     }
 
-    const sessionUser = getSessionUser(event);
+    const sessionUser = shouldUseSessionCache ? getSessionUser(event) : null;
 
     if (sessionUser) {
       try {
