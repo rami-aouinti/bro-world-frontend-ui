@@ -459,13 +459,22 @@ export function requireSessionToken(event: H3Event, options: RequireSessionToken
     return token;
   }
 
-  const { statusCode = 401, statusMessage = "Authentication required", message } = options;
-  const resolvedMessage = typeof message === "string" && message.trim() ? message : statusMessage;
+  const {
+    statusCode = 401,
+    statusMessage: rawStatusMessage = "Authentication required",
+    message,
+  } = options;
+  const resolvedStatusMessage =
+    typeof rawStatusMessage === "string" && rawStatusMessage.trim()
+      ? rawStatusMessage.trim()
+      : "Authentication required";
+  const resolvedMessage =
+    typeof message === "string" && message.trim() ? message.trim() : resolvedStatusMessage;
   const data = resolvedMessage ? { message: resolvedMessage } : undefined;
 
   throw createError({
     statusCode,
-    statusMessage: resolvedMessage,
+    statusMessage: resolvedStatusMessage,
     message: resolvedMessage,
     data,
   });
