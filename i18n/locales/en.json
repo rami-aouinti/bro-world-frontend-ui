@@ -88,6 +88,10 @@
         "jobs": "Jobs",
         "game": "Gaming",
         "ecommerce": "E-commerce",
+        "ecommerceOverview": "Overview",
+        "ecommerceCatalog": "Product catalog",
+        "ecommerceCart": "Cart",
+        "ecommerceCheckout": "Checkout",
         "education": "Education",
         "performance": "Performance",
         "profile": "Profile",
@@ -193,122 +197,6 @@
     "DiscordDescription": "Connect with community on Discord",
     "Forum": "Forum",
     "ForumDiscord": "Join the forum"
-  },
-  "blog": {
-    "sidebar": {
-      "weather": {
-        "badge": "Live",
-        "title": "Bro World HQ",
-        "subtitle": "Keep your umbrella ready",
-        "icon": "solar:sun-2-bold",
-        "location": "Paris, FR",
-        "temperature": "18°",
-        "tip": "Winds up to 12 km/h expected this afternoon.",
-        "locationLabel": "Location",
-        "temperatureLabel": "Temperature",
-        "tipLabel": "Tip"
-      },
-      "leaderboard": {
-        "title": "Top players",
-        "live": "Live ranking",
-        "participants": {
-          "first": {
-            "name": "Alex Carter",
-            "role": "Strategist",
-            "score": "982"
-          },
-          "second": {
-            "name": "Mia Laurent",
-            "role": "Support",
-            "score": "945"
-          },
-          "third": {
-            "name": "Leo Nakamura",
-            "role": "Scout",
-            "score": "918"
-          }
-        }
-      },
-      "rating": {
-        "title": "Community rating",
-        "subtitle": "Bro World experience",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
-        "stars": 5,
-        "categories": {
-          "ui": {
-            "label": "Interface",
-            "value": 4.9
-          },
-          "gameplay": {
-            "label": "Gameplay",
-            "value": 4.8
-          },
-          "community": {
-            "label": "Community",
-            "value": 4.9
-          }
-        }
-      }
-    }
-  },
-  "toc": {
-    "title": "On This Page",
-    "StarOnGitHub": "Star on GitHub",
-    "CreateIssues": "Create Issues",
-    "JoinDiscord": "Join Discord",
-    "Forum": "Forum",
-    "FollowOnX": "Follow on X",
-    "FollowOnBluesky": "Follow on Bluesky"
-  },
-  "page": {
-    "home": {
-      "SupportUs": "Support Us",
-      "AllComponents": "All Components",
-      "OpenSourceComponentsToBuild": "Open source components to build",
-      "Stunning": "stunning",
-      "Beautiful": "beautiful",
-      "WebsitesUsingVueAndNuxt": "websites using Vue & Nuxt",
-      "IntegrateWithYourFavouriteUIframework": "Integrate with your favourite UI framework",
-      "Features": "Features",
-      "CheckOutSomeExamples": "Check out some examples!",
-      "3DCardHoverEffect": "3D Card Hover Effect",
-      "RadiantText": "Radiant Text",
-      "LovedByCommunity": "Loved by community",
-      "WhatAreYouWaitingFor": "What are you waiting for?",
-      "GetStartedAndStartBuildingAwesomeUI": "Get started and start building awesome UI",
-      "GetStarted": "Get Started"
-    }
-  },
-  "auth": {
-    "Account": "Account",
-    "Login": "Log in",
-    "Register": "Register",
-    "usernameOrEmail": "Email address",
-    "password": "Password",
-    "showPassword": "Show password",
-    "hidePassword": "Hide password",
-    "signIn": "Sign in",
-    "signUpPrompt": "Don't have an account?",
-    "signUp": "Create one",
-    "signOut": "Sign out",
-    "forgotPassword": "Forgot your password?",
-    "requiredError": "Please enter your email and password.",
-    "invalidError": "We couldn't sign you in with those details. Please try again.",
-    "successTitle": "Welcome back",
-    "success": "You have been signed in successfully.",
-    "errorTitle": "Sign in failed",
-    "errorGeneric": "Something went wrong while signing you in.",
-    "logoutMessage": "You have been signed out successfully.",
-    "sessionExpired": "Your session has expired. Please sign in again.",
-    "socialTitle": "Sign in with your favorite provider",
-    "socialSubtitle": "We'll redirect you to finish authentication.",
-    "social": {
-      "google": "Continue with Google",
-      "github": "Continue with GitHub",
-      "microsoft": "Continue with Microsoft"
-    }
   },
   "blog": {
     "hero": {
@@ -606,6 +494,63 @@
           "action": "Submit content"
         }
       }
+    }
+  },
+  "toc": {
+    "title": "On This Page",
+    "StarOnGitHub": "Star on GitHub",
+    "CreateIssues": "Create Issues",
+    "JoinDiscord": "Join Discord",
+    "Forum": "Forum",
+    "FollowOnX": "Follow on X",
+    "FollowOnBluesky": "Follow on Bluesky"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "Support Us",
+      "AllComponents": "All Components",
+      "OpenSourceComponentsToBuild": "Open source components to build",
+      "Stunning": "stunning",
+      "Beautiful": "beautiful",
+      "WebsitesUsingVueAndNuxt": "websites using Vue & Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Integrate with your favourite UI framework",
+      "Features": "Features",
+      "CheckOutSomeExamples": "Check out some examples!",
+      "3DCardHoverEffect": "3D Card Hover Effect",
+      "RadiantText": "Radiant Text",
+      "LovedByCommunity": "Loved by community",
+      "WhatAreYouWaitingFor": "What are you waiting for?",
+      "GetStartedAndStartBuildingAwesomeUI": "Get started and start building awesome UI",
+      "GetStarted": "Get Started"
+    }
+  },
+  "auth": {
+    "Account": "Account",
+    "Login": "Log in",
+    "Register": "Register",
+    "usernameOrEmail": "Email address",
+    "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "signIn": "Sign in",
+    "signUpPrompt": "Don't have an account?",
+    "signUp": "Create one",
+    "signOut": "Sign out",
+    "forgotPassword": "Forgot your password?",
+    "requiredError": "Please enter your email and password.",
+    "invalidError": "We couldn't sign you in with those details. Please try again.",
+    "successTitle": "Welcome back",
+    "success": "You have been signed in successfully.",
+    "errorTitle": "Sign in failed",
+    "errorGeneric": "Something went wrong while signing you in.",
+    "logoutMessage": "You have been signed out successfully.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "socialTitle": "Sign in with your favorite provider",
+    "socialSubtitle": "We'll redirect you to finish authentication.",
+    "social": {
+      "google": "Continue with Google",
+      "github": "Continue with GitHub",
+      "microsoft": "Continue with Microsoft"
     }
   },
   "register": {
@@ -1832,7 +1777,23 @@
     },
     "ecommerce": {
       "title": "E-commerce",
-      "description": "Launch and scale modern retail journeys."
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
     },
     "education": {
       "title": "Education",
@@ -2330,25 +2291,41 @@
           "content": {
             "title": "Content management",
             "description": "Plan, publish, and archive articles, events, and learning resources.",
-            "tags": ["Editorial workflow", "Review", "Scheduling"],
+            "tags": [
+              "Editorial workflow",
+              "Review",
+              "Scheduling"
+            ],
             "status": "12 items require editorial review."
           },
           "community": {
             "title": "Community & moderation",
             "description": "Configure moderation rules, manage reports, and handle sanctions.",
-            "tags": ["Reports", "Sanctions", "Private messages"],
+            "tags": [
+              "Reports",
+              "Sanctions",
+              "Private messages"
+            ],
             "status": "Average response time: 1h42."
           },
           "commerce": {
             "title": "Monetization & offers",
             "description": "Manage subscriptions, promo codes, and commercial partnerships.",
-            "tags": ["Subscriptions", "Billing", "Coupons"],
+            "tags": [
+              "Subscriptions",
+              "Billing",
+              "Coupons"
+            ],
             "status": "Conversion rate up by 3.4% this week."
           },
           "governance": {
             "title": "Governance & compliance",
             "description": "Audit access, manage privileged roles, and prepare compliance reports.",
-            "tags": ["Audit", "Roles", "Traceability"],
+            "tags": [
+              "Audit",
+              "Roles",
+              "Traceability"
+            ],
             "status": "Last full audit completed 5 days ago."
           }
         }
@@ -2532,6 +2509,208 @@
       "reactPrompt": "React to this story",
       "messageLabel": "Send a message",
       "send": "Send"
+    }
+  },
+  "demo": {
+    "ecommerce": {
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewDetails": "View details"
+      },
+      "badges": {
+        "bestseller": "Bestseller",
+        "new": "New arrival",
+        "staffPick": "Team favourite",
+        "limited": "Limited run"
+      },
+      "specifications": {
+        "power": "Power",
+        "material": "Material",
+        "dimensions": "Dimensions",
+        "capacity": "Capacity",
+        "compatibility": "Compatibility",
+        "connectivity": "Connectivity"
+      },
+      "inventory": {
+        "inStock": "{count} units in stock",
+        "lowStock": "Only {count} left",
+        "outOfStock": "Out of stock",
+        "defaultMessage": "Check availability with our team"
+      },
+      "summary": {
+        "title": "Order summary",
+        "quantity": "Qty: {count}",
+        "subtotal": "Subtotal",
+        "tax": "Estimated tax",
+        "shipping": "Shipping",
+        "total": "Total"
+      },
+      "catalog": {
+        "title": "Discover the demo storefront",
+        "subtitle": "Browse modular workspace companions, mindful wellbeing tech, and elevated travel gear in one place.",
+        "backToOverview": "Return to overview",
+        "goToCart": "View cart ({count})",
+        "filters": {
+          "all": "All categories"
+        },
+        "searchLabel": "Search catalog",
+        "emptyTitle": "No products match",
+        "emptySubtitle": "We couldn’t find any items matching “{query}”. Reset your filters to explore the full demo range.",
+        "resetFilters": "Reset filters",
+        "breadcrumb": "Catalog"
+      },
+      "product": {
+        "rating": "{rating} ★ ({reviews} reviews)",
+        "quantityLabel": "Quantity",
+        "viewCart": "View cart",
+        "detailsTitle": "Why it works",
+        "specificationsTitle": "Specifications",
+        "goToCheckout": "Proceed to checkout",
+        "backToCatalog": "Back to catalog"
+      },
+      "cart": {
+        "title": "Your cart",
+        "subtitle": "Keep building your bundle or head straight to checkout when you’re ready.",
+        "breadcrumb": "Cart",
+        "table": {
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "Unit price",
+          "total": "Line total",
+          "actions": "Remove item"
+        },
+        "nextStepsTitle": "Next steps",
+        "nextStepsDescription": "Complete checkout or continue exploring the catalog for more add-ons.",
+        "continueShopping": "Continue shopping",
+        "proceedToCheckout": "Proceed to checkout",
+        "checkoutCta": "Go to checkout",
+        "clearCart": "Clear cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add products from the catalog to see them listed here.",
+        "shopNow": "Shop the catalog"
+      },
+      "checkout": {
+        "title": "Secure checkout",
+        "subtitle": "Confirm delivery, payment, and review details to wrap up your demo order.",
+        "breadcrumb": "Checkout",
+        "empty": "There are no items in your cart yet.",
+        "shopLink": "Browse catalog",
+        "steps": {
+          "shipping": "Shipping",
+          "shippingSubtitle": "Address and delivery",
+          "payment": "Payment",
+          "paymentSubtitle": "Billing details",
+          "review": "Review",
+          "reviewSubtitle": "Confirm & submit"
+        },
+        "shippingTitle": "Delivery information",
+        "paymentTitle": "Payment method",
+        "reviewTitle": "Final review",
+        "reviewShipping": "Shipping",
+        "reviewPayment": "Payment",
+        "reviewHint": "Everything look good? You can always return to previous steps before placing the order.",
+        "backToCart": "Back to cart",
+        "continueToPayment": "Continue to payment",
+        "backToShipping": "Back to shipping",
+        "reviewOrder": "Review order",
+        "summaryContinue": "Review order",
+        "backToPayment": "Back to payment",
+        "placeOrder": "Place order",
+        "browseMore": "Browse more products",
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email",
+          "address": "Address",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "delivery": "Delivery option",
+          "notes": "Order notes",
+          "cardNumber": "Card number",
+          "expiry": "Expiry",
+          "cvc": "CVC",
+          "saveCard": "Securely save this card for next time"
+        },
+        "delivery": {
+          "standard": "Standard (free, 3-5 days)",
+          "express": "Express (paid, 24-48h)"
+        },
+        "exampleOrdersTitle": "Recent demo orders",
+        "maskedCard": "Visa ending ••••{last4}"
+      },
+      "orders": {
+        "status": {
+          "processing": "Processing",
+          "fulfilled": "Fulfilled",
+          "cancelled": "Cancelled",
+          "draft": "Draft"
+        },
+        "primary": {
+          "customer": "Jamie Ortiz · Paris, France",
+          "notes": "Repeat customer restock of workplace favourites."
+        },
+        "restock": {
+          "customer": "Taylor Singh · Copenhagen, Denmark",
+          "notes": "Event gifting set scheduled for warehouse dispatch."
+        }
+      },
+      "categories": {
+        "workspace": {
+          "name": "Workspace",
+          "description": "Lighting, ergonomics, and focus rituals for hybrid teams."
+        },
+        "wellbeing": {
+          "name": "Wellbeing",
+          "description": "Support healthy routines with adaptive tech and insights."
+        },
+        "travel": {
+          "name": "Travel",
+          "description": "Go-anywhere carry essentials for the modern explorer."
+        }
+      },
+      "products": {
+        "auroraDeskLamp": {
+          "name": "Aurora adaptive desk lamp",
+          "summary": "Dynamic lighting scenes that sync with circadian rhythms and deep work blocks.",
+          "description": "Aurora blends ambient LEDs with warm task lighting, adaptive brightness, and voice control. Teams personalise presets for focus sessions or cosy after-hours.",
+          "specs": {
+            "power": "18W LED array",
+            "material": "Anodised aluminium and recycled polymer",
+            "dimensions": "45 × 12 × 38 cm"
+          }
+        },
+        "focusHubPro": {
+          "name": "Focus Hub Pro",
+          "summary": "Modular workspace dock with wireless charging, acoustic shielding, and ambient soundscapes.",
+          "description": "Focus Hub Pro anchors hot desks with integrated power, device cradles, and configurable dividers. Built-in soundscapes and white noise adapt to busy floors.",
+          "specs": {
+            "connectivity": "Dual USB-C, 2× Qi wireless pads, Wi-Fi 6 hub",
+            "dimensions": "52 × 22 × 18 cm",
+            "material": "Felt acoustic panels and alloy frame"
+          }
+        },
+        "pulseSmartBottle": {
+          "name": "Pulse smart hydration bottle",
+          "summary": "Hydration tracking with adaptive reminders, mineral insights, and team challenges.",
+          "description": "Pulse keeps crews energised with sip detection, mineral analysis, and app nudges. Sync hydration streaks with wellbeing programmes to boost morale.",
+          "specs": {
+            "capacity": "750 ml",
+            "material": "Double-wall stainless steel",
+            "compatibility": "iOS, Android, and BroWorld wellbeing dashboards"
+          }
+        },
+        "atlasWeekender": {
+          "name": "Atlas recycled weekender",
+          "summary": "Cabin-friendly carry crafted from regenerated ocean plastic with modular packing cubes.",
+          "description": "Atlas keeps teams travel-ready with quick-access tech pockets, convertible straps, and padded laptop storage. Each bag reuses 28 plastic bottles.",
+          "specs": {
+            "capacity": "38 L",
+            "material": "Recycled ocean-bound nylon",
+            "dimensions": "55 × 26 × 24 cm"
+          }
+        }
+      }
     }
   }
 }

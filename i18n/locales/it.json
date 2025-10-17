@@ -178,60 +178,299 @@
     "ForumDiscord": "Entra nel forum"
   },
   "blog": {
+    "hero": {
+      "eyebrow": "Feed della community",
+      "title": "Scopri cosa succede in BroWorld",
+      "description": "Segui i momenti salienti della community, scopri nuove risorse e resta aggiornato su ciò che i builder stanno lanciando ora.",
+      "primaryAction": "Esplora gli ultimi post",
+      "secondaryAction": "Consulta la documentazione",
+      "stats": {
+        "members": "Membri attivi",
+        "reactions": "Reazioni condivise",
+        "comments": "Commenti pubblicati"
+      }
+    },
+    "composer": {
+      "title": "Condividi qualcosa con la community",
+      "subtitle": "Avvia una conversazione e ispira gli altri builder.",
+      "label": "Il tuo messaggio",
+      "placeholder": "Di cosa ti piacerebbe parlare?",
+      "characterCount": "{count} caratteri",
+      "submit": "Pubblica post",
+      "submitting": "Pubblicazione...",
+      "success": "Il tuo post è stato pubblicato con successo!",
+      "error": "Non siamo riusciti a pubblicare il tuo post. Riprova.",
+      "validation": "Scrivi un messaggio prima di pubblicare."
+    },
+    "newPost": {
+      "placeholder": "A cosa stai pensando, {name}?",
+      "quickActions": {
+        "liveVideo": "Video in diretta",
+        "photoVideo": "Foto/Video",
+        "feelingActivity": "Emozione/Attività"
+      },
+      "dialog": {
+        "title": "Crea post",
+        "addToPost": "Aggiungi qualcosa al tuo post",
+        "postButton": "Pubblica"
+      },
+      "audience": {
+        "public": "Pubblico",
+        "friends": "Amici",
+        "private": "Solo io"
+      },
+      "attachments": {
+        "media": "Foto/Video",
+        "tag": "Tagga persone",
+        "feeling": "Emozione/Attività",
+        "location": "Posizione",
+        "gif": "GIF",
+        "poll": "Aggiungi sondaggio"
+      }
+    },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
+    "reactions": {
+      "post": {
+        "publishedOn": "Pubblicato il {date}",
+        "reactions": "{count} reazioni",
+        "comments": "{count} commenti",
+        "recentComments": "Commenti recenti",
+        "commentPreviews": "{count} anteprime",
+        "reactionSpotlight": "Reazioni in evidenza"
+      },
+      "comment": {
+        "reactions": "{count} reazioni",
+        "replies": "{count} risposte"
+      },
+      "reactionTypes": {
+        "like": "Mi piace",
+        "love": "Adoro",
+        "wow": "Wow",
+        "haha": "Ahah",
+        "sad": "Triste",
+        "angry": "Arrabbiato",
+        "dislike": "Non mi piace",
+        "care": "Mi importa"
+      },
+      "posts": {
+        "publishedOn": "Pubblicato il {date}",
+        "reactionCount": "{count} reazioni",
+        "commentCount": "{count} commenti",
+        "recentComments": "Commenti recenti",
+        "previewCount": "{count} anteprime",
+        "highlightedReactions": "Reazioni preferite dai fan",
+        "reactLabel": "Aggiungi la tua reazione",
+        "reactionError": "Non siamo riusciti a reagire a questo post. Riprova.",
+        "likeAction": "Metti mi piace",
+        "unlikeAction": "Rimuovi mi piace",
+        "toggleReaction": "Attiva/disattiva Mi piace su questo post"
+      },
+      "comments": {
+        "reactionCount": "{count} reazioni",
+        "replyCount": "{count} risposte",
+        "likeAction": "Mi piace",
+        "unlikeAction": "Rimuovi mi piace",
+        "toggleReaction": "Attiva/disattiva Mi piace su questo commento"
+      }
+    },
+    "posts": {
+      "actions": {
+        "follow": "Segui",
+        "following": "Seguito",
+        "followAria": "Segui {name}",
+        "followingAria": "Stai già seguendo {name}",
+        "openMenu": "Apri azioni del post",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "statistics": "{reactions} reazioni e {comments} commenti",
+        "editTitle": "Modifica post",
+        "editDescription": "Aggiorna i dettagli del tuo post qui sotto.",
+        "save": "Salva",
+        "cancel": "Annulla",
+        "deleteTitle": "Eliminare questo post?",
+        "deleteDescription": "Questa azione non può essere annullata. Il post verrà rimosso per tutti.",
+        "deleteConfirm": "Elimina",
+        "editSuccessTitle": "Post aggiornato",
+        "editSuccessDescription": "Le modifiche sono state salvate correttamente.",
+        "editErrorTitle": "Aggiornamento non riuscito",
+        "editErrorDescription": "Non è stato possibile aggiornare il post. Riprova.",
+        "deleteSuccessTitle": "Post eliminato",
+        "deleteSuccessDescription": "Il post è stato rimosso dal feed.",
+        "deleteErrorTitle": "Eliminazione non riuscita",
+        "deleteErrorDescription": "Non è stato possibile eliminare il post. Riprova.",
+        "followSuccessTitle": "Autore seguito",
+        "followSuccessDescription": "Ora stai seguendo {name}.",
+        "followErrorTitle": "Impossibile seguire",
+        "followErrorDescription": "Non è stato possibile seguire questo autore. Riprova.",
+        "fields": {
+          "title": "Titolo",
+          "summary": "Sommario",
+          "content": "Contenuto"
+        },
+        "comment": "Commenta",
+        "share": "Condividi"
+      },
+      "shareMenu": {
+        "feed": "Condividi nel feed",
+        "story": "Condividi nella tua storia",
+        "messenger": "Invia su Messenger",
+        "whatsapp": "Invia su WhatsApp",
+        "page": "Condividi su una pagina",
+        "group": "Condividi in un gruppo",
+        "profile": "Condividi sul profilo di un amico",
+        "comingSoonTitle": "Non ancora disponibile",
+        "comingSoonDescription": "Questa opzione di condivisione sarà presto disponibile."
+      },
+      "shareDialog": {
+        "title": "Crea post",
+        "placeholder": "Dì qualcosa su questo...",
+        "placeholderNamed": "Dì qualcosa su questo, {name}...",
+        "defaultName": "Tu",
+        "submit": "Condividi",
+        "cancel": "Annulla",
+        "feedAudience": "Feed",
+        "successTitle": "Post condiviso",
+        "successMessage": "Il tuo aggiornamento è stato aggiunto al tuo feed."
+      },
+      "loading": "Caricamento del post"
+    },
+    "comments": {
+      "label": "Partecipa alla conversazione",
+      "placeholder": "Condividi i tuoi pensieri con la community...",
+      "characterCount": "{count} caratteri",
+      "submit": "Pubblica commento",
+      "submitting": "Pubblicazione...",
+      "loading": "Caricamento dei commenti...",
+      "load": "Carica i commenti",
+      "activationHint": "I commenti vengono caricati quando questa sezione è visibile o quando premi il pulsante.",
+      "success": "Il tuo commento è stato aggiunto.",
+      "error": "Non siamo riusciti ad aggiungere il tuo commento. Riprova.",
+      "validation": "Scrivi un commento prima di pubblicare.",
+      "empty": "Non ci sono ancora commenti. Inizia tu la conversazione!",
+      "reply": "Rispondi",
+      "replying": "Risposta in corso...",
+      "replyPlaceholder": "Scrivi la tua risposta...",
+      "addEmoji": "Aggiungi emoji",
+      "addMedia": "Aggiungi media",
+      "addGif": "Aggiungi GIF",
+      "replySubmit": "Invia risposta",
+      "replySuccess": "La tua risposta è stata aggiunta.",
+      "replyError": "Non siamo riusciti a pubblicare la tua risposta. Riprova.",
+      "replyValidation": "Scrivi una risposta prima di inviarla.",
+      "cancelReply": "Annulla",
+      "replyUnavailable": "Le risposte non sono disponibili al momento.",
+      "reactionUnavailable": "Le reazioni non sono disponibili al momento.",
+      "reactionError": "Non siamo riusciti a reagire a questo commento. Riprova.",
+      "placeholderWithName": "Commenta come {name}",
+      "sort": {
+        "menuAria": "Ordina i commenti",
+        "options": {
+          "relevant": {
+            "label": "Più rilevanti",
+            "description": "Mostra per primi i commenti degli amici e quelli con più interazioni."
+          },
+          "newest": {
+            "label": "Più recenti",
+            "description": "Mostra tutti i commenti dal più recente al meno recente."
+          },
+          "all": {
+            "label": "Tutti i commenti",
+            "description": "Mostra tutti i commenti, incluso lo spam potenziale."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "Mostra tutte le {count} risposte",
+        "hideReplies": "Nascondi risposte"
+      }
+    },
     "sidebar": {
       "weather": {
-        "badge": "In diretta",
-        "title": "HQ di Bro World",
-        "subtitle": "Tieni l'ombrello a portata di mano",
-        "icon": "solar:sun-2-bold",
-        "location": "Parigi, FR",
-        "temperature": "18°",
-        "tip": "Sono previste raffiche fino a 12 km/h nel pomeriggio.",
-        "locationLabel": "Luogo",
+        "badge": "Notizie",
+        "title": "Pioggia in arrivo",
+        "subtitle": "Preparati a una giornata piovosa con venti leggeri.",
+        "icon": "🌧️",
+        "location": "Berlino, Germania",
+        "locationLabel": "Posizione",
+        "temperature": "18°C",
         "temperatureLabel": "Temperatura",
-        "tipLabel": "Consiglio"
+        "tipLabel": "Consiglio",
+        "tip": "Non dimenticare l'ombrello per restare asciutto.",
+        "loading": "Aggiornamento meteo…",
+        "actions": {
+          "useCurrentLocation": "Usa la posizione attuale"
+        },
+        "errors": {
+          "unavailable": "Gli aggiornamenti meteo non sono disponibili.",
+          "denied": "Non è stato possibile accedere alla tua posizione. Mostriamo la previsione predefinita.",
+          "unsupported": "Il tuo browser non supporta la geolocalizzazione.",
+          "updateFailed": "Impossibile aggiornare il meteo in questo momento."
+        }
       },
       "leaderboard": {
-        "title": "Giocatori top",
-        "live": "Classifica live",
+        "title": "Top 3 del quiz",
+        "live": "in diretta",
         "participants": {
           "first": {
-            "name": "Alex Carter",
-            "role": "Stratega",
-            "score": "982"
+            "name": "Bro World",
+            "role": "Team prodotto",
+            "score": "982 pts"
           },
           "second": {
-            "name": "Mia Laurent",
-            "role": "Supporto",
-            "score": "945"
+            "name": "Adam Don",
+            "role": "Community",
+            "score": "953 pts"
           },
           "third": {
-            "name": "Leo Nakamura",
-            "role": "Esploratore",
-            "score": "918"
+            "name": "Nina Ko",
+            "role": "Marketing",
+            "score": "917 pts"
           }
         }
       },
       "rating": {
-        "title": "Valutazione della community",
-        "subtitle": "Esperienza Bro World",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
+        "title": "Panoramica delle valutazioni",
+        "subtitle": "Feedback dei membri della settimana",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
         "stars": 5,
         "categories": {
-          "ui": {
-            "label": "Interfaccia",
-            "value": 4.9
+          "engagement": {
+            "label": "Coinvolgimento",
+            "value": 92
           },
-          "gameplay": {
-            "label": "Gameplay",
-            "value": 4.8
+          "content": {
+            "label": "Contenuto",
+            "value": 88
           },
-          "community": {
-            "label": "Community",
-            "value": 4.9
+          "responsiveness": {
+            "label": "Reattività",
+            "value": 84
           }
+        }
+      },
+      "title": "Resta connesso",
+      "subtitle": "Risorse per restare aggiornato sulla community di BroWorld.",
+      "widgets": {
+        "community": {
+          "title": "Unisciti alla community",
+          "description": "Chatta con altri builder, condividi idee e ottieni aiuto immediato.",
+          "action": "Apri Discord"
+        },
+        "docs": {
+          "title": "Sfoglia la documentazione",
+          "description": "Scopri come sfruttare al meglio i componenti BroWorld nei tuoi progetti.",
+          "action": "Leggi la documentazione"
+        },
+        "contribute": {
+          "title": "Contribuisci con un articolo",
+          "description": "Condividi le tue conoscenze con la community e aiuta gli altri a crescere.",
+          "action": "Invia contenuti"
         }
       }
     }
@@ -1299,304 +1538,6 @@
       "microsoft": "Continua con Microsoft"
     }
   },
-  "blog": {
-    "hero": {
-      "eyebrow": "Feed della community",
-      "title": "Scopri cosa succede in BroWorld",
-      "description": "Segui i momenti salienti della community, scopri nuove risorse e resta aggiornato su ciò che i builder stanno lanciando ora.",
-      "primaryAction": "Esplora gli ultimi post",
-      "secondaryAction": "Consulta la documentazione",
-      "stats": {
-        "members": "Membri attivi",
-        "reactions": "Reazioni condivise",
-        "comments": "Commenti pubblicati"
-      }
-    },
-    "composer": {
-      "title": "Condividi qualcosa con la community",
-      "subtitle": "Avvia una conversazione e ispira gli altri builder.",
-      "label": "Il tuo messaggio",
-      "placeholder": "Di cosa ti piacerebbe parlare?",
-      "characterCount": "{count} caratteri",
-      "submit": "Pubblica post",
-      "submitting": "Pubblicazione...",
-      "success": "Il tuo post è stato pubblicato con successo!",
-      "error": "Non siamo riusciti a pubblicare il tuo post. Riprova.",
-      "validation": "Scrivi un messaggio prima di pubblicare."
-    },
-    "newPost": {
-      "placeholder": "A cosa stai pensando, {name}?",
-      "quickActions": {
-        "liveVideo": "Video in diretta",
-        "photoVideo": "Foto/Video",
-        "feelingActivity": "Emozione/Attività"
-      },
-      "dialog": {
-        "title": "Crea post",
-        "addToPost": "Aggiungi qualcosa al tuo post",
-        "postButton": "Pubblica"
-      },
-      "audience": {
-        "public": "Pubblico",
-        "friends": "Amici",
-        "private": "Solo io"
-      },
-      "attachments": {
-        "media": "Foto/Video",
-        "tag": "Tagga persone",
-        "feeling": "Emozione/Attività",
-        "location": "Posizione",
-        "gif": "GIF",
-        "poll": "Aggiungi sondaggio"
-      }
-    },
-    "auth": {
-      "postRequired": "Sign in to share what's on your mind.",
-      "reactionRequired": "Sign in to react to posts.",
-      "commentRequired": "Sign in to join the discussion."
-    },
-    "reactions": {
-      "post": {
-        "publishedOn": "Pubblicato il {date}",
-        "reactions": "{count} reazioni",
-        "comments": "{count} commenti",
-        "recentComments": "Commenti recenti",
-        "commentPreviews": "{count} anteprime",
-        "reactionSpotlight": "Reazioni in evidenza"
-      },
-      "comment": {
-        "reactions": "{count} reazioni",
-        "replies": "{count} risposte"
-      },
-      "reactionTypes": {
-        "like": "Mi piace",
-        "love": "Adoro",
-        "wow": "Wow",
-        "haha": "Ahah",
-        "sad": "Triste",
-        "angry": "Arrabbiato",
-        "dislike": "Non mi piace",
-        "care": "Mi importa"
-      },
-      "posts": {
-        "publishedOn": "Pubblicato il {date}",
-        "reactionCount": "{count} reazioni",
-        "commentCount": "{count} commenti",
-        "recentComments": "Commenti recenti",
-        "previewCount": "{count} anteprime",
-        "highlightedReactions": "Reazioni preferite dai fan",
-        "reactLabel": "Aggiungi la tua reazione",
-        "reactionError": "Non siamo riusciti a reagire a questo post. Riprova.",
-        "likeAction": "Metti mi piace",
-        "unlikeAction": "Rimuovi mi piace",
-        "toggleReaction": "Attiva/disattiva Mi piace su questo post"
-      },
-      "comments": {
-        "reactionCount": "{count} reazioni",
-        "replyCount": "{count} risposte",
-        "likeAction": "Mi piace",
-        "unlikeAction": "Rimuovi mi piace",
-        "toggleReaction": "Attiva/disattiva Mi piace su questo commento"
-      }
-    },
-    "posts": {
-      "actions": {
-        "follow": "Segui",
-        "following": "Seguito",
-        "followAria": "Segui {name}",
-        "followingAria": "Stai già seguendo {name}",
-        "openMenu": "Apri azioni del post",
-        "edit": "Modifica",
-        "delete": "Elimina",
-        "statistics": "{reactions} reazioni e {comments} commenti",
-        "editTitle": "Modifica post",
-        "editDescription": "Aggiorna i dettagli del tuo post qui sotto.",
-        "save": "Salva",
-        "cancel": "Annulla",
-        "deleteTitle": "Eliminare questo post?",
-        "deleteDescription": "Questa azione non può essere annullata. Il post verrà rimosso per tutti.",
-        "deleteConfirm": "Elimina",
-        "editSuccessTitle": "Post aggiornato",
-        "editSuccessDescription": "Le modifiche sono state salvate correttamente.",
-        "editErrorTitle": "Aggiornamento non riuscito",
-        "editErrorDescription": "Non è stato possibile aggiornare il post. Riprova.",
-        "deleteSuccessTitle": "Post eliminato",
-        "deleteSuccessDescription": "Il post è stato rimosso dal feed.",
-        "deleteErrorTitle": "Eliminazione non riuscita",
-        "deleteErrorDescription": "Non è stato possibile eliminare il post. Riprova.",
-        "followSuccessTitle": "Autore seguito",
-        "followSuccessDescription": "Ora stai seguendo {name}.",
-        "followErrorTitle": "Impossibile seguire",
-        "followErrorDescription": "Non è stato possibile seguire questo autore. Riprova.",
-        "fields": {
-          "title": "Titolo",
-          "summary": "Sommario",
-          "content": "Contenuto"
-        },
-        "comment": "Commenta",
-        "share": "Condividi"
-      },
-      "shareMenu": {
-        "feed": "Condividi nel feed",
-        "story": "Condividi nella tua storia",
-        "messenger": "Invia su Messenger",
-        "whatsapp": "Invia su WhatsApp",
-        "page": "Condividi su una pagina",
-        "group": "Condividi in un gruppo",
-        "profile": "Condividi sul profilo di un amico",
-        "comingSoonTitle": "Non ancora disponibile",
-        "comingSoonDescription": "Questa opzione di condivisione sarà presto disponibile."
-      },
-      "shareDialog": {
-        "title": "Crea post",
-        "placeholder": "Dì qualcosa su questo...",
-        "placeholderNamed": "Dì qualcosa su questo, {name}...",
-        "defaultName": "Tu",
-        "submit": "Condividi",
-        "cancel": "Annulla",
-        "feedAudience": "Feed",
-        "successTitle": "Post condiviso",
-        "successMessage": "Il tuo aggiornamento è stato aggiunto al tuo feed."
-      },
-      "loading": "Caricamento del post"
-    },
-    "comments": {
-      "label": "Partecipa alla conversazione",
-      "placeholder": "Condividi i tuoi pensieri con la community...",
-      "characterCount": "{count} caratteri",
-      "submit": "Pubblica commento",
-      "submitting": "Pubblicazione...",
-      "loading": "Caricamento dei commenti...",
-      "load": "Carica i commenti",
-      "activationHint": "I commenti vengono caricati quando questa sezione è visibile o quando premi il pulsante.",
-      "success": "Il tuo commento è stato aggiunto.",
-      "error": "Non siamo riusciti ad aggiungere il tuo commento. Riprova.",
-      "validation": "Scrivi un commento prima di pubblicare.",
-      "empty": "Non ci sono ancora commenti. Inizia tu la conversazione!",
-      "reply": "Rispondi",
-      "replying": "Risposta in corso...",
-      "replyPlaceholder": "Scrivi la tua risposta...",
-      "addEmoji": "Aggiungi emoji",
-      "addMedia": "Aggiungi media",
-      "addGif": "Aggiungi GIF",
-      "replySubmit": "Invia risposta",
-      "replySuccess": "La tua risposta è stata aggiunta.",
-      "replyError": "Non siamo riusciti a pubblicare la tua risposta. Riprova.",
-      "replyValidation": "Scrivi una risposta prima di inviarla.",
-      "cancelReply": "Annulla",
-      "replyUnavailable": "Le risposte non sono disponibili al momento.",
-      "reactionUnavailable": "Le reazioni non sono disponibili al momento.",
-      "reactionError": "Non siamo riusciti a reagire a questo commento. Riprova.",
-      "placeholderWithName": "Commenta come {name}",
-      "sort": {
-        "menuAria": "Ordina i commenti",
-        "options": {
-          "relevant": {
-            "label": "Più rilevanti",
-            "description": "Mostra per primi i commenti degli amici e quelli con più interazioni."
-          },
-          "newest": {
-            "label": "Più recenti",
-            "description": "Mostra tutti i commenti dal più recente al meno recente."
-          },
-          "all": {
-            "label": "Tutti i commenti",
-            "description": "Mostra tutti i commenti, incluso lo spam potenziale."
-          }
-        }
-      },
-      "thread": {
-        "showReplies": "Mostra tutte le {count} risposte",
-        "hideReplies": "Nascondi risposte"
-      }
-    },
-    "sidebar": {
-      "weather": {
-        "badge": "Notizie",
-        "title": "Pioggia in arrivo",
-        "subtitle": "Preparati a una giornata piovosa con venti leggeri.",
-        "icon": "🌧️",
-        "location": "Berlino, Germania",
-        "locationLabel": "Posizione",
-        "temperature": "18°C",
-        "temperatureLabel": "Temperatura",
-        "tipLabel": "Consiglio",
-        "tip": "Non dimenticare l'ombrello per restare asciutto.",
-        "loading": "Aggiornamento meteo…",
-        "actions": {
-          "useCurrentLocation": "Usa la posizione attuale"
-        },
-        "errors": {
-          "unavailable": "Gli aggiornamenti meteo non sono disponibili.",
-          "denied": "Non è stato possibile accedere alla tua posizione. Mostriamo la previsione predefinita.",
-          "unsupported": "Il tuo browser non supporta la geolocalizzazione.",
-          "updateFailed": "Impossibile aggiornare il meteo in questo momento."
-        }
-      },
-      "leaderboard": {
-        "title": "Top 3 del quiz",
-        "live": "in diretta",
-        "participants": {
-          "first": {
-            "name": "Bro World",
-            "role": "Team prodotto",
-            "score": "982 pts"
-          },
-          "second": {
-            "name": "Adam Don",
-            "role": "Community",
-            "score": "953 pts"
-          },
-          "third": {
-            "name": "Nina Ko",
-            "role": "Marketing",
-            "score": "917 pts"
-          }
-        }
-      },
-      "rating": {
-        "title": "Panoramica delle valutazioni",
-        "subtitle": "Feedback dei membri della settimana",
-        "average": "4.7",
-        "total": 5,
-        "icon": "⭐",
-        "stars": 5,
-        "categories": {
-          "engagement": {
-            "label": "Coinvolgimento",
-            "value": 92
-          },
-          "content": {
-            "label": "Contenuto",
-            "value": 88
-          },
-          "responsiveness": {
-            "label": "Reattività",
-            "value": 84
-          }
-        }
-      },
-      "title": "Resta connesso",
-      "subtitle": "Risorse per restare aggiornato sulla community di BroWorld.",
-      "widgets": {
-        "community": {
-          "title": "Unisciti alla community",
-          "description": "Chatta con altri builder, condividi idee e ottieni aiuto immediato.",
-          "action": "Apri Discord"
-        },
-        "docs": {
-          "title": "Sfoglia la documentazione",
-          "description": "Scopri come sfruttare al meglio i componenti BroWorld nei tuoi progetti.",
-          "action": "Leggi la documentazione"
-        },
-        "contribute": {
-          "title": "Contribuisci con un articolo",
-          "description": "Condividi le tue conoscenze con la community e aiuta gli altri a crescere.",
-          "action": "Invia contenuti"
-        }
-      }
-    }
-  },
   "register": {
     "email": "Indirizzo email",
     "password": "Password",
@@ -1658,7 +1599,23 @@
     },
     "ecommerce": {
       "title": "E-commerce",
-      "description": "Launch and scale modern retail journeys."
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
     },
     "education": {
       "title": "Education",
@@ -2009,25 +1966,41 @@
           "content": {
             "title": "Gestione dei contenuti",
             "description": "Pianifica, pubblica e archivia articoli, eventi e risorse formative.",
-            "tags": ["Workflow editoriale", "Validazione", "Programmazione"],
+            "tags": [
+              "Workflow editoriale",
+              "Validazione",
+              "Programmazione"
+            ],
             "status": "12 contenuti richiedono una revisione editoriale."
           },
           "community": {
             "title": "Community e moderazione",
             "description": "Configura le regole di moderazione, gestisci segnalazioni e sanzioni.",
-            "tags": ["Segnalazioni", "Sanzioni", "Messaggi privati"],
+            "tags": [
+              "Segnalazioni",
+              "Sanzioni",
+              "Messaggi privati"
+            ],
             "status": "Tempo medio di risposta: 1 h 42."
           },
           "commerce": {
             "title": "Monetizzazione e offerte",
             "description": "Gestisci abbonamenti, codici promozionali e partnership commerciali.",
-            "tags": ["Abbonamenti", "Fatturazione", "Coupon"],
+            "tags": [
+              "Abbonamenti",
+              "Fatturazione",
+              "Coupon"
+            ],
             "status": "Tasso di conversione in aumento del 3,4% questa settimana."
           },
           "governance": {
             "title": "Governance e conformità",
             "description": "Verifica gli accessi, gestisci i ruoli sensibili e prepara i report di conformità.",
-            "tags": ["Audit", "Ruoli", "Tracciabilità"],
+            "tags": [
+              "Audit",
+              "Ruoli",
+              "Tracciabilità"
+            ],
             "status": "Ultimo audit completo effettuato 5 giorni fa."
           }
         }
@@ -2306,6 +2279,208 @@
       "reactPrompt": "Reagisci a questa storia",
       "messageLabel": "Invia un messaggio",
       "send": "Invia"
+    }
+  },
+  "demo": {
+    "ecommerce": {
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewDetails": "View details"
+      },
+      "badges": {
+        "bestseller": "Bestseller",
+        "new": "New arrival",
+        "staffPick": "Team favourite",
+        "limited": "Limited run"
+      },
+      "specifications": {
+        "power": "Power",
+        "material": "Material",
+        "dimensions": "Dimensions",
+        "capacity": "Capacity",
+        "compatibility": "Compatibility",
+        "connectivity": "Connectivity"
+      },
+      "inventory": {
+        "inStock": "{count} units in stock",
+        "lowStock": "Only {count} left",
+        "outOfStock": "Out of stock",
+        "defaultMessage": "Check availability with our team"
+      },
+      "summary": {
+        "title": "Order summary",
+        "quantity": "Qty: {count}",
+        "subtotal": "Subtotal",
+        "tax": "Estimated tax",
+        "shipping": "Shipping",
+        "total": "Total"
+      },
+      "catalog": {
+        "title": "Discover the demo storefront",
+        "subtitle": "Browse modular workspace companions, mindful wellbeing tech, and elevated travel gear in one place.",
+        "backToOverview": "Return to overview",
+        "goToCart": "View cart ({count})",
+        "filters": {
+          "all": "All categories"
+        },
+        "searchLabel": "Search catalog",
+        "emptyTitle": "No products match",
+        "emptySubtitle": "We couldn’t find any items matching “{query}”. Reset your filters to explore the full demo range.",
+        "resetFilters": "Reset filters",
+        "breadcrumb": "Catalog"
+      },
+      "product": {
+        "rating": "{rating} ★ ({reviews} reviews)",
+        "quantityLabel": "Quantity",
+        "viewCart": "View cart",
+        "detailsTitle": "Why it works",
+        "specificationsTitle": "Specifications",
+        "goToCheckout": "Proceed to checkout",
+        "backToCatalog": "Back to catalog"
+      },
+      "cart": {
+        "title": "Your cart",
+        "subtitle": "Keep building your bundle or head straight to checkout when you’re ready.",
+        "breadcrumb": "Cart",
+        "table": {
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "Unit price",
+          "total": "Line total",
+          "actions": "Remove item"
+        },
+        "nextStepsTitle": "Next steps",
+        "nextStepsDescription": "Complete checkout or continue exploring the catalog for more add-ons.",
+        "continueShopping": "Continue shopping",
+        "proceedToCheckout": "Proceed to checkout",
+        "checkoutCta": "Go to checkout",
+        "clearCart": "Clear cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add products from the catalog to see them listed here.",
+        "shopNow": "Shop the catalog"
+      },
+      "checkout": {
+        "title": "Secure checkout",
+        "subtitle": "Confirm delivery, payment, and review details to wrap up your demo order.",
+        "breadcrumb": "Checkout",
+        "empty": "There are no items in your cart yet.",
+        "shopLink": "Browse catalog",
+        "steps": {
+          "shipping": "Shipping",
+          "shippingSubtitle": "Address and delivery",
+          "payment": "Payment",
+          "paymentSubtitle": "Billing details",
+          "review": "Review",
+          "reviewSubtitle": "Confirm & submit"
+        },
+        "shippingTitle": "Delivery information",
+        "paymentTitle": "Payment method",
+        "reviewTitle": "Final review",
+        "reviewShipping": "Shipping",
+        "reviewPayment": "Payment",
+        "reviewHint": "Everything look good? You can always return to previous steps before placing the order.",
+        "backToCart": "Back to cart",
+        "continueToPayment": "Continue to payment",
+        "backToShipping": "Back to shipping",
+        "reviewOrder": "Review order",
+        "summaryContinue": "Review order",
+        "backToPayment": "Back to payment",
+        "placeOrder": "Place order",
+        "browseMore": "Browse more products",
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email",
+          "address": "Address",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "delivery": "Delivery option",
+          "notes": "Order notes",
+          "cardNumber": "Card number",
+          "expiry": "Expiry",
+          "cvc": "CVC",
+          "saveCard": "Securely save this card for next time"
+        },
+        "delivery": {
+          "standard": "Standard (free, 3-5 days)",
+          "express": "Express (paid, 24-48h)"
+        },
+        "exampleOrdersTitle": "Recent demo orders",
+        "maskedCard": "Visa ending ••••{last4}"
+      },
+      "orders": {
+        "status": {
+          "processing": "Processing",
+          "fulfilled": "Fulfilled",
+          "cancelled": "Cancelled",
+          "draft": "Draft"
+        },
+        "primary": {
+          "customer": "Jamie Ortiz · Paris, France",
+          "notes": "Repeat customer restock of workplace favourites."
+        },
+        "restock": {
+          "customer": "Taylor Singh · Copenhagen, Denmark",
+          "notes": "Event gifting set scheduled for warehouse dispatch."
+        }
+      },
+      "categories": {
+        "workspace": {
+          "name": "Workspace",
+          "description": "Lighting, ergonomics, and focus rituals for hybrid teams."
+        },
+        "wellbeing": {
+          "name": "Wellbeing",
+          "description": "Support healthy routines with adaptive tech and insights."
+        },
+        "travel": {
+          "name": "Travel",
+          "description": "Go-anywhere carry essentials for the modern explorer."
+        }
+      },
+      "products": {
+        "auroraDeskLamp": {
+          "name": "Aurora adaptive desk lamp",
+          "summary": "Dynamic lighting scenes that sync with circadian rhythms and deep work blocks.",
+          "description": "Aurora blends ambient LEDs with warm task lighting, adaptive brightness, and voice control. Teams personalise presets for focus sessions or cosy after-hours.",
+          "specs": {
+            "power": "18W LED array",
+            "material": "Anodised aluminium and recycled polymer",
+            "dimensions": "45 × 12 × 38 cm"
+          }
+        },
+        "focusHubPro": {
+          "name": "Focus Hub Pro",
+          "summary": "Modular workspace dock with wireless charging, acoustic shielding, and ambient soundscapes.",
+          "description": "Focus Hub Pro anchors hot desks with integrated power, device cradles, and configurable dividers. Built-in soundscapes and white noise adapt to busy floors.",
+          "specs": {
+            "connectivity": "Dual USB-C, 2× Qi wireless pads, Wi-Fi 6 hub",
+            "dimensions": "52 × 22 × 18 cm",
+            "material": "Felt acoustic panels and alloy frame"
+          }
+        },
+        "pulseSmartBottle": {
+          "name": "Pulse smart hydration bottle",
+          "summary": "Hydration tracking with adaptive reminders, mineral insights, and team challenges.",
+          "description": "Pulse keeps crews energised with sip detection, mineral analysis, and app nudges. Sync hydration streaks with wellbeing programmes to boost morale.",
+          "specs": {
+            "capacity": "750 ml",
+            "material": "Double-wall stainless steel",
+            "compatibility": "iOS, Android, and BroWorld wellbeing dashboards"
+          }
+        },
+        "atlasWeekender": {
+          "name": "Atlas recycled weekender",
+          "summary": "Cabin-friendly carry crafted from regenerated ocean plastic with modular packing cubes.",
+          "description": "Atlas keeps teams travel-ready with quick-access tech pockets, convertible straps, and padded laptop storage. Each bag reuses 28 plastic bottles.",
+          "specs": {
+            "capacity": "38 L",
+            "material": "Recycled ocean-bound nylon",
+            "dimensions": "55 × 26 × 24 cm"
+          }
+        }
+      }
     }
   }
 }

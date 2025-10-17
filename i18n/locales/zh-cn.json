@@ -178,142 +178,6 @@
     "ForumDiscord": "加入论坛"
   },
   "blog": {
-    "sidebar": {
-      "weather": {
-        "badge": "实时",
-        "title": "Bro World 总部",
-        "subtitle": "记得带上雨伞",
-        "icon": "solar:sun-2-bold",
-        "location": "法国巴黎",
-        "temperature": "18°",
-        "tip": "下午预计将有最高 12 公里/小时的阵风。",
-        "locationLabel": "位置",
-        "temperatureLabel": "气温",
-        "tipLabel": "提示"
-      },
-      "leaderboard": {
-        "title": "玩家榜",
-        "live": "实时排名",
-        "participants": {
-          "first": {
-            "name": "Alex Carter",
-            "role": "策略师",
-            "score": "982"
-          },
-          "second": {
-            "name": "Mia Laurent",
-            "role": "支援",
-            "score": "945"
-          },
-          "third": {
-            "name": "Leo Nakamura",
-            "role": "侦察",
-            "score": "918"
-          }
-        }
-      },
-      "rating": {
-        "title": "社区评分",
-        "subtitle": "Bro World 体验",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
-        "stars": 5,
-        "categories": {
-          "ui": {
-            "label": "界面",
-            "value": 4.9
-          },
-          "gameplay": {
-            "label": "玩法",
-            "value": 4.8
-          },
-          "community": {
-            "label": "社区",
-            "value": 4.9
-          }
-        }
-      }
-    }
-  },
-  "toc": {
-    "title": "本页",
-    "StarOnGitHub": "GitHub 收藏",
-    "CreateIssues": "创建问题",
-    "JoinDiscord": "加入 Discord",
-    "Forum": "社区",
-    "FollowOnX": "关注 X",
-    "FollowOnBluesky": "关注 Bluesky"
-  },
-  "page": {
-    "home": {
-      "SupportUs": "支持我们",
-      "AllComponents": "所有组件",
-      "OpenSourceComponentsToBuild": "开源组件构建",
-      "Stunning": "惊人的",
-      "Beautiful": "漂亮的",
-      "WebsitesUsingVueAndNuxt": "Vue 和 Nuxt 的网站",
-      "IntegrateWithYourFavouriteUIframework": "与您最喜欢的UI框架集成",
-      "Features": "功能特性",
-      "CheckOutSomeExamples": "案例展示",
-      "3DCardHoverEffect": "鼠标悬停3D效果卡片",
-      "RadiantText": "镭射字",
-      "LovedByCommunity": "深受喜爱的社区",
-      "WhatAreYouWaitingFor": "你还在等什么?",
-      "GetStartedAndStartBuildingAwesomeUI": "开始构建出色的 UI 吧",
-      "GetStarted": "开始"
-    }
-  },
-  "messenger": {
-    "searchPlaceholder": "搜索会话",
-    "emptyList": "暂无会话",
-    "unknownParticipant": "未知",
-    "emptyTitle": "选择一个会话",
-    "emptyDescription": "从列表中选择一个会话以阅读并发送消息。",
-    "emptyCtaLabel": "开始会话",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "输入消息...",
-    "sendLabel": "发送",
-    "sendingLabel": "正在发送…",
-    "sendErrorStatus": "未送达",
-    "shortcutsHint": "按 Ctrl+Enter 发送",
-    "noMessages": "暂无消息",
-    "loadOlder": "加载更早的消息",
-    "participantsLabel": "{count} 位参与者"
-  },
-  "auth": {
-    "Account": "账户",
-    "Login": "登录",
-    "Register": "注册",
-    "usernameOrEmail": "邮箱地址或用户名",
-    "password": "密码",
-    "showPassword": "显示密码",
-    "hidePassword": "隐藏密码",
-    "signIn": "登录",
-    "signUpPrompt": "还没有账号？",
-    "signUp": "立即注册",
-    "signOut": "退出登录",
-    "forgotPassword": "忘记密码？",
-    "requiredError": "请输入邮箱和密码。",
-    "invalidError": "这些信息无法登录，请重试。",
-    "successTitle": "欢迎回来",
-    "success": "您已成功登录。",
-    "errorTitle": "登录失败",
-    "errorGeneric": "登录时出现问题。",
-    "logoutMessage": "您已成功退出登录。",
-    "sessionExpired": "您的会话已过期，请重新登录。",
-    "socialTitle": "使用常用账号快速登录",
-    "socialSubtitle": "我们会跳转到第三方完成认证。",
-    "social": {
-      "google": "使用 Google 继续",
-      "github": "使用 GitHub 继续",
-      "microsoft": "使用 Microsoft 继续"
-    }
-  },
-  "register": {
-    "errorTitle": "创建账户失败"
-  },
-  "blog": {
     "hero": {
       "eyebrow": "社区动态",
       "title": "了解 BroWorld 的最新动态",
@@ -613,6 +477,83 @@
         }
       }
     }
+  },
+  "toc": {
+    "title": "本页",
+    "StarOnGitHub": "GitHub 收藏",
+    "CreateIssues": "创建问题",
+    "JoinDiscord": "加入 Discord",
+    "Forum": "社区",
+    "FollowOnX": "关注 X",
+    "FollowOnBluesky": "关注 Bluesky"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "支持我们",
+      "AllComponents": "所有组件",
+      "OpenSourceComponentsToBuild": "开源组件构建",
+      "Stunning": "惊人的",
+      "Beautiful": "漂亮的",
+      "WebsitesUsingVueAndNuxt": "Vue 和 Nuxt 的网站",
+      "IntegrateWithYourFavouriteUIframework": "与您最喜欢的UI框架集成",
+      "Features": "功能特性",
+      "CheckOutSomeExamples": "案例展示",
+      "3DCardHoverEffect": "鼠标悬停3D效果卡片",
+      "RadiantText": "镭射字",
+      "LovedByCommunity": "深受喜爱的社区",
+      "WhatAreYouWaitingFor": "你还在等什么?",
+      "GetStartedAndStartBuildingAwesomeUI": "开始构建出色的 UI 吧",
+      "GetStarted": "开始"
+    }
+  },
+  "messenger": {
+    "searchPlaceholder": "搜索会话",
+    "emptyList": "暂无会话",
+    "unknownParticipant": "未知",
+    "emptyTitle": "选择一个会话",
+    "emptyDescription": "从列表中选择一个会话以阅读并发送消息。",
+    "emptyCtaLabel": "开始会话",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "输入消息...",
+    "sendLabel": "发送",
+    "sendingLabel": "正在发送…",
+    "sendErrorStatus": "未送达",
+    "shortcutsHint": "按 Ctrl+Enter 发送",
+    "noMessages": "暂无消息",
+    "loadOlder": "加载更早的消息",
+    "participantsLabel": "{count} 位参与者"
+  },
+  "auth": {
+    "Account": "账户",
+    "Login": "登录",
+    "Register": "注册",
+    "usernameOrEmail": "邮箱地址或用户名",
+    "password": "密码",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
+    "signIn": "登录",
+    "signUpPrompt": "还没有账号？",
+    "signUp": "立即注册",
+    "signOut": "退出登录",
+    "forgotPassword": "忘记密码？",
+    "requiredError": "请输入邮箱和密码。",
+    "invalidError": "这些信息无法登录，请重试。",
+    "successTitle": "欢迎回来",
+    "success": "您已成功登录。",
+    "errorTitle": "登录失败",
+    "errorGeneric": "登录时出现问题。",
+    "logoutMessage": "您已成功退出登录。",
+    "sessionExpired": "您的会话已过期，请重新登录。",
+    "socialTitle": "使用常用账号快速登录",
+    "socialSubtitle": "我们会跳转到第三方完成认证。",
+    "social": {
+      "google": "使用 Google 继续",
+      "github": "使用 GitHub 继续",
+      "microsoft": "使用 Microsoft 继续"
+    }
+  },
+  "register": {
+    "errorTitle": "创建账户失败"
   },
   "pages": {
     "profile": {
@@ -1456,7 +1397,23 @@
     },
     "ecommerce": {
       "title": "E-commerce",
-      "description": "Launch and scale modern retail journeys."
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
     },
     "education": {
       "title": "Education",
@@ -1807,25 +1764,41 @@
           "content": {
             "title": "内容管理",
             "description": "规划、发布与归档文章、活动以及学习资源。",
-            "tags": ["内容流程", "审核", "排期"],
+            "tags": [
+              "内容流程",
+              "审核",
+              "排期"
+            ],
             "status": "有12条内容等待编辑审核。"
           },
           "community": {
             "title": "社区与审核",
             "description": "配置审核规则，管理举报与处罚。",
-            "tags": ["举报", "处罚", "私信"],
+            "tags": [
+              "举报",
+              "处罚",
+              "私信"
+            ],
             "status": "平均响应时间：1小时42分。"
           },
           "commerce": {
             "title": "变现与优惠",
             "description": "管理订阅、优惠码和商业合作。",
-            "tags": ["订阅", "计费", "优惠券"],
+            "tags": [
+              "订阅",
+              "计费",
+              "优惠券"
+            ],
             "status": "本周转化率提升3.4%。"
           },
           "governance": {
             "title": "治理与合规",
             "description": "审计访问权限，管理敏感角色并准备合规报告。",
-            "tags": ["审计", "角色", "可追溯性"],
+            "tags": [
+              "审计",
+              "角色",
+              "可追溯性"
+            ],
             "status": "最近一次完整审计在5天前完成。"
           }
         }
@@ -2104,6 +2077,208 @@
       "reactPrompt": "对这个快拍做出反应",
       "messageLabel": "发送消息",
       "send": "发送"
+    }
+  },
+  "demo": {
+    "ecommerce": {
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewDetails": "View details"
+      },
+      "badges": {
+        "bestseller": "Bestseller",
+        "new": "New arrival",
+        "staffPick": "Team favourite",
+        "limited": "Limited run"
+      },
+      "specifications": {
+        "power": "Power",
+        "material": "Material",
+        "dimensions": "Dimensions",
+        "capacity": "Capacity",
+        "compatibility": "Compatibility",
+        "connectivity": "Connectivity"
+      },
+      "inventory": {
+        "inStock": "{count} units in stock",
+        "lowStock": "Only {count} left",
+        "outOfStock": "Out of stock",
+        "defaultMessage": "Check availability with our team"
+      },
+      "summary": {
+        "title": "Order summary",
+        "quantity": "Qty: {count}",
+        "subtotal": "Subtotal",
+        "tax": "Estimated tax",
+        "shipping": "Shipping",
+        "total": "Total"
+      },
+      "catalog": {
+        "title": "Discover the demo storefront",
+        "subtitle": "Browse modular workspace companions, mindful wellbeing tech, and elevated travel gear in one place.",
+        "backToOverview": "Return to overview",
+        "goToCart": "View cart ({count})",
+        "filters": {
+          "all": "All categories"
+        },
+        "searchLabel": "Search catalog",
+        "emptyTitle": "No products match",
+        "emptySubtitle": "We couldn’t find any items matching “{query}”. Reset your filters to explore the full demo range.",
+        "resetFilters": "Reset filters",
+        "breadcrumb": "Catalog"
+      },
+      "product": {
+        "rating": "{rating} ★ ({reviews} reviews)",
+        "quantityLabel": "Quantity",
+        "viewCart": "View cart",
+        "detailsTitle": "Why it works",
+        "specificationsTitle": "Specifications",
+        "goToCheckout": "Proceed to checkout",
+        "backToCatalog": "Back to catalog"
+      },
+      "cart": {
+        "title": "Your cart",
+        "subtitle": "Keep building your bundle or head straight to checkout when you’re ready.",
+        "breadcrumb": "Cart",
+        "table": {
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "Unit price",
+          "total": "Line total",
+          "actions": "Remove item"
+        },
+        "nextStepsTitle": "Next steps",
+        "nextStepsDescription": "Complete checkout or continue exploring the catalog for more add-ons.",
+        "continueShopping": "Continue shopping",
+        "proceedToCheckout": "Proceed to checkout",
+        "checkoutCta": "Go to checkout",
+        "clearCart": "Clear cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add products from the catalog to see them listed here.",
+        "shopNow": "Shop the catalog"
+      },
+      "checkout": {
+        "title": "Secure checkout",
+        "subtitle": "Confirm delivery, payment, and review details to wrap up your demo order.",
+        "breadcrumb": "Checkout",
+        "empty": "There are no items in your cart yet.",
+        "shopLink": "Browse catalog",
+        "steps": {
+          "shipping": "Shipping",
+          "shippingSubtitle": "Address and delivery",
+          "payment": "Payment",
+          "paymentSubtitle": "Billing details",
+          "review": "Review",
+          "reviewSubtitle": "Confirm & submit"
+        },
+        "shippingTitle": "Delivery information",
+        "paymentTitle": "Payment method",
+        "reviewTitle": "Final review",
+        "reviewShipping": "Shipping",
+        "reviewPayment": "Payment",
+        "reviewHint": "Everything look good? You can always return to previous steps before placing the order.",
+        "backToCart": "Back to cart",
+        "continueToPayment": "Continue to payment",
+        "backToShipping": "Back to shipping",
+        "reviewOrder": "Review order",
+        "summaryContinue": "Review order",
+        "backToPayment": "Back to payment",
+        "placeOrder": "Place order",
+        "browseMore": "Browse more products",
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email",
+          "address": "Address",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "delivery": "Delivery option",
+          "notes": "Order notes",
+          "cardNumber": "Card number",
+          "expiry": "Expiry",
+          "cvc": "CVC",
+          "saveCard": "Securely save this card for next time"
+        },
+        "delivery": {
+          "standard": "Standard (free, 3-5 days)",
+          "express": "Express (paid, 24-48h)"
+        },
+        "exampleOrdersTitle": "Recent demo orders",
+        "maskedCard": "Visa ending ••••{last4}"
+      },
+      "orders": {
+        "status": {
+          "processing": "Processing",
+          "fulfilled": "Fulfilled",
+          "cancelled": "Cancelled",
+          "draft": "Draft"
+        },
+        "primary": {
+          "customer": "Jamie Ortiz · Paris, France",
+          "notes": "Repeat customer restock of workplace favourites."
+        },
+        "restock": {
+          "customer": "Taylor Singh · Copenhagen, Denmark",
+          "notes": "Event gifting set scheduled for warehouse dispatch."
+        }
+      },
+      "categories": {
+        "workspace": {
+          "name": "Workspace",
+          "description": "Lighting, ergonomics, and focus rituals for hybrid teams."
+        },
+        "wellbeing": {
+          "name": "Wellbeing",
+          "description": "Support healthy routines with adaptive tech and insights."
+        },
+        "travel": {
+          "name": "Travel",
+          "description": "Go-anywhere carry essentials for the modern explorer."
+        }
+      },
+      "products": {
+        "auroraDeskLamp": {
+          "name": "Aurora adaptive desk lamp",
+          "summary": "Dynamic lighting scenes that sync with circadian rhythms and deep work blocks.",
+          "description": "Aurora blends ambient LEDs with warm task lighting, adaptive brightness, and voice control. Teams personalise presets for focus sessions or cosy after-hours.",
+          "specs": {
+            "power": "18W LED array",
+            "material": "Anodised aluminium and recycled polymer",
+            "dimensions": "45 × 12 × 38 cm"
+          }
+        },
+        "focusHubPro": {
+          "name": "Focus Hub Pro",
+          "summary": "Modular workspace dock with wireless charging, acoustic shielding, and ambient soundscapes.",
+          "description": "Focus Hub Pro anchors hot desks with integrated power, device cradles, and configurable dividers. Built-in soundscapes and white noise adapt to busy floors.",
+          "specs": {
+            "connectivity": "Dual USB-C, 2× Qi wireless pads, Wi-Fi 6 hub",
+            "dimensions": "52 × 22 × 18 cm",
+            "material": "Felt acoustic panels and alloy frame"
+          }
+        },
+        "pulseSmartBottle": {
+          "name": "Pulse smart hydration bottle",
+          "summary": "Hydration tracking with adaptive reminders, mineral insights, and team challenges.",
+          "description": "Pulse keeps crews energised with sip detection, mineral analysis, and app nudges. Sync hydration streaks with wellbeing programmes to boost morale.",
+          "specs": {
+            "capacity": "750 ml",
+            "material": "Double-wall stainless steel",
+            "compatibility": "iOS, Android, and BroWorld wellbeing dashboards"
+          }
+        },
+        "atlasWeekender": {
+          "name": "Atlas recycled weekender",
+          "summary": "Cabin-friendly carry crafted from regenerated ocean plastic with modular packing cubes.",
+          "description": "Atlas keeps teams travel-ready with quick-access tech pockets, convertible straps, and padded laptop storage. Each bag reuses 28 plastic bottles.",
+          "specs": {
+            "capacity": "38 L",
+            "material": "Recycled ocean-bound nylon",
+            "dimensions": "55 × 26 × 24 cm"
+          }
+        }
+      }
     }
   }
 }
