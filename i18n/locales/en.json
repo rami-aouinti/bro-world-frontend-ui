@@ -1347,7 +1347,52 @@
         "allDay": "All-day",
         "upcoming": "Upcoming events",
         "emptyTitle": "No events scheduled",
-        "emptyDescription": "Add events to your calendar to see them here."
+        "emptyDescription": "Add events to your calendar to see them here.",
+        "actions": {
+          "add": "New event",
+          "edit": "Edit",
+          "delete": "Delete"
+        },
+        "form": {
+          "createTitle": "Create event",
+          "createDescription": "Plan a new moment directly from your calendar view.",
+          "editTitle": "Edit event",
+          "editDescription": "Update the details for this calendar entry.",
+          "fields": {
+            "title": "Title",
+            "startDate": "Start date",
+            "endDate": "End date",
+            "startTime": "Start time",
+            "endTime": "End time",
+            "allDay": "All-day event",
+            "color": "Category",
+            "location": "Location",
+            "description": "Description",
+            "isPrivate": "Mark as private"
+          },
+          "actions": {
+            "cancel": "Cancel",
+            "create": "Create event",
+            "save": "Save changes"
+          },
+          "validation": {
+            "title": "Give your event a title.",
+            "startDate": "Select when the event begins.",
+            "startTime": "Choose a start time.",
+            "endTime": "End time must be after the start time.",
+            "range": "The end of the event must be after the start."
+          }
+        },
+        "delete": {
+          "title": "Delete event",
+          "description": "Are you sure you want to delete \"{title}\"? This action cannot be undone."
+        },
+        "colors": {
+          "meetings": "Meetings",
+          "personal": "Personal",
+          "travel": "Travel",
+          "focus": "Focus"
+        }
       },
       "labels": {
         "email": "Email",

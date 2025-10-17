@@ -289,7 +289,52 @@
         "allDay": "Tutto il giorno",
         "upcoming": "Prossimi eventi",
         "emptyTitle": "Nessun evento programmato",
-        "emptyDescription": "Aggiungi eventi al tuo calendario per vederli qui."
+        "emptyDescription": "Aggiungi eventi al tuo calendario per vederli qui.",
+        "actions": {
+          "add": "Nuovo evento",
+          "edit": "Modifica",
+          "delete": "Elimina"
+        },
+        "form": {
+          "createTitle": "Crea evento",
+          "createDescription": "Pianifica un nuovo momento direttamente dalla vista calendario.",
+          "editTitle": "Modifica evento",
+          "editDescription": "Aggiorna i dettagli di questo evento.",
+          "fields": {
+            "title": "Titolo",
+            "startDate": "Data di inizio",
+            "endDate": "Data di fine",
+            "startTime": "Ora di inizio",
+            "endTime": "Ora di fine",
+            "allDay": "Evento per tutto il giorno",
+            "color": "Categoria",
+            "location": "Luogo",
+            "description": "Descrizione",
+            "isPrivate": "Segna come privato"
+          },
+          "actions": {
+            "cancel": "Annulla",
+            "create": "Crea evento",
+            "save": "Salva modifiche"
+          },
+          "validation": {
+            "title": "Aggiungi un titolo all'evento.",
+            "startDate": "Seleziona quando inizia l'evento.",
+            "startTime": "Scegli un'ora di inizio.",
+            "endTime": "L'ora di fine deve essere successiva a quella di inizio.",
+            "range": "La fine dell'evento deve essere successiva all'inizio."
+          }
+        },
+        "delete": {
+          "title": "Elimina evento",
+          "description": "Sei sicuro di voler eliminare \"{title}\"? Questa azione non può essere annullata."
+        },
+        "colors": {
+          "meetings": "Riunioni",
+          "personal": "Personale",
+          "travel": "Viaggi",
+          "focus": "Concentrazione"
+        }
       },
       "labels": {
         "email": "Email",
