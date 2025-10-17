@@ -178,139 +178,6 @@
     "ForumDiscord": "انضم إلى المنتدى"
   },
   "blog": {
-    "sidebar": {
-      "weather": {
-        "badge": "مباشر",
-        "title": "مقر Bro World",
-        "subtitle": "احفظ المظلة بالقرب منك",
-        "icon": "solar:sun-2-bold",
-        "location": "باريس، فرنسا",
-        "temperature": "18°",
-        "tip": "من المتوقع هبات رياح تصل إلى 12 كم/س بعد الظهر.",
-        "locationLabel": "الموقع",
-        "temperatureLabel": "الحرارة",
-        "tipLabel": "نصيحة"
-      },
-      "leaderboard": {
-        "title": "أفضل اللاعبين",
-        "live": "تصنيف مباشر",
-        "participants": {
-          "first": {
-            "name": "أليكس كارتر",
-            "role": "استراتيجي",
-            "score": "982"
-          },
-          "second": {
-            "name": "ميا لوران",
-            "role": "دعم",
-            "score": "945"
-          },
-          "third": {
-            "name": "ليو ناكامورا",
-            "role": "كاشف",
-            "score": "918"
-          }
-        }
-      },
-      "rating": {
-        "title": "تقييم المجتمع",
-        "subtitle": "تجربة Bro World",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
-        "stars": 5,
-        "categories": {
-          "ui": {
-            "label": "الواجهة",
-            "value": 4.9
-          },
-          "gameplay": {
-            "label": "أسلوب اللعب",
-            "value": 4.8
-          },
-          "community": {
-            "label": "المجتمع",
-            "value": 4.9
-          }
-        }
-      }
-    }
-  },
-  "toc": {
-    "title": "في هذه الصفحة",
-    "StarOnGitHub": "أضف نجمة على GitHub",
-    "CreateIssues": "أنشئ بلاغًا",
-    "JoinDiscord": "انضم إلى ديسكورد",
-    "Forum": "المنتدى",
-    "FollowOnX": "تابعنا على X",
-    "FollowOnBluesky": "تابعنا على Bluesky"
-  },
-  "page": {
-    "home": {
-      "SupportUs": "ادعمنا",
-      "AllComponents": "جميع المكوّنات",
-      "OpenSourceComponentsToBuild": "مكوّنات مفتوحة المصدر لتبني بها",
-      "Stunning": "مذهلة",
-      "Beautiful": "جميلة",
-      "WebsitesUsingVueAndNuxt": "مواقع باستخدام Vue وNuxt",
-      "IntegrateWithYourFavouriteUIframework": "ادمج مع إطار الواجهة المفضل لديك",
-      "Features": "الميزات",
-      "CheckOutSomeExamples": "اطلع على بعض الأمثلة!",
-      "3DCardHoverEffect": "تأثير تحويم بطاقة ثلاثية الأبعاد",
-      "RadiantText": "نص متألق",
-      "LovedByCommunity": "محبوب من المجتمع",
-      "WhatAreYouWaitingFor": "ما الذي تنتظره؟",
-      "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
-      "GetStarted": "ابدأ الآن"
-    }
-  },
-  "messenger": {
-    "searchPlaceholder": "ابحث في المحادثات",
-    "emptyList": "لا توجد محادثات بعد",
-    "unknownParticipant": "غير معروف",
-    "emptyTitle": "اختر محادثة",
-    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
-    "emptyCtaLabel": "ابدأ محادثة",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "اكتب رسالة...",
-    "sendLabel": "إرسال",
-    "sendingLabel": "جارٍ الإرسال...",
-    "sendErrorStatus": "لم يتم التسليم",
-    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
-    "noMessages": "لا توجد رسائل بعد",
-    "loadOlder": "تحميل الرسائل السابقة",
-    "participantsLabel": "{count} مشارك"
-  },
-  "auth": {
-    "Account": "الحساب",
-    "Login": "تسجيل الدخول",
-    "Register": "إنشاء حساب",
-    "usernameOrEmail": "البريد الإلكتروني أو اسم المستخدم",
-    "password": "كلمة المرور",
-    "showPassword": "إظهار كلمة المرور",
-    "hidePassword": "إخفاء كلمة المرور",
-    "signIn": "تسجيل الدخول",
-    "signUpPrompt": "لا تملك حسابًا؟",
-    "signUp": "إنشاء حساب",
-    "signOut": "تسجيل الخروج",
-    "forgotPassword": "هل نسيت كلمة المرور؟",
-    "requiredError": "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
-    "invalidError": "تعذر تسجيل الدخول بهذه البيانات. حاول مرة أخرى.",
-    "successTitle": "مرحبًا بعودتك",
-    "success": "تم تسجيل دخولك بنجاح.",
-    "errorTitle": "فشل تسجيل الدخول",
-    "errorGeneric": "حدث خطأ أثناء تسجيل الدخول.",
-    "logoutMessage": "تم تسجيل خروجك بنجاح.",
-    "sessionExpired": "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى.",
-    "socialTitle": "سجّل الدخول باستخدام مزودك المفضل",
-    "socialSubtitle": "سنقوم بإعادة توجيهك لإكمال عملية المصادقة.",
-    "social": {
-      "google": "متابعة باستخدام Google",
-      "github": "متابعة باستخدام GitHub",
-      "microsoft": "متابعة باستخدام Microsoft"
-    }
-  },
-  "blog": {
     "hero": {
       "eyebrow": "تغذية المجتمع",
       "title": "اطلع على ما يحدث في BroWorld",
@@ -608,6 +475,80 @@
           "action": "إرسال محتوى"
         }
       }
+    }
+  },
+  "toc": {
+    "title": "في هذه الصفحة",
+    "StarOnGitHub": "أضف نجمة على GitHub",
+    "CreateIssues": "أنشئ بلاغًا",
+    "JoinDiscord": "انضم إلى ديسكورد",
+    "Forum": "المنتدى",
+    "FollowOnX": "تابعنا على X",
+    "FollowOnBluesky": "تابعنا على Bluesky"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "ادعمنا",
+      "AllComponents": "جميع المكوّنات",
+      "OpenSourceComponentsToBuild": "مكوّنات مفتوحة المصدر لتبني بها",
+      "Stunning": "مذهلة",
+      "Beautiful": "جميلة",
+      "WebsitesUsingVueAndNuxt": "مواقع باستخدام Vue وNuxt",
+      "IntegrateWithYourFavouriteUIframework": "ادمج مع إطار الواجهة المفضل لديك",
+      "Features": "الميزات",
+      "CheckOutSomeExamples": "اطلع على بعض الأمثلة!",
+      "3DCardHoverEffect": "تأثير تحويم بطاقة ثلاثية الأبعاد",
+      "RadiantText": "نص متألق",
+      "LovedByCommunity": "محبوب من المجتمع",
+      "WhatAreYouWaitingFor": "ما الذي تنتظره؟",
+      "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
+      "GetStarted": "ابدأ الآن"
+    }
+  },
+  "messenger": {
+    "searchPlaceholder": "ابحث في المحادثات",
+    "emptyList": "لا توجد محادثات بعد",
+    "unknownParticipant": "غير معروف",
+    "emptyTitle": "اختر محادثة",
+    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
+    "emptyCtaLabel": "ابدأ محادثة",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "اكتب رسالة...",
+    "sendLabel": "إرسال",
+    "sendingLabel": "جارٍ الإرسال...",
+    "sendErrorStatus": "لم يتم التسليم",
+    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
+    "noMessages": "لا توجد رسائل بعد",
+    "loadOlder": "تحميل الرسائل السابقة",
+    "participantsLabel": "{count} مشارك"
+  },
+  "auth": {
+    "Account": "الحساب",
+    "Login": "تسجيل الدخول",
+    "Register": "إنشاء حساب",
+    "usernameOrEmail": "البريد الإلكتروني أو اسم المستخدم",
+    "password": "كلمة المرور",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "signUpPrompt": "لا تملك حسابًا؟",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "requiredError": "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+    "invalidError": "تعذر تسجيل الدخول بهذه البيانات. حاول مرة أخرى.",
+    "successTitle": "مرحبًا بعودتك",
+    "success": "تم تسجيل دخولك بنجاح.",
+    "errorTitle": "فشل تسجيل الدخول",
+    "errorGeneric": "حدث خطأ أثناء تسجيل الدخول.",
+    "logoutMessage": "تم تسجيل خروجك بنجاح.",
+    "sessionExpired": "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى.",
+    "socialTitle": "سجّل الدخول باستخدام مزودك المفضل",
+    "socialSubtitle": "سنقوم بإعادة توجيهك لإكمال عملية المصادقة.",
+    "social": {
+      "google": "متابعة باستخدام Google",
+      "github": "متابعة باستخدام GitHub",
+      "microsoft": "متابعة باستخدام Microsoft"
     }
   },
   "register": {
@@ -1486,6 +1427,113 @@
         "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
         "button": "Talk to us",
         "buttonAria": "Open the contact page"
+      },
+      "openings": {
+        "title": "Current openings",
+        "subtitle": "Explore the roles we're actively hiring for and get a feel for the work you'll lead from day one.",
+        "updated": "Updated weekly",
+        "updatedLabel": "Job listings refresh cadence",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Product Design",
+            "location": "Paris, France (Hybrid)",
+            "type": "Full-time",
+            "salary": "€58k - €72k · 0.05% equity",
+            "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Senior Product Designer role",
+              "hint": "Portfolio link required"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Product & AI",
+            "location": "Remote - EMEA",
+            "type": "Full-time",
+            "salary": "€70k - €90k · bonus eligible",
+            "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the AI Recruiter Strategist role",
+              "hint": "Experience with LLM workflows"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "Full-time",
+            "salary": "€65k base · 50% variable",
+            "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Enterprise Sales Lead role",
+              "hint": "French & English proficiency"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "Full-time",
+            "salary": "€45k - €55k",
+            "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Customer Success Partner role",
+              "hint": "Experience supporting HRIS/ATS rollouts"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Submit your application",
+        "subtitle": "Share a few details and our talent team will reach out with next steps.",
+        "highlights": [
+          "A tailored walkthrough of BroWorld based on your hiring maturity.",
+          "Introductions to the team members you'll collaborate with.",
+          "A response within two business days—even if we are not moving forward yet."
+        ],
+        "form": {
+          "nameLabel": "Full name",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Work email",
+          "emailPlaceholder": "elisa.dupont(at)company.com",
+          "roleLabel": "Role you're interested in",
+          "rolePlaceholder": "e.g. Product Designer",
+          "messageLabel": "Tell us about your experience",
+          "messagePlaceholder": "Share recent projects, achievements, or what excites you about BroWorld.",
+          "consentLabel": "I agree to be contacted about current and future opportunities at BroWorld.",
+          "submit": "Send application",
+          "success": "Thank you! Our talent team will review your profile and be in touch shortly.",
+          "rules": {
+            "required": "This field is required.",
+            "email": "Enter a valid email address.",
+            "consent": "Please confirm we can contact you."
+          }
+        }
       }
     },
     "game": {
@@ -2185,25 +2233,41 @@
           "content": {
             "title": "إدارة المحتوى",
             "description": "خطط للمقالات والفعاليات والموارد التعليمية وانشرها أو أرشفها.",
-            "tags": ["سير عمل تحريري", "مراجعة", "جدولة"],
+            "tags": [
+              "سير عمل تحريري",
+              "مراجعة",
+              "جدولة"
+            ],
             "status": "هناك 12 عنصراً بحاجة إلى مراجعة تحريرية."
           },
           "community": {
             "title": "المجتمع والإشراف",
             "description": "اضبط قواعد الإشراف وتابع البلاغات والعقوبات.",
-            "tags": ["بلاغات", "عقوبات", "رسائل خاصة"],
+            "tags": [
+              "بلاغات",
+              "عقوبات",
+              "رسائل خاصة"
+            ],
             "status": "متوسط وقت الاستجابة: ساعة و42 دقيقة."
           },
           "commerce": {
             "title": "الربحية والعروض",
             "description": "أدر الاشتراكات والرموز الترويجية والشراكات التجارية.",
-            "tags": ["اشتراكات", "فوترة", "قسائم"],
+            "tags": [
+              "اشتراكات",
+              "فوترة",
+              "قسائم"
+            ],
             "status": "ارتفع معدل التحويل بنسبة 3.4٪ هذا الأسبوع."
           },
           "governance": {
             "title": "الحوكمة والامتثال",
             "description": "دقق صلاحيات الوصول، أدر الأدوار الحساسة وجهّز تقارير الامتثال.",
-            "tags": ["تدقيق", "أدوار", "تتبع"],
+            "tags": [
+              "تدقيق",
+              "أدوار",
+              "تتبع"
+            ],
             "status": "آخر تدقيق شامل تم قبل 5 أيام."
           }
         }

@@ -178,139 +178,6 @@
     "ForumDiscord": "Dem Forum beitreten"
   },
   "blog": {
-    "sidebar": {
-      "weather": {
-        "badge": "Live",
-        "title": "Bro World HQ",
-        "subtitle": "Halte den Regenschirm bereit",
-        "icon": "solar:sun-2-bold",
-        "location": "Paris, FR",
-        "temperature": "18°",
-        "tip": "Böen bis zu 12 km/h werden am Nachmittag erwartet.",
-        "locationLabel": "Ort",
-        "temperatureLabel": "Temperatur",
-        "tipLabel": "Tipp"
-      },
-      "leaderboard": {
-        "title": "Top-Spieler",
-        "live": "Live-Ranking",
-        "participants": {
-          "first": {
-            "name": "Alex Carter",
-            "role": "Stratege",
-            "score": "982"
-          },
-          "second": {
-            "name": "Mia Laurent",
-            "role": "Support",
-            "score": "945"
-          },
-          "third": {
-            "name": "Leo Nakamura",
-            "role": "Späher",
-            "score": "918"
-          }
-        }
-      },
-      "rating": {
-        "title": "Community-Bewertung",
-        "subtitle": "Bro World Erlebnis",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
-        "stars": 5,
-        "categories": {
-          "ui": {
-            "label": "Interface",
-            "value": 4.9
-          },
-          "gameplay": {
-            "label": "Gameplay",
-            "value": 4.8
-          },
-          "community": {
-            "label": "Community",
-            "value": 4.9
-          }
-        }
-      }
-    }
-  },
-  "toc": {
-    "title": "Auf dieser Seite",
-    "StarOnGitHub": "Auf GitHub markieren",
-    "CreateIssues": "Issues erstellen",
-    "JoinDiscord": "Discord beitreten",
-    "Forum": "Forum",
-    "FollowOnX": "Auf X folgen",
-    "FollowOnBluesky": "Auf Bluesky folgen"
-  },
-  "page": {
-    "home": {
-      "SupportUs": "Unterstütze uns",
-      "AllComponents": "Alle Komponenten",
-      "OpenSourceComponentsToBuild": "Open-Source-Komponenten zum Erstellen",
-      "Stunning": "beeindruckende",
-      "Beautiful": "schöne",
-      "WebsitesUsingVueAndNuxt": "Websites mit Vue & Nuxt",
-      "IntegrateWithYourFavouriteUIframework": "Integriere dein bevorzugtes UI-Framework",
-      "Features": "Funktionen",
-      "CheckOutSomeExamples": "Sieh dir einige Beispiele an!",
-      "3DCardHoverEffect": "3D-Karten-Hover-Effekt",
-      "RadiantText": "Leuchtender Text",
-      "LovedByCommunity": "Geliebt von der Community",
-      "WhatAreYouWaitingFor": "Worauf wartest du?",
-      "GetStartedAndStartBuildingAwesomeUI": "Leg los und baue beeindruckende Benutzeroberflächen",
-      "GetStarted": "Jetzt starten"
-    }
-  },
-  "messenger": {
-    "searchPlaceholder": "Konversationen durchsuchen",
-    "emptyList": "Noch keine Konversationen",
-    "unknownParticipant": "Unbekannt",
-    "emptyTitle": "Wähle eine Konversation",
-    "emptyDescription": "Wähle eine Konversation aus der Liste, um Nachrichten zu lesen und zu senden.",
-    "emptyCtaLabel": "Konversation starten",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "Nachricht schreiben...",
-    "sendLabel": "Senden",
-    "sendingLabel": "Senden…",
-    "sendErrorStatus": "Nicht zugestellt",
-    "shortcutsHint": "Drücke Strg+Enter zum Senden",
-    "noMessages": "Noch keine Nachrichten",
-    "loadOlder": "Ältere Nachrichten laden",
-    "participantsLabel": "{count} Teilnehmende"
-  },
-  "auth": {
-    "Account": "Konto",
-    "Login": "Anmelden",
-    "Register": "Registrieren",
-    "usernameOrEmail": "E-Mail-Adresse",
-    "password": "Passwort",
-    "showPassword": "Passwort anzeigen",
-    "hidePassword": "Passwort verbergen",
-    "signIn": "Anmelden",
-    "signUpPrompt": "Noch kein Konto?",
-    "signUp": "Jetzt registrieren",
-    "signOut": "Abmelden",
-    "forgotPassword": "Passwort vergessen?",
-    "requiredError": "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.",
-    "invalidError": "Anmeldung mit diesen Daten nicht möglich. Bitte versuchen Sie es erneut.",
-    "successTitle": "Willkommen zurück",
-    "success": "Sie wurden erfolgreich angemeldet.",
-    "errorTitle": "Anmeldung fehlgeschlagen",
-    "errorGeneric": "Beim Anmelden ist ein Fehler aufgetreten.",
-    "logoutMessage": "Sie wurden erfolgreich abgemeldet.",
-    "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
-    "socialTitle": "Mit deinem bevorzugten Anbieter anmelden",
-    "socialSubtitle": "Wir leiten dich weiter, um die Anmeldung abzuschließen.",
-    "social": {
-      "google": "Mit Google fortfahren",
-      "github": "Mit GitHub fortfahren",
-      "microsoft": "Mit Microsoft fortfahren"
-    }
-  },
-  "blog": {
     "hero": {
       "eyebrow": "Community-Feed",
       "title": "Erfahre, was in BroWorld passiert",
@@ -606,6 +473,80 @@
           "action": "Inhalt einreichen"
         }
       }
+    }
+  },
+  "toc": {
+    "title": "Auf dieser Seite",
+    "StarOnGitHub": "Auf GitHub markieren",
+    "CreateIssues": "Issues erstellen",
+    "JoinDiscord": "Discord beitreten",
+    "Forum": "Forum",
+    "FollowOnX": "Auf X folgen",
+    "FollowOnBluesky": "Auf Bluesky folgen"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "Unterstütze uns",
+      "AllComponents": "Alle Komponenten",
+      "OpenSourceComponentsToBuild": "Open-Source-Komponenten zum Erstellen",
+      "Stunning": "beeindruckende",
+      "Beautiful": "schöne",
+      "WebsitesUsingVueAndNuxt": "Websites mit Vue & Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Integriere dein bevorzugtes UI-Framework",
+      "Features": "Funktionen",
+      "CheckOutSomeExamples": "Sieh dir einige Beispiele an!",
+      "3DCardHoverEffect": "3D-Karten-Hover-Effekt",
+      "RadiantText": "Leuchtender Text",
+      "LovedByCommunity": "Geliebt von der Community",
+      "WhatAreYouWaitingFor": "Worauf wartest du?",
+      "GetStartedAndStartBuildingAwesomeUI": "Leg los und baue beeindruckende Benutzeroberflächen",
+      "GetStarted": "Jetzt starten"
+    }
+  },
+  "messenger": {
+    "searchPlaceholder": "Konversationen durchsuchen",
+    "emptyList": "Noch keine Konversationen",
+    "unknownParticipant": "Unbekannt",
+    "emptyTitle": "Wähle eine Konversation",
+    "emptyDescription": "Wähle eine Konversation aus der Liste, um Nachrichten zu lesen und zu senden.",
+    "emptyCtaLabel": "Konversation starten",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Nachricht schreiben...",
+    "sendLabel": "Senden",
+    "sendingLabel": "Senden…",
+    "sendErrorStatus": "Nicht zugestellt",
+    "shortcutsHint": "Drücke Strg+Enter zum Senden",
+    "noMessages": "Noch keine Nachrichten",
+    "loadOlder": "Ältere Nachrichten laden",
+    "participantsLabel": "{count} Teilnehmende"
+  },
+  "auth": {
+    "Account": "Konto",
+    "Login": "Anmelden",
+    "Register": "Registrieren",
+    "usernameOrEmail": "E-Mail-Adresse",
+    "password": "Passwort",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen",
+    "signIn": "Anmelden",
+    "signUpPrompt": "Noch kein Konto?",
+    "signUp": "Jetzt registrieren",
+    "signOut": "Abmelden",
+    "forgotPassword": "Passwort vergessen?",
+    "requiredError": "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.",
+    "invalidError": "Anmeldung mit diesen Daten nicht möglich. Bitte versuchen Sie es erneut.",
+    "successTitle": "Willkommen zurück",
+    "success": "Sie wurden erfolgreich angemeldet.",
+    "errorTitle": "Anmeldung fehlgeschlagen",
+    "errorGeneric": "Beim Anmelden ist ein Fehler aufgetreten.",
+    "logoutMessage": "Sie wurden erfolgreich abgemeldet.",
+    "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+    "socialTitle": "Mit deinem bevorzugten Anbieter anmelden",
+    "socialSubtitle": "Wir leiten dich weiter, um die Anmeldung abzuschließen.",
+    "social": {
+      "google": "Mit Google fortfahren",
+      "github": "Mit GitHub fortfahren",
+      "microsoft": "Mit Microsoft fortfahren"
     }
   },
   "register": {
@@ -1484,6 +1425,113 @@
         "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
         "button": "Talk to us",
         "buttonAria": "Open the contact page"
+      },
+      "openings": {
+        "title": "Current openings",
+        "subtitle": "Explore the roles we're actively hiring for and get a feel for the work you'll lead from day one.",
+        "updated": "Updated weekly",
+        "updatedLabel": "Job listings refresh cadence",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Product Design",
+            "location": "Paris, France (Hybrid)",
+            "type": "Full-time",
+            "salary": "€58k - €72k · 0.05% equity",
+            "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Senior Product Designer role",
+              "hint": "Portfolio link required"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Product & AI",
+            "location": "Remote - EMEA",
+            "type": "Full-time",
+            "salary": "€70k - €90k · bonus eligible",
+            "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the AI Recruiter Strategist role",
+              "hint": "Experience with LLM workflows"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "Full-time",
+            "salary": "€65k base · 50% variable",
+            "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Enterprise Sales Lead role",
+              "hint": "French & English proficiency"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "Full-time",
+            "salary": "€45k - €55k",
+            "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Customer Success Partner role",
+              "hint": "Experience supporting HRIS/ATS rollouts"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Submit your application",
+        "subtitle": "Share a few details and our talent team will reach out with next steps.",
+        "highlights": [
+          "A tailored walkthrough of BroWorld based on your hiring maturity.",
+          "Introductions to the team members you'll collaborate with.",
+          "A response within two business days—even if we are not moving forward yet."
+        ],
+        "form": {
+          "nameLabel": "Full name",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Work email",
+          "emailPlaceholder": "elisa.dupont(at)company.com",
+          "roleLabel": "Role you're interested in",
+          "rolePlaceholder": "e.g. Product Designer",
+          "messageLabel": "Tell us about your experience",
+          "messagePlaceholder": "Share recent projects, achievements, or what excites you about BroWorld.",
+          "consentLabel": "I agree to be contacted about current and future opportunities at BroWorld.",
+          "submit": "Send application",
+          "success": "Thank you! Our talent team will review your profile and be in touch shortly.",
+          "rules": {
+            "required": "This field is required.",
+            "email": "Enter a valid email address.",
+            "consent": "Please confirm we can contact you."
+          }
+        }
       }
     },
     "game": {
@@ -2183,25 +2231,41 @@
           "content": {
             "title": "Content-Management",
             "description": "Planen, veröffentlichen und archivieren Sie Artikel, Events und Lernressourcen.",
-            "tags": ["Redaktions-Workflow", "Freigabe", "Terminplanung"],
+            "tags": [
+              "Redaktions-Workflow",
+              "Freigabe",
+              "Terminplanung"
+            ],
             "status": "12 Inhalte erfordern eine redaktionelle Prüfung."
           },
           "community": {
             "title": "Community & Moderation",
             "description": "Konfigurieren Sie Moderationsregeln, verwalten Sie Meldungen und Sanktionen.",
-            "tags": ["Meldungen", "Sanktionen", "Private Nachrichten"],
+            "tags": [
+              "Meldungen",
+              "Sanktionen",
+              "Private Nachrichten"
+            ],
             "status": "Durchschnittliche Reaktionszeit: 1 h 42."
           },
           "commerce": {
             "title": "Monetarisierung & Angebote",
             "description": "Verwalten Sie Abonnements, Promo-Codes und Geschäftspartnerschaften.",
-            "tags": ["Abonnements", "Abrechnung", "Gutscheine"],
+            "tags": [
+              "Abonnements",
+              "Abrechnung",
+              "Gutscheine"
+            ],
             "status": "Konversionsrate diese Woche um 3,4 % gestiegen."
           },
           "governance": {
             "title": "Governance & Compliance",
             "description": "Prüfen Sie Zugriffe, verwalten Sie privilegierte Rollen und erstellen Sie Compliance-Berichte.",
-            "tags": ["Audit", "Rollen", "Nachverfolgbarkeit"],
+            "tags": [
+              "Audit",
+              "Rollen",
+              "Nachverfolgbarkeit"
+            ],
             "status": "Letztes vollständiges Audit vor 5 Tagen abgeschlossen."
           }
         }

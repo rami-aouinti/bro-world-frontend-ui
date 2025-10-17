@@ -195,122 +195,6 @@
     "ForumDiscord": "Join the forum"
   },
   "blog": {
-    "sidebar": {
-      "weather": {
-        "badge": "Live",
-        "title": "Bro World HQ",
-        "subtitle": "Keep your umbrella ready",
-        "icon": "solar:sun-2-bold",
-        "location": "Paris, FR",
-        "temperature": "18°",
-        "tip": "Winds up to 12 km/h expected this afternoon.",
-        "locationLabel": "Location",
-        "temperatureLabel": "Temperature",
-        "tipLabel": "Tip"
-      },
-      "leaderboard": {
-        "title": "Top players",
-        "live": "Live ranking",
-        "participants": {
-          "first": {
-            "name": "Alex Carter",
-            "role": "Strategist",
-            "score": "982"
-          },
-          "second": {
-            "name": "Mia Laurent",
-            "role": "Support",
-            "score": "945"
-          },
-          "third": {
-            "name": "Leo Nakamura",
-            "role": "Scout",
-            "score": "918"
-          }
-        }
-      },
-      "rating": {
-        "title": "Community rating",
-        "subtitle": "Bro World experience",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
-        "stars": 5,
-        "categories": {
-          "ui": {
-            "label": "Interface",
-            "value": 4.9
-          },
-          "gameplay": {
-            "label": "Gameplay",
-            "value": 4.8
-          },
-          "community": {
-            "label": "Community",
-            "value": 4.9
-          }
-        }
-      }
-    }
-  },
-  "toc": {
-    "title": "On This Page",
-    "StarOnGitHub": "Star on GitHub",
-    "CreateIssues": "Create Issues",
-    "JoinDiscord": "Join Discord",
-    "Forum": "Forum",
-    "FollowOnX": "Follow on X",
-    "FollowOnBluesky": "Follow on Bluesky"
-  },
-  "page": {
-    "home": {
-      "SupportUs": "Support Us",
-      "AllComponents": "All Components",
-      "OpenSourceComponentsToBuild": "Open source components to build",
-      "Stunning": "stunning",
-      "Beautiful": "beautiful",
-      "WebsitesUsingVueAndNuxt": "websites using Vue & Nuxt",
-      "IntegrateWithYourFavouriteUIframework": "Integrate with your favourite UI framework",
-      "Features": "Features",
-      "CheckOutSomeExamples": "Check out some examples!",
-      "3DCardHoverEffect": "3D Card Hover Effect",
-      "RadiantText": "Radiant Text",
-      "LovedByCommunity": "Loved by community",
-      "WhatAreYouWaitingFor": "What are you waiting for?",
-      "GetStartedAndStartBuildingAwesomeUI": "Get started and start building awesome UI",
-      "GetStarted": "Get Started"
-    }
-  },
-  "auth": {
-    "Account": "Account",
-    "Login": "Log in",
-    "Register": "Register",
-    "usernameOrEmail": "Email address",
-    "password": "Password",
-    "showPassword": "Show password",
-    "hidePassword": "Hide password",
-    "signIn": "Sign in",
-    "signUpPrompt": "Don't have an account?",
-    "signUp": "Create one",
-    "signOut": "Sign out",
-    "forgotPassword": "Forgot your password?",
-    "requiredError": "Please enter your email and password.",
-    "invalidError": "We couldn't sign you in with those details. Please try again.",
-    "successTitle": "Welcome back",
-    "success": "You have been signed in successfully.",
-    "errorTitle": "Sign in failed",
-    "errorGeneric": "Something went wrong while signing you in.",
-    "logoutMessage": "You have been signed out successfully.",
-    "sessionExpired": "Your session has expired. Please sign in again.",
-    "socialTitle": "Sign in with your favorite provider",
-    "socialSubtitle": "We'll redirect you to finish authentication.",
-    "social": {
-      "google": "Continue with Google",
-      "github": "Continue with GitHub",
-      "microsoft": "Continue with Microsoft"
-    }
-  },
-  "blog": {
     "hero": {
       "eyebrow": "Community feed",
       "title": "See what's happening across BroWorld",
@@ -606,6 +490,63 @@
           "action": "Submit content"
         }
       }
+    }
+  },
+  "toc": {
+    "title": "On This Page",
+    "StarOnGitHub": "Star on GitHub",
+    "CreateIssues": "Create Issues",
+    "JoinDiscord": "Join Discord",
+    "Forum": "Forum",
+    "FollowOnX": "Follow on X",
+    "FollowOnBluesky": "Follow on Bluesky"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "Support Us",
+      "AllComponents": "All Components",
+      "OpenSourceComponentsToBuild": "Open source components to build",
+      "Stunning": "stunning",
+      "Beautiful": "beautiful",
+      "WebsitesUsingVueAndNuxt": "websites using Vue & Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Integrate with your favourite UI framework",
+      "Features": "Features",
+      "CheckOutSomeExamples": "Check out some examples!",
+      "3DCardHoverEffect": "3D Card Hover Effect",
+      "RadiantText": "Radiant Text",
+      "LovedByCommunity": "Loved by community",
+      "WhatAreYouWaitingFor": "What are you waiting for?",
+      "GetStartedAndStartBuildingAwesomeUI": "Get started and start building awesome UI",
+      "GetStarted": "Get Started"
+    }
+  },
+  "auth": {
+    "Account": "Account",
+    "Login": "Log in",
+    "Register": "Register",
+    "usernameOrEmail": "Email address",
+    "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "signIn": "Sign in",
+    "signUpPrompt": "Don't have an account?",
+    "signUp": "Create one",
+    "signOut": "Sign out",
+    "forgotPassword": "Forgot your password?",
+    "requiredError": "Please enter your email and password.",
+    "invalidError": "We couldn't sign you in with those details. Please try again.",
+    "successTitle": "Welcome back",
+    "success": "You have been signed in successfully.",
+    "errorTitle": "Sign in failed",
+    "errorGeneric": "Something went wrong while signing you in.",
+    "logoutMessage": "You have been signed out successfully.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "socialTitle": "Sign in with your favorite provider",
+    "socialSubtitle": "We'll redirect you to finish authentication.",
+    "social": {
+      "google": "Continue with Google",
+      "github": "Continue with GitHub",
+      "microsoft": "Continue with Microsoft"
     }
   },
   "register": {
@@ -972,6 +913,113 @@
         "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
         "button": "Talk to us",
         "buttonAria": "Open the contact page"
+      },
+      "openings": {
+        "title": "Current openings",
+        "subtitle": "Explore the roles we're actively hiring for and get a feel for the work you'll lead from day one.",
+        "updated": "Updated weekly",
+        "updatedLabel": "Job listings refresh cadence",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Product Design",
+            "location": "Paris, France (Hybrid)",
+            "type": "Full-time",
+            "salary": "€58k - €72k · 0.05% equity",
+            "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Senior Product Designer role",
+              "hint": "Portfolio link required"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Product & AI",
+            "location": "Remote - EMEA",
+            "type": "Full-time",
+            "salary": "€70k - €90k · bonus eligible",
+            "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the AI Recruiter Strategist role",
+              "hint": "Experience with LLM workflows"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "Full-time",
+            "salary": "€65k base · 50% variable",
+            "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Enterprise Sales Lead role",
+              "hint": "French & English proficiency"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "Full-time",
+            "salary": "€45k - €55k",
+            "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Customer Success Partner role",
+              "hint": "Experience supporting HRIS/ATS rollouts"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Submit your application",
+        "subtitle": "Share a few details and our talent team will reach out with next steps.",
+        "highlights": [
+          "A tailored walkthrough of BroWorld based on your hiring maturity.",
+          "Introductions to the team members you'll collaborate with.",
+          "A response within two business days—even if we are not moving forward yet."
+        ],
+        "form": {
+          "nameLabel": "Full name",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Work email",
+          "emailPlaceholder": "elisa.dupont(at)company.com",
+          "roleLabel": "Role you're interested in",
+          "rolePlaceholder": "e.g. Product Designer",
+          "messageLabel": "Tell us about your experience",
+          "messagePlaceholder": "Share recent projects, achievements, or what excites you about BroWorld.",
+          "consentLabel": "I agree to be contacted about current and future opportunities at BroWorld.",
+          "submit": "Send application",
+          "success": "Thank you! Our talent team will review your profile and be in touch shortly.",
+          "rules": {
+            "required": "This field is required.",
+            "email": "Enter a valid email address.",
+            "consent": "Please confirm we can contact you."
+          }
+        }
       }
     },
     "game": {
@@ -2330,25 +2378,41 @@
           "content": {
             "title": "Content management",
             "description": "Plan, publish, and archive articles, events, and learning resources.",
-            "tags": ["Editorial workflow", "Review", "Scheduling"],
+            "tags": [
+              "Editorial workflow",
+              "Review",
+              "Scheduling"
+            ],
             "status": "12 items require editorial review."
           },
           "community": {
             "title": "Community & moderation",
             "description": "Configure moderation rules, manage reports, and handle sanctions.",
-            "tags": ["Reports", "Sanctions", "Private messages"],
+            "tags": [
+              "Reports",
+              "Sanctions",
+              "Private messages"
+            ],
             "status": "Average response time: 1h42."
           },
           "commerce": {
             "title": "Monetization & offers",
             "description": "Manage subscriptions, promo codes, and commercial partnerships.",
-            "tags": ["Subscriptions", "Billing", "Coupons"],
+            "tags": [
+              "Subscriptions",
+              "Billing",
+              "Coupons"
+            ],
             "status": "Conversion rate up by 3.4% this week."
           },
           "governance": {
             "title": "Governance & compliance",
             "description": "Audit access, manage privileged roles, and prepare compliance reports.",
-            "tags": ["Audit", "Roles", "Traceability"],
+            "tags": [
+              "Audit",
+              "Roles",
+              "Traceability"
+            ],
             "status": "Last full audit completed 5 days ago."
           }
         }
