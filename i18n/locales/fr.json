@@ -89,6 +89,7 @@
         "game": "Jeux vidéo",
         "ecommerce": "E-commerce",
         "education": "Éducation",
+        "quiz": "Quiz",
         "profile": "Profil",
         "profileOverview": "Vue d'ensemble",
         "profileSettings": "Paramètres du compte",
@@ -1426,6 +1427,155 @@
       },
       "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données."
     },
+    "quiz": {
+      "title": "Quiz experiences",
+      "subtitle": "Prototype adaptive quizzes that energise your community with instant feedback and storytelling.",
+      "overview": {
+        "title": "Quiz performance snapshot",
+        "description": "Monitor participation, completion, and satisfaction to keep every cohort motivated.",
+        "trendLabel": "{change} compared to last week",
+        "cards": {
+          "participants": {
+            "title": "Active participants",
+            "value": "1,240 members",
+            "trend": "+18%",
+            "caption": "Joined at least one quiz session this week."
+          },
+          "completion": {
+            "title": "Average completion",
+            "value": "87%",
+            "trend": "+6%",
+            "caption": "Finished all rounds with a passing score."
+          },
+          "satisfaction": {
+            "title": "Session rating",
+            "value": "4.6 / 5",
+            "trend": "+0.4",
+            "caption": "Based on post-quiz feedback surveys."
+          }
+        }
+      },
+      "featuresTitle": "Design quizzes with momentum",
+      "features": {
+        "authoring": {
+          "title": "Author in minutes",
+          "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
+          "points": [
+            "Convert brainstorm notes into question pools automatically.",
+            "Mix formats like multiple choice, polls, and lightning rounds.",
+            "Reuse timers, scoring weights, and bonus rules across series."
+          ]
+        },
+        "engagement": {
+          "title": "Fuel real-time engagement",
+          "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
+          "points": [
+            "Highlight hosts and co-creators with stage-ready layouts.",
+            "Trigger soundscapes and emotes when milestones are unlocked.",
+            "Support breakout teams, rematches, and collaborative lifelines."
+          ]
+        },
+        "analytics": {
+          "title": "Measure what matters",
+          "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
+          "points": [
+            "Compare performance by role, location, or membership tier.",
+            "Spot drop-off moments with second-by-second completion curves.",
+            "Export highlights, clips, and insights for stakeholders."
+          ]
+        }
+      },
+      "process": {
+        "title": "Ship the perfect challenge",
+        "stepLabel": "Step {number}",
+        "steps": {
+          "plan": {
+            "title": "Plan your storyline",
+            "description": "Align on themes, desired outcomes, and player journeys before drafting questions."
+          },
+          "launch": {
+            "title": "Launch the experience",
+            "description": "Stream the quiz with live moderation, automated scoring, and instant feedback loops."
+          },
+          "iterate": {
+            "title": "Iterate with insights",
+            "description": "Analyse results, remix question banks, and refresh the experience for the next cohort."
+          }
+        }
+      },
+      "questionBanks": {
+        "title": "Curated question banks",
+        "description": "Mix ready-to-run categories with your own questions to keep every round feeling fresh.",
+        "countLabel": "Questions available",
+        "focusLabel": "Primary focus",
+        "banks": {
+          "general": {
+            "title": "General knowledge vault",
+            "description": "A rotating mix of culture, science, and newsworthy trivia for broad audiences.",
+            "count": "180 curated questions",
+            "focus": "Culture, science, trending topics",
+            "difficulty": "Mixed"
+          },
+          "product": {
+            "title": "Product mastery set",
+            "description": "Train advocates and sales teams on features, roadmaps, and objection handling.",
+            "count": "120 scenario prompts",
+            "focus": "Launch strategy, value props, storytelling",
+            "difficulty": "Intermediate"
+          },
+          "community": {
+            "title": "Community culture pack",
+            "description": "Celebrate inside jokes, rituals, and lore from your most dedicated members.",
+            "count": "95 custom questions",
+            "focus": "Member spotlights, events, shared history",
+            "difficulty": "Casual"
+          }
+        }
+      },
+      "leaderboard": {
+        "title": "Community leaderboard",
+        "description": "Celebrate champions and spark friendly rivalries with transparent scoring.",
+        "updateLabel": "Auto-updated every hour",
+        "columns": {
+          "rank": "Rank",
+          "player": "Participant",
+          "score": "Score",
+          "completed": "Quizzes completed"
+        },
+        "rows": {
+          "0": {
+            "rank": "1",
+            "player": "Maya Chen",
+            "score": "982 pts",
+            "completed": "12 / 12"
+          },
+          "1": {
+            "rank": "2",
+            "player": "Luis Fernández",
+            "score": "941 pts",
+            "completed": "11 / 12"
+          },
+          "2": {
+            "rank": "3",
+            "player": "Sana Kapoor",
+            "score": "905 pts",
+            "completed": "10 / 12"
+          },
+          "3": {
+            "rank": "4",
+            "player": "Jonas Richter",
+            "score": "876 pts",
+            "completed": "10 / 12"
+          }
+        }
+      },
+      "cta": {
+        "title": "Launch your next quiz series",
+        "description": "Partner with us to craft immersive assessments for teams, classrooms, and fandoms.",
+        "button": "Talk with our team",
+        "buttonAria": "Open the contact page"
+      }
+    },
     "playground": {
       "ui": {
         "title": "UI Component Playground",
@@ -1657,6 +1807,10 @@
     "ecommerce": {
       "title": "E-commerce",
       "description": "Lancez et faites évoluer des parcours de vente modernes."
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "description": "Design interactive quiz journeys with adaptive question banks."
     },
     "education": {
       "title": "Éducation",
