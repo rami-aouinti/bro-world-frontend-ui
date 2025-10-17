@@ -534,6 +534,39 @@ describe("fetchCurrentProfileFromSource", () => {
     expect(result).toEqual(apiProfile);
   });
 
+  it("ignores the session cache when a forwarded authorization header is present", async () => {
+    const event = {
+      node: {
+        req: {
+          headers: {
+            authorization: "Bearer external-token",
+          },
+        },
+      },
+    } as unknown as H3Event;
+    const apiProfile = {
+      id: "header-user",
+      username: "header",
+      email: "header@example.com",
+      friends: [],
+      stories: [],
+    };
+
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue("session-token");
+
+    const fetchMock = vi.fn().mockResolvedValue(apiProfile);
+    globalScope.$fetch = fetchMock;
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(readCachedProfileMock).not.toHaveBeenCalled();
+    expect(writeCachedProfileMock).not.toHaveBeenCalled();
+    expect(getSessionUserMock).not.toHaveBeenCalled();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(apiProfile);
+  });
+
   it("skips the session token requirement when a service token is configured", async () => {
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
     const apiProfile = {
@@ -556,6 +589,31 @@ describe("fetchCurrentProfileFromSource", () => {
     expect(requireSessionTokenMock).not.toHaveBeenCalled();
     expect(readCachedProfileMock).not.toHaveBeenCalled();
     expect(writeCachedProfileMock).not.toHaveBeenCalled();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(apiProfile);
+  });
+
+  it("ignores the session cache when a service token is configured", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+    const apiProfile = {
+      id: "service-user",
+      username: "service",
+      email: "service@example.com",
+      friends: [],
+      stories: [],
+    };
+
+    useRuntimeConfigMock.mockReturnValue({ auth: { apiToken: "service-token" }, users: {} });
+    getSessionTokenMock.mockReturnValue("session-token");
+
+    const fetchMock = vi.fn().mockResolvedValue(apiProfile);
+    globalScope.$fetch = fetchMock;
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(readCachedProfileMock).not.toHaveBeenCalled();
+    expect(writeCachedProfileMock).not.toHaveBeenCalled();
+    expect(getSessionUserMock).not.toHaveBeenCalled();
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(result).toEqual(apiProfile);
   });

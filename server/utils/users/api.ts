@@ -22,7 +22,6 @@ import {
   getSessionToken,
   getSessionUser,
   requireSessionToken,
-  waitForSessionToken,
   withAuthHeaders,
 } from "../auth/session";
 
