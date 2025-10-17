@@ -381,6 +381,15 @@ export const defaultSiteSettings: SiteSettings = {
       isVisible: true,
       order: 3,
     }),
+    makeMenu({
+      id: "academy",
+      label: "layout.sidebar.items.academy",
+      icon: "mdi:school-outline",
+      translate: true,
+      to: "/academy",
+      isVisible: true,
+      order: 4,
+    }),
     makeMenu(
       {
         id: "admin",
@@ -389,7 +398,7 @@ export const defaultSiteSettings: SiteSettings = {
         translate: true,
         requiresAdmin: true,
         isVisible: true,
-        order: 4,
+        order: 5,
       },
       [
         makeMenu(
