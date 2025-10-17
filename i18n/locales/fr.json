@@ -90,6 +90,7 @@
         "ecommerce": "E-commerce",
         "education": "Éducation",
         "quiz": "Quiz",
+        "academy": "Académie",
         "profile": "Profil",
         "profileOverview": "Vue d'ensemble",
         "profileSettings": "Paramètres du compte",
@@ -646,7 +647,133 @@
         "community": "Forum communautaire",
         "githubAria": "Ouvrir le dépôt GitHub dans un nouvel onglet",
         "docsAria": "Lire la documentation dans un nouvel onglet",
-        "communityAria": "Rejoindre le forum communautaire dans un nouvel onglet"
+      "communityAria": "Rejoindre le forum communautaire dans un nouvel onglet"
+      }
+    },
+    "academy": {
+      "title": "Académie Bro World",
+      "subtitle": "Développez les compétences pour bâtir des communautés immersives grâce à des parcours ciblés.",
+      "courses": {
+        "title": "Formations phares",
+        "badgesLabel": "Badges du cours",
+        "duration": "Durée",
+        "level": "Niveau",
+        "items": {
+          "strategy": {
+            "title": "Fondamentaux de la stratégie d’expérience",
+            "description": "Concevez vision, positionnement et indicateurs pour des expériences à grande échelle.",
+            "duration": "6 semaines • 3 h par semaine",
+            "level": "Intermédiaire",
+            "badges": {
+              "0": "Ateliers stratégie en direct",
+              "1": "Revues entre pairs",
+              "2": "Modèles de playbook"
+            }
+          },
+          "production": {
+            "title": "Systèmes et opérations de production",
+            "description": "Structurez équipes, rituels et pipelines de mise en production pour des mondes vivants.",
+            "duration": "8 semaines • 4 h par semaine",
+            "level": "Avancé",
+            "badges": {
+              "0": "Revues opérationnelles",
+              "1": "Explorations d’outillage",
+              "2": "Exercices de gestion des risques"
+            }
+          },
+          "leadership": {
+            "title": "Leadership et animation de communauté",
+            "description": "Développez des habitudes de leadership inclusif et accompagnez des équipes créatives distribuées.",
+            "duration": "5 semaines • 2 h par semaine",
+            "level": "Intermédiaire",
+            "badges": {
+              "0": "Cliniques de leadership",
+              "1": "Scénarios communautaires",
+              "2": "Coaching exécutif"
+            }
+          }
+        }
+      },
+      "exercises": {
+        "title": "Parcours de pratique",
+        "duration": "Durée",
+        "deliverables": "Livrables",
+        "resources": "Ressources",
+        "items": {
+          "simulation": {
+            "title": "Simulation de lancement",
+            "duration": "3 jours",
+            "deliverables": "Rapport de scénario et débrief leadership",
+            "resources": "Tableau de bord live ops, permanences mentors"
+          },
+          "sprint": {
+            "title": "Sprint d’innovation",
+            "duration": "1 semaine",
+            "deliverables": "Pitch de prototype et plan de métriques",
+            "resources": "Kits d’atelier, bac à sable analytique"
+          },
+          "capstone": {
+            "title": "Défi capstone",
+            "duration": "4 semaines",
+            "deliverables": "Plan d’activation de bout en bout",
+            "resources": "Revues du comité, accès aux outils"
+          }
+        }
+      },
+      "certifications": {
+        "title": "Parcours de certification",
+        "provider": "Organisme",
+        "requirements": "Pré-requis",
+        "validity": "Validité",
+        "items": {
+          "coaching": {
+            "name": "Coach Bro World certifié",
+            "provider": "Équipe pédagogique Bro World Academy",
+            "requirements": "Valider la résidence de coaching et réussir l’évaluation en direct",
+            "validity": "2 ans"
+          },
+          "facilitation": {
+            "name": "Spécialiste facilitation de communauté",
+            "provider": "Équipe pédagogique Bro World Academy",
+            "requirements": "Terminer les laboratoires de facilitation et remettre des enregistrements d’ateliers",
+            "validity": "3 ans"
+          },
+          "strategy": {
+            "name": "Architecte d’expérience stratégique",
+            "provider": "Équipe pédagogique Bro World Academy",
+            "requirements": "Présenter le projet capstone et passer la revue de portfolio",
+            "validity": "3 ans"
+          }
+        }
+      },
+      "process": {
+        "title": "Comment fonctionne l’académie",
+        "description": "Un parcours guidé mêlant enseignements en direct, pratique et validation.",
+        "stepLabel": "Étape {number}",
+        "steps": {
+          "intake": {
+            "title": "Diagnostic et objectifs",
+            "description": "Définissez vos ambitions, cartographiez vos compétences et rencontrez votre mentor."
+          },
+          "immersion": {
+            "title": "Apprentissages immersifs",
+            "description": "Participez aux sessions en direct, leçons asynchrones et studios collaboratifs."
+          },
+          "practice": {
+            "title": "Pratique accompagnée",
+            "description": "Appliquez les cadres sur des projets réels avec des retours itératifs."
+          },
+          "assessment": {
+            "title": "Évaluation et reconnaissance",
+            "description": "Présentez vos résultats et obtenez des certifications reconnues par nos experts."
+          }
+        }
+      },
+      "cta": {
+        "title": "Rejoindre la prochaine cohorte de l’académie",
+        "description": "Réservez votre place pour recevoir le calendrier, les détails du programme et les étapes d’inscription.",
+        "button": "Discuter avec notre équipe",
+        "buttonAria": "Contacter l’équipe de Bro World Academy"
       }
     },
     "help": {
@@ -1248,6 +1375,113 @@
         "description": "Laissez notre équipe adapter BroWorld à votre stack recrutement, vos processus et vos exigences de conformité.",
         "button": "Contactez-nous",
         "buttonAria": "Ouvrir la page de contact"
+      },
+      "openings": {
+        "title": "Postes ouverts",
+        "subtitle": "Découvrez les rôles pour lesquels nous recrutons activement et projetez-vous dans les missions dès le premier jour.",
+        "updated": "Mise à jour chaque semaine",
+        "updatedLabel": "Fréquence de rafraîchissement des offres",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Design Produit",
+            "location": "Paris, France (Hybrid)",
+            "type": "CDI",
+            "salary": "58k€ - 72k€ · 0,05 % BSPCE",
+            "description": "Imaginez des expériences multi-plateformes pour les recruteurs et les candidats, web et mobile.",
+            "tags": [
+              "Design System",
+              "Figma",
+              "Recherche utilisateur"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste de Senior Product Designer",
+              "hint": "Portfolio requis"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Produit & IA",
+            "location": "Remote - EMEA",
+            "type": "CDI",
+            "salary": "70k€ - 90k€ · bonus",
+            "description": "Construisez des copilotes IA qui automatisent le sourcing, le screening et la planification.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste d'AI Recruiter Strategist",
+              "hint": "Expérience des workflows LLM"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "CDI",
+            "salary": "65k€ fixe · 50 % variable",
+            "description": "Pilotez la génération de pipeline et accompagnez les AEs sur des deals complexes.",
+            "tags": [
+              "B2B SaaS",
+              "Vente Enterprise",
+              "Forecast"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste d'Enterprise Sales Lead",
+              "hint": "Bilingue français/anglais"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "CDI",
+            "salary": "45k€ - 55k€",
+            "description": "Accompagnez les équipes Talent lors de l'onboarding, du lancement des workflows et du suivi d'adoption.",
+            "tags": [
+              "Implementation",
+              "Conduite du changement",
+              "Intégrations ATS"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste de Customer Success Partner",
+              "hint": "Expérience des déploiements HRIS/ATS"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Déposez votre candidature",
+        "subtitle": "Partagez quelques informations et notre équipe Talent reviendra vers vous avec la suite du process.",
+        "highlights": [
+          "Une démo personnalisée de BroWorld selon votre maturité recrutement.",
+          "Des échanges avec les personnes avec qui vous collaborerez.",
+          "Un retour sous deux jours ouvrés, même si nous ne pouvons pas avancer tout de suite."
+        ],
+        "form": {
+          "nameLabel": "Nom complet",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Email professionnel",
+          "emailPlaceholder": "elisa.dupont(at)entreprise.com",
+          "roleLabel": "Poste qui vous intéresse",
+          "rolePlaceholder": "ex : Product Designer",
+          "messageLabel": "Parlez-nous de votre parcours",
+          "messagePlaceholder": "Partagez vos projets récents, vos réussites ou ce qui vous motive chez BroWorld.",
+          "consentLabel": "J'accepte d'être contacté·e pour des opportunités actuelles et futures chez BroWorld.",
+          "submit": "Envoyer la candidature",
+          "success": "Merci ! Notre équipe Talent étudiera votre profil et vous recontactera très vite.",
+          "rules": {
+            "required": "Ce champ est obligatoire.",
+            "email": "Veuillez saisir un email valide.",
+            "consent": "Merci de confirmer que nous pouvons vous contacter."
+          }
+        }
       }
     },
     "game": {
@@ -1806,7 +2040,23 @@
     },
     "ecommerce": {
       "title": "E-commerce",
-      "description": "Lancez et faites évoluer des parcours de vente modernes."
+      "description": "Lancez et faites évoluer des parcours de vente modernes.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
     },
     "quiz": {
       "title": "Quiz experiences",
@@ -1815,6 +2065,10 @@
     "education": {
       "title": "Éducation",
       "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données."
+    },
+    "academy": {
+      "title": "Académie",
+      "description": "Découvrez les parcours d’apprentissage structurés, exercices et certifications de Bro World."
     },
     "performance": {
       "badge": "Rapport de performance",
@@ -2428,25 +2682,41 @@
           "content": {
             "title": "Gestion du contenu",
             "description": "Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.",
-            "tags": ["Workflow éditorial", "Validation", "Programmation"],
+            "tags": [
+              "Workflow éditorial",
+              "Validation",
+              "Programmation"
+            ],
             "status": "12 contenus nécessitent une revue éditoriale."
           },
           "community": {
             "title": "Communauté & modération",
             "description": "Paramétrez les règles de modération, gérez les signalements et les sanctions.",
-            "tags": ["Signalements", "Sanctions", "Messages privés"],
+            "tags": [
+              "Signalements",
+              "Sanctions",
+              "Messages privés"
+            ],
             "status": "Temps moyen de réponse : 1 h 42."
           },
           "commerce": {
             "title": "Monétisation & offres",
             "description": "Administrez les abonnements, codes promotionnels et partenariats commerciaux.",
-            "tags": ["Abonnements", "Facturation", "Coupons"],
+            "tags": [
+              "Abonnements",
+              "Facturation",
+              "Coupons"
+            ],
             "status": "Taux de conversion en hausse de 3,4 % cette semaine."
           },
           "governance": {
             "title": "Gouvernance & conformité",
             "description": "Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.",
-            "tags": ["Audit", "Rôles", "Traçabilité"],
+            "tags": [
+              "Audit",
+              "Rôles",
+              "Traçabilité"
+            ],
             "status": "Dernier audit complet réalisé il y a 5 jours."
           }
         }
@@ -2630,6 +2900,208 @@
       "reactPrompt": "Réagissez à cette story",
       "messageLabel": "Envoyer un message",
       "send": "Envoyer"
+    }
+  },
+  "demo": {
+    "ecommerce": {
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewDetails": "View details"
+      },
+      "badges": {
+        "bestseller": "Bestseller",
+        "new": "New arrival",
+        "staffPick": "Team favourite",
+        "limited": "Limited run"
+      },
+      "specifications": {
+        "power": "Power",
+        "material": "Material",
+        "dimensions": "Dimensions",
+        "capacity": "Capacity",
+        "compatibility": "Compatibility",
+        "connectivity": "Connectivity"
+      },
+      "inventory": {
+        "inStock": "{count} units in stock",
+        "lowStock": "Only {count} left",
+        "outOfStock": "Out of stock",
+        "defaultMessage": "Check availability with our team"
+      },
+      "summary": {
+        "title": "Order summary",
+        "quantity": "Qty: {count}",
+        "subtotal": "Subtotal",
+        "tax": "Estimated tax",
+        "shipping": "Shipping",
+        "total": "Total"
+      },
+      "catalog": {
+        "title": "Discover the demo storefront",
+        "subtitle": "Browse modular workspace companions, mindful wellbeing tech, and elevated travel gear in one place.",
+        "backToOverview": "Return to overview",
+        "goToCart": "View cart ({count})",
+        "filters": {
+          "all": "All categories"
+        },
+        "searchLabel": "Search catalog",
+        "emptyTitle": "No products match",
+        "emptySubtitle": "We couldn’t find any items matching “{query}”. Reset your filters to explore the full demo range.",
+        "resetFilters": "Reset filters",
+        "breadcrumb": "Catalog"
+      },
+      "product": {
+        "rating": "{rating} ★ ({reviews} reviews)",
+        "quantityLabel": "Quantity",
+        "viewCart": "View cart",
+        "detailsTitle": "Why it works",
+        "specificationsTitle": "Specifications",
+        "goToCheckout": "Proceed to checkout",
+        "backToCatalog": "Back to catalog"
+      },
+      "cart": {
+        "title": "Your cart",
+        "subtitle": "Keep building your bundle or head straight to checkout when you’re ready.",
+        "breadcrumb": "Cart",
+        "table": {
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "Unit price",
+          "total": "Line total",
+          "actions": "Remove item"
+        },
+        "nextStepsTitle": "Next steps",
+        "nextStepsDescription": "Complete checkout or continue exploring the catalog for more add-ons.",
+        "continueShopping": "Continue shopping",
+        "proceedToCheckout": "Proceed to checkout",
+        "checkoutCta": "Go to checkout",
+        "clearCart": "Clear cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add products from the catalog to see them listed here.",
+        "shopNow": "Shop the catalog"
+      },
+      "checkout": {
+        "title": "Secure checkout",
+        "subtitle": "Confirm delivery, payment, and review details to wrap up your demo order.",
+        "breadcrumb": "Checkout",
+        "empty": "There are no items in your cart yet.",
+        "shopLink": "Browse catalog",
+        "steps": {
+          "shipping": "Shipping",
+          "shippingSubtitle": "Address and delivery",
+          "payment": "Payment",
+          "paymentSubtitle": "Billing details",
+          "review": "Review",
+          "reviewSubtitle": "Confirm & submit"
+        },
+        "shippingTitle": "Delivery information",
+        "paymentTitle": "Payment method",
+        "reviewTitle": "Final review",
+        "reviewShipping": "Shipping",
+        "reviewPayment": "Payment",
+        "reviewHint": "Everything look good? You can always return to previous steps before placing the order.",
+        "backToCart": "Back to cart",
+        "continueToPayment": "Continue to payment",
+        "backToShipping": "Back to shipping",
+        "reviewOrder": "Review order",
+        "summaryContinue": "Review order",
+        "backToPayment": "Back to payment",
+        "placeOrder": "Place order",
+        "browseMore": "Browse more products",
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email",
+          "address": "Address",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "delivery": "Delivery option",
+          "notes": "Order notes",
+          "cardNumber": "Card number",
+          "expiry": "Expiry",
+          "cvc": "CVC",
+          "saveCard": "Securely save this card for next time"
+        },
+        "delivery": {
+          "standard": "Standard (free, 3-5 days)",
+          "express": "Express (paid, 24-48h)"
+        },
+        "exampleOrdersTitle": "Recent demo orders",
+        "maskedCard": "Visa ending ••••{last4}"
+      },
+      "orders": {
+        "status": {
+          "processing": "Processing",
+          "fulfilled": "Fulfilled",
+          "cancelled": "Cancelled",
+          "draft": "Draft"
+        },
+        "primary": {
+          "customer": "Jamie Ortiz · Paris, France",
+          "notes": "Repeat customer restock of workplace favourites."
+        },
+        "restock": {
+          "customer": "Taylor Singh · Copenhagen, Denmark",
+          "notes": "Event gifting set scheduled for warehouse dispatch."
+        }
+      },
+      "categories": {
+        "workspace": {
+          "name": "Workspace",
+          "description": "Lighting, ergonomics, and focus rituals for hybrid teams."
+        },
+        "wellbeing": {
+          "name": "Wellbeing",
+          "description": "Support healthy routines with adaptive tech and insights."
+        },
+        "travel": {
+          "name": "Travel",
+          "description": "Go-anywhere carry essentials for the modern explorer."
+        }
+      },
+      "products": {
+        "auroraDeskLamp": {
+          "name": "Aurora adaptive desk lamp",
+          "summary": "Dynamic lighting scenes that sync with circadian rhythms and deep work blocks.",
+          "description": "Aurora blends ambient LEDs with warm task lighting, adaptive brightness, and voice control. Teams personalise presets for focus sessions or cosy after-hours.",
+          "specs": {
+            "power": "18W LED array",
+            "material": "Anodised aluminium and recycled polymer",
+            "dimensions": "45 × 12 × 38 cm"
+          }
+        },
+        "focusHubPro": {
+          "name": "Focus Hub Pro",
+          "summary": "Modular workspace dock with wireless charging, acoustic shielding, and ambient soundscapes.",
+          "description": "Focus Hub Pro anchors hot desks with integrated power, device cradles, and configurable dividers. Built-in soundscapes and white noise adapt to busy floors.",
+          "specs": {
+            "connectivity": "Dual USB-C, 2× Qi wireless pads, Wi-Fi 6 hub",
+            "dimensions": "52 × 22 × 18 cm",
+            "material": "Felt acoustic panels and alloy frame"
+          }
+        },
+        "pulseSmartBottle": {
+          "name": "Pulse smart hydration bottle",
+          "summary": "Hydration tracking with adaptive reminders, mineral insights, and team challenges.",
+          "description": "Pulse keeps crews energised with sip detection, mineral analysis, and app nudges. Sync hydration streaks with wellbeing programmes to boost morale.",
+          "specs": {
+            "capacity": "750 ml",
+            "material": "Double-wall stainless steel",
+            "compatibility": "iOS, Android, and BroWorld wellbeing dashboards"
+          }
+        },
+        "atlasWeekender": {
+          "name": "Atlas recycled weekender",
+          "summary": "Cabin-friendly carry crafted from regenerated ocean plastic with modular packing cubes.",
+          "description": "Atlas keeps teams travel-ready with quick-access tech pockets, convertible straps, and padded laptop storage. Each bag reuses 28 plastic bottles.",
+          "specs": {
+            "capacity": "38 L",
+            "material": "Recycled ocean-bound nylon",
+            "dimensions": "55 × 26 × 24 cm"
+          }
+        }
+      }
     }
   }
 }

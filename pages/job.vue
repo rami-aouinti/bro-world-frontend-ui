@@ -82,6 +82,116 @@
 
       <section
         class="mb-12"
+        aria-labelledby="job-openings-title"
+      >
+        <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-6">
+          <div>
+            <h2
+              id="job-openings-title"
+              class="text-h4 font-weight-semibold mb-2"
+            >
+              {{ t("pages.job.openings.title") }}
+            </h2>
+            <p class="text-body-1 text-medium-emphasis mb-0" style="max-width: 640px">
+              {{ t("pages.job.openings.subtitle") }}
+            </p>
+          </div>
+          <v-chip
+            color="primary"
+            variant="tonal"
+            class="align-self-start"
+            :aria-label="t('pages.job.openings.updatedLabel')"
+          >
+            <v-icon
+              icon="mdi:update"
+              size="18"
+              class="mr-2"
+              aria-hidden="true"
+            />
+            {{ t("pages.job.openings.updated") }}
+          </v-chip>
+        </div>
+
+        <v-row dense>
+          <v-col
+            v-for="job in jobOpenings"
+            :key="job.id"
+            cols="12"
+            md="6"
+          >
+            <v-card
+              class="h-100 pa-6 d-flex flex-column"
+              variant="outlined"
+              :aria-labelledby="`job-card-${job.id}`"
+            >
+              <div class="d-flex flex-column gap-2 mb-4">
+                <div>
+                  <p class="text-caption text-uppercase text-medium-emphasis mb-1">
+                    {{ job.department }}
+                  </p>
+                  <h3
+                    :id="`job-card-${job.id}`"
+                    class="text-subtitle-1 font-weight-semibold mb-2"
+                  >
+                    {{ job.title }}
+                  </h3>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ job.description }}
+                  </p>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 text-body-2 text-medium-emphasis">
+                  <div class="d-flex align-center">
+                    <v-icon icon="mdi:map-marker-outline" size="18" class="mr-1" aria-hidden="true" />
+                    <span>{{ job.location }}</span>
+                  </div>
+                  <div class="d-flex align-center">
+                    <v-icon icon="mdi:briefcase-outline" size="18" class="mr-1" aria-hidden="true" />
+                    <span>{{ job.type }}</span>
+                  </div>
+                  <div class="d-flex align-center">
+                    <v-icon icon="mdi:cash-multiple" size="18" class="mr-1" aria-hidden="true" />
+                    <span>{{ job.salary }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                <v-chip
+                  v-for="tag in job.tags"
+                  :key="tag"
+                  color="primary"
+                  variant="tonal"
+                  size="small"
+                  class="text-body-3"
+                >
+                  {{ tag }}
+                </v-chip>
+              </div>
+
+              <v-spacer />
+
+              <div class="d-flex align-center justify-space-between pt-4 mt-auto">
+                <span class="text-body-2 text-medium-emphasis">
+                  {{ job.applyHint }}
+                </span>
+                <v-btn
+                  :href="job.applyLink"
+                  color="primary"
+                  variant="flat"
+                  size="small"
+                  :aria-label="job.applyAria"
+                >
+                  {{ job.applyLabel }}
+                </v-btn>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </section>
+
+      <section
+        class="mb-12"
         aria-labelledby="job-workflow-title"
       >
         <h2
@@ -118,6 +228,116 @@
             </v-sheet>
           </li>
         </ol>
+      </section>
+
+      <section
+        class="mb-12"
+        aria-labelledby="job-application-title"
+      >
+        <v-row class="align-stretch" dense>
+          <v-col cols="12" md="5">
+            <div class="pr-md-6 mb-6 mb-md-0">
+              <h2
+                id="job-application-title"
+                class="text-h4 font-weight-semibold mb-4"
+              >
+                {{ t("pages.job.application.title") }}
+              </h2>
+              <p class="text-body-1 text-medium-emphasis mb-6">
+                {{ t("pages.job.application.subtitle") }}
+              </p>
+              <ul class="pl-6 text-body-2 text-medium-emphasis mb-0 d-flex flex-column gap-3">
+                <li v-for="highlight in applicationHighlights" :key="highlight" class="d-flex align-start">
+                  <v-icon icon="mdi:check-circle-outline" size="20" class="mr-3 mt-1" color="primary" aria-hidden="true" />
+                  <span>{{ highlight }}</span>
+                </li>
+              </ul>
+            </div>
+          </v-col>
+
+          <v-col cols="12" md="7">
+            <v-card class="pa-6" variant="tonal">
+              <v-alert
+                v-if="formSuccess"
+                type="success"
+                variant="tonal"
+                class="mb-4"
+                closable
+                :text="t('pages.job.application.form.success')"
+                density="comfortable"
+              />
+              <v-form ref="formRef" @submit.prevent="submitApplication">
+                <v-row dense>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      v-model="formData.name"
+                      :label="t('pages.job.application.form.nameLabel')"
+                      :placeholder="t('pages.job.application.form.namePlaceholder')"
+                      :rules="[requiredRule]"
+                      autocomplete="name"
+                      variant="outlined"
+                      density="comfortable"
+                    />
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      v-model="formData.email"
+                      :label="t('pages.job.application.form.emailLabel')"
+                      :placeholder="t('pages.job.application.form.emailPlaceholder')"
+                      :rules="[requiredRule, emailRule]"
+                      type="email"
+                      autocomplete="email"
+                      variant="outlined"
+                      density="comfortable"
+                    />
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      v-model="formData.role"
+                      :label="t('pages.job.application.form.roleLabel')"
+                      :placeholder="t('pages.job.application.form.rolePlaceholder')"
+                      :rules="[requiredRule]"
+                      autocomplete="organization-title"
+                      variant="outlined"
+                      density="comfortable"
+                    />
+                  </v-col>
+                  <v-col cols="12">
+                    <v-textarea
+                      v-model="formData.message"
+                      :label="t('pages.job.application.form.messageLabel')"
+                      :placeholder="t('pages.job.application.form.messagePlaceholder')"
+                      :rows="4"
+                      :auto-grow="false"
+                      :rules="[requiredRule]"
+                      variant="outlined"
+                      density="comfortable"
+                    />
+                  </v-col>
+                  <v-col cols="12">
+                    <v-checkbox
+                      v-model="formData.consent"
+                      :label="t('pages.job.application.form.consentLabel')"
+                      :rules="[consentRule]"
+                      density="comfortable"
+                    />
+                  </v-col>
+                  <v-col cols="12" class="d-flex justify-end">
+                    <v-btn
+                      color="primary"
+                      variant="flat"
+                      size="large"
+                      type="submit"
+                      :loading="formSubmitting"
+                    >
+                      {{ t("pages.job.application.form.submit") }}
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card>
+          </v-col>
+        </v-row>
       </section>
 
       <section aria-labelledby="job-resources-title">
@@ -159,9 +379,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import type { VForm } from "vuetify/components";
 
 const { t, locale, localeProperties } = useI18n();
 const pageDescription = computed(() => t("seo.job.description"));
@@ -199,6 +420,8 @@ useHead(() => {
     ],
   };
 });
+
+const contactLink = computed(() => localePath("/contact"));
 
 const featureCards = computed(() => [
   {
@@ -248,5 +471,147 @@ const workflowSteps = computed(() => [
   },
 ]);
 
-const contactLink = computed(() => localePath("/contact"));
+const jobOpenings = computed(() => [
+  {
+    id: "product-designer",
+    title: t("pages.job.openings.items.productDesigner.title"),
+    department: t("pages.job.openings.items.productDesigner.department"),
+    location: t("pages.job.openings.items.productDesigner.location"),
+    type: t("pages.job.openings.items.productDesigner.type"),
+    salary: t("pages.job.openings.items.productDesigner.salary"),
+    description: t("pages.job.openings.items.productDesigner.description"),
+    tags: [
+      t("pages.job.openings.items.productDesigner.tags.0"),
+      t("pages.job.openings.items.productDesigner.tags.1"),
+      t("pages.job.openings.items.productDesigner.tags.2"),
+    ],
+    applyLabel: t("pages.job.openings.items.productDesigner.apply.label"),
+    applyAria: t("pages.job.openings.items.productDesigner.apply.aria"),
+    applyHint: t("pages.job.openings.items.productDesigner.apply.hint"),
+    applyLink: contactLink.value,
+  },
+  {
+    id: "ai-recruiter",
+    title: t("pages.job.openings.items.aiRecruiter.title"),
+    department: t("pages.job.openings.items.aiRecruiter.department"),
+    location: t("pages.job.openings.items.aiRecruiter.location"),
+    type: t("pages.job.openings.items.aiRecruiter.type"),
+    salary: t("pages.job.openings.items.aiRecruiter.salary"),
+    description: t("pages.job.openings.items.aiRecruiter.description"),
+    tags: [
+      t("pages.job.openings.items.aiRecruiter.tags.0"),
+      t("pages.job.openings.items.aiRecruiter.tags.1"),
+      t("pages.job.openings.items.aiRecruiter.tags.2"),
+    ],
+    applyLabel: t("pages.job.openings.items.aiRecruiter.apply.label"),
+    applyAria: t("pages.job.openings.items.aiRecruiter.apply.aria"),
+    applyHint: t("pages.job.openings.items.aiRecruiter.apply.hint"),
+    applyLink: contactLink.value,
+  },
+  {
+    id: "sales-lead",
+    title: t("pages.job.openings.items.salesLead.title"),
+    department: t("pages.job.openings.items.salesLead.department"),
+    location: t("pages.job.openings.items.salesLead.location"),
+    type: t("pages.job.openings.items.salesLead.type"),
+    salary: t("pages.job.openings.items.salesLead.salary"),
+    description: t("pages.job.openings.items.salesLead.description"),
+    tags: [
+      t("pages.job.openings.items.salesLead.tags.0"),
+      t("pages.job.openings.items.salesLead.tags.1"),
+      t("pages.job.openings.items.salesLead.tags.2"),
+    ],
+    applyLabel: t("pages.job.openings.items.salesLead.apply.label"),
+    applyAria: t("pages.job.openings.items.salesLead.apply.aria"),
+    applyHint: t("pages.job.openings.items.salesLead.apply.hint"),
+    applyLink: contactLink.value,
+  },
+  {
+    id: "customer-success",
+    title: t("pages.job.openings.items.customerSuccess.title"),
+    department: t("pages.job.openings.items.customerSuccess.department"),
+    location: t("pages.job.openings.items.customerSuccess.location"),
+    type: t("pages.job.openings.items.customerSuccess.type"),
+    salary: t("pages.job.openings.items.customerSuccess.salary"),
+    description: t("pages.job.openings.items.customerSuccess.description"),
+    tags: [
+      t("pages.job.openings.items.customerSuccess.tags.0"),
+      t("pages.job.openings.items.customerSuccess.tags.1"),
+      t("pages.job.openings.items.customerSuccess.tags.2"),
+    ],
+    applyLabel: t("pages.job.openings.items.customerSuccess.apply.label"),
+    applyAria: t("pages.job.openings.items.customerSuccess.apply.aria"),
+    applyHint: t("pages.job.openings.items.customerSuccess.apply.hint"),
+    applyLink: contactLink.value,
+  },
+]);
+
+const applicationHighlights = computed(() => [
+  t("pages.job.application.highlights.0"),
+  t("pages.job.application.highlights.1"),
+  t("pages.job.application.highlights.2"),
+]);
+
+const formRef = ref<VForm | null>(null);
+const formData = reactive({
+  name: "",
+  email: "",
+  role: "",
+  message: "",
+  consent: false,
+});
+
+const formSubmitting = ref(false);
+const formSuccess = ref(false);
+
+function requiredRule(value: string | boolean) {
+  if (typeof value === "boolean") {
+    return value || t("pages.job.application.form.rules.consent");
+  }
+
+  return (value && value.toString().trim().length > 0) || t("pages.job.application.form.rules.required");
+}
+
+function emailRule(value: string) {
+  if (!value || !value.toString().trim().length) {
+    return t("pages.job.application.form.rules.required");
+  }
+
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return pattern.test(value) || t("pages.job.application.form.rules.email");
+}
+
+function consentRule(value: boolean) {
+  return value || t("pages.job.application.form.rules.consent");
+}
+
+function resetForm() {
+  formData.name = "";
+  formData.email = "";
+  formData.role = "";
+  formData.message = "";
+  formData.consent = false;
+}
+
+async function submitApplication() {
+  if (!formRef.value) {
+    return;
+  }
+
+  const result = await formRef.value.validate();
+
+  if (!result.valid) {
+    return;
+  }
+
+  formSubmitting.value = true;
+  formSuccess.value = false;
+
+  await new Promise((resolve) => setTimeout(resolve, 600));
+
+  formSubmitting.value = false;
+  formSuccess.value = true;
+  resetForm();
+  formRef.value.resetValidation();
+}
 </script>

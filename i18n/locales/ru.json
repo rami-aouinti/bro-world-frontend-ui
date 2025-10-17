@@ -113,6 +113,7 @@
         "ecommerce": "E-commerce",
         "education": "Education",
         "quiz": "Quiz",
+        "academy": "Академия",
         "performance": "Производительность"
       }
     },
@@ -179,60 +180,299 @@
     "ForumDiscord": "Перейти на форум"
   },
   "blog": {
+    "hero": {
+      "eyebrow": "Лента сообщества",
+      "title": "Узнайте, что происходит в BroWorld",
+      "description": "Следите за главными событиями сообщества, открывайте новые ресурсы и смотрите, что создают участники прямо сейчас.",
+      "primaryAction": "Открыть последние записи",
+      "secondaryAction": "Перейти к документации",
+      "stats": {
+        "members": "Активные участники",
+        "reactions": "Оставлено реакций",
+        "comments": "Оставлено комментариев"
+      }
+    },
+    "composer": {
+      "title": "Поделитесь чем-нибудь с сообществом",
+      "subtitle": "Начните беседу и вдохновите других создателей.",
+      "label": "Ваше сообщение",
+      "placeholder": "О чём вы хотите поговорить?",
+      "characterCount": "{count} символов",
+      "submit": "Опубликовать запись",
+      "submitting": "Публикуем...",
+      "success": "Ваша запись успешно опубликована!",
+      "error": "Не удалось опубликовать запись. Попробуйте ещё раз.",
+      "validation": "Напишите сообщение перед публикацией."
+    },
+    "newPost": {
+      "placeholder": "О чём вы думаете, {name}?",
+      "quickActions": {
+        "liveVideo": "Прямая трансляция",
+        "photoVideo": "Фото/Видео",
+        "feelingActivity": "Чувство/Активность"
+      },
+      "dialog": {
+        "title": "Создать публикацию",
+        "addToPost": "Добавьте что-нибудь к своей публикации",
+        "postButton": "Опубликовать"
+      },
+      "audience": {
+        "public": "Публично",
+        "friends": "Друзья",
+        "private": "Только я"
+      },
+      "attachments": {
+        "media": "Фото/Видео",
+        "tag": "Отметить людей",
+        "feeling": "Чувство/Активность",
+        "location": "Местоположение",
+        "gif": "GIF",
+        "poll": "Добавить опрос"
+      }
+    },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
+    "reactions": {
+      "post": {
+        "publishedOn": "Опубликовано {date}",
+        "reactions": "{count} реакций",
+        "comments": "{count} комментариев",
+        "recentComments": "Недавние комментарии",
+        "commentPreviews": "{count} превью",
+        "reactionSpotlight": "Реакции в центре внимания"
+      },
+      "comment": {
+        "reactions": "{count} реакций",
+        "replies": "{count} ответов"
+      },
+      "reactionTypes": {
+        "like": "Нравится",
+        "love": "Обожаю",
+        "wow": "Вау",
+        "haha": "Ха-ха",
+        "sad": "Грусть",
+        "angry": "Злость",
+        "dislike": "Не нравится",
+        "care": "Забота"
+      },
+      "posts": {
+        "publishedOn": "Опубликовано {date}",
+        "reactionCount": "{count} реакций",
+        "commentCount": "{count} комментариев",
+        "recentComments": "Недавние комментарии",
+        "previewCount": "{count} превью",
+        "highlightedReactions": "Любимые реакции фанатов",
+        "reactLabel": "Добавьте свою реакцию",
+        "reactionError": "Не удалось отреагировать на эту запись. Попробуйте ещё раз.",
+        "likeAction": "Нравится",
+        "unlikeAction": "Убрать «Нравится»",
+        "toggleReaction": "Переключить отметку «Нравится» у этой записи"
+      },
+      "comments": {
+        "reactionCount": "{count} реакций",
+        "replyCount": "{count} ответов",
+        "likeAction": "Нравится",
+        "unlikeAction": "Убрать «Нравится»",
+        "toggleReaction": "Переключить отметку «Нравится» у этого комментария"
+      }
+    },
+    "posts": {
+      "actions": {
+        "follow": "Подписаться",
+        "following": "Вы подписаны",
+        "followAria": "Подписаться на {name}",
+        "followingAria": "Вы уже подписаны на {name}",
+        "openMenu": "Открыть действия с публикацией",
+        "edit": "Редактировать",
+        "delete": "Удалить",
+        "statistics": "{reactions} реакций и {comments} комментариев",
+        "editTitle": "Редактировать публикацию",
+        "editDescription": "Обновите информацию о публикации ниже.",
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "deleteTitle": "Удалить эту публикацию?",
+        "deleteDescription": "Действие нельзя отменить. Публикация будет удалена для всех.",
+        "deleteConfirm": "Удалить",
+        "editSuccessTitle": "Публикация обновлена",
+        "editSuccessDescription": "Изменения успешно сохранены.",
+        "editErrorTitle": "Не удалось обновить",
+        "editErrorDescription": "Не удалось обновить публикацию. Попробуйте ещё раз.",
+        "deleteSuccessTitle": "Публикация удалена",
+        "deleteSuccessDescription": "Публикация удалена из ленты.",
+        "deleteErrorTitle": "Не удалось удалить",
+        "deleteErrorDescription": "Не удалось удалить публикацию. Попробуйте ещё раз.",
+        "followSuccessTitle": "Автор добавлен",
+        "followSuccessDescription": "Теперь вы подписаны на {name}.",
+        "followErrorTitle": "Не удалось подписаться",
+        "followErrorDescription": "Не удалось подписаться на автора. Попробуйте ещё раз.",
+        "fields": {
+          "title": "Заголовок",
+          "summary": "Краткое описание",
+          "content": "Содержимое"
+        },
+        "comment": "Комментировать",
+        "share": "Поделиться"
+      },
+      "shareMenu": {
+        "feed": "Поделиться в ленте",
+        "story": "Поделиться в истории",
+        "messenger": "Отправить в Messenger",
+        "whatsapp": "Отправить в WhatsApp",
+        "page": "Поделиться на странице",
+        "group": "Поделиться в группе",
+        "profile": "Поделиться на профиле друга",
+        "comingSoonTitle": "Пока недоступно",
+        "comingSoonDescription": "Эта опция обмена появится позже."
+      },
+      "shareDialog": {
+        "title": "Создать публикацию",
+        "placeholder": "Расскажите что-нибудь об этом...",
+        "placeholderNamed": "Расскажите что-нибудь об этом, {name}...",
+        "defaultName": "Вы",
+        "submit": "Поделиться",
+        "cancel": "Отмена",
+        "feedAudience": "Лента",
+        "successTitle": "Публикация поделена",
+        "successMessage": "Ваше обновление добавлено в ленту."
+      },
+      "loading": "Загрузка публикации"
+    },
+    "comments": {
+      "label": "Присоединяйтесь к обсуждению",
+      "placeholder": "Поделитесь своими мыслями с сообществом...",
+      "characterCount": "{count} символов",
+      "submit": "Отправить комментарий",
+      "submitting": "Отправка...",
+      "loading": "Загрузка комментариев...",
+      "load": "Загрузить комментарии",
+      "activationHint": "Комментарии загружаются, когда этот блок виден или когда вы нажимаете кнопку.",
+      "success": "Ваш комментарий добавлен.",
+      "error": "Не удалось добавить комментарий. Попробуйте ещё раз.",
+      "validation": "Напишите комментарий перед отправкой.",
+      "empty": "Комментариев пока нет. Станьте первым!",
+      "reply": "Ответить",
+      "replying": "Отправка ответа...",
+      "replyPlaceholder": "Напишите свой ответ...",
+      "addEmoji": "Добавить эмодзи",
+      "addMedia": "Добавить медиа",
+      "addGif": "Добавить GIF",
+      "replySubmit": "Отправить ответ",
+      "replySuccess": "Ваш ответ добавлен.",
+      "replyError": "Не удалось опубликовать ответ. Попробуйте ещё раз.",
+      "replyValidation": "Напишите ответ перед отправкой.",
+      "cancelReply": "Отмена",
+      "replyUnavailable": "Ответы временно недоступны.",
+      "reactionUnavailable": "Реакции временно недоступны.",
+      "reactionError": "Не удалось отреагировать на этот комментарий. Попробуйте ещё раз.",
+      "placeholderWithName": "Комментировать как {name}",
+      "sort": {
+        "menuAria": "Сортировка комментариев",
+        "options": {
+          "relevant": {
+            "label": "Самые актуальные",
+            "description": "Сначала показывать комментарии друзей и с наибольшим вовлечением."
+          },
+          "newest": {
+            "label": "Сначала новые",
+            "description": "Показывать все комментарии в обратном хронологическом порядке."
+          },
+          "all": {
+            "label": "Все комментарии",
+            "description": "Показывать все комментарии, включая возможный спам."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "Показать все {count} ответов",
+        "hideReplies": "Скрыть ответы"
+      }
+    },
     "sidebar": {
       "weather": {
-        "badge": "В эфире",
-        "title": "Штаб Bro World",
-        "subtitle": "Держите зонт под рукой",
-        "icon": "solar:sun-2-bold",
-        "location": "Париж, FR",
-        "temperature": "18°",
-        "tip": "После обеда ожидаются порывы ветра до 12 км/ч.",
-        "locationLabel": "Местоположение",
+        "badge": "Новости",
+        "title": "Ожидается дождь",
+        "subtitle": "Подготовьтесь к дождливому дню с лёгким ветром.",
+        "icon": "🌧️",
+        "location": "Берлин, Германия",
+        "locationLabel": "Локация",
+        "temperature": "18°C",
         "temperatureLabel": "Температура",
-        "tipLabel": "Совет"
+        "tipLabel": "Совет",
+        "tip": "Не забудьте зонт, чтобы не промокнуть.",
+        "loading": "Обновление погоды…",
+        "actions": {
+          "useCurrentLocation": "Использовать текущее местоположение"
+        },
+        "errors": {
+          "unavailable": "Обновления погоды недоступны.",
+          "denied": "Не удалось получить доступ к вашему местоположению. Показан прогноз по умолчанию.",
+          "unsupported": "Ваш браузер не поддерживает определение местоположения.",
+          "updateFailed": "Не удалось обновить данные о погоде."
+        }
       },
       "leaderboard": {
-        "title": "Топ-игроки",
-        "live": "Живой рейтинг",
+        "title": "Топ-3 в викторине",
+        "live": "в эфире",
         "participants": {
           "first": {
-            "name": "Алекс Картер",
-            "role": "Стратег",
-            "score": "982"
+            "name": "Bro World",
+            "role": "Команда продукта",
+            "score": "982 pts"
           },
           "second": {
-            "name": "Миа Лоран",
-            "role": "Поддержка",
-            "score": "945"
+            "name": "Adam Don",
+            "role": "Сообщество",
+            "score": "953 pts"
           },
           "third": {
-            "name": "Лео Накамура",
-            "role": "Разведчик",
-            "score": "918"
+            "name": "Nina Ko",
+            "role": "Маркетинг",
+            "score": "917 pts"
           }
         }
       },
       "rating": {
-        "title": "Оценка сообщества",
-        "subtitle": "Опыт Bro World",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
+        "title": "Обзор оценок",
+        "subtitle": "Отзывы участников за неделю",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
         "stars": 5,
         "categories": {
-          "ui": {
-            "label": "Интерфейс",
-            "value": 4.9
+          "engagement": {
+            "label": "Вовлечённость",
+            "value": 92
           },
-          "gameplay": {
-            "label": "Геймплей",
-            "value": 4.8
+          "content": {
+            "label": "Контент",
+            "value": 88
           },
-          "community": {
-            "label": "Сообщество",
-            "value": 4.9
+          "responsiveness": {
+            "label": "Оперативность",
+            "value": 84
           }
+        }
+      },
+      "title": "Оставайтесь на связи",
+      "subtitle": "Ресурсы, чтобы быть в курсе сообщества BroWorld.",
+      "widgets": {
+        "community": {
+          "title": "Присоединяйтесь к сообществу",
+          "description": "Общайтесь с другими создателями, делитесь идеями и получайте помощь мгновенно.",
+          "action": "Открыть Discord"
+        },
+        "docs": {
+          "title": "Изучайте документацию",
+          "description": "Узнайте, как максимально эффективно использовать компоненты BroWorld в своих проектах.",
+          "action": "Читать документацию"
+        },
+        "contribute": {
+          "title": "Поделитесь статьёй",
+          "description": "Делитесь своим опытом с сообществом и помогайте другим развиваться.",
+          "action": "Отправить материал"
         }
       }
     }
@@ -266,6 +506,132 @@
     }
   },
   "pages": {
+    "academy": {
+      "title": "Bro World Academy",
+      "subtitle": "Master the skills to build immersive communities through focused learning tracks.",
+      "courses": {
+        "title": "Flagship courses",
+        "badgesLabel": "Course badges",
+        "duration": "Duration",
+        "level": "Level",
+        "items": {
+          "strategy": {
+            "title": "Experience strategy foundations",
+            "description": "Design vision, positioning, and measurement for large-scale experiences.",
+            "duration": "6 weeks • 3 hours per week",
+            "level": "Intermediate",
+            "badges": {
+              "0": "Live strategy labs",
+              "1": "Peer critiques",
+              "2": "Playbook templates"
+            }
+          },
+          "production": {
+            "title": "Production systems & operations",
+            "description": "Structure teams, rituals, and release pipelines that keep worlds shipping.",
+            "duration": "8 weeks • 4 hours per week",
+            "level": "Advanced",
+            "badges": {
+              "0": "Operations reviews",
+              "1": "Tooling deep dives",
+              "2": "Risk rehearsals"
+            }
+          },
+          "leadership": {
+            "title": "Leadership & community stewardship",
+            "description": "Grow inclusive leadership habits and mentor distributed creator teams.",
+            "duration": "5 weeks • 2 hours per week",
+            "level": "Intermediate",
+            "badges": {
+              "0": "Leadership clinics",
+              "1": "Community scenarios",
+              "2": "Executive coaching"
+            }
+          }
+        }
+      },
+      "exercises": {
+        "title": "Practice tracks",
+        "duration": "Duration",
+        "deliverables": "Deliverables",
+        "resources": "Resources",
+        "items": {
+          "simulation": {
+            "title": "Launch simulation",
+            "duration": "3 days",
+            "deliverables": "Scenario report & leadership debrief",
+            "resources": "Live ops dashboard, mentor office hours"
+          },
+          "sprint": {
+            "title": "Innovation sprint",
+            "duration": "1 week",
+            "deliverables": "Prototype pitch & metrics plan",
+            "resources": "Workshop kits, analytics sandbox"
+          },
+          "capstone": {
+            "title": "Capstone challenge",
+            "duration": "4 weeks",
+            "deliverables": "End-to-end activation blueprint",
+            "resources": "Advisory board reviews, tooling access"
+          }
+        }
+      },
+      "certifications": {
+        "title": "Certification pathways",
+        "provider": "Provider",
+        "requirements": "Requirements",
+        "validity": "Validity",
+        "items": {
+          "coaching": {
+            "name": "Certified Bro World Coach",
+            "provider": "Bro World Academy Faculty",
+            "requirements": "Complete coaching residency & pass live assessment",
+            "validity": "2 years"
+          },
+          "facilitation": {
+            "name": "Community Facilitation Specialist",
+            "provider": "Bro World Academy Faculty",
+            "requirements": "Finish facilitation labs & submit workshop recordings",
+            "validity": "3 years"
+          },
+          "strategy": {
+            "name": "Strategic Experience Architect",
+            "provider": "Bro World Academy Faculty",
+            "requirements": "Deliver capstone & portfolio review",
+            "validity": "3 years"
+          }
+        }
+      },
+      "process": {
+        "title": "How the academy works",
+        "description": "A guided journey mixing live instruction, practice, and validation.",
+        "stepLabel": "Step {number}",
+        "steps": {
+          "intake": {
+            "title": "Intake & goals",
+            "description": "Set ambitions, map competencies, and match with mentors."
+          },
+          "immersion": {
+            "title": "Immersive learning",
+            "description": "Attend live sessions, async lessons, and collaborative studios."
+          },
+          "practice": {
+            "title": "Guided practice",
+            "description": "Apply frameworks to real projects with iterative feedback."
+          },
+          "assessment": {
+            "title": "Assessment & recognition",
+            "description": "Showcase outcomes and earn credentials backed by experts."
+          }
+        }
+      },
+      "cta": {
+        "title": "Join the next academy cohort",
+        "description": "Reserve your spot to receive schedules, programme details, and application guidance.",
+        "button": "Talk with our team",
+        "buttonAria": "Contact the Bro World Academy team"
+      }
+    },
     "profile": {
       "title": "Профиль",
       "subtitle": "Просматривайте и управляйте своей личной информацией.",
@@ -953,6 +1319,113 @@
         "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
         "button": "Talk to us",
         "buttonAria": "Open the contact page"
+      },
+      "openings": {
+        "title": "Current openings",
+        "subtitle": "Explore the roles we're actively hiring for and get a feel for the work you'll lead from day one.",
+        "updated": "Updated weekly",
+        "updatedLabel": "Job listings refresh cadence",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Product Design",
+            "location": "Paris, France (Hybrid)",
+            "type": "Full-time",
+            "salary": "€58k - €72k · 0.05% equity",
+            "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Senior Product Designer role",
+              "hint": "Portfolio link required"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Product & AI",
+            "location": "Remote - EMEA",
+            "type": "Full-time",
+            "salary": "€70k - €90k · bonus eligible",
+            "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the AI Recruiter Strategist role",
+              "hint": "Experience with LLM workflows"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "Full-time",
+            "salary": "€65k base · 50% variable",
+            "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Enterprise Sales Lead role",
+              "hint": "French & English proficiency"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "Full-time",
+            "salary": "€45k - €55k",
+            "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Customer Success Partner role",
+              "hint": "Experience supporting HRIS/ATS rollouts"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Submit your application",
+        "subtitle": "Share a few details and our talent team will reach out with next steps.",
+        "highlights": [
+          "A tailored walkthrough of BroWorld based on your hiring maturity.",
+          "Introductions to the team members you'll collaborate with.",
+          "A response within two business days—even if we are not moving forward yet."
+        ],
+        "form": {
+          "nameLabel": "Full name",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Work email",
+          "emailPlaceholder": "elisa.dupont(at)company.com",
+          "roleLabel": "Role you're interested in",
+          "rolePlaceholder": "e.g. Product Designer",
+          "messageLabel": "Tell us about your experience",
+          "messagePlaceholder": "Share recent projects, achievements, or what excites you about BroWorld.",
+          "consentLabel": "I agree to be contacted about current and future opportunities at BroWorld.",
+          "submit": "Send application",
+          "success": "Thank you! Our talent team will review your profile and be in touch shortly.",
+          "rules": {
+            "required": "This field is required.",
+            "email": "Enter a valid email address.",
+            "consent": "Please confirm we can contact you."
+          }
+        }
       }
     },
     "game": {
@@ -1449,304 +1922,6 @@
       "microsoft": "Продолжить с Microsoft"
     }
   },
-  "blog": {
-    "hero": {
-      "eyebrow": "Лента сообщества",
-      "title": "Узнайте, что происходит в BroWorld",
-      "description": "Следите за главными событиями сообщества, открывайте новые ресурсы и смотрите, что создают участники прямо сейчас.",
-      "primaryAction": "Открыть последние записи",
-      "secondaryAction": "Перейти к документации",
-      "stats": {
-        "members": "Активные участники",
-        "reactions": "Оставлено реакций",
-        "comments": "Оставлено комментариев"
-      }
-    },
-    "composer": {
-      "title": "Поделитесь чем-нибудь с сообществом",
-      "subtitle": "Начните беседу и вдохновите других создателей.",
-      "label": "Ваше сообщение",
-      "placeholder": "О чём вы хотите поговорить?",
-      "characterCount": "{count} символов",
-      "submit": "Опубликовать запись",
-      "submitting": "Публикуем...",
-      "success": "Ваша запись успешно опубликована!",
-      "error": "Не удалось опубликовать запись. Попробуйте ещё раз.",
-      "validation": "Напишите сообщение перед публикацией."
-    },
-    "newPost": {
-      "placeholder": "О чём вы думаете, {name}?",
-      "quickActions": {
-        "liveVideo": "Прямая трансляция",
-        "photoVideo": "Фото/Видео",
-        "feelingActivity": "Чувство/Активность"
-      },
-      "dialog": {
-        "title": "Создать публикацию",
-        "addToPost": "Добавьте что-нибудь к своей публикации",
-        "postButton": "Опубликовать"
-      },
-      "audience": {
-        "public": "Публично",
-        "friends": "Друзья",
-        "private": "Только я"
-      },
-      "attachments": {
-        "media": "Фото/Видео",
-        "tag": "Отметить людей",
-        "feeling": "Чувство/Активность",
-        "location": "Местоположение",
-        "gif": "GIF",
-        "poll": "Добавить опрос"
-      }
-    },
-    "auth": {
-      "postRequired": "Sign in to share what's on your mind.",
-      "reactionRequired": "Sign in to react to posts.",
-      "commentRequired": "Sign in to join the discussion."
-    },
-    "reactions": {
-      "post": {
-        "publishedOn": "Опубликовано {date}",
-        "reactions": "{count} реакций",
-        "comments": "{count} комментариев",
-        "recentComments": "Недавние комментарии",
-        "commentPreviews": "{count} превью",
-        "reactionSpotlight": "Реакции в центре внимания"
-      },
-      "comment": {
-        "reactions": "{count} реакций",
-        "replies": "{count} ответов"
-      },
-      "reactionTypes": {
-        "like": "Нравится",
-        "love": "Обожаю",
-        "wow": "Вау",
-        "haha": "Ха-ха",
-        "sad": "Грусть",
-        "angry": "Злость",
-        "dislike": "Не нравится",
-        "care": "Забота"
-      },
-      "posts": {
-        "publishedOn": "Опубликовано {date}",
-        "reactionCount": "{count} реакций",
-        "commentCount": "{count} комментариев",
-        "recentComments": "Недавние комментарии",
-        "previewCount": "{count} превью",
-        "highlightedReactions": "Любимые реакции фанатов",
-        "reactLabel": "Добавьте свою реакцию",
-        "reactionError": "Не удалось отреагировать на эту запись. Попробуйте ещё раз.",
-        "likeAction": "Нравится",
-        "unlikeAction": "Убрать «Нравится»",
-        "toggleReaction": "Переключить отметку «Нравится» у этой записи"
-      },
-      "comments": {
-        "reactionCount": "{count} реакций",
-        "replyCount": "{count} ответов",
-        "likeAction": "Нравится",
-        "unlikeAction": "Убрать «Нравится»",
-        "toggleReaction": "Переключить отметку «Нравится» у этого комментария"
-      }
-    },
-    "posts": {
-      "actions": {
-        "follow": "Подписаться",
-        "following": "Вы подписаны",
-        "followAria": "Подписаться на {name}",
-        "followingAria": "Вы уже подписаны на {name}",
-        "openMenu": "Открыть действия с публикацией",
-        "edit": "Редактировать",
-        "delete": "Удалить",
-        "statistics": "{reactions} реакций и {comments} комментариев",
-        "editTitle": "Редактировать публикацию",
-        "editDescription": "Обновите информацию о публикации ниже.",
-        "save": "Сохранить",
-        "cancel": "Отмена",
-        "deleteTitle": "Удалить эту публикацию?",
-        "deleteDescription": "Действие нельзя отменить. Публикация будет удалена для всех.",
-        "deleteConfirm": "Удалить",
-        "editSuccessTitle": "Публикация обновлена",
-        "editSuccessDescription": "Изменения успешно сохранены.",
-        "editErrorTitle": "Не удалось обновить",
-        "editErrorDescription": "Не удалось обновить публикацию. Попробуйте ещё раз.",
-        "deleteSuccessTitle": "Публикация удалена",
-        "deleteSuccessDescription": "Публикация удалена из ленты.",
-        "deleteErrorTitle": "Не удалось удалить",
-        "deleteErrorDescription": "Не удалось удалить публикацию. Попробуйте ещё раз.",
-        "followSuccessTitle": "Автор добавлен",
-        "followSuccessDescription": "Теперь вы подписаны на {name}.",
-        "followErrorTitle": "Не удалось подписаться",
-        "followErrorDescription": "Не удалось подписаться на автора. Попробуйте ещё раз.",
-        "fields": {
-          "title": "Заголовок",
-          "summary": "Краткое описание",
-          "content": "Содержимое"
-        },
-        "comment": "Комментировать",
-        "share": "Поделиться"
-      },
-      "shareMenu": {
-        "feed": "Поделиться в ленте",
-        "story": "Поделиться в истории",
-        "messenger": "Отправить в Messenger",
-        "whatsapp": "Отправить в WhatsApp",
-        "page": "Поделиться на странице",
-        "group": "Поделиться в группе",
-        "profile": "Поделиться на профиле друга",
-        "comingSoonTitle": "Пока недоступно",
-        "comingSoonDescription": "Эта опция обмена появится позже."
-      },
-      "shareDialog": {
-        "title": "Создать публикацию",
-        "placeholder": "Расскажите что-нибудь об этом...",
-        "placeholderNamed": "Расскажите что-нибудь об этом, {name}...",
-        "defaultName": "Вы",
-        "submit": "Поделиться",
-        "cancel": "Отмена",
-        "feedAudience": "Лента",
-        "successTitle": "Публикация поделена",
-        "successMessage": "Ваше обновление добавлено в ленту."
-      },
-      "loading": "Загрузка публикации"
-    },
-    "comments": {
-      "label": "Присоединяйтесь к обсуждению",
-      "placeholder": "Поделитесь своими мыслями с сообществом...",
-      "characterCount": "{count} символов",
-      "submit": "Отправить комментарий",
-      "submitting": "Отправка...",
-      "loading": "Загрузка комментариев...",
-      "load": "Загрузить комментарии",
-      "activationHint": "Комментарии загружаются, когда этот блок виден или когда вы нажимаете кнопку.",
-      "success": "Ваш комментарий добавлен.",
-      "error": "Не удалось добавить комментарий. Попробуйте ещё раз.",
-      "validation": "Напишите комментарий перед отправкой.",
-      "empty": "Комментариев пока нет. Станьте первым!",
-      "reply": "Ответить",
-      "replying": "Отправка ответа...",
-      "replyPlaceholder": "Напишите свой ответ...",
-      "addEmoji": "Добавить эмодзи",
-      "addMedia": "Добавить медиа",
-      "addGif": "Добавить GIF",
-      "replySubmit": "Отправить ответ",
-      "replySuccess": "Ваш ответ добавлен.",
-      "replyError": "Не удалось опубликовать ответ. Попробуйте ещё раз.",
-      "replyValidation": "Напишите ответ перед отправкой.",
-      "cancelReply": "Отмена",
-      "replyUnavailable": "Ответы временно недоступны.",
-      "reactionUnavailable": "Реакции временно недоступны.",
-      "reactionError": "Не удалось отреагировать на этот комментарий. Попробуйте ещё раз.",
-      "placeholderWithName": "Комментировать как {name}",
-      "sort": {
-        "menuAria": "Сортировка комментариев",
-        "options": {
-          "relevant": {
-            "label": "Самые актуальные",
-            "description": "Сначала показывать комментарии друзей и с наибольшим вовлечением."
-          },
-          "newest": {
-            "label": "Сначала новые",
-            "description": "Показывать все комментарии в обратном хронологическом порядке."
-          },
-          "all": {
-            "label": "Все комментарии",
-            "description": "Показывать все комментарии, включая возможный спам."
-          }
-        }
-      },
-      "thread": {
-        "showReplies": "Показать все {count} ответов",
-        "hideReplies": "Скрыть ответы"
-      }
-    },
-    "sidebar": {
-      "weather": {
-        "badge": "Новости",
-        "title": "Ожидается дождь",
-        "subtitle": "Подготовьтесь к дождливому дню с лёгким ветром.",
-        "icon": "🌧️",
-        "location": "Берлин, Германия",
-        "locationLabel": "Локация",
-        "temperature": "18°C",
-        "temperatureLabel": "Температура",
-        "tipLabel": "Совет",
-        "tip": "Не забудьте зонт, чтобы не промокнуть.",
-        "loading": "Обновление погоды…",
-        "actions": {
-          "useCurrentLocation": "Использовать текущее местоположение"
-        },
-        "errors": {
-          "unavailable": "Обновления погоды недоступны.",
-          "denied": "Не удалось получить доступ к вашему местоположению. Показан прогноз по умолчанию.",
-          "unsupported": "Ваш браузер не поддерживает определение местоположения.",
-          "updateFailed": "Не удалось обновить данные о погоде."
-        }
-      },
-      "leaderboard": {
-        "title": "Топ-3 в викторине",
-        "live": "в эфире",
-        "participants": {
-          "first": {
-            "name": "Bro World",
-            "role": "Команда продукта",
-            "score": "982 pts"
-          },
-          "second": {
-            "name": "Adam Don",
-            "role": "Сообщество",
-            "score": "953 pts"
-          },
-          "third": {
-            "name": "Nina Ko",
-            "role": "Маркетинг",
-            "score": "917 pts"
-          }
-        }
-      },
-      "rating": {
-        "title": "Обзор оценок",
-        "subtitle": "Отзывы участников за неделю",
-        "average": "4.7",
-        "total": 5,
-        "icon": "⭐",
-        "stars": 5,
-        "categories": {
-          "engagement": {
-            "label": "Вовлечённость",
-            "value": 92
-          },
-          "content": {
-            "label": "Контент",
-            "value": 88
-          },
-          "responsiveness": {
-            "label": "Оперативность",
-            "value": 84
-          }
-        }
-      },
-      "title": "Оставайтесь на связи",
-      "subtitle": "Ресурсы, чтобы быть в курсе сообщества BroWorld.",
-      "widgets": {
-        "community": {
-          "title": "Присоединяйтесь к сообществу",
-          "description": "Общайтесь с другими создателями, делитесь идеями и получайте помощь мгновенно.",
-          "action": "Открыть Discord"
-        },
-        "docs": {
-          "title": "Изучайте документацию",
-          "description": "Узнайте, как максимально эффективно использовать компоненты BroWorld в своих проектах.",
-          "action": "Читать документацию"
-        },
-        "contribute": {
-          "title": "Поделитесь статьёй",
-          "description": "Делитесь своим опытом с сообществом и помогайте другим развиваться.",
-          "action": "Отправить материал"
-        }
-      }
-    }
-  },
   "register": {
     "email": "Адрес электронной почты",
     "password": "Пароль",
@@ -1808,7 +1983,23 @@
     },
     "ecommerce": {
       "title": "E-commerce",
-      "description": "Launch and scale modern retail journeys."
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
     },
     "quiz": {
       "title": "Quiz experiences",
@@ -1817,6 +2008,10 @@
     "education": {
       "title": "Education",
       "description": "Design collaborative, data-informed learning experiences."
+    },
+    "academy": {
+      "title": "Academy",
+      "description": "Explore Bro World's structured learning paths, exercises, and certifications."
     },
     "performance": {
       "title": "Производительность",
@@ -2163,25 +2358,41 @@
           "content": {
             "title": "Управление контентом",
             "description": "Планируйте, публикуйте и архивируйте статьи, события и обучающие материалы.",
-            "tags": ["Редакционный процесс", "Проверка", "Планирование"],
+            "tags": [
+              "Редакционный процесс",
+              "Проверка",
+              "Планирование"
+            ],
             "status": "12 материалов требуют редакционной проверки."
           },
           "community": {
             "title": "Сообщество и модерация",
             "description": "Настраивайте правила модерации, управляйте жалобами и санкциями.",
-            "tags": ["Жалобы", "Санкции", "Личные сообщения"],
+            "tags": [
+              "Жалобы",
+              "Санкции",
+              "Личные сообщения"
+            ],
             "status": "Среднее время ответа: 1 ч 42."
           },
           "commerce": {
             "title": "Монетизация и предложения",
             "description": "Управляйте подписками, промокодами и коммерческими партнёрствами.",
-            "tags": ["Подписки", "Выставление счетов", "Купоны"],
+            "tags": [
+              "Подписки",
+              "Выставление счетов",
+              "Купоны"
+            ],
             "status": "Конверсия выросла на 3,4% за эту неделю."
           },
           "governance": {
             "title": "Говернанс и соответствие",
             "description": "Проводите аудит доступа, управляйте привилегированными ролями и готовьте отчёты по соответствию.",
-            "tags": ["Аудит", "Роли", "Трассируемость"],
+            "tags": [
+              "Аудит",
+              "Роли",
+              "Трассируемость"
+            ],
             "status": "Последний полный аудит выполнен 5 дней назад."
           }
         }
@@ -2460,6 +2671,208 @@
       "reactPrompt": "Отреагируйте на эту историю",
       "messageLabel": "Отправить сообщение",
       "send": "Отправить"
+    }
+  },
+  "demo": {
+    "ecommerce": {
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewDetails": "View details"
+      },
+      "badges": {
+        "bestseller": "Bestseller",
+        "new": "New arrival",
+        "staffPick": "Team favourite",
+        "limited": "Limited run"
+      },
+      "specifications": {
+        "power": "Power",
+        "material": "Material",
+        "dimensions": "Dimensions",
+        "capacity": "Capacity",
+        "compatibility": "Compatibility",
+        "connectivity": "Connectivity"
+      },
+      "inventory": {
+        "inStock": "{count} units in stock",
+        "lowStock": "Only {count} left",
+        "outOfStock": "Out of stock",
+        "defaultMessage": "Check availability with our team"
+      },
+      "summary": {
+        "title": "Order summary",
+        "quantity": "Qty: {count}",
+        "subtotal": "Subtotal",
+        "tax": "Estimated tax",
+        "shipping": "Shipping",
+        "total": "Total"
+      },
+      "catalog": {
+        "title": "Discover the demo storefront",
+        "subtitle": "Browse modular workspace companions, mindful wellbeing tech, and elevated travel gear in one place.",
+        "backToOverview": "Return to overview",
+        "goToCart": "View cart ({count})",
+        "filters": {
+          "all": "All categories"
+        },
+        "searchLabel": "Search catalog",
+        "emptyTitle": "No products match",
+        "emptySubtitle": "We couldn’t find any items matching “{query}”. Reset your filters to explore the full demo range.",
+        "resetFilters": "Reset filters",
+        "breadcrumb": "Catalog"
+      },
+      "product": {
+        "rating": "{rating} ★ ({reviews} reviews)",
+        "quantityLabel": "Quantity",
+        "viewCart": "View cart",
+        "detailsTitle": "Why it works",
+        "specificationsTitle": "Specifications",
+        "goToCheckout": "Proceed to checkout",
+        "backToCatalog": "Back to catalog"
+      },
+      "cart": {
+        "title": "Your cart",
+        "subtitle": "Keep building your bundle or head straight to checkout when you’re ready.",
+        "breadcrumb": "Cart",
+        "table": {
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "Unit price",
+          "total": "Line total",
+          "actions": "Remove item"
+        },
+        "nextStepsTitle": "Next steps",
+        "nextStepsDescription": "Complete checkout or continue exploring the catalog for more add-ons.",
+        "continueShopping": "Continue shopping",
+        "proceedToCheckout": "Proceed to checkout",
+        "checkoutCta": "Go to checkout",
+        "clearCart": "Clear cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add products from the catalog to see them listed here.",
+        "shopNow": "Shop the catalog"
+      },
+      "checkout": {
+        "title": "Secure checkout",
+        "subtitle": "Confirm delivery, payment, and review details to wrap up your demo order.",
+        "breadcrumb": "Checkout",
+        "empty": "There are no items in your cart yet.",
+        "shopLink": "Browse catalog",
+        "steps": {
+          "shipping": "Shipping",
+          "shippingSubtitle": "Address and delivery",
+          "payment": "Payment",
+          "paymentSubtitle": "Billing details",
+          "review": "Review",
+          "reviewSubtitle": "Confirm & submit"
+        },
+        "shippingTitle": "Delivery information",
+        "paymentTitle": "Payment method",
+        "reviewTitle": "Final review",
+        "reviewShipping": "Shipping",
+        "reviewPayment": "Payment",
+        "reviewHint": "Everything look good? You can always return to previous steps before placing the order.",
+        "backToCart": "Back to cart",
+        "continueToPayment": "Continue to payment",
+        "backToShipping": "Back to shipping",
+        "reviewOrder": "Review order",
+        "summaryContinue": "Review order",
+        "backToPayment": "Back to payment",
+        "placeOrder": "Place order",
+        "browseMore": "Browse more products",
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email",
+          "address": "Address",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "delivery": "Delivery option",
+          "notes": "Order notes",
+          "cardNumber": "Card number",
+          "expiry": "Expiry",
+          "cvc": "CVC",
+          "saveCard": "Securely save this card for next time"
+        },
+        "delivery": {
+          "standard": "Standard (free, 3-5 days)",
+          "express": "Express (paid, 24-48h)"
+        },
+        "exampleOrdersTitle": "Recent demo orders",
+        "maskedCard": "Visa ending ••••{last4}"
+      },
+      "orders": {
+        "status": {
+          "processing": "Processing",
+          "fulfilled": "Fulfilled",
+          "cancelled": "Cancelled",
+          "draft": "Draft"
+        },
+        "primary": {
+          "customer": "Jamie Ortiz · Paris, France",
+          "notes": "Repeat customer restock of workplace favourites."
+        },
+        "restock": {
+          "customer": "Taylor Singh · Copenhagen, Denmark",
+          "notes": "Event gifting set scheduled for warehouse dispatch."
+        }
+      },
+      "categories": {
+        "workspace": {
+          "name": "Workspace",
+          "description": "Lighting, ergonomics, and focus rituals for hybrid teams."
+        },
+        "wellbeing": {
+          "name": "Wellbeing",
+          "description": "Support healthy routines with adaptive tech and insights."
+        },
+        "travel": {
+          "name": "Travel",
+          "description": "Go-anywhere carry essentials for the modern explorer."
+        }
+      },
+      "products": {
+        "auroraDeskLamp": {
+          "name": "Aurora adaptive desk lamp",
+          "summary": "Dynamic lighting scenes that sync with circadian rhythms and deep work blocks.",
+          "description": "Aurora blends ambient LEDs with warm task lighting, adaptive brightness, and voice control. Teams personalise presets for focus sessions or cosy after-hours.",
+          "specs": {
+            "power": "18W LED array",
+            "material": "Anodised aluminium and recycled polymer",
+            "dimensions": "45 × 12 × 38 cm"
+          }
+        },
+        "focusHubPro": {
+          "name": "Focus Hub Pro",
+          "summary": "Modular workspace dock with wireless charging, acoustic shielding, and ambient soundscapes.",
+          "description": "Focus Hub Pro anchors hot desks with integrated power, device cradles, and configurable dividers. Built-in soundscapes and white noise adapt to busy floors.",
+          "specs": {
+            "connectivity": "Dual USB-C, 2× Qi wireless pads, Wi-Fi 6 hub",
+            "dimensions": "52 × 22 × 18 cm",
+            "material": "Felt acoustic panels and alloy frame"
+          }
+        },
+        "pulseSmartBottle": {
+          "name": "Pulse smart hydration bottle",
+          "summary": "Hydration tracking with adaptive reminders, mineral insights, and team challenges.",
+          "description": "Pulse keeps crews energised with sip detection, mineral analysis, and app nudges. Sync hydration streaks with wellbeing programmes to boost morale.",
+          "specs": {
+            "capacity": "750 ml",
+            "material": "Double-wall stainless steel",
+            "compatibility": "iOS, Android, and BroWorld wellbeing dashboards"
+          }
+        },
+        "atlasWeekender": {
+          "name": "Atlas recycled weekender",
+          "summary": "Cabin-friendly carry crafted from regenerated ocean plastic with modular packing cubes.",
+          "description": "Atlas keeps teams travel-ready with quick-access tech pockets, convertible straps, and padded laptop storage. Each bag reuses 28 plastic bottles.",
+          "specs": {
+            "capacity": "38 L",
+            "material": "Recycled ocean-bound nylon",
+            "dimensions": "55 × 26 × 24 cm"
+          }
+        }
+      }
     }
   }
 }

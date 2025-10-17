@@ -113,6 +113,7 @@
         "ecommerce": "E-commerce",
         "education": "Education",
         "quiz": "Quiz",
+        "academy": "الأكاديمية",
         "performance": "الأداء"
       }
     },
@@ -177,139 +178,6 @@
     "DiscordDescription": "تواصل مع المجتمع عبر ديسكورد",
     "Forum": "المنتدى",
     "ForumDiscord": "انضم إلى المنتدى"
-  },
-  "blog": {
-    "sidebar": {
-      "weather": {
-        "badge": "مباشر",
-        "title": "مقر Bro World",
-        "subtitle": "احفظ المظلة بالقرب منك",
-        "icon": "solar:sun-2-bold",
-        "location": "باريس، فرنسا",
-        "temperature": "18°",
-        "tip": "من المتوقع هبات رياح تصل إلى 12 كم/س بعد الظهر.",
-        "locationLabel": "الموقع",
-        "temperatureLabel": "الحرارة",
-        "tipLabel": "نصيحة"
-      },
-      "leaderboard": {
-        "title": "أفضل اللاعبين",
-        "live": "تصنيف مباشر",
-        "participants": {
-          "first": {
-            "name": "أليكس كارتر",
-            "role": "استراتيجي",
-            "score": "982"
-          },
-          "second": {
-            "name": "ميا لوران",
-            "role": "دعم",
-            "score": "945"
-          },
-          "third": {
-            "name": "ليو ناكامورا",
-            "role": "كاشف",
-            "score": "918"
-          }
-        }
-      },
-      "rating": {
-        "title": "تقييم المجتمع",
-        "subtitle": "تجربة Bro World",
-        "average": "4.9",
-        "total": 428,
-        "icon": "solar:star-bold",
-        "stars": 5,
-        "categories": {
-          "ui": {
-            "label": "الواجهة",
-            "value": 4.9
-          },
-          "gameplay": {
-            "label": "أسلوب اللعب",
-            "value": 4.8
-          },
-          "community": {
-            "label": "المجتمع",
-            "value": 4.9
-          }
-        }
-      }
-    }
-  },
-  "toc": {
-    "title": "في هذه الصفحة",
-    "StarOnGitHub": "أضف نجمة على GitHub",
-    "CreateIssues": "أنشئ بلاغًا",
-    "JoinDiscord": "انضم إلى ديسكورد",
-    "Forum": "المنتدى",
-    "FollowOnX": "تابعنا على X",
-    "FollowOnBluesky": "تابعنا على Bluesky"
-  },
-  "page": {
-    "home": {
-      "SupportUs": "ادعمنا",
-      "AllComponents": "جميع المكوّنات",
-      "OpenSourceComponentsToBuild": "مكوّنات مفتوحة المصدر لتبني بها",
-      "Stunning": "مذهلة",
-      "Beautiful": "جميلة",
-      "WebsitesUsingVueAndNuxt": "مواقع باستخدام Vue وNuxt",
-      "IntegrateWithYourFavouriteUIframework": "ادمج مع إطار الواجهة المفضل لديك",
-      "Features": "الميزات",
-      "CheckOutSomeExamples": "اطلع على بعض الأمثلة!",
-      "3DCardHoverEffect": "تأثير تحويم بطاقة ثلاثية الأبعاد",
-      "RadiantText": "نص متألق",
-      "LovedByCommunity": "محبوب من المجتمع",
-      "WhatAreYouWaitingFor": "ما الذي تنتظره؟",
-      "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
-      "GetStarted": "ابدأ الآن"
-    }
-  },
-  "messenger": {
-    "searchPlaceholder": "ابحث في المحادثات",
-    "emptyList": "لا توجد محادثات بعد",
-    "unknownParticipant": "غير معروف",
-    "emptyTitle": "اختر محادثة",
-    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
-    "emptyCtaLabel": "ابدأ محادثة",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "اكتب رسالة...",
-    "sendLabel": "إرسال",
-    "sendingLabel": "جارٍ الإرسال...",
-    "sendErrorStatus": "لم يتم التسليم",
-    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
-    "noMessages": "لا توجد رسائل بعد",
-    "loadOlder": "تحميل الرسائل السابقة",
-    "participantsLabel": "{count} مشارك"
-  },
-  "auth": {
-    "Account": "الحساب",
-    "Login": "تسجيل الدخول",
-    "Register": "إنشاء حساب",
-    "usernameOrEmail": "البريد الإلكتروني أو اسم المستخدم",
-    "password": "كلمة المرور",
-    "showPassword": "إظهار كلمة المرور",
-    "hidePassword": "إخفاء كلمة المرور",
-    "signIn": "تسجيل الدخول",
-    "signUpPrompt": "لا تملك حسابًا؟",
-    "signUp": "إنشاء حساب",
-    "signOut": "تسجيل الخروج",
-    "forgotPassword": "هل نسيت كلمة المرور؟",
-    "requiredError": "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
-    "invalidError": "تعذر تسجيل الدخول بهذه البيانات. حاول مرة أخرى.",
-    "successTitle": "مرحبًا بعودتك",
-    "success": "تم تسجيل دخولك بنجاح.",
-    "errorTitle": "فشل تسجيل الدخول",
-    "errorGeneric": "حدث خطأ أثناء تسجيل الدخول.",
-    "logoutMessage": "تم تسجيل خروجك بنجاح.",
-    "sessionExpired": "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى.",
-    "socialTitle": "سجّل الدخول باستخدام مزودك المفضل",
-    "socialSubtitle": "سنقوم بإعادة توجيهك لإكمال عملية المصادقة.",
-    "social": {
-      "google": "متابعة باستخدام Google",
-      "github": "متابعة باستخدام GitHub",
-      "microsoft": "متابعة باستخدام Microsoft"
-    }
   },
   "blog": {
     "hero": {
@@ -611,6 +479,80 @@
       }
     }
   },
+  "toc": {
+    "title": "في هذه الصفحة",
+    "StarOnGitHub": "أضف نجمة على GitHub",
+    "CreateIssues": "أنشئ بلاغًا",
+    "JoinDiscord": "انضم إلى ديسكورد",
+    "Forum": "المنتدى",
+    "FollowOnX": "تابعنا على X",
+    "FollowOnBluesky": "تابعنا على Bluesky"
+  },
+  "page": {
+    "home": {
+      "SupportUs": "ادعمنا",
+      "AllComponents": "جميع المكوّنات",
+      "OpenSourceComponentsToBuild": "مكوّنات مفتوحة المصدر لتبني بها",
+      "Stunning": "مذهلة",
+      "Beautiful": "جميلة",
+      "WebsitesUsingVueAndNuxt": "مواقع باستخدام Vue وNuxt",
+      "IntegrateWithYourFavouriteUIframework": "ادمج مع إطار الواجهة المفضل لديك",
+      "Features": "الميزات",
+      "CheckOutSomeExamples": "اطلع على بعض الأمثلة!",
+      "3DCardHoverEffect": "تأثير تحويم بطاقة ثلاثية الأبعاد",
+      "RadiantText": "نص متألق",
+      "LovedByCommunity": "محبوب من المجتمع",
+      "WhatAreYouWaitingFor": "ما الذي تنتظره؟",
+      "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
+      "GetStarted": "ابدأ الآن"
+    }
+  },
+  "messenger": {
+    "searchPlaceholder": "ابحث في المحادثات",
+    "emptyList": "لا توجد محادثات بعد",
+    "unknownParticipant": "غير معروف",
+    "emptyTitle": "اختر محادثة",
+    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
+    "emptyCtaLabel": "ابدأ محادثة",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "اكتب رسالة...",
+    "sendLabel": "إرسال",
+    "sendingLabel": "جارٍ الإرسال...",
+    "sendErrorStatus": "لم يتم التسليم",
+    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
+    "noMessages": "لا توجد رسائل بعد",
+    "loadOlder": "تحميل الرسائل السابقة",
+    "participantsLabel": "{count} مشارك"
+  },
+  "auth": {
+    "Account": "الحساب",
+    "Login": "تسجيل الدخول",
+    "Register": "إنشاء حساب",
+    "usernameOrEmail": "البريد الإلكتروني أو اسم المستخدم",
+    "password": "كلمة المرور",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "signUpPrompt": "لا تملك حسابًا؟",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "requiredError": "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+    "invalidError": "تعذر تسجيل الدخول بهذه البيانات. حاول مرة أخرى.",
+    "successTitle": "مرحبًا بعودتك",
+    "success": "تم تسجيل دخولك بنجاح.",
+    "errorTitle": "فشل تسجيل الدخول",
+    "errorGeneric": "حدث خطأ أثناء تسجيل الدخول.",
+    "logoutMessage": "تم تسجيل خروجك بنجاح.",
+    "sessionExpired": "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى.",
+    "socialTitle": "سجّل الدخول باستخدام مزودك المفضل",
+    "socialSubtitle": "سنقوم بإعادة توجيهك لإكمال عملية المصادقة.",
+    "social": {
+      "google": "متابعة باستخدام Google",
+      "github": "متابعة باستخدام GitHub",
+      "microsoft": "متابعة باستخدام Microsoft"
+    }
+  },
   "register": {
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
@@ -707,7 +649,133 @@
         "community": "منتدى المجتمع",
         "githubAria": "فتح مستودع GitHub في علامة تبويب جديدة",
         "docsAria": "قراءة التوثيق في علامة تبويب جديدة",
-        "communityAria": "الانضمام إلى منتدى المجتمع في علامة تبويب جديدة"
+      "communityAria": "الانضمام إلى منتدى المجتمع في علامة تبويب جديدة"
+      }
+    },
+    "academy": {
+      "title": "Bro World Academy",
+      "subtitle": "Master the skills to build immersive communities through focused learning tracks.",
+      "courses": {
+        "title": "Flagship courses",
+        "badgesLabel": "Course badges",
+        "duration": "Duration",
+        "level": "Level",
+        "items": {
+          "strategy": {
+            "title": "Experience strategy foundations",
+            "description": "Design vision, positioning, and measurement for large-scale experiences.",
+            "duration": "6 weeks • 3 hours per week",
+            "level": "Intermediate",
+            "badges": {
+              "0": "Live strategy labs",
+              "1": "Peer critiques",
+              "2": "Playbook templates"
+            }
+          },
+          "production": {
+            "title": "Production systems & operations",
+            "description": "Structure teams, rituals, and release pipelines that keep worlds shipping.",
+            "duration": "8 weeks • 4 hours per week",
+            "level": "Advanced",
+            "badges": {
+              "0": "Operations reviews",
+              "1": "Tooling deep dives",
+              "2": "Risk rehearsals"
+            }
+          },
+          "leadership": {
+            "title": "Leadership & community stewardship",
+            "description": "Grow inclusive leadership habits and mentor distributed creator teams.",
+            "duration": "5 weeks • 2 hours per week",
+            "level": "Intermediate",
+            "badges": {
+              "0": "Leadership clinics",
+              "1": "Community scenarios",
+              "2": "Executive coaching"
+            }
+          }
+        }
+      },
+      "exercises": {
+        "title": "Practice tracks",
+        "duration": "Duration",
+        "deliverables": "Deliverables",
+        "resources": "Resources",
+        "items": {
+          "simulation": {
+            "title": "Launch simulation",
+            "duration": "3 days",
+            "deliverables": "Scenario report & leadership debrief",
+            "resources": "Live ops dashboard, mentor office hours"
+          },
+          "sprint": {
+            "title": "Innovation sprint",
+            "duration": "1 week",
+            "deliverables": "Prototype pitch & metrics plan",
+            "resources": "Workshop kits, analytics sandbox"
+          },
+          "capstone": {
+            "title": "Capstone challenge",
+            "duration": "4 weeks",
+            "deliverables": "End-to-end activation blueprint",
+            "resources": "Advisory board reviews, tooling access"
+          }
+        }
+      },
+      "certifications": {
+        "title": "Certification pathways",
+        "provider": "Provider",
+        "requirements": "Requirements",
+        "validity": "Validity",
+        "items": {
+          "coaching": {
+            "name": "Certified Bro World Coach",
+            "provider": "Bro World Academy Faculty",
+            "requirements": "Complete coaching residency & pass live assessment",
+            "validity": "2 years"
+          },
+          "facilitation": {
+            "name": "Community Facilitation Specialist",
+            "provider": "Bro World Academy Faculty",
+            "requirements": "Finish facilitation labs & submit workshop recordings",
+            "validity": "3 years"
+          },
+          "strategy": {
+            "name": "Strategic Experience Architect",
+            "provider": "Bro World Academy Faculty",
+            "requirements": "Deliver capstone & portfolio review",
+            "validity": "3 years"
+          }
+        }
+      },
+      "process": {
+        "title": "How the academy works",
+        "description": "A guided journey mixing live instruction, practice, and validation.",
+        "stepLabel": "Step {number}",
+        "steps": {
+          "intake": {
+            "title": "Intake & goals",
+            "description": "Set ambitions, map competencies, and match with mentors."
+          },
+          "immersion": {
+            "title": "Immersive learning",
+            "description": "Attend live sessions, async lessons, and collaborative studios."
+          },
+          "practice": {
+            "title": "Guided practice",
+            "description": "Apply frameworks to real projects with iterative feedback."
+          },
+          "assessment": {
+            "title": "Assessment & recognition",
+            "description": "Showcase outcomes and earn credentials backed by experts."
+          }
+        }
+      },
+      "cta": {
+        "title": "Join the next academy cohort",
+        "description": "Reserve your spot to receive schedules, programme details, and application guidance.",
+        "button": "Talk with our team",
+        "buttonAria": "Contact the Bro World Academy team"
       }
     },
     "help": {
@@ -1487,6 +1555,113 @@
         "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
         "button": "Talk to us",
         "buttonAria": "Open the contact page"
+      },
+      "openings": {
+        "title": "Current openings",
+        "subtitle": "Explore the roles we're actively hiring for and get a feel for the work you'll lead from day one.",
+        "updated": "Updated weekly",
+        "updatedLabel": "Job listings refresh cadence",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Product Design",
+            "location": "Paris, France (Hybrid)",
+            "type": "Full-time",
+            "salary": "€58k - €72k · 0.05% equity",
+            "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Senior Product Designer role",
+              "hint": "Portfolio link required"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Product & AI",
+            "location": "Remote - EMEA",
+            "type": "Full-time",
+            "salary": "€70k - €90k · bonus eligible",
+            "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the AI Recruiter Strategist role",
+              "hint": "Experience with LLM workflows"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "Full-time",
+            "salary": "€65k base · 50% variable",
+            "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Enterprise Sales Lead role",
+              "hint": "French & English proficiency"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "Full-time",
+            "salary": "€45k - €55k",
+            "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Customer Success Partner role",
+              "hint": "Experience supporting HRIS/ATS rollouts"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Submit your application",
+        "subtitle": "Share a few details and our talent team will reach out with next steps.",
+        "highlights": [
+          "A tailored walkthrough of BroWorld based on your hiring maturity.",
+          "Introductions to the team members you'll collaborate with.",
+          "A response within two business days—even if we are not moving forward yet."
+        ],
+        "form": {
+          "nameLabel": "Full name",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Work email",
+          "emailPlaceholder": "elisa.dupont(at)company.com",
+          "roleLabel": "Role you're interested in",
+          "rolePlaceholder": "e.g. Product Designer",
+          "messageLabel": "Tell us about your experience",
+          "messagePlaceholder": "Share recent projects, achievements, or what excites you about BroWorld.",
+          "consentLabel": "I agree to be contacted about current and future opportunities at BroWorld.",
+          "submit": "Send application",
+          "success": "Thank you! Our talent team will review your profile and be in touch shortly.",
+          "rules": {
+            "required": "This field is required.",
+            "email": "Enter a valid email address.",
+            "consent": "Please confirm we can contact you."
+          }
+        }
       }
     },
     "game": {
@@ -1984,7 +2159,23 @@
     },
     "ecommerce": {
       "title": "E-commerce",
-      "description": "Launch and scale modern retail journeys."
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
     },
     "quiz": {
       "title": "Quiz experiences",
@@ -1993,6 +2184,10 @@
     "education": {
       "title": "Education",
       "description": "Design collaborative, data-informed learning experiences."
+    },
+    "academy": {
+      "title": "Academy",
+      "description": "Explore Bro World's structured learning paths, exercises, and certifications."
     },
     "performance": {
       "title": "الأداء",
@@ -2339,25 +2534,41 @@
           "content": {
             "title": "إدارة المحتوى",
             "description": "خطط للمقالات والفعاليات والموارد التعليمية وانشرها أو أرشفها.",
-            "tags": ["سير عمل تحريري", "مراجعة", "جدولة"],
+            "tags": [
+              "سير عمل تحريري",
+              "مراجعة",
+              "جدولة"
+            ],
             "status": "هناك 12 عنصراً بحاجة إلى مراجعة تحريرية."
           },
           "community": {
             "title": "المجتمع والإشراف",
             "description": "اضبط قواعد الإشراف وتابع البلاغات والعقوبات.",
-            "tags": ["بلاغات", "عقوبات", "رسائل خاصة"],
+            "tags": [
+              "بلاغات",
+              "عقوبات",
+              "رسائل خاصة"
+            ],
             "status": "متوسط وقت الاستجابة: ساعة و42 دقيقة."
           },
           "commerce": {
             "title": "الربحية والعروض",
             "description": "أدر الاشتراكات والرموز الترويجية والشراكات التجارية.",
-            "tags": ["اشتراكات", "فوترة", "قسائم"],
+            "tags": [
+              "اشتراكات",
+              "فوترة",
+              "قسائم"
+            ],
             "status": "ارتفع معدل التحويل بنسبة 3.4٪ هذا الأسبوع."
           },
           "governance": {
             "title": "الحوكمة والامتثال",
             "description": "دقق صلاحيات الوصول، أدر الأدوار الحساسة وجهّز تقارير الامتثال.",
-            "tags": ["تدقيق", "أدوار", "تتبع"],
+            "tags": [
+              "تدقيق",
+              "أدوار",
+              "تتبع"
+            ],
             "status": "آخر تدقيق شامل تم قبل 5 أيام."
           }
         }
@@ -2636,6 +2847,208 @@
       "reactPrompt": "تفاعل مع هذه الستوري",
       "messageLabel": "إرسال رسالة",
       "send": "إرسال"
+    }
+  },
+  "demo": {
+    "ecommerce": {
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewDetails": "View details"
+      },
+      "badges": {
+        "bestseller": "Bestseller",
+        "new": "New arrival",
+        "staffPick": "Team favourite",
+        "limited": "Limited run"
+      },
+      "specifications": {
+        "power": "Power",
+        "material": "Material",
+        "dimensions": "Dimensions",
+        "capacity": "Capacity",
+        "compatibility": "Compatibility",
+        "connectivity": "Connectivity"
+      },
+      "inventory": {
+        "inStock": "{count} units in stock",
+        "lowStock": "Only {count} left",
+        "outOfStock": "Out of stock",
+        "defaultMessage": "Check availability with our team"
+      },
+      "summary": {
+        "title": "Order summary",
+        "quantity": "Qty: {count}",
+        "subtotal": "Subtotal",
+        "tax": "Estimated tax",
+        "shipping": "Shipping",
+        "total": "Total"
+      },
+      "catalog": {
+        "title": "Discover the demo storefront",
+        "subtitle": "Browse modular workspace companions, mindful wellbeing tech, and elevated travel gear in one place.",
+        "backToOverview": "Return to overview",
+        "goToCart": "View cart ({count})",
+        "filters": {
+          "all": "All categories"
+        },
+        "searchLabel": "Search catalog",
+        "emptyTitle": "No products match",
+        "emptySubtitle": "We couldn’t find any items matching “{query}”. Reset your filters to explore the full demo range.",
+        "resetFilters": "Reset filters",
+        "breadcrumb": "Catalog"
+      },
+      "product": {
+        "rating": "{rating} ★ ({reviews} reviews)",
+        "quantityLabel": "Quantity",
+        "viewCart": "View cart",
+        "detailsTitle": "Why it works",
+        "specificationsTitle": "Specifications",
+        "goToCheckout": "Proceed to checkout",
+        "backToCatalog": "Back to catalog"
+      },
+      "cart": {
+        "title": "Your cart",
+        "subtitle": "Keep building your bundle or head straight to checkout when you’re ready.",
+        "breadcrumb": "Cart",
+        "table": {
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "Unit price",
+          "total": "Line total",
+          "actions": "Remove item"
+        },
+        "nextStepsTitle": "Next steps",
+        "nextStepsDescription": "Complete checkout or continue exploring the catalog for more add-ons.",
+        "continueShopping": "Continue shopping",
+        "proceedToCheckout": "Proceed to checkout",
+        "checkoutCta": "Go to checkout",
+        "clearCart": "Clear cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add products from the catalog to see them listed here.",
+        "shopNow": "Shop the catalog"
+      },
+      "checkout": {
+        "title": "Secure checkout",
+        "subtitle": "Confirm delivery, payment, and review details to wrap up your demo order.",
+        "breadcrumb": "Checkout",
+        "empty": "There are no items in your cart yet.",
+        "shopLink": "Browse catalog",
+        "steps": {
+          "shipping": "Shipping",
+          "shippingSubtitle": "Address and delivery",
+          "payment": "Payment",
+          "paymentSubtitle": "Billing details",
+          "review": "Review",
+          "reviewSubtitle": "Confirm & submit"
+        },
+        "shippingTitle": "Delivery information",
+        "paymentTitle": "Payment method",
+        "reviewTitle": "Final review",
+        "reviewShipping": "Shipping",
+        "reviewPayment": "Payment",
+        "reviewHint": "Everything look good? You can always return to previous steps before placing the order.",
+        "backToCart": "Back to cart",
+        "continueToPayment": "Continue to payment",
+        "backToShipping": "Back to shipping",
+        "reviewOrder": "Review order",
+        "summaryContinue": "Review order",
+        "backToPayment": "Back to payment",
+        "placeOrder": "Place order",
+        "browseMore": "Browse more products",
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email",
+          "address": "Address",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "delivery": "Delivery option",
+          "notes": "Order notes",
+          "cardNumber": "Card number",
+          "expiry": "Expiry",
+          "cvc": "CVC",
+          "saveCard": "Securely save this card for next time"
+        },
+        "delivery": {
+          "standard": "Standard (free, 3-5 days)",
+          "express": "Express (paid, 24-48h)"
+        },
+        "exampleOrdersTitle": "Recent demo orders",
+        "maskedCard": "Visa ending ••••{last4}"
+      },
+      "orders": {
+        "status": {
+          "processing": "Processing",
+          "fulfilled": "Fulfilled",
+          "cancelled": "Cancelled",
+          "draft": "Draft"
+        },
+        "primary": {
+          "customer": "Jamie Ortiz · Paris, France",
+          "notes": "Repeat customer restock of workplace favourites."
+        },
+        "restock": {
+          "customer": "Taylor Singh · Copenhagen, Denmark",
+          "notes": "Event gifting set scheduled for warehouse dispatch."
+        }
+      },
+      "categories": {
+        "workspace": {
+          "name": "Workspace",
+          "description": "Lighting, ergonomics, and focus rituals for hybrid teams."
+        },
+        "wellbeing": {
+          "name": "Wellbeing",
+          "description": "Support healthy routines with adaptive tech and insights."
+        },
+        "travel": {
+          "name": "Travel",
+          "description": "Go-anywhere carry essentials for the modern explorer."
+        }
+      },
+      "products": {
+        "auroraDeskLamp": {
+          "name": "Aurora adaptive desk lamp",
+          "summary": "Dynamic lighting scenes that sync with circadian rhythms and deep work blocks.",
+          "description": "Aurora blends ambient LEDs with warm task lighting, adaptive brightness, and voice control. Teams personalise presets for focus sessions or cosy after-hours.",
+          "specs": {
+            "power": "18W LED array",
+            "material": "Anodised aluminium and recycled polymer",
+            "dimensions": "45 × 12 × 38 cm"
+          }
+        },
+        "focusHubPro": {
+          "name": "Focus Hub Pro",
+          "summary": "Modular workspace dock with wireless charging, acoustic shielding, and ambient soundscapes.",
+          "description": "Focus Hub Pro anchors hot desks with integrated power, device cradles, and configurable dividers. Built-in soundscapes and white noise adapt to busy floors.",
+          "specs": {
+            "connectivity": "Dual USB-C, 2× Qi wireless pads, Wi-Fi 6 hub",
+            "dimensions": "52 × 22 × 18 cm",
+            "material": "Felt acoustic panels and alloy frame"
+          }
+        },
+        "pulseSmartBottle": {
+          "name": "Pulse smart hydration bottle",
+          "summary": "Hydration tracking with adaptive reminders, mineral insights, and team challenges.",
+          "description": "Pulse keeps crews energised with sip detection, mineral analysis, and app nudges. Sync hydration streaks with wellbeing programmes to boost morale.",
+          "specs": {
+            "capacity": "750 ml",
+            "material": "Double-wall stainless steel",
+            "compatibility": "iOS, Android, and BroWorld wellbeing dashboards"
+          }
+        },
+        "atlasWeekender": {
+          "name": "Atlas recycled weekender",
+          "summary": "Cabin-friendly carry crafted from regenerated ocean plastic with modular packing cubes.",
+          "description": "Atlas keeps teams travel-ready with quick-access tech pockets, convertible straps, and padded laptop storage. Each bag reuses 28 plastic bottles.",
+          "specs": {
+            "capacity": "38 L",
+            "material": "Recycled ocean-bound nylon",
+            "dimensions": "55 × 26 × 24 cm"
+          }
+        }
+      }
     }
   }
 }
