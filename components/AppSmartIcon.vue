@@ -22,6 +22,16 @@ const props = withDefaults(
 
 const attrs = useAttrs();
 
-const iconName = computed(() => props.name);
+const iconName = computed(() => {
+  const rawName = props.name?.trim() ?? "";
+
+  if (!rawName) return rawName;
+
+  if (rawName.startsWith("mdi:")) return rawName;
+
+  if (rawName.startsWith("mdi-")) return `mdi:${rawName.slice(4)}`;
+
+  return rawName;
+});
 const iconSize = computed(() => props.size);
 </script>
