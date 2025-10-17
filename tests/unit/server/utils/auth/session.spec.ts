@@ -35,7 +35,7 @@ vi.mock("~/lib/cookies", () => ({
   withSecureCookieOptions: withSecureCookieOptionsMock,
 }));
 
-import { getSessionToken, requireSessionToken } from "~/server/utils/auth/session";
+import { getSessionToken, requireSessionToken, waitForSessionToken } from "~/server/utils/auth/session";
 
 function createEvent(): H3Event {
   return {
@@ -181,5 +181,71 @@ describe("requireSessionToken", () => {
         data: { message: "Custom message" },
       }),
     );
+  });
+});
+
+describe("waitForSessionToken", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("returns immediately when a token is already available", async () => {
+    const event = createEvent();
+
+    getCookieMock.mockImplementation((_, name) => {
+      if (name === "auth_token") {
+        return "existing-token";
+      }
+
+      return null;
+    });
+
+    const token = await waitForSessionToken(event);
+
+    expect(token).toBe("existing-token");
+    expect(getCookieMock).toHaveBeenCalled();
+  });
+
+  it("polls until a token becomes available within the timeout", async () => {
+    const event = createEvent();
+    let attempts = 0;
+
+    getCookieMock.mockImplementation((_, name) => {
+      if (name === "auth_token") {
+        attempts += 1;
+        return attempts > 3 ? "delayed-token" : null;
+      }
+
+      return null;
+    });
+
+    vi.useFakeTimers();
+
+    const tokenPromise = waitForSessionToken(event, { interval: 20, timeout: 200 });
+
+    await vi.advanceTimersByTimeAsync(60);
+    await vi.advanceTimersByTimeAsync(60);
+
+    const token = await tokenPromise;
+
+    expect(token).toBe("delayed-token");
+    expect(attempts).toBeGreaterThan(3);
+  });
+
+  it("returns null when no token is available before the timeout elapses", async () => {
+    const event = createEvent();
+
+    getCookieMock.mockReturnValue(null);
+
+    vi.useFakeTimers();
+
+    const tokenPromise = waitForSessionToken(event, { interval: 25, timeout: 60 });
+
+    await vi.advanceTimersByTimeAsync(100);
+
+    const token = await tokenPromise;
+
+    expect(token).toBeNull();
+    expect(getCookieMock).toHaveBeenCalled();
   });
 });

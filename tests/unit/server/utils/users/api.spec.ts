@@ -12,6 +12,9 @@ const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
 const getSessionUserMock = vi.hoisted(() =>
   vi.fn<[H3Event], Record<string, unknown> | null>(),
 );
+const waitForSessionTokenMock = vi.hoisted(() =>
+  vi.fn<[H3Event], Promise<string | null>>().mockResolvedValue(null),
+);
 const requireSessionTokenMock = vi.hoisted(() =>
   vi.fn(
     (
@@ -70,6 +73,7 @@ vi.mock("~/server/utils/auth/session", () => ({
   getSessionToken: getSessionTokenMock,
   getSessionUser: getSessionUserMock,
   requireSessionToken: requireSessionTokenMock,
+  waitForSessionToken: waitForSessionTokenMock,
   withAuthHeaders: withAuthHeadersMock,
 }));
 
@@ -92,6 +96,7 @@ beforeEach(() => {
   getSessionTokenMock.mockReset();
   getSessionUserMock.mockReset();
   requireSessionTokenMock.mockClear();
+  waitForSessionTokenMock.mockClear();
   readCachedProfileMock.mockReset();
   writeCachedProfileMock.mockReset();
   deleteCachedProfileMock.mockReset();
@@ -412,12 +417,48 @@ describe("fetchCurrentProfileFromSource", () => {
 
     useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue(null);
+    waitForSessionTokenMock.mockResolvedValueOnce(null);
 
     await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
       statusCode: 401,
       statusMessage: "Authentication is required to access this resource.",
       data: { message: "Authentication is required to access this resource." },
     });
+
+    expect(waitForSessionTokenMock).toHaveBeenCalledWith(event);
+  });
+
+  it("waits for the session token to become available before fetching the profile", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+    const apiProfile = {
+      data: {
+        id: "late-id",
+        username: "late-user",
+        email: "late@example.com",
+        friends: [],
+        stories: [],
+      },
+    };
+
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+    waitForSessionTokenMock.mockResolvedValueOnce("late-session-token");
+    readCachedProfileMock.mockResolvedValue(null);
+
+    const fetchMock = vi.fn().mockResolvedValue(apiProfile);
+    globalScope.$fetch = fetchMock;
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(waitForSessionTokenMock).toHaveBeenCalledWith(event);
+    expect(requireSessionTokenMock).not.toHaveBeenCalled();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(writeCachedProfileMock).toHaveBeenCalledWith(
+      event,
+      "late-session-token",
+      expect.objectContaining({ id: "late-id" }),
+    );
+    expect(result).toMatchObject({ id: "late-id", username: "late-user" });
   });
 
   it("allows forwarded authorization headers to bypass the session token requirement", async () => {
