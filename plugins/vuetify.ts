@@ -234,9 +234,35 @@ import arLocale from "date-fns/locale/ar-SA";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
 
-const withSvgPrefix = (path: string) => (path.startsWith("svg:") ? path : `svg:${path}`);
+function withSvgPrefix(path: string): string {
+  return path.startsWith("svg:") ? path : `svg:${path}`;
+}
 
-const minimalAliases = {
+function createMdiAliasVariants(iconMap: Record<string, string>) {
+  const extendedAliases = { ...iconMap };
+
+  for (const [name, value] of Object.entries(iconMap)) {
+    if (name.startsWith("mdi-")) {
+      const colonName = `mdi:${name.slice(4)}`;
+
+      if (!(colonName in extendedAliases)) {
+        extendedAliases[colonName] = value;
+      }
+    }
+
+    if (name.startsWith("mdi:")) {
+      const hyphenName = `mdi-${name.slice(4)}`;
+
+      if (!(hyphenName in extendedAliases)) {
+        extendedAliases[hyphenName] = value;
+      }
+    }
+  }
+
+  return extendedAliases;
+};
+
+const minimalAliases = createMdiAliasVariants({
   ...aliases,
   "mdi-account-cog": withSvgPrefix(mdiAccountCog),
   "mdi-account-cog-outline": withSvgPrefix(mdiAccountCogOutline),
@@ -392,7 +418,7 @@ const minimalAliases = {
   "mdi-view-dashboard-outline": withSvgPrefix(mdiViewDashboardOutline),
   "mdi-weather-night": withSvgPrefix(mdiWeatherNight),
   "mdi-weather-sunny": withSvgPrefix(mdiWeatherSunny),
-};
+});
 
 const vuetifyLocaleMessages = {
   en,
