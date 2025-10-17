@@ -418,6 +418,7 @@ describe("fetchCurrentProfileFromSource", () => {
     useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue(null);
     waitForSessionTokenMock.mockResolvedValueOnce(null);
+    getSessionUserMock.mockReturnValue(null);
 
     await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
       statusCode: 401,
@@ -426,6 +427,44 @@ describe("fetchCurrentProfileFromSource", () => {
     });
 
     expect(waitForSessionTokenMock).toHaveBeenCalledWith(event);
+  });
+
+  it("returns the session user profile when no session token becomes available", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+    const sessionUser = {
+      id: "session-id",
+      username: "session-user",
+      email: "session@example.com",
+      friends: {
+        bob: {
+          user: { id: "bob-id", username: "bob" },
+          stories: [{ id: "story-1" }],
+        },
+      },
+      stories: [{ id: "own-story" }],
+    };
+
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+    waitForSessionTokenMock.mockResolvedValueOnce(null);
+    getSessionUserMock.mockReturnValue(sessionUser);
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(waitForSessionTokenMock).toHaveBeenCalledWith(event);
+    expect(requireSessionTokenMock).not.toHaveBeenCalled();
+    expect(result).toMatchObject({
+      id: "session-id",
+      username: "session-user",
+      email: "session@example.com",
+    });
+    expect(result.friends).toEqual([
+      {
+        user: { id: "bob-id", username: "bob" },
+        stories: [{ id: "story-1" }],
+      },
+    ]);
+    expect(result.stories).toEqual([{ id: "own-story" }]);
   });
 
   it("waits for the session token to become available before fetching the profile", async () => {
