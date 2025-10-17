@@ -1,4 +1,4 @@
-import { createError, getHeader } from "h3";
+import { appendHeader, createError, getHeader } from "h3";
 import type { H3Event } from "h3";
 import { joinURL } from "ufo";
 import type { FetchOptions } from "ofetch";
@@ -613,6 +613,8 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();
   const config = useRuntimeConfig(event);
   const serviceToken = resolveUsersServiceToken(config);
+
+  appendHeader(event, "vary", "Authorization");
 
   let sessionToken = getSessionToken(event);
 
