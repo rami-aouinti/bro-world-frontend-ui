@@ -74,15 +74,6 @@
       >
         {{ commentsError }}
       </p>
-      <button
-        v-if="!commentsActivated && !commentsLoading"
-        type="button"
-        class="load-comments"
-        data-test="load-comments-button"
-        @click="loadCommentsManually"
-      >
-        {{ loadCommentsLabel }}
-      </button>
     </div>
   </SidebarCard>
 
@@ -378,7 +369,6 @@ const deleteDialogTitle = computed(() => t("blog.posts.actions.deleteTitle"));
 const deleteDialogDescription = computed(() => t("blog.posts.actions.deleteDescription"));
 const deleteDialogConfirmLabel = computed(() => t("blog.posts.actions.deleteConfirm"));
 const deleteDialogCancelLabel = computed(() => t("blog.posts.actions.cancel"));
-const loadCommentsLabel = computed(() => t("blog.comments.load"));
 
 watch(
   postId,
@@ -557,13 +547,6 @@ function requestComments(options: { force?: boolean } = {}) {
   if (!shouldForce && hasLoadedComments) {
     return;
   }
-
-  void loadComments({ force: shouldForce });
-}
-
-function loadCommentsManually() {
-  commentsActivated.value = true;
-  const shouldForce = !Array.isArray(loadedComments.value);
 
   void loadComments({ force: shouldForce });
 }
