@@ -400,6 +400,23 @@ function resolveUsersServiceToken(config: RuntimeConfig): string | null {
   );
 }
 
+function hasHeader(headers: Record<string, string>, name: string): boolean {
+  const target = name.toLowerCase();
+
+  return Object.keys(headers).some((key) => key.toLowerCase() === target);
+}
+
+function withUsersAuthHeaders(event: H3Event, headers: Record<string, string> = {}) {
+  const result = { ...headers };
+  const forwardedAuthorization = getHeader(event, "authorization")?.trim();
+
+  if (forwardedAuthorization && !hasHeader(result, "authorization")) {
+    result.Authorization = forwardedAuthorization;
+  }
+
+  return withAuthHeaders(event, result);
+}
+
 async function requestUsersApi<T>(
   event: H3Event,
   path: string,
@@ -409,8 +426,6 @@ async function requestUsersApi<T>(
   const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
   const endpoint = joinURL(getUsersApiBase(event), normalizedPath);
 
-  const forwardedAuthorization = getHeader(event, "authorization")?.trim();
-  const sessionToken = forwardedAuthorization ? null : getSessionToken(event)?.trim();
   const serviceToken = resolveUsersServiceToken(config);
   const { headers: initialHeaders, ...requestOptions } = options;
   const headers = new Headers(initialHeaders ?? {});
@@ -418,13 +433,10 @@ async function requestUsersApi<T>(
   headers.set("accept", "application/json");
 
   if (!headers.has("authorization")) {
-    if (forwardedAuthorization) {
-      headers.set("authorization", forwardedAuthorization);
-    } else if (sessionToken) {
-      const authHeaders = withAuthHeaders(event);
-      const value =
-        authHeaders.Authorization ?? authHeaders.authorization ?? `Bearer ${sessionToken}`;
+    const authHeaders = withUsersAuthHeaders(event);
+    const value = authHeaders.Authorization ?? authHeaders.authorization;
 
+    if (value) {
       headers.set("authorization", value);
     } else if (serviceToken) {
       const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
