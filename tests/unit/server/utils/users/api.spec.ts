@@ -5,7 +5,7 @@ import {
   fetchProfileEventsFromSource,
   fetchUsersListFromSource,
 } from "~/server/utils/users/api";
-import { profileEventsSample } from "~/lib/mock/profile";
+import { profileEventsSample, profileSample } from "~/lib/mock/profile";
 import { usersListSample } from "~/lib/mock/users";
 
 const appendHeaderMock = vi.hoisted(() => vi.fn());
@@ -424,7 +424,7 @@ describe("fetchCurrentProfileFromSource", () => {
     expect(deleteCachedProfileMock).toHaveBeenCalledWith(event, "session-token");
   });
 
-  it("throws an authentication error when no session token is available", async () => {
+  it("falls back to a mock profile when no session token is available", async () => {
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
 
     useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
@@ -432,13 +432,20 @@ describe("fetchCurrentProfileFromSource", () => {
     waitForSessionTokenMock.mockResolvedValueOnce(null);
     getSessionUserMock.mockReturnValue(null);
 
-    await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
-      statusCode: 401,
-      statusMessage: "Authentication is required to access this resource.",
-      data: { message: "Authentication is required to access this resource." },
-    });
+    const result = await fetchCurrentProfileFromSource(event);
 
     expect(waitForSessionTokenMock).toHaveBeenCalledWith(event);
+    expect(requireSessionTokenMock).not.toHaveBeenCalled();
+    expect(result).toMatchObject({
+      id: profileSample.id,
+      username: profileSample.username,
+      email: profileSample.email,
+    });
+    expect(result.friends).toEqual(profileSample.friends);
+    expect(result.stories).toEqual(profileSample.stories);
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      expect.stringContaining("[mock] Falling back to mock profile."),
+    );
   });
 
   it("returns the session user profile when no session token becomes available", async () => {
