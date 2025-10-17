@@ -410,7 +410,7 @@ async function requestUsersApi<T>(
   const endpoint = joinURL(getUsersApiBase(event), normalizedPath);
 
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();
-  const sessionToken = getSessionToken(event)?.trim();
+  const sessionToken = forwardedAuthorization ? null : getSessionToken(event)?.trim();
   const serviceToken = resolveUsersServiceToken(config);
   const { headers: initialHeaders, ...requestOptions } = options;
   const headers = new Headers(initialHeaders ?? {});
@@ -418,7 +418,9 @@ async function requestUsersApi<T>(
   headers.set("accept", "application/json");
 
   if (!headers.has("authorization")) {
-    if (sessionToken) {
+    if (forwardedAuthorization) {
+      headers.set("authorization", forwardedAuthorization);
+    } else if (sessionToken) {
       const authHeaders = withAuthHeaders(event);
       const value =
         authHeaders.Authorization ?? authHeaders.authorization ?? `Bearer ${sessionToken}`;
@@ -428,8 +430,6 @@ async function requestUsersApi<T>(
       const value = serviceToken.startsWith("Bearer ") ? serviceToken : `Bearer ${serviceToken}`;
 
       headers.set("authorization", value);
-    } else if (forwardedAuthorization) {
-      headers.set("authorization", forwardedAuthorization);
     }
   }
 
