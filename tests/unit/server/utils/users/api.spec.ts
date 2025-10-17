@@ -298,6 +298,7 @@ describe("fetchCurrentProfileFromSource", () => {
       stories: [],
     };
 
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue("session-token");
     readCachedProfileMock.mockResolvedValue(cachedProfile);
 
@@ -320,6 +321,7 @@ describe("fetchCurrentProfileFromSource", () => {
       },
     };
 
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue("session-token");
     readCachedProfileMock.mockResolvedValue(null);
 
@@ -356,6 +358,7 @@ describe("fetchCurrentProfileFromSource", () => {
       stories: [{ id: "own-story" }],
     };
 
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue("session-token");
     readCachedProfileMock.mockResolvedValue(null);
     getSessionUserMock.mockReturnValue(sessionUser);
@@ -386,6 +389,7 @@ describe("fetchCurrentProfileFromSource", () => {
   it("clears cached entries and propagates authorization errors", async () => {
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
 
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue("session-token");
     readCachedProfileMock.mockResolvedValue(null);
     getSessionUserMock.mockReturnValue(null);
@@ -406,6 +410,7 @@ describe("fetchCurrentProfileFromSource", () => {
   it("throws an authentication error when no session token is available", async () => {
     const event = { node: { req: { headers: {} } } } as unknown as H3Event;
 
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
     getSessionTokenMock.mockReturnValue(null);
 
     await expect(fetchCurrentProfileFromSource(event)).rejects.toMatchObject({
@@ -413,5 +418,65 @@ describe("fetchCurrentProfileFromSource", () => {
       statusMessage: "Authentication is required to access this resource.",
       data: { message: "Authentication is required to access this resource." },
     });
+  });
+
+  it("allows forwarded authorization headers to bypass the session token requirement", async () => {
+    const event = {
+      node: {
+        req: {
+          headers: {
+            authorization: "Basic ZGVtbzpwYXNz",
+          },
+        },
+      },
+    } as unknown as H3Event;
+    const apiProfile = {
+      id: "header-user",
+      username: "header",
+      email: "header@example.com",
+      friends: [],
+      stories: [],
+    };
+
+    useRuntimeConfigMock.mockReturnValue({ auth: {}, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+    readCachedProfileMock.mockResolvedValue(null);
+
+    const fetchMock = vi.fn().mockResolvedValue(apiProfile);
+    globalScope.$fetch = fetchMock;
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(requireSessionTokenMock).not.toHaveBeenCalled();
+    expect(readCachedProfileMock).not.toHaveBeenCalled();
+    expect(writeCachedProfileMock).not.toHaveBeenCalled();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(apiProfile);
+  });
+
+  it("skips the session token requirement when a service token is configured", async () => {
+    const event = { node: { req: { headers: {} } } } as unknown as H3Event;
+    const apiProfile = {
+      id: "service-user",
+      username: "service",
+      email: "service@example.com",
+      friends: [],
+      stories: [],
+    };
+
+    useRuntimeConfigMock.mockReturnValue({ auth: { apiToken: "service-token" }, users: {} });
+    getSessionTokenMock.mockReturnValue(null);
+    readCachedProfileMock.mockResolvedValue(null);
+
+    const fetchMock = vi.fn().mockResolvedValue(apiProfile);
+    globalScope.$fetch = fetchMock;
+
+    const result = await fetchCurrentProfileFromSource(event);
+
+    expect(requireSessionTokenMock).not.toHaveBeenCalled();
+    expect(readCachedProfileMock).not.toHaveBeenCalled();
+    expect(writeCachedProfileMock).not.toHaveBeenCalled();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(apiProfile);
   });
 });
