@@ -818,17 +818,16 @@ const areSidebarsReady = computed(() => {
   }
 
   if (!showNavigation.value) {
-    return isTopBarReady.value;
+    return true;
   }
 
-  const rightReady = canShowRightWidgets.value ? isRightDrawerReady.value : true;
-  return isTopBarReady.value && isLeftDrawerReady.value && rightReady;
+  return isTopBarReady.value && isLeftDrawerReady.value;
 });
 
 /**
  * Centralise la réactivité autour de la navigation.
  * Chaque watcher met à jour un état réellement consommé :
- * - readiness : `areSidebarsReady` s'appuie sur `isTopBarReady`, `isLeftDrawerReady` et `isRightDrawerReady`
+ * - readiness : `areSidebarsReady` s'appuie sur `isTopBarReady` et `isLeftDrawerReady`
  * - tiroirs : `leftDrawer` / `rightDrawer` sont utilisés directement par les `<v-navigation-drawer>`
  * - surlignage : `activeSidebar` est injecté dans `<AppSidebar>` et `<AppSidebarRight>`
  */
