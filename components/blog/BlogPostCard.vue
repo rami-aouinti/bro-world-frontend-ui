@@ -39,6 +39,7 @@
       :liked="false"
       @toggle-like="handleTogglePostReaction"
       @comment="handleCommentButtonClick"
+      @share="handleShareRequest"
     />
     <div
       v-if="post.totalComments > 2 && shouldRenderCommentThread"
@@ -109,11 +110,25 @@
     :description="loginDialogDescription"
     @close="handleLoginDialogClose"
   />
+
+  <component
+    :is="BlogPostShareDialog"
+    v-if="shareDialogOpen"
+    v-model:open="shareDialogOpen"
+    :post="post"
+    :current-user-name="currentUserDisplayName"
+    :current-user-avatar="currentUserAvatar"
+    :max-length="shareDialogMaxLength"
+    @close="handleShareDialogClose"
+    @share="handleShareSubmit"
+  />
 </template>
 
 <script setup lang="ts">
 import { computed, nextTick, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#imports";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useRelativeTime } from "~/composables/useRelativeTime";
@@ -124,6 +139,7 @@ import type {
   ReactionType,
 } from "~/lib/mock/blog";
 import type { CommentNode } from "~/components/blog/CommentThread.vue";
+import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 interface FeedbackState {
   type: "success" | "error";
@@ -268,6 +284,29 @@ const commentThreadNodes = computed(() => {
   return post.value.comments_preview ?? emptyCommentNodes;
 });
 const currentUserForThread = computed(() => currentUser.value ?? undefined);
+const currentUserDisplayName = computed(() => {
+  const user = currentUser.value;
+
+  if (!user) {
+    return "";
+  }
+
+  const parts = [user.firstName, user.lastName].filter(Boolean) as string[];
+
+  if (parts.length > 0) {
+    return parts.join(" ");
+  }
+
+  return user.username || user.email || "";
+});
+const currentUserAvatar = computed(
+  () =>
+    optimizeAvatarUrl(currentUser.value?.photo ?? null, 48) ??
+    currentUser.value?.photo ??
+    props.defaultAvatar,
+);
+const shareDialogOpen = ref(false);
+const shareDialogMaxLength = computed(() => 500);
 
 function openReply(id: string) {
   /* TODO */
@@ -361,6 +400,11 @@ const AuthLoginDialog = defineAsyncComponent({
   suspensible: false,
 });
 
+const BlogPostShareDialog = defineAsyncComponent({
+  loader: () => import("~/components/blog/PostShareDialog.vue"),
+  suspensible: false,
+});
+
 const editModalTitle = computed(() => t("blog.posts.actions.editTitle"));
 const editModalDescription = computed(() => t("blog.posts.actions.editDescription"));
 const editModalSaveLabel = computed(() => t("blog.posts.actions.save"));
@@ -399,6 +443,30 @@ function openLoginDialog() {
   loginDialogPreviousFocusedElement.value =
     (document.activeElement as HTMLElement | null) ?? loginPromptRef.value;
   loginDialogOpen.value = true;
+}
+
+function handleShareRequest() {
+  if (!isAuthenticated.value) {
+    openLoginDialog();
+
+    return;
+  }
+
+  shareDialogOpen.value = true;
+}
+
+function handleShareDialogClose() {
+  shareDialogOpen.value = false;
+}
+
+function handleShareSubmit(_payload: { message: string }) {
+  shareDialogOpen.value = false;
+
+  $notify({
+    type: "success",
+    title: t("blog.posts.shareDialog.successTitle"),
+    message: t("blog.posts.shareDialog.successMessage"),
+  });
 }
 
 async function handleFollow() {

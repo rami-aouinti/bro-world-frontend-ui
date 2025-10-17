@@ -77,16 +77,51 @@
         ></Icon>
         {{ t("blog.posts.actions.comment") }}
       </v-btn>
-      <v-btn
-        variant="text"
-        @click="$emit('share')"
+      <v-menu
+        v-model="shareMenuOpen"
+        offset="8"
+        location="bottom"
+        transition="fade-transition"
       >
-        <Icon
-          name="mdi:share-outline"
-          start
-        ></Icon>
-        {{ t("blog.posts.actions.share") }}
-      </v-btn>
+        <template #activator="{ props: menuProps }">
+          <v-btn
+            v-bind="menuProps"
+            variant="text"
+          >
+            <Icon
+              name="mdi:share-outline"
+              start
+            ></Icon>
+            {{ t("blog.posts.actions.share") }}
+          </v-btn>
+        </template>
+
+        <v-sheet
+          elevation="10"
+          class="rounded-lg"
+          width="280"
+        >
+          <v-list
+            density="comfortable"
+            nav
+          >
+            <v-list-item
+              v-for="option in shareOptions"
+              :key="option.value"
+              :disabled="option.disabled"
+              @click="handleShareOption(option.value)"
+            >
+              <template #prepend>
+                <Icon
+                  :name="option.icon"
+                  class="me-3"
+                />
+              </template>
+              <v-list-item-title>{{ option.label }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-sheet>
+      </v-menu>
     </div>
   </div>
 </template>
@@ -94,6 +129,7 @@
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent } from "vue";
 import { onNuxtReady } from "#app";
+import { useNuxtApp } from "#imports";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
@@ -151,6 +187,7 @@ const emit = defineEmits<{
 const isLiked = ref(!!props.liked);
 
 const { t } = useI18n();
+const { $notify } = useNuxtApp();
 
 // Choisit les 3 réactions les plus fréquentes (ordre “Facebook-ish”)
 const bubbleOrder: Reaction[] = ["like", "sad", "angry"];
@@ -172,6 +209,62 @@ const pickerOpen = ref(false);
 const anchor = ref<{ x: number; y: number; width: number; height: number } | null>(null);
 let openTimer: number | null = null;
 let longPressTimer: number | null = null;
+
+type ShareOption =
+  | "feed"
+  | "story"
+  | "messenger"
+  | "whatsapp"
+  | "page"
+  | "group"
+  | "profile";
+
+const shareMenuOpen = ref(false);
+
+const shareOptions = computed(() => [
+  {
+    value: "feed" as const,
+    label: t("blog.posts.shareMenu.feed"),
+    icon: "mdi:square-edit-outline",
+    disabled: false,
+  },
+  {
+    value: "story" as const,
+    label: t("blog.posts.shareMenu.story"),
+    icon: "mdi:book-open-outline",
+    disabled: false,
+  },
+  {
+    value: "messenger" as const,
+    label: t("blog.posts.shareMenu.messenger"),
+    icon: "mdi:facebook-messenger",
+    disabled: false,
+  },
+  {
+    value: "whatsapp" as const,
+    label: t("blog.posts.shareMenu.whatsapp"),
+    icon: "mdi:whatsapp",
+    disabled: false,
+  },
+  {
+    value: "page" as const,
+    label: t("blog.posts.shareMenu.page"),
+    icon: "mdi:flag-variant-outline",
+    disabled: false,
+  },
+  {
+    value: "group" as const,
+    label: t("blog.posts.shareMenu.group"),
+    icon: "mdi:account-group-outline",
+    disabled: false,
+  },
+  {
+    value: "profile" as const,
+    label: t("blog.posts.shareMenu.profile"),
+    icon: "mdi:account-circle-outline",
+    disabled: false,
+  },
+]);
 
 function calcAnchor() {
   const el = likeBtnRef.value;
@@ -205,6 +298,22 @@ function onMouseLeave() {
   window.setTimeout(() => {
     // si la souris n'est pas au-dessus du picker, il se fermera via doc listener
   }, 150);
+}
+
+function handleShareOption(option: ShareOption) {
+  shareMenuOpen.value = false;
+
+  if (option === "feed") {
+    emit("share");
+
+    return;
+  }
+
+  $notify({
+    type: "info",
+    title: t("blog.posts.shareMenu.comingSoonTitle"),
+    message: t("blog.posts.shareMenu.comingSoonDescription"),
+  });
 }
 
 // Mobile : appui long
