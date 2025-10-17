@@ -621,6 +621,16 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
     sessionToken = await waitForSessionToken(event);
 
     if (!sessionToken) {
+      const sessionUser = getSessionUser(event);
+
+      if (sessionUser) {
+        try {
+          return unwrapProfile(sessionUser as ProfileSource);
+        } catch (fallbackError) {
+          console.error("Failed to normalize session user profile", fallbackError);
+        }
+      }
+
       sessionToken = requireSessionToken(event, {
         statusMessage: "Authentication is required to access this resource.",
         message: "Authentication is required to access this resource.",
