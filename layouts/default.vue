@@ -911,10 +911,14 @@ function setupNavigationReactivity() {
         return;
       }
 
-      isRightDrawerReady.value = false;
-      if (!mobile) {
-        rightDrawer.value = true;
+      if (mobile) {
+        rightDrawer.value = false;
+        isRightDrawerReady.value = true;
+        return;
       }
+
+      isRightDrawerReady.value = false;
+      rightDrawer.value = true;
     },
     { immediate: true },
   );
