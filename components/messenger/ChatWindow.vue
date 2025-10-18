@@ -120,14 +120,17 @@
                 <div
                   v-for="attachment in message.attachments || []"
                   :key="attachment.id"
-                  class="mt-2"
+                  class="mt-2 message-attachment"
                 >
                   <NuxtImg
                     :src="attachment.url"
                     :alt="attachment.name"
-                    width="220"
-                    class="rounded-lg"
+                    :width="220"
+                    :height="165"
+                    class="message-attachment__image"
                     loading="lazy"
+                    sizes="(max-width: 600px) 60vw, 220px"
+                    :format="['webp', 'jpeg']"
                   />
                 </div>
                 <RelativeTime
@@ -394,6 +397,19 @@ onMounted(async () => {
   align-items: flex-start;
   gap: 4px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.message-attachment {
+  width: 220px;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.message-attachment__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .message-bubble--incoming {
