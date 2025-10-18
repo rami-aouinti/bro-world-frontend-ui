@@ -199,11 +199,25 @@ export const useEducationStore = defineStore("education", () => {
     }
   }
 
-  const getCourseBySlug = (slug: string) => courses.value.find((course) => course.slug === slug);
-  const getCourseLessons = (slug: string) => lessons[slug] ?? [];
-  const getCourseExercises = (slug: string) => exercises[slug] ?? [];
-  const getCourseQuiz = (slug: string) => quiz[slug] ?? [];
-  const getProgressForCourse = (courseId: string) => progress[courseId];
+  function getCourseBySlug(slug: string) {
+    return courses.value.find((course) => course.slug === slug);
+  }
+
+  function getCourseLessons(slug: string) {
+    return lessons[slug] ?? [];
+  }
+
+  function getCourseExercises(slug: string) {
+    return exercises[slug] ?? [];
+  }
+
+  function getCourseQuiz(slug: string) {
+    return quiz[slug] ?? [];
+  }
+
+  function getProgressForCourse(courseId: string) {
+    return progress[courseId];
+  }
 
   watch(
     currentLocale,

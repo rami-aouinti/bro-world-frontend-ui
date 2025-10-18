@@ -41,13 +41,15 @@ export default defineNuxtPlugin(() => {
 export function useHtml2Pdf() {
   const nuxtApp = useNuxtApp();
 
-  const load = () => nuxtApp.$html2pdf?.() ?? Promise.resolve(null);
+  function load(): Promise<typeof window.html2pdf | null> {
+    return nuxtApp.$html2pdf?.() ?? Promise.resolve(null);
+  }
 
-  const download = async (
+  async function download(
     element: HTMLElement | null,
     fileName: string,
     options?: Record<string, unknown>,
-  ) => {
+  ): Promise<void> {
     if (!element) {
       return;
     }
@@ -69,7 +71,7 @@ export function useHtml2Pdf() {
     } catch {
       window.print();
     }
-  };
+  }
 
   return { load, download };
 }
