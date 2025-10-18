@@ -1152,19 +1152,29 @@ export const usePostsStore = defineStore("posts", () => {
       let lastError: unknown = null;
 
       try {
-        for (const target of fetchTargets) {
-          try {
+        const targets = Array.from(fetchTargets);
+        const pendingRequests = targets.map((target) =>
+          (async () => {
             const rawResponse = await fetcher<unknown>(target, {
               method: "GET",
               query: queryParams,
             });
 
-            const response = normalizePostsListResponse(rawResponse);
-            setPostsFromResponse(response);
-            return response.data;
-          } catch (requestError) {
-            lastError = requestError;
+            return normalizePostsListResponse(rawResponse);
+          })()
+            .then((response) => ({ status: "fulfilled" as const, value: response }))
+            .catch((reason) => ({ status: "rejected" as const, reason })),
+        );
+
+        for (let index = 0; index < pendingRequests.length; index += 1) {
+          const result = await pendingRequests[index];
+
+          if (result.status === "fulfilled") {
+            setPostsFromResponse(result.value);
+            return result.value.data;
           }
+
+          lastError = result.reason;
         }
 
         const finalError =
