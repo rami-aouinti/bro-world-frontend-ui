@@ -1,6 +1,7 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
 import { createPinia, setActivePinia } from "~/lib/pinia-shim";
 import { useEducationStore } from "~/stores/education";
+import { educationCategoriesMock } from "~/lib/mock/education";
 import type { Certificate } from "~/types/education";
 
 const SAMPLE_COURSE = {
@@ -20,6 +21,42 @@ describe("education store", () => {
   beforeEach(() => {
     const pinia = createPinia();
     setActivePinia(pinia);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("fetches categories from the education API", async () => {
+    const store = useEducationStore();
+    const categories = [
+      {
+        id: "cat-1",
+        slug: "web",
+        title: "Web Development",
+        description: "Learn how to build for the web.",
+        cover: "/img/web.png",
+        courseCount: 5,
+      },
+    ];
+    const fetchMock = vi.fn().mockResolvedValueOnce(categories);
+    vi.stubGlobal("$fetch", fetchMock);
+
+    await store.fetchCategories();
+
+    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories");
+    expect(store.categories.value).toEqual(categories);
+  });
+
+  it("falls back to mock categories when the API request fails", async () => {
+    const store = useEducationStore();
+    const fetchMock = vi.fn().mockRejectedValueOnce(new Error("Network error"));
+    vi.stubGlobal("$fetch", fetchMock);
+
+    await store.fetchCategories();
+
+    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories");
+    expect(store.categories.value).toEqual(educationCategoriesMock);
   });
 
   it("marks lessons and exercises", () => {
