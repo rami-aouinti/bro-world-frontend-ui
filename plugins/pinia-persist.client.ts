@@ -27,7 +27,12 @@ export default defineNuxtPlugin({
   dependsOn: ["pinia-plugin"],
   setup(nuxtApp) {
     const pinia = nuxtApp.$pinia;
-    if (!pinia) {
+    if (!pinia || typeof (pinia as { use?: unknown }).use !== "function") {
+      if (import.meta.dev) {
+        console.warn(
+          "[pinia-persisted-state] Pinia instance does not support plugins. Skipping persistence setup.",
+        );
+      }
       return;
     }
 
