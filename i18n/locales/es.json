@@ -4,7 +4,8 @@
   },
   "common": {
     "InspiraUIPro": "Inspira UI Pro",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "loading": "Cargando…"
   },
   "layout": {
     "loadingOverlay": {
@@ -114,6 +115,7 @@
         "about": "Acerca de",
         "contact": "Contacto",
         "game": "Juegos y Quiz",
+        "crm": "Espacio CRM",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Resumen",
         "ecommerceCatalog": "Catálogo de productos",

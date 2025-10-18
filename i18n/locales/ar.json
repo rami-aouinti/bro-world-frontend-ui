@@ -4,7 +4,8 @@
   },
   "common": {
     "InspiraUIPro": "إنسبيرا UI برو",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "loading": "جارٍ التحميل…"
   },
   "layout": {
     "loadingOverlay": {
@@ -114,6 +115,7 @@
         "about": "حول",
         "contact": "اتصال",
         "game": "الألعاب والاختبارات",
+        "crm": "مساحة CRM",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "نظرة عامة",
         "ecommerceCatalog": "كتالوج المنتجات",

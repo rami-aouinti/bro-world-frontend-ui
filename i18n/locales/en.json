@@ -4,7 +4,8 @@
   },
   "common": {
     "InspiraUIPro": "Inspira UI Pro",
-    "close": "Close"
+    "close": "Close",
+    "loading": "Loading…"
   },
   "layout": {
     "loadingOverlay": {
@@ -90,6 +91,7 @@
         "createWorld": "Create world",
         "jobs": "Jobs",
         "game": "Gaming & Quiz",
+        "crm": "CRM workspace",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Overview",
         "ecommerceCatalog": "Product catalog",
@@ -1330,6 +1332,97 @@
         "description": "Partner with us to modernise programmes, student services, and alumni experiences.",
         "button": "Schedule a consultation",
         "buttonAria": "Open the contact page"
+      },
+      "catalog": {
+        "badge": "Learning",
+        "title": "Explore learning paths",
+        "subtitle": "Browse curated categories, follow interactive lessons, and unlock a mock certificate when you pass the final quiz."
+      },
+      "category": {
+        "courses": "{count} courses",
+        "viewCourses": "View courses",
+        "viewCoursesAria": "View courses for {title}"
+      },
+      "course": {
+        "progress": "{value}% complete",
+        "openAria": "Open the course {title}",
+        "continue": "Continue",
+        "durationMinutes": "{value} min",
+        "durationHours": "{value} h",
+        "durationMixed": "{hours} h {minutes} min",
+        "completedLessons": "{count}/{total} lessons completed",
+        "lessonList": "Course lessons",
+        "lessonDuration": "{value} min",
+        "lessonProgressLabel": "Lesson completion",
+        "quizTitle": "Final quiz",
+        "quizDescription": "Answer ten questions to validate your knowledge and earn the course certificate.",
+        "startQuiz": "Take the quiz",
+        "viewCertificate": "View certificate",
+        "ctaStart": "Start course",
+        "ctaContinue": "Continue course",
+        "ctaQuiz": "Go to quiz"
+      },
+      "lesson": {
+        "position": "Lesson {index} of {total}",
+        "duration": "{value} min",
+        "progressLabel": "Lesson progress",
+        "completed": "Lesson completed",
+        "markDone": "Mark lesson as done",
+        "exercises": "Practice exercises",
+        "previous": "Previous lesson",
+        "next": "Next lesson",
+        "goToQuiz": "Go to final quiz"
+      },
+      "exercise": {
+        "submit": "Check answer",
+        "correct": "Great job!",
+        "incorrect": "Try again on your next attempt.",
+        "true": "True",
+        "false": "False"
+      },
+      "quiz": {
+        "title": "Final quiz — {course}",
+        "subtitle": "Answer every question. Score at least 70% to unlock your certificate.",
+        "progress": "Question {index} of {total}",
+        "previous": "Previous",
+        "next": "Next",
+        "submit": "Submit answers",
+        "passed": "Well done! You scored {score} out of {total}.",
+        "failed": "Keep going — you scored {score} out of {total}.",
+        "threshold": "Passing score: {value}%",
+        "certificateReady": "You passed! Generate your certificate.",
+        "certificateDescription": "Add your name and download a shareable PDF issued by this demo environment.",
+        "nameLabel": "Your name",
+        "namePlaceholder": "Alex Johnson",
+        "generateCertificate": "Generate certificate",
+        "certificateReadyButton": "Certificate generated",
+        "viewCertificate": "Open certificate",
+        "retryTitle": "Need another try?",
+        "retryDescription": "Review the lessons and retake the quiz when you're ready.",
+        "retryButton": "Retry quiz",
+        "breadcrumb": "Final quiz"
+      },
+      "certificate": {
+        "breadcrumb": "Certificate",
+        "title": "Certificate of completion",
+        "subtitle": "This document celebrates the successful completion of a demo course.",
+        "presentedTo": "Presented to",
+        "completed": "For completing the course {course}.",
+        "score": "Final score: {value}%",
+        "date": "Issued on {value}",
+        "signature": "Authorised by",
+        "signatureName": "Nuxt Academy",
+        "organization": "BroWorld Education",
+        "organizationTagline": "Innovating learning experiences",
+        "download": "Download PDF"
+      },
+      "breadcrumb": {
+        "home": "Education"
+      },
+      "levels": {
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced"
       }
     },
     "quiz": {

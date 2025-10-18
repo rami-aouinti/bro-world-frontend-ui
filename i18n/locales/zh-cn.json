@@ -4,7 +4,8 @@
   },
   "common": {
     "InspiraUIPro": "Inspira UI 专业版",
-    "close": "关闭"
+    "close": "关闭",
+    "loading": "加载中…"
   },
   "layout": {
     "loadingOverlay": {
@@ -114,6 +115,7 @@
         "about": "关于",
         "contact": "联系",
         "game": "游戏和测验",
+        "crm": "CRM 工作区",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "概览",
         "ecommerceCatalog": "产品目录",

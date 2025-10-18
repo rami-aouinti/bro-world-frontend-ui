@@ -4,7 +4,8 @@
   },
   "common": {
     "InspiraUIPro": "Inspira UI Pro",
-    "close": "Fermer"
+    "close": "Fermer",
+    "loading": "Chargement…"
   },
   "layout": {
     "loadingOverlay": {
@@ -90,6 +91,7 @@
         "createWorld": "Créer un monde",
         "jobs": "Emplois",
         "game": "Jeux & Quiz",
+        "crm": "Espace CRM",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Vue d'ensemble",
         "ecommerceCatalog": "Catalogue produits",
@@ -1712,7 +1714,98 @@
         "button": "Schedule a consultation",
         "buttonAria": "Open the contact page"
       },
-      "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données."
+      "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données.",
+      "catalog": {
+        "badge": "Apprentissage",
+        "title": "Explorer les parcours d'apprentissage",
+        "subtitle": "Parcourez des catégories thématiques, suivez des leçons interactives et débloquez un certificat fictif en réussissant le quiz final."
+      },
+      "category": {
+        "courses": "{count} cours",
+        "viewCourses": "Voir les cours",
+        "viewCoursesAria": "Voir les cours pour {title}"
+      },
+      "course": {
+        "progress": "{value}% accompli",
+        "openAria": "Ouvrir le cours {title}",
+        "continue": "Continuer",
+        "durationMinutes": "{value} min",
+        "durationHours": "{value} h",
+        "durationMixed": "{hours} h {minutes} min",
+        "completedLessons": "{count}/{total} leçons terminées",
+        "lessonList": "Leçons du cours",
+        "lessonDuration": "{value} min",
+        "lessonProgressLabel": "Progression des leçons",
+        "quizTitle": "Quiz final",
+        "quizDescription": "Répondez à dix questions pour valider vos connaissances et obtenir le certificat du cours.",
+        "startQuiz": "Passer le quiz",
+        "viewCertificate": "Voir le certificat",
+        "ctaStart": "Commencer le cours",
+        "ctaContinue": "Continuer le cours",
+        "ctaQuiz": "Aller au quiz"
+      },
+      "lesson": {
+        "position": "Leçon {index} sur {total}",
+        "duration": "{value} min",
+        "progressLabel": "Progression de la leçon",
+        "completed": "Leçon terminée",
+        "markDone": "Marquer la leçon comme terminée",
+        "exercises": "Exercices d'entraînement",
+        "previous": "Leçon précédente",
+        "next": "Leçon suivante",
+        "goToQuiz": "Aller au quiz final"
+      },
+      "exercise": {
+        "submit": "Valider la réponse",
+        "correct": "Bravo !",
+        "incorrect": "Réessayez lors de votre prochaine tentative.",
+        "true": "Vrai",
+        "false": "Faux"
+      },
+      "quiz": {
+        "title": "Quiz final — {course}",
+        "subtitle": "Répondez à toutes les questions. Obtenez au moins 70 % pour débloquer votre certificat.",
+        "progress": "Question {index} sur {total}",
+        "previous": "Précédent",
+        "next": "Suivant",
+        "submit": "Valider mes réponses",
+        "passed": "Bravo ! Vous avez obtenu {score} sur {total}.",
+        "failed": "Continuez — vous avez obtenu {score} sur {total}.",
+        "threshold": "Score de réussite : {value} %",
+        "certificateReady": "Réussi ! Générez votre certificat.",
+        "certificateDescription": "Indiquez votre nom et téléchargez un PDF partageable depuis cet environnement de démonstration.",
+        "nameLabel": "Votre nom",
+        "namePlaceholder": "Alex Martin",
+        "generateCertificate": "Générer le certificat",
+        "certificateReadyButton": "Certificat généré",
+        "viewCertificate": "Ouvrir le certificat",
+        "retryTitle": "Besoin d'une autre tentative ?",
+        "retryDescription": "Revoyez les leçons puis retentez le quiz quand vous êtes prêt·e.",
+        "retryButton": "Recommencer le quiz",
+        "breadcrumb": "Quiz final"
+      },
+      "certificate": {
+        "breadcrumb": "Certificat",
+        "title": "Certificat d'achèvement",
+        "subtitle": "Ce document atteste de la réussite d'un cours de démonstration.",
+        "presentedTo": "Décerné à",
+        "completed": "Pour avoir suivi le cours {course}.",
+        "score": "Score final : {value} %",
+        "date": "Délivré le {value}",
+        "signature": "Signé par",
+        "signatureName": "Nuxt Academy",
+        "organization": "BroWorld Éducation",
+        "organizationTagline": "Imaginer l'apprentissage de demain",
+        "download": "Télécharger le PDF"
+      },
+      "breadcrumb": {
+        "home": "Éducation"
+      },
+      "levels": {
+        "beginner": "Débutant",
+        "intermediate": "Intermédiaire",
+        "advanced": "Avancé"
+      }
     },
     "quiz": {
       "title": "Quiz experiences",
