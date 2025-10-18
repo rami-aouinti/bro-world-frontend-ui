@@ -9,12 +9,12 @@
     >
       {{ props.summary }}
     </p>
-    <div ref="contentEl"></div>
+    <div v-html="safeHtml"></div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 import DOMPurify from "dompurify";
 
 const props = defineProps<{
@@ -133,9 +133,11 @@ const ALLOWED_ATTR = [
   "value",
 ];
 
-const contentEl = ref<HTMLElement | null>(null);
-
 const domPurifySanitize = (() => {
+  if (typeof window === "undefined") {
+    return (value: string) => value;
+  }
+
   if (typeof DOMPurify?.sanitize === "function") {
     return (value: string) =>
       DOMPurify.sanitize(value, {
@@ -156,20 +158,6 @@ const domPurifySanitize = (() => {
 })();
 
 const safeHtml = computed(() => domPurifySanitize(rawHtml.value));
-
-function updateContent(value: string) {
-  if (contentEl.value) {
-    contentEl.value.innerHTML = value;
-  }
-}
-
-watch(
-  safeHtml,
-  (value) => {
-    updateContent(value);
-  },
-  { immediate: true },
-);
 </script>
 
 <style scoped></style>
