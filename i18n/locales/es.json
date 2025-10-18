@@ -1872,6 +1872,7 @@
         "progress": "{value}% completado",
         "openAria": "Abrir el curso {title}",
         "continue": "Continuar",
+        "startAria": "Iniciar o continuar el curso {title}",
         "durationMinutes": "{value} min",
         "durationHours": "{value} h",
         "durationMixed": "{hours} h {minutes} min",
