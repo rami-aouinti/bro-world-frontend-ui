@@ -45,8 +45,8 @@ if (!certificate.value) {
 }
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: localePath("/education") },
-  { title: t("education.certificate.breadcrumb"), disabled: true },
+  { title: t("pages.education.breadcrumb.home"), to: localePath("/education") },
+  { title: t("pages.education.certificate.breadcrumb"), disabled: true },
 ]);
 
 definePageMeta({

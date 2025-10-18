@@ -10,7 +10,7 @@
         variant="tonal"
         class="mb-3"
       >
-        {{ t("education.catalog.badge") }}
+        {{ t("pages.education.catalog.badge") }}
       </v-chip>
       <h1 class="text-h4 text-md-h3 mb-2">
         {{ category?.title }}
@@ -71,7 +71,7 @@ if (!category.value) {
 }
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: localePath("/education") },
+  { title: t("pages.education.breadcrumb.home"), to: localePath("/education") },
   { title: category.value?.title ?? "", disabled: true },
 ]);
 

@@ -32,7 +32,7 @@
         border="start"
         class="mt-4"
       >
-        {{ isCorrect ? t("education.exercise.correct") : t("education.exercise.incorrect") }}
+        {{ isCorrect ? t("pages.education.exercise.correct") : t("pages.education.exercise.incorrect") }}
       </v-alert>
     </v-card-text>
     <v-card-actions class="justify-end">
@@ -42,7 +42,7 @@
         :loading="loading"
         @click="submit"
       >
-        {{ t("education.exercise.submit") }}
+        {{ t("pages.education.exercise.submit") }}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -83,8 +83,8 @@ const normalizedOptions = computed<ExerciseOption[]>(() => {
   }
   if (props.exercise.type === "truefalse") {
     return [
-      { key: "true", label: t("education.exercise.true") },
-      { key: "false", label: t("education.exercise.false") },
+      { key: "true", label: t("pages.education.exercise.true") },
+      { key: "false", label: t("pages.education.exercise.false") },
     ];
   }
   return [];

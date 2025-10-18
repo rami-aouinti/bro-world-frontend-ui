@@ -16,7 +16,7 @@
             color="primary"
             variant="tonal"
           >
-            {{ t(`education.levels.${course.level}`) }}
+            {{ t(`pages.education.levels.${course.level}`) }}
           </v-chip>
           <v-chip
             size="small"
@@ -30,7 +30,7 @@
             variant="tonal"
           >
             {{
-              t("education.course.completedLessons", {
+              t("pages.education.course.completedLessons", {
                 count: completedLessons,
                 total: totalLessons,
               })
@@ -49,7 +49,7 @@
             size="large"
             :to="ctaTo"
             :disabled="!ctaTo"
-            :aria-label="t('education.course.startAria', { title: course.title })"
+            :aria-label="t('pages.education.course.startAria', { title: course.title })"
           >
             {{ ctaLabel }}
           </v-btn>
@@ -81,14 +81,14 @@ const totalLessons = computed(() => props.totalLessons ?? props.course.lessons.l
 
 function formatDuration(duration: number) {
   if (duration < 60) {
-    return t("education.course.durationMinutes", { value: duration });
+    return t("pages.education.course.durationMinutes", { value: duration });
   }
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
   if (!minutes) {
-    return t("education.course.durationHours", { value: hours });
+    return t("pages.education.course.durationHours", { value: hours });
   }
-  return t("education.course.durationMixed", { hours, minutes });
+  return t("pages.education.course.durationMixed", { hours, minutes });
 }
 
 const ctaTo = computed(() => props.ctaTo ?? null);

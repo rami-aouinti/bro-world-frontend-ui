@@ -160,7 +160,6 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { mdiBullhornOutline, mdiCreditCardCheckOutline, mdiStorefrontOutline } from "@mdi/js";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
@@ -199,10 +198,6 @@ useHead(() => {
     ],
   };
 });
-
-function withSvgPrefix(path: string) {
-  return path.startsWith("svg:") ? path : `svg:${path}`;
-}
 
 const featureCards = computed(() => [
   {

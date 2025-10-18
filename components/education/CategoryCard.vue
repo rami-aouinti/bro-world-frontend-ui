@@ -26,15 +26,15 @@
           color="primary"
           variant="tonal"
         >
-          {{ t("education.category.courses", { count: category.courseCount }) }}
+          {{ t("pages.education.category.courses", { count: category.courseCount }) }}
         </v-chip>
         <v-btn
           :to="categoryLink"
           color="primary"
           variant="text"
-          :aria-label="t('education.category.viewCoursesAria', { title: category.title })"
+          :aria-label="t('pages.education.category.viewCoursesAria', { title: category.title })"
         >
-          {{ t("education.category.viewCourses") }}
+          {{ t("pages.education.category.viewCourses") }}
         </v-btn>
       </div>
     </v-card-text>

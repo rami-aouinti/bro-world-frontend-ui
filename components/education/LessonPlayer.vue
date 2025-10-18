@@ -3,17 +3,17 @@
     <header class="d-flex flex-column flex-md-row justify-space-between align-start gap-4 mb-4">
       <div>
         <p class="text-caption text-medium-emphasis mb-1">
-          {{ t("education.lesson.position", { index: lessonIndex + 1, total: totalLessons }) }}
+          {{ t("pages.education.lesson.position", { index: lessonIndex + 1, total: totalLessons }) }}
         </p>
         <h2 class="text-h5 mb-2">{{ lesson.title }}</h2>
         <p class="text-body-2 text-medium-emphasis">
-          {{ t("education.lesson.duration", { value: lesson.durationMin }) }}
+          {{ t("pages.education.lesson.duration", { value: lesson.durationMin }) }}
         </p>
       </div>
       <div class="d-flex flex-column align-end gap-2">
         <ProgressBar
           :value="progress"
-          :label="t('education.lesson.progressLabel')"
+          :label="t('pages.education.lesson.progressLabel')"
         />
         <v-btn
           color="success"
@@ -25,7 +25,7 @@
             icon="mdi:check-circle-outline"
             start
           />
-          {{ isCompleted ? t("education.lesson.completed") : t("education.lesson.markDone") }}
+          {{ isCompleted ? t("pages.education.lesson.completed") : t("pages.education.lesson.markDone") }}
         </v-btn>
       </div>
     </header>
@@ -39,7 +39,7 @@
       v-if="$slots.exercises"
       class="mb-8"
     >
-      <h3 class="text-h6 mb-3">{{ t("education.lesson.exercises") }}</h3>
+      <h3 class="text-h6 mb-3">{{ t("pages.education.lesson.exercises") }}</h3>
       <slot name="exercises" />
     </section>
 
@@ -51,7 +51,7 @@
         color="primary"
         prepend-icon="mdi:arrow-left"
       >
-        {{ t("education.lesson.previous") }}
+        {{ t("pages.education.lesson.previous") }}
       </v-btn>
       <div class="flex-grow-1" />
       <v-btn
@@ -88,7 +88,7 @@ defineEmits<{ (event: "complete"): void }>();
 const { t } = useI18n();
 
 const nextLabel = computed(() =>
-  props.isLast ? t("education.lesson.goToQuiz") : t("education.lesson.next"),
+  props.isLast ? t("pages.education.lesson.goToQuiz") : t("pages.education.lesson.next"),
 );
 
 const prevTo = computed(() => props.prevTo ?? null);

@@ -5,27 +5,27 @@
       class="certificate-sheet"
     >
       <header class="text-center mb-6">
-        <h1 class="text-h4 text-uppercase mb-2">{{ t("education.certificate.title") }}</h1>
+        <h1 class="text-h4 text-uppercase mb-2">{{ t("pages.education.certificate.title") }}</h1>
         <p class="text-subtitle-1 text-medium-emphasis">
-          {{ t("education.certificate.subtitle") }}
+          {{ t("pages.education.certificate.subtitle") }}
         </p>
       </header>
 
       <div class="certificate-body">
         <p class="text-body-1 mb-2">
-          {{ t("education.certificate.presentedTo") }}
+          {{ t("pages.education.certificate.presentedTo") }}
         </p>
         <p class="text-h4 font-weight-bold mb-4">
           {{ certificate.userName }}
         </p>
         <p class="text-body-1 mb-2">
-          {{ t("education.certificate.completed", { course: certificate.courseTitle }) }}
+          {{ t("pages.education.certificate.completed", { course: certificate.courseTitle }) }}
         </p>
         <p class="text-body-1 mb-6">
-          {{ t("education.certificate.score", { value: certificate.score }) }}
+          {{ t("pages.education.certificate.score", { value: certificate.score }) }}
         </p>
         <p class="text-body-2 text-medium-emphasis">
-          {{ t("education.certificate.date", { value: formattedDate }) }}
+          {{ t("pages.education.certificate.date", { value: formattedDate }) }}
         </p>
         <p class="text-body-2 text-medium-emphasis">ID — {{ certificate.id }}</p>
       </div>
@@ -33,16 +33,16 @@
       <footer class="certificate-footer mt-8">
         <div class="signature">
           <span class="text-body-2 text-medium-emphasis">{{
-            t("education.certificate.signature")
+            t("pages.education.certificate.signature")
           }}</span>
           <div class="signature-line" />
-          <span class="text-caption">{{ t("education.certificate.signatureName") }}</span>
+          <span class="text-caption">{{ t("pages.education.certificate.signatureName") }}</span>
         </div>
         <div class="stamp">
           <span class="text-body-2 text-medium-emphasis">{{
-            t("education.certificate.organization")
+            t("pages.education.certificate.organization")
           }}</span>
-          <span class="text-caption">{{ t("education.certificate.organizationTagline") }}</span>
+          <span class="text-caption">{{ t("pages.education.certificate.organizationTagline") }}</span>
         </div>
       </footer>
     </div>
@@ -57,7 +57,7 @@
           icon="mdi:download"
           start
         />
-        {{ t("education.certificate.download") }}
+        {{ t("pages.education.certificate.download") }}
       </v-btn>
     </div>
   </section>

@@ -6,16 +6,16 @@
         variant="tonal"
         class="mb-4"
       >
-        {{ t("education.catalog.badge") }}
+        {{ t("pages.education.catalog.badge") }}
       </v-chip>
       <h1 class="text-h3 text-md-h2 mb-4">
-        {{ t("education.catalog.title") }}
+        {{ t("pages.education.catalog.title") }}
       </h1>
       <p
         class="text-body-1 text-medium-emphasis mx-auto"
         style="max-width: 640px"
       >
-        {{ t("education.catalog.subtitle") }}
+        {{ t("pages.education.catalog.subtitle") }}
       </p>
     </section>
 
@@ -35,11 +35,13 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import CategoryCard from "~/components/education/CategoryCard.vue";
 import { useEducationStore } from "~/stores/education";
 
-const { t } = useI18n();
+const { t, locale, localeProperties } = useI18n();
 const store = useEducationStore();
+const pageDescription = computed(() => t("seo.pages.education.description"));
 
 if (!store.categories.value.length) {
   await store.fetchCategories();
@@ -48,7 +50,9 @@ if (!store.categories.value.length) {
 const categories = computed(() => store.categories.value);
 
 definePageMeta({
-  layout: "default",
-  alias: ["/academy"],
+  documentDriven: false,
 });
+useSeoMeta(() => ({
+  description: pageDescription.value,
+}));
 </script>

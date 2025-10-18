@@ -4,7 +4,7 @@
       <div>
         <p class="text-caption text-medium-emphasis mb-1">
           {{
-            t("education.quiz.progress", { index: currentQuestionIndex + 1, total: totalQuestions })
+            t("pages.education.quiz.progress", { index: currentQuestionIndex + 1, total: totalQuestions })
           }}
         </p>
         <h2 class="text-h5 mb-2">{{ currentQuestion.question }}</h2>
@@ -54,7 +54,7 @@
         :disabled="currentQuestionIndex === 0 || !!result"
         @click="prev"
       >
-        {{ t("education.quiz.previous") }}
+        {{ t("pages.education.quiz.previous") }}
       </v-btn>
       <div class="flex-grow-1" />
       <v-btn
@@ -64,7 +64,7 @@
         :disabled="!selectedAnswer"
         @click="next"
       >
-        {{ t("education.quiz.next") }}
+        {{ t("pages.education.quiz.next") }}
       </v-btn>
       <v-btn
         v-else-if="!result"
@@ -77,7 +77,7 @@
           icon="mdi:check-circle-outline"
           start
         />
-        {{ t("education.quiz.submit") }}
+        {{ t("pages.education.quiz.submit") }}
       </v-btn>
     </footer>
 
@@ -92,12 +92,12 @@
         <span class="font-weight-medium">
           {{
             result.passed
-              ? t("education.quiz.passed", { score: result.correct, total: result.total })
-              : t("education.quiz.failed", { score: result.correct, total: result.total })
+              ? t("pages.education.quiz.passed", { score: result.correct, total: result.total })
+              : t("pages.education.quiz.failed", { score: result.correct, total: result.total })
           }}
         </span>
         <span class="text-caption text-medium-emphasis">
-          {{ t("education.quiz.threshold", { value: Math.round(threshold * 100) }) }}
+          {{ t("pages.education.quiz.threshold", { value: Math.round(threshold * 100) }) }}
         </span>
       </div>
     </v-alert>

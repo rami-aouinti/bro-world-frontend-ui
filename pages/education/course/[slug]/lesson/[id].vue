@@ -140,7 +140,7 @@ const nextLessonLink = computed(() => {
 });
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: localePath("/education") },
+  { title: t("pages.education.breadcrumb.home"), to: localePath("/education") },
   {
     title: course.value?.title ?? "",
     to: localePath({ name: "education-course-slug", params: { slug: slug.value } }),

@@ -21,7 +21,7 @@
           color="primary"
           variant="tonal"
         >
-          {{ t(`education.levels.${course.level}`) }}
+          {{ t(`pages.education.levels.${course.level}`) }}
         </v-chip>
         <v-chip
           size="small"
@@ -35,7 +35,7 @@
           color="success"
           variant="tonal"
         >
-          {{ t("education.course.progress", { value: Math.round(progress) }) }}
+          {{ t("pages.education.course.progress", { value: Math.round(progress) }) }}
         </v-chip>
       </div>
       <p class="text-body-2 text-medium-emphasis">
@@ -48,7 +48,7 @@
         block
         color="primary"
         :to="courseLink"
-        :aria-label="t('education.course.openAria', { title: course.title })"
+        :aria-label="t('pages.education.course.openAria', { title: course.title })"
       >
         {{ actionLabel }}
       </v-btn>
@@ -69,7 +69,7 @@ const props = defineProps<{
 const { t } = useI18n();
 const localePath = useLocalePath();
 
-const actionLabel = computed(() => props.action ?? t("education.course.continue"));
+const actionLabel = computed(() => props.action ?? t("pages.education.course.continue"));
 
 const courseLink = computed(() =>
   localePath({ name: "education-course-slug", params: { slug: props.course.slug } }),
@@ -77,17 +77,17 @@ const courseLink = computed(() =>
 
 function formatDuration(duration: number) {
   if (duration < 60) {
-    return t("education.course.durationMinutes", { value: duration });
+    return t("pages.education.course.durationMinutes", { value: duration });
   }
 
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
 
   if (!minutes) {
-    return t("education.course.durationHours", { value: hours });
+    return t("pages.education.course.durationHours", { value: hours });
   }
 
-  return t("education.course.durationMixed", { hours, minutes });
+  return t("pages.education.course.durationMixed", { hours, minutes });
 }
 
 const progress = computed(() => props.progress ?? -1);

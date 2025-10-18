@@ -18,7 +18,7 @@
           variant="tonal"
           prepend-icon="mdi:certificate-outline"
         >
-          {{ t("education.course.viewCertificate") }}
+          {{ t("pages.education.course.viewCertificate") }}
         </v-btn>
       </template>
     </CourseHeader>
@@ -26,11 +26,11 @@
     <section class="mt-10">
       <header class="d-flex flex-column flex-md-row justify-space-between align-center mb-4">
         <h2 class="text-h5 mb-3 mb-md-0">
-          {{ t("education.course.lessonList") }}
+          {{ t("pages.education.course.lessonList") }}
         </h2>
         <ProgressBar
           :value="courseProgress"
-          :label="t('education.course.lessonProgressLabel')"
+          :label="t('pages.education.course.lessonProgressLabel')"
         />
       </header>
       <v-card
@@ -46,7 +46,7 @@
             :key="lesson.id"
             :to="lessonLink(lesson.id)"
             :title="lesson.title"
-            :subtitle="t('education.course.lessonDuration', { value: lesson.durationMin })"
+            :subtitle="t('pages.education.course.lessonDuration', { value: lesson.durationMin })"
           >
             <template #prepend>
               <v-avatar
@@ -78,9 +78,9 @@
         class="pa-6 d-flex flex-column flex-md-row align-center gap-6"
       >
         <div class="flex-grow-1">
-          <h3 class="text-h6 mb-2">{{ t("education.course.quizTitle") }}</h3>
+          <h3 class="text-h6 mb-2">{{ t("pages.education.course.quizTitle") }}</h3>
           <p class="text-body-2 text-medium-emphasis">
-            {{ t("education.course.quizDescription") }}
+            {{ t("pages.education.course.quizDescription") }}
           </p>
         </div>
         <v-btn
@@ -93,7 +93,7 @@
             icon="mdi:clipboard-check-outline"
             start
           />
-          {{ t("education.course.startQuiz") }}
+          {{ t("pages.education.course.startQuiz") }}
         </v-btn>
       </v-card>
     </section>
@@ -197,12 +197,12 @@ const ctaTo = computed(() => {
 
 const ctaLabel = computed(() => {
   if (!progress.value?.lessonDone || !Object.keys(progress.value.lessonDone).length) {
-    return t("education.course.ctaStart");
+    return t("pages.education.course.ctaStart");
   }
   if (lessonsCompleted.value) {
-    return t("education.course.ctaQuiz");
+    return t("pages.education.course.ctaQuiz");
   }
-  return t("education.course.ctaContinue");
+  return t("pages.education.course.ctaContinue");
 });
 
 const certificateLink = computed(() => {

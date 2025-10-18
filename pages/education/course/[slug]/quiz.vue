@@ -9,9 +9,9 @@
     />
 
     <section class="mb-8">
-      <h1 class="text-h4 mb-2">{{ t("education.quiz.title", { course: course.title }) }}</h1>
+      <h1 class="text-h4 mb-2">{{ t("pages.education.quiz.title", { course: course.title }) }}</h1>
       <p class="text-body-1 text-medium-emphasis">
-        {{ t("education.quiz.subtitle") }}
+        {{ t("pages.education.quiz.subtitle") }}
       </p>
     </section>
 
@@ -34,9 +34,9 @@
           v-if="result.passed"
           class="d-flex flex-column gap-2"
         >
-          <h2 class="text-h6">{{ t("education.quiz.certificateReady") }}</h2>
+          <h2 class="text-h6">{{ t("pages.education.quiz.certificateReady") }}</h2>
           <p class="text-body-2 text-medium-emphasis">
-            {{ t("education.quiz.certificateDescription") }}
+            {{ t("pages.education.quiz.certificateDescription") }}
           </p>
           <v-form
             class="d-flex flex-column flex-md-row gap-4"
@@ -44,8 +44,8 @@
           >
             <v-text-field
               v-model="userName"
-              :label="t('education.quiz.nameLabel')"
-              :placeholder="t('education.quiz.namePlaceholder')"
+              :label="t('pages.education.quiz.nameLabel')"
+              :placeholder="t('pages.education.quiz.namePlaceholder')"
               :disabled="certificatePending || Boolean(certificateLink)"
               required
               class="flex-grow-1"
@@ -63,8 +63,8 @@
               />
               {{
                 certificateLink
-                  ? t("education.quiz.certificateReadyButton")
-                  : t("education.quiz.generateCertificate")
+                  ? t("pages.education.quiz.certificateReadyButton")
+                  : t("pages.education.quiz.generateCertificate")
               }}
             </v-btn>
           </v-form>
@@ -78,7 +78,7 @@
               variant="tonal"
               prepend-icon="mdi:eye"
             >
-              {{ t("education.quiz.viewCertificate") }}
+              {{ t("pages.education.quiz.viewCertificate") }}
             </v-btn>
           </div>
         </div>
@@ -86,9 +86,9 @@
           v-else
           class="d-flex flex-column gap-2"
         >
-          <h2 class="text-h6">{{ t("education.quiz.retryTitle") }}</h2>
+          <h2 class="text-h6">{{ t("pages.education.quiz.retryTitle") }}</h2>
           <p class="text-body-2 text-medium-emphasis">
-            {{ t("education.quiz.retryDescription") }}
+            {{ t("pages.education.quiz.retryDescription") }}
           </p>
           <v-btn
             color="primary"
@@ -99,7 +99,7 @@
               icon="mdi:reload"
               start
             />
-            {{ t("education.quiz.retryButton") }}
+            {{ t("pages.education.quiz.retryButton") }}
           </v-btn>
         </div>
       </div>
@@ -183,12 +183,12 @@ watch(
 );
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: localePath("/education") },
+  { title: t("pages.education.breadcrumb.home"), to: localePath("/education") },
   {
     title: course.value?.title ?? "",
     to: localePath({ name: "education-course-slug", params: { slug: slug.value } }),
   },
-  { title: t("education.quiz.breadcrumb"), disabled: true },
+  { title: t("pages.education.quiz.breadcrumb"), disabled: true },
 ]);
 
 async function submitQuiz(answers: Record<string, string>) {
