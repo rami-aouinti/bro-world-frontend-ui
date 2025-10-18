@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-6">
+  <div class="flex items-center gap-3 sm:gap-6">
     <button
       v-show="props.isMobile"
       type="button"

@@ -1228,12 +1228,22 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 </script>
 
 <style scoped>
+:global(:root) {
+  --app-viewport-height: 100vh;
+}
+
+@supports (height: 100dvh) {
+  :global(:root) {
+    --app-viewport-height: 100dvh;
+  }
+}
+
 .app-surface {
   position: relative;
   display: flex;
   flex: 1 1 auto;
   align-items: flex-start;
-  min-height: 100vh;
+  min-height: var(--app-viewport-height, 100vh);
   background: transparent;
   overflow-x: hidden;
   overflow-y: visible;
@@ -1260,7 +1270,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 }
 
 .app-drawer .pane-scroll {
-  height: calc(100vh - var(--app-bar-height));
+  height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
 }
 
 .right-drawer-wrapper {
@@ -1271,7 +1281,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   position: relative;
   z-index: 1;
   flex: 1 1 auto;
-  min-height: calc(100vh - var(--app-bar-height));
+  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
   display: flex;
   flex-direction: column;
 }
@@ -1282,7 +1292,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - var(--app-bar-height));
+  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
   padding-block-end: clamp(8px, 2vw, 16px);
   box-sizing: border-box;
 }
