@@ -63,7 +63,7 @@ registerRightSidebarContent(
     component: ChatList,
     props: {
       conversations: conversations.value,
-      selectedId: activeConversationId.value ?? conversationId.value || null,
+      selectedId: (activeConversationId.value ?? conversationId.value) || null,
       loading: loading.value,
       emptyLabel: t("messenger.emptyList", "No conversations yet"),
       onSelect: handleSelect,
