@@ -42,10 +42,12 @@
     >
       <template v-if="isHydrated">
         <ParticlesBg
+          ref="leftParticlesRef"
           class="sidebar-default-card__particles"
           :quantity="50"
           :ease="50"
           :staticity="12"
+          :auto-start="false"
           refresh
         />
       </template>
@@ -90,10 +92,12 @@
     >
       <template v-if="isHydrated && canShowRightWidgets">
         <ParticlesBg
+          ref="rightParticlesRef"
           class="sidebar-default-card__particles"
           :quantity="50"
           :ease="50"
           :staticity="12"
+          :auto-start="false"
           refresh
         />
       </template>
@@ -211,13 +215,18 @@
     </v-navigation-drawer>
 
     <v-main class="app-surface">
-      <div class="main-scroll py-4">
+      <div
+        ref="mainParticlesContainerRef"
+        class="main-scroll py-4"
+      >
         <template v-if="isHydrated">
           <ParticlesBg
+            ref="mainParticlesRef"
             class="sidebar-default-card__particles"
             :quantity="120"
             :ease="120"
             :staticity="12"
+            :auto-start="false"
             refresh
           />
         </template>
@@ -284,13 +293,14 @@ import {
   defineComponent,
   nextTick,
   onMounted,
+  onBeforeUnmount,
   ref,
   watch,
   watchEffect,
 } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
-import { useResizeObserver } from "@vueuse/core";
+import { useIntersectionObserver, useResizeObserver } from "@vueuse/core";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
@@ -368,6 +378,14 @@ const LazySpeedInsights = defineAsyncComponent({
 
 const shouldRenderAnalytics = ref(false);
 const shouldRenderSpeedInsights = ref(false);
+
+type ParticlesBgInstance = { start: () => void; stop: () => void };
+
+const leftParticlesRef = ref<ParticlesBgInstance | null>(null);
+const rightParticlesRef = ref<ParticlesBgInstance | null>(null);
+const mainParticlesRef = ref<ParticlesBgInstance | null>(null);
+const mainParticlesContainerRef = ref<HTMLElement | null>(null);
+const isMainParticlesVisible = ref(false);
 
 type IdleScheduler = (callback: () => void, options?: { timeout?: number }) => void;
 
@@ -648,6 +666,76 @@ const showRightWidgets = computed(() => {
 });
 
 const canShowRightWidgets = computed(() => showNavigation.value && showRightWidgets.value);
+
+if (import.meta.client) {
+  const { stop: stopMainParticlesObserver } = useIntersectionObserver(
+    mainParticlesContainerRef,
+    (entries) => {
+      const entry = entries[0];
+      isMainParticlesVisible.value = Boolean(entry?.isIntersecting && entry.intersectionRatio > 0);
+    },
+    {
+      threshold: [0, 0.25, 0.5],
+    },
+  );
+
+  const stopLeftParticlesEffect = watchEffect(() => {
+    const instance = leftParticlesRef.value;
+
+    if (!instance) {
+      return;
+    }
+
+    if (isHydrated.value && showNavigation.value && leftDrawer.value) {
+      instance.start();
+    } else {
+      instance.stop();
+    }
+  });
+
+  const stopRightParticlesEffect = watchEffect(() => {
+    const instance = rightParticlesRef.value;
+
+    if (!instance) {
+      return;
+    }
+
+    if (
+      isHydrated.value &&
+      showNavigation.value &&
+      canShowRightWidgets.value &&
+      rightDrawer.value
+    ) {
+      instance.start();
+    } else {
+      instance.stop();
+    }
+  });
+
+  const stopMainParticlesEffect = watchEffect(() => {
+    const instance = mainParticlesRef.value;
+
+    if (!instance) {
+      return;
+    }
+
+    if (isHydrated.value && isMainParticlesVisible.value) {
+      instance.start();
+    } else {
+      instance.stop();
+    }
+  });
+
+  onBeforeUnmount(() => {
+    stopMainParticlesObserver();
+    stopLeftParticlesEffect();
+    stopRightParticlesEffect();
+    stopMainParticlesEffect();
+    leftParticlesRef.value?.stop();
+    rightParticlesRef.value?.stop();
+    mainParticlesRef.value?.stop();
+  });
+}
 
 const isRightDrawerReady = ref(!canShowRightWidgets.value);
 

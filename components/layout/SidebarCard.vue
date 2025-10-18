@@ -8,20 +8,23 @@
   >
     <ParticlesBg
       v-if="shouldRenderParticles"
+      ref="particlesRef"
       class="sidebar-card__particles"
       v-bind="resolvedParticlesProps"
+      :auto-start="false"
     />
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
-import { useResizeObserver } from "@vueuse/core";
-import { computed, defineAsyncComponent, onBeforeUnmount, ref, useAttrs, watch } from "vue";
+import { useIntersectionObserver, useResizeObserver } from "@vueuse/core";
+import { computed, defineAsyncComponent, onBeforeUnmount, ref, useAttrs, watch, watchEffect } from "vue";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
 
 type ParticlesProps = Record<string, unknown>;
+type ParticlesBgInstance = { start: () => void; stop: () => void };
 
 const ParticlesBg = defineAsyncComponent({
   loader: () => import("~/components/content/inspira/ui/particles-bg/ParticlesBg.vue"),
@@ -60,6 +63,8 @@ const paddingClassMap: Record<PaddingSize, string> = {
 };
 
 const cardRef = ref<HTMLElement | null>(null);
+const particlesRef = ref<ParticlesBgInstance | null>(null);
+const isCardVisible = ref(false);
 
 const cardAttrs = computed(() => {
   const result: Record<string, unknown> = {};
@@ -101,6 +106,24 @@ watch(
     };
   },
 );
+
+const shouldRenderParticles = computed(() => props.particles);
+const resolvedParticlesProps = computed(() => props.particlesProps);
+const tagName = computed(() => props.tag);
+
+function updateParticlesAnimation() {
+  const instance = particlesRef.value;
+
+  if (!instance) {
+    return;
+  }
+
+  if (shouldRenderParticles.value && isCardVisible.value) {
+    instance.start();
+  } else {
+    instance.stop();
+  }
+}
 
 if (import.meta.client) {
   function applyPaddingMeasurement(padding: number) {
@@ -145,14 +168,28 @@ if (import.meta.client) {
     }
   });
 
+  const { stop: stopVisibilityObserver } = useIntersectionObserver(
+    cardRef,
+    (entries) => {
+      const entry = entries[0];
+      isCardVisible.value = Boolean(entry?.isIntersecting && entry.intersectionRatio > 0);
+    },
+    {
+      threshold: [0, 0.2, 0.5],
+    },
+  );
+
+  const stopParticlesWatcher = watchEffect(() => {
+    updateParticlesAnimation();
+  });
+
   onBeforeUnmount(() => {
     stopObserver();
+    stopVisibilityObserver();
+    stopParticlesWatcher();
+    particlesRef.value?.stop();
   });
 }
-
-const shouldRenderParticles = computed(() => props.particles);
-const resolvedParticlesProps = computed(() => props.particlesProps);
-const tagName = computed(() => props.tag);
 </script>
 
 <style scoped>

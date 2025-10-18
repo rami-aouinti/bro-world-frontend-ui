@@ -39,6 +39,7 @@ type Props = {
   staticity?: number;
   ease?: number;
   class?: string;
+  autoStart?: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -47,6 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
   staticity: 50,
   ease: 50,
   class: "",
+  autoStart: false,
 });
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -60,6 +62,8 @@ let animationFrameId: number | null = null;
 const { x: mouseX, y: mouseY } = useMouse();
 const { pixelRatio } = useDevicePixelRatio();
 const isAnimating = ref(false);
+const startRequested = ref(false);
+const prefersReducedMotion = ref(false);
 let stopMouseWatch: WatchStopHandle | null = null;
 let resizeListenerActive = false;
 let motionMediaQuery: MediaQueryList | null = null;
@@ -163,6 +167,15 @@ function cancelScheduledStart() {
 }
 
 function stopAnimation() {
+  if (!import.meta.client) {
+    isAnimating.value = false;
+    cleanupMouseWatch();
+    removeResizeListener();
+    circles.length = 0;
+    clearContext();
+    return;
+  }
+
   if (!isAnimating.value) {
     return;
   }
@@ -181,6 +194,10 @@ function stopAnimation() {
 }
 
 function startAnimation() {
+  if (!startRequested.value || prefersReducedMotion.value) {
+    return;
+  }
+
   if (isAnimating.value) {
     return;
   }
@@ -201,6 +218,10 @@ function startAnimation() {
 }
 
 function scheduleStart() {
+  if (!import.meta.client || !startRequested.value || prefersReducedMotion.value) {
+    return;
+  }
+
   if (isAnimating.value) {
     return;
   }
@@ -223,13 +244,17 @@ function scheduleStart() {
 }
 
 function handleReducedMotionChange(event: MediaQueryListEvent) {
-  if (event.matches) {
+  prefersReducedMotion.value = event.matches;
+
+  if (prefersReducedMotion.value) {
     cancelScheduledStart();
     stopAnimation();
     return;
   }
 
-  scheduleStart();
+  if (startRequested.value) {
+    scheduleStart();
+  }
 }
 
 onMounted(() => {
@@ -239,11 +264,13 @@ onMounted(() => {
 
   motionMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (motionMediaQuery.matches) {
-    return;
-  }
+  prefersReducedMotion.value = motionMediaQuery.matches;
 
-  scheduleStart();
+  if (props.autoStart && !prefersReducedMotion.value) {
+    start();
+  } else if (props.autoStart) {
+    startRequested.value = true;
+  }
 
   motionMediaQuery.addEventListener("change", handleReducedMotionChange);
 });
@@ -256,6 +283,45 @@ onBeforeUnmount(() => {
     motionMediaQuery.removeEventListener("change", handleReducedMotionChange);
     motionMediaQuery = null;
   }
+});
+
+if (import.meta.client) {
+  watch(
+    () => props.autoStart,
+    (value) => {
+      if (value) {
+        start();
+      } else {
+        stop();
+      }
+    },
+  );
+}
+
+function start() {
+  startRequested.value = true;
+
+  if (!import.meta.client || prefersReducedMotion.value) {
+    return;
+  }
+
+  if (isAnimating.value) {
+    return;
+  }
+
+  scheduleStart();
+}
+
+function stop() {
+  startRequested.value = false;
+
+  cancelScheduledStart();
+  stopAnimation();
+}
+
+defineExpose({
+  start,
+  stop,
 });
 
 function initCanvas() {
