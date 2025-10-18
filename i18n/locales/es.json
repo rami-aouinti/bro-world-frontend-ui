@@ -1610,6 +1610,48 @@
         "buttonAria": "Open the contact page"
       }
     },
+    "calendar": {
+      "title": "Calendario",
+      "cardTitle": "Resumen del calendario",
+      "menuTitle": "Eventos de hoy",
+      "menuEmpty": "No hay eventos hoy",
+      "authNotice": "Inicia sesión para ver y gestionar tus eventos.",
+      "rangeAllDay": "Todo el día",
+      "fallbackTitle": "Evento sin título",
+      "actions": {
+        "newEvent": "Nuevo evento"
+      },
+      "dialog": {
+        "createTitle": "Nuevo evento",
+        "editTitle": "Editar evento",
+        "titleLabel": "Título del evento",
+        "startLabel": "Fecha de inicio",
+        "endLabel": "Fecha de finalización",
+        "startTimeLabel": "Hora de inicio",
+        "endTimeLabel": "Hora de finalización",
+        "allDayLabel": "Evento de todo el día",
+        "privateLabel": "Evento privado",
+        "locationLabel": "Ubicación",
+        "descriptionLabel": "Descripción",
+        "save": "Guardar",
+        "cancel": "Cerrar",
+        "delete": "Eliminar",
+        "confirmDelete": "Eliminar evento",
+        "confirmDeleteMessage": "Esta acción no se puede deshacer. ¿Seguro que quieres eliminar este evento?"
+      },
+      "validation": {
+        "title": "Proporciona un título.",
+        "startDate": "Selecciona una fecha de inicio.",
+        "startTime": "Selecciona una hora de inicio.",
+        "endTime": "La hora de finalización debe ser posterior a la hora de inicio.",
+        "range": "El final del evento debe ser posterior al inicio."
+      },
+      "errors": {
+        "save": "No pudimos guardar los cambios. Inténtalo de nuevo.",
+        "delete": "No pudimos eliminar este evento. Inténtalo de nuevo.",
+        "load": "No pudimos cargar tus eventos. Inténtalo de nuevo."
+      }
+    },
     "ecommerce": {
       "title": "E-commerce",
       "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",

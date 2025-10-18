@@ -1030,6 +1030,7 @@ export default defineNuxtConfig({
       },
       apiBlogBase: "https://blog.bro-world.org",
       apiJobBase: "https://job.bro-world.org",
+      apiProfileBase: process.env.NUXT_PUBLIC_PROFILE_API_BASE ?? "https://bro-world.org",
       groqApiKey: process.env.GROQ_API_KEY,
       tinyMceApiKey: process.env.TINYMCE_API_KEY || "no-api-key",
     },

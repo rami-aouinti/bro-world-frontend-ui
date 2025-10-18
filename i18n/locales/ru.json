@@ -1610,6 +1610,48 @@
         "buttonAria": "Open the contact page"
       }
     },
+    "calendar": {
+      "title": "Календарь",
+      "cardTitle": "Обзор календаря",
+      "menuTitle": "События сегодня",
+      "menuEmpty": "На сегодня событий нет",
+      "authNotice": "Войдите в аккаунт, чтобы просматривать и управлять событиями.",
+      "rangeAllDay": "Весь день",
+      "fallbackTitle": "Событие без названия",
+      "actions": {
+        "newEvent": "Новое событие"
+      },
+      "dialog": {
+        "createTitle": "Новое событие",
+        "editTitle": "Редактировать событие",
+        "titleLabel": "Название события",
+        "startLabel": "Дата начала",
+        "endLabel": "Дата окончания",
+        "startTimeLabel": "Время начала",
+        "endTimeLabel": "Время окончания",
+        "allDayLabel": "Событие на весь день",
+        "privateLabel": "Приватное событие",
+        "locationLabel": "Место",
+        "descriptionLabel": "Описание",
+        "save": "Сохранить",
+        "cancel": "Закрыть",
+        "delete": "Удалить",
+        "confirmDelete": "Удалить событие",
+        "confirmDeleteMessage": "Это действие нельзя отменить. Удалить событие?"
+      },
+      "validation": {
+        "title": "Укажите название.",
+        "startDate": "Выберите дату начала.",
+        "startTime": "Выберите время начала.",
+        "endTime": "Время окончания должно быть позже времени начала.",
+        "range": "Окончание события должно быть позже начала."
+      },
+      "errors": {
+        "save": "Не удалось сохранить изменения. Попробуйте снова.",
+        "delete": "Не удалось удалить событие. Попробуйте снова.",
+        "load": "Не удалось загрузить события. Попробуйте снова."
+      }
+    },
     "ecommerce": {
       "title": "E-commerce",
       "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",

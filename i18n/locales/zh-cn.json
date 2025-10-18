@@ -1899,10 +1899,53 @@
       "title": "Jobs",
       "description": "Plan, track, and optimise hiring programmes."
     },
-    "game": {
-      "title": "Gaming",
-      "description": "Deliver live game experiences, communities, and monetisation."
-    },
+
+"game": {
+  "title": "Gaming",
+  "description": "Deliver live game experiences, communities, and monetisation."
+},
+"calendar": {
+  "title": "日程",
+  "cardTitle": "日程概览",
+  "menuTitle": "今日事件",
+  "menuEmpty": "今天暂无事件",
+  "authNotice": "登录后即可查看并管理你的事件。",
+  "rangeAllDay": "全天",
+  "fallbackTitle": "未命名事件",
+  "actions": {
+    "newEvent": "新建事件"
+  },
+  "dialog": {
+    "createTitle": "新建事件",
+    "editTitle": "编辑事件",
+    "titleLabel": "事件标题",
+    "startLabel": "开始日期",
+    "endLabel": "结束日期",
+    "startTimeLabel": "开始时间",
+    "endTimeLabel": "结束时间",
+    "allDayLabel": "全天事件",
+    "privateLabel": "私密事件",
+    "locationLabel": "地点",
+    "descriptionLabel": "描述",
+    "save": "保存",
+    "cancel": "关闭",
+    "delete": "删除",
+    "confirmDelete": "删除事件",
+    "confirmDeleteMessage": "该操作无法撤销，确定要删除此事件吗？"
+  },
+  "validation": {
+    "title": "请填写标题。",
+    "startDate": "请选择开始日期。",
+    "startTime": "请选择开始时间。",
+    "endTime": "结束时间必须晚于开始时间。",
+    "range": "事件的结束时间必须晚于开始时间。"
+  },
+  "errors": {
+    "save": "暂时无法保存更改，请稍后再试。",
+    "delete": "暂时无法删除事件，请稍后再试。",
+    "load": "暂时无法加载事件，请稍后再试。"
+  }
+},
     "ecommerce": {
       "title": "E-commerce",
       "description": "Launch and scale modern retail journeys.",

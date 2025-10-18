@@ -1667,6 +1667,48 @@
       },
       "description": "Offrez des expériences de jeu en direct, des communautés et des leviers de monétisation."
     },
+    "calendar": {
+      "title": "Calendrier",
+      "cardTitle": "Vue d'ensemble du calendrier",
+      "menuTitle": "Événements du jour",
+      "menuEmpty": "Aucun événement aujourd'hui",
+      "authNotice": "Connectez-vous pour voir et gérer vos événements.",
+      "rangeAllDay": "Toute la journée",
+      "fallbackTitle": "Événement sans titre",
+      "actions": {
+        "newEvent": "Nouvel événement"
+      },
+      "dialog": {
+        "createTitle": "Nouvel événement",
+        "editTitle": "Modifier l'événement",
+        "titleLabel": "Titre de l'événement",
+        "startLabel": "Date de début",
+        "endLabel": "Date de fin",
+        "startTimeLabel": "Heure de début",
+        "endTimeLabel": "Heure de fin",
+        "allDayLabel": "Événement sur la journée",
+        "privateLabel": "Événement privé",
+        "locationLabel": "Lieu",
+        "descriptionLabel": "Description",
+        "save": "Enregistrer",
+        "cancel": "Fermer",
+        "delete": "Supprimer",
+        "confirmDelete": "Supprimer l'événement",
+        "confirmDeleteMessage": "Cette action est irréversible. Confirmez-vous la suppression de cet événement ?"
+      },
+      "validation": {
+        "title": "Merci d'indiquer un titre.",
+        "startDate": "Sélectionnez une date de début.",
+        "startTime": "Sélectionnez une heure de début.",
+        "endTime": "L'heure de fin doit être postérieure à l'heure de début.",
+        "range": "La fin de l'événement doit être postérieure au début."
+      },
+      "errors": {
+        "save": "Impossible d'enregistrer vos modifications. Veuillez réessayer.",
+        "delete": "Impossible de supprimer cet événement. Veuillez réessayer.",
+        "load": "Impossible de charger vos événements. Veuillez réessayer."
+      }
+    },
     "ecommerce": {
       "title": "E-commerce",
       "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",
