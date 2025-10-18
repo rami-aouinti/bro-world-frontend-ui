@@ -601,8 +601,11 @@ const photoLibrary = reactive<PhotoItem[]>([
   },
 ]);
 
+const numberFormatter = computed(
+  () => new Intl.NumberFormat(locale.value || "en-US"),
+);
+
 const collectionStats = computed(() => {
-  const formatter = new Intl.NumberFormat(locale.value || "en-US");
   const totalPhotos =
     photoLibrary.length +
     highlightedAlbum.count +
@@ -614,17 +617,17 @@ const collectionStats = computed(() => {
     {
       id: "photos",
       label: t("pages.profilePhotos.meta.photoCount"),
-      value: formatter.format(totalPhotos),
+      value: numberFormatter.value.format(totalPhotos),
     },
     {
       id: "albums",
       label: t("pages.profilePhotos.stats.albums"),
-      value: formatter.format(curatedAlbums),
+      value: numberFormatter.value.format(curatedAlbums),
     },
     {
       id: "tags",
       label: t("pages.profilePhotos.stats.tags"),
-      value: formatter.format(curatedTags),
+      value: numberFormatter.value.format(curatedTags),
     },
   ];
 });

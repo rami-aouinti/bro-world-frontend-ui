@@ -425,6 +425,10 @@ const description = computed(() => {
   return defaultProfileBio.value ?? null;
 });
 const hometown = computed(() => asString(profileDetails.value?.hometown));
+const birthdayFormatter = computed(
+  () => new Intl.DateTimeFormat(locale.value || "en-US", { dateStyle: "long" }),
+);
+
 const birthdayFormatted = computed(() => {
   const raw = asString(profileDetails.value?.birthday);
 
@@ -438,12 +442,15 @@ const birthdayFormatted = computed(() => {
     return null;
   }
 
-  const targetLocale = locale.value || "en-US";
-  return new Intl.DateTimeFormat(targetLocale, { dateStyle: "long" }).format(date);
+  return birthdayFormatter.value.format(date);
 });
 
+const numberFormatter = computed(
+  () => new Intl.NumberFormat(locale.value || "en-US"),
+);
+
 function formatNumber(value: number) {
-  return new Intl.NumberFormat(locale.value || "en-US").format(value);
+  return numberFormatter.value.format(value);
 }
 
 const friendEntries = computed(() => {
