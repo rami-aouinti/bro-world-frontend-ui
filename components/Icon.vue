@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, useAttrs } from "vue";
+import { computed, onMounted, watch, useAttrs } from "vue";
 import type { StyleValue } from "vue";
 
 const props = withDefaults(
@@ -25,7 +25,9 @@ const props = withDefaults(
 );
 
 const attrs = useAttrs();
-const iconCache = useState<Record<string, string | null>>("app-icon-cache", () => ({}));
+type IconCache = Record<string, string | null | undefined>;
+
+const iconCache = useState<IconCache>("app-icon-cache", () => ({}));
 
 function sanitizeSvg(svg: string): string {
   return svg
@@ -48,7 +50,15 @@ const forwardedAttrs = computed(() => {
   return Object.fromEntries(entries.filter(([key]) => key !== "class" && key !== "style"));
 });
 
-const iconSvg = computed(() => (props.name ? (iconCache.value[props.name] ?? null) : null));
+const iconSvg = computed(() => {
+  if (!props.name) {
+    return null;
+  }
+
+  const cachedValue = iconCache.value[props.name];
+
+  return typeof cachedValue === "string" ? cachedValue : null;
+});
 const iconContent = computed(() => iconSvg.value ?? "");
 
 function sanitizeStyleValue(value: unknown): string | number | undefined {
@@ -105,15 +115,20 @@ const mergedStyle = computed<StyleValue | undefined>(() => {
 });
 
 async function resolveIcon(name: string) {
-  if (iconCache.value[name] !== undefined) {
+  const cachedValue = iconCache.value[name];
+
+  if (typeof cachedValue === "string") {
     return;
   }
 
   try {
-    const svg = await $fetch<string>(`https://api.iconify.design/${name}.svg`, {
-      responseType: "text",
-      parseResponse: (text) => text,
-    });
+    const response = await fetch(`https://api.iconify.design/${name}.svg`);
+
+    if (!response.ok) {
+      throw new Error(`Icon request failed with status ${response.status}`);
+    }
+
+    const svg = await response.text();
 
     iconCache.value = {
       ...iconCache.value,
@@ -138,4 +153,10 @@ watch(
   },
   { immediate: true },
 );
+
+onMounted(() => {
+  if (props.name) {
+    resolveIcon(props.name);
+  }
+});
 </script>
