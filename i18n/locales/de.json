@@ -1844,6 +1844,48 @@
         "buttonAria": "Open the contact page"
       }
     },
+    "calendar": {
+      "title": "Kalender",
+      "cardTitle": "Kalenderübersicht",
+      "menuTitle": "Heutige Veranstaltungen",
+      "menuEmpty": "Heute sind keine Ereignisse geplant",
+      "authNotice": "Melden Sie sich an, um Ihre Ereignisse zu sehen und zu verwalten.",
+      "rangeAllDay": "Ganztägig",
+      "fallbackTitle": "Unbenanntes Ereignis",
+      "actions": {
+        "newEvent": "Neues Ereignis"
+      },
+      "dialog": {
+        "createTitle": "Neues Ereignis",
+        "editTitle": "Ereignis bearbeiten",
+        "titleLabel": "Titel des Ereignisses",
+        "startLabel": "Startdatum",
+        "endLabel": "Enddatum",
+        "startTimeLabel": "Startzeit",
+        "endTimeLabel": "Endzeit",
+        "allDayLabel": "Ganztägiges Ereignis",
+        "privateLabel": "Privates Ereignis",
+        "locationLabel": "Ort",
+        "descriptionLabel": "Beschreibung",
+        "save": "Speichern",
+        "cancel": "Schließen",
+        "delete": "Löschen",
+        "confirmDelete": "Ereignis löschen",
+        "confirmDeleteMessage": "Diese Aktion kann nicht rückgängig gemacht werden. Möchten Sie dieses Ereignis wirklich löschen?"
+      },
+      "validation": {
+        "title": "Bitte geben Sie einen Titel an.",
+        "startDate": "Wählen Sie ein Startdatum aus.",
+        "startTime": "Wählen Sie eine Startzeit aus.",
+        "endTime": "Die Endzeit muss nach der Startzeit liegen.",
+        "range": "Das Ende des Ereignisses muss nach dem Beginn liegen."
+      },
+      "errors": {
+        "save": "Ihre Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+        "delete": "Dieses Ereignis konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+        "load": "Ihre Ereignisse konnten nicht geladen werden. Bitte versuchen Sie es erneut."
+      }
+    },
     "ecommerce": {
       "title": "E-commerce",
       "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",

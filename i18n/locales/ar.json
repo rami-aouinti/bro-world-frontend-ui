@@ -2277,10 +2277,53 @@
       "title": "Jobs",
       "description": "Plan, track, and optimise hiring programmes."
     },
-    "game": {
-      "title": "Gaming",
-      "description": "Deliver live game experiences, communities, and monetisation."
-    },
+
+"game": {
+  "title": "Gaming",
+  "description": "Deliver live game experiences, communities, and monetisation."
+},
+"calendar": {
+  "title": "التقويم",
+  "cardTitle": "نظرة عامة على التقويم",
+  "menuTitle": "أحداث اليوم",
+  "menuEmpty": "لا توجد أحداث اليوم",
+  "authNotice": "سجّل الدخول للاطلاع على أحداثك وإدارتها.",
+  "rangeAllDay": "طوال اليوم",
+  "fallbackTitle": "حدث بدون عنوان",
+  "actions": {
+    "newEvent": "حدث جديد"
+  },
+  "dialog": {
+    "createTitle": "حدث جديد",
+    "editTitle": "تعديل الحدث",
+    "titleLabel": "عنوان الحدث",
+    "startLabel": "تاريخ البدء",
+    "endLabel": "تاريخ الانتهاء",
+    "startTimeLabel": "وقت البدء",
+    "endTimeLabel": "وقت الانتهاء",
+    "allDayLabel": "حدث طوال اليوم",
+    "privateLabel": "حدث خاص",
+    "locationLabel": "الموقع",
+    "descriptionLabel": "الوصف",
+    "save": "حفظ",
+    "cancel": "إغلاق",
+    "delete": "حذف",
+    "confirmDelete": "حذف الحدث",
+    "confirmDeleteMessage": "هذا الإجراء لا يمكن التراجع عنه. هل تريد حذف الحدث؟"
+  },
+  "validation": {
+    "title": "يرجى إضافة عنوان.",
+    "startDate": "اختر تاريخ البدء.",
+    "startTime": "اختر وقت البدء.",
+    "endTime": "يجب أن يكون وقت الانتهاء بعد وقت البدء.",
+    "range": "يجب أن يكون انتهاء الحدث بعد بدايته."
+  },
+  "errors": {
+    "save": "تعذّر حفظ التغييرات. حاول مرة أخرى.",
+    "delete": "تعذّر حذف الحدث. حاول مرة أخرى.",
+    "load": "تعذّر تحميل الأحداث. حاول مرة أخرى."
+  }
+},
     "ecommerce": {
       "title": "E-commerce",
       "description": "Launch and scale modern retail journeys.",

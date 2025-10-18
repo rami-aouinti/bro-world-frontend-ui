@@ -18,6 +18,11 @@
       @update:locale="handleLocaleChange"
     />
 
+    <div
+      id="menu-bar-world"
+      class="menu-bar-world-slot"
+    />
+
     <!-- LEFT DRAWER -->
     <v-navigation-drawer
       v-if="showNavigation"

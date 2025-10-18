@@ -1287,6 +1287,48 @@
         "buttonAria": "Open the contact page"
       }
     },
+    "calendar": {
+      "title": "Calendar",
+      "cardTitle": "Calendar overview",
+      "menuTitle": "Today's events",
+      "menuEmpty": "No events today",
+      "authNotice": "Sign in to see and manage your events.",
+      "rangeAllDay": "All day",
+      "fallbackTitle": "Untitled event",
+      "actions": {
+        "newEvent": "New event"
+      },
+      "dialog": {
+        "createTitle": "New event",
+        "editTitle": "Edit event",
+        "titleLabel": "Event title",
+        "startLabel": "Start date",
+        "endLabel": "End date",
+        "startTimeLabel": "Start time",
+        "endTimeLabel": "End time",
+        "allDayLabel": "All-day event",
+        "privateLabel": "Private event",
+        "locationLabel": "Location",
+        "descriptionLabel": "Description",
+        "save": "Save",
+        "cancel": "Close",
+        "delete": "Delete",
+        "confirmDelete": "Delete event",
+        "confirmDeleteMessage": "This action cannot be undone. Are you sure you want to delete this event?"
+      },
+      "validation": {
+        "title": "Please provide a title.",
+        "startDate": "Select a start date.",
+        "startTime": "Select a start time.",
+        "endTime": "End time must be after the start time.",
+        "range": "The end of the event must be after the start."
+      },
+      "errors": {
+        "save": "We could not save your changes. Please try again.",
+        "delete": "We could not delete this event. Please try again.",
+        "load": "We could not load your events. Please try again."
+      }
+    },
     "ecommerce": {
       "title": "E-commerce",
       "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",
