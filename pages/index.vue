@@ -18,7 +18,7 @@
 
     <template v-if="canAccessAuthenticatedContent">
       <NewPostSkeleton v-if="pending" />
-      <NewPost
+      <LazyNewPost
         v-else
         :avatar="userAvatar"
         :user-name="userName"
@@ -40,12 +40,13 @@
             class="sr-only"
             @change="onStorySelected"
           />
-          <StoriesStrip
+          <LazyStoriesStrip
             :items="stories"
             @open="openStory"
             @create="createStory"
           />
-          <StoryViewerModal
+          <LazyStoryViewerModal
+            v-if="isStoryViewerOpen"
             v-model="isStoryViewerOpen"
             :story="activeStory"
             @close="onStoryClosed"
@@ -68,7 +69,7 @@
 
     <template v-else>
       <div class="flex flex-col gap-4">
-        <BlogPostCard
+        <LazyBlogPostCard
           v-for="(post, index) in posts"
           :key="post.id ?? `post-${index}`"
           data-test="blog-post-card"
@@ -134,7 +135,20 @@ function asString(value: unknown): string | null {
 
 const profileStories = computed(() => profileStore.storyItems.value);
 const localStories = ref<Story[]>([]);
-const stories = computed<Story[]>(() => [...localStories.value, ...profileStories.value]);
+const stories = computed<Story[]>(() => {
+  const local = localStories.value;
+  const profile = profileStories.value;
+
+  if (local.length === 0) {
+    return profile;
+  }
+
+  if (profile.length === 0) {
+    return local;
+  }
+
+  return [...local, ...profile];
+});
 
 const storyObjectUrls = new Set<string>();
 
@@ -380,8 +394,10 @@ async function maybeLoadMore() {
   });
 }
 
+let stopLoadMoreObserver: (() => void) | undefined;
+
 if (import.meta.client) {
-  useIntersectionObserver(
+  const observer = useIntersectionObserver(
     loadMoreTrigger,
     (entries) => {
       if (!hasMore.value || pending.value || loadingMore.value) {
@@ -397,6 +413,22 @@ if (import.meta.client) {
     },
     { rootMargin: "200px 0px" },
   );
+
+  stopLoadMoreObserver = observer.stop;
+
+  watch(
+    hasMore,
+    (value) => {
+      if (!value) {
+        stopLoadMoreObserver?.();
+      }
+    },
+    { immediate: true },
+  );
+
+  onUnmounted(() => {
+    stopLoadMoreObserver?.();
+  });
 }
 
 async function loadInitialPosts() {
