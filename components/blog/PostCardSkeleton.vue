@@ -8,31 +8,18 @@
     aria-live="polite"
     :aria-label="loadingLabel"
   >
-    <v-skeleton-loader
-      type="list-item-avatar-two-line"
-      class="mb-4"
-    />
-    <v-skeleton-loader
-      type="paragraph@3"
-      class="mb-6"
-    />
-    <div class="post-skeleton__actions">
-      <v-skeleton-loader
-        type="chip"
-        width="140"
-        class="me-2"
-      />
-      <v-skeleton-loader
-        type="chip"
-        width="120"
-      />
-    </div>
+    <PostMetaSkeleton class="mb-4" />
+    <BlogPostContentSkeleton class="mb-6" />
+    <BlogPostReactCardSkeleton />
   </v-card>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import BlogPostContentSkeleton from "./BlogPostContentSkeleton.vue";
+import BlogPostReactCardSkeleton from "./BlogPostReactCardSkeleton.vue";
+import PostMetaSkeleton from "./PostMetaSkeleton.vue";
 
 const { t } = useI18n();
 const loadingLabel = computed(() => t("blog.posts.loading"));
@@ -46,9 +33,4 @@ const loadingLabel = computed(() => t("blog.posts.loading"));
   padding: 1.5rem;
 }
 
-.post-skeleton__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
 </style>

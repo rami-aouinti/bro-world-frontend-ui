@@ -48,8 +48,13 @@
       <CommentSortMenu v-model="sortBy" />
     </div>
     <div ref="commentsSectionRef">
+      <CommentThreadSkeleton
+        v-if="commentsLoading && shouldRenderCommentThread"
+        class="mb-4"
+        :show-composer="isAuthenticated"
+      />
       <CommentThread
-        v-if="shouldRenderCommentThread"
+        v-else-if="shouldRenderCommentThread"
         v-model:composer-visible="isCommentComposerVisible"
         :counts="{ care: 0, love: 0, wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
         :nodes="sortedCommentThreadNodes"
@@ -140,6 +145,7 @@ import type {
 } from "~/lib/mock/blog";
 import type { CommentNode } from "~/components/blog/CommentThread.vue";
 import { optimizeAvatarUrl } from "~/lib/images/avatar";
+import CommentThreadSkeleton from "./CommentThreadSkeleton.vue";
 
 interface FeedbackState {
   type: "success" | "error";

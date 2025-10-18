@@ -331,6 +331,15 @@ export const defaultSiteSettings: SiteSettings = {
       isVisible: true,
       order: 1,
     }),
+    makeMenu({
+      id: "crm",
+      label: "layout.sidebar.items.crm",
+      icon: "mdi:account-box-multiple-outline",
+      translate: true,
+      to: "/crm",
+      isVisible: true,
+      order: 2,
+    }),
     makeMenu(
       {
         id: "ecommerce",
@@ -339,7 +348,7 @@ export const defaultSiteSettings: SiteSettings = {
         translate: true,
         to: "/ecommerce",
         isVisible: true,
-        order: 2,
+        order: 3,
       },
       [
         {
@@ -379,7 +388,7 @@ export const defaultSiteSettings: SiteSettings = {
       translate: true,
       to: "/education",
       isVisible: true,
-      order: 3,
+      order: 4,
     }),
     makeMenu({
       id: "academy",
@@ -388,7 +397,7 @@ export const defaultSiteSettings: SiteSettings = {
       translate: true,
       to: "/academy",
       isVisible: true,
-      order: 4,
+      order: 5,
     }),
     makeMenu(
       {
@@ -398,7 +407,7 @@ export const defaultSiteSettings: SiteSettings = {
         translate: true,
         requiresAdmin: true,
         isVisible: true,
-        order: 5,
+        order: 6,
       },
       [
         makeMenu(

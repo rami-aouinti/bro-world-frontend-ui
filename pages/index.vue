@@ -17,14 +17,19 @@
     </v-alert>
 
     <template v-if="canAccessAuthenticatedContent">
+      <NewPostSkeleton v-if="pending" />
       <NewPost
+        v-else
         :avatar="userAvatar"
         :user-name="userName"
         @submit="createPost"
         @attach="onAttach"
       />
+
       <div class="my-4">
+        <StoriesStripSkeleton v-if="pending" />
         <SidebarCard
+          v-else
           class="text-card-foreground px-3 py-2"
           glow
         >
@@ -102,7 +107,7 @@
 import { useIntersectionObserver } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { callOnce } from "#imports";
+import { callOnce } from "#app";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { ReactionType } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
