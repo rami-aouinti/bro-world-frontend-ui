@@ -124,6 +124,12 @@
       </v-menu>
     </div>
   </div>
+  <div
+    v-else-if="showActionSkeleton"
+    class="reaction-bar"
+  >
+    <BlogPostReactCardSkeleton />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -134,6 +140,7 @@ import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";
 import type { BlogPost } from "~/lib/mock/blog";
+import BlogPostReactCardSkeleton from "./BlogPostReactCardSkeleton.vue";
 
 const ReactionPicker = defineAsyncComponent({
   loader: () => import("~/components/blog/ReactionPicker.vue"),
@@ -166,6 +173,7 @@ if (import.meta.client) {
 const showAuthUi = computed(
   () => isHydrated.value && auth.isReady.value && auth.isAuthenticated.value,
 );
+const showActionSkeleton = computed(() => !isHydrated.value);
 type ReactionNode = Pick<BlogPost, "id"> | { id?: string | number } | null;
 
 const props = defineProps<{
