@@ -250,17 +250,6 @@ function createDayjsEsmResolver(): PluginOption {
 }
 const normalizedLocalPagesDir = resolveFromRoot("pages").replace(/\\/g, "/");
 
-type HtmlAttribute = {
-  name: string;
-  lowerName: string;
-  value: string | null;
-  quote: '"' | "'";
-};
-
-const entryStylesheetPattern =
-  /<link\b[^>]*rel=(['"])stylesheet\1[^>]*href=(['"])[^'"\s>]*entry[^'"\s>]*\.css\2[^>]*>/gi;
-const attributePattern = /([\w:-]+)(?:\s*=\s*(["'])(.*?)\2)?/g;
-
 const vuetifyPlugin = vuetify({
   autoImport: false,
   styles: {
@@ -659,10 +648,14 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/icon",
     "nuxt-llms",
+    "nuxt-partytown",
+    "@tanstack/nuxt-query",
+    "nuxt-critters",
   ],
   alias: {
     pinia: resolveFromRoot("lib/pinia-shim.ts"),
     "@braintree/sanitize-url": resolveFromRoot("lib/shims/sanitize-url.ts"),
+    "pinia-plugin-persistedstate": resolveFromRoot("lib/shims/pinia-plugin-persistedstate.ts"),
   },
 
   components: [
@@ -734,6 +727,32 @@ export default defineNuxtConfig({
     safelistColors: ["primary", "red", "orange", "green"],
   },
 
+  partytown: {
+    forward: ["dataLayer.push", "gtag", "clarity"],
+    config: {
+      lib: "/~partytown/",
+    },
+  },
+
+  tanstackQuery: {
+    devtools: false,
+    queryClientOptions: {
+      defaultOptions: {
+        queries: {
+          staleTime: 1000 * 60 * 5,
+          refetchOnWindowFocus: false,
+        },
+      },
+    },
+  },
+
+  critters: {
+    config: {
+      preload: "swap",
+      pruneSource: true,
+    },
+  },
+
   experimental: {
     typedPages: true,
     payloadExtraction: true,
@@ -768,78 +787,6 @@ export default defineNuxtConfig({
 
         page.meta = { ...page.meta, documentDriven: false };
       }
-    },
-    "render:html"(htmlChunks) {
-      const headIndex = 0;
-
-      htmlChunks[headIndex] = htmlChunks[headIndex].replace(entryStylesheetPattern, (match) => {
-        if (/data-critical/i.test(match) || /rel=(['"])preload\1/i.test(match)) {
-          return match;
-        }
-
-        const isSelfClosing = /\/>\s*$/.test(match);
-        const closingLength = isSelfClosing ? 2 : 1;
-        const attributesSegment = match.slice("<link".length, match.length - closingLength).trim();
-
-        attributePattern.lastIndex = 0;
-
-        const attributes: HtmlAttribute[] = [];
-        let attributeMatch: RegExpExecArray | null;
-
-        while ((attributeMatch = attributePattern.exec(attributesSegment))) {
-          const [, rawName, rawQuote = '"', rawValue] = attributeMatch;
-          const normalizedName = rawName.trim();
-
-          if (!normalizedName) {
-            continue;
-          }
-
-          const normalizedQuote = rawQuote === "'" ? "'" : '"';
-
-          attributes.push({
-            name: normalizedName,
-            lowerName: normalizedName.toLowerCase(),
-            value: rawValue ?? null,
-            quote: normalizedQuote,
-          });
-        }
-
-        function upsertAttribute(name: string, value: string) {
-          const lowerName = name.toLowerCase();
-          const existing = attributes.find((attribute) => attribute.lowerName === lowerName);
-
-          if (existing) {
-            existing.value = value;
-            existing.quote = '"';
-            return;
-          }
-
-          attributes.push({
-            name,
-            lowerName,
-            value,
-            quote: '"',
-          });
-        }
-
-        upsertAttribute("rel", "preload");
-        upsertAttribute("as", "style");
-        upsertAttribute("onload", "this.onload=null;this.rel='stylesheet'");
-
-        const serializedAttributes = attributes
-          .map((attribute) =>
-            attribute.value == null
-              ? attribute.name
-              : `${attribute.name}=${attribute.quote}${attribute.value}${attribute.quote}`,
-          )
-          .join(" ")
-          .trim();
-
-        const preloadLink = `<link ${serializedAttributes}${isSelfClosing ? " />" : ">"}`;
-        const fallbackLink = match.endsWith("/>") ? match : match.replace(/>\s*$/, ">");
-
-        return `${preloadLink}\n<noscript>${fallbackLink}</noscript>`;
-      });
     },
   },
 

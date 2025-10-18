@@ -86,8 +86,8 @@ export default defineNuxtPlugin(() => {
     }
 
     const script = document.createElement("script");
+    script.type = "text/partytown";
     script.src = source;
-    script.async = true;
     script.dataset.lazyGtag = "true";
     document.head.appendChild(script);
   }
