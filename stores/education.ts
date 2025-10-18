@@ -1,5 +1,5 @@
+import { persistedState } from "~/lib/pinia-persisted-state";
 import { computed, reactive, ref, watch } from "vue";
-import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "~/lib/pinia-shim";
 import { educationCategoriesMock } from "~/lib/mock/education";
 import type {
@@ -14,25 +14,13 @@ import type {
 
 const STORAGE_KEY = "bro-world-education";
 
-interface PersistedState {
-  progress: Record<string, CourseProgress>;
-  certificates: Certificate[];
-}
-
-function createInitialPersistedState(): PersistedState {
-  return {
-    progress: {},
-    certificates: [],
-  };
-}
-
 export const useEducationStore = defineStore("education", () => {
   const categories = ref<CategorySummary[]>([]);
   const courses = ref<Course[]>([]);
   const lessons = reactive<Record<string, Lesson[]>>({});
   const exercises = reactive<Record<string, Exercise[]>>({});
   const quiz = reactive<Record<string, QuizQuestion[]>>({});
-  const progress = reactive<Record<string, CourseProgress>>({});
+  const progress = ref<Record<string, CourseProgress>>({});
   const certificates = ref<Certificate[]>([]);
   const { locale } = useI18n();
   const currentLocale = computed(() => locale.value);
@@ -41,43 +29,6 @@ export const useEducationStore = defineStore("education", () => {
   const fetchedLessonsSlugs = new Set<string>();
   const fetchedExercisesSlugs = new Set<string>();
   const fetchedQuizSlugs = new Set<string>();
-
-  if (import.meta.client) {
-    const storage = useLocalStorage<PersistedState>(STORAGE_KEY, createInitialPersistedState(), {
-      deep: true,
-      serializer: {
-        read: (value: string): PersistedState => {
-          try {
-            const parsed = JSON.parse(value) as PersistedState | null;
-            if (parsed && typeof parsed === "object") {
-              return {
-                progress: parsed.progress ?? {},
-                certificates: parsed.certificates ?? [],
-              };
-            }
-          } catch {
-            // noop
-          }
-          return createInitialPersistedState();
-        },
-        write: (value: PersistedState) => JSON.stringify(value),
-      },
-    });
-
-    Object.assign(progress, storage.value.progress ?? {});
-    certificates.value = [...(storage.value.certificates ?? [])];
-
-    watch(
-      () => ({
-        progress: JSON.parse(JSON.stringify(progress)) as Record<string, CourseProgress>,
-        certificates: certificates.value.map((entry) => ({ ...entry })),
-      }),
-      (value) => {
-        storage.value = value;
-      },
-      { deep: true },
-    );
-  }
 
   function upsertCourse(course: Course) {
     const index = courses.value.findIndex((entry) => entry.id === course.id);
@@ -152,10 +103,10 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   function ensureProgress(courseId: string): CourseProgress {
-    if (!progress[courseId]) {
-      progress[courseId] = { lessonDone: {}, exerciseScore: {} };
+    if (!progress.value[courseId]) {
+      progress.value[courseId] = { lessonDone: {}, exerciseScore: {} };
     }
-    return progress[courseId];
+    return progress.value[courseId];
   }
 
   function markLessonDone(courseId: string, lessonId: string) {
@@ -186,13 +137,13 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   function resetCourseProgress(courseId: string) {
-    if (progress[courseId]) {
-      progress[courseId] = { lessonDone: {}, exerciseScore: {} };
+    if (progress.value[courseId]) {
+      progress.value[courseId] = { lessonDone: {}, exerciseScore: {} };
     }
   }
 
   function clearQuizScore(courseId: string) {
-    const entry = progress[courseId];
+    const entry = progress.value[courseId];
     if (entry) {
       delete entry.quizScore;
       delete entry.certificateId;
@@ -216,7 +167,7 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   function getProgressForCourse(courseId: string) {
-    return progress[courseId];
+    return progress.value[courseId];
   }
 
   watch(
@@ -280,4 +231,10 @@ export const useEducationStore = defineStore("education", () => {
     getCourseQuiz,
     getProgressForCourse,
   };
+}, {
+  persist: {
+    key: STORAGE_KEY,
+    storage: persistedState.localStorage,
+    paths: ["progress", "certificates"],
+  },
 });
