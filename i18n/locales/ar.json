@@ -653,7 +653,7 @@
         "community": "منتدى المجتمع",
         "githubAria": "فتح مستودع GitHub في علامة تبويب جديدة",
         "docsAria": "قراءة التوثيق في علامة تبويب جديدة",
-      "communityAria": "الانضمام إلى منتدى المجتمع في علامة تبويب جديدة"
+        "communityAria": "الانضمام إلى منتدى المجتمع في علامة تبويب جديدة"
       }
     },
     "academy": {
@@ -834,34 +834,68 @@
       }
     },
     "profile": {
-      "title": "Profile",
-      "subtitle": "Review and manage your personal information.",
+      "title": "الملف الشخصي",
+      "subtitle": "راجع معلوماتك الشخصية وقم بإدارتها.",
       "sections": {
-        "contact": "Contact",
-        "profile": "Profile",
-        "social": "Social",
+        "contact": "معلومات الاتصال",
+        "profile": "الملف الشخصي",
+        "social": "الشبكات الاجتماعية",
         "calendar": "التقويم"
       },
       "calendar": {
-        "subtitle": "تابع جدولك القادم بسهولة.",
+        "subtitle": "ابق على اطلاع بجدولك القادم.",
         "viewLabel": "تغيير عرض التقويم",
         "views": {
           "month": "شهر",
           "week": "أسبوع",
           "day": "يوم"
         },
-        "errorTitle": "تعذر تحميل الأحداث",
-        "errorFallback": "لم نتمكن من تحميل أحداثك. حاول مرة أخرى.",
+        "errorTitle": "تعذّر تحميل الأحداث",
+        "errorFallback": "لم نتمكن من تحميل أحداثك. يرجى المحاولة مرة أخرى.",
         "retry": "إعادة المحاولة",
         "privateLabel": "خاص",
         "allDay": "طوال اليوم",
         "upcoming": "الأحداث القادمة",
         "emptyTitle": "لا توجد أحداث مجدولة",
-        "emptyDescription": "أضف أحداثًا إلى التقويم لتظهر هنا.",
+        "emptyDescription": "أضف أحداثًا إلى تقويمك لتظهر هنا.",
         "actions": {
           "add": "حدث جديد",
           "edit": "تعديل",
           "delete": "حذف"
+        },
+        "form": {
+          "createTitle": "إنشاء حدث",
+          "createDescription": "خطط لحدث جديد مباشرةً من عرض التقويم.",
+          "editTitle": "تعديل الحدث",
+          "editDescription": "حدّث تفاصيل هذا الحدث في التقويم.",
+          "fields": {
+            "title": "العنوان",
+            "startDate": "تاريخ البدء",
+            "endDate": "تاريخ الانتهاء",
+            "startTime": "وقت البدء",
+            "endTime": "وقت الانتهاء",
+            "allDay": "حدث طوال اليوم",
+            "color": "الفئة",
+            "location": "الموقع",
+            "description": "الوصف",
+            "isPrivate": "وضع علامة كحدث خاص"
+          },
+          "actions": {
+            "cancel": "إلغاء",
+            "create": "إنشاء الحدث",
+            "save": "حفظ التغييرات"
+          },
+          "validation": {
+            "title": "أدخل عنوانًا لحدثك.",
+            "startDate": "حدّد متى يبدأ الحدث.",
+            "startTime": "اختر وقت البدء.",
+            "endTime": "يجب أن يكون وقت الانتهاء بعد وقت البدء.",
+            "range": "يجب أن ينتهي الحدث بعد وقت البدء."
+          }
+        },
+        "delete": {
+          "title": "حذف الحدث",
+          "description": "هل أنت متأكد أنك تريد حذف \"{title}\"؟ لا يمكن التراجع عن هذا الإجراء."
         },
         "colors": {
           "meetings": "اجتماعات",
@@ -871,217 +905,217 @@
         }
       },
       "labels": {
-        "email": "Email",
-        "phone": "Phone",
-        "address": "Address",
-        "title": "Title",
-        "gender": "Gender",
-        "birthday": "Birthday",
-        "description": "Description",
-        "roles": "Roles",
-        "friends": "Friends",
-        "stories": "Stories",
-        "accountStatus": "Account status"
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "address": "العنوان",
+        "title": "المسمى الوظيفي",
+        "gender": "النوع الاجتماعي",
+        "birthday": "تاريخ الميلاد",
+        "description": "الوصف",
+        "roles": "الأدوار",
+        "friends": "الأصدقاء",
+        "stories": "القصص",
+        "accountStatus": "حالة الحساب"
       },
       "statuses": {
-        "enabled": "Enabled",
-        "disabled": "Disabled"
+        "enabled": "مفعل",
+        "disabled": "معطل"
       },
       "placeholders": {
         "missing": "—",
-        "noStories": "No stories"
+        "noStories": "لا توجد قصص"
       },
-      "avatarAlt": "Profile picture of {name}",
-      "avatarAltFallback": "Profile picture placeholder",
+      "avatarAlt": "صورة ملف {name} الشخصية",
+      "avatarAltFallback": "صورة ملف افتراضية",
       "stats": {
-        "title": "Quick stats"
+        "title": "إحصائيات سريعة"
       }
     },
     "profileFriends": {
-      "title": "Connections",
-      "subtitle": "Reconnect with your collaborators, mentors, and communities.",
+      "title": "العلاقات",
+      "subtitle": "أعد التواصل مع المتعاونين والمرشدين والمجتمعات.",
       "actions": {
-        "message": "Send message",
-        "schedule": "Schedule call",
-        "viewProfile": "Open profile"
+        "message": "إرسال رسالة",
+        "schedule": "جدولة مكالمة",
+        "viewProfile": "فتح الملف الشخصي"
       },
       "highlights": {
-        "title": "Featured collaborators",
-        "subtitle": "Handpicked partners you collaborate with the most this quarter."
+        "title": "متعاونون مميزون",
+        "subtitle": "شركاء مختارون تتعاون معهم بكثرة هذا الربع."
+      },
+      "sections": {
+        "active": "نشط الآن",
+        "suggestions": "علاقات مقترحة"
       },
       "filters": {
-        "all": "All",
-        "design": "Design",
-        "product": "Product",
-        "engineering": "Engineering",
-        "marketing": "Marketing"
-      },
-      "stats": {
-        "totalFriends": "Connections",
-        "mutual": "mutual connections",
-        "online": "online now"
+        "all": "الكل",
+        "design": "تصميم",
+        "engineering": "هندسة",
+        "marketing": "تسويق",
+        "product": "منتج"
       },
       "meta": {
         "lastActive": "آخر نشاط · {time}"
       },
-      "sections": {
-        "suggestions": "Suggested connections",
-        "active": "Active now"
+      "stats": {
+        "totalFriends": "العلاقات",
+        "mutual": "علاقات مشتركة",
+        "online": "متصل الآن"
       },
       "status": {
-        "online": "Online",
-        "focus": "Focus",
-        "busy": "Busy",
-        "offline": "Offline"
+        "online": "متصل",
+        "offline": "غير متصل",
+        "busy": "مشغول",
+        "focus": "تركيز"
       },
       "feedback": {
-        "message": "Drafting a quick hello…",
-        "messageWith": "Drafting a quick hello to {name}…",
-        "schedule": "Opening your scheduling flow…",
-        "scheduleWith": "Opening your scheduling flow for {name}…",
-        "connect": "We'll note that you'd like to connect.",
-        "connectWith": "We'll let {name} know you'd like to connect."
+        "connect": "سنلاحظ رغبتك في التواصل.",
+        "connectWith": "سنبلغ {name} بأنك تود التواصل.",
+        "message": "جاري كتابة تحية سريعة…",
+        "messageWith": "جاري كتابة تحية سريعة لـ {name}…",
+        "schedule": "نقوم بفتح تدفق الجدولة…",
+        "scheduleWith": "نقوم بفتح تدفق الجدولة لـ {name}…"
       },
-      "empty": "No profiles match this filter yet."
+      "empty": "لا توجد ملفات مطابقة لهذا الفلتر بعد."
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "subtitle": "Curate highlights from launches, research trips, and behind-the-scenes moments.",
+      "title": "مكتبة الصور",
+      "subtitle": "نسّق أبرز اللقطات من الإطلاقات، ورحلات البحث، وما وراء الكواليس.",
       "actions": {
-        "upload": "Upload photos",
-        "createAlbum": "Create album"
-      },
-      "sections": {
-        "pinned": "Pinned collections",
-        "albums": "Album explorer",
-        "timeline": "Creative notes",
-        "notesDescription": "Updates from collaborators as they prep visual stories."
-      },
-      "meta": {
-        "updated": "Updated {date}",
-        "photoCount": "photos"
+        "createAlbum": "إنشاء ألبوم",
+        "upload": "رفع صور"
       },
       "filters": {
-        "recent": "Recent",
-        "events": "Events",
-        "studio": "Studio",
-        "travel": "Travel"
+        "recent": "الأحدث",
+        "events": "الأحداث",
+        "studio": "الاستوديو",
+        "travel": "الرحلات"
       },
-      "cta": {
-        "share": "Share curated sets with your crew or export to presentations."
+      "sections": {
+        "albums": "مستكشف الألبومات",
+        "pinned": "مجموعات مثبتة",
+        "timeline": "ملاحظات إبداعية",
+        "notesDescription": "تحديثات من المتعاونين أثناء إعداد القصص البصرية."
+      },
+      "meta": {
+        "photoCount": "صور",
+        "updated": "تم التحديث {date}"
       },
       "stats": {
-        "albums": "curated albums",
-        "tags": "unique story tags"
+        "albums": "ألبومات منسقة",
+        "tags": "وسوم قصص فريدة"
       },
       "timeline": {
-        "title": "Story milestones",
-        "description": "Snapshots from key launches, residencies, and retreats that shaped your year."
+        "title": "محطات القصة",
+        "description": "لمحات عن الإطلاقات والإقامات والملتقيات التي شكّلت عامك."
+      },
+      "cta": {
+        "share": "شارك هذه المجموعات المنسقة مع فريقك أو صدّرها إلى عروضك التقديمية."
       },
       "feedback": {
-        "upload": "Opening your media picker…",
-        "createAlbum": "Let's craft a new album.",
-        "shareCollection": "Sharing options are ready.",
-        "generic": "Action started."
+        "upload": "جارٍ فتح منتقي الوسائط…",
+        "createAlbum": "لننشئ ألبومًا جديدًا.",
+        "shareCollection": "خيارات المشاركة جاهزة.",
+        "generic": "تم بدء الإجراء."
       },
-      "empty": "No photos match this filter yet."
+      "empty": "لا توجد صور مطابقة لهذا الفلتر حاليًا."
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "subtitle": "Refresh your details so collaborators always have the latest context.",
+      "title": "تعديل الملف الشخصي",
+      "subtitle": "حدّث بياناتك ليحصل المتعاونون دائمًا على السياق الصحيح.",
       "sections": {
         "profile": {
           "title": "الملف الشخصي",
           "bio": "نبذة",
-          "skills": "المهارات المميزة"
+          "skills": "مهارات أساسية"
         },
-        "contact": "Contact",
-        "about": "About",
-        "social": "Social links",
-        "siteSettings": "Site settings"
+        "contact": "معلومات الاتصال",
+        "about": "حول",
+        "social": "روابط اجتماعية",
+        "siteSettings": "إعدادات الموقع"
       },
       "labels": {
-        "firstName": "First name",
-        "lastName": "Last name",
-        "headline": "Headline",
-        "pronouns": "Pronouns",
-        "language": "Preferred language",
-        "timezone": "Time zone",
-        "email": "Email",
-        "phone": "Phone",
-        "location": "Location",
-        "website": "Website",
-        "bio": "Bio",
-        "skills": "Key skills",
-        "interests": "Focus areas",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "headline": "المسمى المهني",
+        "pronouns": "الضمائر",
+        "language": "اللغة المفضلة",
+        "timezone": "المنطقة الزمنية",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "location": "الموقع",
+        "website": "الموقع الإلكتروني",
+        "bio": "نبذة",
+        "skills": "مهارات أساسية",
+        "interests": "مجالات الاهتمام",
         "linkedin": "LinkedIn",
         "twitter": "Twitter / X",
         "dribbble": "Dribbble",
         "behance": "Behance"
       },
       "actions": {
-        "cancel": "Reset",
-        "save": "Save changes"
+        "cancel": "إعادة الضبط",
+        "save": "حفظ التغييرات"
       },
       "helpers": {
-        "bio": "Share your mission, how you collaborate, or recent wins (280 characters).",
-        "skills": "Type to add custom skills or pick from the suggestions.",
-        "summary": "This quick card updates automatically as you edit your details.",
-        "siteSettings": "Update the site name or tagline without leaving your profile."
+        "bio": "شارك مهمتك، وطريقة تعاونك أو أحدث إنجازاتك (حتى 280 حرفًا).",
+        "skills": "أدخل مهارات مخصصة أو اختر من الاقتراحات.",
+        "summary": "تتحدث هذه البطاقة تلقائيًا أثناء تحديث بياناتك.",
+        "siteSettings": "حدّث اسم الموقع أو الشعار دون مغادرة ملفك الشخصي."
       },
       "feedback": {
-        "successMessage": "Profile details saved successfully.",
-        "errorMessage": "Please review the highlighted fields."
+        "successMessage": "تم حفظ تفاصيل الملف الشخصي بنجاح.",
+        "errorMessage": "يرجى مراجعة الحقول المظللة."
       },
       "validation": {
-        "required": "This field is required.",
-        "bioLimit": "Your bio must be 280 characters or fewer."
+        "required": "هذا الحقل مطلوب.",
+        "bioLimit": "يجب ألا تتجاوز النبذة 280 حرفًا."
       }
     },
     "profileSecurity": {
-      "title": "Password & security",
-      "subtitle": "Keep your account protected with strong credentials and verified devices.",
+      "title": "كلمة المرور والأمان",
+      "subtitle": "احم حسابك باستخدام بيانات اعتماد قوية وأجهزة موثوقة.",
       "actions": {
-        "save": "Save security settings",
-        "generateCodes": "Generate recovery codes"
+        "save": "حفظ إعدادات الأمان",
+        "generateCodes": "إنشاء رموز استرداد"
       },
       "sections": {
         "password": {
-          "title": "Update password",
-          "description": "Create a unique passphrase that combines at least 12 characters, numbers, and symbols."
+          "title": "تحديث كلمة المرور",
+          "description": "أنشئ عبارة مرور فريدة لا تقل عن 12 حرفًا مع الأرقام والرموز."
         },
         "sessions": {
-          "title": "Active sessions",
-          "description": "Review where you're signed in and revoke access from unfamiliar devices."
+          "title": "الجلسات النشطة",
+          "description": "تحقق من الأجهزة التي سجلت الدخول منها وأزل الوصول عن الأجهزة غير المعروفة."
         },
         "mfa": {
-          "title": "Two-factor authentication",
-          "description": "Add an extra verification step to keep your workspace secure."
+          "title": "المصادقة الثنائية",
+          "description": "أضف خطوة تحقق إضافية لتأمين مساحة عملك."
         }
       },
       "labels": {
-        "currentPassword": "Current password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password",
-        "mfaToggle": "Enable two-factor authentication"
+        "currentPassword": "كلمة المرور الحالية",
+        "newPassword": "كلمة المرور الجديدة",
+        "confirmPassword": "تأكيد كلمة المرور",
+        "mfaToggle": "تفعيل المصادقة الثنائية"
       },
       "passwordHint": {
-        "title": "Password tips",
-        "description": "Use a password manager, avoid reusing credentials, and rotate sensitive passwords regularly."
+        "title": "نصائح كلمة المرور",
+        "description": "استخدم مدير كلمات المرور، وتجنب تكرارها، وجدد الكلمات الحساسة بانتظام."
       },
       "sessions": {
-        "device": "Device",
-        "location": "Location",
-        "activity": "Last activity",
-        "actions": "Actions",
-        "revoke": "Revoke",
-        "activeNow": "Active now",
-        "trusted": "Trusted",
-        "remembered": "Remembered",
-        "untrusted": "Unrecognized"
+        "device": "الجهاز",
+        "location": "الموقع",
+        "activity": "آخر نشاط",
+        "actions": "إجراءات",
+        "revoke": "إلغاء",
+        "activeNow": "نشط الآن",
+        "trusted": "موثوق",
+        "remembered": "محفوظ",
+        "untrusted": "غير معروف"
       },
       "recoveryCodes": {
-        "title": "Store these one-time recovery codes"
+        "title": "احتفظ بهذه الرموز الاحتياطية ذات الاستخدام الواحد"
       }
     },
     "contact": {
@@ -2141,24 +2175,24 @@
       "description": "تواصل مع فريقنا."
     },
     "profile": {
-      "title": "Profile",
-      "description": "View your personal details and account activity."
+      "title": "الملف الشخصي",
+      "description": "اطّلع على بياناتك الشخصية ونشاط حسابك."
     },
     "profileFriends": {
-      "title": "Connections",
-      "description": "Browse your collaborators, suggested contacts, and real-time activity."
+      "title": "العلاقات",
+      "description": "استكشف المتعاونين والعلاقات المقترحة والنشاط الفوري."
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "description": "Organise launch highlights, studio shoots, and research archives."
+      "title": "مكتبة الصور",
+      "description": "نظّم أبرز لحظات الإطلاق وجلسات الاستوديو وأرشيفات البحث."
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "description": "Update your contact information, skills, and social links."
+      "title": "تعديل الملف الشخصي",
+      "description": "حدّث معلومات الاتصال والمهارات وروابط التواصل الاجتماعي."
     },
     "profileSecurity": {
-      "title": "Password & security",
-      "description": "Manage sign-in credentials, two-factor authentication, and trusted devices."
+      "title": "كلمة المرور والأمان",
+      "description": "أدِر بيانات تسجيل الدخول والمصادقة الثنائية والأجهزة الموثوقة."
     },
     "createWorld": {
       "title": "Create world",
