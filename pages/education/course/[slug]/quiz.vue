@@ -73,7 +73,7 @@ import QuizRunner from "~/components/education/QuizRunner.vue";
 import { useEducationStore } from "~/stores/education";
 import type { SubmitQuizResult } from "~/types/education";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const route = useRoute();
 const store = useEducationStore();
 
@@ -160,6 +160,7 @@ async function submitQuiz(answers: Record<string, string>) {
       "/api/education/submit",
       {
         method: "POST",
+        query: { locale: locale.value },
         body: {
           courseId: course.value.id,
           answers,
@@ -184,6 +185,7 @@ async function createCertificate() {
   try {
     const certificate = await $fetch("/api/education/certificates", {
       method: "POST",
+      query: { locale: locale.value },
       body: {
         courseId: course.value.id,
         userName: userName.value.trim(),
