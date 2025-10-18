@@ -761,6 +761,97 @@
         "description": "Reserve your spot to receive schedules, programme details, and application guidance.",
         "button": "Talk with our team",
         "buttonAria": "Contact the Bro World Academy team"
+      },
+      "catalog": {
+        "badge": "@:education.catalog.badge",
+        "title": "@:education.catalog.title",
+        "subtitle": "@:education.catalog.subtitle"
+      },
+      "category": {
+        "courses": "@:education.category.courses",
+        "viewCourses": "@:education.category.viewCourses",
+        "viewCoursesAria": "@:education.category.viewCoursesAria"
+      },
+      "course": {
+        "progress": "@:education.course.progress",
+        "openAria": "@:education.course.openAria",
+        "continue": "@:education.course.continue",
+        "durationMinutes": "@:education.course.durationMinutes",
+        "durationHours": "@:education.course.durationHours",
+        "durationMixed": "@:education.course.durationMixed",
+        "completedLessons": "@:education.course.completedLessons",
+        "lessonList": "@:education.course.lessonList",
+        "lessonDuration": "@:education.course.lessonDuration",
+        "lessonProgressLabel": "@:education.course.lessonProgressLabel",
+        "quizTitle": "@:education.course.quizTitle",
+        "quizDescription": "@:education.course.quizDescription",
+        "startQuiz": "@:education.course.startQuiz",
+        "viewCertificate": "@:education.course.viewCertificate",
+        "ctaStart": "@:education.course.ctaStart",
+        "ctaContinue": "@:education.course.ctaContinue",
+        "ctaQuiz": "@:education.course.ctaQuiz"
+      },
+      "lesson": {
+        "position": "@:education.lesson.position",
+        "duration": "@:education.lesson.duration",
+        "progressLabel": "@:education.lesson.progressLabel",
+        "completed": "@:education.lesson.completed",
+        "markDone": "@:education.lesson.markDone",
+        "exercises": "@:education.lesson.exercises",
+        "previous": "@:education.lesson.previous",
+        "next": "@:education.lesson.next",
+        "goToQuiz": "@:education.lesson.goToQuiz"
+      },
+      "exercise": {
+        "submit": "@:education.exercise.submit",
+        "correct": "@:education.exercise.correct",
+        "incorrect": "@:education.exercise.incorrect",
+        "true": "@:education.exercise.true",
+        "false": "@:education.exercise.false"
+      },
+      "quiz": {
+        "title": "@:education.quiz.title",
+        "subtitle": "@:education.quiz.subtitle",
+        "progress": "@:education.quiz.progress",
+        "previous": "@:education.quiz.previous",
+        "next": "@:education.quiz.next",
+        "submit": "@:education.quiz.submit",
+        "passed": "@:education.quiz.passed",
+        "failed": "@:education.quiz.failed",
+        "threshold": "@:education.quiz.threshold",
+        "certificateReady": "@:education.quiz.certificateReady",
+        "certificateDescription": "@:education.quiz.certificateDescription",
+        "nameLabel": "@:education.quiz.nameLabel",
+        "namePlaceholder": "@:education.quiz.namePlaceholder",
+        "generateCertificate": "@:education.quiz.generateCertificate",
+        "certificateReadyButton": "@:education.quiz.certificateReadyButton",
+        "viewCertificate": "@:education.quiz.viewCertificate",
+        "retryTitle": "@:education.quiz.retryTitle",
+        "retryDescription": "@:education.quiz.retryDescription",
+        "retryButton": "@:education.quiz.retryButton",
+        "breadcrumb": "@:education.quiz.breadcrumb"
+      },
+      "certificate": {
+        "breadcrumb": "@:education.certificate.breadcrumb",
+        "title": "@:education.certificate.title",
+        "subtitle": "@:education.certificate.subtitle",
+        "presentedTo": "@:education.certificate.presentedTo",
+        "completed": "@:education.certificate.completed",
+        "score": "@:education.certificate.score",
+        "date": "@:education.certificate.date",
+        "signature": "@:education.certificate.signature",
+        "signatureName": "@:education.certificate.signatureName",
+        "organization": "@:education.certificate.organization",
+        "organizationTagline": "@:education.certificate.organizationTagline",
+        "download": "@:education.certificate.download"
+      },
+      "breadcrumb": {
+        "home": "@:education.breadcrumb.home"
+      },
+      "levels": {
+        "beginner": "@:education.levels.beginner",
+        "intermediate": "@:education.levels.intermediate",
+        "advanced": "@:education.levels.advanced"
       }
     },
     "profile": {
@@ -1539,61 +1630,152 @@
       }
     },
     "education": {
-      "title": "Education",
-      "subtitle": "Empower instructors, learners, and administrators with collaborative, data-informed experiences.",
-      "featuresTitle": "Create learning journeys that stick",
+      "title": "教育",
+      "subtitle": "为教师、学习者和管理员提供协作且数据驱动的体验。",
+      "featuresTitle": "打造高效的学习旅程",
       "features": {
         "curriculum": {
-          "title": "Design inclusive curriculum",
-          "description": "Author courses, micro-learning paths, and certification programmes with ease.",
+          "title": "设计包容性的课程体系",
+          "description": "轻松创建课程、微学习路径和认证项目。",
           "points": [
-            "Reuse templates that balance synchronous and asynchronous learning.",
-            "Embed multimedia, assessments, and accessibility standards by default.",
-            "Localise content for cohorts across campuses or regions."
+            "复用兼顾同步与异步学习的模板。",
+            "默认嵌入多媒体、评估与无障碍标准。",
+            "为不同校区或地区的班级提供本地化内容。"
           ]
         },
         "collaboration": {
-          "title": "Champion collaboration",
-          "description": "Connect faculty, mentors, and peers inside a secure digital campus.",
+          "title": "促进协作",
+          "description": "在安全的数字校园中连接教师、导师与同伴。",
           "points": [
-            "Coordinate mentorship, office hours, and cohort forums effortlessly.",
-            "Offer real-time feedback loops on assignments and projects.",
-            "Celebrate progress with badges, spotlights, and alumni pathways."
+            "轻松协调导师指导、答疑时间和班级论坛。",
+            "为作业和项目提供实时反馈循环。",
+            "通过徽章、聚焦展示和校友路径庆祝进步。"
           ]
         },
         "analytics": {
-          "title": "Act on meaningful analytics",
-          "description": "Surface insights that support retention, wellbeing, and accreditation goals.",
+          "title": "洞察驱动的分析",
+          "description": "呈现支持留存、身心健康与认证目标的洞察。",
           "points": [
-            "Monitor engagement signals to intervene before learners drift.",
-            "Share programme dashboards with leadership and accreditation boards.",
-            "Respect privacy with transparent controls and governance."
+            "监测参与度信号，在学习者分心前及时干预。",
+            "与管理层及认证机构共享项目仪表盘。",
+            "以透明的控制与治理保障隐私。"
           ]
         }
       },
-      "workflowTitle": "Guide every cohort",
+      "workflowTitle": "引导每一届学员",
       "workflow": {
         "steps": {
           "design": {
-            "title": "Design",
-            "description": "Map learning outcomes, content, and assessment moments collaboratively."
+            "title": "设计",
+            "description": "协同规划学习成果、内容与评估节点。"
           },
           "deliver": {
-            "title": "Deliver",
-            "description": "Host live and on-demand sessions, track attendance, and adapt in real time."
+            "title": "实施",
+            "description": "开展直播与点播课程，追踪出勤并实时调整。"
           },
           "reflect": {
-            "title": "Reflect",
-            "description": "Review impact, gather feedback, and iterate for the next intake."
+            "title": "复盘",
+            "description": "回顾影响，收集反馈，并为下一期迭代。"
           }
         }
       },
-      "stepLabel": "Milestone {number}",
+      "stepLabel": "里程碑 {number}",
       "cta": {
-        "title": "Elevate your learning ecosystem",
-        "description": "Partner with us to modernise programmes, student services, and alumni experiences.",
-        "button": "Schedule a consultation",
-        "buttonAria": "Open the contact page"
+        "title": "升级你的学习生态",
+        "description": "与我们合作，现代化课程、学生服务和校友体验。",
+        "button": "预约咨询",
+        "buttonAria": "打开联系页面"
+      },
+      "catalog": {
+        "badge": "学习",
+        "title": "探索学习路径",
+        "subtitle": "浏览精选类别，跟随互动课程，并在通过最终测验后解锁模拟证书。"
+      },
+      "category": {
+        "courses": "{count} 门课程",
+        "viewCourses": "查看课程",
+        "viewCoursesAria": "查看 {title} 的课程"
+      },
+      "course": {
+        "progress": "{value}% 已完成",
+        "openAria": "打开课程 {title}",
+        "continue": "继续",
+        "durationMinutes": "{value} 分钟",
+        "durationHours": "{value} 小时",
+        "durationMixed": "{hours} 小时 {minutes} 分钟",
+        "completedLessons": "{count}/{total} 节课已完成",
+        "lessonList": "课程目录",
+        "lessonDuration": "{value} 分钟",
+        "lessonProgressLabel": "课程进度",
+        "quizTitle": "最终测验",
+        "quizDescription": "回答十个问题以验证知识，并获得课程证书。",
+        "startQuiz": "开始测验",
+        "viewCertificate": "查看证书",
+        "ctaStart": "开始课程",
+        "ctaContinue": "继续课程",
+        "ctaQuiz": "前往测验"
+      },
+      "lesson": {
+        "position": "第 {index}/{total} 课",
+        "duration": "{value} 分钟",
+        "progressLabel": "课程进度",
+        "completed": "本课已完成",
+        "markDone": "标记本课为已完成",
+        "exercises": "练习任务",
+        "previous": "上一课",
+        "next": "下一课",
+        "goToQuiz": "前往最终测验"
+      },
+      "exercise": {
+        "submit": "检查答案",
+        "correct": "干得好！",
+        "incorrect": "下次再试一次。",
+        "true": "正确",
+        "false": "错误"
+      },
+      "quiz": {
+        "title": "最终测验 — {course}",
+        "subtitle": "回答所有问题。得分至少 70% 即可解锁证书。",
+        "progress": "第 {index}/{total} 题",
+        "previous": "上一题",
+        "next": "下一题",
+        "submit": "提交答案",
+        "passed": "太棒了！你获得 {total} 分中的 {score} 分。",
+        "failed": "继续努力——你获得 {total} 分中的 {score} 分。",
+        "threshold": "及格分：{value}%",
+        "certificateReady": "已通过！生成证书。",
+        "certificateDescription": "填写姓名并下载由此演示环境签发的可分享 PDF。",
+        "nameLabel": "你的姓名",
+        "namePlaceholder": "Alex Johnson",
+        "generateCertificate": "生成证书",
+        "certificateReadyButton": "证书已生成",
+        "viewCertificate": "打开证书",
+        "retryTitle": "还想再试一次？",
+        "retryDescription": "回顾课程，准备好后再参加测验。",
+        "retryButton": "重新测验",
+        "breadcrumb": "最终测验"
+      },
+      "certificate": {
+        "breadcrumb": "证书",
+        "title": "结业证书",
+        "subtitle": "此文件用于庆祝成功完成演示课程。",
+        "presentedTo": "授予",
+        "completed": "成功完成课程 {course}。",
+        "score": "最终得分：{value}%",
+        "date": "签发日期：{value}",
+        "signature": "授权人",
+        "signatureName": "Nuxt Academy",
+        "organization": "BroWorld 教育",
+        "organizationTagline": "创新学习体验",
+        "download": "下载 PDF"
+      },
+      "breadcrumb": {
+        "home": "教育"
+      },
+      "levels": {
+        "beginner": "初级",
+        "intermediate": "中级",
+        "advanced": "高级"
       }
     },
     "quiz": {
@@ -1971,12 +2153,12 @@
       "description": "Design interactive quiz journeys with adaptive question banks."
     },
     "education": {
-      "title": "Education",
-      "description": "Design collaborative, data-informed learning experiences."
+      "title": "教育",
+      "description": "打造协作且数据驱动的学习体验。"
     },
     "academy": {
-      "title": "Academy",
-      "description": "Explore Bro World's structured learning paths, exercises, and certifications."
+      "title": "学院",
+      "description": "探索 Bro World 精心设计的学习路径、练习与认证。"
     },
     "performance": {
       "title": "性能",

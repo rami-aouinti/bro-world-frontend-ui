@@ -709,6 +709,97 @@
         "description": "Reserve your spot to receive schedules, programme details, and application guidance.",
         "button": "Talk with our team",
         "buttonAria": "Contact the Bro World Academy team"
+      },
+      "catalog": {
+        "badge": "@:education.catalog.badge",
+        "title": "@:education.catalog.title",
+        "subtitle": "@:education.catalog.subtitle"
+      },
+      "category": {
+        "courses": "@:education.category.courses",
+        "viewCourses": "@:education.category.viewCourses",
+        "viewCoursesAria": "@:education.category.viewCoursesAria"
+      },
+      "course": {
+        "progress": "@:education.course.progress",
+        "openAria": "@:education.course.openAria",
+        "continue": "@:education.course.continue",
+        "durationMinutes": "@:education.course.durationMinutes",
+        "durationHours": "@:education.course.durationHours",
+        "durationMixed": "@:education.course.durationMixed",
+        "completedLessons": "@:education.course.completedLessons",
+        "lessonList": "@:education.course.lessonList",
+        "lessonDuration": "@:education.course.lessonDuration",
+        "lessonProgressLabel": "@:education.course.lessonProgressLabel",
+        "quizTitle": "@:education.course.quizTitle",
+        "quizDescription": "@:education.course.quizDescription",
+        "startQuiz": "@:education.course.startQuiz",
+        "viewCertificate": "@:education.course.viewCertificate",
+        "ctaStart": "@:education.course.ctaStart",
+        "ctaContinue": "@:education.course.ctaContinue",
+        "ctaQuiz": "@:education.course.ctaQuiz"
+      },
+      "lesson": {
+        "position": "@:education.lesson.position",
+        "duration": "@:education.lesson.duration",
+        "progressLabel": "@:education.lesson.progressLabel",
+        "completed": "@:education.lesson.completed",
+        "markDone": "@:education.lesson.markDone",
+        "exercises": "@:education.lesson.exercises",
+        "previous": "@:education.lesson.previous",
+        "next": "@:education.lesson.next",
+        "goToQuiz": "@:education.lesson.goToQuiz"
+      },
+      "exercise": {
+        "submit": "@:education.exercise.submit",
+        "correct": "@:education.exercise.correct",
+        "incorrect": "@:education.exercise.incorrect",
+        "true": "@:education.exercise.true",
+        "false": "@:education.exercise.false"
+      },
+      "quiz": {
+        "title": "@:education.quiz.title",
+        "subtitle": "@:education.quiz.subtitle",
+        "progress": "@:education.quiz.progress",
+        "previous": "@:education.quiz.previous",
+        "next": "@:education.quiz.next",
+        "submit": "@:education.quiz.submit",
+        "passed": "@:education.quiz.passed",
+        "failed": "@:education.quiz.failed",
+        "threshold": "@:education.quiz.threshold",
+        "certificateReady": "@:education.quiz.certificateReady",
+        "certificateDescription": "@:education.quiz.certificateDescription",
+        "nameLabel": "@:education.quiz.nameLabel",
+        "namePlaceholder": "@:education.quiz.namePlaceholder",
+        "generateCertificate": "@:education.quiz.generateCertificate",
+        "certificateReadyButton": "@:education.quiz.certificateReadyButton",
+        "viewCertificate": "@:education.quiz.viewCertificate",
+        "retryTitle": "@:education.quiz.retryTitle",
+        "retryDescription": "@:education.quiz.retryDescription",
+        "retryButton": "@:education.quiz.retryButton",
+        "breadcrumb": "@:education.quiz.breadcrumb"
+      },
+      "certificate": {
+        "breadcrumb": "@:education.certificate.breadcrumb",
+        "title": "@:education.certificate.title",
+        "subtitle": "@:education.certificate.subtitle",
+        "presentedTo": "@:education.certificate.presentedTo",
+        "completed": "@:education.certificate.completed",
+        "score": "@:education.certificate.score",
+        "date": "@:education.certificate.date",
+        "signature": "@:education.certificate.signature",
+        "signatureName": "@:education.certificate.signatureName",
+        "organization": "@:education.certificate.organization",
+        "organizationTagline": "@:education.certificate.organizationTagline",
+        "download": "@:education.certificate.download"
+      },
+      "breadcrumb": {
+        "home": "@:education.breadcrumb.home"
+      },
+      "levels": {
+        "beginner": "@:education.levels.beginner",
+        "intermediate": "@:education.levels.intermediate",
+        "advanced": "@:education.levels.advanced"
       }
     },
     "profile": {
@@ -1711,61 +1802,152 @@
       }
     },
     "education": {
-      "title": "Education",
-      "subtitle": "Empower instructors, learners, and administrators with collaborative, data-informed experiences.",
-      "featuresTitle": "Create learning journeys that stick",
+      "title": "Istruzione",
+      "subtitle": "Offri a docenti, studenti e amministratori esperienze collaborative guidate dai dati.",
+      "featuresTitle": "Crea percorsi di apprendimento coinvolgenti",
       "features": {
         "curriculum": {
-          "title": "Design inclusive curriculum",
-          "description": "Author courses, micro-learning paths, and certification programmes with ease.",
+          "title": "Progetta curricula inclusivi",
+          "description": "Crea corsi, percorsi di microlearning e programmi di certificazione con facilità.",
           "points": [
-            "Reuse templates that balance synchronous and asynchronous learning.",
-            "Embed multimedia, assessments, and accessibility standards by default.",
-            "Localise content for cohorts across campuses or regions."
+            "Riutilizza modelli che bilanciano apprendimento sincrono e asincrono.",
+            "Integra automaticamente multimedia, verifiche e standard di accessibilità.",
+            "Localizza i contenuti per le coorti nei diversi campus o regioni."
           ]
         },
         "collaboration": {
-          "title": "Champion collaboration",
-          "description": "Connect faculty, mentors, and peers inside a secure digital campus.",
+          "title": "Promuovi la collaborazione",
+          "description": "Metti in contatto docenti, mentori e pari all'interno di un campus digitale sicuro.",
           "points": [
-            "Coordinate mentorship, office hours, and cohort forums effortlessly.",
-            "Offer real-time feedback loops on assignments and projects.",
-            "Celebrate progress with badges, spotlights, and alumni pathways."
+            "Coordina mentoring, ricevimento studenti e forum di coorte senza sforzo.",
+            "Offri cicli di feedback in tempo reale su compiti e progetti.",
+            "Celebra i progressi con badge, spotlight e percorsi alumni."
           ]
         },
         "analytics": {
-          "title": "Act on meaningful analytics",
-          "description": "Surface insights that support retention, wellbeing, and accreditation goals.",
+          "title": "Agisci su analisi significative",
+          "description": "Metti in evidenza insight che supportano obiettivi di retention, benessere e accreditamento.",
           "points": [
-            "Monitor engagement signals to intervene before learners drift.",
-            "Share programme dashboards with leadership and accreditation boards.",
-            "Respect privacy with transparent controls and governance."
+            "Monitora i segnali di coinvolgimento per intervenire prima che gli studenti si allontanino.",
+            "Condividi dashboard di programma con la dirigenza e gli enti di accreditamento.",
+            "Tutela la privacy con controlli e governance trasparenti."
           ]
         }
       },
-      "workflowTitle": "Guide every cohort",
+      "workflowTitle": "Accompagna ogni coorte",
       "workflow": {
         "steps": {
           "design": {
-            "title": "Design",
-            "description": "Map learning outcomes, content, and assessment moments collaboratively."
+            "title": "Progettare",
+            "description": "Mappa insieme risultati di apprendimento, contenuti e momenti di valutazione."
           },
           "deliver": {
-            "title": "Deliver",
-            "description": "Host live and on-demand sessions, track attendance, and adapt in real time."
+            "title": "Erogare",
+            "description": "Offri sessioni live e on-demand, traccia la partecipazione e adatta in tempo reale."
           },
           "reflect": {
-            "title": "Reflect",
-            "description": "Review impact, gather feedback, and iterate for the next intake."
+            "title": "Riflettere",
+            "description": "Valuta l'impatto, raccogli feedback e migliora per il prossimo intake."
           }
         }
       },
-      "stepLabel": "Milestone {number}",
+      "stepLabel": "Tappa {number}",
       "cta": {
-        "title": "Elevate your learning ecosystem",
-        "description": "Partner with us to modernise programmes, student services, and alumni experiences.",
-        "button": "Schedule a consultation",
-        "buttonAria": "Open the contact page"
+        "title": "Valorizza il tuo ecosistema di apprendimento",
+        "description": "Collabora con noi per modernizzare programmi, servizi agli studenti ed esperienze alumni.",
+        "button": "Prenota una consulenza",
+        "buttonAria": "Apri la pagina di contatto"
+      },
+      "catalog": {
+        "badge": "Apprendimento",
+        "title": "Esplora i percorsi di apprendimento",
+        "subtitle": "Scopri categorie curate, segui lezioni interattive e sblocca un certificato dimostrativo superando il quiz finale."
+      },
+      "category": {
+        "courses": "{count} corsi",
+        "viewCourses": "Vedi i corsi",
+        "viewCoursesAria": "Vedi i corsi di {title}"
+      },
+      "course": {
+        "progress": "{value}% completato",
+        "openAria": "Apri il corso {title}",
+        "continue": "Continua",
+        "durationMinutes": "{value} min",
+        "durationHours": "{value} h",
+        "durationMixed": "{hours} h {minutes} min",
+        "completedLessons": "{count}/{total} lezioni completate",
+        "lessonList": "Lezioni del corso",
+        "lessonDuration": "{value} min",
+        "lessonProgressLabel": "Avanzamento lezione",
+        "quizTitle": "Quiz finale",
+        "quizDescription": "Rispondi a dieci domande per convalidare le tue conoscenze e ottenere il certificato del corso.",
+        "startQuiz": "Inizia il quiz",
+        "viewCertificate": "Vedi certificato",
+        "ctaStart": "Avvia il corso",
+        "ctaContinue": "Continua il corso",
+        "ctaQuiz": "Vai al quiz"
+      },
+      "lesson": {
+        "position": "Lezione {index} di {total}",
+        "duration": "{value} min",
+        "progressLabel": "Avanzamento lezione",
+        "completed": "Lezione completata",
+        "markDone": "Segna la lezione come completata",
+        "exercises": "Esercizi pratici",
+        "previous": "Lezione precedente",
+        "next": "Lezione successiva",
+        "goToQuiz": "Vai al quiz finale"
+      },
+      "exercise": {
+        "submit": "Verifica risposta",
+        "correct": "Ottimo lavoro!",
+        "incorrect": "Riprova al prossimo tentativo.",
+        "true": "Vero",
+        "false": "Falso"
+      },
+      "quiz": {
+        "title": "Quiz finale — {course}",
+        "subtitle": "Rispondi a tutte le domande. Ottieni almeno il 70 % per sbloccare il certificato.",
+        "progress": "Domanda {index} di {total}",
+        "previous": "Precedente",
+        "next": "Successiva",
+        "submit": "Invia risposte",
+        "passed": "Ben fatto! Hai ottenuto {score} su {total}.",
+        "failed": "Continua: hai ottenuto {score} su {total}.",
+        "threshold": "Soglia di superamento: {value}%",
+        "certificateReady": "Hai superato! Genera il certificato.",
+        "certificateDescription": "Aggiungi il tuo nome e scarica un PDF condivisibile rilasciato da questo ambiente demo.",
+        "nameLabel": "Il tuo nome",
+        "namePlaceholder": "Alex Johnson",
+        "generateCertificate": "Genera certificato",
+        "certificateReadyButton": "Certificato generato",
+        "viewCertificate": "Apri certificato",
+        "retryTitle": "Serve un altro tentativo?",
+        "retryDescription": "Rivedi le lezioni e ripeti il quiz quando ti senti pronto.",
+        "retryButton": "Ripeti quiz",
+        "breadcrumb": "Quiz finale"
+      },
+      "certificate": {
+        "breadcrumb": "Certificato",
+        "title": "Certificato di completamento",
+        "subtitle": "Questo documento celebra il completamento con successo di un corso dimostrativo.",
+        "presentedTo": "Conferito a",
+        "completed": "Per aver completato il corso {course}.",
+        "score": "Punteggio finale: {value}%",
+        "date": "Rilasciato il {value}",
+        "signature": "Autorizzato da",
+        "signatureName": "Nuxt Academy",
+        "organization": "BroWorld Education",
+        "organizationTagline": "Innovare le esperienze di apprendimento",
+        "download": "Scarica PDF"
+      },
+      "breadcrumb": {
+        "home": "Istruzione"
+      },
+      "levels": {
+        "beginner": "Principiante",
+        "intermediate": "Intermedio",
+        "advanced": "Avanzato"
       }
     },
     "quiz": {
