@@ -1,4 +1,5 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
+import { ref } from "vue";
 import { createPinia, setActivePinia } from "~/lib/pinia-shim";
 import { useEducationStore } from "~/stores/education";
 import { educationCategoriesMock } from "~/lib/mock/education";
@@ -21,6 +22,8 @@ describe("education store", () => {
   beforeEach(() => {
     const pinia = createPinia();
     setActivePinia(pinia);
+    const localeRef = ref("en");
+    vi.stubGlobal("useI18n", () => ({ locale: localeRef }));
   });
 
   afterEach(() => {
@@ -44,7 +47,7 @@ describe("education store", () => {
 
     await store.fetchCategories();
 
-    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories");
+    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories", { query: { locale: "en" } });
     expect(store.categories.value).toEqual(categories);
   });
 
@@ -55,7 +58,7 @@ describe("education store", () => {
 
     await store.fetchCategories();
 
-    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories");
+    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories", { query: { locale: "en" } });
     expect(store.categories.value).toEqual(educationCategoriesMock);
   });
 

@@ -1,4 +1,4 @@
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "~/lib/pinia-shim";
 import { educationCategoriesMock } from "~/lib/mock/education";
@@ -34,6 +34,13 @@ export const useEducationStore = defineStore("education", () => {
   const quiz = reactive<Record<string, QuizQuestion[]>>({});
   const progress = reactive<Record<string, CourseProgress>>({});
   const certificates = ref<Certificate[]>([]);
+  const { locale } = useI18n();
+  const currentLocale = computed(() => locale.value);
+  const fetchedCategorySlugs = new Set<string>();
+  const fetchedCourseSlugs = new Set<string>();
+  const fetchedLessonsSlugs = new Set<string>();
+  const fetchedExercisesSlugs = new Set<string>();
+  const fetchedQuizSlugs = new Set<string>();
 
   if (import.meta.client) {
     const storage = useLocalStorage<PersistedState>(STORAGE_KEY, createInitialPersistedState(), {
@@ -89,7 +96,9 @@ export const useEducationStore = defineStore("education", () => {
 
   async function fetchCategories() {
     try {
-      const response = await $fetch<CategorySummary[]>("/api/education/categories");
+      const response = await $fetch<CategorySummary[]>("/api/education/categories", {
+        query: { locale: currentLocale.value },
+      });
       categories.value = response;
     } catch (error) {
       if (import.meta.dev) {
@@ -101,30 +110,45 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   async function fetchCoursesByCategory(categorySlug: string) {
-    const response = await $fetch<Course[]>(`/api/education/courses?category=${categorySlug}`);
+    const response = await $fetch<Course[]>("/api/education/courses", {
+      query: { category: categorySlug, locale: currentLocale.value },
+    });
     response.forEach(upsertCourse);
+    fetchedCategorySlugs.add(categorySlug);
   }
 
   async function fetchCourseDetails(slug: string) {
-    const course = await $fetch<Course>(`/api/education/courses/${slug}`);
+    const course = await $fetch<Course>(`/api/education/courses/${slug}`, {
+      query: { locale: currentLocale.value },
+    });
     upsertCourse(course);
     lessons[slug] = course.lessons;
     quiz[slug] = course.quiz;
+    fetchedCourseSlugs.add(slug);
   }
 
   async function fetchLessons(slug: string) {
-    const response = await $fetch<Lesson[]>(`/api/education/courses/${slug}/lessons`);
+    const response = await $fetch<Lesson[]>(`/api/education/courses/${slug}/lessons`, {
+      query: { locale: currentLocale.value },
+    });
     lessons[slug] = response;
+    fetchedLessonsSlugs.add(slug);
   }
 
   async function fetchExercises(slug: string) {
-    const response = await $fetch<Exercise[]>(`/api/education/courses/${slug}/exercises`);
+    const response = await $fetch<Exercise[]>(`/api/education/courses/${slug}/exercises`, {
+      query: { locale: currentLocale.value },
+    });
     exercises[slug] = response;
+    fetchedExercisesSlugs.add(slug);
   }
 
   async function fetchQuiz(slug: string) {
-    const response = await $fetch<QuizQuestion[]>(`/api/education/courses/${slug}/quiz`);
+    const response = await $fetch<QuizQuestion[]>(`/api/education/courses/${slug}/quiz`, {
+      query: { locale: currentLocale.value },
+    });
     quiz[slug] = response;
+    fetchedQuizSlugs.add(slug);
   }
 
   function ensureProgress(courseId: string): CourseProgress {
@@ -180,6 +204,41 @@ export const useEducationStore = defineStore("education", () => {
   const getCourseExercises = (slug: string) => exercises[slug] ?? [];
   const getCourseQuiz = (slug: string) => quiz[slug] ?? [];
   const getProgressForCourse = (courseId: string) => progress[courseId];
+
+  watch(
+    currentLocale,
+    () => {
+      categories.value = [];
+      courses.value = [];
+      Object.keys(lessons).forEach((key) => delete lessons[key]);
+      Object.keys(exercises).forEach((key) => delete exercises[key]);
+      Object.keys(quiz).forEach((key) => delete quiz[key]);
+
+      if (import.meta.client) {
+        void fetchCategories();
+        fetchedCategorySlugs.forEach((slug) => {
+          void fetchCoursesByCategory(slug);
+        });
+        fetchedCourseSlugs.forEach((slug) => {
+          void fetchCourseDetails(slug);
+        });
+        fetchedLessonsSlugs.forEach((slug) => {
+          if (!fetchedCourseSlugs.has(slug)) {
+            void fetchLessons(slug);
+          }
+        });
+        fetchedExercisesSlugs.forEach((slug) => {
+          void fetchExercises(slug);
+        });
+        fetchedQuizSlugs.forEach((slug) => {
+          if (!fetchedCourseSlugs.has(slug)) {
+            void fetchQuiz(slug);
+          }
+        });
+      }
+    },
+    { flush: "post" },
+  );
 
   return {
     categories,
