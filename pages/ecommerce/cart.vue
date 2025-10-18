@@ -1,48 +1,86 @@
 <template>
   <main class="py-10">
     <v-container>
-      <v-breadcrumbs :items="breadcrumbs" class="mb-6" />
+      <v-breadcrumbs
+        :items="breadcrumbs"
+        class="mb-6"
+      />
       <header class="mb-8 text-center text-md-left">
         <h1 class="text-h4 text-md-h3 font-weight-bold mb-3">
           {{ t("demo.ecommerce.cart.title") }}
         </h1>
-        <p class="text-body-1 text-medium-emphasis mx-auto mx-md-0" style="max-width: 640px">
+        <p
+          class="text-body-1 text-medium-emphasis mx-auto mx-md-0"
+          style="max-width: 640px"
+        >
           {{ t("demo.ecommerce.cart.subtitle") }}
         </p>
       </header>
 
-      <v-row v-if="!cart.isEmpty" dense>
-        <v-col cols="12" md="8">
-          <v-card variant="outlined" class="mb-6">
-            <v-table hover density="comfortable">
+      <v-row
+        v-if="!cart.isEmpty"
+        dense
+      >
+        <v-col
+          cols="12"
+          md="8"
+        >
+          <v-card
+            variant="outlined"
+            class="mb-6"
+          >
+            <v-table
+              hover
+              density="comfortable"
+            >
               <thead>
                 <tr>
                   <th>{{ t("demo.ecommerce.cart.table.product") }}</th>
                   <th class="text-center">{{ t("demo.ecommerce.cart.table.quantity") }}</th>
                   <th class="text-right">{{ t("demo.ecommerce.cart.table.price") }}</th>
                   <th class="text-right">{{ t("demo.ecommerce.cart.table.total") }}</th>
-                  <th class="text-right" :aria-label="t('demo.ecommerce.cart.table.actions')"></th>
+                  <th
+                    class="text-right"
+                    :aria-label="t('demo.ecommerce.cart.table.actions')"
+                  ></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in cart.itemsWithDetails" :key="item.product.slug">
+                <tr
+                  v-for="item in cart.itemsWithDetails"
+                  :key="item.product.slug"
+                >
                   <td>
                     <div class="d-flex align-start gap-3">
-                      <v-avatar size="64" rounded>
-                        <v-img :src="item.product.images[0]" :alt="t(item.product.nameKey)" cover />
+                      <v-avatar
+                        size="64"
+                        rounded
+                      >
+                        <v-img
+                          :src="item.product.images[0]"
+                          :alt="t(item.product.nameKey)"
+                          cover
+                        />
                       </v-avatar>
                       <div>
                         <div class="text-subtitle-2 font-weight-semibold">
                           {{ t(item.product.nameKey) }}
                         </div>
                         <div class="text-caption text-medium-emphasis">{{ item.product.sku }}</div>
-                        <v-chip size="x-small" class="mt-2" color="surface-variant">
+                        <v-chip
+                          size="x-small"
+                          class="mt-2"
+                          color="surface-variant"
+                        >
                           {{ t(`demo.ecommerce.categories.${item.product.categorySlug}.name`) }}
                         </v-chip>
                       </div>
                     </div>
                   </td>
-                  <td class="text-center" style="width: 140px">
+                  <td
+                    class="text-center"
+                    style="width: 140px"
+                  >
                     <v-text-field
                       v-model.number="quantities[item.product.slug]"
                       type="number"
@@ -60,15 +98,26 @@
                   <td class="text-right text-body-2 font-weight-semibold">
                     {{ formatPrice(item.lineTotal, item.product.currency) }}
                   </td>
-                  <td class="text-right" style="width: 80px">
-                    <v-btn icon="mdi:delete-outline" variant="text" color="error" @click="remove(item.product.slug)" />
+                  <td
+                    class="text-right"
+                    style="width: 80px"
+                  >
+                    <v-btn
+                      icon="mdi:delete-outline"
+                      variant="text"
+                      color="error"
+                      @click="remove(item.product.slug)"
+                    />
                   </td>
                 </tr>
               </tbody>
             </v-table>
           </v-card>
 
-          <v-card variant="tonal" class="pa-6">
+          <v-card
+            variant="tonal"
+            class="pa-6"
+          >
             <h2 class="text-subtitle-1 font-weight-semibold mb-3">
               {{ t("demo.ecommerce.cart.nextStepsTitle") }}
             </h2>
@@ -76,16 +125,27 @@
               {{ t("demo.ecommerce.cart.nextStepsDescription") }}
             </p>
             <div class="d-flex flex-wrap gap-3">
-              <v-btn :to="localePath('/ecommerce/catalog')" variant="tonal" prepend-icon="mdi:shopping-search">
+              <v-btn
+                :to="localePath('/ecommerce/catalog')"
+                variant="tonal"
+                prepend-icon="mdi:shopping-search"
+              >
                 {{ t("demo.ecommerce.cart.continueShopping") }}
               </v-btn>
-              <v-btn color="primary" :to="localePath('/ecommerce/checkout')" prepend-icon="mdi:credit-card-check-outline">
+              <v-btn
+                color="primary"
+                :to="localePath('/ecommerce/checkout')"
+                prepend-icon="mdi:credit-card-check-outline"
+              >
                 {{ t("demo.ecommerce.cart.proceedToCheckout") }}
               </v-btn>
             </div>
           </v-card>
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col
+          cols="12"
+          md="4"
+        >
           <OrderSummary
             :items="cart.itemsWithDetails"
             :subtotal="cart.subtotal"
@@ -95,10 +155,20 @@
           >
             <template #actions>
               <div class="pa-4 pt-0 d-flex flex-column gap-2">
-                <v-btn :to="localePath('/ecommerce/checkout')" block color="primary" size="large">
+                <v-btn
+                  :to="localePath('/ecommerce/checkout')"
+                  block
+                  color="primary"
+                  size="large"
+                >
                   {{ t("demo.ecommerce.cart.checkoutCta") }}
                 </v-btn>
-                <v-btn block variant="text" color="error" @click="clearCart">
+                <v-btn
+                  block
+                  variant="text"
+                  color="error"
+                  @click="clearCart"
+                >
                   {{ t("demo.ecommerce.cart.clearCart") }}
                 </v-btn>
               </div>
@@ -114,7 +184,11 @@
         :text="t('demo.ecommerce.cart.emptySubtitle')"
       >
         <template #actions>
-          <v-btn color="primary" variant="flat" :to="localePath('/ecommerce/catalog')">
+          <v-btn
+            color="primary"
+            variant="flat"
+            :to="localePath('/ecommerce/catalog')"
+          >
             {{ t("demo.ecommerce.cart.shopNow") }}
           </v-btn>
         </template>
@@ -178,9 +252,7 @@ definePageMeta({
   documentDriven: false,
 });
 
-const baseUrl = computed(
-  () => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com",
-);
+const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {
   const title = t("seo.ecommerce.cart.title");

@@ -21,7 +21,9 @@ export default defineNuxtPlugin({
       ? new URL(rawBaseURL, useRequestURL().origin).toString()
       : rawBaseURL;
     const auth = useAuthSession();
-    const forwardedHeaders = import.meta.server ? useRequestHeaders(["cookie", "authorization"]) : null;
+    const forwardedHeaders = import.meta.server
+      ? useRequestHeaders(["cookie", "authorization"])
+      : null;
     const { $i18n } = nuxtApp as unknown as { $i18n?: { t: (key: string) => string } };
     const { session: sessionCookieName } = resolveAuthCookieNames();
     const sessionCookie = useCookie<string | null>(sessionCookieName, { watch: false });
@@ -54,7 +56,10 @@ export default defineNuxtPlugin({
           if (token) {
             const resolvedToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
 
-            if (!headers.Authorization || headers.Authorization === forwardedHeaders?.authorization) {
+            if (
+              !headers.Authorization ||
+              headers.Authorization === forwardedHeaders?.authorization
+            ) {
               headers.Authorization = resolvedToken;
             }
           }
@@ -75,7 +80,8 @@ export default defineNuxtPlugin({
 
         const status = error.response?.status;
         const payload = (error.response?.data ?? {}) as ErrorPayload;
-        const message = payload.message || payload.error || error.message || "Unexpected network error";
+        const message =
+          payload.message || payload.error || error.message || "Unexpected network error";
         const title = payload.title || (status ? `HTTP ${status}` : undefined);
         const context = (error.config?.context ?? {}) as ApiRequestContext;
         const skipUnauthorizedHandler = Boolean(context?.skipUnauthorizedHandler);

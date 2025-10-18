@@ -1,5 +1,8 @@
 <template>
-  <main class="py-12" aria-labelledby="crm-project-detail-heading">
+  <main
+    class="py-12"
+    aria-labelledby="crm-project-detail-heading"
+  >
     <v-container>
       <Suspense>
         <ProjectDetailLayout :project-id="projectId">
@@ -8,7 +11,11 @@
               <NuxtPage />
               <template #fallback>
                 <div class="py-10 text-center">
-                  <v-progress-circular indeterminate color="primary" size="40" />
+                  <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    size="40"
+                  />
                 </div>
               </template>
             </Suspense>
@@ -16,7 +23,11 @@
         </ProjectDetailLayout>
         <template #fallback>
           <div class="py-10 text-center">
-            <v-progress-circular indeterminate color="primary" size="40" />
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              size="40"
+            />
           </div>
         </template>
       </Suspense>

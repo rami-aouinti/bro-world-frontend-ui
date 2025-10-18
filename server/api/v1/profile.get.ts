@@ -1,5 +1,9 @@
 import { createError } from "h3";
-import { resolveErrorMessage, resolveErrorStatusCode, sanitizeErrorStack } from "../../utils/errors";
+import {
+  resolveErrorMessage,
+  resolveErrorStatusCode,
+  sanitizeErrorStack,
+} from "../../utils/errors";
 import { fetchCurrentProfileFromSource } from "../../utils/users/api";
 
 export default defineEventHandler(async (event) => {

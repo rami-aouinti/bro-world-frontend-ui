@@ -9,7 +9,10 @@
         <h1 class="text-h4 text-md-h3 font-weight-bold mb-3">
           {{ t("demo.ecommerce.catalog.title") }}
         </h1>
-        <p class="text-body-1 text-medium-emphasis mx-auto" style="max-width: 640px">
+        <p
+          class="text-body-1 text-medium-emphasis mx-auto"
+          style="max-width: 640px"
+        >
           {{ t("demo.ecommerce.catalog.subtitle") }}
         </p>
         <div class="d-flex flex-wrap justify-center gap-4 mt-6">
@@ -31,8 +34,15 @@
         </div>
       </header>
 
-      <v-row class="mb-6" align="center" justify="space-between">
-        <v-col cols="12" md="6">
+      <v-row
+        class="mb-6"
+        align="center"
+        justify="space-between"
+      >
+        <v-col
+          cols="12"
+          md="6"
+        >
           <v-tabs
             v-model="selectedCategory"
             grow
@@ -47,7 +57,10 @@
             </v-tab>
           </v-tabs>
         </v-col>
-        <v-col cols="12" md="5">
+        <v-col
+          cols="12"
+          md="5"
+        >
           <v-text-field
             v-model="search"
             :label="t('demo.ecommerce.catalog.searchLabel')"
@@ -59,7 +72,10 @@
         </v-col>
       </v-row>
 
-      <v-row v-if="filteredProducts.length" dense>
+      <v-row
+        v-if="filteredProducts.length"
+        dense
+      >
         <v-col
           v-for="product in filteredProducts"
           :key="product.slug"
@@ -123,9 +139,7 @@ definePageMeta({
 });
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = computed(
-  () => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com",
-);
+const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {
   const title = t("seo.ecommerce.catalog.title");
@@ -161,8 +175,9 @@ const categoryFilters = computed(() => [
 const matchedProducts = computed(() => getProductsMatchingQuery(search.value));
 
 const filteredProducts = computed(() =>
-  matchedProducts.value.filter((product) =>
-    selectedCategory.value === "all" || product.categorySlug === selectedCategory.value,
+  matchedProducts.value.filter(
+    (product) =>
+      selectedCategory.value === "all" || product.categorySlug === selectedCategory.value,
   ),
 );
 

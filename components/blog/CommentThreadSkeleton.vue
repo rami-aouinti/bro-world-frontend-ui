@@ -16,14 +16,29 @@
           type="avatar"
         />
         <div class="comment-thread-skeleton__bubble">
-          <v-skeleton-loader type="text" width="180" />
-          <v-skeleton-loader type="text" width="220" />
+          <v-skeleton-loader
+            type="text"
+            width="180"
+          />
+          <v-skeleton-loader
+            type="text"
+            width="220"
+          />
         </div>
       </div>
       <div class="comment-thread-skeleton__meta">
-        <v-skeleton-loader type="text" width="80" />
-        <v-skeleton-loader type="chip" width="70" />
-        <v-skeleton-loader type="chip" width="70" />
+        <v-skeleton-loader
+          type="text"
+          width="80"
+        />
+        <v-skeleton-loader
+          type="chip"
+          width="70"
+        />
+        <v-skeleton-loader
+          type="chip"
+          width="70"
+        />
       </div>
     </div>
     <div

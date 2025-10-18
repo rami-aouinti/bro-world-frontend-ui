@@ -1907,11 +1907,7 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": [
-              "Design Systems",
-              "Figma",
-              "User Research"
-            ],
+            "tags": ["Design Systems", "Figma", "User Research"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1925,11 +1921,7 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": [
-              "Python",
-              "LangChain",
-              "Hiring Ops"
-            ],
+            "tags": ["Python", "LangChain", "Hiring Ops"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1943,11 +1935,7 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": [
-              "B2B SaaS",
-              "Enterprise Sales",
-              "Forecasting"
-            ],
+            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1961,11 +1949,7 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": [
-              "Implementation",
-              "Change Management",
-              "ATS Integrations"
-            ],
+            "tags": ["Implementation", "Change Management", "ATS Integrations"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -2584,52 +2568,52 @@
       "description": "Plan, track, and optimise hiring programmes."
     },
 
-"game": {
-  "title": "Gaming",
-  "description": "Deliver live game experiences, communities, and monetisation."
-},
-"calendar": {
-  "title": "التقويم",
-  "cardTitle": "نظرة عامة على التقويم",
-  "menuTitle": "أحداث اليوم",
-  "menuEmpty": "لا توجد أحداث اليوم",
-  "authNotice": "سجّل الدخول للاطلاع على أحداثك وإدارتها.",
-  "rangeAllDay": "طوال اليوم",
-  "fallbackTitle": "حدث بدون عنوان",
-  "actions": {
-    "newEvent": "حدث جديد"
-  },
-  "dialog": {
-    "createTitle": "حدث جديد",
-    "editTitle": "تعديل الحدث",
-    "titleLabel": "عنوان الحدث",
-    "startLabel": "تاريخ البدء",
-    "endLabel": "تاريخ الانتهاء",
-    "startTimeLabel": "وقت البدء",
-    "endTimeLabel": "وقت الانتهاء",
-    "allDayLabel": "حدث طوال اليوم",
-    "privateLabel": "حدث خاص",
-    "locationLabel": "الموقع",
-    "descriptionLabel": "الوصف",
-    "save": "حفظ",
-    "cancel": "إغلاق",
-    "delete": "حذف",
-    "confirmDelete": "حذف الحدث",
-    "confirmDeleteMessage": "هذا الإجراء لا يمكن التراجع عنه. هل تريد حذف الحدث؟"
-  },
-  "validation": {
-    "title": "يرجى إضافة عنوان.",
-    "startDate": "اختر تاريخ البدء.",
-    "startTime": "اختر وقت البدء.",
-    "endTime": "يجب أن يكون وقت الانتهاء بعد وقت البدء.",
-    "range": "يجب أن يكون انتهاء الحدث بعد بدايته."
-  },
-  "errors": {
-    "save": "تعذّر حفظ التغييرات. حاول مرة أخرى.",
-    "delete": "تعذّر حذف الحدث. حاول مرة أخرى.",
-    "load": "تعذّر تحميل الأحداث. حاول مرة أخرى."
-  }
-},
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "calendar": {
+      "title": "التقويم",
+      "cardTitle": "نظرة عامة على التقويم",
+      "menuTitle": "أحداث اليوم",
+      "menuEmpty": "لا توجد أحداث اليوم",
+      "authNotice": "سجّل الدخول للاطلاع على أحداثك وإدارتها.",
+      "rangeAllDay": "طوال اليوم",
+      "fallbackTitle": "حدث بدون عنوان",
+      "actions": {
+        "newEvent": "حدث جديد"
+      },
+      "dialog": {
+        "createTitle": "حدث جديد",
+        "editTitle": "تعديل الحدث",
+        "titleLabel": "عنوان الحدث",
+        "startLabel": "تاريخ البدء",
+        "endLabel": "تاريخ الانتهاء",
+        "startTimeLabel": "وقت البدء",
+        "endTimeLabel": "وقت الانتهاء",
+        "allDayLabel": "حدث طوال اليوم",
+        "privateLabel": "حدث خاص",
+        "locationLabel": "الموقع",
+        "descriptionLabel": "الوصف",
+        "save": "حفظ",
+        "cancel": "إغلاق",
+        "delete": "حذف",
+        "confirmDelete": "حذف الحدث",
+        "confirmDeleteMessage": "هذا الإجراء لا يمكن التراجع عنه. هل تريد حذف الحدث؟"
+      },
+      "validation": {
+        "title": "يرجى إضافة عنوان.",
+        "startDate": "اختر تاريخ البدء.",
+        "startTime": "اختر وقت البدء.",
+        "endTime": "يجب أن يكون وقت الانتهاء بعد وقت البدء.",
+        "range": "يجب أن يكون انتهاء الحدث بعد بدايته."
+      },
+      "errors": {
+        "save": "تعذّر حفظ التغييرات. حاول مرة أخرى.",
+        "delete": "تعذّر حذف الحدث. حاول مرة أخرى.",
+        "load": "تعذّر تحميل الأحداث. حاول مرة أخرى."
+      }
+    },
     "ecommerce": {
       "title": "E-commerce",
       "description": "Launch and scale modern retail journeys.",
@@ -3052,41 +3036,25 @@
           "content": {
             "title": "إدارة المحتوى",
             "description": "خطط للمقالات والفعاليات والموارد التعليمية وانشرها أو أرشفها.",
-            "tags": [
-              "سير عمل تحريري",
-              "مراجعة",
-              "جدولة"
-            ],
+            "tags": ["سير عمل تحريري", "مراجعة", "جدولة"],
             "status": "هناك 12 عنصراً بحاجة إلى مراجعة تحريرية."
           },
           "community": {
             "title": "المجتمع والإشراف",
             "description": "اضبط قواعد الإشراف وتابع البلاغات والعقوبات.",
-            "tags": [
-              "بلاغات",
-              "عقوبات",
-              "رسائل خاصة"
-            ],
+            "tags": ["بلاغات", "عقوبات", "رسائل خاصة"],
             "status": "متوسط وقت الاستجابة: ساعة و42 دقيقة."
           },
           "commerce": {
             "title": "الربحية والعروض",
             "description": "أدر الاشتراكات والرموز الترويجية والشراكات التجارية.",
-            "tags": [
-              "اشتراكات",
-              "فوترة",
-              "قسائم"
-            ],
+            "tags": ["اشتراكات", "فوترة", "قسائم"],
             "status": "ارتفع معدل التحويل بنسبة 3.4٪ هذا الأسبوع."
           },
           "governance": {
             "title": "الحوكمة والامتثال",
             "description": "دقق صلاحيات الوصول، أدر الأدوار الحساسة وجهّز تقارير الامتثال.",
-            "tags": [
-              "تدقيق",
-              "أدوار",
-              "تتبع"
-            ],
+            "tags": ["تدقيق", "أدوار", "تتبع"],
             "status": "آخر تدقيق شامل تم قبل 5 أيام."
           }
         }

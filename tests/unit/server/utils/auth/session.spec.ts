@@ -1,6 +1,12 @@
 import type { H3Event } from "h3";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import {
+  getSessionToken,
+  requireSessionToken,
+  waitForSessionToken,
+} from "~/server/utils/auth/session";
+
 const getCookieMock = vi.hoisted(() => vi.fn<[H3Event, string], string | null | undefined>());
 const setCookieMock = vi.hoisted(() => vi.fn());
 const getHeaderMock = vi.hoisted(() => vi.fn<[H3Event, string], string | null | undefined>());
@@ -21,21 +27,18 @@ vi.mock("#imports", () => ({
 }));
 
 const shouldUseSecureCookiesMock = vi.hoisted(() => vi.fn(() => false));
-const withSecureCookieOptionsMock = vi.hoisted(
-  () =>
-    vi.fn((options: Record<string, unknown> = {}) => ({
-      path: "/",
-      secure: typeof options.secure === "boolean" ? options.secure : false,
-      ...options,
-    })),
+const withSecureCookieOptionsMock = vi.hoisted(() =>
+  vi.fn((options: Record<string, unknown> = {}) => ({
+    path: "/",
+    secure: typeof options.secure === "boolean" ? options.secure : false,
+    ...options,
+  })),
 );
 
 vi.mock("~/lib/cookies", () => ({
   shouldUseSecureCookies: shouldUseSecureCookiesMock,
   withSecureCookieOptions: withSecureCookieOptionsMock,
 }));
-
-import { getSessionToken, requireSessionToken, waitForSessionToken } from "~/server/utils/auth/session";
 
 function createEvent(): H3Event {
   return {
@@ -80,7 +83,6 @@ afterEach(() => {
 });
 
 describe("getSessionToken", () => {
-
   it("uses alternative session cookie names when syncing tokens", () => {
     const event = createEvent();
 
@@ -105,13 +107,11 @@ describe("getSessionToken", () => {
     expect(token).toBe("session-token");
 
     const cookieNames = setCookieMock.mock.calls.map(([, name]) => name);
-    expect(cookieNames).toEqual([
-      "auth_token",
-      "auth_token_present",
-      "auth_session_token",
-    ]);
+    expect(cookieNames).toEqual(["auth_token", "auth_token_present", "auth_session_token"]);
 
-    const sessionCookieCall = setCookieMock.mock.calls.find(([, name]) => name === "auth_session_token");
+    const sessionCookieCall = setCookieMock.mock.calls.find(
+      ([, name]) => name === "auth_session_token",
+    );
     expect(sessionCookieCall).toBeDefined();
     expect(sessionCookieCall?.[2]).toBe("session-token");
     expect(sessionCookieCall?.[3]).toMatchObject({

@@ -1,5 +1,8 @@
 <template>
-  <v-container class="py-10" v-if="course">
+  <v-container
+    v-if="course"
+    class="py-10"
+  >
     <CourseHeader
       :course="course"
       :completed-lessons="completedLessons"
@@ -25,26 +28,42 @@
         <h2 class="text-h5 mb-3 mb-md-0">
           {{ t("education.course.lessonList") }}
         </h2>
-        <ProgressBar :value="courseProgress" :label="t('education.course.lessonProgressLabel')" />
+        <ProgressBar
+          :value="courseProgress"
+          :label="t('education.course.lessonProgressLabel')"
+        />
       </header>
-      <v-card rounded="xl" elevation="1">
-      <v-list lines="two" rounded="xl">
-        <v-list-item
-          v-for="(lesson, index) in lessons"
-          :key="lesson.id"
-          :to="lessonLink(lesson.id)"
-          :title="lesson.title"
-          :subtitle="t('education.course.lessonDuration', { value: lesson.durationMin })"
+      <v-card
+        rounded="xl"
+        elevation="1"
+      >
+        <v-list
+          lines="two"
+          rounded="xl"
         >
+          <v-list-item
+            v-for="(lesson, index) in lessons"
+            :key="lesson.id"
+            :to="lessonLink(lesson.id)"
+            :title="lesson.title"
+            :subtitle="t('education.course.lessonDuration', { value: lesson.durationMin })"
+          >
             <template #prepend>
-              <v-avatar color="primary" size="40" variant="tonal" class="font-weight-medium">
+              <v-avatar
+                color="primary"
+                size="40"
+                variant="tonal"
+                class="font-weight-medium"
+              >
                 {{ index + 1 }}
               </v-avatar>
             </template>
             <template #append>
               <v-icon
                 :color="isLessonCompleted(lesson.id) ? 'success' : 'grey'"
-                :icon="isLessonCompleted(lesson.id) ? 'mdi:check-circle' : 'mdi:play-circle-outline'"
+                :icon="
+                  isLessonCompleted(lesson.id) ? 'mdi:check-circle' : 'mdi:play-circle-outline'
+                "
               />
             </template>
           </v-list-item>
@@ -53,7 +72,11 @@
     </section>
 
     <section class="mt-10">
-      <v-card rounded="xl" elevation="1" class="pa-6 d-flex flex-column flex-md-row align-center gap-6">
+      <v-card
+        rounded="xl"
+        elevation="1"
+        class="pa-6 d-flex flex-column flex-md-row align-center gap-6"
+      >
         <div class="flex-grow-1">
           <h3 class="text-h6 mb-2">{{ t("education.course.quizTitle") }}</h3>
           <p class="text-body-2 text-medium-emphasis">
@@ -66,7 +89,10 @@
           :disabled="!lessonsCompleted"
           :to="quizLink"
         >
-          <v-icon icon="mdi:clipboard-check-outline" start />
+          <v-icon
+            icon="mdi:clipboard-check-outline"
+            start
+          />
           {{ t("education.course.startQuiz") }}
         </v-btn>
       </v-card>
@@ -144,7 +170,10 @@ const nextLessonId = computed(() => {
 });
 
 const quizLink = computed(() =>
-  localePath({ name: "education-course-slug-quiz", params: { slug: course.value?.slug ?? slug.value } }),
+  localePath({
+    name: "education-course-slug-quiz",
+    params: { slug: course.value?.slug ?? slug.value },
+  }),
 );
 
 const ctaTo = computed(() => {
@@ -159,7 +188,10 @@ const ctaTo = computed(() => {
   }
   const target = nextLessonId.value ?? lessons.value[0]?.id;
   return target
-    ? localePath({ name: "education-course-slug-lesson-id", params: { slug: course.value.slug, id: target } })
+    ? localePath({
+        name: "education-course-slug-lesson-id",
+        params: { slug: course.value.slug, id: target },
+      })
     : null;
 });
 
@@ -178,7 +210,9 @@ const certificateLink = computed(() => {
     return null;
   }
   const certificateId = progress.value?.certificateId;
-  return certificateId ? localePath({ name: "education-certificate-id", params: { id: certificateId } }) : null;
+  return certificateId
+    ? localePath({ name: "education-certificate-id", params: { id: certificateId } })
+    : null;
 });
 
 function isLessonCompleted(id: string) {
@@ -186,7 +220,10 @@ function isLessonCompleted(id: string) {
 }
 
 function lessonLink(id: string) {
-  return localePath({ name: "education-course-slug-lesson-id", params: { slug: course.value?.slug ?? slug.value, id } });
+  return localePath({
+    name: "education-course-slug-lesson-id",
+    params: { slug: course.value?.slug ?? slug.value, id },
+  });
 }
 
 definePageMeta({

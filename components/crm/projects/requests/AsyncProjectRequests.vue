@@ -23,8 +23,16 @@
         {{ loadError }}
       </v-alert>
 
-      <div v-if="isLoading" class="py-6">
-        <v-progress-linear indeterminate color="primary" height="6" rounded="lg" />
+      <div
+        v-if="isLoading"
+        class="py-6"
+      >
+        <v-progress-linear
+          indeterminate
+          color="primary"
+          height="6"
+          rounded="lg"
+        />
       </div>
 
       <v-alert
@@ -39,10 +47,22 @@
         No access requests at the moment.
       </v-alert>
 
-      <v-list v-else lines="three" class="crm-requests-list">
-        <v-list-item v-for="request in requests" :key="request.id" class="align-start">
+      <v-list
+        v-else
+        lines="three"
+        class="crm-requests-list"
+      >
+        <v-list-item
+          v-for="request in requests"
+          :key="request.id"
+          class="align-start"
+        >
           <template #prepend>
-            <v-avatar size="40" color="primary" variant="tonal">
+            <v-avatar
+              size="40"
+              color="primary"
+              variant="tonal"
+            >
               {{ request.requesterName.slice(0, 1) }}
             </v-avatar>
           </template>
@@ -51,7 +71,7 @@
             {{ request.requesterName }}
           </v-list-item-title>
           <v-list-item-subtitle class="text-body-2">
-            {{ request.role || 'Contributor' }}
+            {{ request.role || "Contributor" }}
           </v-list-item-subtitle>
           <v-list-item-subtitle class="text-body-2 text-medium-emphasis">
             Submitted {{ formatSubmittedAt(request.submittedAt) }}
@@ -68,7 +88,10 @@
                 {{ request.status }}
               </v-chip>
 
-              <div v-if="request.status === 'pending'" class="d-flex gap-2">
+              <div
+                v-if="request.status === 'pending'"
+                class="d-flex gap-2"
+              >
                 <LockableButton
                   color="success"
                   variant="text"
@@ -91,7 +114,10 @@
             </div>
           </template>
 
-          <v-list-item-subtitle v-if="request.message" class="text-body-2 mt-2">
+          <v-list-item-subtitle
+            v-if="request.message"
+            class="text-body-2 mt-2"
+          >
             “{{ request.message }}”
           </v-list-item-subtitle>
 
@@ -118,10 +144,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 import LockableButton from "~/components/LockableButton.vue";
-import {
-  useCrmRequestsStore,
-  type CrmProjectRequest,
-} from "~/stores/crm-requests";
+import { useCrmRequestsStore, type CrmProjectRequest } from "~/stores/crm-requests";
 
 const props = defineProps<{
   projectId: string;

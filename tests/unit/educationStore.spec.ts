@@ -47,7 +47,9 @@ describe("education store", () => {
 
     await store.fetchCategories();
 
-    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories", { query: { locale: "en" } });
+    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories", {
+      query: { locale: "en" },
+    });
     expect(store.categories.value).toEqual(categories);
   });
 
@@ -58,7 +60,9 @@ describe("education store", () => {
 
     await store.fetchCategories();
 
-    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories", { query: { locale: "en" } });
+    expect(fetchMock).toHaveBeenCalledWith("/api/education/categories", {
+      query: { locale: "en" },
+    });
     expect(store.categories.value).toEqual(educationCategoriesMock);
   });
 

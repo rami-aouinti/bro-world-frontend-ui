@@ -1,18 +1,40 @@
 <template>
-  <v-card class="d-flex flex-column h-100" elevation="2" rounded="xl">
-    <v-img :src="course.cover" :alt="course.title" height="160" cover class="rounded-t-xl" />
+  <v-card
+    class="d-flex flex-column h-100"
+    elevation="2"
+    rounded="xl"
+  >
+    <v-img
+      :src="course.cover"
+      :alt="course.title"
+      height="160"
+      cover
+      class="rounded-t-xl"
+    />
     <v-card-item>
       <v-card-title class="text-h6 mb-2">
         {{ course.title }}
       </v-card-title>
       <div class="d-flex flex-wrap gap-2 align-center mb-3">
-        <v-chip size="small" color="primary" variant="tonal">
+        <v-chip
+          size="small"
+          color="primary"
+          variant="tonal"
+        >
           {{ t(`education.levels.${course.level}`) }}
         </v-chip>
-        <v-chip size="small" variant="tonal">
+        <v-chip
+          size="small"
+          variant="tonal"
+        >
           {{ formatDuration(course.durationMin) }}
         </v-chip>
-        <v-chip v-if="progress >= 0" size="small" color="success" variant="tonal">
+        <v-chip
+          v-if="progress >= 0"
+          size="small"
+          color="success"
+          variant="tonal"
+        >
           {{ t("education.course.progress", { value: Math.round(progress) }) }}
         </v-chip>
       </div>

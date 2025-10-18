@@ -66,8 +66,7 @@ function resolveCommentsPayload(response: unknown): BlogCommentWithReplies[] | u
 
 function resolvePostEndpoint(event: H3Event, visibility: PostsVisibility): string {
   const config = useRuntimeConfig(event);
-  const publicEndpoint =
-    config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
+  const publicEndpoint = config.public.blogApiEndpoint || "https://blog.bro-world.org/public/post";
   const privateEndpoint =
     config.public.blogPrivateApiEndpoint || "https://blog.bro-world.org/v1/platform/post";
 
@@ -102,11 +101,11 @@ function resolveCommentEndpoint(event: H3Event, visibility: PostsVisibility): st
   const config = useRuntimeConfig(event);
   const publicEndpoint =
     config.public.blogCommentApiEndpoint ||
-      deriveCommentEndpoint(config.public.blogApiEndpoint) ||
+    deriveCommentEndpoint(config.public.blogApiEndpoint) ||
     "https://blog.bro-world.org/api/v1/comments";
   const privateEndpoint =
     config.public.blogPrivateCommentApiEndpoint ||
-      deriveCommentEndpoint(config.public.blogPrivateApiEndpoint) ||
+    deriveCommentEndpoint(config.public.blogPrivateApiEndpoint) ||
     "https://blog.bro-world.org/api/v1/comments";
 
   return visibility === "private" ? privateEndpoint : publicEndpoint;
@@ -463,10 +462,13 @@ export async function fetchPostCommentsFromSource(
       }
     }
 
-    throw lastError ?? createError({
-      statusCode: 502,
-      statusMessage: "Unable to load comments.",
-    });
+    throw (
+      lastError ??
+      createError({
+        statusCode: 502,
+        statusMessage: "Unable to load comments.",
+      })
+    );
   }
 
   const token = getSessionToken(event);

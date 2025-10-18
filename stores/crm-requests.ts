@@ -44,8 +44,14 @@ export const useCrmRequestsStore = defineStore("crm-requests", () => {
   const pending = useState<Record<string, boolean>>("crm-requests:pending", () => ({}));
   const error = useState<Record<string, string | null>>("crm-requests:error", () => ({}));
   const processing = useState<Record<string, boolean>>("crm-requests:processing", () => ({}));
-  const processError = useState<Record<string, string | null>>("crm-requests:process-error", () => ({}));
-  const lastFetched = useState<Record<string, number | null>>("crm-requests:last-fetched", () => ({}));
+  const processError = useState<Record<string, string | null>>(
+    "crm-requests:process-error",
+    () => ({}),
+  );
+  const lastFetched = useState<Record<string, number | null>>(
+    "crm-requests:last-fetched",
+    () => ({}),
+  );
   const runtimeConfig = useRuntimeConfig();
   const envMockFlag =
     typeof process !== "undefined" ? process.env?.NUXT_PUBLIC_CRM_REQUESTS_USE_MOCKS : undefined;

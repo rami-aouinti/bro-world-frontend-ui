@@ -68,27 +68,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"
-import { useI18n } from "vue-i18n"
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 interface JobHeader {
-  title?: string
-  company?: { name?: string; description?: string }
-  workLocation?: string
-  salaryRange?: string | number
-  workType?: string
-  experience?: string | number
-  contractType?: string
+  title?: string;
+  company?: { name?: string; description?: string };
+  workLocation?: string;
+  salaryRange?: string | number;
+  workType?: string;
+  experience?: string | number;
+  contractType?: string;
 }
 
-const props = defineProps<{ job: JobHeader }>()
+const props = defineProps<{ job: JobHeader }>();
 
-const { t } = useI18n()
+const { t } = useI18n();
 
-const companyName = computed(() => props.job.company?.name ?? t("job.unknownCompany"))
-const location = computed(() => props.job.workLocation || t("job.locationUnknown"))
-const salary = computed(() => props.job.salaryRange ?? t("job.salaryUnknown"))
-const workType = computed(() => props.job.workType ?? "")
-const experience = computed(() => props.job.experience ?? "")
-const contractType = computed(() => props.job.contractType ?? "")
+const companyName = computed(() => props.job.company?.name ?? t("job.unknownCompany"));
+const location = computed(() => props.job.workLocation || t("job.locationUnknown"));
+const salary = computed(() => props.job.salaryRange ?? t("job.salaryUnknown"));
+const workType = computed(() => props.job.workType ?? "");
+const experience = computed(() => props.job.experience ?? "");
+const contractType = computed(() => props.job.contractType ?? "");
 </script>

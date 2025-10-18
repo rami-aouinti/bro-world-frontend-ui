@@ -78,120 +78,120 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue"
-import { useI18n } from "vue-i18n"
-import { useNuxtApp } from "#app"
-import JobCreateButtons from "~/components/job/JobCreateButtons.vue"
-import CreateApplicant from "~/components/job/CreateApplicant.vue"
-import CreateJob from "~/components/job/CreateJob.vue"
-import JobFilters from "~/components/job/JobFilters.vue"
-import JobList from "~/components/job/JobList.vue"
-import JobTopFilters from "~/components/job/JobTopFilters.vue"
-import { useJobStore, type JobSummary } from "~/stores/useJobStore"
+import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#app";
+import JobCreateButtons from "~/components/job/JobCreateButtons.vue";
+import CreateApplicant from "~/components/job/CreateApplicant.vue";
+import CreateJob from "~/components/job/CreateJob.vue";
+import JobFilters from "~/components/job/JobFilters.vue";
+import JobList from "~/components/job/JobList.vue";
+import JobTopFilters from "~/components/job/JobTopFilters.vue";
+import { useJobStore, type JobSummary } from "~/stores/useJobStore";
 
 definePageMeta({
   layout: false,
   description: "Job page",
   breadcrumb: "disabled",
-})
+});
 
 type CompanyInfo = {
-  id?: string | number
-  name: string
-}
+  id?: string | number;
+  name: string;
+};
 
-type CompaniesResponse = CompanyInfo[] | { data: CompanyInfo[] }
+type CompaniesResponse = CompanyInfo[] | { data: CompanyInfo[] };
 
 type JobsResponse = {
-  data?: JobSummary[]
-  count?: number
-  page?: number
-}
+  data?: JobSummary[];
+  count?: number;
+  page?: number;
+};
 
-const jobStore = useJobStore()
-const { t } = useI18n()
-const { $notify: notify, $fetch } = useNuxtApp()
+const jobStore = useJobStore();
+const { t } = useI18n();
+const { $notify: notify, $fetch } = useNuxtApp();
 
-const pending = ref(false)
-const search = ref("")
-const selectedCompany = ref("")
-const selectedExperience = ref<number | null>(null)
-const salaryRange = ref<number>(50)
-const selectedSkills = ref<string[]>([])
-const selectedWork = ref<string[]>([])
-const selectedContract = ref<string[]>([])
-const selectedLocations = ref("")
-const currentPage = ref(1)
-const limit = 5
-const totalPages = ref(1)
+const pending = ref(false);
+const search = ref("");
+const selectedCompany = ref("");
+const selectedExperience = ref<number | null>(null);
+const salaryRange = ref<number>(50);
+const selectedSkills = ref<string[]>([]);
+const selectedWork = ref<string[]>([]);
+const selectedContract = ref<string[]>([]);
+const selectedLocations = ref("");
+const currentPage = ref(1);
+const limit = 5;
+const totalPages = ref(1);
 
-const showCreateJobModal = ref(false)
-const showCreateApplicantModal = ref(false)
-const selectedJobId = ref<string | null>(null)
+const showCreateJobModal = ref(false);
+const showCreateApplicantModal = ref(false);
+const selectedJobId = ref<string | null>(null);
 
-const companies = ref<CompanyInfo[]>([])
+const companies = ref<CompanyInfo[]>([]);
 
 function normaliseCompanies(result: CompaniesResponse) {
   if (Array.isArray(result)) {
-    return result
+    return result;
   }
 
   if (result && Array.isArray(result.data)) {
-    return result.data
+    return result.data;
   }
 
-  return []
+  return [];
 }
 
 async function fetchCompanies() {
   try {
-    const result = await $fetch<CompaniesResponse>("/api/job/companies")
-    companies.value = normaliseCompanies(result)
+    const result = await $fetch<CompaniesResponse>("/api/job/companies");
+    companies.value = normaliseCompanies(result);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 async function fetchJobs() {
-  pending.value = true
-  jobStore.setLoaded(false)
-  const query = new URLSearchParams()
+  pending.value = true;
+  jobStore.setLoaded(false);
+  const query = new URLSearchParams();
 
-  if (search.value) query.set("title", search.value)
-  if (selectedCompany.value) query.set("company", selectedCompany.value)
+  if (search.value) query.set("title", search.value);
+  if (selectedCompany.value) query.set("company", selectedCompany.value);
   if (selectedExperience.value) {
-    query.set("experience", selectedExperience.value.toString())
+    query.set("experience", selectedExperience.value.toString());
   }
   if (selectedSkills.value.length) {
-    selectedSkills.value.forEach((skill) => query.append("skills[]", skill))
+    selectedSkills.value.forEach((skill) => query.append("skills[]", skill));
   }
   if (selectedWork.value.length) {
-    selectedWork.value.forEach((work) => query.append("works[]", work))
+    selectedWork.value.forEach((work) => query.append("works[]", work));
   }
   if (selectedContract.value.length) {
-    selectedContract.value.forEach((contract) => query.append("contracts[]", contract))
+    selectedContract.value.forEach((contract) => query.append("contracts[]", contract));
   }
   if (selectedLocations.value.length) {
-    query.set("location", selectedLocations.value)
+    query.set("location", selectedLocations.value);
   }
 
-  query.set("salaryMin", (salaryRange.value * 1000).toString())
-  query.set("page", currentPage.value.toString())
-  query.set("limit", limit.toString())
+  query.set("salaryMin", (salaryRange.value * 1000).toString());
+  query.set("page", currentPage.value.toString());
+  query.set("limit", limit.toString());
 
   try {
-    const response = await $fetch<JobsResponse>(`/api/job/jobs?${query.toString()}`)
-    const jobs = Array.isArray(response?.data) ? response.data : []
+    const response = await $fetch<JobsResponse>(`/api/job/jobs?${query.toString()}`);
+    const jobs = Array.isArray(response?.data) ? response.data : [];
 
-    jobStore.setJobs(jobs)
-    jobStore.setTotal(response?.count ?? 0)
-    jobStore.setPage(response?.page ?? 1)
-    jobStore.setLoaded(true)
-    totalPages.value = Math.max(1, Math.ceil((response?.count ?? 0) / limit))
+    jobStore.setJobs(jobs);
+    jobStore.setTotal(response?.count ?? 0);
+    jobStore.setPage(response?.page ?? 1);
+    jobStore.setLoaded(true);
+    totalPages.value = Math.max(1, Math.ceil((response?.count ?? 0) / limit));
   } catch (error) {
-    console.error(error)
+    console.error(error);
   } finally {
-    pending.value = false
+    pending.value = false;
   }
 }
 
@@ -208,30 +208,29 @@ watch(
     currentPage,
   ],
   () => {
-    void fetchJobs()
+    void fetchJobs();
   },
   { immediate: true, deep: true },
-)
+);
 
 onMounted(() => {
-  void fetchCompanies()
-})
+  void fetchCompanies();
+});
 
 function openApplyModal(jobId: string) {
-  selectedJobId.value = jobId
-  showCreateApplicantModal.value = true
+  selectedJobId.value = jobId;
+  showCreateApplicantModal.value = true;
 }
 
 async function refreshJobs() {
-  pending.value = true
-  await fetchJobs()
-  notify.success(t("job.createdSuccess"))
-  pending.value = false
+  pending.value = true;
+  await fetchJobs();
+  notify.success(t("job.createdSuccess"));
+  pending.value = false;
 }
 
 function onApplicantCreated() {
-  notify.success(t("applicant.createdSuccess"))
-  showCreateApplicantModal.value = false
+  notify.success(t("applicant.createdSuccess"));
+  showCreateApplicantModal.value = false;
 }
-
 </script>

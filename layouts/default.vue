@@ -276,7 +276,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, defineComponent, nextTick, onMounted, ref, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  defineComponent,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
 import { useResizeObserver } from "@vueuse/core";
@@ -381,13 +389,19 @@ const scheduleIdleRender: IdleScheduler | null = import.meta.client
 
 if (import.meta.client) {
   onMounted(() => {
-    scheduleIdleRender?.(() => {
-      shouldRenderAnalytics.value = true;
-    }, { timeout: 4500 });
+    scheduleIdleRender?.(
+      () => {
+        shouldRenderAnalytics.value = true;
+      },
+      { timeout: 4500 },
+    );
 
-    scheduleIdleRender?.(() => {
-      shouldRenderSpeedInsights.value = true;
-    }, { timeout: 6500 });
+    scheduleIdleRender?.(
+      () => {
+        shouldRenderSpeedInsights.value = true;
+      },
+      { timeout: 6500 },
+    );
   });
 }
 

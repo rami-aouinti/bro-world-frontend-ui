@@ -770,79 +770,74 @@ export default defineNuxtConfig({
     "render:html"(htmlChunks) {
       const headIndex = 0;
 
-      htmlChunks[headIndex] = htmlChunks[headIndex].replace(
-        entryStylesheetPattern,
-        (match) => {
-          if (/data-critical/i.test(match) || /rel=(['"])preload\1/i.test(match)) {
-            return match;
+      htmlChunks[headIndex] = htmlChunks[headIndex].replace(entryStylesheetPattern, (match) => {
+        if (/data-critical/i.test(match) || /rel=(['"])preload\1/i.test(match)) {
+          return match;
+        }
+
+        const isSelfClosing = /\/>\s*$/.test(match);
+        const closingLength = isSelfClosing ? 2 : 1;
+        const attributesSegment = match.slice("<link".length, match.length - closingLength).trim();
+
+        attributePattern.lastIndex = 0;
+
+        const attributes: HtmlAttribute[] = [];
+        let attributeMatch: RegExpExecArray | null;
+
+        while ((attributeMatch = attributePattern.exec(attributesSegment))) {
+          const [, rawName, rawQuote = '"', rawValue] = attributeMatch;
+          const normalizedName = rawName.trim();
+
+          if (!normalizedName) {
+            continue;
           }
 
-          const isSelfClosing = /\/>\s*$/.test(match);
-          const closingLength = isSelfClosing ? 2 : 1;
-          const attributesSegment = match
-            .slice("<link".length, match.length - closingLength)
-            .trim();
+          const normalizedQuote = rawQuote === "'" ? "'" : '"';
 
-          attributePattern.lastIndex = 0;
+          attributes.push({
+            name: normalizedName,
+            lowerName: normalizedName.toLowerCase(),
+            value: rawValue ?? null,
+            quote: normalizedQuote,
+          });
+        }
 
-          const attributes: HtmlAttribute[] = [];
-          let attributeMatch: RegExpExecArray | null;
+        function upsertAttribute(name: string, value: string) {
+          const lowerName = name.toLowerCase();
+          const existing = attributes.find((attribute) => attribute.lowerName === lowerName);
 
-          while ((attributeMatch = attributePattern.exec(attributesSegment))) {
-            const [, rawName, rawQuote = '"', rawValue] = attributeMatch;
-            const normalizedName = rawName.trim();
-
-            if (!normalizedName) {
-              continue;
-            }
-
-            const normalizedQuote = rawQuote === "'" ? "'" : '"';
-
-            attributes.push({
-              name: normalizedName,
-              lowerName: normalizedName.toLowerCase(),
-              value: rawValue ?? null,
-              quote: normalizedQuote,
-            });
+          if (existing) {
+            existing.value = value;
+            existing.quote = '"';
+            return;
           }
 
-          function upsertAttribute(name: string, value: string) {
-            const lowerName = name.toLowerCase();
-            const existing = attributes.find((attribute) => attribute.lowerName === lowerName);
+          attributes.push({
+            name,
+            lowerName,
+            value,
+            quote: '"',
+          });
+        }
 
-            if (existing) {
-              existing.value = value;
-              existing.quote = '"';
-              return;
-            }
+        upsertAttribute("rel", "preload");
+        upsertAttribute("as", "style");
+        upsertAttribute("onload", "this.onload=null;this.rel='stylesheet'");
 
-            attributes.push({
-              name,
-              lowerName,
-              value,
-              quote: '"',
-            });
-          }
+        const serializedAttributes = attributes
+          .map((attribute) =>
+            attribute.value == null
+              ? attribute.name
+              : `${attribute.name}=${attribute.quote}${attribute.value}${attribute.quote}`,
+          )
+          .join(" ")
+          .trim();
 
-          upsertAttribute("rel", "preload");
-          upsertAttribute("as", "style");
-          upsertAttribute("onload", "this.onload=null;this.rel='stylesheet'");
+        const preloadLink = `<link ${serializedAttributes}${isSelfClosing ? " />" : ">"}`;
+        const fallbackLink = match.endsWith("/>") ? match : match.replace(/>\s*$/, ">");
 
-          const serializedAttributes = attributes
-            .map((attribute) =>
-              attribute.value == null
-                ? attribute.name
-                : `${attribute.name}=${attribute.quote}${attribute.value}${attribute.quote}`,
-            )
-            .join(" ")
-            .trim();
-
-          const preloadLink = `<link ${serializedAttributes}${isSelfClosing ? " />" : ">"}`;
-          const fallbackLink = match.endsWith("/>") ? match : match.replace(/>\s*$/, ">");
-
-          return `${preloadLink}\n<noscript>${fallbackLink}</noscript>`;
-        },
-      );
+        return `${preloadLink}\n<noscript>${fallbackLink}</noscript>`;
+      });
     },
   },
 
@@ -957,10 +952,7 @@ export default defineNuxtConfig({
     },
     users: {
       apiBase: process.env.NUXT_USERS_API_BASE ?? "https://bro-world.org/api/v1",
-      apiToken:
-        process.env.NUXT_USERS_API_TOKEN ??
-        process.env.NUXT_AUTH_API_TOKEN ??
-        "",
+      apiToken: process.env.NUXT_USERS_API_TOKEN ?? process.env.NUXT_AUTH_API_TOKEN ?? "",
     },
     public: {
       redis: {
@@ -1078,8 +1070,7 @@ export default defineNuxtConfig({
         },
         {
           rel: "stylesheet",
-          href:
-            "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Space+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap",
+          href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Space+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap",
         },
         {
           rel: "preconnect",

@@ -19,17 +19,32 @@
           class="text-body-1 text-medium-emphasis mx-auto"
           style="max-width: 640px"
         >
-          Centralise your opportunities, track their progress, and collaborate with sales in real time using our mock data.
+          Centralise your opportunities, track their progress, and collaborate with sales in real
+          time using our mock data.
         </p>
       </section>
 
-      <v-row class="mb-10" align="stretch" dense>
-        <v-col cols="12" md="5">
+      <v-row
+        class="mb-10"
+        align="stretch"
+        dense
+      >
+        <v-col
+          cols="12"
+          md="5"
+        >
           <ProjectCreateForm @created="handleProjectCreated" />
         </v-col>
 
-        <v-col cols="12" md="7">
-          <v-card variant="tonal" color="primary" class="h-100">
+        <v-col
+          cols="12"
+          md="7"
+        >
+          <v-card
+            variant="tonal"
+            color="primary"
+            class="h-100"
+          >
             <v-card-item>
               <v-card-title class="text-h5 font-weight-semibold text-primary-darken-3">
                 Pipeline snapshot
@@ -41,25 +56,41 @@
 
             <v-card-text>
               <v-row dense>
-                <v-col cols="12" sm="6" class="mb-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  class="mb-4"
+                >
                   <div class="d-flex flex-column">
                     <span class="text-subtitle-2 text-primary-darken-1">Total projects</span>
                     <span class="text-h4 font-weight-bold">{{ totalProjects }}</span>
                   </div>
                 </v-col>
-                <v-col cols="12" sm="6" class="mb-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  class="mb-4"
+                >
                   <div class="d-flex flex-column">
                     <span class="text-subtitle-2 text-primary-darken-1">Active pipeline</span>
                     <span class="text-h4 font-weight-bold">{{ activeProjects }}</span>
                   </div>
                 </v-col>
-                <v-col cols="12" sm="6" class="mb-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  class="mb-4"
+                >
                   <div class="d-flex flex-column">
                     <span class="text-subtitle-2 text-primary-darken-1">High priority</span>
                     <span class="text-h4 font-weight-bold">{{ highPriorityProjects }}</span>
                   </div>
                 </v-col>
-                <v-col cols="12" sm="6" class="mb-4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  class="mb-4"
+                >
                   <div class="d-flex flex-column">
                     <span class="text-subtitle-2 text-primary-darken-1">Forecasted revenue</span>
                     <span class="text-h4 font-weight-bold">{{ formattedForecast }}</span>
@@ -71,7 +102,11 @@
         </v-col>
       </v-row>
 
-      <v-row class="mb-12" align="stretch" dense>
+      <v-row
+        class="mb-12"
+        align="stretch"
+        dense
+      >
         <v-col cols="12">
           <TaskCreateSection />
         </v-col>
@@ -138,18 +173,24 @@ const isLoading = computed(() => store.pending.value);
 const tableError = computed(() => loadError.value || store.error.value || null);
 
 const totalProjects = computed(() => projects.value.length);
-const activeProjects = computed(() =>
-  projects.value.filter((project) => (project.status ?? project.stage ?? "").toLowerCase() !== "completed").length,
+const activeProjects = computed(
+  () =>
+    projects.value.filter(
+      (project) => (project.status ?? project.stage ?? "").toLowerCase() !== "completed",
+    ).length,
 );
-const highPriorityProjects = computed(() =>
-  projects.value.filter((project) => (project.priority ?? "").toLowerCase() === "high").length,
+const highPriorityProjects = computed(
+  () =>
+    projects.value.filter((project) => (project.priority ?? "").toLowerCase() === "high").length,
 );
 const forecastValue = computed(() =>
   projects.value.reduce((total, project) => {
-    const budget = typeof project.budget === "number" && Number.isFinite(project.budget) ? project.budget : 0;
-    const probability = typeof project.probability === "number" && Number.isFinite(project.probability)
-      ? Math.min(Math.max(project.probability, 0), 1)
-      : 0;
+    const budget =
+      typeof project.budget === "number" && Number.isFinite(project.budget) ? project.budget : 0;
+    const probability =
+      typeof project.probability === "number" && Number.isFinite(project.probability)
+        ? Math.min(Math.max(project.probability, 0), 1)
+        : 0;
     return total + budget * probability;
   }, 0),
 );

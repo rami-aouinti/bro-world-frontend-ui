@@ -9,7 +9,10 @@
       rounded="xl"
     >
       <div class="performance-hero__content">
-        <div class="performance-hero__badge" role="status">
+        <div
+          class="performance-hero__badge"
+          role="status"
+        >
           <v-icon
             icon="mdi:speedometer"
             size="22"
@@ -39,7 +42,10 @@
           <span>{{ lastUpdated }}</span>
         </div>
       </div>
-      <div class="performance-hero__gauge" aria-hidden="true">
+      <div
+        class="performance-hero__gauge"
+        aria-hidden="true"
+      >
         <svg
           viewBox="0 0 200 200"
           class="performance-hero__gauge-svg"
@@ -99,7 +105,7 @@
             dominant-baseline="middle"
             text-anchor="middle"
           >
-            {{ t('pages.performance.hero.scoreLabel') }}
+            {{ t("pages.performance.hero.scoreLabel") }}
           </text>
         </svg>
       </div>
@@ -121,9 +127,7 @@ const props = defineProps<{
 }>();
 
 function toNumber(value: number | string | undefined, fallback: number) {
-  const parsed = Number.parseFloat(
-    typeof value === "number" ? String(value) : value ?? "",
-  );
+  const parsed = Number.parseFloat(typeof value === "number" ? String(value) : (value ?? ""));
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
@@ -134,15 +138,10 @@ const scoreLabel = computed(() => {
   }
   return typeof props.score === "string" ? props.score : String(props.score ?? "");
 });
-const maxScoreValue = computed(() =>
-  Math.max(toNumber(props.maxScore, 100), scoreValue.value),
-);
+const maxScoreValue = computed(() => Math.max(toNumber(props.maxScore, 100), scoreValue.value));
 const gaugeCircumference = computed(() => 2 * Math.PI * 90);
 const gaugeOffset = computed(() => {
-  const normalizedScore = Math.max(
-    0,
-    Math.min(scoreValue.value / maxScoreValue.value, 1),
-  );
+  const normalizedScore = Math.max(0, Math.min(scoreValue.value / maxScoreValue.value, 1));
   return gaugeCircumference.value * (1 - normalizedScore);
 });
 

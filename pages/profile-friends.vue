@@ -460,9 +460,7 @@ const highlightedFriends = computed(() =>
 );
 const featuredIdSet = computed(() => new Set(highlightedFriends.value.map((friend) => friend.id)));
 
-const numberFormatter = computed(
-  () => new Intl.NumberFormat(locale.value || "en-US"),
-);
+const numberFormatter = computed(() => new Intl.NumberFormat(locale.value || "en-US"));
 
 const heroStats = computed(computeHeroStats);
 
@@ -472,9 +470,7 @@ const activeFilter = ref<string>("all");
 
 const filteredFriends = computed(resolveFilteredFriends);
 
-const suggestions = computed(() =>
-  allFriends.value.slice(highlightedFriends.value.length),
-);
+const suggestions = computed(() => allFriends.value.slice(highlightedFriends.value.length));
 
 const activeNow = computed(resolveActiveNow);
 

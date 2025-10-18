@@ -78,7 +78,9 @@ const props = withDefaults(defineProps<AdminMetricCardProps>(), {
   avatarColor: "primary",
 });
 
-const trendIcon = computed(() => (props.trendIsPositive ? "mdi:arrow-up-bold" : "mdi:arrow-down-bold"));
+const trendIcon = computed(() =>
+  props.trendIsPositive ? "mdi:arrow-up-bold" : "mdi:arrow-down-bold",
+);
 const trendColor = computed(() => (props.trendIsPositive ? "success" : "error"));
 const avatarColor = computed(() => props.avatarColor ?? "primary");
 const hasTrend = computed(() => Boolean(props.trend));

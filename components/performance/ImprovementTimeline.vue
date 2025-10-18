@@ -21,7 +21,10 @@
         :key="item.key"
         class="timeline__item"
       >
-        <div class="timeline__marker" aria-hidden="true">
+        <div
+          class="timeline__marker"
+          aria-hidden="true"
+        >
           <span class="timeline__dot" />
           <span class="timeline__line" />
         </div>

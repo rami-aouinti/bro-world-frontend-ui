@@ -13,9 +13,7 @@
           width="4"
           aria-label="Loading task creator"
         />
-        <span class="text-body-2 text-medium-emphasis">
-          Preparing the task workspace…
-        </span>
+        <span class="text-body-2 text-medium-emphasis"> Preparing the task workspace… </span>
       </v-card>
     </template>
   </Suspense>
@@ -24,7 +22,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
 
-const AsyncCreateTask = defineAsyncComponent(() =>
-  import("~/components/crm/tasks/AsyncCreateTask.vue"),
+const AsyncCreateTask = defineAsyncComponent(
+  () => import("~/components/crm/tasks/AsyncCreateTask.vue"),
 );
 </script>

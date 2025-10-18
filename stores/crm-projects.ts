@@ -284,7 +284,8 @@ function normalizeProject(candidate: unknown): CrmProject | null {
     priority: ensureString(value.priority),
     pipeline: ensureString(value.pipeline ?? value.pipelineId ?? value.pipeline_id),
     ownerId:
-      ensureString(value.ownerId ?? value.owner_id ?? value.assigneeId ?? value.assignee_id) ?? null,
+      ensureString(value.ownerId ?? value.owner_id ?? value.assigneeId ?? value.assignee_id) ??
+      null,
     ownerName: ensureString(value.ownerName ?? value.owner_name),
     clientName: ensureString(value.clientName ?? value.client_name),
     budget: ensureNumber(value.budget ?? value.amount ?? value.value),
@@ -418,7 +419,8 @@ function updateMetaState(
     ensureNumber(response?.meta?.limit) ??
     null;
 
-  const meta = page || pageSize ? { page: page ?? undefined, pageSize: pageSize ?? undefined } : null;
+  const meta =
+    page || pageSize ? { page: page ?? undefined, pageSize: pageSize ?? undefined } : null;
 
   return { total: resolvedTotal, meta };
 }
@@ -476,10 +478,7 @@ export const useCrmProjectsStore = defineStore("crm-projects", () => {
     items.value = nextItems;
     listIds.value = nextIds;
 
-    const { total: resolvedTotal, meta: resolvedMeta } = updateMetaState(
-      response,
-      nextIds.length,
-    );
+    const { total: resolvedTotal, meta: resolvedMeta } = updateMetaState(response, nextIds.length);
     total.value = resolvedTotal;
     meta.value = resolvedMeta;
   }

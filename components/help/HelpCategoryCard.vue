@@ -13,7 +13,12 @@
             {{ category.description }}
           </v-card-subtitle>
         </div>
-        <v-avatar v-if="category.icon" color="primary" variant="tonal" size="40">
+        <v-avatar
+          v-if="category.icon"
+          color="primary"
+          variant="tonal"
+          size="40"
+        >
           <v-icon :icon="category.icon" />
         </v-avatar>
       </div>
@@ -21,7 +26,10 @@
     <v-card-text class="pt-0">
       <div class="d-flex align-center justify-space-between text-medium-emphasis">
         <span class="text-body-2">{{ articleCountLabel }}</span>
-        <v-icon icon="mdi-arrow-right" class="ms-2" />
+        <v-icon
+          icon="mdi-arrow-right"
+          class="ms-2"
+        />
       </div>
     </v-card-text>
   </v-card>

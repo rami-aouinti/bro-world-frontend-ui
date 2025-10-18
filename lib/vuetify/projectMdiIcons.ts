@@ -257,7 +257,7 @@ import {
   mdiVolumeVariantOff,
   mdiWeatherNight,
   mdiWeatherSunny,
-  mdiWhatsapp
+  mdiWhatsapp,
 } from "@mdi/js";
 
 export const projectMdiIcons = {
@@ -517,7 +517,7 @@ export const projectMdiIcons = {
   "mdi-volume-variant-off": mdiVolumeVariantOff,
   "mdi-weather-night": mdiWeatherNight,
   "mdi-weather-sunny": mdiWeatherSunny,
-  "mdi-whatsapp": mdiWhatsapp
+  "mdi-whatsapp": mdiWhatsapp,
 } as const;
 
 export type ProjectMdiIconKey = keyof typeof projectMdiIcons;

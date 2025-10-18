@@ -1,6 +1,12 @@
 <template>
-  <v-container v-if="course" class="py-8">
-    <v-breadcrumbs :items="breadcrumbs" class="mb-4" />
+  <v-container
+    v-if="course"
+    class="py-8"
+  >
+    <v-breadcrumbs
+      :items="breadcrumbs"
+      class="mb-4"
+    />
 
     <section class="mb-8">
       <h1 class="text-h4 mb-2">{{ t("education.quiz.title", { course: course.title }) }}</h1>
@@ -17,14 +23,25 @@
       @submit="submitQuiz"
     />
 
-    <v-card v-if="result" class="mt-8 pa-6" rounded="xl" elevation="1">
+    <v-card
+      v-if="result"
+      class="mt-8 pa-6"
+      rounded="xl"
+      elevation="1"
+    >
       <div class="d-flex flex-column gap-4">
-        <div v-if="result.passed" class="d-flex flex-column gap-2">
+        <div
+          v-if="result.passed"
+          class="d-flex flex-column gap-2"
+        >
           <h2 class="text-h6">{{ t("education.quiz.certificateReady") }}</h2>
           <p class="text-body-2 text-medium-emphasis">
             {{ t("education.quiz.certificateDescription") }}
           </p>
-          <v-form @submit.prevent="createCertificate" class="d-flex flex-column flex-md-row gap-4">
+          <v-form
+            class="d-flex flex-column flex-md-row gap-4"
+            @submit.prevent="createCertificate"
+          >
             <v-text-field
               v-model="userName"
               :label="t('education.quiz.nameLabel')"
@@ -40,23 +57,48 @@
               :loading="certificatePending"
               :disabled="!userName || Boolean(certificateLink)"
             >
-              <v-icon icon="mdi:certificate-outline" start />
-              {{ certificateLink ? t("education.quiz.certificateReadyButton") : t("education.quiz.generateCertificate") }}
+              <v-icon
+                icon="mdi:certificate-outline"
+                start
+              />
+              {{
+                certificateLink
+                  ? t("education.quiz.certificateReadyButton")
+                  : t("education.quiz.generateCertificate")
+              }}
             </v-btn>
           </v-form>
-          <div v-if="certificateLink" class="d-flex gap-3">
-            <v-btn :to="certificateLink" color="secondary" variant="tonal" prepend-icon="mdi:eye">
+          <div
+            v-if="certificateLink"
+            class="d-flex gap-3"
+          >
+            <v-btn
+              :to="certificateLink"
+              color="secondary"
+              variant="tonal"
+              prepend-icon="mdi:eye"
+            >
               {{ t("education.quiz.viewCertificate") }}
             </v-btn>
           </div>
         </div>
-        <div v-else class="d-flex flex-column gap-2">
+        <div
+          v-else
+          class="d-flex flex-column gap-2"
+        >
           <h2 class="text-h6">{{ t("education.quiz.retryTitle") }}</h2>
           <p class="text-body-2 text-medium-emphasis">
             {{ t("education.quiz.retryDescription") }}
           </p>
-          <v-btn color="primary" variant="tonal" @click="resetQuiz">
-            <v-icon icon="mdi:reload" start />
+          <v-btn
+            color="primary"
+            variant="tonal"
+            @click="resetQuiz"
+          >
+            <v-icon
+              icon="mdi:reload"
+              start
+            />
             {{ t("education.quiz.retryButton") }}
           </v-btn>
         </div>
@@ -122,7 +164,7 @@ const certificateRecord = computed(() => {
   }
   const certificateId = store.progress[course.value.id]?.certificateId;
   return certificateId
-    ? store.certificates.value.find((entry) => entry.id === certificateId) ?? null
+    ? (store.certificates.value.find((entry) => entry.id === certificateId) ?? null)
     : null;
 });
 
@@ -156,17 +198,19 @@ async function submitQuiz(answers: Record<string, string>) {
 
   submitting.value = true;
   try {
-    const res = await $fetch<{ correct: number; total: number; passed: boolean; threshold: number }>(
-      "/api/education/submit",
-      {
-        method: "POST",
-        query: { locale: locale.value },
-        body: {
-          courseId: course.value.id,
-          answers,
-        },
+    const res = await $fetch<{
+      correct: number;
+      total: number;
+      passed: boolean;
+      threshold: number;
+    }>("/api/education/submit", {
+      method: "POST",
+      query: { locale: locale.value },
+      body: {
+        courseId: course.value.id,
+        answers,
       },
-    );
+    });
 
     store.setQuizScore(course.value.id, res.correct, res.total, res.passed);
     result.value = { correct: res.correct, total: res.total, passed: res.passed };

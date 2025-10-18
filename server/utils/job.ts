@@ -86,7 +86,9 @@ async function readJobData(): Promise<JobData> {
 
   const jobs = (parsed.jobs ?? []).map((job) => {
     const company = job.companyId ? companyMap.get(job.companyId) : undefined;
-    const companyDetails = job.company ?? (company ? { name: company.name, description: company.description } : undefined);
+    const companyDetails =
+      job.company ??
+      (company ? { name: company.name, description: company.description } : undefined);
 
     return {
       ...job,
@@ -188,12 +190,7 @@ export async function listJobs(query: ListJobsQuery = {}): Promise<PaginatedJobs
 
   let filtered = data.jobs.filter((job) => {
     if (normalisedTitle) {
-      const combined = [
-        job.title,
-        job.description,
-        job.work,
-        ...(job.keywords ?? []),
-      ]
+      const combined = [job.title, job.description, job.work, ...(job.keywords ?? [])]
         .filter(Boolean)
         .map((value) => value!.toString().toLowerCase());
       if (!combined.some((value) => value.includes(normalisedTitle))) {
@@ -235,10 +232,7 @@ export async function listJobs(query: ListJobsQuery = {}): Promise<PaginatedJobs
     }
 
     if (normalisedLocation) {
-      const locations = [
-        job.workLocation ?? "",
-        ...(job.locationTags ?? []),
-      ]
+      const locations = [job.workLocation ?? "", ...(job.locationTags ?? [])]
         .filter(Boolean)
         .map((value) => value!.toString().toLowerCase());
 

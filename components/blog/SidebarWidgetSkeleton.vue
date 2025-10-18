@@ -9,9 +9,18 @@
       <v-skeleton-loader type="avatar" />
     </div>
     <div class="sidebar-widget-skeleton__content">
-      <v-skeleton-loader type="text" width="160" />
-      <v-skeleton-loader type="text" width="220" />
-      <v-skeleton-loader type="text" width="120" />
+      <v-skeleton-loader
+        type="text"
+        width="160"
+      />
+      <v-skeleton-loader
+        type="text"
+        width="220"
+      />
+      <v-skeleton-loader
+        type="text"
+        width="120"
+      />
     </div>
   </div>
 </template>
@@ -33,7 +42,9 @@ const loadingLabel = computed(() => t("common.loading"));
   border: 1px solid rgba(255, 255, 255, 0.05);
   background-color: rgba(255, 255, 255, 0.05);
   padding: 1.25rem;
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 }
 
 .sidebar-widget-skeleton__icon {

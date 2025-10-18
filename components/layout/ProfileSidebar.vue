@@ -224,7 +224,10 @@ const defaultAvatar = "/images/avatars/avatar-default.svg";
 const friendAvatarDisplaySize = 72;
 
 const friendAvatarPixelSize = computed(() =>
-  Math.max(friendAvatarDisplaySize, Math.round(friendAvatarDisplaySize * normalizedPixelRatio.value)),
+  Math.max(
+    friendAvatarDisplaySize,
+    Math.round(friendAvatarDisplaySize * normalizedPixelRatio.value),
+  ),
 );
 
 const friendsList = computed<Friend[]>(() =>

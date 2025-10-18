@@ -379,11 +379,9 @@ export const useAuthSession = defineStore("auth-session", () => {
 
     const shouldSyncFromServer =
       sessionCookies.hasPresenceCookie.value &&
-      (
-        !sessionTokenState.value ||
+      (!sessionTokenState.value ||
         !sessionCookies.token.value ||
-        (!currentUserState.value && !sessionCookies.user.value)
-      );
+        (!currentUserState.value && !sessionCookies.user.value));
 
     if (shouldSyncFromServer) {
       serverSession = await synchronizeSessionFromServer();

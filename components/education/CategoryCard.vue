@@ -1,5 +1,9 @@
 <template>
-  <v-card class="d-flex flex-column h-100" elevation="2" rounded="xl">
+  <v-card
+    class="d-flex flex-column h-100"
+    elevation="2"
+    rounded="xl"
+  >
     <v-img
       :src="category.cover"
       :alt="category.title"
@@ -17,7 +21,11 @@
     </v-card-item>
     <v-card-text class="pt-0">
       <div class="d-flex align-center justify-space-between">
-        <v-chip size="small" color="primary" variant="tonal">
+        <v-chip
+          size="small"
+          color="primary"
+          variant="tonal"
+        >
           {{ t("education.category.courses", { count: category.courseCount }) }}
         </v-chip>
         <v-btn

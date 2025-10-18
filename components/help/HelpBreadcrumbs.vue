@@ -1,14 +1,31 @@
 <template>
-  <nav class="help-breadcrumbs" aria-label="breadcrumbs">
-    <v-breadcrumbs :items="breadcrumbs" density="compact">
+  <nav
+    class="help-breadcrumbs"
+    aria-label="breadcrumbs"
+  >
+    <v-breadcrumbs
+      :items="breadcrumbs"
+      density="compact"
+    >
       <template #prepend>
-        <v-icon icon="mdi-home-outline" class="me-2" />
+        <v-icon
+          icon="mdi-home-outline"
+          class="me-2"
+        />
       </template>
       <template #item="{ item }">
-        <NuxtLink v-if="item.to" :to="item.to" class="help-breadcrumbs__link">
+        <NuxtLink
+          v-if="item.to"
+          :to="item.to"
+          class="help-breadcrumbs__link"
+        >
           {{ item.title }}
         </NuxtLink>
-        <span v-else class="help-breadcrumbs__current">{{ item.title }}</span>
+        <span
+          v-else
+          class="help-breadcrumbs__current"
+          >{{ item.title }}</span
+        >
       </template>
     </v-breadcrumbs>
   </nav>

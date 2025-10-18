@@ -3,7 +3,9 @@
     class="text-card-foreground pa-6 h-100"
     glow
   >
-    <header class="d-flex flex-column flex-md-row justify-space-between align-start align-md-center gap-4 mb-6">
+    <header
+      class="d-flex flex-column flex-md-row justify-space-between align-start align-md-center gap-4 mb-6"
+    >
       <div>
         <h2 class="text-h6 text-lg-h5 font-weight-semibold mb-1">{{ title }}</h2>
         <p class="text-body-2 text-medium-emphasis mb-0">{{ subtitle }}</p>
@@ -189,9 +191,7 @@ function resolveInitials(name: string | null | undefined): string {
     return name.slice(0, 2).toUpperCase();
   }
 
-  return parts
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
+  return parts.map((part) => part[0]?.toUpperCase() ?? "").join("");
 }
 
 function resolveStatusColor(status: string | null | undefined): string {

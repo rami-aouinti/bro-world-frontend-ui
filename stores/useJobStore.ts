@@ -1,12 +1,12 @@
-import { defineStore } from "pinia"
+import { defineStore } from "pinia";
 
-export type JobSummary = Record<string, unknown>
+export type JobSummary = Record<string, unknown>;
 
 interface JobState {
-  jobs: JobSummary[]
-  total: number
-  page: number
-  loaded: boolean
+  jobs: JobSummary[];
+  total: number;
+  page: number;
+  loaded: boolean;
 }
 
 export const useJobStore = defineStore("job", {
@@ -18,22 +18,22 @@ export const useJobStore = defineStore("job", {
   }),
   actions: {
     setJobs(jobs: JobSummary[]) {
-      this.jobs = jobs
+      this.jobs = jobs;
     },
     setTotal(total: number) {
-      this.total = total
+      this.total = total;
     },
     setPage(page: number) {
-      this.page = page
+      this.page = page;
     },
     setLoaded(status: boolean) {
-      this.loaded = status
+      this.loaded = status;
     },
     reset() {
-      this.jobs = []
-      this.total = 0
-      this.page = 0
-      this.loaded = false
+      this.jobs = [];
+      this.total = 0;
+      this.page = 0;
+      this.loaded = false;
     },
   },
-})
+});

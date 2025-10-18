@@ -345,9 +345,7 @@ export const useCrmTasksStore = defineStore("crm-tasks", () => {
 
     try {
       const response = await crud.list<CrmTasksListResponse>(options.params);
-      const data = Array.isArray(response?.data as unknown[])
-        ? (response?.data as unknown[])
-        : [];
+      const data = Array.isArray(response?.data as unknown[]) ? (response?.data as unknown[]) : [];
       const tasksForProject = data
         .map((candidate) => normalizeTask(candidate))
         .filter((task): task is CrmTask => Boolean(task))
@@ -394,8 +392,7 @@ export const useCrmTasksStore = defineStore("crm-tasks", () => {
         return mockTask;
       } catch (caughtError) {
         const message =
-          sanitizeErrorMessage(extractErrorMessage(caughtError)) ||
-          "Unable to create task.";
+          sanitizeErrorMessage(extractErrorMessage(caughtError)) || "Unable to create task.";
         createError.value = { ...createError.value, [trimmedId]: message };
         removeTask(optimisticTask);
         throw new Error(message);

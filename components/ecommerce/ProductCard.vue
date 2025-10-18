@@ -98,7 +98,9 @@ const localePath = useResolvedLocalePath();
 
 const productLink = computed(() => localePath(`/ecommerce/product-${props.product.slug}`));
 
-const lowStockThreshold = computed(() => props.lowStockThreshold ?? props.inventory?.lowStockThreshold ?? 10);
+const lowStockThreshold = computed(
+  () => props.lowStockThreshold ?? props.inventory?.lowStockThreshold ?? 10,
+);
 
 const formatPrice = computed(() =>
   formatCurrency(props.product.price, locale.value, props.product.currency),

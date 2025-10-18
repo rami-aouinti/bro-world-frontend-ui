@@ -9,8 +9,14 @@
         aria-busy="true"
       >
         <span class="sr-only">{{ t("layout.loadingOverlay.srLabel") }}</span>
-        <div class="app-loading-scene" aria-hidden="true">
-          <header class="app-loading-navbar" aria-hidden="true">
+        <div
+          class="app-loading-scene"
+          aria-hidden="true"
+        >
+          <header
+            class="app-loading-navbar"
+            aria-hidden="true"
+          >
             <div class="app-loading-navbar-inner">
               <span class="app-loading-brand app-loading-skeleton" />
               <span class="app-loading-search app-loading-skeleton" />
@@ -22,7 +28,9 @@
               </div>
             </div>
           </header>
-          <div class="app-loading-aside-card app-loading-aside-card--nav app-loading-skeleton app-loading-column--nav">
+          <div
+            class="app-loading-aside-card app-loading-aside-card--nav app-loading-skeleton app-loading-column--nav"
+          >
             <div class="app-loading-nav">
               <span
                 v-for="item in 7"
@@ -50,7 +58,11 @@
                 <span class="app-loading-line app-loading-line--medium app-loading-skeleton" />
               </div>
               <div class="app-loading-emojis">
-                <span v-for="emoji in 3" :key="emoji" class="app-loading-emoji app-loading-skeleton" />
+                <span
+                  v-for="emoji in 3"
+                  :key="emoji"
+                  class="app-loading-emoji app-loading-skeleton"
+                />
               </div>
               <div class="app-loading-footer">
                 <span class="app-loading-tag app-loading-skeleton" />
@@ -61,7 +73,9 @@
           <div class="app-loading-column app-loading-column--aside py-1 my-2">
             <div class="app-loading-aside-card app-loading-aside-card--tall app-loading-skeleton" />
             <div class="app-loading-aside-card app-loading-aside-card--tall app-loading-skeleton" />
-            <div class="app-loading-aside-card app-loading-aside-card--tall-2 app-loading-skeleton" />
+            <div
+              class="app-loading-aside-card app-loading-aside-card--tall-2 app-loading-skeleton"
+            />
           </div>
         </div>
       </div>
@@ -95,9 +109,11 @@ const { t } = useI18n();
   opacity: 0;
 }
 .app-loading-navbar {
-  --nav-h: 50px;                /* hauteur configurable */
-  position: absolute;           /* reste en haut de l’overlay */
-  top: 0; left: 0; right: 0;
+  --nav-h: 50px; /* hauteur configurable */
+  position: absolute; /* reste en haut de l’overlay */
+  top: 0;
+  left: 0;
+  right: 0;
   height: var(--nav-h);
   display: flex;
   align-items: center;
@@ -105,7 +121,7 @@ const { t } = useI18n();
   background: linear-gradient(150deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.82));
   backdrop-filter: blur(10px) saturate(120%);
   border-bottom: 1px solid rgb(3, 32, 61);
-  z-index: 1;                   /* au-dessus de la scène */
+  z-index: 1; /* au-dessus de la scène */
 }
 
 .app-loading-navbar-inner {
@@ -117,7 +133,7 @@ const { t } = useI18n();
 }
 
 .app-loading-brand {
-  width: 7rem;
+  width: 11rem;
   height: 1.75rem;
   border-radius: 0.6rem;
 }
@@ -161,7 +177,8 @@ const { t } = useI18n();
   min-height: 100vh;
   box-sizing: border-box;
   padding: clamp(1.25rem, 4vw, 3rem);
-  background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.1), transparent 55%),
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.1), transparent 55%),
     radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.12), transparent 60%),
     radial-gradient(circle at 50% 100%, rgba(99, 102, 241, 0.18), transparent 65%),
     hsl(var(--background) / 0.93);

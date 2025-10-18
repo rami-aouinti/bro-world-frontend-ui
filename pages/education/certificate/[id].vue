@@ -1,10 +1,22 @@
 <template>
-  <v-container v-if="certificate" class="py-10">
-    <v-breadcrumbs :items="breadcrumbs" class="mb-6" />
+  <v-container
+    v-if="certificate"
+    class="py-10"
+  >
+    <v-breadcrumbs
+      :items="breadcrumbs"
+      class="mb-6"
+    />
     <CertificateSheet :certificate="certificate" />
   </v-container>
-  <v-container v-else class="py-10 d-flex justify-center">
-    <v-progress-circular indeterminate color="primary" />
+  <v-container
+    v-else
+    class="py-10 d-flex justify-center"
+  >
+    <v-progress-circular
+      indeterminate
+      color="primary"
+    />
   </v-container>
 </template>
 

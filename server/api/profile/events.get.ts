@@ -1,6 +1,10 @@
 import { createError, getQuery } from "h3";
 import type { H3Event } from "h3";
-import { resolveErrorMessage, resolveErrorStatusCode, sanitizeErrorStack } from "../../utils/errors";
+import {
+  resolveErrorMessage,
+  resolveErrorStatusCode,
+  sanitizeErrorStack,
+} from "../../utils/errors";
 import { fetchProfileEventsFromSource } from "../../utils/users/api";
 
 async function loadProfileEvents(event: H3Event) {

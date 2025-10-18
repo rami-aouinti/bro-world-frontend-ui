@@ -23,8 +23,16 @@
         {{ loadError }}
       </v-alert>
 
-      <div v-if="isLoading" class="py-6">
-        <v-progress-linear indeterminate color="primary" height="6" rounded="lg" />
+      <div
+        v-if="isLoading"
+        class="py-6"
+      >
+        <v-progress-linear
+          indeterminate
+          color="primary"
+          height="6"
+          rounded="lg"
+        />
       </div>
 
       <v-alert
@@ -39,14 +47,22 @@
         No participants are assigned to this project yet.
       </v-alert>
 
-      <v-list v-else lines="three" class="crm-participants-list">
+      <v-list
+        v-else
+        lines="three"
+        class="crm-participants-list"
+      >
         <v-list-item
           v-for="participant in participants"
           :key="participant.id"
           class="align-start"
         >
           <template #prepend>
-            <v-avatar color="primary" variant="tonal" size="40">
+            <v-avatar
+              color="primary"
+              variant="tonal"
+              size="40"
+            >
               {{ participant.name.slice(0, 1) }}
             </v-avatar>
           </template>
@@ -55,10 +71,10 @@
             {{ participant.name }}
           </v-list-item-title>
           <v-list-item-subtitle class="text-body-2">
-            {{ participant.role || 'Team member' }}
+            {{ participant.role || "Team member" }}
           </v-list-item-subtitle>
           <v-list-item-subtitle class="text-body-2 text-medium-emphasis">
-            {{ participant.email || 'Email not shared' }}
+            {{ participant.email || "Email not shared" }}
           </v-list-item-subtitle>
 
           <template #append>

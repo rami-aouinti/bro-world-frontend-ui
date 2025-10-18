@@ -445,9 +445,7 @@ const birthdayFormatted = computed(() => {
   return birthdayFormatter.value.format(date);
 });
 
-const numberFormatter = computed(
-  () => new Intl.NumberFormat(locale.value || "en-US"),
-);
+const numberFormatter = computed(() => new Intl.NumberFormat(locale.value || "en-US"));
 
 function formatNumber(value: number) {
   return numberFormatter.value.format(value);

@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { createError, type H3Event } from "h3";
+import handler from "~/server/api/profile/events.get";
+import { fetchProfileEventsFromSource } from "~/server/utils/users/api";
+
 const defineEventHandlerMock = vi.hoisted(() => {
   const mock = vi.fn(<T extends (...args: any[]) => any>(handler: T) => handler);
   (globalThis as Record<string, unknown>).defineEventHandler = mock;
   return mock;
 });
-
-import { createError, type H3Event } from "h3";
-import handler from "~/server/api/profile/events.get";
-import { fetchProfileEventsFromSource } from "~/server/utils/users/api";
 
 vi.mock("~/server/utils/users/api", () => ({
   fetchProfileEventsFromSource: vi.fn(),
@@ -19,9 +19,10 @@ const mockedFetcher = fetchProfileEventsFromSource as unknown as ReturnType<type
 describe("GET /api/profile/events", () => {
   const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
-  const createEvent = () => ({
-    node: { req: { headers: {} } },
-  }) as unknown as H3Event;
+  const createEvent = () =>
+    ({
+      node: { req: { headers: {} } },
+    }) as unknown as H3Event;
 
   beforeEach(() => {
     vi.clearAllMocks();

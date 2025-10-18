@@ -42,20 +42,9 @@
       "experience": "5+ ans",
       "experienceMin": 5,
       "contractType": "CDI",
-      "works": [
-        "Remote",
-        "Hybrid"
-      ],
-      "contracts": [
-        "Fulltime"
-      ],
-      "skills": [
-        "Nuxt",
-        "Vue",
-        "TypeScript",
-        "GraphQL",
-        "Design System"
-      ],
+      "works": ["Remote", "Hybrid"],
+      "contracts": ["Fulltime"],
+      "skills": ["Nuxt", "Vue", "TypeScript", "GraphQL", "Design System"],
       "requirements": [
         "Piloter la feuille de route front et assurer la qualité du code.",
         "Coordonner l'intégration continue avec l'équipe backend.",
@@ -73,21 +62,10 @@
       ],
       "description": "Vous structurez la plateforme Bro World et accompagnez une équipe de quatre développeurs.",
       "work": "Définir l'architecture Nuxt, faire évoluer le design system et accompagner les lancements produits.",
-      "benefits": [
-        "Budget conférence annuel",
-        "Horaires flexibles",
-        "Matériel haut de gamme"
-      ],
+      "benefits": ["Budget conférence annuel", "Horaires flexibles", "Matériel haut de gamme"],
       "postedAt": "2025-01-05",
-      "locationTags": [
-        "Paris",
-        "Remote"
-      ],
-      "keywords": [
-        "nuxt",
-        "typescript",
-        "design"
-      ]
+      "locationTags": ["Paris", "Remote"],
+      "keywords": ["nuxt", "typescript", "design"]
     },
     {
       "id": "job-ux-strategist",
@@ -105,17 +83,9 @@
       "experience": "3+ ans",
       "experienceMin": 3,
       "contractType": "CDI",
-      "works": [
-        "Hybrid"
-      ],
-      "contracts": [
-        "Fulltime"
-      ],
-      "skills": [
-        "Design Research",
-        "Product Discovery",
-        "Workshops"
-      ],
+      "works": ["Hybrid"],
+      "contracts": ["Fulltime"],
+      "skills": ["Design Research", "Product Discovery", "Workshops"],
       "requirements": [
         "Organiser des ateliers discovery et synthétiser les insights.",
         "Collaborer avec la tech pour cadrer des expériences immersives.",
@@ -133,20 +103,10 @@
       ],
       "description": "Vous aidez les équipes à aligner vision, storytelling et feuille de route produit.",
       "work": "Analyser l'expérience existante, concevoir des parcours et accompagner leur mise en œuvre.",
-      "benefits": [
-        "Programme de mentorat",
-        "Budget formation",
-        "Transport remboursé"
-      ],
+      "benefits": ["Programme de mentorat", "Budget formation", "Transport remboursé"],
       "postedAt": "2025-01-11",
-      "locationTags": [
-        "Paris"
-      ],
-      "keywords": [
-        "design",
-        "strategy",
-        "ux"
-      ]
+      "locationTags": ["Paris"],
+      "keywords": ["design", "strategy", "ux"]
     },
     {
       "id": "job-data-analyst",
@@ -164,19 +124,9 @@
       "experience": "2+ ans",
       "experienceMin": 2,
       "contractType": "CDI",
-      "works": [
-        "Remote",
-        "Onsite"
-      ],
-      "contracts": [
-        "Fulltime"
-      ],
-      "skills": [
-        "SQL",
-        "Python",
-        "Tableau",
-        "Statistics"
-      ],
+      "works": ["Remote", "Onsite"],
+      "contracts": ["Fulltime"],
+      "skills": ["SQL", "Python", "Tableau", "Statistics"],
       "requirements": [
         "Construire des dashboards orientés activation.",
         "Modéliser la donnée pour suivre les funnels growth.",
@@ -194,21 +144,10 @@
       ],
       "description": "Vous transformez les signaux data en opportunités produit concrètes.",
       "work": "Produire des analyses exploratoires et proposer des tests A/B pertinents.",
-      "benefits": [
-        "Mutuelle premium",
-        "Télétravail flexible",
-        "Prime de performance"
-      ],
+      "benefits": ["Mutuelle premium", "Télétravail flexible", "Prime de performance"],
       "postedAt": "2025-01-08",
-      "locationTags": [
-        "Lyon",
-        "Remote"
-      ],
-      "keywords": [
-        "data",
-        "python",
-        "sql"
-      ]
+      "locationTags": ["Lyon", "Remote"],
+      "keywords": ["data", "python", "sql"]
     },
     {
       "id": "job-backend-go",
@@ -226,18 +165,9 @@
       "experience": "4+ ans",
       "experienceMin": 4,
       "contractType": "CDI",
-      "works": [
-        "Hybrid"
-      ],
-      "contracts": [
-        "Fulltime"
-      ],
-      "skills": [
-        "Go",
-        "REST API",
-        "PostgreSQL",
-        "Docker"
-      ],
+      "works": ["Hybrid"],
+      "contracts": ["Fulltime"],
+      "skills": ["Go", "REST API", "PostgreSQL", "Docker"],
       "requirements": [
         "Développer des services scalables en Go.",
         "Optimiser les performances des APIs temps réel.",
@@ -255,20 +185,10 @@
       ],
       "description": "Vous rejoignez la squad plateforme pour fiabiliser l'ingestion de données.",
       "work": "Concevoir des microservices, écrire des tests et contribuer à la culture DevOps.",
-      "benefits": [
-        "Prime vacances",
-        "Abonnement transport",
-        "Temps dédié à l'open source"
-      ],
+      "benefits": ["Prime vacances", "Abonnement transport", "Temps dédié à l'open source"],
       "postedAt": "2025-01-03",
-      "locationTags": [
-        "Lyon"
-      ],
-      "keywords": [
-        "go",
-        "api",
-        "docker"
-      ]
+      "locationTags": ["Lyon"],
+      "keywords": ["go", "api", "docker"]
     },
     {
       "id": "job-learning-coach",
@@ -286,18 +206,9 @@
       "experience": "1+ an",
       "experienceMin": 1,
       "contractType": "CDI",
-      "works": [
-        "Remote",
-        "Onsite"
-      ],
-      "contracts": [
-        "Parttime"
-      ],
-      "skills": [
-        "Pedagogy",
-        "Coaching",
-        "Community"
-      ],
+      "works": ["Remote", "Onsite"],
+      "contracts": ["Parttime"],
+      "skills": ["Pedagogy", "Coaching", "Community"],
       "requirements": [
         "Accompagner des cohortes de 30 apprenants.",
         "Animer des sessions live et des suivis individuels.",
@@ -311,20 +222,10 @@
       ],
       "description": "Vous soutenez les apprenants sur des parcours produit et tech.",
       "work": "Préparer les ateliers, suivre les livrables et coordonner les experts invités.",
-      "benefits": [
-        "Télétravail total",
-        "Budget formation continue",
-        "Retraite supplémentaire"
-      ],
+      "benefits": ["Télétravail total", "Budget formation continue", "Retraite supplémentaire"],
       "postedAt": "2025-01-09",
-      "locationTags": [
-        "Marseille",
-        "Remote"
-      ],
-      "keywords": [
-        "education",
-        "coaching"
-      ]
+      "locationTags": ["Marseille", "Remote"],
+      "keywords": ["education", "coaching"]
     },
     {
       "id": "job-freelance-writer",
@@ -342,18 +243,9 @@
       "experience": "3+ ans",
       "experienceMin": 3,
       "contractType": "Freelance",
-      "works": [
-        "Remote"
-      ],
-      "contracts": [
-        "Parttime"
-      ],
-      "skills": [
-        "Vue",
-        "Nuxt",
-        "API",
-        "Html"
-      ],
+      "works": ["Remote"],
+      "contracts": ["Parttime"],
+      "skills": ["Vue", "Nuxt", "API", "Html"],
       "requirements": [
         "Rédiger des contenus techniques pour nos bootcamps.",
         "Créer des exemples de code clairs et commentés.",
@@ -371,20 +263,10 @@
       ],
       "description": "Vous produisez des guides et supports techniques orientés apprentissage.",
       "work": "Structurer des modules, rédiger des quiz et tester les ateliers avant diffusion.",
-      "benefits": [
-        "Mission renouvelable",
-        "Equipe accessible",
-        "Paiement 30 jours"
-      ],
+      "benefits": ["Mission renouvelable", "Equipe accessible", "Paiement 30 jours"],
       "postedAt": "2025-01-02",
-      "locationTags": [
-        "Remote"
-      ],
-      "keywords": [
-        "vue",
-        "nuxt",
-        "freelance"
-      ]
+      "locationTags": ["Remote"],
+      "keywords": ["vue", "nuxt", "freelance"]
     }
   ]
 }

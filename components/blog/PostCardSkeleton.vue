@@ -53,9 +53,7 @@ const props = withDefaults(
 
 const loadingLabel = computed(() => t("blog.posts.loading"));
 const showComments = computed(() => props.showCommentSkeleton);
-const showComposer = computed(
-  () => showComments.value && props.showComposer,
-);
+const showComposer = computed(() => showComments.value && props.showComposer);
 </script>
 
 <style scoped>

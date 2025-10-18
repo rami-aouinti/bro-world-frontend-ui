@@ -601,9 +601,7 @@ const photoLibrary = reactive<PhotoItem[]>([
   },
 ]);
 
-const numberFormatter = computed(
-  () => new Intl.NumberFormat(locale.value || "en-US"),
-);
+const numberFormatter = computed(() => new Intl.NumberFormat(locale.value || "en-US"));
 
 const collectionStats = computed(() => {
   const totalPhotos =

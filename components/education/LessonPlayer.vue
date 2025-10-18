@@ -11,22 +11,34 @@
         </p>
       </div>
       <div class="d-flex flex-column align-end gap-2">
-        <ProgressBar :value="progress" :label="t('education.lesson.progressLabel')" />
+        <ProgressBar
+          :value="progress"
+          :label="t('education.lesson.progressLabel')"
+        />
         <v-btn
           color="success"
           variant="tonal"
           :disabled="isCompleted"
           @click="$emit('complete')"
         >
-          <v-icon icon="mdi:check-circle-outline" start />
+          <v-icon
+            icon="mdi:check-circle-outline"
+            start
+          />
           {{ isCompleted ? t("education.lesson.completed") : t("education.lesson.markDone") }}
         </v-btn>
       </div>
     </header>
 
-    <article class="lesson-content mb-6" v-html="lesson.content" />
+    <article
+      class="lesson-content mb-6"
+      v-html="lesson.content"
+    />
 
-    <section v-if="$slots.exercises" class="mb-8">
+    <section
+      v-if="$slots.exercises"
+      class="mb-8"
+    >
       <h3 class="text-h6 mb-3">{{ t("education.lesson.exercises") }}</h3>
       <slot name="exercises" />
     </section>
@@ -99,7 +111,8 @@ const nextTo = computed(() => props.nextTo ?? null);
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   background: rgba(59, 130, 246, 0.12);
-  font-family: "Fira Code", "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+  font-family:
+    "Fira Code", "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 }
 </style>

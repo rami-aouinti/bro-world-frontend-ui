@@ -6,7 +6,11 @@
         rounded="xl"
         variant="text"
       >
-        <v-icon color="primary" size="48">mdi-message-outline</v-icon>
+        <v-icon
+          color="primary"
+          size="48"
+          >mdi-message-outline</v-icon
+        >
         <p class="mt-4 text-h6">Select a conversation to get started</p>
         <p class="text-body-2 text-medium-emphasis">Pick someone from the list to open the chat.</p>
       </v-card>
@@ -30,7 +34,11 @@
         <header class="px-4 pb-4">
           <div class="d-flex align-center justify-between">
             <div class="d-flex align-center gap-3">
-              <GlowingAvatar :src="avatar" :alt="title" :size="56" />
+              <GlowingAvatar
+                :src="avatar"
+                :alt="title"
+                :size="56"
+              />
               <div>
                 <h2 class="text-h6 mb-0">{{ title }}</h2>
                 <p class="text-body-2 text-medium-emphasis mb-0">
@@ -39,17 +47,33 @@
               </div>
             </div>
             <div class="d-flex align-center gap-2 text-medium-emphasis">
-              <v-btn icon variant="text" size="small">
+              <v-btn
+                icon
+                variant="text"
+                size="small"
+              >
                 <v-icon size="20">mdi-video</v-icon>
               </v-btn>
-              <v-menu transition="slide-y-transition" offset-y min-width="160">
+              <v-menu
+                transition="slide-y-transition"
+                offset-y
+                min-width="160"
+              >
                 <template #activator="{ props: menuProps }">
-                  <v-btn v-bind="menuProps" icon variant="text" size="small">
+                  <v-btn
+                    v-bind="menuProps"
+                    icon
+                    variant="text"
+                    size="small"
+                  >
                     <v-icon size="20">mdi-dots-vertical</v-icon>
                   </v-btn>
                 </template>
                 <v-list density="comfortable">
-                  <v-list-item v-for="item in menuItems" :key="item">
+                  <v-list-item
+                    v-for="item in menuItems"
+                    :key="item"
+                  >
                     <v-list-item-title>{{ item }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -68,10 +92,13 @@
         <div
           ref="messageContainer"
           class="px-4 pb-4 pt-2 overflow-y-auto"
-          style="max-height: 420px; overflow-x: hidden;"
+          style="max-height: 420px; overflow-x: hidden"
           @scroll.passive="handleScroll"
         >
-          <div v-if="messages.length" class="d-flex flex-column gap-4">
+          <div
+            v-if="messages.length"
+            class="d-flex flex-column gap-4"
+          >
             <div
               v-for="message in messages"
               :key="message.id"
@@ -80,9 +107,14 @@
             >
               <div
                 class="message-bubble"
-                :class="isOwnMessage(message) ? 'message-bubble--outgoing' : 'message-bubble--incoming'"
+                :class="
+                  isOwnMessage(message) ? 'message-bubble--outgoing' : 'message-bubble--incoming'
+                "
               >
-                <div v-if="message.content?.trim()" class="text-body-2">
+                <div
+                  v-if="message.content?.trim()"
+                  class="text-body-2"
+                >
                   {{ message.content }}
                 </div>
                 <div
@@ -98,11 +130,17 @@
                     loading="lazy"
                   />
                 </div>
-                <RelativeTime :date="message.createdAt" class="mt-2" />
+                <RelativeTime
+                  :date="message.createdAt"
+                  class="mt-2"
+                />
               </div>
             </div>
           </div>
-          <div v-else class="py-8 text-center text-medium-emphasis">
+          <div
+            v-else
+            class="py-8 text-center text-medium-emphasis"
+          >
             No messages yet. Start the conversation!
           </div>
           <div ref="bottomAnchor" />
@@ -114,7 +152,10 @@
           @send="handleSend"
         />
 
-        <p v-if="sendError" class="px-4 pb-4 text-body-2 text-error">
+        <p
+          v-if="sendError"
+          class="px-4 pb-4 text-body-2 text-error"
+        >
           {{ sendError }}
         </p>
       </v-card>
@@ -124,7 +165,11 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from "vue";
-import type { MessengerConversation, MessengerMessage, MessengerSendMessagePayload } from "~/types/messenger";
+import type {
+  MessengerConversation,
+  MessengerMessage,
+  MessengerSendMessagePayload,
+} from "~/types/messenger";
 import { useMessengerStore } from "~/stores/messenger";
 import { useAuthSession } from "~/stores/auth-session";
 import MessageInput from "~/components/world/messenger/MessageInput.vue";
@@ -162,7 +207,9 @@ const loadingMessages = computed(() => {
 
 const loadingState = computed(() => loadingConversation.value || loadingMessages.value);
 const title = computed(() => getConversationTitle(props.conversation));
-const avatar = computed(() => getConversationAvatar(props.conversation) ?? "https://placehold.co/128x128");
+const avatar = computed(
+  () => getConversationAvatar(props.conversation) ?? "https://placehold.co/128x128",
+);
 const participantsSubtitle = computed(() => {
   const participants = props.conversation?.participants ?? [];
   const count = Math.max(participants.length - 1, 0);

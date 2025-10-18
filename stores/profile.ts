@@ -16,10 +16,7 @@ function useStoreState<T>(key: string, init: () => T): Ref<T> {
       return useState<T>(key, init);
     } catch (error) {
       if (import.meta.dev) {
-        console.warn(
-          `[profile-store] Falling back to local state for "${key}".`,
-          error,
-        );
+        console.warn(`[profile-store] Falling back to local state for "${key}".`, error);
       }
     }
   }
@@ -113,9 +110,7 @@ function asString(value: unknown): string | null {
   return trimmed ? trimmed : null;
 }
 
-function normalizeFriendEntries(
-  raw: ProfileUser["friends"],
-): FriendEntry[] {
+function normalizeFriendEntries(raw: ProfileUser["friends"]): FriendEntry[] {
   if (!raw) {
     return [];
   }
@@ -136,10 +131,7 @@ function normalizeStories(raw: unknown): FriendStory[] {
 }
 
 function resolveName(
-  user: Pick<
-    ProfileUser,
-    "firstName" | "lastName" | "username" | "email"
-  > | null | undefined,
+  user: Pick<ProfileUser, "firstName" | "lastName" | "username" | "email"> | null | undefined,
 ): string | null {
   if (!user) {
     return null;
@@ -168,7 +160,9 @@ function resolveName(
   return null;
 }
 
-function resolveAvatar(user: { profile?: { photo?: string | null } } | null | undefined): string | null {
+function resolveAvatar(
+  user: { profile?: { photo?: string | null } } | null | undefined,
+): string | null {
   if (!user) {
     return null;
   }
@@ -225,10 +219,7 @@ export const useProfileStore = defineStore("profile", () => {
   const profileState = useStoreState<ProfileUser | null>("profile-data", () => null);
   const pendingState = useStoreState<boolean>("profile-pending", () => false);
   const errorState = useStoreState<string | null>("profile-error", () => null);
-  const lastFetchedState = useStoreState<number | null>(
-    "profile-last-fetched",
-    () => null,
-  );
+  const lastFetchedState = useStoreState<number | null>("profile-last-fetched", () => null);
 
   let activeRequest: Promise<ProfileUser | null> | null = null;
 
@@ -236,13 +227,13 @@ export const useProfileStore = defineStore("profile", () => {
   const isLoading = computed(() => pendingState.value);
   const error = computed(() => errorState.value);
 
-  const friendEntries = computed<FriendEntry[]>(() => normalizeFriendEntries(profileState.value?.friends));
+  const friendEntries = computed<FriendEntry[]>(() =>
+    normalizeFriendEntries(profileState.value?.friends),
+  );
   const ownStories = computed<FriendStory[]>(() => normalizeStories(profileState.value?.stories));
 
   const preferredName = computed(() => resolveName(profileState.value));
-  const avatarUrl = computed(
-    () => resolveAvatar(profileState.value) ?? DEFAULT_AVATAR,
-  );
+  const avatarUrl = computed(() => resolveAvatar(profileState.value) ?? DEFAULT_AVATAR);
 
   const storyItems = computed<Story[]>(() => {
     const items: Story[] = [];

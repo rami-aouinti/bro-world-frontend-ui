@@ -1,21 +1,34 @@
 <template>
   <section class="help-hero py-16 py-md-24">
-    <div class="mx-auto px-4" style="max-width: 960px;">
+    <div
+      class="mx-auto px-4"
+      style="max-width: 960px"
+    >
       <div class="text-center">
-        <p v-if="badge" class="text-uppercase text-primary font-weight-medium mb-4">
+        <p
+          v-if="badge"
+          class="text-uppercase text-primary font-weight-medium mb-4"
+        >
           {{ badge }}
         </p>
         <h1 class="text-h3 text-md-h2 font-weight-bold mb-4">
           {{ title }}
         </h1>
-        <p v-if="subtitle" class="text-body-1 text-medium-emphasis mx-auto" style="max-width: 720px;">
+        <p
+          v-if="subtitle"
+          class="text-body-1 text-medium-emphasis mx-auto"
+          style="max-width: 720px"
+        >
           {{ subtitle }}
         </p>
       </div>
       <div class="mt-8">
         <slot />
       </div>
-      <div v-if="popularItems?.length" class="mt-10 text-center">
+      <div
+        v-if="popularItems?.length"
+        class="mt-10 text-center"
+      >
         <p class="text-body-2 text-medium-emphasis mb-3">
           {{ popularTitle }}
         </p>

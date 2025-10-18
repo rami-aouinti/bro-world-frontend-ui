@@ -1,6 +1,9 @@
 <template>
   <section class="certificate-wrapper">
-    <div ref="certificateRef" class="certificate-sheet">
+    <div
+      ref="certificateRef"
+      class="certificate-sheet"
+    >
       <header class="text-center mb-6">
         <h1 class="text-h4 text-uppercase mb-2">{{ t("education.certificate.title") }}</h1>
         <p class="text-subtitle-1 text-medium-emphasis">
@@ -24,27 +27,36 @@
         <p class="text-body-2 text-medium-emphasis">
           {{ t("education.certificate.date", { value: formattedDate }) }}
         </p>
-        <p class="text-body-2 text-medium-emphasis">
-          ID — {{ certificate.id }}
-        </p>
+        <p class="text-body-2 text-medium-emphasis">ID — {{ certificate.id }}</p>
       </div>
 
       <footer class="certificate-footer mt-8">
         <div class="signature">
-          <span class="text-body-2 text-medium-emphasis">{{ t("education.certificate.signature") }}</span>
+          <span class="text-body-2 text-medium-emphasis">{{
+            t("education.certificate.signature")
+          }}</span>
           <div class="signature-line" />
           <span class="text-caption">{{ t("education.certificate.signatureName") }}</span>
         </div>
         <div class="stamp">
-          <span class="text-body-2 text-medium-emphasis">{{ t("education.certificate.organization") }}</span>
+          <span class="text-body-2 text-medium-emphasis">{{
+            t("education.certificate.organization")
+          }}</span>
           <span class="text-caption">{{ t("education.certificate.organizationTagline") }}</span>
         </div>
       </footer>
     </div>
 
     <div class="mt-6 d-flex justify-end">
-      <v-btn color="primary" size="large" @click="downloadCertificate">
-        <v-icon icon="mdi:download" start />
+      <v-btn
+        color="primary"
+        size="large"
+        @click="downloadCertificate"
+      >
+        <v-icon
+          icon="mdi:download"
+          start
+        />
         {{ t("education.certificate.download") }}
       </v-btn>
     </div>
@@ -64,7 +76,9 @@ const { download } = useHtml2Pdf();
 const certificateRef = ref<HTMLElement | null>(null);
 
 const formattedDate = computed(() =>
-  new Intl.DateTimeFormat(locale.value, { dateStyle: "long" }).format(new Date(props.certificate.dateIso)),
+  new Intl.DateTimeFormat(locale.value, { dateStyle: "long" }).format(
+    new Date(props.certificate.dateIso),
+  ),
 );
 
 async function downloadCertificate() {
@@ -77,7 +91,8 @@ async function downloadCertificate() {
 
 <style scoped>
 .certificate-wrapper {
-  background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.12), transparent 45%),
+  background:
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.12), transparent 45%),
     radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.12), transparent 40%);
   padding: clamp(1.5rem, 4vw, 3rem);
   border-radius: 24px;

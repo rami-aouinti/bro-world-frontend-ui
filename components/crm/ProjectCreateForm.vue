@@ -4,9 +4,7 @@
     class="h-100"
   >
     <v-card-item>
-      <v-card-title class="text-h5 font-weight-semibold">
-        Create project
-      </v-card-title>
+      <v-card-title class="text-h5 font-weight-semibold"> Create project </v-card-title>
       <v-card-subtitle class="text-body-2 text-medium-emphasis">
         Capture a new opportunity and enrich your CRM pipeline.
       </v-card-subtitle>
@@ -79,9 +77,7 @@ const successMessage = computed(() => {
   }
 
   const name = project.name?.trim();
-  return name
-    ? `“${name}” has been added to your pipeline.`
-    : "Project saved successfully.";
+  return name ? `“${name}” has been added to your pipeline.` : "Project saved successfully.";
 });
 
 async function handleSubmit() {

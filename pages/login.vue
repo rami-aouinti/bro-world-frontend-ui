@@ -1,5 +1,8 @@
 <template>
-  <v-container class="py-8" fluid>
+  <v-container
+    class="py-8"
+    fluid
+  >
     <v-row justify="center">
       <v-col
         cols="12"

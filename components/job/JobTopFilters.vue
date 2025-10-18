@@ -24,20 +24,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue"
-import { useI18n } from "vue-i18n"
+import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 type Emits = {
-  (e: "update:search", value: string): void
-  (e: "update:location", value: string): void
-}
+  (e: "update:search", value: string): void;
+  (e: "update:location", value: string): void;
+};
 
-const emit = defineEmits<Emits>()
-const { t } = useI18n()
+const emit = defineEmits<Emits>();
+const { t } = useI18n();
 
-const search = ref("")
-const selectedLocations = ref("")
+const search = ref("");
+const selectedLocations = ref("");
 
-watch(search, (value) => emit("update:search", value))
-watch(selectedLocations, (value) => emit("update:location", value))
+watch(search, (value) => emit("update:search", value));
+watch(selectedLocations, (value) => emit("update:location", value));
 </script>

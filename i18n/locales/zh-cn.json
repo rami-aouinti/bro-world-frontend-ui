@@ -1552,11 +1552,7 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": [
-              "Design Systems",
-              "Figma",
-              "User Research"
-            ],
+            "tags": ["Design Systems", "Figma", "User Research"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1570,11 +1566,7 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": [
-              "Python",
-              "LangChain",
-              "Hiring Ops"
-            ],
+            "tags": ["Python", "LangChain", "Hiring Ops"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1588,11 +1580,7 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": [
-              "B2B SaaS",
-              "Enterprise Sales",
-              "Forecasting"
-            ],
+            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1606,11 +1594,7 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": [
-              "Implementation",
-              "Change Management",
-              "ATS Integrations"
-            ],
+            "tags": ["Implementation", "Change Management", "ATS Integrations"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -2160,10 +2144,7 @@
             "date": "第 1 周",
             "title": "消除布局位移",
             "description": "审计所有信息流卡片和故事，确保尺寸可预期。",
-            "actions": [
-              "为故事缩略图和帖子插图添加宽高比。",
-              "在骨架占位符后固定广告容器。"
-            ]
+            "actions": ["为故事缩略图和帖子插图添加宽高比。", "在骨架占位符后固定广告容器。"]
           },
           "week2": {
             "date": "第 2 周",
@@ -2217,52 +2198,52 @@
       "description": "Plan, track, and optimise hiring programmes."
     },
 
-"game": {
-  "title": "Gaming",
-  "description": "Deliver live game experiences, communities, and monetisation."
-},
-"calendar": {
-  "title": "日程",
-  "cardTitle": "日程概览",
-  "menuTitle": "今日事件",
-  "menuEmpty": "今天暂无事件",
-  "authNotice": "登录后即可查看并管理你的事件。",
-  "rangeAllDay": "全天",
-  "fallbackTitle": "未命名事件",
-  "actions": {
-    "newEvent": "新建事件"
-  },
-  "dialog": {
-    "createTitle": "新建事件",
-    "editTitle": "编辑事件",
-    "titleLabel": "事件标题",
-    "startLabel": "开始日期",
-    "endLabel": "结束日期",
-    "startTimeLabel": "开始时间",
-    "endTimeLabel": "结束时间",
-    "allDayLabel": "全天事件",
-    "privateLabel": "私密事件",
-    "locationLabel": "地点",
-    "descriptionLabel": "描述",
-    "save": "保存",
-    "cancel": "关闭",
-    "delete": "删除",
-    "confirmDelete": "删除事件",
-    "confirmDeleteMessage": "该操作无法撤销，确定要删除此事件吗？"
-  },
-  "validation": {
-    "title": "请填写标题。",
-    "startDate": "请选择开始日期。",
-    "startTime": "请选择开始时间。",
-    "endTime": "结束时间必须晚于开始时间。",
-    "range": "事件的结束时间必须晚于开始时间。"
-  },
-  "errors": {
-    "save": "暂时无法保存更改，请稍后再试。",
-    "delete": "暂时无法删除事件，请稍后再试。",
-    "load": "暂时无法加载事件，请稍后再试。"
-  }
-},
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "calendar": {
+      "title": "日程",
+      "cardTitle": "日程概览",
+      "menuTitle": "今日事件",
+      "menuEmpty": "今天暂无事件",
+      "authNotice": "登录后即可查看并管理你的事件。",
+      "rangeAllDay": "全天",
+      "fallbackTitle": "未命名事件",
+      "actions": {
+        "newEvent": "新建事件"
+      },
+      "dialog": {
+        "createTitle": "新建事件",
+        "editTitle": "编辑事件",
+        "titleLabel": "事件标题",
+        "startLabel": "开始日期",
+        "endLabel": "结束日期",
+        "startTimeLabel": "开始时间",
+        "endTimeLabel": "结束时间",
+        "allDayLabel": "全天事件",
+        "privateLabel": "私密事件",
+        "locationLabel": "地点",
+        "descriptionLabel": "描述",
+        "save": "保存",
+        "cancel": "关闭",
+        "delete": "删除",
+        "confirmDelete": "删除事件",
+        "confirmDeleteMessage": "该操作无法撤销，确定要删除此事件吗？"
+      },
+      "validation": {
+        "title": "请填写标题。",
+        "startDate": "请选择开始日期。",
+        "startTime": "请选择开始时间。",
+        "endTime": "结束时间必须晚于开始时间。",
+        "range": "事件的结束时间必须晚于开始时间。"
+      },
+      "errors": {
+        "save": "暂时无法保存更改，请稍后再试。",
+        "delete": "暂时无法删除事件，请稍后再试。",
+        "load": "暂时无法加载事件，请稍后再试。"
+      }
+    },
     "ecommerce": {
       "title": "E-commerce",
       "description": "Launch and scale modern retail journeys.",
@@ -2685,41 +2666,25 @@
           "content": {
             "title": "内容管理",
             "description": "规划、发布与归档文章、活动以及学习资源。",
-            "tags": [
-              "内容流程",
-              "审核",
-              "排期"
-            ],
+            "tags": ["内容流程", "审核", "排期"],
             "status": "有12条内容等待编辑审核。"
           },
           "community": {
             "title": "社区与审核",
             "description": "配置审核规则，管理举报与处罚。",
-            "tags": [
-              "举报",
-              "处罚",
-              "私信"
-            ],
+            "tags": ["举报", "处罚", "私信"],
             "status": "平均响应时间：1小时42分。"
           },
           "commerce": {
             "title": "变现与优惠",
             "description": "管理订阅、优惠码和商业合作。",
-            "tags": [
-              "订阅",
-              "计费",
-              "优惠券"
-            ],
+            "tags": ["订阅", "计费", "优惠券"],
             "status": "本周转化率提升3.4%。"
           },
           "governance": {
             "title": "治理与合规",
             "description": "审计访问权限，管理敏感角色并准备合规报告。",
-            "tags": [
-              "审计",
-              "角色",
-              "可追溯性"
-            ],
+            "tags": ["审计", "角色", "可追溯性"],
             "status": "最近一次完整审计在5天前完成。"
           }
         }

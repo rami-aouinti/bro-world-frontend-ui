@@ -7,18 +7,14 @@ import { useRuntimeConfig } from "#imports";
 import type { AuthUser } from "~/types/auth";
 import { profileEventsSample, profileSample } from "~/lib/mock/profile";
 import { usersListSample } from "~/lib/mock/users";
+import { deleteCachedProfile, readCachedProfile, writeCachedProfile } from "../cache/profile";
+import type { FriendEntry, FriendStory, ProfileEvent, ProfileUser } from "~/types/pages/profile";
 import {
-  deleteCachedProfile,
-  readCachedProfile,
-  writeCachedProfile,
-} from "../cache/profile";
-import type {
-  FriendEntry,
-  FriendStory,
-  ProfileEvent,
-  ProfileUser,
-} from "~/types/pages/profile";
-import { getSessionToken, getSessionUser, waitForSessionToken, withAuthHeaders } from "../auth/session";
+  getSessionToken,
+  getSessionUser,
+  waitForSessionToken,
+  withAuthHeaders,
+} from "../auth/session";
 
 export interface UsersApiUser extends AuthUser {
   language?: string | null;
@@ -104,8 +100,7 @@ function warnMockFallback(key: string, subject: string, error: unknown) {
   mockFallbackWarnings.add(key);
 
   const reason = extractErrorReason(error);
-  const details =
-    reason && !reason.endsWith(".") ? `${reason}.` : reason ?? "";
+  const details = reason && !reason.endsWith(".") ? `${reason}.` : (reason ?? "");
   const hint =
     "Sign in to your account or configure the users service API credentials to load live data.";
 
@@ -222,11 +217,12 @@ function normalizeProfileEvent(raw: unknown): ProfileEvent | null {
   const titleCandidate = record.title;
   const start = sanitizeEventTimestamp(record.start);
 
-  const id = typeof idCandidate === "string" && idCandidate.trim()
-    ? idCandidate.trim()
-    : idCandidate != null
-      ? String(idCandidate)
-      : "";
+  const id =
+    typeof idCandidate === "string" && idCandidate.trim()
+      ? idCandidate.trim()
+      : idCandidate != null
+        ? String(idCandidate)
+        : "";
   const title = typeof titleCandidate === "string" ? titleCandidate : "";
 
   if (!id || !title || !start) {
@@ -281,9 +277,9 @@ function normalizeProfileEvents(payload: ProfileEventsSource): ProfileEvent[] {
     ? payload
     : payload && typeof payload === "object"
       ? Array.isArray((payload as ProfileEventsEnvelope).events)
-        ? (payload as ProfileEventsEnvelope).events ?? []
+        ? ((payload as ProfileEventsEnvelope).events ?? [])
         : Array.isArray((payload as ProfileEventsEnvelope).data)
-          ? (payload as ProfileEventsEnvelope).data ?? []
+          ? ((payload as ProfileEventsEnvelope).data ?? [])
           : []
       : [];
 
@@ -467,8 +463,7 @@ async function requestUsersApi<T>(
         : typeof payload.error === "string"
           ? payload.error
           : undefined;
-    const fallbackMessage =
-      error instanceof Error ? error.message : "Users API request failed.";
+    const fallbackMessage = error instanceof Error ? error.message : "Users API request failed.";
 
     let message = rawMessage || fallbackMessage;
 
@@ -650,11 +645,7 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
         }
       }
 
-      warnMockFallback(
-        "profile",
-        "profile",
-        "Authentication is required to access this resource.",
-      );
+      warnMockFallback("profile", "profile", "Authentication is required to access this resource.");
 
       return unwrapProfile(profileSample);
     }

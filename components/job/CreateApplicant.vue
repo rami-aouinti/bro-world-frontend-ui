@@ -9,7 +9,10 @@
       <v-card-text>
         <v-form @submit.prevent="submitApplicant">
           <v-row class="align-center mb-4">
-            <v-col cols="12" md="4">
+            <v-col
+              cols="12"
+              md="4"
+            >
               <v-select
                 v-model="form.applicantId"
                 :items="applicants"
@@ -20,10 +23,17 @@
                 rounded="xl"
               />
             </v-col>
-            <v-col cols="12" md="1" class="text-center">
+            <v-col
+              cols="12"
+              md="1"
+              class="text-center"
+            >
               <div class="text-subtitle-1 font-weight-medium">OR</div>
             </v-col>
-            <v-col cols="12" md="3">
+            <v-col
+              cols="12"
+              md="3"
+            >
               <v-btn
                 block
                 color="primary"
@@ -33,10 +43,17 @@
                 {{ t("applicant.uploadResume") }}
               </v-btn>
             </v-col>
-            <v-col cols="12" md="1" class="text-center">
+            <v-col
+              cols="12"
+              md="1"
+              class="text-center"
+            >
               <div class="text-subtitle-1 font-weight-medium">OR</div>
             </v-col>
-            <v-col cols="12" md="3">
+            <v-col
+              cols="12"
+              md="3"
+            >
               <v-btn
                 block
                 color="primary"
@@ -67,7 +84,10 @@
         >
           {{ t("buttons.cancel") }}
         </v-btn>
-        <v-btn color="primary" @click="submitApplicant">
+        <v-btn
+          color="primary"
+          @click="submitApplicant"
+        >
           {{ t("applicant.submit") }}
         </v-btn>
       </v-card-actions>
@@ -76,130 +96,130 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue"
-import { useI18n } from "vue-i18n"
-import { useNuxtApp } from "#app"
-import CreateResume from "~/components/job/CreateResume.vue"
-import UploadResume from "~/components/job/UploadResume.vue"
+import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#app";
+import CreateResume from "~/components/job/CreateResume.vue";
+import UploadResume from "~/components/job/UploadResume.vue";
 
 type Applicant = {
-  id: string
-  name?: string
-  resume?: string
-}
+  id: string;
+  name?: string;
+  resume?: string;
+};
 
-type ApplicantsResponse = Applicant[] | { data: Applicant[] }
+type ApplicantsResponse = Applicant[] | { data: Applicant[] };
 
 const props = defineProps<{
-  modelValue: boolean
-  selectedJobId: string | null
-}>()
+  modelValue: boolean;
+  selectedJobId: string | null;
+}>();
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: boolean): void
-  (e: "applicant-created"): void
-}>()
+  (e: "update:modelValue", value: boolean): void;
+  (e: "applicant-created"): void;
+}>();
 
-const { t } = useI18n()
-const { $notify: notify, $fetch } = useNuxtApp()
+const { t } = useI18n();
+const { $notify: notify, $fetch } = useNuxtApp();
 
 const form = ref({
   applicantId: "",
-})
+});
 
-const showCreateApplicant = ref(false)
-const showUploadApplicant = ref(false)
-const applicants = ref<Applicant[]>([])
+const showCreateApplicant = ref(false);
+const showUploadApplicant = ref(false);
+const applicants = ref<Applicant[]>([]);
 
 function getFileName(applicant: Applicant) {
   if (applicant.resume) {
-    const parts = applicant.resume.split("/")
-    return parts[parts.length - 1] ?? applicant.resume
+    const parts = applicant.resume.split("/");
+    return parts[parts.length - 1] ?? applicant.resume;
   }
 
-  return `${applicant.name ?? "Unknown"} (${t("applicant.noResume")})`
+  return `${applicant.name ?? "Unknown"} (${t("applicant.noResume")})`;
 }
 
 function toggleCreateApplicant() {
-  showCreateApplicant.value = !showCreateApplicant.value
+  showCreateApplicant.value = !showCreateApplicant.value;
   if (showCreateApplicant.value) {
-    showUploadApplicant.value = false
+    showUploadApplicant.value = false;
   }
 }
 
 function toggleUploadApplicant() {
-  showUploadApplicant.value = !showUploadApplicant.value
+  showUploadApplicant.value = !showUploadApplicant.value;
   if (showUploadApplicant.value) {
-    showCreateApplicant.value = false
+    showCreateApplicant.value = false;
   }
 }
 
 function normaliseApplicants(result: ApplicantsResponse): Applicant[] {
   if (Array.isArray(result)) {
-    return result
+    return result;
   }
 
   if (result && Array.isArray(result.data)) {
-    return result.data
+    return result.data;
   }
 
-  return []
+  return [];
 }
 
 async function fetchApplicants() {
   try {
-    const response = await $fetch<ApplicantsResponse>("/api/job/applicants")
-    applicants.value = normaliseApplicants(response)
+    const response = await $fetch<ApplicantsResponse>("/api/job/applicants");
+    applicants.value = normaliseApplicants(response);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 function handleApplicantCreated() {
-  void fetchApplicants()
-  showCreateApplicant.value = false
-  emit("applicant-created")
-  emit("update:modelValue", false)
+  void fetchApplicants();
+  showCreateApplicant.value = false;
+  emit("applicant-created");
+  emit("update:modelValue", false);
 }
 
 function handleApplicantUploaded() {
-  void fetchApplicants()
-  showUploadApplicant.value = false
-  emit("applicant-created")
-  emit("update:modelValue", false)
+  void fetchApplicants();
+  showUploadApplicant.value = false;
+  emit("applicant-created");
+  emit("update:modelValue", false);
 }
 
 async function submitApplicant() {
   if (!props.selectedJobId || !form.value.applicantId) {
-    notify.error(t("applicant.selectError"))
-    return
+    notify.error(t("applicant.selectError"));
+    return;
   }
 
   try {
     await $fetch(`/api/job/application/${props.selectedJobId}/${form.value.applicantId}`, {
       method: "POST",
-    })
+    });
   } catch (error) {
-    console.error(error)
-    notify.error(t("applicant.submitError"))
-    return
+    console.error(error);
+    notify.error(t("applicant.submitError"));
+    return;
   }
 
-  notify.success(t("applicant.submitSuccess"))
-  emit("applicant-created")
-  emit("update:modelValue", false)
+  notify.success(t("applicant.submitSuccess"));
+  emit("applicant-created");
+  emit("update:modelValue", false);
 }
 
 watch(
   () => props.modelValue,
   (value) => {
     if (value) {
-      void fetchApplicants()
+      void fetchApplicants();
     }
   },
-)
+);
 
 onMounted(() => {
-  void fetchApplicants()
-})
+  void fetchApplicants();
+});
 </script>

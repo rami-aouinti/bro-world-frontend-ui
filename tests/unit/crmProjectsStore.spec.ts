@@ -130,7 +130,7 @@ describe("crm projects store", () => {
       await listPromise;
 
       const createPromise = store.createProject({
-        name: "Nouvelle campagne", 
+        name: "Nouvelle campagne",
         status: "planning",
         finishDate: "2024-10-01T10:00:00Z",
         tags: ["nouveau"],

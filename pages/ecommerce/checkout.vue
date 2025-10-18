@@ -1,12 +1,18 @@
 <template>
   <main class="py-10">
     <v-container>
-      <v-breadcrumbs :items="breadcrumbs" class="mb-6" />
+      <v-breadcrumbs
+        :items="breadcrumbs"
+        class="mb-6"
+      />
       <header class="mb-8 text-center text-md-left">
         <h1 class="text-h4 text-md-h3 font-weight-bold mb-3">
           {{ t("demo.ecommerce.checkout.title") }}
         </h1>
-        <p class="text-body-1 text-medium-emphasis mx-auto mx-md-0" style="max-width: 640px">
+        <p
+          class="text-body-1 text-medium-emphasis mx-auto mx-md-0"
+          style="max-width: 640px"
+        >
           {{ t("demo.ecommerce.checkout.subtitle") }}
         </p>
       </header>
@@ -18,12 +24,21 @@
         class="mb-8"
       >
         {{ t("demo.ecommerce.checkout.empty") }}
-        <v-btn :to="localePath('/ecommerce/catalog')" class="ml-4" variant="outlined">
+        <v-btn
+          :to="localePath('/ecommerce/catalog')"
+          class="ml-4"
+          variant="outlined"
+        >
           {{ t("demo.ecommerce.checkout.shopLink") }}
         </v-btn>
       </v-alert>
 
-      <v-stepper v-else v-model="currentStep" elevation="0" color="primary">
+      <v-stepper
+        v-else
+        v-model="currentStep"
+        elevation="0"
+        color="primary"
+      >
         <v-stepper-header>
           <v-stepper-item
             v-for="step in steps"
@@ -38,14 +53,23 @@
         <v-stepper-window>
           <v-stepper-window-item value="shipping">
             <v-row dense>
-              <v-col cols="12" md="7">
-                <v-card variant="outlined" class="pa-6 mb-6">
+              <v-col
+                cols="12"
+                md="7"
+              >
+                <v-card
+                  variant="outlined"
+                  class="pa-6 mb-6"
+                >
                   <h2 class="text-h5 font-weight-semibold mb-4">
                     {{ t("demo.ecommerce.checkout.shippingTitle") }}
                   </h2>
                   <v-form @submit.prevent="goToPayment">
                     <v-row dense>
-                      <v-col cols="12" md="6">
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
                         <v-text-field
                           v-model="shippingForm.firstName"
                           :label="t('demo.ecommerce.checkout.fields.firstName')"
@@ -53,7 +77,10 @@
                           variant="outlined"
                         />
                       </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
                         <v-text-field
                           v-model="shippingForm.lastName"
                           :label="t('demo.ecommerce.checkout.fields.lastName')"
@@ -78,7 +105,10 @@
                           variant="outlined"
                         />
                       </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col
+                        cols="12"
+                        md="6"
+                      >
                         <v-text-field
                           v-model="shippingForm.city"
                           :label="t('demo.ecommerce.checkout.fields.city')"
@@ -86,7 +116,10 @@
                           variant="outlined"
                         />
                       </v-col>
-                      <v-col cols="6" md="3">
+                      <v-col
+                        cols="6"
+                        md="3"
+                      >
                         <v-text-field
                           v-model="shippingForm.postalCode"
                           :label="t('demo.ecommerce.checkout.fields.postalCode')"
@@ -94,7 +127,10 @@
                           variant="outlined"
                         />
                       </v-col>
-                      <v-col cols="6" md="3">
+                      <v-col
+                        cols="6"
+                        md="3"
+                      >
                         <v-text-field
                           v-model="shippingForm.country"
                           :label="t('demo.ecommerce.checkout.fields.country')"
@@ -103,9 +139,18 @@
                         />
                       </v-col>
                       <v-col cols="12">
-                        <v-radio-group v-model="shippingForm.delivery" :label="t('demo.ecommerce.checkout.fields.delivery')">
-                          <v-radio value="standard" :label="t('demo.ecommerce.checkout.delivery.standard')" />
-                          <v-radio value="express" :label="t('demo.ecommerce.checkout.delivery.express')" />
+                        <v-radio-group
+                          v-model="shippingForm.delivery"
+                          :label="t('demo.ecommerce.checkout.fields.delivery')"
+                        >
+                          <v-radio
+                            value="standard"
+                            :label="t('demo.ecommerce.checkout.delivery.standard')"
+                          />
+                          <v-radio
+                            value="express"
+                            :label="t('demo.ecommerce.checkout.delivery.express')"
+                          />
                         </v-radio-group>
                       </v-col>
                       <v-col cols="12">
@@ -118,17 +163,26 @@
                       </v-col>
                     </v-row>
                     <div class="d-flex justify-end gap-3 mt-4">
-                      <v-btn variant="tonal" @click="goToCart">
+                      <v-btn
+                        variant="tonal"
+                        @click="goToCart"
+                      >
                         {{ t("demo.ecommerce.checkout.backToCart") }}
                       </v-btn>
-                      <v-btn color="primary" type="submit">
+                      <v-btn
+                        color="primary"
+                        type="submit"
+                      >
                         {{ t("demo.ecommerce.checkout.continueToPayment") }}
                       </v-btn>
                     </div>
                   </v-form>
                 </v-card>
               </v-col>
-              <v-col cols="12" md="5">
+              <v-col
+                cols="12"
+                md="5"
+              >
                 <OrderSummary
                   :items="cart.itemsWithDetails"
                   :subtotal="cart.subtotal"
@@ -142,8 +196,14 @@
 
           <v-stepper-window-item value="payment">
             <v-row dense>
-              <v-col cols="12" md="7">
-                <v-card variant="outlined" class="pa-6 mb-6">
+              <v-col
+                cols="12"
+                md="7"
+              >
+                <v-card
+                  variant="outlined"
+                  class="pa-6 mb-6"
+                >
                   <h2 class="text-h5 font-weight-semibold mb-4">
                     {{ t("demo.ecommerce.checkout.paymentTitle") }}
                   </h2>
@@ -181,17 +241,26 @@
                       </v-col>
                     </v-row>
                     <div class="d-flex justify-space-between gap-3 mt-4">
-                      <v-btn variant="tonal" @click="goToShipping">
+                      <v-btn
+                        variant="tonal"
+                        @click="goToShipping"
+                      >
                         {{ t("demo.ecommerce.checkout.backToShipping") }}
                       </v-btn>
-                      <v-btn color="primary" type="submit">
+                      <v-btn
+                        color="primary"
+                        type="submit"
+                      >
                         {{ t("demo.ecommerce.checkout.reviewOrder") }}
                       </v-btn>
                     </div>
                   </v-form>
                 </v-card>
 
-                <v-card variant="tonal" class="pa-6">
+                <v-card
+                  variant="tonal"
+                  class="pa-6"
+                >
                   <h3 class="text-subtitle-1 font-weight-semibold mb-4">
                     {{ t("demo.ecommerce.checkout.exampleOrdersTitle") }}
                   </h3>
@@ -202,7 +271,9 @@
                       color="primary"
                     >
                       <template #opposite>
-                        <div class="text-caption text-medium-emphasis">{{ formatDate(order.createdAt) }}</div>
+                        <div class="text-caption text-medium-emphasis">
+                          {{ formatDate(order.createdAt) }}
+                        </div>
                       </template>
                       <div class="text-subtitle-2 font-weight-semibold mb-1">
                         {{ order.number }} · {{ t(`demo.ecommerce.orders.status.${order.status}`) }}
@@ -217,7 +288,10 @@
                   </v-timeline>
                 </v-card>
               </v-col>
-              <v-col cols="12" md="5">
+              <v-col
+                cols="12"
+                md="5"
+              >
                 <OrderSummary
                   :items="cart.itemsWithDetails"
                   :subtotal="cart.subtotal"
@@ -227,7 +301,11 @@
                 >
                   <template #actions>
                     <div class="pa-4 pt-0">
-                      <v-btn block color="primary" @click="goToReview">
+                      <v-btn
+                        block
+                        color="primary"
+                        @click="goToReview"
+                      >
                         {{ t("demo.ecommerce.checkout.summaryContinue") }}
                       </v-btn>
                     </div>
@@ -239,8 +317,14 @@
 
           <v-stepper-window-item value="review">
             <v-row dense>
-              <v-col cols="12" md="7">
-                <v-card variant="outlined" class="pa-6 mb-6">
+              <v-col
+                cols="12"
+                md="7"
+              >
+                <v-card
+                  variant="outlined"
+                  class="pa-6 mb-6"
+                >
                   <h2 class="text-h5 font-weight-semibold mb-4">
                     {{ t("demo.ecommerce.checkout.reviewTitle") }}
                   </h2>
@@ -262,20 +346,33 @@
                       </v-list-item-subtitle>
                     </v-list-item>
                   </v-list>
-                  <v-alert type="success" variant="tonal" class="mt-4">
+                  <v-alert
+                    type="success"
+                    variant="tonal"
+                    class="mt-4"
+                  >
                     {{ t("demo.ecommerce.checkout.reviewHint") }}
                   </v-alert>
                   <div class="d-flex justify-space-between gap-3 mt-6">
-                    <v-btn variant="tonal" @click="goToPayment">
+                    <v-btn
+                      variant="tonal"
+                      @click="goToPayment"
+                    >
                       {{ t("demo.ecommerce.checkout.backToPayment") }}
                     </v-btn>
-                    <v-btn color="primary" @click="placeOrder">
+                    <v-btn
+                      color="primary"
+                      @click="placeOrder"
+                    >
                       {{ t("demo.ecommerce.checkout.placeOrder") }}
                     </v-btn>
                   </div>
                 </v-card>
               </v-col>
-              <v-col cols="12" md="5">
+              <v-col
+                cols="12"
+                md="5"
+              >
                 <OrderSummary
                   :items="cart.itemsWithDetails"
                   :subtotal="cart.subtotal"
@@ -285,10 +382,19 @@
                 >
                   <template #actions>
                     <div class="pa-4 pt-0">
-                      <v-btn block color="primary" @click="placeOrder">
+                      <v-btn
+                        block
+                        color="primary"
+                        @click="placeOrder"
+                      >
                         {{ t("demo.ecommerce.checkout.placeOrder") }}
                       </v-btn>
-                      <v-btn block variant="text" color="secondary" @click="goToCatalog">
+                      <v-btn
+                        block
+                        variant="text"
+                        color="secondary"
+                        @click="goToCatalog"
+                      >
                         {{ t("demo.ecommerce.checkout.browseMore") }}
                       </v-btn>
                     </div>
@@ -319,9 +425,21 @@ const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
 const steps = [
-  { value: "shipping", title: "demo.ecommerce.checkout.steps.shipping", subtitle: "demo.ecommerce.checkout.steps.shippingSubtitle" },
-  { value: "payment", title: "demo.ecommerce.checkout.steps.payment", subtitle: "demo.ecommerce.checkout.steps.paymentSubtitle" },
-  { value: "review", title: "demo.ecommerce.checkout.steps.review", subtitle: "demo.ecommerce.checkout.steps.reviewSubtitle" },
+  {
+    value: "shipping",
+    title: "demo.ecommerce.checkout.steps.shipping",
+    subtitle: "demo.ecommerce.checkout.steps.shippingSubtitle",
+  },
+  {
+    value: "payment",
+    title: "demo.ecommerce.checkout.steps.payment",
+    subtitle: "demo.ecommerce.checkout.steps.paymentSubtitle",
+  },
+  {
+    value: "review",
+    title: "demo.ecommerce.checkout.steps.review",
+    subtitle: "demo.ecommerce.checkout.steps.reviewSubtitle",
+  },
 ] as const;
 
 const currentStep = ref(cart.state.value.activeStep ?? "shipping");
@@ -393,9 +511,7 @@ definePageMeta({
   documentDriven: false,
 });
 
-const baseUrl = computed(
-  () => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com",
-);
+const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {
   const title = t("seo.ecommerce.checkout.title");
@@ -451,8 +567,9 @@ function formatDate(value: string) {
   });
 }
 
-const shippingSummary = computed(() =>
-  `${shippingForm.firstName} ${shippingForm.lastName} · ${shippingForm.address}, ${shippingForm.city} ${shippingForm.postalCode} (${shippingForm.country})`,
+const shippingSummary = computed(
+  () =>
+    `${shippingForm.firstName} ${shippingForm.lastName} · ${shippingForm.address}, ${shippingForm.city} ${shippingForm.postalCode} (${shippingForm.country})`,
 );
 
 const paymentSummary = computed(

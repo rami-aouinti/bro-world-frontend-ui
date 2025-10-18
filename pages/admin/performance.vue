@@ -61,9 +61,7 @@
           />
         </template>
         <template #fallback>
-          <PerformanceTimelineSkeleton
-            :item-count="timelineMilestones.length || 4"
-          />
+          <PerformanceTimelineSkeleton :item-count="timelineMilestones.length || 4" />
         </template>
       </Suspense>
     </v-container>
@@ -109,11 +107,15 @@ const localeKey = computed(() => localeProperties.value?.iso ?? locale.value);
 
 type PrimitiveLocalizedValue = string | number | boolean;
 
-let primitiveLocalizedValueCache: Map<PrimitiveLocalizedValue, string> =
-  new Map<PrimitiveLocalizedValue, string>();
+let primitiveLocalizedValueCache: Map<PrimitiveLocalizedValue, string> = new Map<
+  PrimitiveLocalizedValue,
+  string
+>();
 let objectLocalizedValueCache: WeakMap<object, string> = new WeakMap<object, string>();
-let stringListCache: WeakMap<readonly unknown[], string[]> =
-  new WeakMap<readonly unknown[], string[]>();
+let stringListCache: WeakMap<readonly unknown[], string[]> = new WeakMap<
+  readonly unknown[],
+  string[]
+>();
 
 watch(
   localeKey,
@@ -156,7 +158,9 @@ function parseToNumber(value: string, fallback: number) {
 }
 
 const performanceScore = computed(() => parseToNumber(t("pages.performance.hero.score"), 72));
-const performanceMaxScore = computed(() => parseToNumber(t("pages.performance.hero.maxScore"), 100));
+const performanceMaxScore = computed(() =>
+  parseToNumber(t("pages.performance.hero.maxScore"), 100),
+);
 
 interface MetricConfig {
   label: string;
@@ -251,10 +255,9 @@ function renderStringList(value: unknown): string[] {
 
 const metricsDefinition = computed(
   () =>
-    (tm("pages.performance.metrics.items") as Record<
-      string,
-      Partial<Record<keyof MetricConfig, unknown>> | undefined
-    > | undefined) ?? {},
+    (tm("pages.performance.metrics.items") as
+      | Record<string, Partial<Record<keyof MetricConfig, unknown>> | undefined>
+      | undefined) ?? {},
 );
 
 const metricCards = computed(() => {
@@ -290,10 +293,13 @@ interface OpportunityItem {
 
 const opportunitiesDefinition = computed(
   () =>
-    (tm("pages.performance.opportunities.items") as Record<
-      string,
-      Partial<Record<keyof Omit<OpportunityItem, "key" | "icon" | "color">, unknown>> | undefined
-    > | undefined) ?? {},
+    (tm("pages.performance.opportunities.items") as
+      | Record<
+          string,
+          | Partial<Record<keyof Omit<OpportunityItem, "key" | "icon" | "color">, unknown>>
+          | undefined
+        >
+      | undefined) ?? {},
 );
 
 const opportunities = computed<OpportunityItem[]>(() => {
@@ -329,10 +335,9 @@ interface TimelineMilestone {
 
 const timelineDefinition = computed(
   () =>
-    (tm("pages.performance.timeline.items") as Record<
-      string,
-      Partial<Record<keyof Omit<TimelineMilestone, "key">, unknown>> | undefined
-    > | undefined) ?? {},
+    (tm("pages.performance.timeline.items") as
+      | Record<string, Partial<Record<keyof Omit<TimelineMilestone, "key">, unknown>> | undefined>
+      | undefined) ?? {},
 );
 
 const timelineMilestones = computed<TimelineMilestone[]>(() => {

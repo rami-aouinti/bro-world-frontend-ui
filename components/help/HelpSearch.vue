@@ -1,7 +1,17 @@
 <template>
-  <div class="help-search" :class="{ 'help-search--has-results': shouldShowResults }">
-    <form class="help-search__form" @submit.prevent="emitSubmit">
-      <label class="visually-hidden" :for="inputId">{{ ariaLabel || placeholder }}</label>
+  <div
+    class="help-search"
+    :class="{ 'help-search--has-results': shouldShowResults }"
+  >
+    <form
+      class="help-search__form"
+      @submit.prevent="emitSubmit"
+    >
+      <label
+        class="visually-hidden"
+        :for="inputId"
+        >{{ ariaLabel || placeholder }}</label
+      >
       <v-text-field
         :id="inputId"
         :model-value="internalValue"
@@ -16,13 +26,33 @@
         @keydown.enter="emitSubmit"
       />
     </form>
-    <div v-if="shouldShowResults" class="help-search__panel" role="region" :aria-live="ariaLive">
-      <p v-if="!results.length && !loading" class="text-body-2 text-medium-emphasis px-4 py-3">
+    <div
+      v-if="shouldShowResults"
+      class="help-search__panel"
+      role="region"
+      :aria-live="ariaLive"
+    >
+      <p
+        v-if="!results.length && !loading"
+        class="text-body-2 text-medium-emphasis px-4 py-3"
+      >
         {{ emptyMessage }}
       </p>
-      <ul v-else class="help-search__results" :aria-label="resultsLabel">
-        <li v-for="result in results" :key="result.slug" class="help-search__result">
-          <NuxtLink :to="resultLink(result)" class="help-search__result-link" @click="emitSelect(result)">
+      <ul
+        v-else
+        class="help-search__results"
+        :aria-label="resultsLabel"
+      >
+        <li
+          v-for="result in results"
+          :key="result.slug"
+          class="help-search__result"
+        >
+          <NuxtLink
+            :to="resultLink(result)"
+            class="help-search__result-link"
+            @click="emitSelect(result)"
+          >
             <span class="help-search__result-title">{{ result.title }}</span>
             <span class="help-search__result-excerpt">{{ result.excerpt }}</span>
           </NuxtLink>

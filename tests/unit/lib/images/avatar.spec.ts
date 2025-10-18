@@ -4,10 +4,7 @@ import { optimizeAvatarUrl } from "~/lib/images/avatar";
 
 describe("optimizeAvatarUrl", () => {
   it("adds format parameter for bro-world avatars", () => {
-    const result = optimizeAvatarUrl(
-      "https://bro-world.org/uploads/avatar/example.jpg",
-      48,
-    );
+    const result = optimizeAvatarUrl("https://bro-world.org/uploads/avatar/example.jpg", 48);
 
     if (!result) {
       throw new Error("Expected a transformed URL");

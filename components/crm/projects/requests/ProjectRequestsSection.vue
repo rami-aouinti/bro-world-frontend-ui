@@ -8,10 +8,17 @@
     </header>
 
     <Suspense>
-      <AsyncProjectRequests :key="queryStore.getHash" :project-id="projectId" />
+      <AsyncProjectRequests
+        :key="queryStore.getHash"
+        :project-id="projectId"
+      />
       <template #fallback>
         <div class="py-10 text-center">
-          <v-progress-circular indeterminate color="primary" size="32" />
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            size="32"
+          />
         </div>
       </template>
     </Suspense>

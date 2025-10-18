@@ -218,14 +218,7 @@ const anchor = ref<{ x: number; y: number; width: number; height: number } | nul
 let openTimer: number | null = null;
 let longPressTimer: number | null = null;
 
-type ShareOption =
-  | "feed"
-  | "story"
-  | "messenger"
-  | "whatsapp"
-  | "page"
-  | "group"
-  | "profile";
+type ShareOption = "feed" | "story" | "messenger" | "whatsapp" | "page" | "group" | "profile";
 
 const shareMenuOpen = ref(false);
 

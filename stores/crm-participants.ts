@@ -46,11 +46,19 @@ export const useCrmParticipantsStore = defineStore("crm-participants", () => {
   const pending = useState<Record<string, boolean>>("crm-participants:pending", () => ({}));
   const error = useState<Record<string, string | null>>("crm-participants:error", () => ({}));
   const removing = useState<Record<string, boolean>>("crm-participants:removing", () => ({}));
-  const removeError = useState<Record<string, string | null>>("crm-participants:remove-error", () => ({}));
-  const lastFetched = useState<Record<string, number | null>>("crm-participants:last-fetched", () => ({}));
+  const removeError = useState<Record<string, string | null>>(
+    "crm-participants:remove-error",
+    () => ({}),
+  );
+  const lastFetched = useState<Record<string, number | null>>(
+    "crm-participants:last-fetched",
+    () => ({}),
+  );
   const runtimeConfig = useRuntimeConfig();
   const envMockFlag =
-    typeof process !== "undefined" ? process.env?.NUXT_PUBLIC_CRM_PARTICIPANTS_USE_MOCKS : undefined;
+    typeof process !== "undefined"
+      ? process.env?.NUXT_PUBLIC_CRM_PARTICIPANTS_USE_MOCKS
+      : undefined;
   const configMockFlag = runtimeConfig.public?.crmParticipants?.useMocks;
   const useMockData = ((): boolean => {
     if (typeof envMockFlag !== "undefined") {
@@ -186,7 +194,10 @@ export const useCrmParticipantsStore = defineStore("crm-participants", () => {
     return participants.value[trimmedId] ?? [];
   }
 
-  function getParticipant(projectId: string, userId: string | null | undefined): CrmParticipant | null {
+  function getParticipant(
+    projectId: string,
+    userId: string | null | undefined,
+  ): CrmParticipant | null {
     const trimmedId = projectId?.trim();
     const trimmedUserId = userId?.trim();
 
@@ -195,7 +206,9 @@ export const useCrmParticipantsStore = defineStore("crm-participants", () => {
     }
 
     const participantsForProject = participants.value[trimmedId] ?? [];
-    return participantsForProject.find((participant) => participant.userId === trimmedUserId) ?? null;
+    return (
+      participantsForProject.find((participant) => participant.userId === trimmedUserId) ?? null
+    );
   }
 
   return {

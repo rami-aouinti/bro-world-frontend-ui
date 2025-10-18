@@ -10,7 +10,11 @@
         {{ step }} / {{ totalSteps }}
       </v-card-subtitle>
       <v-card-text class="pa-6">
-        <v-stepper v-model="step" class="job-stepper" elevation="0">
+        <v-stepper
+          v-model="step"
+          class="job-stepper"
+          elevation="0"
+        >
           <v-stepper-header class="job-stepper__header">
             <v-stepper-item
               v-for="stepItem in steps"
@@ -96,7 +100,10 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" md="6">
+                <v-col
+                  cols="12"
+                  md="6"
+                >
                   <v-textarea
                     v-model="jobForm.description"
                     :label="t('job.description')"
@@ -106,7 +113,10 @@
                     rounded="xl"
                   />
                 </v-col>
-                <v-col cols="12" md="6">
+                <v-col
+                  cols="12"
+                  md="6"
+                >
                   <v-textarea
                     v-model="jobForm.work"
                     :label="t('job.work')"
@@ -118,7 +128,10 @@
                 </v-col>
               </v-row>
               <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn variant="text" @click="prevStep">
+                <v-btn
+                  variant="text"
+                  @click="prevStep"
+                >
                   {{ t("buttons.back") }}
                 </v-btn>
                 <v-btn
@@ -133,7 +146,10 @@
 
             <v-stepper-window-item :value="3">
               <v-row class="py-2">
-                <v-col cols="12" md="4">
+                <v-col
+                  cols="12"
+                  md="4"
+                >
                   <v-select
                     v-model="jobForm.requiredSkills"
                     :items="['Php', 'Symfony', 'Html', 'Css', 'Laravel']"
@@ -144,7 +160,10 @@
                     rounded="xl"
                   />
                 </v-col>
-                <v-col cols="12" md="4">
+                <v-col
+                  cols="12"
+                  md="4"
+                >
                   <v-select
                     v-model="jobForm.requirements"
                     :items="['Symfony', 'Backend', 'Node']"
@@ -155,7 +174,10 @@
                     rounded="xl"
                   />
                 </v-col>
-                <v-col cols="12" md="4">
+                <v-col
+                  cols="12"
+                  md="4"
+                >
                   <v-select
                     v-model="jobForm.experience"
                     :items="experienceOptions"
@@ -170,7 +192,8 @@
               <v-row>
                 <v-col cols="12">
                   <div class="text-grey-darken-1">
-                    {{ t('job.salaryRange') }}: {{ salaryRangeRange[0] }} € - {{ salaryRangeRange[1] }} €
+                    {{ t("job.salaryRange") }}: {{ salaryRangeRange[0] }} € -
+                    {{ salaryRangeRange[1] }} €
                   </div>
                   <v-range-slider
                     v-model="salaryRangeRange"
@@ -183,10 +206,17 @@
                 </v-col>
               </v-row>
               <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn variant="text" @click="prevStep">
+                <v-btn
+                  variant="text"
+                  @click="prevStep"
+                >
                   {{ t("buttons.back") }}
                 </v-btn>
-                <v-btn :disabled="!canContinue" color="primary" @click="nextStep">
+                <v-btn
+                  :disabled="!canContinue"
+                  color="primary"
+                  @click="nextStep"
+                >
                   {{ t("buttons.continue") }}
                 </v-btn>
               </v-row>
@@ -194,7 +224,10 @@
 
             <v-stepper-window-item :value="4">
               <v-row class="py-2">
-                <v-col cols="12" md="4">
+                <v-col
+                  cols="12"
+                  md="4"
+                >
                   <v-select
                     v-model="jobForm.workType"
                     :items="['Remote', 'Onsite', 'Hybrid']"
@@ -204,7 +237,10 @@
                     rounded="xl"
                   />
                 </v-col>
-                <v-col cols="12" md="4">
+                <v-col
+                  cols="12"
+                  md="4"
+                >
                   <v-select
                     v-model="jobForm.contractType"
                     :items="['Fulltime', 'Parttime']"
@@ -214,7 +250,10 @@
                     rounded="xl"
                   />
                 </v-col>
-                <v-col cols="12" md="4">
+                <v-col
+                  cols="12"
+                  md="4"
+                >
                   <v-text-field
                     v-model="jobForm.workLocation"
                     :label="t('job.location')"
@@ -231,7 +270,10 @@
                     class="d-flex align-center gap-4 mb-3"
                   >
                     <v-row>
-                      <v-col cols="12" md="5">
+                      <v-col
+                        cols="12"
+                        md="5"
+                      >
                         <v-select
                           v-model="lang.name"
                           :items="availableLanguages"
@@ -243,7 +285,10 @@
                           rounded="xl"
                         />
                       </v-col>
-                      <v-col cols="12" md="5">
+                      <v-col
+                        cols="12"
+                        md="5"
+                      >
                         <v-select
                           v-model="lang.level"
                           :items="['basic', 'intermediate', 'fluent', 'native']"
@@ -253,7 +298,10 @@
                           rounded="xl"
                         />
                       </v-col>
-                      <v-col cols="12" md="2">
+                      <v-col
+                        cols="12"
+                        md="2"
+                      >
                         <v-btn
                           icon
                           variant="text"
@@ -276,10 +324,17 @@
                 </v-col>
               </v-row>
               <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn variant="text" @click="prevStep">
+                <v-btn
+                  variant="text"
+                  @click="prevStep"
+                >
                   {{ t("buttons.back") }}
                 </v-btn>
-                <v-btn :disabled="!canContinue" color="primary" @click="nextStep">
+                <v-btn
+                  :disabled="!canContinue"
+                  color="primary"
+                  @click="nextStep"
+                >
                   {{ t("buttons.continue") }}
                 </v-btn>
               </v-row>
@@ -299,10 +354,16 @@
                 </v-col>
               </v-row>
               <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn variant="text" @click="prevStep">
+                <v-btn
+                  variant="text"
+                  @click="prevStep"
+                >
                   {{ t("buttons.back") }}
                 </v-btn>
-                <v-btn color="primary" @click="submitJob">
+                <v-btn
+                  color="primary"
+                  @click="submitJob"
+                >
                   {{ t("job.submit") }}
                 </v-btn>
               </v-row>
@@ -315,57 +376,57 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue"
-import { useI18n } from "vue-i18n"
-import { useNuxtApp } from "#app"
-import CreateCompany from "~/components/job/CreateCompany.vue"
+import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#app";
+import CreateCompany from "~/components/job/CreateCompany.vue";
 
 type Language = {
-  name: string
-  level: string
-}
+  name: string;
+  level: string;
+};
 
 type JobForm = {
-  companyId: string
-  title: string
-  description: string
-  requiredSkills: string[]
-  workType: string
-  contractType: string
-  requirements: string[]
-  benefits: string
-  experience: string
-  salaryRange: string
-  work: string
-  workLocation: string
-  languages: Language[]
-}
+  companyId: string;
+  title: string;
+  description: string;
+  requiredSkills: string[];
+  workType: string;
+  contractType: string;
+  requirements: string[];
+  benefits: string;
+  experience: string;
+  salaryRange: string;
+  work: string;
+  workLocation: string;
+  languages: Language[];
+};
 
 type Company = {
-  id: string
-  name: string
-}
+  id: string;
+  name: string;
+};
 
-type CompaniesResponse = Company[] | { data: Company[] }
+type CompaniesResponse = Company[] | { data: Company[] };
 
-const props = defineProps<{ modelValue: boolean }>()
-const emit = defineEmits<{ "update:modelValue": [value: boolean]; "job-created": [] }>()
+const props = defineProps<{ modelValue: boolean }>();
+const emit = defineEmits<{ "update:modelValue": [value: boolean]; "job-created": [] }>();
 
-const { t } = useI18n()
-const { $notify: notify, $fetch } = useNuxtApp()
+const { t } = useI18n();
+const { $notify: notify, $fetch } = useNuxtApp();
 
-const step = ref(1)
+const step = ref(1);
 const steps = computed(() => [
   { value: 1, title: t("company.title"), icon: "mdi-domain" },
   { value: 2, title: t("job.details"), icon: "mdi-briefcase-variant" },
   { value: 3, title: t("job.requirements"), icon: "mdi-check-decagram" },
   { value: 4, title: t("job.additional"), icon: "mdi-playlist-edit" },
   { value: 5, title: t("job.others"), icon: "mdi-dots-horizontal" },
-])
-const totalSteps = computed(() => steps.value.length)
-const progress = computed(() => (step.value / totalSteps.value) * 100)
-const showCreateCompany = ref(false)
-const companies = ref<Company[]>([])
+]);
+const totalSteps = computed(() => steps.value.length);
+const progress = computed(() => (step.value / totalSteps.value) * 100);
+const showCreateCompany = ref(false);
+const companies = ref<Company[]>([]);
 
 function createDefaultJobForm(): JobForm {
   return {
@@ -382,10 +443,10 @@ function createDefaultJobForm(): JobForm {
     work: "",
     workLocation: "",
     languages: [],
-  }
+  };
 }
 
-const jobForm = ref<JobForm>(createDefaultJobForm())
+const jobForm = ref<JobForm>(createDefaultJobForm());
 
 const experienceOptions = [
   { label: "6 months", value: "0.5" },
@@ -394,7 +455,7 @@ const experienceOptions = [
   { label: "3 years", value: "3" },
   { label: "5 years+", value: "5+" },
   { label: "10 years+", value: "10+" },
-]
+];
 
 const availableLanguages = [
   { name: "English" },
@@ -407,85 +468,84 @@ const availableLanguages = [
   { name: "中文" },
   { name: "日本語" },
   { name: "Русский" },
-]
+];
 
-const salaryRangeRange = ref<[number, number]>([30000, 90000])
+const salaryRangeRange = ref<[number, number]>([30000, 90000]);
 
 const canContinue = computed(() => {
   switch (step.value) {
     case 1:
-      return Boolean(jobForm.value.companyId)
+      return Boolean(jobForm.value.companyId);
     case 2:
-      return jobForm.value.title.trim().length > 0
+      return jobForm.value.title.trim().length > 0;
     case 3:
       return (
-        (jobForm.value.requiredSkills.length > 0 ||
-          jobForm.value.requirements.length > 0) &&
+        (jobForm.value.requiredSkills.length > 0 || jobForm.value.requirements.length > 0) &&
         jobForm.value.experience !== ""
-      )
+      );
     case 4:
       return Boolean(
         jobForm.value.workType &&
           jobForm.value.contractType &&
-          jobForm.value.workLocation.trim().length > 0
-      )
+          jobForm.value.workLocation.trim().length > 0,
+      );
     default:
-      return true
+      return true;
   }
-})
+});
 
 watch(salaryRangeRange, (range) => {
-  jobForm.value.salaryRange = `${range[0]} - ${range[1]}`
-})
+  jobForm.value.salaryRange = `${range[0]} - ${range[1]}`;
+});
 
 function toggleCreateCompany() {
-  showCreateCompany.value = !showCreateCompany.value
+  showCreateCompany.value = !showCreateCompany.value;
 }
 
 function nextStep() {
   if (!canContinue.value) {
-    return
+    return;
   }
 
   if (step.value < totalSteps.value) {
-    step.value += 1
+    step.value += 1;
   }
 }
 
 function prevStep() {
   if (step.value > 1) {
-    step.value -= 1
+    step.value -= 1;
   }
 }
 
 function addLanguage() {
-  jobForm.value.languages.push({ name: "", level: "" })
+  jobForm.value.languages.push({ name: "", level: "" });
 }
 
 function normaliseCompanies(result: CompaniesResponse) {
   if (Array.isArray(result)) {
-    return result
+    return result;
   }
 
   if (result && Array.isArray(result.data)) {
-    return result.data
+    return result.data;
   }
 
-  return []
+  return [];
 }
 
 async function fetchCompanies() {
   try {
-    const response = await $fetch<CompaniesResponse>("/api/job/companies")
-    companies.value = normaliseCompanies(response)
+    const response = await $fetch<CompaniesResponse>("/api/job/companies");
+    companies.value = normaliseCompanies(response);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 function onCompanyCreated() {
-  fetchCompanies()
-  showCreateCompany.value = false
+  fetchCompanies();
+  showCreateCompany.value = false;
 }
 
 async function submitJob() {
@@ -493,32 +553,32 @@ async function submitJob() {
     await $fetch("/api/job/job", {
       method: "POST",
       body: jobForm.value,
-    })
+    });
   } catch (error) {
-    console.error(error)
-    notify.error(t("job.createError"))
-    return
+    console.error(error);
+    notify.error(t("job.createError"));
+    return;
   }
 
-  notify.success(t("job.createdSuccess"))
-  emit("job-created")
-  emit("update:modelValue", false)
-  step.value = 1
-  jobForm.value = createDefaultJobForm()
+  notify.success(t("job.createdSuccess"));
+  emit("job-created");
+  emit("update:modelValue", false);
+  step.value = 1;
+  jobForm.value = createDefaultJobForm();
 }
 
 watch(
   () => props.modelValue,
   (value) => {
     if (value) {
-      void fetchCompanies()
+      void fetchCompanies();
     }
   },
-)
+);
 
 onMounted(() => {
-  void fetchCompanies()
-})
+  void fetchCompanies();
+});
 </script>
 
 <style scoped>

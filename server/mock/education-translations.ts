@@ -303,8 +303,7 @@ export const educationTranslationsByLocale: Record<string, EducationTranslations
           },
           "data-l4": {
             title: "Tell a story",
-            content:
-              "<p>Combine multiple charts and add annotations to guide the narrative.</p>",
+            content: "<p>Combine multiple charts and add annotations to guide the narrative.</p>",
           },
         },
         quiz: {
@@ -416,8 +415,7 @@ export const educationTranslationsByLocale: Record<string, EducationTranslations
           },
           "prod-l3": {
             title: "Data-driven steering",
-            content:
-              "<p>Connect product metrics and team health through a shared dashboard.</p>",
+            content: "<p>Connect product metrics and team health through a shared dashboard.</p>",
           },
           "prod-l4": {
             title: "Feedback loops",

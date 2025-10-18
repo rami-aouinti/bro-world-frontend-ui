@@ -1,12 +1,29 @@
 <template>
-  <section aria-labelledby="help-faq-title" class="help-faq">
+  <section
+    aria-labelledby="help-faq-title"
+    class="help-faq"
+  >
     <div class="mb-6 d-flex align-center justify-space-between flex-wrap gap-4">
       <div>
-        <h2 id="help-faq-title" class="text-h5 text-md-h4 mb-1">{{ title }}</h2>
-        <p v-if="subtitle" class="text-medium-emphasis">{{ subtitle }}</p>
+        <h2
+          id="help-faq-title"
+          class="text-h5 text-md-h4 mb-1"
+        >
+          {{ title }}
+        </h2>
+        <p
+          v-if="subtitle"
+          class="text-medium-emphasis"
+        >
+          {{ subtitle }}
+        </p>
       </div>
     </div>
-    <v-expansion-panels variant="accordion" multiple tile>
+    <v-expansion-panels
+      variant="accordion"
+      multiple
+      tile
+    >
       <v-expansion-panel
         v-for="item in faqItems"
         :key="item.q"
