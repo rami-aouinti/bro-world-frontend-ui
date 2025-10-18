@@ -3,6 +3,7 @@ import type { App } from "vue";
 
 interface PiniaInstance {
   install: (app: App) => void;
+  use: (plugin: unknown) => PiniaInstance;
   _a: App | null;
   _s: Map<string, unknown>;
   state: Record<string, unknown>;
@@ -42,6 +43,9 @@ export function createPinia(): PiniaInstance {
       app.provide(PINIA_SYMBOL as symbol, pinia);
       app.config.globalProperties.$pinia = pinia;
       setActivePinia(pinia);
+    },
+    use() {
+      return pinia;
     },
     _a: null,
     _s: stores,
