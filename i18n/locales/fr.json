@@ -7,6 +7,67 @@
     "close": "Fermer",
     "loading": "Chargement…"
   },
+  "help": {
+    "meta": {
+      "title": "Centre d'aide",
+      "description": "Trouvez des réponses rapides, des guides et des FAQ pour {site}."
+    },
+    "hero": {
+      "badge": "Support",
+      "title": "Comment pouvons-nous vous aider ?",
+      "subtitle": "Parcourez les guides, les procédures de dépannage et les conseils pour tirer le meilleur parti de la plateforme.",
+      "searchPlaceholder": "Rechercher un sujet ou un mot-clé…",
+      "searchAria": "Rechercher dans le centre d'aide",
+      "popular": "Populaire"
+    },
+    "categories": {
+      "title": "Par catégorie",
+      "subtitle": "Nous avons regroupé nos guides essentiels pour démarrer rapidement.",
+      "count": "{count} articles"
+    },
+    "faq": {
+      "title": "FAQ rapide",
+      "subtitle": "Les réponses aux questions les plus fréquentes.",
+      "items": [
+        {
+          "q": "Comment créer un compte ?",
+          "a": "Remplissez le formulaire d'inscription avec votre e-mail professionnel, confirmez-le sous 24 h puis complétez votre profil."
+        },
+        {
+          "q": "Puis-je inviter mon équipe ?",
+          "a": "Les administrateurs peuvent inviter des collègues depuis Paramètres → Membres et gérer leurs droits à tout moment."
+        },
+        {
+          "q": "Où télécharger mes factures ?",
+          "a": "Rendez-vous dans Facturation → Factures pour télécharger des PDF conformes à conserver."
+        }
+      ]
+    },
+    "search": {
+      "resultsLabel": "Résultats de recherche du centre d'aide"
+    },
+    "article": {
+      "toc": "Dans cette page",
+      "copyLink": "Copier le lien de la section",
+      "copied": "Lien de section copié",
+      "updated": "Mis à jour {date}",
+      "related": "Articles liés",
+      "feedback": {
+        "question": "Cet article vous a-t-il été utile ?",
+        "yes": "Oui",
+        "no": "Non",
+        "thanks": "Merci pour votre retour !"
+      }
+    },
+    "empty": {
+      "title": "Aucun résultat",
+      "subtitle": "Essayez un autre mot-clé ou explorez une catégorie."
+    },
+    "breadcrumbs": {
+      "home": "Accueil",
+      "help": "Centre d'aide"
+    }
+  },
   "layout": {
     "loadingOverlay": {
       "srLabel": "Chargement de Bro World",

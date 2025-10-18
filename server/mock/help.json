@@ -1,0 +1,368 @@
+{
+  "categories": [
+    {
+      "id": "getting-started",
+      "slug": "getting-started",
+      "icon": "mdi-rocket-launch",
+      "order": 1,
+      "translations": {
+        "en": {
+          "title": "Getting started",
+          "description": "Learn the basics to onboard your team in minutes."
+        },
+        "fr": {
+          "title": "Bien démarrer",
+          "description": "Apprenez les bases pour embarquer votre équipe en quelques minutes."
+        },
+        "de": {
+          "title": "Erste Schritte",
+          "description": "Lernen Sie die Grundlagen, um Ihr Team in wenigen Minuten einzuführen."
+        },
+        "ar": {
+          "title": "البدء",
+          "description": "تعلّم الأساسيات لبدء فريقك في دقائق."
+        }
+      }
+    },
+    {
+      "id": "account",
+      "slug": "account",
+      "icon": "mdi-account-circle",
+      "order": 2,
+      "translations": {
+        "en": {
+          "title": "Account & profile",
+          "description": "Manage login, security, and notifications."
+        },
+        "fr": {
+          "title": "Compte et profil",
+          "description": "Gérez la connexion, la sécurité et les notifications."
+        },
+        "de": {
+          "title": "Konto & Profil",
+          "description": "Verwalten Sie Anmeldung, Sicherheit und Benachrichtigungen."
+        },
+        "ar": {
+          "title": "الحساب والملف الشخصي",
+          "description": "أدِر تسجيل الدخول والأمان والإشعارات."
+        }
+      }
+    },
+    {
+      "id": "billing",
+      "slug": "billing",
+      "icon": "mdi-credit-card-outline",
+      "order": 3,
+      "translations": {
+        "en": {
+          "title": "Billing & plans",
+          "description": "Update payment methods and invoices."
+        },
+        "fr": {
+          "title": "Facturation et offres",
+          "description": "Mettez à jour vos moyens de paiement et vos factures."
+        },
+        "de": {
+          "title": "Abrechnung & Pläne",
+          "description": "Aktualisieren Sie Zahlungsmethoden und Rechnungen."
+        },
+        "ar": {
+          "title": "الفوترة والباقات",
+          "description": "حدِّث وسائل الدفع والفواتير."
+        }
+      }
+    },
+    {
+      "id": "collaboration",
+      "slug": "collaboration",
+      "icon": "mdi-account-multiple-outline",
+      "order": 4,
+      "translations": {
+        "en": {
+          "title": "Collaboration",
+          "description": "Invite teammates and organize workspaces."
+        },
+        "fr": {
+          "title": "Collaboration",
+          "description": "Invitez vos collègues et organisez vos espaces de travail."
+        },
+        "de": {
+          "title": "Zusammenarbeit",
+          "description": "Laden Sie Teammitglieder ein und organisieren Sie Arbeitsbereiche."
+        },
+        "ar": {
+          "title": "التعاون",
+          "description": "ادعُ زملاءك ونظِّم مساحات العمل."
+        }
+      }
+    }
+  ],
+  "articles": [
+    {
+      "id": "create-account",
+      "slug": "create-account",
+      "categorySlug": "getting-started",
+      "keywords": ["signup", "account", "email"],
+      "updatedAtIso": "2024-09-20T10:00:00.000Z",
+      "isPopular": true,
+      "translations": {
+        "en": {
+          "title": "Create your account",
+          "excerpt": "Open an account, confirm your email, and complete your profile in three simple steps.",
+          "body": "<h2 id=\"create-account-step-1\">Step 1 — Start from the welcome page</h2><p>Click <strong>Get started</strong> on the welcome page and provide your name, work email, and a strong password. Passwords must include at least 10 characters with a mix of letters and numbers.</p><h2 id=\"create-account-step-2\">Step 2 — Confirm your email address</h2><p>Check your inbox for the confirmation email. Select <em>Confirm now</em> to activate your account. The link stays valid for 24 hours.</p><h2 id=\"create-account-step-3\">Step 3 — Personalise your profile</h2><p>Upload a profile picture, add a time zone, and set your default language. These preferences help us tailor notifications for your team.</p>",
+          "related": ["invite-team", "reset-password"]
+        },
+        "fr": {
+          "title": "Créer votre compte",
+          "excerpt": "Ouvrez un compte, confirmez votre e-mail et complétez votre profil en trois étapes simples.",
+          "body": "<h2 id=\"creer-compte-etape-1\">Étape 1 — Depuis la page d'accueil</h2><p>Cliquez sur <strong>Commencer</strong> et indiquez votre nom, votre e-mail professionnel et un mot de passe sécurisé. Ce dernier doit contenir au moins 10 caractères mêlant lettres et chiffres.</p><h2 id=\"creer-compte-etape-2\">Étape 2 — Confirmez votre e-mail</h2><p>Consultez votre messagerie et cliquez sur <em>Confirmer maintenant</em> pour activer votre compte. Le lien est valable 24 heures.</p><h2 id=\"creer-compte-etape-3\">Étape 3 — Personnalisez votre profil</h2><p>Téléversez une photo, choisissez votre fuseau horaire et votre langue par défaut afin d'adapter les notifications.</p>",
+          "related": ["invite-team", "reset-password"]
+        },
+        "de": {
+          "title": "Erstellen Sie Ihr Konto",
+          "excerpt": "Eröffnen Sie ein Konto, bestätigen Sie Ihre E-Mail und vervollständigen Sie Ihr Profil in drei einfachen Schritten.",
+          "body": "<h2 id=\"konto-erstellen-schritt-1\">Schritt 1 – Starten Sie über die Willkommensseite</h2><p>Klicken Sie auf <strong>Jetzt loslegen</strong> und geben Sie Ihren Namen, Ihre geschäftliche E-Mail-Adresse und ein sicheres Passwort ein. Das Passwort muss mindestens 10 Zeichen mit Buchstaben und Zahlen enthalten.</p><h2 id=\"konto-erstellen-schritt-2\">Schritt 2 – Bestätigen Sie Ihre E-Mail-Adresse</h2><p>Öffnen Sie die Bestätigungs-E-Mail und klicken Sie auf <em>Jetzt bestätigen</em>, um Ihr Konto zu aktivieren. Der Link ist 24 Stunden gültig.</p><h2 id=\"konto-erstellen-schritt-3\">Schritt 3 – Personalisieren Sie Ihr Profil</h2><p>Laden Sie ein Profilbild hoch, wählen Sie Ihre Zeitzone und legen Sie Ihre Standardsprache fest, damit Benachrichtigungen zu Ihrem Team passen.</p>",
+          "related": ["invite-team", "reset-password"]
+        },
+        "ar": {
+          "title": "إنشاء حسابك",
+          "excerpt": "افتح حسابًا، وأكِّد بريدك الإلكتروني، وأكمِل ملفك الشخصي في ثلاث خطوات بسيطة.",
+          "body": "<h2 id=\"khataa-alhisab-almarhala-1\">الخطوة 1 — ابدأ من صفحة الترحيب</h2><p>اضغط على <strong>ابدأ الآن</strong> وأدخل اسمك وبريدك الإلكتروني للعمل وكلمة مرور قوية. يجب أن تتضمن كلمة المرور 10 أحرف على الأقل مع مزيج من الحروف والأرقام.</p><h2 id=\"khataa-alhisab-almarhala-2\">الخطوة 2 — أكِّد بريدك الإلكتروني</h2><p>تحقق من صندوق الوارد لديك واضغط على <em>تأكيد الآن</em> لتنشيط حسابك. يظل الرابط صالحًا لمدة 24 ساعة.</p><h2 id=\"khataa-alhisab-almarhala-3\">الخطوة 3 — خصِّص ملفك الشخصي</h2><p>قم برفع صورة شخصية، وحدِّد منطقتك الزمنية ولغتك المفضلة حتى نكيّف الإشعارات مع فريقك.</p>",
+          "related": ["invite-team", "reset-password"]
+        }
+      }
+    },
+    {
+      "id": "invite-team",
+      "slug": "invite-team",
+      "categorySlug": "collaboration",
+      "keywords": ["team", "invitation", "workspace"],
+      "updatedAtIso": "2024-10-05T08:00:00.000Z",
+      "isPopular": true,
+      "translations": {
+        "en": {
+          "title": "Invite your team",
+          "excerpt": "Add teammates, assign roles, and manage workspace permissions.",
+          "body": "<h2 id=\"invite-team-step-1\">Step 1 — Open the members panel</h2><p>Navigate to <strong>Settings → Members</strong> within your workspace. Only admins can invite new teammates.</p><h2 id=\"invite-team-step-2\">Step 2 — Send invitations</h2><p>Enter up to 20 email addresses at once. Choose a role (Viewer, Editor, or Admin) and include a welcome message.</p><h2 id=\"invite-team-step-3\">Step 3 — Track acceptance</h2><p>Pending invitations appear in the <em>Awaiting approval</em> tab. You can resend or revoke them anytime.</p>",
+          "related": ["create-account", "workspace-permissions"]
+        },
+        "fr": {
+          "title": "Inviter votre équipe",
+          "excerpt": "Ajoutez des collègues, assignez des rôles et gérez les autorisations de l'espace de travail.",
+          "body": "<h2 id=\"inviter-equipe-etape-1\">Étape 1 — Ouvrir le panneau des membres</h2><p>Allez dans <strong>Paramètres → Membres</strong> de votre espace. Seuls les administrateurs peuvent inviter de nouveaux membres.</p><h2 id=\"inviter-equipe-etape-2\">Étape 2 — Envoyer les invitations</h2><p>Saisissez jusqu'à 20 e-mails simultanément. Choisissez un rôle (Lecteur, Éditeur ou Admin) et ajoutez un message d'accueil.</p><h2 id=\"inviter-equipe-etape-3\">Étape 3 — Suivre les invitations</h2><p>Les invitations en attente apparaissent dans l'onglet <em>En attente</em>. Vous pouvez les renvoyer ou les annuler à tout moment.</p>",
+          "related": ["create-account", "workspace-permissions"]
+        },
+        "de": {
+          "title": "Laden Sie Ihr Team ein",
+          "excerpt": "Fügen Sie Teammitglieder hinzu, weisen Sie Rollen zu und verwalten Sie Zugriffsrechte.",
+          "body": "<h2 id=\"team-einladen-schritt-1\">Schritt 1 – Mitgliederbereich öffnen</h2><p>Wechseln Sie in Ihrem Arbeitsbereich zu <strong>Einstellungen → Mitglieder</strong>. Nur Administratoren können neue Mitglieder einladen.</p><h2 id=\"team-einladen-schritt-2\">Schritt 2 – Einladungen versenden</h2><p>Geben Sie bis zu 20 E-Mail-Adressen gleichzeitig ein. Wählen Sie eine Rolle (Leser, Bearbeiter oder Admin) und fügen Sie eine Begrüßung hinzu.</p><h2 id=\"team-einladen-schritt-3\">Schritt 3 – Annahmen verfolgen</h2><p>Offene Einladungen finden Sie im Tab <em>Ausstehend</em>. Sie können sie jederzeit erneut senden oder widerrufen.</p>",
+          "related": ["create-account", "workspace-permissions"]
+        },
+        "ar": {
+          "title": "دعوة فريقك",
+          "excerpt": "أضِف أعضاء الفريق، وعيِّن الأدوار، وأدِر صلاحيات مساحة العمل.",
+          "body": "<h2 id=\"daeowat-alfariq-marhala-1\">الخطوة 1 — افتح لوحة الأعضاء</h2><p>انتقل إلى <strong>الإعدادات ← الأعضاء</strong> في مساحة العمل الخاصة بك. لا يستطيع دعوة أعضاء جدد سوى المسؤولين.</p><h2 id=\"daeowat-alfariq-marhala-2\">الخطوة 2 — إرسال الدعوات</h2><p>أدخل ما يصل إلى 20 بريدًا إلكترونيًا في آن واحد. اختر الدور (مشاهد أو محرر أو مسؤول) وأضِف رسالة ترحيب.</p><h2 id=\"daeowat-alfariq-marhala-3\">الخطوة 3 — متابعة القبول</h2><p>تظهر الدعوات المعلّقة في تبويب <em>بانتظار القبول</em>. يمكنك إعادة الإرسال أو الإلغاء في أي وقت.</p>",
+          "related": ["create-account", "workspace-permissions"]
+        }
+      }
+    },
+    {
+      "id": "reset-password",
+      "slug": "reset-password",
+      "categorySlug": "account",
+      "keywords": ["password", "login"],
+      "updatedAtIso": "2024-08-12T09:15:00.000Z",
+      "translations": {
+        "en": {
+          "title": "Reset your password",
+          "excerpt": "Follow these steps if you can no longer sign in or forgot your password.",
+          "body": "<h2 id=\"reset-password-step-1\">Step 1 — Request a reset link</h2><p>From the login page, choose <strong>Forgot password</strong> and submit the email linked to your account.</p><h2 id=\"reset-password-step-2\">Step 2 — Check your inbox</h2><p>You'll receive a secure link. It expires after 30 minutes for your safety.</p><h2 id=\"reset-password-step-3\">Step 3 — Create a new password</h2><p>Enter the reset code plus a new password. Use at least 12 characters to increase security.</p>",
+          "related": ["create-account", "enable-2fa"]
+        },
+        "fr": {
+          "title": "Réinitialiser votre mot de passe",
+          "excerpt": "Suivez ces étapes si vous ne pouvez plus vous connecter ou avez oublié votre mot de passe.",
+          "body": "<h2 id=\"reinitialiser-mdp-etape-1\">Étape 1 — Demander un lien</h2><p>Depuis la page de connexion, cliquez sur <strong>Mot de passe oublié</strong> et saisissez l'e-mail associé à votre compte.</p><h2 id=\"reinitialiser-mdp-etape-2\">Étape 2 — Consultez votre boîte mail</h2><p>Vous recevrez un lien sécurisé valable 30 minutes pour des raisons de sécurité.</p><h2 id=\"reinitialiser-mdp-etape-3\">Étape 3 — Créez un nouveau mot de passe</h2><p>Entrez le code reçu et choisissez un mot de passe d'au moins 12 caractères.</p>",
+          "related": ["create-account", "enable-2fa"]
+        },
+        "de": {
+          "title": "Passwort zurücksetzen",
+          "excerpt": "So gehen Sie vor, wenn Sie sich nicht mehr anmelden können oder Ihr Passwort vergessen haben.",
+          "body": "<h2 id=\"passwort-zuruecksetzen-schritt-1\">Schritt 1 – Link anfordern</h2><p>Wählen Sie auf der Anmeldeseite <strong>Passwort vergessen</strong> und geben Sie Ihre registrierte E-Mail-Adresse ein.</p><h2 id=\"passwort-zuruecksetzen-schritt-2\">Schritt 2 – Posteingang prüfen</h2><p>Sie erhalten einen sicheren Link, der aus Sicherheitsgründen nach 30 Minuten abläuft.</p><h2 id=\"passwort-zuruecksetzen-schritt-3\">Schritt 3 – Neues Passwort erstellen</h2><p>Geben Sie den Wiederherstellungscode und ein neues Passwort mit mindestens 12 Zeichen ein.</p>",
+          "related": ["create-account", "enable-2fa"]
+        },
+        "ar": {
+          "title": "إعادة تعيين كلمة المرور",
+          "excerpt": "اتبع هذه الخطوات إذا لم تتمكن من تسجيل الدخول أو نسيت كلمة المرور.",
+          "body": "<h2 id=\"iieadat-taayin-kelmat-alsir-marhala-1\">الخطوة 1 — اطلب رابط إعادة التعيين</h2><p>من صفحة تسجيل الدخول اضغط على <strong>هل نسيت كلمة المرور؟</strong> ثم أدخل البريد المرتبط بحسابك.</p><h2 id=\"iieadat-taayin-kelmat-alsir-marhala-2\">الخطوة 2 — افحص بريدك</h2><p>ستتلقى رابطًا آمنًا تنتهي صلاحيته بعد 30 دقيقة حفاظًا على الأمان.</p><h2 id=\"iieadat-taayin-kelmat-alsir-marhala-3\">الخطوة 3 — أنشئ كلمة مرور جديدة</h2><p>أدخل رمز الاستعادة واختر كلمة مرور جديدة لا تقل عن 12 حرفًا.</p>",
+          "related": ["create-account", "enable-2fa"]
+        }
+      }
+    },
+    {
+      "id": "enable-2fa",
+      "slug": "enable-2fa",
+      "categorySlug": "account",
+      "keywords": ["security", "two factor"],
+      "updatedAtIso": "2024-07-18T14:30:00.000Z",
+      "translations": {
+        "en": {
+          "title": "Enable two-factor authentication",
+          "excerpt": "Protect your account by pairing a mobile authenticator application.",
+          "body": "<h2 id=\"enable-2fa-step-1\">Step 1 — Open security settings</h2><p>In your profile menu, select <strong>Security</strong> and locate the two-factor authentication section.</p><h2 id=\"enable-2fa-step-2\">Step 2 — Scan the QR code</h2><p>Use any compatible authenticator app to scan the QR code and enter the 6-digit verification code.</p><h2 id=\"enable-2fa-step-3\">Step 3 — Save backup codes</h2><p>Download or copy the backup codes. Store them in a safe place in case you lose device access.</p>",
+          "related": ["reset-password", "account-sessions"]
+        },
+        "fr": {
+          "title": "Activer la double authentification",
+          "excerpt": "Protégez votre compte en associant une application d'authentification mobile.",
+          "body": "<h2 id=\"activer-2fa-etape-1\">Étape 1 — Ouvrir les paramètres de sécurité</h2><p>Depuis votre profil, choisissez <strong>Sécurité</strong> puis la section Double authentification.</p><h2 id=\"activer-2fa-etape-2\">Étape 2 — Scanner le QR code</h2><p>Scannez le QR code avec une application d'authentification compatible et saisissez le code à 6 chiffres.</p><h2 id=\"activer-2fa-etape-3\">Étape 3 — Sauvegarder les codes de secours</h2><p>Téléchargez ou copiez les codes de secours et conservez-les en lieu sûr.</p>",
+          "related": ["reset-password", "account-sessions"]
+        },
+        "de": {
+          "title": "Zwei-Faktor-Authentifizierung aktivieren",
+          "excerpt": "Schützen Sie Ihr Konto mit einer Authentifizierungs-App auf dem Smartphone.",
+          "body": "<h2 id=\"2fa-aktivieren-schritt-1\">Schritt 1 – Sicherheitseinstellungen öffnen</h2><p>Wählen Sie in Ihrem Profil <strong>Sicherheit</strong> und dort den Bereich Zwei-Faktor-Authentifizierung.</p><h2 id=\"2fa-aktivieren-schritt-2\">Schritt 2 – QR-Code scannen</h2><p>Scannen Sie den QR-Code mit einer kompatiblen App und geben Sie den sechsstelligen Code ein.</p><h2 id=\"2fa-aktivieren-schritt-3\">Schritt 3 – Sicherungscodes speichern</h2><p>Laden Sie die Sicherungscodes herunter oder kopieren Sie sie und bewahren Sie sie sicher auf.</p>",
+          "related": ["reset-password", "account-sessions"]
+        },
+        "ar": {
+          "title": "تفعيل المصادقة الثنائية",
+          "excerpt": "قم بحماية حسابك عبر ربط تطبيق مصادقة على الهاتف المحمول.",
+          "body": "<h2 id=\"tfeal-altothiq-althunaey-marhala-1\">الخطوة 1 — افتح إعدادات الأمان</h2><p>من قائمة ملفك الشخصي اختر <strong>الأمان</strong> ثم قسم المصادقة الثنائية.</p><h2 id=\"tfeal-altothiq-althunaey-marhala-2\">الخطوة 2 — امسح رمز QR</h2><p>استخدم أي تطبيق مصادقة متوافق لمسح رمز QR وأدخل الرمز المكوّن من 6 أرقام.</p><h2 id=\"tfeal-altothiq-althunaey-marhala-3\">الخطوة 3 — احفظ رموز النسخ الاحتياطي</h2><p>قم بتنزيل رموز النسخ الاحتياطي أو نسخها واحتفظ بها في مكان آمن.</p>",
+          "related": ["reset-password", "account-sessions"]
+        }
+      }
+    },
+    {
+      "id": "workspace-permissions",
+      "slug": "workspace-permissions",
+      "categorySlug": "collaboration",
+      "keywords": ["permissions", "workspace", "roles"],
+      "updatedAtIso": "2024-11-10T11:45:00.000Z",
+      "translations": {
+        "en": {
+          "title": "Manage workspace permissions",
+          "excerpt": "Understand the difference between viewers, editors, admins, and owners.",
+          "body": "<h2 id=\"workspace-permissions-overview\">Role overview</h2><p>Viewers can comment, editors can modify content, admins manage billing, and owners control everything.</p><h2 id=\"workspace-permissions-adjust\">Adjust permissions</h2><p>Open <strong>Settings → Roles</strong> and assign permissions per project or workspace using toggles.</p><h2 id=\"workspace-permissions-audit\">Audit access</h2><p>Download the monthly access report to review changes and export it for compliance checks.</p>",
+          "related": ["invite-team", "account-sessions"]
+        },
+        "fr": {
+          "title": "Gérer les autorisations de l'espace",
+          "excerpt": "Comprenez la différence entre lecteurs, éditeurs, administrateurs et propriétaires.",
+          "body": "<h2 id=\"autorisations-espace-apercu\">Aperçu des rôles</h2><p>Les lecteurs commentent, les éditeurs modifient, les administrateurs gèrent la facturation et les propriétaires ont tous les droits.</p><h2 id=\"autorisations-espace-ajuster\">Ajuster les autorisations</h2><p>Ouvrez <strong>Paramètres → Rôles</strong> et attribuez des droits par projet ou espace via les interrupteurs.</p><h2 id=\"autorisations-espace-audit\">Auditer les accès</h2><p>Téléchargez le rapport mensuel pour vérifier les changements et l'utiliser en conformité.</p>",
+          "related": ["invite-team", "account-sessions"]
+        },
+        "de": {
+          "title": "Arbeitsbereichsrechte verwalten",
+          "excerpt": "Erfahren Sie den Unterschied zwischen Lesern, Bearbeitern, Administratoren und Eigentümern.",
+          "body": "<h2 id=\"arbeitsbereich-berechtigungen-uebersicht\">Rollenübersicht</h2><p>Leser kommentieren, Bearbeiter ändern Inhalte, Administratoren verwalten die Abrechnung, Eigentümer kontrollieren alles.</p><h2 id=\"arbeitsbereich-berechtigungen-anpassen\">Berechtigungen anpassen</h2><p>Öffnen Sie <strong>Einstellungen → Rollen</strong> und weisen Sie Berechtigungen je Projekt oder Arbeitsbereich zu.</p><h2 id=\"arbeitsbereich-berechtigungen-audit\">Zugriffe prüfen</h2><p>Laden Sie den monatlichen Zugriffsbericht herunter, um Änderungen zu prüfen und für Audits zu speichern.</p>",
+          "related": ["invite-team", "account-sessions"]
+        },
+        "ar": {
+          "title": "إدارة صلاحيات مساحة العمل",
+          "excerpt": "تعرّف على الفرق بين المشاهدين والمحررين والمسؤولين والمالكين.",
+          "body": "<h2 id=\"idarat-salahiyat-makan-alamal-nabdah\">نظرة عامة على الأدوار</h2><p>يمكن للمشاهدين التعليق، وللمحررين تعديل المحتوى، وللمسؤولين إدارة الفوترة، ويملك المالكون التحكم الكامل.</p><h2 id=\"idarat-salahiyat-makan-alamal-tadil\">تعديل الصلاحيات</h2><p>افتح <strong>الإعدادات ← الأدوار</strong> وخصص الصلاحيات لكل مشروع أو مساحة باستخدام المفاتيح.</p><h2 id=\"idarat-salahiyat-makan-alamal-muraqaba\">مراجعة الوصول</h2><p>نزّل تقرير الوصول الشهري لمراجعة التغييرات والاحتفاظ به لأغراض الامتثال.</p>",
+          "related": ["invite-team", "account-sessions"]
+        }
+      }
+    },
+    {
+      "id": "account-sessions",
+      "slug": "account-sessions",
+      "categorySlug": "account",
+      "keywords": ["sessions", "security"],
+      "updatedAtIso": "2024-09-01T12:00:00.000Z",
+      "translations": {
+        "en": {
+          "title": "Review active sessions",
+          "excerpt": "See which devices are connected and revoke access remotely.",
+          "body": "<h2 id=\"account-sessions-dashboard\">Open the session dashboard</h2><p>Visit <strong>Profile → Devices</strong> to view every active login with location and browser details.</p><h2 id=\"account-sessions-revoke\">Revoke or sign out</h2><p>Select <em>Sign out</em> next to any device to revoke access immediately.</p><h2 id=\"account-sessions-notify\">Enable alerts</h2><p>Turn on security alerts to receive email notifications whenever a new device signs in.</p>",
+          "related": ["enable-2fa", "reset-password"]
+        },
+        "fr": {
+          "title": "Consulter les sessions actives",
+          "excerpt": "Voyez quels appareils sont connectés et révoquez l'accès à distance.",
+          "body": "<h2 id=\"sessions-actives-tableau\">Ouvrir le tableau des sessions</h2><p>Allez dans <strong>Profil → Appareils</strong> pour voir chaque connexion active avec la localisation et le navigateur.</p><h2 id=\"sessions-actives-revoquer\">Révoquer ou déconnecter</h2><p>Cliquer sur <em>Se déconnecter</em> pour couper l'accès d'un appareil instantanément.</p><h2 id=\"sessions-actives-alertes\">Activer les alertes</h2><p>Activez les alertes de sécurité pour recevoir un e-mail à chaque nouvelle connexion.</p>",
+          "related": ["enable-2fa", "reset-password"]
+        },
+        "de": {
+          "title": "Aktive Sitzungen prüfen",
+          "excerpt": "Sehen Sie, welche Geräte verbunden sind, und entziehen Sie den Zugriff aus der Ferne.",
+          "body": "<h2 id=\"aktive-sitzungen-dashboard\">Sitzungsübersicht öffnen</h2><p>Wechseln Sie zu <strong>Profil → Geräte</strong>, um alle aktiven Logins mit Standort und Browser anzuzeigen.</p><h2 id=\"aktive-sitzungen-beenden\">Zugriff beenden</h2><p>Klicken Sie neben einem Gerät auf <em>Abmelden</em>, um den Zugriff sofort zu entziehen.</p><h2 id=\"aktive-sitzungen-benachrichtigen\">Benachrichtigungen aktivieren</h2><p>Aktivieren Sie Sicherheitsbenachrichtigungen, um bei neuen Geräten eine E-Mail zu erhalten.</p>",
+          "related": ["enable-2fa", "reset-password"]
+        },
+        "ar": {
+          "title": "مراجعة الجلسات النشطة",
+          "excerpt": "اطّلع على الأجهزة المتصلة واسمح بإلغاء الوصول عن بُعد.",
+          "body": "<h2 id=\"mراجعة-aljalsat-alnshta-alwajha\">افتح لوحة الجلسات</h2><p>انتقل إلى <strong>الملف الشخصي ← الأجهزة</strong> لعرض كل تسجيل دخول نشط مع الموقع والمتصفح.</p><h2 id=\"mراجعة-aljalsat-alnshta-alghaa\">إلغاء الوصول</h2><p>اختر <em>تسجيل الخروج</em> بجوار أي جهاز لإلغاء وصوله فورًا.</p><h2 id=\"mراجعة-aljalsat-alnshta-altanbihat\">تفعيل التنبيهات</h2><p>فعِّل تنبيهات الأمان لتتلقى بريدًا عند تسجيل دخول جهاز جديد.</p>",
+          "related": ["enable-2fa", "reset-password"]
+        }
+      }
+    },
+    {
+      "id": "update-billing",
+      "slug": "update-billing",
+      "categorySlug": "billing",
+      "keywords": ["billing", "invoice", "payment"],
+      "updatedAtIso": "2024-10-28T16:10:00.000Z",
+      "translations": {
+        "en": {
+          "title": "Update billing details",
+          "excerpt": "Add new payment methods and download compliant invoices.",
+          "body": "<h2 id=\"billing-methods\">Manage payment methods</h2><p>Under <strong>Billing → Payment methods</strong>, add cards or bank accounts and set a default option.</p><h2 id=\"billing-invoices\">Download invoices</h2><p>Select any invoice to open a PDF that includes tax ID, purchase order reference, and billing address.</p><h2 id=\"billing-notifications\">Configure notifications</h2><p>Enable reminders before each renewal to avoid service interruptions.</p>",
+          "related": ["expense-export", "workspace-permissions"]
+        },
+        "fr": {
+          "title": "Mettre à jour la facturation",
+          "excerpt": "Ajoutez de nouveaux moyens de paiement et téléchargez des factures conformes.",
+          "body": "<h2 id=\"facturation-moyens\">Gérer les moyens de paiement</h2><p>Dans <strong>Facturation → Paiements</strong>, ajoutez des cartes ou comptes bancaires et définissez l'option par défaut.</p><h2 id=\"facturation-factures\">Télécharger les factures</h2><p>Ouvrez n'importe quelle facture pour générer un PDF avec votre numéro TVA, référence de commande et adresse.</p><h2 id=\"facturation-alertes\">Configurer les alertes</h2><p>Activez les rappels avant chaque renouvellement afin d'éviter toute interruption.</p>",
+          "related": ["expense-export", "workspace-permissions"]
+        },
+        "de": {
+          "title": "Abrechnungsdaten aktualisieren",
+          "excerpt": "Fügen Sie neue Zahlungsmethoden hinzu und laden Sie gesetzeskonforme Rechnungen herunter.",
+          "body": "<h2 id=\"abrechnung-zahlungsmethoden\">Zahlungsmethoden verwalten</h2><p>Unter <strong>Abrechnung → Zahlungen</strong> können Sie Karten oder Bankkonten hinzufügen und eine Standardmethode festlegen.</p><h2 id=\"abrechnung-rechnungen\">Rechnungen herunterladen</h2><p>Öffnen Sie eine Rechnung, um ein PDF mit Steuer-ID, Bestellreferenz und Rechnungsadresse zu erhalten.</p><h2 id=\"abrechnung-benachrichtigungen\">Benachrichtigungen konfigurieren</h2><p>Aktivieren Sie Erinnerungen vor jeder Verlängerung, um Ausfälle zu vermeiden.</p>",
+          "related": ["expense-export", "workspace-permissions"]
+        },
+        "ar": {
+          "title": "تحديث معلومات الفوترة",
+          "excerpt": "أضف طرق دفع جديدة وحمِّل فواتير متوافقة.",
+          "body": "<h2 id=\"tahdith-alfoatra-turuq\">إدارة طرق الدفع</h2><p>في <strong>الفوترة ← طرق الدفع</strong> أضِف البطاقات أو الحسابات البنكية وحدد الخيار الافتراضي.</p><h2 id=\"tahdith-alfoatra-fawatir\">تنزيل الفواتير</h2><p>افتح أي فاتورة للحصول على ملف PDF يتضمن الرقم الضريبي ومرجع أمر الشراء والعنوان.</p><h2 id=\"tahdith-alfoatra-tanbihat\">ضبط التنبيهات</h2><p>فعِّل التذكيرات قبل كل تجديد لتجنب أي انقطاع.</p>",
+          "related": ["expense-export", "workspace-permissions"]
+        }
+      }
+    },
+    {
+      "id": "expense-export",
+      "slug": "expense-export",
+      "categorySlug": "billing",
+      "keywords": ["export", "expenses", "csv"],
+      "updatedAtIso": "2024-09-30T13:25:00.000Z",
+      "translations": {
+        "en": {
+          "title": "Export expenses",
+          "excerpt": "Download expense reports as CSV or Excel for your accounting team.",
+          "body": "<h2 id=\"expense-export-range\">Select a date range</h2><p>Choose a preset period or custom dates to include in the export.</p><h2 id=\"expense-export-format\">Pick the right format</h2><p>CSV works with most tools, while XLSX keeps column formatting for spreadsheets.</p><h2 id=\"expense-export-share\">Share securely</h2><p>Use the share link with expiration to send files to external partners.</p>",
+          "related": ["update-billing", "workspace-permissions"]
+        },
+        "fr": {
+          "title": "Exporter les dépenses",
+          "excerpt": "Téléchargez les rapports de dépenses en CSV ou Excel pour votre comptabilité.",
+          "body": "<h2 id=\"export-depenses-periode\">Sélectionner une période</h2><p>Choisissez une période prédéfinie ou des dates personnalisées à inclure.</p><h2 id=\"export-depenses-format\">Choisir le format adapté</h2><p>Le CSV est compatible avec la plupart des outils, tandis que le XLSX préserve la mise en forme.</p><h2 id=\"export-depenses-partage\">Partager en toute sécurité</h2><p>Utilisez le lien de partage avec expiration pour transmettre les fichiers à vos partenaires.</p>",
+          "related": ["update-billing", "workspace-permissions"]
+        },
+        "de": {
+          "title": "Ausgaben exportieren",
+          "excerpt": "Laden Sie Ausgabenberichte als CSV oder Excel für die Buchhaltung herunter.",
+          "body": "<h2 id=\"ausgaben-export-zeitraum\">Zeitraum auswählen</h2><p>Wählen Sie einen voreingestellten Zeitraum oder benutzerdefinierte Daten aus.</p><h2 id=\"ausgaben-export-format\">Format bestimmen</h2><p>CSV ist universell einsetzbar, XLSX behält Formatierungen für Tabellen bei.</p><h2 id=\"ausgaben-export-teilen\">Sicher teilen</h2><p>Nutzen Sie einen Freigabelink mit Ablaufdatum, um Dateien extern zu senden.</p>",
+          "related": ["update-billing", "workspace-permissions"]
+        },
+        "ar": {
+          "title": "تصدير النفقات",
+          "excerpt": "حمِّل تقارير النفقات بصيغة CSV أو Excel لفريق المحاسبة.",
+          "body": "<h2 id=\"tasdir-alnfqat-almadaa\">حدد نطاق التاريخ</h2><p>اختر فترة جاهزة أو تواريخ مخصّصة لإدراجها في التصدير.</p><h2 id=\"tasdir-alnfqat-alsigha\">اختر الصيغة المناسبة</h2><p>تعمل صيغة CSV مع معظم الأدوات، بينما تحافظ XLSX على تنسيق الأعمدة.</p><h2 id=\"tasdir-alnfqat-almusharaka\">المشاركة بأمان</h2><p>استخدم رابط مشاركة قابل للانتهاء لإرسال الملفات إلى الشركاء.</p>",
+          "related": ["update-billing", "workspace-permissions"]
+        }
+      }
+    }
+  ]
+}

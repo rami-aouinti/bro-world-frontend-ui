@@ -7,6 +7,67 @@
     "close": "Close",
     "loading": "Loading…"
   },
+  "help": {
+    "meta": {
+      "title": "Help centre",
+      "description": "Find quick answers, guides, and FAQs for {site}."
+    },
+    "hero": {
+      "badge": "Support",
+      "title": "How can we help?",
+      "subtitle": "Browse guides, troubleshooting steps, and tips to get the most out of the platform.",
+      "searchPlaceholder": "Search by topic or keyword…",
+      "searchAria": "Search the help centre",
+      "popular": "Popular"
+    },
+    "categories": {
+      "title": "Browse by category",
+      "subtitle": "We grouped our most helpful guides so you can jump right in.",
+      "count": "{count} articles"
+    },
+    "faq": {
+      "title": "Quick FAQ",
+      "subtitle": "Answers to the questions we hear every day.",
+      "items": [
+        {
+          "q": "How do I create an account?",
+          "a": "Use the sign up form with your work email, confirm it within 24 hours, and complete your profile."
+        },
+        {
+          "q": "Can I invite my teammates?",
+          "a": "Admins can invite teammates from Settings → Members and manage their permissions at any time."
+        },
+        {
+          "q": "Where can I download my invoices?",
+          "a": "Head to Billing → Invoices to download compliant PDF copies for your records."
+        }
+      ]
+    },
+    "search": {
+      "resultsLabel": "Help search results"
+    },
+    "article": {
+      "toc": "On this page",
+      "copyLink": "Copy section link",
+      "copied": "Section link copied",
+      "updated": "Updated {date}",
+      "related": "Related articles",
+      "feedback": {
+        "question": "Was this article helpful?",
+        "yes": "Yes",
+        "no": "No",
+        "thanks": "Thanks for your feedback!"
+      }
+    },
+    "empty": {
+      "title": "No results",
+      "subtitle": "Try another keyword or explore a category."
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "help": "Help centre"
+    }
+  },
   "layout": {
     "loadingOverlay": {
       "srLabel": "Loading Bro World",
