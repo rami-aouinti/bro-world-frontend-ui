@@ -144,7 +144,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from "vue";
 import type { VForm } from "vuetify/components";
-import { callOnce } from "#imports";
+import { callOnce } from "#app";
 import { useI18n } from "vue-i18n";
 
 import LockableButton from "~/components/LockableButton.vue";
