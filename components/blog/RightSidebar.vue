@@ -20,11 +20,19 @@
           </h2>
         </header>
         <div class="space-y-4">
-          <SidebarWidget
-            v-for="widget in widgets"
-            :key="widget.id"
-            :widget="widget"
-          />
+          <template v-if="showSkeleton">
+            <SidebarWidgetSkeleton
+              v-for="index in 3"
+              :key="`sidebar-widget-skeleton-${index}`"
+            />
+          </template>
+          <template v-else>
+            <SidebarWidget
+              v-for="widget in sidebarWidgets"
+              :key="widget.id"
+              :widget="widget"
+            />
+          </template>
         </div>
       </div>
     </UiScrollArea>
@@ -32,14 +40,31 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import SidebarWidget, { type SidebarWidgetData } from "./SidebarWidget.vue";
+import SidebarWidgetSkeleton from "./SidebarWidgetSkeleton.vue";
 
 const { page } = useContent();
 const config = useConfig();
 
-defineProps<{
-  title: string;
-  subtitle: string;
-  widgets: SidebarWidgetData[];
-}>();
+const props = withDefaults(
+  defineProps<{
+    title: string;
+    subtitle: string;
+    widgets: SidebarWidgetData[];
+    loading?: boolean;
+  }>(),
+  {
+    loading: undefined,
+  },
+);
+
+const showSkeleton = computed(() => {
+  if (typeof props.loading === "boolean") {
+    return props.loading;
+  }
+
+  return props.widgets.length === 0;
+});
+const sidebarWidgets = computed(() => props.widgets);
 </script>
