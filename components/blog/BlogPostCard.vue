@@ -59,8 +59,11 @@
         :counts="{ care: 0, love: 0, wow: 0, haha: 0, like: 4, sad: 2, angry: 1 }"
         :nodes="sortedCommentThreadNodes"
         :current-user="currentUserForThread"
+        :composer-submitting="submittingComment"
+        :pending-replies="pendingReplies"
         @like="handleCommentLike"
         @reply="openReply"
+        @submit="handleCommentSubmit"
       />
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
@@ -130,7 +133,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref, shallowRef, watch } from "vue";
+import { computed, nextTick, reactive, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#imports";
@@ -198,6 +201,7 @@ const commentContent = ref("");
 const isCommentComposerVisible = ref(false);
 const submittingComment = ref(false);
 const commentFeedback = ref<FeedbackState | null>(null);
+const pendingReplies = reactive<Record<string, boolean>>({});
 const loadedComments = ref<BlogCommentWithReplies[] | null>(null);
 const commentsLoading = ref(false);
 const commentsError = ref<string | null>(null);
@@ -358,8 +362,60 @@ const shareDialogOpen = ref(false);
 const shareDialogMaxLength = computed(() => 500);
 const { schedule: scheduleNonBlockingTask } = useNonBlockingTask({ timeout: 400 });
 
-function openReply(id: string) {
-  /* TODO */
+async function openReply(id: string, text: string) {
+  const trimmedId = id.trim();
+  const trimmedText = text.trim();
+
+  if (!trimmedId || !trimmedText) {
+    return;
+  }
+
+  if (!isAuthenticated.value) {
+    openLoginDialog();
+
+    return;
+  }
+
+  const currentPostId = postId.value;
+
+  if (!currentPostId) {
+    $notify({
+      type: "error",
+      title: t("blog.comments.label"),
+      message: t("blog.comments.replyError"),
+      timeout: null,
+    });
+
+    return;
+  }
+
+  if (pendingReplies[trimmedId]) {
+    return;
+  }
+
+  pendingReplies[trimmedId] = true;
+
+  try {
+    await addComment(currentPostId, trimmedText, trimmedId);
+    await loadComments({ force: true });
+
+    $notify({
+      type: "success",
+      title: t("blog.comments.label"),
+      message: t("blog.comments.replySuccess"),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "");
+
+    $notify({
+      type: "error",
+      title: t("blog.comments.label"),
+      message: message || t("blog.comments.replyError"),
+      timeout: null,
+    });
+  } finally {
+    delete pendingReplies[trimmedId];
+  }
 }
 const loginToReactMessage = computed(() => t("blog.auth.reactionRequired"));
 const loginToViewCommentsMessage = computed(() => t("blog.auth.commentRequired"));
@@ -544,6 +600,61 @@ function handleCommentButtonClick() {
   });
 }
 
+async function handleCommentSubmit(text: string) {
+  const trimmedText = text.trim();
+
+  if (!trimmedText) {
+    return;
+  }
+
+  if (!isAuthenticated.value) {
+    openLoginDialog();
+
+    return;
+  }
+
+  if (submittingComment.value) {
+    return;
+  }
+
+  const currentPostId = postId.value;
+
+  if (!currentPostId) {
+    $notify({
+      type: "error",
+      title: t("blog.comments.label"),
+      message: t("blog.comments.error"),
+      timeout: null,
+    });
+
+    return;
+  }
+
+  submittingComment.value = true;
+
+  try {
+    await addComment(currentPostId, trimmedText);
+    await loadComments({ force: true });
+
+    $notify({
+      type: "success",
+      title: t("blog.comments.label"),
+      message: t("blog.comments.success"),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "");
+
+    $notify({
+      type: "error",
+      title: t("blog.comments.label"),
+      message: message || t("blog.comments.error"),
+      timeout: null,
+    });
+  } finally {
+    submittingComment.value = false;
+  }
+}
+
 async function handleCommentReaction(commentId: string, reactionType: ReactionAction) {
   if (!isAuthenticated.value) {
     throw new Error(loginToReactMessage.value);
@@ -611,6 +722,9 @@ function resetCommentsState() {
   commentsLoading.value = false;
   activeCommentsRequest.value = null;
   commentsActivated.value = false;
+  for (const key of Object.keys(pendingReplies)) {
+    delete pendingReplies[key];
+  }
 }
 
 function requestComments(options: { force?: boolean } = {}) {
