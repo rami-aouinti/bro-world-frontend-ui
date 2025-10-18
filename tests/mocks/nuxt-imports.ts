@@ -202,6 +202,7 @@ export function __setMockDocsConfig(override: Partial<DocsConfig>) {
 
 export function useNuxtApp() {
   return {
+    $fetch: useAppRequestFetch(),
     $notify: notifyMock,
   };
 }
