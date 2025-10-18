@@ -173,7 +173,7 @@ const auth = useAuthSession();
 const messenger = useMessengerStore();
 
 const iconTriggerClasses =
-  "flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2";
+  "flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2";
 
 const localeMetadata = {
   en: { label: "English", flag: "gb" },
