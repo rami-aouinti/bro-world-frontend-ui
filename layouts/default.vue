@@ -284,6 +284,7 @@ import {
   onMounted,
   ref,
   watch,
+  watchEffect,
 } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
@@ -951,39 +952,25 @@ function setupNavigationReactivity() {
     { immediate: true },
   );
 
-  watch(
-    () => [isHydrated.value, currentRoute.value?.fullPath ?? ""],
-    ([hydrated, path]) => {
-      if (!hydrated) {
-        return;
+  watchEffect(() => {
+    const hydrated = isHydrated.value;
+    const items = sidebarItems.value;
+    const path = currentRoute.value?.fullPath ?? "/";
+
+    if (!hydrated) {
+      if (import.meta.server) {
+        updateActiveSidebar(path, items);
       }
+      return;
+    }
 
-      if (isMobile.value) {
-        leftDrawer.value = false;
-        rightDrawer.value = false;
-      }
-      updateActiveSidebar(path, sidebarItems.value);
-    },
-    { immediate: import.meta.server },
-  );
+    if (isMobile.value) {
+      leftDrawer.value = false;
+      rightDrawer.value = false;
+    }
 
-  watch(
-    () => [isHydrated.value, sidebarItems.value],
-    ([hydrated, items]) => {
-      if (!hydrated) {
-        return;
-      }
-
-      const path = currentRoute.value?.fullPath ?? "/";
-      updateActiveSidebar(path, items);
-    },
-    { immediate: import.meta.server },
-  );
-
-  if (import.meta.server) {
-    const initialPath = currentRoute.value?.fullPath ?? "/";
-    updateActiveSidebar(initialPath, sidebarItems.value);
-  }
+    updateActiveSidebar(path, items);
+  });
 }
 
 setupNavigationReactivity();
