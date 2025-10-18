@@ -18,6 +18,9 @@
         <NuxtImg
           :src="src"
           :alt="alt"
+          :width="size"
+          :height="size"
+          :sizes="`${size}px`"
           cover
           format="webp"
         />

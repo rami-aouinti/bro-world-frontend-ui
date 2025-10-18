@@ -16,46 +16,47 @@
       {{ loadErrorMessage }}
     </v-alert>
 
-    <template v-if="canAccessAuthenticatedContent">
-      <NewPostSkeleton v-if="pending" />
-      <LazyNewPost
-        v-else
-        :avatar="userAvatar"
-        :user-name="userName"
-        @submit="createPost"
-        @attach="onAttach"
-      />
+    <div>
+      <template v-if="showAuthenticatedSkeletons">
+        <NewPostSkeleton />
+        <div class="my-4">
+          <StoriesStripSkeleton />
+        </div>
+      </template>
+      <template v-else-if="canAccessAuthenticatedContent">
+        <LazyNewPost
+          :avatar="userAvatar"
+          :user-name="userName"
+          @submit="createPost"
+          @attach="onAttach"
+        />
 
-      <div class="my-4">
-        <StoriesStripSkeleton v-if="pending" />
-        <SidebarCard
-          v-else
-          class="text-card-foreground px-3 py-2"
-          glow
-        >
-          <input
-            ref="storyFileInput"
-            type="file"
-            accept="image/*"
-            class="sr-only"
-            @change="onStorySelected"
-          />
-          <LazyStoriesStrip
-            :items="stories"
-            @open="openStory"
-            @create="createStory"
-          />
-          <LazyStoryViewerModal
-            v-if="isStoryViewerOpen"
-            v-model="isStoryViewerOpen"
-            :story="activeStory"
-            @close="onStoryClosed"
-            @react="handleStoryReaction"
-            @message="handleStoryMessage"
-          />
-        </SidebarCard>
-      </div>
-    </template>
+        <div class="my-4">
+          <SidebarCard class="text-card-foreground px-3 py-2" glow>
+            <input
+              ref="storyFileInput"
+              type="file"
+              accept="image/*"
+              class="sr-only"
+              @change="onStorySelected"
+            />
+            <LazyStoriesStrip
+              :items="stories"
+              @open="openStory"
+              @create="createStory"
+            />
+            <LazyStoryViewerModal
+              v-if="isStoryViewerOpen"
+              v-model="isStoryViewerOpen"
+              :story="activeStory"
+              @close="onStoryClosed"
+              @react="handleStoryReaction"
+              @message="handleStoryMessage"
+            />
+          </SidebarCard>
+        </div>
+      </template>
+    </div>
 
     <div
       v-if="pending"
@@ -343,6 +344,10 @@ const {
   createPost,
   pageSize,
 } = usePostsStore();
+
+const showAuthenticatedSkeletons = computed(
+  () => !isAuthReady.value || pending.value,
+);
 
 const skeletonBatchSize = computed(() => {
   const size = pageSize.value || INITIAL_PAGE_SIZE;
