@@ -164,12 +164,12 @@
                   cols="12"
                   md="6"
                 >
-                  <v-text-field
+                  <v-date-input
                     v-model="worldForm.launchDate"
-                    type="date"
                     :label="t('pages.createWorld.form.fields.launchDate')"
                     density="comfortable"
                     variant="outlined"
+                    hide-details="auto"
                   />
                   <p class="text-body-2 text-medium-emphasis mt-1 mb-0">
                     {{ t("pages.createWorld.form.fields.launchDateHint") }}
