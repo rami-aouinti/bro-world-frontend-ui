@@ -4,7 +4,8 @@
   },
   "common": {
     "InspiraUIPro": "Inspira UI Pro",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "loading": "Caricamento…"
   },
   "layout": {
     "loadingOverlay": {

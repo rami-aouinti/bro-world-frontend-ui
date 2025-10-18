@@ -4,7 +4,8 @@
   },
   "common": {
     "InspiraUIPro": "إنسبيرا UI برو",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "loading": "جارٍ التحميل…"
   },
   "layout": {
     "loadingOverlay": {
