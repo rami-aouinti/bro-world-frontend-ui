@@ -75,7 +75,10 @@
       "briefcase": "Travail",
       "store": "Boutique",
       "database": "Données",
-      "game": "Jeux"
+      "ecommerce": "E-commerce",
+      "education": "Éducation",
+      "quiz": "Quiz",
+      "game": "Jeux & Quiz"
     },
     "sidebar": {
       "title": "Connexion",
@@ -86,7 +89,7 @@
         "cv": "CV",
         "createWorld": "Créer un monde",
         "jobs": "Emplois",
-        "game": "Jeux vidéo",
+        "game": "Jeux & Quiz",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Vue d'ensemble",
         "ecommerceCatalog": "Catalogue produits",

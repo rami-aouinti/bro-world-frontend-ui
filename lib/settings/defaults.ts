@@ -390,15 +390,6 @@ export const defaultSiteSettings: SiteSettings = {
       isVisible: true,
       order: 4,
     }),
-    makeMenu({
-      id: "quiz",
-      label: "layout.sidebar.items.quiz",
-      icon: "mdi:clipboard-text-outline",
-      translate: true,
-      to: "/quiz",
-      isVisible: true,
-      order: 5,
-    }),
     makeMenu(
       {
         id: "admin",

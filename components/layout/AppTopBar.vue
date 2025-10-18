@@ -135,7 +135,7 @@ import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
 
-type AppIcon = { name: string; label: string; size?: number; to: string };
+type AppIcon = { name: string; label: string; size?: number; to?: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
 type NotificationKey = "newFollower" | "newComment" | "systemUpdate";
 type NotificationDefinition = {

@@ -75,7 +75,10 @@
       "briefcase": "工作",
       "store": "商店",
       "database": "数据",
-      "game": "游戏"
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "游戏和测验"
     },
     "sidebar": {
       "title": "连接",
@@ -109,7 +112,7 @@
         "help": "帮助",
         "about": "关于",
         "contact": "联系",
-        "game": "Gaming",
+        "game": "游戏和测验",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "概览",
         "ecommerceCatalog": "产品目录",

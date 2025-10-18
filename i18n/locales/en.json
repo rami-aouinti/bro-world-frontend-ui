@@ -75,7 +75,10 @@
       "briefcase": "Work",
       "store": "Store",
       "database": "Data",
-      "game": "Games"
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "Gaming & Quiz"
     },
     "sidebar": {
       "title": "Connect",
@@ -86,7 +89,7 @@
         "cv": "CV",
         "createWorld": "Create world",
         "jobs": "Jobs",
-        "game": "Gaming",
+        "game": "Gaming & Quiz",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Overview",
         "ecommerceCatalog": "Product catalog",
