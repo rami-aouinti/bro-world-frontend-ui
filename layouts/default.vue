@@ -140,6 +140,7 @@
                       v-else
                       class="flex flex-col gap-6"
                     >
+                      <SidebarContactCard />
                       <SidebarWeatherCard
                         v-if="weather"
                         :weather="weather"
@@ -300,6 +301,11 @@ const AppSidebar = defineAsyncComponent({
 
 const AppSidebarRight = defineAsyncComponent({
   loader: () => import("~/components/layout/AppSidebarRight.vue"),
+  suspensible: false,
+});
+
+const SidebarContactCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarContactCard.vue"),
   suspensible: false,
 });
 
