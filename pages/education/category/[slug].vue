@@ -33,6 +33,8 @@ const { t } = useI18n();
 const route = useRoute();
 const store = useEducationStore();
 
+const localePath = useLocalePath();
+
 const slug = computed(() => String(route.params.slug));
 
 if (!store.categories.length) {
@@ -51,7 +53,7 @@ if (!category.value) {
 }
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: "/education" },
+  { title: t("education.breadcrumb.home"), to: localePath("/education") },
   { title: category.value?.title ?? "", disabled: true },
 ]);
 
@@ -67,4 +69,8 @@ function courseProgress(course: Course) {
   const done = Object.values(progress.lessonDone).filter(Boolean).length;
   return Math.min(100, (done / totalLessons) * 100);
 }
+
+definePageMeta({
+  alias: ["/academy/category/:slug"],
+});
 </script>

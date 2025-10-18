@@ -19,6 +19,8 @@ const { t } = useI18n();
 const route = useRoute();
 const store = useEducationStore();
 
+const localePath = useLocalePath();
+
 const id = computed(() => String(route.params.id));
 const certificate = ref<Certificate | null>(
   store.certificates.value.find((entry) => entry.id === id.value) ?? null,
@@ -31,7 +33,11 @@ if (!certificate.value) {
 }
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: "/education" },
+  { title: t("education.breadcrumb.home"), to: localePath("/education") },
   { title: t("education.certificate.breadcrumb"), disabled: true },
 ]);
+
+definePageMeta({
+  alias: ["/academy/certificate/:id"],
+});
 </script>

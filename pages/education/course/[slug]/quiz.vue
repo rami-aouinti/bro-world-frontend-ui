@@ -77,6 +77,8 @@ const { t } = useI18n();
 const route = useRoute();
 const store = useEducationStore();
 
+const localePath = useLocalePath();
+
 const slug = computed(() => String(route.params.slug));
 
 await store.fetchCourseDetails(slug.value);
@@ -97,7 +99,9 @@ const certificateLink = computed(() => {
     return null;
   }
   const certificateId = store.progress[course.value.id]?.certificateId;
-  return certificateId ? { name: "education-certificate-id", params: { id: certificateId } } : null;
+  return certificateId
+    ? localePath({ name: "education-certificate-id", params: { id: certificateId } })
+    : null;
 });
 
 const certificateRecord = computed(() => {
@@ -125,8 +129,11 @@ watch(
 );
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: "/education" },
-  { title: course.value?.title ?? "", to: { name: "education-course-slug", params: { slug: slug.value } } },
+  { title: t("education.breadcrumb.home"), to: localePath("/education") },
+  {
+    title: course.value?.title ?? "",
+    to: localePath({ name: "education-course-slug", params: { slug: slug.value } }),
+  },
   { title: t("education.quiz.breadcrumb"), disabled: true },
 ]);
 
@@ -186,4 +193,8 @@ function resetQuiz() {
   store.clearQuizScore(course.value.id);
   result.value = null;
 }
+
+definePageMeta({
+  alias: ["/academy/course/:slug/quiz"],
+});
 </script>
