@@ -276,20 +276,20 @@
                 required
               />
               <div class="d-flex flex-column flex-md-row gap-4">
-                <v-text-field
+                <v-date-input
                   v-model="eventForm.startDate"
-                  type="date"
                   :label="t('pages.profile.calendar.form.fields.startDate')"
                   :error-messages="eventErrors.startDate"
                   class="flex-grow-1"
+                  hide-details="auto"
                 />
-                <v-text-field
+                <v-date-input
                   v-model="eventForm.endDate"
-                  type="date"
                   :label="t('pages.profile.calendar.form.fields.endDate')"
                   :min="eventForm.startDate"
                   :error-messages="eventErrors.endDate"
                   class="flex-grow-1"
+                  hide-details="auto"
                 />
               </div>
               <div class="d-flex flex-column flex-md-row gap-4">
