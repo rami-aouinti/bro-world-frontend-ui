@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const canvasContainerRef = ref<HTMLDivElement | null>(null);
 const context = ref<CanvasRenderingContext2D | null>(null);
-const circles = ref<Circle[]>([]);
+let circles: Circle[] = [];
 const mouse = reactive<{ x: number; y: number }>({ x: 0, y: 0 });
 const canvasSize = reactive<{ w: number; h: number }>({ w: 0, h: 0 });
 const canvasRect = ref<DOMRect | null>(null);
@@ -87,6 +87,8 @@ const color = computed(() => {
   // Return the RGB values as a string separated by spaces
   return `${r} ${g} ${b}`;
 });
+
+const rgbaColor = computed(() => color.value.split(" ").join(", "));
 
 function cleanupMouseWatch() {
   if (stopMouseWatch) {
@@ -174,7 +176,7 @@ function stopAnimation() {
 
   cleanupMouseWatch();
   removeResizeListener();
-  circles.value.length = 0;
+  circles.length = 0;
   clearContext();
 }
 
@@ -281,7 +283,7 @@ function resizeCanvas() {
       context.value = canvasRef.value.getContext("2d");
     }
 
-    circles.value.length = 0;
+    circles.length = 0;
     canvasSize.w = canvasContainerRef.value.offsetWidth;
     canvasSize.h = canvasContainerRef.value.offsetHeight;
     canvasRef.value.width = canvasSize.w * pixelRatio.value;
@@ -319,25 +321,30 @@ function circleParams(): Circle {
 }
 
 function drawCircle(circle: Circle, update = false) {
-  if (context.value) {
-    const { x, y, translateX, translateY, size, alpha } = circle;
-    context.value.translate(translateX, translateY);
-    context.value.beginPath();
-    context.value.arc(x, y, size, 0, 2 * Math.PI);
-    context.value.fillStyle = `rgba(${color.value.split(" ").join(", ")}, ${alpha})`;
-    context.value.fill();
-    context.value.setTransform(pixelRatio.value, 0, 0, pixelRatio.value, 0, 0);
+  if (!context.value) {
+    return;
+  }
 
-    if (!update) {
-      circles.value.push(circle);
-    }
+  const { x, y, translateX, translateY, size, alpha } = circle;
+  const drawX = x + translateX;
+  const drawY = y + translateY;
+
+  context.value.beginPath();
+  context.value.arc(drawX, drawY, size, 0, 2 * Math.PI);
+  context.value.fillStyle = `rgba(${rgbaColor.value}, ${alpha})`;
+  context.value.fill();
+
+  if (!update) {
+    circles.push(circle);
   }
 }
 
 function clearContext() {
-  if (context.value) {
-    context.value.clearRect(0, 0, canvasSize.w, canvasSize.h);
+  if (!context.value) {
+    return;
   }
+
+  context.value.clearRect(0, 0, canvasSize.w, canvasSize.h);
 }
 
 function drawParticles() {
@@ -377,7 +384,8 @@ function animate() {
   }
 
   clearContext();
-  circles.value.forEach((circle, i) => {
+  for (let i = circles.length - 1; i >= 0; i--) {
+    const circle = circles[i];
     // Handle the alpha value
     const edge = [
       circle.x + circle.translateX - circle.size, // distance from left edge
@@ -411,25 +419,25 @@ function animate() {
       circle.y > canvasSize.h + circle.size
     ) {
       // remove the circle from the array
-      circles.value.splice(i, 1);
+      circles.splice(i, 1);
       // create a new circle
       const newCircle = circleParams();
       drawCircle(newCircle);
-      // update the circle position
-    } else {
-      drawCircle(
-        {
-          ...circle,
-          x: circle.x,
-          y: circle.y,
-          translateX: circle.translateX,
-          translateY: circle.translateY,
-          alpha: circle.alpha,
-        },
-        true,
-      );
+      continue;
     }
-  });
+
+    drawCircle(
+      {
+        ...circle,
+        x: circle.x,
+        y: circle.y,
+        translateX: circle.translateX,
+        translateY: circle.translateY,
+        alpha: circle.alpha,
+      },
+      true,
+    );
+  }
   if (!isAnimating.value) {
     return;
   }
