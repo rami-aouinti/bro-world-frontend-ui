@@ -41,16 +41,17 @@ For the **Chinese version** visit [here](README_CN.md). For the **Italian versio
 4. [Tech Stack](#-tech-stack)
 5. [Getting Started](#-getting-started)
 6. [Project Structure](#-project-structure)
-7. [Documentation](#-documentation)
-8. [Configuration](#-configuration)
-9. [Profile Page](#-profile-page)
-10. [Testing](#-testing)
-11. [Deployment Tips](#-deployment-tips)
-12. [Acknowledgments](#-acknowledgments)
-13. [Author](#-author)
-14. [Contribute](#-contribute)
-15. [Sponsorship](#sponsorship)
-16. [Repo Stats](#repo-stats)
+7. [Education Module](#-education-module)
+8. [Documentation](#-documentation)
+9. [Configuration](#-configuration)
+10. [Profile Page](#-profile-page)
+11. [Testing](#-testing)
+12. [Deployment Tips](#-deployment-tips)
+13. [Acknowledgments](#-acknowledgments)
+14. [Author](#-author)
+15. [Contribute](#-contribute)
+16. [Sponsorship](#sponsorship)
+17. [Repo Stats](#repo-stats)
 
 ## ✨ About BroWorld
 
@@ -123,6 +124,16 @@ Here's an overview of the most important directories to help you navigate the co
 ```
 
 Each directory may contain additional `README` or documentation files to describe specific implementation details. Explore the `docs/` folder for deeper explanations of patterns used across the app.
+
+## 🎓 Education Module
+
+The `/education` workspace delivers a complete mock learning journey powered by Nuxt 3, Vuetify 3, and Pinia. Learners can browse categories, follow lessons with inline exercises, complete a final quiz, and generate a downloadable certificate—everything running on local mock data and persisted in the browser.
+
+- **Mock APIs:** The Nitro server exposes REST-style endpoints under `server/api/education/` that serve categories, course details, lesson content, quizzes, and certificate workflows backed by `server/mock/education.json` and helper utilities in `server/utils/education.ts`.
+- **State management:** `stores/education.ts` keeps catalogue data, lesson progress, quiz outcomes, and issued certificates in sync with `localStorage`, while shared TypeScript contracts live in `types/education.ts`.
+- **Client experience:** Pages in `pages/education/` orchestrate the flow across the catalogue, lessons, quizzes, and certificate viewer using the reusable components housed in `components/education/` plus the html2pdf download helper defined in `plugins/html2pdf.client.ts`.
+- **Translations:** English and French locale strings for the entire journey are located in `i18n/locales/en.json` and `i18n/locales/fr.json`.
+- **Targeted tests:** Run `pnpm vitest run tests/unit/educationStore.spec.ts` to verify store behaviour, or add Playwright coverage for the multi-step happy path when browser automation is available.
 
 ## 📚 Documentation
 
