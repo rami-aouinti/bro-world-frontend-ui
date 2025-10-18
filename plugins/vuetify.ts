@@ -81,6 +81,8 @@ import {
 } from "vuetify/lib/composables/icons";
 import { normalizeHexColor } from "~/lib/theme/colors";
 import {
+  mdiAccount,
+  mdiAccountCircleOutline,
   mdiAccountCog,
   mdiAccountCogOutline,
   mdiAccountGroup,
@@ -90,8 +92,11 @@ import {
   mdiAccountMultiple,
   mdiAccountMultipleCheckOutline,
   mdiAccountMultipleOutline,
+  mdiAccountOutline,
   mdiAccountPlus,
   mdiAccountPlusOutline,
+  mdiAccountQuestionOutline,
+  mdiAccountTie,
   mdiAccountVoice,
   mdiAlertDecagram,
   mdiAlertDecagramOutline,
@@ -282,6 +287,8 @@ function createMdiAliasVariants(iconMap: Record<string, string>) {
 
 const minimalAliases = createMdiAliasVariants({
   ...aliases,
+  "mdi-account": withSvgPrefix(mdiAccount),
+  "mdi-account-circle-outline": withSvgPrefix(mdiAccountCircleOutline),
   "mdi-account-cog": withSvgPrefix(mdiAccountCog),
   "mdi-account-cog-outline": withSvgPrefix(mdiAccountCogOutline),
   "mdi-account-group": withSvgPrefix(mdiAccountGroup),
@@ -291,8 +298,11 @@ const minimalAliases = createMdiAliasVariants({
   "mdi-account-multiple": withSvgPrefix(mdiAccountMultiple),
   "mdi-account-multiple-check-outline": withSvgPrefix(mdiAccountMultipleCheckOutline),
   "mdi-account-multiple-outline": withSvgPrefix(mdiAccountMultipleOutline),
+  "mdi-account-outline": withSvgPrefix(mdiAccountOutline),
   "mdi-account-plus": withSvgPrefix(mdiAccountPlus),
   "mdi-account-plus-outline": withSvgPrefix(mdiAccountPlusOutline),
+  "mdi-account-question-outline": withSvgPrefix(mdiAccountQuestionOutline),
+  "mdi-account-tie": withSvgPrefix(mdiAccountTie),
   "mdi-account-voice": withSvgPrefix(mdiAccountVoice),
   "mdi-alert-decagram": withSvgPrefix(mdiAlertDecagram),
   "mdi-alert-decagram-outline": withSvgPrefix(mdiAlertDecagramOutline),
