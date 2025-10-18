@@ -549,7 +549,15 @@ export default defineNuxtPlugin((nuxtApp) => {
       watch: false,
     }),
   );
-  const locale = localeCookie.value ?? "en";
+  const localeCookieValue = localeCookie.value ?? "en";
+  const rtlLocaleCodes = ["ar"] as const;
+  const rtlLocaleMap = Object.fromEntries(
+    rtlLocaleCodes.map((code) => [code, true] as const),
+  ) as Record<string, boolean>;
+  const i18n = nuxtApp.$i18n as
+    | { locale?: { value?: string | undefined } }
+    | undefined;
+  const initialLocale = i18n?.locale?.value ?? localeCookieValue;
 
   const sharedVariables = {
     "font-family-base":
@@ -976,9 +984,10 @@ export default defineNuxtPlugin((nuxtApp) => {
       },
     },
     locale: {
-      locale,
+      locale: initialLocale,
       fallback: "en",
       messages: normalizedVuetifyLocaleMessages,
+      rtl: rtlLocaleMap,
     },
     date: {
       adapter: DateFnsAdapter,
@@ -1006,6 +1015,18 @@ export default defineNuxtPlugin((nuxtApp) => {
         },
       },
     },
+  });
+
+  if (initialLocale) {
+    vuetify.locale.current.value = initialLocale;
+  }
+
+  nuxtApp.hook("i18n:localeSwitched", (context) => {
+    const nextLocale = context?.newLocale;
+
+    if (typeof nextLocale === "string" && nextLocale.length > 0) {
+      vuetify.locale.current.value = nextLocale;
+    }
   });
 
   nuxtApp.vueApp.use(vuetify);

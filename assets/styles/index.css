@@ -28,6 +28,41 @@ body {
   --v-navigation-drawer-border-radius: var(--radius, var(--ui-card-radius));
 }
 
+body.ltr {
+  direction: ltr;
+}
+
+body.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+body.rtl .v-application,
+body.rtl .v-application * {
+  direction: inherit;
+}
+
+body.rtl .v-card,
+body.rtl .v-sheet,
+body.rtl .v-navigation-drawer,
+body.rtl .v-list,
+body.rtl .v-table,
+body.rtl .v-data-table,
+body.rtl .v-toolbar,
+body.rtl .v-footer,
+body.rtl .v-dialog,
+body.rtl .v-menu > .v-overlay__content {
+  text-align: inherit;
+}
+
+body.rtl .text-left {
+  text-align: right !important;
+}
+
+body.rtl .text-right {
+  text-align: left !important;
+}
+
 :root {
   /* Radius */
   --ui-radius-none: var(--v-radius-none);

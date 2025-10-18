@@ -123,6 +123,9 @@ export function useRuntimeConfig() {
         listTtl: 60,
         itemTtl: 300,
       },
+      crmProjects: {
+        useMocks: true,
+      },
     },
     redis: {
       listTtl: 60,

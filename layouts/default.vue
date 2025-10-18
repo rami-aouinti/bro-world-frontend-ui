@@ -743,11 +743,13 @@ const layoutInsets = computed(() => {
 });
 
 const appIcons = [
-  { name: "mdi:school-outline", label: "layout.appIcons.academy", size: 22, to: "/academy" },
+  { name: "mdi:shopping-outline", label: "layout.appIcons.ecommerce", to: "/ecommerce" },
+  { name: "mdi:school-outline", label: "layout.appIcons.education", to: "/education" },
+  { name: "mdi:school-outline", label: "layout.appIcons.academy", to: "/academy" },
+  { name: "mdi:clipboard-text-outline", label: "layout.appIcons.quiz", to: "/quiz" },
   { name: "mdi:briefcase-outline", label: "layout.appIcons.briefcase" },
-  { name: "mdi:store-outline", label: "layout.appIcons.store" },
   { name: "mdi:database", label: "layout.appIcons.database" },
-  { name: "mdi:gamepad-variant-outline", label: "layout.appIcons.game" },
+  { name: "mdi:gamepad-variant-outline", label: "layout.appIcons.game", to: "/game" },
 ];
 
 const canAccessAdmin = computed(() => {

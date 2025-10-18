@@ -75,7 +75,10 @@
       "briefcase": "Работа",
       "store": "Магазин",
       "database": "Данные",
-      "game": "Игры"
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "Игры и викторины"
     },
     "sidebar": {
       "title": "Подключение",
@@ -109,7 +112,7 @@
         "help": "Помощь",
         "about": "О нас",
         "contact": "Контакты",
-        "game": "Gaming",
+        "game": "Игры и викторины",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Обзор",
         "ecommerceCatalog": "Каталог товаров",
@@ -642,11 +645,11 @@
       "sections": {
         "contact": "Контакты",
         "profile": "Профиль",
-        "social": "Социальное",
+        "social": "Соцсети",
         "calendar": "Календарь"
       },
       "calendar": {
-        "subtitle": "Следите за своим предстоящим расписанием.",
+        "subtitle": "Держите под контролем ближайшие планы.",
         "viewLabel": "Изменить вид календаря",
         "views": {
           "month": "Месяц",
@@ -654,23 +657,57 @@
           "day": "День"
         },
         "errorTitle": "Не удалось загрузить события",
-        "errorFallback": "Не удалось загрузить ваши события. Попробуйте ещё раз.",
+        "errorFallback": "Не получилось загрузить ваши события. Попробуйте ещё раз.",
         "retry": "Повторить",
         "privateLabel": "Приватно",
         "allDay": "Весь день",
-        "upcoming": "Ближайшие события",
+        "upcoming": "Предстоящие события",
         "emptyTitle": "Нет запланированных событий",
-        "emptyDescription": "Добавьте события в календарь, чтобы видеть их здесь.",
+        "emptyDescription": "Добавьте события в календарь, чтобы увидеть их здесь.",
         "actions": {
           "add": "Новое событие",
           "edit": "Редактировать",
           "delete": "Удалить"
         },
+        "form": {
+          "createTitle": "Создать событие",
+          "createDescription": "Запланируйте новый момент прямо из вида календаря.",
+          "editTitle": "Редактировать событие",
+          "editDescription": "Обновите детали этой записи календаря.",
+          "fields": {
+            "title": "Название",
+            "startDate": "Дата начала",
+            "endDate": "Дата окончания",
+            "startTime": "Время начала",
+            "endTime": "Время окончания",
+            "allDay": "Событие на весь день",
+            "color": "Категория",
+            "location": "Место",
+            "description": "Описание",
+            "isPrivate": "Отметить как приватное"
+          },
+          "actions": {
+            "cancel": "Отмена",
+            "create": "Создать событие",
+            "save": "Сохранить изменения"
+          },
+          "validation": {
+            "title": "Укажите название события.",
+            "startDate": "Выберите дату начала события.",
+            "startTime": "Выберите время начала.",
+            "endTime": "Время окончания должно быть позже начала.",
+            "range": "Окончание события должно быть позже начала."
+          }
+        },
+        "delete": {
+          "title": "Удалить событие",
+          "description": "Вы уверены, что хотите удалить «{title}»? Действие нельзя отменить."
+        },
         "colors": {
           "meetings": "Встречи",
           "personal": "Личное",
-          "travel": "Путешествия",
-          "focus": "Концентрация"
+          "travel": "Поездки",
+          "focus": "Фокус"
         }
       },
       "labels": {
@@ -688,203 +725,203 @@
       },
       "statuses": {
         "enabled": "Активен",
-        "disabled": "Неактивен"
+        "disabled": "Отключен"
       },
       "placeholders": {
         "missing": "—",
         "noStories": "Нет историй"
       },
       "avatarAlt": "Фото профиля {name}",
-      "avatarAltFallback": "Заглушка для фото профиля",
+      "avatarAltFallback": "Заглушка фото профиля",
       "stats": {
-        "title": "Краткая статистика"
+        "title": "Быстрая статистика"
       }
     },
     "profileFriends": {
-      "title": "Connections",
-      "subtitle": "Reconnect with your collaborators, mentors, and communities.",
+      "title": "Связи",
+      "subtitle": "Возобновите общение с коллегами, наставниками и сообществами.",
       "actions": {
-        "message": "Send message",
-        "schedule": "Schedule call",
-        "viewProfile": "Open profile"
+        "message": "Отправить сообщение",
+        "schedule": "Назначить звонок",
+        "viewProfile": "Открыть профиль"
       },
       "highlights": {
-        "title": "Featured collaborators",
-        "subtitle": "Handpicked partners you collaborate with the most this quarter."
-      },
-      "filters": {
-        "all": "All",
-        "design": "Design",
-        "product": "Product",
-        "engineering": "Engineering",
-        "marketing": "Marketing"
-      },
-      "stats": {
-        "totalFriends": "Connections",
-        "mutual": "mutual connections",
-        "online": "online now"
-      },
-      "meta": {
-        "lastActive": "Последняя активность · {time}"
+        "title": "Рекомендуемые коллеги",
+        "subtitle": "Партнёры, с которыми вы чаще всего сотрудничаете в этом квартале."
       },
       "sections": {
-        "suggestions": "Suggested connections",
-        "active": "Active now"
+        "active": "Сейчас онлайн",
+        "suggestions": "Предложенные связи"
+      },
+      "filters": {
+        "all": "Все",
+        "design": "Дизайн",
+        "engineering": "Инженерия",
+        "marketing": "Маркетинг",
+        "product": "Продукт"
+      },
+      "meta": {
+        "lastActive": "Был(а) в сети · {time}"
+      },
+      "stats": {
+        "totalFriends": "Связи",
+        "mutual": "общих контактов",
+        "online": "в сети сейчас"
       },
       "status": {
-        "online": "Online",
-        "focus": "Focus",
-        "busy": "Busy",
-        "offline": "Offline"
+        "online": "Онлайн",
+        "offline": "Оффлайн",
+        "busy": "Занят",
+        "focus": "Фокус"
       },
       "feedback": {
-        "message": "Drafting a quick hello…",
-        "messageWith": "Drafting a quick hello to {name}…",
-        "schedule": "Opening your scheduling flow…",
-        "scheduleWith": "Opening your scheduling flow for {name}…",
-        "connect": "We'll note that you'd like to connect.",
-        "connectWith": "We'll let {name} know you'd like to connect."
+        "connect": "Мы отметим, что вы хотите установить связь.",
+        "connectWith": "Мы сообщим {name}, что вы хотите установить связь.",
+        "message": "Готовим короткое приветствие…",
+        "messageWith": "Готовим короткое приветствие для {name}…",
+        "schedule": "Открываем окно планирования…",
+        "scheduleWith": "Открываем окно планирования для {name}…"
       },
-      "empty": "No profiles match this filter yet."
+      "empty": "Пока нет профилей, подходящих под этот фильтр."
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "subtitle": "Curate highlights from launches, research trips, and behind-the-scenes moments.",
+      "title": "Фототека",
+      "subtitle": "Собирайте яркие моменты запусков, исследовательских поездок и закулисья.",
       "actions": {
-        "upload": "Upload photos",
-        "createAlbum": "Create album"
-      },
-      "sections": {
-        "pinned": "Pinned collections",
-        "albums": "Album explorer",
-        "timeline": "Creative notes",
-        "notesDescription": "Updates from collaborators as they prep visual stories."
-      },
-      "meta": {
-        "updated": "Updated {date}",
-        "photoCount": "photos"
+        "createAlbum": "Создать альбом",
+        "upload": "Загрузить фото"
       },
       "filters": {
-        "recent": "Recent",
-        "events": "Events",
-        "studio": "Studio",
-        "travel": "Travel"
+        "recent": "Недавние",
+        "events": "События",
+        "studio": "Студия",
+        "travel": "Путешествия"
       },
-      "cta": {
-        "share": "Share curated sets with your crew or export to presentations."
+      "sections": {
+        "albums": "Обзор альбомов",
+        "pinned": "Закреплённые подборки",
+        "timeline": "Творческие заметки",
+        "notesDescription": "Обновления от коллег, пока они готовят визуальные истории."
+      },
+      "meta": {
+        "photoCount": "фото",
+        "updated": "Обновлено {date}"
       },
       "stats": {
-        "albums": "curated albums",
-        "tags": "unique story tags"
+        "albums": "курируемых альбомов",
+        "tags": "уникальных тегов истории"
       },
       "timeline": {
-        "title": "Story milestones",
-        "description": "Snapshots from key launches, residencies, and retreats that shaped your year."
+        "title": "Важные вехи",
+        "description": "Кадры ключевых запусков, резиденций и ретритов, которые определили ваш год."
+      },
+      "cta": {
+        "share": "Поделитесь этими подборками с командой или экспортируйте их в презентации."
       },
       "feedback": {
-        "upload": "Opening your media picker…",
-        "createAlbum": "Let's craft a new album.",
-        "shareCollection": "Sharing options are ready.",
-        "generic": "Action started."
+        "upload": "Открываем выбор медиа…",
+        "createAlbum": "Создаём новый альбом.",
+        "shareCollection": "Параметры доступа готовы.",
+        "generic": "Действие запущено."
       },
-      "empty": "No photos match this filter yet."
+      "empty": "Пока нет фотографий, соответствующих этому фильтру."
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "subtitle": "Refresh your details so collaborators always have the latest context.",
+      "title": "Редактировать профиль",
+      "subtitle": "Обновляйте данные, чтобы коллеги всегда имели актуальный контекст.",
       "sections": {
         "profile": {
           "title": "Профиль",
-          "bio": "О себе",
-          "skills": "Основные навыки"
+          "bio": "Биография",
+          "skills": "Ключевые навыки"
         },
-        "contact": "Contact",
-        "about": "About",
-        "social": "Social links",
-        "siteSettings": "Site settings"
+        "contact": "Контакты",
+        "about": "О себе",
+        "social": "Социальные ссылки",
+        "siteSettings": "Настройки сайта"
       },
       "labels": {
-        "firstName": "First name",
-        "lastName": "Last name",
-        "headline": "Headline",
-        "pronouns": "Pronouns",
-        "language": "Preferred language",
-        "timezone": "Time zone",
-        "email": "Email",
-        "phone": "Phone",
-        "location": "Location",
-        "website": "Website",
-        "bio": "Bio",
-        "skills": "Key skills",
-        "interests": "Focus areas",
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "headline": "Заголовок",
+        "pronouns": "Местоимения",
+        "language": "Предпочитаемый язык",
+        "timezone": "Часовой пояс",
+        "email": "Электронная почта",
+        "phone": "Телефон",
+        "location": "Местоположение",
+        "website": "Веб-сайт",
+        "bio": "Биография",
+        "skills": "Ключевые навыки",
+        "interests": "Области фокуса",
         "linkedin": "LinkedIn",
         "twitter": "Twitter / X",
         "dribbble": "Dribbble",
         "behance": "Behance"
       },
       "actions": {
-        "cancel": "Reset",
-        "save": "Save changes"
+        "cancel": "Сбросить",
+        "save": "Сохранить изменения"
       },
       "helpers": {
-        "bio": "Share your mission, how you collaborate, or recent wins (280 characters).",
-        "skills": "Type to add custom skills or pick from the suggestions.",
-        "summary": "This quick card updates automatically as you edit your details.",
-        "siteSettings": "Update the site name or tagline without leaving your profile."
+        "bio": "Расскажите о своей миссии, стиле сотрудничества или недавних достижениях (280 символов).",
+        "skills": "Введите свои навыки или выберите предложенные.",
+        "summary": "Эта карточка обновляется автоматически по мере редактирования данных.",
+        "siteSettings": "Обновляйте название или слоган сайта, не покидая профиль."
       },
       "feedback": {
-        "successMessage": "Profile details saved successfully.",
-        "errorMessage": "Please review the highlighted fields."
+        "successMessage": "Данные профиля успешно сохранены.",
+        "errorMessage": "Пожалуйста, проверьте выделенные поля."
       },
       "validation": {
-        "required": "This field is required.",
-        "bioLimit": "Your bio must be 280 characters or fewer."
+        "required": "Это поле обязательно.",
+        "bioLimit": "Биография должна содержать не более 280 символов."
       }
     },
     "profileSecurity": {
-      "title": "Password & security",
-      "subtitle": "Keep your account protected with strong credentials and verified devices.",
+      "title": "Пароль и безопасность",
+      "subtitle": "Защитите аккаунт надёжными данными и проверенными устройствами.",
       "actions": {
-        "save": "Save security settings",
-        "generateCodes": "Generate recovery codes"
+        "save": "Сохранить настройки безопасности",
+        "generateCodes": "Создать резервные коды"
       },
       "sections": {
         "password": {
-          "title": "Update password",
-          "description": "Create a unique passphrase that combines at least 12 characters, numbers, and symbols."
+          "title": "Обновить пароль",
+          "description": "Создайте уникальную фразу длиной не менее 12 символов с цифрами и знаками."
         },
         "sessions": {
-          "title": "Active sessions",
-          "description": "Review where you're signed in and revoke access from unfamiliar devices."
+          "title": "Активные сессии",
+          "description": "Проверьте, где вы авторизованы, и отключите подозрительные устройства."
         },
         "mfa": {
-          "title": "Two-factor authentication",
-          "description": "Add an extra verification step to keep your workspace secure."
+          "title": "Двухфакторная аутентификация",
+          "description": "Добавьте дополнительный шаг проверки, чтобы обезопасить рабочее пространство."
         }
       },
       "labels": {
-        "currentPassword": "Current password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password",
-        "mfaToggle": "Enable two-factor authentication"
+        "currentPassword": "Текущий пароль",
+        "newPassword": "Новый пароль",
+        "confirmPassword": "Подтвердите пароль",
+        "mfaToggle": "Включить двухфакторную аутентификацию"
       },
       "passwordHint": {
-        "title": "Password tips",
-        "description": "Use a password manager, avoid reusing credentials, and rotate sensitive passwords regularly."
+        "title": "Советы по паролю",
+        "description": "Используйте менеджер паролей, избегайте повторов и регулярно обновляйте важные учётные данные."
       },
       "sessions": {
-        "device": "Device",
-        "location": "Location",
-        "activity": "Last activity",
-        "actions": "Actions",
-        "revoke": "Revoke",
-        "activeNow": "Active now",
-        "trusted": "Trusted",
-        "remembered": "Remembered",
-        "untrusted": "Unrecognized"
+        "device": "Устройство",
+        "location": "Местоположение",
+        "activity": "Последняя активность",
+        "actions": "Действия",
+        "revoke": "Отозвать",
+        "activeNow": "Активно сейчас",
+        "trusted": "Доверенное",
+        "remembered": "Запомнено",
+        "untrusted": "Нераспознано"
       },
       "recoveryCodes": {
-        "title": "Store these one-time recovery codes"
+        "title": "Сохраните эти одноразовые резервные коды"
       }
     },
     "playground": {
@@ -1969,20 +2006,20 @@
       "description": "Просматривайте личные данные и активность аккаунта."
     },
     "profileFriends": {
-      "title": "Connections",
-      "description": "Browse your collaborators, suggested contacts, and real-time activity."
+      "title": "Связи",
+      "description": "Изучайте коллег, рекомендованные контакты и активность в реальном времени."
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "description": "Organise launch highlights, studio shoots, and research archives."
+      "title": "Фототека",
+      "description": "Организуйте яркие моменты запусков, студийных съёмок и исследовательских архивов."
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "description": "Update your contact information, skills, and social links."
+      "title": "Редактировать профиль",
+      "description": "Обновляйте контактные данные, навыки и ссылки на соцсети."
     },
     "profileSecurity": {
-      "title": "Password & security",
-      "description": "Manage sign-in credentials, two-factor authentication, and trusted devices."
+      "title": "Пароль и безопасность",
+      "description": "Управляйте данными входа, двухфакторной аутентификацией и доверенными устройствами."
     },
     "createWorld": {
       "title": "Create world",

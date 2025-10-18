@@ -75,7 +75,10 @@
       "briefcase": "工作",
       "store": "商店",
       "database": "数据",
-      "game": "游戏"
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "游戏和测验"
     },
     "sidebar": {
       "title": "连接",
@@ -109,7 +112,7 @@
         "help": "帮助",
         "about": "关于",
         "contact": "联系",
-        "game": "Gaming",
+        "game": "游戏和测验",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "概览",
         "ecommerceCatalog": "产品目录",
@@ -690,7 +693,7 @@
     },
     "profile": {
       "title": "个人资料",
-      "subtitle": "查看并管理您的个人信息。",
+      "subtitle": "查看并管理你的个人信息。",
       "sections": {
         "contact": "联系方式",
         "profile": "个人资料",
@@ -698,7 +701,7 @@
         "calendar": "日历"
       },
       "calendar": {
-        "subtitle": "随时掌握即将到来的行程。",
+        "subtitle": "随时掌握即将到来的安排。",
         "viewLabel": "切换日历视图",
         "views": {
           "month": "月",
@@ -706,27 +709,61 @@
           "day": "日"
         },
         "errorTitle": "无法加载事件",
-        "errorFallback": "无法加载你的事件，请重试。",
+        "errorFallback": "我们未能加载你的事件，请重试。",
         "retry": "重试",
-        "privateLabel": "私人",
+        "privateLabel": "私密",
         "allDay": "全天",
-        "upcoming": "即将到来的事件",
-        "emptyTitle": "暂无计划的事件",
-        "emptyDescription": "添加事件到日历即可在此查看。",
+        "upcoming": "即将举行的事件",
+        "emptyTitle": "暂无计划事件",
+        "emptyDescription": "向日历中添加事件即可在此查看。",
         "actions": {
-          "add": "新事件",
+          "add": "新建事件",
           "edit": "编辑",
           "delete": "删除"
+        },
+        "form": {
+          "createTitle": "创建事件",
+          "createDescription": "直接在日历视图中规划新的安排。",
+          "editTitle": "编辑事件",
+          "editDescription": "更新此日历条目的详细信息。",
+          "fields": {
+            "title": "标题",
+            "startDate": "开始日期",
+            "endDate": "结束日期",
+            "startTime": "开始时间",
+            "endTime": "结束时间",
+            "allDay": "全天事件",
+            "color": "类别",
+            "location": "地点",
+            "description": "描述",
+            "isPrivate": "标记为私密"
+          },
+          "actions": {
+            "cancel": "取消",
+            "create": "创建事件",
+            "save": "保存更改"
+          },
+          "validation": {
+            "title": "为你的事件添加标题。",
+            "startDate": "请选择事件的开始日期。",
+            "startTime": "请选择开始时间。",
+            "endTime": "结束时间必须晚于开始时间。",
+            "range": "事件的结束时间必须晚于开始时间。"
+          }
+        },
+        "delete": {
+          "title": "删除事件",
+          "description": "确定要删除“{title}”吗？该操作无法撤销。"
         },
         "colors": {
           "meetings": "会议",
           "personal": "个人",
-          "travel": "旅行",
+          "travel": "出行",
           "focus": "专注"
         }
       },
       "labels": {
-        "email": "电子邮箱",
+        "email": "邮箱",
         "phone": "电话",
         "address": "地址",
         "title": "头衔",
@@ -735,8 +772,8 @@
         "description": "简介",
         "roles": "角色",
         "friends": "好友",
-        "stories": "动态",
-        "accountStatus": "账号状态"
+        "stories": "故事",
+        "accountStatus": "账户状态"
       },
       "statuses": {
         "enabled": "已启用",
@@ -744,199 +781,199 @@
       },
       "placeholders": {
         "missing": "—",
-        "noStories": "暂无动态"
+        "noStories": "暂无故事"
       },
       "avatarAlt": "{name} 的个人头像",
       "avatarAltFallback": "默认个人头像",
       "stats": {
-        "title": "快速概览"
+        "title": "快速统计"
       }
     },
     "profileFriends": {
-      "title": "Connections",
-      "subtitle": "Reconnect with your collaborators, mentors, and communities.",
+      "title": "人脉",
+      "subtitle": "与合作者、导师和社区重新建立联系。",
       "actions": {
-        "message": "Send message",
-        "schedule": "Schedule call",
-        "viewProfile": "Open profile"
+        "message": "发送消息",
+        "schedule": "安排通话",
+        "viewProfile": "打开个人资料"
       },
       "highlights": {
-        "title": "Featured collaborators",
-        "subtitle": "Handpicked partners you collaborate with the most this quarter."
-      },
-      "filters": {
-        "all": "All",
-        "design": "Design",
-        "product": "Product",
-        "engineering": "Engineering",
-        "marketing": "Marketing"
-      },
-      "stats": {
-        "totalFriends": "Connections",
-        "mutual": "mutual connections",
-        "online": "online now"
-      },
-      "meta": {
-        "lastActive": "上次活跃 · {time}"
+        "title": "精选合作者",
+        "subtitle": "本季度与你合作最频繁的核心伙伴。"
       },
       "sections": {
-        "suggestions": "Suggested connections",
-        "active": "Active now"
+        "active": "当前在线",
+        "suggestions": "推荐人脉"
+      },
+      "filters": {
+        "all": "全部",
+        "design": "设计",
+        "engineering": "工程",
+        "marketing": "市场",
+        "product": "产品"
+      },
+      "meta": {
+        "lastActive": "上次在线 · {time}"
+      },
+      "stats": {
+        "totalFriends": "人脉",
+        "mutual": "共同联系人",
+        "online": "当前在线"
       },
       "status": {
-        "online": "Online",
-        "focus": "Focus",
-        "busy": "Busy",
-        "offline": "Offline"
+        "online": "在线",
+        "offline": "离线",
+        "busy": "忙碌",
+        "focus": "专注"
       },
       "feedback": {
-        "message": "Drafting a quick hello…",
-        "messageWith": "Drafting a quick hello to {name}…",
-        "schedule": "Opening your scheduling flow…",
-        "scheduleWith": "Opening your scheduling flow for {name}…",
-        "connect": "We'll note that you'd like to connect.",
-        "connectWith": "We'll let {name} know you'd like to connect."
+        "connect": "我们会记录你想建立联系。",
+        "connectWith": "我们会告知 {name} 你希望建立联系。",
+        "message": "正在撰写简短问候…",
+        "messageWith": "正在为 {name} 撰写简短问候…",
+        "schedule": "正在打开日程安排流程…",
+        "scheduleWith": "正在为 {name} 打开日程安排流程…"
       },
-      "empty": "No profiles match this filter yet."
+      "empty": "暂无符合该筛选条件的个人资料。"
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "subtitle": "Curate highlights from launches, research trips, and behind-the-scenes moments.",
+      "title": "照片库",
+      "subtitle": "整理发布会亮点、调研之旅和幕后瞬间。",
       "actions": {
-        "upload": "Upload photos",
-        "createAlbum": "Create album"
-      },
-      "sections": {
-        "pinned": "Pinned collections",
-        "albums": "Album explorer",
-        "timeline": "Creative notes",
-        "notesDescription": "Updates from collaborators as they prep visual stories."
-      },
-      "meta": {
-        "updated": "Updated {date}",
-        "photoCount": "photos"
+        "createAlbum": "创建相册",
+        "upload": "上传照片"
       },
       "filters": {
-        "recent": "Recent",
-        "events": "Events",
-        "studio": "Studio",
-        "travel": "Travel"
+        "recent": "最新",
+        "events": "活动",
+        "studio": "影棚",
+        "travel": "旅行"
       },
-      "cta": {
-        "share": "Share curated sets with your crew or export to presentations."
+      "sections": {
+        "albums": "相册导航",
+        "pinned": "置顶合集",
+        "timeline": "创意笔记",
+        "notesDescription": "协作者在准备视觉故事时的最新动态。"
+      },
+      "meta": {
+        "photoCount": "张照片",
+        "updated": "{date} 更新"
       },
       "stats": {
-        "albums": "curated albums",
-        "tags": "unique story tags"
+        "albums": "精选相册",
+        "tags": "独特故事标签"
       },
       "timeline": {
-        "title": "Story milestones",
-        "description": "Snapshots from key launches, residencies, and retreats that shaped your year."
+        "title": "故事里程碑",
+        "description": "记录塑造你这一年的重点发布、驻留和团建时刻。"
+      },
+      "cta": {
+        "share": "将这些精选合集分享给团队或导出到演示文稿。"
       },
       "feedback": {
-        "upload": "Opening your media picker…",
-        "createAlbum": "Let's craft a new album.",
-        "shareCollection": "Sharing options are ready.",
-        "generic": "Action started."
+        "upload": "正在打开媒体选择器…",
+        "createAlbum": "一起创建一个新相册。",
+        "shareCollection": "分享选项已准备就绪。",
+        "generic": "操作已启动。"
       },
-      "empty": "No photos match this filter yet."
+      "empty": "暂无符合该筛选条件的照片。"
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "subtitle": "Refresh your details so collaborators always have the latest context.",
+      "title": "编辑个人资料",
+      "subtitle": "及时更新信息，让协作者随时掌握最新背景。",
       "sections": {
         "profile": {
           "title": "个人资料",
-          "bio": "个人介绍",
-          "skills": "关键技能"
+          "bio": "简介",
+          "skills": "核心技能"
         },
-        "contact": "Contact",
-        "about": "About",
-        "social": "Social links",
-        "siteSettings": "Site settings"
+        "contact": "联系方式",
+        "about": "关于",
+        "social": "社交链接",
+        "siteSettings": "站点设置"
       },
       "labels": {
-        "firstName": "First name",
-        "lastName": "Last name",
-        "headline": "Headline",
-        "pronouns": "Pronouns",
-        "language": "Preferred language",
-        "timezone": "Time zone",
-        "email": "Email",
-        "phone": "Phone",
-        "location": "Location",
-        "website": "Website",
-        "bio": "Bio",
-        "skills": "Key skills",
-        "interests": "Focus areas",
+        "firstName": "名",
+        "lastName": "姓",
+        "headline": "职业头衔",
+        "pronouns": "代称",
+        "language": "首选语言",
+        "timezone": "时区",
+        "email": "邮箱",
+        "phone": "电话",
+        "location": "所在地",
+        "website": "网站",
+        "bio": "简介",
+        "skills": "核心技能",
+        "interests": "关注领域",
         "linkedin": "LinkedIn",
         "twitter": "Twitter / X",
         "dribbble": "Dribbble",
         "behance": "Behance"
       },
       "actions": {
-        "cancel": "Reset",
-        "save": "Save changes"
+        "cancel": "重置",
+        "save": "保存更改"
       },
       "helpers": {
-        "bio": "Share your mission, how you collaborate, or recent wins (280 characters).",
-        "skills": "Type to add custom skills or pick from the suggestions.",
-        "summary": "This quick card updates automatically as you edit your details.",
-        "siteSettings": "Update the site name or tagline without leaving your profile."
+        "bio": "分享你的使命、协作方式或最新成果（限 280 个字符）。",
+        "skills": "输入自定义技能或从建议中选择。",
+        "summary": "在你编辑信息时，这张速览卡会自动更新。",
+        "siteSettings": "无需离开个人资料即可更新站点名称或标语。"
       },
       "feedback": {
-        "successMessage": "Profile details saved successfully.",
-        "errorMessage": "Please review the highlighted fields."
+        "successMessage": "个人资料信息已成功保存。",
+        "errorMessage": "请检查高亮显示的字段。"
       },
       "validation": {
-        "required": "This field is required.",
-        "bioLimit": "Your bio must be 280 characters or fewer."
+        "required": "此字段为必填项。",
+        "bioLimit": "简介长度需在 280 个字符以内。"
       }
     },
     "profileSecurity": {
-      "title": "Password & security",
-      "subtitle": "Keep your account protected with strong credentials and verified devices.",
+      "title": "密码与安全",
+      "subtitle": "使用强密码与已验证设备保护你的账户。",
       "actions": {
-        "save": "Save security settings",
-        "generateCodes": "Generate recovery codes"
+        "save": "保存安全设置",
+        "generateCodes": "生成备用验证码"
       },
       "sections": {
         "password": {
-          "title": "Update password",
-          "description": "Create a unique passphrase that combines at least 12 characters, numbers, and symbols."
+          "title": "更新密码",
+          "description": "创建至少 12 个字符，包含数字和符号的专属密码短语。"
         },
         "sessions": {
-          "title": "Active sessions",
-          "description": "Review where you're signed in and revoke access from unfamiliar devices."
+          "title": "活跃会话",
+          "description": "查看你的登录位置，并撤销陌生设备的访问权限。"
         },
         "mfa": {
-          "title": "Two-factor authentication",
-          "description": "Add an extra verification step to keep your workspace secure."
+          "title": "双重验证",
+          "description": "增加一步验证流程，守护你的工作空间。"
         }
       },
       "labels": {
-        "currentPassword": "Current password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password",
-        "mfaToggle": "Enable two-factor authentication"
+        "currentPassword": "当前密码",
+        "newPassword": "新密码",
+        "confirmPassword": "确认密码",
+        "mfaToggle": "启用双重验证"
       },
       "passwordHint": {
-        "title": "Password tips",
-        "description": "Use a password manager, avoid reusing credentials, and rotate sensitive passwords regularly."
+        "title": "密码提示",
+        "description": "使用密码管理器，避免重复使用密码，并定期更新重要凭据。"
       },
       "sessions": {
-        "device": "Device",
-        "location": "Location",
-        "activity": "Last activity",
-        "actions": "Actions",
-        "revoke": "Revoke",
-        "activeNow": "Active now",
-        "trusted": "Trusted",
-        "remembered": "Remembered",
-        "untrusted": "Unrecognized"
+        "device": "设备",
+        "location": "位置",
+        "activity": "最近活动",
+        "actions": "操作",
+        "revoke": "撤销",
+        "activeNow": "当前活跃",
+        "trusted": "受信任",
+        "remembered": "已记住",
+        "untrusted": "未识别"
       },
       "recoveryCodes": {
-        "title": "Store these one-time recovery codes"
+        "title": "请妥善保存这些一次性备用验证码"
       }
     },
     "createWorld": {
@@ -1767,16 +1804,16 @@
       "description": "查看您的个人信息和账号活动。"
     },
     "profileFriends": {
-      "title": "Connections",
-      "description": "Browse your collaborators, suggested contacts, and real-time activity."
+      "title": "人脉",
+      "description": "浏览你的合作者、推荐联系人和实时动态。"
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "description": "Organise launch highlights, studio shoots, and research archives."
+      "title": "照片库",
+      "description": "整理发布亮点、影棚拍摄和调研档案。"
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "description": "Update your contact information, skills, and social links."
+      "title": "编辑个人资料",
+      "description": "更新联系方式、技能和社交链接。"
     },
     "profileSecurity": {
       "title": "密码与安全",
