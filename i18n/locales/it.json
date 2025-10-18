@@ -75,7 +75,10 @@
       "briefcase": "Lavoro",
       "store": "Store",
       "database": "Dati",
-      "game": "Giochi"
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "Giochi e Quiz"
     },
     "sidebar": {
       "title": "Connetti",
@@ -109,7 +112,7 @@
         "help": "Aiuto",
         "about": "Informazioni",
         "contact": "Contatti",
-        "game": "Gaming",
+        "game": "Giochi e Quiz",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Panoramica",
         "ecommerceCatalog": "Catalogo prodotti",

@@ -75,7 +75,10 @@
       "briefcase": "Работа",
       "store": "Магазин",
       "database": "Данные",
-      "game": "Игры"
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "Игры и викторины"
     },
     "sidebar": {
       "title": "Подключение",
@@ -109,7 +112,7 @@
         "help": "Помощь",
         "about": "О нас",
         "contact": "Контакты",
-        "game": "Gaming",
+        "game": "Игры и викторины",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Обзор",
         "ecommerceCatalog": "Каталог товаров",

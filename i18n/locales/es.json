@@ -75,7 +75,10 @@
       "briefcase": "Trabajo",
       "store": "Tienda",
       "database": "Datos",
-      "game": "Juegos"
+      "ecommerce": "E-commerce",
+      "education": "Educación",
+      "quiz": "Quiz",
+      "game": "Juegos y Quiz"
     },
     "sidebar": {
       "title": "Conectar",
@@ -109,7 +112,7 @@
         "help": "Ayuda",
         "about": "Acerca de",
         "contact": "Contacto",
-        "game": "Gaming",
+        "game": "Juegos y Quiz",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "Resumen",
         "ecommerceCatalog": "Catálogo de productos",

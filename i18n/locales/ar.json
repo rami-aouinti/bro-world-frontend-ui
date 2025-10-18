@@ -75,7 +75,10 @@
       "briefcase": "العمل",
       "store": "المتجر",
       "database": "البيانات",
-      "game": "الألعاب"
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "الألعاب والاختبارات"
     },
     "sidebar": {
       "title": "اتصال",
@@ -109,7 +112,7 @@
         "help": "المساعدة",
         "about": "حول",
         "contact": "اتصال",
-        "game": "Gaming",
+        "game": "الألعاب والاختبارات",
         "ecommerce": "E-commerce",
         "ecommerceOverview": "نظرة عامة",
         "ecommerceCatalog": "كتالوج المنتجات",
