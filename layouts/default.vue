@@ -143,7 +143,9 @@
                       v-else
                       class="flex flex-col gap-6"
                     >
-                      <SidebarContactCard />
+                      <SidebarContactCard
+                        v-if="shouldShowContactSidebarCard"
+                      />
                       <SidebarWeatherCard
                         v-if="weather"
                         :weather="weather"
@@ -476,6 +478,9 @@ const showNavigation = computed(() => {
 
   return currentRoute.value?.meta?.showNavbar !== false;
 });
+const shouldShowContactSidebarCard = computed(
+  () => currentRoute.value?.meta?.showContactSidebarCard === true,
+);
 const { rightSidebarContent } = useLayoutRightSidebar();
 const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
 const DEFAULT_APP_BAR_HEIGHT = 72;

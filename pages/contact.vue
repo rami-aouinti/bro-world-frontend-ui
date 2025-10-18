@@ -157,6 +157,7 @@ const pageDescription = computed(() => t("seo.contact.description"));
 
 definePageMeta({
   documentDriven: false,
+  showContactSidebarCard: true,
 });
 useSeoMeta(() => ({
   description: pageDescription.value,
