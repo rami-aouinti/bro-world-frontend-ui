@@ -646,7 +646,7 @@
         "calendar": "Calendario"
       },
       "calendar": {
-        "subtitle": "Tieniti aggiornato sul tuo prossimo programma.",
+        "subtitle": "Tieni sotto controllo gli impegni in arrivo.",
         "viewLabel": "Cambia vista calendario",
         "views": {
           "month": "Mese",
@@ -660,7 +660,7 @@
         "allDay": "Tutto il giorno",
         "upcoming": "Prossimi eventi",
         "emptyTitle": "Nessun evento programmato",
-        "emptyDescription": "Aggiungi eventi al tuo calendario per vederli qui.",
+        "emptyDescription": "Aggiungi eventi al calendario per visualizzarli qui.",
         "actions": {
           "add": "Nuovo evento",
           "edit": "Modifica",
@@ -670,18 +670,18 @@
           "createTitle": "Crea evento",
           "createDescription": "Pianifica un nuovo momento direttamente dalla vista calendario.",
           "editTitle": "Modifica evento",
-          "editDescription": "Aggiorna i dettagli di questo evento.",
+          "editDescription": "Aggiorna i dettagli di questa voce di calendario.",
           "fields": {
             "title": "Titolo",
             "startDate": "Data di inizio",
             "endDate": "Data di fine",
             "startTime": "Ora di inizio",
             "endTime": "Ora di fine",
-            "allDay": "Evento per tutto il giorno",
+            "allDay": "Evento di un giorno intero",
             "color": "Categoria",
             "location": "Luogo",
             "description": "Descrizione",
-            "isPrivate": "Segna come privato"
+            "isPrivate": "Contrassegna come privato"
           },
           "actions": {
             "cancel": "Annulla",
@@ -689,11 +689,11 @@
             "save": "Salva modifiche"
           },
           "validation": {
-            "title": "Aggiungi un titolo all'evento.",
+            "title": "Assegna un titolo al tuo evento.",
             "startDate": "Seleziona quando inizia l'evento.",
-            "startTime": "Scegli un'ora di inizio.",
-            "endTime": "L'ora di fine deve essere successiva a quella di inizio.",
-            "range": "La fine dell'evento deve essere successiva all'inizio."
+            "startTime": "Scegli un orario d'inizio.",
+            "endTime": "L'orario di fine deve essere successivo all'inizio.",
+            "range": "La fine dell’evento deve essere successiva all’inizio."
           }
         },
         "delete": {
@@ -704,7 +704,7 @@
           "meetings": "Riunioni",
           "personal": "Personale",
           "travel": "Viaggi",
-          "focus": "Concentrazione"
+          "focus": "Focus"
         }
       },
       "labels": {
@@ -713,12 +713,12 @@
         "address": "Indirizzo",
         "title": "Titolo",
         "gender": "Genere",
-        "birthday": "Data di nascita",
+        "birthday": "Compleanno",
         "description": "Descrizione",
         "roles": "Ruoli",
         "friends": "Amici",
         "stories": "Storie",
-        "accountStatus": "Stato dell'account"
+        "accountStatus": "Stato account"
       },
       "statuses": {
         "enabled": "Attivo",
@@ -735,190 +735,190 @@
       }
     },
     "profileFriends": {
-      "title": "Connections",
-      "subtitle": "Reconnect with your collaborators, mentors, and communities.",
+      "title": "Connessioni",
+      "subtitle": "Riconnettiti con collaboratori, mentori e community.",
       "actions": {
-        "message": "Send message",
-        "schedule": "Schedule call",
-        "viewProfile": "Open profile"
+        "message": "Invia messaggio",
+        "schedule": "Programma chiamata",
+        "viewProfile": "Apri profilo"
       },
       "highlights": {
-        "title": "Featured collaborators",
-        "subtitle": "Handpicked partners you collaborate with the most this quarter."
+        "title": "Collaboratori in evidenza",
+        "subtitle": "Partner selezionati con cui collabori più spesso in questo trimestre."
+      },
+      "sections": {
+        "active": "Ora attivi",
+        "suggestions": "Connessioni suggerite"
       },
       "filters": {
-        "all": "All",
+        "all": "Tutti",
         "design": "Design",
-        "product": "Product",
         "engineering": "Engineering",
-        "marketing": "Marketing"
-      },
-      "stats": {
-        "totalFriends": "Connections",
-        "mutual": "mutual connections",
-        "online": "online now"
+        "marketing": "Marketing",
+        "product": "Prodotto"
       },
       "meta": {
         "lastActive": "Ultima attività · {time}"
       },
-      "sections": {
-        "suggestions": "Suggested connections",
-        "active": "Active now"
+      "stats": {
+        "totalFriends": "Connessioni",
+        "mutual": "contatti in comune",
+        "online": "online ora"
       },
       "status": {
         "online": "Online",
-        "focus": "Focus",
-        "busy": "Busy",
-        "offline": "Offline"
+        "offline": "Offline",
+        "busy": "Occupato",
+        "focus": "Focus"
       },
       "feedback": {
-        "message": "Drafting a quick hello…",
-        "messageWith": "Drafting a quick hello to {name}…",
-        "schedule": "Opening your scheduling flow…",
-        "scheduleWith": "Opening your scheduling flow for {name}…",
-        "connect": "We'll note that you'd like to connect.",
-        "connectWith": "We'll let {name} know you'd like to connect."
+        "connect": "Annoteremo che desideri connetterti.",
+        "connectWith": "Avviseremo {name} che desideri connetterti.",
+        "message": "Stiamo preparando un saluto veloce…",
+        "messageWith": "Stiamo preparando un saluto veloce per {name}…",
+        "schedule": "Apertura del flusso di pianificazione…",
+        "scheduleWith": "Apertura del flusso di pianificazione per {name}…"
       },
-      "empty": "No profiles match this filter yet."
+      "empty": "Nessun profilo corrisponde ancora a questo filtro."
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "subtitle": "Curate highlights from launches, research trips, and behind-the-scenes moments.",
+      "title": "Libreria foto",
+      "subtitle": "Cura gli highlight di lanci, viaggi di ricerca e momenti dietro le quinte.",
       "actions": {
-        "upload": "Upload photos",
-        "createAlbum": "Create album"
-      },
-      "sections": {
-        "pinned": "Pinned collections",
-        "albums": "Album explorer",
-        "timeline": "Creative notes",
-        "notesDescription": "Updates from collaborators as they prep visual stories."
-      },
-      "meta": {
-        "updated": "Updated {date}",
-        "photoCount": "photos"
+        "createAlbum": "Crea album",
+        "upload": "Carica foto"
       },
       "filters": {
-        "recent": "Recent",
-        "events": "Events",
+        "recent": "Recenti",
+        "events": "Eventi",
         "studio": "Studio",
-        "travel": "Travel"
+        "travel": "Viaggi"
       },
-      "cta": {
-        "share": "Share curated sets with your crew or export to presentations."
+      "sections": {
+        "albums": "Esplora album",
+        "pinned": "Raccolte in evidenza",
+        "timeline": "Note creative",
+        "notesDescription": "Aggiornamenti dei collaboratori mentre preparano storie visive."
+      },
+      "meta": {
+        "photoCount": "foto",
+        "updated": "Aggiornato {date}"
       },
       "stats": {
-        "albums": "curated albums",
-        "tags": "unique story tags"
+        "albums": "album curati",
+        "tags": "tag storia unici"
       },
       "timeline": {
-        "title": "Story milestones",
-        "description": "Snapshots from key launches, residencies, and retreats that shaped your year."
+        "title": "Pietre miliari della storia",
+        "description": "Scatti dei lanci, delle residenze e dei ritiri che hanno segnato il tuo anno."
+      },
+      "cta": {
+        "share": "Condividi questi set curati con il tuo team o esportali nelle presentazioni."
       },
       "feedback": {
-        "upload": "Opening your media picker…",
-        "createAlbum": "Let's craft a new album.",
-        "shareCollection": "Sharing options are ready.",
-        "generic": "Action started."
+        "upload": "Apertura del selettore multimediale…",
+        "createAlbum": "Creiamo un nuovo album.",
+        "shareCollection": "Le opzioni di condivisione sono pronte.",
+        "generic": "Azione avviata."
       },
-      "empty": "No photos match this filter yet."
+      "empty": "Nessuna foto corrisponde a questo filtro al momento."
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "subtitle": "Refresh your details so collaborators always have the latest context.",
+      "title": "Modifica profilo",
+      "subtitle": "Aggiorna i tuoi dati così i collaboratori hanno sempre il contesto giusto.",
       "sections": {
         "profile": {
           "title": "Profilo",
-          "bio": "Profilo personale",
-          "skills": "Competenze principali"
+          "bio": "Biografia",
+          "skills": "Competenze chiave"
         },
-        "contact": "Contact",
-        "about": "About",
-        "social": "Social links",
-        "siteSettings": "Site settings"
+        "contact": "Contatti",
+        "about": "Informazioni",
+        "social": "Link social",
+        "siteSettings": "Impostazioni del sito"
       },
       "labels": {
-        "firstName": "First name",
-        "lastName": "Last name",
-        "headline": "Headline",
-        "pronouns": "Pronouns",
-        "language": "Preferred language",
-        "timezone": "Time zone",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "headline": "Titolo professionale",
+        "pronouns": "Pronomi",
+        "language": "Lingua preferita",
+        "timezone": "Fuso orario",
         "email": "Email",
-        "phone": "Phone",
-        "location": "Location",
-        "website": "Website",
-        "bio": "Bio",
-        "skills": "Key skills",
-        "interests": "Focus areas",
+        "phone": "Telefono",
+        "location": "Località",
+        "website": "Sito web",
+        "bio": "Biografia",
+        "skills": "Competenze chiave",
+        "interests": "Aree di interesse",
         "linkedin": "LinkedIn",
         "twitter": "Twitter / X",
         "dribbble": "Dribbble",
         "behance": "Behance"
       },
       "actions": {
-        "cancel": "Reset",
-        "save": "Save changes"
+        "cancel": "Reimposta",
+        "save": "Salva modifiche"
       },
       "helpers": {
-        "bio": "Share your mission, how you collaborate, or recent wins (280 characters).",
-        "skills": "Type to add custom skills or pick from the suggestions.",
-        "summary": "This quick card updates automatically as you edit your details.",
-        "siteSettings": "Update the site name or tagline without leaving your profile."
+        "bio": "Condividi la tua missione, il tuo modo di collaborare o i successi recenti (280 caratteri).",
+        "skills": "Digita per aggiungere competenze personalizzate o scegli tra i suggerimenti.",
+        "summary": "Questa scheda rapida si aggiorna automaticamente mentre modifichi i tuoi dati.",
+        "siteSettings": "Aggiorna nome o slogan del sito senza lasciare il profilo."
       },
       "feedback": {
-        "successMessage": "Profile details saved successfully.",
-        "errorMessage": "Please review the highlighted fields."
+        "successMessage": "I dettagli del profilo sono stati salvati con successo.",
+        "errorMessage": "Controlla i campi evidenziati."
       },
       "validation": {
-        "required": "This field is required.",
-        "bioLimit": "Your bio must be 280 characters or fewer."
+        "required": "Questo campo è obbligatorio.",
+        "bioLimit": "La biografia deve contenere al massimo 280 caratteri."
       }
     },
     "profileSecurity": {
-      "title": "Password & security",
-      "subtitle": "Keep your account protected with strong credentials and verified devices.",
+      "title": "Password e sicurezza",
+      "subtitle": "Proteggi il tuo account con credenziali robuste e dispositivi verificati.",
       "actions": {
-        "save": "Save security settings",
-        "generateCodes": "Generate recovery codes"
+        "save": "Salva impostazioni di sicurezza",
+        "generateCodes": "Genera codici di recupero"
       },
       "sections": {
         "password": {
-          "title": "Update password",
-          "description": "Create a unique passphrase that combines at least 12 characters, numbers, and symbols."
+          "title": "Aggiorna password",
+          "description": "Crea una passphrase unica con almeno 12 caratteri, numeri e simboli."
         },
         "sessions": {
-          "title": "Active sessions",
-          "description": "Review where you're signed in and revoke access from unfamiliar devices."
+          "title": "Sessioni attive",
+          "description": "Controlla dove hai effettuato l’accesso e revoca l’accesso ai dispositivi sconosciuti."
         },
         "mfa": {
-          "title": "Two-factor authentication",
-          "description": "Add an extra verification step to keep your workspace secure."
+          "title": "Autenticazione a due fattori",
+          "description": "Aggiungi un ulteriore passaggio di verifica per mettere al sicuro il tuo workspace."
         }
       },
       "labels": {
-        "currentPassword": "Current password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password",
-        "mfaToggle": "Enable two-factor authentication"
+        "currentPassword": "Password attuale",
+        "newPassword": "Nuova password",
+        "confirmPassword": "Conferma password",
+        "mfaToggle": "Attiva autenticazione a due fattori"
       },
       "passwordHint": {
-        "title": "Password tips",
-        "description": "Use a password manager, avoid reusing credentials, and rotate sensitive passwords regularly."
+        "title": "Suggerimenti sulla password",
+        "description": "Usa un password manager, evita i duplicati e aggiorna regolarmente le credenziali sensibili."
       },
       "sessions": {
-        "device": "Device",
-        "location": "Location",
-        "activity": "Last activity",
-        "actions": "Actions",
-        "revoke": "Revoke",
-        "activeNow": "Active now",
-        "trusted": "Trusted",
-        "remembered": "Remembered",
-        "untrusted": "Unrecognized"
+        "device": "Dispositivo",
+        "location": "Località",
+        "activity": "Ultima attività",
+        "actions": "Azioni",
+        "revoke": "Revoca",
+        "activeNow": "Attivo ora",
+        "trusted": "Affidabile",
+        "remembered": "Memorizzato",
+        "untrusted": "Non riconosciuto"
       },
       "recoveryCodes": {
-        "title": "Store these one-time recovery codes"
+        "title": "Conserva questi codici di recupero monouso"
       }
     },
     "playground": {
@@ -2003,20 +2003,20 @@
       "description": "Consulta i tuoi dati personali e l'attività dell'account."
     },
     "profileFriends": {
-      "title": "Connections",
-      "description": "Browse your collaborators, suggested contacts, and real-time activity."
+      "title": "Connessioni",
+      "description": "Esplora collaboratori, contatti suggeriti e attività in tempo reale."
     },
     "profilePhotos": {
-      "title": "Photo library",
-      "description": "Organise launch highlights, studio shoots, and research archives."
+      "title": "Libreria foto",
+      "description": "Organizza gli highlight di lanci, sessioni in studio e archivi di ricerca."
     },
     "profileEdit": {
-      "title": "Edit profile",
-      "description": "Update your contact information, skills, and social links."
+      "title": "Modifica profilo",
+      "description": "Aggiorna informazioni di contatto, competenze e link social."
     },
     "profileSecurity": {
-      "title": "Password & security",
-      "description": "Manage sign-in credentials, two-factor authentication, and trusted devices."
+      "title": "Password e sicurezza",
+      "description": "Gestisci credenziali di accesso, autenticazione a due fattori e dispositivi affidabili."
     },
     "createWorld": {
       "title": "Create world",

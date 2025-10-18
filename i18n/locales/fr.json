@@ -842,7 +842,7 @@
       },
       "calendar": {
         "subtitle": "Gardez un œil sur votre planning à venir.",
-        "viewLabel": "Changer la vue du calendrier",
+        "viewLabel": "Changer l’affichage du calendrier",
         "views": {
           "month": "Mois",
           "week": "Semaine",
@@ -861,6 +861,40 @@
           "edit": "Modifier",
           "delete": "Supprimer"
         },
+        "form": {
+          "createTitle": "Créer un événement",
+          "createDescription": "Planifiez un nouveau moment directement depuis la vue calendrier.",
+          "editTitle": "Modifier l’événement",
+          "editDescription": "Mettez à jour les détails de cette entrée dans le calendrier.",
+          "fields": {
+            "title": "Titre",
+            "startDate": "Date de début",
+            "endDate": "Date de fin",
+            "startTime": "Heure de début",
+            "endTime": "Heure de fin",
+            "allDay": "Événement sur toute la journée",
+            "color": "Catégorie",
+            "location": "Lieu",
+            "description": "Description",
+            "isPrivate": "Marquer comme privé"
+          },
+          "actions": {
+            "cancel": "Annuler",
+            "create": "Créer l’événement",
+            "save": "Enregistrer les modifications"
+          },
+          "validation": {
+            "title": "Donnez un titre à votre événement.",
+            "startDate": "Indiquez quand l’événement commence.",
+            "startTime": "Choisissez une heure de début.",
+            "endTime": "L’heure de fin doit être postérieure à l’heure de début.",
+            "range": "La fin de l’événement doit être postérieure à son début."
+          }
+        },
+        "delete": {
+          "title": "Supprimer l’événement",
+          "description": "Voulez-vous vraiment supprimer « {title} » ? Cette action est irréversible."
+        },
         "colors": {
           "meetings": "Réunions",
           "personal": "Personnel",
@@ -878,7 +912,7 @@
         "description": "Description",
         "roles": "Rôles",
         "friends": "Amis",
-        "stories": "Stories",
+        "stories": "Histoires",
         "accountStatus": "Statut du compte"
       },
       "statuses": {
@@ -887,7 +921,7 @@
       },
       "placeholders": {
         "missing": "—",
-        "noStories": "Aucune story"
+        "noStories": "Aucune histoire"
       },
       "avatarAlt": "Photo de profil de {name}",
       "avatarAltFallback": "Image de profil par défaut",
@@ -916,8 +950,8 @@
       },
       "stats": {
         "totalFriends": "Connexions",
-        "mutual": "connexions en commun",
-        "online": "en ligne maintenant"
+        "mutual": "Connexions en commun",
+        "online": "En ligne maintenant"
       },
       "meta": {
         "lastActive": "Dernière activité · {time}"
@@ -933,8 +967,8 @@
         "offline": "Hors ligne"
       },
       "feedback": {
-        "message": "Rédaction d'un petit message…",
-        "messageWith": "Rédaction d'un petit message pour {name}…",
+        "message": "Rédaction d’un petit message…",
+        "messageWith": "Rédaction d’un petit message pour {name}…",
         "schedule": "Ouverture de votre flux de planification…",
         "scheduleWith": "Ouverture du flux de planification pour {name}…",
         "connect": "Nous noterons que vous souhaitez vous connecter.",
@@ -970,8 +1004,8 @@
         "share": "Partagez ces sélections avec votre équipe ou exportez-les dans vos présentations."
       },
       "stats": {
-        "albums": "albums organisés",
-        "tags": "étiquettes d’histoire uniques"
+        "albums": "Albums organisés",
+        "tags": "Étiquettes d’histoire uniques"
       },
       "timeline": {
         "title": "Moments clés de l’histoire",
@@ -984,7 +1018,7 @@
         "generic": "Action lancée."
       },
       "empty": "Aucune photo ne correspond à ce filtre pour le moment.",
-      "description": "Organisez les moments forts des lancements, sessions en studio et voyages de recherche."
+      "description": "Organisez les moments forts des lancements, des sessions en studio et des voyages de recherche."
     },
     "profileEdit": {
       "title": "Modifier le profil",
@@ -1043,17 +1077,17 @@
       "title": "Mot de passe et sécurité",
       "subtitle": "Protégez votre compte avec des identifiants robustes et des appareils vérifiés.",
       "actions": {
-        "save": "Enregistrer la sécurité",
+        "save": "Enregistrer les paramètres de sécurité",
         "generateCodes": "Générer des codes de secours"
       },
       "sections": {
         "password": {
           "title": "Mettre à jour le mot de passe",
-          "description": "Créez une phrase secrète unique d'au moins 12 caractères avec chiffres et symboles."
+          "description": "Créez une phrase secrète unique d’au moins 12 caractères avec chiffres et symboles."
         },
         "sessions": {
           "title": "Sessions actives",
-          "description": "Vérifiez où vous êtes connecté et révoquez l'accès des appareils inconnus."
+          "description": "Vérifiez sur quels appareils vous êtes connecté et révoquez l’accès des appareils inconnus."
         },
         "mfa": {
           "title": "Authentification à deux facteurs",
@@ -1068,7 +1102,7 @@
       },
       "passwordHint": {
         "title": "Conseils de mot de passe",
-        "description": "Utilisez un gestionnaire de mots de passe, évitez les doublons et renouvelez-les régulièrement."
+        "description": "Utilisez un gestionnaire de mots de passe, évitez les doublons et pensez à les renouveler régulièrement."
       },
       "sessions": {
         "device": "Appareil",
@@ -1076,13 +1110,13 @@
         "activity": "Dernière activité",
         "actions": "Actions",
         "revoke": "Révoquer",
-        "activeNow": "Actif maintenant",
+        "activeNow": "Actif en ce moment",
         "trusted": "De confiance",
-        "remembered": "Enregistré",
+        "remembered": "Mémorisé",
         "untrusted": "Non reconnu"
       },
       "recoveryCodes": {
-        "title": "Conservez ces codes de secours uniques"
+        "title": "Conservez ces codes de secours à usage unique"
       }
     },
     "contact": {
@@ -2031,7 +2065,7 @@
     },
     "profilePhotos": {
       "title": "Bibliothèque de photos",
-      "description": "Organisez les moments forts des lancements, sessions en studio et voyages de recherche."
+      "description": "Organisez les moments forts des lancements, des sessions en studio et des voyages de recherche."
     },
     "profileEdit": {
       "title": "Modifier le profil",
