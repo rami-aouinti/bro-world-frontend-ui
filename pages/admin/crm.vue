@@ -191,7 +191,6 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { storeToRefs } from "pinia";
 import { callOnce } from "#imports";
 import { useI18n } from "vue-i18n";
 
@@ -248,7 +247,9 @@ useHead(() => {
 });
 
 const crmStore = useCrmProjectsStore();
-const { projects, pending, error } = storeToRefs(crmStore);
+const projects = crmStore.projects;
+const pending = crmStore.pending;
+const error = crmStore.error;
 
 await callOnce(() => crmStore.listProjects());
 
