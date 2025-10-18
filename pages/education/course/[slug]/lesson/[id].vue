@@ -46,9 +46,24 @@ const localePath = useLocalePath();
 const slug = computed(() => String(route.params.slug));
 const lessonId = computed(() => String(route.params.id));
 
-await store.fetchCourseDetails(slug.value);
-await store.fetchLessons(slug.value);
-await store.fetchExercises(slug.value);
+const fetchTasks: Promise<unknown>[] = [];
+const shouldFetchCourse = !store.getCourseBySlug(slug.value);
+
+if (shouldFetchCourse) {
+  fetchTasks.push(store.fetchCourseDetails(slug.value));
+}
+
+if (!store.getCourseLessons(slug.value)?.length && !shouldFetchCourse) {
+  fetchTasks.push(store.fetchLessons(slug.value));
+}
+
+if (!store.getCourseExercises(slug.value)?.length) {
+  fetchTasks.push(store.fetchExercises(slug.value));
+}
+
+if (fetchTasks.length) {
+  await Promise.all(fetchTasks);
+}
 
 const course = computed(() => store.getCourseBySlug(slug.value));
 const lessons = computed(() => {
