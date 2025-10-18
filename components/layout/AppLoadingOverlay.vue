@@ -10,13 +10,24 @@
       >
         <span class="sr-only">{{ t("layout.loadingOverlay.srLabel") }}</span>
         <div class="app-loading-scene" aria-hidden="true">
-          <div class="app-loading-column app-loading-column--nav">
-            <span class="app-loading-logo app-loading-skeleton" />
+          <header class="app-loading-navbar" aria-hidden="true">
+            <div class="app-loading-navbar-inner">
+              <span class="app-loading-brand app-loading-skeleton" />
+              <span class="app-loading-search app-loading-skeleton" />
+              <div class="app-loading-actions">
+                <span class="app-loading-action app-loading-skeleton" />
+                <span class="app-loading-action app-loading-skeleton" />
+                <span class="app-loading-action app-loading-skeleton" />
+                <span class="app-loading-avatar app-loading-skeleton" />
+              </div>
+            </div>
+          </header>
+          <div class="app-loading-aside-card app-loading-aside-card--nav app-loading-skeleton app-loading-column--nav">
             <div class="app-loading-nav">
               <span
-                v-for="item in 6"
+                v-for="item in 7"
                 :key="item"
-                class="app-loading-nav-item app-loading-skeleton"
+                class="app-loading-nav-item app-loading-skeleton py-1 my-2 mx-3"
               />
             </div>
           </div>
@@ -32,6 +43,10 @@
               <div class="app-loading-body">
                 <span class="app-loading-line app-loading-skeleton" />
                 <span class="app-loading-line app-loading-skeleton" />
+                <span class="app-loading-line app-loading-skeleton" />
+                <span class="app-loading-line app-loading-skeleton" />
+                <span class="app-loading-line app-loading-skeleton" />
+                <span class="app-loading-line app-loading-skeleton" />
                 <span class="app-loading-line app-loading-line--medium app-loading-skeleton" />
               </div>
               <div class="app-loading-emojis">
@@ -42,23 +57,11 @@
                 <span class="app-loading-tag app-loading-skeleton" />
               </div>
             </div>
-            <div class="app-loading-card app-loading-card--secondary">
-              <div class="app-loading-card-header">
-                <span class="app-loading-avatar app-loading-skeleton" />
-                <div class="app-loading-meta">
-                  <span class="app-loading-line app-loading-line--short app-loading-skeleton" />
-                  <span class="app-loading-line app-loading-line--tiny app-loading-skeleton" />
-                </div>
-              </div>
-              <div class="app-loading-body">
-                <span class="app-loading-line app-loading-line--medium app-loading-skeleton" />
-                <span class="app-loading-line app-loading-line--short app-loading-skeleton" />
-              </div>
-            </div>
           </div>
-          <div class="app-loading-column app-loading-column--aside">
-            <div class="app-loading-aside-card app-loading-skeleton" />
+          <div class="app-loading-column app-loading-column--aside py-1 my-2">
             <div class="app-loading-aside-card app-loading-aside-card--tall app-loading-skeleton" />
+            <div class="app-loading-aside-card app-loading-aside-card--tall app-loading-skeleton" />
+            <div class="app-loading-aside-card app-loading-aside-card--tall-2 app-loading-skeleton" />
           </div>
         </div>
       </div>
@@ -91,7 +94,63 @@ const { t } = useI18n();
 .app-loading-fade-leave-to {
   opacity: 0;
 }
+.app-loading-navbar {
+  --nav-h: 50px;                /* hauteur configurable */
+  position: absolute;           /* reste en haut de l’overlay */
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(1rem, 3vw, 1.5rem);
+  background: linear-gradient(150deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.82));
+  backdrop-filter: blur(10px) saturate(120%);
+  border-bottom: 1px solid rgb(3, 32, 61);
+  z-index: 1;                   /* au-dessus de la scène */
+}
 
+.app-loading-navbar-inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.app-loading-brand {
+  width: 7rem;
+  height: 1.75rem;
+  border-radius: 0.6rem;
+}
+
+.app-loading-search {
+  height: 2.2rem;
+  border-radius: 999px;
+  max-width: 560px;
+  justify-self: center;
+  width: min(100%, 560px);
+}
+
+.app-loading-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-loading-action {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.75rem;
+}
+
+/* Responsive: cache la search bar sur petits écrans */
+@media (max-width: 720px) {
+  .app-loading-navbar-inner {
+    grid-template-columns: auto auto;
+  }
+  .app-loading-search {
+    display: none;
+  }
+}
 .app-loading-overlay {
   position: fixed;
   inset: 0;
@@ -100,7 +159,6 @@ const { t } = useI18n();
   place-items: center;
   width: 100vw;
   min-height: 100vh;
-  min-height: 100dvh;
   box-sizing: border-box;
   padding: clamp(1.25rem, 4vw, 3rem);
   background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.1), transparent 55%),
@@ -111,10 +169,8 @@ const { t } = useI18n();
 }
 
 .app-loading-scene {
-  width: min(1100px, 100%);
-  height: min(680px, 100%);
   display: grid;
-  grid-template-columns: minmax(160px, 1fr) minmax(320px, 1.2fr) minmax(200px, 0.9fr);
+  grid-template-columns: minmax(200px, 1fr) minmax(420px, 1.2fr) minmax(200px, 1fr);
   gap: clamp(1.5rem, 4vw, 2.5rem);
   align-items: center;
 }
@@ -137,11 +193,11 @@ const { t } = useI18n();
 
 .app-loading-nav {
   display: grid;
-  gap: 0.65rem;
+  gap: 1.65rem;
 }
 
 .app-loading-nav-item {
-  height: 0.95rem;
+  height: 2.95rem;
   border-radius: 999px;
 }
 
@@ -252,7 +308,13 @@ const { t } = useI18n();
 }
 
 .app-loading-aside-card--tall {
-  height: clamp(9rem, 18vw, 11rem);
+  height: clamp(7rem, 18vw, 11rem);
+}
+.app-loading-aside-card--tall-2 {
+  height: clamp(7rem, 18vw, 7rem);
+}
+.app-loading-aside-card--nav {
+  height: clamp(32rem, 18vw, 21rem);
 }
 
 .app-loading-skeleton {
@@ -335,8 +397,6 @@ const { t } = useI18n();
   .app-loading-column--nav {
     order: 2;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
     gap: 1rem;
   }
 
