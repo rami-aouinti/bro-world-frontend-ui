@@ -63,44 +63,16 @@
             sm="6"
             md="3"
           >
-            <SidebarCard
-              class="text-card-foreground pa-5 h-100"
-              glow
-            >
-              <div class="d-flex justify-space-between align-start">
-                <div>
-                  <p class="text-subtitle-2 text-medium-emphasis mb-1">{{ metric.label }}</p>
-                  <p class="text-h5 text-lg-h4 font-weight-bold mb-0">{{ metric.value }}</p>
-                  <div class="d-flex align-center gap-2 mt-3">
-                    <v-chip
-                      :color="metric.trendIsPositive ? 'success' : 'error'"
-                      variant="tonal"
-                      size="x-small"
-                      class="font-weight-medium"
-                    >
-                      <Icon
-                        :name="metric.trendIsPositive ? 'mdi:arrow-up-bold' : 'mdi:arrow-down-bold'"
-                        size="16"
-                        class="me-1"
-                      />
-                      {{ metric.trend }}
-                    </v-chip>
-                    <span class="text-caption text-medium-emphasis">{{ metric.caption }}</span>
-                  </div>
-                </div>
-                <v-avatar
-                  color="primary"
-                  variant="tonal"
-                  size="44"
-                >
-                  <Icon
-                    :name="metric.icon"
-                    size="26"
-                  />
-                </v-avatar>
-              </div>
-              <p class="text-body-2 text-medium-emphasis mb-0 mt-4">{{ metric.description }}</p>
-            </SidebarCard>
+            <AdminMetricCard
+              :label="metric.label"
+              :value="metric.value"
+              :trend="metric.trend"
+              :trend-is-positive="metric.trendIsPositive"
+              :caption="metric.caption"
+              :description="metric.description"
+              :icon="metric.icon"
+              :avatar-color="metric.avatarColor"
+            />
           </v-col>
         </v-row>
       </section>
@@ -183,36 +155,13 @@
             cols="12"
             md="4"
           >
-            <SidebarCard
-              class="text-card-foreground pa-6 h-100"
-              glow
-            >
-              <div class="d-flex align-start gap-4">
-                <v-avatar
-                  :color="action.color"
-                  variant="tonal"
-                  size="48"
-                >
-                  <Icon
-                    :name="action.icon"
-                    size="26"
-                  />
-                </v-avatar>
-                <div class="flex-grow-1">
-                  <h3 class="text-subtitle-1 font-weight-semibold mb-2">{{ action.title }}</h3>
-                  <p class="text-body-2 text-medium-emphasis mb-4">{{ action.description }}</p>
-                  <v-btn
-                    :color="action.color"
-                    variant="flat"
-                    class="text-none"
-                    block
-                    prepend-icon="mdi:play-circle"
-                  >
-                    {{ t("admin.sections.quickActions.button") }}
-                  </v-btn>
-                </div>
-              </div>
-            </SidebarCard>
+            <AdminQuickActionCard
+              :title="action.title"
+              :description="action.description"
+              :icon="action.icon"
+              :color="action.color"
+              :cta-label="action.ctaLabel"
+            />
           </v-col>
         </v-row>
       </section>
@@ -566,6 +515,7 @@ const metrics = computed(() => [
     caption: t("admin.sections.stats.metrics.users.caption"),
     icon: "mdi:account-group",
     description: t("admin.sections.stats.metrics.users.description"),
+    avatarColor: "primary",
   },
   {
     id: "content",
@@ -576,6 +526,7 @@ const metrics = computed(() => [
     caption: t("admin.sections.stats.metrics.content.caption"),
     icon: "mdi:text-box-multiple",
     description: t("admin.sections.stats.metrics.content.description"),
+    avatarColor: "secondary",
   },
   {
     id: "reports",
@@ -586,6 +537,7 @@ const metrics = computed(() => [
     caption: t("admin.sections.stats.metrics.reports.caption"),
     icon: "mdi:shield-check",
     description: t("admin.sections.stats.metrics.reports.description"),
+    avatarColor: "success",
   },
   {
     id: "availability",
@@ -596,6 +548,7 @@ const metrics = computed(() => [
     caption: t("admin.sections.stats.metrics.availability.caption"),
     icon: "mdi:chart-areaspline",
     description: t("admin.sections.stats.metrics.availability.description"),
+    avatarColor: "info",
   },
 ]);
 
@@ -658,6 +611,7 @@ const quickActions = computed(() => [
     description: t("admin.sections.quickActions.items.contentReview.description"),
     icon: "mdi:check-decagram",
     color: "primary",
+    ctaLabel: t("admin.sections.quickActions.button"),
   },
   {
     id: "security-scan",
@@ -665,6 +619,7 @@ const quickActions = computed(() => [
     description: t("admin.sections.quickActions.items.securityScan.description"),
     icon: "mdi:shield-lock",
     color: "secondary",
+    ctaLabel: t("admin.sections.quickActions.button"),
   },
   {
     id: "community-update",
@@ -672,6 +627,7 @@ const quickActions = computed(() => [
     description: t("admin.sections.quickActions.items.communityUpdate.description"),
     icon: "mdi:email-outline",
     color: "purple",
+    ctaLabel: t("admin.sections.quickActions.button"),
   },
 ]);
 

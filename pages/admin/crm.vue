@@ -57,28 +57,13 @@
             sm="6"
             lg="3"
           >
-            <SidebarCard
-              class="text-card-foreground pa-6 h-100"
-              glow
-            >
-              <div class="d-flex justify-space-between align-start">
-                <div>
-                  <p class="text-subtitle-2 text-medium-emphasis mb-2">{{ metric.label }}</p>
-                  <p class="text-h5 text-lg-h4 font-weight-bold mb-1">{{ metric.value }}</p>
-                  <p class="text-caption text-medium-emphasis mb-0">{{ metric.caption }}</p>
-                </div>
-                <v-avatar
-                  :color="metric.color"
-                  variant="tonal"
-                  size="48"
-                >
-                  <Icon
-                    :name="metric.icon"
-                    size="26"
-                  />
-                </v-avatar>
-              </div>
-            </SidebarCard>
+            <AdminMetricCard
+              :label="metric.label"
+              :value="metric.value"
+              :caption="metric.caption"
+              :icon="metric.icon"
+              :avatar-color="metric.color"
+            />
           </v-col>
         </v-row>
       </section>
@@ -194,10 +179,10 @@ import { computed } from "vue";
 import { callOnce } from "#imports";
 import { useI18n } from "vue-i18n";
 
-import Icon from "~/components/Icon.vue";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import CrmProjectsTable from "~/components/admin/crm/CrmProjectsTable.vue";
 import { useCrmProjectsStore } from "~/stores/crm-projects";
+import AdminMetricCard from "~/components/admin/dashboard/AdminMetricCard.vue";
 import type { DataTableHeaders } from "~/plugins/vuetify";
 
 const { t, n } = useI18n();
