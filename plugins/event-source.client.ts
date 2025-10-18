@@ -1,5 +1,15 @@
-import { EventSourcePolyfill } from "event-source-polyfill";
 import type { MercureConnectionOptions, MercureQueryValue } from "~/types/mercure";
+
+type EventSourceConstructor = new (
+  url: string,
+  eventSourceInitDict?: EventSourceInit & Record<string, unknown>,
+) => EventSource;
+
+type PolyfillInit = EventSourceInit & {
+  headers?: HeadersInit;
+};
+
+let polyfilledEventSource: EventSourceConstructor | undefined;
 
 function appendQueryValue(params: URLSearchParams, key: string, value: MercureQueryValue) {
   if (Array.isArray(value)) {
@@ -34,20 +44,41 @@ function createMercureEventSource(
     });
   }
 
-  const headers = new Headers(init?.headers ?? {});
+  const initOptions = { ...(init ?? {}) } as PolyfillInit;
+  const { headers: initialHeaders, ...restInit } = initOptions;
+
+  const headers = new Headers(initialHeaders ?? {});
 
   if (token) {
     headers.set("Authorization", token.startsWith("Bearer ") ? token : `Bearer ${token}`);
   }
 
-  return new EventSourcePolyfill(url.toString(), {
-    ...(init ?? {}),
-    headers,
-  });
+  const eventSourceImplementation = (polyfilledEventSource ?? window.EventSource) as
+    | EventSourceConstructor
+    | undefined;
+
+  if (!eventSourceImplementation) {
+    throw new Error("EventSource is not available in this environment.");
+  }
+
+  if (polyfilledEventSource) {
+    return new eventSourceImplementation(url.toString(), {
+      ...restInit,
+      headers,
+    });
+  }
+
+  const nativeInit = Object.keys(restInit).length > 0 ? restInit : undefined;
+
+  return new eventSourceImplementation(url.toString(), nativeInit as EventSourceInit | undefined);
 }
 
-export default defineNuxtPlugin(() => {
-  window.EventSource = EventSourcePolyfill as unknown as typeof window.EventSource;
+export default defineNuxtPlugin(async () => {
+  if (!window.EventSource) {
+    const { EventSourcePolyfill } = await import("event-source-polyfill");
+    polyfilledEventSource = EventSourcePolyfill as unknown as EventSourceConstructor;
+    window.EventSource = polyfilledEventSource as unknown as typeof window.EventSource;
+  }
 
   return {
     provide: {
