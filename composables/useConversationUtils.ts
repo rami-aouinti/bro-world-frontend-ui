@@ -37,7 +37,9 @@ export function useConversationUtils() {
     );
   }
 
-  function getConversationAvatar(conversation: MessengerConversation | null | undefined): string | null {
+  function getConversationAvatar(
+    conversation: MessengerConversation | null | undefined,
+  ): string | null {
     if (!conversation) {
       return null;
     }

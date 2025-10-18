@@ -1,6 +1,13 @@
 <template>
-  <div class="help-feedback" role="form" :aria-labelledby="labelId">
-    <p :id="labelId" class="text-body-1 font-weight-medium mb-3">
+  <div
+    class="help-feedback"
+    role="form"
+    :aria-labelledby="labelId"
+  >
+    <p
+      :id="labelId"
+      class="text-body-1 font-weight-medium mb-3"
+    >
       {{ question }}
     </p>
     <div class="d-flex flex-wrap gap-2">
@@ -25,7 +32,11 @@
         {{ noLabel }}
       </v-btn>
     </div>
-    <p v-if="hasResponse" class="text-body-2 text-medium-emphasis mt-3" data-test="help-feedback-thanks">
+    <p
+      v-if="hasResponse"
+      class="text-body-2 text-medium-emphasis mt-3"
+      data-test="help-feedback-thanks"
+    >
       {{ thanksLabel }}
     </p>
   </div>

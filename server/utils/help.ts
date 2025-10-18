@@ -88,7 +88,11 @@ function pickTranslation<T extends LocalizedContent>(
   return first;
 }
 
-function mapCategory(raw: RawHelpCategory, locale: SupportedLocale, articleCount: number): HelpCategory {
+function mapCategory(
+  raw: RawHelpCategory,
+  locale: SupportedLocale,
+  articleCount: number,
+): HelpCategory {
   const translation = pickTranslation(raw.translations, locale);
   return {
     id: raw.id,
@@ -191,7 +195,10 @@ export async function listHelpArticles(options: {
   return filtered.map((article) => mapArticle(article, resolvedLocale));
 }
 
-export async function getHelpArticle(slug: string, locale: string): Promise<HelpArticleDetail | null> {
+export async function getHelpArticle(
+  slug: string,
+  locale: string,
+): Promise<HelpArticleDetail | null> {
   const data = await readHelpData();
   const resolvedLocale = resolveLocale(locale);
   const article = data.articles.find((entry) => entry.slug === slug);
@@ -203,7 +210,10 @@ export async function getHelpArticle(slug: string, locale: string): Promise<Help
   return mapArticleDetail(article, resolvedLocale);
 }
 
-export async function searchHelpArticles(query: string, locale: string): Promise<HelpArticleSummary[]> {
+export async function searchHelpArticles(
+  query: string,
+  locale: string,
+): Promise<HelpArticleSummary[]> {
   if (!query.trim()) {
     return [];
   }
@@ -239,8 +249,8 @@ export async function getHelpRelatedArticles(
     (entry) => entry.categorySlug === article.categorySlug && entry.slug !== article.slug,
   );
 
-  const combined = [...relatedById, ...sameCategory].filter((value, index, array) =>
-    array.findIndex((candidate) => candidate.id === value.id) === index,
+  const combined = [...relatedById, ...sameCategory].filter(
+    (value, index, array) => array.findIndex((candidate) => candidate.id === value.id) === index,
   );
 
   return combined.slice(0, limit).map((item) => mapArticle(item, resolvedLocale));

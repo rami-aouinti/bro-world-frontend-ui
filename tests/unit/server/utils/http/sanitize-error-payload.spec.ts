@@ -55,9 +55,7 @@ describe("sanitizeErrorPayload", () => {
   it("ignores primitive values", () => {
     expect(sanitizeErrorPayload(null)).toBeNull();
     expect(sanitizeErrorPayload(undefined)).toBeUndefined();
-    expect(sanitizeErrorPayload("error" as unknown as Record<string, unknown>)).toBe(
-      "error",
-    );
+    expect(sanitizeErrorPayload("error" as unknown as Record<string, unknown>)).toBe("error");
   });
 
   it("does not remove non-stack properties", () => {

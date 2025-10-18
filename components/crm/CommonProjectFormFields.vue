@@ -22,8 +22,14 @@
       prepend-inner-icon="mdi:text-box-outline"
     />
 
-    <v-row dense class="g-4">
-      <v-col cols="12" md="6">
+    <v-row
+      dense
+      class="g-4"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-select
           v-model="project.pipeline"
           :items="pipelineOptions"
@@ -35,7 +41,10 @@
           clearable
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-select
           v-model="project.stage"
           :items="stageOptions"
@@ -47,7 +56,10 @@
           clearable
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-select
           v-model="project.status"
           :items="statusOptions"
@@ -59,7 +71,10 @@
           clearable
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-select
           v-model="project.priority"
           :items="priorityOptions"
@@ -73,8 +88,14 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="g-4">
-      <v-col cols="12" md="6">
+    <v-row
+      dense
+      class="g-4"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-text-field
           v-model="project.clientName"
           label="Client"
@@ -84,7 +105,10 @@
           prepend-inner-icon="mdi:account-tie"
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-text-field
           v-model="project.ownerName"
           label="Owner"
@@ -96,8 +120,14 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="g-4">
-      <v-col cols="12" md="6">
+    <v-row
+      dense
+      class="g-4"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-text-field
           v-model.number="project.budget"
           type="number"
@@ -111,7 +141,10 @@
           step="1000"
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-text-field
           v-model.number="project.probability"
           type="number"
@@ -128,8 +161,14 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="g-4">
-      <v-col cols="12" md="4">
+    <v-row
+      dense
+      class="g-4"
+    >
+      <v-col
+        cols="12"
+        md="4"
+      >
         <v-date-input
           v-model="project.startDate"
           label="Start date"
@@ -140,7 +179,10 @@
           clearable
         />
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col
+        cols="12"
+        md="4"
+      >
         <v-date-input
           v-model="project.dueDate"
           label="Due date"
@@ -151,7 +193,10 @@
           clearable
         />
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col
+        cols="12"
+        md="4"
+      >
         <v-date-input
           v-model="project.finishDate"
           label="Finish date"
@@ -203,34 +248,13 @@ export interface ProjectFormState {
 
 const project = defineModel<ProjectFormState>({ required: true });
 
-const pipelineOptions = [
-  "Enterprise",
-  "Growth",
-  "Scale-Up",
-  "SMB",
-];
+const pipelineOptions = ["Enterprise", "Growth", "Scale-Up", "SMB"];
 
-const stageOptions = [
-  "Discovery",
-  "Qualification",
-  "Planning",
-  "Execution",
-  "Handover",
-];
+const stageOptions = ["Discovery", "Qualification", "Planning", "Execution", "Handover"];
 
-const statusOptions = [
-  "planning",
-  "in-progress",
-  "at-risk",
-  "completed",
-  "on-hold",
-];
+const statusOptions = ["planning", "in-progress", "at-risk", "completed", "on-hold"];
 
-const priorityOptions = [
-  "low",
-  "medium",
-  "high",
-];
+const priorityOptions = ["low", "medium", "high"];
 
 const nameRules = computed(() => [
   (value: string) => !!value?.trim() || "Please provide a project name.",

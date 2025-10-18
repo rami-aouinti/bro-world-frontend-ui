@@ -23,8 +23,16 @@
         {{ loadError }}
       </v-alert>
 
-      <div v-if="isLoading" class="py-6">
-        <v-progress-linear indeterminate color="primary" height="6" rounded="lg" />
+      <div
+        v-if="isLoading"
+        class="py-6"
+      >
+        <v-progress-linear
+          indeterminate
+          color="primary"
+          height="6"
+          rounded="lg"
+        />
       </div>
 
       <v-alert
@@ -51,12 +59,21 @@
         <template #[`item.name`]="{ item }">
           <div class="d-flex flex-column gap-1">
             <span class="text-body-1 font-weight-semibold">{{ item.name }}</span>
-            <span v-if="item.brief" class="text-body-2 text-medium-emphasis">{{ item.brief }}</span>
+            <span
+              v-if="item.brief"
+              class="text-body-2 text-medium-emphasis"
+              >{{ item.brief }}</span
+            >
           </div>
         </template>
 
         <template #[`item.status`]="{ item }">
-          <v-chip :color="statusMeta(item.status).color" variant="tonal" size="small" class="text-uppercase">
+          <v-chip
+            :color="statusMeta(item.status).color"
+            variant="tonal"
+            size="small"
+            class="text-uppercase"
+          >
             {{ statusMeta(item.status).label }}
           </v-chip>
         </template>
@@ -64,7 +81,11 @@
         <template #[`item.schedule`]="{ item }">
           <div class="d-flex flex-column">
             <span class="text-body-2 font-weight-medium">{{ item.schedule }}</span>
-            <span v-if="item.duration" class="text-caption text-medium-emphasis">{{ item.duration }}</span>
+            <span
+              v-if="item.duration"
+              class="text-caption text-medium-emphasis"
+              >{{ item.duration }}</span
+            >
           </div>
         </template>
       </v-data-table>
@@ -149,7 +170,12 @@ function formatDuration(start: string | null | undefined, end: string | null | u
   const startDate = start ? new Date(start) : null;
   const endDate = end ? new Date(end) : null;
 
-  if (!startDate || !endDate || Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+  if (
+    !startDate ||
+    !endDate ||
+    Number.isNaN(startDate.getTime()) ||
+    Number.isNaN(endDate.getTime())
+  ) {
     return "";
   }
 

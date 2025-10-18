@@ -1,6 +1,12 @@
 <template>
-  <v-container v-if="course && lesson" class="py-8">
-    <v-breadcrumbs :items="breadcrumbs" class="mb-4" />
+  <v-container
+    v-if="course && lesson"
+    class="py-8"
+  >
+    <v-breadcrumbs
+      :items="breadcrumbs"
+      class="mb-4"
+    />
     <LessonPlayer
       :lesson="lesson"
       :lesson-index="lessonIndex"
@@ -70,7 +76,9 @@ const lessons = computed(() => {
   const list = store.getCourseLessons(slug.value);
   return Array.isArray(list) ? list : [];
 });
-const progress = computed(() => store.getProgressForCourse(course.value?.id ?? "") ?? { lessonDone: {}, exerciseScore: {} });
+const progress = computed(
+  () => store.getProgressForCourse(course.value?.id ?? "") ?? { lessonDone: {}, exerciseScore: {} },
+);
 
 const lessonIndex = computed(() => lessons.value.findIndex((entry) => entry.id === lessonId.value));
 const lesson = computed<Lesson | undefined>(() => lessons.value[lessonIndex.value]);

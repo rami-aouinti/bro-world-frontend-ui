@@ -150,7 +150,11 @@
                         size="small"
                       />
                       <span class="text-body-2">
-                        {{ selectedEvent.allDay ? t("pages.profile.calendar.allDay") : formatEventTime(selectedEvent) }}
+                        {{
+                          selectedEvent.allDay
+                            ? t("pages.profile.calendar.allDay")
+                            : formatEventTime(selectedEvent)
+                        }}
                       </span>
                     </div>
                   </v-card-text>
@@ -246,159 +250,173 @@
     </SidebarCard>
 
     <v-dialog
-        v-model="isEventDialogOpen"
-        max-width="480"
-        transition="dialog-bottom-transition"
-      >
-        <v-card>
-          <v-card-title class="d-flex flex-column align-start gap-1">
-            <span class="text-h6 font-weight-semibold">
-              {{
-                eventDialogMode === "create"
-                  ? t("pages.profile.calendar.form.createTitle")
-                  : t("pages.profile.calendar.form.editTitle")
-              }}
-            </span>
-            <span class="text-body-2 text-medium-emphasis">
-              {{
-                eventDialogMode === "create"
-                  ? t("pages.profile.calendar.form.createDescription")
-                  : t("pages.profile.calendar.form.editDescription")
-              }}
-            </span>
-          </v-card-title>
-          <v-card-text>
-            <form class="d-flex flex-column gap-4" @submit.prevent>
+      v-model="isEventDialogOpen"
+      max-width="480"
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-card-title class="d-flex flex-column align-start gap-1">
+          <span class="text-h6 font-weight-semibold">
+            {{
+              eventDialogMode === "create"
+                ? t("pages.profile.calendar.form.createTitle")
+                : t("pages.profile.calendar.form.editTitle")
+            }}
+          </span>
+          <span class="text-body-2 text-medium-emphasis">
+            {{
+              eventDialogMode === "create"
+                ? t("pages.profile.calendar.form.createDescription")
+                : t("pages.profile.calendar.form.editDescription")
+            }}
+          </span>
+        </v-card-title>
+        <v-card-text>
+          <form
+            class="d-flex flex-column gap-4"
+            @submit.prevent
+          >
+            <v-text-field
+              v-model="eventForm.title"
+              :label="t('pages.profile.calendar.form.fields.title')"
+              :error-messages="eventErrors.title"
+              required
+            />
+            <div class="d-flex flex-column flex-md-row gap-4">
+              <v-date-input
+                v-model="eventForm.startDate"
+                :label="t('pages.profile.calendar.form.fields.startDate')"
+                :error-messages="eventErrors.startDate"
+                class="flex-grow-1"
+                hide-details="auto"
+              />
+              <v-date-input
+                v-model="eventForm.endDate"
+                :label="t('pages.profile.calendar.form.fields.endDate')"
+                :min="eventForm.startDate"
+                :error-messages="eventErrors.endDate"
+                class="flex-grow-1"
+                hide-details="auto"
+              />
+            </div>
+            <div class="d-flex flex-column flex-md-row gap-4">
               <v-text-field
-                v-model="eventForm.title"
-                :label="t('pages.profile.calendar.form.fields.title')"
-                :error-messages="eventErrors.title"
-                required
-              />
-              <div class="d-flex flex-column flex-md-row gap-4">
-                <v-date-input
-                  v-model="eventForm.startDate"
-                  :label="t('pages.profile.calendar.form.fields.startDate')"
-                  :error-messages="eventErrors.startDate"
-                  class="flex-grow-1"
-                  hide-details="auto"
-                />
-                <v-date-input
-                  v-model="eventForm.endDate"
-                  :label="t('pages.profile.calendar.form.fields.endDate')"
-                  :min="eventForm.startDate"
-                  :error-messages="eventErrors.endDate"
-                  class="flex-grow-1"
-                  hide-details="auto"
-                />
-              </div>
-              <div class="d-flex flex-column flex-md-row gap-4">
-                <v-text-field
-                  v-model="eventForm.startTime"
-                  type="time"
-                  :label="t('pages.profile.calendar.form.fields.startTime')"
-                  :disabled="eventForm.allDay"
-                  :error-messages="eventErrors.startTime"
-                  class="flex-grow-1"
-                />
-                <v-text-field
-                  v-model="eventForm.endTime"
-                  type="time"
-                  :label="t('pages.profile.calendar.form.fields.endTime')"
-                  :disabled="eventForm.allDay"
-                  :error-messages="eventErrors.endTime"
-                  class="flex-grow-1"
-                />
-              </div>
-              <v-switch
-                v-model="eventForm.allDay"
-                :label="t('pages.profile.calendar.form.fields.allDay')"
-                color="primary"
-              />
-              <v-select
-                v-model="eventForm.color"
-                :items="colorOptions"
-                item-title="label"
-                item-value="value"
-                :label="t('pages.profile.calendar.form.fields.color')"
+                v-model="eventForm.startTime"
+                type="time"
+                :label="t('pages.profile.calendar.form.fields.startTime')"
+                :disabled="eventForm.allDay"
+                :error-messages="eventErrors.startTime"
+                class="flex-grow-1"
               />
               <v-text-field
-                v-model="eventForm.location"
-                :label="t('pages.profile.calendar.form.fields.location')"
+                v-model="eventForm.endTime"
+                type="time"
+                :label="t('pages.profile.calendar.form.fields.endTime')"
+                :disabled="eventForm.allDay"
+                :error-messages="eventErrors.endTime"
+                class="flex-grow-1"
               />
-              <v-textarea
-                v-model="eventForm.description"
-                :label="t('pages.profile.calendar.form.fields.description')"
-                auto-grow
-                rows="2"
-              />
-              <v-switch
-                v-model="eventForm.isPrivate"
-                :label="t('pages.profile.calendar.form.fields.isPrivate')"
-                color="primary"
-              />
-              <v-alert
-                v-if="eventErrors.general.length"
-                type="error"
-                variant="tonal"
-                :text="eventErrors.general[0]"
-              />
-            </form>
-          </v-card-text>
-          <v-card-actions class="justify-space-between flex-wrap gap-2">
-            <div class="d-flex gap-2 flex-wrap">
-              <v-btn
-                v-if="eventDialogMode === 'edit'"
-                color="error"
-                variant="text"
-                @click="eventForm.id && confirmDeleteFromDialog()"
-              >
-                {{ t('pages.profile.calendar.actions.delete') }}
-              </v-btn>
             </div>
-            <div class="d-flex gap-2 flex-wrap">
-              <v-btn
-                variant="text"
-                @click="closeEventDialog()"
-              >
-                {{ t('pages.profile.calendar.form.actions.cancel') }}
-              </v-btn>
-              <v-btn
-                color="primary"
-                variant="flat"
-                @click="submitEventForm()"
-              >
-                {{
-                  eventDialogMode === "create"
-                    ? t("pages.profile.calendar.form.actions.create")
-                    : t("pages.profile.calendar.form.actions.save")
-                }}
-              </v-btn>
-            </div>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+            <v-switch
+              v-model="eventForm.allDay"
+              :label="t('pages.profile.calendar.form.fields.allDay')"
+              color="primary"
+            />
+            <v-select
+              v-model="eventForm.color"
+              :items="colorOptions"
+              item-title="label"
+              item-value="value"
+              :label="t('pages.profile.calendar.form.fields.color')"
+            />
+            <v-text-field
+              v-model="eventForm.location"
+              :label="t('pages.profile.calendar.form.fields.location')"
+            />
+            <v-textarea
+              v-model="eventForm.description"
+              :label="t('pages.profile.calendar.form.fields.description')"
+              auto-grow
+              rows="2"
+            />
+            <v-switch
+              v-model="eventForm.isPrivate"
+              :label="t('pages.profile.calendar.form.fields.isPrivate')"
+              color="primary"
+            />
+            <v-alert
+              v-if="eventErrors.general.length"
+              type="error"
+              variant="tonal"
+              :text="eventErrors.general[0]"
+            />
+          </form>
+        </v-card-text>
+        <v-card-actions class="justify-space-between flex-wrap gap-2">
+          <div class="d-flex gap-2 flex-wrap">
+            <v-btn
+              v-if="eventDialogMode === 'edit'"
+              color="error"
+              variant="text"
+              @click="eventForm.id && confirmDeleteFromDialog()"
+            >
+              {{ t("pages.profile.calendar.actions.delete") }}
+            </v-btn>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <v-btn
+              variant="text"
+              @click="closeEventDialog()"
+            >
+              {{ t("pages.profile.calendar.form.actions.cancel") }}
+            </v-btn>
+            <v-btn
+              color="primary"
+              variant="flat"
+              @click="submitEventForm()"
+            >
+              {{
+                eventDialogMode === "create"
+                  ? t("pages.profile.calendar.form.actions.create")
+                  : t("pages.profile.calendar.form.actions.save")
+              }}
+            </v-btn>
+          </div>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog
-        v-model="isDeleteDialogOpen"
-        max-width="420"
-      >
-        <v-card>
-          <v-card-title class="text-h6 font-weight-semibold">
-            {{ t('pages.profile.calendar.delete.title') }}
-          </v-card-title>
-          <v-card-text class="text-body-2">
-            {{ t('pages.profile.calendar.delete.description', { title: pendingDeleteEvent?.title ?? '' }) }}
-          </v-card-text>
-          <v-card-actions class="justify-end gap-2">
-            <v-btn variant="text" @click="cancelDeleteEvent()">
-              {{ t('pages.profile.calendar.form.actions.cancel') }}
-            </v-btn>
-            <v-btn color="error" variant="flat" @click="confirmDeleteEvent()">
-              {{ t('pages.profile.calendar.actions.delete') }}
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+      v-model="isDeleteDialogOpen"
+      max-width="420"
+    >
+      <v-card>
+        <v-card-title class="text-h6 font-weight-semibold">
+          {{ t("pages.profile.calendar.delete.title") }}
+        </v-card-title>
+        <v-card-text class="text-body-2">
+          {{
+            t("pages.profile.calendar.delete.description", {
+              title: pendingDeleteEvent?.title ?? "",
+            })
+          }}
+        </v-card-text>
+        <v-card-actions class="justify-end gap-2">
+          <v-btn
+            variant="text"
+            @click="cancelDeleteEvent()"
+          >
+            {{ t("pages.profile.calendar.form.actions.cancel") }}
+          </v-btn>
+          <v-btn
+            color="error"
+            variant="flat"
+            @click="confirmDeleteEvent()"
+          >
+            {{ t("pages.profile.calendar.actions.delete") }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
   </section>
 </template>
@@ -661,7 +679,10 @@ function parseDate(value: string | undefined | null): Date | null {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function normalizeCalendarTimestamp(value: string | null | undefined, allDay: boolean): string | null {
+function normalizeCalendarTimestamp(
+  value: string | null | undefined,
+  allDay: boolean,
+): string | null {
   if (!value) {
     return null;
   }
@@ -672,9 +693,7 @@ function normalizeCalendarTimestamp(value: string | null | undefined, allDay: bo
     return null;
   }
 
-  const match = trimmed.match(
-    /^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?$/,
-  );
+  const match = trimmed.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?$/);
 
   if (match) {
     const [, rawYear, rawMonth, rawDay, rawHour, rawMinute] = match;
@@ -719,10 +738,7 @@ function resolveEventColor(rawColor: string | null | undefined): string {
   return colorMap[rawColor] ?? "primary";
 }
 
-function resolveEventCategory(
-  rawColor: string | null | undefined,
-  resolvedColor: string,
-): string {
+function resolveEventCategory(rawColor: string | null | undefined, resolvedColor: string): string {
   if (rawColor && colorMap[rawColor]) {
     return rawColor;
   }
@@ -808,7 +824,10 @@ function onDayClick(payload: { date?: string } | undefined) {
 }
 
 function createEventForFocus() {
-  const date = typeof focus.value === "string" && focus.value ? focus.value : new Date().toISOString().slice(0, 10);
+  const date =
+    typeof focus.value === "string" && focus.value
+      ? focus.value
+      : new Date().toISOString().slice(0, 10);
   openCreateDialog(date);
 }
 
@@ -824,9 +843,7 @@ function openCreateDialog(date: string) {
 
 function openEventEditor(event: CalendarDisplayEvent) {
   const startParts = splitTimestamp(event.start, Boolean(event.allDay));
-  const endParts = event.end
-    ? splitTimestamp(event.end, Boolean(event.allDay))
-    : startParts;
+  const endParts = event.end ? splitTimestamp(event.end, Boolean(event.allDay)) : startParts;
 
   resetEventForm({
     id: event.id,
@@ -907,8 +924,8 @@ function submitEventForm() {
       ? normalizedEndDate
       : null
     : normalizedEndDate
-    ? `${normalizedEndDate} ${normalizedEndTime}`
-    : null;
+      ? `${normalizedEndDate} ${normalizedEndTime}`
+      : null;
 
   const payload: ProfileEvent = {
     id,
@@ -950,20 +967,41 @@ function validateEventForm(): boolean {
     eventErrors.startTime = [t("pages.profile.calendar.form.validation.startTime")];
   }
 
-  if (!eventForm.allDay && eventForm.endTime && eventForm.startTime && eventForm.endTime < eventForm.startTime) {
+  if (
+    !eventForm.allDay &&
+    eventForm.endTime &&
+    eventForm.startTime &&
+    eventForm.endTime < eventForm.startTime
+  ) {
     eventErrors.endTime = [t("pages.profile.calendar.form.validation.endTime")];
   }
 
   const comparableEndTime = eventForm.endTime || eventForm.startTime;
 
-  const startComparable = buildComparableDate(eventForm.startDate, eventForm.startTime, eventForm.allDay, false);
-  const endComparable = buildComparableDate(eventForm.endDate || eventForm.startDate, comparableEndTime, eventForm.allDay, true);
+  const startComparable = buildComparableDate(
+    eventForm.startDate,
+    eventForm.startTime,
+    eventForm.allDay,
+    false,
+  );
+  const endComparable = buildComparableDate(
+    eventForm.endDate || eventForm.startDate,
+    comparableEndTime,
+    eventForm.allDay,
+    true,
+  );
 
   if (startComparable && endComparable && endComparable.getTime() < startComparable.getTime()) {
     eventErrors.endDate = [t("pages.profile.calendar.form.validation.range")];
   }
 
-  return !eventErrors.title.length && !eventErrors.startDate.length && !eventErrors.startTime.length && !eventErrors.endDate.length && !eventErrors.endTime.length;
+  return (
+    !eventErrors.title.length &&
+    !eventErrors.startDate.length &&
+    !eventErrors.startTime.length &&
+    !eventErrors.endDate.length &&
+    !eventErrors.endTime.length
+  );
 }
 
 function buildComparableDate(
@@ -988,7 +1026,9 @@ function addEvent(event: ProfileEvent) {
 }
 
 function updateEvent(event: ProfileEvent) {
-  internalEvents.value = internalEvents.value.map((existing) => (existing.id === event.id ? event : existing));
+  internalEvents.value = internalEvents.value.map((existing) =>
+    existing.id === event.id ? event : existing,
+  );
 }
 
 function selectEventById(id: string) {

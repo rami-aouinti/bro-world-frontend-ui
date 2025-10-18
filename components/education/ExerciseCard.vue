@@ -1,5 +1,9 @@
 <template>
-  <v-card class="mb-4" elevation="1" rounded="xl">
+  <v-card
+    class="mb-4"
+    elevation="1"
+    rounded="xl"
+  >
     <v-card-item>
       <v-card-title class="text-subtitle-1">
         {{ exercise.question }}

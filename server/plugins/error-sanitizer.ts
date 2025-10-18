@@ -9,7 +9,7 @@ function resolveHeaderValue(headers: H3Response["headers"], name: string): strin
   const target = name.toLowerCase();
 
   if (typeof (headers as Headers)?.get === "function") {
-    return ((headers as Headers).get(name) ?? null);
+    return (headers as Headers).get(name) ?? null;
   }
 
   const entries = headers as Record<string, unknown>;
@@ -54,9 +54,11 @@ function isBinaryBody(body: unknown): boolean {
     return true;
   }
 
-  const globalBuffer = (globalThis as typeof globalThis & {
-    Buffer?: { isBuffer(value: unknown): boolean };
-  }).Buffer;
+  const globalBuffer = (
+    globalThis as typeof globalThis & {
+      Buffer?: { isBuffer(value: unknown): boolean };
+    }
+  ).Buffer;
 
   if (globalBuffer?.isBuffer?.(body)) {
     return true;

@@ -1,21 +1,39 @@
 <template>
   <v-container class="py-10">
-    <v-breadcrumbs :items="breadcrumbs" class="mb-6" />
+    <v-breadcrumbs
+      :items="breadcrumbs"
+      class="mb-6"
+    />
     <header class="mb-10">
-      <v-chip color="primary" variant="tonal" class="mb-3">
+      <v-chip
+        color="primary"
+        variant="tonal"
+        class="mb-3"
+      >
         {{ t("education.catalog.badge") }}
       </v-chip>
       <h1 class="text-h4 text-md-h3 mb-2">
         {{ category?.title }}
       </h1>
-      <p class="text-body-1 text-medium-emphasis" style="max-width: 640px;">
+      <p
+        class="text-body-1 text-medium-emphasis"
+        style="max-width: 640px"
+      >
         {{ category?.description }}
       </p>
     </header>
 
     <v-row dense>
-      <v-col v-for="course in courses" :key="course.id" cols="12" md="6">
-        <CourseCard :course="course" :progress="courseProgress(course)" />
+      <v-col
+        v-for="course in courses"
+        :key="course.id"
+        cols="12"
+        md="6"
+      >
+        <CourseCard
+          :course="course"
+          :progress="courseProgress(course)"
+        />
       </v-col>
     </v-row>
   </v-container>

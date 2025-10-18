@@ -1,10 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 
-import {
-  clearHelpCache,
-  listHelpCategories,
-  searchHelpArticles,
-} from "~/server/utils/help";
+import { clearHelpCache, listHelpCategories, searchHelpArticles } from "~/server/utils/help";
 
 afterEach(() => {
   clearHelpCache();

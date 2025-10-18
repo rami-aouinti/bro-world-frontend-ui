@@ -46,7 +46,11 @@
             </div>
             <div class="flex items-center justify-between gap-2">
               <p class="truncate text-body-2 text-medium-emphasis">
-                <span v-if="conversation.sender" class="font-medium text-body-2">{{ conversation.sender }} — </span>
+                <span
+                  v-if="conversation.sender"
+                  class="font-medium text-body-2"
+                  >{{ conversation.sender }} —
+                </span>
                 <span>{{ conversation.preview }}</span>
               </p>
               <v-chip
@@ -56,7 +60,7 @@
                 class="font-semibold"
                 rounded="lg"
               >
-                {{ conversation.unreadCount > 99 ? '99+' : conversation.unreadCount }}
+                {{ conversation.unreadCount > 99 ? "99+" : conversation.unreadCount }}
               </v-chip>
             </div>
           </div>

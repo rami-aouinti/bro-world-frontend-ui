@@ -209,12 +209,9 @@ export const useUsersStore = defineStore("users", () => {
     const position = listIds.value.indexOf(trimmedId);
 
     try {
-      const response = await fetcher<UserResponse>(
-        `/v1/user/${encodeURIComponent(trimmedId)}`,
-        {
-          method: "GET",
-        },
-      );
+      const response = await fetcher<UserResponse>(`/v1/user/${encodeURIComponent(trimmedId)}`, {
+        method: "GET",
+      });
 
       if (!response?.data) {
         throw new Error("Invalid user response.");
@@ -311,16 +308,13 @@ export const useUsersStore = defineStore("users", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      const response = await fetcher<UserResponse>(
-        `/v1/user/${encodeURIComponent(trimmedId)}`,
-        {
-          method: "PUT",
-          body: buildRequestBody({
-            ...existing,
-            ...payload,
-          }),
-        },
-      );
+      const response = await fetcher<UserResponse>(`/v1/user/${encodeURIComponent(trimmedId)}`, {
+        method: "PUT",
+        body: buildRequestBody({
+          ...existing,
+          ...payload,
+        }),
+      });
 
       if (!response?.data) {
         throw new Error("Invalid update user response.");

@@ -181,10 +181,7 @@ function isItemActive(item: LayoutSidebarItem, key: string): boolean {
   return false;
 }
 
-function getDefaultExpandedGroups(
-  items: LayoutSidebarItem[],
-  activeKey: string,
-): Set<string> {
+function getDefaultExpandedGroups(items: LayoutSidebarItem[], activeKey: string): Set<string> {
   const result = new Set<string>();
 
   for (const item of items) {

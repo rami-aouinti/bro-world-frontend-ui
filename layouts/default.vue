@@ -143,7 +143,9 @@
                       v-else
                       class="flex flex-col gap-6"
                     >
-                      <SidebarContactCard />
+                      <SidebarContactCard
+                        v-if="shouldShowContactSidebarCard"
+                      />
                       <SidebarWeatherCard
                         v-if="weather"
                         :weather="weather"
@@ -276,7 +278,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, defineComponent, nextTick, onMounted, ref, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  defineComponent,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
 import { useResizeObserver } from "@vueuse/core";
@@ -381,13 +391,19 @@ const scheduleIdleRender: IdleScheduler | null = import.meta.client
 
 if (import.meta.client) {
   onMounted(() => {
-    scheduleIdleRender?.(() => {
-      shouldRenderAnalytics.value = true;
-    }, { timeout: 4500 });
+    scheduleIdleRender?.(
+      () => {
+        shouldRenderAnalytics.value = true;
+      },
+      { timeout: 4500 },
+    );
 
-    scheduleIdleRender?.(() => {
-      shouldRenderSpeedInsights.value = true;
-    }, { timeout: 6500 });
+    scheduleIdleRender?.(
+      () => {
+        shouldRenderSpeedInsights.value = true;
+      },
+      { timeout: 6500 },
+    );
   });
 }
 
@@ -462,6 +478,9 @@ const showNavigation = computed(() => {
 
   return currentRoute.value?.meta?.showNavbar !== false;
 });
+const shouldShowContactSidebarCard = computed(
+  () => currentRoute.value?.meta?.showContactSidebarCard === true,
+);
 const { rightSidebarContent } = useLayoutRightSidebar();
 const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
 const DEFAULT_APP_BAR_HEIGHT = 72;

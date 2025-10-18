@@ -10,8 +10,11 @@
           <p class="text-body-1 text-medium-emphasis mb-4">
             {{ article.excerpt }}
           </p>
-          <p v-if="article.updatedAtIso" class="text-caption text-disabled">
-            {{ t('help.article.updated', { date: formatDate(article.updatedAtIso) }) }}
+          <p
+            v-if="article.updatedAtIso"
+            class="text-caption text-disabled"
+          >
+            {{ t("help.article.updated", { date: formatDate(article.updatedAtIso) }) }}
           </p>
         </header>
         <HelpArticle
@@ -30,9 +33,16 @@
         />
       </article>
 
-      <section v-if="relatedArticles.length" class="mt-12" aria-labelledby="related-articles">
-        <h2 id="related-articles" class="text-h5 font-weight-semibold mb-4">
-          {{ t('help.article.related') }}
+      <section
+        v-if="relatedArticles.length"
+        class="mt-12"
+        aria-labelledby="related-articles"
+      >
+        <h2
+          id="related-articles"
+          class="text-h5 font-weight-semibold mb-4"
+        >
+          {{ t("help.article.related") }}
         </h2>
         <v-row dense>
           <v-col
@@ -41,7 +51,11 @@
             cols="12"
             md="4"
           >
-            <v-card :to="articleLink(related)" class="rounded-xl" elevation="1">
+            <v-card
+              :to="articleLink(related)"
+              class="rounded-xl"
+              elevation="1"
+            >
               <v-card-item>
                 <v-card-title class="text-subtitle-1 mb-1">{{ related.title }}</v-card-title>
                 <v-card-subtitle class="text-body-2 text-medium-emphasis">
@@ -102,7 +116,7 @@ function formatDate(dateIso: string) {
   }).format(new Date(dateIso));
 }
 
-const seoTitle = computed(() => `${article.title} · ${t('help.meta.title')}`);
+const seoTitle = computed(() => `${article.title} · ${t("help.meta.title")}`);
 const seoDescription = computed(() => article.excerpt);
 
 useSeoMeta({

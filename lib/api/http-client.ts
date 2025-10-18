@@ -1,10 +1,5 @@
 import axios from "axios";
-import type {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
-  AxiosResponse,
-} from "axios";
+import type { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
 import { shouldSendCredentials } from "~/lib/api/credentials";
 
 export interface ApiRequestContext {
@@ -27,7 +22,8 @@ export interface ApiRequestOptions<Data = unknown>
   skipAuthHeader?: boolean;
 }
 
-export interface CrudFactoryOptions extends Omit<ApiRequestOptions, "body" | "data" | "query" | "params"> {
+export interface CrudFactoryOptions
+  extends Omit<ApiRequestOptions, "body" | "data" | "query" | "params"> {
   params?: Record<string, unknown>;
 }
 
@@ -35,8 +31,16 @@ export interface CrudOperations {
   list<T = unknown>(params?: Record<string, unknown>, options?: ApiRequestOptions): Promise<T>;
   get<T = unknown>(id: string | number, options?: ApiRequestOptions): Promise<T>;
   create<T = unknown, D = unknown>(data: D, options?: ApiRequestOptions<D>): Promise<T>;
-  update<T = unknown, D = unknown>(id: string | number, data: D, options?: ApiRequestOptions<D>): Promise<T>;
-  patch<T = unknown, D = unknown>(id: string | number, data: D, options?: ApiRequestOptions<D>): Promise<T>;
+  update<T = unknown, D = unknown>(
+    id: string | number,
+    data: D,
+    options?: ApiRequestOptions<D>,
+  ): Promise<T>;
+  patch<T = unknown, D = unknown>(
+    id: string | number,
+    data: D,
+    options?: ApiRequestOptions<D>,
+  ): Promise<T>;
   remove<T = unknown>(id: string | number, options?: ApiRequestOptions): Promise<T>;
 }
 
@@ -46,7 +50,9 @@ export interface ApiFetcher {
   crud: (basePath: string, options?: CrudFactoryOptions) => CrudOperations;
 }
 
-function mergeContexts(...contexts: Array<ApiRequestContext | undefined>): ApiRequestContext | undefined {
+function mergeContexts(
+  ...contexts: Array<ApiRequestContext | undefined>
+): ApiRequestContext | undefined {
   const result: ApiRequestContext = {};
 
   for (const context of contexts) {
@@ -96,7 +102,10 @@ function mergeHeaders(
   return hasValues ? merged : undefined;
 }
 
-function mergeOptions(base?: ApiRequestOptions, override?: ApiRequestOptions): ApiRequestOptions | undefined {
+function mergeOptions(
+  base?: ApiRequestOptions,
+  override?: ApiRequestOptions,
+): ApiRequestOptions | undefined {
   if (!base) {
     return override ? { ...override } : undefined;
   }
@@ -123,16 +132,7 @@ function normalizeOptions(options?: ApiRequestOptions): AxiosRequestConfig {
     return {};
   }
 
-  const {
-    body,
-    data,
-    query,
-    params,
-    context,
-    isPrivate,
-    skipAuthHeader,
-    ...rest
-  } = options;
+  const { body, data, query, params, context, isPrivate, skipAuthHeader, ...rest } = options;
 
   const resolvedContext = mergeContexts(context, {
     isPrivate,
@@ -204,7 +204,9 @@ function createCrudOperations(
   basePath: string,
   defaultOptions?: CrudFactoryOptions,
 ): CrudOperations {
-  const baseOptions: ApiRequestOptions | undefined = defaultOptions ? { ...defaultOptions } : undefined;
+  const baseOptions: ApiRequestOptions | undefined = defaultOptions
+    ? { ...defaultOptions }
+    : undefined;
 
   return {
     list<T>(params?: Record<string, unknown>, options?: ApiRequestOptions) {

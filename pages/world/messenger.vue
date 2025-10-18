@@ -1,9 +1,16 @@
 <template>
   <v-container fluid>
     <client-only>
-      <teleport v-if="canTeleport" to="#menu-bar-world">
+      <teleport
+        v-if="canTeleport"
+        to="#menu-bar-world"
+      >
         <template v-if="showSkeleton">
-          <v-card class="pa-4" rounded="xl" variant="text">
+          <v-card
+            class="pa-4"
+            rounded="xl"
+            variant="text"
+          >
             <v-skeleton-loader
               v-for="n in 4"
               :key="n"
@@ -24,8 +31,16 @@
       </teleport>
     </client-only>
 
-    <v-row class="mt-4" align="stretch" dense>
-      <v-col v-if="!canTeleport" cols="12" md="4">
+    <v-row
+      class="mt-4"
+      align="stretch"
+      dense
+    >
+      <v-col
+        v-if="!canTeleport"
+        cols="12"
+        md="4"
+      >
         <ChatList
           :conversations="conversations"
           :selected-id="activeConversation?.id ?? null"
@@ -34,7 +49,10 @@
           @select="setActiveConversation"
         />
       </v-col>
-      <v-col cols="12" :md="canTeleport ? 12 : 8">
+      <v-col
+        cols="12"
+        :md="canTeleport ? 12 : 8"
+      >
         <ChatWindow :conversation="activeConversation" />
       </v-col>
     </v-row>
@@ -45,8 +63,8 @@
 import { computed, nextTick, onMounted, ref, watchEffect } from "vue";
 import { callOnce } from "#app";
 import { useI18n } from "vue-i18n";
-import ChatList from "~/components/world/messenger/ChatList.vue";
-import ChatWindow from "~/components/world/messenger/ChatWindow.vue";
+import ChatList from "~/components/messenger/ChatList.vue";
+import ChatWindow from "~/components/messenger/ChatWindow.vue";
 import { useMessengerStore } from "~/stores/messenger";
 
 const messenger = useMessengerStore();

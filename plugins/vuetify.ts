@@ -76,11 +76,7 @@ import { VDateInput } from "vuetify/labs/VDateInput";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { aliases } from "vuetify/iconsets/mdi-svg";
-import {
-  VSvgIcon,
-  makeIconProps,
-  type IconValue,
-} from "vuetify/lib/composables/icons";
+import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables/icons";
 import { normalizeHexColor } from "~/lib/theme/colors";
 import { projectMdiIcons } from "~/lib/vuetify/projectMdiIcons";
 import DateFnsAdapter from "@date-io/date-fns";
@@ -120,13 +116,10 @@ function createMdiAliasVariants(iconMap: Record<string, string>) {
   }
 
   return extendedAliases;
-};
+}
 
 const projectMdiAliasEntries = Object.fromEntries(
-  Object.entries(projectMdiIcons).map(([name, value]) => [
-    name,
-    withSvgPrefix(value),
-  ]),
+  Object.entries(projectMdiIcons).map(([name, value]) => [name, withSvgPrefix(value)]),
 );
 
 const minimalAliases = createMdiAliasVariants({
@@ -177,9 +170,7 @@ function resolveMdiIconValue(value: IconValue): IconValue {
 
     if (Array.isArray(alias)) {
       return alias.map((entry) =>
-        Array.isArray(entry)
-          ? [stripSvgPrefix(entry[0]), entry[1]]
-          : stripSvgPrefix(entry),
+        Array.isArray(entry) ? [stripSvgPrefix(entry[0]), entry[1]] : stripSvgPrefix(entry),
       );
     }
 
@@ -252,9 +243,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const rtlLocaleMap = Object.fromEntries(
     rtlLocaleCodes.map((code) => [code, true] as const),
   ) as Record<string, boolean>;
-  const i18n = nuxtApp.$i18n as
-    | { locale?: { value?: string | undefined } }
-    | undefined;
+  const i18n = nuxtApp.$i18n as { locale?: { value?: string | undefined } } | undefined;
   const initialLocale = i18n?.locale?.value ?? localeCookieValue;
 
   const sharedVariables = {

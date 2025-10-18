@@ -209,7 +209,8 @@ function tryResolvePosts(
 
       if (resolved) {
         const sourceRecord =
-          resolved.source ?? (isRecord(candidate) ? (candidate as Record<string, unknown>) : undefined);
+          resolved.source ??
+          (isRecord(candidate) ? (candidate as Record<string, unknown>) : undefined);
 
         return { posts: resolved.posts, source: sourceRecord };
       }
@@ -230,7 +231,8 @@ function tryResolvePosts(
 
       if (resolved) {
         const sourceRecord =
-          resolved.source ?? (isRecord(candidate) ? (candidate as Record<string, unknown>) : undefined);
+          resolved.source ??
+          (isRecord(candidate) ? (candidate as Record<string, unknown>) : undefined);
 
         return { posts: resolved.posts, source: sourceRecord };
       }
@@ -495,10 +497,7 @@ function normalizePostsListResponse(raw: unknown): PostsListResponse {
   const rootSource = isRecord(normalizedInput)
     ? (normalizedInput as Record<string, unknown>)
     : undefined;
-  const metaSources: Array<Record<string, unknown> | undefined> = [
-    rootSource,
-    source,
-  ];
+  const metaSources: Array<Record<string, unknown> | undefined> = [rootSource, source];
 
   metaSources.push(...collectHydraMeta(rootSource));
 
@@ -526,7 +525,11 @@ function normalizePostsListResponse(raw: unknown): PostsListResponse {
     }
   }
 
-  const resolvedPage = pickFirstValue(metaSources, ["page", "currentPage", "current_page"], toFiniteNumber);
+  const resolvedPage = pickFirstValue(
+    metaSources,
+    ["page", "currentPage", "current_page"],
+    toFiniteNumber,
+  );
   const resolvedLimit = pickFirstValue(
     metaSources,
     ["limit", "perPage", "per_page", "pageSize", "page_size"],
@@ -565,8 +568,7 @@ function normalizePostsListResponse(raw: unknown): PostsListResponse {
 
   return {
     data: normalizedPosts,
-    page:
-      typeof resolvedPage === "number" && resolvedPage > 0 ? Math.floor(resolvedPage) : 1,
+    page: typeof resolvedPage === "number" && resolvedPage > 0 ? Math.floor(resolvedPage) : 1,
     limit,
     count,
     cachedAt:
@@ -867,21 +869,21 @@ export const usePostsStore = defineStore("posts", () => {
     let nextItems: Record<string, PostsStorePost> | null = null;
     let nextTimestamps: Record<string, number> | null = null;
 
-      function ensureItems() {
-        if (!nextItems) {
-          nextItems = { ...items.value };
-        }
-
-        return nextItems;
+    function ensureItems() {
+      if (!nextItems) {
+        nextItems = { ...items.value };
       }
 
-      function ensureTimestamps() {
-        if (!nextTimestamps) {
-          nextTimestamps = { ...itemTimestamps.value };
-        }
+      return nextItems;
+    }
 
-        return nextTimestamps;
+    function ensureTimestamps() {
+      if (!nextTimestamps) {
+        nextTimestamps = { ...itemTimestamps.value };
       }
+
+      return nextTimestamps;
+    }
 
     for (const id of Object.keys(items.value)) {
       if (!activeIds.has(id)) {
@@ -1292,12 +1294,9 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      const response = await fetcher<PostResponse>(
-        `/v1/posts/${encodeURIComponent(trimmedId)}`,
-        {
-          method: "GET",
-        },
-      );
+      const response = await fetcher<PostResponse>(`/v1/posts/${encodeURIComponent(trimmedId)}`, {
+        method: "GET",
+      });
 
       if (!response?.data || typeof response.data.id !== "string") {
         throw new Error("Invalid post response format.");
@@ -1445,13 +1444,10 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveApiFetcher();
 
     try {
-      const response = await fetcher<PostResponse>(
-        `/v1/posts/${encodeURIComponent(trimmedId)}`,
-        {
-          method: "PATCH",
-          body: updates,
-        },
-      );
+      const response = await fetcher<PostResponse>(`/v1/posts/${encodeURIComponent(trimmedId)}`, {
+        method: "PATCH",
+        body: updates,
+      });
 
       const updatedPost: PostsStorePost = { ...response.data, __optimistic: false };
 

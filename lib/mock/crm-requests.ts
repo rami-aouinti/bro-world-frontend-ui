@@ -38,8 +38,7 @@ export const crmRequestsMock: CrmRequestMockEntry[] = [
     requesterId: "usr-210",
     requesterName: "Marie Leroy",
     role: "Data Analyst",
-    message:
-      "J'aimerais soutenir l'équipe data pour préparer les modèles de reporting financiers.",
+    message: "J'aimerais soutenir l'équipe data pour préparer les modèles de reporting financiers.",
     status: "pending",
     submittedAt: "2024-02-22T11:45:00Z",
   },
@@ -49,8 +48,7 @@ export const crmRequestsMock: CrmRequestMockEntry[] = [
     requesterId: "usr-211",
     requesterName: "Thomas Borel",
     role: "DevOps Engineer",
-    message:
-      "Je peux couvrir les pipelines CI/CD pendant la migration vers le cloud.",
+    message: "Je peux couvrir les pipelines CI/CD pendant la migration vers le cloud.",
     status: "declined",
     submittedAt: "2023-12-14T16:30:00Z",
   },

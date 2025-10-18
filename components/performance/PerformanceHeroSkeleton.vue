@@ -30,7 +30,10 @@
           width="140"
         />
       </div>
-      <div class="performance-hero__gauge" aria-hidden="true">
+      <div
+        class="performance-hero__gauge"
+        aria-hidden="true"
+      >
         <v-skeleton-loader
           class="performance-hero__gauge-skeleton"
           type="image"

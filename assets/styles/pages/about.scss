@@ -150,14 +150,13 @@ main.about-page {
   border-radius: inherit;
   overflow: hidden;
   border: 1px dashed rgba(var(--v-theme-outline-variant), 0.35);
-  background:
-    repeating-linear-gradient(
-      -45deg,
-      rgba(var(--v-theme-outline-variant), 0.1) 0,
-      rgba(var(--v-theme-outline-variant), 0.1) 10px,
-      rgba(var(--v-theme-surface-variant), 0.16) 10px,
-      rgba(var(--v-theme-surface-variant), 0.16) 20px
-    );
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(var(--v-theme-outline-variant), 0.1) 0,
+    rgba(var(--v-theme-outline-variant), 0.1) 10px,
+    rgba(var(--v-theme-surface-variant), 0.16) 10px,
+    rgba(var(--v-theme-surface-variant), 0.16) 20px
+  );
 }
 
 .about-media__content {

@@ -54,9 +54,8 @@ export const useDemoCartStore = defineStore("demo-cart", () => {
       })
     : null;
 
-  const state = useState<DemoCartState>(
-    "demo-cart-state",
-    () => storage?.value ? { ...storage.value, items: [...storage.value.items] } : createInitialState(),
+  const state = useState<DemoCartState>("demo-cart-state", () =>
+    storage?.value ? { ...storage.value, items: [...storage.value.items] } : createInitialState(),
   );
 
   watch(
@@ -89,8 +88,8 @@ export const useDemoCartStore = defineStore("demo-cart", () => {
   const itemsWithDetails = computed(() =>
     state.value.items
       .map(mapItemWithDetails)
-      .filter(
-        (entry): entry is NonNullable<ReturnType<typeof mapItemWithDetails>> => Boolean(entry),
+      .filter((entry): entry is NonNullable<ReturnType<typeof mapItemWithDetails>> =>
+        Boolean(entry),
       ),
   );
 

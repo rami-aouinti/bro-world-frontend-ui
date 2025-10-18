@@ -1,17 +1,36 @@
 <template>
   <div class="help-article">
-    <aside v-if="tocItems.length" class="help-article__toc" aria-label="toc">
+    <aside
+      v-if="tocItems.length"
+      class="help-article__toc"
+      aria-label="toc"
+    >
       <h2 class="text-subtitle-1 font-weight-semibold mb-3">{{ tocTitle }}</h2>
       <nav>
         <ul>
-          <li v-for="item in tocItems" :key="item.id" :class="[`level-${item.level}`]">
-            <a :href="`#${item.id}`" class="help-article__toc-link">{{ item.text }}</a>
+          <li
+            v-for="item in tocItems"
+            :key="item.id"
+            :class="[`level-${item.level}`]"
+          >
+            <a
+              :href="`#${item.id}`"
+              class="help-article__toc-link"
+              >{{ item.text }}</a
+            >
           </li>
         </ul>
       </nav>
     </aside>
-    <article ref="contentRef" class="help-article__content" v-html="safeHtml"></article>
-    <div class="visually-hidden" aria-live="polite">
+    <article
+      ref="contentRef"
+      class="help-article__content"
+      v-html="safeHtml"
+    ></article>
+    <div
+      class="visually-hidden"
+      aria-live="polite"
+    >
       <span v-if="recentlyCopied">{{ copiedLabel }}</span>
     </div>
   </div>
@@ -137,7 +156,7 @@ function enhanceHeadings() {
       button.dataset.copyAnchor = "true";
       button.className = "help-article__anchor";
       button.setAttribute("aria-label", props.copyLabel);
-      button.innerHTML = "<span aria-hidden=\"true\">#</span>";
+      button.innerHTML = '<span aria-hidden="true">#</span>';
       button.addEventListener("click", () => handleCopy(heading.id));
       heading.appendChild(button);
     } else {

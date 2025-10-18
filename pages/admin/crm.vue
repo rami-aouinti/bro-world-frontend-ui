@@ -4,7 +4,9 @@
     aria-labelledby="crm-heading"
   >
     <v-container class="crm-page__container">
-      <header class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-5 mb-8">
+      <header
+        class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-5 mb-8"
+      >
         <div>
           <h1
             id="crm-heading"
@@ -40,7 +42,9 @@
         aria-labelledby="crm-overview"
         class="mb-8"
       >
-        <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4">
+        <div
+          class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4"
+        >
           <h2
             id="crm-overview"
             class="text-h5 font-weight-semibold mb-0"
@@ -72,7 +76,9 @@
         aria-labelledby="crm-pipeline"
         class="mb-8"
       >
-        <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4">
+        <div
+          class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-4 mb-4"
+        >
           <h2
             id="crm-pipeline"
             class="text-h5 font-weight-semibold mb-0"
@@ -340,14 +346,18 @@ const upcomingDeadlines = computed(() => {
         dueDateFormatted: dueDateFormatter.format(dueDate),
       };
     })
-    .filter((item): item is {
-      id: string;
-      name: string;
-      clientName: string | null | undefined;
-      stage: string;
-      dueDate: Date;
-      dueDateFormatted: string;
-    } => Boolean(item))
+    .filter(
+      (
+        item,
+      ): item is {
+        id: string;
+        name: string;
+        clientName: string | null | undefined;
+        stage: string;
+        dueDate: Date;
+        dueDateFormatted: string;
+      } => Boolean(item),
+    )
     .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
     .slice(0, 4);
 

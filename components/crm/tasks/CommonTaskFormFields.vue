@@ -33,8 +33,14 @@
       prepend-inner-icon="mdi:text-box-edit-outline"
     />
 
-    <v-row dense class="g-4">
-      <v-col cols="12" md="6">
+    <v-row
+      dense
+      class="g-4"
+    >
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-date-input
           v-model="task.startDate"
           label="Start date"
@@ -50,7 +56,10 @@
         />
       </v-col>
 
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-date-input
           v-model="task.finishDate"
           label="Finish date"
@@ -145,8 +154,12 @@ const nameRules = [
 ];
 
 const startDateMin = computed(() => latest(null, props.project?.startDate ?? null));
-const startDateMax = computed(() => earliest(task.value.finishDate, props.project?.finishDate ?? null));
-const finishDateMin = computed(() => latest(task.value.startDate, props.project?.startDate ?? null));
+const startDateMax = computed(() =>
+  earliest(task.value.finishDate, props.project?.finishDate ?? null),
+);
+const finishDateMin = computed(() =>
+  latest(task.value.startDate, props.project?.startDate ?? null),
+);
 const finishDateMax = computed(() => earliest(null, props.project?.finishDate ?? null));
 
 const startDateRules = [

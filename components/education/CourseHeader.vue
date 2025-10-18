@@ -11,14 +11,30 @@
       />
       <div class="flex-grow-1">
         <div class="d-flex flex-wrap align-center gap-2 mb-3">
-          <v-chip size="small" color="primary" variant="tonal">
+          <v-chip
+            size="small"
+            color="primary"
+            variant="tonal"
+          >
             {{ t(`education.levels.${course.level}`) }}
           </v-chip>
-          <v-chip size="small" variant="tonal">
+          <v-chip
+            size="small"
+            variant="tonal"
+          >
             {{ formatDuration(course.durationMin) }}
           </v-chip>
-          <v-chip size="small" color="success" variant="tonal">
-            {{ t("education.course.completedLessons", { count: completedLessons, total: totalLessons }) }}
+          <v-chip
+            size="small"
+            color="success"
+            variant="tonal"
+          >
+            {{
+              t("education.course.completedLessons", {
+                count: completedLessons,
+                total: totalLessons,
+              })
+            }}
           </v-chip>
         </div>
         <h1 class="text-h4 text-wrap mb-3">

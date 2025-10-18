@@ -653,7 +653,7 @@ export const useMessengerStore = defineStore("messenger", () => {
       ? trimmedContent
       : normalizedAttachments.length > 1
         ? `${normalizedAttachments.length} attachments`
-        : normalizedAttachments[0]?.name ?? "Attachment";
+        : (normalizedAttachments[0]?.name ?? "Attachment");
 
     const optimistic = createOptimisticMessage(
       conversationId,

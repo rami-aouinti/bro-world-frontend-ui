@@ -48,7 +48,10 @@
             cols="12"
             md="4"
           >
-            <v-card class="pa-6 h-100" variant="tonal">
+            <v-card
+              class="pa-6 h-100"
+              variant="tonal"
+            >
               <div class="d-flex align-center justify-space-between mb-2">
                 <h3 class="text-subtitle-1 font-weight-semibold mb-0">
                   {{ card.title }}
@@ -194,7 +197,10 @@
             cols="12"
             md="4"
           >
-            <v-card class="pa-6 h-100" variant="tonal">
+            <v-card
+              class="pa-6 h-100"
+              variant="tonal"
+            >
               <div class="d-flex align-center justify-space-between mb-3">
                 <h3 class="text-subtitle-1 font-weight-semibold mb-0">
                   {{ bank.title }}
@@ -238,7 +244,9 @@
         class="mb-12"
         aria-labelledby="quiz-leaderboard-title"
       >
-        <div class="mb-6 d-flex flex-column flex-md-row align-md-center justify-space-between gap-4">
+        <div
+          class="mb-6 d-flex flex-column flex-md-row align-md-center justify-space-between gap-4"
+        >
           <div>
             <h2
               id="quiz-leaderboard-title"
@@ -258,19 +266,34 @@
             {{ t("pages.quiz.leaderboard.updateLabel") }}
           </v-chip>
         </div>
-        <v-table density="comfortable" class="rounded-lg overflow-hidden">
+        <v-table
+          density="comfortable"
+          class="rounded-lg overflow-hidden"
+        >
           <thead>
             <tr>
-              <th scope="col" class="text-left">
+              <th
+                scope="col"
+                class="text-left"
+              >
                 {{ t("pages.quiz.leaderboard.columns.rank") }}
               </th>
-              <th scope="col" class="text-left">
+              <th
+                scope="col"
+                class="text-left"
+              >
                 {{ t("pages.quiz.leaderboard.columns.player") }}
               </th>
-              <th scope="col" class="text-left">
+              <th
+                scope="col"
+                class="text-left"
+              >
                 {{ t("pages.quiz.leaderboard.columns.score") }}
               </th>
-              <th scope="col" class="text-left">
+              <th
+                scope="col"
+                class="text-left"
+              >
                 {{ t("pages.quiz.leaderboard.columns.completed") }}
               </th>
             </tr>
@@ -297,29 +320,29 @@
         >
           <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
             <div>
-            <h2
-              id="quiz-cta-title"
-              class="text-h4 font-weight-semibold text-white mb-2"
+              <h2
+                id="quiz-cta-title"
+                class="text-h4 font-weight-semibold text-white mb-2"
+              >
+                {{ cta.title }}
+              </h2>
+              <p
+                class="text-body-1 text-white text-opacity-80 mb-0"
+                style="max-width: 520px"
+              >
+                {{ cta.description }}
+              </p>
+            </div>
+            <v-btn
+              :to="contactLink"
+              color="white"
+              variant="flat"
+              size="large"
+              class="text-primary"
+              :aria-label="cta.buttonAria"
             >
-              {{ cta.title }}
-            </h2>
-            <p
-              class="text-body-1 text-white text-opacity-80 mb-0"
-              style="max-width: 520px"
-            >
-              {{ cta.description }}
-            </p>
-          </div>
-          <v-btn
-            :to="contactLink"
-            color="white"
-            variant="flat"
-            size="large"
-            class="text-primary"
-            :aria-label="cta.buttonAria"
-          >
-            {{ cta.button }}
-          </v-btn>
+              {{ cta.button }}
+            </v-btn>
           </div>
         </v-card>
       </section>
@@ -345,7 +368,9 @@ definePageMeta({
   documentDriven: false,
 });
 
-const { data: quizData } = await useAsyncData<QuizLandingData>("quiz-landing", () => $fetch("/api/quiz"));
+const { data: quizData } = await useAsyncData<QuizLandingData>("quiz-landing", () =>
+  $fetch("/api/quiz"),
+);
 
 useSeoMeta(() => ({
   description: pageDescription.value,
@@ -485,7 +510,9 @@ const fallbackQuestionBanks = computed(() => [
 ]);
 
 const questionBanks = computed(() =>
-  quizData.value?.questionBanks?.length ? quizData.value.questionBanks : fallbackQuestionBanks.value,
+  quizData.value?.questionBanks?.length
+    ? quizData.value.questionBanks
+    : fallbackQuestionBanks.value,
 );
 
 const fallbackLeaderboard = computed(() => [

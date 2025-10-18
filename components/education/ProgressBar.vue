@@ -4,7 +4,13 @@
       <span class="text-caption text-medium-emphasis">{{ label }}</span>
       <span class="text-caption font-weight-medium">{{ formatted }}</span>
     </div>
-    <v-progress-linear :model-value="value" height="8" color="primary" rounded background-opacity="0.2" />
+    <v-progress-linear
+      :model-value="value"
+      height="8"
+      color="primary"
+      rounded
+      background-opacity="0.2"
+    />
   </div>
 </template>
 

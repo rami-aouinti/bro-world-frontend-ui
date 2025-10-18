@@ -1,9 +1,10 @@
 <template>
-  <v-card variant="outlined" class="h-100">
+  <v-card
+    variant="outlined"
+    class="h-100"
+  >
     <v-card-item>
-      <v-card-title class="text-h5 font-weight-semibold">
-        Task coordination
-      </v-card-title>
+      <v-card-title class="text-h5 font-weight-semibold"> Task coordination </v-card-title>
       <v-card-subtitle class="text-body-2 text-medium-emphasis">
         Plan deliverables for each opportunity using the shared CRM dataset.
       </v-card-subtitle>
@@ -12,9 +13,19 @@
     <v-divider />
 
     <v-card-text>
-      <v-row class="g-8" align="stretch">
-        <v-col cols="12" lg="5">
-          <v-form ref="formRef" class="d-flex flex-column gap-4" @submit.prevent="handleSubmit">
+      <v-row
+        class="g-8"
+        align="stretch"
+      >
+        <v-col
+          cols="12"
+          lg="5"
+        >
+          <v-form
+            ref="formRef"
+            class="d-flex flex-column gap-4"
+            @submit.prevent="handleSubmit"
+          >
             <v-select
               v-model="selectedProjectId"
               :items="projectOptions"
@@ -35,7 +46,10 @@
               {{ successMessage }}
             </FormSuccess>
 
-            <CommonTaskFormFields v-model="formState" :project="selectedProject" />
+            <CommonTaskFormFields
+              v-model="formState"
+              :project="selectedProject"
+            />
 
             <div class="d-flex justify-end">
               <LockableButton
@@ -54,7 +68,10 @@
           </v-form>
         </v-col>
 
-        <v-col cols="12" lg="7">
+        <v-col
+          cols="12"
+          lg="7"
+        >
           <v-sheet
             color="surface-variant"
             class="pa-6 h-100 d-flex flex-column"
@@ -70,8 +87,16 @@
               </p>
             </header>
 
-            <div v-if="isLoadingTasks" class="py-6">
-              <v-progress-linear indeterminate color="primary" height="6" rounded="lg" />
+            <div
+              v-if="isLoadingTasks"
+              class="py-6"
+            >
+              <v-progress-linear
+                indeterminate
+                color="primary"
+                height="6"
+                rounded="lg"
+              />
             </div>
             <v-alert
               v-else-if="listError"
@@ -101,10 +126,17 @@
               lines="three"
               class="elevated-task-list"
             >
-              <template v-for="(task, index) in tasksForProject" :key="task.id">
+              <template
+                v-for="(task, index) in tasksForProject"
+                :key="task.id"
+              >
                 <v-list-item>
                   <template #prepend>
-                    <v-avatar size="36" color="primary" variant="tonal">
+                    <v-avatar
+                      size="36"
+                      color="primary"
+                      variant="tonal"
+                    >
                       <v-icon :icon="resolveStatusMeta(task.status).icon" />
                     </v-avatar>
                   </template>
@@ -131,7 +163,10 @@
                   </template>
                 </v-list-item>
 
-                <v-divider v-if="index < tasksForProject.length - 1" inset />
+                <v-divider
+                  v-if="index < tasksForProject.length - 1"
+                  inset
+                />
               </template>
             </v-list>
           </v-sheet>
@@ -153,15 +188,8 @@ import FormSuccess from "~/components/crm/FormSuccess.vue";
 import CommonTaskFormFields, {
   type TaskFormState,
 } from "~/components/crm/tasks/CommonTaskFormFields.vue";
-import {
-  useCrmProjectsStore,
-  type CrmProject,
-} from "~/stores/crm-projects";
-import {
-  useCrmTasksStore,
-  type CrmTask,
-  type CrmTaskCreatePayload,
-} from "~/stores/crm-tasks";
+import { useCrmProjectsStore, type CrmProject } from "~/stores/crm-projects";
+import { useCrmTasksStore, type CrmTask, type CrmTaskCreatePayload } from "~/stores/crm-tasks";
 
 const projectsStore = useCrmProjectsStore();
 const tasksStore = useCrmTasksStore();
@@ -292,7 +320,10 @@ function formatDate(value: string | null | undefined): string {
   return dateFormatter.value.format(new Date(parsed));
 }
 
-function formatDateRange(start: string | null | undefined, finish: string | null | undefined): string {
+function formatDateRange(
+  start: string | null | undefined,
+  finish: string | null | undefined,
+): string {
   const startLabel = formatDate(start);
   const finishLabel = formatDate(finish);
 

@@ -167,7 +167,11 @@ const props = defineProps<{
 
 const { t } = useI18n();
 const postUserAriaName = computed(
-  () => postUserDisplayName.value || postUser.value?.username || postUser.value?.email || t("blog.posts.actions.follow"),
+  () =>
+    postUserDisplayName.value ||
+    postUser.value?.username ||
+    postUser.value?.email ||
+    t("blog.posts.actions.follow"),
 );
 const { $notify } = useNuxtApp();
 const { reactToPost, addComment, reactToComment, getComments } = usePostsStore();

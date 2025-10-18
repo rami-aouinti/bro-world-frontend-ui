@@ -89,22 +89,19 @@ const localizedContentOverrides: Partial<Record<string, LocalizedContentOverride
       about: {
         title: "La mission de BroWorld",
         subtitle: "Concevoir des univers sociaux pour les communautés modernes.",
-        body:
-          "BroWorld aide les équipes produit à créer des expériences immersives centrées sur la communauté, avec une itération rapide et une identité de marque cohérente.",
+        body: "BroWorld aide les équipes produit à créer des expériences immersives centrées sur la communauté, avec une itération rapide et une identité de marque cohérente.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       contact: {
         title: "Contactez l'équipage BroWorld",
         subtitle: "Nous sommes là pour vous aider à lancer des plateformes sociales audacieuses.",
-        body:
-          "Contactez-nous à support@broworld.com pour toute demande de partenariat, d'assistance ou de presse.",
+        body: "Contactez-nous à support@broworld.com pour toute demande de partenariat, d'assistance ou de presse.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       help: {
         title: "Centre d'aide",
         subtitle: "Guides et ressources pour maîtriser la boîte à outils de BroWorld.",
-        body:
-          "Parcourez des liens rapides, des tutoriels et des FAQ pour obtenir des réponses en quelques minutes.",
+        body: "Parcourez des liens rapides, des tutoriels et des FAQ pour obtenir des réponses en quelques minutes.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
     },
@@ -115,22 +112,19 @@ const localizedContentOverrides: Partial<Record<string, LocalizedContentOverride
       about: {
         title: "Die Mission von BroWorld",
         subtitle: "Soziale Universen für moderne Gemeinschaften gestalten.",
-        body:
-          "BroWorld befähigt Produktteams, immersive, communityorientierte Erlebnisse mit schnellen Iterationen und konsistentem Branding zu entwickeln.",
+        body: "BroWorld befähigt Produktteams, immersive, communityorientierte Erlebnisse mit schnellen Iterationen und konsistentem Branding zu entwickeln.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       contact: {
         title: "Kontaktiere die BroWorld-Crew",
         subtitle: "Wir helfen dir, mutige soziale Plattformen zu starten.",
-        body:
-          "Erreiche uns unter support@broworld.com für Partnerschaften, Support oder Presseanfragen.",
+        body: "Erreiche uns unter support@broworld.com für Partnerschaften, Support oder Presseanfragen.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       help: {
         title: "Hilfecenter",
         subtitle: "Leitfäden und Ressourcen, um das BroWorld-Toolkit zu meistern.",
-        body:
-          "Durchstöbere Schnellzugriffe, Tutorials und FAQs, um in wenigen Minuten Antworten zu erhalten.",
+        body: "Durchstöbere Schnellzugriffe, Tutorials und FAQs, um in wenigen Minuten Antworten zu erhalten.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
     },
@@ -141,22 +135,19 @@ const localizedContentOverrides: Partial<Record<string, LocalizedContentOverride
       about: {
         title: "La misión de BroWorld",
         subtitle: "Diseñamos universos sociales para las comunidades modernas.",
-        body:
-          "BroWorld ayuda a los equipos de producto a crear experiencias inmersivas impulsadas por la comunidad con iteraciones rápidas y una marca coherente.",
+        body: "BroWorld ayuda a los equipos de producto a crear experiencias inmersivas impulsadas por la comunidad con iteraciones rápidas y una marca coherente.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       contact: {
         title: "Contacta al equipo de BroWorld",
         subtitle: "Estamos aquí para ayudarte a lanzar plataformas sociales audaces.",
-        body:
-          "Escríbenos a support@broworld.com para colaboraciones, soporte o consultas de prensa.",
+        body: "Escríbenos a support@broworld.com para colaboraciones, soporte o consultas de prensa.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       help: {
         title: "Centro de ayuda",
         subtitle: "Guías y recursos para dominar las herramientas de BroWorld.",
-        body:
-          "Explora accesos directos, tutoriales y preguntas frecuentes para obtener respuestas en minutos.",
+        body: "Explora accesos directos, tutoriales y preguntas frecuentes para obtener respuestas en minutos.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
     },
@@ -167,22 +158,19 @@ const localizedContentOverrides: Partial<Record<string, LocalizedContentOverride
       about: {
         title: "La missione di BroWorld",
         subtitle: "Progettiamo universi sociali per le comunità moderne.",
-        body:
-          "BroWorld permette ai team di prodotto di creare esperienze immersive guidate dalla community con iterazioni rapide e un brand coerente.",
+        body: "BroWorld permette ai team di prodotto di creare esperienze immersive guidate dalla community con iterazioni rapide e un brand coerente.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       contact: {
         title: "Contatta l'equipaggio di BroWorld",
         subtitle: "Siamo qui per aiutarti a lanciare piattaforme social audaci.",
-        body:
-          "Scrivici a support@broworld.com per collaborazioni, assistenza o richieste stampa.",
+        body: "Scrivici a support@broworld.com per collaborazioni, assistenza o richieste stampa.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       help: {
         title: "Centro assistenza",
         subtitle: "Guide e risorse per padroneggiare il toolkit di BroWorld.",
-        body:
-          "Consulta link rapidi, tutorial e FAQ per ottenere risposte in pochi minuti.",
+        body: "Consulta link rapidi, tutorial e FAQ per ottenere risposte in pochi minuti.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
     },
@@ -193,22 +181,19 @@ const localizedContentOverrides: Partial<Record<string, LocalizedContentOverride
       about: {
         title: "Миссия BroWorld",
         subtitle: "Проектируем социальные вселенные для современных сообществ.",
-        body:
-          "BroWorld помогает продуктовым командам создавать иммерсивные, ориентированные на сообщество впечатления с быстрой итерацией и последовательным брендингом.",
+        body: "BroWorld помогает продуктовым командам создавать иммерсивные, ориентированные на сообщество впечатления с быстрой итерацией и последовательным брендингом.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       contact: {
         title: "Свяжитесь с командой BroWorld",
         subtitle: "Мы поможем вам запустить смелые социальные платформы.",
-        body:
-          "Пишите на support@broworld.com по вопросам партнёрства, поддержки или для прессы.",
+        body: "Пишите на support@broworld.com по вопросам партнёрства, поддержки или для прессы.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       help: {
         title: "Справочный центр",
         subtitle: "Руководства и ресурсы, чтобы освоить инструменты BroWorld.",
-        body:
-          "Просматривайте быстрые ссылки, учебные материалы и ответы на вопросы, чтобы получать информацию за считанные минуты.",
+        body: "Просматривайте быстрые ссылки, учебные материалы и ответы на вопросы, чтобы получать информацию за считанные минуты.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
     },
@@ -219,22 +204,19 @@ const localizedContentOverrides: Partial<Record<string, LocalizedContentOverride
       about: {
         title: "مهمة BroWorld",
         subtitle: "نصمم عوالم اجتماعية للمجتمعات المعاصرة.",
-        body:
-          "تمكّن BroWorld فرق المنتجات من ابتكار تجارب غامرة يقودها المجتمع مع وتيرة تطوير سريعة وهوية علامة تجارية متسقة.",
+        body: "تمكّن BroWorld فرق المنتجات من ابتكار تجارب غامرة يقودها المجتمع مع وتيرة تطوير سريعة وهوية علامة تجارية متسقة.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       contact: {
         title: "تواصل مع فريق BroWorld",
         subtitle: "نحن هنا لمساعدتك على إطلاق منصات اجتماعية جريئة.",
-        body:
-          "تواصل معنا عبر support@broworld.com للشراكات أو الدعم أو استفسارات الصحافة.",
+        body: "تواصل معنا عبر support@broworld.com للشراكات أو الدعم أو استفسارات الصحافة.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
       help: {
         title: "مركز المساعدة",
         subtitle: "أدلة وموارد لإتقان مجموعة أدوات BroWorld.",
-        body:
-          "تصفح الروابط السريعة والدروس والأسئلة الشائعة لتحصل على الإجابات في دقائق.",
+        body: "تصفح الروابط السريعة والدروس والأسئلة الشائعة لتحصل على الإجابات في دقائق.",
         updatedAt: DEFAULT_CONTENT_UPDATED_AT,
       },
     },

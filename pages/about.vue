@@ -655,9 +655,7 @@ const alternateLinks = computed(() => {
 
       return { rel: "alternate" as const, hreflang, href };
     })
-    .filter((link): link is { rel: "alternate"; hreflang: string; href: string } =>
-      Boolean(link),
-    );
+    .filter((link): link is { rel: "alternate"; hreflang: string; href: string } => Boolean(link));
 });
 const xDefaultLink = computed(() => {
   if (!switchLocalePath) {

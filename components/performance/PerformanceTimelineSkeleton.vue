@@ -19,11 +19,17 @@
         :key="index"
         class="timeline__item"
       >
-        <div class="timeline__marker" aria-hidden="true">
+        <div
+          class="timeline__marker"
+          aria-hidden="true"
+        >
           <span class="timeline__dot" />
           <span class="timeline__line" />
         </div>
-        <div class="timeline__content" aria-busy="true">
+        <div
+          class="timeline__content"
+          aria-busy="true"
+        >
           <v-skeleton-loader
             class="timeline__date"
             type="text"

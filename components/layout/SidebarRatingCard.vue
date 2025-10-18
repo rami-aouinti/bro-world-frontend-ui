@@ -236,7 +236,9 @@ function resolveErrorDetails(error: unknown) {
 
   if (error instanceof AxiosError) {
     status = error.response?.status ?? null;
-    payloadMessage = extractErrorMessage((error.response?.data as { message?: unknown } | undefined)?.message);
+    payloadMessage = extractErrorMessage(
+      (error.response?.data as { message?: unknown } | undefined)?.message,
+    );
   } else if (isFetchError(error)) {
     const fetchError = error as FetchError<{ message?: unknown }>;
     status = fetchError.response?.status ?? null;

@@ -79,15 +79,11 @@ export function defineStore(
   id: string,
   setupOrOptions:
     | (() => unknown)
-    | StoreOptions<
-        Record<string, unknown>,
-        Record<string, (...args: unknown[]) => unknown>
-      >,
+    | StoreOptions<Record<string, unknown>, Record<string, (...args: unknown[]) => unknown>>,
 ): (pinia?: PiniaInstance | null) => unknown {
   return function useStore(passedPinia?: PiniaInstance | null) {
     const currentInstance = getCurrentInstance();
-    const resolvedPinia =
-      passedPinia ?? resolveInjectedPinia(currentInstance) ?? activePinia;
+    const resolvedPinia = passedPinia ?? resolveInjectedPinia(currentInstance) ?? activePinia;
     const pinia = resolvedPinia ?? null;
 
     if (!pinia) {
@@ -114,10 +110,7 @@ export function defineStore(
           for (const [key, action] of Object.entries(actions)) {
             Object.defineProperty(storeWithActions, key, {
               value: (...args: unknown[]) =>
-                (action as (...args: unknown[]) => unknown).apply(
-                  storeWithActions,
-                  args,
-                ),
+                (action as (...args: unknown[]) => unknown).apply(storeWithActions, args),
               enumerable: true,
               configurable: true,
               writable: true,

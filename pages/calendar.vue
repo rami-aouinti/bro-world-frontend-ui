@@ -22,7 +22,7 @@
           <div class="px-4 pt-3 pb-3">
             <v-list
               v-if="todayEvents.length"
-              style="background-color: transparent; max-height: 320px;"
+              style="background-color: transparent; max-height: 320px"
               density="compact"
             >
               <v-list-item-group class="border-radius-sm">
@@ -94,7 +94,11 @@
             :loading="isSaving"
           >
             <v-card-title class="text-h6 text-primary px-6 py-4">
-              {{ dialogMode === 'edit' ? t('pages.calendar.dialog.editTitle') : t('pages.calendar.dialog.createTitle') }}
+              {{
+                dialogMode === "edit"
+                  ? t("pages.calendar.dialog.editTitle")
+                  : t("pages.calendar.dialog.createTitle")
+              }}
             </v-card-title>
             <v-card-text class="pb-2">
               <v-text-field
@@ -210,7 +214,7 @@
                 :disabled="isSaving"
                 @click="confirmDeleteDialog = true"
               >
-                {{ t('pages.calendar.dialog.delete') }}
+                {{ t("pages.calendar.dialog.delete") }}
               </v-btn>
               <v-spacer />
               <v-btn
@@ -218,7 +222,7 @@
                 color="secondary"
                 @click="closeEventDialog"
               >
-                {{ t('pages.calendar.dialog.cancel') }}
+                {{ t("pages.calendar.dialog.cancel") }}
               </v-btn>
               <v-btn
                 color="primary"
@@ -227,7 +231,7 @@
                 :loading="isSaving"
                 @click="submitEvent"
               >
-                {{ t('pages.calendar.dialog.save') }}
+                {{ t("pages.calendar.dialog.save") }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -242,10 +246,10 @@
     >
       <v-card rounded="xl">
         <v-card-title class="text-h6 text-error px-6 py-4">
-          {{ t('pages.calendar.dialog.confirmDelete') }}
+          {{ t("pages.calendar.dialog.confirmDelete") }}
         </v-card-title>
         <v-card-text>
-          {{ t('pages.calendar.dialog.confirmDeleteMessage') }}
+          {{ t("pages.calendar.dialog.confirmDeleteMessage") }}
         </v-card-text>
         <v-card-actions class="justify-end px-6 pb-4">
           <v-btn
@@ -253,7 +257,7 @@
             color="secondary"
             @click="confirmDeleteDialog = false"
           >
-            {{ t('pages.calendar.dialog.cancel') }}
+            {{ t("pages.calendar.dialog.cancel") }}
           </v-btn>
           <v-btn
             color="error"
@@ -261,7 +265,7 @@
             :loading="isDeleting"
             @click="removeCurrentEvent"
           >
-            {{ t('pages.calendar.dialog.delete') }}
+            {{ t("pages.calendar.dialog.delete") }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -277,7 +281,7 @@
         >
           <v-card-title class="d-flex align-center justify-space-between px-6 py-4">
             <span class="text-h6">
-              {{ t('pages.calendar.cardTitle') }}
+              {{ t("pages.calendar.cardTitle") }}
             </span>
             <v-btn
               variant="tonal"
@@ -285,7 +289,7 @@
               prepend-icon="mdi-plus"
               @click="openCreateDialog(focus)"
             >
-              {{ t('pages.calendar.actions.newEvent') }}
+              {{ t("pages.calendar.actions.newEvent") }}
             </v-btn>
           </v-card-title>
           <v-divider class="mx-6" />
@@ -331,12 +335,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref } from "vue"
-import dayjs from "dayjs"
-import { useI18n } from "vue-i18n"
-import { useAuthSession } from "~/stores/auth-session"
-import { useEventStore } from "~/stores/useEventStore"
-import type { ProfileEvent } from "~/types/pages/profile"
+import { computed, nextTick, onMounted, reactive, ref } from "vue";
+import dayjs from "dayjs";
+import { useI18n } from "vue-i18n";
+import { useAuthSession } from "~/stores/auth-session";
+import { useEventStore } from "~/stores/useEventStore";
+import type { ProfileEvent } from "~/types/pages/profile";
 
 definePageMeta({
   layout: "default",
@@ -344,67 +348,67 @@ definePageMeta({
   title: "Calendar",
   description: "Manage and track your events.",
   scrollToTop: true,
-})
+});
 
 interface CalendarDisplayEvent {
-  id: string
-  title: string
-  start: string
-  end: string | null
-  color: string
-  allDay: boolean
-  description?: string | null
-  location?: string | null
-  isPrivate?: boolean | null
+  id: string;
+  title: string;
+  start: string;
+  end: string | null;
+  color: string;
+  allDay: boolean;
+  description?: string | null;
+  location?: string | null;
+  isPrivate?: boolean | null;
 }
 
 interface EventFormState {
-  id: string | null
-  title: string
-  description: string
-  location: string
-  startDate: string
-  endDate: string
-  startTime: string
-  endTime: string
-  allDay: boolean
-  isPrivate: boolean
+  id: string | null;
+  title: string;
+  description: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+  allDay: boolean;
+  isPrivate: boolean;
 }
 
-const DEFAULT_START_TIME = "09:00"
-const DEFAULT_END_TIME = "10:00"
+const DEFAULT_START_TIME = "09:00";
+const DEFAULT_END_TIME = "10:00";
 
-const weekdays = [1, 2, 3, 4, 5, 6, 0]
+const weekdays = [1, 2, 3, 4, 5, 6, 0];
 
-const { t } = useI18n()
-const authSession = useAuthSession()
-const eventStore = useEventStore()
+const { t } = useI18n();
+const authSession = useAuthSession();
+const eventStore = useEventStore();
 
-const isAuthenticated = computed(() => authSession.isAuthenticated)
+const isAuthenticated = computed(() => authSession.isAuthenticated);
 
-const loading = computed(() => eventStore.loading)
-const loadError = computed(() => eventStore.error)
+const loading = computed(() => eventStore.loading);
+const loadError = computed(() => eventStore.error);
 
-const focus = ref(new Date().toISOString().slice(0, 10))
+const focus = ref(new Date().toISOString().slice(0, 10));
 const calendarEvents = computed<CalendarDisplayEvent[]>(() =>
   eventStore.events.map((event) => normalizeEvent(event)),
-)
+);
 
 const todayEvents = computed(() => {
-  const today = dayjs().format("YYYY-MM-DD")
+  const today = dayjs().format("YYYY-MM-DD");
 
   return calendarEvents.value
     .filter((event) => event.start.startsWith(today))
-    .sort((a, b) => getComparableTime(a.start).localeCompare(getComparableTime(b.start)))
-})
+    .sort((a, b) => getComparableTime(a.start).localeCompare(getComparableTime(b.start)));
+});
 
-const canTeleport = ref(false)
-const eventDialog = ref(false)
-const confirmDeleteDialog = ref(false)
-const dialogMode = ref<"create" | "edit">("create")
-const isSaving = ref(false)
-const isDeleting = ref(false)
-const formError = ref<string | null>(null)
+const canTeleport = ref(false);
+const eventDialog = ref(false);
+const confirmDeleteDialog = ref(false);
+const dialogMode = ref<"create" | "edit">("create");
+const isSaving = ref(false);
+const isDeleting = ref(false);
+const formError = ref<string | null>(null);
 
 const eventForm = reactive<EventFormState>({
   id: null,
@@ -417,21 +421,21 @@ const eventForm = reactive<EventFormState>({
   endTime: DEFAULT_END_TIME,
   allDay: false,
   isPrivate: false,
-})
+});
 
 const validationErrors = reactive({
   title: [] as string[],
   startDate: [] as string[],
   startTime: [] as string[],
   endTime: [] as string[],
-})
+});
 
 function normalizeEvent(event: ProfileEvent): CalendarDisplayEvent {
-  const id = event.id || `event-${Math.random().toString(36).slice(2)}`
-  const allDay = Boolean(event.allDay)
-  const normalizedStart = normalizeTimestamp(event.start, allDay)
-  const normalizedEnd = event.end ? normalizeTimestamp(event.end, allDay) : null
-  const color = event.color && event.color.trim() ? event.color : "primary"
+  const id = event.id || `event-${Math.random().toString(36).slice(2)}`;
+  const allDay = Boolean(event.allDay);
+  const normalizedStart = normalizeTimestamp(event.start, allDay);
+  const normalizedEnd = event.end ? normalizeTimestamp(event.end, allDay) : null;
+  const color = event.color && event.color.trim() ? event.color : "primary";
 
   return {
     id,
@@ -443,214 +447,236 @@ function normalizeEvent(event: ProfileEvent): CalendarDisplayEvent {
     description: event.description ?? null,
     location: event.location ?? null,
     isPrivate: event.isPrivate ?? null,
-  }
+  };
 }
 
 function normalizeTimestamp(value: string, allDay: boolean): string {
-  const trimmed = value?.trim()
+  const trimmed = value?.trim();
 
   if (!trimmed) {
-    const today = dayjs().format("YYYY-MM-DD")
-    return allDay ? today : `${today} ${DEFAULT_START_TIME}`
+    const today = dayjs().format("YYYY-MM-DD");
+    return allDay ? today : `${today} ${DEFAULT_START_TIME}`;
   }
 
   if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
-    return allDay ? trimmed : `${trimmed} ${DEFAULT_START_TIME}`
+    return allDay ? trimmed : `${trimmed} ${DEFAULT_START_TIME}`;
   }
 
   if (/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/.test(trimmed)) {
-    return trimmed
+    return trimmed;
   }
 
-  const parsed = dayjs(trimmed)
+  const parsed = dayjs(trimmed);
 
   if (!parsed.isValid()) {
-    const today = dayjs().format("YYYY-MM-DD")
-    return allDay ? today : `${today} ${DEFAULT_START_TIME}`
+    const today = dayjs().format("YYYY-MM-DD");
+    return allDay ? today : `${today} ${DEFAULT_START_TIME}`;
   }
 
-  return allDay ? parsed.format("YYYY-MM-DD") : parsed.format("YYYY-MM-DD HH:mm")
+  return allDay ? parsed.format("YYYY-MM-DD") : parsed.format("YYYY-MM-DD HH:mm");
 }
 
 function getComparableTime(value: string): string {
   if (/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/.test(value)) {
-    return value.split(" ")[1]
+    return value.split(" ")[1];
   }
 
-  return value
+  return value;
 }
 
 function formatEventRange(event: CalendarDisplayEvent): string {
   if (event.allDay) {
-    return t("pages.calendar.rangeAllDay")
+    return t("pages.calendar.rangeAllDay");
   }
 
-  const startTime = extractTime(event.start)
-  const endTime = event.end ? extractTime(event.end) : null
+  const startTime = extractTime(event.start);
+  const endTime = event.end ? extractTime(event.end) : null;
 
   if (startTime && endTime) {
-    return `${startTime} - ${endTime}`
+    return `${startTime} - ${endTime}`;
   }
 
-  return startTime ?? ""
+  return startTime ?? "";
 }
 
 function extractTime(value: string | null): string | null {
   if (!value) {
-    return null
+    return null;
   }
 
-  const match = value.match(/\d{2}:\d{2}$/)
+  const match = value.match(/\d{2}:\d{2}$/);
 
   if (match) {
-    return match[0]
+    return match[0];
   }
 
-  const parsed = dayjs(value)
+  const parsed = dayjs(value);
 
-  return parsed.isValid() ? parsed.format("HH:mm") : null
+  return parsed.isValid() ? parsed.format("HH:mm") : null;
 }
 
 function getEventColor(event: CalendarDisplayEvent): string {
-  return event.color || "primary"
+  return event.color || "primary";
 }
 
 function openCreateDialog(date?: string | null) {
-  dialogMode.value = "create"
-  resetForm()
+  dialogMode.value = "create";
+  resetForm();
 
   if (date) {
-    eventForm.startDate = dayjs(date).format("YYYY-MM-DD")
-    eventForm.endDate = eventForm.startDate
+    eventForm.startDate = dayjs(date).format("YYYY-MM-DD");
+    eventForm.endDate = eventForm.startDate;
   }
 
-  eventDialog.value = true
+  eventDialog.value = true;
 }
 
 function openEditDialog(event: CalendarDisplayEvent) {
-  dialogMode.value = "edit"
+  dialogMode.value = "edit";
   resetForm({
     id: event.id,
     title: event.title,
     description: event.description ?? "",
     location: event.location ?? "",
     startDate: dayjs(event.start).format("YYYY-MM-DD"),
-    endDate: event.end ? dayjs(event.end).format("YYYY-MM-DD") : dayjs(event.start).format("YYYY-MM-DD"),
+    endDate: event.end
+      ? dayjs(event.end).format("YYYY-MM-DD")
+      : dayjs(event.start).format("YYYY-MM-DD"),
     startTime: extractTime(event.start) ?? DEFAULT_START_TIME,
     endTime: extractTime(event.end) ?? extractTime(event.start) ?? DEFAULT_END_TIME,
     allDay: event.allDay,
     isPrivate: Boolean(event.isPrivate),
-  })
-  eventDialog.value = true
+  });
+  eventDialog.value = true;
 }
 
 function onDayClick(payload: { date?: string }) {
-  const date = payload.date
+  const date = payload.date;
   if (!date) {
-    return
+    return;
   }
-  focus.value = date
-  openCreateDialog(date)
+  focus.value = date;
+  openCreateDialog(date);
 }
 
 function onEventClick(payload: { event?: CalendarDisplayEvent }) {
   if (!payload.event) {
-    return
+    return;
   }
-  openEditDialog(payload.event)
+  openEditDialog(payload.event);
 }
 
 function closeEventDialog() {
-  eventDialog.value = false
-  formError.value = null
+  eventDialog.value = false;
+  formError.value = null;
 }
 
 function resetForm(overrides: Partial<EventFormState> = {}) {
-  eventForm.id = overrides.id ?? null
-  eventForm.title = overrides.title ?? ""
-  eventForm.description = overrides.description ?? ""
-  eventForm.location = overrides.location ?? ""
-  eventForm.startDate = overrides.startDate ?? focus.value
-  eventForm.endDate = overrides.endDate ?? eventForm.startDate
-  eventForm.startTime = overrides.startTime ?? DEFAULT_START_TIME
-  eventForm.endTime = overrides.endTime ?? DEFAULT_END_TIME
-  eventForm.allDay = overrides.allDay ?? false
-  eventForm.isPrivate = overrides.isPrivate ?? false
+  eventForm.id = overrides.id ?? null;
+  eventForm.title = overrides.title ?? "";
+  eventForm.description = overrides.description ?? "";
+  eventForm.location = overrides.location ?? "";
+  eventForm.startDate = overrides.startDate ?? focus.value;
+  eventForm.endDate = overrides.endDate ?? eventForm.startDate;
+  eventForm.startTime = overrides.startTime ?? DEFAULT_START_TIME;
+  eventForm.endTime = overrides.endTime ?? DEFAULT_END_TIME;
+  eventForm.allDay = overrides.allDay ?? false;
+  eventForm.isPrivate = overrides.isPrivate ?? false;
 
-  validationErrors.title = []
-  validationErrors.startDate = []
-  validationErrors.startTime = []
-  validationErrors.endTime = []
+  validationErrors.title = [];
+  validationErrors.startDate = [];
+  validationErrors.startTime = [];
+  validationErrors.endTime = [];
 }
 
 function validateForm(): boolean {
-  validationErrors.title = []
-  validationErrors.startDate = []
-  validationErrors.startTime = []
-  validationErrors.endTime = []
-  formError.value = null
+  validationErrors.title = [];
+  validationErrors.startDate = [];
+  validationErrors.startTime = [];
+  validationErrors.endTime = [];
+  formError.value = null;
 
   if (!eventForm.title.trim()) {
-    validationErrors.title = [t("pages.calendar.validation.title")]
+    validationErrors.title = [t("pages.calendar.validation.title")];
   }
 
   if (!eventForm.startDate) {
-    validationErrors.startDate = [t("pages.calendar.validation.startDate")]
+    validationErrors.startDate = [t("pages.calendar.validation.startDate")];
   }
 
   if (!eventForm.allDay && !eventForm.startTime) {
-    validationErrors.startTime = [t("pages.calendar.validation.startTime")]
+    validationErrors.startTime = [t("pages.calendar.validation.startTime")];
   }
 
-  if (!eventForm.allDay && eventForm.endTime && eventForm.startTime && eventForm.endTime < eventForm.startTime) {
-    validationErrors.endTime = [t("pages.calendar.validation.endTime")]
+  if (
+    !eventForm.allDay &&
+    eventForm.endTime &&
+    eventForm.startTime &&
+    eventForm.endTime < eventForm.startTime
+  ) {
+    validationErrors.endTime = [t("pages.calendar.validation.endTime")];
   }
 
   const hasErrors =
     validationErrors.title.length ||
     validationErrors.startDate.length ||
     validationErrors.startTime.length ||
-    validationErrors.endTime.length
+    validationErrors.endTime.length;
 
   if (hasErrors) {
-    return false
+    return false;
   }
 
-  const start = buildComparableDate(eventForm.startDate, eventForm.startTime, eventForm.allDay, false)
-  const end = buildComparableDate(eventForm.endDate || eventForm.startDate, eventForm.endTime, eventForm.allDay, true)
+  const start = buildComparableDate(
+    eventForm.startDate,
+    eventForm.startTime,
+    eventForm.allDay,
+    false,
+  );
+  const end = buildComparableDate(
+    eventForm.endDate || eventForm.startDate,
+    eventForm.endTime,
+    eventForm.allDay,
+    true,
+  );
 
   if (start && end && end.getTime() < start.getTime()) {
-    formError.value = t("pages.calendar.validation.range")
-    return false
+    formError.value = t("pages.calendar.validation.range");
+    return false;
   }
 
-  return true
+  return true;
 }
 
-function buildComparableDate(date: string | null, time: string | null, allDay: boolean, isEnd: boolean): Date | null {
+function buildComparableDate(
+  date: string | null,
+  time: string | null,
+  allDay: boolean,
+  isEnd: boolean,
+): Date | null {
   if (!date) {
-    return null
+    return null;
   }
 
   if (allDay) {
-    return new Date(`${date}T${isEnd ? "23:59" : "00:00"}:00`)
+    return new Date(`${date}T${isEnd ? "23:59" : "00:00"}:00`);
   }
 
-  const safeTime = time || (isEnd ? DEFAULT_END_TIME : DEFAULT_START_TIME)
-  return new Date(`${date}T${safeTime}:00`)
+  const safeTime = time || (isEnd ? DEFAULT_END_TIME : DEFAULT_START_TIME);
+  return new Date(`${date}T${safeTime}:00`);
 }
 
 function buildEventPayload() {
   const start = eventForm.allDay
     ? eventForm.startDate
-    : `${eventForm.startDate} ${eventForm.startTime || DEFAULT_START_TIME}`
+    : `${eventForm.startDate} ${eventForm.startTime || DEFAULT_START_TIME}`;
 
-  const normalizedEndDate = eventForm.endDate || eventForm.startDate
+  const normalizedEndDate = eventForm.endDate || eventForm.startDate;
   const end = eventForm.allDay
     ? normalizedEndDate && normalizedEndDate !== eventForm.startDate
       ? normalizedEndDate
       : null
-    : `${normalizedEndDate} ${eventForm.endTime || eventForm.startTime || DEFAULT_END_TIME}`
+    : `${normalizedEndDate} ${eventForm.endTime || eventForm.startTime || DEFAULT_END_TIME}`;
 
   return {
     title: eventForm.title.trim(),
@@ -660,68 +686,68 @@ function buildEventPayload() {
     end,
     allDay: eventForm.allDay,
     isPrivate: eventForm.isPrivate,
-  }
+  };
 }
 
 async function submitEvent() {
   if (!validateForm()) {
-    return
+    return;
   }
 
-  const payload = buildEventPayload()
-  isSaving.value = true
+  const payload = buildEventPayload();
+  isSaving.value = true;
 
   try {
     if (dialogMode.value === "edit" && eventForm.id) {
-      await eventStore.updateEvent({ id: eventForm.id, ...payload })
+      await eventStore.updateEvent({ id: eventForm.id, ...payload });
     } else {
-      await eventStore.addEvent(payload)
+      await eventStore.addEvent(payload);
     }
 
-    eventDialog.value = false
+    eventDialog.value = false;
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error ?? "")
-    formError.value = message || t("pages.calendar.errors.save")
+    const message = error instanceof Error ? error.message : String(error ?? "");
+    formError.value = message || t("pages.calendar.errors.save");
   } finally {
-    isSaving.value = false
+    isSaving.value = false;
   }
 }
 
 async function removeCurrentEvent() {
   if (!eventForm.id) {
-    return
+    return;
   }
 
-  isDeleting.value = true
-  formError.value = null
+  isDeleting.value = true;
+  formError.value = null;
 
   try {
-    await eventStore.removeEvent(eventForm.id)
-    confirmDeleteDialog.value = false
-    eventDialog.value = false
+    await eventStore.removeEvent(eventForm.id);
+    confirmDeleteDialog.value = false;
+    eventDialog.value = false;
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error ?? "")
-    formError.value = message || t("pages.calendar.errors.delete")
+    const message = error instanceof Error ? error.message : String(error ?? "");
+    formError.value = message || t("pages.calendar.errors.delete");
   } finally {
-    isDeleting.value = false
+    isDeleting.value = false;
   }
 }
 
 onMounted(async () => {
   try {
-    await eventStore.fetchEventsFromApi()
+    await eventStore.fetchEventsFromApi();
   } catch (error) {
     if (!formError.value) {
-      const message = error instanceof Error ? error.message : String(error ?? "")
-      formError.value = message || t("pages.calendar.errors.load")
+      const message = error instanceof Error ? error.message : String(error ?? "");
+      formError.value = message || t("pages.calendar.errors.load");
     }
   }
 
-  await nextTick()
+  await nextTick();
   setTimeout(() => {
-    canTeleport.value = Boolean(document.getElementById("menu-bar-world"))
-  }, 200)
-})
+    canTeleport.value = Boolean(document.getElementById("menu-bar-world"));
+  }, 200);
+});
 </script>
 
 <style scoped>

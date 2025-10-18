@@ -34,7 +34,10 @@ function resolveString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-export function resolveErrorMessage(error: unknown, fallbackMessage = "An unexpected error occurred.") {
+export function resolveErrorMessage(
+  error: unknown,
+  fallbackMessage = "An unexpected error occurred.",
+) {
   if (error && typeof error === "object") {
     const data = (error as { data?: Record<string, unknown> }).data;
 
@@ -72,10 +75,8 @@ export function resolveErrorMessage(error: unknown, fallbackMessage = "An unexpe
 
 export function sanitizeErrorStack(error: H3Error) {
   if (error && typeof error === "object") {
-    // eslint-disable-next-line no-param-reassign -- Stack traces should not leak sensitive details.
     error.stack = undefined;
   }
 
   return error;
 }
-

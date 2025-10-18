@@ -332,8 +332,17 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
 
 const INITIAL_PAGE_SIZE = 6;
 
-const { posts, pending, loadingMore, hasMore, error, fetchPosts, fetchMorePosts, createPost, pageSize } =
-  usePostsStore();
+const {
+  posts,
+  pending,
+  loadingMore,
+  hasMore,
+  error,
+  fetchPosts,
+  fetchMorePosts,
+  createPost,
+  pageSize,
+} = usePostsStore();
 
 const skeletonBatchSize = computed(() => {
   const size = pageSize.value || INITIAL_PAGE_SIZE;
@@ -353,7 +362,8 @@ const loadErrorMessage = computed(() => {
   }
 
   const storeError = typeof error.value === "string" ? error.value.trim() : "";
-  const localError = typeof initialLoadError.value === "string" ? initialLoadError.value.trim() : "";
+  const localError =
+    typeof initialLoadError.value === "string" ? initialLoadError.value.trim() : "";
 
   return storeError || localError;
 });
@@ -437,8 +447,7 @@ async function loadInitialPosts() {
     initialLoadError.value = null;
     isLoadErrorDismissed.value = false;
   } catch (caughtError) {
-    const message =
-      caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
+    const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
 
     initialLoadError.value = message.trim() || t("blog.feed.loadError");
     isLoadErrorDismissed.value = false;

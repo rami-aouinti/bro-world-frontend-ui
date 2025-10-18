@@ -1,7 +1,10 @@
 <template>
   <v-form @submit.prevent="submit">
     <v-row>
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-text-field
           v-model="form.name"
           :label="t('applicant.name')"
@@ -9,7 +12,10 @@
           rounded="xl"
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col
+        cols="12"
+        md="6"
+      >
         <v-text-field
           v-model="form.contactEmail"
           :label="t('applicant.contactEmail')"
@@ -27,62 +33,65 @@
         />
       </v-col>
     </v-row>
-    <v-btn color="primary" type="submit">
+    <v-btn
+      color="primary"
+      type="submit"
+    >
       {{ t("applicant.submit") }}
     </v-btn>
   </v-form>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue"
-import { useI18n } from "vue-i18n"
-import { useNuxtApp } from "#app"
+import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#app";
 
 type Emits = {
-  (e: "applicant-created"): void
-}
+  (e: "applicant-created"): void;
+};
 
 const props = defineProps<{
-  selectedJobId: string | null
-}>()
+  selectedJobId: string | null;
+}>();
 
-const emit = defineEmits<Emits>()
-const { t } = useI18n()
-const { $notify: notify, $fetch } = useNuxtApp()
+const emit = defineEmits<Emits>();
+const { t } = useI18n();
+const { $notify: notify, $fetch } = useNuxtApp();
 
 const form = ref({
   name: "",
   contactEmail: "",
   jobPreferences: "",
   jobId: props.selectedJobId ?? "",
-})
+});
 
 watch(
   () => props.selectedJobId,
   (value) => {
-    form.value.jobId = value ?? ""
+    form.value.jobId = value ?? "";
   },
-)
+);
 
 async function submit() {
   try {
     await $fetch("/api/job/applicants", {
       method: "POST",
       body: form.value,
-    })
+    });
   } catch (error) {
-    console.error(error)
-    notify.error(t("applicant.createError"))
-    return
+    console.error(error);
+    notify.error(t("applicant.createError"));
+    return;
   }
 
-  notify.success(t("applicant.createdSuccess"))
-  emit("applicant-created")
+  notify.success(t("applicant.createdSuccess"));
+  emit("applicant-created");
   form.value = {
     name: "",
     contactEmail: "",
     jobPreferences: "",
     jobId: props.selectedJobId ?? "",
-  }
+  };
 }
 </script>

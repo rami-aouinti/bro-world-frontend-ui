@@ -3,20 +3,38 @@
     <header class="d-flex flex-column flex-md-row justify-space-between align-start gap-4 mb-6">
       <div>
         <p class="text-caption text-medium-emphasis mb-1">
-          {{ t("education.quiz.progress", { index: currentQuestionIndex + 1, total: totalQuestions }) }}
+          {{
+            t("education.quiz.progress", { index: currentQuestionIndex + 1, total: totalQuestions })
+          }}
         </p>
         <h2 class="text-h5 mb-2">{{ currentQuestion.question }}</h2>
       </div>
-      <v-chip color="primary" variant="tonal">
+      <v-chip
+        color="primary"
+        variant="tonal"
+      >
         {{ Math.round(progress) }}%
       </v-chip>
     </header>
 
-    <v-progress-linear :model-value="progress" height="10" color="primary" rounded class="mb-6" />
+    <v-progress-linear
+      :model-value="progress"
+      height="10"
+      color="primary"
+      rounded
+      class="mb-6"
+    />
 
-    <v-card elevation="1" rounded="xl">
+    <v-card
+      elevation="1"
+      rounded="xl"
+    >
       <v-card-text>
-        <v-radio-group v-model="selectedAnswer" :disabled="!!result" class="d-flex flex-column gap-3">
+        <v-radio-group
+          v-model="selectedAnswer"
+          :disabled="!!result"
+          class="d-flex flex-column gap-3"
+        >
           <v-radio
             v-for="option in currentQuestion.options"
             :key="option.key"
@@ -55,7 +73,10 @@
         :loading="loading"
         @click="submit"
       >
-        <v-icon icon="mdi:check-circle-outline" start />
+        <v-icon
+          icon="mdi:check-circle-outline"
+          start
+        />
         {{ t("education.quiz.submit") }}
       </v-btn>
     </footer>

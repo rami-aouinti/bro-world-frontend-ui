@@ -6,35 +6,51 @@
         <h1 class="text-h3 text-md-h2 font-weight-bold mb-3">
           {{ category.title }}
         </h1>
-        <p v-if="category.description" class="text-body-1 text-medium-emphasis">
+        <p
+          v-if="category.description"
+          class="text-body-1 text-medium-emphasis"
+        >
           {{ category.description }}
         </p>
       </header>
 
-      <v-row v-if="articles.length" dense>
+      <v-row
+        v-if="articles.length"
+        dense
+      >
         <v-col
           v-for="article in articles"
           :key="article.id"
           cols="12"
           md="6"
         >
-          <v-card :to="articleLink(article)" class="rounded-xl" elevation="1">
+          <v-card
+            :to="articleLink(article)"
+            class="rounded-xl"
+            elevation="1"
+          >
             <v-card-item>
               <v-card-title class="text-h5 mb-2">{{ article.title }}</v-card-title>
               <v-card-subtitle class="text-body-2 text-medium-emphasis mb-2">
                 {{ article.excerpt }}
               </v-card-subtitle>
-              <p v-if="article.updatedAtIso" class="text-caption text-disabled">
-                {{ t('help.article.updated', { date: formatDate(article.updatedAtIso) }) }}
+              <p
+                v-if="article.updatedAtIso"
+                class="text-caption text-disabled"
+              >
+                {{ t("help.article.updated", { date: formatDate(article.updatedAtIso) }) }}
               </p>
             </v-card-item>
           </v-card>
         </v-col>
       </v-row>
 
-      <div v-else class="py-12 text-center">
-        <h2 class="text-h5 font-weight-semibold mb-2">{{ t('help.empty.title') }}</h2>
-        <p class="text-medium-emphasis">{{ t('help.empty.subtitle') }}</p>
+      <div
+        v-else
+        class="py-12 text-center"
+      >
+        <h2 class="text-h5 font-weight-semibold mb-2">{{ t("help.empty.title") }}</h2>
+        <p class="text-medium-emphasis">{{ t("help.empty.subtitle") }}</p>
       </div>
     </v-container>
   </div>
@@ -88,7 +104,9 @@ function formatDate(dateIso: string) {
 }
 
 const seoTitle = computed(() => `${category.title} · ${t("help.meta.title")}`);
-const seoDescription = computed(() => category.description ?? t("help.meta.description", { site: siteName }));
+const seoDescription = computed(
+  () => category.description ?? t("help.meta.description", { site: siteName }),
+);
 
 useSeoMeta({
   title: () => seoTitle.value,

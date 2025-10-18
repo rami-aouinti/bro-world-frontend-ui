@@ -20,14 +20,20 @@
     </HelpHero>
 
     <v-container class="py-12">
-      <section aria-labelledby="help-categories-title" class="mb-14">
+      <section
+        aria-labelledby="help-categories-title"
+        class="mb-14"
+      >
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between mb-6">
           <div>
-            <h2 id="help-categories-title" class="text-h4 font-weight-bold mb-2">
-              {{ t('help.categories.title') }}
+            <h2
+              id="help-categories-title"
+              class="text-h4 font-weight-bold mb-2"
+            >
+              {{ t("help.categories.title") }}
             </h2>
             <p class="text-medium-emphasis">
-              {{ t('help.categories.subtitle') }}
+              {{ t("help.categories.subtitle") }}
             </p>
           </div>
         </div>
@@ -47,7 +53,11 @@
         </v-row>
       </section>
 
-      <HelpFaq :title="t('help.faq.title')" :items="faqItems" :subtitle="t('help.faq.subtitle')" />
+      <HelpFaq
+        :title="t('help.faq.title')"
+        :items="faqItems"
+        :subtitle="t('help.faq.subtitle')"
+      />
     </v-container>
   </div>
 </template>

@@ -44,13 +44,13 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n"
-import JobDetails from "~/components/job/JobDetails.vue"
-import type { JobSummary } from "~/stores/useJobStore"
+import { useI18n } from "vue-i18n";
+import JobDetails from "~/components/job/JobDetails.vue";
+import type { JobSummary } from "~/stores/useJobStore";
 
-defineProps<{ jobs: JobSummary[]; filtered: boolean }>()
+defineProps<{ jobs: JobSummary[]; filtered: boolean }>();
 
-const emit = defineEmits<{ (e: "apply", jobId: string): void }>()
+const emit = defineEmits<{ (e: "apply", jobId: string): void }>();
 
-const { t } = useI18n()
+const { t } = useI18n();
 </script>

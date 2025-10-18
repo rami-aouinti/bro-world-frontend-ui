@@ -162,7 +162,10 @@ const cancelLabel = computed(() => t("blog.posts.shareDialog.cancel"));
 const audienceLabel = computed(() => t("blog.posts.shareDialog.feedAudience"));
 
 const currentUserAvatarSrc = computed(
-  () => optimizeAvatarUrl(props.currentUserAvatar ?? null, 44) ?? props.currentUserAvatar ?? "/avatar.png",
+  () =>
+    optimizeAvatarUrl(props.currentUserAvatar ?? null, 44) ??
+    props.currentUserAvatar ??
+    "/avatar.png",
 );
 
 const postAuthorName = computed(() => {
@@ -177,7 +180,10 @@ const postAuthorName = computed(() => {
 });
 
 const postAuthorAvatar = computed(
-  () => optimizeAvatarUrl(props.post.user?.photo ?? null, 40) ?? props.post.user?.photo ?? "/avatar.png",
+  () =>
+    optimizeAvatarUrl(props.post.user?.photo ?? null, 40) ??
+    props.post.user?.photo ??
+    "/avatar.png",
 );
 
 const postPublishedLabel = computed(() => formatRelativeTime(props.post.publishedAt));

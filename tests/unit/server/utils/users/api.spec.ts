@@ -10,9 +10,7 @@ import { usersListSample } from "~/lib/mock/users";
 
 const appendHeaderMock = vi.hoisted(() => vi.fn());
 const getSessionTokenMock = vi.hoisted(() => vi.fn<[H3Event], string | null>());
-const getSessionUserMock = vi.hoisted(() =>
-  vi.fn<[H3Event], Record<string, unknown> | null>(),
-);
+const getSessionUserMock = vi.hoisted(() => vi.fn<[H3Event], Record<string, unknown> | null>());
 const waitForSessionTokenMock = vi.hoisted(() =>
   vi.fn<[H3Event], Promise<string | null>>().mockResolvedValue(null),
 );
@@ -46,9 +44,7 @@ const readCachedProfileMock = vi.hoisted(() =>
 const writeCachedProfileMock = vi.hoisted(() =>
   vi.fn<[H3Event, string, Record<string, unknown>], Promise<void>>(),
 );
-const deleteCachedProfileMock = vi.hoisted(() =>
-  vi.fn<[H3Event, string], Promise<void>>(),
-);
+const deleteCachedProfileMock = vi.hoisted(() => vi.fn<[H3Event, string], Promise<void>>());
 const withAuthHeadersMock = vi.hoisted(() =>
   vi.fn((event: H3Event, headers: Record<string, string> = {}) => {
     const token = getSessionTokenMock(event);

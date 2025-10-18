@@ -39,13 +39,13 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n"
+import { useI18n } from "vue-i18n";
 
 type Emits = {
-  (e: "create-job"): void
-  (e: "create-applicant"): void
-}
+  (e: "create-job"): void;
+  (e: "create-applicant"): void;
+};
 
-const emit = defineEmits<Emits>()
-const { t } = useI18n()
+const emit = defineEmits<Emits>();
+const { t } = useI18n();
 </script>

@@ -19,11 +19,12 @@
       The project details are not available. Try refreshing the CRM workspace.
     </v-alert>
 
-    <v-card v-else variant="outlined">
+    <v-card
+      v-else
+      variant="outlined"
+    >
       <v-card-item>
-        <v-card-title class="text-h6 font-weight-semibold">
-          Delivery timeline
-        </v-card-title>
+        <v-card-title class="text-h6 font-weight-semibold"> Delivery timeline </v-card-title>
         <v-card-subtitle class="text-body-2 text-medium-emphasis">
           Estimated schedule pulled from the shared CRM dataset.
         </v-card-subtitle>
@@ -32,46 +33,71 @@
       <v-divider />
 
       <v-card-text>
-        <v-row class="gap-y-4" dense>
-          <v-col cols="12" sm="6">
+        <v-row
+          class="gap-y-4"
+          dense
+        >
+          <v-col
+            cols="12"
+            sm="6"
+          >
             <div class="d-flex flex-column gap-1">
               <span class="text-caption text-uppercase text-medium-emphasis">Client</span>
-              <span class="text-body-1 font-weight-medium">{{ project.clientName || '—' }}</span>
+              <span class="text-body-1 font-weight-medium">{{ project.clientName || "—" }}</span>
             </div>
           </v-col>
 
-          <v-col cols="12" sm="6">
+          <v-col
+            cols="12"
+            sm="6"
+          >
             <div class="d-flex flex-column gap-1">
               <span class="text-caption text-uppercase text-medium-emphasis">Pipeline</span>
-              <span class="text-body-1 font-weight-medium">{{ project.pipeline || '—' }}</span>
+              <span class="text-body-1 font-weight-medium">{{ project.pipeline || "—" }}</span>
             </div>
           </v-col>
 
-          <v-col cols="12" sm="6">
+          <v-col
+            cols="12"
+            sm="6"
+          >
             <div class="d-flex flex-column gap-1">
               <span class="text-caption text-uppercase text-medium-emphasis">Budget</span>
               <span class="text-body-1 font-weight-medium">{{ formattedBudget }}</span>
             </div>
           </v-col>
 
-          <v-col cols="12" sm="6">
+          <v-col
+            cols="12"
+            sm="6"
+          >
             <div class="d-flex flex-column gap-1">
               <span class="text-caption text-uppercase text-medium-emphasis">Win rate</span>
               <span class="text-body-1 font-weight-medium">{{ formattedProbability }}</span>
             </div>
           </v-col>
 
-          <v-col cols="12" sm="6">
+          <v-col
+            cols="12"
+            sm="6"
+          >
             <div class="d-flex flex-column gap-1">
               <span class="text-caption text-uppercase text-medium-emphasis">Kickoff</span>
-              <span class="text-body-1 font-weight-medium">{{ formatDate(project.startDate) }}</span>
+              <span class="text-body-1 font-weight-medium">{{
+                formatDate(project.startDate)
+              }}</span>
             </div>
           </v-col>
 
-          <v-col cols="12" sm="6">
+          <v-col
+            cols="12"
+            sm="6"
+          >
             <div class="d-flex flex-column gap-1">
               <span class="text-caption text-uppercase text-medium-emphasis">Target delivery</span>
-              <span class="text-body-1 font-weight-medium">{{ formatDate(project.dueDate || project.finishDate) }}</span>
+              <span class="text-body-1 font-weight-medium">{{
+                formatDate(project.dueDate || project.finishDate)
+              }}</span>
             </div>
           </v-col>
 
@@ -82,7 +108,10 @@
           <v-col cols="12">
             <div class="d-flex flex-column gap-2">
               <span class="text-caption text-uppercase text-medium-emphasis">Tags</span>
-              <div v-if="project.tags?.length" class="d-flex flex-wrap gap-2">
+              <div
+                v-if="project.tags?.length"
+                class="d-flex flex-wrap gap-2"
+              >
                 <v-chip
                   v-for="tag in project.tags"
                   :key="`tag-${tag}`"
@@ -94,14 +123,22 @@
                   {{ tag }}
                 </v-chip>
               </div>
-              <span v-else class="text-body-2 text-medium-emphasis">No tags yet.</span>
+              <span
+                v-else
+                class="text-body-2 text-medium-emphasis"
+                >No tags yet.</span
+              >
             </div>
           </v-col>
         </v-row>
       </v-card-text>
     </v-card>
 
-    <v-card v-if="project?.description" variant="tonal" color="primary">
+    <v-card
+      v-if="project?.description"
+      variant="tonal"
+      color="primary"
+    >
       <v-card-item>
         <v-card-title class="text-h6 font-weight-semibold">Narrative</v-card-title>
         <v-card-subtitle class="text-body-2 text-primary-darken-1">
@@ -137,7 +174,9 @@ const currencyFormatter = computed(
     }),
 );
 
-const probabilityFormatter = computed(() => new Intl.NumberFormat(locale.value, { style: "percent", maximumFractionDigits: 0 }));
+const probabilityFormatter = computed(
+  () => new Intl.NumberFormat(locale.value, { style: "percent", maximumFractionDigits: 0 }),
+);
 
 function formatDate(value: string | null | undefined) {
   if (!value) {
@@ -161,7 +200,10 @@ const formattedBudget = computed(() => {
 });
 
 const formattedProbability = computed(() => {
-  if (typeof project.value?.probability === "number" && Number.isFinite(project.value.probability)) {
+  if (
+    typeof project.value?.probability === "number" &&
+    Number.isFinite(project.value.probability)
+  ) {
     return probabilityFormatter.value.format(Math.max(Math.min(project.value.probability, 1), 0));
   }
 

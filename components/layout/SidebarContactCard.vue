@@ -23,7 +23,9 @@
           class="flex flex-col gap-2"
         >
           <div class="flex items-start gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary"
+            >
               <v-icon
                 :icon="channel.icon"
                 size="20"

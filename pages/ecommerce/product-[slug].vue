@@ -1,9 +1,15 @@
 <template>
   <main class="py-10">
     <v-container v-if="product">
-      <v-breadcrumbs :items="breadcrumbs" class="mb-6" />
+      <v-breadcrumbs
+        :items="breadcrumbs"
+        class="mb-6"
+      />
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col
+          cols="12"
+          md="6"
+        >
           <v-carousel
             height="360"
             hide-delimiter-background
@@ -14,11 +20,19 @@
               v-for="(image, index) in product.images"
               :key="index"
             >
-              <v-img :src="image" :alt="t(product.nameKey)" cover class="rounded-lg" />
+              <v-img
+                :src="image"
+                :alt="t(product.nameKey)"
+                cover
+                class="rounded-lg"
+              />
             </v-carousel-item>
           </v-carousel>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col
+          cols="12"
+          md="6"
+        >
           <section>
             <div class="d-flex flex-wrap gap-2 mb-4">
               <v-chip
@@ -39,7 +53,12 @@
             <div class="d-flex align-center gap-4 mb-4">
               <div class="text-h5 font-weight-semibold">{{ formattedPrice }}</div>
               <div class="text-body-2 text-medium-emphasis">
-                {{ t("demo.ecommerce.product.rating", { rating: product.rating, reviews: product.reviews }) }}
+                {{
+                  t("demo.ecommerce.product.rating", {
+                    rating: product.rating,
+                    reviews: product.reviews,
+                  })
+                }}
               </div>
             </div>
             <v-alert
@@ -50,7 +69,10 @@
             >
               {{ t("demo.ecommerce.inventory.lowStock", { count: inventory.available }) }}
             </v-alert>
-            <v-card variant="outlined" class="pa-4 mb-6">
+            <v-card
+              variant="outlined"
+              class="pa-4 mb-6"
+            >
               <div class="d-flex flex-column gap-3">
                 <v-text-field
                   v-model.number="quantity"
@@ -62,10 +84,18 @@
                   variant="outlined"
                 />
                 <div class="d-flex flex-wrap gap-3">
-                  <v-btn color="primary" size="large" @click="addToCart">
+                  <v-btn
+                    color="primary"
+                    size="large"
+                    @click="addToCart"
+                  >
                     {{ t("demo.ecommerce.actions.addToCart") }}
                   </v-btn>
-                  <v-btn :to="localePath('/ecommerce/cart')" size="large" variant="tonal">
+                  <v-btn
+                    :to="localePath('/ecommerce/cart')"
+                    size="large"
+                    variant="tonal"
+                  >
                     {{ t("demo.ecommerce.product.viewCart") }}
                   </v-btn>
                 </div>
@@ -78,9 +108,18 @@
         </v-col>
       </v-row>
 
-      <v-row class="mt-8" dense>
-        <v-col cols="12" md="7">
-          <v-card variant="tonal" class="pa-6 mb-6">
+      <v-row
+        class="mt-8"
+        dense
+      >
+        <v-col
+          cols="12"
+          md="7"
+        >
+          <v-card
+            variant="tonal"
+            class="pa-6 mb-6"
+          >
             <h2 class="text-h5 font-weight-semibold mb-3">
               {{ t("demo.ecommerce.product.detailsTitle") }}
             </h2>
@@ -89,7 +128,10 @@
             </p>
           </v-card>
 
-          <v-card variant="outlined" class="pa-6">
+          <v-card
+            variant="outlined"
+            class="pa-6"
+          >
             <h3 class="text-subtitle-1 font-weight-semibold mb-4">
               {{ t("demo.ecommerce.product.specificationsTitle") }}
             </h3>
@@ -108,7 +150,10 @@
             </v-list>
           </v-card>
         </v-col>
-        <v-col cols="12" md="5">
+        <v-col
+          cols="12"
+          md="5"
+        >
           <OrderSummary
             :items="cart.itemsWithDetails"
             :subtotal="cart.subtotal"
@@ -118,10 +163,20 @@
           >
             <template #actions>
               <div class="pa-4 pt-0 d-flex flex-column gap-2">
-                <v-btn :to="localePath('/ecommerce/checkout')" block color="primary" size="large">
+                <v-btn
+                  :to="localePath('/ecommerce/checkout')"
+                  block
+                  color="primary"
+                  size="large"
+                >
                   {{ t("demo.ecommerce.product.goToCheckout") }}
                 </v-btn>
-                <v-btn :to="localePath('/ecommerce/catalog')" block variant="tonal" size="large">
+                <v-btn
+                  :to="localePath('/ecommerce/catalog')"
+                  block
+                  variant="tonal"
+                  size="large"
+                >
                   {{ t("demo.ecommerce.product.backToCatalog") }}
                 </v-btn>
               </div>
@@ -139,11 +194,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute, useHead, useSeoMeta, useRuntimeConfig, createError } from "#imports";
 import OrderSummary from "~/components/ecommerce/OrderSummary.vue";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
-import {
-  getProductBySlug,
-  getInventoryForProduct,
-  formatCurrency,
-} from "~/lib/demo/ecommerce";
+import { getProductBySlug, getInventoryForProduct, formatCurrency } from "~/lib/demo/ecommerce";
 import { useDemoCartStore } from "~/stores/useDemoCart";
 
 const cart = useDemoCartStore();
@@ -196,9 +247,7 @@ definePageMeta({
   documentDriven: false,
 });
 
-const baseUrl = computed(
-  () => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com",
-);
+const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
 useHead(() => {
   const title = `${t(product.value!.nameKey)} | ${t("demo.ecommerce.catalog.title")}`;

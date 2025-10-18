@@ -95,12 +95,7 @@ function buildCacheKey(config: ProfileCacheConfig, sessionToken: string): string
 
   const digest = createHash("sha256").update(normalized).digest("hex");
 
-  return createPrefixedCacheKey(
-    config.keyPrefix,
-    CACHE_NAMESPACE_USER,
-    "profile",
-    digest,
-  );
+  return createPrefixedCacheKey(config.keyPrefix, CACHE_NAMESPACE_USER, "profile", digest);
 }
 
 function normalizeFriendStories(raw: unknown): FriendStory[] {
@@ -218,10 +213,7 @@ export async function writeCachedProfile(
   }
 }
 
-export async function deleteCachedProfile(
-  event: H3Event,
-  sessionToken: string,
-): Promise<void> {
+export async function deleteCachedProfile(event: H3Event, sessionToken: string): Promise<void> {
   const client = await getRedisClient(event);
 
   if (!client) {

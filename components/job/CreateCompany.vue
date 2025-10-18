@@ -32,42 +32,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
-import { useI18n } from "vue-i18n"
-import { useNuxtApp } from "#app"
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useNuxtApp } from "#app";
 
 type Emits = {
-  (e: "company-created"): void
-}
+  (e: "company-created"): void;
+};
 
-const emit = defineEmits<Emits>()
-const { t } = useI18n()
-const { $notify: notify, $fetch } = useNuxtApp()
+const emit = defineEmits<Emits>();
+const { t } = useI18n();
+const { $notify: notify, $fetch } = useNuxtApp();
 
 const form = ref({
   name: "",
   description: "",
   website: "",
-})
+});
 
 async function submitCompany() {
   try {
     await $fetch("/api/job/company", {
       method: "POST",
       body: form.value,
-    })
+    });
   } catch (error) {
-    console.error(error)
-    notify.error(t("company.createError"))
-    return
+    console.error(error);
+    notify.error(t("company.createError"));
+    return;
   }
 
-  notify.success(t("company.createSuccess"))
-  emit("company-created")
+  notify.success(t("company.createSuccess"));
+  emit("company-created");
   form.value = {
     name: "",
     description: "",
     website: "",
-  }
+  };
 }
 </script>

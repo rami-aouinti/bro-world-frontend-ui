@@ -1,9 +1,7 @@
 <template>
   <v-card variant="outlined">
     <v-card-item>
-      <v-card-title class="text-h5 font-weight-semibold">
-        Pipeline overview
-      </v-card-title>
+      <v-card-title class="text-h5 font-weight-semibold"> Pipeline overview </v-card-title>
       <v-card-subtitle class="text-body-2 text-medium-emphasis">
         Monitor revenue forecasts and identify deals that need attention.
       </v-card-subtitle>
@@ -34,9 +32,7 @@
         hover
       >
         <template #loading>
-          <div class="py-8 text-body-2 text-medium-emphasis text-center">
-            Loading projects…
-          </div>
+          <div class="py-8 text-body-2 text-medium-emphasis text-center">Loading projects…</div>
         </template>
 
         <template #[`item.name`]="{ item }">
@@ -49,8 +45,14 @@
             </NuxtLink>
             <div class="d-flex flex-wrap align-center gap-2 text-medium-emphasis text-caption">
               <span v-if="item.pipeline">{{ item.pipeline }}</span>
-              <span v-if="item.stage" class="d-flex align-center gap-1">
-                <v-icon icon="mdi:chart-timeline-variant" size="16" />
+              <span
+                v-if="item.stage"
+                class="d-flex align-center gap-1"
+              >
+                <v-icon
+                  icon="mdi:chart-timeline-variant"
+                  size="16"
+                />
                 <span>{{ item.stage }}</span>
               </span>
             </div>
@@ -73,11 +75,11 @@
         </template>
 
         <template #[`item.client`]="{ item }">
-          <span class="text-body-2">{{ item.client || '—' }}</span>
+          <span class="text-body-2">{{ item.client || "—" }}</span>
         </template>
 
         <template #[`item.owner`]="{ item }">
-          <span class="text-body-2">{{ item.owner || '—' }}</span>
+          <span class="text-body-2">{{ item.owner || "—" }}</span>
         </template>
 
         <template #[`item.priority`]="{ item }">
@@ -90,7 +92,11 @@
           >
             {{ item.priority }}
           </v-chip>
-          <span v-else class="text-body-2">—</span>
+          <span
+            v-else
+            class="text-body-2"
+            >—</span
+          >
         </template>
 
         <template #[`item.budget`]="{ item }">
@@ -98,7 +104,9 @@
         </template>
 
         <template #[`item.probability`]="{ item }">
-          <span class="text-body-2 text-medium-emphasis">{{ formatProbability(item.probability) }}</span>
+          <span class="text-body-2 text-medium-emphasis">{{
+            formatProbability(item.probability)
+          }}</span>
         </template>
 
         <template #[`item.dueDate`]="{ item }">

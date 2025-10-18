@@ -78,7 +78,7 @@ function applyEducationTranslations(data: EducationData, locale: string): Educat
   const translations =
     normalizedLocale === "fr"
       ? educationTranslationsByLocale.fr
-      : educationTranslationsByLocale[normalizedLocale] ?? educationTranslationsByLocale.en;
+      : (educationTranslationsByLocale[normalizedLocale] ?? educationTranslationsByLocale.en);
 
   const cloned = cloneEducationData(data);
 
@@ -153,9 +153,7 @@ function applyEducationTranslations(data: EducationData, locale: string): Educat
         ...(overrides.question ? { question: overrides.question } : {}),
         options: exercise.options?.map((option) => ({
           ...option,
-          ...(overrides.options?.[option.key]
-            ? { label: overrides.options[option.key]! }
-            : {}),
+          ...(overrides.options?.[option.key] ? { label: overrides.options[option.key]! } : {}),
         })),
       };
     });

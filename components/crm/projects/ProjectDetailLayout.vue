@@ -5,15 +5,21 @@
         :to="workspacePath"
         class="d-inline-flex align-center text-body-2 text-medium-emphasis gap-2"
       >
-        <v-icon icon="mdi:arrow-left" size="18" />
+        <v-icon
+          icon="mdi:arrow-left"
+          size="18"
+        />
         <span>Back to CRM workspace</span>
       </NuxtLink>
 
       <h1 class="text-h4 text-md-h3 font-weight-bold mb-0">
-        Project “{{ project?.name ?? 'Untitled project' }}”
+        Project “{{ project?.name ?? "Untitled project" }}”
       </h1>
 
-      <p v-if="project?.description" class="text-body-2 text-medium-emphasis mb-0">
+      <p
+        v-if="project?.description"
+        class="text-body-2 text-medium-emphasis mb-0"
+      >
         {{ project.description }}
       </p>
     </header>
@@ -56,13 +62,21 @@
       {{ leaveSuccess }}
     </v-alert>
 
-    <v-row v-if="project" class="gap-y-6" align="stretch">
-      <v-col cols="12" md="4">
-        <v-card variant="outlined" class="h-100">
+    <v-row
+      v-if="project"
+      class="gap-y-6"
+      align="stretch"
+    >
+      <v-col
+        cols="12"
+        md="4"
+      >
+        <v-card
+          variant="outlined"
+          class="h-100"
+        >
           <v-card-item>
-            <v-card-title class="text-h6 font-weight-semibold">
-              Project navigation
-            </v-card-title>
+            <v-card-title class="text-h6 font-weight-semibold"> Project navigation </v-card-title>
             <v-card-subtitle class="text-body-2 text-medium-emphasis">
               Browse CRM insights for this opportunity.
             </v-card-subtitle>
@@ -71,7 +85,10 @@
           <v-divider />
 
           <v-card-text class="py-3">
-            <v-list density="comfortable" nav>
+            <v-list
+              density="comfortable"
+              nav
+            >
               <v-list-item
                 v-for="item in navItems"
                 :key="item.name"
@@ -113,51 +130,62 @@
               Leave project
             </LockableButton>
 
-            <p v-if="showLeaveButton" class="text-caption text-medium-emphasis mb-0">
+            <p
+              v-if="showLeaveButton"
+              class="text-caption text-medium-emphasis mb-0"
+            >
               You can leave the project once all your tasks are reassigned.
             </p>
 
             <div class="d-flex flex-column gap-1 text-body-2 text-medium-emphasis">
               <span class="font-weight-medium">Owner</span>
-              <span>{{ project.ownerName || 'Not assigned' }}</span>
+              <span>{{ project.ownerName || "Not assigned" }}</span>
             </div>
 
             <div class="d-flex flex-column gap-1 text-body-2 text-medium-emphasis">
               <span class="font-weight-medium">Stage</span>
-              <span>{{ project.stage || project.status || '—' }}</span>
+              <span>{{ project.stage || project.status || "—" }}</span>
             </div>
 
             <div class="d-flex flex-column gap-1 text-body-2 text-medium-emphasis">
               <span class="font-weight-medium">Participants</span>
               <span>
                 <template v-if="participantsCount > 0">
-                  {{ participantsCount }} team member{{ participantsCount > 1 ? 's' : '' }}
+                  {{ participantsCount }} team member{{ participantsCount > 1 ? "s" : "" }}
                 </template>
-                <template v-else>
-                  No participants yet
-                </template>
+                <template v-else> No participants yet </template>
               </span>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
 
-      <v-col cols="12" md="8">
+      <v-col
+        cols="12"
+        md="8"
+      >
         <slot :project="project" />
       </v-col>
     </v-row>
 
-    <v-dialog v-model="leaveDialog" max-width="480">
+    <v-dialog
+      v-model="leaveDialog"
+      max-width="480"
+    >
       <v-card>
         <v-card-title class="text-h6 font-weight-semibold">
-          Leave the project “{{ project?.name ?? 'project' }}”? 
+          Leave the project “{{ project?.name ?? "project" }}”?
         </v-card-title>
         <v-card-text class="text-body-2 text-medium-emphasis">
-          You will lose access to the project’s participants, requests, and timeline once you leave. Confirm to
-          notify the owner and free up your seat in the CRM workspace.
+          You will lose access to the project’s participants, requests, and timeline once you leave.
+          Confirm to notify the owner and free up your seat in the CRM workspace.
         </v-card-text>
         <v-card-actions class="justify-end gap-2">
-          <v-btn variant="text" @click="leaveDialog = false" :disabled="leavePending">
+          <v-btn
+            variant="text"
+            :disabled="leavePending"
+            @click="leaveDialog = false"
+          >
             Cancel
           </v-btn>
           <LockableButton
@@ -268,9 +296,11 @@ const navItems = computed<NavItem[]>(() => [
 ]);
 
 const showLeaveButton = computed(() => Boolean(currentParticipant.value));
-const isOwner = computed(() => project.value?.ownerId && project.value.ownerId === currentUserId.value);
-const isCompleted = computed(() =>
-  (project.value?.status ?? "").toString().trim().toLowerCase() === "completed",
+const isOwner = computed(
+  () => project.value?.ownerId && project.value.ownerId === currentUserId.value,
+);
+const isCompleted = computed(
+  () => (project.value?.status ?? "").toString().trim().toLowerCase() === "completed",
 );
 const canLeave = computed(() => {
   if (!currentParticipant.value || isOwner.value || isCompleted.value) {
