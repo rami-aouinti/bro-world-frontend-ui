@@ -438,9 +438,14 @@ const loadErrorMessage = computed(() => {
     return "";
   }
 
-  const storeError = typeof error.value === "string" ? error.value.trim() : "";
   const localError =
     typeof initialLoadError.value === "string" ? initialLoadError.value.trim() : "";
+
+  if (!hasCompletedHydration.value) {
+    return localError;
+  }
+
+  const storeError = typeof error.value === "string" ? error.value.trim() : "";
 
   return storeError || localError;
 });
