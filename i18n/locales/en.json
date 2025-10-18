@@ -1537,152 +1537,152 @@
       }
     },
     "quiz": {
-      "title": "Quiz experiences",
-      "subtitle": "Prototype adaptive quizzes that energise your community with instant feedback and storytelling.",
+      "title": "Launch ready-to-run community quizzes",
+      "subtitle": "Craft immersive learning rituals with curated question banks, live leaderboards, and actionable insights.",
       "overview": {
-        "title": "Quiz performance snapshot",
-        "description": "Monitor participation, completion, and satisfaction to keep every cohort motivated.",
-        "trendLabel": "{change} compared to last week",
+        "title": "Impact in numbers",
+        "description": "See how communities stay engaged with Bro World quizzes.",
+        "trendLabel": "Change {change}",
         "cards": {
           "participants": {
             "title": "Active participants",
-            "value": "1,240 members",
-            "trend": "+18%",
-            "caption": "Joined at least one quiz session this week."
+            "value": "2,350",
+            "trend": "+8%",
+            "caption": "across the last 30 days"
           },
           "completion": {
-            "title": "Average completion",
-            "value": "87%",
-            "trend": "+6%",
-            "caption": "Finished all rounds with a passing score."
+            "title": "Completion rate",
+            "value": "86%",
+            "trend": "+4 pts",
+            "caption": "boosted by smart reminders"
           },
           "satisfaction": {
-            "title": "Session rating",
-            "value": "4.6 / 5",
-            "trend": "+0.4",
-            "caption": "Based on post-quiz feedback surveys."
+            "title": "Satisfaction",
+            "value": "4.7 / 5",
+            "trend": "97 reviews",
+            "caption": "learners and mentors combined"
           }
         }
       },
-      "featuresTitle": "Design quizzes with momentum",
+      "featuresTitle": "Why teams love Bro World quizzes",
       "features": {
         "authoring": {
-          "title": "Author in minutes",
-          "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
-          "points": [
-            "Convert brainstorm notes into question pools automatically.",
-            "Mix formats like multiple choice, polls, and lightning rounds.",
-            "Reuse timers, scoring weights, and bonus rules across series."
-          ]
+          "title": "Guided authoring",
+          "description": "Spin up multi-level quizzes with modular templates and instant validation.",
+          "points": {
+            "0": "Role-based templates",
+            "1": "Inline feedback generator",
+            "2": "CSV & Markdown import"
+          }
         },
         "engagement": {
-          "title": "Fuel real-time engagement",
-          "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
-          "points": [
-            "Highlight hosts and co-creators with stage-ready layouts.",
-            "Trigger soundscapes and emotes when milestones are unlocked.",
-            "Support breakout teams, rematches, and collaborative lifelines."
-          ]
+          "title": "Ongoing engagement",
+          "description": "Unlock badges, targeted notifications, and cohort-based leaderboards.",
+          "points": {
+            "0": "Customisable badges",
+            "1": "Automated multi-channel nudges",
+            "2": "Synchronous live sessions"
+          }
         },
         "analytics": {
-          "title": "Measure what matters",
-          "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
-          "points": [
-            "Compare performance by role, location, or membership tier.",
-            "Spot drop-off moments with second-by-second completion curves.",
-            "Export highlights, clips, and insights for stakeholders."
-          ]
+          "title": "Precise analytics",
+          "description": "Visualise understanding by theme and surface friction points.",
+          "points": {
+            "0": "Ready-to-use dashboards",
+            "1": "CSV/BigQuery export",
+            "2": "Progress deviation alerts"
+          }
         }
       },
       "process": {
-        "title": "Ship the perfect challenge",
+        "title": "Launch in three steps",
         "stepLabel": "Step {number}",
         "steps": {
           "plan": {
-            "title": "Plan your storyline",
-            "description": "Align on themes, desired outcomes, and player journeys before drafting questions."
+            "title": "Plan",
+            "description": "Choose a question bank and define objectives for your community."
           },
           "launch": {
-            "title": "Launch the experience",
-            "description": "Stream the quiz with live moderation, automated scoring, and instant feedback loops."
+            "title": "Launch",
+            "description": "Open registrations, automate invites, and monitor live answers."
           },
           "iterate": {
-            "title": "Iterate with insights",
-            "description": "Analyse results, remix question banks, and refresh the experience for the next cohort."
+            "title": "Iterate",
+            "description": "Review the results, adapt the journey, and relaunch top sessions."
           }
         }
       },
       "questionBanks": {
         "title": "Curated question banks",
-        "description": "Mix ready-to-run categories with your own questions to keep every round feeling fresh.",
-        "countLabel": "Questions available",
-        "focusLabel": "Primary focus",
+        "description": "Pick a starting point or mix & match topics for your community.",
+        "countLabel": "Questions",
+        "focusLabel": "Focus area",
         "banks": {
           "general": {
-            "title": "General knowledge vault",
-            "description": "A rotating mix of culture, science, and newsworthy trivia for broad audiences.",
-            "count": "180 curated questions",
-            "focus": "Culture, science, trending topics",
-            "difficulty": "Mixed"
-          },
-          "product": {
-            "title": "Product mastery set",
-            "description": "Train advocates and sales teams on features, roadmaps, and objection handling.",
-            "count": "120 scenario prompts",
-            "focus": "Launch strategy, value props, storytelling",
+            "title": "Product foundations",
+            "description": "Vision alignment, discovery, and cross-functional rituals.",
+            "count": "120 questions",
+            "focus": "Discovery, prioritisation, communication",
             "difficulty": "Intermediate"
           },
+          "product": {
+            "title": "Go-to-market strategy",
+            "description": "Acquisition tactics, activation, and multi-channel retention.",
+            "count": "95 questions",
+            "focus": "Growth, segmentation, storytelling",
+            "difficulty": "Advanced"
+          },
           "community": {
-            "title": "Community culture pack",
-            "description": "Celebrate inside jokes, rituals, and lore from your most dedicated members.",
-            "count": "95 custom questions",
-            "focus": "Member spotlights, events, shared history",
-            "difficulty": "Casual"
+            "title": "Community culture",
+            "description": "Animation scenarios, moderation, and collective feedback.",
+            "count": "80 questions",
+            "focus": "Engagement, rituals, care",
+            "difficulty": "Beginner"
           }
         }
       },
       "leaderboard": {
-        "title": "Community leaderboard",
-        "description": "Celebrate champions and spark friendly rivalries with transparent scoring.",
-        "updateLabel": "Auto-updated every hour",
+        "title": "Live leaderboard",
+        "description": "Track friendly competition between guilds and cohorts.",
+        "updateLabel": "Updated hourly",
         "columns": {
           "rank": "Rank",
-          "player": "Participant",
+          "player": "Team",
           "score": "Score",
-          "completed": "Quizzes completed"
+          "completed": "Completed"
         },
         "rows": {
           "0": {
-            "rank": "1",
-            "player": "Maya Chen",
-            "score": "982 pts",
-            "completed": "12 / 12"
+            "rank": "#1",
+            "player": "Horizon Collective",
+            "score": "98%",
+            "completed": "124"
           },
           "1": {
-            "rank": "2",
-            "player": "Luis Fernández",
-            "score": "941 pts",
-            "completed": "11 / 12"
+            "rank": "#2",
+            "player": "Nova Guild",
+            "score": "94%",
+            "completed": "118"
           },
           "2": {
-            "rank": "3",
-            "player": "Sana Kapoor",
-            "score": "905 pts",
-            "completed": "10 / 12"
+            "rank": "#3",
+            "player": "Comet Crew",
+            "score": "92%",
+            "completed": "102"
           },
           "3": {
-            "rank": "4",
-            "player": "Jonas Richter",
-            "score": "876 pts",
-            "completed": "10 / 12"
+            "rank": "#4",
+            "player": "Flux Studio",
+            "score": "89%",
+            "completed": "97"
           }
         }
       },
       "cta": {
-        "title": "Launch your next quiz series",
-        "description": "Partner with us to craft immersive assessments for teams, classrooms, and fandoms.",
-        "button": "Talk with our team",
-        "buttonAria": "Open the contact page"
+        "title": "Launch a tailored challenge",
+        "description": "Share your goals and receive a custom quiz configuration within 48 hours.",
+        "button": "Book a demo",
+        "buttonAria": "Contact the Bro World quiz team"
       }
     },
     "performance": {

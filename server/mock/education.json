@@ -13,6 +13,13 @@
       "title": "Data Science",
       "description": "Analyse de données, modèles et storytelling.",
       "cover": "/img/cat-data.jpg"
+    },
+    {
+      "id": "cat-product",
+      "slug": "product-leadership",
+      "title": "Leadership Produit",
+      "description": "Cadres pour aligner produit, design et opérations.",
+      "cover": "/img/cat-product.jpg"
     }
   ],
   "courses": [
@@ -60,10 +67,22 @@
           "id": "nuxt-q1",
           "question": "Quelle commande crée un nouveau projet Nuxt 3 ?",
           "options": [
-            { "key": "a", "label": "npx nuxi init" },
-            { "key": "b", "label": "npm create nuxt-app" },
-            { "key": "c", "label": "nuxt start" },
-            { "key": "d", "label": "vue create" }
+            {
+              "key": "a",
+              "label": "npx nuxi init"
+            },
+            {
+              "key": "b",
+              "label": "npm create nuxt-app"
+            },
+            {
+              "key": "c",
+              "label": "nuxt start"
+            },
+            {
+              "key": "d",
+              "label": "vue create"
+            }
           ],
           "correct": "a"
         },
@@ -71,10 +90,22 @@
           "id": "nuxt-q2",
           "question": "Quel dossier génère automatiquement les routes ?",
           "options": [
-            { "key": "a", "label": "src/routes" },
-            { "key": "b", "label": "pages" },
-            { "key": "c", "label": "app" },
-            { "key": "d", "label": "router" }
+            {
+              "key": "a",
+              "label": "src/routes"
+            },
+            {
+              "key": "b",
+              "label": "pages"
+            },
+            {
+              "key": "c",
+              "label": "app"
+            },
+            {
+              "key": "d",
+              "label": "router"
+            }
           ],
           "correct": "b"
         },
@@ -82,10 +113,22 @@
           "id": "nuxt-q3",
           "question": "Quelle composable permet de récupérer des données asynchrones ?",
           "options": [
-            { "key": "a", "label": "useState" },
-            { "key": "b", "label": "useAsyncData" },
-            { "key": "c", "label": "useFetchData" },
-            { "key": "d", "label": "useLazy" }
+            {
+              "key": "a",
+              "label": "useState"
+            },
+            {
+              "key": "b",
+              "label": "useAsyncData"
+            },
+            {
+              "key": "c",
+              "label": "useFetchData"
+            },
+            {
+              "key": "d",
+              "label": "useLazy"
+            }
           ],
           "correct": "b"
         },
@@ -93,10 +136,22 @@
           "id": "nuxt-q4",
           "question": "Quel fichier centralise la configuration Nuxt ?",
           "options": [
-            { "key": "a", "label": "nuxt.config.ts" },
-            { "key": "b", "label": "nuxt.json" },
-            { "key": "c", "label": "app.config.ts" },
-            { "key": "d", "label": "package.json" }
+            {
+              "key": "a",
+              "label": "nuxt.config.ts"
+            },
+            {
+              "key": "b",
+              "label": "nuxt.json"
+            },
+            {
+              "key": "c",
+              "label": "app.config.ts"
+            },
+            {
+              "key": "d",
+              "label": "package.json"
+            }
           ],
           "correct": "a"
         },
@@ -104,10 +159,22 @@
           "id": "nuxt-q5",
           "question": "Comment partager une mise en page entre plusieurs pages ?",
           "options": [
-            { "key": "a", "label": "Créer un composant Layout dans components/" },
-            { "key": "b", "label": "Créer un fichier dans layouts/" },
-            { "key": "c", "label": "Utiliser middleware/" },
-            { "key": "d", "label": "Configurer le router manuellement" }
+            {
+              "key": "a",
+              "label": "Créer un composant Layout dans components/"
+            },
+            {
+              "key": "b",
+              "label": "Créer un fichier dans layouts/"
+            },
+            {
+              "key": "c",
+              "label": "Utiliser middleware/"
+            },
+            {
+              "key": "d",
+              "label": "Configurer le router manuellement"
+            }
           ],
           "correct": "b"
         },
@@ -115,10 +182,22 @@
           "id": "nuxt-q6",
           "question": "Quelle commande prépare l'application au déploiement ?",
           "options": [
-            { "key": "a", "label": "nuxt dev" },
-            { "key": "b", "label": "nuxt build" },
-            { "key": "c", "label": "nuxt preview" },
-            { "key": "d", "label": "nuxt test" }
+            {
+              "key": "a",
+              "label": "nuxt dev"
+            },
+            {
+              "key": "b",
+              "label": "nuxt build"
+            },
+            {
+              "key": "c",
+              "label": "nuxt preview"
+            },
+            {
+              "key": "d",
+              "label": "nuxt test"
+            }
           ],
           "correct": "b"
         },
@@ -126,10 +205,22 @@
           "id": "nuxt-q7",
           "question": "Comment accéder aux variables d'environnement publiques ?",
           "options": [
-            { "key": "a", "label": "process.env" },
-            { "key": "b", "label": "useRuntimeConfig().public" },
-            { "key": "c", "label": "window.env" },
-            { "key": "d", "label": "nuxt.env" }
+            {
+              "key": "a",
+              "label": "process.env"
+            },
+            {
+              "key": "b",
+              "label": "useRuntimeConfig().public"
+            },
+            {
+              "key": "c",
+              "label": "window.env"
+            },
+            {
+              "key": "d",
+              "label": "nuxt.env"
+            }
           ],
           "correct": "b"
         },
@@ -137,10 +228,22 @@
           "id": "nuxt-q8",
           "question": "Quel module facilite la gestion du state global ?",
           "options": [
-            { "key": "a", "label": "Vuex" },
-            { "key": "b", "label": "Pinia" },
-            { "key": "c", "label": "Redux" },
-            { "key": "d", "label": "MobX" }
+            {
+              "key": "a",
+              "label": "Vuex"
+            },
+            {
+              "key": "b",
+              "label": "Pinia"
+            },
+            {
+              "key": "c",
+              "label": "Redux"
+            },
+            {
+              "key": "d",
+              "label": "MobX"
+            }
           ],
           "correct": "b"
         },
@@ -148,10 +251,22 @@
           "id": "nuxt-q9",
           "question": "Quelle directive affiche un composant uniquement côté client ?",
           "options": [
-            { "key": "a", "label": "<client-only>" },
-            { "key": "b", "label": "v-client" },
-            { "key": "c", "label": "<no-ssr>" },
-            { "key": "d", "label": "v-ssr" }
+            {
+              "key": "a",
+              "label": "<client-only>"
+            },
+            {
+              "key": "b",
+              "label": "v-client"
+            },
+            {
+              "key": "c",
+              "label": "<no-ssr>"
+            },
+            {
+              "key": "d",
+              "label": "v-ssr"
+            }
           ],
           "correct": "a"
         },
@@ -159,10 +274,22 @@
           "id": "nuxt-q10",
           "question": "Quel répertoire contient les API serverless dans Nuxt 3 ?",
           "options": [
-            { "key": "a", "label": "server/api" },
-            { "key": "b", "label": "api" },
-            { "key": "c", "label": "functions" },
-            { "key": "d", "label": "lambda" }
+            {
+              "key": "a",
+              "label": "server/api"
+            },
+            {
+              "key": "b",
+              "label": "api"
+            },
+            {
+              "key": "c",
+              "label": "functions"
+            },
+            {
+              "key": "d",
+              "label": "lambda"
+            }
           ],
           "correct": "a"
         }
@@ -212,10 +339,22 @@
           "id": "vuetify-q1",
           "question": "Quel composant définit une grille responsive ?",
           "options": [
-            { "key": "a", "label": "v-grid" },
-            { "key": "b", "label": "v-container" },
-            { "key": "c", "label": "v-layout" },
-            { "key": "d", "label": "v-responsive" }
+            {
+              "key": "a",
+              "label": "v-grid"
+            },
+            {
+              "key": "b",
+              "label": "v-container"
+            },
+            {
+              "key": "c",
+              "label": "v-layout"
+            },
+            {
+              "key": "d",
+              "label": "v-responsive"
+            }
           ],
           "correct": "b"
         },
@@ -223,10 +362,22 @@
           "id": "vuetify-q2",
           "question": "Quelle propriété applique un thème sombre ?",
           "options": [
-            { "key": "a", "label": "app.theme" },
-            { "key": "b", "label": "theme.dark" },
-            { "key": "c", "label": "theme.default" },
-            { "key": "d", "label": "v-app.dark" }
+            {
+              "key": "a",
+              "label": "app.theme"
+            },
+            {
+              "key": "b",
+              "label": "theme.dark"
+            },
+            {
+              "key": "c",
+              "label": "theme.default"
+            },
+            {
+              "key": "d",
+              "label": "v-app.dark"
+            }
           ],
           "correct": "b"
         },
@@ -234,10 +385,22 @@
           "id": "vuetify-q3",
           "question": "Quel composant affiche une boîte de dialogue modale ?",
           "options": [
-            { "key": "a", "label": "v-dialog" },
-            { "key": "b", "label": "v-modal" },
-            { "key": "c", "label": "v-window" },
-            { "key": "d", "label": "v-overlay" }
+            {
+              "key": "a",
+              "label": "v-dialog"
+            },
+            {
+              "key": "b",
+              "label": "v-modal"
+            },
+            {
+              "key": "c",
+              "label": "v-window"
+            },
+            {
+              "key": "d",
+              "label": "v-overlay"
+            }
           ],
           "correct": "a"
         },
@@ -245,10 +408,22 @@
           "id": "vuetify-q4",
           "question": "Comment activer une icône Material Design ?",
           "options": [
-            { "key": "a", "label": "Utiliser <v-icon icon='mdi:home' />" },
-            { "key": "b", "label": "Importer la police via CDN" },
-            { "key": "c", "label": "Utiliser <i class='mdi mdi-home'></i>" },
-            { "key": "d", "label": "Toutes les réponses" }
+            {
+              "key": "a",
+              "label": "Utiliser <v-icon icon='mdi:home' />"
+            },
+            {
+              "key": "b",
+              "label": "Importer la police via CDN"
+            },
+            {
+              "key": "c",
+              "label": "Utiliser <i class='mdi mdi-home'></i>"
+            },
+            {
+              "key": "d",
+              "label": "Toutes les réponses"
+            }
           ],
           "correct": "d"
         },
@@ -256,10 +431,22 @@
           "id": "vuetify-q5",
           "question": "Quel composant crée un bouton avec menu déroulant ?",
           "options": [
-            { "key": "a", "label": "v-menu" },
-            { "key": "b", "label": "v-dropdown" },
-            { "key": "c", "label": "v-toolbar" },
-            { "key": "d", "label": "v-list" }
+            {
+              "key": "a",
+              "label": "v-menu"
+            },
+            {
+              "key": "b",
+              "label": "v-dropdown"
+            },
+            {
+              "key": "c",
+              "label": "v-toolbar"
+            },
+            {
+              "key": "d",
+              "label": "v-list"
+            }
           ],
           "correct": "a"
         },
@@ -267,10 +454,22 @@
           "id": "vuetify-q6",
           "question": "Quelle prop active les vagues sur un bouton ?",
           "options": [
-            { "key": "a", "label": "ripple" },
-            { "key": "b", "label": "waves" },
-            { "key": "c", "label": "effect" },
-            { "key": "d", "label": "touch" }
+            {
+              "key": "a",
+              "label": "ripple"
+            },
+            {
+              "key": "b",
+              "label": "waves"
+            },
+            {
+              "key": "c",
+              "label": "effect"
+            },
+            {
+              "key": "d",
+              "label": "touch"
+            }
           ],
           "correct": "a"
         },
@@ -278,10 +477,22 @@
           "id": "vuetify-q7",
           "question": "Quel composant affiche une barre de progression linéaire ?",
           "options": [
-            { "key": "a", "label": "v-progress-linear" },
-            { "key": "b", "label": "v-progress" },
-            { "key": "c", "label": "v-loader" },
-            { "key": "d", "label": "v-bar" }
+            {
+              "key": "a",
+              "label": "v-progress-linear"
+            },
+            {
+              "key": "b",
+              "label": "v-progress"
+            },
+            {
+              "key": "c",
+              "label": "v-loader"
+            },
+            {
+              "key": "d",
+              "label": "v-bar"
+            }
           ],
           "correct": "a"
         },
@@ -289,10 +500,22 @@
           "id": "vuetify-q8",
           "question": "Quelle directive rend un composant uniquement côté client ?",
           "options": [
-            { "key": "a", "label": "<client-only>" },
-            { "key": "b", "label": "v-client" },
-            { "key": "c", "label": "<lazy-hydrate>" },
-            { "key": "d", "label": "v-lazy" }
+            {
+              "key": "a",
+              "label": "<client-only>"
+            },
+            {
+              "key": "b",
+              "label": "v-client"
+            },
+            {
+              "key": "c",
+              "label": "<lazy-hydrate>"
+            },
+            {
+              "key": "d",
+              "label": "v-lazy"
+            }
           ],
           "correct": "a"
         },
@@ -300,10 +523,22 @@
           "id": "vuetify-q9",
           "question": "Comment personnaliser un composant globalement ?",
           "options": [
-            { "key": "a", "label": "via la prop style" },
-            { "key": "b", "label": "en surchargeant les variables Sass" },
-            { "key": "c", "label": "en modifiant le DOM" },
-            { "key": "d", "label": "en important un CSS externe" }
+            {
+              "key": "a",
+              "label": "via la prop style"
+            },
+            {
+              "key": "b",
+              "label": "en surchargeant les variables Sass"
+            },
+            {
+              "key": "c",
+              "label": "en modifiant le DOM"
+            },
+            {
+              "key": "d",
+              "label": "en important un CSS externe"
+            }
           ],
           "correct": "b"
         },
@@ -311,10 +546,22 @@
           "id": "vuetify-q10",
           "question": "Quel composant affiche un message temporaire ?",
           "options": [
-            { "key": "a", "label": "v-alert" },
-            { "key": "b", "label": "v-snackbar" },
-            { "key": "c", "label": "v-chip" },
-            { "key": "d", "label": "v-banner" }
+            {
+              "key": "a",
+              "label": "v-alert"
+            },
+            {
+              "key": "b",
+              "label": "v-snackbar"
+            },
+            {
+              "key": "c",
+              "label": "v-chip"
+            },
+            {
+              "key": "d",
+              "label": "v-banner"
+            }
           ],
           "correct": "b"
         }
@@ -364,10 +611,22 @@
           "id": "data-q1",
           "question": "Quelle bibliothèque charge un fichier CSV en DataFrame ?",
           "options": [
-            { "key": "a", "label": "numpy" },
-            { "key": "b", "label": "pandas" },
-            { "key": "c", "label": "matplotlib" },
-            { "key": "d", "label": "plotly" }
+            {
+              "key": "a",
+              "label": "numpy"
+            },
+            {
+              "key": "b",
+              "label": "pandas"
+            },
+            {
+              "key": "c",
+              "label": "matplotlib"
+            },
+            {
+              "key": "d",
+              "label": "plotly"
+            }
           ],
           "correct": "b"
         },
@@ -375,10 +634,22 @@
           "id": "data-q2",
           "question": "Quelle méthode affiche les cinq premières lignes ?",
           "options": [
-            { "key": "a", "label": "first()" },
-            { "key": "b", "label": "head()" },
-            { "key": "c", "label": "peek()" },
-            { "key": "d", "label": "sample()" }
+            {
+              "key": "a",
+              "label": "first()"
+            },
+            {
+              "key": "b",
+              "label": "head()"
+            },
+            {
+              "key": "c",
+              "label": "peek()"
+            },
+            {
+              "key": "d",
+              "label": "sample()"
+            }
           ],
           "correct": "b"
         },
@@ -386,10 +657,22 @@
           "id": "data-q3",
           "question": "Quel graphique compare la distribution de deux variables numériques ?",
           "options": [
-            { "key": "a", "label": "Histogramme" },
-            { "key": "b", "label": "Boxplot" },
-            { "key": "c", "label": "Heatmap" },
-            { "key": "d", "label": "Pie chart" }
+            {
+              "key": "a",
+              "label": "Histogramme"
+            },
+            {
+              "key": "b",
+              "label": "Boxplot"
+            },
+            {
+              "key": "c",
+              "label": "Heatmap"
+            },
+            {
+              "key": "d",
+              "label": "Pie chart"
+            }
           ],
           "correct": "b"
         },
@@ -397,10 +680,22 @@
           "id": "data-q4",
           "question": "Quelle fonction seaborn crée un nuage de points ?",
           "options": [
-            { "key": "a", "label": "scatterplot" },
-            { "key": "b", "label": "lineplot" },
-            { "key": "c", "label": "barplot" },
-            { "key": "d", "label": "histplot" }
+            {
+              "key": "a",
+              "label": "scatterplot"
+            },
+            {
+              "key": "b",
+              "label": "lineplot"
+            },
+            {
+              "key": "c",
+              "label": "barplot"
+            },
+            {
+              "key": "d",
+              "label": "histplot"
+            }
           ],
           "correct": "a"
         },
@@ -408,10 +703,22 @@
           "id": "data-q5",
           "question": "Comment enregistrer une figure matplotlib ?",
           "options": [
-            { "key": "a", "label": "plt.export('plot.pdf')" },
-            { "key": "b", "label": "plt.save('plot.png')" },
-            { "key": "c", "label": "plt.savefig('plot.png')" },
-            { "key": "d", "label": "plt.snapshot('plot.png')" }
+            {
+              "key": "a",
+              "label": "plt.export('plot.pdf')"
+            },
+            {
+              "key": "b",
+              "label": "plt.save('plot.png')"
+            },
+            {
+              "key": "c",
+              "label": "plt.savefig('plot.png')"
+            },
+            {
+              "key": "d",
+              "label": "plt.snapshot('plot.png')"
+            }
           ],
           "correct": "c"
         },
@@ -419,10 +726,22 @@
           "id": "data-q6",
           "question": "Quel paramètre ajoute un titre à une figure seaborn ?",
           "options": [
-            { "key": "a", "label": "title" },
-            { "key": "b", "label": "label" },
-            { "key": "c", "label": "caption" },
-            { "key": "d", "label": "heading" }
+            {
+              "key": "a",
+              "label": "title"
+            },
+            {
+              "key": "b",
+              "label": "label"
+            },
+            {
+              "key": "c",
+              "label": "caption"
+            },
+            {
+              "key": "d",
+              "label": "heading"
+            }
           ],
           "correct": "a"
         },
@@ -430,10 +749,22 @@
           "id": "data-q7",
           "question": "Quelle fonction pandas combine deux DataFrame sur une clé commune ?",
           "options": [
-            { "key": "a", "label": "join" },
-            { "key": "b", "label": "merge" },
-            { "key": "c", "label": "concat" },
-            { "key": "d", "label": "combine" }
+            {
+              "key": "a",
+              "label": "join"
+            },
+            {
+              "key": "b",
+              "label": "merge"
+            },
+            {
+              "key": "c",
+              "label": "concat"
+            },
+            {
+              "key": "d",
+              "label": "combine"
+            }
           ],
           "correct": "b"
         },
@@ -441,10 +772,22 @@
           "id": "data-q8",
           "question": "Quel graphique met en valeur la part de catégories ?",
           "options": [
-            { "key": "a", "label": "Pie chart" },
-            { "key": "b", "label": "Histogramme" },
-            { "key": "c", "label": "Scatter" },
-            { "key": "d", "label": "Line" }
+            {
+              "key": "a",
+              "label": "Pie chart"
+            },
+            {
+              "key": "b",
+              "label": "Histogramme"
+            },
+            {
+              "key": "c",
+              "label": "Scatter"
+            },
+            {
+              "key": "d",
+              "label": "Line"
+            }
           ],
           "correct": "a"
         },
@@ -452,10 +795,22 @@
           "id": "data-q9",
           "question": "Quelle méthode supprime les lignes avec valeurs manquantes ?",
           "options": [
-            { "key": "a", "label": "dropna" },
-            { "key": "b", "label": "clean" },
-            { "key": "c", "label": "remove" },
-            { "key": "d", "label": "dropnull" }
+            {
+              "key": "a",
+              "label": "dropna"
+            },
+            {
+              "key": "b",
+              "label": "clean"
+            },
+            {
+              "key": "c",
+              "label": "remove"
+            },
+            {
+              "key": "d",
+              "label": "dropnull"
+            }
           ],
           "correct": "a"
         },
@@ -463,10 +818,209 @@
           "id": "data-q10",
           "question": "Quel type de graphique illustre une tendance temporelle ?",
           "options": [
-            { "key": "a", "label": "Bar chart" },
-            { "key": "b", "label": "Line chart" },
-            { "key": "c", "label": "Scatter" },
-            { "key": "d", "label": "Pie chart" }
+            {
+              "key": "a",
+              "label": "Bar chart"
+            },
+            {
+              "key": "b",
+              "label": "Line chart"
+            },
+            {
+              "key": "c",
+              "label": "Scatter"
+            },
+            {
+              "key": "d",
+              "label": "Pie chart"
+            }
+          ],
+          "correct": "b"
+        }
+      ]
+    },
+    {
+      "id": "c-product-ops",
+      "slug": "product-ops-rituels",
+      "categorySlug": "product-leadership",
+      "title": "Product Ops & Rituels d'Équipe",
+      "level": "intermediate",
+      "durationMin": 210,
+      "description": "Structurer la collaboration produit-design et orchestrer des lancements prévisibles.",
+      "cover": "/img/product-ops.jpg",
+      "lessons": [
+        {
+          "id": "prod-l1",
+          "title": "Cadre de gouvernance",
+          "type": "text",
+          "content": "<p>Dressez une charte produit qui précise rôles, responsabilités et prises de décision.</p>",
+          "durationMin": 30
+        },
+        {
+          "id": "prod-l2",
+          "title": "Calendrier des rituels",
+          "type": "text",
+          "content": "<p>Séquencez les points hebdomadaires, revues mensuelles et rétrospectives trimestrielles.</p>",
+          "durationMin": 45
+        },
+        {
+          "id": "prod-l3",
+          "title": "Pilotage par la donnée",
+          "type": "text",
+          "content": "<p>Reliez métriques produit et santé d'équipe via un tableau de bord partagé.</p>",
+          "durationMin": 60
+        },
+        {
+          "id": "prod-l4",
+          "title": "Boucles de feedback",
+          "type": "text",
+          "content": "<p>Installez des canaux de retours clients et internes pour itérer sans friction.</p>",
+          "durationMin": 40
+        },
+        {
+          "id": "prod-l5",
+          "title": "Plan de lancement",
+          "type": "text",
+          "content": "<p>Orchestrez communication, support et mesure d'impact avant et après go-live.</p>",
+          "durationMin": 35
+        }
+      ],
+      "quiz": [
+        {
+          "id": "prod-q1",
+          "question": "Quel artefact clarifie qui décide quoi sur le produit ?",
+          "options": [
+            {
+              "key": "a",
+              "label": "Une matrice RACI produit"
+            },
+            {
+              "key": "b",
+              "label": "Un rapport d'incident"
+            },
+            {
+              "key": "c",
+              "label": "Un tableau Kanban"
+            },
+            {
+              "key": "d",
+              "label": "Un sondage client"
+            }
+          ],
+          "correct": "a"
+        },
+        {
+          "id": "prod-q2",
+          "question": "Quel rituel aligne vision et exécution à moyen terme ?",
+          "options": [
+            {
+              "key": "a",
+              "label": "Le point quotidien"
+            },
+            {
+              "key": "b",
+              "label": "La revue de roadmap mensuelle"
+            },
+            {
+              "key": "c",
+              "label": "Le support de garde"
+            },
+            {
+              "key": "d",
+              "label": "La session de design critique"
+            }
+          ],
+          "correct": "b"
+        },
+        {
+          "id": "prod-q3",
+          "question": "Quel indicateur relie usage produit et santé d'équipe ?",
+          "options": [
+            {
+              "key": "a",
+              "label": "Nombre de tickets ouverts"
+            },
+            {
+              "key": "b",
+              "label": "Taux de disponibilité du service"
+            },
+            {
+              "key": "c",
+              "label": "Score NPS segmenté"
+            },
+            {
+              "key": "d",
+              "label": "Temps passé en réunion"
+            }
+          ],
+          "correct": "c"
+        },
+        {
+          "id": "prod-q4",
+          "question": "Quel canal favorise les retours clients continus ?",
+          "options": [
+            {
+              "key": "a",
+              "label": "Des enquêtes trimestrielles"
+            },
+            {
+              "key": "b",
+              "label": "Un panel utilisateur asynchrone"
+            },
+            {
+              "key": "c",
+              "label": "Des notes de version"
+            },
+            {
+              "key": "d",
+              "label": "Un rétroplanning"
+            }
+          ],
+          "correct": "b"
+        },
+        {
+          "id": "prod-q5",
+          "question": "Quel livrable sécurise un lancement multi-équipes ?",
+          "options": [
+            {
+              "key": "a",
+              "label": "Une feuille de route à 3 ans"
+            },
+            {
+              "key": "b",
+              "label": "Un plan de communication aligné"
+            },
+            {
+              "key": "c",
+              "label": "Un guide d'onboarding"
+            },
+            {
+              "key": "d",
+              "label": "Un backlog groomé"
+            }
+          ],
+          "correct": "b"
+        },
+        {
+          "id": "prod-q6",
+          "question": "Quel est le bon réflexe après une rétrospective ?",
+          "options": [
+            {
+              "key": "a",
+              "label": "Archiver les actions"
+            },
+            {
+              "key": "b",
+              "label": "Planifier des suivis"
+            },
+            {
+              "key": "c",
+              "label": "Changer d'outils"
+            },
+            {
+              "key": "d",
+              "label": "Inviter toute l'entreprise"
+            }
           ],
           "correct": "b"
         }
@@ -474,18 +1028,329 @@
     }
   ],
   "exercises": [
-    { "id": "nuxt-ex1", "courseId": "c-nuxt-basics", "lessonId": "nuxt-l1", "question": "Quelle commande initialise un projet Nuxt 3 ?", "type": "mcq", "options": [ { "key": "a", "label": "npx nuxi init" }, { "key": "b", "label": "npm init nuxt" } ], "correct": "a" },
-    { "id": "nuxt-ex2", "courseId": "c-nuxt-basics", "lessonId": "nuxt-l1", "question": "Vrai ou Faux : Nuxt 3 fonctionne uniquement avec Yarn.", "type": "truefalse", "options": [ { "key": "true", "label": "Vrai" }, { "key": "false", "label": "Faux" } ], "correct": "false" },
-    { "id": "nuxt-ex3", "courseId": "c-nuxt-basics", "lessonId": "nuxt-l2", "question": "Quel dossier crée une route /blog ?", "type": "mcq", "options": [ { "key": "a", "label": "pages/blog.vue" }, { "key": "b", "label": "routes/blog.vue" } ], "correct": "a" },
-    { "id": "nuxt-ex4", "courseId": "c-nuxt-basics", "lessonId": "nuxt-l3", "question": "Vrai ou Faux : useAsyncData peut être utilisé côté serveur.", "type": "truefalse", "options": [ { "key": "true", "label": "Vrai" }, { "key": "false", "label": "Faux" } ], "correct": "true" },
-    { "id": "nuxt-ex5", "courseId": "c-nuxt-basics", "lessonId": "nuxt-l4", "question": "Quelle commande génère la version de production ?", "type": "mcq", "options": [ { "key": "a", "label": "nuxt dev" }, { "key": "b", "label": "nuxt build" } ], "correct": "b" },
-    { "id": "vuetify-ex1", "courseId": "c-vuetify-ui", "lessonId": "vuetify-l1", "question": "Quel plugin Nuxt installe Vuetify 3 ?", "type": "mcq", "options": [ { "key": "a", "label": "@nuxtjs/vuetify" }, { "key": "b", "label": "vite-plugin-vuetify" } ], "correct": "b" },
-    { "id": "vuetify-ex2", "courseId": "c-vuetify-ui", "lessonId": "vuetify-l2", "question": "Vrai ou Faux : v-container ajoute un padding horizontal.", "type": "truefalse", "options": [ { "key": "true", "label": "Vrai" }, { "key": "false", "label": "Faux" } ], "correct": "true" },
-    { "id": "vuetify-ex3", "courseId": "c-vuetify-ui", "lessonId": "vuetify-l3", "question": "Quel composant affiche une liste avec actions ?", "type": "mcq", "options": [ { "key": "a", "label": "v-list" }, { "key": "b", "label": "v-table" } ], "correct": "a" },
-    { "id": "vuetify-ex4", "courseId": "c-vuetify-ui", "lessonId": "vuetify-l4", "question": "Vrai ou Faux : on peut définir plusieurs thèmes Vuetify.", "type": "truefalse", "options": [ { "key": "true", "label": "Vrai" }, { "key": "false", "label": "Faux" } ], "correct": "true" },
-    { "id": "data-ex1", "courseId": "c-data-visual", "lessonId": "data-l1", "question": "Quelle commande installe pandas ?", "type": "mcq", "options": [ { "key": "a", "label": "pip install pandas" }, { "key": "b", "label": "pip install panda" } ], "correct": "a" },
-    { "id": "data-ex2", "courseId": "c-data-visual", "lessonId": "data-l2", "question": "Vrai ou Faux : describe() retourne des statistiques.", "type": "truefalse", "options": [ { "key": "true", "label": "Vrai" }, { "key": "false", "label": "Faux" } ], "correct": "true" },
-    { "id": "data-ex3", "courseId": "c-data-visual", "lessonId": "data-l3", "question": "Quel module produit des graphiques statistiques ?", "type": "mcq", "options": [ { "key": "a", "label": "seaborn" }, { "key": "b", "label": "random" } ], "correct": "a" },
-    { "id": "data-ex4", "courseId": "c-data-visual", "lessonId": "data-l4", "question": "Vrai ou Faux : une story nécessite une structure narrative.", "type": "truefalse", "options": [ { "key": "true", "label": "Vrai" }, { "key": "false", "label": "Faux" } ], "correct": "true" }
+    {
+      "id": "nuxt-ex1",
+      "courseId": "c-nuxt-basics",
+      "lessonId": "nuxt-l1",
+      "question": "Quelle commande initialise un projet Nuxt 3 ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "npx nuxi init"
+        },
+        {
+          "key": "b",
+          "label": "npm init nuxt"
+        }
+      ],
+      "correct": "a"
+    },
+    {
+      "id": "nuxt-ex2",
+      "courseId": "c-nuxt-basics",
+      "lessonId": "nuxt-l1",
+      "question": "Vrai ou Faux : Nuxt 3 fonctionne uniquement avec Yarn.",
+      "type": "truefalse",
+      "options": [
+        {
+          "key": "true",
+          "label": "Vrai"
+        },
+        {
+          "key": "false",
+          "label": "Faux"
+        }
+      ],
+      "correct": "false"
+    },
+    {
+      "id": "nuxt-ex3",
+      "courseId": "c-nuxt-basics",
+      "lessonId": "nuxt-l2",
+      "question": "Quel dossier crée une route /blog ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "pages/blog.vue"
+        },
+        {
+          "key": "b",
+          "label": "routes/blog.vue"
+        }
+      ],
+      "correct": "a"
+    },
+    {
+      "id": "nuxt-ex4",
+      "courseId": "c-nuxt-basics",
+      "lessonId": "nuxt-l3",
+      "question": "Vrai ou Faux : useAsyncData peut être utilisé côté serveur.",
+      "type": "truefalse",
+      "options": [
+        {
+          "key": "true",
+          "label": "Vrai"
+        },
+        {
+          "key": "false",
+          "label": "Faux"
+        }
+      ],
+      "correct": "true"
+    },
+    {
+      "id": "nuxt-ex5",
+      "courseId": "c-nuxt-basics",
+      "lessonId": "nuxt-l4",
+      "question": "Quelle commande génère la version de production ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "nuxt dev"
+        },
+        {
+          "key": "b",
+          "label": "nuxt build"
+        }
+      ],
+      "correct": "b"
+    },
+    {
+      "id": "vuetify-ex1",
+      "courseId": "c-vuetify-ui",
+      "lessonId": "vuetify-l1",
+      "question": "Quel plugin Nuxt installe Vuetify 3 ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "@nuxtjs/vuetify"
+        },
+        {
+          "key": "b",
+          "label": "vite-plugin-vuetify"
+        }
+      ],
+      "correct": "b"
+    },
+    {
+      "id": "vuetify-ex2",
+      "courseId": "c-vuetify-ui",
+      "lessonId": "vuetify-l2",
+      "question": "Vrai ou Faux : v-container ajoute un padding horizontal.",
+      "type": "truefalse",
+      "options": [
+        {
+          "key": "true",
+          "label": "Vrai"
+        },
+        {
+          "key": "false",
+          "label": "Faux"
+        }
+      ],
+      "correct": "true"
+    },
+    {
+      "id": "vuetify-ex3",
+      "courseId": "c-vuetify-ui",
+      "lessonId": "vuetify-l3",
+      "question": "Quel composant affiche une liste avec actions ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "v-list"
+        },
+        {
+          "key": "b",
+          "label": "v-table"
+        }
+      ],
+      "correct": "a"
+    },
+    {
+      "id": "vuetify-ex4",
+      "courseId": "c-vuetify-ui",
+      "lessonId": "vuetify-l4",
+      "question": "Vrai ou Faux : on peut définir plusieurs thèmes Vuetify.",
+      "type": "truefalse",
+      "options": [
+        {
+          "key": "true",
+          "label": "Vrai"
+        },
+        {
+          "key": "false",
+          "label": "Faux"
+        }
+      ],
+      "correct": "true"
+    },
+    {
+      "id": "data-ex1",
+      "courseId": "c-data-visual",
+      "lessonId": "data-l1",
+      "question": "Quelle commande installe pandas ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "pip install pandas"
+        },
+        {
+          "key": "b",
+          "label": "pip install panda"
+        }
+      ],
+      "correct": "a"
+    },
+    {
+      "id": "data-ex2",
+      "courseId": "c-data-visual",
+      "lessonId": "data-l2",
+      "question": "Vrai ou Faux : describe() retourne des statistiques.",
+      "type": "truefalse",
+      "options": [
+        {
+          "key": "true",
+          "label": "Vrai"
+        },
+        {
+          "key": "false",
+          "label": "Faux"
+        }
+      ],
+      "correct": "true"
+    },
+    {
+      "id": "data-ex3",
+      "courseId": "c-data-visual",
+      "lessonId": "data-l3",
+      "question": "Quel module produit des graphiques statistiques ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "seaborn"
+        },
+        {
+          "key": "b",
+          "label": "random"
+        }
+      ],
+      "correct": "a"
+    },
+    {
+      "id": "data-ex4",
+      "courseId": "c-data-visual",
+      "lessonId": "data-l4",
+      "question": "Vrai ou Faux : une story nécessite une structure narrative.",
+      "type": "truefalse",
+      "options": [
+        {
+          "key": "true",
+          "label": "Vrai"
+        },
+        {
+          "key": "false",
+          "label": "Faux"
+        }
+      ],
+      "correct": "true"
+    },
+    {
+      "id": "prod-ex1",
+      "courseId": "c-product-ops",
+      "lessonId": "prod-l1",
+      "question": "Quelle information doit figurer dans une charte produit ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "La météo de la semaine"
+        },
+        {
+          "key": "b",
+          "label": "Les rôles et responsabilités"
+        }
+      ],
+      "correct": "b"
+    },
+    {
+      "id": "prod-ex2",
+      "courseId": "c-product-ops",
+      "lessonId": "prod-l2",
+      "question": "Combien de temps doit durer une revue mensuelle ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "10 minutes"
+        },
+        {
+          "key": "b",
+          "label": "45 à 60 minutes"
+        }
+      ],
+      "correct": "b"
+    },
+    {
+      "id": "prod-ex3",
+      "courseId": "c-product-ops",
+      "lessonId": "prod-l3",
+      "question": "Quel KPI relier à votre tableau de bord partagé ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "Le nombre de post-it"
+        },
+        {
+          "key": "b",
+          "label": "Le taux d'activation produit"
+        }
+      ],
+      "correct": "b"
+    },
+    {
+      "id": "prod-ex4",
+      "courseId": "c-product-ops",
+      "lessonId": "prod-l4",
+      "question": "Quel outil aide à suivre les retours clients ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "Un tableau partagé structuré"
+        },
+        {
+          "key": "b",
+          "label": "Une présentation statique"
+        }
+      ],
+      "correct": "a"
+    },
+    {
+      "id": "prod-ex5",
+      "courseId": "c-product-ops",
+      "lessonId": "prod-l5",
+      "question": "Quel point valider avant diffusion publique ?",
+      "type": "mcq",
+      "options": [
+        {
+          "key": "a",
+          "label": "La checklist de communication"
+        },
+        {
+          "key": "b",
+          "label": "Le thème graphique du support"
+        }
+      ],
+      "correct": "a"
+    }
   ]
 }
