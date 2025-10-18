@@ -1,6 +1,7 @@
 import { reactive, ref, watch } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "~/lib/pinia-shim";
+import { educationCategoriesMock } from "~/lib/mock/education";
 import type {
   CategorySummary,
   Certificate,
@@ -87,8 +88,16 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   async function fetchCategories() {
-    const response = await $fetch<CategorySummary[]>("/api/education/categories");
-    categories.value = response;
+    try {
+      const response = await $fetch<CategorySummary[]>("/api/education/categories");
+      categories.value = response;
+    } catch (error) {
+      if (import.meta.dev) {
+        console.warn("Failed to fetch education categories, falling back to mock data.", error);
+      }
+
+      categories.value = educationCategoriesMock.map((category) => ({ ...category }));
+    }
   }
 
   async function fetchCoursesByCategory(categorySlug: string) {
