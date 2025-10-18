@@ -255,6 +255,12 @@ const totalBudget = computed(() =>
   projects.value.reduce((total, project) => total + (project.budget ?? 0), 0),
 );
 
+const currencyFormatter = new Intl.NumberFormat(undefined, {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
 const metricCards = computed(() => [
   {
     id: "total",
@@ -283,11 +289,7 @@ const metricCards = computed(() => [
   {
     id: "budget",
     label: t("pages.crm.metrics.pipelineValue"),
-    value: new Intl.NumberFormat(undefined, {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(totalBudget.value),
+    value: currencyFormatter.format(totalBudget.value),
     caption: t("pages.crm.metrics.pipelineValueCaption"),
     icon: "mdi:currency-usd",
     color: "success",
@@ -304,6 +306,17 @@ const tableHeaders = computed<DataTableHeaders>(() => [
   { title: t("pages.crm.table.headers.probability"), key: "probability", sortable: false },
   { title: t("pages.crm.table.headers.dueDate"), key: "dueDate", sortable: false },
 ]);
+
+const dueDateFormatter = new Intl.DateTimeFormat(undefined, {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+
+const stageCaptionFormatter = new Intl.DateTimeFormat(undefined, {
+  month: "short",
+  day: "numeric",
+});
 
 const upcomingDeadlines = computed(() => {
   const items = projects.value
@@ -324,11 +337,7 @@ const upcomingDeadlines = computed(() => {
         clientName: project.clientName,
         stage: project.stage ?? "",
         dueDate,
-        dueDateFormatted: new Intl.DateTimeFormat(undefined, {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }).format(dueDate),
+        dueDateFormatted: dueDateFormatter.format(dueDate),
       };
     })
     .filter((item): item is {
@@ -365,11 +374,6 @@ const stageSummary = computed(() => {
     map.set(key, entry);
   }
 
-  const dateFormatter = new Intl.DateTimeFormat(undefined, {
-    month: "short",
-    day: "numeric",
-  });
-
   const colorPalette = ["primary", "info", "success", "warning", "secondary", "error"];
 
   return Array.from(map.entries()).map(([stage, data], index) => ({
@@ -377,7 +381,9 @@ const stageSummary = computed(() => {
     label: stage,
     count: data.count,
     color: colorPalette[index % colorPalette.length],
-    caption: data.earliest ? t("pages.crm.stages.caption", { date: dateFormatter.format(data.earliest) }) : "",
+    caption: data.earliest
+      ? t("pages.crm.stages.caption", { date: stageCaptionFormatter.format(data.earliest) })
+      : "",
   }));
 });
 </script>
