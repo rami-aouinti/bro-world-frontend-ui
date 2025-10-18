@@ -11,10 +11,6 @@
         height="44"
         width="44"
       />
-      <v-skeleton-loader
-        class="flex-grow-1 rounded-pill"
-        height="44"
-      />
     </div>
 
     <v-divider class="my-2" />
