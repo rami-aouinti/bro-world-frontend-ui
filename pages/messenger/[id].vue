@@ -1,81 +1,85 @@
 <template>
-  <div class="flex h-[calc(100vh-50px)] flex-col md:flex-row">
-    <ConversationsList
-      :conversations="conversations"
-      :active-id="conversationId"
-      :loading="loading"
-      :search-placeholder="t('messenger.searchPlaceholder')"
-      :empty-label="t('messenger.emptyList')"
-      :unknown-label="t('messenger.unknownParticipant')"
-      @select="handleSelect"
-    />
-    <ChatPane
-      class="flex-1"
-      :composer-placeholder="t('messenger.composerPlaceholder')"
-      :send-label="t('messenger.sendLabel')"
-      :sending-label="t('messenger.sendingLabel')"
-      :send-error-label="t('messenger.sendErrorStatus')"
-      :shortcuts-hint="t('messenger.shortcutsHint')"
-      :empty-title="t('messenger.emptyTitle')"
-      :empty-description="t('messenger.emptyDescription')"
-      :empty-cta-label="t('messenger.emptyCtaLabel')"
-      :empty-cta-to="emptyCtaTo"
-      :no-messages-label="t('messenger.noMessages')"
-      :load-older-label="t('messenger.loadOlder')"
-      :participants-label="t('messenger.participantsLabel')"
-      :unknown-label="t('messenger.unknownParticipant')"
-    />
-  </div>
+  <v-container
+    fluid
+    class="py-6"
+  >
+    <ChatWindow :conversation="activeConversation" />
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { computed, watch, defineAsyncComponent } from "vue";
+import { computed, watch } from "vue";
+import { callOnce, navigateTo } from "#app";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { callOnce, navigateTo } from "#app";
+import ChatWindow from "~/components/messenger/ChatWindow.vue";
+import ChatList from "~/components/messenger/ChatList.vue";
 import { useMessengerStore } from "~/stores/messenger";
-
-const ConversationsList = defineAsyncComponent({
-  loader: () => import("~/components/messenger/ConversationsList.vue"),
-  suspensible: false,
-});
-const ChatPane = defineAsyncComponent({
-  loader: () => import("~/components/messenger/ChatPane.vue"),
-  suspensible: false,
-});
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 
 const messenger = useMessengerStore();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const { t } = useI18n();
-
-const pageDescription = computed(() => t("seo.messenger.description"));
+const { registerRightSidebarContent } = useLayoutRightSidebar();
 
 definePageMeta({
   documentDriven: false,
+  showRightWidgets: true,
 });
+
+const pageDescription = computed(() => t("seo.messenger.description"));
+
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));
+
 await callOnce(() => messenger.fetchThreads({ limit: 50 }));
 
 const conversationId = computed(() => {
   const params = currentRoute.value?.params ?? {};
   return String((params as Record<string, unknown>).id ?? "");
 });
+
 const conversations = computed(() => messenger.orderedConversations.value ?? []);
 const loading = computed(() => messenger.loadingList.value);
-const emptyCtaTo = computed(() => {
-  const raw = t("messenger.emptyCtaLink");
-  return raw === "messenger.emptyCtaLink" ? undefined : raw;
-});
+const activeConversation = computed(() => messenger.activeConversation.value);
+const activeConversationId = computed(() => messenger.activeConversationId.value);
+
+function handleSelect(id: string) {
+  if (!id) {
+    return;
+  }
+
+  if (id === conversationId.value) {
+    return;
+  }
+
+  router.push({ path: `/messenger/${id}` });
+}
+
+registerRightSidebarContent(
+  computed(() => ({
+    component: ChatList,
+    props: {
+      conversations: conversations.value,
+      selectedId: activeConversationId.value ?? conversationId.value || null,
+      loading: loading.value,
+      emptyLabel: t("messenger.emptyList", "No conversations yet"),
+      onSelect: handleSelect,
+    },
+    wrapperClass: "flex flex-col gap-4 px-3 py-4",
+  })),
+);
 
 async function ensureConversation(id: string) {
   if (!id) {
-    const latest = messenger.latestConversationId.value;
+    const fallback = messenger.latestConversationId.value;
 
-    if (latest) {
-      await navigateTo({ path: `/messenger/${latest}`, replace: true });
+    if (fallback) {
+      await navigateTo({ path: `/messenger/${fallback}`, replace: true });
+    } else {
+      await navigateTo({ path: "/messenger", replace: true });
     }
 
     return;
@@ -104,12 +108,4 @@ watch(
     }
   },
 );
-
-function handleSelect(id: string) {
-  if (!id) {
-    return;
-  }
-
-  router.push({ path: `/messenger/${id}` });
-}
 </script>

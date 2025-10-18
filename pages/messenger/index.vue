@@ -1,82 +1,71 @@
 <template>
-  <div class="flex h-[calc(100vh-50px)] flex-col md:flex-row">
-    <ConversationsList
-      :conversations="conversations"
-      :active-id="null"
-      :loading="loading"
-      :search-placeholder="t('messenger.searchPlaceholder')"
-      :empty-label="t('messenger.emptyList')"
-      :unknown-label="t('messenger.unknownParticipant')"
-      @select="handleSelect"
-    />
-    <div class="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-10 text-center">
-      <div
-        class="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary"
-      >
-        <AppIcon
-          name="mdi:message-outline"
-          :size="48"
-        />
-      </div>
-      <div class="space-y-2">
-        <h1 class="text-2xl font-semibold">
-          {{ t("messenger.emptyTitle") }}
-        </h1>
-        <p class="max-w-md text-sm text-muted-foreground">
-          {{ t("messenger.emptyDescription") }}
-        </p>
-      </div>
-      <v-btn
-        color="primary"
-        variant="flat"
-        :to="emptyCtaTo"
-      >
-        {{ t("messenger.emptyCtaLabel") }}
-      </v-btn>
-    </div>
-  </div>
+  <v-container
+    fluid
+    class="py-6"
+  >
+    <ChatWindow :conversation="activeConversation" />
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from "vue";
+import { computed } from "vue";
+import { callOnce, navigateTo } from "#app";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { callOnce, navigateTo } from "#app";
+import ChatWindow from "~/components/messenger/ChatWindow.vue";
+import ChatList from "~/components/messenger/ChatList.vue";
 import { useMessengerStore } from "~/stores/messenger";
-
-const ConversationsList = defineAsyncComponent({
-  loader: () => import("~/components/messenger/ConversationsList.vue"),
-  suspensible: false,
-});
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 
 const messenger = useMessengerStore();
 const router = useRouter();
 const { t } = useI18n();
-
-const pageDescription = computed(() => t("seo.messenger.description"));
+const { registerRightSidebarContent } = useLayoutRightSidebar();
 
 definePageMeta({
   documentDriven: false,
+  showRightWidgets: true,
 });
+
+const pageDescription = computed(() => t("seo.messenger.description"));
+
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));
+
 await callOnce(() => messenger.fetchThreads({ limit: 50 }));
+
+const conversations = computed(() => messenger.orderedConversations.value ?? []);
+const activeConversation = computed(() => messenger.activeConversation.value);
+const activeConversationId = computed(() => messenger.activeConversationId.value);
+const loading = computed(() => messenger.loadingList.value);
+const emptyLabel = computed(() => t("messenger.emptyList", "No conversations yet"));
+
+function handleSelect(id: string) {
+  if (!id) {
+    return;
+  }
+
+  router.push({ path: `/messenger/${id}` });
+}
+
+registerRightSidebarContent(
+  computed(() => ({
+    component: ChatList,
+    props: {
+      conversations: conversations.value,
+      selectedId: activeConversationId.value,
+      loading: loading.value,
+      emptyLabel: emptyLabel.value,
+      onSelect: handleSelect,
+    },
+    wrapperClass: "flex flex-col gap-4 px-3 py-4",
+  })),
+);
 
 const latestConversationId = messenger.latestConversationId.value;
 
 if (latestConversationId) {
   await navigateTo({ path: `/messenger/${latestConversationId}`, replace: true });
-}
-
-const conversations = computed(() => messenger.orderedConversations.value ?? []);
-const loading = computed(() => messenger.loadingList.value);
-const emptyCtaTo = computed(() => {
-  const raw = t("messenger.emptyCtaLink");
-  return raw === "messenger.emptyCtaLink" ? undefined : raw;
-});
-
-function handleSelect(id: string) {
-  router.push({ path: `/messenger/${id}` });
 }
 </script>
