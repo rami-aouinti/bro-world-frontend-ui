@@ -102,10 +102,12 @@
         class="reply-composer"
       >
         <PostCommentForm
+          v-model="replyText[node.id]"
           :avatar="resolveComposerAvatar(props.currentUser?.photo)"
           :placeholder="t('blog.comments.replyPlaceholder')"
-          :disabled="!canRenderAuthUi"
-          @submit="(t) => emit('submit', t)"
+          :disabled="!canRenderAuthUi || isReplySubmitting(node.id)"
+          :submitting="isReplySubmitting(node.id)"
+          @submit="(t) => handleReplySubmit(node.id, t)"
         />
       </div>
 
@@ -116,6 +118,8 @@
         :nodes="node.children!"
         :depth="(depth ?? 0) + 1"
         :current-user="props.currentUser"
+        :composer-submitting="props.composerSubmitting"
+        :pending-replies="props.pendingReplies"
         @like="(id) => emit('like', id)"
         @reply="(pid, text) => emit('reply', pid, text)"
         @more="(id) => emit('more', id)"
@@ -128,7 +132,8 @@
       <PostCommentForm
         :placeholder="commentPlaceholder"
         :avatar="resolveComposerAvatar(props.currentUser?.photo)"
-        :disabled="!canRenderAuthUi"
+        :disabled="!canRenderAuthUi || composerSubmitting"
+        :submitting="composerSubmitting"
         @submit="handleSubmit"
       />
     </div>
@@ -179,6 +184,7 @@ const canRenderAuthUi = computed(
   () => isHydrated.value && auth.isReady.value && auth.isAuthenticated.value,
 );
 const composerVisible = defineModel<boolean>("composerVisible", { default: false });
+const composerSubmitting = computed(() => props.composerSubmitting ?? false);
 
 const avatarSize = 34;
 
@@ -228,6 +234,8 @@ const props = defineProps<{
   nodes: CommentNode[];
   depth?: number;
   currentUser?: { firstName?: string; lastName?: string; photo?: string };
+  composerSubmitting?: boolean;
+  pendingReplies?: Record<string, boolean | undefined>;
 }>();
 
 const emit = defineEmits<{
@@ -291,15 +299,27 @@ const commentPlaceholder = computed(() => {
   return t("blog.comments.placeholder");
 });
 
+function isReplySubmitting(id: string) {
+  return Boolean(props.pendingReplies?.[id]);
+}
+
 function toggleExpand(id: string) {
   expanded[id] = !expanded[id];
 }
 function toggleReply(id: string) {
   replying[id] = !replying[id];
+
+  if (!replying[id]) {
+    delete replyText[id];
+  }
 }
 
 function handleSubmit(text: string) {
   emit("submit", text);
+}
+
+function handleReplySubmit(id: string, text: string) {
+  emit("reply", id, text);
 }
 function formatTime(value: Date | string | number) {
   return formatRelativeTime(value);
