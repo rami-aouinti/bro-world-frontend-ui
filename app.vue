@@ -229,7 +229,54 @@ const structuredData = computed(() =>
   }),
 );
 
-const socialImageUrl = computed(() => `${normalizedBaseUrl.value}/social-img.png`);
+const socialImageAssets = computed(() => {
+  const base = normalizedBaseUrl.value;
+
+  return {
+    webp: {
+      url: `${base}/social-img.webp`,
+      type: "image/webp" as const,
+    },
+    png: {
+      url: `${base}/social-img.png`,
+      type: "image/png" as const,
+    },
+  };
+});
+
+let cachedSupportsWebp: boolean | null = null;
+
+function detectWebpSupport() {
+  if (cachedSupportsWebp !== null) {
+    return cachedSupportsWebp;
+  }
+
+  if (!import.meta.client || typeof document === "undefined") {
+    cachedSupportsWebp = true;
+    return cachedSupportsWebp;
+  }
+
+  try {
+    const canvas = document.createElement("canvas");
+
+    if (!canvas.getContext) {
+      cachedSupportsWebp = false;
+      return cachedSupportsWebp;
+    }
+
+    cachedSupportsWebp = canvas.toDataURL("image/webp").startsWith("data:image/webp");
+  } catch {
+    cachedSupportsWebp = false;
+  }
+
+  return cachedSupportsWebp;
+}
+
+const socialImageUrl = computed(() => {
+  const assets = socialImageAssets.value;
+
+  return detectWebpSupport() ? assets.webp.url : assets.png.url;
+});
 const themeColor = computed(() => themePrimaryHex.value ?? "#03203d");
 
 const switchLocalePath = hasInjectionSupport ? useSwitchLocalePath() : null;
@@ -322,6 +369,58 @@ const bodyAttributes = computed(() => ({
   style: bodyStyle.value,
 }));
 
+const socialImageMeta = computed(() => {
+  const assets = socialImageAssets.value;
+
+  const entries = [
+    {
+      hid: "og:image:webp",
+      property: "og:image",
+      content: assets.webp.url,
+    },
+    {
+      hid: "og:image:webp:type",
+      property: "og:image:type",
+      content: assets.webp.type,
+    },
+    {
+      hid: "og:image:png",
+      property: "og:image",
+      content: assets.png.url,
+    },
+    {
+      hid: "og:image:png:type",
+      property: "og:image:type",
+      content: assets.png.type,
+    },
+    {
+      hid: "og:image:width",
+      property: "og:image:width",
+      content: "1200",
+    },
+    {
+      hid: "og:image:height",
+      property: "og:image:height",
+      content: "630",
+    },
+    {
+      hid: "twitter:image",
+      name: "twitter:image",
+      content: socialImageUrl.value,
+    },
+  ];
+
+  if (socialImageUrl.value !== assets.png.url) {
+    entries.push({
+      hid: "twitter:image:fallback",
+      name: "twitter:image",
+      content: assets.png.url,
+    });
+  }
+
+  return entries;
+});
+
 const headConfig = computed(() => ({
   title: resolvedSeoMeta.value.title,
   titleTemplate: (value?: string) => (value ? `${value} | Bro World` : "Bro World"),
@@ -332,9 +431,7 @@ const headConfig = computed(() => ({
       name: "google-site-verification",
       content: "TMfvcd4kWDKIVfrwdD3GFq6J9itPdd0ipFJdxO_yMro",
     },
-    { property: "og:image:type", content: "image/png" },
-    { property: "og:image:width", content: "1200" },
-    { property: "og:image:height", content: "630" },
+    ...socialImageMeta.value,
   ],
   script: [
     {
@@ -355,10 +452,8 @@ const seoMetaPayload = computed(() => ({
   ogDescription: resolvedSeoMeta.value.description,
   ogType: "website",
   ogUrl: canonicalUrl.value,
-  ogImage: socialImageUrl.value,
   twitterTitle: resolvedSeoMeta.value.title,
   twitterDescription: resolvedSeoMeta.value.description,
-  twitterImage: socialImageUrl.value,
   twitterCard: "summary_large_image",
   keywords: resolvedSeoMeta.value.keywords,
   themeColor: themeColor.value,
