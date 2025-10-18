@@ -2066,6 +2066,7 @@
         "progress": "{value}% مكتمل",
         "openAria": "فتح الدورة {title}",
         "continue": "متابعة",
+        "startAria": "بدء أو متابعة دورة {title}",
         "durationMinutes": "{value} دقيقة",
         "durationHours": "{value} ساعة",
         "durationMixed": "{hours} ساعة {minutes} دقيقة",

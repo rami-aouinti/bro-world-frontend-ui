@@ -2106,6 +2106,7 @@
         "progress": "{value}% abgeschlossen",
         "openAria": "Kurs {title} öffnen",
         "continue": "Fortsetzen",
+        "startAria": "Kurs {title} starten oder fortsetzen",
         "durationMinutes": "{value} Min.",
         "durationHours": "{value} Std.",
         "durationMixed": "{hours} Std. {minutes} Min.",

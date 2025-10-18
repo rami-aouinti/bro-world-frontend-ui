@@ -1700,6 +1700,7 @@
         "progress": "{value}% 已完成",
         "openAria": "打开课程 {title}",
         "continue": "继续",
+        "startAria": "开始或继续课程 {title}",
         "durationMinutes": "{value} 分钟",
         "durationHours": "{value} 小时",
         "durationMixed": "{hours} 小时 {minutes} 分钟",
