@@ -113,6 +113,7 @@ import {
 import { useAuthSession } from "~/stores/auth-session";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 
 type SidebarVariant = "default" | "profile";
 
@@ -160,6 +161,8 @@ const localizedItems = computed<LayoutSidebarItem[]>(() =>
   resolvedItems.value.map((item) => localizeItem(item)),
 );
 
+const { schedule: scheduleNonBlockingTask } = useNonBlockingTask({ timeout: 400 });
+
 const derivedActiveKey = computed(() => {
   const items = localizedItems.value;
   const fullPath = currentRoute.value?.fullPath ?? "/";
@@ -200,38 +203,44 @@ function getDefaultExpandedGroups(
   return result;
 }
 
-const expandedGroupKeys = ref<string[]>(
-  Array.from(getDefaultExpandedGroups(localizedItems.value, resolvedActiveKey.value)),
-);
+const expandedGroupKeys = ref<string[]>([]);
+
+function synchronizeExpandedGroups() {
+  const defaultGroups = getDefaultExpandedGroups(localizedItems.value, resolvedActiveKey.value);
+  const next = new Set(expandedGroupKeys.value);
+  let updated = false;
+
+  for (const key of defaultGroups) {
+    if (!next.has(key)) {
+      next.add(key);
+      updated = true;
+    }
+  }
+
+  const availableGroups = new Set(
+    localizedItems.value.filter((item) => item.children?.length).map((item) => item.key),
+  );
+
+  for (const groupKey of Array.from(next)) {
+    if (!availableGroups.has(groupKey)) {
+      next.delete(groupKey);
+      updated = true;
+    }
+  }
+
+  if (updated || expandedGroupKeys.value.length !== next.size) {
+    expandedGroupKeys.value = Array.from(next);
+  }
+}
+
+synchronizeExpandedGroups();
 
 watch(
   () => [resolvedActiveKey.value, localizedItems.value],
-  ([activeKey]) => {
-    let updated = false;
-    const next = new Set(expandedGroupKeys.value);
-    const defaultGroups = getDefaultExpandedGroups(localizedItems.value, activeKey);
-
-    for (const key of defaultGroups) {
-      if (!next.has(key)) {
-        next.add(key);
-        updated = true;
-      }
-    }
-
-    const availableGroups = new Set(
-      localizedItems.value.filter((item) => item.children?.length).map((item) => item.key),
-    );
-
-    for (const groupKey of Array.from(next)) {
-      if (!availableGroups.has(groupKey)) {
-        next.delete(groupKey);
-        updated = true;
-      }
-    }
-
-    if (updated) expandedGroupKeys.value = Array.from(next);
+  () => {
+    scheduleNonBlockingTask(synchronizeExpandedGroups);
   },
-  { immediate: true, deep: true },
+  { deep: true },
 );
 
 function toggleGroup(key: string) {

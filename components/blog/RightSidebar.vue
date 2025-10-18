@@ -40,12 +40,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, shallowRef, watch } from "vue";
 import SidebarWidget, { type SidebarWidgetData } from "./SidebarWidget.vue";
 import SidebarWidgetSkeleton from "./SidebarWidgetSkeleton.vue";
-
-const { page } = useContent();
-const config = useConfig();
+import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 
 const props = withDefaults(
   defineProps<{
@@ -59,12 +57,24 @@ const props = withDefaults(
   },
 );
 
+const sidebarWidgets = shallowRef<SidebarWidgetData[]>(props.widgets);
+const { schedule: scheduleNonBlockingTask } = useNonBlockingTask({ timeout: 300 });
+
+watch(
+  () => props.widgets,
+  (widgets) => {
+    scheduleNonBlockingTask(() => {
+      sidebarWidgets.value = widgets;
+    });
+  },
+  { immediate: true, deep: false },
+);
+
 const showSkeleton = computed(() => {
   if (typeof props.loading === "boolean") {
     return props.loading;
   }
 
-  return props.widgets.length === 0;
+  return sidebarWidgets.value.length === 0;
 });
-const sidebarWidgets = computed(() => props.widgets);
 </script>

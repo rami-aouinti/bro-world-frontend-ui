@@ -136,6 +136,7 @@ import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#imports";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
+import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 import { useRelativeTime } from "~/composables/useRelativeTime";
 import type {
   BlogCommentWithReplies,
@@ -355,6 +356,7 @@ const currentUserAvatar = computed(
 );
 const shareDialogOpen = ref(false);
 const shareDialogMaxLength = computed(() => 500);
+const { schedule: scheduleNonBlockingTask } = useNonBlockingTask({ timeout: 400 });
 
 function openReply(id: string) {
   /* TODO */
@@ -642,7 +644,7 @@ function prefetchComments() {
     return;
   }
 
-  void loadComments();
+  scheduleNonBlockingTask(() => loadComments());
 }
 
 watch(sortBy, (value) => {
@@ -688,7 +690,7 @@ watch(isAuthenticated, (value) => {
     commentsError.value = null;
 
     if (shouldReload) {
-      void loadComments({ force: true });
+      scheduleNonBlockingTask(() => loadComments({ force: true }));
     }
   }
 

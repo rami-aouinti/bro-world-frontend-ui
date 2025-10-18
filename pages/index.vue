@@ -109,6 +109,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce } from "#app";
 import { usePostsStore } from "~/composables/usePostsStore";
+import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 import type { ReactionType } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
 import { useProfileStore } from "~/stores/profile";
@@ -330,6 +331,7 @@ const initialLoadError = ref<string | null>(null);
 
 const isLoadErrorDismissed = ref(false);
 const loadMoreRequestInFlight = ref(false);
+const { schedule: scheduleNonBlockingTask } = useNonBlockingTask({ timeout: 500 });
 
 const loadErrorMessage = computed(() => {
   if (isLoadErrorDismissed.value) {
@@ -365,14 +367,17 @@ async function maybeLoadMore() {
     return;
   }
 
-  try {
-    loadMoreRequestInFlight.value = true;
-    await fetchMorePosts({ params: { pageSize: INITIAL_PAGE_SIZE } });
-  } catch (error) {
-    console.error("Failed to load more posts", error);
-  } finally {
-    loadMoreRequestInFlight.value = false;
-  }
+  loadMoreRequestInFlight.value = true;
+
+  scheduleNonBlockingTask(async () => {
+    try {
+      await fetchMorePosts({ params: { pageSize: INITIAL_PAGE_SIZE } });
+    } catch (error) {
+      console.error("Failed to load more posts", error);
+    } finally {
+      loadMoreRequestInFlight.value = false;
+    }
+  });
 }
 
 if (import.meta.client) {
@@ -409,15 +414,22 @@ async function loadInitialPosts() {
   }
 }
 
-await callOnce(loadInitialPosts);
+await callOnce(async () => {
+  if (import.meta.server) {
+    await loadInitialPosts();
+    return;
+  }
+
+  scheduleNonBlockingTask(loadInitialPosts);
+});
 
 if (import.meta.client) {
-  onMounted(async () => {
+  onMounted(() => {
     if (posts.value.length > 0 || pending.value || loadingMore.value) {
       return;
     }
 
-    await loadInitialPosts();
+    scheduleNonBlockingTask(loadInitialPosts);
   });
 }
 </script>
