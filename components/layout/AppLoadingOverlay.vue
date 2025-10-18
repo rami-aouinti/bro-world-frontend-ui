@@ -98,6 +98,10 @@ const { t } = useI18n();
   z-index: 9999;
   display: grid;
   place-items: center;
+  width: 100vw;
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
   padding: clamp(1.25rem, 4vw, 3rem);
   background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.1), transparent 55%),
     radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.12), transparent 60%),
@@ -107,7 +111,8 @@ const { t } = useI18n();
 }
 
 .app-loading-scene {
-  width: min(980px, 100%);
+  width: min(1100px, 100%);
+  height: min(680px, 100%);
   display: grid;
   grid-template-columns: minmax(160px, 1fr) minmax(320px, 1.2fr) minmax(200px, 0.9fr);
   gap: clamp(1.5rem, 4vw, 2.5rem);
