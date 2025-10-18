@@ -6,17 +6,33 @@
   >
     <v-card>
       <v-card-title>{{ t("job.create") }}</v-card-title>
-      <v-card-text>
-        <v-stepper v-model="step" elevation="0">
-          <v-stepper-header>
-            <v-stepper-item :title="t('company.title')" :value="1" />
-            <v-stepper-item :title="t('job.details')" :value="2" />
-            <v-stepper-item :title="t('job.requirements')" :value="3" />
-            <v-stepper-item :title="t('job.additional')" :value="4" />
-            <v-stepper-item :title="t('job.others')" :value="5" />
+      <v-card-subtitle class="text-medium-emphasis">
+        {{ step }} / {{ totalSteps }}
+      </v-card-subtitle>
+      <v-card-text class="pa-6">
+        <v-stepper v-model="step" class="job-stepper" elevation="0">
+          <v-stepper-header class="job-stepper__header">
+            <v-stepper-item
+              v-for="stepItem in steps"
+              :key="stepItem.value"
+              :complete="step > stepItem.value"
+              :editable="step > stepItem.value"
+              :title="stepItem.title"
+              :value="stepItem.value"
+              :prepend-icon="stepItem.icon"
+            />
           </v-stepper-header>
 
-          <v-stepper-window>
+          <div class="job-stepper__progress">
+            <v-progress-linear
+              :model-value="progress"
+              color="primary"
+              height="6"
+              rounded
+            />
+          </div>
+
+          <v-stepper-window class="job-stepper__window">
             <v-stepper-window-item :value="1">
               <v-row
                 v-if="companies.length"
@@ -60,7 +76,7 @@
                 <v-btn
                   class="mt-4"
                   color="primary"
-                  :disabled="!jobForm.companyId"
+                  :disabled="!canContinue"
                   @click="nextStep"
                 >
                   {{ t("buttons.continue") }}
@@ -107,7 +123,7 @@
                 </v-btn>
                 <v-btn
                   color="primary"
-                  :disabled="!jobForm.title"
+                  :disabled="!canContinue"
                   @click="nextStep"
                 >
                   {{ t("buttons.continue") }}
@@ -170,7 +186,7 @@
                 <v-btn variant="text" @click="prevStep">
                   {{ t("buttons.back") }}
                 </v-btn>
-                <v-btn color="primary" @click="nextStep">
+                <v-btn :disabled="!canContinue" color="primary" @click="nextStep">
                   {{ t("buttons.continue") }}
                 </v-btn>
               </v-row>
@@ -263,7 +279,7 @@
                 <v-btn variant="text" @click="prevStep">
                   {{ t("buttons.back") }}
                 </v-btn>
-                <v-btn color="primary" @click="nextStep">
+                <v-btn :disabled="!canContinue" color="primary" @click="nextStep">
                   {{ t("buttons.continue") }}
                 </v-btn>
               </v-row>
@@ -299,7 +315,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue"
+import { computed, onMounted, ref, watch } from "vue"
 import { useI18n } from "vue-i18n"
 import { useNuxtApp } from "#app"
 import CreateCompany from "~/components/job/CreateCompany.vue"
@@ -339,6 +355,15 @@ const { t } = useI18n()
 const { $notify: notify, $fetch } = useNuxtApp()
 
 const step = ref(1)
+const steps = computed(() => [
+  { value: 1, title: t("company.title"), icon: "mdi-domain" },
+  { value: 2, title: t("job.details"), icon: "mdi-briefcase-variant" },
+  { value: 3, title: t("job.requirements"), icon: "mdi-check-decagram" },
+  { value: 4, title: t("job.additional"), icon: "mdi-playlist-edit" },
+  { value: 5, title: t("job.others"), icon: "mdi-dots-horizontal" },
+])
+const totalSteps = computed(() => steps.value.length)
+const progress = computed(() => (step.value / totalSteps.value) * 100)
 const showCreateCompany = ref(false)
 const companies = ref<Company[]>([])
 
@@ -386,6 +411,29 @@ const availableLanguages = [
 
 const salaryRangeRange = ref<[number, number]>([30000, 90000])
 
+const canContinue = computed(() => {
+  switch (step.value) {
+    case 1:
+      return Boolean(jobForm.value.companyId)
+    case 2:
+      return jobForm.value.title.trim().length > 0
+    case 3:
+      return (
+        (jobForm.value.requiredSkills.length > 0 ||
+          jobForm.value.requirements.length > 0) &&
+        jobForm.value.experience !== ""
+      )
+    case 4:
+      return Boolean(
+        jobForm.value.workType &&
+          jobForm.value.contractType &&
+          jobForm.value.workLocation.trim().length > 0
+      )
+    default:
+      return true
+  }
+})
+
 watch(salaryRangeRange, (range) => {
   jobForm.value.salaryRange = `${range[0]} - ${range[1]}`
 })
@@ -395,7 +443,11 @@ function toggleCreateCompany() {
 }
 
 function nextStep() {
-  if (step.value < 5) {
+  if (!canContinue.value) {
+    return
+  }
+
+  if (step.value < totalSteps.value) {
     step.value += 1
   }
 }
@@ -468,3 +520,45 @@ onMounted(() => {
   void fetchCompanies()
 })
 </script>
+
+<style scoped>
+.job-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.job-stepper__header {
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--v-theme-surface), 0.35),
+    rgba(var(--v-theme-primary), 0.08)
+  );
+  border: 1px solid rgba(var(--v-theme-primary), 0.25);
+}
+
+.job-stepper__progress {
+  padding: 0 8px;
+}
+
+.job-stepper__window {
+  padding: 16px;
+  border-radius: 16px;
+  background-color: rgba(var(--v-theme-surface), 0.25);
+  border: 1px solid rgba(var(--v-theme-surface), 0.08);
+}
+
+.job-stepper :deep(.v-stepper-item__content) {
+  text-transform: none;
+}
+
+.job-stepper :deep(.v-stepper-item__label) {
+  font-weight: 600;
+}
+
+.job-stepper :deep(.v-btn--disabled) {
+  opacity: 0.5;
+}
+</style>
