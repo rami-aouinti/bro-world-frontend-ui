@@ -1,85 +1,80 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col
-        cols="12"
-        md="4"
+  <NuxtLayout name="default">
+    <template #left-sidebar>
+      <SidebarCard
+        class="text-card-foreground px-3 py-2"
+        glow
       >
-        <v-card
-          class="pa-4 mb-4 position-sticky top-1"
-          rounded="xl"
-          variant="text"
-        >
-          <JobCreateButtons
-            @create-job="showCreateJobModal = true"
-            @create-applicant="showCreateApplicantModal = true"
+        <JobCreateButtons
+          @create-job="showCreateJobModal = true"
+          @create-applicant="showCreateApplicantModal = true"
+        />
+
+        <JobFilters
+          :experience-options="[0.5, 1, 2, 3, 5, 10]"
+          :companies="companies"
+          @update:experience="selectedExperience = $event"
+          @update:company="selectedCompany = $event"
+          @update:salary-range="salaryRange = $event"
+          @update:skills="selectedSkills = $event"
+          @update:work="selectedWork = $event"
+          @update:contract="selectedContract = $event"
+        />
+      </SidebarCard>
+    </template>
+
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12">
+          <JobTopFilters
+            @update:search="search = $event"
+            @update:location="selectedLocations = $event"
           />
 
-          <JobFilters
-            :experience-options="[0.5, 1, 2, 3, 5, 10]"
-            :companies="companies"
-            @update:experience="selectedExperience = $event"
-            @update:company="selectedCompany = $event"
-            @update:salary-range="salaryRange = $event"
-            @update:skills="selectedSkills = $event"
-            @update:work="selectedWork = $event"
-            @update:contract="selectedContract = $event"
+          <div v-if="pending">
+            <v-col
+              v-for="n in 6"
+              :key="n"
+              cols="12"
+            >
+              <v-skeleton-loader
+                class="pa-4 rounded-xl"
+                height="200"
+                rounded="xl"
+                type="card"
+              />
+            </v-col>
+          </div>
+
+          <JobList
+            v-else
+            :filtered="jobStore.loaded"
+            :jobs="jobStore.jobs"
+            @apply="openApplyModal"
           />
-        </v-card>
-      </v-col>
 
-      <v-col
-        cols="12"
-        md="8"
-      >
-        <JobTopFilters
-          @update:search="search = $event"
-          @update:location="selectedLocations = $event"
-        />
+          <v-pagination
+            v-model="currentPage"
+            class="mt-4"
+            color="primary"
+            rounded="circle"
+            :length="totalPages"
+          />
+        </v-col>
+      </v-row>
 
-        <div v-if="pending">
-          <v-col
-            v-for="n in 6"
-            :key="n"
-            cols="12"
-          >
-            <v-skeleton-loader
-              class="pa-4 rounded-xl"
-              height="200"
-              rounded="xl"
-              type="card"
-            />
-          </v-col>
-        </div>
+      <CreateJob
+        v-model="showCreateJobModal"
+        @job-created="refreshJobs"
+      />
 
-        <JobList
-          v-else
-          :filtered="jobStore.loaded"
-          :jobs="jobStore.jobs"
-          @apply="openApplyModal"
-        />
-
-        <v-pagination
-          v-model="currentPage"
-          class="mt-4"
-          color="primary"
-          rounded="circle"
-          :length="totalPages"
-        />
-      </v-col>
-    </v-row>
-
-    <CreateJob
-      v-model="showCreateJobModal"
-      @job-created="refreshJobs"
-    />
-
-    <CreateApplicant
-      v-model="showCreateApplicantModal"
-      :selected-job-id="selectedJobId"
-      @applicant-created="onApplicantCreated"
-    />
-  </v-container>
+      <CreateApplicant
+        v-model="showCreateApplicantModal"
+        :selected-job-id="selectedJobId"
+        @applicant-created="onApplicantCreated"
+      />
+    </v-container>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
@@ -95,7 +90,7 @@ import JobTopFilters from "~/components/job/JobTopFilters.vue"
 import { useJobStore, type JobSummary } from "~/stores/useJobStore"
 
 definePageMeta({
-  layout: "default",
+  layout: false,
   description: "Job page",
   breadcrumb: "disabled",
 })
