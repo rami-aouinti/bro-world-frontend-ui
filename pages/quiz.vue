@@ -12,14 +12,14 @@
           id="quiz-heading"
           class="text-h3 font-weight-bold mb-4"
         >
-          {{ t("pages.quiz.title") }}
+          {{ hero.title }}
         </h1>
         <p
           id="quiz-subtitle"
           class="text-body-1 text-medium-emphasis mx-auto"
           style="max-width: 640px"
         >
-          {{ t("pages.quiz.subtitle") }}
+          {{ hero.subtitle }}
         </p>
       </section>
 
@@ -59,7 +59,7 @@
                   size="small"
                   variant="flat"
                   class="text-caption"
-                  :aria-label="t('pages.quiz.overview.trendLabel', { change: card.trend })"
+                  :aria-label="getTrendLabel(card.trend)"
                 >
                   {{ card.trend }}
                 </v-chip>
@@ -297,29 +297,29 @@
         >
           <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
             <div>
-              <h2
-                id="quiz-cta-title"
-                class="text-h4 font-weight-semibold text-white mb-2"
-              >
-                {{ t("pages.quiz.cta.title") }}
-              </h2>
-              <p
-                class="text-body-1 text-white text-opacity-80 mb-0"
-                style="max-width: 520px"
-              >
-                {{ t("pages.quiz.cta.description") }}
-              </p>
-            </div>
-            <v-btn
-              :to="contactLink"
-              color="white"
-              variant="flat"
-              size="large"
-              class="text-primary"
-              :aria-label="t('pages.quiz.cta.buttonAria')"
+            <h2
+              id="quiz-cta-title"
+              class="text-h4 font-weight-semibold text-white mb-2"
             >
-              {{ t("pages.quiz.cta.button") }}
-            </v-btn>
+              {{ cta.title }}
+            </h2>
+            <p
+              class="text-body-1 text-white text-opacity-80 mb-0"
+              style="max-width: 520px"
+            >
+              {{ cta.description }}
+            </p>
+          </div>
+          <v-btn
+            :to="contactLink"
+            color="white"
+            variant="flat"
+            size="large"
+            class="text-primary"
+            :aria-label="cta.buttonAria"
+          >
+            {{ cta.button }}
+          </v-btn>
           </div>
         </v-card>
       </section>
@@ -331,6 +331,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import type { QuizLandingData } from "~/server/utils/quiz";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
@@ -343,6 +344,8 @@ const pageDescription = computed(() => t("seo.quiz.description"));
 definePageMeta({
   documentDriven: false,
 });
+
+const { data: quizData } = await useAsyncData<QuizLandingData>("quiz-landing", () => $fetch("/api/quiz"));
 
 useSeoMeta(() => ({
   description: pageDescription.value,
@@ -369,7 +372,14 @@ useHead(() => {
   };
 });
 
-const overviewCards = computed(() => [
+const fallbackHero = computed(() => ({
+  title: t("pages.quiz.title"),
+  subtitle: t("pages.quiz.subtitle"),
+}));
+
+const hero = computed(() => quizData.value?.hero ?? fallbackHero.value);
+
+const fallbackOverviewCards = computed(() => [
   {
     title: t("pages.quiz.overview.cards.participants.title"),
     value: t("pages.quiz.overview.cards.participants.value"),
@@ -390,7 +400,11 @@ const overviewCards = computed(() => [
   },
 ]);
 
-const featureCards = computed(() => [
+const overviewCards = computed(() =>
+  quizData.value?.overview?.length ? quizData.value.overview : fallbackOverviewCards.value,
+);
+
+const fallbackFeatureCards = computed(() => [
   {
     icon: "mdi:clipboard-text-clock-outline",
     title: t("pages.quiz.features.authoring.title"),
@@ -423,7 +437,11 @@ const featureCards = computed(() => [
   },
 ]);
 
-const processSteps = computed(() => [
+const featureCards = computed(() =>
+  quizData.value?.features?.length ? quizData.value.features : fallbackFeatureCards.value,
+);
+
+const fallbackProcessSteps = computed(() => [
   {
     title: t("pages.quiz.process.steps.plan.title"),
     description: t("pages.quiz.process.steps.plan.description"),
@@ -438,7 +456,11 @@ const processSteps = computed(() => [
   },
 ]);
 
-const questionBanks = computed(() => [
+const processSteps = computed(() =>
+  quizData.value?.process?.length ? quizData.value.process : fallbackProcessSteps.value,
+);
+
+const fallbackQuestionBanks = computed(() => [
   {
     title: t("pages.quiz.questionBanks.banks.general.title"),
     description: t("pages.quiz.questionBanks.banks.general.description"),
@@ -462,7 +484,11 @@ const questionBanks = computed(() => [
   },
 ]);
 
-const leaderboard = computed(() => [
+const questionBanks = computed(() =>
+  quizData.value?.questionBanks?.length ? quizData.value.questionBanks : fallbackQuestionBanks.value,
+);
+
+const fallbackLeaderboard = computed(() => [
   {
     rank: t("pages.quiz.leaderboard.rows.0.rank"),
     player: t("pages.quiz.leaderboard.rows.0.player"),
@@ -489,5 +515,42 @@ const leaderboard = computed(() => [
   },
 ]);
 
-const contactLink = computed(() => localePath("/contact"));
+const leaderboard = computed(() =>
+  quizData.value?.leaderboard?.length ? quizData.value.leaderboard : fallbackLeaderboard.value,
+);
+
+const fallbackCta = computed(() => ({
+  title: t("pages.quiz.cta.title"),
+  description: t("pages.quiz.cta.description"),
+  button: t("pages.quiz.cta.button"),
+  buttonAria: t("pages.quiz.cta.buttonAria"),
+  link: "/contact",
+}));
+
+const cta = computed(() => {
+  const fallback = fallbackCta.value;
+  const data = quizData.value?.cta;
+  if (!data) {
+    return fallback;
+  }
+
+  return {
+    ...fallback,
+    ...data,
+    link: data.link || fallback.link,
+  };
+});
+
+const contactLink = computed(() => {
+  const link = cta.value.link || "/contact";
+  return localePath(link);
+});
+
+function getTrendLabel(change?: string) {
+  if (!change) {
+    return undefined;
+  }
+
+  return t("pages.quiz.overview.trendLabel", { change });
+}
 </script>

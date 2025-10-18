@@ -1,0 +1,128 @@
+{
+  "hero": {
+    "title": "Quiz communautaires prêts à lancer",
+    "subtitle": "Des scénarios conçus pour engager vos membres et mesurer la progression en temps réel."
+  },
+  "overview": [
+    {
+      "title": "Participants actifs",
+      "value": "2 350",
+      "trend": "+8 %",
+      "caption": "sur les 30 derniers jours"
+    },
+    {
+      "title": "Taux de complétion",
+      "value": "86 %",
+      "trend": "+4 pts",
+      "caption": "grâce aux rappels intelligents"
+    },
+    {
+      "title": "Satisfaction",
+      "value": "4,7 / 5",
+      "trend": "97 avis",
+      "caption": "apprenants et mentors confondus"
+    }
+  ],
+  "features": [
+    {
+      "icon": "mdi:clipboard-text-clock-outline",
+      "title": "Création assistée",
+      "description": "Composez des quiz multi-niveaux avec des modèles modulaires et une validation automatique.",
+      "points": [
+        "Bibliothèque de modèles par rôle",
+        "Générateur de feedback instantané",
+        "Import CSV & Markdown"
+      ]
+    },
+    {
+      "icon": "mdi:account-voice",
+      "title": "Engagement continu",
+      "description": "Débloquez des badges, notifications ciblées et classements par cohorte.",
+      "points": [
+        "Badges personnalisables",
+        "Relances automatiques multicanales",
+        "Sessions live synchronisées"
+      ]
+    },
+    {
+      "icon": "mdi:chart-box-outline",
+      "title": "Analyse précise",
+      "description": "Visualisez la compréhension par thème et identifiez les points de friction.",
+      "points": [
+        "Tableaux de bord prêts à l'emploi",
+        "Export CSV/BigQuery",
+        "Alertes sur les écarts de progression"
+      ]
+    }
+  ],
+  "process": [
+    {
+      "title": "Planifier",
+      "description": "Sélectionnez une banque de questions et fixez les objectifs pour votre communauté."
+    },
+    {
+      "title": "Lancer",
+      "description": "Ouvrez les inscriptions, automatisez les invitations et suivez les réponses en direct."
+    },
+    {
+      "title": "Itérer",
+      "description": "Analysez les résultats, ajustez les parcours et rediffusez les meilleures sessions."
+    }
+  ],
+  "questionBanks": [
+    {
+      "title": "Fondamentaux produit",
+      "description": "Alignement vision, discovery et rituels cross-fonctionnels.",
+      "count": "120 questions",
+      "focus": "Discovery, priorisation, communication",
+      "difficulty": "Intermédiaire"
+    },
+    {
+      "title": "Stratégie go-to-market",
+      "description": "Tactiques d'acquisition, activation et rétention multi-canal.",
+      "count": "95 questions",
+      "focus": "Growth, segmentation, narration",
+      "difficulty": "Avancée"
+    },
+    {
+      "title": "Culture communauté",
+      "description": "Scénarios d'animation, modération et feedback collectif.",
+      "count": "80 questions",
+      "focus": "Engagement, rituels, bienveillance",
+      "difficulty": "Débutant"
+    }
+  ],
+  "leaderboard": [
+    {
+      "rank": "#1",
+      "player": "Collectif Horizon",
+      "score": "98 %",
+      "completed": "124 quiz"
+    },
+    {
+      "rank": "#2",
+      "player": "Guild Nova",
+      "score": "94 %",
+      "completed": "118 quiz"
+    },
+    {
+      "rank": "#3",
+      "player": "Équipe Comète",
+      "score": "92 %",
+      "completed": "102 quiz"
+    },
+    {
+      "rank": "#4",
+      "player": "Atelier Flux",
+      "score": "89 %",
+      "completed": "97 quiz"
+    }
+  ],
+  "cta": {
+    "title": "Lancer un challenge sur mesure",
+    "description": "Partagez vos objectifs et recevez une configuration de quiz adaptée en 48h.",
+    "button": "Planifier une démo",
+    "buttonAria": "Contacter l'équipe quiz Bro World",
+    "link": "/contact"
+  }
+}
