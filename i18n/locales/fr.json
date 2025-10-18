@@ -111,6 +111,7 @@
         "adminData": "Données",
         "adminCrons": "Tâches planifiées",
         "adminSettings": "Paramètres du site",
+        "adminCrm": "Espace CRM",
         "adminUserManagement": "Gestion des utilisateurs",
         "adminBlogManagement": "Gestion du blog",
         "adminJobManagement": "Gestion des offres d'emploi",
@@ -2244,6 +2245,51 @@
             ]
           }
         }
+      }
+    },
+    "crm": {
+      "title": "Espace CRM",
+      "subtitle": "Suivez les opportunités actives, les responsables et les remises en main en un coup d'œil.",
+      "actions": {
+        "newProject": "Nouveau projet",
+        "viewPipeline": "Voir le pipeline"
+      },
+      "metrics": {
+        "title": "Vue d'ensemble du pipeline",
+        "subtitle": "Aperçu du flux d'affaires par statut actuel.",
+        "total": "Projets",
+        "totalCaption": "Opportunités actives dans l'ensemble des pipelines.",
+        "inProgress": "En cours",
+        "inProgressCaption": "Équipes actuellement en exécution.",
+        "atRisk": "À risque",
+        "atRiskCaption": "Affaires nécessitant une attention immédiate.",
+        "pipelineValue": "Valeur du pipeline",
+        "pipelineValueCaption": "Revenu estimé sécurisé dans le pipeline."
+      },
+      "table": {
+        "title": "Projets actifs",
+        "subtitle": "Dernières initiatives CRM avec responsables et jalons.",
+        "empty": "Aucun projet CRM trouvé.",
+        "headers": {
+          "name": "Projet",
+          "client": "Client",
+          "owner": "Responsable",
+          "status": "Statut",
+          "stage": "Phase",
+          "budget": "Budget",
+          "probability": "Probabilité de gain",
+          "dueDate": "Date d'échéance"
+        }
+      },
+      "upcoming": {
+        "title": "Prochains transferts",
+        "subtitle": "Prochains jalons de livraison du pipeline.",
+        "empty": "Aucune échéance à venir."
+      },
+      "stages": {
+        "title": "Répartition par phase",
+        "subtitle": "Progression des projets par phase du pipeline.",
+        "caption": "Prochain jalon le {date}"
       }
     },
     "login": {
