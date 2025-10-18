@@ -23,7 +23,7 @@
           <StoriesStripSkeleton />
         </div>
       </template>
-      <template v-else-if="canAccessAuthenticatedContent">
+      <template v-else-if="shouldRenderAuthenticatedContent">
         <LazyNewPost
           :avatar="userAvatar"
           :user-name="userName"
@@ -109,7 +109,7 @@
 import { useIntersectionObserver } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { callOnce } from "#app";
+import { callOnce, onNuxtReady, useNuxtApp, useState } from "#app";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 import type { ReactionType } from "~/lib/mock/blog";
@@ -125,6 +125,28 @@ const isAuthReady = computed(() => auth.isReady.value);
 const canAccessAuthenticatedContent = computed(
   () => isAuthReady.value && auth.isAuthenticated.value,
 );
+
+const nuxtApp = useNuxtApp();
+const hasCompletedHydration = ref(!import.meta.client || !nuxtApp?.isHydrating);
+
+if (import.meta.client && nuxtApp?.isHydrating) {
+  onNuxtReady(() => {
+    hasCompletedHydration.value = true;
+  });
+}
+
+const initialAuthAccessState = useState(
+  "index:initial-can-access-authenticated-content",
+  () => canAccessAuthenticatedContent.value,
+);
+
+const shouldRenderAuthenticatedContent = computed(() => {
+  if (!hasCompletedHydration.value) {
+    return initialAuthAccessState.value;
+  }
+
+  return canAccessAuthenticatedContent.value;
+});
 function asString(value: unknown): string | null {
   if (typeof value !== "string") {
     return null;
@@ -345,8 +367,32 @@ const {
   pageSize,
 } = usePostsStore();
 
-const showAuthenticatedSkeletons = computed(
+const showAuthenticatedSkeletonsState = computed(
   () => !isAuthReady.value || pending.value,
+);
+
+const initialSkeletonVisibilityState = useState(
+  "index:initial-show-authenticated-skeletons",
+  () => showAuthenticatedSkeletonsState.value,
+);
+
+const showAuthenticatedSkeletons = computed(() => {
+  if (!hasCompletedHydration.value) {
+    return initialSkeletonVisibilityState.value;
+  }
+
+  return showAuthenticatedSkeletonsState.value;
+});
+
+watch(
+  hasCompletedHydration,
+  (hydrated) => {
+    if (hydrated) {
+      initialAuthAccessState.value = canAccessAuthenticatedContent.value;
+      initialSkeletonVisibilityState.value = showAuthenticatedSkeletonsState.value;
+    }
+  },
+  { immediate: false },
 );
 
 const skeletonBatchSize = computed(() => {
