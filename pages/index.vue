@@ -24,12 +24,19 @@
         </div>
       </template>
       <template v-else-if="shouldRenderAuthenticatedContent">
-        <LazyNewPost
-          :avatar="userAvatar"
-          :user-name="userName"
-          @submit="createPost"
-          @attach="onAttach"
-        />
+        <Suspense>
+          <template #default>
+            <NewPost
+              :avatar="userAvatar"
+              :user-name="userName"
+              @submit="createPost"
+              @attach="onAttach"
+            />
+          </template>
+          <template #fallback>
+            <NewPostSkeleton />
+          </template>
+        </Suspense>
 
         <div class="my-4">
           <SidebarCard class="text-card-foreground px-3 py-2" glow>
@@ -40,12 +47,19 @@
               class="sr-only"
               @change="onStorySelected"
             />
-            <LazyStoriesStrip
-              :items="stories"
-              @open="openStory"
-              @create="createStory"
-            />
-            <LazyStoryViewerModal
+            <Suspense>
+              <template #default>
+                <StoriesStrip
+                  :items="stories"
+                  @open="openStory"
+                  @create="createStory"
+                />
+              </template>
+              <template #fallback>
+                <StoriesStripSkeleton />
+              </template>
+            </Suspense>
+            <StoryViewerModal
               v-if="isStoryViewerOpen"
               v-model="isStoryViewerOpen"
               :story="activeStory"
@@ -70,16 +84,24 @@
 
     <template v-else>
       <div class="flex flex-col gap-4">
-        <LazyBlogPostCard
+        <Suspense
           v-for="(post, index) in posts"
           :key="post.id ?? `post-${index}`"
-          data-test="blog-post-card"
-          :post="post"
-          :default-avatar="defaultAvatar"
-          :reaction-emojis="reactionEmojis"
-          :reaction-labels="reactionLabels"
-          :prefer-eager-media-loading="index === 0"
-        />
+        >
+          <template #default>
+            <BlogPostCard
+              data-test="blog-post-card"
+              :post="post"
+              :default-avatar="defaultAvatar"
+              :reaction-emojis="reactionEmojis"
+              :reaction-labels="reactionLabels"
+              :prefer-eager-media-loading="index === 0"
+            />
+          </template>
+          <template #fallback>
+            <PostCardSkeleton />
+          </template>
+        </Suspense>
 
         <div
           v-if="loadingMore"
