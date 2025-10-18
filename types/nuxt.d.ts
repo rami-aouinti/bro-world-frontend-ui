@@ -8,6 +8,7 @@ declare module "#app" {
     $notify: (alert: AlertMessage) => string;
     $clearAlerts: () => void;
     $mercure: MercureEventSourceFactory;
+    $html2pdf?: () => Promise<typeof window.html2pdf | null>;
   }
 }
 
@@ -17,6 +18,21 @@ declare module "vue" {
     $notify: (alert: AlertMessage) => string;
     $clearAlerts: () => void;
     $mercure: MercureEventSourceFactory;
+    $html2pdf?: () => Promise<typeof window.html2pdf | null>;
+  }
+}
+
+declare global {
+  interface Window {
+    html2pdf?: () => {
+      from: (element: HTMLElement) => {
+        set: (options: Record<string, unknown>) => unknown;
+        save: (fileName: string) => unknown;
+      } & {
+        set?: (options: Record<string, unknown>) => unknown;
+        save?: (fileName: string) => unknown;
+      };
+    };
   }
 }
 
