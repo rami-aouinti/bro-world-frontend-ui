@@ -36,5 +36,6 @@ const categories = computed(() => store.categories.value);
 
 definePageMeta({
   layout: "default",
+  alias: ["/academy"],
 });
 </script>

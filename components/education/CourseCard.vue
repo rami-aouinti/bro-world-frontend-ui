@@ -25,7 +25,7 @@
       <v-btn
         block
         color="primary"
-        :to="{ name: 'education-course-slug', params: { slug: course.slug } }"
+        :to="courseLink"
         :aria-label="t('education.course.openAria', { title: course.title })"
       >
         {{ actionLabel }}
@@ -45,8 +45,13 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 const actionLabel = computed(() => props.action ?? t("education.course.continue"));
+
+const courseLink = computed(() =>
+  localePath({ name: "education-course-slug", params: { slug: props.course.slug } }),
+);
 
 function formatDuration(duration: number) {
   if (duration < 60) {

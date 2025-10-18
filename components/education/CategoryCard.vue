@@ -21,7 +21,7 @@
           {{ t("education.category.courses", { count: category.courseCount }) }}
         </v-chip>
         <v-btn
-          :to="{ name: 'education-category-slug', params: { slug: category.slug } }"
+          :to="categoryLink"
           color="primary"
           variant="text"
           :aria-label="t('education.category.viewCoursesAria', { title: category.title })"
@@ -42,4 +42,9 @@ const props = defineProps<{ category: CategorySummary }>();
 const category = computed(() => props.category);
 
 const { t } = useI18n();
+const localePath = useLocalePath();
+
+const categoryLink = computed(() =>
+  localePath({ name: "education-category-slug", params: { slug: category.value.slug } }),
+);
 </script>

@@ -28,14 +28,14 @@
         <ProgressBar :value="courseProgress" :label="t('education.course.lessonProgressLabel')" />
       </header>
       <v-card rounded="xl" elevation="1">
-        <v-list lines="two" rounded="xl">
-          <v-list-item
-            v-for="(lesson, index) in lessons"
-            :key="lesson.id"
-            :to="{ name: 'education-course-slug-lesson-id', params: { slug: course.slug, id: lesson.id } }"
-            :title="lesson.title"
-            :subtitle="t('education.course.lessonDuration', { value: lesson.durationMin })"
-          >
+      <v-list lines="two" rounded="xl">
+        <v-list-item
+          v-for="(lesson, index) in lessons"
+          :key="lesson.id"
+          :to="lessonLink(lesson.id)"
+          :title="lesson.title"
+          :subtitle="t('education.course.lessonDuration', { value: lesson.durationMin })"
+        >
             <template #prepend>
               <v-avatar color="primary" size="40" variant="tonal" class="font-weight-medium">
                 {{ index + 1 }}
@@ -64,7 +64,7 @@
           color="primary"
           size="large"
           :disabled="!lessonsCompleted"
-          :to="{ name: 'education-course-slug-quiz', params: { slug: course.slug } }"
+          :to="quizLink"
         >
           <v-icon icon="mdi:clipboard-check-outline" start />
           {{ t("education.course.startQuiz") }}
@@ -85,6 +85,8 @@ import { useEducationStore } from "~/stores/education";
 const { t } = useI18n();
 const route = useRoute();
 const store = useEducationStore();
+
+const localePath = useLocalePath();
 
 const slug = computed(() => String(route.params.slug));
 
@@ -123,6 +125,10 @@ const nextLessonId = computed(() => {
   return lesson?.id ?? lessons.value[0]?.id ?? null;
 });
 
+const quizLink = computed(() =>
+  localePath({ name: "education-course-slug-quiz", params: { slug: course.value?.slug ?? slug.value } }),
+);
+
 const ctaTo = computed(() => {
   if (!course.value) {
     return null;
@@ -131,11 +137,11 @@ const ctaTo = computed(() => {
     return null;
   }
   if (lessonsCompleted.value) {
-    return { name: "education-course-slug-quiz", params: { slug: course.value.slug } };
+    return localePath({ name: "education-course-slug-quiz", params: { slug: course.value.slug } });
   }
   const target = nextLessonId.value ?? lessons.value[0]?.id;
   return target
-    ? { name: "education-course-slug-lesson-id", params: { slug: course.value.slug, id: target } }
+    ? localePath({ name: "education-course-slug-lesson-id", params: { slug: course.value.slug, id: target } })
     : null;
 });
 
@@ -154,10 +160,18 @@ const certificateLink = computed(() => {
     return null;
   }
   const certificateId = progress.value?.certificateId;
-  return certificateId ? { name: "education-certificate-id", params: { id: certificateId } } : null;
+  return certificateId ? localePath({ name: "education-certificate-id", params: { id: certificateId } }) : null;
 });
 
 function isLessonCompleted(id: string) {
   return Boolean(progress.value?.lessonDone?.[id]);
 }
+
+function lessonLink(id: string) {
+  return localePath({ name: "education-course-slug-lesson-id", params: { slug: course.value?.slug ?? slug.value, id } });
+}
+
+definePageMeta({
+  alias: ["/academy/course/:slug"],
+});
 </script>

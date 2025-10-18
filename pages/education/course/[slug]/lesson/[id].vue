@@ -41,6 +41,8 @@ const { t } = useI18n();
 const route = useRoute();
 const store = useEducationStore();
 
+const localePath = useLocalePath();
+
 const slug = computed(() => String(route.params.slug));
 const lessonId = computed(() => String(route.params.id));
 
@@ -90,30 +92,33 @@ const isLastLesson = computed(() => lessonIndex.value === lessons.value.length -
 
 const prevLessonLink = computed(() => {
   if (lessonIndex.value > 0) {
-    return {
+    return localePath({
       name: "education-course-slug-lesson-id",
       params: { slug: slug.value, id: lessons.value[lessonIndex.value - 1]!.id },
-    };
+    });
   }
-  return { name: "education-course-slug", params: { slug: slug.value } };
+  return localePath({ name: "education-course-slug", params: { slug: slug.value } });
 });
 
 const nextLessonLink = computed(() => {
   if (lessonIndex.value < lessons.value.length - 1) {
-    return {
+    return localePath({
       name: "education-course-slug-lesson-id",
       params: { slug: slug.value, id: lessons.value[lessonIndex.value + 1]!.id },
-    };
+    });
   }
-  return {
+  return localePath({
     name: "education-course-slug-quiz",
     params: { slug: slug.value },
-  };
+  });
 });
 
 const breadcrumbs = computed(() => [
-  { title: t("education.breadcrumb.home"), to: "/education" },
-  { title: course.value?.title ?? "", to: { name: "education-course-slug", params: { slug: slug.value } } },
+  { title: t("education.breadcrumb.home"), to: localePath("/education") },
+  {
+    title: course.value?.title ?? "",
+    to: localePath({ name: "education-course-slug", params: { slug: slug.value } }),
+  },
   { title: lesson.value?.title ?? "", disabled: true },
 ]);
 
@@ -140,4 +145,8 @@ function markCompleted() {
   }
   store.markLessonDone(course.value.id, lesson.value.id);
 }
+
+definePageMeta({
+  alias: ["/academy/course/:slug/lesson/:id"],
+});
 </script>
