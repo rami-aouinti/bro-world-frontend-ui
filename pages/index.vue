@@ -355,6 +355,7 @@ const initialLoadError = ref<string | null>(null);
 const isLoadErrorDismissed = ref(false);
 const loadMoreRequestInFlight = ref(false);
 const { schedule: scheduleNonBlockingTask } = useNonBlockingTask({ timeout: 500 });
+const initialLoadPromise = ref<Promise<void> | null>(null);
 
 const loadErrorMessage = computed(() => {
   if (isLoadErrorDismissed.value) {
@@ -441,7 +442,7 @@ if (import.meta.client) {
   });
 }
 
-async function loadInitialPosts() {
+async function performInitialPostsLoad() {
   try {
     await fetchPosts(1, { params: { pageSize: INITIAL_PAGE_SIZE } });
     initialLoadError.value = null;
@@ -455,22 +456,41 @@ async function loadInitialPosts() {
   }
 }
 
+function ensureInitialPostsLoad() {
+  if (!initialLoadPromise.value) {
+    initialLoadPromise.value = performInitialPostsLoad().finally(() => {
+      initialLoadPromise.value = null;
+    });
+  }
+
+  return initialLoadPromise.value;
+}
+
 await callOnce(async () => {
   if (import.meta.server) {
-    await loadInitialPosts();
+    await ensureInitialPostsLoad();
     return;
   }
 
-  scheduleNonBlockingTask(loadInitialPosts);
+  scheduleNonBlockingTask(() => {
+    void ensureInitialPostsLoad();
+  });
 });
 
 if (import.meta.client) {
   onMounted(() => {
-    if (posts.value.length > 0 || pending.value || loadingMore.value) {
+    if (
+      posts.value.length > 0 ||
+      pending.value ||
+      loadingMore.value ||
+      initialLoadPromise.value
+    ) {
       return;
     }
 
-    scheduleNonBlockingTask(loadInitialPosts);
+    scheduleNonBlockingTask(() => {
+      void ensureInitialPostsLoad();
+    });
   });
 }
 </script>

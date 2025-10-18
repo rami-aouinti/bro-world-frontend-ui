@@ -44,6 +44,11 @@ const fallbackSiteConfig = {
   description: "Welcome to Bro World — your unique community platform.",
 };
 
+const hasInjectionSupport = Boolean(nuxtApp && hasInjectionContext());
+const appConfig = hasInjectionSupport ? useAppConfig() : null;
+const runtimeConfig = hasInjectionSupport ? useRuntimeConfig() : null;
+const requestUrl = hasInjectionSupport ? useRequestURL() : null;
+
 const routeLoadingState = useState("route:loading", () => false);
 const routeLoading = computed(() => routeLoadingState.value);
 const initialLoadingState = useState("app:initial-loading", () => true);
@@ -79,11 +84,10 @@ function markInitialHydrationComplete() {
 }
 
 const siteConfig = computed(() => {
-  if (!nuxtApp || !hasInjectionContext()) {
+  if (!hasInjectionSupport || !appConfig) {
     return fallbackSiteConfig;
   }
 
-  const appConfig = useAppConfig();
   const site = appConfig?.shadcnDocs?.site;
 
   return {
@@ -151,8 +155,6 @@ const bodyClass = computed(() => {
   return classes.join(" ").trim();
 });
 const bodyStyle = computed(() => `--radius: ${radius.value}rem;`);
-const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
-const requestUrl = nuxtApp && hasInjectionContext() ? useRequestURL() : null;
 
 const fallbackBaseUrl = "https://bro-world-space.com";
 
@@ -188,13 +190,6 @@ type SeoMetaFields = {
   keywords?: string;
 };
 
-const matchedMeta = computed<SeoMetaFields>(() => {
-  return (route.matched?.[0]?.meta as SeoMetaFields) ?? {};
-});
-const currentMeta = computed<SeoMetaFields>(() => (route.meta as SeoMetaFields) ?? {});
-
-const defaultTitle = computed(() => siteConfig.value.name);
-const defaultDescription = computed(() => siteConfig.value.description);
 const canonicalUrl = computed(() => {
   const base = normalizedBaseUrl.value;
 
@@ -210,15 +205,19 @@ const canonicalUrl = computed(() => {
   }
 });
 
-const title = computed(
-  () => currentMeta.value.title ?? matchedMeta.value.title ?? defaultTitle.value,
-);
-const description = computed(
-  () => currentMeta.value.description ?? matchedMeta.value.description ?? defaultDescription.value,
-);
-const keywords = computed(
-  () => currentMeta.value.keywords ?? matchedMeta.value.keywords ?? "social, Bro world, Community",
-);
+const DEFAULT_SEO_KEYWORDS = "social, Bro world, Community";
+
+const resolvedSeoMeta = computed(() => {
+  const matchedMeta = (route.matched?.[0]?.meta as SeoMetaFields) ?? {};
+  const currentMeta = (route.meta as SeoMetaFields) ?? {};
+
+  return {
+    title: currentMeta.title ?? matchedMeta.title ?? siteConfig.value.name,
+    description:
+      currentMeta.description ?? matchedMeta.description ?? siteConfig.value.description,
+    keywords: currentMeta.keywords ?? matchedMeta.keywords ?? DEFAULT_SEO_KEYWORDS,
+  };
+});
 
 const structuredData = computed(() =>
   JSON.stringify({
@@ -226,14 +225,14 @@ const structuredData = computed(() =>
     "@type": "WebSite",
     url: canonicalUrl.value,
     name: "Bro World",
-    description: description.value,
+    description: resolvedSeoMeta.value.description,
   }),
 );
 
 const socialImageUrl = computed(() => `${normalizedBaseUrl.value}/social-img.png`);
 const themeColor = computed(() => themePrimaryHex.value ?? "#03203d");
 
-const switchLocalePath = hasInjectionContext() ? useSwitchLocalePath() : null;
+const switchLocalePath = hasInjectionSupport ? useSwitchLocalePath() : null;
 
 type LocaleEntry = { code?: string };
 
@@ -303,20 +302,31 @@ const alternateLocaleLinks = computed(() => {
   return links;
 });
 
-const headLinks = computed(() => [
-  { rel: "icon", href: "/favicon.ico" },
-  { rel: "canonical", href: canonicalUrl.value },
-  ...alternateLocaleLinks.value,
-]);
+const headLinks = computed(() => {
+  const canonical = canonicalUrl.value;
 
-useHead({
-  title,
-  titleTemplate: (value) => (value ? `${value} | Bro World` : "Bro World"),
-  htmlAttrs: {
-    dir: computed(() => (isRtlLocale.value ? "rtl" : "ltr")),
-    lang: computed(() => locale.value),
-  },
-  link: headLinks,
+  return [
+    { rel: "icon", href: "/favicon.ico" },
+    { rel: "canonical", href: canonical },
+    ...alternateLocaleLinks.value,
+  ];
+});
+
+const htmlAttributes = computed(() => ({
+  dir: isRtlLocale.value ? "rtl" : "ltr",
+  lang: locale.value,
+}));
+
+const bodyAttributes = computed(() => ({
+  class: bodyClass.value,
+  style: bodyStyle.value,
+}));
+
+const headConfig = computed(() => ({
+  title: resolvedSeoMeta.value.title,
+  titleTemplate: (value?: string) => (value ? `${value} | Bro World` : "Bro World"),
+  htmlAttrs: htmlAttributes.value,
+  link: headLinks.value,
   meta: [
     {
       name: "google-site-verification",
@@ -332,30 +342,31 @@ useHead({
       children: structuredData.value,
     },
   ],
-  bodyAttrs: {
-    class: () => bodyClass.value,
-    style: () => bodyStyle.value,
-  },
-});
+  bodyAttrs: bodyAttributes.value,
+}));
 
-useSeoMeta({
-  title,
-  description,
+useHead(() => headConfig.value);
+
+const seoMetaPayload = computed(() => ({
+  title: resolvedSeoMeta.value.title,
+  description: resolvedSeoMeta.value.description,
   author: "rami.aouinti@gmail.com",
-  ogTitle: title,
-  ogDescription: description,
+  ogTitle: resolvedSeoMeta.value.title,
+  ogDescription: resolvedSeoMeta.value.description,
   ogType: "website",
-  ogUrl: canonicalUrl,
-  ogImage: socialImageUrl,
-  twitterTitle: title,
-  twitterDescription: description,
-  twitterImage: socialImageUrl,
+  ogUrl: canonicalUrl.value,
+  ogImage: socialImageUrl.value,
+  twitterTitle: resolvedSeoMeta.value.title,
+  twitterDescription: resolvedSeoMeta.value.description,
+  twitterImage: socialImageUrl.value,
   twitterCard: "summary_large_image",
-  keywords,
-  themeColor,
+  keywords: resolvedSeoMeta.value.keywords,
+  themeColor: themeColor.value,
   robots: "index, follow",
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
-  ogLocale: locale,
+  ogLocale: locale.value,
   ogSiteName: "Bro World",
-});
+}));
+
+useSeoMeta(() => seoMetaPayload.value);
 </script>
