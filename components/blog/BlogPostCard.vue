@@ -133,7 +133,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, shallowRef, watch } from "vue";
+import { computed, defineAsyncComponent, nextTick, reactive, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#imports";
@@ -445,6 +445,11 @@ function handleCommentLike(commentId: string) {
 }
 const CommentSortMenu = defineAsyncComponent({
   loader: () => import("~/components/blog/CommentSortMenu.vue"),
+  suspensible: false,
+});
+
+const CommentThread = defineAsyncComponent({
+  loader: () => import("~/components/blog/CommentThread.vue"),
   suspensible: false,
 });
 

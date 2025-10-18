@@ -96,6 +96,8 @@
               :reaction-emojis="reactionEmojis"
               :reaction-labels="reactionLabels"
               :prefer-eager-media-loading="index === 0"
+              :defer-offscreen="index > 0"
+              :intrinsic-height="blogPostCardIntrinsicHeight"
             />
           </template>
           <template #fallback>
@@ -140,6 +142,7 @@ import { useProfileStore } from "~/stores/profile";
 import type { Story, StoryReaction } from "~/types/stories";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
+const blogPostCardIntrinsicHeight = 720;
 const auth = useAuthSession();
 const profileStore = useProfileStore();
 

@@ -38,6 +38,8 @@ const props = withDefaults(
     particles?: boolean;
     particlesProps?: ParticlesProps;
     glow?: boolean;
+    deferOffscreen?: boolean;
+    intrinsicHeight?: number;
   }>(),
   {
     tag: "div",
@@ -50,6 +52,8 @@ const props = withDefaults(
         staticity: 12,
       }) as ParticlesProps,
     glow: false,
+    deferOffscreen: false,
+    intrinsicHeight: 600,
   },
 );
 
@@ -92,7 +96,7 @@ const paddingValueMap: Record<PaddingSize, string> = {
   lg: "1.5rem",
 };
 
-const cardStyle = ref<Record<string, string>>({
+const baseCardStyle = ref<Record<string, string>>({
   "--card-x": paddingValueMap[props.padding] ?? "0px",
   borderRadius: "var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px))",
 });
@@ -100,12 +104,44 @@ const cardStyle = ref<Record<string, string>>({
 watch(
   () => props.padding,
   (value) => {
-    cardStyle.value = {
-      ...cardStyle.value,
+    baseCardStyle.value = {
+      ...baseCardStyle.value,
       "--card-x": paddingValueMap[value] ?? "0px",
     };
   },
 );
+
+const shouldDeferOffscreen = computed(() => Boolean(props.deferOffscreen));
+
+const intrinsicHeightValue = computed(() => {
+  const rawValue = Number(props.intrinsicHeight);
+
+  if (Number.isFinite(rawValue) && rawValue > 0) {
+    return rawValue;
+  }
+
+  return 600;
+});
+
+const offscreenStyle = computed(() => {
+  if (!shouldDeferOffscreen.value) {
+    return {} as Record<string, string>;
+  }
+
+  const intrinsicHeight = Math.max(1, intrinsicHeightValue.value);
+  const intrinsicSizeValue = `${intrinsicHeight}px`;
+
+  return {
+    contentVisibility: "auto",
+    containIntrinsicSize: `auto ${intrinsicSizeValue}`,
+    "--sidebar-card-intrinsic-size": intrinsicSizeValue,
+  } as Record<string, string>;
+});
+
+const cardStyle = computed(() => ({
+  ...baseCardStyle.value,
+  ...offscreenStyle.value,
+}));
 
 const shouldRenderParticles = computed(() => props.particles);
 const resolvedParticlesProps = computed(() => props.particlesProps);
@@ -128,9 +164,9 @@ function updateParticlesAnimation() {
 if (import.meta.client) {
   function applyPaddingMeasurement(padding: number) {
     const nextValue = `${Math.max(0, padding)}px`;
-    if (cardStyle.value["--card-x"] !== nextValue) {
-      cardStyle.value = {
-        ...cardStyle.value,
+    if (baseCardStyle.value["--card-x"] !== nextValue) {
+      baseCardStyle.value = {
+        ...baseCardStyle.value,
         "--card-x": nextValue,
       };
     }
