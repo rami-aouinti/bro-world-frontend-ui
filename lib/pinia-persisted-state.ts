@@ -153,7 +153,7 @@ function normalizeOptions(
     .filter((entry): entry is NormalizedPersistedStateOption => Boolean(entry.storage));
 }
 
-export default function piniaPluginPersistedstate(context: PiniaPluginContext) {
+export default function piniaPersistedStatePlugin(context: PiniaPluginContext) {
   const rawOptions = (context.options as { persist?: PersistedStateOptions | PersistedStateOptions[] }).persist;
 
   if (!rawOptions) {
@@ -183,7 +183,7 @@ export default function piniaPluginPersistedstate(context: PiniaPluginContext) {
       }
     } catch (error) {
       if (import.meta.dev) {
-        console.warn("[pinia-plugin-persistedstate] Failed to restore store state", error);
+        console.warn("[pinia-persisted-state] Failed to restore store state", error);
       }
     }
 
@@ -194,7 +194,7 @@ export default function piniaPluginPersistedstate(context: PiniaPluginContext) {
           storage.setItem(storageKey, serializer.serialize(toStore));
         } catch (error) {
           if (import.meta.dev) {
-            console.warn("[pinia-plugin-persistedstate] Failed to persist store state", error);
+            console.warn("[pinia-persisted-state] Failed to persist store state", error);
           }
         }
       },

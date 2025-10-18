@@ -45,7 +45,7 @@ export default defineNuxtPlugin(() => {
           (c[a].q = c[a].q || []).push(arguments);
         };
       t = l.createElement(r);
-      t.type = "text/partytown";
+      t.async = true;
       t.setAttribute("data-loaded-by", "nuxt-clarity-plugin");
       t.src = `https://www.clarity.ms/tag/${i}`;
       y = l.getElementsByTagName(r)[0];

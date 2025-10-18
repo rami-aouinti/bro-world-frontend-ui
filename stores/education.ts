@@ -1,4 +1,4 @@
-import { persistedState } from "pinia-plugin-persistedstate";
+import { persistedState } from "~/lib/pinia-persisted-state";
 import { computed, reactive, ref, watch } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
 import { educationCategoriesMock } from "~/lib/mock/education";
