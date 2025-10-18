@@ -41,7 +41,12 @@
 
         <template #[`item.name`]="{ item }">
           <div class="d-flex flex-column gap-1">
-            <span class="text-body-1 font-weight-semibold">{{ item.name }}</span>
+            <NuxtLink
+              :to="item.detailPath"
+              class="text-body-1 font-weight-semibold text-decoration-none"
+            >
+              {{ item.name }}
+            </NuxtLink>
             <div class="d-flex flex-wrap align-center gap-2 text-medium-emphasis text-caption">
               <span v-if="item.pipeline">{{ item.pipeline }}</span>
               <span v-if="item.stage" class="d-flex align-center gap-1">
@@ -115,6 +120,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useLocalePath } from "#imports";
 
 import type { CrmProject } from "~/stores/crm-projects";
 
@@ -132,6 +138,7 @@ const props = withDefaults(
 );
 
 const { locale } = useI18n();
+const localePath = useLocalePath();
 
 const headers = computed(() => [
   { title: "Project", key: "name", sortable: false },
@@ -156,6 +163,7 @@ const tableItems = computed(() =>
     probability: project.probability ?? null,
     dueDate: project.dueDate ?? project.finishDate ?? null,
     tags: Array.isArray(project.tags) ? project.tags : [],
+    detailPath: resolveProjectPath(project.id),
   })),
 );
 
@@ -215,6 +223,19 @@ function priorityColor(priority: string | null) {
       return "success";
     default:
       return "primary";
+  }
+}
+
+function resolveProjectPath(id: string) {
+  const trimmed = id?.trim();
+  if (!trimmed) {
+    return "/crm";
+  }
+
+  try {
+    return localePath({ name: "crm-projects-id", params: { id: trimmed } });
+  } catch {
+    return `/crm/projects/${trimmed}`;
   }
 }
 </script>
