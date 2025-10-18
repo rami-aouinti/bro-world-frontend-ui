@@ -1,7 +1,8 @@
 import { computed } from "vue";
-import { useState } from "#imports";
+import { useRuntimeConfig, useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
+import { crmProjectsMock } from "~/lib/mock/crm-projects";
 
 export interface CrmProject {
   id: string;
@@ -18,6 +19,7 @@ export interface CrmProject {
   probability?: number | null;
   startDate?: string | null;
   dueDate?: string | null;
+  finishDate?: string | null;
   createdAt?: string | null;
   updatedAt?: string | null;
   tags?: string[] | null;
@@ -38,6 +40,7 @@ export interface CrmProjectCreatePayload {
   probability?: number | null;
   startDate?: string | null;
   dueDate?: string | null;
+  finishDate?: string | null;
   tags?: string[] | null;
 }
 
@@ -69,6 +72,7 @@ interface ListProjectsOptions {
 
 const CACHE_TTL = 60_000;
 const HTML_TAG_PATTERN = /<\/?[a-z][^>]*>/i;
+const MOCK_REQUEST_DELAY = 180;
 
 function sanitizeErrorMessage(message: string): string {
   const trimmed = message.trim();
@@ -170,6 +174,40 @@ function normalizeDate(value: unknown): string | null {
   return null;
 }
 
+function resolveBooleanFlag(value: unknown, defaultValue: boolean): boolean {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "number") {
+    if (value === 1) {
+      return true;
+    }
+
+    if (value === 0) {
+      return false;
+    }
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+
+    if (normalized === "") {
+      return defaultValue;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return defaultValue;
+}
+
 function extractErrorMessage(error: unknown): string {
   if (!error) {
     return "";
@@ -253,6 +291,14 @@ function normalizeProject(candidate: unknown): CrmProject | null {
     probability: ensureNumber(value.probability ?? value.probabilityScore),
     startDate: normalizeDate(value.startDate ?? value.start_date ?? value.openedAt),
     dueDate: normalizeDate(value.dueDate ?? value.due_date ?? value.expectedCloseDate),
+    finishDate: normalizeDate(
+      value.finishDate ??
+        value.finish_date ??
+        value.closeDate ??
+        value.close_date ??
+        value.completedAt ??
+        value.completed_at,
+    ),
     createdAt: normalizeDate(value.createdAt ?? value.created_at ?? value.createdOn),
     updatedAt: normalizeDate(value.updatedAt ?? value.updated_at ?? value.modifiedOn),
     tags: ensureStringArray(value.tags ?? value.labels ?? value.categories),
@@ -297,11 +343,55 @@ function buildOptimisticProject(payload: CrmProjectCreatePayload): CrmProject {
     probability: ensureNumber(payload.probability),
     startDate: normalizeDate(payload.startDate),
     dueDate: normalizeDate(payload.dueDate),
+    finishDate: normalizeDate(payload.finishDate),
     createdAt: now,
     updatedAt: now,
     tags,
     __optimistic: true,
   };
+}
+
+function generateMockProjectId(): string {
+  return `mock-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function waitForMockDelay(delay = MOCK_REQUEST_DELAY): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+function buildMockProject(payload: CrmProjectCreatePayload): CrmProject {
+  const now = new Date().toISOString();
+  const tags = ensureStringArray(payload.tags ?? null);
+  const name = ensureString(payload.name) ?? "";
+
+  return {
+    id: generateMockProjectId(),
+    name,
+    description: ensureString(payload.description),
+    status: ensureString(payload.status),
+    stage: ensureString(payload.stage),
+    priority: ensureString(payload.priority),
+    pipeline: ensureString(payload.pipeline),
+    ownerId: ensureString(payload.ownerId),
+    ownerName: ensureString(payload.ownerName),
+    clientName: ensureString(payload.clientName),
+    budget: ensureNumber(payload.budget),
+    probability: ensureNumber(payload.probability),
+    startDate: normalizeDate(payload.startDate),
+    dueDate: normalizeDate(payload.dueDate),
+    finishDate: normalizeDate(payload.finishDate),
+    createdAt: now,
+    updatedAt: now,
+    tags,
+    __optimistic: false,
+  };
+}
+
+function loadMockProjects(): CrmProject[] {
+  return crmProjectsMock
+    .map((project) => normalizeProject(project))
+    .filter((project): project is CrmProject => Boolean(project))
+    .map((project) => ({ ...project, __optimistic: false }));
 }
 
 function updateMetaState(
@@ -347,6 +437,15 @@ export const useCrmProjectsStore = defineStore("crm-projects", () => {
     "crm-projects:meta",
     () => null,
   );
+  const runtimeConfig = useRuntimeConfig();
+  const envMockFlag =
+    typeof process !== "undefined" ? process.env?.NUXT_PUBLIC_CRM_PROJECTS_USE_MOCKS : undefined;
+  const configMockFlag = runtimeConfig.public?.crmProjects?.useMocks;
+  const useMockData = resolveBooleanFlag(
+    typeof envMockFlag !== "undefined" ? envMockFlag : configMockFlag,
+    true,
+  );
+  const mockProjects = useState<CrmProject[]>("crm-projects:mock-data", () => loadMockProjects());
 
   const projects = computed(() =>
     listIds.value
@@ -443,6 +542,19 @@ export const useCrmProjectsStore = defineStore("crm-projects", () => {
     pending.value = true;
     error.value = null;
 
+    if (useMockData) {
+      try {
+        await waitForMockDelay();
+        const data = mockProjects.value.map((project) => ({ ...project, __optimistic: false }));
+        setProjectsFromResponse({ data });
+        lastFetched.value = now;
+        lastParamsKey.value = paramsKey;
+        return projects.value;
+      } finally {
+        pending.value = false;
+      }
+    }
+
     const fetcher = resolveApiFetcher();
     const crud = fetcher.crud("/projects");
 
@@ -480,10 +592,21 @@ export const useCrmProjectsStore = defineStore("crm-projects", () => {
     const optimisticProject = buildOptimisticProject({ ...payload, name: trimmedName });
     upsertProject(optimisticProject);
 
-    const fetcher = resolveApiFetcher();
-    const crud = fetcher.crud("/projects");
-
     try {
+      if (useMockData) {
+        await waitForMockDelay();
+        const mockProject = buildMockProject({ ...payload, name: trimmedName });
+        mockProjects.value = [
+          { ...mockProject, __optimistic: false },
+          ...mockProjects.value.filter((project) => project.id !== mockProject.id),
+        ];
+        replaceProject(optimisticProject.id, { ...mockProject, __optimistic: false });
+        total.value = mockProjects.value.length;
+        return mockProject;
+      }
+
+      const fetcher = resolveApiFetcher();
+      const crud = fetcher.crud("/projects");
       const response = await crud.create<CrmProjectResponse, CrmProjectCreatePayload>(payload);
       const project = normalizeProject(response?.data);
 
@@ -533,6 +656,9 @@ export const useCrmProjectsStore = defineStore("crm-projects", () => {
     lastParamsKey.value = null;
     total.value = null;
     meta.value = null;
+    if (useMockData) {
+      mockProjects.value = loadMockProjects();
+    }
   }
 
   return {
