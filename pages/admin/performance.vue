@@ -4,32 +4,68 @@
     aria-labelledby="performance-heading"
   >
     <v-container class="performance-page__container">
-      <PerformanceHero
-        :title="performanceTitle"
-        :description="performanceSubtitle"
-        :badge="performanceBadge"
-        :last-updated="performanceUpdated"
-        :score="performanceScore"
-        :max-score="performanceMaxScore"
-      />
+      <Suspense>
+        <template #default>
+          <LazyPerformanceHero
+            :title="performanceTitle"
+            :description="performanceSubtitle"
+            :badge="performanceBadge"
+            :last-updated="performanceUpdated"
+            :score="performanceScore"
+            :max-score="performanceMaxScore"
+          />
+        </template>
+        <template #fallback>
+          <PerformanceHeroSkeleton />
+        </template>
+      </Suspense>
 
-      <MetricGrid
-        :title="metricsTitle"
-        :subtitle="metricsSubtitle"
-        :metrics="metricCards"
-      />
+      <Suspense>
+        <template #default>
+          <LazyMetricGrid
+            :title="metricsTitle"
+            :subtitle="metricsSubtitle"
+            :metrics="metricCards"
+          />
+        </template>
+        <template #fallback>
+          <PerformanceCardGridSkeleton
+            :card-count="metricCards.length || 6"
+            :card-line-count="3"
+          />
+        </template>
+      </Suspense>
 
-      <OpportunityList
-        :title="opportunitiesTitle"
-        :subtitle="opportunitiesSubtitle"
-        :opportunities="opportunities"
-      />
+      <Suspense>
+        <template #default>
+          <LazyOpportunityList
+            :title="opportunitiesTitle"
+            :subtitle="opportunitiesSubtitle"
+            :opportunities="opportunities"
+          />
+        </template>
+        <template #fallback>
+          <PerformanceCardGridSkeleton
+            :card-count="opportunities.length || 4"
+            :card-line-count="4"
+          />
+        </template>
+      </Suspense>
 
-      <ImprovementTimeline
-        :title="timelineTitle"
-        :subtitle="timelineSubtitle"
-        :milestones="timelineMilestones"
-      />
+      <Suspense>
+        <template #default>
+          <LazyImprovementTimeline
+            :title="timelineTitle"
+            :subtitle="timelineSubtitle"
+            :milestones="timelineMilestones"
+          />
+        </template>
+        <template #fallback>
+          <PerformanceTimelineSkeleton
+            :item-count="timelineMilestones.length || 4"
+          />
+        </template>
+      </Suspense>
     </v-container>
   </main>
 </template>
@@ -37,11 +73,6 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-
-import PerformanceHero from "~/components/performance/PerformanceHero.vue";
-import MetricGrid from "~/components/performance/MetricGrid.vue";
-import OpportunityList from "~/components/performance/OpportunityList.vue";
-import ImprovementTimeline from "~/components/performance/ImprovementTimeline.vue";
 
 const METRIC_ICON_MAP = Object.freeze({
   fcp: "mdi:flash", // First Contentful Paint
