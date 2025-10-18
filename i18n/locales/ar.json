@@ -1907,7 +1907,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1921,7 +1925,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1935,7 +1943,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1949,7 +1961,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -2567,7 +2583,6 @@
       "title": "Jobs",
       "description": "Plan, track, and optimise hiring programmes."
     },
-
     "game": {
       "title": "Gaming",
       "description": "Deliver live game experiences, communities, and monetisation."
@@ -3036,25 +3051,41 @@
           "content": {
             "title": "إدارة المحتوى",
             "description": "خطط للمقالات والفعاليات والموارد التعليمية وانشرها أو أرشفها.",
-            "tags": ["سير عمل تحريري", "مراجعة", "جدولة"],
+            "tags": [
+              "سير عمل تحريري",
+              "مراجعة",
+              "جدولة"
+            ],
             "status": "هناك 12 عنصراً بحاجة إلى مراجعة تحريرية."
           },
           "community": {
             "title": "المجتمع والإشراف",
             "description": "اضبط قواعد الإشراف وتابع البلاغات والعقوبات.",
-            "tags": ["بلاغات", "عقوبات", "رسائل خاصة"],
+            "tags": [
+              "بلاغات",
+              "عقوبات",
+              "رسائل خاصة"
+            ],
             "status": "متوسط وقت الاستجابة: ساعة و42 دقيقة."
           },
           "commerce": {
             "title": "الربحية والعروض",
             "description": "أدر الاشتراكات والرموز الترويجية والشراكات التجارية.",
-            "tags": ["اشتراكات", "فوترة", "قسائم"],
+            "tags": [
+              "اشتراكات",
+              "فوترة",
+              "قسائم"
+            ],
             "status": "ارتفع معدل التحويل بنسبة 3.4٪ هذا الأسبوع."
           },
           "governance": {
             "title": "الحوكمة والامتثال",
             "description": "دقق صلاحيات الوصول، أدر الأدوار الحساسة وجهّز تقارير الامتثال.",
-            "tags": ["تدقيق", "أدوار", "تتبع"],
+            "tags": [
+              "تدقيق",
+              "أدوار",
+              "تتبع"
+            ],
             "status": "آخر تدقيق شامل تم قبل 5 أيام."
           }
         }
@@ -3535,6 +3566,88 @@
           }
         }
       }
+    }
+  },
+  "media": {
+    "toolbar": {
+      "newFolder": "مجلد جديد",
+      "upload": "تحميل",
+      "gridView": "عرض الشبكة",
+      "listView": "عرض القائمة",
+      "showTrash": "فتح سلة المهملات",
+      "hideTrash": "إغلاق سلة المهملات",
+      "refresh": "تحديث"
+    },
+    "tree": {
+      "ariaLabel": "مجلدات الوسائط"
+    },
+    "breadcrumbs": {
+      "root": "وسائطي"
+    },
+    "grid": {
+      "empty": "هذا المجلد فارغ",
+      "ariaLabel": "شبكة الوسائط"
+    },
+    "list": {
+      "columns": {
+        "name": "الاسم",
+        "type": "النوع",
+        "size": "الحجم",
+        "updatedAt": "آخر تحديث"
+      },
+      "empty": "لا توجد ملفات في هذا المجلد"
+    },
+    "upload": {
+      "title": "تحميل ملفات",
+      "dropTitle": "أسقط الملفات هنا",
+      "dropSubtitle": "أو تصفح جهازك لاختيار ملفات",
+      "browse": "تصفح الملفات",
+      "queue": "قائمة التحميل",
+      "empty": "لا توجد عمليات تحميل جارية"
+    },
+    "rename": {
+      "title": "إعادة تسمية",
+      "nameLabel": "الاسم",
+      "namePlaceholder": "أدخل اسماً",
+      "save": "حفظ"
+    },
+    "delete": {
+      "title": "نقل إلى سلة المهملات",
+      "description": "يتم الاحتفاظ بالعناصر المحذوفة لمدة 30 يوماً في سلة المهملات.",
+      "confirm": "حذف",
+      "purgeTitle": "حذف نهائي",
+      "purgeDescription": "سيتم حذف العنصر المحدد نهائياً. لا يمكن التراجع عن هذا الإجراء."
+    },
+    "move": {
+      "title": "نقل إلى مجلد",
+      "destinationLabel": "الوجهة",
+      "confirm": "نقل",
+      "rootOption": "المستوى الرئيسي"
+    },
+    "preview": {
+      "ariaLabel": "معاينة الملف",
+      "unavailable": "المعاينة غير متاحة",
+      "empty": "اختر ملفاً لمعاينته",
+      "download": "تنزيل"
+    },
+    "createFolder": {
+      "title": "إنشاء مجلد"
+    },
+    "actions": {
+      "open": "فتح",
+      "rename": "إعادة تسمية",
+      "move": "نقل",
+      "delete": "حذف",
+      "deleteForever": "حذف نهائي",
+      "restore": "استعادة"
+    },
+    "trash": {
+      "name": "الاسم",
+      "type": "النوع",
+      "deletedAt": "تاريخ الحذف",
+      "actions": "إجراءات",
+      "file": "ملف",
+      "folder": "مجلد"
     }
   }
 }

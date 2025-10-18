@@ -3370,5 +3370,87 @@
         }
       }
     }
+  },
+  "media": {
+    "toolbar": {
+      "newFolder": "Nuova cartella",
+      "upload": "Carica",
+      "gridView": "Vista griglia",
+      "listView": "Vista elenco",
+      "showTrash": "Apri cestino",
+      "hideTrash": "Chiudi cestino",
+      "refresh": "Aggiorna"
+    },
+    "tree": {
+      "ariaLabel": "Cartelle media"
+    },
+    "breadcrumbs": {
+      "root": "I miei media"
+    },
+    "grid": {
+      "empty": "Questa cartella è vuota",
+      "ariaLabel": "Griglia media"
+    },
+    "list": {
+      "columns": {
+        "name": "Nome",
+        "type": "Tipo",
+        "size": "Dimensione",
+        "updatedAt": "Aggiornato"
+      },
+      "empty": "Nessun file in questa cartella"
+    },
+    "upload": {
+      "title": "Carica file",
+      "dropTitle": "Rilascia i file qui",
+      "dropSubtitle": "oppure sfoglia il dispositivo per selezionare i file",
+      "browse": "Sfoglia file",
+      "queue": "Coda di caricamento",
+      "empty": "Nessun caricamento in corso"
+    },
+    "rename": {
+      "title": "Rinomina",
+      "nameLabel": "Nome",
+      "namePlaceholder": "Inserisci un nome",
+      "save": "Salva"
+    },
+    "delete": {
+      "title": "Sposta nel cestino",
+      "description": "Gli elementi eliminati vengono conservati nel cestino per 30 giorni.",
+      "confirm": "Elimina",
+      "purgeTitle": "Elimina definitivamente",
+      "purgeDescription": "Questo eliminerà definitivamente l'elemento selezionato. Questa azione non può essere annullata."
+    },
+    "move": {
+      "title": "Sposta nella cartella",
+      "destinationLabel": "Destinazione",
+      "confirm": "Sposta",
+      "rootOption": "Livello principale"
+    },
+    "preview": {
+      "ariaLabel": "Anteprima file",
+      "unavailable": "Anteprima non disponibile",
+      "empty": "Seleziona un file da visualizzare",
+      "download": "Scarica"
+    },
+    "createFolder": {
+      "title": "Crea cartella"
+    },
+    "actions": {
+      "open": "Apri",
+      "rename": "Rinomina",
+      "move": "Sposta",
+      "delete": "Elimina",
+      "deleteForever": "Elimina definitivamente",
+      "restore": "Ripristina"
+    },
+    "trash": {
+      "name": "Nome",
+      "type": "Tipo",
+      "deletedAt": "Eliminato il",
+      "actions": "Azioni",
+      "file": "File",
+      "folder": "Cartella"
+    }
   }
 }

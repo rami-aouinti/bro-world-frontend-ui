@@ -1348,7 +1348,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1362,7 +1366,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1376,7 +1384,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1390,7 +1402,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -3180,25 +3196,41 @@
           "content": {
             "title": "Content management",
             "description": "Plan, publish, and archive articles, events, and learning resources.",
-            "tags": ["Editorial workflow", "Review", "Scheduling"],
+            "tags": [
+              "Editorial workflow",
+              "Review",
+              "Scheduling"
+            ],
             "status": "12 items require editorial review."
           },
           "community": {
             "title": "Community & moderation",
             "description": "Configure moderation rules, manage reports, and handle sanctions.",
-            "tags": ["Reports", "Sanctions", "Private messages"],
+            "tags": [
+              "Reports",
+              "Sanctions",
+              "Private messages"
+            ],
             "status": "Average response time: 1h42."
           },
           "commerce": {
             "title": "Monetization & offers",
             "description": "Manage subscriptions, promo codes, and commercial partnerships.",
-            "tags": ["Subscriptions", "Billing", "Coupons"],
+            "tags": [
+              "Subscriptions",
+              "Billing",
+              "Coupons"
+            ],
             "status": "Conversion rate up by 3.4% this week."
           },
           "governance": {
             "title": "Governance & compliance",
             "description": "Audit access, manage privileged roles, and prepare compliance reports.",
-            "tags": ["Audit", "Roles", "Traceability"],
+            "tags": [
+              "Audit",
+              "Roles",
+              "Traceability"
+            ],
             "status": "Last full audit completed 5 days ago."
           }
         }
@@ -3584,6 +3616,88 @@
           }
         }
       }
+    }
+  },
+  "media": {
+    "toolbar": {
+      "newFolder": "New folder",
+      "upload": "Upload",
+      "gridView": "Grid view",
+      "listView": "List view",
+      "showTrash": "Open trash",
+      "hideTrash": "Close trash",
+      "refresh": "Refresh"
+    },
+    "tree": {
+      "ariaLabel": "Media folders"
+    },
+    "breadcrumbs": {
+      "root": "My media"
+    },
+    "grid": {
+      "empty": "This folder is empty",
+      "ariaLabel": "Media grid"
+    },
+    "list": {
+      "columns": {
+        "name": "Name",
+        "type": "Type",
+        "size": "Size",
+        "updatedAt": "Updated"
+      },
+      "empty": "No files in this folder"
+    },
+    "upload": {
+      "title": "Upload files",
+      "dropTitle": "Drop files here",
+      "dropSubtitle": "or browse your device to select files",
+      "browse": "Browse files",
+      "queue": "Upload queue",
+      "empty": "No uploads in progress"
+    },
+    "rename": {
+      "title": "Rename",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter a name",
+      "save": "Save"
+    },
+    "delete": {
+      "title": "Move to trash",
+      "description": "Deleted items are kept for 30 days in the trash.",
+      "confirm": "Delete",
+      "purgeTitle": "Delete permanently",
+      "purgeDescription": "This will permanently delete the selected item. This action cannot be undone."
+    },
+    "move": {
+      "title": "Move to folder",
+      "destinationLabel": "Destination",
+      "confirm": "Move",
+      "rootOption": "Top level"
+    },
+    "preview": {
+      "ariaLabel": "File preview",
+      "unavailable": "Preview unavailable",
+      "empty": "Select a file to preview",
+      "download": "Download"
+    },
+    "createFolder": {
+      "title": "Create folder"
+    },
+    "actions": {
+      "open": "Open",
+      "rename": "Rename",
+      "move": "Move",
+      "delete": "Delete",
+      "deleteForever": "Delete permanently",
+      "restore": "Restore"
+    },
+    "trash": {
+      "name": "Name",
+      "type": "Type",
+      "deletedAt": "Deleted",
+      "actions": "Actions",
+      "file": "File",
+      "folder": "Folder"
     }
   }
 }

@@ -3370,5 +3370,87 @@
         }
       }
     }
+  },
+  "media": {
+    "toolbar": {
+      "newFolder": "Nueva carpeta",
+      "upload": "Subir",
+      "gridView": "Vista de cuadrícula",
+      "listView": "Vista de lista",
+      "showTrash": "Abrir papelera",
+      "hideTrash": "Cerrar papelera",
+      "refresh": "Actualizar"
+    },
+    "tree": {
+      "ariaLabel": "Carpetas de medios"
+    },
+    "breadcrumbs": {
+      "root": "Mis medios"
+    },
+    "grid": {
+      "empty": "Esta carpeta está vacía",
+      "ariaLabel": "Cuadrícula de medios"
+    },
+    "list": {
+      "columns": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "size": "Tamaño",
+        "updatedAt": "Actualizado"
+      },
+      "empty": "No hay archivos en esta carpeta"
+    },
+    "upload": {
+      "title": "Subir archivos",
+      "dropTitle": "Suelta los archivos aquí",
+      "dropSubtitle": "o navega en tu dispositivo para seleccionar archivos",
+      "browse": "Examinar archivos",
+      "queue": "Cola de subida",
+      "empty": "No hay subidas en curso"
+    },
+    "rename": {
+      "title": "Renombrar",
+      "nameLabel": "Nombre",
+      "namePlaceholder": "Introduce un nombre",
+      "save": "Guardar"
+    },
+    "delete": {
+      "title": "Mover a la papelera",
+      "description": "Los elementos eliminados se conservan 30 días en la papelera.",
+      "confirm": "Eliminar",
+      "purgeTitle": "Eliminar permanentemente",
+      "purgeDescription": "Esto eliminará permanentemente el elemento seleccionado. Esta acción no se puede deshacer."
+    },
+    "move": {
+      "title": "Mover a carpeta",
+      "destinationLabel": "Destino",
+      "confirm": "Mover",
+      "rootOption": "Nivel principal"
+    },
+    "preview": {
+      "ariaLabel": "Vista previa del archivo",
+      "unavailable": "Vista previa no disponible",
+      "empty": "Selecciona un archivo para previsualizar",
+      "download": "Descargar"
+    },
+    "createFolder": {
+      "title": "Crear carpeta"
+    },
+    "actions": {
+      "open": "Abrir",
+      "rename": "Renombrar",
+      "move": "Mover",
+      "delete": "Eliminar",
+      "deleteForever": "Eliminar permanentemente",
+      "restore": "Restaurar"
+    },
+    "trash": {
+      "name": "Nombre",
+      "type": "Tipo",
+      "deletedAt": "Eliminado el",
+      "actions": "Acciones",
+      "file": "Archivo",
+      "folder": "Carpeta"
+    }
   }
 }
