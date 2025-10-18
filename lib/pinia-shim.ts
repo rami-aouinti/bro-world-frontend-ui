@@ -53,10 +53,33 @@ export function createPinia(): PiniaInstance {
   return pinia;
 }
 
+type StoreOptions<StoreState extends Record<string, unknown>, StoreActions> = {
+  state?: () => StoreState;
+  actions?: StoreActions;
+};
+
 export function defineStore<StoreReturn>(
   id: string,
   setup: () => StoreReturn,
-): (pinia?: PiniaInstance | null) => StoreReturn {
+): (pinia?: PiniaInstance | null) => StoreReturn;
+
+export function defineStore<
+  StoreState extends Record<string, unknown>,
+  StoreActions extends Record<string, (...args: unknown[]) => unknown>,
+>(
+  id: string,
+  options: StoreOptions<StoreState, StoreActions>,
+): (pinia?: PiniaInstance | null) => StoreState & StoreActions;
+
+export function defineStore(
+  id: string,
+  setupOrOptions:
+    | (() => unknown)
+    | StoreOptions<
+        Record<string, unknown>,
+        Record<string, (...args: unknown[]) => unknown>
+      >,
+): (pinia?: PiniaInstance | null) => unknown {
   return function useStore(passedPinia?: PiniaInstance | null) {
     const currentInstance = getCurrentInstance();
     const resolvedPinia =
@@ -75,7 +98,32 @@ export function defineStore<StoreReturn>(
       const scope = effectScope(true);
       const store = scope.run(() => {
         setActivePinia(pinia);
-        return setup();
+        if (typeof setupOrOptions === "function") {
+          return setupOrOptions();
+        }
+
+        const { state: stateFn, actions } = setupOrOptions;
+        const state = reactive(stateFn ? stateFn() : {});
+        const storeWithActions = state as Record<string, unknown>;
+
+        if (actions) {
+          for (const [key, action] of Object.entries(actions)) {
+            Object.defineProperty(storeWithActions, key, {
+              value: (...args: unknown[]) =>
+                (action as (...args: unknown[]) => unknown).apply(
+                  storeWithActions,
+                  args,
+                ),
+              enumerable: true,
+              configurable: true,
+              writable: true,
+            });
+          }
+        }
+
+        pinia.state[id] = state;
+
+        return storeWithActions;
       });
 
       if (!store) {
