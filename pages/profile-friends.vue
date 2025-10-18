@@ -460,6 +460,10 @@ const highlightedFriends = computed(() =>
 );
 const featuredIdSet = computed(() => new Set(highlightedFriends.value.map((friend) => friend.id)));
 
+const numberFormatter = computed(
+  () => new Intl.NumberFormat(locale.value || "en-US"),
+);
+
 const heroStats = computed(computeHeroStats);
 
 const filterOptions = computed(resolveFilterOptions);
@@ -500,23 +504,22 @@ function computeHeroStats() {
   const total = allFriends.value.length;
   const mutual = allFriends.value.filter((friend) => friend.status !== "offline").length;
   const online = allFriends.value.filter((friend) => friend.status === "online").length;
-  const formatter = new Intl.NumberFormat(locale.value || "en-US");
 
   return [
     {
       id: "total",
       label: t("pages.profileFriends.stats.totalFriends"),
-      value: formatter.format(total),
+      value: numberFormatter.value.format(total),
     },
     {
       id: "mutual",
       label: t("pages.profileFriends.stats.mutual"),
-      value: formatter.format(mutual),
+      value: numberFormatter.value.format(mutual),
     },
     {
       id: "online",
       label: t("pages.profileFriends.stats.online"),
-      value: formatter.format(online),
+      value: numberFormatter.value.format(online),
     },
   ];
 }
