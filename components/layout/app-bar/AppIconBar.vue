@@ -80,7 +80,7 @@ function resolveIconSize(icon: { size?: number }) {
 }
 
 const iconBarClasses = computed(() => [
-  "app-icon-bar flex flex-1 items-center justify-center gap-3",
+  "app-icon-bar flex items-center justify-center gap-3",
   isHydrated.value ? "px-4 sm:px-6 md:px-8" : "px-8",
 ]);
 </script>

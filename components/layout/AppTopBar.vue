@@ -42,11 +42,13 @@
       <LayoutSearchButton />
     </div>
 
-    <AppIconBar
-      :app-icons="props.appIcons"
-      :icon-trigger-classes="iconTriggerClasses"
-      :is-dark="props.isDark"
-    />
+    <div :class="iconWrapperClasses">
+      <AppIconBar
+        :app-icons="props.appIcons"
+        :icon-trigger-classes="iconTriggerClasses"
+        :is-dark="props.isDark"
+      />
+    </div>
 
     <template #append>
       <div class="app-top-bar__append">
@@ -199,6 +201,11 @@ const showInlineSearch = computed(
 const showSearchButton = computed(
   () => !config.value.search.inAside && config.value.search.style === "button",
 );
+
+const iconWrapperClasses = computed(() => [
+  "app-top-bar__icons",
+  showInlineSearch.value ? "app-top-bar__icons--with-search" : "",
+]);
 
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const currentUser = computed(() => auth.currentUser.value);
@@ -409,6 +416,7 @@ function markAllNotifications() {
     border-color 0.2s ease,
     box-shadow 0.2s ease;
   --v-theme-overlay-multiplier: 0;
+  position: relative;
 }
 
 .app-top-bar :deep(.v-toolbar__content) {
@@ -432,6 +440,35 @@ function markAllNotifications() {
   justify-content: flex-end;
   gap: 0.75rem;
   min-width: min(100%, 320px);
+}
+
+.app-top-bar__icons {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  position: relative;
+}
+
+.app-top-bar__icons--with-search {
+  flex: 1;
+}
+
+@media (min-width: 960px) {
+  .app-top-bar__icons {
+    flex: 0 0 auto;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .app-top-bar__icons--with-search {
+    flex: 1 1 auto;
+    left: auto;
+    position: relative;
+    top: auto;
+    transform: none;
+  }
 }
 
 .app-top-bar__append-placeholder {
