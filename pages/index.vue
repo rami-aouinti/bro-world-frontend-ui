@@ -17,14 +17,19 @@
     </v-alert>
 
     <template v-if="canAccessAuthenticatedContent">
+      <NewPostSkeleton v-if="pending" />
       <NewPost
+        v-else
         :avatar="userAvatar"
         :user-name="userName"
         @submit="createPost"
         @attach="onAttach"
       />
+
       <div class="my-4">
+        <StoriesStripSkeleton v-if="pending" />
         <SidebarCard
+          v-else
           class="text-card-foreground px-3 py-2"
           glow
         >
