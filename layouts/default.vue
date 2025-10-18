@@ -40,12 +40,12 @@
       class="app-drawer"
       :style="drawerInlineStyle"
     >
-      <template v-if="isHydrated">
+      <template v-if="isHydrated && shouldRenderParticles">
         <ParticlesBg
           ref="leftParticlesRef"
           class="sidebar-default-card__particles"
-          :quantity="50"
-          :ease="50"
+          :quantity="30"
+          :ease="40"
           :staticity="12"
           :auto-start="false"
           refresh
@@ -90,12 +90,12 @@
       data-test="app-right-drawer"
       :style="drawerInlineStyle"
     >
-      <template v-if="isHydrated && canShowRightWidgets">
+      <template v-if="isHydrated && canShowRightWidgets && shouldRenderParticles">
         <ParticlesBg
           ref="rightParticlesRef"
           class="sidebar-default-card__particles"
-          :quantity="50"
-          :ease="50"
+          :quantity="30"
+          :ease="40"
           :staticity="12"
           :auto-start="false"
           refresh
@@ -219,12 +219,12 @@
         ref="mainParticlesContainerRef"
         class="main-scroll py-4"
       >
-        <template v-if="isHydrated">
+        <template v-if="isHydrated && shouldRenderParticles">
           <ParticlesBg
             ref="mainParticlesRef"
             class="sidebar-default-card__particles"
-            :quantity="120"
-            :ease="120"
+            :quantity="90"
+            :ease="100"
             :staticity="12"
             :auto-start="false"
             refresh
@@ -386,6 +386,23 @@ const rightParticlesRef = ref<ParticlesBgInstance | null>(null);
 const mainParticlesRef = ref<ParticlesBgInstance | null>(null);
 const mainParticlesContainerRef = ref<HTMLElement | null>(null);
 const isMainParticlesVisible = ref(false);
+const shouldRenderParticles = ref(false);
+const display = useDisplay();
+const isLargeViewportForParticles = computed(() => {
+  const mdThreshold = display.thresholds.value.md ?? 0;
+
+  if (import.meta.server) {
+    return false;
+  }
+
+  const width = display.width?.value;
+
+  if (typeof width === "number" && Number.isFinite(width) && width > 0) {
+    return width >= mdThreshold;
+  }
+
+  return !display.mobile.value;
+});
 
 type IdleScheduler = (callback: () => void, options?: { timeout?: number }) => void;
 
@@ -409,7 +426,29 @@ const scheduleIdleRender: IdleScheduler | null = import.meta.client
   : null;
 
 if (import.meta.client) {
+  let hasScheduledParticlesRender = false;
+
+  function scheduleParticlesRender() {
+    if (shouldRenderParticles.value || hasScheduledParticlesRender) {
+      return;
+    }
+
+    hasScheduledParticlesRender = true;
+
+    scheduleIdleRender?.(
+      () => {
+        hasScheduledParticlesRender = false;
+        if (isLargeViewportForParticles.value) {
+          shouldRenderParticles.value = true;
+        }
+      },
+      { timeout: 2000 },
+    );
+  }
+
   onMounted(() => {
+    scheduleParticlesRender();
+
     scheduleIdleRender?.(
       () => {
         shouldRenderAnalytics.value = true;
@@ -424,6 +463,16 @@ if (import.meta.client) {
       { timeout: 6500 },
     );
   });
+
+  watch(
+    () => isLargeViewportForParticles.value,
+    (isLarge) => {
+      if (isLarge && !shouldRenderParticles.value) {
+        scheduleParticlesRender();
+      }
+    },
+    { immediate: true },
+  );
 }
 
 const colorMode = useCookieColorMode();
@@ -511,7 +560,6 @@ const initialShowRightWidgets = useState(
   "layout-initial-show-right-widgets",
   () => currentRoute.value?.meta?.showRightWidgets !== false,
 );
-const display = useDisplay();
 const initialIsMobile = useState("layout-initial-is-mobile", () => {
   if (import.meta.server) {
     if (mobileUaHint === "?1") {
@@ -686,6 +734,11 @@ if (import.meta.client) {
       return;
     }
 
+    if (!shouldRenderParticles.value) {
+      instance.stop();
+      return;
+    }
+
     if (isHydrated.value && showNavigation.value && leftDrawer.value) {
       instance.start();
     } else {
@@ -697,6 +750,11 @@ if (import.meta.client) {
     const instance = rightParticlesRef.value;
 
     if (!instance) {
+      return;
+    }
+
+    if (!shouldRenderParticles.value) {
+      instance.stop();
       return;
     }
 
@@ -716,6 +774,11 @@ if (import.meta.client) {
     const instance = mainParticlesRef.value;
 
     if (!instance) {
+      return;
+    }
+
+    if (!shouldRenderParticles.value) {
+      instance.stop();
       return;
     }
 
