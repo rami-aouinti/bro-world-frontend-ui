@@ -57,4 +57,14 @@ describe("optimizeAvatarUrl", () => {
 
     expect(result).toBe(source);
   });
+
+  it("keeps cached entries scoped by size", () => {
+    const source = "https://avatars.githubusercontent.com/u/123?v=4";
+
+    const large = optimizeAvatarUrl(source, 96);
+    const small = optimizeAvatarUrl(source, 32);
+
+    expect(large).toContain("s=96");
+    expect(small).toContain("s=32");
+  });
 });
