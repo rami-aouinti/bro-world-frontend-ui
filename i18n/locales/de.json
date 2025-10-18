@@ -721,6 +721,10 @@
     "about": {
       "title": "Über uns",
       "subtitle": "Wer wir sind und was wir bauen",
+      "heroPrimaryCta": "Jetzt loslegen",
+      "heroPrimaryCtaAria": "Den Welten-Erstellungsablauf öffnen",
+      "heroSecondaryCta": "Mit unserem Team sprechen",
+      "heroSecondaryCtaAria": "Das BroWorld-Team kontaktieren",
       "missionTitle": "Unsere Mission",
       "missionBody": "Wir möchten UI-Bausteine in Spitzenqualität für jede:n Builder zugänglich machen. BroWorld bündelt Community-Beiträge, kuratierte Patterns und inklusive Leitfäden, damit Teams gemeinsam schneller ausliefern.",
       "missionPoints": {
@@ -735,6 +739,55 @@
         "iteration": {
           "title": "Verantwortungsvoll iterieren",
           "body": "Veröffentlicht sorgfältig getestete Releases mit transparenten Roadmaps und messbarem Impact."
+        }
+      },
+      "valuesTitle": "Werte & Produktpfeiler",
+      "valuesSubtitle": "Die Leitplanken, die jede Veröffentlichung und Partnerschaft prägen.",
+      "valuesMediaPlaceholder": "Platzhalter für Hero-Bild oder Produktvorschau. Vor dem Launch durch das finale Asset ersetzen.",
+      "values": {
+        "items": {
+          "community": {
+            "title": "Mit der Community co-kreiert",
+            "body": "Moderierte Arbeitsgruppen teilen ihre Herausforderungen, damit wir bewusst inklusive Lösungen gestalten."
+          },
+          "design": {
+            "title": "Designsystem-kompatibel",
+            "body": "Jede Komponente richtet sich nach Accessibility-Tokens, responsiven Breakpoints und Motion-Guidelines."
+          },
+          "velocity": {
+            "title": "Tempo durch Automatisierung",
+            "body": "Starter-Templates und CLI-Tools halten Releases schnell ohne Qualitätseinbußen."
+          },
+          "quality": {
+            "title": "Qualität und Vertrauen als Standard",
+            "body": "Strenge Reviews, visuelle Regressionstests und Observability sorgen für robuste Experiences."
+          }
+        }
+      },
+      "metricsTitle": "Kennzahlen",
+      "metricsSubtitle": "Signale der Builder:innen und Communities, die heute auf BroWorld vertrauen.",
+      "metrics": {
+        "items": {
+          "contributors": {
+            "value": "2,5K+",
+            "label": "Aktive Beitragende",
+            "caption": "Designer:innen, Entwickler:innen und Storyteller:innen, die jedes Quartal Verbesserungen einreichen."
+          },
+          "components": {
+            "value": "180+",
+            "label": "Komponierbare Bausteine",
+            "caption": "Wiederverwendbare Vue-Komponenten, Composables und Starter-Flows für die Produktion."
+          },
+          "locales": {
+            "value": "7",
+            "label": "Unterstützte Sprachen",
+            "caption": "Lokalisierte Erlebnisse mit RTL- und Accessibility-Abdeckung."
+          },
+          "satisfaction": {
+            "value": "94 %",
+            "label": "Zufriedenheitswert",
+            "caption": "Maintainer:innen berichten, dass BroWorld Geschwindigkeit und Klarheit steigert."
+          }
         }
       },
       "teamTitle": "Unser Team",
@@ -788,6 +841,15 @@
         "githubAria": "Das GitHub-Repository in einem neuen Tab öffnen",
         "docsAria": "Die Dokumentation in einem neuen Tab lesen",
         "communityAria": "Dem Community-Forum in einem neuen Tab beitreten"
+      },
+      "finalCta": {
+        "title": "Gestalte die nächste BroWorld Experience mit uns",
+        "body": "Ob Prototyp, Skalierung oder Mentoring neuer Community-Leads – wir co-designen euren nächsten Launch.",
+        "mediaPlaceholder": "Platzhalter für Testimonial-Clip oder Produktdurchlauf.",
+        "primaryCta": "Neue Welt starten",
+        "primaryCtaAria": "Den Leitfaden zur Welterstellung öffnen",
+        "secondaryCta": "Gespräch planen",
+        "secondaryCtaAria": "Zur Kontaktseite wechseln, um ein Gespräch zu vereinbaren"
       }
     },
     "academy": {

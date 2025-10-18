@@ -36,6 +36,26 @@
           >
             {{ aboutSubtitle }}
           </p>
+          <div class="about-hero__actions">
+            <v-btn
+              v-for="action in heroActions"
+              :key="action.label"
+              :to="action.to"
+              :color="action.color"
+              :variant="action.variant"
+              :size="action.size"
+              class="about-hero__btn"
+              :aria-label="action.ariaLabel"
+            >
+              <v-icon
+                v-if="action.icon"
+                :icon="action.icon"
+                class="mr-2"
+                aria-hidden="true"
+              />
+              {{ action.label }}
+            </v-btn>
+          </div>
         </v-sheet>
       </section>
 
@@ -118,6 +138,147 @@
             </v-sheet>
           </v-col>
         </v-row>
+      </section>
+
+      <section
+        class="mb-12"
+        aria-labelledby="values-title"
+      >
+        <v-sheet
+          class="about-section"
+          elevation="0"
+          rounded="xl"
+        >
+          <v-row
+            class="align-stretch"
+            dense
+          >
+            <v-col
+              cols="12"
+              md="7"
+            >
+              <div class="about-section__heading">
+                <h2
+                  id="values-title"
+                  class="text-h4 font-weight-semibold mb-3"
+                >
+                  {{ t("pages.about.valuesTitle") }}
+                </h2>
+                <p class="text-body-1 text-medium-emphasis mb-6">
+                  {{ t("pages.about.valuesSubtitle") }}
+                </p>
+              </div>
+              <v-row
+                class="about-values-grid"
+                dense
+              >
+                <v-col
+                  v-for="feature in valuesFeatures"
+                  :key="feature.title"
+                  cols="12"
+                  sm="6"
+                >
+                  <v-card
+                    class="about-value-card"
+                    elevation="0"
+                    rounded="lg"
+                  >
+                    <v-avatar
+                      class="about-value-card__icon mb-4"
+                      size="48"
+                    >
+                      <v-icon
+                        :icon="feature.icon"
+                        size="26"
+                        aria-hidden="true"
+                      />
+                    </v-avatar>
+                    <h3 class="text-subtitle-1 font-weight-semibold mb-2">
+                      {{ feature.title }}
+                    </h3>
+                    <p class="text-body-2 text-medium-emphasis mb-0">
+                      {{ feature.body }}
+                    </p>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col
+              cols="12"
+              md="5"
+            >
+              <v-sheet
+                class="about-media"
+                elevation="0"
+                rounded="lg"
+              >
+                <v-responsive
+                  aspect-ratio="4/3"
+                  class="about-media__placeholder"
+                >
+                  <div class="about-media__content">
+                    <v-icon
+                      icon="mdi:image-outline"
+                      size="48"
+                      aria-hidden="true"
+                    />
+                    <p class="text-body-2 text-medium-emphasis mb-0 text-center">
+                      {{ t("pages.about.valuesMediaPlaceholder") }}
+                    </p>
+                  </div>
+                </v-responsive>
+              </v-sheet>
+            </v-col>
+          </v-row>
+        </v-sheet>
+      </section>
+
+      <section
+        class="mb-12"
+        aria-labelledby="metrics-title"
+      >
+        <v-sheet
+          class="about-section"
+          elevation="0"
+          rounded="xl"
+        >
+          <div class="about-section__heading mb-6">
+            <h2
+              id="metrics-title"
+              class="text-h4 font-weight-semibold mb-3"
+            >
+              {{ t("pages.about.metricsTitle") }}
+            </h2>
+            <p class="text-body-1 text-medium-emphasis mb-0">
+              {{ t("pages.about.metricsSubtitle") }}
+            </p>
+          </div>
+          <v-row dense>
+            <v-col
+              v-for="metric in metrics"
+              :key="metric.label"
+              cols="12"
+              sm="6"
+              lg="3"
+            >
+              <v-card
+                class="about-metric-card"
+                elevation="0"
+                rounded="lg"
+              >
+                <p class="about-metric-card__value mb-1">
+                  {{ metric.value }}
+                </p>
+                <p class="about-metric-card__label mb-2">
+                  {{ metric.label }}
+                </p>
+                <p class="text-body-2 text-medium-emphasis mb-0">
+                  {{ metric.caption }}
+                </p>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-sheet>
       </section>
 
       <section
@@ -254,7 +415,10 @@
         </v-sheet>
       </section>
 
-      <section aria-labelledby="links-title">
+      <section
+        class="mb-12"
+        aria-labelledby="links-title"
+      >
         <v-sheet
           class="about-section"
           elevation="0"
@@ -288,20 +452,110 @@
           </div>
         </v-sheet>
       </section>
+
+      <section
+        class="mb-12"
+        aria-labelledby="cta-title"
+      >
+        <v-sheet
+          class="about-section about-section--cta"
+          elevation="0"
+          rounded="xl"
+        >
+          <v-row
+            class="align-center"
+            dense
+          >
+            <v-col
+              cols="12"
+              md="7"
+            >
+              <h2
+                id="cta-title"
+                class="text-h4 font-weight-semibold mb-3"
+              >
+                {{ finalCta.title }}
+              </h2>
+              <p class="text-body-1 text-medium-emphasis mb-6">
+                {{ finalCta.body }}
+              </p>
+              <div class="about-cta-actions">
+                <v-btn
+                  :to="finalCta.primary.to"
+                  color="primary"
+                  size="large"
+                  class="about-cta-actions__btn"
+                  :aria-label="finalCta.primary.ariaLabel"
+                >
+                  <v-icon
+                    icon="mdi:rocket-launch-outline"
+                    class="mr-2"
+                    aria-hidden="true"
+                  />
+                  {{ finalCta.primary.label }}
+                </v-btn>
+                <v-btn
+                  :to="finalCta.secondary.to"
+                  color="primary"
+                  variant="outlined"
+                  size="large"
+                  class="about-cta-actions__btn"
+                  :aria-label="finalCta.secondary.ariaLabel"
+                >
+                  <v-icon
+                    icon="mdi:chat-processing-outline"
+                    class="mr-2"
+                    aria-hidden="true"
+                  />
+                  {{ finalCta.secondary.label }}
+                </v-btn>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              md="5"
+            >
+              <v-sheet
+                class="about-media"
+                elevation="0"
+                rounded="lg"
+              >
+                <v-responsive
+                  aspect-ratio="4/3"
+                  class="about-media__placeholder"
+                >
+                  <div class="about-media__content">
+                    <v-icon
+                      icon="mdi:movie-play-outline"
+                      size="48"
+                      aria-hidden="true"
+                    />
+                    <p class="text-body-2 text-medium-emphasis mb-0 text-center">
+                      {{ finalCta.mediaPlaceholder }}
+                    </p>
+                  </div>
+                </v-responsive>
+              </v-sheet>
+            </v-col>
+          </v-row>
+        </v-sheet>
+      </section>
     </v-container>
   </main>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, unref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useSwitchLocalePath } from "#i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
-const { t, locale, localeProperties } = useI18n();
+const { t, locale, locales, defaultLocale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const localePath = useResolvedLocalePath();
+const switchLocalePath = useSwitchLocalePath();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const pageDescription = computed(() => t("seo.about.description"));
@@ -311,6 +565,8 @@ definePageMeta({
 });
 useSeoMeta(() => ({
   description: pageDescription.value,
+  ogDescription: pageDescription.value,
+  twitterDescription: pageDescription.value,
 }));
 const siteSettings = useSiteSettingsState();
 
@@ -323,26 +579,105 @@ const aboutSubtitle = computed(
 );
 const aboutBody = computed(() => aboutContent.value.body?.trim() || t("pages.about.missionBody"));
 
-const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
+const heroActions = computed(() => [
+  {
+    label: t("pages.about.heroPrimaryCta"),
+    ariaLabel: t("pages.about.heroPrimaryCtaAria"),
+    to: localePath("/world-create"),
+    color: "primary",
+    variant: "flat",
+    size: "large",
+    icon: "mdi:rocket-launch-outline",
+  },
+  {
+    label: t("pages.about.heroSecondaryCta"),
+    ariaLabel: t("pages.about.heroSecondaryCtaAria"),
+    to: localePath("/contact"),
+    color: "primary",
+    variant: "outlined",
+    size: "large",
+    icon: "mdi:chat-processing-outline",
+  },
+]);
 
-useHead(() => {
-  const title = t("seo.about.title");
-  const canonicalPath = currentRoute.value?.path ?? "/";
-  const canonical = new URL(canonicalPath, baseUrl.value).toString();
-  const iso = localeProperties.value?.iso ?? locale.value;
+const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
+const currentPath = computed(() => currentRoute.value?.path ?? "/");
+const canonicalUrl = computed(() => new URL(currentPath.value, baseUrl.value).toString());
+const availableLocales = computed(() => {
+  const rawLocales = unref(locales);
+
+  if (!rawLocales) {
+    return [] as Array<{ code: string; iso?: string }>;
+  }
+
+  return rawLocales.map((entry) =>
+    typeof entry === "string" ? { code: entry, iso: entry } : entry,
+  );
+});
+const defaultLocaleCode = computed(() => {
+  const rawDefault = unref(defaultLocale);
+
+  if (typeof rawDefault === "string" && rawDefault) {
+    return rawDefault;
+  }
+
+  if (
+    rawDefault &&
+    typeof rawDefault === "object" &&
+    "code" in rawDefault &&
+    typeof rawDefault.code === "string"
+  ) {
+    return rawDefault.code;
+  }
+
+  return availableLocales.value[0]?.code ?? "en";
+});
+const alternateLinks = computed(() => {
+  if (!switchLocalePath) {
+    return [] as Array<{ rel: "alternate"; hreflang: string; href: string }>;
+  }
+
+  const path = currentPath.value;
+  const seen = new Set<string>();
+
+  return availableLocales.value
+    .map((entry) => {
+      const hreflang = entry.iso || entry.code;
+
+      if (!hreflang || seen.has(hreflang)) {
+        return null;
+      }
+
+      seen.add(hreflang);
+
+      const targetPath = switchLocalePath(entry.code) ?? path;
+      const href = new URL(targetPath, baseUrl.value).toString();
+
+      return { rel: "alternate" as const, hreflang, href };
+    })
+    .filter((link): link is { rel: "alternate"; hreflang: string; href: string } =>
+      Boolean(link),
+    );
+});
+const xDefaultLink = computed(() => {
+  if (!switchLocalePath) {
+    return null;
+  }
+
+  const targetPath = switchLocalePath(defaultLocaleCode.value) ?? currentPath.value;
 
   return {
-    title,
-    meta: [
-      { key: "og:title", property: "og:title", content: title },
-      { key: "og:type", property: "og:type", content: "website" },
-      { key: "og:url", property: "og:url", content: canonical },
-      { key: "og:locale", property: "og:locale", content: iso },
-      { key: "twitter:card", name: "twitter:card", content: "summary_large_image" },
-      { key: "twitter:title", name: "twitter:title", content: title },
-      { key: "twitter:url", name: "twitter:url", content: canonical },
-    ],
+    rel: "alternate" as const,
+    hreflang: "x-default",
+    href: new URL(targetPath, baseUrl.value).toString(),
   };
+});
+const ogAlternateLocales = computed(() => {
+  const activeIso = localeProperties.value?.iso ?? locale.value;
+
+  return availableLocales.value
+    .map((entry) => entry.iso || entry.code)
+    .filter((code): code is string => Boolean(code && code !== activeIso));
 });
 
 const missionPoints = computed(() => [
@@ -360,6 +695,52 @@ const missionPoints = computed(() => [
     icon: "mdi:update",
     title: t("pages.about.missionPoints.iteration.title"),
     body: t("pages.about.missionPoints.iteration.body"),
+  },
+]);
+
+const valuesFeatures = computed(() => [
+  {
+    icon: "mdi:account-group-outline",
+    title: t("pages.about.values.items.community.title"),
+    body: t("pages.about.values.items.community.body"),
+  },
+  {
+    icon: "mdi:palette-outline",
+    title: t("pages.about.values.items.design.title"),
+    body: t("pages.about.values.items.design.body"),
+  },
+  {
+    icon: "mdi:clock-fast",
+    title: t("pages.about.values.items.velocity.title"),
+    body: t("pages.about.values.items.velocity.body"),
+  },
+  {
+    icon: "mdi:shield-check-outline",
+    title: t("pages.about.values.items.quality.title"),
+    body: t("pages.about.values.items.quality.body"),
+  },
+]);
+
+const metrics = computed(() => [
+  {
+    value: t("pages.about.metrics.items.contributors.value"),
+    label: t("pages.about.metrics.items.contributors.label"),
+    caption: t("pages.about.metrics.items.contributors.caption"),
+  },
+  {
+    value: t("pages.about.metrics.items.components.value"),
+    label: t("pages.about.metrics.items.components.label"),
+    caption: t("pages.about.metrics.items.components.caption"),
+  },
+  {
+    value: t("pages.about.metrics.items.locales.value"),
+    label: t("pages.about.metrics.items.locales.label"),
+    caption: t("pages.about.metrics.items.locales.caption"),
+  },
+  {
+    value: t("pages.about.metrics.items.satisfaction.value"),
+    label: t("pages.about.metrics.items.satisfaction.label"),
+    caption: t("pages.about.metrics.items.satisfaction.caption"),
   },
 ]);
 
@@ -456,6 +837,136 @@ const resourceLinks = computed(() => [
     ariaLabel: t("pages.about.links.communityAria"),
   },
 ]);
+
+const finalCta = computed(() => ({
+  title: t("pages.about.finalCta.title"),
+  body: t("pages.about.finalCta.body"),
+  mediaPlaceholder: t("pages.about.finalCta.mediaPlaceholder"),
+  primary: {
+    label: t("pages.about.finalCta.primaryCta"),
+    ariaLabel: t("pages.about.finalCta.primaryCtaAria"),
+    to: localePath("/world-create"),
+  },
+  secondary: {
+    label: t("pages.about.finalCta.secondaryCta"),
+    ariaLabel: t("pages.about.finalCta.secondaryCtaAria"),
+    to: localePath("/contact"),
+  },
+}));
+
+const aboutJsonLd = computed(() => {
+  const iso = localeProperties.value?.iso ?? locale.value;
+  const metricProperties = metrics.value.map((metric) => ({
+    "@type": "PropertyValue",
+    name: metric.label,
+    value: metric.value,
+    description: metric.caption,
+  }));
+  const team = teamMembers.value.map((member) => ({
+    "@type": "Person",
+    name: member.name,
+    jobTitle: member.role,
+    description: member.bio,
+  }));
+  const knowledgeAreas = valuesFeatures.value.map((item) => item.title);
+  const sameAsLinks = resourceLinks.value
+    .filter((link) => typeof link.href === "string" && link.href.startsWith("http"))
+    .map((link) => link.href);
+  const actions = heroActions.value.map((action) => ({
+    "@type": "EntryPoint",
+    name: action.label,
+    urlTemplate: new URL(action.to, baseUrl.value).toString(),
+  }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    inLanguage: iso,
+    url: canonicalUrl.value,
+    name: aboutTitle.value,
+    description: pageDescription.value,
+    alternateName: aboutSubtitle.value,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Bro World",
+      url: baseUrl.value,
+      inLanguage: iso,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Bro World",
+      url: baseUrl.value,
+    },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      description: t("pages.about.valuesMediaPlaceholder"),
+    },
+    potentialAction: actions,
+    about: knowledgeAreas,
+    mainEntity: {
+      "@type": "Organization",
+      name: "Bro World",
+      url: baseUrl.value,
+      description: aboutBody.value,
+      member: team,
+      areaServed: availableLocales.value.map((entry) => entry.iso ?? entry.code),
+      additionalProperty: metricProperties,
+      sameAs: sameAsLinks,
+    },
+  };
+});
+
+useHead(() => {
+  const title = t("seo.about.title");
+  const iso = localeProperties.value?.iso ?? locale.value;
+  const alternateMeta = ogAlternateLocales.value.map((code) => ({
+    key: `og:locale:alternate:${code}`,
+    property: "og:locale:alternate",
+    content: code,
+  }));
+
+  const links = [
+    { key: "canonical", rel: "canonical", href: canonicalUrl.value },
+    ...alternateLinks.value.map((link) => ({
+      key: `alternate-${link.hreflang}`,
+      rel: link.rel,
+      hreflang: link.hreflang,
+      href: link.href,
+    })),
+  ];
+
+  if (xDefaultLink.value) {
+    links.push({
+      key: "alternate-x-default",
+      rel: xDefaultLink.value.rel,
+      hreflang: xDefaultLink.value.hreflang,
+      href: xDefaultLink.value.href,
+    });
+  }
+
+  return {
+    title,
+    meta: [
+      { key: "og:title", property: "og:title", content: title },
+      { key: "og:type", property: "og:type", content: "website" },
+      { key: "og:url", property: "og:url", content: canonicalUrl.value },
+      { key: "og:locale", property: "og:locale", content: iso },
+      { key: "twitter:card", name: "twitter:card", content: "summary_large_image" },
+      { key: "twitter:title", name: "twitter:title", content: title },
+      { key: "twitter:url", name: "twitter:url", content: canonicalUrl.value },
+      ...alternateMeta,
+    ],
+    link: links,
+    script: [
+      {
+        key: "ld-json-about",
+        type: "application/ld+json",
+        innerHTML: JSON.stringify(aboutJsonLd.value),
+      },
+    ],
+    __dangerouslyDisableSanitizers: ["script"],
+  };
+});
 </script>
 
 <style scoped src="~/assets/styles/pages/about.scss" lang="scss"></style>

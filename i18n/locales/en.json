@@ -721,6 +721,10 @@
     "about": {
       "title": "About",
       "subtitle": "Who we are and what we’re building",
+      "heroPrimaryCta": "Start building now",
+      "heroPrimaryCtaAria": "Open the world creation flow",
+      "heroSecondaryCta": "Talk with our team",
+      "heroSecondaryCtaAria": "Contact the BroWorld crew",
       "missionTitle": "Our mission",
       "missionBody": "We aim to make world-class UI primitives accessible to every builder. BroWorld gathers community contributions, curated patterns, and inclusive guidelines so teams can ship faster together.",
       "missionPoints": {
@@ -735,6 +739,55 @@
         "iteration": {
           "title": "Iterate responsibly",
           "body": "Ship carefully tested releases with transparent roadmaps and measurable impact."
+        }
+      },
+      "valuesTitle": "Values & product pillars",
+      "valuesSubtitle": "The guardrails that shape every release and partnership.",
+      "valuesMediaPlaceholder": "Reserved hero image or product preview. Replace with final asset before launch.",
+      "values": {
+        "items": {
+          "community": {
+            "title": "Co-created with the community",
+            "body": "Moderated working groups share their challenges so we can design intentionally inclusive solutions."
+          },
+          "design": {
+            "title": "Design systems aware",
+            "body": "Every component aligns with accessibility tokens, responsive breakpoints, and motion guidelines."
+          },
+          "velocity": {
+            "title": "Momentum from automation",
+            "body": "Starter templates and CLI tooling keep updates shipping without losing quality."
+          },
+          "quality": {
+            "title": "Quality and trust by default",
+            "body": "Rigorous reviews, visual regression suites, and observability keep experiences resilient."
+          }
+        }
+      },
+      "metricsTitle": "Key numbers",
+      "metricsSubtitle": "Signals from the builders and communities who rely on BroWorld today.",
+      "metrics": {
+        "items": {
+          "contributors": {
+            "value": "2.5K+",
+            "label": "Active contributors",
+            "caption": "Designers, engineers, and storytellers submitting improvements every quarter."
+          },
+          "components": {
+            "value": "180+",
+            "label": "Composable primitives",
+            "caption": "Reusable Vue components, composables, and starter flows ready for production."
+          },
+          "locales": {
+            "value": "7",
+            "label": "Supported locales",
+            "caption": "Localized experiences with right-to-left and accessibility coverage."
+          },
+          "satisfaction": {
+            "value": "94%",
+            "label": "Satisfaction score",
+            "caption": "Maintainers reporting that BroWorld increases delivery speed and clarity."
+          }
         }
       },
       "teamTitle": "Our team",
@@ -788,6 +841,15 @@
         "githubAria": "Open the GitHub repository in a new tab",
         "docsAria": "Read the documentation in a new tab",
         "communityAria": "Join the community forum in a new tab"
+      },
+      "finalCta": {
+        "title": "Build the next BroWorld experience with us",
+        "body": "Whether you’re prototyping, scaling operations, or mentoring new community leaders, we’re ready to co-design your next launch.",
+        "mediaPlaceholder": "Placeholder for testimonial clip or product walkthrough.",
+        "primaryCta": "Start a new world",
+        "primaryCtaAria": "Open the world creation guide",
+        "secondaryCta": "Schedule a call",
+        "secondaryCtaAria": "Open the contact page to schedule a conversation"
       }
     },
     "academy": {

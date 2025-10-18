@@ -721,6 +721,10 @@
     "about": {
       "title": "À propos",
       "subtitle": "Qui nous sommes et ce que nous construisons",
+      "heroPrimaryCta": "Commencer à construire",
+      "heroPrimaryCtaAria": "Ouvrir le parcours de création de monde",
+      "heroSecondaryCta": "Parler avec notre équipe",
+      "heroSecondaryCtaAria": "Contacter l'équipe BroWorld",
       "missionTitle": "Notre mission",
       "missionBody": "Nous voulons rendre des briques d’interface de classe mondiale accessibles à chaque créateur. BroWorld rassemble les contributions de la communauté, des modèles soigneusement sélectionnés et des recommandations inclusives afin que les équipes puissent livrer plus vite ensemble.",
       "missionPoints": {
@@ -735,6 +739,55 @@
         "iteration": {
           "title": "Itérer de manière responsable",
           "body": "Livrer des versions testées avec soin, des feuilles de route transparentes et un impact mesurable."
+        }
+      },
+      "valuesTitle": "Valeurs et piliers produit",
+      "valuesSubtitle": "Les garde-fous qui guident chaque version et partenariat.",
+      "valuesMediaPlaceholder": "Espace réservé pour l'image héros ou l'aperçu produit. Remplacer par l'actif final avant lancement.",
+      "values": {
+        "items": {
+          "community": {
+            "title": "Co-créé avec la communauté",
+            "body": "Des groupes de travail modérés partagent leurs défis pour concevoir des solutions vraiment inclusives."
+          },
+          "design": {
+            "title": "Compatible avec les systèmes de design",
+            "body": "Chaque composant respecte les tokens d'accessibilité, les points de rupture responsives et les directives de mouvement."
+          },
+          "velocity": {
+            "title": "Momentum grâce à l'automatisation",
+            "body": "Des modèles de démarrage et des CLI fluidifient les mises à jour sans sacrifier la qualité."
+          },
+          "quality": {
+            "title": "Qualité et confiance par défaut",
+            "body": "Revues rigoureuses, tests visuels et observabilité pour des expériences résilientes."
+          }
+        }
+      },
+      "metricsTitle": "Chiffres clés",
+      "metricsSubtitle": "Les signaux envoyés par les créateurs et communautés qui utilisent BroWorld aujourd'hui.",
+      "metrics": {
+        "items": {
+          "contributors": {
+            "value": "2,5K+",
+            "label": "Contributeurs actifs",
+            "caption": "Designers, ingénieurs et conteurs qui soumettent des améliorations chaque trimestre."
+          },
+          "components": {
+            "value": "180+",
+            "label": "Briques composables",
+            "caption": "Composants Vue, composables et parcours prêts pour la production."
+          },
+          "locales": {
+            "value": "7",
+            "label": "Langues prises en charge",
+            "caption": "Expériences localisées avec prise en charge RTL et accessibilité."
+          },
+          "satisfaction": {
+            "value": "94 %",
+            "label": "Indice de satisfaction",
+            "caption": "Mainteneurs affirmant que BroWorld accélère la livraison et clarifie les collaborations."
+          }
         }
       },
       "teamTitle": "Notre équipe",
@@ -787,7 +840,16 @@
         "community": "Forum communautaire",
         "githubAria": "Ouvrir le dépôt GitHub dans un nouvel onglet",
         "docsAria": "Lire la documentation dans un nouvel onglet",
-      "communityAria": "Rejoindre le forum communautaire dans un nouvel onglet"
+        "communityAria": "Rejoindre le forum communautaire dans un nouvel onglet"
+      },
+      "finalCta": {
+        "title": "Construisez la prochaine expérience BroWorld avec nous",
+        "body": "Que vous prototypiez, fassiez évoluer vos opérations ou mentoriez de nouveaux leaders communautaires, nous co-concevons votre prochain lancement.",
+        "mediaPlaceholder": "Espace réservé pour un témoignage vidéo ou une démo produit.",
+        "primaryCta": "Créer un nouveau monde",
+        "primaryCtaAria": "Ouvrir le guide de création de monde",
+        "secondaryCta": "Planifier un échange",
+        "secondaryCtaAria": "Ouvrir la page contact pour planifier une conversation"
       }
     },
     "academy": {
