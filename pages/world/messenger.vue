@@ -63,8 +63,8 @@
 import { computed, nextTick, onMounted, ref, watchEffect } from "vue";
 import { callOnce } from "#app";
 import { useI18n } from "vue-i18n";
-import ChatList from "~/components/world/messenger/ChatList.vue";
-import ChatWindow from "~/components/world/messenger/ChatWindow.vue";
+import ChatList from "~/components/messenger/ChatList.vue";
+import ChatWindow from "~/components/messenger/ChatWindow.vue";
 import { useMessengerStore } from "~/stores/messenger";
 
 const messenger = useMessengerStore();
