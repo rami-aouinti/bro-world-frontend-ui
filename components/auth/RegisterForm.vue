@@ -1,43 +1,66 @@
 <template>
-  <form
+  <v-form
     class="register-form mx-auto max-w-xl"
     @submit.prevent="handleSubmit"
   >
-    <div class="card-padding">
+    <div class="d-flex flex-column gap-4">
       <v-text-field
         v-model="email"
-        density="compact"
         :label="t('register.email')"
-        :class="fieldAlignment"
-        required
-        class="font-size-input input-style"
-        append-inner-icon="mdi:email"
+        variant="outlined"
+        density="comfortable"
+        color="primary"
+        prepend-inner-icon="mdi:email"
         :disabled="loading"
+        :style="inputDirectionStyle"
+        @update:model-value="clearError"
       />
       <v-text-field
         v-model="password"
-        density="compact"
         :type="showPassword ? 'text' : 'password'"
         :label="t('register.password')"
-        required
-        class="font-size-input input-style"
-        :class="fieldAlignment"
+        variant="outlined"
+        density="comfortable"
+        color="primary"
         :disabled="loading"
-        :append-inner-icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'"
+        :style="inputDirectionStyle"
         @click:append-inner="togglePassword"
-      />
+        @update:model-value="clearError"
+      >
+        <template #append-inner>
+          <v-btn
+            :icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'"
+            :aria-label="showPassword ? t('auth.hidePassword') : t('auth.showPassword')"
+            :disabled="loading"
+            variant="text"
+            density="comfortable"
+            @click.prevent="togglePassword"
+          />
+        </template>
+      </v-text-field>
       <v-text-field
         v-model="repeatPassword"
-        density="compact"
         :type="showRepeatPassword ? 'text' : 'password'"
         :label="t('register.repeatPassword')"
-        required
-        class="font-size-input input-style"
-        :class="fieldAlignment"
+        variant="outlined"
+        density="comfortable"
+        color="primary"
         :disabled="loading"
-        :append-inner-icon="showRepeatPassword ? 'mdi:eye-off' : 'mdi:eye'"
+        :style="inputDirectionStyle"
         @click:append-inner="toggleRepeatPassword"
-      />
+        @update:model-value="clearError"
+      >
+        <template #append-inner>
+          <v-btn
+            :icon="showRepeatPassword ? 'mdi:eye-off' : 'mdi:eye'"
+            :aria-label="showRepeatPassword ? t('auth.hidePassword') : t('auth.showPassword')"
+            :disabled="loading"
+            variant="text"
+            density="comfortable"
+            @click.prevent="toggleRepeatPassword"
+          />
+        </template>
+      </v-text-field>
 
       <v-row
         class="align-center"
@@ -48,19 +71,19 @@
             v-model="checkbox"
             hide-details
             class="ma-0 pa-0"
-            density="compact"
+            density="comfortable"
             :disabled="loading"
           />
         </v-col>
         <v-col>
           <span
-            class="text-body text-sm ls-0"
+            class="text-body-2 ls-0"
             :class="fieldAlignment"
           >
             {{ t("register.agree") }}
             <a
               href="javascript:void(0)"
-              class="font-weight-bolder text-decoration-none text-primary"
+              class="font-weight-medium text-decoration-none text-primary"
               @click.prevent="showTerms = true"
             >
               {{ t("register.terms") }}
@@ -69,73 +92,62 @@
         </v-col>
       </v-row>
 
-      <p
+      <v-alert
         v-if="error"
-        class="mt-1 text-red d-flex justify-center"
+        type="error"
+        variant="tonal"
+        border="start"
+        density="comfortable"
+        role="alert"
       >
         {{ error }}
-      </p>
+      </v-alert>
 
-      <p
-        class="mt-1 mb-2 font-weight-bold text-typo"
-        :class="fieldAlignment"
+      <v-alert
+        type="info"
+        variant="tonal"
+        border="start"
+        density="comfortable"
+        class="mb-0"
       >
-        {{ t("register.requirements") }}
-      </p>
-
-      <div
-        class="d-sm-flex"
-        :class="isRtl ? 'rtl-block' : 'ltr-block'"
-      >
-        <ul
-          class="text-muted ps-6 mb-0"
-          :class="isRtl ? 'rtl-block' : 'ltr-block'"
+        <div
+          class="font-weight-semibold mb-2"
+          :class="fieldAlignment"
         >
-          <li>
-            <h6
-              class="text-h7"
-              :class="isRtl ? 'rtl-block' : 'ltr-block'"
-            >
-              {{ t("register.requirement1") }}
-            </h6>
+          {{ t("register.requirements") }}
+        </div>
+        <ul class="ps-4 mb-0">
+          <li class="text-body-2">
+            {{ t("register.requirement1") }}
           </li>
-          <li>
-            <h6
-              class="text-h7"
-              :class="isRtl ? 'rtl-block' : 'ltr-block'"
-            >
-              {{ t("register.requirement2") }}
-            </h6>
+          <li class="text-body-2">
+            {{ t("register.requirement2") }}
           </li>
         </ul>
-      </div>
+      </v-alert>
 
-      <button
-        :disabled="loading"
+      <LockableButton
+        block
+        color="primary"
+        variant="flat"
+        rounded="xl"
+        size="large"
         type="submit"
-        class="btn btn-outline-primary bg-primary rounded-xl text-decoration-none font-weight-bold text-uppercase py-2 px-6 me-2 mt-6 mb-2 w-100"
+        class="text-uppercase font-weight-semibold"
+        :loading="loading"
+        :disabled="loading"
       >
-        <v-progress-circular
-          v-if="loading"
-          indeterminate
-          size="20"
-        />
-        <span
-          v-else
-          :class="fieldAlignment"
-          >{{ t("register.signUp") }}</span
-        >
-      </button>
+        {{ t("register.signUp") }}
+      </LockableButton>
 
       <p
-        class="text-sm text-body mt-1 mb-0 d-flex justify-center"
+        class="text-body-2 text-medium-emphasis text-center mb-0"
         :class="fieldAlignment"
       >
         {{ t("register.haveAccount") }}
         <NuxtLink
           :to="localePath('/login')"
-          class="text-primary text-decoration-none font-weight-bolder px-1"
-          :class="fieldAlignment"
+          class="text-primary text-decoration-none font-weight-semibold ms-1"
         >
           {{ t("register.signIn") }}
         </NuxtLink>
@@ -159,7 +171,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-  </form>
+  </v-form>
 </template>
 
 <script setup lang="ts">
@@ -167,6 +179,7 @@ import { computed, ref, defineAsyncComponent } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import LockableButton from "~/components/LockableButton.vue";
 
 const Terms = defineAsyncComponent({
   loader: () => import("~/components/auth/Terms.vue"),
@@ -191,12 +204,20 @@ const showPassword = ref(false);
 const showRepeatPassword = ref(false);
 const showTerms = ref(false);
 
+const inputDirectionStyle = computed(() => ({ direction: isRtl.value ? "rtl" : "ltr" }));
+
 function togglePassword() {
   showPassword.value = !showPassword.value;
 }
 
 function toggleRepeatPassword() {
   showRepeatPassword.value = !showRepeatPassword.value;
+}
+
+function clearError() {
+  if (error.value) {
+    error.value = "";
+  }
 }
 
 async function handleSubmit() {
@@ -285,16 +306,5 @@ async function handleSubmit() {
 .register-form :deep(.v-field__outline),
 .register-form :deep(.v-field__overlay) {
   border-radius: inherit;
-}
-</style>
-
-<style scoped>
-.rtl-block {
-  direction: rtl;
-  text-align: right;
-}
-.ltr-block {
-  direction: ltr;
-  text-align: left;
 }
 </style>
