@@ -1,8 +1,7 @@
 <template>
   <Icon
-    :icon="iconName"
-    :width="iconSize"
-    :height="iconSize"
+    :name="iconName"
+    :size="iconSize"
     v-bind="attrs"
   />
 </template>

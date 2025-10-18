@@ -7,7 +7,7 @@
       :aria-label="props.navigationLabel"
       @click="emit('toggle-left')"
     >
-      <Icon
+      <AppIcon
         name="mdi:menu"
         :size="24"
       />
@@ -20,7 +20,7 @@
         :aria-label="props.goBackLabel"
         @click="emit('go-back')"
       >
-        <Icon
+        <AppIcon
           name="mdi:arrow-left"
           :size="22"
         />
@@ -36,7 +36,7 @@
         :disabled="props.refreshing"
         @click="emit('refresh')"
       >
-        <Icon
+        <AppIcon
           :name="props.refreshing ? 'mdi:loading' : 'mdi:refresh'"
           :size="22"
           :class="{ 'animate-spin': props.refreshing }"

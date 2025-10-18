@@ -4,6 +4,7 @@
     v-bind="attrs"
     :name="resolved.value"
     :size="size"
+    mode="svg"
   />
 </template>
 
