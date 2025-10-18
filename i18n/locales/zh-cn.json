@@ -637,6 +637,140 @@
     "errorTitle": "创建账户失败"
   },
   "pages": {
+    "about": {
+      "title": "关于我们",
+      "subtitle": "我们是谁，以及我们正在构建什么",
+      "heroPrimaryCta": "立即开始构建",
+      "heroPrimaryCtaAria": "打开世界创建流程",
+      "heroSecondaryCta": "与我们的团队交流",
+      "heroSecondaryCtaAria": "联系 BroWorld 团队",
+      "missionTitle": "我们的使命",
+      "missionBody": "我们希望让世界级的 UI 基础模块对每一位构建者都触手可及。BroWorld 汇集社区贡献、精选模式和包容性指南，帮助团队更快协作发布。",
+      "missionPoints": {
+        "builders": {
+          "title": "赋能每一位构建者",
+          "body": "提供经过深思的默认设置和易于访问的模式，适用于任何规模的团队。"
+        },
+        "community": {
+          "title": "与社区共同成长",
+          "body": "放大各地维护者的贡献，庆祝开放式协作。"
+        },
+        "iteration": {
+          "title": "负责任地迭代",
+          "body": "通过透明路线图和可衡量的影响，发布经过严谨测试的版本。"
+        }
+      },
+      "valuesTitle": "价值观与产品支柱",
+      "valuesSubtitle": "指引每一次发布与合作的轨道。",
+      "valuesMediaPlaceholder": "此处预留英雄图或产品预览，发布前请替换为最终素材。",
+      "values": {
+        "items": {
+          "community": {
+            "title": "与社区共同打造",
+            "body": "经主持的工作小组分享挑战，让我们设计真正包容的解决方案。"
+          },
+          "design": {
+            "title": "符合设计系统",
+            "body": "每个组件都遵循无障碍令牌、响应式断点和动效指南。"
+          },
+          "velocity": {
+            "title": "自动化驱动的速度",
+            "body": "起步模板和 CLI 工具让发布节奏保持高速且不牺牲质量。"
+          },
+          "quality": {
+            "title": "默认即质量与信任",
+            "body": "严格的评审、视觉回归测试和可观测性确保体验稳定。"
+          }
+        }
+      },
+      "metricsTitle": "关键数据",
+      "metricsSubtitle": "来自依赖 BroWorld 的构建者与社区的信号。",
+      "metrics": {
+        "items": {
+          "contributors": {
+            "value": "2.5K+",
+            "label": "活跃贡献者",
+            "caption": "设计师、工程师与叙事者每个季度持续提交改进。"
+          },
+          "components": {
+            "value": "180+",
+            "label": "可组合基础件",
+            "caption": "可复用的 Vue 组件、组合式函数和上线流程开箱即用。"
+          },
+          "locales": {
+            "value": "7",
+            "label": "支持的语言",
+            "caption": "本地化体验覆盖 RTL 与无障碍需求。"
+          },
+          "satisfaction": {
+            "value": "94%",
+            "label": "满意度",
+            "caption": "维护者反馈 BroWorld 提升了交付速度与协作清晰度。"
+          }
+        }
+      },
+      "teamTitle": "我们的团队",
+      "teamBody": "BroWorld 由一支分布式的设计师、工程师与故事讲述者团队维护，他们相信开源工具也应令人愉悦。",
+      "teamMembers": {
+        "amina": {
+          "role": "产品负责人",
+          "bio": "制定产品愿景，并让路线图始终围绕社区需求。"
+        },
+        "lukas": {
+          "role": "工程负责人",
+          "bio": "把控架构，确保每次发布都高性能、可访问且经过充分测试。"
+        },
+        "clara": {
+          "role": "开发者推广",
+          "bio": "把反馈转化为可执行文档，帮助贡献者感到受欢迎。"
+        },
+        "youssef": {
+          "role": "社区管家",
+          "bio": "主持社区活动、筛选贡献并确保讨论保持包容。"
+        }
+      },
+      "techTitle": "技术",
+      "techBody": "我们依托现代 Vue 技术栈，让文档与线上体验保持同步。",
+      "techStack": {
+        "nuxt": "基于文件路由的混合渲染体验。",
+        "vuetify": "具备一流 RTL 支持的可访问设计基础。",
+        "typescript": "在组件、Store 与工具中实现类型安全的开发。",
+        "vitest": "极速的单元与组件测试，保障版本可靠。"
+      },
+      "timelineTitle": "里程碑",
+      "timeline": {
+        "2023": {
+          "title": "开源首批组件集",
+          "description": "发布库的基础与入门指南。"
+        },
+        "2024": {
+          "title": "扩展本地化覆盖",
+          "description": "新增多语言内容、RTL 支持与社区翻译流程。"
+        },
+        "2025": {
+          "title": "上线协作流程",
+          "description": "引入共享模板、集成反馈循环与更强的自动化。"
+        }
+      },
+      "linksTitle": "进一步了解",
+      "links": {
+        "github": "GitHub 仓库",
+        "docs": "文档",
+        "community": "社区论坛",
+        "githubAria": "在新标签页打开 GitHub 仓库",
+        "docsAria": "在新标签页阅读文档",
+        "communityAria": "在新标签页加入社区论坛"
+      },
+      "finalCta": {
+        "title": "与我们一起打造下一段 BroWorld 体验",
+        "body": "无论你在原型设计、扩展运营还是培养新的社区领袖，我们都愿意与你共创下一次发布。",
+        "mediaPlaceholder": "此处预留推荐语或产品演示占位。",
+        "primaryCta": "创建新世界",
+        "primaryCtaAria": "打开世界创建指南",
+        "secondaryCta": "预约交流",
+        "secondaryCtaAria": "打开联系页面预约沟通"
+      }
+    },
     "academy": {
       "title": "Bro World Academy",
       "subtitle": "Master the skills to build immersive communities through focused learning tracks.",

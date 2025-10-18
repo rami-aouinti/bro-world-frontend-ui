@@ -585,6 +585,140 @@
     }
   },
   "pages": {
+    "about": {
+      "title": "Chi siamo",
+      "subtitle": "Chi siamo e cosa stiamo costruendo",
+      "heroPrimaryCta": "Inizia a costruire",
+      "heroPrimaryCtaAria": "Apri il flusso di creazione dei mondi",
+      "heroSecondaryCta": "Parla con il nostro team",
+      "heroSecondaryCtaAria": "Contatta il team di BroWorld",
+      "missionTitle": "La nostra missione",
+      "missionBody": "Vogliamo rendere accessibili a ogni builder componenti UI di livello mondiale. BroWorld riunisce contributi della community, pattern curati e linee guida inclusive per permettere ai team di spedire più velocemente insieme.",
+      "missionPoints": {
+        "builders": {
+          "title": "Dare potere a ogni builder",
+          "body": "Offrire impostazioni predefinite ragionate e pattern accessibili per team di qualsiasi dimensione."
+        },
+        "community": {
+          "title": "Crescere con la community",
+          "body": "Valorizzare i contributi dei maintainer di tutte le regioni e celebrare la collaborazione aperta."
+        },
+        "iteration": {
+          "title": "Iterare con responsabilità",
+          "body": "Rilasciare aggiornamenti accuratamente testati con roadmap trasparenti e impatto misurabile."
+        }
+      },
+      "valuesTitle": "Valori e pilastri del prodotto",
+      "valuesSubtitle": "I binari che orientano ogni release e partnership.",
+      "valuesMediaPlaceholder": "Segnaposto per hero o anteprima prodotto. Sostituire con l'asset finale prima del lancio.",
+      "values": {
+        "items": {
+          "community": {
+            "title": "Co-creato con la community",
+            "body": "Gruppi di lavoro moderati condividono le loro sfide così possiamo progettare soluzioni davvero inclusive."
+          },
+          "design": {
+            "title": "Attento ai design system",
+            "body": "Ogni componente rispetta token di accessibilità, breakpoint responsive e linee guida sul movimento."
+          },
+          "velocity": {
+            "title": "Slancio dall'automazione",
+            "body": "Template iniziali e tooling CLI mantengono il ritmo senza compromettere la qualità."
+          },
+          "quality": {
+            "title": "Qualità e fiducia di default",
+            "body": "Revisioni rigorose, suite di regressione visiva e osservabilità garantiscono esperienze resilienti."
+          }
+        }
+      },
+      "metricsTitle": "Numeri chiave",
+      "metricsSubtitle": "Segnali dai builder e dalle community che oggi si affidano a BroWorld.",
+      "metrics": {
+        "items": {
+          "contributors": {
+            "value": "2,5K+",
+            "label": "Contributor attivi",
+            "caption": "Designer, ingegneri e storyteller che inviano miglioramenti ogni trimestre."
+          },
+          "components": {
+            "value": "180+",
+            "label": "Primitive componibili",
+            "caption": "Componenti Vue riutilizzabili, composable e flussi iniziali pronti per la produzione."
+          },
+          "locales": {
+            "value": "7",
+            "label": "Lingue supportate",
+            "caption": "Esperienze localizzate con supporto RTL e accessibilità."
+          },
+          "satisfaction": {
+            "value": "94 %",
+            "label": "Indice di soddisfazione",
+            "caption": "I maintainer riportano che BroWorld aumenta velocità e chiarezza."
+          }
+        }
+      },
+      "teamTitle": "Il nostro team",
+      "teamBody": "BroWorld è mantenuto da un gruppo distribuito di designer, ingegneri e storyteller che credono che l'open source debba essere piacevole.",
+      "teamMembers": {
+        "amina": {
+          "role": "Lead prodotto",
+          "bio": "Definisce la visione di prodotto e mantiene la roadmap allineata ai bisogni della community."
+        },
+        "lukas": {
+          "role": "Lead ingegneria",
+          "bio": "Guida l'architettura e garantisce che ogni release sia performante, accessibile e ben testata."
+        },
+        "clara": {
+          "role": "Developer advocate",
+          "bio": "Trasforma i feedback in documentazione azionabile e aiuta i contributor a sentirsi i benvenuti."
+        },
+        "youssef": {
+          "role": "Responsabile community",
+          "bio": "Organizza le sessioni della community, cura i contributi e mantiene conversazioni inclusive."
+        }
+      },
+      "techTitle": "Tecnologia",
+      "techBody": "Ci affidiamo a uno stack Vue moderno per mantenere allineate documentazione e superfici di produzione.",
+      "techStack": {
+        "nuxt": "Esperienze con rendering ibrido basate sul routing a file.",
+        "vuetify": "Primitive di design accessibili con supporto RTL di prima classe.",
+        "typescript": "Scrittura tipizzata in componenti, store e utility.",
+        "vitest": "Test rapidi di unità e componenti per release affidabili."
+      },
+      "timelineTitle": "Traguardi",
+      "timeline": {
+        "2023": {
+          "title": "Open source del primo set di componenti",
+          "description": "Pubblicata la base della libreria e la guida di onboarding."
+        },
+        "2024": {
+          "title": "Espansione della copertura di localizzazione",
+          "description": "Aggiunti contenuti multilingua, supporto RTL e flussi di traduzione della community."
+        },
+        "2025": {
+          "title": "Lancio dei workflow collaborativi",
+          "description": "Introdotti template condivisi, cicli di feedback integrati e automazione migliorata."
+        }
+      },
+      "linksTitle": "Esplora di più",
+      "links": {
+        "github": "Repository GitHub",
+        "docs": "Documentazione",
+        "community": "Forum della community",
+        "githubAria": "Apri il repository GitHub in una nuova scheda",
+        "docsAria": "Leggi la documentazione in una nuova scheda",
+        "communityAria": "Unisciti al forum della community in una nuova scheda"
+      },
+      "finalCta": {
+        "title": "Costruisci con noi la prossima esperienza BroWorld",
+        "body": "Che tu stia prototipando, scalando le operazioni o guidando nuovi leader della community, siamo pronti a co-progettare il tuo prossimo lancio.",
+        "mediaPlaceholder": "Segnaposto per testimonianza o walkthrough del prodotto.",
+        "primaryCta": "Crea un nuovo mondo",
+        "primaryCtaAria": "Apri la guida alla creazione del mondo",
+        "secondaryCta": "Prenota una chiamata",
+        "secondaryCtaAria": "Apri la pagina contatti per prenotare una conversazione"
+      }
+    },
     "academy": {
       "title": "Bro World Academy",
       "subtitle": "Master the skills to build immersive communities through focused learning tracks.",
