@@ -51,7 +51,10 @@ await store.fetchLessons(slug.value);
 await store.fetchExercises(slug.value);
 
 const course = computed(() => store.getCourseBySlug(slug.value));
-const lessons = computed(() => store.getCourseLessons(slug.value));
+const lessons = computed(() => {
+  const list = store.getCourseLessons(slug.value);
+  return Array.isArray(list) ? list : [];
+});
 const progress = computed(() => store.getProgressForCourse(course.value?.id ?? "") ?? { lessonDone: {}, exerciseScore: {} });
 
 const lessonIndex = computed(() => lessons.value.findIndex((entry) => entry.id === lessonId.value));
