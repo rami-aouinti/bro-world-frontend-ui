@@ -8,6 +8,7 @@ import type {
   MessengerMercureEnvelope,
   MessengerMessage,
   MessengerMessagesEnvelope,
+  MessengerAttachment,
   MessengerParticipant,
   MessengerSendMessagePayload,
   MessengerThreadEnvelope,
@@ -134,6 +135,7 @@ function createOptimisticMessage(
   conversationId: string,
   sender: MessengerParticipant,
   content: string,
+  attachments: MessengerAttachment[] = [],
 ): MessengerMessage {
   return {
     id: `optimistic-${Date.now()}-${Math.random().toString(36).slice(2)}`,
@@ -143,6 +145,7 @@ function createOptimisticMessage(
     createdAt: new Date().toISOString(),
     status: "pending",
     optimistic: true,
+    attachments,
   };
 }
 
@@ -627,13 +630,37 @@ export const useMessengerStore = defineStore("messenger", () => {
       avatarUrl: currentUser.photo ?? null,
     };
 
-    const trimmedContent = payload.content?.trim();
+    const normalizedAttachments = Array.isArray(payload.attachments)
+      ? payload.attachments
+          .filter((attachment) => Boolean(attachment?.url))
+          .map((attachment) => ({
+            id: attachment.id ?? `temp-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+            name: attachment.name?.trim() || "Attachment",
+            url: attachment.url,
+            mimeType: attachment.mimeType ?? undefined,
+            size: attachment.size ?? undefined,
+          }))
+      : [];
 
-    if (!trimmedContent) {
+    const trimmedContent = payload.content?.trim() ?? "";
+    const hasContent = trimmedContent.length > 0;
+
+    if (!hasContent && normalizedAttachments.length === 0) {
       return null;
     }
 
-    const optimistic = createOptimisticMessage(conversationId, sender, trimmedContent);
+    const fallbackContent = hasContent
+      ? trimmedContent
+      : normalizedAttachments.length > 1
+        ? `${normalizedAttachments.length} attachments`
+        : normalizedAttachments[0]?.name ?? "Attachment";
+
+    const optimistic = createOptimisticMessage(
+      conversationId,
+      sender,
+      fallbackContent,
+      normalizedAttachments,
+    );
     appendMessage(conversationId, optimistic);
     setSendState(conversationId, { pending: true, error: null });
 
@@ -643,8 +670,8 @@ export const useMessengerStore = defineStore("messenger", () => {
         {
           method: "POST",
           body: {
-            content: trimmedContent,
-            attachments: payload.attachments ?? [],
+            content: fallbackContent,
+            attachments: normalizedAttachments,
           },
         },
       );
@@ -902,10 +929,15 @@ export const useMessengerStore = defineStore("messenger", () => {
   }
 
   watch(
-    () => auth.isAuthenticated.value,
-    (authenticated) => {
-      if (!authenticated) {
-        resetState();
+    () => auth.currentUser.value?.id ?? null,
+    (userId, previousUserId) => {
+      if (userId === previousUserId) {
+        return;
+      }
+
+      resetState();
+
+      if (!userId) {
         return;
       }
 
