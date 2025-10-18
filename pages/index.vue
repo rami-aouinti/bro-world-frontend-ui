@@ -401,7 +401,10 @@ const skeletonBatchSize = computed(() => {
 });
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
-const initialLoadError = ref<string | null>(null);
+const initialLoadError = useState<string | null>(
+  "index:initial-load-error",
+  () => null,
+);
 
 const isLoadErrorDismissed = ref(false);
 const loadMoreRequestInFlight = ref(false);
