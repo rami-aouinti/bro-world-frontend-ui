@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-4">
-    <Header :job="job" />
+    <JobDetailsHeader :job="job" />
 
     <v-expand-transition>
       <div v-if="expanded">
@@ -28,7 +28,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Skills from "~/components/job/details/Skills.vue";
 import Content from "~/components/job/details/Content.vue";
-import Header from "~/components/job/details/Header.vue";
+import JobDetailsHeader from "~/components/job/details/JobDetailsHeader.vue";
 
 type JobDetailsPayload = {
   title?: string;
