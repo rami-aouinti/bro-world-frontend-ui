@@ -15,7 +15,7 @@
               {{ t("admin.settings.page.title") }}
             </h4>
             <p class="text-body-1 text-medium-emphasis mb-0">
-              {{ currentSection?.subtitle || t("admin.settings.page.subtitle") }}
+              {{ currentSectionSubtitle }}
             </p>
           </div>
           <div class="d-flex flex-wrap gap-3">
@@ -79,59 +79,60 @@ const { hasChanges, isSaving, pending, reset, save, snackbar, setSnackbar } =
 
 const activeSection = computed(() => props.section);
 
-const navigationTitle = computed(() => {
-  const label = t("admin.settings.navigation.title");
-  return label === "admin.settings.navigation.title" ? t("admin.settings.page.title") : label;
-});
-
 const sections = computed(() => [
   {
     key: "general",
     to: "/admin/settings",
     icon: "mdi:cog-outline",
-    title: t("admin.settings.sections.general.title"),
-    subtitle: t("admin.settings.sections.general.subtitle"),
+    titleKey: "admin.settings.sections.general.title",
+    subtitleKey: "admin.settings.sections.general.subtitle",
   },
   {
     key: "themes",
     to: "/admin/settings/themes",
     icon: "mdi:palette-outline",
-    title: t("admin.settings.sections.theme.title"),
-    subtitle: t("admin.settings.sections.theme.subtitle"),
+    titleKey: "admin.settings.sections.theme.title",
+    subtitleKey: "admin.settings.sections.theme.subtitle",
   },
   {
     key: "profile",
     to: "/admin/settings/profile",
     icon: "mdi:account-cog",
-    title: t("admin.settings.sections.profile.title"),
-    subtitle: t("admin.settings.sections.profile.subtitle"),
+    titleKey: "admin.settings.sections.profile.title",
+    subtitleKey: "admin.settings.sections.profile.subtitle",
   },
   {
     key: "appearance",
     to: "/admin/settings/appearance",
     icon: "mdi:theme-light-dark",
-    title: t("admin.settings.sections.appearance.title"),
-    subtitle: t("admin.settings.sections.appearance.subtitle"),
+    titleKey: "admin.settings.sections.appearance.title",
+    subtitleKey: "admin.settings.sections.appearance.subtitle",
   },
   {
     key: "pages",
     to: "/admin/settings/pages",
     icon: "mdi:book-open-page-variant",
-    title: t("admin.settings.sections.pages.title"),
-    subtitle: t("admin.settings.sections.pages.subtitle"),
+    titleKey: "admin.settings.sections.pages.title",
+    subtitleKey: "admin.settings.sections.pages.subtitle",
   },
   {
     key: "navigation",
     to: "/admin/settings/navigation",
     icon: "mdi:compass-outline",
-    title: t("admin.settings.sections.navigation.title"),
-    subtitle: t("admin.settings.sections.navigation.subtitle"),
+    titleKey: "admin.settings.sections.navigation.title",
+    subtitleKey: "admin.settings.sections.navigation.subtitle",
   },
 ]);
 
-const currentSection = computed(() =>
-  sections.value.find((section) => section.key === activeSection.value),
-);
+const currentSectionSubtitle = computed(() => {
+  const section = sections.value.find((candidate) => candidate.key === activeSection.value);
+  if (!section) {
+    return t("admin.settings.page.subtitle");
+  }
+
+  const translated = t(section.subtitleKey);
+  return translated === section.subtitleKey ? t("admin.settings.page.subtitle") : translated;
+});
 
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 
@@ -140,7 +141,8 @@ const sidebarContent = computed(() => ({
   props: {
     sections: sections.value,
     activeSection: activeSection.value,
-    title: navigationTitle.value,
+    titleKey: "admin.settings.navigation.title",
+    titleFallbackKey: "admin.settings.page.title",
   },
   wrapperClass: "flex flex-col gap-6 px-3 py-4",
 }));
