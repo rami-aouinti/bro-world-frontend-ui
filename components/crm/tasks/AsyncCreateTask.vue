@@ -316,14 +316,14 @@ function resolveStatusMeta(status: string | null | undefined) {
 
   switch (normalized) {
     case "completed":
-      return { label: "Completed", color: "success", icon: "mdi-check-circle" };
+      return { label: "Completed", color: "success", icon: "mdi:check-circle" };
     case "in-progress":
-      return { label: "In progress", color: "primary", icon: "mdi-progress-clock" };
+      return { label: "In progress", color: "primary", icon: "mdi:progress-clock" };
     case "todo":
     case "to-do":
-      return { label: "To do", color: "grey", icon: "mdi-checkbox-blank-circle-outline" };
+      return { label: "To do", color: "grey", icon: "mdi:checkbox-blank-circle-outline" };
     default:
-      return { label: "Planned", color: "secondary", icon: "mdi-timeline-clock-outline" };
+      return { label: "Planned", color: "secondary", icon: "mdi:timeline-clock-outline" };
   }
 }
 
