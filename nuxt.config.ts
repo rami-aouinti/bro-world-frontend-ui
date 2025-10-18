@@ -871,6 +871,9 @@ export default defineNuxtConfig({
       { code: "ru", name: "Russian", iso: "ru-RU", icon: "fi-ru ru", file: "ru.json" },
     ],
     baseUrl: "https://bro-world-space.com",
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
   },
 
   vuetify: {
