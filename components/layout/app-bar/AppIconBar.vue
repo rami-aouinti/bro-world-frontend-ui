@@ -48,10 +48,13 @@ import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
+type ClassBinding = string | string[] | Record<string, boolean>;
+
 const props = defineProps<{
   appIcons: { name: string; label: string; size?: number; to?: string }[];
   iconTriggerClasses: string;
   isDark: boolean;
+  wrapperClasses?: ClassBinding;
 }>();
 
 const { t } = useI18n();
@@ -77,8 +80,25 @@ function resolveIconSize(icon: { size?: number }) {
   return icon.size ?? 26;
 }
 
-const iconBarClasses = computed(() => [
-  "app-icon-bar flex items-center justify-center gap-3",
-  isHydrated.value ? "px-4 sm:px-6 md:px-8" : "px-8",
-]);
+const iconBarClasses = computed(() => {
+  const classes: (string | Record<string, boolean>)[] = [];
+
+  const wrapper = props.wrapperClasses;
+
+  if (Array.isArray(wrapper)) {
+    for (const value of wrapper) {
+      if (!value) continue;
+      classes.push(value);
+    }
+  } else if (wrapper) {
+    classes.push(wrapper);
+  }
+
+  classes.push(
+    "app-icon-bar flex items-center justify-center gap-3",
+    isHydrated.value ? "px-4 sm:px-6 md:px-8" : "px-8",
+  );
+
+  return classes;
+});
 </script>

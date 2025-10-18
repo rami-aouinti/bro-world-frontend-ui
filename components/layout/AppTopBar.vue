@@ -42,13 +42,12 @@
       <LayoutSearchButton />
     </div>
 
-    <div :class="iconWrapperClasses">
-      <AppIconBar
-        :app-icons="props.appIcons"
-        :icon-trigger-classes="iconTriggerClasses"
-        :is-dark="props.isDark"
-      />
-    </div>
+    <AppIconBar
+      :app-icons="props.appIcons"
+      :icon-trigger-classes="iconTriggerClasses"
+      :is-dark="props.isDark"
+      :wrapper-classes="iconWrapperClasses"
+    />
 
     <template #append>
       <div class="app-top-bar__append">
@@ -442,19 +441,19 @@ function markAllNotifications() {
   min-width: min(100%, 320px);
 }
 
-.app-top-bar__icons {
+:deep(.app-top-bar__icons) {
   display: flex;
   flex: 1;
   justify-content: center;
   position: relative;
 }
 
-.app-top-bar__icons--with-search {
+:deep(.app-top-bar__icons--with-search) {
   flex: 1;
 }
 
 @media (min-width: 960px) {
-  .app-top-bar__icons {
+  :deep(.app-top-bar__icons) {
     flex: 0 0 auto;
     left: 50%;
     position: absolute;
@@ -462,7 +461,7 @@ function markAllNotifications() {
     transform: translate(-50%, -50%);
   }
 
-  .app-top-bar__icons--with-search {
+  :deep(.app-top-bar__icons--with-search) {
     flex: 1 1 auto;
     left: auto;
     position: relative;
