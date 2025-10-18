@@ -222,7 +222,9 @@ const dayjsEsmIndexPath = normalizePath(require.resolve("dayjs/esm/index.js"));
 const dayjsEsmDir = dirname(dayjsEsmIndexPath);
 
 function createDayjsEsmResolver(): PluginOption {
-  const stripJsExtension = (specifier: string) => specifier.replace(/\.(?:mjs|cjs|js)$/i, "");
+  function stripJsExtension(specifier: string): string {
+    return specifier.replace(/\.(?:mjs|cjs|js)$/i, "");
+  }
 
   return {
     name: "dayjs-esm-resolver",

@@ -1,4 +1,3 @@
-const CONTROL_CHARACTERS_REGEX = /[\u0000-\u001f\u007f]/g;
 const URL_SCHEME_REGEX = /^([a-z0-9+.-]+):/i;
 const RELATIVE_URL_REGEX = /^[/?#]/;
 const SAFE_PROTOCOLS = new Set([
@@ -26,6 +25,25 @@ const SAFE_PROTOCOLS = new Set([
 ]);
 const SAFE_DATA_URL_REGEX = /^data:image\/(?:gif|png|jpeg|webp|bmp);/i;
 
+function stripControlCharacters(value: string): string {
+  let result = "";
+
+  for (const character of value) {
+    const code = character.codePointAt(0);
+    if (code === undefined) {
+      continue;
+    }
+
+    if ((code >= 0 && code <= 31) || code === 127) {
+      continue;
+    }
+
+    result += character;
+  }
+
+  return result;
+}
+
 function sanitizeUrl(url: unknown): string {
   if (typeof url !== "string") {
     return "about:blank";
@@ -36,7 +54,7 @@ function sanitizeUrl(url: unknown): string {
     return "about:blank";
   }
 
-  const cleaned = trimmed.replace(CONTROL_CHARACTERS_REGEX, "");
+  const cleaned = stripControlCharacters(trimmed);
   if (!cleaned) {
     return "about:blank";
   }
