@@ -46,7 +46,7 @@
         class="sidebar-default-card__particles"
         aria-hidden="true"
       />
-      <div class="pane-scroll py-4">
+      <div class="pane-scroll py-5">
         <slot
           name="left-sidebar"
           :items="sidebarItems"
