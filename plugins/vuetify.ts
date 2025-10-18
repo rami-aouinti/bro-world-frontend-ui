@@ -80,13 +80,7 @@ import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables
 import { normalizeHexColor } from "~/lib/theme/colors";
 import { projectMdiIcons } from "~/lib/vuetify/projectMdiIcons";
 import DateFnsAdapter from "@date-io/date-fns";
-import enUSLocale from "date-fns/locale/en-US";
-import frLocale from "date-fns/locale/fr";
-import deLocale from "date-fns/locale/de";
-import itLocale from "date-fns/locale/it";
-import esLocale from "date-fns/locale/es";
-import ruLocale from "date-fns/locale/ru";
-import arLocale from "date-fns/locale/ar-SA";
+import type { Locale } from "date-fns";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
 
@@ -197,6 +191,82 @@ const MdiSvgIcon = defineComponent({
   },
 });
 
+type SupportedDateLocaleCode = "en" | "fr" | "de" | "ar" | "it" | "es" | "ru";
+
+type DateLocaleLoader = () => Promise<Locale>;
+
+function createDateLocaleLoader(importer: () => Promise<{ default: Locale }>): DateLocaleLoader {
+  let cachedPromise: Promise<Locale> | null = null;
+
+  return () => {
+    if (cachedPromise == null) {
+      cachedPromise = importer().then((module) => module.default);
+    }
+
+    return cachedPromise;
+  };
+}
+
+function isSupportedDateLocale(locale: string): locale is SupportedDateLocaleCode {
+  return ["en", "fr", "de", "ar", "it", "es", "ru"].includes(
+    locale as SupportedDateLocaleCode,
+  );
+}
+
+const dateLocaleLoaders: Record<SupportedDateLocaleCode, DateLocaleLoader> = {
+  en: createDateLocaleLoader(() => import("date-fns/locale/en-US")),
+  fr: createDateLocaleLoader(() => import("date-fns/locale/fr")),
+  de: createDateLocaleLoader(() => import("date-fns/locale/de")),
+  ar: createDateLocaleLoader(() => import("date-fns/locale/ar-SA")),
+  it: createDateLocaleLoader(() => import("date-fns/locale/it")),
+  es: createDateLocaleLoader(() => import("date-fns/locale/es")),
+  ru: createDateLocaleLoader(() => import("date-fns/locale/ru")),
+};
+
+const dateLocaleFallbacks: Record<SupportedDateLocaleCode, string> = {
+  en: "en-US",
+  fr: "fr",
+  de: "de",
+  ar: "ar-SA",
+  it: "it",
+  es: "es",
+  ru: "ru",
+};
+
+const loadedDateLocalePromises = new Map<SupportedDateLocaleCode, Promise<Locale>>();
+
+const dateLocaleRegistry: Record<SupportedDateLocaleCode, Locale | string> = {
+  ...dateLocaleFallbacks,
+};
+
+let activeRuntimeDateLocaleRegistry:
+  | Record<SupportedDateLocaleCode, Locale | string>
+  | undefined;
+
+async function ensureDateLocale(code: string | undefined): Promise<Locale | undefined> {
+  if (!code || !isSupportedDateLocale(code)) {
+    return undefined;
+  }
+
+  let pending = loadedDateLocalePromises.get(code);
+
+  if (pending == null) {
+    pending = dateLocaleLoaders[code]().then((locale) => {
+      dateLocaleRegistry[code] = locale;
+
+      if (activeRuntimeDateLocaleRegistry) {
+        activeRuntimeDateLocaleRegistry[code] = locale;
+      }
+
+      return locale;
+    });
+
+    loadedDateLocalePromises.set(code, pending);
+  }
+
+  return pending;
+}
+
 const vuetifyLocaleMessages = {
   en,
   fr,
@@ -221,7 +291,7 @@ export type DataTableHeaders = VDataTable["$props"]["headers"];
 
 const FALLBACK_PRIMARY_HEX = "#091b2d";
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(async (nuxtApp) => {
   const primaryCookie = useCookie<string | null>(
     "theme-primary",
     withSecureCookieOptions({
@@ -245,6 +315,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   ) as Record<string, boolean>;
   const i18n = nuxtApp.$i18n as { locale?: { value?: string | undefined } } | undefined;
   const initialLocale = i18n?.locale?.value ?? localeCookieValue;
+
+  const fallbackDateLocalePromise = ensureDateLocale("en");
+  const initialDateLocale =
+    initialLocale && initialLocale !== "en"
+      ? await ensureDateLocale(initialLocale)
+      : await fallbackDateLocalePromise;
+  const fallbackDateLocale = await fallbackDateLocalePromise;
 
   const sharedVariables = {
     "font-family-base":
@@ -687,15 +764,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
     date: {
       adapter: DateFnsAdapter,
-      locale: {
-        en: enUSLocale,
-        fr: frLocale,
-        de: deLocale,
-        ar: arLocale,
-        it: itLocale,
-        es: esLocale,
-        ru: ruLocale,
-      },
+      locale: dateLocaleRegistry as Record<string, Locale | string>,
     },
     defaults: {
       VBtn: {
@@ -713,14 +782,33 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
   });
 
+  activeRuntimeDateLocaleRegistry = vuetify.date.options.locale as Record<
+    SupportedDateLocaleCode,
+    Locale | string
+  >;
+
+  if (initialDateLocale) {
+    vuetify.date.instance.locale = initialDateLocale;
+  } else if (fallbackDateLocale) {
+    vuetify.date.instance.locale = fallbackDateLocale;
+  }
+
   if (initialLocale) {
     vuetify.locale.current.value = initialLocale;
   }
 
-  nuxtApp.hook("i18n:localeSwitched", (context) => {
+  nuxtApp.hook("i18n:localeSwitched", async (context) => {
     const nextLocale = context?.newLocale;
 
     if (typeof nextLocale === "string" && nextLocale.length > 0) {
+      const nextDateLocale = await ensureDateLocale(nextLocale);
+
+      if (nextDateLocale) {
+        vuetify.date.instance.locale = nextDateLocale;
+      } else if (fallbackDateLocale) {
+        vuetify.date.instance.locale = fallbackDateLocale;
+      }
+
       vuetify.locale.current.value = nextLocale;
     }
   });
