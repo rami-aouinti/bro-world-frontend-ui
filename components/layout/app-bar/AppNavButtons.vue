@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed } from "vue";
 
 const props = withDefaults(
   defineProps<{
@@ -76,17 +76,9 @@ const props = withDefaults(
 );
 const emit = defineEmits(["toggle-left", "go-back", "refresh"]);
 
-const isHydrated = ref(false);
-
-if (import.meta.client) {
-  onMounted(() => {
-    isHydrated.value = true;
-  });
-}
-
 const navGroupClasses = computed(() => {
-  if (!isHydrated.value) {
-    return props.isMobile ? "flex items-center gap-3 px-4" : "flex items-center gap-12 px-16";
+  if (props.isMobile) {
+    return "flex items-center gap-3 px-4";
   }
 
   return "flex items-center gap-12 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8";
