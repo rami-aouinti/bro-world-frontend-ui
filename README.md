@@ -104,6 +104,20 @@ open http://localhost:3000
 - Optional integrations (Redis, analytics, advertising) can remain empty when not needed.
 - Restart the dev server after changing environment variables so Nuxt picks up the new values.
 
+### Help centre content
+
+The `/help` experience relies on the mock dataset in `server/mock/help.json`, which stores
+every category and article with localized strings.
+
+When you update the help centre:
+
+- Edit `server/mock/help.json` to adjust articles (provide English, French, German, and
+  Arabic copies for each field).
+- Update the UI strings in `i18n/locales/{en,fr,de,ar}.json` under the `help` namespace to
+  keep hero copy, FAQs, and feedback labels aligned.
+- Review the Vue pages in `pages/help/` and components in `components/help/` if you need to
+  add new layout blocks or change SEO metadata.
+
 ## 🗂️ Project Structure
 
 Here's an overview of the most important directories to help you navigate the codebase quickly:
