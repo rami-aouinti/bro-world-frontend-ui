@@ -31,11 +31,21 @@ export default defineNuxtPlugin({
       return;
     }
 
-    pinia.use((context: PiniaPluginContext) => {
-      const persist = (context.options as { persist?: PersistOption }).persist;
-      if (!persist) {
-        return;
+    if (typeof (pinia as { use?: unknown }).use !== "function") {
+      if (import.meta.dev) {
+        console.warn(
+          "[pinia-persisted-state] The provided Pinia instance does not support plugins.",
+        );
       }
+      return;
+    }
+
+    (pinia as { use(plugin: (context: PiniaPluginContext) => void): void }).use(
+      (context: PiniaPluginContext) => {
+        const persist = (context.options as { persist?: PersistOption }).persist;
+        if (!persist) {
+          return;
+        }
 
       const options = typeof persist === "object" ? persist : {};
       const key = options.key ?? `pinia-${context.store.$id}`;
@@ -50,12 +60,13 @@ export default defineNuxtPlugin({
         storage.value = pickPaths(context.store.$state as Record<string, unknown>, paths);
       }
 
-      context.store.$subscribe(
-        (_mutation, state) => {
-          storage.value = pickPaths(state as Record<string, unknown>, paths);
-        },
-        { detached: true },
-      );
-    });
+        context.store.$subscribe(
+          (_mutation, state) => {
+            storage.value = pickPaths(state as Record<string, unknown>, paths);
+          },
+          { detached: true },
+        );
+      },
+    );
   },
 });
