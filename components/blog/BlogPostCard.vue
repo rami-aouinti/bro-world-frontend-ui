@@ -271,30 +271,33 @@ const sortedCommentThreadNodes = computed(() => {
 });
 
 function sortCommentsByPublishedAt(nodes: BlogCommentWithReplies[]): BlogCommentWithReplies[] {
-  return [...nodes]
+  return nodes
     .map((node) => {
       const sortedChildren = resolveSortedChildren(node);
+      const baseNode: BlogCommentWithReplies = sortedChildren
+        ? {
+            ...node,
+            children: sortedChildren,
+          }
+        : { ...node };
 
-      if (!sortedChildren) {
-        return { ...node };
+      if (sortedChildren) {
+        if (Array.isArray(node.comments)) {
+          baseNode.comments = sortedChildren;
+        }
+
+        if (Array.isArray(node.replies)) {
+          baseNode.replies = sortedChildren;
+        }
       }
 
-      const clone: BlogCommentWithReplies = {
-        ...node,
-        children: sortedChildren,
+      return {
+        node: baseNode,
+        publishedTimestamp: getPublishedTimestamp(node.publishedAt),
       };
-
-      if (Array.isArray(node.comments)) {
-        clone.comments = sortedChildren;
-      }
-
-      if (Array.isArray(node.replies)) {
-        clone.replies = sortedChildren;
-      }
-
-      return clone;
     })
-    .sort((a, b) => getPublishedTimestamp(b.publishedAt) - getPublishedTimestamp(a.publishedAt));
+    .sort((a, b) => b.publishedTimestamp - a.publishedTimestamp)
+    .map(({ node }) => node);
 }
 
 function resolveSortedChildren(node: BlogCommentWithReplies): BlogCommentWithReplies[] | undefined {
