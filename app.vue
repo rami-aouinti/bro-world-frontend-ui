@@ -140,6 +140,17 @@ if (import.meta.client && nuxtApp) {
 const pageKey = computed(() => route.fullPath ?? route.name ?? "");
 const { themeClass, radius, themePrimaryHex } = useThemes();
 const { locale, locales } = useI18n();
+
+const rtlLocales = new Set(["ar"]);
+const isRtlLocale = computed(() => rtlLocales.has(locale.value));
+const bodyClass = computed(() => {
+  const classes = [themeClass.value];
+
+  classes.push(isRtlLocale.value ? "rtl" : "ltr");
+
+  return classes.join(" ").trim();
+});
+const bodyStyle = computed(() => `--radius: ${radius.value}rem;`);
 const runtimeConfig = nuxtApp && hasInjectionContext() ? useRuntimeConfig() : null;
 const requestUrl = nuxtApp && hasInjectionContext() ? useRequestURL() : null;
 
@@ -302,7 +313,7 @@ useHead({
   title,
   titleTemplate: (value) => (value ? `${value} | Bro World` : "Bro World"),
   htmlAttrs: {
-    dir: computed(() => (locale.value === "ar" ? "rtl" : "ltr")),
+    dir: computed(() => (isRtlLocale.value ? "rtl" : "ltr")),
     lang: computed(() => locale.value),
   },
   link: headLinks,
@@ -322,8 +333,8 @@ useHead({
     },
   ],
   bodyAttrs: {
-    class: () => themeClass.value,
-    style: () => `--radius: ${radius.value}rem;`,
+    class: () => bodyClass.value,
+    style: () => bodyStyle.value,
   },
 });
 
