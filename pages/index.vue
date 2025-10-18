@@ -523,8 +523,18 @@ await callOnce(async () => {
     return;
   }
 
-  scheduleNonBlockingTask(() => {
-    void ensureInitialPostsLoad();
+  if (!nuxtApp?.isHydrating) {
+    scheduleNonBlockingTask(() => {
+      void ensureInitialPostsLoad();
+    });
+
+    return;
+  }
+
+  onNuxtReady(() => {
+    scheduleNonBlockingTask(() => {
+      void ensureInitialPostsLoad();
+    });
   });
 });
 
