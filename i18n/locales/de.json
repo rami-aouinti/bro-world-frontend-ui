@@ -102,6 +102,7 @@
         "adminData": "Daten",
         "adminCrons": "Geplante Aufgaben",
         "adminSettings": "Seiteneinstellungen",
+        "adminCrm": "CRM-Arbeitsbereich",
         "adminUserManagement": "Benutzerverwaltung",
         "adminBlogManagement": "Blogverwaltung",
         "adminJobManagement": "Stellenverwaltung",
@@ -2242,6 +2243,51 @@
     "performance": {
       "title": "Performance",
       "description": "Verfolge Budgets und Prüfungen, damit Bro World für jede Community schnell bleibt."
+    },
+    "crm": {
+      "title": "CRM-Arbeitsbereich",
+      "subtitle": "Überwachen Sie aktive Opportunities, Verantwortliche und Übergaben auf einen Blick.",
+      "actions": {
+        "newProject": "Neues Projekt",
+        "viewPipeline": "Pipeline anzeigen"
+      },
+      "metrics": {
+        "title": "Pipeline-Überblick",
+        "subtitle": "Momentaufnahme des aktuellen Deal-Flows nach Status.",
+        "total": "Projekte",
+        "totalCaption": "Aktive Opportunities über alle Pipelines hinweg.",
+        "inProgress": "In Arbeit",
+        "inProgressCaption": "Teams, die derzeit Workstreams umsetzen.",
+        "atRisk": "Gefährdet",
+        "atRiskCaption": "Deals, die sofortige Aufmerksamkeit benötigen.",
+        "pipelineValue": "Pipeline-Wert",
+        "pipelineValueCaption": "Geschätzter Umsatz, der in der Pipeline gesichert ist."
+      },
+      "table": {
+        "title": "Aktive Projekte",
+        "subtitle": "Aktuelle CRM-Initiativen mit Verantwortlichen und Meilensteinen.",
+        "empty": "Keine CRM-Projekte gefunden.",
+        "headers": {
+          "name": "Projekt",
+          "client": "Kunde",
+          "owner": "Verantwortliche*r",
+          "status": "Status",
+          "stage": "Phase",
+          "budget": "Budget",
+          "probability": "Gewinnwahrscheinlichkeit",
+          "dueDate": "Fälligkeitsdatum"
+        }
+      },
+      "upcoming": {
+        "title": "Bevorstehende Übergaben",
+        "subtitle": "Nächste Liefermeilensteine in der Pipeline.",
+        "empty": "Keine anstehenden Fristen."
+      },
+      "stages": {
+        "title": "Phasenverteilung",
+        "subtitle": "Wie Projekte entlang der Pipeline-Phasen voranschreiten.",
+        "caption": "Nächster Meilenstein am {date}"
+      }
     },
     "login": {
       "title": "Anmelden",

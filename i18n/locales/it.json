@@ -102,6 +102,7 @@
         "adminData": "Dati",
         "adminCrons": "Attività pianificate",
         "adminSettings": "Impostazioni del sito",
+        "adminCrm": "Spazio CRM",
         "adminUserManagement": "Gestione utenti",
         "adminBlogManagement": "Gestione blog",
         "adminJobManagement": "Gestione offerte di lavoro",
@@ -2068,6 +2069,51 @@
     "performance": {
       "title": "Prestazioni",
       "description": "Monitora budget e audit per mantenere Bro World veloce per ogni community."
+    },
+    "crm": {
+      "title": "Spazio CRM",
+      "subtitle": "Monitora opportunità attive, referenti e consegne in un'unica vista.",
+      "actions": {
+        "newProject": "Nuovo progetto",
+        "viewPipeline": "Vedi pipeline"
+      },
+      "metrics": {
+        "title": "Panoramica della pipeline",
+        "subtitle": "Istante del flusso di trattative per stato attuale.",
+        "total": "Progetti",
+        "totalCaption": "Opportunità attive in tutte le pipeline.",
+        "inProgress": "In corso",
+        "inProgressCaption": "Team che stanno eseguendo i workstream.",
+        "atRisk": "A rischio",
+        "atRiskCaption": "Trattative che richiedono attenzione immediata.",
+        "pipelineValue": "Valore pipeline",
+        "pipelineValueCaption": "Entrate stimate assicurate nella pipeline."
+      },
+      "table": {
+        "title": "Progetti attivi",
+        "subtitle": "Ultime iniziative CRM con referenti e milestone.",
+        "empty": "Nessun progetto CRM trovato.",
+        "headers": {
+          "name": "Progetto",
+          "client": "Cliente",
+          "owner": "Referente",
+          "status": "Stato",
+          "stage": "Fase",
+          "budget": "Budget",
+          "probability": "Probabilità di successo",
+          "dueDate": "Data di consegna"
+        }
+      },
+      "upcoming": {
+        "title": "Prossime consegne",
+        "subtitle": "Prossimi milestone di consegna nella pipeline.",
+        "empty": "Nessuna scadenza imminente."
+      },
+      "stages": {
+        "title": "Distribuzione per fase",
+        "subtitle": "Avanzamento dei progetti per fase di pipeline.",
+        "caption": "Prossimo milestone il {date}"
+      }
     },
     "login": {
       "title": "Accedi",

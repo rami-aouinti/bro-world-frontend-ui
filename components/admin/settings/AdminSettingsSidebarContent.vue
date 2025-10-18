@@ -11,10 +11,10 @@
         style="background-color: transparent"
       >
         <v-list-subheader class="text-subtitle-2">
-          {{ title }}
+          {{ computedTitle }}
         </v-list-subheader>
         <v-list-item
-          v-for="section in sections"
+          v-for="section in translatedSections"
           :key="section.key"
           class="group mx-2 my-0.5 rounded-xl my-4 transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5"
           :title="section.title"
@@ -32,19 +32,38 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+
 interface AdminSettingsSection {
   key: string;
   to: string;
   icon: string;
-  title: string;
-  subtitle: string;
+  titleKey: string;
+  subtitleKey: string;
 }
 
-defineProps<{
-  title: string;
+const props = defineProps<{
+  titleKey: string;
+  titleFallbackKey: string;
   sections: AdminSettingsSection[];
   activeSection: string;
 }>();
+
+const { t } = useI18n();
+
+const computedTitle = computed(() => {
+  const label = t(props.titleKey);
+  return label === props.titleKey ? t(props.titleFallbackKey) : label;
+});
+
+const translatedSections = computed(() =>
+  props.sections.map((section) => ({
+    ...section,
+    title: t(section.titleKey),
+    subtitle: t(section.subtitleKey),
+  })),
+);
 </script>
 
 <style scoped>

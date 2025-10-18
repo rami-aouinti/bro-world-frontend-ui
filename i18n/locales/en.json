@@ -112,6 +112,7 @@
         "adminData": "Data",
         "adminCrons": "Scheduled tasks",
         "adminSettings": "Site settings",
+        "adminCrm": "CRM workspace",
         "adminUserManagement": "User management",
         "adminBlogManagement": "Blog management",
         "adminJobManagement": "Job management",
@@ -2242,6 +2243,51 @@
     "performance": {
       "title": "Performance",
       "description": "Track the budgets and audits keeping BroWorld fast for every community."
+    },
+    "crm": {
+      "title": "CRM workspace",
+      "subtitle": "Monitor active opportunities, owners, and handovers in one view.",
+      "actions": {
+        "newProject": "New project",
+        "viewPipeline": "View pipeline"
+      },
+      "metrics": {
+        "title": "Pipeline overview",
+        "subtitle": "Snapshot of the current deal flow by status.",
+        "total": "Projects",
+        "totalCaption": "Active opportunities across every pipeline.",
+        "inProgress": "In progress",
+        "inProgressCaption": "Teams currently executing workstreams.",
+        "atRisk": "At risk",
+        "atRiskCaption": "Deals requiring immediate attention.",
+        "pipelineValue": "Pipeline value",
+        "pipelineValueCaption": "Estimated revenue secured in the pipeline."
+      },
+      "table": {
+        "title": "Active projects",
+        "subtitle": "Latest CRM initiatives with owners and milestones.",
+        "empty": "No CRM projects found.",
+        "headers": {
+          "name": "Project",
+          "client": "Client",
+          "owner": "Owner",
+          "status": "Status",
+          "stage": "Stage",
+          "budget": "Budget",
+          "probability": "Win probability",
+          "dueDate": "Due date"
+        }
+      },
+      "upcoming": {
+        "title": "Upcoming handovers",
+        "subtitle": "Next delivery checkpoints across the pipeline.",
+        "empty": "No upcoming deadlines."
+      },
+      "stages": {
+        "title": "Stage distribution",
+        "subtitle": "How projects are progressing by pipeline stage.",
+        "caption": "Next milestone on {date}"
+      }
     },
     "login": {
       "title": "Log in",
