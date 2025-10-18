@@ -417,16 +417,13 @@ const deleteDialogDescription = computed(() => t("blog.posts.actions.deleteDescr
 const deleteDialogConfirmLabel = computed(() => t("blog.posts.actions.deleteConfirm"));
 const deleteDialogCancelLabel = computed(() => t("blog.posts.actions.cancel"));
 
-watch(
-  postId,
-  () => {
-    commentContent.value = "";
-    commentFeedback.value = null;
-    submittingComment.value = false;
-    postReacting.value = false;
-    postReactionError.value = null;
-  },
-);
+function resetPostInteractionState() {
+  commentContent.value = "";
+  commentFeedback.value = null;
+  submittingComment.value = false;
+  postReacting.value = false;
+  postReactionError.value = null;
+}
 
 function openEditModal() {
   previousFocusedElement.value = document.activeElement as HTMLElement | null;
@@ -608,6 +605,14 @@ async function loadComments(options: { force?: boolean } = {}) {
   return request;
 }
 
+function resetCommentsState() {
+  loadedComments.value = null;
+  commentsError.value = null;
+  commentsLoading.value = false;
+  activeCommentsRequest.value = null;
+  commentsActivated.value = false;
+}
+
 function requestComments(options: { force?: boolean } = {}) {
   if (!postId.value) {
     return;
@@ -666,11 +671,8 @@ watch(
 watch(
   postId,
   (id) => {
-    loadedComments.value = null;
-    commentsError.value = null;
-    commentsLoading.value = false;
-    activeCommentsRequest.value = null;
-    commentsActivated.value = false;
+    resetPostInteractionState();
+    resetCommentsState();
 
     if (id) {
       prefetchComments();
