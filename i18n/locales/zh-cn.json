@@ -102,6 +102,7 @@
         "adminData": "数据",
         "adminCrons": "定时任务",
         "adminSettings": "站点设置",
+        "adminCrm": "CRM 工作区",
         "adminUserManagement": "用户管理",
         "adminBlogManagement": "博客管理",
         "adminJobManagement": "职位管理",
@@ -1866,6 +1867,51 @@
     "performance": {
       "title": "性能",
       "description": "跟踪预算和审计，让 Bro World 在每个社区都保持高速。"
+    },
+    "crm": {
+      "title": "CRM 工作区",
+      "subtitle": "在一个视图中跟踪活跃商机、负责人和交付节点。",
+      "actions": {
+        "newProject": "新建项目",
+        "viewPipeline": "查看销售管道"
+      },
+      "metrics": {
+        "title": "管道概览",
+        "subtitle": "按当前状态展示交易流量概况。",
+        "total": "项目",
+        "totalCaption": "所有管道中的活跃机会。",
+        "inProgress": "进行中",
+        "inProgressCaption": "正在执行工作流的团队。",
+        "atRisk": "风险",
+        "atRiskCaption": "需要立即关注的交易。",
+        "pipelineValue": "管道价值",
+        "pipelineValueCaption": "预计在管道中锁定的收入。"
+      },
+      "table": {
+        "title": "活跃项目",
+        "subtitle": "最新的 CRM 项目及其负责人和里程碑。",
+        "empty": "暂无 CRM 项目。",
+        "headers": {
+          "name": "项目",
+          "client": "客户",
+          "owner": "负责人",
+          "status": "状态",
+          "stage": "阶段",
+          "budget": "预算",
+          "probability": "赢单概率",
+          "dueDate": "截止日期"
+        }
+      },
+      "upcoming": {
+        "title": "即将交付",
+        "subtitle": "管道中的下一批交付节点。",
+        "empty": "暂无即将到期的节点。"
+      },
+      "stages": {
+        "title": "阶段分布",
+        "subtitle": "项目在各个管道阶段的推进情况。",
+        "caption": "下一个里程碑：{date}"
+      }
     },
     "login": {
       "title": "登录",
