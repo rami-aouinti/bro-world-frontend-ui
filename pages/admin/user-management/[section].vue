@@ -222,7 +222,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { callOnce } from "#imports";
+import { callOnce } from "#app";
 import { useAdminModulePage } from "~/composables/useAdminModulePage";
 import { useUsersStore } from "~/stores/users";
 import type { UsersStoreUser } from "~/stores/users";

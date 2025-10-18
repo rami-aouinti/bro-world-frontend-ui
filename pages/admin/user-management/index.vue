@@ -405,7 +405,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
-import { callOnce } from "#imports";
+import { callOnce } from "#app";
 import { useI18n } from "vue-i18n";
 import { useUsersStore } from "~/stores/users";
 

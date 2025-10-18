@@ -323,7 +323,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { callOnce } from "#imports";
+import { callOnce } from "#app";
 import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useProfileStore } from "~/stores/profile";

@@ -41,7 +41,7 @@
 import { computed, defineAsyncComponent } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { callOnce, navigateTo } from "#imports";
+import { callOnce, navigateTo } from "#app";
 import { useMessengerStore } from "~/stores/messenger";
 
 const ConversationsList = defineAsyncComponent({
