@@ -1,6 +1,12 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
+import {
+  invalidateQuizLandingCache,
+  readQuizLandingCache,
+  writeQuizLandingCache,
+} from "./cache/quiz";
+
 export interface QuizFeature {
   icon: string;
   title: string;
@@ -60,6 +66,13 @@ export async function getQuizLandingData(): Promise<QuizLandingData> {
     return cache;
   }
 
+  const cached = await readQuizLandingCache();
+
+  if (cached) {
+    cache = cached;
+    return cached;
+  }
+
   const filePath = join(process.cwd(), "server/mock/quiz.json");
   const content = await readFile(filePath, "utf8");
   const parsed = JSON.parse(content) as QuizLandingData;
@@ -74,9 +87,12 @@ export async function getQuizLandingData(): Promise<QuizLandingData> {
     cta: parsed.cta,
   };
 
+  await writeQuizLandingCache(cache);
+
   return cache;
 }
 
-export function clearQuizCache() {
+export async function invalidateQuizCache() {
   cache = null;
+  await invalidateQuizLandingCache();
 }

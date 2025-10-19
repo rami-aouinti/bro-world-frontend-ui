@@ -95,7 +95,68 @@ function createDefaultDocsConfig(): DocsConfig {
   };
 }
 
+type RuntimeConfig = {
+  public: {
+    siteUrl: string;
+    apiBase: string;
+    postsApiBase: string;
+    redis: {
+      listTtl: number;
+      itemTtl: number;
+      quizTtl: number;
+    };
+    crmProjects: {
+      useMocks: boolean;
+    };
+  };
+  redis: {
+    url: string;
+    tls: boolean;
+    keyPrefix: string;
+    listTtl: number;
+    itemTtl: number;
+    helpTtl: number;
+    profileTtl: number;
+    settingsTtl: number;
+    mercureTtl: number;
+    quizTtl: number;
+  };
+};
+
+function createDefaultRuntimeConfig(): RuntimeConfig {
+  return {
+    public: {
+      siteUrl: "",
+      apiBase: "/api",
+      postsApiBase: "https://fallback.test/",
+      redis: {
+        listTtl: 60,
+        itemTtl: 300,
+        quizTtl: 300,
+        jobTtl: 300,
+      },
+      crmProjects: {
+        useMocks: true,
+      },
+    },
+    redis: {
+      url: "",
+      tls: false,
+      keyPrefix: "bro-world",
+      listTtl: 60,
+      itemTtl: 300,
+      jobTtl: 300,
+      helpTtl: 300,
+      profileTtl: 300,
+      settingsTtl: 300,
+      mercureTtl: 600,
+      quizTtl: 300,
+    },
+  } satisfies RuntimeConfig;
+}
+
 const docsConfig = ref<DocsConfig>(createDefaultDocsConfig());
+let runtimeConfigOverride: Partial<RuntimeConfig> | null = null;
 
 export function useRequestEvent() {
   return null;
@@ -114,27 +175,49 @@ export function useRequestFetch() {
 }
 
 export function useRuntimeConfig() {
-  return {
-    public: {
-      siteUrl: "",
-      apiBase: "/api",
-      postsApiBase: "https://fallback.test/",
-      redis: {
-        listTtl: 60,
-        itemTtl: 300,
-        jobTtl: 300,
-      },
-      crmProjects: {
-        useMocks: true,
-      },
-    },
-    redis: {
-      listTtl: 60,
-      itemTtl: 300,
-      jobTtl: 300,
-      helpTtl: 300,
-    },
-  };
+  const globalOverride = (globalThis as { useRuntimeConfig?: unknown }).useRuntimeConfig;
+
+  if (typeof globalOverride === "function" && globalOverride !== useRuntimeConfig) {
+    return (globalOverride as () => RuntimeConfig)();
+  }
+
+  const base = createDefaultRuntimeConfig();
+
+  if (!runtimeConfigOverride) {
+    return base;
+  }
+
+  return mergeRuntimeConfig(base, runtimeConfigOverride);
+}
+
+function mergeRuntimeConfig(base: RuntimeConfig, override: Partial<RuntimeConfig>): RuntimeConfig {
+  const result = structuredClone(base);
+
+  function assign(target: Record<string, unknown>, source: Record<string, unknown>) {
+    for (const [key, value] of Object.entries(source)) {
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        const current = (target[key] ?? {}) as Record<string, unknown>;
+        target[key] = assign({ ...current }, value as Record<string, unknown>);
+        continue;
+      }
+
+      target[key] = value;
+    }
+
+    return target;
+  }
+
+  assign(result as unknown as Record<string, unknown>, override as Record<string, unknown>);
+
+  return result;
+}
+
+export function __setMockRuntimeConfig(override: Partial<RuntimeConfig>) {
+  runtimeConfigOverride = structuredClone(override);
+}
+
+export function __resetMockRuntimeConfig() {
+  runtimeConfigOverride = null;
 }
 
 export async function callOnce<T>(_key: string, fn: () => T | Promise<T>) {
