@@ -718,9 +718,53 @@ const drawerInlineStyle = computed(() => ({
   "--app-bar-height": resolvedAppBarHeight.value,
   "z-index": isHydrated.value ? 1004 : 1006,
 }));
+
+const layoutInsets = computed(() => {
+  if (!showNavigation.value) {
+    return {
+      top: "0px",
+      right: "0px",
+      bottom: "0px",
+      left: "0px",
+    } as const;
+  }
+
+  const top = resolvedAppBarHeight.value || DEFAULT_APP_BAR_HEIGHT_VALUE;
+  const isDesktop = !isMobile.value;
+  const left = isDesktop && leftDrawer.value ? "320px" : "0px";
+  const right = isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
+
+  return {
+    top,
+    right,
+    bottom: "0px",
+    left,
+  } as const;
+});
+
+const DEFAULT_CONTENT_MAX_WIDTH = 1120;
+const CONTENT_SAFE_GAP = 48;
+
+const contentMaxWidth = computed(() => {
+  const { left, right } = layoutInsets.value;
+  const hasLeftInset = left !== "0px" && left !== "0";
+  const hasRightInset = right !== "0px" && right !== "0";
+
+  if (!hasLeftInset && !hasRightInset) {
+    return `${DEFAULT_CONTENT_MAX_WIDTH}px`;
+  }
+
+  const availableWidthExpression = `calc(100vw - ${left} - ${right} - ${CONTENT_SAFE_GAP}px)`;
+
+  return `min(${DEFAULT_CONTENT_MAX_WIDTH}px, max(0px, ${availableWidthExpression}))`;
+});
+
 const mainInlineStyle = computed(() => ({
   "--app-bar-height": resolvedAppBarHeight.value,
   "--layout-inset-top": layoutInsets.value.top,
+  "--layout-inset-left": layoutInsets.value.left,
+  "--layout-inset-right": layoutInsets.value.right,
+  "--layout-content-max-width": contentMaxWidth.value,
 }));
 const isMobile = computed(() => {
   if (!isHydrated.value) {
@@ -930,29 +974,6 @@ watch(themePrimaryCookie, (value, oldValue) => {
       applyPrimaryColorCssVariables(theme.primaryColor);
     }
   }
-});
-
-const layoutInsets = computed(() => {
-  if (!showNavigation.value) {
-    return {
-      top: "0px",
-      right: "0px",
-      bottom: "0px",
-      left: "0px",
-    };
-  }
-
-  const top = resolvedAppBarHeight.value || DEFAULT_APP_BAR_HEIGHT_VALUE;
-  const isDesktop = !isMobile.value;
-  const left = isDesktop && leftDrawer.value ? "320px" : "0px";
-  const right = isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
-
-  return {
-    top,
-    right,
-    bottom: "0px",
-    left,
-  };
 });
 
 const appIcons = [
@@ -1329,7 +1350,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   z-index: 2;
   flex: 1 1 auto;
   width: 100%;
-  max-width: min(1120px, 100%);
+  max-width: min(var(--layout-content-max-width, 1120px), 100%);
   margin-inline: auto;
   box-sizing: border-box;
   padding: 10px;
