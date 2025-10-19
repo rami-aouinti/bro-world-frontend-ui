@@ -133,6 +133,7 @@ function createDefaultRuntimeConfig(): RuntimeConfig {
         listTtl: 60,
         itemTtl: 300,
         quizTtl: 300,
+        jobTtl: 300,
       },
       crmProjects: {
         useMocks: true,
@@ -144,6 +145,7 @@ function createDefaultRuntimeConfig(): RuntimeConfig {
       keyPrefix: "bro-world",
       listTtl: 60,
       itemTtl: 300,
+      jobTtl: 300,
       helpTtl: 300,
       profileTtl: 300,
       settingsTtl: 300,

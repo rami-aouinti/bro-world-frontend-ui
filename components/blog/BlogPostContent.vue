@@ -1,5 +1,5 @@
 <template>
-  <section class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-auto">
+  <section class="space-y-2 py-4 my-3 px-2 w-full">
     <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
       {{ props.title }}
     </h2>
@@ -9,11 +9,17 @@
     >
       {{ props.summary }}
     </p>
+    <div
+      v-if="props.content"
+      class="text-base leading-relaxed text-slate-600 dark:text-slate-300"
+      v-html="safeHtml"
+    ></div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import DOMPurify from "dompurify";
 
 const props = defineProps<{
   title?: string;
@@ -21,7 +27,6 @@ const props = defineProps<{
   content?: string;
 }>();
 
-const rawHtml = computed(() => props.content ?? "");
 const ALLOWED_TAGS = [
   // texte & inline
   "p",
@@ -130,6 +135,28 @@ const ALLOWED_ATTR = [
   "start",
   "value",
 ];
+
+const domPurifySanitize = (() => {
+  if (typeof DOMPurify?.sanitize === "function") {
+    return (value: string) =>
+      DOMPurify.sanitize(value, {
+        ALLOWED_TAGS,
+        ALLOWED_ATTR,
+      });
+  }
+
+  if (typeof DOMPurify === "function") {
+    return (value: string) =>
+      DOMPurify(value, {
+        ALLOWED_TAGS,
+        ALLOWED_ATTR,
+      });
+  }
+
+  return (value: string) => value;
+})();
+
+const safeHtml = computed(() => domPurifySanitize(props.content ?? ""));
 </script>
 
 <style scoped></style>

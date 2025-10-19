@@ -1,6 +1,12 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
+import {
+  invalidateCachedJobs,
+  readCachedJobs,
+  writeCachedJobs,
+} from "~/server/utils/cache/jobs";
+
 interface MockCompany {
   id: string;
   name: string;
@@ -41,7 +47,7 @@ interface MockJob {
   keywords?: string[];
 }
 
-interface JobData {
+export interface JobData {
   companies: MockCompany[];
   jobs: MockJob[];
 }
@@ -66,11 +72,11 @@ interface PaginatedJobs {
   limit: number;
 }
 
-let cache: JobData | null = null;
-
 async function readJobData(): Promise<JobData> {
-  if (cache) {
-    return cache;
+  const cached = await readCachedJobs();
+
+  if (cached) {
+    return cached;
   }
 
   const filePath = join(process.cwd(), "server/mock/jobs.json");
@@ -105,8 +111,11 @@ async function readJobData(): Promise<JobData> {
     } satisfies MockJob;
   });
 
-  cache = { companies, jobs };
-  return cache;
+  const data: JobData = { companies, jobs };
+
+  await writeCachedJobs(data);
+
+  return data;
 }
 
 function normaliseList(values?: string[]): string[] {
@@ -265,6 +274,10 @@ export async function listJobs(query: ListJobsQuery = {}): Promise<PaginatedJobs
   };
 }
 
+export async function invalidateJobsCache(): Promise<void> {
+  await invalidateCachedJobs();
+}
+
 export function clearJobCache() {
-  cache = null;
+  void invalidateCachedJobs();
 }
