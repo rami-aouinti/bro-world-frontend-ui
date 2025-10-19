@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, withDefaults } from "vue";
+import { computed } from "vue";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const props = withDefaults(defineProps<{ count?: number }>(), {
