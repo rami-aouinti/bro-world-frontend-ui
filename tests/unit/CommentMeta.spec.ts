@@ -1,6 +1,25 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { computed, ref } from "vue";
+import { createI18n } from "vue-i18n";
 import { mount } from "@vue/test-utils";
 import CommentMeta from "~/components/blog/CommentMeta.vue";
+import en from "~/i18n/locales/en.json";
+
+const authReady = ref(false);
+const authAuthenticated = ref(false);
+
+const i18n = createI18n({
+  legacy: false,
+  locale: "en",
+  messages: { en },
+});
+
+vi.mock("~/stores/auth-session", () => ({
+  useAuthSession: () => ({
+    isReady: computed(() => authReady.value),
+    isAuthenticated: computed(() => authAuthenticated.value),
+  }),
+}));
 
 const defaultUser = {
   id: "user-1",
@@ -20,17 +39,33 @@ function mountComponent(options: Record<string, unknown> = {}) {
       publishedLabel: "Published moments ago",
       ...options,
     },
+    global: {
+      plugins: [i18n],
+      stubs: {
+        AppIcon: { template: "<span><slot /></span>" },
+        VBtn: { template: "<button><slot /></button>" },
+      },
+    },
   });
 }
 
 describe("CommentMeta", () => {
+  beforeEach(() => {
+    authReady.value = false;
+    authAuthenticated.value = false;
+  });
+
   it("does not render actions when the viewer is not authenticated", () => {
+    authReady.value = true;
+    authAuthenticated.value = false;
     const wrapper = mountComponent();
 
     expect(wrapper.find("[data-test='comment-actions']").exists()).toBe(false);
   });
 
   it("renders follow button for authenticated non-following users", async () => {
+    authReady.value = true;
+    authAuthenticated.value = true;
     const wrapper = mountComponent({
       isAuthenticated: true,
       isAuthor: false,
@@ -48,6 +83,8 @@ describe("CommentMeta", () => {
   });
 
   it("opens the action menu for the comment author", async () => {
+    authReady.value = true;
+    authAuthenticated.value = true;
     const wrapper = mountComponent({
       isAuthenticated: true,
       isAuthor: true,
