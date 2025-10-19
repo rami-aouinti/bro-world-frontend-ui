@@ -7,6 +7,7 @@ import type {
   SiteContentBlock,
   SiteLanguageDefinition,
   SiteLocalizedSettings,
+  SiteWorldSettings,
 } from "~/types/settings";
 import { defaultLanguageCode, supportedLanguages } from "~/lib/i18n/languages";
 
@@ -49,6 +50,95 @@ function makeUiSettings(overrides: Partial<SiteUiSettings> = {}): SiteUiSettings
 
 function makeContentBlock(block: SiteContentBlock): SiteContentBlock {
   return { ...block };
+}
+
+type MenuBlueprint = Omit<SiteMenuItem, "order" | "children"> & {
+  order?: number;
+  children?: MenuBlueprint[];
+};
+
+function cloneMenuBlueprint(blueprint: MenuBlueprint): MenuBlueprint {
+  return {
+    ...blueprint,
+    children: blueprint.children?.map((child) => cloneMenuBlueprint(child)),
+  } satisfies MenuBlueprint;
+}
+
+function mergeBlueprintNode(base: MenuBlueprint, addition: MenuBlueprint): MenuBlueprint {
+  const merged: MenuBlueprint = {
+    ...base,
+    ...(addition.order !== undefined ? { order: addition.order } : {}),
+  };
+
+  if (addition.label !== undefined) merged.label = addition.label;
+  if (addition.icon !== undefined) merged.icon = addition.icon;
+  if (addition.to !== undefined) merged.to = addition.to;
+  if (addition.requiresAdmin !== undefined) merged.requiresAdmin = addition.requiresAdmin;
+  if (addition.translate !== undefined) merged.translate = addition.translate;
+  if (addition.isVisible !== undefined) merged.isVisible = addition.isVisible;
+
+  const baseChildren = base.children ?? [];
+  const additionChildren = addition.children ?? [];
+
+  if (additionChildren.length > 0 || baseChildren.length > 0) {
+    merged.children = mergeMenuBlueprints(baseChildren, additionChildren);
+  }
+
+  return merged;
+}
+
+function mergeMenuBlueprints(
+  base: MenuBlueprint[],
+  additions: MenuBlueprint[],
+): MenuBlueprint[] {
+  const result: MenuBlueprint[] = base.map((item) => cloneMenuBlueprint(item));
+
+  for (const addition of additions) {
+    const additionClone = cloneMenuBlueprint(addition);
+    if (additionClone.id) {
+      const existingIndex = result.findIndex((item) => item.id === additionClone.id);
+      if (existingIndex !== -1) {
+        result[existingIndex] = mergeBlueprintNode(result[existingIndex], additionClone);
+        continue;
+      }
+    }
+
+    result.push(additionClone);
+  }
+
+  return result.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
+function convertBlueprintsToMenus(blueprints: MenuBlueprint[]): SiteMenuItem[] {
+  const sorted = [...blueprints].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+  return sorted.map((blueprint, index) =>
+    makeMenu(
+      { ...blueprint, order: blueprint.order ?? index },
+      convertBlueprintsToMenus(blueprint.children ?? []),
+    ),
+  );
+}
+
+function convertMenusToBlueprints(menus: SiteMenuItem[]): MenuBlueprint[] {
+  return menus.map((menu) => ({
+    id: menu.id,
+    label: menu.label,
+    icon: menu.icon ?? undefined,
+    to: menu.to ?? undefined,
+    requiresAdmin: menu.requiresAdmin,
+    translate: menu.translate,
+    isVisible: menu.isVisible,
+    order: menu.order,
+    children: menu.children ? convertMenusToBlueprints(menu.children) : undefined,
+  }));
+}
+
+function cloneMenuTree(menus: SiteMenuItem[]): SiteMenuItem[] {
+  return menus.map((menu) => ({
+    ...menu,
+    children: menu.children ? cloneMenuTree(menu.children) : undefined,
+  }));
 }
 
 const DEFAULT_CONTENT_UPDATED_AT = "2024-01-01T00:00:00.000Z";
@@ -248,6 +338,551 @@ const defaultLocalizedSettings: Record<string, SiteLocalizedSettings> = Object.f
   }),
 );
 
+const BASE_MENU_BLUEPRINTS: MenuBlueprint[] = [
+  {
+    id: "create-world",
+    label: "layout.sidebar.items.createWorld",
+    icon: "mdi:earth-plus",
+    translate: true,
+    to: "/world-create",
+    isVisible: true,
+    order: -1,
+  },
+  {
+    id: "admin",
+    label: "layout.sidebar.items.admin",
+    icon: "mdi:shield-crown",
+    translate: true,
+    requiresAdmin: true,
+    isVisible: true,
+    order: 6,
+    children: [
+      {
+        id: "admin-general",
+        label: "layout.sidebar.items.adminGeneral",
+        icon: "mdi:view-dashboard-outline",
+        translate: true,
+        requiresAdmin: true,
+        isVisible: true,
+        order: 0,
+        children: [
+          {
+            id: "admin-general-overview",
+            label: "layout.sidebar.items.adminGeneral",
+            icon: "mdi:view-dashboard-outline",
+            translate: true,
+            to: "/admin",
+            requiresAdmin: true,
+            isVisible: true,
+            order: 0,
+          },
+          {
+            id: "admin-general-statistics",
+            label: "layout.sidebar.items.adminStatistics",
+            icon: "mdi:chart-box-outline",
+            translate: true,
+            to: "/admin/statistics",
+            requiresAdmin: true,
+            isVisible: true,
+            order: 1,
+          },
+          {
+            id: "admin-general-performance",
+            label: "layout.sidebar.items.performance",
+            icon: "mdi:speedometer",
+            translate: true,
+            to: "/admin/performance",
+            requiresAdmin: true,
+            isVisible: true,
+            order: 2,
+          },
+          {
+            id: "admin-general-settings",
+            label: "layout.sidebar.items.adminSettings",
+            icon: "mdi:cog-outline",
+            translate: true,
+            to: "/admin/settings",
+            requiresAdmin: true,
+            isVisible: true,
+            order: 4,
+          },
+        ],
+      },
+      {
+        id: "admin-user-management",
+        label: "layout.sidebar.items.adminUserManagement",
+        icon: "mdi:account-cog-outline",
+        translate: true,
+        requiresAdmin: true,
+        isVisible: true,
+        order: 2,
+        children: [
+          {
+            id: "admin-user-general",
+            label: "layout.sidebar.items.adminGeneralSetting",
+            icon: "mdi:tune",
+            translate: true,
+            to: "/admin/user-management",
+            requiresAdmin: true,
+            isVisible: true,
+            order: 0,
+          },
+          {
+            id: "admin-user-data",
+            label: "layout.sidebar.items.adminData",
+            icon: "mdi:database-outline",
+            translate: true,
+            to: "/admin/user-management/data",
+            requiresAdmin: true,
+            isVisible: true,
+            order: 1,
+          },
+          {
+            id: "admin-user-crons",
+            label: "layout.sidebar.items.adminCrons",
+            icon: "mdi:clock-outline",
+            translate: true,
+            to: "/admin/user-management/crons",
+            requiresAdmin: true,
+            isVisible: true,
+            order: 2,
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const PLUGIN_MENU_CONTRIBUTIONS: Record<string, MenuBlueprint[]> = {
+  "job-board": [
+    {
+      id: "jobs",
+      label: "layout.sidebar.items.jobs",
+      icon: "mdi:briefcase-search",
+      translate: true,
+      to: "/job",
+      isVisible: true,
+      order: 0,
+    },
+    {
+      id: "admin",
+      children: [
+        {
+          id: "admin-job-management",
+          label: "layout.sidebar.items.adminJobManagement",
+          icon: "mdi:briefcase-outline",
+          translate: true,
+          requiresAdmin: true,
+          isVisible: true,
+          order: 3,
+          children: [
+            {
+              id: "admin-job-general",
+              label: "layout.sidebar.items.adminGeneralSetting",
+              icon: "mdi:tune",
+              translate: true,
+              to: "/admin/job-management",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 0,
+            },
+            {
+              id: "admin-job-data",
+              label: "layout.sidebar.items.adminData",
+              icon: "mdi:database-outline",
+              translate: true,
+              to: "/admin/job-management/data",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 1,
+            },
+            {
+              id: "admin-job-crons",
+              label: "layout.sidebar.items.adminCrons",
+              icon: "mdi:clock-outline",
+              translate: true,
+              to: "/admin/job-management/crons",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 2,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  game: [
+    {
+      id: "game",
+      label: "layout.sidebar.items.game",
+      icon: "mdi:gamepad-variant-outline",
+      translate: true,
+      to: "/game",
+      isVisible: true,
+      order: 1,
+    },
+    {
+      id: "admin",
+      children: [
+        {
+          id: "admin-game-management",
+          label: "layout.sidebar.items.adminGameManagement",
+          icon: "mdi:gamepad-variant-outline",
+          translate: true,
+          requiresAdmin: true,
+          isVisible: true,
+          order: 6,
+          children: [
+            {
+              id: "admin-game-general",
+              label: "layout.sidebar.items.adminGeneralSetting",
+              icon: "mdi:tune",
+              translate: true,
+              to: "/admin/game-management",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 0,
+            },
+            {
+              id: "admin-game-data",
+              label: "layout.sidebar.items.adminData",
+              icon: "mdi:database-outline",
+              translate: true,
+              to: "/admin/game-management/data",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 1,
+            },
+            {
+              id: "admin-game-crons",
+              label: "layout.sidebar.items.adminCrons",
+              icon: "mdi:clock-outline",
+              translate: true,
+              to: "/admin/game-management/crons",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 2,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  crm: [
+    {
+      id: "crm",
+      label: "layout.sidebar.items.crm",
+      icon: "mdi:account-box-multiple-outline",
+      translate: true,
+      to: "/crm",
+      isVisible: true,
+      order: 2,
+    },
+    {
+      id: "admin",
+      children: [
+        {
+          id: "admin-general",
+          children: [
+            {
+              id: "admin-general-crm",
+              label: "layout.sidebar.items.adminCrm",
+              icon: "mdi:account-box-multiple-outline",
+              translate: true,
+              to: "/admin/crm",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 3,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  ecommerce: [
+    {
+      id: "ecommerce",
+      label: "layout.sidebar.items.ecommerce",
+      icon: "mdi:shopping-outline",
+      translate: true,
+      to: "/ecommerce",
+      isVisible: true,
+      order: 3,
+      children: [
+        {
+          id: "ecommerce-overview",
+          label: "layout.sidebar.items.ecommerceOverview",
+          icon: "mdi:view-dashboard-outline",
+          translate: true,
+          to: "/ecommerce",
+          order: 0,
+        },
+        {
+          id: "ecommerce-catalog",
+          label: "layout.sidebar.items.ecommerceCatalog",
+          icon: "mdi:view-grid-outline",
+          translate: true,
+          to: "/ecommerce/catalog",
+          order: 1,
+        },
+        {
+          id: "ecommerce-cart",
+          label: "layout.sidebar.items.ecommerceCart",
+          icon: "mdi:cart",
+          translate: true,
+          to: "/ecommerce/cart",
+          order: 2,
+        },
+        {
+          id: "ecommerce-checkout",
+          label: "layout.sidebar.items.ecommerceCheckout",
+          icon: "mdi:credit-card-check-outline",
+          translate: true,
+          to: "/ecommerce/checkout",
+          order: 3,
+        },
+      ],
+    },
+    {
+      id: "admin",
+      children: [
+        {
+          id: "admin-ecommerce-management",
+          label: "layout.sidebar.items.adminEcommerceManagement",
+          icon: "mdi:shopping-outline",
+          translate: true,
+          requiresAdmin: true,
+          isVisible: true,
+          order: 4,
+          children: [
+            {
+              id: "admin-ecommerce-general",
+              label: "layout.sidebar.items.adminGeneralSetting",
+              icon: "mdi:tune",
+              translate: true,
+              to: "/admin/ecommerce-management",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 0,
+            },
+            {
+              id: "admin-ecommerce-data",
+              label: "layout.sidebar.items.adminData",
+              icon: "mdi:database-outline",
+              translate: true,
+              to: "/admin/ecommerce-management/data",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 1,
+            },
+            {
+              id: "admin-ecommerce-crons",
+              label: "layout.sidebar.items.adminCrons",
+              icon: "mdi:clock-outline",
+              translate: true,
+              to: "/admin/ecommerce-management/crons",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 2,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  education: [
+    {
+      id: "education",
+      label: "layout.sidebar.items.education",
+      icon: "mdi:school-outline",
+      translate: true,
+      to: "/education",
+      isVisible: true,
+      order: 4,
+    },
+    {
+      id: "admin",
+      children: [
+        {
+          id: "admin-education-management",
+          label: "layout.sidebar.items.adminEducationManagement",
+          icon: "mdi:school-outline",
+          translate: true,
+          requiresAdmin: true,
+          isVisible: true,
+          order: 5,
+          children: [
+            {
+              id: "admin-education-general",
+              label: "layout.sidebar.items.adminGeneralSetting",
+              icon: "mdi:tune",
+              translate: true,
+              to: "/admin/education-management",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 0,
+            },
+            {
+              id: "admin-education-data",
+              label: "layout.sidebar.items.adminData",
+              icon: "mdi:database-outline",
+              translate: true,
+              to: "/admin/education-management/data",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 1,
+            },
+            {
+              id: "admin-education-crons",
+              label: "layout.sidebar.items.adminCrons",
+              icon: "mdi:clock-outline",
+              translate: true,
+              to: "/admin/education-management/crons",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 2,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  blog: [
+    {
+      id: "admin",
+      children: [
+        {
+          id: "admin-blog-management",
+          label: "layout.sidebar.items.adminBlogManagement",
+          icon: "mdi:post-outline",
+          translate: true,
+          requiresAdmin: true,
+          isVisible: true,
+          order: 1,
+          children: [
+            {
+              id: "admin-blog-general",
+              label: "layout.sidebar.items.adminGeneralSetting",
+              icon: "mdi:tune",
+              translate: true,
+              to: "/admin/blog",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 0,
+            },
+            {
+              id: "admin-blog-data",
+              label: "layout.sidebar.items.adminData",
+              icon: "mdi:database-outline",
+              translate: true,
+              to: "/admin/blog/data",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 1,
+            },
+            {
+              id: "admin-blog-crons",
+              label: "layout.sidebar.items.adminCrons",
+              icon: "mdi:clock-outline",
+              translate: true,
+              to: "/admin/blog/crons",
+              requiresAdmin: true,
+              isVisible: true,
+              order: 2,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const DEFAULT_WORLD_PLUGIN_IDS = [
+  "job-board",
+  "game",
+  "crm",
+  "ecommerce",
+  "education",
+  "blog",
+] as const;
+
+function buildPluginMenuBlueprints(selectedPluginIds: Iterable<string>): MenuBlueprint[] {
+  let merged: MenuBlueprint[] = [];
+  const seen = new Set<string>();
+
+  for (const pluginId of selectedPluginIds ?? []) {
+    if (typeof pluginId !== "string") {
+      continue;
+    }
+
+    const normalized = pluginId.trim();
+    if (!normalized || seen.has(normalized)) {
+      continue;
+    }
+
+    const contributions = PLUGIN_MENU_CONTRIBUTIONS[normalized];
+    if (!contributions?.length) {
+      seen.add(normalized);
+      continue;
+    }
+
+    merged = mergeMenuBlueprints(merged, contributions);
+    seen.add(normalized);
+  }
+
+  return merged;
+}
+
+export function buildMenusForPlugins(
+  selectedPluginIds: Iterable<string>,
+  _locale?: string,
+): SiteMenuItem[] {
+  return convertBlueprintsToMenus(buildPluginMenuBlueprints(selectedPluginIds));
+}
+
+export function composeMenusWithPlugins(
+  baseMenus: SiteMenuItem[],
+  selectedPluginIds: Iterable<string>,
+  _locale?: string,
+): SiteMenuItem[] {
+  const baseBlueprints = convertMenusToBlueprints(baseMenus);
+  const pluginBlueprints = buildPluginMenuBlueprints(selectedPluginIds);
+
+  if (!pluginBlueprints.length) {
+    return convertBlueprintsToMenus(baseBlueprints);
+  }
+
+  return convertBlueprintsToMenus(mergeMenuBlueprints(baseBlueprints, pluginBlueprints));
+}
+
+export function getDefaultMenuBlueprints(): SiteMenuItem[] {
+  return convertBlueprintsToMenus(BASE_MENU_BLUEPRINTS);
+}
+
+const defaultMenuBlueprints = getDefaultMenuBlueprints();
+const defaultMenus = composeMenusWithPlugins(defaultMenuBlueprints, DEFAULT_WORLD_PLUGIN_IDS);
+
+const defaultWorld: SiteWorldSettings = {
+  id: "bro-world",
+  name: DEFAULT_SITE_NAME,
+  slug: "bro-world",
+  pluginIds: Array.from(DEFAULT_WORLD_PLUGIN_IDS),
+  locale: defaultLanguageCode,
+  description: null,
+  visibility: "public",
+  region: "global",
+  theme: "aurora",
+  launchDate: "",
+  tags: [],
+  guidelines: "",
+  enableMonetization: true,
+  enableIntegrations: true,
+  requireVerification: false,
+  allowGuests: true,
+  createdAt: DEFAULT_CONTENT_UPDATED_AT,
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
 export const defaultSiteSettings: SiteSettings = {
   siteName: DEFAULT_SITE_NAME,
   tagline: DEFAULT_TAGLINE,
@@ -285,428 +920,16 @@ export const defaultSiteSettings: SiteSettings = {
     contact: makeContentBlock(defaultContactContent),
     help: makeContentBlock(defaultHelpContent),
   },
-  menus: [
-    makeMenu({
-      id: "create-world",
-      label: "layout.sidebar.items.createWorld",
-      icon: "mdi:earth-plus",
-      translate: true,
-      to: "/world-create",
-      isVisible: true,
-      order: -1,
-    }),
-    makeMenu({
-      id: "jobs",
-      label: "layout.sidebar.items.jobs",
-      icon: "mdi:briefcase-search",
-      translate: true,
-      to: "/job",
-      isVisible: true,
-      order: 0,
-    }),
-    makeMenu({
-      id: "game",
-      label: "layout.sidebar.items.game",
-      icon: "mdi:gamepad-variant-outline",
-      translate: true,
-      to: "/game",
-      isVisible: true,
-      order: 1,
-    }),
-    makeMenu({
-      id: "crm",
-      label: "layout.sidebar.items.crm",
-      icon: "mdi:account-box-multiple-outline",
-      translate: true,
-      to: "/crm",
-      isVisible: true,
-      order: 2,
-    }),
-    makeMenu(
-      {
-        id: "ecommerce",
-        label: "layout.sidebar.items.ecommerce",
-        icon: "mdi:shopping-outline",
-        translate: true,
-        to: "/ecommerce",
-        isVisible: true,
-        order: 3,
-      },
-      [
-        {
-          id: "ecommerce-overview",
-          label: "layout.sidebar.items.ecommerceOverview",
-          translate: true,
-          to: "/ecommerce",
-          icon: "mdi:view-dashboard-outline",
-        },
-        {
-          id: "ecommerce-catalog",
-          label: "layout.sidebar.items.ecommerceCatalog",
-          translate: true,
-          to: "/ecommerce/catalog",
-          icon: "mdi:view-grid-outline",
-        },
-        {
-          id: "ecommerce-cart",
-          label: "layout.sidebar.items.ecommerceCart",
-          translate: true,
-          to: "/ecommerce/cart",
-          icon: "mdi:cart",
-        },
-        {
-          id: "ecommerce-checkout",
-          label: "layout.sidebar.items.ecommerceCheckout",
-          translate: true,
-          to: "/ecommerce/checkout",
-          icon: "mdi:credit-card-check-outline",
-        },
-      ],
-    ),
-    makeMenu({
-      id: "education",
-      label: "layout.sidebar.items.education",
-      icon: "mdi:school-outline",
-      translate: true,
-      to: "/education",
-      isVisible: true,
-      order: 4,
-    }),
-    makeMenu(
-      {
-        id: "admin",
-        label: "layout.sidebar.items.admin",
-        icon: "mdi:shield-crown",
-        translate: true,
-        requiresAdmin: true,
-        isVisible: true,
-        order: 6,
-      },
-      [
-        makeMenu(
-          {
-            id: "admin-general",
-            label: "layout.sidebar.items.adminGeneral",
-            icon: "mdi:view-dashboard-outline",
-            translate: true,
-            requiresAdmin: true,
-            isVisible: true,
-            order: 0,
-          },
-          [
-            {
-              id: "admin-general-overview",
-              label: "layout.sidebar.items.adminGeneral",
-              icon: "mdi:view-dashboard-outline",
-              translate: true,
-              to: "/admin",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 0,
-            },
-            {
-              id: "admin-general-statistics",
-              label: "layout.sidebar.items.adminStatistics",
-              icon: "mdi:chart-box-outline",
-              translate: true,
-              to: "/admin/statistics",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 1,
-            },
-            {
-              id: "admin-general-performance",
-              label: "layout.sidebar.items.performance",
-              icon: "mdi:speedometer",
-              translate: true,
-              to: "/admin/performance",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 2,
-            },
-            {
-              id: "admin-general-crm",
-              label: "layout.sidebar.items.adminCrm",
-              icon: "mdi:account-box-multiple-outline",
-              translate: true,
-              to: "/admin/crm",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 3,
-            },
-            {
-              id: "admin-general-settings",
-              label: "layout.sidebar.items.adminSettings",
-              icon: "mdi:cog-outline",
-              translate: true,
-              to: "/admin/settings",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 4,
-            },
-          ],
-        ),
-        makeMenu(
-          {
-            id: "admin-blog-management",
-            label: "layout.sidebar.items.adminBlogManagement",
-            icon: "mdi:post-outline",
-            translate: true,
-            requiresAdmin: true,
-            isVisible: true,
-            order: 1,
-          },
-          [
-            {
-              id: "admin-blog-general",
-              label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi:tune",
-              translate: true,
-              to: "/admin/blog",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 0,
-            },
-            {
-              id: "admin-blog-data",
-              label: "layout.sidebar.items.adminData",
-              icon: "mdi:database-outline",
-              translate: true,
-              to: "/admin/blog/data",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 1,
-            },
-            {
-              id: "admin-blog-crons",
-              label: "layout.sidebar.items.adminCrons",
-              icon: "mdi:clock-outline",
-              translate: true,
-              to: "/admin/blog/crons",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 2,
-            },
-          ],
-        ),
-        makeMenu(
-          {
-            id: "admin-user-management",
-            label: "layout.sidebar.items.adminUserManagement",
-            icon: "mdi:account-cog-outline",
-            translate: true,
-            requiresAdmin: true,
-            isVisible: true,
-            order: 2,
-          },
-          [
-            {
-              id: "admin-user-general",
-              label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi:tune",
-              translate: true,
-              to: "/admin/user-management",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 0,
-            },
-            {
-              id: "admin-user-data",
-              label: "layout.sidebar.items.adminData",
-              icon: "mdi:database-outline",
-              translate: true,
-              to: "/admin/user-management/data",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 1,
-            },
-            {
-              id: "admin-user-crons",
-              label: "layout.sidebar.items.adminCrons",
-              icon: "mdi:clock-outline",
-              translate: true,
-              to: "/admin/user-management/crons",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 2,
-            },
-          ],
-        ),
-        makeMenu(
-          {
-            id: "admin-job-management",
-            label: "layout.sidebar.items.adminJobManagement",
-            icon: "mdi:briefcase-outline",
-            translate: true,
-            requiresAdmin: true,
-            isVisible: true,
-            order: 3,
-          },
-          [
-            {
-              id: "admin-job-general",
-              label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi:tune",
-              translate: true,
-              to: "/admin/job-management",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 0,
-            },
-            {
-              id: "admin-job-data",
-              label: "layout.sidebar.items.adminData",
-              icon: "mdi:database-outline",
-              translate: true,
-              to: "/admin/job-management/data",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 1,
-            },
-            {
-              id: "admin-job-crons",
-              label: "layout.sidebar.items.adminCrons",
-              icon: "mdi:clock-outline",
-              translate: true,
-              to: "/admin/job-management/crons",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 2,
-            },
-          ],
-        ),
-        makeMenu(
-          {
-            id: "admin-ecommerce-management",
-            label: "layout.sidebar.items.adminEcommerceManagement",
-            icon: "mdi:shopping-outline",
-            translate: true,
-            requiresAdmin: true,
-            isVisible: true,
-            order: 4,
-          },
-          [
-            {
-              id: "admin-ecommerce-general",
-              label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi:tune",
-              translate: true,
-              to: "/admin/ecommerce-management",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 0,
-            },
-            {
-              id: "admin-ecommerce-data",
-              label: "layout.sidebar.items.adminData",
-              icon: "mdi:database-outline",
-              translate: true,
-              to: "/admin/ecommerce-management/data",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 1,
-            },
-            {
-              id: "admin-ecommerce-crons",
-              label: "layout.sidebar.items.adminCrons",
-              icon: "mdi:clock-outline",
-              translate: true,
-              to: "/admin/ecommerce-management/crons",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 2,
-            },
-          ],
-        ),
-        makeMenu(
-          {
-            id: "admin-education-management",
-            label: "layout.sidebar.items.adminEducationManagement",
-            icon: "mdi:school-outline",
-            translate: true,
-            requiresAdmin: true,
-            isVisible: true,
-            order: 5,
-          },
-          [
-            {
-              id: "admin-education-general",
-              label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi:tune",
-              translate: true,
-              to: "/admin/education-management",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 0,
-            },
-            {
-              id: "admin-education-data",
-              label: "layout.sidebar.items.adminData",
-              icon: "mdi:database-outline",
-              translate: true,
-              to: "/admin/education-management/data",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 1,
-            },
-            {
-              id: "admin-education-crons",
-              label: "layout.sidebar.items.adminCrons",
-              icon: "mdi:clock-outline",
-              translate: true,
-              to: "/admin/education-management/crons",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 2,
-            },
-          ],
-        ),
-        makeMenu(
-          {
-            id: "admin-game-management",
-            label: "layout.sidebar.items.adminGameManagement",
-            icon: "mdi:gamepad-variant-outline",
-            translate: true,
-            requiresAdmin: true,
-            isVisible: true,
-            order: 6,
-          },
-          [
-            {
-              id: "admin-game-general",
-              label: "layout.sidebar.items.adminGeneralSetting",
-              icon: "mdi:tune",
-              translate: true,
-              to: "/admin/game-management",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 0,
-            },
-            {
-              id: "admin-game-data",
-              label: "layout.sidebar.items.adminData",
-              icon: "mdi:database-outline",
-              translate: true,
-              to: "/admin/game-management/data",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 1,
-            },
-            {
-              id: "admin-game-crons",
-              label: "layout.sidebar.items.adminCrons",
-              icon: "mdi:clock-outline",
-              translate: true,
-              to: "/admin/game-management/crons",
-              requiresAdmin: true,
-              isVisible: true,
-              order: 2,
-            },
-          ],
-        ),
-      ],
-    ),
+  menuBlueprints: cloneMenuTree(defaultMenuBlueprints),
+  menus: cloneMenuTree(defaultMenus),
+  worlds: [
+    {
+      ...defaultWorld,
+      pluginIds: [...defaultWorld.pluginIds],
+      tags: [...(defaultWorld.tags ?? [])],
+    },
   ],
+  activeWorldId: defaultWorld.id,
   defaultLanguage: defaultLanguageCode,
   languages: defaultLanguages,
   localized: defaultLocalizedSettings,
