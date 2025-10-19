@@ -322,6 +322,7 @@ import { withSecureCookieOptions } from "~/lib/cookies";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
+import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants";
 
 const AppSidebar = defineAsyncComponent({
   loader: () => import("@/components/layout/AppSidebar.vue"),
@@ -581,9 +582,7 @@ const shouldShowDashboardRightSidebar = computed(
   () => routeRightSidebarPreset.value === "dashboard" && !rightSidebarContent.value,
 );
 const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
-const DEFAULT_APP_BAR_HEIGHT = 72;
-const DEFAULT_APP_BAR_HEIGHT_VALUE = `${DEFAULT_APP_BAR_HEIGHT}px`;
-const topBarHeight = ref(showNavigation.value ? DEFAULT_APP_BAR_HEIGHT_VALUE : "0px");
+const topBarHeight = ref(showNavigation.value ? APP_TOP_BAR_HEIGHT_VALUE : "0px");
 const resolvedAppBarHeight = computed(() => (showNavigation.value ? topBarHeight.value : "0px"));
 
 const initialShowRightWidgets = useState(
@@ -637,7 +636,7 @@ const initialLayoutInsets = useState<LayoutInsets>("layout-initial-insets", () =
   }
 
   const isDesktop = !initialIsMobile.value;
-  const top = resolvedAppBarHeight.value || DEFAULT_APP_BAR_HEIGHT_VALUE;
+  const top = resolvedAppBarHeight.value || APP_TOP_BAR_HEIGHT_VALUE;
   const left = isDesktop ? "320px" : "0px";
   const right =
     isDesktop && initialShowRightWidgets.value ? "340px" : "0px";
@@ -681,8 +680,8 @@ if (import.meta.client) {
       return;
     }
 
-    if (topBarHeight.value !== DEFAULT_APP_BAR_HEIGHT_VALUE) {
-      topBarHeight.value = DEFAULT_APP_BAR_HEIGHT_VALUE;
+    if (topBarHeight.value !== APP_TOP_BAR_HEIGHT_VALUE) {
+      topBarHeight.value = APP_TOP_BAR_HEIGHT_VALUE;
     }
   }
 
@@ -768,7 +767,7 @@ const layoutInsets = computed(() => {
     } as const;
   }
 
-  const top = resolvedAppBarHeight.value || DEFAULT_APP_BAR_HEIGHT_VALUE;
+  const top = resolvedAppBarHeight.value || APP_TOP_BAR_HEIGHT_VALUE;
   const isDesktop = !isMobile.value;
   const left = isDesktop && leftDrawer.value ? "320px" : "0px";
   const right =
