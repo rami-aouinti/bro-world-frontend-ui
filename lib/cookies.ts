@@ -6,13 +6,33 @@ const contextOptions: Parameters<typeof getContext>[1] = {
   asyncContext: import.meta.server,
 };
 
+type NodeRequireFn = (moduleId: string) => unknown;
+
+function resolveNodeRequire(): NodeRequireFn | undefined {
+  const globalRequire = (globalThis as Record<string, unknown> | undefined)?.require;
+
+  if (typeof globalRequire === "function") {
+    return globalRequire as NodeRequireFn;
+  }
+
+  try {
+    return Function("return require")() as NodeRequireFn;
+  } catch {
+    return undefined;
+  }
+}
+
 if (import.meta.server) {
-  void (async () => {
+  const nodeRequire = resolveNodeRequire();
+
+  if (nodeRequire) {
     try {
-      const { AsyncLocalStorage } = await import("node:async_hooks");
+      const { AsyncLocalStorage } = nodeRequire("node:async_hooks") as typeof import("node:async_hooks");
       contextOptions.AsyncLocalStorage = AsyncLocalStorage;
-    } catch {}
-  })();
+    } catch {
+      // ignore resolution errors and fall back to default context behaviour
+    }
+  }
 }
 
 type MaybeEvent = H3Event | null | undefined;

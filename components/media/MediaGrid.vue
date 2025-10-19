@@ -26,13 +26,17 @@
           @keydown.enter.prevent="handleDblClick(file)"
           @contextmenu="handleContext($event, file)"
         >
-          <VImg
+          <NuxtImg
             v-if="file.thumbnails?.medium"
             :src="file.thumbnails.medium"
             :alt="file.name"
+            :width="thumbWidth"
+            :height="thumbHeight"
+            :sizes="thumbSizes"
             class="media-grid__thumb"
-            aspect-ratio="1"
-            cover
+            fit="cover"
+            loading="lazy"
+            decoding="async"
           />
           <div v-else class="media-grid__placeholder" aria-hidden="true">
             <VIcon icon="mdi-file" size="48" />
@@ -72,6 +76,10 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+
+const thumbWidth = 320;
+const thumbHeight = 320;
+const thumbSizes = "(max-width: 600px) 100vw, (max-width: 960px) 50vw, 320px";
 
 const gridEmptyMessage = computed(() => t("media.grid.empty"));
 
@@ -132,6 +140,13 @@ function handleContext(event: MouseEvent, file: MediaFile) {
 .media-grid__thumb,
 .media-grid__placeholder {
   border-bottom: 1px solid rgba(var(--v-theme-outline-variant), 0.5);
+}
+
+.media-grid__thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
 }
 
 .media-grid__placeholder {

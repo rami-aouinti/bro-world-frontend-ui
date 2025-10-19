@@ -49,7 +49,6 @@
     "dotted-map": "^2.2.3",
     "eslint-plugin-nuxt": "^4.0.0",
     "event-source-polyfill": "^1.*",
-    "flag-icons": "^7.5.0",
     "fs": "0.0.1-security",
     "gsap": "^3.13.0",
     "highlight.js": "^11.11.1",

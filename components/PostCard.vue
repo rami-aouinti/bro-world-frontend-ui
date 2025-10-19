@@ -2,7 +2,7 @@
   <article class="post-card">
     <header class="post-card__header">
       <div class="post-card__author">
-        <img
+        <NuxtImg
           :src="authorAvatar"
           :alt="`${post.user.firstName} ${post.user.lastName}`"
           width="48"
