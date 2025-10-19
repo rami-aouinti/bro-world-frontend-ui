@@ -1,0 +1,22 @@
+{
+  "categories": [
+    {
+      "id": "community-dynamics",
+      "name": "Dynamiques de communauté",
+      "description": "Évaluer la capacité à fédérer un collectif et à orchestrer des rituels engageants.",
+      "icon": "mdi:account-group-outline"
+    },
+    {
+      "id": "product-strategy",
+      "name": "Stratégie produit",
+      "description": "Mesurer la compréhension des boucles de feedback et de la priorisation produit.",
+      "icon": "mdi:lightbulb-on-10"
+    },
+    {
+      "id": "go-to-market",
+      "name": "Go-to-market",
+      "description": "Tester les réflexes d'acquisition, de conversion et d'activation multi-canal.",
+      "icon": "mdi:rocket-launch-outline"
+    }
+  ]
+}

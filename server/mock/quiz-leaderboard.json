@@ -1,0 +1,36 @@
+{
+  "period": "weekly",
+  "updatedAt": "2025-01-08T10:00:00.000Z",
+  "entries": [
+    {
+      "rank": 1,
+      "player": "Collectif Nova",
+      "score": 980,
+      "streak": 7
+    },
+    {
+      "rank": 2,
+      "player": "Atelier Flux",
+      "score": 945,
+      "streak": 5
+    },
+    {
+      "rank": 3,
+      "player": "Équipe Atlas",
+      "score": 922,
+      "streak": 4
+    },
+    {
+      "rank": 4,
+      "player": "Tribu Horizon",
+      "score": 905,
+      "streak": 6
+    },
+    {
+      "rank": 5,
+      "player": "Studio Comète",
+      "score": 884,
+      "streak": 3
+    }
+  ]
+}

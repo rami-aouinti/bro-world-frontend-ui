@@ -1,0 +1,29 @@
+{
+  "player": {
+    "id": "mock-user",
+    "displayName": "Alexia"
+  },
+  "score": 768,
+  "maxScore": 1000,
+  "rank": 18,
+  "percentile": 92,
+  "streak": 4,
+  "lastPlayedAt": "2025-01-07T17:30:00.000Z",
+  "recentSessions": [
+    {
+      "quizId": "mock-session-39",
+      "score": 720,
+      "playedAt": "2025-01-03T15:00:00.000Z"
+    },
+    {
+      "quizId": "mock-session-40",
+      "score": 750,
+      "playedAt": "2025-01-05T11:00:00.000Z"
+    },
+    {
+      "quizId": "mock-session-41",
+      "score": 768,
+      "playedAt": "2025-01-07T17:30:00.000Z"
+    }
+  ]
+}
