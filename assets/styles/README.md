@@ -103,9 +103,9 @@ Une ombre de focus harmonisée est également disponible via `--ui-focus` (`0 0 
 
 ## Typographie
 
-- Police par défaut (`$body-font-family` / `var(--v-font-family-base)`) : pile système (`system-ui`, `-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, `Helvetica Neue`, `Arial`, `sans-serif`).
-- Police display (`var(--v-font-family-display)`) : identique à la pile système pour garantir un rendu cohérent sans chargement externe.
-- Les fontes système sont utilisées par défaut et évitent tout aller-retour réseau critique au chargement initial.
+- Police par défaut (`$body-font-family` / `var(--v-font-family-base)`) : `Plus Jakarta Sans`, `Space Grotesk`, puis la pile système (`system-ui`, `-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, `Helvetica Neue`, `Arial`, `sans-serif`).
+- Police display (`var(--v-font-family-display)`) : `Space Grotesk`, `Plus Jakarta Sans`, puis la pile système pour une continuité visuelle.
+- Les fontes principales sont auto-hébergées via `@nuxt/fonts` (avec `font-display: swap`) afin d'éviter les aller-retours réseau critiques et de bénéficier d'un cache longue durée.
 
 ### Échelle commune Vuetify ↔ Tailwind
 

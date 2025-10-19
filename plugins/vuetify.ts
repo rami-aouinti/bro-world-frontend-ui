@@ -326,9 +326,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const sharedVariables = {
     "font-family-base":
-      "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+      "'Plus Jakarta Sans', 'Space Grotesk', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
     "font-family-display":
-      "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+      "'Space Grotesk', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
     "font-size-root": "16px",
     "line-height-base": 1.5,
     "text-h1-size": "3.25rem",
@@ -422,7 +422,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       readonly "text-h2-line-height": 1.25;
       readonly "space-6": "2rem";
       readonly "radius-md": "0.5rem";
-      readonly "font-family-base": "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
+      readonly "font-family-base": "'Plus Jakarta Sans', 'Space Grotesk', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
       readonly "text-h1-line-height": 1.2;
       readonly "input-line-height": 1.4;
       readonly "text-h4-letter-spacing": "-0.005em";
@@ -430,7 +430,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       readonly "text-h2-size": "2.5rem";
       readonly "text-h6-line-height": 1.45;
       readonly "font-size-root": "16px";
-      readonly "font-family-display": "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
+      readonly "font-family-display": "'Space Grotesk', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
       readonly "text-h3-size": "2rem";
       readonly "input-min-height": "2.75rem";
       readonly "text-body-2-size": "0.875rem";
@@ -559,7 +559,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       readonly "text-h2-line-height": 1.25;
       readonly "space-6": "2rem";
       readonly "radius-md": "0.5rem";
-      readonly "font-family-base": "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
+      readonly "font-family-base": "'Plus Jakarta Sans', 'Space Grotesk', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
       readonly "text-h1-line-height": 1.2;
       readonly "input-line-height": 1.4;
       readonly "text-h4-letter-spacing": "-0.005em";
@@ -567,7 +567,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       readonly "text-h2-size": "2.5rem";
       readonly "text-h6-line-height": 1.45;
       readonly "font-size-root": "16px";
-      readonly "font-family-display": "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
+      readonly "font-family-display": "'Space Grotesk', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
       readonly "text-h3-size": "2rem";
       readonly "input-min-height": "2.75rem";
       readonly "text-body-2-size": "0.875rem";
