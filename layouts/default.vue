@@ -147,23 +147,7 @@
                       v-else-if="shouldShowDashboardRightSidebar"
                       class="flex flex-col gap-6"
                     >
-                      <SidebarContactCard
-                        v-if="shouldShowContactSidebarCard"
-                      />
-                      <SidebarWeatherCard
-                        v-if="weather"
-                        :weather="weather"
-                      />
-                      <SidebarLeaderboardCard
-                        v-if="leaderboard"
-                        :title="leaderboard.title"
-                        :live-label="leaderboard.live"
-                        :participants="leaderboard.participants"
-                      />
-                      <SidebarRatingCard
-                        v-if="rating"
-                        :rating="rating"
-                      />
+                      <SidebarHelpCenterCard />
                     </div>
                   </slot>
                 </AppSidebarRight>
@@ -329,21 +313,8 @@ const AppSidebarRight = defineAsyncComponent({
   suspensible: false,
 });
 
-const SidebarContactCard = defineAsyncComponent({
-  loader: () => import("~/components/layout/SidebarContactCard.vue"),
-  suspensible: false,
-});
-
-const SidebarWeatherCard = defineAsyncComponent({
-  loader: () => import("~/components/layout/SidebarWeatherCard.vue"),
-  suspensible: false,
-});
-const SidebarLeaderboardCard = defineAsyncComponent({
-  loader: () => import("~/components/layout/SidebarLeaderboardCard.vue"),
-  suspensible: false,
-});
-const SidebarRatingCard = defineAsyncComponent({
-  loader: () => import("~/components/layout/SidebarRatingCard.vue"),
+const SidebarHelpCenterCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarHelpCenterCard.vue"),
   suspensible: false,
 });
 
@@ -557,9 +528,6 @@ const showNavigation = computed(() => {
 
   return currentRoute.value?.meta?.showNavbar !== false;
 });
-const shouldShowContactSidebarCard = computed(
-  () => currentRoute.value?.meta?.showContactSidebarCard === true,
-);
 const { rightSidebarContent } = useLayoutRightSidebar();
 const shouldShowDashboardRightSidebar = computed(
   () => routeRightSidebarPreset.value === "dashboard" && !rightSidebarContent.value,
