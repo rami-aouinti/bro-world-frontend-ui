@@ -1,5 +1,8 @@
 import { createError, readBody } from "h3";
-import { invalidatePostAndLists } from "../../../../../../../utils/cache/posts";
+import {
+  invalidatePostAndLists,
+  invalidatePostComments,
+} from "../../../../../../../utils/cache/posts";
 import { reactToCommentAtSource } from "../../../../../../../utils/posts/api";
 
 export default defineEventHandler(async (event) => {
@@ -27,6 +30,7 @@ export default defineEventHandler(async (event) => {
   try {
     await reactToCommentAtSource(event, trimmedPostId, trimmedCommentId, { reactionType });
     await invalidatePostAndLists(event, trimmedPostId);
+    await invalidatePostComments(event, trimmedPostId);
 
     return { success: true };
   } catch (error) {

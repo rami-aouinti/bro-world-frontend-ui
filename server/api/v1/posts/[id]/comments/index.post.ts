@@ -1,5 +1,8 @@
 import { createError, readBody } from "h3";
-import { invalidatePostAndLists } from "../../../../../utils/cache/posts";
+import {
+  invalidatePostAndLists,
+  invalidatePostComments,
+} from "../../../../../utils/cache/posts";
 import { addCommentAtSource } from "../../../../../utils/posts/api";
 
 export default defineEventHandler(async (event) => {
@@ -32,6 +35,7 @@ export default defineEventHandler(async (event) => {
     });
 
     await invalidatePostAndLists(event, trimmedId);
+    await invalidatePostComments(event, trimmedId);
 
     return { success: true };
   } catch (error) {
