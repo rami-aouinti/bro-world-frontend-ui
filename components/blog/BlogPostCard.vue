@@ -65,22 +65,6 @@
         @reply="openReply"
         @submit="handleCommentSubmit"
       />
-      <div
-        v-else-if="manualCommentsTriggerVisible"
-        class="comments-manual"
-      >
-        <button
-          type="button"
-          class="comments-manual__button"
-          data-test="load-comments-button"
-          @click="handleManualCommentsLoad"
-        >
-          {{ manualCommentsButtonLabel }}
-        </button>
-        <p class="comments-manual__hint">
-          {{ manualCommentsHint }}
-        </p>
-      </div>
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
         ref="loginPromptRef"

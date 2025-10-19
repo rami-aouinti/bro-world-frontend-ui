@@ -143,7 +143,7 @@ import { useProfileStore } from "~/stores/profile";
 import type { Story, StoryReaction } from "~/types/stories";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
-const blogPostCardIntrinsicHeight = 720;
+const blogPostCardIntrinsicHeight = 520;
 const auth = useAuthSession();
 const profileStore: ReturnType<typeof useProfileStore> | null = (() => {
   try {
