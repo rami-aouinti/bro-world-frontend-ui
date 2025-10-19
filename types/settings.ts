@@ -51,6 +51,27 @@ export interface SiteContentBlock {
   updatedAt: string;
 }
 
+export interface SiteWorldSettings {
+  id: string;
+  name: string;
+  slug: string;
+  pluginIds: string[];
+  locale?: string | null;
+  description?: string | null;
+  visibility?: string | null;
+  region?: string | null;
+  theme?: string | null;
+  launchDate?: string | null;
+  tags?: string[];
+  guidelines?: string | null;
+  enableMonetization?: boolean;
+  enableIntegrations?: boolean;
+  requireVerification?: boolean;
+  allowGuests?: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface SiteLocalizedSettings {
   tagline?: string | null;
   pages: {
@@ -66,6 +87,7 @@ export interface SiteSettings {
   activeThemeId: string;
   themes: SiteThemeDefinition[];
   menus: SiteMenuItem[];
+  menuBlueprints?: SiteMenuItem[];
   profile: SiteProfileSettings;
   ui: SiteUiSettings;
   defaultLanguage: string;
@@ -76,5 +98,7 @@ export interface SiteSettings {
     contact: SiteContentBlock;
     help: SiteContentBlock;
   };
+  worlds?: SiteWorldSettings[];
+  activeWorldId?: string | null;
   updatedAt: string;
 }

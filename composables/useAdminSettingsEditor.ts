@@ -169,6 +169,7 @@ function createFormFromSettings(settings: SiteSettings): AdminSettingsForm {
     defaults.defaultLanguage;
 
   const activeDraft = drafts[activeLanguage] ?? createEmptyLocalizedDraft();
+  const menuSource = settings.menuBlueprints?.length ? settings.menuBlueprints : settings.menus;
 
   return {
     siteName: settings.siteName,
@@ -177,7 +178,7 @@ function createFormFromSettings(settings: SiteSettings): AdminSettingsForm {
     tagline: activeDraft.tagline,
     activeThemeId: settings.activeThemeId,
     themes: settings.themes.map((theme) => ({ ...theme })),
-    menus: settings.menus.map((menu) => deepCloneMenu(menu)),
+    menus: menuSource.map((menu) => deepCloneMenu(menu)),
     profile: {
       allowCustomization: settings.profile.allowCustomization,
       allowAvatarUploads: settings.profile.allowAvatarUploads,
@@ -220,12 +221,15 @@ function serializeFormState(form: AdminSettingsForm): Partial<SiteSettings> {
     ]),
   );
 
+  const serializedMenus = form.menus.map((menu, index) => serializeMenu(menu, index));
+
   return {
     siteName: form.siteName.trim(),
     tagline: defaultDraft.tagline.trim() || null,
     activeThemeId: form.activeThemeId,
     themes: form.themes.map((theme) => ({ ...theme })),
-    menus: form.menus.map((menu, index) => serializeMenu(menu, index)),
+    menus: serializedMenus,
+    menuBlueprints: serializedMenus,
     profile: {
       allowCustomization: form.profile.allowCustomization,
       allowAvatarUploads: form.profile.allowAvatarUploads,

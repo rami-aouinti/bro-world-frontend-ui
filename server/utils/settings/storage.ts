@@ -12,8 +12,16 @@ import type {
   SiteSettings,
   SiteThemeDefinition,
   SiteUiSettings,
+  SiteWorldSettings,
 } from "~/types/settings";
-import { defaultSiteSettings, getDefaultSiteSettings } from "~/lib/settings/defaults";
+import type { CreateWorldRequestPayload } from "~/types/world";
+import {
+  DEFAULT_WORLD_PLUGIN_IDS,
+  composeMenusWithPlugins,
+  defaultSiteSettings,
+  getDefaultSiteSettings,
+} from "~/lib/settings/defaults";
+import { WORLD_PLUGIN_REGISTRY_MAP } from "~/lib/world/plugins";
 import {
   defaultLanguageCode,
   getSupportedLanguage,
@@ -272,6 +280,11 @@ function sanitizeMenu(menu: Partial<SiteMenuItem>, order: number): SiteMenuItem 
   const to = menu.to?.trim() || null;
   const icon = menu.icon?.trim() || null;
 
+  const normalizedOrder =
+    typeof menu.order === "number" && Number.isFinite(menu.order)
+      ? menu.order
+      : order;
+
   const children = Array.isArray(menu.children)
     ? menu.children
         .map((child, index) => ({ child, index }))
@@ -287,7 +300,7 @@ function sanitizeMenu(menu: Partial<SiteMenuItem>, order: number): SiteMenuItem 
     requiresAdmin,
     translate,
     isVisible,
-    order,
+    order: normalizedOrder,
     children,
   } satisfies SiteMenuItem;
 }
@@ -662,6 +675,237 @@ function sanitizeLocalizedSettingsMap(
   return result;
 }
 
+function cloneWorld(world: SiteWorldSettings): SiteWorldSettings {
+  return {
+    ...world,
+    pluginIds: [...world.pluginIds],
+    tags: world.tags ? [...world.tags] : undefined,
+  } satisfies SiteWorldSettings;
+}
+
+function sanitizePluginIdCollection(
+  candidate: unknown,
+  fallback: string[],
+  useFallbackWhenUndefined: boolean,
+): string[] {
+  const normalized: string[] = [];
+  const seen = new Set<string>();
+  const source = Array.isArray(candidate) ? candidate : [];
+
+  for (const entry of source) {
+    if (typeof entry !== "string") {
+      continue;
+    }
+
+    const trimmed = entry.trim();
+    if (!trimmed || seen.has(trimmed) || !WORLD_PLUGIN_REGISTRY_MAP.has(trimmed)) {
+      continue;
+    }
+
+    normalized.push(trimmed);
+    seen.add(trimmed);
+  }
+
+  if (!normalized.length && useFallbackWhenUndefined) {
+    for (const fallbackId of fallback) {
+      if (typeof fallbackId !== "string") {
+        continue;
+      }
+
+      const trimmed = fallbackId.trim();
+      if (!trimmed || seen.has(trimmed) || !WORLD_PLUGIN_REGISTRY_MAP.has(trimmed)) {
+        continue;
+      }
+
+      normalized.push(trimmed);
+      seen.add(trimmed);
+    }
+  }
+
+  return normalized;
+}
+
+function sanitizeWorldCandidate(
+  candidate: Partial<SiteWorldSettings> | null | undefined,
+  fallback: SiteWorldSettings | null,
+  options: { requirePlugins?: boolean } = {},
+): SiteWorldSettings | null {
+  if (!candidate && !fallback) {
+    return null;
+  }
+
+  const source = candidate ?? {};
+  const fallbackWorld = fallback ?? null;
+
+  const name =
+    typeof source.name === "string" && source.name.trim()
+      ? source.name.trim()
+      : fallbackWorld?.name ?? "Untitled world";
+
+  const slugSource =
+    typeof source.slug === "string" && source.slug.trim()
+      ? source.slug.trim()
+      : fallbackWorld?.slug ?? name;
+
+  const id =
+    typeof source.id === "string" && source.id.trim()
+      ? source.id.trim()
+      : fallbackWorld?.id ?? slugify(slugSource);
+
+  const fallbackPlugins = fallbackWorld?.pluginIds ?? [];
+  const pluginIds = sanitizePluginIdCollection(
+    source.pluginIds,
+    fallbackPlugins.length ? fallbackPlugins : Array.from(DEFAULT_WORLD_PLUGIN_IDS),
+    source.pluginIds === undefined,
+  );
+
+  if (options.requirePlugins && !pluginIds.length) {
+    return null;
+  }
+
+  const now = new Date().toISOString();
+
+  const tags = Array.isArray(source.tags)
+    ? source.tags.map((tag) => String(tag).trim()).filter((tag) => tag.length > 0)
+    : fallbackWorld?.tags
+    ? [...fallbackWorld.tags]
+    : [];
+
+  const createdAt =
+    typeof source.createdAt === "string" && source.createdAt.trim()
+      ? source.createdAt.trim()
+      : fallbackWorld?.createdAt ?? now;
+
+  const updatedAt =
+    typeof source.updatedAt === "string" && source.updatedAt.trim()
+      ? source.updatedAt.trim()
+      : fallbackWorld?.updatedAt ?? now;
+
+  return {
+    id,
+    name,
+    slug: slugify(slugSource),
+    pluginIds,
+    locale:
+      typeof source.locale === "string" && source.locale.trim()
+        ? source.locale.trim()
+        : fallbackWorld?.locale ?? null,
+    description:
+      typeof source.description === "string"
+        ? source.description.trim() || null
+        : fallbackWorld?.description ?? null,
+    visibility:
+      typeof source.visibility === "string"
+        ? source.visibility.trim() || null
+        : fallbackWorld?.visibility ?? null,
+    region:
+      typeof source.region === "string"
+        ? source.region.trim() || null
+        : fallbackWorld?.region ?? null,
+    theme:
+      typeof source.theme === "string"
+        ? source.theme.trim() || null
+        : fallbackWorld?.theme ?? null,
+    launchDate:
+      typeof source.launchDate === "string"
+        ? source.launchDate.trim() || null
+        : fallbackWorld?.launchDate ?? null,
+    tags,
+    guidelines:
+      typeof source.guidelines === "string"
+        ? source.guidelines.trim() || null
+        : fallbackWorld?.guidelines ?? null,
+    enableMonetization:
+      source.enableMonetization === undefined
+        ? fallbackWorld?.enableMonetization ?? false
+        : Boolean(source.enableMonetization),
+    enableIntegrations:
+      source.enableIntegrations === undefined
+        ? fallbackWorld?.enableIntegrations ?? false
+        : Boolean(source.enableIntegrations),
+    requireVerification:
+      source.requireVerification === undefined
+        ? fallbackWorld?.requireVerification ?? false
+        : Boolean(source.requireVerification),
+    allowGuests:
+      source.allowGuests === undefined
+        ? fallbackWorld?.allowGuests ?? true
+        : Boolean(source.allowGuests),
+    createdAt,
+    updatedAt,
+  } satisfies SiteWorldSettings;
+}
+
+function sanitizeWorldCollection(
+  requested: unknown,
+  fallbackWorlds: SiteWorldSettings[] | undefined,
+): SiteWorldSettings[] {
+  const fallback = fallbackWorlds ?? [];
+  const requestedArray = Array.isArray(requested) ? requested : [];
+  const source = requestedArray.length ? requestedArray : fallback;
+
+  const normalized: SiteWorldSettings[] = [];
+  const seen = new Set<string>();
+
+  for (const entry of source) {
+    const candidate = (entry ?? null) as Partial<SiteWorldSettings> | null;
+    const fallbackMatch = fallback.find(
+      (world) =>
+        (candidate?.id && world.id === candidate.id) ||
+        (candidate?.slug && world.slug === candidate.slug),
+    ) ?? null;
+
+    const sanitized = sanitizeWorldCandidate(candidate, fallbackMatch, { requirePlugins: false });
+    if (!sanitized || seen.has(sanitized.id)) {
+      continue;
+    }
+
+    normalized.push(sanitized);
+    seen.add(sanitized.id);
+  }
+
+  if (!normalized.length) {
+    for (const fallbackEntry of fallback) {
+      const sanitized = sanitizeWorldCandidate(fallbackEntry, null, { requirePlugins: false });
+      if (!sanitized || seen.has(sanitized.id)) {
+        continue;
+      }
+
+      normalized.push(sanitized);
+      seen.add(sanitized.id);
+    }
+  }
+
+  if (!normalized.length) {
+    const fallbackDefault = defaultSiteSettings.worlds?.[0] ?? null;
+    const sanitizedDefault = sanitizeWorldCandidate(null, fallbackDefault, { requirePlugins: false });
+    if (sanitizedDefault && !seen.has(sanitizedDefault.id)) {
+      normalized.push(sanitizedDefault);
+      seen.add(sanitizedDefault.id);
+    }
+  }
+
+  return normalized;
+}
+
+function resolveActiveWorldId(
+  requested: unknown,
+  worlds: SiteWorldSettings[],
+  fallback: string | null | undefined,
+): string | null {
+  const candidate = typeof requested === "string" ? requested.trim() : "";
+  if (candidate && worlds.some((world) => world.id === candidate)) {
+    return candidate;
+  }
+
+  const fallbackCandidate = typeof fallback === "string" ? fallback.trim() : "";
+  if (fallbackCandidate && worlds.some((world) => world.id === fallbackCandidate)) {
+    return fallbackCandidate;
+  }
+
+  return worlds[0]?.id ?? null;
+}
+
 function normalizeSettings(settings: SiteSettings): SiteSettings {
   const defaults = getDefaultSiteSettings();
 
@@ -678,9 +922,27 @@ function normalizeSettings(settings: SiteSettings): SiteSettings {
     }),
   );
 
-  const menusSource = settings.menus?.length ? settings.menus : defaults.menus;
-  const sortedMenus = [...menusSource].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  const normalizedMenus = sortedMenus.map((menu, index) => sanitizeMenu(menu, index));
+  const menuBlueprintSource = settings.menuBlueprints?.length
+    ? settings.menuBlueprints
+    : settings.menus?.length
+    ? settings.menus
+    : defaults.menuBlueprints?.length
+    ? defaults.menuBlueprints
+    : defaults.menus;
+  const sortedBlueprints = [...menuBlueprintSource].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const normalizedMenuBlueprints = sortedBlueprints.map((menu, index) => sanitizeMenu(menu, index));
+
+  const normalizedWorlds = sanitizeWorldCollection(settings.worlds, defaults.worlds);
+  const activeWorldId = resolveActiveWorldId(
+    settings.activeWorldId,
+    normalizedWorlds,
+    defaults.activeWorldId ?? null,
+  );
+  const activeWorld = normalizedWorlds.find((world) => world.id === activeWorldId);
+  const pluginIds = activeWorld?.pluginIds ?? [];
+
+  const composedMenus = composeMenusWithPlugins(normalizedMenuBlueprints, pluginIds);
+  const normalizedMenus = composedMenus.map((menu, index) => sanitizeMenu(menu, index));
 
   const normalizedProfile = sanitizeProfileSettings(settings.profile, defaults.profile);
   const normalizedUi = sanitizeUiSettings(settings.ui, defaults.ui);
@@ -714,6 +976,7 @@ function normalizeSettings(settings: SiteSettings): SiteSettings {
     tagline: normalizedTagline,
     activeThemeId: normalizedActiveThemeId,
     themes: normalizedThemes,
+    menuBlueprints: normalizedMenuBlueprints.map((menu) => sanitizeMenu(menu, menu.order ?? 0)),
     menus: normalizedMenus,
     profile: normalizedProfile,
     ui: normalizedUi,
@@ -721,6 +984,8 @@ function normalizeSettings(settings: SiteSettings): SiteSettings {
     defaultLanguage,
     languages: normalizedLanguages,
     localized: normalizedLocalized,
+    worlds: normalizedWorlds.map((world) => cloneWorld(world)),
+    activeWorldId,
     updatedAt,
   } satisfies SiteSettings;
 }
@@ -969,6 +1234,44 @@ export async function updateSiteSettings(
     normalizedPages,
   );
 
+  const blueprintFallback = current.menuBlueprints?.length
+    ? current.menuBlueprints
+    : current.menus?.length
+    ? current.menus
+    : defaults.menuBlueprints?.length
+    ? defaults.menuBlueprints
+    : defaults.menus;
+  const requestedBlueprints = Array.isArray(payload.menuBlueprints)
+    ? payload.menuBlueprints
+    : Array.isArray(payload.menus)
+    ? payload.menus
+    : blueprintFallback;
+  const sortedBlueprints = [...requestedBlueprints].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const normalizedMenuBlueprints = sortedBlueprints.map((menu, index) => sanitizeMenu(menu, index));
+  const clonedMenuBlueprints = normalizedMenuBlueprints.map((menu) => sanitizeMenu(menu, menu.order ?? 0));
+
+  const worldFallback = current.worlds?.length ? current.worlds : defaults.worlds;
+  const requestedWorlds = Array.isArray(payload.worlds) ? payload.worlds : current.worlds ?? defaults.worlds;
+  const normalizedWorlds = sanitizeWorldCollection(requestedWorlds, worldFallback);
+  const requestedActiveWorldId =
+    payload.activeWorldId ??
+    (Array.isArray(payload.worlds) && payload.worlds[0]?.id
+      ? String(payload.worlds[0]?.id)
+      : undefined) ??
+    current.activeWorldId ??
+    defaults.activeWorldId ??
+    null;
+  const activeWorldId = resolveActiveWorldId(
+    requestedActiveWorldId,
+    normalizedWorlds,
+    current.activeWorldId ?? defaults.activeWorldId ?? null,
+  );
+  const activeWorld = normalizedWorlds.find((world) => world.id === activeWorldId);
+  const pluginIds = activeWorld?.pluginIds ?? [];
+
+  const composedMenus = composeMenusWithPlugins(normalizedMenuBlueprints, pluginIds);
+  const normalizedMenus = composedMenus.map((menu, index) => sanitizeMenu(menu, index));
+
   const next: SiteSettings = {
     ...current,
     siteName: payload.siteName?.trim() || current.siteName,
@@ -977,15 +1280,16 @@ export async function updateSiteSettings(
     themes: payload.themes?.length
       ? payload.themes.map((theme) => sanitizeTheme(theme)).filter(Boolean)
       : current.themes.map((theme) => ({ ...theme })),
-    menus: payload.menus?.length
-      ? payload.menus.map((menu, index) => sanitizeMenu(menu, index))
-      : current.menus.map((menu, index) => sanitizeMenu(menu, index)),
+    menuBlueprints: clonedMenuBlueprints,
+    menus: normalizedMenus,
     profile: sanitizeProfileSettings(payload.profile, current.profile ?? defaults.profile),
     ui: sanitizeUiSettings(payload.ui, current.ui ?? defaults.ui),
     pages: normalizedPages,
     defaultLanguage,
     languages: normalizedLanguages,
     localized: normalizedLocalized,
+    worlds: normalizedWorlds.map((world) => cloneWorld(world)),
+    activeWorldId,
     updatedAt: new Date().toISOString(),
   } satisfies SiteSettings;
 
@@ -997,4 +1301,109 @@ export async function updateSiteSettings(
   await cacheSettings(cacheKey, segments, persisted);
 
   return persisted;
+}
+
+export async function createWorld(
+  event: H3Event,
+  payload: CreateWorldRequestPayload,
+): Promise<{ settings: SiteSettings; world: SiteWorldSettings }> {
+  const { cacheKey, segments, userId } = await resolveCacheKey(event);
+
+  if (!userId) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "Authentication required",
+    });
+  }
+
+  if (!Array.isArray(payload.pluginIds) || !payload.pluginIds.length) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Select at least one plugin to continue",
+    });
+  }
+
+  const current = await getSiteSettings(event);
+  const defaults = getDefaultSiteSettings();
+
+  const blueprintSource = current.menuBlueprints?.length
+    ? current.menuBlueprints
+    : current.menus?.length
+    ? current.menus
+    : defaults.menuBlueprints?.length
+    ? defaults.menuBlueprints
+    : defaults.menus;
+  const normalizedBlueprints = blueprintSource.map((menu, index) => sanitizeMenu(menu, index));
+  const clonedBlueprints = normalizedBlueprints.map((menu) => sanitizeMenu(menu, menu.order ?? 0));
+
+  const fallbackWorlds = current.worlds?.length ? current.worlds : defaults.worlds ?? [];
+
+  const proposedWorld: Partial<SiteWorldSettings> = {
+    id: payload.slug?.trim() || slugify(payload.name || "Untitled world"),
+    name: payload.name,
+    slug: payload.slug,
+    description: payload.description,
+    visibility: payload.visibility,
+    region: payload.region,
+    theme: payload.theme,
+    launchDate: payload.launchDate,
+    tags: payload.tags,
+    guidelines: payload.guidelines,
+    enableMonetization: payload.enableMonetization,
+    enableIntegrations: payload.enableIntegrations,
+    requireVerification: payload.requireVerification,
+    allowGuests: payload.allowGuests,
+    pluginIds: payload.pluginIds,
+  };
+
+  const fallbackWorld = fallbackWorlds.find(
+    (world) =>
+      (proposedWorld.id && world.id === proposedWorld.id) ||
+      (proposedWorld.slug && world.slug === proposedWorld.slug),
+  ) ?? null;
+
+  const sanitizedWorld = sanitizeWorldCandidate(proposedWorld, fallbackWorld, { requirePlugins: true });
+
+  if (!sanitizedWorld || !sanitizedWorld.pluginIds.length) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Select at least one plugin to continue",
+    });
+  }
+
+  sanitizedWorld.locale =
+    sanitizedWorld.locale ?? current.defaultLanguage ?? defaults.defaultLanguage ?? defaultLanguageCode;
+
+  if (fallbackWorld?.createdAt) {
+    sanitizedWorld.createdAt = fallbackWorld.createdAt;
+  }
+  sanitizedWorld.updatedAt = new Date().toISOString();
+
+  const filteredWorlds = fallbackWorlds.filter(
+    (world) => world.id !== sanitizedWorld.id && world.slug !== sanitizedWorld.slug,
+  );
+  const nextWorlds = [...filteredWorlds.map((world) => cloneWorld(world)), sanitizedWorld];
+
+  const composedMenus = composeMenusWithPlugins(normalizedBlueprints, sanitizedWorld.pluginIds);
+  const normalizedMenus = composedMenus.map((menu, index) => sanitizeMenu(menu, index));
+
+  const nextSettings: SiteSettings = {
+    ...current,
+    menuBlueprints: clonedBlueprints,
+    menus: normalizedMenus,
+    worlds: nextWorlds.map((world) => cloneWorld(world)),
+    activeWorldId: sanitizedWorld.id,
+    updatedAt: new Date().toISOString(),
+  } satisfies SiteSettings;
+
+  const ensured = ensureActiveThemeId(nextSettings);
+  const persisted = await persistToConfigurationApi(event, ensured);
+
+  await invalidateCache(cacheKey, segments);
+  await cacheSettings(cacheKey, segments, persisted);
+
+  const persistedWorld =
+    persisted.worlds?.find((world) => world.id === sanitizedWorld.id) ?? sanitizedWorld;
+
+  return { settings: persisted, world: persistedWorld };
 }
