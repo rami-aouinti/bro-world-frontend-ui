@@ -100,45 +100,6 @@
               </div>
             </v-sheet>
           </v-col>
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-sheet
-              class="about-section about-section--cards"
-              elevation="0"
-              rounded="xl"
-            >
-              <v-card
-                v-for="point in missionPoints"
-                :key="point.title"
-                class="about-mission-card"
-                elevation="0"
-                rounded="lg"
-              >
-                <div class="d-flex align-start">
-                  <v-avatar
-                    class="about-mission-card__icon mr-4"
-                    size="48"
-                  >
-                    <v-icon
-                      :icon="point.icon"
-                      size="26"
-                      aria-hidden="true"
-                    />
-                  </v-avatar>
-                  <div>
-                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
-                      {{ point.title }}
-                    </h3>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ point.body }}
-                    </p>
-                  </div>
-                </div>
-              </v-card>
-            </v-sheet>
-          </v-col>
         </v-row>
       </section>
 
@@ -553,6 +514,8 @@ import { useSwitchLocalePath } from "#i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import MissionSidebarCards from "~/components/about/MissionSidebarCards.vue";
 
 const { t, locale, locales, defaultLocale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
@@ -564,6 +527,7 @@ const pageDescription = computed(() => t("seo.about.description"));
 
 definePageMeta({
   documentDriven: false,
+  showRightWidgets: true,
 });
 useSeoMeta(() => ({
   description: pageDescription.value,
@@ -697,6 +661,25 @@ const missionPoints = computed(() => [
     body: t("pages.about.missionPoints.iteration.body"),
   },
 ]);
+
+const missionSidebarPoints = computed(() => missionPoints.value.slice(0, 2));
+
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
+registerRightSidebarContent(
+  computed(() => {
+    const points = missionSidebarPoints.value;
+
+    if (!points.length) {
+      return null;
+    }
+
+    return {
+      component: MissionSidebarCards,
+      props: { points },
+    };
+  }),
+);
 
 const valuesFeatures = computed(() => [
   {
