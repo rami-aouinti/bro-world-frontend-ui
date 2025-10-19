@@ -5,11 +5,33 @@
         class="text-card-foreground px-3 py-2"
         glow
       >
-        <JobCreateButtons
-          @create-job="showCreateJobModal = true"
-          @create-applicant="showCreateApplicantModal = true"
-        />
+        <v-list
+          nav
+          density="compact"
+          class="creation-nav"
+        >
+          <v-list-item
+            v-for="item in creationOptions"
+            :key="item.key"
+            :active="activeCreation === item.key"
+            :title="item.label"
+            rounded="xl"
+            class="creation-nav__item"
+            @click="selectCreation(item.key)"
+          >
+            <template #prepend>
+              <v-icon :icon="item.icon" />
+            </template>
+          </v-list-item>
+        </v-list>
+      </SidebarCard>
+    </template>
 
+    <template #right-sidebar>
+      <SidebarCard
+        class="text-card-foreground px-3 py-2"
+        glow
+      >
         <JobFilters
           :experience-options="[0.5, 1, 2, 3, 5, 10]"
           :companies="companies"
@@ -63,25 +85,45 @@
         </v-col>
       </v-row>
 
-      <CreateJob
-        v-model="showCreateJobModal"
-        @job-created="refreshJobs"
-      />
+      <div
+        v-if="activeCreation !== 'none'"
+        ref="creationSectionRef"
+        class="mt-6"
+      >
+        <CreateJob
+          v-if="activeCreation === 'job'"
+          @job-created="refreshJobs"
+        />
 
-      <CreateApplicant
-        v-model="showCreateApplicantModal"
-        :selected-job-id="selectedJobId"
-        @applicant-created="onApplicantCreated"
-      />
+        <div v-else>
+          <div
+            v-if="selectedJob"
+            class="mb-4 flex items-center gap-2"
+          >
+            <v-chip
+              color="primary"
+              variant="tonal"
+              class="font-medium"
+            >
+              {{ selectedJob.title }}
+            </v-chip>
+          </div>
+
+          <CreateApplicant
+            :selected-job-id="selectedJobId"
+            @applicant-created="onApplicantCreated"
+            @cancel="selectCreation('none')"
+          />
+        </div>
+      </div>
     </v-container>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
-import JobCreateButtons from "~/components/job/JobCreateButtons.vue";
 import CreateApplicant from "~/components/job/CreateApplicant.vue";
 import CreateJob from "~/components/job/CreateJob.vue";
 import JobFilters from "~/components/job/JobFilters.vue";
@@ -113,6 +155,8 @@ const jobStore = useJobStore();
 const { t } = useI18n();
 const { $notify: notify, $fetch } = useNuxtApp();
 
+type CreationSection = "job" | "applicant" | "none";
+
 const pending = ref(false);
 const search = ref("");
 const selectedCompany = ref("");
@@ -126,11 +170,48 @@ const currentPage = ref(1);
 const limit = 5;
 const totalPages = ref(1);
 
-const showCreateJobModal = ref(false);
-const showCreateApplicantModal = ref(false);
+const activeCreation = ref<CreationSection>("none");
 const selectedJobId = ref<string | null>(null);
+const creationSectionRef = ref<HTMLElement | null>(null);
 
 const companies = ref<CompanyInfo[]>([]);
+
+const creationOptions = computed(() => [
+  {
+    key: "job" as const,
+    label: t("job.create"),
+    icon: "mdi-briefcase-plus",
+  },
+  {
+    key: "applicant" as const,
+    label: t("applicant.create"),
+    icon: "mdi-account-plus",
+  },
+]);
+
+const selectedJob = computed(
+  () => jobStore.jobs.find((job) => job.id === selectedJobId.value) ?? null,
+);
+
+function selectCreation(section: CreationSection) {
+  const isSameSection = section === activeCreation.value;
+  const nextSection = isSameSection && section !== "none" ? "none" : section;
+
+  activeCreation.value = nextSection;
+
+  if (nextSection !== "applicant") {
+    selectedJobId.value = null;
+  }
+
+  if (nextSection !== "none") {
+    void nextTick(() => {
+      creationSectionRef.value?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
+}
 
 function normaliseCompanies(result: CompaniesResponse) {
   if (Array.isArray(result)) {
@@ -226,7 +307,13 @@ onMounted(() => {
 
 function openApplyModal(jobId: string) {
   selectedJobId.value = jobId;
-  showCreateApplicantModal.value = true;
+  activeCreation.value = "applicant";
+  void nextTick(() => {
+    creationSectionRef.value?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  });
 }
 
 async function refreshJobs() {
@@ -238,6 +325,19 @@ async function refreshJobs() {
 
 function onApplicantCreated() {
   notify.success(t("applicant.createdSuccess"));
-  showCreateApplicantModal.value = false;
+  selectedJobId.value = null;
+  selectCreation("none");
 }
 </script>
+
+<style scoped>
+.creation-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.creation-nav__item {
+  border-radius: 16px;
+}
+</style>
