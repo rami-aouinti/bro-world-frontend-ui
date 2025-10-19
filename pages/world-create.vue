@@ -43,12 +43,15 @@
                 {{ t("pages.createWorld.form.subtitle") }}
               </p>
             </div>
-            <div class="d-flex align-center gap-4">
+            <div class="d-flex align-center gap-4 flex-column flex-md-row">
               <v-btn
                 color="secondary"
                 variant="outlined"
                 size="large"
                 :aria-label="t('pages.createWorld.form.actions.previewAria')"
+                :loading="isSubmitting && activeAction === 'preview'"
+                :disabled="isSubmitting"
+                @click="handleSubmit('preview')"
               >
                 {{ t("pages.createWorld.form.actions.preview") }}
               </v-btn>
@@ -57,9 +60,38 @@
                 variant="flat"
                 size="large"
                 :aria-label="t('pages.createWorld.form.actions.publishAria')"
+                :loading="isSubmitting && activeAction === 'publish'"
+                :disabled="isSubmitting"
+                @click="handleSubmit('publish')"
               >
                 {{ t("pages.createWorld.form.actions.publish") }}
               </v-btn>
+            </div>
+            <div
+              v-if="submissionError"
+              class="mt-4"
+            >
+              <v-alert
+                type="error"
+                variant="tonal"
+                border="start"
+                color="error"
+              >
+                {{ submissionError }}
+              </v-alert>
+            </div>
+            <div
+              v-else-if="submissionSuccessAction"
+              class="mt-4"
+            >
+              <v-alert
+                type="success"
+                variant="tonal"
+                border="start"
+                color="success"
+              >
+                {{ submissionSuccessMessage }}
+              </v-alert>
             </div>
           </div>
 
@@ -289,73 +321,178 @@
         <v-row dense>
           <v-col
             v-for="category in pluginCategories"
-            :key="category.key"
+            :key="category.id"
             cols="12"
-            md="4"
+            md="6"
+            xl="4"
           >
             <v-card
               variant="tonal"
               class="pa-6 h-100 d-flex flex-column gap-5"
             >
-              <div>
-                <div class="d-flex align-start gap-3 mb-3">
-                  <v-avatar
-                    color="primary"
-                    size="44"
-                    class="elevation-2"
-                  >
-                    <v-icon
-                      :icon="category.icon"
-                      size="26"
-                      color="white"
-                    />
-                  </v-avatar>
-                  <div>
-                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
-                      {{ category.title }}
-                    </h3>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ category.description }}
-                    </p>
-                  </div>
+              <div class="d-flex align-start gap-3">
+                <v-avatar
+                  color="primary"
+                  size="44"
+                  class="elevation-2"
+                >
+                  <v-icon
+                    :icon="category.icon"
+                    size="26"
+                    color="white"
+                  />
+                </v-avatar>
+                <div>
+                  <h3 class="text-subtitle-1 font-weight-semibold mb-1">
+                    {{ category.label }}
+                  </h3>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ category.description }}
+                  </p>
                 </div>
-                <v-divider />
               </div>
+              <v-divider />
               <div class="d-flex flex-column gap-4">
-                <div
+                <article
                   v-for="plugin in category.plugins"
-                  :key="plugin.name"
+                  :key="plugin.id"
                   class="plugin-card"
                 >
-                  <div class="d-flex justify-space-between align-start mb-2">
-                    <h4 class="text-body-1 font-weight-medium mb-0">
-                      {{ plugin.name }}
-                    </h4>
-                    <v-chip
-                      v-if="plugin.tag"
+                  <div class="d-flex align-start justify-space-between gap-3">
+                    <div class="d-flex align-start gap-3">
+                      <v-avatar
+                        color="surface"
+                        class="elevation-1"
+                        size="40"
+                      >
+                        <v-icon
+                          :icon="plugin.icon"
+                          size="22"
+                          color="primary"
+                        />
+                      </v-avatar>
+                      <div>
+                        <h4 class="text-body-1 font-weight-semibold mb-1">
+                          {{ plugin.name }}
+                        </h4>
+                        <p class="text-body-2 text-medium-emphasis mb-0">
+                          {{ plugin.description }}
+                        </p>
+                      </div>
+                    </div>
+                    <v-switch
+                      class="flex-shrink-0"
                       color="primary"
-                      variant="tonal"
-                      size="small"
-                    >
-                      {{ plugin.tag }}
-                    </v-chip>
+                      density="compact"
+                      hide-details
+                      inset
+                      :aria-label="`Toggle ${plugin.name}`"
+                      :model-value="selectedPluginIds.has(plugin.id)"
+                      @update:model-value="(value) => togglePlugin(plugin.id, Boolean(value))"
+                    />
                   </div>
-                  <p class="text-body-2 text-medium-emphasis mb-2">
-                    {{ plugin.description }}
-                  </p>
-                  <ul class="text-body-2 text-medium-emphasis pl-5 mb-0">
-                    <li
-                      v-for="point in plugin.points"
-                      :key="point"
-                    >
-                      {{ point }}
-                    </li>
-                  </ul>
-                </div>
+                  <div
+                    v-if="plugin.highlights?.length"
+                    class="mt-3"
+                  >
+                    <ul class="plugin-meta-list">
+                      <li
+                        v-for="highlight in plugin.highlights"
+                        :key="highlight"
+                      >
+                        {{ highlight }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div
+                    v-if="plugin.routes?.length"
+                    class="mt-4"
+                  >
+                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">
+                      Routes
+                    </h5>
+                    <ul class="plugin-meta-list">
+                      <li
+                        v-for="route in plugin.routes"
+                        :key="route.path"
+                      >
+                        <span class="font-weight-medium">{{ route.label }}</span>
+                        <span class="text-medium-emphasis"> ({{ route.path }})</span>
+                        <span
+                          v-if="route.description"
+                          class="d-block text-caption text-disabled mt-1"
+                        >
+                          {{ route.description }}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div
+                    v-if="plugin.menus?.length"
+                    class="mt-4"
+                  >
+                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">
+                      Menus
+                    </h5>
+                    <ul class="plugin-meta-list">
+                      <li
+                        v-for="menu in plugin.menus"
+                        :key="menu.id"
+                      >
+                        <span class="font-weight-medium">{{ menu.label }}</span>
+                        <span
+                          v-if="menu.description"
+                          class="text-medium-emphasis"
+                        >
+                          — {{ menu.description }}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
               </div>
             </v-card>
           </v-col>
         </v-row>
+        <div class="mt-6">
+          <v-alert
+            v-if="pluginSelectionError"
+            type="error"
+            variant="tonal"
+            border="start"
+            color="error"
+            class="mb-4"
+          >
+            {{ pluginSelectionError }}
+          </v-alert>
+          <v-alert
+            type="info"
+            variant="tonal"
+            border="start"
+            color="primary"
+          >
+            <div class="d-flex flex-column gap-2">
+              <div class="text-subtitle-2 font-weight-semibold">
+                {{ pluginSummaryTitle }}
+              </div>
+              <p class="text-body-2 text-medium-emphasis mb-0">
+                {{ pluginSummaryDescription }}
+              </p>
+              <ul
+                v-if="selectedPlugins.length"
+                class="plugin-meta-list mb-0"
+              >
+                <li
+                  v-for="plugin in selectedPlugins"
+                  :key="plugin.id"
+                  class="text-body-2"
+                >
+                  {{ plugin.name }}
+                </li>
+              </ul>
+            </div>
+          </v-alert>
+        </div>
       </section>
 
       <section
@@ -454,9 +591,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import { useWorldCreator } from "~/composables/useWorldCreator";
+import {
+  groupWorldPluginsByCategory,
+  WORLD_PLUGIN_REGISTRY,
+  WORLD_PLUGIN_REGISTRY_MAP,
+  type WorldPluginDefinition,
+} from "~/lib/world/plugins";
+import type { CreateWorldRequestPayload, WorldFormState, WorldSubmissionAction } from "~/types/world";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
@@ -472,7 +617,7 @@ definePageMeta({
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));
-const worldForm = reactive({
+const worldForm = reactive<WorldFormState>({
   name: "",
   slug: "",
   description: "",
@@ -510,130 +655,121 @@ const tagSuggestions = computed(() => [
   t("pages.createWorld.form.tagSuggestions.modded"),
 ]);
 
-const pluginCategories = computed(() => [
-  {
-    key: "community",
-    icon: "mdi:earth",
-    title: t("pages.createWorld.plugins.categories.community.title"),
-    description: t("pages.createWorld.plugins.categories.community.description"),
-    plugins: [
-      {
-        name: t("pages.createWorld.plugins.categories.community.plugins.lobby.name"),
-        tag: t("pages.createWorld.plugins.categories.community.plugins.lobby.tag"),
-        description: t("pages.createWorld.plugins.categories.community.plugins.lobby.description"),
-        points: [
-          t("pages.createWorld.plugins.categories.community.plugins.lobby.points.0"),
-          t("pages.createWorld.plugins.categories.community.plugins.lobby.points.1"),
-          t("pages.createWorld.plugins.categories.community.plugins.lobby.points.2"),
-        ],
-      },
-      {
-        name: t("pages.createWorld.plugins.categories.community.plugins.events.name"),
-        tag: t("pages.createWorld.plugins.categories.community.plugins.events.tag"),
-        description: t("pages.createWorld.plugins.categories.community.plugins.events.description"),
-        points: [
-          t("pages.createWorld.plugins.categories.community.plugins.events.points.0"),
-          t("pages.createWorld.plugins.categories.community.plugins.events.points.1"),
-          t("pages.createWorld.plugins.categories.community.plugins.events.points.2"),
-        ],
-      },
-      {
-        name: t("pages.createWorld.plugins.categories.community.plugins.streams.name"),
-        tag: t("pages.createWorld.plugins.categories.community.plugins.streams.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.community.plugins.streams.description",
-        ),
-        points: [
-          t("pages.createWorld.plugins.categories.community.plugins.streams.points.0"),
-          t("pages.createWorld.plugins.categories.community.plugins.streams.points.1"),
-          t("pages.createWorld.plugins.categories.community.plugins.streams.points.2"),
-        ],
-      },
-    ],
-  },
-  {
-    key: "economy",
-    icon: "mdi:currency-usd",
-    title: t("pages.createWorld.plugins.categories.economy.title"),
-    description: t("pages.createWorld.plugins.categories.economy.description"),
-    plugins: [
-      {
-        name: t("pages.createWorld.plugins.categories.economy.plugins.market.name"),
-        tag: t("pages.createWorld.plugins.categories.economy.plugins.market.tag"),
-        description: t("pages.createWorld.plugins.categories.economy.plugins.market.description"),
-        points: [
-          t("pages.createWorld.plugins.categories.economy.plugins.market.points.0"),
-          t("pages.createWorld.plugins.categories.economy.plugins.market.points.1"),
-          t("pages.createWorld.plugins.categories.economy.plugins.market.points.2"),
-        ],
-      },
-      {
-        name: t("pages.createWorld.plugins.categories.economy.plugins.crafting.name"),
-        tag: t("pages.createWorld.plugins.categories.economy.plugins.crafting.tag"),
-        description: t("pages.createWorld.plugins.categories.economy.plugins.crafting.description"),
-        points: [
-          t("pages.createWorld.plugins.categories.economy.plugins.crafting.points.0"),
-          t("pages.createWorld.plugins.categories.economy.plugins.crafting.points.1"),
-          t("pages.createWorld.plugins.categories.economy.plugins.crafting.points.2"),
-        ],
-      },
-      {
-        name: t("pages.createWorld.plugins.categories.economy.plugins.rewards.name"),
-        tag: t("pages.createWorld.plugins.categories.economy.plugins.rewards.tag"),
-        description: t("pages.createWorld.plugins.categories.economy.plugins.rewards.description"),
-        points: [
-          t("pages.createWorld.plugins.categories.economy.plugins.rewards.points.0"),
-          t("pages.createWorld.plugins.categories.economy.plugins.rewards.points.1"),
-          t("pages.createWorld.plugins.categories.economy.plugins.rewards.points.2"),
-        ],
-      },
-    ],
-  },
-  {
-    key: "governance",
-    icon: "mdi:shield-account",
-    title: t("pages.createWorld.plugins.categories.governance.title"),
-    description: t("pages.createWorld.plugins.categories.governance.description"),
-    plugins: [
-      {
-        name: t("pages.createWorld.plugins.categories.governance.plugins.moderation.name"),
-        tag: t("pages.createWorld.plugins.categories.governance.plugins.moderation.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.governance.plugins.moderation.description",
-        ),
-        points: [
-          t("pages.createWorld.plugins.categories.governance.plugins.moderation.points.0"),
-          t("pages.createWorld.plugins.categories.governance.plugins.moderation.points.1"),
-          t("pages.createWorld.plugins.categories.governance.plugins.moderation.points.2"),
-        ],
-      },
-      {
-        name: t("pages.createWorld.plugins.categories.governance.plugins.safety.name"),
-        tag: t("pages.createWorld.plugins.categories.governance.plugins.safety.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.governance.plugins.safety.description",
-        ),
-        points: [
-          t("pages.createWorld.plugins.categories.governance.plugins.safety.points.0"),
-          t("pages.createWorld.plugins.categories.governance.plugins.safety.points.1"),
-          t("pages.createWorld.plugins.categories.governance.plugins.safety.points.2"),
-        ],
-      },
-      {
-        name: t("pages.createWorld.plugins.categories.governance.plugins.analytics.name"),
-        tag: t("pages.createWorld.plugins.categories.governance.plugins.analytics.tag"),
-        description: t(
-          "pages.createWorld.plugins.categories.governance.plugins.analytics.description",
-        ),
-        points: [
-          t("pages.createWorld.plugins.categories.governance.plugins.analytics.points.0"),
-          t("pages.createWorld.plugins.categories.governance.plugins.analytics.points.1"),
-          t("pages.createWorld.plugins.categories.governance.plugins.analytics.points.2"),
-        ],
-      },
-    ],
-  },
-]);
+const { submitWorld, isSubmitting } = useWorldCreator();
+
+const pluginCategories = computed(() => groupWorldPluginsByCategory(WORLD_PLUGIN_REGISTRY));
+
+const selectedPluginIds = ref<Set<string>>(new Set());
+
+const selectedPlugins = computed<WorldPluginDefinition[]>(() =>
+  Array.from(selectedPluginIds.value)
+    .map((id) => WORLD_PLUGIN_REGISTRY_MAP.get(id) ?? null)
+    .filter((plugin): plugin is WorldPluginDefinition => Boolean(plugin)),
+);
+
+const showPluginValidation = ref(false);
+const submissionError = ref<string | null>(null);
+const submissionSuccessAction = ref<WorldSubmissionAction | null>(null);
+const activeAction = ref<WorldSubmissionAction | null>(null);
+
+const pluginSelectionError = computed(() =>
+  showPluginValidation.value && selectedPluginIds.value.size === 0
+    ? "Select at least one plugin to continue."
+    : null,
+);
+
+const pluginSummaryTitle = computed(() =>
+  selectedPlugins.value.length > 0 ? "Selected plugins" : "No plugins selected yet",
+);
+
+const pluginSummaryDescription = computed(() =>
+  selectedPlugins.value.length > 0
+    ? "The following plugins will be included in your provisioning request:"
+    : "Choose plugins to preview the capabilities that will be provisioned.",
+);
+
+const submissionSuccessMessage = computed(() => {
+  if (!submissionSuccessAction.value) {
+    return "";
+  }
+
+  return submissionSuccessAction.value === "preview"
+    ? "Preview request submitted. We'll send the sandbox link shortly."
+    : "Publish request submitted. Provisioning will begin soon.";
+});
+
+function resetSubmissionState() {
+  submissionError.value = null;
+  submissionSuccessAction.value = null;
+}
+
+function togglePlugin(id: string, enabled: boolean) {
+  const next = new Set(selectedPluginIds.value);
+
+  if (enabled) {
+    next.add(id);
+  } else {
+    next.delete(id);
+  }
+
+  selectedPluginIds.value = next;
+
+  if (next.size > 0) {
+    showPluginValidation.value = false;
+  }
+
+  resetSubmissionState();
+}
+
+function resolveErrorMessage(error: unknown): string {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  if (typeof error === "string" && error.trim().length > 0) {
+    return error;
+  }
+
+  return "Unable to submit your world request. Please try again.";
+}
+
+async function handleSubmit(action: WorldSubmissionAction) {
+  showPluginValidation.value = true;
+  resetSubmissionState();
+
+  if (selectedPluginIds.value.size === 0) {
+    return;
+  }
+
+  const payload: CreateWorldRequestPayload = {
+    name: worldForm.name,
+    slug: worldForm.slug,
+    description: worldForm.description,
+    visibility: worldForm.visibility,
+    theme: worldForm.theme,
+    region: worldForm.region,
+    launchDate: worldForm.launchDate,
+    tags: [...worldForm.tags],
+    guidelines: worldForm.guidelines,
+    enableMonetization: worldForm.enableMonetization,
+    enableIntegrations: worldForm.enableIntegrations,
+    requireVerification: worldForm.requireVerification,
+    allowGuests: worldForm.allowGuests,
+    pluginIds: Array.from(selectedPluginIds.value),
+    action,
+  };
+
+  try {
+    activeAction.value = action;
+    await submitWorld(payload);
+    submissionSuccessAction.value = action;
+  } catch (error) {
+    submissionError.value = resolveErrorMessage(error);
+    console.error("[world-create] Failed to submit world", error);
+  } finally {
+    activeAction.value = null;
+  }
+}
 
 const creationSteps = computed(() => [
   {
@@ -683,6 +819,16 @@ useHead(() => {
   padding: 1rem;
   border-radius: var(--ui-surface-radius, calc(var(--radius, var(--ui-radius)) + 4px));
   background-color: rgba(var(--v-theme-surface-variant), 0.4);
+}
+
+.plugin-meta-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.plugin-meta-list li + li {
+  margin-top: 0.25rem;
 }
 
 @media (max-width: 600px) {
