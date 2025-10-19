@@ -87,12 +87,14 @@ export default withNuxt(
         {
           "**/*/.md": "([a-z0-9]+(-[a-z0-9]+)|[0-9]+.[a-z0-9]+(-[a-z0-9]+))",
           "components/**/*.vue": "PASCAL_CASE",
+          "features/**/components/**/*.vue": "PASCAL_CASE",
         },
       ],
       "check-file/folder-naming-convention": [
         "error",
         {
           "components/**/": "KEBAB_CASE",
+          "features/**/components/**/": "KEBAB_CASE",
         },
       ],
     },

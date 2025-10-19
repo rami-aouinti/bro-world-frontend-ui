@@ -125,17 +125,21 @@ Here's an overview of the most important directories to help you navigate the co
 ```
 .
 ├── app.vue               # Root application shell
-├── components/           # Reusable UI components grouped by domain
+├── features/             # Self-contained feature packages (components, pages, stores, plugins...)
+├── modules/              # Nuxt modules (feature loader, shared tooling)
+├── components/           # Legacy global components pending migration to features
 ├── composables/          # Reusable Composition API utilities and hooks
 ├── content/              # Markdown pages used by Nuxt Content for docs/blog
 ├── layouts/              # Nuxt layouts for shared page chrome
-├── pages/                # Route-based Vue single-file components
-├── plugins/              # Nuxt plugins (auth, API, analytics...)
+├── pages/                # Legacy route-based Vue components
+├── plugins/              # Nuxt plugins shared across features
 ├── public/               # Static assets served as-is
-├── server/               # Nitro server routes & API endpoints
+├── server/               # Legacy Nitro server routes & API endpoints
 ├── stores/               # Pinia stores for global state
 └── tests/                # Vitest suites, component tests, and utilities
 ```
+
+Feature work now happens inside `features/<slug>/` directories. Each feature can expose `components/`, `pages/`, `server/`, `stores/`, `composables/`, and `plugins/` folders and they will be registered automatically at build time by the in-repo module located at [`modules/features/module.ts`](modules/features/module.ts). Import any asset from a feature with the `~/features/<slug>` alias (for example `import useFoo from "~/features/foo/stores/foo"`).
 
 Each directory may contain additional `README` or documentation files to describe specific implementation details. Explore the `docs/` folder for deeper explanations of patterns used across the app.
 
@@ -181,6 +185,14 @@ Set `NUXT_PUBLIC_GAME_API_BASE` to the base URL of the BroWorld Game API (defaul
 forward requests to the external service. Provide the special value `mock` to serve the local
 fixtures in [`server/mock/game.ts`](server/mock/game.ts) instead of calling the remote API—handy when
 developing offline or when the upstream service is unavailable.
+
+### Feature modules
+
+Nuxt discovers feature packages dynamically through [`modules/features/module.ts`](modules/features/module.ts). Create a new
+feature by adding a folder under `features/<slug>/`—the module will register any nested `components/`, `pages/`, `server/`,
+`stores/`, `plugins/`, or `composables/` directories without additional configuration. You can opt out of a feature by listing
+its slug inside the `featureModules.disabled` array in `nuxt.config.ts`, or explicitly enumerate the features to load with
+`featureModules.enabled`. Aliases are generated automatically, so `~/features/<slug>` always resolves to the feature root.
 
 ### Redis TTL overrides
 

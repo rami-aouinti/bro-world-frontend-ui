@@ -7,7 +7,7 @@ import os from "node:os";
 import { Blob as NodeBlob, File as NodeFile } from "node:buffer";
 import { URL, fileURLToPath } from "node:url";
 import { dirname, resolve as resolvePath } from "node:path";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import compression from "vite-plugin-compression";
 import tailwindcss from "@tailwindcss/vite";
@@ -197,6 +197,35 @@ const projectRoot = [currentDir, process.cwd()].find((dir) =>
 function resolveFromRoot(...segments: string[]) {
   return resolvePath(projectRoot ?? currentDir, ...segments);
 }
+
+function resolveFeatureAliases(): Record<string, string> {
+  const featuresDir = resolveFromRoot("features");
+
+  if (!existsSync(featuresDir)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    readdirSync(featuresDir, { withFileTypes: true })
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => [
+        `~/features/${dirent.name}`,
+        resolvePath(featuresDir, dirent.name),
+      ]),
+  );
+}
+
+const featureAliases = resolveFeatureAliases();
+const hasFeatureModules = Object.keys(featureAliases).length > 0;
+const legacyComponentDirectories = hasFeatureModules
+  ? []
+  : [
+      {
+        path: "~/components",
+        pathPrefix: false,
+        ignore: ["**/index.ts", "**/shaders.ts", "**/types.ts"],
+      },
+    ];
 
 const redisUrl = process.env.NUXT_REDIS_URL?.trim();
 const redisTls = process.env.NUXT_REDIS_TLS === "true";
@@ -659,19 +688,18 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/icon",
     "nuxt-llms",
+    resolveFromRoot("modules/features/module"),
   ],
   alias: {
     pinia: resolveFromRoot("lib/pinia-shim.ts"),
     "@braintree/sanitize-url": resolveFromRoot("lib/shims/sanitize-url.ts"),
+    ...featureAliases,
   },
 
-  components: [
-    {
-      path: "~/components",
-      pathPrefix: false,
-      ignore: ["**/index.ts", "**/shaders.ts", "**/types.ts"],
-    },
-  ],
+  components: legacyComponentDirectories,
+  featureModules: {
+    disabled: [],
+  },
   extends: nuxtLayers,
 
   nitro: {
