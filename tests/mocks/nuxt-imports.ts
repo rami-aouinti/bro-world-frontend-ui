@@ -130,6 +130,7 @@ export function useRuntimeConfig() {
     redis: {
       listTtl: 60,
       itemTtl: 300,
+      helpTtl: 300,
     },
   };
 }
