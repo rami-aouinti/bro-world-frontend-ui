@@ -659,24 +659,39 @@ function ensureInitialPostsLoad() {
 }
 
 await callOnceFn("pages:index:initial-posts", async () => {
+  function triggerInitialLoad(): Promise<void> {
+    return ensureInitialPostsLoad() ?? Promise.resolve();
+  }
+
   if (import.meta.server) {
-    await ensureInitialPostsLoad();
+    await triggerInitialLoad();
     return;
   }
 
-  if (!nuxtApp?.isHydrating) {
-    scheduleNonBlockingTask(() => {
-      void ensureInitialPostsLoad();
+  if (nuxtApp?.isHydrating) {
+    await new Promise<void>((resolve) => {
+      onNuxtReady(() => {
+        if (typeof queueMicrotask === "function") {
+          queueMicrotask(() => {
+            void triggerInitialLoad().finally(resolve);
+          });
+          return;
+        }
+
+        Promise.resolve()
+          .then(() => {
+            void triggerInitialLoad().finally(resolve);
+          })
+          .catch(() => {
+            void triggerInitialLoad().finally(resolve);
+        });
+      });
     });
 
     return;
   }
 
-  onNuxtReady(() => {
-    scheduleNonBlockingTask(() => {
-      void ensureInitialPostsLoad();
-    });
-  });
+  await triggerInitialLoad();
 });
 
 if (import.meta.client) {
