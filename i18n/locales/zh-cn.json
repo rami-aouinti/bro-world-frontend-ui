@@ -13,6 +13,11 @@
       "title": "Bro World 正在加载…",
       "description": "我们正在准备完整体验：顶栏、侧边栏和内容。"
     },
+    "routeLoadingOverlay": {
+      "srLabel": "正在加载页面",
+      "title": "加载中",
+      "subtitle": "我们正在为你准备宇宙…"
+    },
     "actions": {
       "openNavigation": "打开导航菜单",
       "openWidgets": "打开快速小部件",

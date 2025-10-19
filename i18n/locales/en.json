@@ -74,6 +74,11 @@
       "title": "Bro World is loading…",
       "description": "We're preparing the full experience: top bar, panels, and content."
     },
+    "routeLoadingOverlay": {
+      "srLabel": "Loading page",
+      "title": "Loading",
+      "subtitle": "We're preparing your universe…"
+    },
     "actions": {
       "openNavigation": "Open navigation menu",
       "openWidgets": "Open quick widgets",

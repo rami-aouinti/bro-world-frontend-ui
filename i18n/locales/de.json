@@ -74,6 +74,11 @@
       "title": "Bro World wird geladen…",
       "description": "Wir bereiten das vollständige Erlebnis vor: obere Leiste, Seitenbereiche und Inhalte."
     },
+    "routeLoadingOverlay": {
+      "srLabel": "Seite wird geladen",
+      "title": "Wird geladen",
+      "subtitle": "Wir bereiten dein Universum vor…"
+    },
     "actions": {
       "openNavigation": "Navigation öffnen",
       "openWidgets": "Widgets öffnen",

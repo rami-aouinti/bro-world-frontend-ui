@@ -12,7 +12,7 @@
       aria-live="polite"
       aria-busy="true"
     >
-      <span class="sr-only">Chargement de la page</span>
+      <span class="sr-only">{{ t("layout.routeLoadingOverlay.srLabel") }}</span>
       <div class="route-loader" aria-hidden="true">
         <div class="route-loader__orb">
           <span class="route-loader__pulse" />
@@ -21,8 +21,8 @@
           <span class="route-loader__spark route-loader__spark--two" />
         </div>
         <div class="route-loader__label">
-          <span class="route-loader__title">Chargement</span>
-          <span class="route-loader__subtitle">Nous préparons votre univers...</span>
+          <span class="route-loader__title">{{ t("layout.routeLoadingOverlay.title") }}</span>
+          <span class="route-loader__subtitle">{{ t("layout.routeLoadingOverlay.subtitle") }}</span>
         </div>
         <div class="route-loader__progress">
           <span class="route-loader__bar" />
@@ -33,7 +33,11 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
 defineProps<{ visible: boolean }>();
+
+const { t } = useI18n();
 </script>
 
 <style scoped>
