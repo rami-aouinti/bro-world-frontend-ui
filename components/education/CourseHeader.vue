@@ -1,13 +1,17 @@
 <template>
   <section class="course-header py-6">
     <div class="d-flex flex-column flex-md-row gap-6">
-      <v-img
+      <NuxtImg
         :src="course.cover"
         :alt="course.title"
-        class="rounded-xl"
-        width="320"
-        height="200"
-        cover
+        :width="courseHeaderCoverWidth"
+        :height="courseHeaderCoverHeight"
+        :sizes="courseHeaderCoverSizes"
+        format="webp"
+        preset="lcp"
+        loading="lazy"
+        decoding="async"
+        class="course-header__cover rounded-xl"
       />
       <div class="flex-grow-1">
         <div class="d-flex flex-wrap align-center gap-2 mb-3">
@@ -93,6 +97,9 @@ function formatDuration(duration: number) {
 
 const ctaTo = computed(() => props.ctaTo ?? null);
 const ctaLabel = computed(() => props.ctaLabel);
+const courseHeaderCoverWidth = 640;
+const courseHeaderCoverHeight = 400;
+const courseHeaderCoverSizes = "(min-width: 1280px) 320px, (min-width: 960px) 40vw, 100vw";
 </script>
 
 <style scoped>
@@ -100,5 +107,18 @@ const ctaLabel = computed(() => props.ctaLabel);
   background: linear-gradient(135deg, rgba(90, 103, 216, 0.08), rgba(59, 130, 246, 0.05));
   border-radius: 24px;
   padding-inline: clamp(1.5rem, 3vw, 3rem);
+}
+
+.course-header__cover {
+  width: clamp(240px, 40vw, 320px);
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+  .course-header__cover {
+    width: 100%;
+  }
 }
 </style>

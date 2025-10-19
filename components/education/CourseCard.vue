@@ -4,13 +4,20 @@
     elevation="2"
     rounded="xl"
   >
-    <v-img
-      :src="course.cover"
-      :alt="course.title"
-      height="160"
-      cover
-      class="rounded-t-xl"
-    />
+    <div class="rounded-t-xl overflow-hidden">
+      <NuxtImg
+        :src="course.cover"
+        :alt="course.title"
+        :width="courseCoverWidth"
+        :height="courseCoverHeight"
+        :sizes="courseCoverSizes"
+        format="webp"
+        preset="lcp"
+        loading="lazy"
+        decoding="async"
+        class="course-card__cover"
+      />
+    </div>
     <v-card-item>
       <v-card-title class="text-h6 mb-2">
         {{ course.title }}
@@ -75,6 +82,10 @@ const courseLink = computed(() =>
   localePath({ name: "education-course-slug", params: { slug: props.course.slug } }),
 );
 
+const courseCoverWidth = 480;
+const courseCoverHeight = 270;
+const courseCoverSizes = "(max-width: 600px) 100vw, 320px";
+
 function formatDuration(duration: number) {
   if (duration < 60) {
     return t("pages.education.course.durationMinutes", { value: duration });
@@ -92,3 +103,12 @@ function formatDuration(duration: number) {
 
 const progress = computed(() => props.progress ?? -1);
 </script>
+
+<style scoped>
+.course-card__cover {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+</style>

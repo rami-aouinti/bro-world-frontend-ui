@@ -4,13 +4,20 @@
     elevation="2"
     rounded="xl"
   >
-    <v-img
-      :src="category.cover"
-      :alt="category.title"
-      height="180"
-      cover
-      class="rounded-t-xl"
-    />
+    <div class="rounded-t-xl overflow-hidden">
+      <NuxtImg
+        :src="category.cover"
+        :alt="category.title"
+        :width="categoryCoverWidth"
+        :height="categoryCoverHeight"
+        :sizes="categoryCoverSizes"
+        format="webp"
+        preset="lcp"
+        loading="lazy"
+        decoding="async"
+        class="category-card__cover"
+      />
+    </div>
     <v-card-item>
       <v-card-title class="text-h6">
         {{ category.title }}
@@ -55,4 +62,17 @@ const localePath = useLocalePath();
 const categoryLink = computed(() =>
   localePath({ name: "education-category-slug", params: { slug: category.value.slug } }),
 );
+
+const categoryCoverWidth = 480;
+const categoryCoverHeight = 300;
+const categoryCoverSizes = "(max-width: 600px) 100vw, 360px";
 </script>
+
+<style scoped>
+.category-card__cover {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+</style>
