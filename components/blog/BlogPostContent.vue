@@ -1,5 +1,5 @@
 <template>
-  <section class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-auto">
+  <section class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-2">
     <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
       {{ props.title }}
     </h2>
@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import DOMPurify from "dompurify";
 
 const props = defineProps<{
   title?: string;
@@ -131,32 +130,6 @@ const ALLOWED_ATTR = [
   "start",
   "value",
 ];
-
-const domPurifySanitize = (() => {
-  if (typeof window === "undefined") {
-    return (value: string) => value;
-  }
-
-  if (typeof DOMPurify?.sanitize === "function") {
-    return (value: string) =>
-      DOMPurify.sanitize(value, {
-        ALLOWED_TAGS,
-        ALLOWED_ATTR,
-      });
-  }
-
-  if (typeof DOMPurify === "function") {
-    return (value: string) =>
-      DOMPurify(value, {
-        ALLOWED_TAGS,
-        ALLOWED_ATTR,
-      });
-  }
-
-  return (value: string) => value;
-})();
-
-const safeHtml = computed(() => domPurifySanitize(rawHtml.value));
 </script>
 
 <style scoped></style>
