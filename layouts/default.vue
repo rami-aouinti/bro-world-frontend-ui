@@ -310,10 +310,6 @@ import { withSecureCookieOptions } from "~/lib/cookies";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
-import SidebarContactCardSkeleton from "@/components/layout/SidebarContactCardSkeleton.vue";
-import SidebarLeaderboardCardSkeleton from "@/components/layout/SidebarLeaderboardCardSkeleton.vue";
-import SidebarRatingCardSkeleton from "@/components/layout/SidebarRatingCardSkeleton.vue";
-import SidebarWeatherCardSkeleton from "@/components/layout/SidebarWeatherCardSkeleton.vue";
 import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants";
 
 const AppSidebar = defineAsyncComponent({
@@ -343,6 +339,26 @@ const SidebarLeaderboardCard = defineAsyncComponent({
 
 const SidebarRatingCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarRatingCard.vue"),
+  suspensible: false,
+});
+
+const SidebarWeatherCardSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarWeatherCardSkeleton.vue"),
+  suspensible: false,
+});
+
+const SidebarLeaderboardCardSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarLeaderboardCardSkeleton.vue"),
+  suspensible: false,
+});
+
+const SidebarRatingCardSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarRatingCardSkeleton.vue"),
+  suspensible: false,
+});
+
+const SidebarContactCardSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarContactCardSkeleton.vue"),
   suspensible: false,
 });
 
