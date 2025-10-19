@@ -1552,7 +1552,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1566,7 +1570,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1580,7 +1588,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1594,7 +1606,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -1632,61 +1648,77 @@
       }
     },
     "game": {
-      "title": "Gaming",
-      "subtitle": "Launch vibrant player communities, live events, and monetisation loops without extra engineering time.",
-      "featuresTitle": "Level up every player journey",
-      "features": {
-        "community": {
-          "title": "Build communities that stay",
-          "description": "Host news, patch notes, and discussions with built-in moderation controls.",
-          "points": [
-            "Curate seasonal hubs that adapt to each franchise or guild.",
-            "Reward loyal fans with badges, drops, and cross-game progression.",
-            "Localise experiences with one click for global launches."
-          ]
-        },
-        "monetization": {
-          "title": "Unlock sustainable revenue",
-          "description": "Experiment with stores, battle passes, and bundles in a safe sandbox.",
-          "points": [
-            "Configure limited-time offers and track conversion instantly.",
-            "Integrate multiple payment providers and entitlement systems.",
-            "Balance in-game economies with configurable guardrails."
-          ]
-        },
-        "events": {
-          "title": "Orchestrate unforgettable events",
-          "description": "Coordinate tournaments, live ops, and creator collaborations effortlessly.",
-          "points": [
-            "Schedule announcements, streams, and drops in a unified timeline.",
-            "Share production checklists and asset packs with internal teams.",
-            "Track sentiment and uptime to react before the hype dips."
-          ]
+      "title": "测验竞技场",
+      "subtitle": "通过类别、难度等级和实时排行榜原型化多阶段测验体验。",
+      "menu": {
+        "player": "玩家就绪！",
+        "guest": "访客",
+        "guestName": "访客",
+        "categoryPlaceholder": "选择类别",
+        "levelPlaceholder": "选择关卡",
+        "timer": "时间",
+        "score": "得分",
+        "progress": "进度",
+        "pendingScore": "待定",
+        "helper": "先选择一个类别和关卡即可开始。登录后可同步进度。"
+      },
+      "leaderboard": {
+        "title": "排行榜",
+        "loading": "加载中…",
+        "empty": "完成首次测验后将刷新排行榜。"
+      },
+      "categories": {
+        "title": "选择类别",
+        "subtitle": "探索 Bro World 宇宙中的主题题库。",
+        "reload": "重新加载",
+        "empty": "当前没有可用类别。",
+        "levels": "{count} 个关卡",
+        "questions": "{count} 道题",
+        "players": "{count} 名玩家"
+      },
+      "levels": {
+        "title": "选择关卡",
+        "subtitle": "每个关卡都会提高难度并加快计时。",
+        "locked": "请先选择类别以查看关卡。",
+        "empty": "该类别尚无可用关卡。",
+        "questions": "{count} 道题",
+        "time": "{minutes} 分钟"
+      },
+      "questions": {
+        "title": "第 {index} / {total} 题",
+        "progress": "{answered}/{total} 已作答",
+        "timer": "已用时间",
+        "empty": "选择关卡后即可开始测验。",
+        "warning": "提交前请回答所有问题。",
+        "checking": "正在核对答案…",
+        "actions": {
+          "previous": "上一题",
+          "next": "下一题",
+          "submit": "提交答案"
         }
       },
-      "workflowTitle": "Plan, launch, and grow",
-      "workflow": {
-        "steps": {
-          "launch": {
-            "title": "Launch",
-            "description": "Prototype your experience, test with closed groups, and ship with guardrails."
-          },
-          "engage": {
-            "title": "Engage",
-            "description": "Deliver live updates, challenges, and quests that feel fresh every session."
-          },
-          "grow": {
-            "title": "Grow",
-            "description": "Analyse cohorts, expand to new platforms, and activate creators responsibly."
-          }
+      "results": {
+        "title": "结果",
+        "score": "得分",
+        "summary": "{correct}/{total} 答对",
+        "time": "耗时",
+        "breakdown": {
+          "correct": "正确",
+          "incorrect": "错误",
+          "yourAnswer": "你的回答",
+          "correctAnswer": "正确答案",
+          "noAnswer": "未作答"
         }
       },
-      "stepLabel": "Stage {number}",
-      "cta": {
-        "title": "Ship the next fan-favourite season",
-        "description": "We partner with studios of every size to streamline community, monetisation, and live ops management.",
-        "button": "Plan a demo",
-        "buttonAria": "Open the contact page"
+      "auth": {
+        "title": "登录以保存进度",
+        "subtitle": "登录或创建账户即可出现在排行榜上。"
+      },
+      "errors": {
+        "categories": "无法加载测验类别。",
+        "levels": "无法加载该类别的关卡。",
+        "questions": "无法加载测验题目。",
+        "validation": "无法验证你的答案，请重试。"
       }
     },
     "ecommerce": {
@@ -2144,7 +2176,10 @@
             "date": "第 1 周",
             "title": "消除布局位移",
             "description": "审计所有信息流卡片和故事，确保尺寸可预期。",
-            "actions": ["为故事缩略图和帖子插图添加宽高比。", "在骨架占位符后固定广告容器。"]
+            "actions": [
+              "为故事缩略图和帖子插图添加宽高比。",
+              "在骨架占位符后固定广告容器。"
+            ]
           },
           "week2": {
             "date": "第 2 周",
@@ -2197,7 +2232,6 @@
       "title": "Jobs",
       "description": "Plan, track, and optimise hiring programmes."
     },
-
     "game": {
       "title": "Gaming",
       "description": "Deliver live game experiences, communities, and monetisation."
@@ -2666,25 +2700,41 @@
           "content": {
             "title": "内容管理",
             "description": "规划、发布与归档文章、活动以及学习资源。",
-            "tags": ["内容流程", "审核", "排期"],
+            "tags": [
+              "内容流程",
+              "审核",
+              "排期"
+            ],
             "status": "有12条内容等待编辑审核。"
           },
           "community": {
             "title": "社区与审核",
             "description": "配置审核规则，管理举报与处罚。",
-            "tags": ["举报", "处罚", "私信"],
+            "tags": [
+              "举报",
+              "处罚",
+              "私信"
+            ],
             "status": "平均响应时间：1小时42分。"
           },
           "commerce": {
             "title": "变现与优惠",
             "description": "管理订阅、优惠码和商业合作。",
-            "tags": ["订阅", "计费", "优惠券"],
+            "tags": [
+              "订阅",
+              "计费",
+              "优惠券"
+            ],
             "status": "本周转化率提升3.4%。"
           },
           "governance": {
             "title": "治理与合规",
             "description": "审计访问权限，管理敏感角色并准备合规报告。",
-            "tags": ["审计", "角色", "可追溯性"],
+            "tags": [
+              "审计",
+              "角色",
+              "可追溯性"
+            ],
             "status": "最近一次完整审计在5天前完成。"
           }
         }

@@ -1682,7 +1682,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1696,7 +1700,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1710,7 +1718,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1724,7 +1736,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -1762,61 +1778,77 @@
       }
     },
     "game": {
-      "title": "Gaming",
-      "subtitle": "Launch vibrant player communities, live events, and monetisation loops without extra engineering time.",
-      "featuresTitle": "Level up every player journey",
-      "features": {
-        "community": {
-          "title": "Build communities that stay",
-          "description": "Host news, patch notes, and discussions with built-in moderation controls.",
-          "points": [
-            "Curate seasonal hubs that adapt to each franchise or guild.",
-            "Reward loyal fans with badges, drops, and cross-game progression.",
-            "Localise experiences with one click for global launches."
-          ]
-        },
-        "monetization": {
-          "title": "Unlock sustainable revenue",
-          "description": "Experiment with stores, battle passes, and bundles in a safe sandbox.",
-          "points": [
-            "Configure limited-time offers and track conversion instantly.",
-            "Integrate multiple payment providers and entitlement systems.",
-            "Balance in-game economies with configurable guardrails."
-          ]
-        },
-        "events": {
-          "title": "Orchestrate unforgettable events",
-          "description": "Coordinate tournaments, live ops, and creator collaborations effortlessly.",
-          "points": [
-            "Schedule announcements, streams, and drops in a unified timeline.",
-            "Share production checklists and asset packs with internal teams.",
-            "Track sentiment and uptime to react before the hype dips."
-          ]
+      "title": "Arena de quiz",
+      "subtitle": "Prototipa cuestionarios por etapas con categorías, niveles y un ranking en vivo.",
+      "menu": {
+        "player": "¡Jugador listo!",
+        "guest": "Invitado",
+        "guestName": "Invitado",
+        "categoryPlaceholder": "Elige una categoría",
+        "levelPlaceholder": "Selecciona un nivel",
+        "timer": "Tiempo",
+        "score": "Puntuación",
+        "progress": "Progreso",
+        "pendingScore": "Pendiente",
+        "helper": "Elige una categoría y un nivel para desbloquear el quiz. Inicia sesión para sincronizar tu progreso."
+      },
+      "leaderboard": {
+        "title": "Tabla de clasificación",
+        "loading": "Cargando…",
+        "empty": "La tabla se actualiza tras las primeras partidas."
+      },
+      "categories": {
+        "title": "Elige una categoría",
+        "subtitle": "Explora bancos de preguntas con narrativa del universo Bro World.",
+        "reload": "Recargar",
+        "empty": "No hay categorías disponibles por ahora.",
+        "levels": "{count} niveles",
+        "questions": "{count} preguntas",
+        "players": "{count} jugadores"
+      },
+      "levels": {
+        "title": "Selecciona un nivel",
+        "subtitle": "Cada nivel aumenta el desafío y acelera el temporizador.",
+        "locked": "Selecciona una categoría para ver sus niveles.",
+        "empty": "No hay niveles disponibles para esta categoría.",
+        "questions": "{count} preguntas",
+        "time": "{minutes} min"
+      },
+      "questions": {
+        "title": "Pregunta {index} de {total}",
+        "progress": "{answered}/{total} respondidas",
+        "timer": "Tiempo transcurrido",
+        "empty": "Elige un nivel para iniciar el quiz.",
+        "warning": "Responde todas las preguntas antes de enviar.",
+        "checking": "Comprobando tus respuestas…",
+        "actions": {
+          "previous": "Anterior",
+          "next": "Siguiente",
+          "submit": "Enviar respuestas"
         }
       },
-      "workflowTitle": "Plan, launch, and grow",
-      "workflow": {
-        "steps": {
-          "launch": {
-            "title": "Launch",
-            "description": "Prototype your experience, test with closed groups, and ship with guardrails."
-          },
-          "engage": {
-            "title": "Engage",
-            "description": "Deliver live updates, challenges, and quests that feel fresh every session."
-          },
-          "grow": {
-            "title": "Grow",
-            "description": "Analyse cohorts, expand to new platforms, and activate creators responsibly."
-          }
+      "results": {
+        "title": "Resultados",
+        "score": "Puntuación",
+        "summary": "{correct}/{total} correctas",
+        "time": "Tiempo invertido",
+        "breakdown": {
+          "correct": "Correcta",
+          "incorrect": "Incorrecta",
+          "yourAnswer": "Tu respuesta",
+          "correctAnswer": "Respuesta correcta",
+          "noAnswer": "Sin respuesta"
         }
       },
-      "stepLabel": "Stage {number}",
-      "cta": {
-        "title": "Ship the next fan-favourite season",
-        "description": "We partner with studios of every size to streamline community, monetisation, and live ops management.",
-        "button": "Plan a demo",
-        "buttonAria": "Open the contact page"
+      "auth": {
+        "title": "Inicia sesión para guardar tu progreso",
+        "subtitle": "Inicia sesión o crea una cuenta para aparecer en la clasificación."
+      },
+      "errors": {
+        "categories": "No se pudieron cargar las categorías del quiz.",
+        "levels": "No se pudieron cargar los niveles de esta categoría.",
+        "questions": "No se pudieron cargar las preguntas del quiz.",
+        "validation": "No pudimos validar tus respuestas. Inténtalo de nuevo."
       }
     },
     "calendar": {
@@ -2870,25 +2902,41 @@
           "content": {
             "title": "Gestión de contenido",
             "description": "Planifica, publica y archiva artículos, eventos y recursos formativos.",
-            "tags": ["Flujo editorial", "Validación", "Programación"],
+            "tags": [
+              "Flujo editorial",
+              "Validación",
+              "Programación"
+            ],
             "status": "12 contenidos requieren revisión editorial."
           },
           "community": {
             "title": "Comunidad y moderación",
             "description": "Configura las reglas de moderación, gestiona reportes y sanciones.",
-            "tags": ["Reportes", "Sanciones", "Mensajes privados"],
+            "tags": [
+              "Reportes",
+              "Sanciones",
+              "Mensajes privados"
+            ],
             "status": "Tiempo medio de respuesta: 1 h 42."
           },
           "commerce": {
             "title": "Monetización y ofertas",
             "description": "Administra suscripciones, códigos promocionales y alianzas comerciales.",
-            "tags": ["Suscripciones", "Facturación", "Cupones"],
+            "tags": [
+              "Suscripciones",
+              "Facturación",
+              "Cupones"
+            ],
             "status": "La tasa de conversión subió un 3,4% esta semana."
           },
           "governance": {
             "title": "Gobernanza y cumplimiento",
             "description": "Audita accesos, gestiona roles privilegiados y prepara informes de cumplimiento.",
-            "tags": ["Auditoría", "Roles", "Trazabilidad"],
+            "tags": [
+              "Auditoría",
+              "Roles",
+              "Trazabilidad"
+            ],
             "status": "Última auditoría completa realizada hace 5 días."
           }
         }

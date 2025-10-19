@@ -1682,7 +1682,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1696,7 +1700,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1710,7 +1718,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1724,7 +1736,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -1762,61 +1778,77 @@
       }
     },
     "game": {
-      "title": "Gaming",
-      "subtitle": "Launch vibrant player communities, live events, and monetisation loops without extra engineering time.",
-      "featuresTitle": "Level up every player journey",
-      "features": {
-        "community": {
-          "title": "Build communities that stay",
-          "description": "Host news, patch notes, and discussions with built-in moderation controls.",
-          "points": [
-            "Curate seasonal hubs that adapt to each franchise or guild.",
-            "Reward loyal fans with badges, drops, and cross-game progression.",
-            "Localise experiences with one click for global launches."
-          ]
-        },
-        "monetization": {
-          "title": "Unlock sustainable revenue",
-          "description": "Experiment with stores, battle passes, and bundles in a safe sandbox.",
-          "points": [
-            "Configure limited-time offers and track conversion instantly.",
-            "Integrate multiple payment providers and entitlement systems.",
-            "Balance in-game economies with configurable guardrails."
-          ]
-        },
-        "events": {
-          "title": "Orchestrate unforgettable events",
-          "description": "Coordinate tournaments, live ops, and creator collaborations effortlessly.",
-          "points": [
-            "Schedule announcements, streams, and drops in a unified timeline.",
-            "Share production checklists and asset packs with internal teams.",
-            "Track sentiment and uptime to react before the hype dips."
-          ]
+      "title": "Викторина-арена",
+      "subtitle": "Прототипируйте многоступенчатые квизы с категориями, уровнями и живым рейтингом.",
+      "menu": {
+        "player": "Игрок готов!",
+        "guest": "Гость",
+        "guestName": "Гость",
+        "categoryPlaceholder": "Выберите категорию",
+        "levelPlaceholder": "Выберите уровень",
+        "timer": "Время",
+        "score": "Счёт",
+        "progress": "Прогресс",
+        "pendingScore": "Ожидание",
+        "helper": "Выберите категорию и уровень, чтобы начать. Авторизуйтесь, чтобы сохранить прогресс."
+      },
+      "leaderboard": {
+        "title": "Рейтинг",
+        "loading": "Загрузка…",
+        "empty": "Рейтинг обновится после первых попыток."
+      },
+      "categories": {
+        "title": "Выберите категорию",
+        "subtitle": "Исследуйте тематические банки вопросов из вселенной Bro World.",
+        "reload": "Обновить",
+        "empty": "Категории временно недоступны.",
+        "levels": "{count} уровней",
+        "questions": "{count} вопросов",
+        "players": "{count} игроков"
+      },
+      "levels": {
+        "title": "Выберите уровень",
+        "subtitle": "Каждый уровень повышает сложность и ускоряет таймер.",
+        "locked": "Сначала выберите категорию, чтобы увидеть уровни.",
+        "empty": "Для этой категории уровней нет.",
+        "questions": "{count} вопросов",
+        "time": "{minutes} мин"
+      },
+      "questions": {
+        "title": "Вопрос {index} из {total}",
+        "progress": "{answered}/{total} отвечено",
+        "timer": "Прошло времени",
+        "empty": "Выберите уровень, чтобы начать.",
+        "warning": "Ответьте на все вопросы перед отправкой.",
+        "checking": "Проверяем ответы…",
+        "actions": {
+          "previous": "Назад",
+          "next": "Далее",
+          "submit": "Отправить ответы"
         }
       },
-      "workflowTitle": "Plan, launch, and grow",
-      "workflow": {
-        "steps": {
-          "launch": {
-            "title": "Launch",
-            "description": "Prototype your experience, test with closed groups, and ship with guardrails."
-          },
-          "engage": {
-            "title": "Engage",
-            "description": "Deliver live updates, challenges, and quests that feel fresh every session."
-          },
-          "grow": {
-            "title": "Grow",
-            "description": "Analyse cohorts, expand to new platforms, and activate creators responsibly."
-          }
+      "results": {
+        "title": "Результаты",
+        "score": "Счёт",
+        "summary": "{correct}/{total} верно",
+        "time": "Потраченное время",
+        "breakdown": {
+          "correct": "Верно",
+          "incorrect": "Неверно",
+          "yourAnswer": "Ваш ответ",
+          "correctAnswer": "Правильный ответ",
+          "noAnswer": "Нет ответа"
         }
       },
-      "stepLabel": "Stage {number}",
-      "cta": {
-        "title": "Ship the next fan-favourite season",
-        "description": "We partner with studios of every size to streamline community, monetisation, and live ops management.",
-        "button": "Plan a demo",
-        "buttonAria": "Open the contact page"
+      "auth": {
+        "title": "Войдите, чтобы сохранить прогресс",
+        "subtitle": "Войдите или создайте аккаунт, чтобы попасть в рейтинг."
+      },
+      "errors": {
+        "categories": "Не удалось загрузить категории квиза.",
+        "levels": "Не удалось загрузить уровни для этой категории.",
+        "questions": "Не удалось загрузить вопросы квиза.",
+        "validation": "Не удалось проверить ответы. Попробуйте снова."
       }
     },
     "calendar": {
@@ -2870,25 +2902,41 @@
           "content": {
             "title": "Управление контентом",
             "description": "Планируйте, публикуйте и архивируйте статьи, события и обучающие материалы.",
-            "tags": ["Редакционный процесс", "Проверка", "Планирование"],
+            "tags": [
+              "Редакционный процесс",
+              "Проверка",
+              "Планирование"
+            ],
             "status": "12 материалов требуют редакционной проверки."
           },
           "community": {
             "title": "Сообщество и модерация",
             "description": "Настраивайте правила модерации, управляйте жалобами и санкциями.",
-            "tags": ["Жалобы", "Санкции", "Личные сообщения"],
+            "tags": [
+              "Жалобы",
+              "Санкции",
+              "Личные сообщения"
+            ],
             "status": "Среднее время ответа: 1 ч 42."
           },
           "commerce": {
             "title": "Монетизация и предложения",
             "description": "Управляйте подписками, промокодами и коммерческими партнёрствами.",
-            "tags": ["Подписки", "Выставление счетов", "Купоны"],
+            "tags": [
+              "Подписки",
+              "Выставление счетов",
+              "Купоны"
+            ],
             "status": "Конверсия выросла на 3,4% за эту неделю."
           },
           "governance": {
             "title": "Говернанс и соответствие",
             "description": "Проводите аудит доступа, управляйте привилегированными ролями и готовьте отчёты по соответствию.",
-            "tags": ["Аудит", "Роли", "Трассируемость"],
+            "tags": [
+              "Аудит",
+              "Роли",
+              "Трассируемость"
+            ],
             "status": "Последний полный аудит выполнен 5 дней назад."
           }
         }

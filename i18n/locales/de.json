@@ -2001,61 +2001,77 @@
       }
     },
     "game": {
-      "title": "Gaming",
-      "subtitle": "Launch vibrant player communities, live events, and monetisation loops without extra engineering time.",
-      "featuresTitle": "Level up every player journey",
-      "features": {
-        "community": {
-          "title": "Build communities that stay",
-          "description": "Host news, patch notes, and discussions with built-in moderation controls.",
-          "points": [
-            "Curate seasonal hubs that adapt to each franchise or guild.",
-            "Reward loyal fans with badges, drops, and cross-game progression.",
-            "Localise experiences with one click for global launches."
-          ]
-        },
-        "monetization": {
-          "title": "Unlock sustainable revenue",
-          "description": "Experiment with stores, battle passes, and bundles in a safe sandbox.",
-          "points": [
-            "Configure limited-time offers and track conversion instantly.",
-            "Integrate multiple payment providers and entitlement systems.",
-            "Balance in-game economies with configurable guardrails."
-          ]
-        },
-        "events": {
-          "title": "Orchestrate unforgettable events",
-          "description": "Coordinate tournaments, live ops, and creator collaborations effortlessly.",
-          "points": [
-            "Schedule announcements, streams, and drops in a unified timeline.",
-            "Share production checklists and asset packs with internal teams.",
-            "Track sentiment and uptime to react before the hype dips."
-          ]
+      "title": "Quiz-Arena",
+      "subtitle": "Prototyp mehrstufige Quizze mit Kategorien, Levels und Live-Rangliste.",
+      "menu": {
+        "player": "Spieler bereit!",
+        "guest": "Gast",
+        "guestName": "Gast",
+        "categoryPlaceholder": "Kategorie wählen",
+        "levelPlaceholder": "Level auswählen",
+        "timer": "Zeit",
+        "score": "Punktzahl",
+        "progress": "Fortschritt",
+        "pendingScore": "Ausstehend",
+        "helper": "Wähle zuerst eine Kategorie und ein Level, um das Quiz zu starten. Melde dich an, um deinen Fortschritt zu synchronisieren."
+      },
+      "leaderboard": {
+        "title": "Rangliste",
+        "loading": "Wird geladen…",
+        "empty": "Die Rangliste aktualisiert sich nach den ersten Versuchen."
+      },
+      "categories": {
+        "title": "Kategorie wählen",
+        "subtitle": "Entdecke kuratierte Fragenpakete aus dem Bro World Universum.",
+        "reload": "Neu laden",
+        "empty": "Derzeit sind keine Kategorien verfügbar.",
+        "levels": "{count} Levels",
+        "questions": "{count} Fragen",
+        "players": "{count} Spieler"
+      },
+      "levels": {
+        "title": "Level auswählen",
+        "subtitle": "Jedes Level erhöht den Schwierigkeitsgrad und beschleunigt den Timer.",
+        "locked": "Wähle zuerst eine Kategorie, um die Levels zu sehen.",
+        "empty": "Für diese Kategorie sind keine Levels verfügbar.",
+        "questions": "{count} Fragen",
+        "time": "{minutes} Min"
+      },
+      "questions": {
+        "title": "Frage {index} von {total}",
+        "progress": "{answered}/{total} beantwortet",
+        "timer": "Verstrichene Zeit",
+        "empty": "Wähle ein Level, um zu starten.",
+        "warning": "Beantworte alle Fragen, bevor du sendest.",
+        "checking": "Antworten werden geprüft…",
+        "actions": {
+          "previous": "Zurück",
+          "next": "Weiter",
+          "submit": "Antworten senden"
         }
       },
-      "workflowTitle": "Plan, launch, and grow",
-      "workflow": {
-        "steps": {
-          "launch": {
-            "title": "Launch",
-            "description": "Prototype your experience, test with closed groups, and ship with guardrails."
-          },
-          "engage": {
-            "title": "Engage",
-            "description": "Deliver live updates, challenges, and quests that feel fresh every session."
-          },
-          "grow": {
-            "title": "Grow",
-            "description": "Analyse cohorts, expand to new platforms, and activate creators responsibly."
-          }
+      "results": {
+        "title": "Ergebnisse",
+        "score": "Punktzahl",
+        "summary": "{correct}/{total} richtig",
+        "time": "Benötigte Zeit",
+        "breakdown": {
+          "correct": "Richtig",
+          "incorrect": "Falsch",
+          "yourAnswer": "Deine Antwort",
+          "correctAnswer": "Richtige Antwort",
+          "noAnswer": "Keine Antwort"
         }
       },
-      "stepLabel": "Stage {number}",
-      "cta": {
-        "title": "Ship the next fan-favourite season",
-        "description": "We partner with studios of every size to streamline community, monetisation, and live ops management.",
-        "button": "Plan a demo",
-        "buttonAria": "Open the contact page"
+      "auth": {
+        "title": "Melde dich an, um deinen Fortschritt zu speichern",
+        "subtitle": "Melde dich an oder erstelle ein Konto, um in der Rangliste zu erscheinen."
+      },
+      "errors": {
+        "categories": "Quiz-Kategorien konnten nicht geladen werden.",
+        "levels": "Levels für diese Kategorie konnten nicht geladen werden.",
+        "questions": "Quizfragen konnten nicht geladen werden.",
+        "validation": "Deine Antworten konnten nicht validiert werden. Bitte versuche es erneut."
       }
     },
     "calendar": {
