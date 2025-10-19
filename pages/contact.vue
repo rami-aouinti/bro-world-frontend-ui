@@ -1,5 +1,6 @@
 <template>
   <main
+    class="contact-page"
     aria-labelledby="contact-heading"
   >
     <header
@@ -10,9 +11,7 @@
         class="align-stretch contact-layout"
         dense
       >
-        <v-col
-          cols="12"
-        >
+        <v-col cols="12">
           <v-sheet
             class="contact-panel contact-panel--primary"
             elevation="0"
@@ -63,6 +62,8 @@ import { useI18n } from "vue-i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import ContactSupportSidebar from "~/components/contact/ContactSupportSidebar.vue";
 
 const ContactForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ContactForm.vue"),
@@ -95,6 +96,9 @@ const contactSubtitle = computed(
 const contactSupportBody = computed(
   () => contactContent.value.body?.trim() || t("pages.contact.details.description"),
 );
+const supportSectionTitle = computed(() => t("pages.contact.details.title"));
+const availabilityTitle = computed(() => t("pages.contact.availability.title"));
+const availabilityBody = computed(() => t("pages.contact.availability.body"));
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 
@@ -146,6 +150,22 @@ const supportChannels = computed(() => [
     ctaLabel: t("pages.contact.details.docsCtaLabel"),
   },
 ]);
+
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
+registerRightSidebarContent(
+  computed(() => ({
+    component: ContactSupportSidebar,
+    props: {
+      supportTitle: supportSectionTitle.value,
+      supportBody: contactSupportBody.value,
+      supportChannels: supportChannels.value,
+      availabilityTitle: availabilityTitle.value,
+      availabilityBody: availabilityBody.value,
+    },
+    wrapperClass: "flex flex-col gap-6",
+  })),
+);
 </script>
 
 <style scoped src="~/assets/styles/pages/contact.scss" lang="scss"></style>
