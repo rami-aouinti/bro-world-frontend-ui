@@ -20,7 +20,18 @@
         <VProgressCircular indeterminate color="primary" />
       </div>
       <div v-else-if="file" class="preview-drawer__preview" :aria-label="t('media.preview.ariaLabel')">
-        <VImg v-if="isImage && previewSource" :src="previewSource" :alt="file.name" cover />
+        <NuxtImg
+          v-if="isImage && previewSource"
+          :src="previewSource"
+          :alt="file.name"
+          :width="previewImageWidth"
+          :height="previewImageHeight"
+          :sizes="previewImageSizes"
+          fit="cover"
+          class="preview-drawer__image"
+          loading="lazy"
+          decoding="async"
+        />
         <video v-else-if="isVideo && previewSource" controls :poster="file.thumbnails?.video">
           <source :src="file.thumbnails?.large ?? file.thumbnails?.medium ?? previewSource" :type="file.mime" />
         </video>
@@ -85,6 +96,10 @@ const previewSource = computed(() => {
   return null;
 });
 
+const previewImageWidth = 384;
+const previewImageHeight = 288;
+const previewImageSizes = "(max-width: 600px) 100vw, 384px";
+
 const isVideo = computed(() => props.file?.kind === "video");
 const isImage = computed(() => props.file?.kind === "image");
 const isPdf = computed(() => props.file?.mime?.includes("pdf"));
@@ -115,7 +130,7 @@ function triggerDownload() {
 }
 
 .preview-drawer__preview video,
-.preview-drawer__preview :deep(img) {
+.preview-drawer__image {
   width: 100%;
   height: auto;
   display: block;

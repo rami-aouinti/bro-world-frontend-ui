@@ -83,7 +83,7 @@
                 :size="40"
                 class="bg-muted text-sm font-semibold text-muted-foreground"
               >
-                <img
+                <NuxtImg
                   v-if="preview.avatarUrl"
                   :alt="preview.title"
                   :src="preview.avatarUrl"
