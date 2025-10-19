@@ -52,7 +52,6 @@
     <template #append>
       <div class="app-top-bar__append">
         <RightControls
-          v-if="isHydrated"
           :is-mobile="props.isMobile"
           :show-right-toggle="props.showRightToggle"
           :icon-trigger-classes="iconTriggerClasses"
@@ -104,25 +103,13 @@
             />
           </template>
         </RightControls>
-        <div
-          v-else
-          class="app-top-bar__append-placeholder"
-          aria-hidden="true"
-        >
-          <span
-            v-for="index in placeholderCount"
-            :key="index"
-            class="app-top-bar__placeholder animate-pulse"
-          />
-          <span class="app-top-bar__placeholder app-top-bar__placeholder--wide animate-pulse" />
-        </div>
       </div>
     </template>
   </v-app-bar>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { computed, ref } from "vue";
 import { onNuxtReady } from "#app";
 import AppBrand from "./app-bar/AppBrand.vue";
 import AppNavButtons from "./app-bar/AppNavButtons.vue";
@@ -263,15 +250,6 @@ const notificationsTitle = computed(() => t("layout.notificationsMenu.title"));
 const notificationsSubtitle = computed(() => t("layout.notificationsMenu.subtitle"));
 const notificationsEmpty = computed(() => t("layout.notificationsMenu.empty"));
 const notificationsMarkAll = computed(() => t("layout.notificationsMenu.markAll"));
-const placeholderCount = 6;
-const isHydrated = ref(false);
-
-if (import.meta.client) {
-  onMounted(() => {
-    isHydrated.value = true;
-  });
-}
-
 const notificationsButtonLabel = computed(() => {
   const count = notificationCount.value;
   if (count > 0) {
