@@ -1,5 +1,21 @@
 <template>
   <ClientOnly>
+    <template #fallback>
+      <UiButton
+        variant="ghost"
+        size="icon"
+        :class="triggerClass"
+        type="button"
+        aria-label="Toggle theme customization"
+        aria-disabled="true"
+        disabled
+      >
+        <Icon
+          name="lucide:paintbrush"
+          size="16"
+        />
+      </UiButton>
+    </template>
     <UiPopover>
       <UiPopoverTrigger as-child>
         <UiButton
@@ -22,20 +38,6 @@
         <ThemeCustomizer />
       </UiPopoverContent>
     </UiPopover>
-    <template #fallback>
-      <button
-        type="button"
-        :class="triggerClass"
-        aria-label="Toggle theme customization"
-        aria-disabled="true"
-        disabled
-      >
-        <Icon
-          name="lucide:paintbrush"
-          size="16"
-        />
-      </button>
-    </template>
   </ClientOnly>
 </template>
 
