@@ -1,4 +1,3 @@
-import { createRequire } from "module";
 import type { CookieOptions } from "nuxt/app";
 import type { H3Event } from "h3";
 import { getContext } from "unctx";
@@ -7,10 +6,33 @@ const contextOptions: Parameters<typeof getContext>[1] = {
   asyncContext: import.meta.server,
 };
 
+type NodeRequireFn = (moduleId: string) => unknown;
+
+function resolveNodeRequire(): NodeRequireFn | undefined {
+  const globalRequire = (globalThis as Record<string, unknown> | undefined)?.require;
+
+  if (typeof globalRequire === "function") {
+    return globalRequire as NodeRequireFn;
+  }
+
+  try {
+    return Function("return require")() as NodeRequireFn;
+  } catch {
+    return undefined;
+  }
+}
+
 if (import.meta.server) {
-  const require = createRequire(import.meta.url);
-  const { AsyncLocalStorage } = require("node:async_hooks") as typeof import("node:async_hooks");
-  contextOptions.AsyncLocalStorage = AsyncLocalStorage;
+  const nodeRequire = resolveNodeRequire();
+
+  if (nodeRequire) {
+    try {
+      const { AsyncLocalStorage } = nodeRequire("node:async_hooks") as typeof import("node:async_hooks");
+      contextOptions.AsyncLocalStorage = AsyncLocalStorage;
+    } catch {
+      // ignore resolution errors and fall back to default context behaviour
+    }
+  }
 }
 
 type MaybeEvent = H3Event | null | undefined;
