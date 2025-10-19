@@ -38,7 +38,12 @@
             :aria-label="editLabel"
             @click="handleEdit"
           >
-            {{ editLabel }}
+            <AppIcon
+              :name="MENU_ICONS.edit"
+              :size="variantClasses.iconSize"
+              :class="variantClasses.editIcon"
+            />
+            <span :class="variantClasses.menuItemLabel">{{ editLabel }}</span>
           </button>
           <button
             ref="deleteButton"
@@ -49,7 +54,12 @@
             :aria-label="deleteLabel"
             @click="handleDelete"
           >
-            {{ deleteLabel }}
+            <AppIcon
+              :name="MENU_ICONS.delete"
+              :size="variantClasses.iconSize"
+              :class="variantClasses.deleteIcon"
+            />
+            <span :class="variantClasses.menuItemLabel">{{ deleteLabel }}</span>
           </button>
         </div>
       </transition>
@@ -91,6 +101,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 
+import AppIcon from "~/components/layout/AppIcon.vue";
 import { useAuthSession } from "~/stores/auth-session";
 
 type Variant = "post" | "comment";
@@ -103,6 +114,10 @@ const VARIANT_CONFIG: Record<
     menuPanel: string;
     editButton: string;
     deleteButton: string;
+    menuItemLabel: string;
+    editIcon: string;
+    deleteIcon: string;
+    iconSize: number;
     followButton: string;
     followLoadingWrapper: string;
     spinner: string;
@@ -121,11 +136,17 @@ const VARIANT_CONFIG: Record<
     menuButton:
       "inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-lg text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     menuPanel:
-      "absolute right-0 z-20 mt-2 w-44 rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-xl",
+      "absolute right-0 z-20 mt-2 w-48 rounded-2xl border border-border/60 bg-popover/95 p-2 text-popover-foreground shadow-2xl backdrop-blur-sm ring-1 ring-black/5",
     editButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-popover-foreground transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+      "group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-popover-foreground transition-colors duration-200 hover:bg-muted/70 focus-visible:bg-muted/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     deleteButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-destructive transition-colors hover:bg-destructive/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive",
+      "group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-destructive transition-colors duration-200 hover:bg-destructive/10 focus-visible:bg-destructive/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive",
+    menuItemLabel: "flex-1",
+    editIcon:
+      "shrink-0 text-base text-muted-foreground transition-colors duration-200 group-hover:text-primary group-focus-visible:text-primary",
+    deleteIcon:
+      "shrink-0 text-base text-destructive transition-colors duration-200 group-hover:text-destructive group-focus-visible:text-destructive",
+    iconSize: 18,
     followButton:
       "inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
     followLoadingWrapper: "inline-flex items-center gap-2",
@@ -146,11 +167,17 @@ const VARIANT_CONFIG: Record<
     menuButton:
       "inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-base text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     menuPanel:
-      "absolute right-0 z-20 mt-2 w-40 rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-xl",
+      "absolute right-0 z-20 mt-2 w-44 rounded-2xl border border-border/60 bg-popover/95 p-1.5 text-popover-foreground shadow-xl backdrop-blur-sm ring-1 ring-black/5",
     editButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs text-popover-foreground transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+      "group flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-xs font-medium text-popover-foreground transition-colors duration-200 hover:bg-muted/70 focus-visible:bg-muted/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
     deleteButton:
-      "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs text-destructive transition-colors hover:bg-destructive/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive",
+      "group flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-xs font-medium text-destructive transition-colors duration-200 hover:bg-destructive/10 focus-visible:bg-destructive/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive",
+    menuItemLabel: "flex-1",
+    editIcon:
+      "shrink-0 text-sm text-muted-foreground transition-colors duration-200 group-hover:text-primary group-focus-visible:text-primary",
+    deleteIcon:
+      "shrink-0 text-sm text-destructive transition-colors duration-200 group-hover:text-destructive group-focus-visible:text-destructive",
+    iconSize: 16,
     followButton:
       "inline-flex items-center justify-center rounded-full bg-primary px-3 py-1.5 font-semibold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
     followLoadingWrapper: "inline-flex items-center gap-2",
@@ -196,6 +223,11 @@ const props = withDefaults(
     variant: "post",
   },
 );
+
+const MENU_ICONS = {
+  edit: "mdi:pencil-outline",
+  delete: "mdi:trash-can-outline",
+} as const;
 
 const emit = defineEmits<{
   (e: "follow"): void;
