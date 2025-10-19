@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { clearHelpCache, listHelpCategories, searchHelpArticles } from "~/server/utils/help";
 
-afterEach(() => {
-  clearHelpCache();
+afterEach(async () => {
+  await clearHelpCache();
 });
 
 describe("help search", () => {

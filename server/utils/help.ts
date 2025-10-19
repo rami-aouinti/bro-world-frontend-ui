@@ -2,7 +2,10 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { createError } from "h3";
+import { useRuntimeConfig } from "#imports";
+import Redis from "ioredis";
 
+import { CACHE_NAMESPACE_PUBLIC, createPrefixedCacheKey } from "~/lib/cache/namespaces";
 import type { HelpArticleDetail, HelpArticleSummary, HelpCategory } from "~/types/help";
 
 interface LocalizedContent {
@@ -36,7 +39,195 @@ interface HelpData {
   articles: RawHelpArticle[];
 }
 
-let cache: HelpData | null = null;
+interface HelpCacheConfig {
+  url: string;
+  tls: boolean;
+  keyPrefix: string;
+  ttl: number;
+}
+
+interface MemoryCacheEntry {
+  value: HelpData;
+  expiresAt: number;
+}
+
+const DEFAULT_HELP_TTL_SECONDS = 300;
+const MEMORY_CACHE_TTL_MS = 60_000;
+
+const globalScope = globalThis as typeof globalThis & {
+  __broHelpMemoryCache?: MemoryCacheEntry | null;
+  __broHelpRedisClient?: Redis | null;
+  __broHelpRedisClientPromise?: Promise<Redis | null> | null;
+};
+
+function getHelpCacheConfig(): HelpCacheConfig {
+  const runtime = useRuntimeConfig();
+  const redis = (runtime.redis ?? {}) as Partial<HelpCacheConfig & { helpTtl?: number }>;
+  const ttlCandidate = Number(redis.helpTtl);
+
+  return {
+    url: typeof redis.url === "string" ? redis.url : "",
+    tls: Boolean(redis.tls),
+    keyPrefix:
+      typeof redis.keyPrefix === "string" && redis.keyPrefix ? redis.keyPrefix : "bro-world",
+    ttl:
+      Number.isFinite(ttlCandidate) && ttlCandidate > 0
+        ? Number(ttlCandidate)
+        : DEFAULT_HELP_TTL_SECONDS,
+  } satisfies HelpCacheConfig;
+}
+
+function getRedisCacheKey(config: HelpCacheConfig): string {
+  return createPrefixedCacheKey(config.keyPrefix, CACHE_NAMESPACE_PUBLIC, "help", "data");
+}
+
+async function getRedisClient(): Promise<Redis | null> {
+  const config = getHelpCacheConfig();
+
+  if (!config.url) {
+    return null;
+  }
+
+  if (globalScope.__broHelpRedisClient) {
+    return globalScope.__broHelpRedisClient;
+  }
+
+  if (!globalScope.__broHelpRedisClientPromise) {
+    globalScope.__broHelpRedisClientPromise = (async () => {
+      try {
+        const client = new Redis(config.url, {
+          lazyConnect: true,
+          enableAutoPipelining: true,
+          maxRetriesPerRequest: 2,
+          tls: config.tls ? {} : undefined,
+        });
+
+        client.on("error", (error) => {
+          console.error("[help-cache] Redis client error", error);
+        });
+
+        await client.connect();
+        globalScope.__broHelpRedisClient = client;
+        return client;
+      } catch (error) {
+        console.error("[help-cache] Redis connection failed", error);
+        return null;
+      } finally {
+        if (!globalScope.__broHelpRedisClient) {
+          globalScope.__broHelpRedisClientPromise = null;
+        }
+      }
+    })();
+  }
+
+  const client = await globalScope.__broHelpRedisClientPromise;
+
+  if (!client) {
+    globalScope.__broHelpRedisClientPromise = null;
+  }
+
+  return client ?? null;
+}
+
+function readFromMemory(): HelpData | null {
+  const entry = globalScope.__broHelpMemoryCache;
+
+  if (!entry || entry.expiresAt <= Date.now()) {
+    if (entry) {
+      globalScope.__broHelpMemoryCache = null;
+    }
+
+    return null;
+  }
+
+  return structuredClone(entry.value);
+}
+
+function writeToMemory(data: HelpData): void {
+  globalScope.__broHelpMemoryCache = {
+    value: structuredClone(data),
+    expiresAt: Date.now() + MEMORY_CACHE_TTL_MS,
+  } satisfies MemoryCacheEntry;
+}
+
+function clearMemoryCache(): void {
+  globalScope.__broHelpMemoryCache = null;
+}
+
+function sanitizeHelpDataCandidate(candidate: unknown): HelpData | null {
+  if (!candidate || typeof candidate !== "object") {
+    return null;
+  }
+
+  const record = candidate as Partial<HelpData>;
+
+  if (!Array.isArray(record.categories) || !Array.isArray(record.articles)) {
+    return null;
+  }
+
+  return {
+    categories: record.categories,
+    articles: record.articles,
+  } satisfies HelpData;
+}
+
+async function readFromRedis(): Promise<HelpData | null> {
+  const client = await getRedisClient();
+
+  if (!client) {
+    return null;
+  }
+
+  const config = getHelpCacheConfig();
+
+  try {
+    const raw = await client.get(getRedisCacheKey(config));
+
+    if (!raw) {
+      return null;
+    }
+
+    const parsed = JSON.parse(raw) as unknown;
+    return sanitizeHelpDataCandidate(parsed);
+  } catch (error) {
+    console.error("[help-cache] Failed to read help data from Redis", error);
+    return null;
+  }
+}
+
+async function writeToRedis(data: HelpData): Promise<void> {
+  const client = await getRedisClient();
+
+  if (!client) {
+    return;
+  }
+
+  const config = getHelpCacheConfig();
+
+  try {
+    const serialized = JSON.stringify(data);
+    const ttl = Math.max(1, Math.round(config.ttl));
+    await client.set(getRedisCacheKey(config), serialized, "EX", ttl);
+  } catch (error) {
+    console.error("[help-cache] Failed to persist help data to Redis", error);
+  }
+}
+
+async function deleteRedisCache(): Promise<void> {
+  const client = await getRedisClient();
+
+  if (!client) {
+    return;
+  }
+
+  const config = getHelpCacheConfig();
+
+  try {
+    await client.del(getRedisCacheKey(config));
+  } catch (error) {
+    console.error("[help-cache] Failed to delete help cache from Redis", error);
+  }
+}
 
 const SUPPORTED_LOCALES = ["en", "fr", "de", "ar"] as const;
 
@@ -53,16 +244,29 @@ function resolveLocale(locale: string | undefined): SupportedLocale {
 }
 
 async function readHelpData(): Promise<HelpData> {
-  if (cache) {
-    return cache;
+  const memoryCached = readFromMemory();
+
+  if (memoryCached) {
+    return memoryCached;
+  }
+
+  const redisCached = await readFromRedis();
+
+  if (redisCached) {
+    writeToMemory(redisCached);
+    return structuredClone(redisCached);
   }
 
   const filePath = join(process.cwd(), "server/mock/help.json");
   const content = await readFile(filePath, "utf8");
-  const parsed = JSON.parse(content) as HelpData;
+  const parsed = JSON.parse(content) as unknown;
+  const sanitized =
+    sanitizeHelpDataCandidate(parsed) ?? ({ categories: [], articles: [] } satisfies HelpData);
 
-  cache = parsed;
-  return parsed;
+  writeToMemory(sanitized);
+  await writeToRedis(sanitized);
+
+  return structuredClone(sanitized);
 }
 
 function pickTranslation<T extends LocalizedContent>(
@@ -256,6 +460,7 @@ export async function getHelpRelatedArticles(
   return combined.slice(0, limit).map((item) => mapArticle(item, resolvedLocale));
 }
 
-export function clearHelpCache() {
-  cache = null;
+export async function clearHelpCache(): Promise<void> {
+  clearMemoryCache();
+  await deleteRedisCache();
 }
