@@ -122,6 +122,7 @@ export function useRuntimeConfig() {
       redis: {
         listTtl: 60,
         itemTtl: 300,
+        jobTtl: 300,
       },
       crmProjects: {
         useMocks: true,
@@ -130,6 +131,7 @@ export function useRuntimeConfig() {
     redis: {
       listTtl: 60,
       itemTtl: 300,
+      jobTtl: 300,
       helpTtl: 300,
     },
   };
