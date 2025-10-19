@@ -76,9 +76,6 @@
         >
           {{ manualCommentsButtonLabel }}
         </button>
-        <p class="comments-manual__hint">
-          {{ manualCommentsHint }}
-        </p>
       </div>
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
@@ -237,7 +234,6 @@ const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
 const commentsActivated = ref(false);
 const shouldRenderCommentThread = computed(() => commentsActivated.value);
 const manualCommentsButtonLabel = computed(() => t("blog.comments.load"));
-const manualCommentsHint = computed(() => t("blog.comments.activationHint"));
 const manualCommentsTriggerVisible = computed(
   () =>
     isHydrated.value &&
@@ -958,13 +954,6 @@ function handleLoginDialogClose() {
 .comments-manual__button:focus-visible {
   outline: 2px solid rgba(var(--v-theme-primary), 0.7);
   outline-offset: 3px;
-}
-
-.comments-manual__hint {
-  margin: 0;
-  font-size: 0.75rem;
-  line-height: 1.4;
-  opacity: 0.75;
 }
 
 .comments-error {
