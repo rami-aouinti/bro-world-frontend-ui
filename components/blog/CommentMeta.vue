@@ -18,71 +18,43 @@
         </p>
       </div>
     </div>
-    <div
-      v-if="isAuthenticated"
-      class="comment-meta__actions"
-      data-test="comment-actions"
-    >
-      <template v-if="isAuthor">
-        <button
-          type="button"
-          class="comment-meta__menu-trigger"
-          data-test="comment-actions-trigger"
-          :aria-expanded="menuOpen ? 'true' : 'false'"
-          @click="toggleMenu"
-        >
-          ⋮
-        </button>
+    <ClientOnly>
+      <AuthorActionMenu
+        data-test="comment-actions"
+        :is-authenticated="isAuthenticated"
+        :is-author="isAuthor"
+        :is-following="isFollowing"
+        :follow-loading="followLoading"
+        :follow-label="followLabel"
+        :follow-loading-label="followLoadingLabel"
+        :follow-aria-label="followAriaLabel"
+        :following-label="followingLabel"
+        :following-aria-label="followingAriaLabel"
+        :actions-aria-label="actionsAriaLabel"
+        :edit-label="editLabel"
+        :delete-label="deleteLabel"
+        variant="comment"
+        @follow="emit('follow')"
+        @edit="(event) => emit('edit', event)"
+        @delete="(event) => emit('delete', event)"
+      />
+      <template #fallback>
         <div
-          v-if="menuOpen"
-          class="comment-meta__menu"
+          aria-hidden="true"
+          class="comment-meta__actions"
         >
-          <button
-            type="button"
-            class="comment-meta__menu-item"
-            data-test="comment-action-edit"
-            @click="$emit('edit', $event)"
-          >
-            {{ editLabel }}
-          </button>
-          <button
-            type="button"
-            class="comment-meta__menu-item"
-            data-test="comment-action-delete"
-            @click="$emit('delete', $event)"
-          >
-            {{ deleteLabel }}
-          </button>
+          <span class="comment-meta__actions-placeholder">&nbsp;</span>
         </div>
       </template>
-      <template v-else>
-        <button
-          v-if="!isFollowing"
-          type="button"
-          class="comment-meta__follow"
-          data-test="comment-follow-button"
-          :disabled="followLoading"
-          @click="$emit('follow')"
-        >
-          <span v-if="followLoading">{{ followLoadingLabel }}</span>
-          <span v-else>{{ followLabel }}</span>
-        </button>
-        <span
-          v-else
-          class="comment-meta__following"
-          data-test="comment-following-chip"
-        >
-          {{ followingLabel }}
-        </span>
-      </template>
-    </div>
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import type { BlogUser } from "~/lib/mock/blog";
 import { optimizeAvatarUrl } from "~/lib/images/avatar";
+import AuthorActionMenu from "~/components/blog/AuthorActionMenu.vue";
 
 type CommentMetaProps = {
   user: BlogUser;
@@ -94,12 +66,15 @@ type CommentMetaProps = {
   followLoading?: boolean;
   followLabel?: string;
   followLoadingLabel?: string;
+  followAriaLabel?: string;
   followingLabel?: string;
+  followingAriaLabel?: string;
+  actionsAriaLabel?: string;
   editLabel?: string;
   deleteLabel?: string;
 };
 
-defineEmits<{
+const emit = defineEmits<{
   (e: "edit", event: Event): void;
   (e: "delete", event: Event): void;
   (e: "follow"): void;
@@ -112,12 +87,13 @@ const props = withDefaults(defineProps<CommentMetaProps>(), {
   followLoading: false,
   followLabel: "Follow",
   followLoadingLabel: "Following",
+  followAriaLabel: undefined,
   followingLabel: "Following",
+  followingAriaLabel: undefined,
+  actionsAriaLabel: undefined,
   editLabel: "Edit",
   deleteLabel: "Delete",
 });
-
-const menuOpen = ref(false);
 
 const isAuthenticated = computed(() => props.isAuthenticated);
 const isAuthor = computed(() => props.isAuthor);
@@ -125,17 +101,16 @@ const isFollowing = computed(() => props.isFollowing);
 const followLoading = computed(() => props.followLoading);
 const followLabel = computed(() => props.followLabel);
 const followLoadingLabel = computed(() => props.followLoadingLabel);
+const followAriaLabel = computed(() => props.followAriaLabel);
 const followingLabel = computed(() => props.followingLabel);
+const followingAriaLabel = computed(() => props.followingAriaLabel);
+const actionsAriaLabel = computed(() => props.actionsAriaLabel);
 const editLabel = computed(() => props.editLabel);
 const deleteLabel = computed(() => props.deleteLabel);
 const avatarSize = 40;
 const avatarSrc = computed(
   () => optimizeAvatarUrl(props.user.photo ?? null, avatarSize) ?? props.defaultAvatar,
 );
-
-function toggleMenu() {
-  menuOpen.value = !menuOpen.value;
-}
 </script>
 
 <style scoped>
@@ -172,47 +147,13 @@ function toggleMenu() {
 }
 
 .comment-meta__actions {
-  display: flex;
+  min-height: 2rem;
+}
+
+.comment-meta__actions-placeholder {
+  display: inline-flex;
+  min-width: 80px;
   align-items: center;
-  gap: 0.5rem;
-}
-
-.comment-meta__menu-trigger {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  background: transparent;
-}
-
-.comment-meta__menu {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.comment-meta__menu-item {
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: var(--radius, var(--ui-radius));
-  background: white;
-  padding: 0.25rem 0.75rem;
-  text-align: left;
-}
-
-.comment-meta__follow {
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  font-size: 0.85rem;
-}
-
-.comment-meta__following {
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  text-transform: uppercase;
+  justify-content: center;
 }
 </style>
