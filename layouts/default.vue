@@ -338,10 +338,12 @@ const SidebarWeatherCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarWeatherCard.vue"),
   suspensible: false,
 });
+
 const SidebarLeaderboardCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarLeaderboardCard.vue"),
   suspensible: false,
 });
+
 const SidebarRatingCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarRatingCard.vue"),
   suspensible: false,
@@ -545,6 +547,19 @@ const routeRightSidebarPreset = computed<RightSidebarPreset>(() => {
   return "none";
 });
 
+const initialShowContactSidebarCard = useState(
+  "layout-initial-show-contact-card",
+  () => Boolean(currentRoute.value?.meta?.showContactSidebarCard),
+);
+
+const shouldShowContactSidebarCard = computed(() => {
+  if (!isHydrated.value) {
+    return initialShowContactSidebarCard.value;
+  }
+
+  return Boolean(currentRoute.value?.meta?.showContactSidebarCard);
+});
+
 const initialShowNavigation = useState(
   "layout-initial-show-navigation",
   () => currentRoute.value?.meta?.showNavbar !== false,
@@ -557,9 +572,6 @@ const showNavigation = computed(() => {
 
   return currentRoute.value?.meta?.showNavbar !== false;
 });
-const shouldShowContactSidebarCard = computed(
-  () => currentRoute.value?.meta?.showContactSidebarCard === true,
-);
 const { rightSidebarContent } = useLayoutRightSidebar();
 const shouldShowDashboardRightSidebar = computed(
   () => routeRightSidebarPreset.value === "dashboard" && !rightSidebarContent.value,

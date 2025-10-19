@@ -222,10 +222,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, defineAsyncComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
 const { t, locale, localeProperties } = useI18n();
@@ -234,15 +235,27 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const localePath = useResolvedLocalePath();
 const siteSettings = useSiteSettingsState();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
+const SidebarHelpCenterCard = defineAsyncComponent({
+  loader: () => import("~/components/layout/SidebarHelpCenterCard.vue"),
+  suspensible: false,
+});
 
 const pageDescription = computed(() => t("seo.help.description"));
 
 definePageMeta({
   documentDriven: false,
+  showRightWidgets: true,
+  rightSidebarPreset: "none",
 });
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));
+registerRightSidebarContent({
+  component: SidebarHelpCenterCard,
+  wrapperClass: "flex flex-col gap-6",
+});
 const helpContent = computed(
   () => siteSettings.value?.pages.help ?? getDefaultSiteSettings().pages.help,
 );
