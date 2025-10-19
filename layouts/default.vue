@@ -615,6 +615,39 @@ const rightDrawerState = ref(
   showNavigation.value && !initialIsMobile.value && initialShowRightWidgets.value,
 );
 
+type LayoutInsets = {
+  top: string;
+  right: string;
+  bottom: string;
+  left: string;
+};
+
+const initialLayoutInsets = useState<LayoutInsets>("layout-initial-insets", () => {
+  const navigationVisible = showNavigation.value;
+
+  if (!navigationVisible) {
+    return {
+      top: "0px",
+      right: "0px",
+      bottom: "0px",
+      left: "0px",
+    } satisfies LayoutInsets;
+  }
+
+  const isDesktop = !initialIsMobile.value;
+  const top = resolvedAppBarHeight.value || DEFAULT_APP_BAR_HEIGHT_VALUE;
+  const left = isDesktop ? "320px" : "0px";
+  const right =
+    isDesktop && initialShowRightWidgets.value ? "340px" : "0px";
+
+  return {
+    top,
+    right,
+    bottom: "0px",
+    left,
+  } satisfies LayoutInsets;
+});
+
 const isLeftDrawerReady = ref(!showNavigation.value);
 
 const isTopBarReady = ref(!showNavigation.value);
@@ -720,6 +753,10 @@ const drawerInlineStyle = computed(() => ({
 }));
 
 const layoutInsets = computed(() => {
+  if (!isHydrated.value) {
+    return initialLayoutInsets.value;
+  }
+
   if (!showNavigation.value) {
     return {
       top: "0px",
@@ -732,7 +769,8 @@ const layoutInsets = computed(() => {
   const top = resolvedAppBarHeight.value || DEFAULT_APP_BAR_HEIGHT_VALUE;
   const isDesktop = !isMobile.value;
   const left = isDesktop && leftDrawer.value ? "320px" : "0px";
-  const right = isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
+  const right =
+    isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
 
   return {
     top,
