@@ -292,9 +292,17 @@ function isGroupExpanded(key: string) {
 }
 
 function handleParentSelect(item: LayoutSidebarItem) {
+  const hasChildren = Boolean(item.children?.length);
+  const hasRoute = Boolean(item.to);
+
+  if (hasChildren && !hasRoute) {
+    toggleGroup(item.key);
+    return;
+  }
+
   emit("select", item.key);
 
-  if (item.children?.length && !isGroupExpanded(item.key)) toggleGroup(item.key);
+  if (hasChildren && !isGroupExpanded(item.key)) toggleGroup(item.key);
 }
 
 function handleChildSelect(key: string) {
