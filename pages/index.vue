@@ -495,6 +495,23 @@ const showAuthenticatedSkeletonsState = computed(
   () => !isAuthReady.value || pending.value,
 );
 
+let hasPrefetchedFirstBlogPostCard = false;
+
+watch(
+  posts,
+  (postItems) => {
+    if (hasPrefetchedFirstBlogPostCard || postItems.length === 0) {
+      return;
+    }
+
+    hasPrefetchedFirstBlogPostCard = true;
+    void callOnceFn("index:prefetch-first-blog-post-card", async () => {
+      await blogPostCardLoader();
+    });
+  },
+  { immediate: true, flush: "post" },
+);
+
 const initialSkeletonVisibilityState = resolveSharedState(
   "index:initial-show-authenticated-skeletons",
   () => showAuthenticatedSkeletonsState.value,
