@@ -218,15 +218,15 @@ function handleSocialRedirect(provider: SocialProvider) {
   margin-top: 0.5rem;
 }
 
-.sidebar-login-card :deep(.login-form__inner) {
+.sidebar-login-card ::v-deep(.login-form__inner) {
   gap: 0.75rem;
 }
 
-.sidebar-login-card :deep(.login-field) {
+.sidebar-login-card ::v-deep(.login-field) {
   box-shadow: 0 12px 26px rgba(236, 72, 153, 0.18);
 }
 
-.sidebar-login-card :deep(.login-form__submit) {
+.sidebar-login-card ::v-deep(.login-form__submit) {
   box-shadow: 0 16px 32px rgba(236, 72, 153, 0.28);
 }
 </style>
