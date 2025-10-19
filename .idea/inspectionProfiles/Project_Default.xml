@@ -72,7 +72,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="55">
+          <list size="58">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -128,6 +128,9 @@
             <item index="52" class="java.lang.String" itemvalue="ColourfulText" />
             <item index="53" class="java.lang.String" itemvalue="v-icon" />
             <item index="54" class="java.lang.String" itemvalue="v-card-subtitle" />
+            <item index="55" class="java.lang.String" itemvalue="v-timeline" />
+            <item index="56" class="java.lang.String" itemvalue="v-timeline-item" />
+            <item index="57" class="java.lang.String" itemvalue="v-responsive" />
           </list>
         </value>
       </option>

@@ -63,48 +63,6 @@
 
       <section
         class="mb-12"
-        aria-labelledby="mission-title"
-      >
-        <v-row
-          class="align-center"
-          dense
-        >
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-sheet
-              class="about-section"
-              elevation="0"
-              rounded="xl"
-            >
-              <h2
-                id="mission-title"
-                class="text-h4 font-weight-semibold mb-4"
-              >
-                {{ t("pages.about.missionTitle") }}
-              </h2>
-              <p class="text-body-1 text-medium-emphasis mb-6">
-                {{ aboutBody }}
-              </p>
-              <div class="d-flex flex-wrap gap-3">
-                <v-chip
-                  v-for="tech in techStack"
-                  :key="tech.label"
-                  class="about-chip"
-                  color="primary"
-                  variant="tonal"
-                >
-                  {{ tech.label }}
-                </v-chip>
-              </div>
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </section>
-
-      <section
-        class="mb-12"
         aria-labelledby="values-title"
       >
         <v-sheet
@@ -543,7 +501,6 @@ const aboutTitle = computed(() => aboutContent.value.title?.trim() || t("pages.a
 const aboutSubtitle = computed(
   () => aboutContent.value.subtitle?.trim() || t("pages.about.subtitle"),
 );
-const aboutBody = computed(() => aboutContent.value.body?.trim() || t("pages.about.missionBody"));
 
 const heroActions = computed(() => [
   {

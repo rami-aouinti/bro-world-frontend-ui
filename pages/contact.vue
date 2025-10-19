@@ -1,6 +1,5 @@
 <template>
   <main
-    class="contact-page"
     aria-labelledby="contact-heading"
   >
     <header

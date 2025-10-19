@@ -6,147 +6,9 @@
         class="mb-6"
         aria-describedby="help-subtitle"
     >
-      <section
-        class="help-hero mb-10"
-        aria-describedby="help-subtitle"
-      >
-        <v-sheet
-          class="help-hero__surface"
-          elevation="0"
-          rounded="xl"
-        >
-          <div class="help-hero__header">
-            <div class="help-hero__badge">
-              <v-icon
-                icon="mdi:lifebuoy"
-                size="22"
-                class="mr-2"
-                aria-hidden="true"
-              />
-              <span class="text-caption font-weight-medium text-uppercase tracking-wide">
-                {{ t("pages.help.quickLinksTitle") }}
-              </span>
-            </div>
-            <h1
-              id="help-heading"
-              class="text-h3 font-weight-bold mb-3"
-            >
-              {{ helpTitle }}
-            </h1>
-            <p
-              id="help-subtitle"
-              class="text-body-1 text-medium-emphasis"
-            >
-              {{ helpSubtitle }}
-            </p>
-          </div>
-
-          <div class="help-hero__search">
-            <v-text-field
-              v-model="query"
-              :label="t('pages.help.searchPlaceholder')"
-              prepend-inner-icon="mdi:magnify"
-              variant="outlined"
-              density="comfortable"
-              clearable
-              data-test="faq-search"
-              aria-describedby="help-faq"
-            />
-            <v-chip
-              class="help-hero__count"
-              color="primary"
-              variant="tonal"
-              size="small"
-            >
-              {{ filteredFaq.length }}
-              {{
-                filteredFaq.length === 1
-                  ? t("pages.help.faqCountSingular")
-                  : t("pages.help.faqCountPlural")
-              }}
-            </v-chip>
-          </div>
-        </v-sheet>
-      </section>
-
-      <section
-        class="mb-10"
-        aria-labelledby="quick-actions"
-      >
-        <v-sheet
-          class="help-actions"
-          elevation="0"
-          rounded="xl"
-        >
-          <div class="d-flex align-center justify-space-between flex-wrap gap-4 mb-6">
-            <div>
-              <h2
-                id="quick-actions"
-                class="text-h5 font-weight-semibold mb-1"
-              >
-                {{ t("pages.help.quickLinksTitle") }}
-              </h2>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ helpBody }}
-              </p>
-            </div>
-          </div>
-          <v-row
-            class="help-actions__row"
-            dense
-          >
-            <v-col
-              v-for="action in actions"
-              :key="action.label"
-              cols="12"
-              md="4"
-            >
-              <v-card
-                class="help-actions__card"
-                elevation="0"
-                rounded="lg"
-              >
-                <div class="d-flex align-start mb-4">
-                  <v-avatar
-                    class="help-actions__icon mr-3"
-                    size="42"
-                  >
-                    <v-icon
-                      :icon="action.icon"
-                      aria-hidden="true"
-                    />
-                  </v-avatar>
-                  <div>
-                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
-                      {{ action.label }}
-                    </h3>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ action.description }}
-                    </p>
-                  </div>
-                </div>
-                <v-btn
-                  :href="action.href"
-                  :to="action.to"
-                  :target="action.target"
-                  :rel="action.rel"
-                  color="primary"
-                  variant="text"
-                  class="justify-start px-0"
-                  :aria-label="action.ariaLabel"
-                >
-                  {{ action.cta }}
-                </v-btn>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-sheet>
-      </section>
-
-      <section aria-labelledby="help-faq">
+      <section class="mb-10" aria-labelledby="help-faq">
         <v-sheet
           class="help-faq"
-          elevation="0"
           rounded="xl"
         >
           <div class="d-flex align-center justify-space-between flex-wrap gap-3 mb-4">
@@ -215,6 +77,78 @@
               </v-expansion-panel-title>
             </v-expansion-panel>
           </v-expansion-panels>
+        </v-sheet>
+      </section>
+      <section
+          aria-labelledby="quick-actions"
+      >
+        <v-sheet
+            class="help-actions"
+            elevation="0"
+            rounded="xl"
+        >
+          <div class="d-flex align-center justify-space-between flex-wrap gap-4 mb-6">
+            <div>
+              <h2
+                  id="quick-actions"
+                  class="text-h5 font-weight-semibold mb-1"
+              >
+                {{ t("pages.help.quickLinksTitle") }}
+              </h2>
+              <p class="text-body-2 text-medium-emphasis mb-0">
+                {{ helpBody }}
+              </p>
+            </div>
+          </div>
+          <v-row
+              class="help-actions__row"
+              dense
+          >
+            <v-col
+                v-for="action in actions"
+                :key="action.label"
+                cols="12"
+                md="12"
+            >
+              <v-card
+                  class="help-actions__card"
+                  elevation="0"
+                  rounded="lg"
+              >
+                <div class="d-flex align-start mb-4">
+                  <v-avatar
+                      class="help-actions__icon mr-3"
+                      size="42"
+                  >
+                    <v-icon
+                        :icon="action.icon"
+                        aria-hidden="true"
+                    />
+                  </v-avatar>
+                  <div>
+                    <h3 class="text-subtitle-1 font-weight-semibold mb-1">
+                      {{ action.label }}
+                    </h3>
+                    <p class="text-body-2 text-medium-emphasis mb-0">
+                      {{ action.description }}
+                    </p>
+                  </div>
+                </div>
+                <v-btn
+                    :href="action.href"
+                    :to="action.to"
+                    :target="action.target"
+                    :rel="action.rel"
+                    color="primary"
+                    variant="text"
+                    class="justify-start px-0"
+                    :aria-label="action.ariaLabel"
+                >
+                  {{ action.cta }}
+                </v-btn>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-sheet>
       </section>
     </header>
