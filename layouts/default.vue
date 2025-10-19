@@ -310,6 +310,10 @@ import { withSecureCookieOptions } from "~/lib/cookies";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
+import SidebarContactCardSkeleton from "@/components/layout/SidebarContactCardSkeleton.vue";
+import SidebarLeaderboardCardSkeleton from "@/components/layout/SidebarLeaderboardCardSkeleton.vue";
+import SidebarRatingCardSkeleton from "@/components/layout/SidebarRatingCardSkeleton.vue";
+import SidebarWeatherCardSkeleton from "@/components/layout/SidebarWeatherCardSkeleton.vue";
 import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants";
 
 const AppSidebar = defineAsyncComponent({
