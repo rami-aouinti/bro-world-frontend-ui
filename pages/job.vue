@@ -87,6 +87,7 @@ import CreateJob from "~/components/job/CreateJob.vue";
 import JobFilters from "~/components/job/JobFilters.vue";
 import JobList from "~/components/job/JobList.vue";
 import JobTopFilters from "~/components/job/JobTopFilters.vue";
+import { jobCompaniesSample, jobListSample } from "~/lib/mock/jobs";
 import { useJobStore, type JobSummary } from "~/stores/useJobStore";
 
 definePageMeta({
@@ -149,6 +150,7 @@ async function fetchCompanies() {
     companies.value = normaliseCompanies(result);
   } catch (error) {
     console.error(error);
+    companies.value = jobCompaniesSample;
   }
 }
 
@@ -190,6 +192,11 @@ async function fetchJobs() {
     totalPages.value = Math.max(1, Math.ceil((response?.count ?? 0) / limit));
   } catch (error) {
     console.error(error);
+    jobStore.setJobs(jobListSample);
+    jobStore.setTotal(jobListSample.length);
+    jobStore.setPage(1);
+    jobStore.setLoaded(true);
+    totalPages.value = 1;
   } finally {
     pending.value = false;
   }
