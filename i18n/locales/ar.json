@@ -2731,28 +2731,28 @@
         "caption": "المعلم التالي في {date}"
       },
       "sidebar": {
-        "ariaLabel": "CRM insights panel",
+        "ariaLabel": "لوحة معلومات إدارة علاقات العملاء",
         "projects": {
-          "title": "My projects",
-          "subtitle": "Your active initiatives for the selected sprint.",
+          "title": "مشاريعي",
+          "subtitle": "مبادراتك النشطة للسبرينت المحدد.",
           "actions": {
-            "new": "New project",
-            "create": "Create a project"
+            "new": "مشروع جديد",
+            "create": "إنشاء مشروع"
           },
           "empty": {
-            "description": "No project is assigned to you yet."
+            "description": "لم يتم إسناد أي مشروع إليك بعد."
           }
         },
         "tasks": {
-          "title": "Recent tasks",
-          "subtitle": "Tasks created most recently.",
+          "title": "المهام الأخيرة",
+          "subtitle": "أحدث المهام التي تم إنشاؤها.",
           "actions": {
-            "new": "New task"
+            "new": "مهمة جديدة"
           },
           "empty": {
-            "description": "No recent tasks. Create one to kick off your sprint."
+            "description": "لا توجد مهام حديثة. أنشئ مهمة لبدء السبرينت."
           },
-          "projectFallback": "Unknown project"
+          "projectFallback": "مشروع غير معروف"
         }
       }
     },

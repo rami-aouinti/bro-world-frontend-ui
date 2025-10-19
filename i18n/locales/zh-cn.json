@@ -2364,28 +2364,28 @@
         "caption": "下一个里程碑：{date}"
       },
       "sidebar": {
-        "ariaLabel": "CRM insights panel",
+        "ariaLabel": "CRM 洞察面板",
         "projects": {
-          "title": "My projects",
-          "subtitle": "Your active initiatives for the selected sprint.",
+          "title": "我的项目",
+          "subtitle": "您在所选冲刺中的活跃事项。",
           "actions": {
-            "new": "New project",
-            "create": "Create a project"
+            "new": "新建项目",
+            "create": "创建项目"
           },
           "empty": {
-            "description": "No project is assigned to you yet."
+            "description": "尚未为您分配项目。"
           }
         },
         "tasks": {
-          "title": "Recent tasks",
-          "subtitle": "Tasks created most recently.",
+          "title": "最新任务",
+          "subtitle": "最近创建的任务。",
           "actions": {
-            "new": "New task"
+            "new": "新建任务"
           },
           "empty": {
-            "description": "No recent tasks. Create one to kick off your sprint."
+            "description": "暂无近期任务。创建一个任务来开启冲刺。"
           },
-          "projectFallback": "Unknown project"
+          "projectFallback": "未知项目"
         }
       }
     },
