@@ -23,11 +23,12 @@
       <v-card-text class="pt-4">
         <div class="d-flex align-start ga-3 mb-2">
           <v-avatar size="40">
-            <v-img
+            <NuxtImg
               :src="avatarSrc"
               alt="Avatar"
               width="40"
               height="40"
+              fit="cover"
             />
           </v-avatar>
           <div class="d-flex flex-column">

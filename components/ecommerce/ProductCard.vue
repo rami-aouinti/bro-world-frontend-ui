@@ -3,11 +3,12 @@
     class="product-card h-100 d-flex flex-column"
     variant="outlined"
   >
-    <v-img
+    <NuxtImg
       :src="product.images[0]"
       :alt="t(product.nameKey)"
       height="200"
-      cover
+      fit="cover"
+      class="w-100"
     />
 
     <v-card-text class="flex-grow-1 d-flex flex-column">

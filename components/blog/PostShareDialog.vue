@@ -22,11 +22,12 @@
       <v-card-text class="pt-4">
         <div class="d-flex align-start ga-3 mb-3">
           <v-avatar size="44">
-            <v-img
+            <NuxtImg
               :src="currentUserAvatarSrc"
               :alt="currentUserName"
               width="44"
               height="44"
+              fit="cover"
             />
           </v-avatar>
 
@@ -66,11 +67,12 @@
         >
           <div class="d-flex align-start ga-3">
             <v-avatar size="40">
-              <v-img
+              <NuxtImg
                 :src="postAuthorAvatar"
                 :alt="postAuthorName"
                 width="40"
                 height="40"
+                fit="cover"
               />
             </v-avatar>
 

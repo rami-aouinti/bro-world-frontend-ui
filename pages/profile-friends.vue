@@ -111,10 +111,12 @@
                 class="d-inline-flex"
               >
                 <v-avatar size="64">
-                  <v-img
+                  <NuxtImg
                     :src="friend.avatar"
                     :alt="friend.name"
-                    cover
+                    width="64"
+                    height="64"
+                    fit="cover"
                   />
                 </v-avatar>
               </NuxtLink>
@@ -228,10 +230,12 @@
               >
                 <template #prepend>
                   <v-avatar size="48">
-                    <v-img
+                    <NuxtImg
                       :src="suggestion.avatar"
                       :alt="suggestion.name"
-                      cover
+                      width="48"
+                      height="48"
+                      fit="cover"
                     />
                   </v-avatar>
                 </template>
@@ -281,10 +285,12 @@
                     class="d-flex align-center gap-3 text-decoration-none text-card-foreground"
                   >
                     <v-avatar size="40">
-                      <v-img
+                      <NuxtImg
                         :src="friend.avatar"
                         :alt="friend.name"
-                        cover
+                        width="40"
+                        height="40"
+                        fit="cover"
                       />
                     </v-avatar>
                     <div>

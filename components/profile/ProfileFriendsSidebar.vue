@@ -19,10 +19,12 @@
           >
             <div class="d-flex align-center gap-3">
               <v-avatar size="40">
-                <v-img
+                <NuxtImg
                   :src="friend.avatar"
                   :alt="friend.name"
-                  cover
+                  width="40"
+                  height="40"
+                  fit="cover"
                 />
               </v-avatar>
               <div>
@@ -70,10 +72,12 @@
             <div>
               <div>
                 <v-avatar size="24">
-                  <v-img
+                  <NuxtImg
                     :src="suggestion.avatar"
                     :alt="suggestion.name"
-                    cover
+                    width="24"
+                    height="24"
+                    fit="cover"
                   />
                 </v-avatar>
               </div>

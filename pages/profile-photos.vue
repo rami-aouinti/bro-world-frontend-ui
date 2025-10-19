@@ -114,11 +114,11 @@
                   glow
                 >
                   <div class="rounded-xl overflow-hidden mb-4">
-                    <v-img
+                    <NuxtImg
                       :src="highlightedAlbum.cover"
                       :alt="highlightedAlbum.title"
-                      aspect-ratio="4/3"
-                      cover
+                      fit="cover"
+                      style="width: 100%; aspect-ratio: 4 / 3;"
                     />
                   </div>
                   <h3 class="text-subtitle-1 font-weight-semibold mb-1">
@@ -149,13 +149,13 @@
                     glow
                   >
                     <div class="d-flex gap-4">
-                      <v-img
+                      <NuxtImg
                         :src="album.cover"
                         :alt="album.title"
                         class="rounded-lg"
-                        aspect-ratio="1"
                         width="96"
-                        cover
+                        height="96"
+                        fit="cover"
                       />
                       <div class="flex-grow-1">
                         <div class="d-flex align-center justify-space-between mb-1">
@@ -217,12 +217,12 @@
                 :key="photo.id"
                 class="masonry-item"
               >
-                <v-img
+                <NuxtImg
                   :src="photo.src"
                   :alt="photo.alt"
                   class="rounded-xl"
-                  aspect-ratio="photo.ratio"
-                  cover
+                  fit="cover"
+                  :style="{ aspectRatio: photo.ratio, width: '100%' }"
                 />
                 <div class="mt-2 d-flex flex-column gap-1">
                   <div class="d-flex align-center justify-space-between">
