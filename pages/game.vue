@@ -763,6 +763,7 @@ const pageDescription = computed(() => t("seo.game.description"));
 
 definePageMeta({
   documentDriven: false,
+  alias: ["/quiz"],
 });
 
 useSeoMeta(() => ({
