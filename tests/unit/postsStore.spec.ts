@@ -127,9 +127,18 @@ describe("posts store", () => {
 
     const result = await store.fetchPosts({ params: { perPage: 5 } });
 
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
-    expect(fetchSpy).toHaveBeenCalledWith(
-      "/v1/posts",
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+    expect(fetchSpy).toHaveBeenNthCalledWith(
+      1,
+      expect.stringContaining("/v1/posts"),
+      expect.objectContaining({
+        method: "GET",
+        query: expect.objectContaining({ page: 1, perPage: 5 }),
+      }),
+    );
+    expect(fetchSpy).toHaveBeenNthCalledWith(
+      2,
+      "https://fallback.test/public/post",
       expect.objectContaining({
         method: "GET",
         query: expect.objectContaining({ page: 1, perPage: 5 }),
@@ -257,7 +266,7 @@ describe("posts store", () => {
     expect(fetchSpy).toHaveBeenCalledTimes(2);
     expect(fetchSpy).toHaveBeenNthCalledWith(
       1,
-      "/v1/posts",
+      expect.stringContaining("/v1/posts"),
       expect.objectContaining({
         method: "GET",
         query: expect.objectContaining({ page: 1 }),
@@ -275,6 +284,56 @@ describe("posts store", () => {
     expect(result.map((post) => post.id)).toEqual(["post-1"]);
     expect(store.posts.value.map((post) => post.id)).toEqual(["post-1"]);
     expect(store.error.value).toBeNull();
+  });
+
+  it("uses the fastest available posts endpoint when the primary request stalls", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const primaryRequest = createDeferred<PostsListResponse>();
+    const fallbackPosts = [makePost("post-1"), makePost("post-2")];
+    const fallbackResponse = {
+      data: {
+        data: fallbackPosts,
+        meta: {
+          current_page: 1,
+          per_page: fallbackPosts.length,
+          total: fallbackPosts.length,
+          cached_at: new Date().toISOString(),
+        },
+      },
+    } satisfies Record<string, unknown>;
+
+    fetchSpy.mockImplementation((url) => {
+      if (typeof url === "string" && url.includes("/v1/posts")) {
+        return primaryRequest.promise;
+      }
+
+      if (typeof url === "string" && url.includes("/public/post")) {
+        return Promise.resolve(fallbackResponse);
+      }
+
+      return Promise.reject(new Error(`Unexpected fetch target: ${url as string}`));
+    });
+
+    const result = await store.fetchPosts();
+
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+    expect(result.map((post) => post.id)).toEqual(fallbackPosts.map((post) => post.id));
+    expect(store.posts.value.map((post) => post.id)).toEqual(fallbackPosts.map((post) => post.id));
+
+    primaryRequest.resolve(fallbackResponse as unknown as PostsListResponse);
   });
 
   it("surfaces API error messages when the response lacks post data", async () => {
@@ -409,7 +468,7 @@ describe("posts store", () => {
       },
     });
 
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
 
     deferred.resolve({
       data: [],
