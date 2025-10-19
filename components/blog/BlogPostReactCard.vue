@@ -135,7 +135,7 @@
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent } from "vue";
 import { onNuxtReady } from "#app";
-import { useNuxtApp } from "#imports";
+import { useNuxtApp } from "#app";
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";

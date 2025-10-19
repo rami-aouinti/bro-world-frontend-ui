@@ -1106,7 +1106,7 @@ export const usePostsStore = defineStore("posts", () => {
       const defaultPublicEndpoint = "/public/post";
       const defaultPrivateEndpoint = "/v1/platform/post";
 
-      addFetchTarget("/api/v1/posts");
+      addFetchTarget("/v1/posts");
 
       const baseURL =
         typeof fetcher.client?.defaults?.baseURL === "string"
@@ -1153,28 +1153,20 @@ export const usePostsStore = defineStore("posts", () => {
 
       try {
         const targets = Array.from(fetchTargets);
-        const pendingRequests = targets.map((target) =>
-          (async () => {
+
+        for (const target of targets) {
+          try {
             const rawResponse = await fetcher<unknown>(target, {
               method: "GET",
               query: queryParams,
             });
 
-            return normalizePostsListResponse(rawResponse);
-          })()
-            .then((response) => ({ status: "fulfilled" as const, value: response }))
-            .catch((reason) => ({ status: "rejected" as const, reason })),
-        );
-
-        for (let index = 0; index < pendingRequests.length; index += 1) {
-          const result = await pendingRequests[index];
-
-          if (result.status === "fulfilled") {
-            setPostsFromResponse(result.value);
-            return result.value.data;
+            const normalized = normalizePostsListResponse(rawResponse);
+            setPostsFromResponse(normalized);
+            return normalized.data;
+          } catch (error_) {
+            lastError = error_;
           }
-
-          lastError = result.reason;
         }
 
         const finalError =
