@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="messenger-window">
     <template v-if="!conversation">
       <v-card
-        class="d-flex flex-column align-center justify-center py-12 text-center"
+        class="messenger-window__placeholder d-flex flex-column align-center justify-center py-12 text-center"
         rounded="xl"
         variant="text"
       >
@@ -20,14 +20,13 @@
       <v-skeleton-loader
         v-if="loadingState"
         type="card-avatar"
-        class="pt-8 px-2 mb-4"
-        height="420"
+        class="messenger-window__skeleton pt-8 px-2 mb-4"
         rounded="xl"
       />
 
       <v-card
         v-else
-        class="pt-8 px-2 shadow-blur fade-in overflow-visible"
+        class="messenger-window__card pt-8 px-2 shadow-blur fade-in overflow-visible"
         rounded="xl"
         variant="text"
       >
@@ -91,8 +90,7 @@
 
         <div
           ref="messageContainer"
-          class="px-4 pb-4 pt-2 overflow-y-auto"
-          style="max-height: 420px; overflow-x: hidden"
+          class="messenger-window__messages px-4 pb-4 pt-2"
           @scroll.passive="handleScroll"
         >
           <div
@@ -372,6 +370,40 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.messenger-window {
+  --messenger-min-height: clamp(520px, 70vh, 840px);
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.messenger-window__placeholder,
+.messenger-window__skeleton,
+.messenger-window__card {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: var(--messenger-min-height);
+  width: 100%;
+}
+
+.messenger-window__card {
+  gap: 0;
+}
+
+.messenger-window__skeleton {
+  width: 100%;
+}
+
+.messenger-window__messages {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: none;
+  min-height: 0;
+  scrollbar-gutter: stable both-edges;
+}
+
 .fade-in {
   animation: fadeIn 0.4s ease-in-out;
 }
