@@ -1,7 +1,7 @@
 <template>
   <div class="comment-meta">
     <div class="comment-meta__info">
-      <img
+      <NuxtImg
         :src="avatarSrc"
         :alt="`${user.firstName} ${user.lastName}`"
         width="40"

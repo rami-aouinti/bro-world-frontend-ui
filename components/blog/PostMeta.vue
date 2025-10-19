@@ -2,7 +2,7 @@
   <header class="flex flex-wrap items-start justify-between gap-4">
     <div class="flex items-center gap-3">
       <div class="h-12 w-12 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
-        <img
+        <NuxtImg
           :src="avatarSrc"
           :alt="`${user.firstName} ${user.lastName}`"
           width="48"
