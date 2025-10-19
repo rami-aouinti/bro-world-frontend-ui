@@ -168,6 +168,7 @@ const pageDescription = computed(() => t("seo.ecommerce.description"));
 
 definePageMeta({
   documentDriven: false,
+  requiresPlugin: "ecommerce",
 });
 useSeoMeta(() => ({
   description: pageDescription.value,

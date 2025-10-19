@@ -13,6 +13,8 @@
       :locales="availableLocales"
       :show-right-toggle="showRightWidgets"
       :refreshing="isRefreshing"
+      :messenger-enabled="isMessengerEnabled"
+      :cart-enabled="isEcommerceEnabled"
       @toggle-left="toggleLeftDrawer"
       @toggle-right="toggleRightDrawer"
       @toggle-theme="toggleTheme"
@@ -875,6 +877,9 @@ if (import.meta.client) {
 const isRightDrawerReady = ref(!canShowRightWidgets.value);
 
 const siteSettingsState = useSiteSettingsState();
+const enabledPluginSet = computed(() => new Set(siteSettingsState.enabledPlugins.value));
+const isMessengerEnabled = computed(() => enabledPluginSet.value.has("messenger"));
+const isEcommerceEnabled = computed(() => enabledPluginSet.value.has("ecommerce"));
 
 watch(
   themeName,
@@ -976,13 +981,24 @@ watch(themePrimaryCookie, (value, oldValue) => {
   }
 });
 
-const appIcons = [
-  { name: "mdi:shopping-outline", label: "layout.appIcons.ecommerce", to: "/ecommerce" },
-  { name: "mdi:school-outline", label: "layout.appIcons.education", to: "/education" },
+const baseAppIcons: Array<{
+  name: string;
+  label: string;
+  to?: string;
+  plugin?: string;
+}> = [
+  { name: "mdi:shopping-outline", label: "layout.appIcons.ecommerce", to: "/ecommerce", plugin: "ecommerce" },
+  { name: "mdi:school-outline", label: "layout.appIcons.education", to: "/education", plugin: "education" },
   { name: "mdi:briefcase-outline", label: "layout.appIcons.briefcase" },
   { name: "mdi:database", label: "layout.appIcons.database" },
-  { name: "mdi:gamepad-variant-outline", label: "layout.appIcons.game", to: "/game" },
+  { name: "mdi:gamepad-variant-outline", label: "layout.appIcons.game", to: "/game", plugin: "game" },
 ];
+
+const appIcons = computed(() =>
+  baseAppIcons
+    .filter((icon) => !icon.plugin || enabledPluginSet.value.has(icon.plugin))
+    .map(({ plugin, ...icon }) => icon),
+);
 
 const canAccessAdmin = computed(() => {
   if (!auth.isAuthenticated.value) return false;

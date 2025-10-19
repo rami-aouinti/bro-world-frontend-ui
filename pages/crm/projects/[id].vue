@@ -43,4 +43,8 @@ import ProjectDetailLayout from "~/components/crm/projects/ProjectDetailLayout.v
 
 const route = useRoute();
 const projectId = computed(() => route.params.id?.toString() ?? "");
+
+definePageMeta({
+  requiresPlugin: "crm",
+});
 </script>

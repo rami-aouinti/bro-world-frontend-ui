@@ -174,5 +174,6 @@ function markCompleted() {
 
 definePageMeta({
   alias: ["/academy/course/:slug/lesson/:id"],
+  requiresPlugin: "education",
 });
 </script>

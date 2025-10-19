@@ -136,6 +136,7 @@ definePageMeta({
   layout: false,
   description: "Job page",
   breadcrumb: "disabled",
+  requiresPlugin: "job-board",
 });
 
 type CompanyInfo = {

@@ -10,4 +10,8 @@ import ProjectParticipantsSection from "~/components/crm/projects/participants/P
 
 const route = useRoute();
 const projectId = computed(() => route.params.id?.toString() ?? "");
+
+definePageMeta({
+  requiresPlugin: "crm",
+});
 </script>
