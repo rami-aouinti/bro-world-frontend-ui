@@ -5,21 +5,21 @@
       "slug": "web-dev",
       "title": "Développement Web",
       "description": "Frameworks modernes pour créer des applications web.",
-      "cover": "/img/cat-web.jpg"
+      "cover": "/images/education/cat-web.webp"
     },
     {
       "id": "cat-data",
       "slug": "data-science",
       "title": "Data Science",
       "description": "Analyse de données, modèles et storytelling.",
-      "cover": "/img/cat-data.jpg"
+      "cover": "/images/education/cat-data.webp"
     },
     {
       "id": "cat-product",
       "slug": "product-leadership",
       "title": "Leadership Produit",
       "description": "Cadres pour aligner produit, design et opérations.",
-      "cover": "/img/cat-product.jpg"
+      "cover": "/images/education/cat-product.webp"
     }
   ],
   "courses": [
@@ -31,7 +31,7 @@
       "level": "beginner",
       "durationMin": 150,
       "description": "Découvrir Nuxt 3, créer un projet, gérer le routing et consommer des API.",
-      "cover": "/img/nuxt-3.jpg",
+      "cover": "/images/education/course-nuxt-3.webp",
       "lessons": [
         {
           "id": "nuxt-l1",
@@ -303,7 +303,7 @@
       "level": "intermediate",
       "durationMin": 180,
       "description": "Construire des interfaces modernes avec les composants Vuetify 3.",
-      "cover": "/img/vuetify-3.jpg",
+      "cover": "/images/education/course-vuetify-3.webp",
       "lessons": [
         {
           "id": "vuetify-l1",
@@ -575,7 +575,7 @@
       "level": "beginner",
       "durationMin": 140,
       "description": "Manipuler des données avec pandas et créer des visualisations claires.",
-      "cover": "/img/data-viz.jpg",
+      "cover": "/images/education/course-data-viz.webp",
       "lessons": [
         {
           "id": "data-l1",
@@ -847,7 +847,7 @@
       "level": "intermediate",
       "durationMin": 210,
       "description": "Structurer la collaboration produit-design et orchestrer des lancements prévisibles.",
-      "cover": "/img/product-ops.jpg",
+      "cover": "/images/education/course-product-ops.webp",
       "lessons": [
         {
           "id": "prod-l1",

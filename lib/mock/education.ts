@@ -6,7 +6,7 @@ export const educationCategoriesMock: CategorySummary[] = [
     slug: "web-dev",
     title: "Web Development",
     description: "Modern frameworks for building web applications.",
-    cover: "/img/cat-web.jpg",
+    cover: "/images/education/cat-web.webp",
     courseCount: 2,
   },
   {
@@ -14,7 +14,7 @@ export const educationCategoriesMock: CategorySummary[] = [
     slug: "data-science",
     title: "Data Science",
     description: "Data analysis, modelling, and storytelling.",
-    cover: "/img/cat-data.jpg",
+    cover: "/images/education/cat-data.webp",
     courseCount: 1,
   },
   {
@@ -22,7 +22,7 @@ export const educationCategoriesMock: CategorySummary[] = [
     slug: "product-leadership",
     title: "Product Leadership",
     description: "Frameworks to align product, design, and operations.",
-    cover: "/img/cat-product.jpg",
+    cover: "/images/education/cat-product.webp",
     courseCount: 1,
   },
 ];
