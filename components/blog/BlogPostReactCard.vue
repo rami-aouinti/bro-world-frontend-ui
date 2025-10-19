@@ -60,41 +60,47 @@
   >
     <!-- Actions -->
     <div class="actions">
-      <ReactionPicker
-        class="like-size-lg"
-        @like="onToggleLike"
-        @select="handleSelect"
-      />
-      <v-btn
-        variant="text"
-        density="comfortable"
-        class="action-btn"
-        @click="$emit('comment')"
-      >
-        <Icon
-          name="mdi:chat-outline"
-          start
-        ></Icon>
-        {{ t("blog.posts.actions.comment") }}
-      </v-btn>
-      <v-menu
-        v-model="shareMenuOpen"
-        offset="8"
-        location="bottom"
-        transition="fade-transition"
-      >
-        <template #activator="{ props: menuProps }">
-          <v-btn
-            v-bind="menuProps"
-            variant="text"
-          >
-            <Icon
-              name="mdi:share-outline"
-              start
-            ></Icon>
-            {{ t("blog.posts.actions.share") }}
-          </v-btn>
-        </template>
+      <div class="action-item">
+        <ReactionPicker
+          class="like-size-lg"
+          @like="onToggleLike"
+          @select="handleSelect"
+        />
+      </div>
+      <div class="action-item">
+        <v-btn
+          variant="text"
+          density="comfortable"
+          class="action-btn"
+          @click="$emit('comment')"
+        >
+          <Icon
+            name="mdi:chat-outline"
+            start
+          ></Icon>
+          {{ t("blog.posts.actions.comment") }}
+        </v-btn>
+      </div>
+      <div class="action-item">
+        <v-menu
+          v-model="shareMenuOpen"
+          offset="8"
+          location="bottom"
+          transition="fade-transition"
+        >
+          <template #activator="{ props: menuProps }">
+            <v-btn
+              v-bind="menuProps"
+              variant="text"
+              class="action-btn"
+            >
+              <Icon
+                name="mdi:share-outline"
+                start
+              ></Icon>
+              {{ t("blog.posts.actions.share") }}
+            </v-btn>
+          </template>
 
         <v-sheet
           elevation="10"
@@ -121,7 +127,8 @@
             </v-list-item>
           </v-list>
         </v-sheet>
-      </v-menu>
+        </v-menu>
+      </div>
     </div>
   </div>
   <div
@@ -390,12 +397,30 @@ const reactionListLabel = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 12px;
   flex: 1;
 }
+
+.action-item {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+
 .action-btn {
   text-transform: none;
   font-weight: 600;
+  flex: 1 1 auto;
+  width: 100%;
+  justify-content: center;
+}
+
+.actions :deep(.meta__btn) {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .right {
