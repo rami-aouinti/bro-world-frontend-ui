@@ -23,15 +23,18 @@ function resolveNodeRequire(): NodeRequireFn | undefined {
 }
 
 if (import.meta.server) {
-  const nodeRequire = resolveNodeRequire();
+  try {
+    const nodeRequire = resolveNodeRequire();
 
-  if (nodeRequire) {
-    try {
+    if (nodeRequire) {
       const { AsyncLocalStorage } = nodeRequire("node:async_hooks") as typeof import("node:async_hooks");
       contextOptions.AsyncLocalStorage = AsyncLocalStorage;
-    } catch {
-      // ignore resolution errors and fall back to default context behaviour
+    } else {
+      const { AsyncLocalStorage } = await import("node:async_hooks");
+      contextOptions.AsyncLocalStorage = AsyncLocalStorage;
     }
+  } catch {
+    // ignore resolution errors and fall back to default context behaviour
   }
 }
 
