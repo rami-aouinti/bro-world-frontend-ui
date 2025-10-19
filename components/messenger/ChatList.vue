@@ -1,15 +1,18 @@
 <template>
-  <v-card
-    class="pa-4"
-    variant="text"
-    rounded="xl"
+  <SidebarCard
+    class="messenger-chat-list"
+    padding="md"
+    glow
   >
-    <div v-if="loading">
+    <div
+      v-if="loading"
+      class="messenger-chat-list__scroll messenger-chat-list__skeleton"
+    >
       <v-skeleton-loader
         v-for="n in 4"
         :key="n"
         type="list-item-avatar"
-        class="rounded-lg mb-2"
+        class="rounded-lg"
         height="60"
       />
     </div>
@@ -17,7 +20,7 @@
       <v-list
         v-if="items.length"
         nav
-        class="py-0"
+        class="messenger-chat-list__scroll py-0"
       >
         <v-list-item
           v-for="conversation in items"
@@ -68,12 +71,12 @@
       </v-list>
       <div
         v-else
-        class="text-center py-8 text-medium-emphasis"
+        class="messenger-chat-list__scroll messenger-chat-list__empty text-medium-emphasis"
       >
         {{ emptyLabel }}
       </div>
     </template>
-  </v-card>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">
@@ -81,6 +84,7 @@ import { computed } from "vue";
 import GlowingAvatar from "~/components/app/GlowingAvatar.vue";
 import { useConversationUtils } from "~/composables/useConversationUtils";
 import type { MessengerConversation } from "~/types/messenger";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -128,6 +132,36 @@ function handleSelect(id: string) {
 </script>
 
 <style scoped>
+.messenger-chat-list {
+  --messenger-sidebar-min-height: clamp(520px, 70vh, 840px);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: var(--messenger-sidebar-min-height);
+}
+
+.messenger-chat-list__scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-gutter: stable both-edges;
+}
+
+.messenger-chat-list__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.messenger-chat-list__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 0;
+}
+
 .hover\:bg-surface-light:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
