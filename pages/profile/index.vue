@@ -16,10 +16,12 @@
             color="primary"
             variant="tonal"
           >
-            <v-img
+            <NuxtImg
               :src="avatarSrc"
               :alt="avatarAlt"
-              cover
+              width="96"
+              height="96"
+              fit="cover"
             />
           </v-avatar>
           <div class="flex-grow-1 w-100">

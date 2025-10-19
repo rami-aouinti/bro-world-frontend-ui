@@ -25,12 +25,12 @@
               v-if="story?.avatar"
               size="40"
             >
-              <v-img
+              <NuxtImg
                 :src="story?.avatar"
                 :alt="story?.name || t('stories.viewer.avatarAlt')"
-                cover
                 width="40"
                 height="40"
+                fit="cover"
               />
             </v-avatar>
             <div class="story-viewer__meta">
@@ -56,12 +56,12 @@
 
         <main class="story-viewer__body">
           <transition name="story-fade">
-            <v-img
+            <NuxtImg
               v-if="isStoryVisible && story?.image"
               :key="story?.id || story?.image"
               :src="story?.image"
               class="story-viewer__image"
-              cover
+              fit="cover"
               :alt="story?.name || t('stories.viewer.imageAlt')"
               width="480"
               height="360"

@@ -20,11 +20,12 @@
               v-for="(image, index) in product.images"
               :key="index"
             >
-              <v-img
+              <NuxtImg
                 :src="image"
                 :alt="t(product.nameKey)"
-                cover
                 class="rounded-lg"
+                height="360"
+                fit="cover"
               />
             </v-carousel-item>
           </v-carousel>

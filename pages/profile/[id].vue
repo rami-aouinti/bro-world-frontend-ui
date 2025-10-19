@@ -20,10 +20,12 @@
     >
       <div class="d-flex flex-column flex-md-row gap-6 align-md-center">
         <v-avatar size="104">
-          <v-img
+          <NuxtImg
             :src="friend.avatar"
             :alt="friend.name"
-            cover
+            width="104"
+            height="104"
+            fit="cover"
           />
         </v-avatar>
         <div class="flex-grow-1">
@@ -192,10 +194,12 @@
               size="72"
               class="mb-3"
             >
-              <v-img
+              <NuxtImg
                 :src="suggestion.avatar"
                 :alt="suggestion.name"
-                cover
+                width="72"
+                height="72"
+                fit="cover"
               />
             </v-avatar>
             <div class="text-subtitle-2 font-weight-medium text-center mb-1">

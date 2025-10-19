@@ -11,11 +11,12 @@
           size="34"
           class="mr-2"
         >
-          <v-img
+          <NuxtImg
             :src="resolveCommentAvatar(node.user.photo)"
             alt=""
             width="34"
             height="34"
+            fit="cover"
           />
         </v-avatar>
         <div class="bubble">
