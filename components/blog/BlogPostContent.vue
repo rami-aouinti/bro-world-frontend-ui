@@ -9,7 +9,6 @@
     >
       {{ props.summary }}
     </p>
-    <div v-html="safeHtml"></div>
   </section>
 </template>
 
