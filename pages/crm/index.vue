@@ -30,16 +30,7 @@
             :disabled="projectOptionsForTasks.length === 0"
             @click="openTaskDialog"
           >
-            Nouveau task
-          </v-btn>
-          <v-btn
-            variant="tonal"
-            color="primary"
-            class="text-none font-weight-semibold"
-            :prepend-icon="showInlineSidebar ? 'mdi:eye-off-outline' : 'mdi:view-sidebar'"
-            @click="handleToggleSidebar"
-          >
-            {{ showInlineSidebar ? 'Masquer panneau' : 'Afficher panneau' }}
+            {{ t("pages.crm.sidebar.tasks.actions.new") }}
           </v-btn>
         </div>
       </header>
@@ -52,32 +43,8 @@
           :users-by-id="userMap"
           @move="handleMoveTask"
         />
-
-        <SidebarRight
-          v-if="showInlineSidebar"
-          class="crm-index__sidebar"
-          :projects="projectSummaries"
-          :recent-tasks="recentTaskSummaries"
-          @create-project="openProjectDialog"
-          @create-task="openTaskDialog"
-        />
       </section>
     </v-container>
-
-    <v-navigation-drawer
-      v-model="isSidebarDrawerOpen"
-      location="right"
-      temporary
-      width="360"
-      scrim
-    >
-      <SidebarRight
-        :projects="projectSummaries"
-        :recent-tasks="recentTaskSummaries"
-        @create-project="openProjectDialog"
-        @create-task="openTaskDialog"
-      />
-    </v-navigation-drawer>
 
     <NewProjectDialog
       v-model="isProjectDialogOpen"
@@ -100,13 +67,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import { useDisplay } from "vuetify";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import CrmKanbanBoard from "~/components/crm/kanban/CrmKanbanBoard.vue";
 import SidebarRight from "~/components/crm/SidebarRight.vue";
 import NewProjectDialog from "~/components/crm/dialogs/NewProjectDialog.vue";
 import NewTaskDialog from "~/components/crm/dialogs/NewTaskDialog.vue";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import {
   useCrmBoardStore,
   type CrmBoardProject,
@@ -115,11 +83,14 @@ import {
   type CrmBoardUser,
 } from "~/stores/crm-board";
 
-const board = useCrmBoardStore();
-const display = useDisplay();
+definePageMeta({
+  showRightWidgets: true,
+});
 
-const isSidebarVisible = ref(true);
-const isSidebarDrawerOpen = ref(false);
+const board = useCrmBoardStore();
+const { locale, t } = useI18n();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
 const isProjectDialogOpen = ref(false);
 const isTaskDialogOpen = ref(false);
 const isCreatingProject = ref(false);
@@ -163,7 +134,7 @@ function resolvePriorityMeta(priority: CrmBoardTaskPriority) {
   }
 }
 
-function formatDueDate(value: string | null | undefined) {
+function formatDueDate(value: string | null | undefined, currentLocale: string) {
   if (!value) {
     return null;
   }
@@ -171,11 +142,15 @@ function formatDueDate(value: string | null | undefined) {
   if (Number.isNaN(timestamp)) {
     return null;
   }
-  return new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short" }).format(timestamp);
+  return new Intl.DateTimeFormat(currentLocale, { day: "2-digit", month: "short" }).format(
+    timestamp,
+  );
 }
 
 const recentTaskSummaries = computed(() => {
   const tasks = board.recentTasks.value.slice(0, 6);
+  const projectFallback = t("pages.crm.sidebar.tasks.projectFallback");
+  const currentLocale = locale.value;
   return tasks.map((task) => {
     const project = projectMap.value[task.projectId] as CrmBoardProject | undefined;
     const assignee = userMap.value[task.assigneeId ?? ""] as CrmBoardUser | undefined;
@@ -183,8 +158,8 @@ const recentTaskSummaries = computed(() => {
     return {
       id: task.id,
       title: task.title,
-      projectName: project?.name ?? "Projet inconnu",
-      dueDateLabel: formatDueDate(task.dueDate ?? null),
+      projectName: project?.name ?? projectFallback,
+      dueDateLabel: formatDueDate(task.dueDate ?? null, currentLocale),
       priority: task.priority,
       priorityColor: priorityMeta.color,
       priorityTextColor: priorityMeta.text,
@@ -218,25 +193,6 @@ const userOptionsForDialog = computed(() =>
 );
 
 const defaultTaskProjectId = computed(() => projectOptionsForTasks.value[0]?.id ?? null);
-
-const showInlineSidebar = computed(() => display.mdAndUp.value && isSidebarVisible.value);
-
-watch(
-  () => display.mdAndUp.value,
-  (isDesktop) => {
-    if (isDesktop) {
-      isSidebarDrawerOpen.value = false;
-    }
-  },
-);
-
-function handleToggleSidebar() {
-  if (display.mdAndUp.value) {
-    isSidebarVisible.value = !isSidebarVisible.value;
-  } else {
-    isSidebarDrawerOpen.value = true;
-  }
-}
 
 function handleSprintChange(sprintId: string) {
   if (sprintId) {
@@ -289,13 +245,24 @@ async function handleCreateTask(payload: {
   try {
     board.createTask(payload);
     isTaskDialogOpen.value = false;
-    isSidebarDrawerOpen.value = false;
   } catch (error) {
     taskError.value = error instanceof Error ? error.message : String(error ?? "");
   } finally {
     isCreatingTask.value = false;
   }
 }
+
+const sidebarContent = computed(() => ({
+  component: SidebarRight,
+  props: {
+    projects: projectSummaries.value,
+    recentTasks: recentTaskSummaries.value,
+    onCreateProject: openProjectDialog,
+    onCreateTask: openTaskDialog,
+  },
+}));
+
+registerRightSidebarContent(sidebarContent);
 </script>
 
 <style scoped>

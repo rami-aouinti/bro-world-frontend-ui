@@ -2727,6 +2727,31 @@
         "title": "Phasenverteilung",
         "subtitle": "Wie Projekte entlang der Pipeline-Phasen voranschreiten.",
         "caption": "Nächster Meilenstein am {date}"
+      },
+      "sidebar": {
+        "ariaLabel": "CRM insights panel",
+        "projects": {
+          "title": "My projects",
+          "subtitle": "Your active initiatives for the selected sprint.",
+          "actions": {
+            "new": "New project",
+            "create": "Create a project"
+          },
+          "empty": {
+            "description": "No project is assigned to you yet."
+          }
+        },
+        "tasks": {
+          "title": "Recent tasks",
+          "subtitle": "Tasks created most recently.",
+          "actions": {
+            "new": "New task"
+          },
+          "empty": {
+            "description": "No recent tasks. Create one to kick off your sprint."
+          },
+          "projectFallback": "Unknown project"
+        }
       }
     },
     "login": {
