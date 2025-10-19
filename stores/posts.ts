@@ -44,6 +44,7 @@ interface FetchOptions {
 
 interface PostsStorePost extends BlogPost {
   __optimistic?: boolean;
+  __signature?: string;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -598,7 +599,7 @@ function createOptimisticPost(
 ): PostsStorePost {
   const timestamp = new Date().toISOString();
 
-  return {
+  const optimisticPost: PostsStorePost = {
     id,
     title: overrides?.title ?? "",
     summary: overrides?.summary ?? "",
@@ -626,6 +627,8 @@ function createOptimisticPost(
     comments_preview: overrides?.comments_preview ? [...overrides.comments_preview] : [],
     __optimistic: true,
   };
+
+  return applyPostSignature(optimisticPost);
 }
 
 function sanitizeTextInput(value: unknown) {
@@ -639,49 +642,6 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 
   const prototype = Object.getPrototypeOf(value);
   return prototype === Object.prototype || prototype === null;
-}
-
-function deepEqual(a: unknown, b: unknown): boolean {
-  if (a === b) {
-    return true;
-  }
-
-  if (Array.isArray(a) && Array.isArray(b)) {
-    if (a.length !== b.length) {
-      return false;
-    }
-
-    for (let index = 0; index < a.length; index += 1) {
-      if (!deepEqual(a[index], b[index])) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  if (isPlainObject(a) && isPlainObject(b)) {
-    const keysA = Object.keys(a);
-    const keysB = Object.keys(b);
-
-    if (keysA.length !== keysB.length) {
-      return false;
-    }
-
-    for (const key of keysA) {
-      if (!Object.prototype.hasOwnProperty.call(b, key)) {
-        return false;
-      }
-
-      if (!deepEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  return Object.is(a, b);
 }
 
 function normalizeForStableSerialization(value: unknown, seen = new WeakSet<object>()): unknown {
@@ -716,6 +676,104 @@ function stableStringify(value: unknown) {
   } catch {
     return JSON.stringify(value);
   }
+}
+
+function computePostSignature(post: PostsStorePost): string {
+  const candidate = (post as PostsStorePost & { updatedAt?: string | number | null }).updatedAt;
+
+  if (typeof candidate === "string" || typeof candidate === "number") {
+    return String(candidate);
+  }
+
+  const user = post.user as
+    | (BlogPost["user"] & { updatedAt?: string | number | null })
+    | undefined;
+  const userKey = user
+    ? [
+        user.id ?? "",
+        user.username ?? "",
+        user.firstName ?? "",
+        user.lastName ?? "",
+        user.email ?? "",
+        user.photo ?? "",
+        typeof user.updatedAt === "string" || typeof user.updatedAt === "number"
+          ? String(user.updatedAt)
+          : "",
+      ].join("|")
+    : "";
+
+  const sharedFromKey =
+    post.sharedFrom && typeof post.sharedFrom === "object"
+      ? stableStringify(post.sharedFrom)
+      : String(post.sharedFrom ?? "");
+
+  const mediasKey = Array.isArray(post.medias)
+    ? post.medias
+        .map((media) =>
+          media && typeof media === "object" ? stableStringify(media) : String(media ?? ""),
+        )
+        .join("|")
+    : "";
+
+  const reactionsKey = Array.isArray(post.reactions_preview)
+    ? post.reactions_preview
+        .map(
+          (reaction) =>
+            `${reaction.id}|${reaction.type}|${reaction.user?.id ?? ""}|${reaction.user?.username ?? ""}`,
+        )
+        .join("|")
+    : "";
+
+  const commentsKey = Array.isArray(post.comments_preview)
+    ? post.comments_preview
+        .map(
+          (comment) =>
+            `${comment.id}|${comment.content}|${comment.reactions_count}|${comment.totalComments}|${comment.publishedAt}`,
+        )
+        .join("|")
+    : "";
+
+  return [
+    post.title,
+    post.summary,
+    post.content,
+    post.url ?? "",
+    post.slug,
+    post.publishedAt ?? "",
+    sharedFromKey,
+    mediasKey,
+    post.isReacted === null ? "null" : post.isReacted ? "1" : "0",
+    String(post.reactions_count ?? 0),
+    String(post.totalComments ?? 0),
+    userKey,
+    reactionsKey,
+    commentsKey,
+  ].join("::");
+}
+
+function applyPostSignature(post: PostsStorePost): PostsStorePost {
+  post.__signature = computePostSignature(post);
+  return post;
+}
+
+function getPostSignature(post: PostsStorePost | undefined): string {
+  if (!post) {
+    return "";
+  }
+
+  if (typeof post.__signature === "string") {
+    return post.__signature;
+  }
+
+  return applyPostSignature(post).__signature ?? "";
+}
+
+function postsAreEquivalent(current: PostsStorePost, incoming: PostsStorePost): boolean {
+  if (current.__optimistic !== incoming.__optimistic) {
+    return false;
+  }
+
+  return getPostSignature(current) === getPostSignature(incoming);
 }
 
 export const usePostsStore = defineStore("posts", () => {
@@ -770,15 +828,8 @@ export const usePostsStore = defineStore("posts", () => {
       return;
     }
 
-    commentsCache.value = {
-      ...commentsCache.value,
-      [postId]: comments,
-    };
-
-    commentTimestamps.value = {
-      ...commentTimestamps.value,
-      [postId]: Date.now(),
-    };
+    commentsCache.value[postId] = comments.slice();
+    commentTimestamps.value[postId] = Date.now();
   }
 
   function invalidateCommentsCache(postId: string) {
@@ -787,21 +838,16 @@ export const usePostsStore = defineStore("posts", () => {
     }
 
     if (postId in commentsCache.value) {
-      const { [postId]: _, ...rest } = commentsCache.value;
-      commentsCache.value = rest;
+      delete commentsCache.value[postId];
     }
 
     if (postId in commentTimestamps.value) {
-      const { [postId]: _, ...rest } = commentTimestamps.value;
-      commentTimestamps.value = rest;
+      delete commentTimestamps.value[postId];
     }
   }
 
   function markItemTimestamp(id: string, timestamp: number) {
-    itemTimestamps.value = {
-      ...itemTimestamps.value,
-      [id]: timestamp,
-    };
+    itemTimestamps.value[id] = timestamp;
   }
 
   function replaceOptimisticId(oldId: string, newPost: PostsStorePost) {
@@ -813,17 +859,20 @@ export const usePostsStore = defineStore("posts", () => {
       listIds.value.unshift(newPost.id);
     }
 
-    const { [oldId]: removed, ...rest } = items.value;
-    items.value = {
-      ...rest,
-      [newPost.id]: newPost,
-    };
+    const removed = items.value[oldId];
 
-    const { [oldId]: _, ...timestamps } = itemTimestamps.value;
-    itemTimestamps.value = {
-      ...timestamps,
-      [newPost.id]: Date.now(),
-    };
+    if (removed) {
+      delete items.value[oldId];
+    }
+
+    const prepared = applyPostSignature(newPost);
+    items.value[newPost.id] = prepared;
+
+    if (oldId in itemTimestamps.value) {
+      delete itemTimestamps.value[oldId];
+    }
+
+    itemTimestamps.value[newPost.id] = Date.now();
 
     return removed;
   }
@@ -900,76 +949,45 @@ export const usePostsStore = defineStore("posts", () => {
       return;
     }
 
-    let nextItems: Record<string, PostsStorePost> | null = null;
-    let nextTimestamps: Record<string, number> | null = null;
-
-    function ensureItems() {
-      if (!nextItems) {
-        nextItems = { ...items.value };
-      }
-
-      return nextItems;
-    }
-
-    function ensureTimestamps() {
-      if (!nextTimestamps) {
-        nextTimestamps = { ...itemTimestamps.value };
-      }
-
-      return nextTimestamps;
-    }
-
     for (const id of Object.keys(items.value)) {
       if (!activeIds.has(id)) {
-        const itemsTarget = ensureItems();
-        const timestampsTarget = ensureTimestamps();
+        delete items.value[id];
 
-        delete itemsTarget[id];
-        delete timestampsTarget[id];
+        if (id in itemTimestamps.value) {
+          delete itemTimestamps.value[id];
+        }
       }
     }
 
     for (const post of incomingPosts) {
-      const normalizedPost: PostsStorePost = { ...post, __optimistic: false };
-      const currentItem = (nextItems ?? items.value)[post.id];
+      const normalizedPost = applyPostSignature({ ...post, __optimistic: false });
+      const currentItem = items.value[post.id];
 
-      if (!currentItem || currentItem.__optimistic || !deepEqual(currentItem, normalizedPost)) {
-        const itemsTarget = ensureItems();
-        itemsTarget[post.id] = normalizedPost;
+      if (!currentItem) {
+        items.value[post.id] = normalizedPost;
+      } else {
+        getPostSignature(currentItem);
+
+        if (currentItem.__optimistic || !postsAreEquivalent(currentItem, normalizedPost)) {
+          items.value[post.id] = normalizedPost;
+        }
       }
 
-      const currentTimestamp = (nextTimestamps ?? itemTimestamps.value)[post.id];
-
-      if (currentTimestamp !== now) {
-        const timestampsTarget = ensureTimestamps();
-        timestampsTarget[post.id] = now;
+      if (itemTimestamps.value[post.id] !== now) {
+        itemTimestamps.value[post.id] = now;
       }
-    }
-
-    if (nextItems) {
-      items.value = nextItems;
     }
 
     if (!listOrderMatch) {
-      listIds.value = finalIds;
-    }
-
-    if (nextTimestamps) {
-      itemTimestamps.value = nextTimestamps;
+      listIds.value.splice(0, listIds.value.length, ...finalIds);
     }
 
     if (!pageIdsMatch) {
-      pageMap.value = {
-        ...pageMap.value,
-        [normalizedPage]: incomingIds,
-      };
+      pageMap.value[normalizedPage] = incomingIds;
     }
 
     if (pageTimestamp !== now) {
-      pageTimestamps.value = {
-        ...pageTimestamps.value,
-        [normalizedPage]: now,
-      };
+      pageTimestamps.value[normalizedPage] = now;
     }
 
     if (pageSize.value !== normalizedLimit) {
@@ -1004,10 +1022,7 @@ export const usePostsStore = defineStore("posts", () => {
       listIds.value.unshift(post.id);
     }
 
-    items.value = {
-      ...items.value,
-      [post.id]: post,
-    };
+    items.value[post.id] = applyPostSignature(post);
 
     markItemTimestamp(post.id, Date.now());
   }
@@ -1020,13 +1035,11 @@ export const usePostsStore = defineStore("posts", () => {
     }
 
     if (items.value[postId]) {
-      const { [postId]: _, ...rest } = items.value;
-      items.value = rest;
+      delete items.value[postId];
     }
 
     if (itemTimestamps.value[postId]) {
-      const { [postId]: __, ...restTimestamps } = itemTimestamps.value;
-      itemTimestamps.value = restTimestamps;
+      delete itemTimestamps.value[postId];
     }
 
     return index;
@@ -1347,6 +1360,7 @@ export const usePostsStore = defineStore("posts", () => {
     const cachedTimestamp = itemTimestamps.value[trimmedId];
 
     if (!options.force && existing && cachedTimestamp && now - cachedTimestamp < itemTtlMs) {
+      getPostSignature(existing);
       return existing;
     }
 
@@ -1361,12 +1375,9 @@ export const usePostsStore = defineStore("posts", () => {
         throw new Error("Invalid post response format.");
       }
 
-      const post: PostsStorePost = { ...response.data, __optimistic: false };
+      const post = applyPostSignature({ ...response.data, __optimistic: false });
 
-      items.value = {
-        ...items.value,
-        [post.id]: post,
-      };
+      items.value[post.id] = post;
 
       if (!listIds.value.includes(post.id)) {
         listIds.value.push(post.id);
@@ -1431,7 +1442,7 @@ export const usePostsStore = defineStore("posts", () => {
         throw new Error("Invalid create post response.");
       }
 
-      const createdPost: PostsStorePost = { ...response.data, __optimistic: false };
+      const createdPost = applyPostSignature({ ...response.data, __optimistic: false });
       replaceOptimisticId(optimisticId, createdPost);
       markItemTimestamp(
         createdPost.id,
@@ -1489,16 +1500,12 @@ export const usePostsStore = defineStore("posts", () => {
       return existing;
     }
 
+    getPostSignature(existing);
     const snapshot = clonePost(existing);
-    items.value = {
-      ...items.value,
-      [trimmedId]: { ...existing, ...updates, __optimistic: true },
-    };
+    const optimisticPost = applyPostSignature({ ...existing, ...updates, __optimistic: true });
+    items.value[trimmedId] = optimisticPost;
 
-    updating.value = {
-      ...updating.value,
-      [trimmedId]: true,
-    };
+    updating.value[trimmedId] = true;
 
     const fetcher = resolveApiFetcher();
 
@@ -1508,12 +1515,9 @@ export const usePostsStore = defineStore("posts", () => {
         body: updates,
       });
 
-      const updatedPost: PostsStorePost = { ...response.data, __optimistic: false };
+      const updatedPost = applyPostSignature({ ...response.data, __optimistic: false });
 
-      items.value = {
-        ...items.value,
-        [trimmedId]: updatedPost,
-      };
+      items.value[trimmedId] = updatedPost;
 
       markItemTimestamp(
         trimmedId,
@@ -1522,19 +1526,13 @@ export const usePostsStore = defineStore("posts", () => {
 
       return updatedPost;
     } catch (caughtError) {
-      items.value = {
-        ...items.value,
-        [trimmedId]: snapshot,
-      };
+      items.value[trimmedId] = snapshot;
 
       const message =
         caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to update the post.");
     } finally {
-      updating.value = {
-        ...updating.value,
-        [trimmedId]: false,
-      };
+      updating.value[trimmedId] = false;
     }
   }
 
@@ -1551,13 +1549,11 @@ export const usePostsStore = defineStore("posts", () => {
       return;
     }
 
+    getPostSignature(existing);
     const snapshot = clonePost(existing);
     const previousIndex = removePostFromState(trimmedId);
 
-    deleting.value = {
-      ...deleting.value,
-      [trimmedId]: true,
-    };
+    deleting.value[trimmedId] = true;
 
     const fetcher = resolveApiFetcher();
 
@@ -1572,10 +1568,7 @@ export const usePostsStore = defineStore("posts", () => {
         listIds.value.unshift(trimmedId);
       }
 
-      items.value = {
-        ...items.value,
-        [trimmedId]: snapshot,
-      };
+      items.value[trimmedId] = snapshot;
 
       markItemTimestamp(trimmedId, Date.now());
 
@@ -1583,10 +1576,7 @@ export const usePostsStore = defineStore("posts", () => {
         caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
       throw new Error(message || "Unable to delete the post.");
     } finally {
-      deleting.value = {
-        ...deleting.value,
-        [trimmedId]: false,
-      };
+      deleting.value[trimmedId] = false;
     }
   }
 
