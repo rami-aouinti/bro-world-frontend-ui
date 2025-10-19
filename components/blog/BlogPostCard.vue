@@ -65,6 +65,21 @@
         @reply="openReply"
         @submit="handleCommentSubmit"
       />
+      <div
+        v-if="manualCommentsTriggerVisible"
+        class="comments-manual"
+      >
+        <button
+          type="button"
+          class="comments-manual__button"
+          @click="handleManualCommentsLoad"
+        >
+          {{ manualCommentsButtonLabel }}
+        </button>
+        <p class="comments-manual__hint">
+          {{ manualCommentsHint }}
+        </p>
+      </div>
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
         ref="loginPromptRef"
@@ -136,7 +151,7 @@
 import { computed, defineAsyncComponent, nextTick, reactive, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
-import { useNuxtApp } from "#app";
+import { onNuxtReady, useNuxtApp } from "#app";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
@@ -177,6 +192,13 @@ const postUserAriaName = computed(
     t("blog.posts.actions.follow"),
 );
 const { $notify } = useNuxtApp();
+const isHydrated = ref(false);
+
+if (import.meta.client) {
+  onNuxtReady(() => {
+    isHydrated.value = true;
+  });
+}
 const { reactToPost, addComment, reactToComment, getComments } = usePostsStore();
 const {
   currentUser,
@@ -218,6 +240,7 @@ const manualCommentsButtonLabel = computed(() => t("blog.comments.load"));
 const manualCommentsHint = computed(() => t("blog.comments.activationHint"));
 const manualCommentsTriggerVisible = computed(
   () =>
+    isHydrated.value &&
     isAuthenticated.value &&
     !shouldRenderCommentThread.value &&
     !commentsLoading.value &&
