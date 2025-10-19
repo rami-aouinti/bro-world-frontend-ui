@@ -117,6 +117,11 @@ import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 
 type SidebarVariant = "default" | "profile";
 
+interface SidebarCacheState {
+  default: string[];
+  profile: string[];
+}
+
 const props = withDefaults(
   defineProps<{
     items?: LayoutSidebarItem[];
@@ -173,6 +178,25 @@ const derivedActiveKey = computed(() => {
 
 const resolvedActiveKey = computed(() => props.activeKey ?? derivedActiveKey.value);
 
+const sidebarCache = useState<SidebarCacheState>("app-sidebar-cache", () => ({
+  default: [],
+  profile: [],
+}));
+
+const expandedGroupKeys = computed<string[]>({
+  get() {
+    const variant = props.variant ?? "default";
+    return sidebarCache.value[variant] ?? [];
+  },
+  set(value) {
+    const variant = props.variant ?? "default";
+    sidebarCache.value = {
+      ...sidebarCache.value,
+      [variant]: value,
+    };
+  },
+});
+
 function isItemActive(item: LayoutSidebarItem, key: string): boolean {
   if (item.key === key) return true;
 
@@ -199,8 +223,6 @@ function getDefaultExpandedGroups(items: LayoutSidebarItem[], activeKey: string)
 
   return result;
 }
-
-const expandedGroupKeys = ref<string[]>([]);
 
 function synchronizeExpandedGroups() {
   const defaultGroups = getDefaultExpandedGroups(localizedItems.value, resolvedActiveKey.value);

@@ -216,29 +216,32 @@ const canAccessAdmin = computed(() => {
   return roles.some((role) => adminRoleSet.has(role));
 });
 
-const notificationDefinitions = ref<NotificationDefinition[]>([
-  {
-    id: "new-follower",
-    key: "newFollower",
-    icon: "mdi:account-plus",
-    color: "primary",
-    read: false,
-  },
-  {
-    id: "new-comment",
-    key: "newComment",
-    icon: "mdi:message-reply-text",
-    color: "info",
-    read: false,
-  },
-  {
-    id: "system-update",
-    key: "systemUpdate",
-    icon: "mdi:calendar-clock",
-    color: "warning",
-    read: true,
-  },
-]);
+const notificationDefinitions = useState<NotificationDefinition[]>(
+  "app-top-bar-notifications",
+  () => [
+    {
+      id: "new-follower",
+      key: "newFollower",
+      icon: "mdi:account-plus",
+      color: "primary",
+      read: false,
+    },
+    {
+      id: "new-comment",
+      key: "newComment",
+      icon: "mdi:message-reply-text",
+      color: "info",
+      read: false,
+    },
+    {
+      id: "system-update",
+      key: "systemUpdate",
+      icon: "mdi:calendar-clock",
+      color: "warning",
+      read: true,
+    },
+  ],
+);
 
 const notifications = computed<AppNotification[]>(() =>
   notificationDefinitions.value.map((item) => ({
