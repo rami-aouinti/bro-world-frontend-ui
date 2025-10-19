@@ -179,16 +179,10 @@
                 class="pane-scroll px-3 py-4"
               >
                 <div class="flex flex-col gap-6">
-                  <v-skeleton-loader
-                    type="list-item-two-line"
-                    class="rounded-2xl"
-                  />
-                  <v-skeleton-loader
-                    v-for="index in 2"
-                    :key="index"
-                    type="card"
-                    class="rounded-2xl"
-                  />
+                  <SidebarWeatherCardSkeleton />
+                  <SidebarLeaderboardCardSkeleton />
+                  <SidebarRatingCardSkeleton />
+                  <SidebarContactCardSkeleton v-if="shouldShowContactSidebarCard" />
                 </div>
               </div>
             </template>
@@ -201,16 +195,10 @@
               class="pane-scroll px-3 py-4"
             >
               <div class="flex flex-col gap-6">
-                <v-skeleton-loader
-                  type="list-item-two-line"
-                  class="rounded-2xl"
-                />
-                <v-skeleton-loader
-                  v-for="index in 2"
-                  :key="index"
-                  type="card"
-                  class="rounded-2xl"
-                />
+                <SidebarWeatherCardSkeleton />
+                <SidebarLeaderboardCardSkeleton />
+                <SidebarRatingCardSkeleton />
+                <SidebarContactCardSkeleton v-if="shouldShowContactSidebarCard" />
               </div>
             </div>
           </div>
