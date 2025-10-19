@@ -117,7 +117,7 @@ function createMdiAliasVariants(iconMap: Record<string, string>) {
   return extendedAliases;
 }
 
-let projectMdiAliasEntries = Object.fromEntries(
+const projectMdiAliasEntries = Object.fromEntries(
   Object.entries(coreProjectMdiIcons).map(([name, value]) => [name, withSvgPrefix(value)]),
 );
 
@@ -167,7 +167,7 @@ function normalizeRequestedIconName(name: string | undefined): string {
   }
 
   if (trimmed.startsWith("mdi:")) {
-    return trimmed;
+    return `mdi-${trimmed.slice(4)}`;
   }
 
   if (trimmed.startsWith("mdi-")) {
@@ -235,6 +235,9 @@ function resolveMdiIconValue(value: IconValue): ResolvedMdiIcon {
   return { icon: stripSvgPrefix(normalized), found: false };
 }
 
+const pendingIconLoads = new Map<string, Promise<void>>();
+const missingIconWarnings = new Set<string>();
+
 const MdiSvgIcon = defineComponent({
   name: "AppMdiSvgIcon",
   props: makeIconProps(),
@@ -243,21 +246,58 @@ const MdiSvgIcon = defineComponent({
 
     async function updateIcon(icon: IconValue) {
       const target = icon ?? "";
-      const { icon: resolvedIcon, found } = resolveMdiIconValue(target);
+      const initial = resolveMdiIconValue(target);
 
-      resolved.value = resolvedIcon;
-
-      if (!found && typeof target === "string") {
-        const requestName = normalizeRequestedIconName(target);
-
-        if (!requestName) {
-          return;
-        }
-
-        await loadProjectMdiIcons([requestName]);
-        const retry = resolveMdiIconValue(target);
-        resolved.value = retry.icon;
+      if (initial.found || typeof target !== "string") {
+        resolved.value = initial.icon;
+        return;
       }
+
+      const requestName = normalizeRequestedIconName(target);
+
+      // Avoid rendering invalid SVG path data while the icon registry updates.
+      resolved.value = "";
+
+      if (!requestName) {
+        return;
+      }
+
+      let pending = pendingIconLoads.get(requestName);
+
+      if (!pending) {
+        pending = loadProjectMdiIcons([requestName])
+          .catch((error) => {
+            if (import.meta.dev) {
+              console.warn(
+                `[vuetify] Failed to load lazy MDI icon "${target}" from project bundle.`,
+                error,
+              );
+            }
+          })
+          .finally(() => {
+            pendingIconLoads.delete(requestName);
+          });
+
+        pendingIconLoads.set(requestName, pending);
+      }
+
+      await pending;
+
+      const retry = resolveMdiIconValue(target);
+
+      if (retry.found) {
+        resolved.value = retry.icon;
+        return;
+      }
+
+      if (import.meta.dev && !missingIconWarnings.has(requestName)) {
+        missingIconWarnings.add(requestName);
+        console.warn(
+          `[vuetify] Icon "${target}" is not registered even after attempting lazy load.`,
+        );
+      }
+
+      resolved.value = "";
     }
 
     watch(
