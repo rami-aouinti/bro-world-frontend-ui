@@ -174,6 +174,14 @@ do not use those integrations.
 
 > ℹ️ The `.env.example` file documents every supported environment variable along with inline comments that describe its purpose. When deploying to platforms such as Vercel or Netlify, set these variables using their dashboard or CLI so serverless functions receive the correct runtime configuration.
 
+### Game service proxy
+
+Set `NUXT_PUBLIC_GAME_API_BASE` to the base URL of the BroWorld Game API (defaults to
+`https://game.bro-world.org`). The server routes mounted under `/api/game/*` read this value to
+forward requests to the external service. Provide the special value `mock` to serve the local
+fixtures in [`server/mock/game.ts`](server/mock/game.ts) instead of calling the remote API—handy when
+developing offline or when the upstream service is unavailable.
+
 ### Redis TTL overrides
 
 Configure the following environment variables to tune how long Redis stores education content and generated certificates:
