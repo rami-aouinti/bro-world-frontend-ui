@@ -7,7 +7,7 @@
     rounded
     flat
     class="app-top-bar text-foreground"
-    height="50"
+    :height="APP_TOP_BAR_HEIGHT"
   >
     <span
       class="pointer-events-none absolute -left-14 top-8 h-40 w-40 rounded-full bg-primary/25 blur-3xl"
@@ -113,6 +113,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { onNuxtReady } from "#app";
+import { APP_TOP_BAR_HEIGHT } from "./app-bar/constants";
 import AppBrand from "./app-bar/AppBrand.vue";
 import AppNavButtons from "./app-bar/AppNavButtons.vue";
 import AppIconBar from "./app-bar/AppIconBar.vue";
