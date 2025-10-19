@@ -51,23 +51,11 @@ const requestUrl = hasInjectionSupport ? useRequestURL() : null;
 
 const routeLoadingState = useState("route:loading", () => false);
 const routeLoading = computed(() => routeLoadingState.value);
-const initialLoadingState = useState("app:initial-loading", () => {
-  if (import.meta.server) {
-    return false;
-  }
-
-  if (nuxtApp?.isHydrating === false) {
-    return false;
-  }
-
-  return true;
-});
+const initialLoadingState = useState("app:initial-loading", () => true);
 const initialLoading = computed(() => initialLoadingState.value);
 
 const initialRouteReady = ref(false);
-const initialHydrationComplete = ref(
-  !import.meta.client || !nuxtApp || !nuxtApp.isHydrating,
-);
+const initialHydrationComplete = ref(!import.meta.client || !nuxtApp || !nuxtApp.isHydrating);
 
 function maybeDismissInitialLoading(force = false) {
   if (!initialLoadingState.value) {
@@ -118,10 +106,6 @@ if (import.meta.client && nuxtApp) {
       finishTimer = null;
     }
     routeLoadingState.value = true;
-
-    if (initialRouteReady.value && initialHydrationComplete.value) {
-      initialLoadingState.value = true;
-    }
   }
 
   function handleRouteStop() {
