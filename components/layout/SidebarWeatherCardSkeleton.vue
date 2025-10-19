@@ -17,3 +17,7 @@
     </div>
   </SidebarCard>
 </template>
+
+<script setup lang="ts">
+import SidebarCard from "~/components/layout/SidebarCard.vue";
+</script>
