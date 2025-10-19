@@ -1161,20 +1161,66 @@ export const usePostsStore = defineStore("posts", () => {
             });
 
             return normalizePostsListResponse(rawResponse);
-          })()
-            .then((response) => ({ status: "fulfilled" as const, value: response }))
-            .catch((reason) => ({ status: "rejected" as const, reason })),
+          })(),
         );
 
-        for (let index = 0; index < pendingRequests.length; index += 1) {
-          const result = await pendingRequests[index];
+        const errors: unknown[] = [];
 
-          if (result.status === "fulfilled") {
-            setPostsFromResponse(result.value);
-            return result.value.data;
+        const firstSuccessfulResponse = await new Promise<PostsListResponse>((resolve, reject) => {
+          let remaining = pendingRequests.length;
+          let settled = false;
+
+          if (remaining === 0) {
+            settled = true;
+            reject(new Error("Unable to fetch posts."));
+            return;
           }
 
-          lastError = result.reason;
+          for (const pendingRequest of pendingRequests) {
+            pendingRequest
+              .then((response) => {
+                if (settled) {
+                  return;
+                }
+
+                settled = true;
+                resolve(response);
+              })
+              .catch((reason) => {
+                if (settled) {
+                  return;
+                }
+
+                errors.push(reason);
+                lastError = reason;
+                remaining -= 1;
+
+                if (remaining === 0) {
+                  settled = true;
+                  const lastReason = errors[errors.length - 1];
+                  const aggregateMessage =
+                    lastReason instanceof Error
+                      ? lastReason.message
+                      : String(lastReason ?? "");
+                  const aggregateError =
+                    errors.length > 1
+                      ? new AggregateError(errors, aggregateMessage)
+                      : (errors[0] instanceof Error
+                          ? errors[0]
+                          : new Error(String(errors[0] ?? "")));
+
+                  lastError = aggregateError;
+                  reject(aggregateError);
+                }
+              });
+          }
+        });
+
+        setPostsFromResponse(firstSuccessfulResponse);
+        return firstSuccessfulResponse.data;
+      } catch (caughtError) {
+        if (typeof caughtError !== "undefined") {
+          lastError = caughtError;
         }
 
         const finalError =
