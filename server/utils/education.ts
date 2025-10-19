@@ -13,24 +13,29 @@ import type {
   QuizQuestion,
 } from "~/types/education";
 import { educationTranslationsByLocale } from "~/server/mock/education-translations";
+import type { CachedEducationData } from "./cache/education";
+import {
+  clearCachedCertificates,
+  invalidateCachedEducationData,
+  prependCachedCertificate,
+  readCachedBaseEducationData,
+  readCachedCertificates,
+  readCachedEducationData,
+  writeCachedBaseEducationData,
+  writeCachedEducationData,
+} from "./cache/education";
 
 interface RawCourse extends Course {
   exercises?: ExerciseWithCourse[];
 }
 
-interface EducationData {
-  categories: Category[];
-  courses: RawCourse[];
-  exercises: ExerciseWithCourse[];
-}
-
-let baseCache: EducationData | null = null;
-const localizedCache = new Map<string, EducationData>();
-const certificateStore: Certificate[] = [];
+type EducationData = CachedEducationData;
 
 async function readBaseEducationData(): Promise<EducationData> {
-  if (baseCache) {
-    return baseCache;
+  const cached = await readCachedBaseEducationData();
+
+  if (cached) {
+    return cached;
   }
 
   const filePath = join(process.cwd(), "server/mock/education.json");
@@ -50,7 +55,10 @@ async function readBaseEducationData(): Promise<EducationData> {
     exercises: exercisesByCourse[course.id] ?? [],
   }));
 
-  baseCache = parsed;
+  parsed.categories = parsed.categories?.map((category) => ({ ...category })) ?? [];
+  parsed.exercises = parsed.exercises?.map((exercise) => ({ ...exercise })) ?? [];
+
+  await writeCachedBaseEducationData(parsed);
   return parsed;
 }
 
@@ -164,7 +172,7 @@ function applyEducationTranslations(data: EducationData, locale: string): Educat
 
 async function readEducationData(locale?: string): Promise<EducationData> {
   const normalizedLocale = locale && typeof locale === "string" ? locale : "en";
-  const cached = localizedCache.get(normalizedLocale);
+  const cached = await readCachedEducationData(normalizedLocale);
 
   if (cached) {
     return cached;
@@ -172,7 +180,7 @@ async function readEducationData(locale?: string): Promise<EducationData> {
 
   const baseData = await readBaseEducationData();
   const localized = applyEducationTranslations(baseData, normalizedLocale);
-  localizedCache.set(normalizedLocale, localized);
+  await writeCachedEducationData(normalizedLocale, localized);
   return localized;
 }
 
@@ -289,20 +297,21 @@ export async function createCertificate(
     dateIso: new Date().toISOString(),
   };
 
-  certificateStore.unshift(certificate);
+  await prependCachedCertificate(certificate);
   return certificate;
 }
 
-export function listCertificates(): Certificate[] {
-  return [...certificateStore];
+export async function listCertificates(): Promise<Certificate[]> {
+  const certificates = await readCachedCertificates();
+  return certificates.map((certificate) => ({ ...certificate }));
 }
 
-export function findCertificate(id: string): Certificate | null {
-  return certificateStore.find((entry) => entry.id === id) ?? null;
+export async function findCertificate(id: string): Promise<Certificate | null> {
+  const certificates = await readCachedCertificates();
+  return certificates.find((entry) => entry.id === id) ?? null;
 }
 
-export function clearEducationCache() {
-  baseCache = null;
-  localizedCache.clear();
-  certificateStore.splice(0, certificateStore.length);
+export async function clearEducationCache(): Promise<void> {
+  await invalidateCachedEducationData();
+  await clearCachedCertificates();
 }

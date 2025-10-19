@@ -947,6 +947,11 @@ export default defineNuxtConfig({
       profileTtl: Number.parseInt(process.env.NUXT_REDIS_PROFILE_TTL ?? "300", 10),
       helpTtl: Number.parseInt(process.env.NUXT_REDIS_HELP_TTL ?? "300", 10),
       quizTtl: Number.parseInt(process.env.NUXT_REDIS_QUIZ_TTL ?? "300", 10),
+      educationTtl: Number.parseInt(process.env.NUXT_REDIS_EDUCATION_TTL ?? "300", 10),
+      certificateTtl: Number.parseInt(
+        process.env.NUXT_REDIS_CERTIFICATE_TTL ?? String(60 * 60 * 24 * 7),
+        10,
+      ),
     },
     reviews: {
       apiBase: process.env.NUXT_REVIEWS_API_BASE ?? "https://bro-world.org",
@@ -973,6 +978,11 @@ export default defineNuxtConfig({
         itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
         quizTtl: Number.parseInt(process.env.NUXT_REDIS_QUIZ_TTL ?? "300", 10),
         jobTtl: Number.parseInt(process.env.NUXT_REDIS_JOB_TTL ?? "300", 10),
+        educationTtl: Number.parseInt(process.env.NUXT_REDIS_EDUCATION_TTL ?? "300", 10),
+        certificateTtl: Number.parseInt(
+          process.env.NUXT_REDIS_CERTIFICATE_TTL ?? String(60 * 60 * 24 * 7),
+          10,
+        ),
       },
       auth: {
         sessionTokenCookieName:

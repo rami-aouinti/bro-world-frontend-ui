@@ -174,6 +174,13 @@ do not use those integrations.
 
 > ℹ️ The `.env.example` file documents every supported environment variable along with inline comments that describe its purpose. When deploying to platforms such as Vercel or Netlify, set these variables using their dashboard or CLI so serverless functions receive the correct runtime configuration.
 
+### Redis TTL overrides
+
+Configure the following environment variables to tune how long Redis stores education content and generated certificates:
+
+- `NUXT_REDIS_EDUCATION_TTL` — Expiration (in seconds) for cached course listings and lesson data. Defaults to `300` seconds.
+- `NUXT_REDIS_CERTIFICATE_TTL` — Expiration (in seconds) for stored education certificates. Defaults to `604800` seconds (7 days).
+
 ## 🔐 Profile page
 
 - The `/profile` route is protected by the `auth` middleware. Visitors without a valid session are redirected to `/login`, and the intended URL is stored so they return to `/profile` after authenticating.

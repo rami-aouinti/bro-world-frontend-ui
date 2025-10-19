@@ -104,6 +104,9 @@ type RuntimeConfig = {
       listTtl: number;
       itemTtl: number;
       quizTtl: number;
+      jobTtl: number;
+      educationTtl: number;
+      certificateTtl: number;
     };
     crmProjects: {
       useMocks: boolean;
@@ -120,6 +123,8 @@ type RuntimeConfig = {
     settingsTtl: number;
     mercureTtl: number;
     quizTtl: number;
+    educationTtl: number;
+    certificateTtl: number;
   };
 };
 
@@ -134,6 +139,8 @@ function createDefaultRuntimeConfig(): RuntimeConfig {
         itemTtl: 300,
         quizTtl: 300,
         jobTtl: 300,
+        educationTtl: 300,
+        certificateTtl: 60 * 60 * 24 * 7,
       },
       crmProjects: {
         useMocks: true,
@@ -151,6 +158,8 @@ function createDefaultRuntimeConfig(): RuntimeConfig {
       settingsTtl: 300,
       mercureTtl: 600,
       quizTtl: 300,
+      educationTtl: 300,
+      certificateTtl: 60 * 60 * 24 * 7,
     },
   } satisfies RuntimeConfig;
 }
