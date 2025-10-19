@@ -452,7 +452,7 @@ const createErrors = reactive<FormErrors>({});
 const editErrors = reactive<FormErrors>({});
 
 try {
-  await callOnce(() => store.fetchUsers());
+  await callOnce("admin:user-management:fetch-users", () => store.fetchUsers());
 } catch (caughtError) {
   localError.value = store.error.value || resolveUsersErrorMessage(caughtError);
 }

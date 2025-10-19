@@ -433,7 +433,7 @@ const { registerRightSidebarContent } = useLayoutRightSidebar();
 
 useHead(createProfileFriendsHead);
 
-await callOnce(async () => {
+await callOnce("profile:friends:fetch-profile", async () => {
   try {
     await profileStore.fetchProfile({ background: true });
   } catch (error) {

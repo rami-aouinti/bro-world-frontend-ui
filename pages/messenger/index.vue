@@ -33,7 +33,7 @@ useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 
-await callOnce(() => messenger.fetchThreads({ limit: 50 }));
+await callOnce("messenger:threads:prefetch", () => messenger.fetchThreads({ limit: 50 }));
 
 const conversations = computed(() => messenger.orderedConversations.value ?? []);
 const activeConversation = computed(() => messenger.activeConversation.value);

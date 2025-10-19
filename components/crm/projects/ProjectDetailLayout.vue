@@ -237,7 +237,7 @@ const leaveError = ref<string | null>(null);
 const leaveSuccess = ref<string | null>(null);
 const loadError = ref<string | null>(null);
 
-await callOnce(() => projectsStore.listProjects());
+await callOnce("crm:projects:list", () => projectsStore.listProjects());
 
 try {
   await participantsStore.listParticipants(props.projectId);

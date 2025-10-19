@@ -197,7 +197,7 @@ const formRef = ref<VForm | null>(null);
 const selectedProjectId = ref<string | null>(null);
 const successTask = ref<CrmTask | null>(null);
 
-await callOnce(() => projectsStore.listProjects());
+await callOnce("crm:projects:list", () => projectsStore.listProjects());
 
 const { locale } = useI18n();
 

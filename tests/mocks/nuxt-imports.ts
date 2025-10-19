@@ -134,7 +134,7 @@ export function useRuntimeConfig() {
   };
 }
 
-export async function callOnce<T>(fn: () => T | Promise<T>) {
+export async function callOnce<T>(_key: string, fn: () => T | Promise<T>) {
   return await fn();
 }
 

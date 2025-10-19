@@ -34,7 +34,7 @@ useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 
-await callOnce(() => messenger.fetchThreads({ limit: 50 }));
+await callOnce("messenger:threads:prefetch", () => messenger.fetchThreads({ limit: 50 }));
 
 const conversationId = computed(() => {
   const params = currentRoute.value?.params ?? {};

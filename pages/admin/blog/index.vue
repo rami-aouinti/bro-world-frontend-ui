@@ -494,7 +494,7 @@ const updatingState = postsStore.updating;
 const deletingState = postsStore.deleting;
 const generalError = postsStore.error;
 
-await callOnce(() => postsStore.fetchPosts());
+await callOnce("admin:blog:posts:fetch", () => postsStore.fetchPosts());
 
 const search = ref("");
 const itemsPerPage = ref(10);
