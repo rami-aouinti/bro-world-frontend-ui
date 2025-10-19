@@ -501,6 +501,9 @@ const aboutTitle = computed(() => aboutContent.value.title?.trim() || t("pages.a
 const aboutSubtitle = computed(
   () => aboutContent.value.subtitle?.trim() || t("pages.about.subtitle"),
 );
+const aboutBody = computed(
+  () => aboutContent.value.body?.trim() || t("pages.about.missionBody"),
+);
 
 const heroActions = computed(() => [
   {
