@@ -135,6 +135,8 @@ import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch } fr
 import { useI18n } from "vue-i18n";
 import { callOnce, onNuxtReady, useNuxtApp, useState } from "#app";
 import { definePageMeta } from "#imports";
+import NewPostSkeleton from "~/components/blog/NewPostSkeleton.vue";
+import StoriesStripSkeleton from "~/components/stories/StoriesStripSkeleton.vue";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 import type { ReactionType } from "~/lib/mock/blog";
@@ -480,14 +482,6 @@ async function callOnceFn<T>(key: string, task: () => Promise<T> | T) {
 
   return await task();
 }
-const NewPostSkeleton = defineAsyncComponent({
-  loader: () => import("~/components/blog/NewPostSkeleton.vue"),
-  suspensible: false,
-});
-const StoriesStripSkeleton = defineAsyncComponent({
-  loader: () => import("~/components/stories/StoriesStripSkeleton.vue"),
-  suspensible: false,
-});
 const StoriesStrip = defineAsyncComponent({
   loader: () => import("~/components/stories/StoriesStrip.vue"),
   suspensible: false,
