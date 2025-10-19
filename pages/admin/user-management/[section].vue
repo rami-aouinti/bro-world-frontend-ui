@@ -265,7 +265,7 @@ const detailsLoading = ref(false);
 const detailsError = ref<string | null>(null);
 const selectedUser = ref<UsersStoreUser | null>(null);
 
-await callOnce(async () => {
+await callOnce("admin:user-management:fetch-users", async () => {
   try {
     await store.fetchUsers();
   } catch (error) {

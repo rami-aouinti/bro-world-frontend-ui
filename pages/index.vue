@@ -473,10 +473,13 @@ const {
 } = usePostsStore();
 
 const error = storeError ?? ref<string | null>(null);
-const callOnceFn =
-  typeof callOnce === "function"
-    ? callOnce
-    : async <T>(task: () => Promise<T> | T) => await task();
+async function callOnceFn<T>(key: string, task: () => Promise<T> | T) {
+  if (typeof callOnce === "function") {
+    return await callOnce(key, task);
+  }
+
+  return await task();
+}
 const NewPostSkeleton = defineAsyncComponent({
   loader: () => import("~/components/blog/NewPostSkeleton.vue"),
   suspensible: false,
@@ -655,7 +658,7 @@ function ensureInitialPostsLoad() {
   return initialLoadPromise.value;
 }
 
-await callOnceFn(async () => {
+await callOnceFn("pages:index:initial-posts", async () => {
   if (import.meta.server) {
     await ensureInitialPostsLoad();
     return;

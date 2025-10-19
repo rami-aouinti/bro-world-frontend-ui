@@ -11,7 +11,7 @@ vi.mock("#imports", async () => {
 
   return {
     useI18n: vueI18n.useI18n,
-    callOnce: (fn: () => unknown) => fn(),
+    callOnce: (_key: string, fn: () => unknown) => fn(),
     definePageMeta: () => {},
   };
 });

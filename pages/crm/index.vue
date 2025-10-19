@@ -162,7 +162,7 @@ const createdProject = ref<CrmProject | null>(null);
 const loadError = ref<string | null>(null);
 
 try {
-  await callOnce(() => store.listProjects());
+  await callOnce("crm:projects:list", () => store.listProjects());
 } catch (error) {
   const message = store.error.value || (error as { message?: string } | null)?.message || null;
   loadError.value = message;

@@ -242,7 +242,7 @@ const projects = crmStore.projects;
 const pending = crmStore.pending;
 const error = crmStore.error;
 
-await callOnce(() => crmStore.listProjects());
+await callOnce("admin:crm:projects:list", () => crmStore.listProjects());
 
 const totalProjects = computed(() => projects.value.length);
 
