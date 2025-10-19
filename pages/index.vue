@@ -438,6 +438,7 @@ if (typeof definePageMeta === "function") {
   definePageMeta({
     showRightWidgets: true,
     documentDriven: false,
+    rightSidebarPreset: "dashboard",
   });
 }
 
