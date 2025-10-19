@@ -1,9 +1,11 @@
 <template>
   <main
-    class="help-page py-6"
     aria-labelledby="help-heading"
   >
-    <v-container class="help-container">
+    <header
+        class="mb-6"
+        aria-describedby="help-subtitle"
+    >
       <section
         class="help-hero mb-10"
         aria-describedby="help-subtitle"
@@ -215,7 +217,7 @@
           </v-expansion-panels>
         </v-sheet>
       </section>
-    </v-container>
+    </header>
   </main>
 </template>
 

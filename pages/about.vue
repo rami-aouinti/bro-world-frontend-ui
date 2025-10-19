@@ -1,9 +1,11 @@
 <template>
   <main
-    class="about-page py-12"
     aria-labelledby="about-heading"
   >
-    <v-container class="about-container">
+    <header
+        class="mb-6"
+        aria-describedby="about-subtitle"
+    >
       <section
         class="mb-12"
         aria-describedby="about-subtitle"
@@ -540,7 +542,7 @@
           </v-row>
         </v-sheet>
       </section>
-    </v-container>
+    </header>
   </main>
 </template>
 

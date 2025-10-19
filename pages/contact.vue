@@ -1,9 +1,11 @@
 <template>
   <main
-    class="contact-page py-12"
     aria-labelledby="contact-heading"
   >
-    <v-container class="contact-container">
+    <header
+        class="mb-6"
+        aria-describedby="contact-subtitle"
+    >
       <v-row
         class="align-stretch contact-layout"
         dense
@@ -136,7 +138,7 @@
           </aside>
         </v-col>
       </v-row>
-    </v-container>
+    </header>
   </main>
 </template>
 
