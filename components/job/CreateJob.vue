@@ -1,378 +1,370 @@
 <template>
-  <v-dialog
-    :model-value="modelValue"
-    max-width="900px"
-    @update:model-value="emit('update:modelValue', $event)"
-  >
-    <v-card>
-      <v-card-title>{{ t("job.create") }}</v-card-title>
-      <v-card-subtitle class="text-medium-emphasis">
-        {{ step }} / {{ totalSteps }}
-      </v-card-subtitle>
-      <v-card-text class="pa-6">
-        <v-stepper
-          v-model="step"
-          class="job-stepper"
-          elevation="0"
-        >
-          <v-stepper-header class="job-stepper__header">
-            <v-stepper-item
-              v-for="stepItem in steps"
-              :key="stepItem.value"
-              :complete="step > stepItem.value"
-              :editable="step > stepItem.value"
-              :title="stepItem.title"
-              :value="stepItem.value"
-              :prepend-icon="stepItem.icon"
-            />
-          </v-stepper-header>
+  <v-card class="job-card">
+    <v-card-title>{{ t("job.create") }}</v-card-title>
+    <v-card-subtitle class="text-medium-emphasis"> {{ step }} / {{ totalSteps }} </v-card-subtitle>
+    <v-card-text class="pa-6">
+      <v-stepper
+        v-model="step"
+        class="job-stepper"
+        elevation="0"
+      >
+        <v-stepper-header class="job-stepper__header">
+          <v-stepper-item
+            v-for="stepItem in steps"
+            :key="stepItem.value"
+            :complete="step > stepItem.value"
+            :editable="step > stepItem.value"
+            :title="stepItem.title"
+            :value="stepItem.value"
+            :prepend-icon="stepItem.icon"
+          />
+        </v-stepper-header>
 
-          <div class="job-stepper__progress">
-            <v-progress-linear
-              :model-value="progress"
-              color="primary"
-              height="6"
-              rounded
-            />
-          </div>
+        <div class="job-stepper__progress">
+          <v-progress-linear
+            :model-value="progress"
+            color="primary"
+            height="6"
+            rounded
+          />
+        </div>
 
-          <v-stepper-window class="job-stepper__window">
-            <v-stepper-window-item :value="1">
-              <v-row
-                v-if="companies.length"
-                class="align-center mb-4"
+        <v-stepper-window class="job-stepper__window">
+          <v-stepper-window-item :value="1">
+            <v-row
+              v-if="companies.length"
+              class="align-center mb-4"
+            >
+              <v-col cols="5">
+                <v-select
+                  v-model="jobForm.companyId"
+                  :items="companies"
+                  density="compact"
+                  item-title="name"
+                  item-value="id"
+                  :label="t('job.company')"
+                  rounded="xl"
+                />
+              </v-col>
+              <v-col
+                cols="2"
+                class="text-center"
               >
-                <v-col cols="5">
-                  <v-select
-                    v-model="jobForm.companyId"
-                    :items="companies"
-                    density="compact"
-                    item-title="name"
-                    item-value="id"
-                    :label="t('job.company')"
-                    rounded="xl"
-                  />
-                </v-col>
-                <v-col
-                  cols="2"
-                  class="text-center"
-                >
-                  <div class="text-subtitle-1 font-weight-medium">OR</div>
-                </v-col>
-                <v-col cols="5">
-                  <v-btn
-                    block
-                    color="primary"
-                    variant="outlined"
-                    @click="toggleCreateCompany"
-                  >
-                    {{ t("company.create") }}
-                  </v-btn>
-                </v-col>
-              </v-row>
-
-              <CreateCompany
-                v-if="showCreateCompany || !companies.length"
-                @company-created="onCompanyCreated"
-              />
-
-              <v-row class="d-flex align-center text-center mt-4 mb-2 mx-2">
+                <div class="text-subtitle-1 font-weight-medium">OR</div>
+              </v-col>
+              <v-col cols="5">
                 <v-btn
-                  class="mt-4"
+                  block
                   color="primary"
-                  :disabled="!canContinue"
-                  @click="nextStep"
+                  variant="outlined"
+                  @click="toggleCreateCompany"
                 >
-                  {{ t("buttons.continue") }}
+                  {{ t("company.create") }}
                 </v-btn>
-              </v-row>
-            </v-stepper-window-item>
+              </v-col>
+            </v-row>
 
-            <v-stepper-window-item :value="2">
-              <v-row class="py-2">
-                <v-col cols="12">
-                  <v-text-field
-                    v-model="jobForm.title"
-                    :label="t('job.title')"
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-textarea
-                    v-model="jobForm.description"
-                    :label="t('job.description')"
-                    auto-grow
-                    class="mb-2"
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-textarea
-                    v-model="jobForm.work"
-                    :label="t('job.work')"
-                    auto-grow
-                    class="mb-2"
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-              </v-row>
-              <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn
-                  variant="text"
-                  @click="prevStep"
-                >
-                  {{ t("buttons.back") }}
-                </v-btn>
-                <v-btn
-                  color="primary"
-                  :disabled="!canContinue"
-                  @click="nextStep"
-                >
-                  {{ t("buttons.continue") }}
-                </v-btn>
-              </v-row>
-            </v-stepper-window-item>
+            <CreateCompany
+              v-if="showCreateCompany || !companies.length"
+              @company-created="onCompanyCreated"
+            />
 
-            <v-stepper-window-item :value="3">
-              <v-row class="py-2">
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-select
-                    v-model="jobForm.requiredSkills"
-                    :items="['Php', 'Symfony', 'Html', 'Css', 'Laravel']"
-                    :label="t('job.skills')"
-                    chips
-                    density="compact"
-                    multiple
-                    rounded="xl"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-select
-                    v-model="jobForm.requirements"
-                    :items="['Symfony', 'Backend', 'Node']"
-                    :label="t('job.requirements')"
-                    chips
-                    density="compact"
-                    multiple
-                    rounded="xl"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-select
-                    v-model="jobForm.experience"
-                    :items="experienceOptions"
-                    item-title="label"
-                    item-value="value"
-                    :label="t('job.experience')"
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <div class="text-grey-darken-1">
-                    {{ t("job.salaryRange") }}: {{ salaryRangeRange[0] }} € -
-                    {{ salaryRangeRange[1] }} €
-                  </div>
-                  <v-range-slider
-                    v-model="salaryRangeRange"
-                    :min="15000"
-                    :max="150000"
-                    class="mt-6"
-                    step="5000"
-                    thumb-label="always"
-                  />
-                </v-col>
-              </v-row>
-              <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn
-                  variant="text"
-                  @click="prevStep"
-                >
-                  {{ t("buttons.back") }}
-                </v-btn>
-                <v-btn
-                  :disabled="!canContinue"
-                  color="primary"
-                  @click="nextStep"
-                >
-                  {{ t("buttons.continue") }}
-                </v-btn>
-              </v-row>
-            </v-stepper-window-item>
+            <v-row class="d-flex align-center text-center mt-4 mb-2 mx-2">
+              <v-btn
+                class="mt-4"
+                color="primary"
+                :disabled="!canContinue"
+                @click="nextStep"
+              >
+                {{ t("buttons.continue") }}
+              </v-btn>
+            </v-row>
+          </v-stepper-window-item>
 
-            <v-stepper-window-item :value="4">
-              <v-row class="py-2">
-                <v-col
-                  cols="12"
-                  md="4"
+          <v-stepper-window-item :value="2">
+            <v-row class="py-2">
+              <v-col cols="12">
+                <v-text-field
+                  v-model="jobForm.title"
+                  :label="t('job.title')"
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col
+                cols="12"
+                md="6"
+              >
+                <v-textarea
+                  v-model="jobForm.description"
+                  :label="t('job.description')"
+                  auto-grow
+                  class="mb-2"
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                md="6"
+              >
+                <v-textarea
+                  v-model="jobForm.work"
+                  :label="t('job.work')"
+                  auto-grow
+                  class="mb-2"
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+            </v-row>
+            <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
+              <v-btn
+                variant="text"
+                @click="prevStep"
+              >
+                {{ t("buttons.back") }}
+              </v-btn>
+              <v-btn
+                color="primary"
+                :disabled="!canContinue"
+                @click="nextStep"
+              >
+                {{ t("buttons.continue") }}
+              </v-btn>
+            </v-row>
+          </v-stepper-window-item>
+
+          <v-stepper-window-item :value="3">
+            <v-row class="py-2">
+              <v-col
+                cols="12"
+                md="4"
+              >
+                <v-select
+                  v-model="jobForm.requiredSkills"
+                  :items="['Php', 'Symfony', 'Html', 'Css', 'Laravel']"
+                  :label="t('job.skills')"
+                  chips
+                  density="compact"
+                  multiple
+                  rounded="xl"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                md="4"
+              >
+                <v-select
+                  v-model="jobForm.requirements"
+                  :items="['Symfony', 'Backend', 'Node']"
+                  :label="t('job.requirements')"
+                  chips
+                  density="compact"
+                  multiple
+                  rounded="xl"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                md="4"
+              >
+                <v-select
+                  v-model="jobForm.experience"
+                  :items="experienceOptions"
+                  item-title="label"
+                  item-value="value"
+                  :label="t('job.experience')"
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <div class="text-grey-darken-1">
+                  {{ t("job.salaryRange") }}: {{ salaryRangeRange[0] }} € -
+                  {{ salaryRangeRange[1] }} €
+                </div>
+                <v-range-slider
+                  v-model="salaryRangeRange"
+                  :min="15000"
+                  :max="150000"
+                  class="mt-6"
+                  step="5000"
+                  thumb-label="always"
+                />
+              </v-col>
+            </v-row>
+            <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
+              <v-btn
+                variant="text"
+                @click="prevStep"
+              >
+                {{ t("buttons.back") }}
+              </v-btn>
+              <v-btn
+                :disabled="!canContinue"
+                color="primary"
+                @click="nextStep"
+              >
+                {{ t("buttons.continue") }}
+              </v-btn>
+            </v-row>
+          </v-stepper-window-item>
+
+          <v-stepper-window-item :value="4">
+            <v-row class="py-2">
+              <v-col
+                cols="12"
+                md="4"
+              >
+                <v-select
+                  v-model="jobForm.workType"
+                  :items="['Remote', 'Onsite', 'Hybrid']"
+                  :label="t('job.workType')"
+                  chips
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                md="4"
+              >
+                <v-select
+                  v-model="jobForm.contractType"
+                  :items="['Fulltime', 'Parttime']"
+                  :label="t('job.contractType')"
+                  chips
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                md="4"
+              >
+                <v-text-field
+                  v-model="jobForm.workLocation"
+                  :label="t('job.location')"
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <div
+                  v-for="(lang, index) in jobForm.languages"
+                  :key="index"
+                  class="d-flex align-center gap-4 mb-3"
                 >
-                  <v-select
-                    v-model="jobForm.workType"
-                    :items="['Remote', 'Onsite', 'Hybrid']"
-                    :label="t('job.workType')"
-                    chips
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-select
-                    v-model="jobForm.contractType"
-                    :items="['Fulltime', 'Parttime']"
-                    :label="t('job.contractType')"
-                    chips
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    v-model="jobForm.workLocation"
-                    :label="t('job.location')"
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <div
-                    v-for="(lang, index) in jobForm.languages"
-                    :key="index"
-                    class="d-flex align-center gap-4 mb-3"
-                  >
-                    <v-row>
-                      <v-col
-                        cols="12"
-                        md="5"
+                  <v-row>
+                    <v-col
+                      cols="12"
+                      md="5"
+                    >
+                      <v-select
+                        v-model="lang.name"
+                        :items="availableLanguages"
+                        class="flex-grow-1"
+                        density="compact"
+                        item-title="name"
+                        item-value="name"
+                        label="Language"
+                        rounded="xl"
+                      />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="5"
+                    >
+                      <v-select
+                        v-model="lang.level"
+                        :items="['basic', 'intermediate', 'fluent', 'native']"
+                        class="flex-grow-1"
+                        density="compact"
+                        label="Level"
+                        rounded="xl"
+                      />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="2"
+                    >
+                      <v-btn
+                        icon
+                        variant="text"
+                        @click="jobForm.languages.splice(index, 1)"
                       >
-                        <v-select
-                          v-model="lang.name"
-                          :items="availableLanguages"
-                          class="flex-grow-1"
-                          density="compact"
-                          item-title="name"
-                          item-value="name"
-                          label="Language"
-                          rounded="xl"
-                        />
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        md="5"
-                      >
-                        <v-select
-                          v-model="lang.level"
-                          :items="['basic', 'intermediate', 'fluent', 'native']"
-                          class="flex-grow-1"
-                          density="compact"
-                          label="Level"
-                          rounded="xl"
-                        />
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        md="2"
-                      >
-                        <v-btn
-                          icon
-                          variant="text"
-                          @click="jobForm.languages.splice(index, 1)"
-                        >
-                          <v-icon color="primary">mdi-delete</v-icon>
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                  </div>
+                        <v-icon color="primary">mdi-delete</v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </div>
 
-                  <v-btn
-                    color="primary"
-                    prepend-icon="mdi-plus"
-                    variant="text"
-                    @click="addLanguage"
-                  >
-                    {{ t("job.addLanguage") }}
-                  </v-btn>
-                </v-col>
-              </v-row>
-              <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn
-                  variant="text"
-                  @click="prevStep"
-                >
-                  {{ t("buttons.back") }}
-                </v-btn>
-                <v-btn
-                  :disabled="!canContinue"
-                  color="primary"
-                  @click="nextStep"
-                >
-                  {{ t("buttons.continue") }}
-                </v-btn>
-              </v-row>
-            </v-stepper-window-item>
-
-            <v-stepper-window-item :value="5">
-              <v-row class="py-2">
-                <v-col cols="12">
-                  <v-textarea
-                    v-model="jobForm.benefits"
-                    :label="t('job.benefits')"
-                    auto-grow
-                    class="mb-2"
-                    density="compact"
-                    rounded="xl"
-                  />
-                </v-col>
-              </v-row>
-              <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
-                <v-btn
-                  variant="text"
-                  @click="prevStep"
-                >
-                  {{ t("buttons.back") }}
-                </v-btn>
                 <v-btn
                   color="primary"
-                  @click="submitJob"
+                  prepend-icon="mdi-plus"
+                  variant="text"
+                  @click="addLanguage"
                 >
-                  {{ t("job.submit") }}
+                  {{ t("job.addLanguage") }}
                 </v-btn>
-              </v-row>
-            </v-stepper-window-item>
-          </v-stepper-window>
-        </v-stepper>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
+              </v-col>
+            </v-row>
+            <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
+              <v-btn
+                variant="text"
+                @click="prevStep"
+              >
+                {{ t("buttons.back") }}
+              </v-btn>
+              <v-btn
+                :disabled="!canContinue"
+                color="primary"
+                @click="nextStep"
+              >
+                {{ t("buttons.continue") }}
+              </v-btn>
+            </v-row>
+          </v-stepper-window-item>
+
+          <v-stepper-window-item :value="5">
+            <v-row class="py-2">
+              <v-col cols="12">
+                <v-textarea
+                  v-model="jobForm.benefits"
+                  :label="t('job.benefits')"
+                  auto-grow
+                  class="mb-2"
+                  density="compact"
+                  rounded="xl"
+                />
+              </v-col>
+            </v-row>
+            <v-row class="d-flex justify-space-between mt-4 mb-2 mx-2">
+              <v-btn
+                variant="text"
+                @click="prevStep"
+              >
+                {{ t("buttons.back") }}
+              </v-btn>
+              <v-btn
+                color="primary"
+                @click="submitJob"
+              >
+                {{ t("job.submit") }}
+              </v-btn>
+            </v-row>
+          </v-stepper-window-item>
+        </v-stepper-window>
+      </v-stepper>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script setup lang="ts">
@@ -409,8 +401,7 @@ type Company = {
 
 type CompaniesResponse = Company[] | { data: Company[] };
 
-const props = defineProps<{ modelValue: boolean }>();
-const emit = defineEmits<{ "update:modelValue": [value: boolean]; "job-created": [] }>();
+const emit = defineEmits<{ "job-created": [] }>();
 
 const { t } = useI18n();
 const { $notify: notify, $fetch } = useNuxtApp();
@@ -562,19 +553,9 @@ async function submitJob() {
 
   notify.success(t("job.createdSuccess"));
   emit("job-created");
-  emit("update:modelValue", false);
   step.value = 1;
   jobForm.value = createDefaultJobForm();
 }
-
-watch(
-  () => props.modelValue,
-  (value) => {
-    if (value) {
-      void fetchCompanies();
-    }
-  },
-);
 
 onMounted(() => {
   void fetchCompanies();
@@ -582,6 +563,12 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.job-card {
+  border-radius: 24px;
+  border: 1px solid rgba(var(--v-theme-primary), 0.25);
+  background: rgba(var(--v-theme-surface), 0.4);
+}
+
 .job-stepper {
   display: flex;
   flex-direction: column;
