@@ -3,7 +3,7 @@
     :color="false"
     class="z-100 bg-primary/80"
   />
-  <AppLoadingOverlay :visible="showInitialOverlay" />
+  <AppLoadingOverlay :visible="initialLoading" />
   <NuxtLayout>
     <NuxtPage :key="pageKey" />
   </NuxtLayout>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineAsyncComponent, onBeforeUnmount, watch } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
 import {
   hasInjectionContext,
   tryUseNuxtApp,
@@ -53,8 +53,6 @@ const routeLoadingState = useState("route:loading", () => false);
 const routeLoading = computed(() => routeLoadingState.value);
 const initialLoadingState = useState("app:initial-loading", () => true);
 const initialLoading = computed(() => initialLoadingState.value);
-const initialOverlayDelayPassed = ref(false);
-let initialOverlayTimer: ReturnType<typeof setTimeout> | null = null;
 
 const initialRouteReady = ref(false);
 const initialHydrationComplete = ref(!import.meta.client || !nuxtApp || !nuxtApp.isHydrating);
@@ -98,48 +96,6 @@ const siteConfig = computed(() => {
   };
 });
 const route = useRoute();
-
-function ensureInitialOverlayTimer() {
-  if (initialOverlayTimer || !import.meta.client) {
-    return;
-  }
-
-  initialOverlayTimer = window.setTimeout(() => {
-    initialOverlayDelayPassed.value = true;
-  }, 300);
-}
-
-if (import.meta.client) {
-  ensureInitialOverlayTimer();
-}
-
-watch(
-  initialLoading,
-  (loading) => {
-    if (loading) {
-      ensureInitialOverlayTimer();
-      return;
-    }
-
-    if (initialOverlayTimer) {
-      clearTimeout(initialOverlayTimer);
-      initialOverlayTimer = null;
-    }
-    initialOverlayDelayPassed.value = false;
-  },
-  { immediate: true },
-);
-
-onBeforeUnmount(() => {
-  if (initialOverlayTimer) {
-    clearTimeout(initialOverlayTimer);
-    initialOverlayTimer = null;
-  }
-});
-
-const showInitialOverlay = computed(
-  () => initialLoading.value && initialOverlayDelayPassed.value,
-);
 
 if (import.meta.client && nuxtApp) {
   let finishTimer: ReturnType<typeof setTimeout> | null = null;
