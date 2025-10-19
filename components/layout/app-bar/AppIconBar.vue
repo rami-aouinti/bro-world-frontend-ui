@@ -1,6 +1,24 @@
 <template>
   <div :class="iconBarClasses">
-    <template v-if="isHydrated">
+    <ClientOnly>
+      <template #fallback>
+        <v-btn
+          v-for="icon in props.appIcons"
+          :key="`button-${icon.label}`"
+          :aria-label="t(icon.label)"
+          :title="t(icon.label)"
+          :class="props.iconTriggerClasses"
+          :theme="props.isDark ? 'dark' : 'light'"
+          :ripple="false"
+          :to="resolveIconTarget(icon)"
+        >
+          <AppIcon
+            :name="icon.name"
+            :size="resolveIconSize(icon)"
+          />
+        </v-btn>
+      </template>
+
       <v-tooltip
         v-for="icon in props.appIcons"
         :key="`tooltip-${icon.label}`"
@@ -22,23 +40,7 @@
           </v-btn>
         </template>
       </v-tooltip>
-    </template>
-    <template v-else>
-      <v-btn
-        v-for="icon in props.appIcons"
-        :key="`button-${icon.label}`"
-        :aria-label="t(icon.label)"
-        :class="props.iconTriggerClasses"
-        :theme="props.isDark ? 'dark' : 'light'"
-        :ripple="false"
-        :to="resolveIconTarget(icon)"
-      >
-        <AppIcon
-          :name="icon.name"
-          :size="resolveIconSize(icon)"
-        />
-      </v-btn>
-    </template>
+    </ClientOnly>
   </div>
 </template>
 
@@ -61,11 +63,9 @@ const resolveLocalePath = useResolvedLocalePath();
 
 const isHydrated = ref(false);
 
-if (import.meta.client) {
-  onMounted(() => {
-    isHydrated.value = true;
-  });
-}
+onMounted(() => {
+  isHydrated.value = true;
+});
 
 function resolveIconTarget(icon: { to?: string }) {
   if (!icon.to) {
