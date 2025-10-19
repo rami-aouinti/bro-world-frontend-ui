@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
+html {
   min-height: 100%;
   overflow: hidden;
+}
+
+body {
+  min-height: 100%;
 }
 
 body {
