@@ -1,7 +1,7 @@
 import type { H3Event } from "h3";
 import { defineEventHandler } from "h3";
 import { requestWithRetry } from "~/server/utils/requestWithRetry";
-import { useCachedFetch } from "~/composables/useCachedFetch";
+import { useCachedFetch } from "~/server/utils/useCachedFetch";
 
 interface ReviewStatsResponse {
   average_rating?: number | null;
