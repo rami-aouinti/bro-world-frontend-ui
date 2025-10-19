@@ -10,4 +10,8 @@ import ProjectRequestsSection from "~/components/crm/projects/requests/ProjectRe
 
 const route = useRoute();
 const projectId = computed(() => route.params.id?.toString() ?? "");
+
+definePageMeta({
+  requiresPlugin: "crm",
+});
 </script>

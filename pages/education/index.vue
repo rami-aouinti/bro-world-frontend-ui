@@ -51,6 +51,7 @@ const categories = computed(() => store.categories.value);
 
 definePageMeta({
   documentDriven: false,
+  requiresPlugin: "education",
 });
 useSeoMeta(() => ({
   description: pageDescription.value,

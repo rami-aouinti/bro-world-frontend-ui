@@ -71,6 +71,8 @@
           :messenger-view-all="messengerViewAll"
           :messenger-unknown-label="messengerUnknownLabel"
           :messenger-loading="messengerMenuLoading"
+          :messenger-enabled="props.messengerEnabled"
+          :cart-enabled="props.cartEnabled"
           :widgets-label="widgetsLabel"
           :cart-label="cartLabel"
           @toggle-right="$emit('toggle-right')"
@@ -145,9 +147,13 @@ const props = withDefaults(
     locales: LocaleInput[];
     showRightToggle: boolean;
     refreshing?: boolean;
+    messengerEnabled?: boolean;
+    cartEnabled?: boolean;
   }>(),
   {
     refreshing: false,
+    messengerEnabled: true,
+    cartEnabled: true,
   },
 );
 
@@ -258,8 +264,12 @@ const notificationsButtonLabel = computed(() => {
   return t("layout.actions.notifications");
 });
 
-const messengerPreviewConversations = computed(() => messenger.previewConversations.value ?? []);
-const messengerUnreadCount = computed(() => messenger.unreadTotal.value);
+const messengerPreviewConversations = computed(() =>
+  props.messengerEnabled ? messenger.previewConversations.value ?? [] : [],
+);
+const messengerUnreadCount = computed(() =>
+  props.messengerEnabled ? messenger.unreadTotal.value : 0,
+);
 const messengerTitle = computed(() => t("layout.messengerMenu.title"));
 const messengerSubtitle = computed(() => {
   const raw = t("layout.messengerMenu.subtitle");
@@ -268,7 +278,9 @@ const messengerSubtitle = computed(() => {
 const messengerEmpty = computed(() => t("layout.messengerMenu.empty"));
 const messengerViewAll = computed(() => t("layout.messengerMenu.viewAll"));
 const messengerUnknownLabel = computed(() => t("messenger.unknownParticipant"));
-const messengerMenuLoading = computed(() => messenger.loadingPreview.value);
+const messengerMenuLoading = computed(() =>
+  props.messengerEnabled ? messenger.loadingPreview.value : false,
+);
 const messengerButtonLabel = computed(() => {
   const count = messengerUnreadCount.value;
   if (count > 0) {
@@ -279,6 +291,10 @@ const messengerButtonLabel = computed(() => {
 
 if (import.meta.client) {
   onNuxtReady(() => {
+    if (!props.messengerEnabled) {
+      return;
+    }
+
     if (!messengerPreviewConversations.value.length) {
       messenger.fetchThreads({ limit: 3 }).catch(() => {});
     }

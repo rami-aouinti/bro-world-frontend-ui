@@ -1,59 +1,30 @@
 <template>
-  <NuxtLayout name="default">
-    <template #left-sidebar>
-      <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        glow
-      >
-        <v-list
-          nav
-          density="compact"
-          class="creation-nav"
-        >
-          <v-list-item
-            v-for="item in creationOptions"
-            :key="item.key"
-            :active="activeCreation === item.key"
-            :title="item.label"
-            rounded="xl"
-            class="creation-nav__item"
-            @click="selectCreation(item.key)"
-          >
-            <template #prepend>
-              <v-icon :icon="item.icon" />
-            </template>
-          </v-list-item>
-        </v-list>
-      </SidebarCard>
-    </template>
-
-    <template #right-sidebar>
-      <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        glow
-      >
-        <JobFilters
-          :experience-options="[0.5, 1, 2, 3, 5, 10]"
-          :companies="companies"
-          @update:experience="selectedExperience = $event"
-          @update:company="selectedCompany = $event"
-          @update:salary-range="salaryRange = $event"
-          @update:skills="selectedSkills = $event"
-          @update:work="selectedWork = $event"
-          @update:contract="selectedContract = $event"
-        />
-      </SidebarCard>
-    </template>
-
+  <main aria-labelledby="job-heading">
     <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-          <JobTopFilters
-            @update:search="search = $event"
-            @update:location="selectedLocations = $event"
-          />
+      <header class="mb-6">
+        <h1
+          id="job-heading"
+          class="text-h4 font-weight-bold mb-0"
+        >
+          {{ t("job.search") }}
+        </h1>
+      </header>
 
-          <div v-if="pending">
+      <section class="mb-6">
+        <JobCreateButtons
+          @create-job="selectCreation('job')"
+          @create-applicant="selectCreation('applicant')"
+        />
+      </section>
+
+      <section>
+        <JobTopFilters
+          @update:search="search = $event"
+          @update:location="selectedLocations = $event"
+        />
+
+        <div v-if="pending" class="mt-4">
+          <v-row>
             <v-col
               v-for="n in 6"
               :key="n"
@@ -66,84 +37,108 @@
                 type="card"
               />
             </v-col>
-          </div>
+          </v-row>
+        </div>
 
-          <JobList
-            v-else
-            :filtered="jobStore.loaded"
-            :jobs="jobStore.jobs"
-            @apply="openApplyModal"
-          />
-
-          <v-pagination
-            v-model="currentPage"
-            class="mt-4"
-            color="primary"
-            rounded="circle"
-            :length="totalPages"
-          />
-        </v-col>
-      </v-row>
-
-      <div
-        v-if="activeCreation !== 'none'"
-        ref="creationSectionRef"
-        class="mt-6"
-      >
-        <CreateJob
-          v-if="activeCreation === 'job'"
-          @job-created="refreshJobs"
+        <JobList
+          v-else
+          :filtered="jobStore.loaded"
+          :jobs="jobStore.jobs"
+          @apply="openApplyModal"
         />
 
-        <div v-else>
-          <div
-            v-if="selectedJob"
-            class="mb-4 flex items-center gap-2"
-          >
-            <v-chip
-              color="primary"
-              variant="tonal"
-              class="font-medium"
-            >
-              {{ selectedJob.title }}
-            </v-chip>
-          </div>
+        <v-pagination
+          v-model="currentPage"
+          class="mt-4"
+          color="primary"
+          rounded="circle"
+          :length="totalPages"
+        />
+      </section>
 
-          <CreateApplicant
-            :selected-job-id="selectedJobId"
-            @applicant-created="onApplicantCreated"
-            @cancel="selectCreation('none')"
+      <section
+        v-if="activeCreation !== 'none'"
+        ref="creationSectionRef"
+        class="mt-8"
+        aria-labelledby="job-create-heading"
+      >
+        <SidebarCard
+          class="text-card-foreground px-3 py-4"
+          glow
+        >
+          <h2
+            id="job-create-heading"
+            class="text-h5 font-weight-semibold mb-4"
+          >
+            {{
+              activeCreation === "job"
+                ? t("job.create")
+                : t("applicant.create")
+            }}
+          </h2>
+
+          <CreateJob
+            v-if="activeCreation === 'job'"
+            @job-created="refreshJobs"
           />
-        </div>
-      </div>
+
+          <div v-else>
+            <div
+              v-if="selectedJob"
+              class="mb-4 d-flex align-center gap-2"
+            >
+              <v-chip
+                color="primary"
+                variant="tonal"
+                class="font-medium"
+              >
+                {{ selectedJob.title }}
+              </v-chip>
+            </div>
+
+            <CreateApplicant
+              :selected-job-id="selectedJobId"
+              @applicant-created="onApplicantCreated"
+              @cancel="selectCreation('none')"
+            />
+          </div>
+        </SidebarCard>
+      </section>
     </v-container>
-  </NuxtLayout>
+  </main>
 </template>
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
+
 import CreateApplicant from "~/components/job/CreateApplicant.vue";
 import CreateJob from "~/components/job/CreateJob.vue";
-import JobFilters from "~/components/job/JobFilters.vue";
+import JobCreateButtons from "~/components/job/JobCreateButtons.vue";
 import JobList from "~/components/job/JobList.vue";
 import JobTopFilters from "~/components/job/JobTopFilters.vue";
+import JobSidebarFilters, {
+  type JobCompany,
+} from "~/components/job/JobSidebarFilters.vue";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { jobCompaniesSample, jobListSample } from "~/lib/mock/jobs";
 import { useJobStore, type JobSummary } from "~/stores/useJobStore";
 
 definePageMeta({
-  layout: false,
   description: "Job page",
   breadcrumb: "disabled",
+  requiresPlugin: "job-board",
+  showRightWidgets: true,
 });
 
-type CompanyInfo = {
-  id?: string | number;
-  name: string;
-};
+const jobStore = useJobStore();
+const { t } = useI18n();
+const { $notify: notify, $fetch } = useNuxtApp();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
 
-type CompaniesResponse = CompanyInfo[] | { data: CompanyInfo[] };
+type CompaniesResponse = JobCompany[] | { data: JobCompany[] };
 
 type JobsResponse = {
   data?: JobSummary[];
@@ -151,11 +146,9 @@ type JobsResponse = {
   page?: number;
 };
 
-const jobStore = useJobStore();
-const { t } = useI18n();
-const { $notify: notify, $fetch } = useNuxtApp();
-
 type CreationSection = "job" | "applicant" | "none";
+
+const experienceOptions = [0.5, 1, 2, 3, 5, 10];
 
 const pending = ref(false);
 const search = ref("");
@@ -174,20 +167,7 @@ const activeCreation = ref<CreationSection>("none");
 const selectedJobId = ref<string | null>(null);
 const creationSectionRef = ref<HTMLElement | null>(null);
 
-const companies = ref<CompanyInfo[]>([]);
-
-const creationOptions = computed(() => [
-  {
-    key: "job" as const,
-    label: t("job.create"),
-    icon: "mdi-briefcase-plus",
-  },
-  {
-    key: "applicant" as const,
-    label: t("applicant.create"),
-    icon: "mdi-account-plus",
-  },
-]);
+const companies = ref<JobCompany[]>([]);
 
 const selectedJob = computed(
   () => jobStore.jobs.find((job) => job.id === selectedJobId.value) ?? null,
@@ -283,6 +263,47 @@ async function fetchJobs() {
   }
 }
 
+function handleExperienceChange(value: number | null) {
+  selectedExperience.value = value;
+}
+
+function handleCompanyChange(value: string) {
+  selectedCompany.value = value;
+}
+
+function handleSalaryRangeChange(value: number) {
+  salaryRange.value = value;
+}
+
+function handleSkillsChange(value: string[]) {
+  selectedSkills.value = value;
+}
+
+function handleWorkChange(value: string[]) {
+  selectedWork.value = value;
+}
+
+function handleContractChange(value: string[]) {
+  selectedContract.value = value;
+}
+
+registerRightSidebarContent(
+  computed(() => ({
+    component: JobSidebarFilters,
+    wrapperClass: "flex flex-col gap-6",
+    props: {
+      experienceOptions,
+      companies: companies.value,
+      onExperienceChange: handleExperienceChange,
+      onCompanyChange: handleCompanyChange,
+      onSalaryRangeChange: handleSalaryRangeChange,
+      onSkillsChange: handleSkillsChange,
+      onWorkChange: handleWorkChange,
+      onContractChange: handleContractChange,
+    },
+  })),
+);
+
 watch(
   [
     search,
@@ -320,6 +341,7 @@ async function refreshJobs() {
   pending.value = true;
   await fetchJobs();
   notify.success(t("job.createdSuccess"));
+  activeCreation.value = "none";
   pending.value = false;
 }
 
@@ -331,13 +353,9 @@ function onApplicantCreated() {
 </script>
 
 <style scoped>
-.creation-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+@reference "../assets/css/tailwind.css";
 
-.creation-nav__item {
-  border-radius: 16px;
+section + section {
+  margin-top: 2rem;
 }
 </style>

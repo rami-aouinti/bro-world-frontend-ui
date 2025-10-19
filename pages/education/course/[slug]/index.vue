@@ -228,5 +228,6 @@ function lessonLink(id: string) {
 
 definePageMeta({
   alias: ["/academy/course/:slug"],
+  requiresPlugin: "education",
 });
 </script>

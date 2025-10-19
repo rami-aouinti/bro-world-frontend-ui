@@ -71,7 +71,7 @@ import {
   VToolbar,
   VTooltip,
 } from "vuetify/components";
-import { defineComponent, h } from "vue";
+import { defineComponent, h, ref, watch } from "vue";
 import { Ripple } from "vuetify/directives";
 import { VCalendar } from "vuetify/labs/VCalendar";
 import { VDateInput } from "vuetify/labs/VDateInput";
@@ -80,7 +80,10 @@ import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { aliases } from "vuetify/iconsets/mdi-svg";
 import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables/icons";
 import { normalizeHexColor } from "~/lib/theme/colors";
-import { projectMdiIcons } from "~/lib/vuetify/projectMdiIcons";
+import {
+  coreProjectMdiIcons,
+  ensureProjectMdiIcons,
+} from "~/lib/vuetify/projectMdiIcons";
 import DateFnsAdapter from "@date-io/date-fns";
 import type { Locale } from "date-fns";
 import { withSecureCookieOptions } from "~/lib/cookies";
@@ -114,28 +117,81 @@ function createMdiAliasVariants(iconMap: Record<string, string>) {
   return extendedAliases;
 }
 
-const projectMdiAliasEntries = Object.fromEntries(
-  Object.entries(projectMdiIcons).map(([name, value]) => [name, withSvgPrefix(value)]),
+let projectMdiAliasEntries = Object.fromEntries(
+  Object.entries(coreProjectMdiIcons).map(([name, value]) => [name, withSvgPrefix(value)]),
 );
 
-const minimalAliases = createMdiAliasVariants({
+let minimalAliases = createMdiAliasVariants({
   ...aliases,
   ...projectMdiAliasEntries,
 });
+
+function rebuildAliasRegistry() {
+  minimalAliases = createMdiAliasVariants({
+    ...aliases,
+    ...projectMdiAliasEntries,
+  });
+}
+
+export async function loadProjectMdiIcons(names: string[]): Promise<void> {
+  if (!names.length) {
+    return;
+  }
+
+  const icons = await ensureProjectMdiIcons(names);
+  let didMutate = false;
+
+  for (const [name, value] of Object.entries(icons)) {
+    if (name in projectMdiAliasEntries) {
+      continue;
+    }
+
+    projectMdiAliasEntries[name] = withSvgPrefix(value);
+    didMutate = true;
+  }
+
+  if (didMutate) {
+    rebuildAliasRegistry();
+  }
+}
+
+function normalizeRequestedIconName(name: string | undefined): string {
+  if (!name) {
+    return "";
+  }
+
+  const trimmed = name.trim();
+
+  if (!trimmed) {
+    return "";
+  }
+
+  if (trimmed.startsWith("mdi:")) {
+    return trimmed;
+  }
+
+  if (trimmed.startsWith("mdi-")) {
+    return trimmed;
+  }
+
+  return `mdi-${trimmed}`;
+}
 
 function stripSvgPrefix(value: string): string {
   return value.startsWith("svg:") ? value.slice(4) : value;
 }
 
-function resolveMdiIconValue(value: IconValue): IconValue {
+type ResolvedMdiIcon = { icon: IconValue; found: boolean };
+
+function resolveMdiIconValue(value: IconValue): ResolvedMdiIcon {
   if (typeof value !== "string") {
-    return value;
+    return { icon: value, found: true };
   }
 
   const normalized = value.trim();
 
   if (!normalized) {
-    return normalized;
+    return { icon: normalized, found: true };
   }
 
   const lookupKeys = new Set<string>([normalized]);
@@ -161,32 +217,64 @@ function resolveMdiIconValue(value: IconValue): IconValue {
     }
 
     if (typeof alias === "string") {
-      return stripSvgPrefix(alias);
+      return { icon: stripSvgPrefix(alias), found: true };
     }
 
     if (Array.isArray(alias)) {
-      return alias.map((entry) =>
-        Array.isArray(entry) ? [stripSvgPrefix(entry[0]), entry[1]] : stripSvgPrefix(entry),
-      );
+      return {
+        icon: alias.map((entry) =>
+          Array.isArray(entry) ? [stripSvgPrefix(entry[0]), entry[1]] : stripSvgPrefix(entry),
+        ),
+        found: true,
+      };
     }
 
-    return alias;
+    return { icon: alias, found: true };
   }
 
-  return stripSvgPrefix(normalized);
+  return { icon: stripSvgPrefix(normalized), found: false };
 }
 
 const MdiSvgIcon = defineComponent({
   name: "AppMdiSvgIcon",
   props: makeIconProps(),
   setup(props, { attrs, slots }) {
+    const resolved = ref<IconValue>("");
+
+    async function updateIcon(icon: IconValue) {
+      const target = icon ?? "";
+      const { icon: resolvedIcon, found } = resolveMdiIconValue(target);
+
+      resolved.value = resolvedIcon;
+
+      if (!found && typeof target === "string") {
+        const requestName = normalizeRequestedIconName(target);
+
+        if (!requestName) {
+          return;
+        }
+
+        await loadProjectMdiIcons([requestName]);
+        const retry = resolveMdiIconValue(target);
+        resolved.value = retry.icon;
+      }
+    }
+
+    watch(
+      () => props.icon,
+      (icon) => {
+        void updateIcon(icon ?? "");
+      },
+      { immediate: true },
+    );
+
     return () =>
       h(
         VSvgIcon,
         {
           ...attrs,
           tag: props.tag,
-          icon: resolveMdiIconValue(props.icon ?? ""),
+          icon: resolved.value,
         },
         slots,
       );

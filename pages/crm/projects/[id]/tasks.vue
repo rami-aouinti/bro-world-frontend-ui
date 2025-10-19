@@ -10,4 +10,8 @@ import ProjectTasksSection from "~/components/crm/projects/tasks/ProjectTasksSec
 
 const route = useRoute();
 const projectId = computed(() => route.params.id?.toString() ?? "");
+
+definePageMeta({
+  requiresPlugin: "crm",
+});
 </script>

@@ -10,4 +10,8 @@ import ProjectInfoSection from "~/components/crm/projects/ProjectInfoSection.vue
 
 const route = useRoute();
 const projectId = computed(() => route.params.id?.toString() ?? "");
+
+definePageMeta({
+  requiresPlugin: "crm",
+});
 </script>

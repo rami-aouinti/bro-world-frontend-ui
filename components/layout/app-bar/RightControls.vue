@@ -13,7 +13,7 @@
       />
     </button>
     <MessengerMenu
-      v-if="isAuthenticated"
+      v-if="props.messengerEnabled && isAuthenticated"
       :conversations="props.messengerConversations"
       :icon-trigger-classes="props.iconTriggerClasses"
       :title="props.messengerTitle"
@@ -26,7 +26,7 @@
       :loading="props.messengerLoading"
     />
     <button
-      v-else
+      v-else-if="props.messengerEnabled"
       type="button"
       :class="[props.iconTriggerClasses, 'opacity-60']"
       :aria-label="props.messengerButtonLabel"
@@ -64,6 +64,7 @@
       />
     </button>
     <button
+      v-if="props.cartEnabled"
       type="button"
       :class="props.iconTriggerClasses"
       :aria-label="props.cartLabel"
@@ -103,29 +104,37 @@ import AppIcon from "../AppIcon.vue";
 import { useAuthStore } from "~/composables/useAuthStore";
 import MessengerMenu from "~/components/messenger/MessengerMenu.vue";
 
-const props = defineProps<{
-  isMobile: boolean;
-  showRightToggle: boolean;
-  iconTriggerClasses: string;
-  notifications: AppNotification[];
-  notificationCount: number;
-  notificationsTitle: string;
-  notificationsSubtitle?: string;
-  notificationsEmpty: string;
-  notificationsMarkAll: string;
-  notificationsButtonLabel: string;
-  messengerConversations: MessengerConversation[];
-  messengerUnreadCount: number;
-  messengerButtonLabel: string;
-  messengerTitle: string;
-  messengerSubtitle?: string;
-  messengerEmpty: string;
-  messengerViewAll: string;
-  messengerUnknownLabel: string;
-  messengerLoading: boolean;
-  widgetsLabel: string;
-  cartLabel: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    isMobile: boolean;
+    showRightToggle: boolean;
+    iconTriggerClasses: string;
+    notifications: AppNotification[];
+    notificationCount: number;
+    notificationsTitle: string;
+    notificationsSubtitle?: string;
+    notificationsEmpty: string;
+    notificationsMarkAll: string;
+    notificationsButtonLabel: string;
+    messengerConversations: MessengerConversation[];
+    messengerUnreadCount: number;
+    messengerButtonLabel: string;
+    messengerTitle: string;
+    messengerSubtitle?: string;
+    messengerEmpty: string;
+    messengerViewAll: string;
+    messengerUnknownLabel: string;
+    messengerLoading: boolean;
+    widgetsLabel: string;
+    cartLabel: string;
+    messengerEnabled?: boolean;
+    cartEnabled?: boolean;
+  }>(),
+  {
+    messengerEnabled: true,
+    cartEnabled: true,
+  },
+);
 const desktopToggleClasses = computed(() => `${props.iconTriggerClasses} hidden md:flex`);
 const mobileToggleClasses = computed(() => `${props.iconTriggerClasses} md:hidden`);
 const showToggleButtons = computed(() => props.showRightToggle);

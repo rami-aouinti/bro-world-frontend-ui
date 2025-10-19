@@ -85,6 +85,7 @@ import {
 
 definePageMeta({
   showRightWidgets: true,
+  requiresPlugin: "crm",
 });
 
 const board = useCrmBoardStore();
