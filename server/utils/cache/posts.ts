@@ -1,7 +1,11 @@
 import { createHash } from "node:crypto";
 import Redis from "ioredis";
 import type { H3Event } from "h3";
-import type { BlogApiResponse, BlogPost } from "~/lib/mock/blog";
+import type {
+  BlogApiResponse,
+  BlogCommentWithReplies,
+  BlogPost,
+} from "~/lib/mock/blog";
 import { CACHE_NAMESPACE_BLOG, createPrefixedCacheKey } from "~/lib/cache/namespaces";
 import type { NormalizedPostsListQuery } from "../posts/types";
 
@@ -229,6 +233,17 @@ function getItemTag(prefix: string, postId: string) {
   return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "tag", "item", postId);
 }
 
+function getCommentsTag(prefix: string, postId: string) {
+  return createPrefixedCacheKey(
+    prefix,
+    CACHE_NAMESPACE_BLOG,
+    "posts",
+    "tag",
+    "comments",
+    postId,
+  );
+}
+
 function getAuthorTag(prefix: string, authorId: string) {
   return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "tag", "author", authorId);
 }
@@ -258,6 +273,11 @@ export function getPostsListCacheKey(
 export function getPostItemCacheKey(event: H3Event, postId: string) {
   const prefix = getCachePrefix(event);
   return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "item", postId);
+}
+
+export function getPostCommentsCacheKey(event: H3Event, postId: string) {
+  const prefix = getCachePrefix(event);
+  return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "comments", postId);
 }
 
 async function readCache<T>(event: H3Event, key: string): Promise<CachedEntry<T> | null> {
@@ -401,6 +421,14 @@ export async function getCachedPostById(
   return readCache<BlogPost>(event, key);
 }
 
+export async function getCachedPostComments(
+  event: H3Event,
+  postId: string,
+): Promise<CachedEntry<BlogCommentWithReplies[]> | null> {
+  const key = getPostCommentsCacheKey(event, postId);
+  return readCache<BlogCommentWithReplies[]>(event, key);
+}
+
 export async function cachePostsList(
   event: H3Event,
   params: NormalizedPostsListQuery,
@@ -440,12 +468,32 @@ export async function cachePostById(event: H3Event, post: BlogPost): Promise<voi
   await writeCache(event, key, entry, getItemTtl(event), tags);
 }
 
+export async function cachePostComments(
+  event: H3Event,
+  postId: string,
+  comments: BlogCommentWithReplies[],
+): Promise<void> {
+  const key = getPostCommentsCacheKey(event, postId);
+  const entry: CachedEntry<BlogCommentWithReplies[]> = {
+    data: comments,
+    cachedAt: Date.now(),
+  };
+
+  const tags = [getCommentsTag(getCachePrefix(event), postId)];
+
+  await writeCache(event, key, entry, getItemTtl(event), tags);
+}
+
 export async function invalidatePostsList(event: H3Event): Promise<void> {
   await invalidateTags(event, [getListTag(getCachePrefix(event))]);
 }
 
 export async function invalidatePostCache(event: H3Event, postId: string): Promise<void> {
   await invalidateTags(event, [getItemTag(getCachePrefix(event), postId)]);
+}
+
+export async function invalidatePostComments(event: H3Event, postId: string): Promise<void> {
+  await invalidateTags(event, [getCommentsTag(getCachePrefix(event), postId)]);
 }
 
 export async function invalidatePostAndLists(event: H3Event, postId: string): Promise<void> {

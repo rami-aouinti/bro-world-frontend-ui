@@ -1,4 +1,10 @@
 import { createError } from "h3";
+import {
+  cachePostComments,
+  getCachedPostComments,
+  getPostCommentsCacheKey,
+  queueRevalidation,
+} from "../../../../../utils/cache/posts";
 import { fetchPostCommentsFromSource } from "../../../../../utils/posts/api";
 
 export default defineEventHandler(async (event) => {
@@ -13,7 +19,34 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const cacheKey = getPostCommentsCacheKey(event, trimmedId);
+    const cached = await getCachedPostComments(event, trimmedId);
+
+    if (cached) {
+      event.waitUntil(
+        queueRevalidation(cacheKey, async () => {
+          try {
+            const fresh = await fetchPostCommentsFromSource(event, trimmedId);
+            await cachePostComments(event, trimmedId, fresh);
+          } catch (revalidationError) {
+            console.error(
+              `Failed to revalidate comments cache for post ${trimmedId}`,
+              revalidationError,
+            );
+          }
+        }),
+      );
+
+      return cached.data;
+    }
+
     const comments = await fetchPostCommentsFromSource(event, trimmedId);
+
+    try {
+      await cachePostComments(event, trimmedId, comments);
+    } catch (cacheError) {
+      console.error(`Failed to cache comments for post ${trimmedId}`, cacheError);
+    }
 
     return comments;
   } catch (error) {
