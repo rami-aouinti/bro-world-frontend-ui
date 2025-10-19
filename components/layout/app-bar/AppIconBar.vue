@@ -28,7 +28,6 @@
         v-for="icon in props.appIcons"
         :key="`button-${icon.label}`"
         :aria-label="t(icon.label)"
-        :title="t(icon.label)"
         :class="props.iconTriggerClasses"
         :theme="props.isDark ? 'dark' : 'light'"
         :ripple="false"
