@@ -1,9 +1,10 @@
 <template>
   <div class="flex flex-col gap-4">
-    <v-card
+    <SidebarCard
+        class="text-card-foreground px-3 py-2"
+        glow
       v-for="point in points"
       :key="point.title"
-      class="about-mission-card"
       elevation="0"
       rounded="lg"
     >
@@ -27,7 +28,7 @@
           </p>
         </div>
       </div>
-    </v-card>
+    </SidebarCard>
   </div>
 </template>
 
