@@ -33,12 +33,12 @@
                   {{ t("pages.contact.details.title") }}
                 </span>
               </div>
-              <h1
+              <h4
                 id="contact-heading"
-                class="text-h3 font-weight-bold mb-3"
+                class="text-h4 font-weight-bold mb-3"
               >
                 {{ contactTitle }}
-              </h1>
+              </h4>
               <p
                 id="contact-intro"
                 class="text-body-1 text-medium-emphasis"
