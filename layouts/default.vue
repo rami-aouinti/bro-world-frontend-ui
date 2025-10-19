@@ -1377,6 +1377,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
   display: flex;
   flex-direction: column;
+  scrollbar-gutter: stable both-edges;
 }
 
 .main-scroll__viewport {
@@ -1388,6 +1389,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
   padding-block-end: clamp(8px, 2vw, 16px);
   box-sizing: border-box;
+  scrollbar-gutter: stable both-edges;
 }
 
 .app-container {
