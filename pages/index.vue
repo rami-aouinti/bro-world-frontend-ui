@@ -218,8 +218,6 @@ type SeoMetaFn = (input: () => Record<string, unknown>) => void;
 let useSeoMetaFn: SeoMetaFn | null = null;
 
 try {
-  const { useSeoMeta } = await import("#imports");
-
   if (typeof useSeoMeta === "function") {
     useSeoMetaFn = useSeoMeta as SeoMetaFn;
   }
