@@ -1,26 +1,42 @@
 <template>
-  <UiPopover>
-    <UiPopoverTrigger as-child>
-      <UiButton
-        variant="ghost"
-        size="icon"
-        :class="triggerClass"
+  <ClientOnly>
+    <UiPopover>
+      <UiPopoverTrigger as-child>
+        <UiButton
+          variant="ghost"
+          size="icon"
+          :class="triggerClass"
+          type="button"
+          aria-label="Toggle theme customization"
+        >
+          <Icon
+            name="lucide:paintbrush"
+            size="16"
+          />
+        </UiButton>
+      </UiPopoverTrigger>
+      <UiPopoverContent
+        class="w-[33rem] bg-background text-card-foreground rounded-xl"
+        :align="breakpoints.isGreaterOrEqual('md') ? 'end' : 'center'"
+      >
+        <ThemeCustomizer />
+      </UiPopoverContent>
+    </UiPopover>
+    <template #fallback>
+      <button
         type="button"
+        :class="triggerClass"
         aria-label="Toggle theme customization"
+        aria-disabled="true"
+        disabled
       >
         <Icon
           name="lucide:paintbrush"
           size="16"
         />
-      </UiButton>
-    </UiPopoverTrigger>
-    <UiPopoverContent
-      class="w-[33rem] bg-background text-card-foreground rounded-xl"
-      :align="breakpoints.isGreaterOrEqual('md') ? 'end' : 'center'"
-    >
-      <ThemeCustomizer />
-    </UiPopoverContent>
-  </UiPopover>
+      </button>
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
