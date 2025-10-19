@@ -2206,6 +2206,76 @@
           }
         }
       }
+    },
+    "crm": {
+      "title": "@:seo.crm.title",
+      "subtitle": "@:seo.crm.subtitle",
+      "actions": {
+        "newProject": "@:seo.crm.actions.newProject",
+        "viewPipeline": "@:seo.crm.actions.viewPipeline"
+      },
+      "metrics": {
+        "title": "@:seo.crm.metrics.title",
+        "subtitle": "@:seo.crm.metrics.subtitle",
+        "total": "@:seo.crm.metrics.total",
+        "totalCaption": "@:seo.crm.metrics.totalCaption",
+        "inProgress": "@:seo.crm.metrics.inProgress",
+        "inProgressCaption": "@:seo.crm.metrics.inProgressCaption",
+        "atRisk": "@:seo.crm.metrics.atRisk",
+        "atRiskCaption": "@:seo.crm.metrics.atRiskCaption",
+        "pipelineValue": "@:seo.crm.metrics.pipelineValue",
+        "pipelineValueCaption": "@:seo.crm.metrics.pipelineValueCaption"
+      },
+      "table": {
+        "title": "@:seo.crm.table.title",
+        "subtitle": "@:seo.crm.table.subtitle",
+        "empty": "@:seo.crm.table.empty",
+        "headers": {
+          "name": "@:seo.crm.table.headers.name",
+          "client": "@:seo.crm.table.headers.client",
+          "owner": "@:seo.crm.table.headers.owner",
+          "status": "@:seo.crm.table.headers.status",
+          "stage": "@:seo.crm.table.headers.stage",
+          "budget": "@:seo.crm.table.headers.budget",
+          "probability": "@:seo.crm.table.headers.probability",
+          "dueDate": "@:seo.crm.table.headers.dueDate"
+        }
+      },
+      "upcoming": {
+        "title": "@:seo.crm.upcoming.title",
+        "subtitle": "@:seo.crm.upcoming.subtitle",
+        "empty": "@:seo.crm.upcoming.empty"
+      },
+      "stages": {
+        "title": "@:seo.crm.stages.title",
+        "subtitle": "@:seo.crm.stages.subtitle",
+        "caption": "@:seo.crm.stages.caption"
+      },
+      "sidebar": {
+        "ariaLabel": "@:seo.crm.sidebar.ariaLabel",
+        "projects": {
+          "title": "@:seo.crm.sidebar.projects.title",
+          "subtitle": "@:seo.crm.sidebar.projects.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.projects.actions.new",
+            "create": "@:seo.crm.sidebar.projects.actions.create"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.projects.empty.description"
+          }
+        },
+        "tasks": {
+          "title": "@:seo.crm.sidebar.tasks.title",
+          "subtitle": "@:seo.crm.sidebar.tasks.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.tasks.actions.new"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.tasks.empty.description"
+          },
+          "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
+        }
+      }
     }
   },
   "seo": {
@@ -2319,76 +2389,76 @@
       "title": "性能",
       "description": "跟踪预算和审计，让 Bro World 在每个社区都保持高速。"
     },
-    "crm": {
-      "title": "CRM 工作区",
-      "subtitle": "在一个视图中跟踪活跃商机、负责人和交付节点。",
-      "actions": {
-        "newProject": "新建项目",
-        "viewPipeline": "查看销售管道"
-      },
-      "metrics": {
-        "title": "管道概览",
-        "subtitle": "按当前状态展示交易流量概况。",
-        "total": "项目",
-        "totalCaption": "所有管道中的活跃机会。",
-        "inProgress": "进行中",
-        "inProgressCaption": "正在执行工作流的团队。",
-        "atRisk": "风险",
-        "atRiskCaption": "需要立即关注的交易。",
-        "pipelineValue": "管道价值",
-        "pipelineValueCaption": "预计在管道中锁定的收入。"
-      },
-      "table": {
-        "title": "活跃项目",
-        "subtitle": "最新的 CRM 项目及其负责人和里程碑。",
-        "empty": "暂无 CRM 项目。",
-        "headers": {
-          "name": "项目",
-          "client": "客户",
-          "owner": "负责人",
-          "status": "状态",
-          "stage": "阶段",
-          "budget": "预算",
-          "probability": "赢单概率",
-          "dueDate": "截止日期"
-        }
-      },
-      "upcoming": {
-        "title": "即将交付",
-        "subtitle": "管道中的下一批交付节点。",
-        "empty": "暂无即将到期的节点。"
-      },
-      "stages": {
-        "title": "阶段分布",
-        "subtitle": "项目在各个管道阶段的推进情况。",
-        "caption": "下一个里程碑：{date}"
-      },
-      "sidebar": {
-        "ariaLabel": "CRM 洞察面板",
-        "projects": {
-          "title": "我的项目",
-          "subtitle": "您在所选冲刺中的活跃事项。",
-          "actions": {
-            "new": "新建项目",
-            "create": "创建项目"
-          },
-          "empty": {
-            "description": "尚未为您分配项目。"
+      "crm": {
+        "title": "@:seo.crm.title",
+        "subtitle": "@:seo.crm.subtitle",
+        "actions": {
+          "newProject": "@:seo.crm.actions.newProject",
+          "viewPipeline": "@:seo.crm.actions.viewPipeline"
+        },
+        "metrics": {
+          "title": "@:seo.crm.metrics.title",
+          "subtitle": "@:seo.crm.metrics.subtitle",
+          "total": "@:seo.crm.metrics.total",
+          "totalCaption": "@:seo.crm.metrics.totalCaption",
+          "inProgress": "@:seo.crm.metrics.inProgress",
+          "inProgressCaption": "@:seo.crm.metrics.inProgressCaption",
+          "atRisk": "@:seo.crm.metrics.atRisk",
+          "atRiskCaption": "@:seo.crm.metrics.atRiskCaption",
+          "pipelineValue": "@:seo.crm.metrics.pipelineValue",
+          "pipelineValueCaption": "@:seo.crm.metrics.pipelineValueCaption"
+        },
+        "table": {
+          "title": "@:seo.crm.table.title",
+          "subtitle": "@:seo.crm.table.subtitle",
+          "empty": "@:seo.crm.table.empty",
+          "headers": {
+            "name": "@:seo.crm.table.headers.name",
+            "client": "@:seo.crm.table.headers.client",
+            "owner": "@:seo.crm.table.headers.owner",
+            "status": "@:seo.crm.table.headers.status",
+            "stage": "@:seo.crm.table.headers.stage",
+            "budget": "@:seo.crm.table.headers.budget",
+            "probability": "@:seo.crm.table.headers.probability",
+            "dueDate": "@:seo.crm.table.headers.dueDate"
           }
         },
-        "tasks": {
-          "title": "最新任务",
-          "subtitle": "最近创建的任务。",
-          "actions": {
-            "new": "新建任务"
+        "upcoming": {
+          "title": "@:seo.crm.upcoming.title",
+          "subtitle": "@:seo.crm.upcoming.subtitle",
+          "empty": "@:seo.crm.upcoming.empty"
+        },
+        "stages": {
+          "title": "@:seo.crm.stages.title",
+          "subtitle": "@:seo.crm.stages.subtitle",
+          "caption": "@:seo.crm.stages.caption"
+        },
+        "sidebar": {
+          "ariaLabel": "@:seo.crm.sidebar.ariaLabel",
+          "projects": {
+            "title": "@:seo.crm.sidebar.projects.title",
+            "subtitle": "@:seo.crm.sidebar.projects.subtitle",
+            "actions": {
+              "new": "@:seo.crm.sidebar.projects.actions.new",
+              "create": "@:seo.crm.sidebar.projects.actions.create"
+            },
+            "empty": {
+              "description": "@:seo.crm.sidebar.projects.empty.description"
+            }
           },
-          "empty": {
-            "description": "暂无近期任务。创建一个任务来开启冲刺。"
-          },
-          "projectFallback": "未知项目"
+          "tasks": {
+            "title": "@:seo.crm.sidebar.tasks.title",
+            "subtitle": "@:seo.crm.sidebar.tasks.subtitle",
+            "actions": {
+              "new": "@:seo.crm.sidebar.tasks.actions.new"
+            },
+            "empty": {
+              "description": "@:seo.crm.sidebar.tasks.empty.description"
+            },
+            "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
+          }
         }
-      }
-    },
+      },
     "login": {
       "title": "登录",
       "description": "登录您的 Bro World 帐号，继续与社区协作。"
