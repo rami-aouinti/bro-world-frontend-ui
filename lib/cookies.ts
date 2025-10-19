@@ -2,6 +2,15 @@ import type { CookieOptions } from "nuxt/app";
 import type { H3Event } from "h3";
 import { getContext } from "unctx";
 
+const contextOptions: Parameters<typeof getContext>[1] = {
+  asyncContext: import.meta.server,
+};
+
+if (import.meta.server) {
+  const { AsyncLocalStorage } = await import("node:async_hooks");
+  contextOptions.AsyncLocalStorage = AsyncLocalStorage;
+}
+
 type MaybeEvent = H3Event | null | undefined;
 
 type NuxtAppContext = {
@@ -10,9 +19,10 @@ type NuxtAppContext = {
   };
 };
 
-const nuxtAppContext = getContext<NuxtAppContext>("nuxt-app", {
-  asyncContext: import.meta.server,
-});
+const nuxtAppContext = getContext<NuxtAppContext>(
+  "nuxt-app",
+  contextOptions,
+);
 
 function resolveActiveRequestEvent(): MaybeEvent {
   if (!import.meta.server) {

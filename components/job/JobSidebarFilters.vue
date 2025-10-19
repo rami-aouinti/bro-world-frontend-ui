@@ -17,8 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults } from "vue";
-
 import JobFilters from "~/components/job/JobFilters.vue";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 
