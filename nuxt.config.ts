@@ -945,6 +945,7 @@ export default defineNuxtConfig({
       mercureTtl: Number.parseInt(process.env.NUXT_REDIS_MERCURE_TTL ?? "600", 10),
       profileTtl: Number.parseInt(process.env.NUXT_REDIS_PROFILE_TTL ?? "300", 10),
       helpTtl: Number.parseInt(process.env.NUXT_REDIS_HELP_TTL ?? "300", 10),
+      quizTtl: Number.parseInt(process.env.NUXT_REDIS_QUIZ_TTL ?? "300", 10),
     },
     reviews: {
       apiBase: process.env.NUXT_REVIEWS_API_BASE ?? "https://bro-world.org",
@@ -969,6 +970,7 @@ export default defineNuxtConfig({
       redis: {
         listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
         itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
+        quizTtl: Number.parseInt(process.env.NUXT_REDIS_QUIZ_TTL ?? "300", 10),
       },
       auth: {
         sessionTokenCookieName:
