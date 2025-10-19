@@ -42,11 +42,10 @@
           <template #prepend>
             <span
               v-if="props.getFlag(locale)"
-              class="mr-3 block text-base leading-none"
+              :class="['fi', `fi-${props.getFlag(locale)}`]"
+              class="mr-3 block h-[16px] w-[22px] rounded-sm shadow-sm"
               aria-hidden="true"
-            >
-              {{ props.getFlag(locale) }}
-            </span>
+            />
           </template>
           <template #append>
             <AppIcon

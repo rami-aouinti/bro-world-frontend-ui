@@ -170,13 +170,13 @@ const iconTriggerClasses =
   "flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2";
 
 const localeMetadata = {
-  en: { label: "English", flag: "🇺🇸" },
-  de: { label: "Deutsch", flag: "🇩🇪" },
-  fr: { label: "Français", flag: "🇫🇷" },
-  es: { label: "Español", flag: "🇪🇸" },
-  it: { label: "Italiano", flag: "🇮🇹" },
-  ru: { label: "Русский", flag: "🇷🇺" },
-  ar: { label: "العربية", flag: "🇹🇳" },
+  en: { label: "English", flag: "gb" },
+  de: { label: "Deutsch", flag: "de" },
+  fr: { label: "Français", flag: "fr" },
+  es: { label: "Español", flag: "es" },
+  it: { label: "Italiano", flag: "it" },
+  ru: { label: "Русский", flag: "ru" },
+  ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
 const navigationLabel = computed(() => t("layout.actions.openNavigation"));
 const goBackLabel = computed(() => t("layout.actions.goBack"));
