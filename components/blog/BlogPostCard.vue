@@ -65,6 +65,22 @@
         @reply="openReply"
         @submit="handleCommentSubmit"
       />
+      <div
+        v-else-if="manualCommentsTriggerVisible"
+        class="comments-manual"
+      >
+        <button
+          type="button"
+          class="comments-manual__button"
+          data-test="load-comments-button"
+          @click="handleManualCommentsLoad"
+        >
+          {{ manualCommentsButtonLabel }}
+        </button>
+        <p class="comments-manual__hint">
+          {{ manualCommentsHint }}
+        </p>
+      </div>
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
         ref="loginPromptRef"
@@ -136,7 +152,7 @@
 import { computed, defineAsyncComponent, nextTick, reactive, ref, shallowRef, watch } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
-import { useNuxtApp } from "#imports";
+import { useNuxtApp } from "#app";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
@@ -214,6 +230,15 @@ const commentsSectionRef = ref<HTMLElement | null>(null);
 const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
 const commentsActivated = ref(false);
 const shouldRenderCommentThread = computed(() => commentsActivated.value);
+const manualCommentsButtonLabel = computed(() => t("blog.comments.load"));
+const manualCommentsHint = computed(() => t("blog.comments.activationHint"));
+const manualCommentsTriggerVisible = computed(
+  () =>
+    isAuthenticated.value &&
+    !shouldRenderCommentThread.value &&
+    !commentsLoading.value &&
+    !commentsError.value,
+);
 const loginDialogOpen = ref(false);
 const loginPromptRef = ref<HTMLButtonElement | null>(null);
 const loginDialogPreviousFocusedElement = ref<HTMLElement | null>(null);
@@ -443,6 +468,14 @@ function handleCommentLike(commentId: string) {
     });
   });
 }
+const BlogPostContent = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostContent.vue"),
+  suspensible: false,
+});
+const BlogPostReactCard = defineAsyncComponent({
+  loader: () => import("~/components/blog/BlogPostReactCard.vue"),
+  suspensible: false,
+});
 const CommentSortMenu = defineAsyncComponent({
   loader: () => import("~/components/blog/CommentSortMenu.vue"),
   suspensible: false,
@@ -603,6 +636,18 @@ function handleCommentButtonClick() {
   }
 
   requestComments();
+
+  nextTick(() => {
+    commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+}
+
+function handleManualCommentsLoad() {
+  requestComments({ force: true });
+
+  if (!isCommentComposerVisible.value) {
+    isCommentComposerVisible.value = true;
+  }
 
   nextTick(() => {
     commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -873,6 +918,46 @@ function handleLoginDialogClose() {
 .fade-scale-leave-to {
   opacity: 0;
   transform: scale(0.96);
+}
+
+.comments-manual {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.comments-manual__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(var(--v-theme-primary), 0.35);
+  background: transparent;
+  color: rgb(var(--v-theme-primary));
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.comments-manual__button:hover {
+  background-color: rgba(var(--v-theme-primary), 0.08);
+}
+
+.comments-manual__button:focus-visible {
+  outline: 2px solid rgba(var(--v-theme-primary), 0.7);
+  outline-offset: 3px;
+}
+
+.comments-manual__hint {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  opacity: 0.75;
 }
 
 .comments-error {

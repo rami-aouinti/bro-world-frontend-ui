@@ -20,7 +20,7 @@ export const useEducationStore = defineStore("education", () => {
   const lessons = reactive<Record<string, Lesson[]>>({});
   const exercises = reactive<Record<string, Exercise[]>>({});
   const quiz = reactive<Record<string, QuizQuestion[]>>({});
-  const progress = ref<Record<string, CourseProgress>>({});
+  const progress = reactive<Record<string, CourseProgress>>({});
   const certificates = ref<Certificate[]>([]);
   const { locale } = useI18n();
   const currentLocale = computed(() => locale.value);
@@ -103,10 +103,11 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   function ensureProgress(courseId: string): CourseProgress {
-    if (!progress.value[courseId]) {
-      progress.value[courseId] = { lessonDone: {}, exerciseScore: {} };
+    if (!progress[courseId]) {
+      progress[courseId] = { lessonDone: {}, exerciseScore: {} };
     }
-    return progress.value[courseId];
+
+    return progress[courseId];
   }
 
   function markLessonDone(courseId: string, lessonId: string) {
@@ -137,13 +138,13 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   function resetCourseProgress(courseId: string) {
-    if (progress.value[courseId]) {
-      progress.value[courseId] = { lessonDone: {}, exerciseScore: {} };
+    if (progress[courseId]) {
+      progress[courseId] = { lessonDone: {}, exerciseScore: {} };
     }
   }
 
   function clearQuizScore(courseId: string) {
-    const entry = progress.value[courseId];
+    const entry = progress[courseId];
     if (entry) {
       delete entry.quizScore;
       delete entry.certificateId;
@@ -167,7 +168,7 @@ export const useEducationStore = defineStore("education", () => {
   }
 
   function getProgressForCourse(courseId: string) {
-    return progress.value[courseId];
+    return progress[courseId];
   }
 
   watch(

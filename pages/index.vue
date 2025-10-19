@@ -131,9 +131,10 @@
 
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce, onNuxtReady, useNuxtApp, useState } from "#app";
+import { definePageMeta } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 import type { ReactionType } from "~/lib/mock/blog";
@@ -144,30 +145,104 @@ import type { Story, StoryReaction } from "~/types/stories";
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const blogPostCardIntrinsicHeight = 720;
 const auth = useAuthSession();
-const profileStore = useProfileStore();
+const profileStore: ReturnType<typeof useProfileStore> | null = (() => {
+  try {
+    return useProfileStore();
+  } catch (error) {
+    if (import.meta.dev) {
+      console.warn("[pages/index] Profile store unavailable; using fallback profile state.", error);
+    }
+
+    return null;
+  }
+})();
 
 const isAuthReady = computed(() => auth.isReady.value);
 const canAccessAuthenticatedContent = computed(
   () => isAuthReady.value && auth.isAuthenticated.value,
 );
 
-const nuxtApp = useNuxtApp();
-const hasCompletedHydration = ref(!import.meta.client || !nuxtApp?.isHydrating);
+type NuxtAppLike = ReturnType<typeof useNuxtApp> | { isHydrating?: boolean };
 
-if (import.meta.client && nuxtApp?.isHydrating) {
+function resolveNuxtApp(): NuxtAppLike {
+  try {
+    const app = useNuxtApp();
+
+    if (app) {
+      return app;
+    }
+  } catch (error) {
+    const globalResolver = (globalThis as { useNuxtApp?: () => unknown }).useNuxtApp;
+
+    if (typeof globalResolver === "function") {
+      const resolved = globalResolver();
+
+      if (resolved && typeof resolved === "object") {
+        return resolved as NuxtAppLike;
+      }
+    }
+
+    if (import.meta.dev) {
+      console.warn("[pages/index] Falling back to a mock Nuxt app instance.", error);
+    }
+  }
+
+  return { isHydrating: false };
+}
+
+const nuxtApp = resolveNuxtApp();
+const isBrowser = typeof window !== "undefined";
+const hasCompletedHydration = ref(!isBrowser || !nuxtApp?.isHydrating);
+
+function resolveSharedState<T>(key: string, initializer: () => T) {
+  if (typeof useState === "function") {
+    try {
+      return useState<T>(key, initializer);
+    } catch (error) {
+      if (import.meta.dev) {
+        console.warn(`[pages/index] Falling back to local state for "${key}".`, error);
+      }
+    }
+  }
+
+  return ref(initializer()) as ReturnType<typeof useState<T>>;
+}
+
+function setSharedStateValue<T>(state: { value: T } | null | undefined, value: T) {
+  if (state && typeof state === "object" && "value" in state) {
+    (state as { value: T }).value = value;
+  }
+}
+
+type SeoMetaFn = (input: () => Record<string, unknown>) => void;
+let useSeoMetaFn: SeoMetaFn | null = null;
+
+try {
+  const { useSeoMeta } = await import("#imports");
+
+  if (typeof useSeoMeta === "function") {
+    useSeoMetaFn = useSeoMeta as SeoMetaFn;
+  }
+} catch (error) {
+  if (import.meta.dev) {
+    console.warn("[pages/index] Unable to import useSeoMeta helper.", error);
+  }
+}
+
+if (isBrowser && nuxtApp?.isHydrating) {
   onNuxtReady(() => {
     hasCompletedHydration.value = true;
   });
 }
 
-const initialAuthAccessState = useState(
+const initialAuthAccessState = resolveSharedState(
   "index:initial-can-access-authenticated-content",
   () => canAccessAuthenticatedContent.value,
 );
 
 const shouldRenderAuthenticatedContent = computed(() => {
   if (!hasCompletedHydration.value) {
-    return initialAuthAccessState.value;
+    return initialAuthAccessState?.value ?? false;
   }
 
   return canAccessAuthenticatedContent.value;
@@ -181,7 +256,7 @@ function asString(value: unknown): string | null {
   return trimmed ? trimmed : null;
 }
 
-const profileStories = computed(() => profileStore.storyItems.value);
+const profileStories = computed(() => profileStore?.storyItems.value ?? []);
 const localStories = ref<Story[]>([]);
 const stories = computed<Story[]>(() => {
   const local = localStories.value;
@@ -219,7 +294,7 @@ function resetLocalStories() {
 }
 
 const profileDisplayName = computed(() => {
-  const preferred = asString(profileStore.preferredName.value);
+  const preferred = asString(profileStore?.preferredName.value ?? null);
 
   if (preferred) {
     return preferred;
@@ -251,7 +326,7 @@ const profileDisplayName = computed(() => {
 });
 
 const userName = computed(() => profileDisplayName.value ?? "");
-const userAvatar = computed(() => profileStore.avatarUrl.value || defaultAvatar);
+const userAvatar = computed(() => profileStore?.avatarUrl.value || defaultAvatar);
 
 const activeStory = ref<Story | null>(null);
 const isStoryViewerOpen = ref(false);
@@ -361,13 +436,18 @@ const { t } = useI18n();
 
 const pageDescription = computed(() => t("blog.hero.description"));
 
-definePageMeta({
-  showRightWidgets: true,
-  documentDriven: false,
-});
-useSeoMeta(() => ({
-  description: pageDescription.value,
-}));
+if (typeof definePageMeta === "function") {
+  definePageMeta({
+    showRightWidgets: true,
+    documentDriven: false,
+  });
+}
+
+if (useSeoMetaFn) {
+  useSeoMetaFn(() => ({
+    description: pageDescription.value,
+  }));
+}
 const reactionLabels = computed<Record<ReactionType, string>>(() => ({
   like: t("blog.reactions.reactionTypes.like"),
   love: t("blog.reactions.reactionTypes.love"),
@@ -385,25 +465,47 @@ const {
   pending,
   loadingMore,
   hasMore,
-  error,
+  error: storeError,
   fetchPosts,
   fetchMorePosts,
   createPost,
   pageSize,
 } = usePostsStore();
 
+const error = storeError ?? ref<string | null>(null);
+const callOnceFn =
+  typeof callOnce === "function"
+    ? callOnce
+    : async <T>(task: () => Promise<T> | T) => await task();
+const NewPostSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/blog/NewPostSkeleton.vue"),
+  suspensible: false,
+});
+const StoriesStripSkeleton = defineAsyncComponent({
+  loader: () => import("~/components/stories/StoriesStripSkeleton.vue"),
+  suspensible: false,
+});
+const StoriesStrip = defineAsyncComponent({
+  loader: () => import("~/components/stories/StoriesStrip.vue"),
+  suspensible: false,
+});
+const StoryViewerModal = defineAsyncComponent({
+  loader: () => import("~/components/stories/StoryViewerModal.vue"),
+  suspensible: false,
+});
+
 const showAuthenticatedSkeletonsState = computed(
   () => !isAuthReady.value || pending.value,
 );
 
-const initialSkeletonVisibilityState = useState(
+const initialSkeletonVisibilityState = resolveSharedState(
   "index:initial-show-authenticated-skeletons",
   () => showAuthenticatedSkeletonsState.value,
 );
 
 const showAuthenticatedSkeletons = computed(() => {
   if (!hasCompletedHydration.value) {
-    return initialSkeletonVisibilityState.value;
+    return initialSkeletonVisibilityState?.value ?? false;
   }
 
   return showAuthenticatedSkeletonsState.value;
@@ -413,8 +515,11 @@ watch(
   hasCompletedHydration,
   (hydrated) => {
     if (hydrated) {
-      initialAuthAccessState.value = canAccessAuthenticatedContent.value;
-      initialSkeletonVisibilityState.value = showAuthenticatedSkeletonsState.value;
+      setSharedStateValue(initialAuthAccessState, canAccessAuthenticatedContent.value);
+      setSharedStateValue(
+        initialSkeletonVisibilityState,
+        showAuthenticatedSkeletonsState.value,
+      );
     }
   },
   { immediate: false },
@@ -426,7 +531,7 @@ const skeletonBatchSize = computed(() => {
 });
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
-const initialLoadError = useState<string | null>(
+const initialLoadError = resolveSharedState<string | null>(
   "index:initial-load-error",
   () => null,
 );
@@ -442,7 +547,7 @@ const loadErrorMessage = computed(() => {
   }
 
   const localError =
-    typeof initialLoadError.value === "string" ? initialLoadError.value.trim() : "";
+    typeof initialLoadError?.value === "string" ? initialLoadError.value.trim() : "";
 
   if (!hasCompletedHydration.value) {
     return localError;
@@ -457,7 +562,7 @@ watch(
   () => error.value,
   (storeError) => {
     if (!storeError) {
-      initialLoadError.value = null;
+      setSharedStateValue(initialLoadError, null);
       return;
     }
 
@@ -468,7 +573,7 @@ watch(
 
 function dismissLoadError() {
   isLoadErrorDismissed.value = true;
-  initialLoadError.value = null;
+  setSharedStateValue(initialLoadError, null);
 }
 
 async function maybeLoadMore() {
@@ -491,7 +596,7 @@ async function maybeLoadMore() {
 
 let stopLoadMoreObserver: (() => void) | undefined;
 
-if (import.meta.client) {
+if (isBrowser) {
   const observer = useIntersectionObserver(
     loadMoreTrigger,
     (entries) => {
@@ -529,12 +634,12 @@ if (import.meta.client) {
 async function performInitialPostsLoad() {
   try {
     await fetchPosts(1, { params: { pageSize: INITIAL_PAGE_SIZE } });
-    initialLoadError.value = null;
+    setSharedStateValue(initialLoadError, null);
     isLoadErrorDismissed.value = false;
   } catch (caughtError) {
     const message = caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
 
-    initialLoadError.value = message.trim() || t("blog.feed.loadError");
+    setSharedStateValue(initialLoadError, message.trim() || t("blog.feed.loadError"));
     isLoadErrorDismissed.value = false;
     console.error("Failed to fetch posts", caughtError);
   }
@@ -550,7 +655,7 @@ function ensureInitialPostsLoad() {
   return initialLoadPromise.value;
 }
 
-await callOnce(async () => {
+await callOnceFn(async () => {
   if (import.meta.server) {
     await ensureInitialPostsLoad();
     return;

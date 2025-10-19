@@ -1106,7 +1106,7 @@ export const usePostsStore = defineStore("posts", () => {
       const defaultPublicEndpoint = "/public/post";
       const defaultPrivateEndpoint = "/v1/platform/post";
 
-      addFetchTarget("/api/v1/posts");
+      addFetchTarget("/v1/posts");
 
       const baseURL =
         typeof fetcher.client?.defaults?.baseURL === "string"
@@ -1153,74 +1153,20 @@ export const usePostsStore = defineStore("posts", () => {
 
       try {
         const targets = Array.from(fetchTargets);
-        const pendingRequests = targets.map((target) =>
-          (async () => {
+
+        for (const target of targets) {
+          try {
             const rawResponse = await fetcher<unknown>(target, {
               method: "GET",
               query: queryParams,
             });
 
-            return normalizePostsListResponse(rawResponse);
-          })(),
-        );
-
-        const errors: unknown[] = [];
-
-        const firstSuccessfulResponse = await new Promise<PostsListResponse>((resolve, reject) => {
-          let remaining = pendingRequests.length;
-          let settled = false;
-
-          if (remaining === 0) {
-            settled = true;
-            reject(new Error("Unable to fetch posts."));
-            return;
+            const normalized = normalizePostsListResponse(rawResponse);
+            setPostsFromResponse(normalized);
+            return normalized.data;
+          } catch (error_) {
+            lastError = error_;
           }
-
-          for (const pendingRequest of pendingRequests) {
-            pendingRequest
-              .then((response) => {
-                if (settled) {
-                  return;
-                }
-
-                settled = true;
-                resolve(response);
-              })
-              .catch((reason) => {
-                if (settled) {
-                  return;
-                }
-
-                errors.push(reason);
-                lastError = reason;
-                remaining -= 1;
-
-                if (remaining === 0) {
-                  settled = true;
-                  const lastReason = errors[errors.length - 1];
-                  const aggregateMessage =
-                    lastReason instanceof Error
-                      ? lastReason.message
-                      : String(lastReason ?? "");
-                  const aggregateError =
-                    errors.length > 1
-                      ? new AggregateError(errors, aggregateMessage)
-                      : (errors[0] instanceof Error
-                          ? errors[0]
-                          : new Error(String(errors[0] ?? "")));
-
-                  lastError = aggregateError;
-                  reject(aggregateError);
-                }
-              });
-          }
-        });
-
-        setPostsFromResponse(firstSuccessfulResponse);
-        return firstSuccessfulResponse.data;
-      } catch (caughtError) {
-        if (typeof caughtError !== "undefined") {
-          lastError = caughtError;
         }
 
         const finalError =
