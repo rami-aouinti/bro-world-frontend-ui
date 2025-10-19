@@ -25,6 +25,7 @@ const { registerRightSidebarContent } = useLayoutRightSidebar();
 definePageMeta({
   documentDriven: false,
   showRightWidgets: true,
+  requiresPlugin: "messenger",
 });
 
 const pageDescription = computed(() => t("seo.messenger.description"));

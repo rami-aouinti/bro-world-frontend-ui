@@ -120,6 +120,7 @@ definePageMeta({
   title: "Messenger",
   breadcrumb: "disabled",
   scrollToTop: true,
+  requiresPlugin: "messenger",
 });
 
 useSeoMeta({

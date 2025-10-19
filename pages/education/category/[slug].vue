@@ -90,5 +90,6 @@ function courseProgress(course: Course) {
 
 definePageMeta({
   alias: ["/academy/category/:slug"],
+  requiresPlugin: "education",
 });
 </script>

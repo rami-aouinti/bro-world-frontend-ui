@@ -136,6 +136,7 @@ useSeoMeta(() => ({
 
 definePageMeta({
   documentDriven: false,
+  requiresPlugin: "ecommerce",
 });
 
 const runtimeConfig = useRuntimeConfig();

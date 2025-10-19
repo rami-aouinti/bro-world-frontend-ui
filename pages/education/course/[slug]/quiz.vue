@@ -254,5 +254,6 @@ function resetQuiz() {
 
 definePageMeta({
   alias: ["/academy/course/:slug/quiz"],
+  requiresPlugin: "education",
 });
 </script>

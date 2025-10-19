@@ -51,5 +51,6 @@ const breadcrumbs = computed(() => [
 
 definePageMeta({
   alias: ["/academy/certificate/:id"],
+  requiresPlugin: "education",
 });
 </script>
