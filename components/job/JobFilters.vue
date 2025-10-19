@@ -7,6 +7,7 @@
     density="compact"
     :label="t('job.company')"
     rounded="xl"
+    variant="outlined"
   />
   <v-select
     v-model="selectedSkills"
@@ -17,6 +18,7 @@
     :label="t('job.skills')"
     multiple
     rounded="xl"
+    variant="outlined"
   />
   <v-select
     v-model="selectedExperience"
@@ -24,6 +26,7 @@
     :label="t('job.filterByExperience')"
     density="compact"
     rounded="xl"
+    variant="outlined"
   />
   <v-select
     v-model="selectedWorkType"
@@ -34,6 +37,7 @@
     density="compact"
     multiple
     rounded="xl"
+    variant="outlined"
   />
   <v-select
     v-model="selectedContractType"
@@ -44,12 +48,15 @@
     density="compact"
     multiple
     rounded="xl"
+    variant="outlined"
   />
   <v-slider
     v-model="salaryRange"
     :label="`${t('job.salaryRange')}: ${salaryRange}k`"
     class="mb-4"
     :max="200"
+    color="primary"
+    track-color="primary"
     thumb-label="always"
   />
 </template>
