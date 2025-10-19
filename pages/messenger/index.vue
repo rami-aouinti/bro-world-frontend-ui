@@ -1,7 +1,7 @@
 <template>
   <v-container
     fluid
-    class="py-6"
+    class="messenger-page py-6"
   >
     <ChatWindow :conversation="activeConversation" />
   </v-container>
@@ -59,7 +59,7 @@ registerRightSidebarContent(
       emptyLabel: emptyLabel.value,
       onSelect: handleSelect,
     },
-    wrapperClass: "flex flex-col gap-4 px-3 py-4",
+    wrapperClass: "flex h-full flex-col gap-4 px-3 py-4",
   })),
 );
 
@@ -69,3 +69,14 @@ if (latestConversationId) {
   await navigateTo({ path: `/messenger/${latestConversationId}`, replace: true });
 }
 </script>
+
+<style scoped>
+.messenger-page {
+  display: flex !important;
+  flex: 1 1 auto;
+  flex-direction: column;
+  flex-wrap: nowrap !important;
+  align-content: stretch;
+  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
+}
+</style>
