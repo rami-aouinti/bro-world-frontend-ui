@@ -1,5 +1,8 @@
 <template>
-  <main aria-labelledby="blog-heading">
+  <main
+    class="index-page"
+    aria-labelledby="blog-heading"
+  >
     <v-alert
       v-if="loadErrorMessage"
       data-test="posts-load-error"
@@ -722,3 +725,5 @@ if (import.meta.client) {
   });
 }
 </script>
+
+<style scoped src="~/assets/styles/pages/index.scss" lang="scss"></style>
