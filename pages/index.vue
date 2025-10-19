@@ -480,6 +480,11 @@ async function callOnceFn<T>(key: string, task: () => Promise<T> | T) {
 
   return await task();
 }
+const blogPostCardLoader = () => import("~/components/blog/BlogPostCard.vue");
+const BlogPostCard = defineAsyncComponent({
+  loader: blogPostCardLoader,
+});
+
 const NewPostSkeleton = defineAsyncComponent({
   loader: () => import("~/components/blog/NewPostSkeleton.vue"),
   suspensible: false,
@@ -499,6 +504,23 @@ const StoryViewerModal = defineAsyncComponent({
 
 const showAuthenticatedSkeletonsState = computed(
   () => !isAuthReady.value || pending.value,
+);
+
+let hasPrefetchedFirstBlogPostCard = false;
+
+watch(
+  posts,
+  (postItems) => {
+    if (hasPrefetchedFirstBlogPostCard || postItems.length === 0) {
+      return;
+    }
+
+    hasPrefetchedFirstBlogPostCard = true;
+    void callOnceFn("index:prefetch-first-blog-post-card", async () => {
+      await blogPostCardLoader();
+    });
+  },
+  { immediate: true, flush: "post" },
 );
 
 const initialSkeletonVisibilityState = resolveSharedState(
