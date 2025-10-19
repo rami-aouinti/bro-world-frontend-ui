@@ -1,233 +1,367 @@
 <template>
-  <main
-    class="py-12"
-    aria-labelledby="crm-workspace-heading"
-  >
-    <v-container>
-      <section
-        class="text-center mb-12"
-        aria-describedby="crm-workspace-subheading"
-      >
-        <h1
-          id="crm-workspace-heading"
-          class="text-h3 font-weight-bold mb-4"
-        >
-          CRM workspace
-        </h1>
-        <p
-          id="crm-workspace-subheading"
-          class="text-body-1 text-medium-emphasis mx-auto"
-          style="max-width: 640px"
-        >
-          Centralise your opportunities, track their progress, and collaborate with sales in real
-          time using our mock data.
-        </p>
-      </section>
-
-      <v-row
-        class="mb-10"
-        align="stretch"
-        dense
-      >
-        <v-col
-          cols="12"
-          md="5"
-        >
-          <ProjectCreateForm @created="handleProjectCreated" />
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="7"
-        >
-          <v-card
+  <main class="crm-index" aria-labelledby="crm-index-heading">
+    <v-container fluid class="py-10 px-6 px-md-10">
+      <header class="crm-index__header">
+        <div class="crm-index__header-text">
+          <h1 id="crm-index-heading">CRM — Index</h1>
+          <p>
+            Visualisez vos tâches de sprint, organisez-les par statut et accédez rapidement à vos projets.
+          </p>
+        </div>
+        <div class="crm-index__header-actions">
+          <v-select
+            :model-value="activeSprintId"
+            :items="sprintSelectItems"
+            label="Sprint"
+            item-title="label"
+            item-value="value"
+            variant="outlined"
+            density="comfortable"
+            color="primary"
+            prepend-inner-icon="mdi:flag-checkered"
+            class="crm-index__sprint-select"
+            @update:model-value="handleSprintChange"
+          />
+          <v-btn
+            color="primary"
+            variant="flat"
+            prepend-icon="mdi:clipboard-plus"
+            class="text-none font-weight-semibold"
+            :disabled="projectOptionsForTasks.length === 0"
+            @click="openTaskDialog"
+          >
+            Nouveau task
+          </v-btn>
+          <v-btn
             variant="tonal"
             color="primary"
-            class="h-100"
+            class="text-none font-weight-semibold"
+            :prepend-icon="showInlineSidebar ? 'mdi:eye-off-outline' : 'mdi:view-sidebar'"
+            @click="handleToggleSidebar"
           >
-            <v-card-item>
-              <v-card-title class="text-h5 font-weight-semibold text-primary-darken-3">
-                Pipeline snapshot
-              </v-card-title>
-              <v-card-subtitle class="text-body-2 text-primary-darken-1">
-                Quick indicators generated from the current mock dataset.
-              </v-card-subtitle>
-            </v-card-item>
-
-            <v-card-text>
-              <v-row dense>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  class="mb-4"
-                >
-                  <div class="d-flex flex-column">
-                    <span class="text-subtitle-2 text-primary-darken-1">Total projects</span>
-                    <span class="text-h4 font-weight-bold">{{ totalProjects }}</span>
-                  </div>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  class="mb-4"
-                >
-                  <div class="d-flex flex-column">
-                    <span class="text-subtitle-2 text-primary-darken-1">Active pipeline</span>
-                    <span class="text-h4 font-weight-bold">{{ activeProjects }}</span>
-                  </div>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  class="mb-4"
-                >
-                  <div class="d-flex flex-column">
-                    <span class="text-subtitle-2 text-primary-darken-1">High priority</span>
-                    <span class="text-h4 font-weight-bold">{{ highPriorityProjects }}</span>
-                  </div>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  class="mb-4"
-                >
-                  <div class="d-flex flex-column">
-                    <span class="text-subtitle-2 text-primary-darken-1">Forecasted revenue</span>
-                    <span class="text-h4 font-weight-bold">{{ formattedForecast }}</span>
-                  </div>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-row
-        class="mb-12"
-        align="stretch"
-        dense
-      >
-        <v-col cols="12">
-          <TaskCreateSection />
-        </v-col>
-      </v-row>
-
-      <section aria-labelledby="crm-table-heading">
-        <div class="d-flex flex-column gap-4 mb-6">
-          <v-alert
-            v-if="createdProjectMessage"
-            type="success"
-            variant="tonal"
-            border="start"
-            border-color="success"
-            density="comfortable"
-            closable
-            role="status"
-            @click:close="clearCreatedProject"
-          >
-            {{ createdProjectMessage }}
-          </v-alert>
+            {{ showInlineSidebar ? 'Masquer panneau' : 'Afficher panneau' }}
+          </v-btn>
         </div>
+      </header>
 
-        <h2
-          id="crm-table-heading"
-          class="text-h4 font-weight-semibold mb-4"
-        >
-          Opportunities
-        </h2>
+      <section class="crm-index__content">
+        <CrmKanbanBoard
+          class="crm-index__board"
+          :tasks="kanbanTasks"
+          :projects-by-id="projectMap"
+          :users-by-id="userMap"
+          @move="handleMoveTask"
+        />
 
-        <ProjectListTable
-          :projects="projects"
-          :loading="isLoading"
-          :error="tableError"
+        <SidebarRight
+          v-if="showInlineSidebar"
+          class="crm-index__sidebar"
+          :projects="projectSummaries"
+          :recent-tasks="recentTaskSummaries"
+          @create-project="openProjectDialog"
+          @create-task="openTaskDialog"
         />
       </section>
     </v-container>
+
+    <v-navigation-drawer
+      v-model="isSidebarDrawerOpen"
+      location="right"
+      temporary
+      width="360"
+      scrim
+    >
+      <SidebarRight
+        :projects="projectSummaries"
+        :recent-tasks="recentTaskSummaries"
+        @create-project="openProjectDialog"
+        @create-task="openTaskDialog"
+      />
+    </v-navigation-drawer>
+
+    <NewProjectDialog
+      v-model="isProjectDialogOpen"
+      :loading="isCreatingProject"
+      :error="projectError"
+      @submit="handleCreateProject"
+    />
+    <NewTaskDialog
+      v-model="isTaskDialogOpen"
+      :projects="projectOptionsForTasks"
+      :sprints="sprintOptionsForDialog"
+      :users="userOptionsForDialog"
+      :default-project-id="defaultTaskProjectId"
+      :default-sprint-id="activeSprintId"
+      :loading="isCreatingTask"
+      :error="taskError"
+      @submit="handleCreateTask"
+    />
   </main>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { callOnce } from "#app";
+import { computed, ref, watch } from "vue";
+import { useDisplay } from "vuetify";
 
-import ProjectCreateForm from "~/components/crm/ProjectCreateForm.vue";
-import TaskCreateSection from "~/components/crm/tasks/TaskCreateSection.vue";
-import ProjectListTable from "~/components/crm/ProjectListTable.vue";
-import { useCrmProjectsStore, type CrmProject } from "~/stores/crm-projects";
+import CrmKanbanBoard from "~/components/crm/kanban/CrmKanbanBoard.vue";
+import SidebarRight from "~/components/crm/SidebarRight.vue";
+import NewProjectDialog from "~/components/crm/dialogs/NewProjectDialog.vue";
+import NewTaskDialog from "~/components/crm/dialogs/NewTaskDialog.vue";
+import {
+  useCrmBoardStore,
+  type CrmBoardProject,
+  type CrmBoardTaskPriority,
+  type CrmBoardTaskStatus,
+  type CrmBoardUser,
+} from "~/stores/crm-board";
 
-const { locale } = useI18n();
-const store = useCrmProjectsStore();
-const createdProject = ref<CrmProject | null>(null);
-const loadError = ref<string | null>(null);
+const board = useCrmBoardStore();
+const display = useDisplay();
 
-try {
-  await callOnce("crm:projects:list", () => store.listProjects());
-} catch (error) {
-  const message = store.error.value || (error as { message?: string } | null)?.message || null;
-  loadError.value = message;
+const isSidebarVisible = ref(true);
+const isSidebarDrawerOpen = ref(false);
+const isProjectDialogOpen = ref(false);
+const isTaskDialogOpen = ref(false);
+const isCreatingProject = ref(false);
+const isCreatingTask = ref(false);
+const projectError = ref<string | null>(null);
+const taskError = ref<string | null>(null);
+
+const activeSprintId = computed(() => board.activeSprintId.value);
+const kanbanTasks = computed(() => board.tasksForActiveSprint.value);
+const projectMap = computed(() => board.projectsById.value);
+const userMap = computed(() => board.usersById.value);
+
+const sprintSelectItems = computed(() =>
+  board.sprints.value.map((sprint) => ({
+    label: sprint.name,
+    value: sprint.id,
+  })),
+);
+
+const projectSummaries = computed(() =>
+  board.projectsForCurrentUser.value.map((project) => ({
+    id: project.id,
+    name: project.name,
+    key: project.key || project.name.slice(0, 3).toUpperCase(),
+    color: project.color || "#64748b",
+    taskCount: board.taskCountForProjectInSprint(project.id, activeSprintId.value),
+  })),
+);
+
+function resolvePriorityMeta(priority: CrmBoardTaskPriority) {
+  switch (priority) {
+    case "Urgent":
+      return { color: "#dc2626", text: "#fef2f2" };
+    case "High":
+      return { color: "#f97316", text: "#fff7ed" };
+    case "Medium":
+      return { color: "#0284c7", text: "#e0f2fe" };
+    case "Low":
+    default:
+      return { color: "#0f766e", text: "#ecfdf5" };
+  }
 }
 
-const projects = computed(() => store.projects.value);
-const isLoading = computed(() => store.pending.value);
-const tableError = computed(() => loadError.value || store.error.value || null);
-
-const totalProjects = computed(() => projects.value.length);
-const activeProjects = computed(
-  () =>
-    projects.value.filter(
-      (project) => (project.status ?? project.stage ?? "").toLowerCase() !== "completed",
-    ).length,
-);
-const highPriorityProjects = computed(
-  () =>
-    projects.value.filter((project) => (project.priority ?? "").toLowerCase() === "high").length,
-);
-const forecastValue = computed(() =>
-  projects.value.reduce((total, project) => {
-    const budget =
-      typeof project.budget === "number" && Number.isFinite(project.budget) ? project.budget : 0;
-    const probability =
-      typeof project.probability === "number" && Number.isFinite(project.probability)
-        ? Math.min(Math.max(project.probability, 0), 1)
-        : 0;
-    return total + budget * probability;
-  }, 0),
-);
-
-const currencyFormatter = computed(
-  () =>
-    new Intl.NumberFormat(locale.value, {
-      style: "currency",
-      currency: "EUR",
-      maximumFractionDigits: 0,
-    }),
-);
-
-const formattedForecast = computed(() => {
-  if (forecastValue.value <= 0) {
-    return "€0";
+function formatDueDate(value: string | null | undefined) {
+  if (!value) {
+    return null;
   }
-  return currencyFormatter.value.format(forecastValue.value);
-});
-
-const createdProjectMessage = computed(() => {
-  const project = createdProject.value;
-  if (!project) {
-    return "";
+  const timestamp = Date.parse(value);
+  if (Number.isNaN(timestamp)) {
+    return null;
   }
-
-  const name = project.name?.trim();
-  return name
-    ? `The project “${name}” is now part of your pipeline.`
-    : "A new project has been added to your pipeline.";
-});
-
-function handleProjectCreated(project: CrmProject) {
-  createdProject.value = project;
+  return new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short" }).format(timestamp);
 }
 
-function clearCreatedProject() {
-  createdProject.value = null;
+const recentTaskSummaries = computed(() => {
+  const tasks = board.recentTasks.value.slice(0, 6);
+  return tasks.map((task) => {
+    const project = projectMap.value[task.projectId] as CrmBoardProject | undefined;
+    const assignee = userMap.value[task.assigneeId ?? ""] as CrmBoardUser | undefined;
+    const priorityMeta = resolvePriorityMeta(task.priority);
+    return {
+      id: task.id,
+      title: task.title,
+      projectName: project?.name ?? "Projet inconnu",
+      dueDateLabel: formatDueDate(task.dueDate ?? null),
+      priority: task.priority,
+      priorityColor: priorityMeta.color,
+      priorityTextColor: priorityMeta.text,
+      assigneeInitials: assignee?.initials ?? null,
+      assigneeColor: assignee?.avatarColor ?? null,
+    };
+  });
+});
+
+const projectOptionsForTasks = computed(() =>
+  board.projectsForCurrentUser.value.map((project) => ({
+    id: project.id,
+    name: project.name,
+    key: project.key || project.name.slice(0, 3).toUpperCase(),
+  })),
+);
+
+const sprintOptionsForDialog = computed(() =>
+  board.sprints.value.map((sprint) => ({
+    id: sprint.id,
+    name: sprint.name,
+  })),
+);
+
+const userOptionsForDialog = computed(() =>
+  board.users.value.map((user) => ({
+    id: user.id,
+    name: user.name,
+    initials: user.initials,
+  })),
+);
+
+const defaultTaskProjectId = computed(() => projectOptionsForTasks.value[0]?.id ?? null);
+
+const showInlineSidebar = computed(() => display.mdAndUp.value && isSidebarVisible.value);
+
+watch(
+  () => display.mdAndUp.value,
+  (isDesktop) => {
+    if (isDesktop) {
+      isSidebarDrawerOpen.value = false;
+    }
+  },
+);
+
+function handleToggleSidebar() {
+  if (display.mdAndUp.value) {
+    isSidebarVisible.value = !isSidebarVisible.value;
+  } else {
+    isSidebarDrawerOpen.value = true;
+  }
+}
+
+function handleSprintChange(sprintId: string) {
+  if (sprintId) {
+    board.setActiveSprint(sprintId);
+  }
+}
+
+function handleMoveTask(payload: { taskId: string; status: CrmBoardTaskStatus; beforeTaskId: string | null }) {
+  board.moveTask(payload.taskId, payload.status, payload.beforeTaskId);
+}
+
+function openProjectDialog() {
+  projectError.value = null;
+  isProjectDialogOpen.value = true;
+}
+
+function openTaskDialog() {
+  taskError.value = null;
+  if (!projectOptionsForTasks.value.length) {
+    openProjectDialog();
+    return;
+  }
+  isTaskDialogOpen.value = true;
+}
+
+async function handleCreateProject(payload: { name: string; key: string; color: string }) {
+  projectError.value = null;
+  isCreatingProject.value = true;
+  try {
+    board.createProject(payload);
+    isProjectDialogOpen.value = false;
+  } catch (error) {
+    projectError.value = error instanceof Error ? error.message : String(error ?? "");
+  } finally {
+    isCreatingProject.value = false;
+  }
+}
+
+async function handleCreateTask(payload: {
+  title: string;
+  description?: string;
+  projectId: string;
+  sprintId: string;
+  priority: CrmBoardTaskPriority;
+  assigneeId?: string | null;
+  dueDate?: string | null;
+}) {
+  taskError.value = null;
+  isCreatingTask.value = true;
+  try {
+    board.createTask(payload);
+    isTaskDialogOpen.value = false;
+    isSidebarDrawerOpen.value = false;
+  } catch (error) {
+    taskError.value = error instanceof Error ? error.message : String(error ?? "");
+  } finally {
+    isCreatingTask.value = false;
+  }
 }
 </script>
+
+<style scoped>
+.crm-index {
+  min-height: 100vh;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(241, 245, 249, 0.7) 100%);
+}
+
+.crm-index__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 960px) {
+  .crm-index__header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.crm-index__header-text h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-weight: 700;
+  color: rgb(15 23 42);
+}
+
+.crm-index__header-text p {
+  margin: 0;
+  max-width: 560px;
+  color: rgb(71 85 105);
+  font-size: 1rem;
+}
+
+.crm-index__header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.crm-index__sprint-select {
+  min-width: 200px;
+}
+
+.crm-index__content {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.crm-index__board {
+  flex: 1;
+}
+
+.crm-index__sidebar {
+  flex-shrink: 0;
+}
+
+@media (max-width: 1280px) {
+  .crm-index__content {
+    flex-direction: column;
+  }
+}
+</style>
