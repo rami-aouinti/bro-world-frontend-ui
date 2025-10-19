@@ -74,6 +74,11 @@
       "title": "Bro World se charge…",
       "description": "Nous préparons l'expérience complète : barre supérieure, panneaux et contenu."
     },
+    "routeLoadingOverlay": {
+      "srLabel": "Chargement de la page",
+      "title": "Chargement",
+      "subtitle": "Nous préparons votre univers…"
+    },
     "actions": {
       "openNavigation": "Ouvrir le menu de navigation",
       "openWidgets": "Ouvrir les widgets rapides",
