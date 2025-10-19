@@ -25,7 +25,7 @@
               v-if="story?.avatar"
               size="40"
             >
-              <v-img
+              <NuxtImg
                 :src="story?.avatar"
                 :alt="story?.name || t('stories.viewer.avatarAlt')"
                 cover
