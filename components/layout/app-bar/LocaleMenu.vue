@@ -13,11 +13,10 @@
       >
         <span
           v-if="currentFlag"
-          class="block h-[18px] w-[24px] text-lg leading-none"
+          :class="['fi', `fi-${currentFlag}`]"
+          class="block h-[18px] w-[24px] rounded-sm shadow-sm"
           aria-hidden="true"
-        >
-          {{ currentFlag }}
-        </span>
+        />
         <AppIcon
           v-else
           name="mdi:flag-outline"
