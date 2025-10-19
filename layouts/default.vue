@@ -1319,13 +1319,11 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 <style scoped>
 :global(:root) {
   --app-viewport-height: 100vh;
-  overflow: hidden;
 }
 
 @supports (height: 100dvh) {
   :global(:root) {
     --app-viewport-height: 100dvh;
-    overflow: hidden;
   }
 }
 
