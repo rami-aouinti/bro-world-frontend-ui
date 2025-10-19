@@ -1,19 +1,14 @@
 <template>
-  <section class="space-y-2 py-4 my-3 px-2 w-full">
-    <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
+  <section class="space-y-2 py-4 my-3 px-2 w-full mx-auto">
+    <h4 class="text font-semibold leading-tight text-foreground mx-auto">
       {{ props.title }}
-    </h2>
+    </h4>
     <p
       v-if="props.summary"
-      class="text-base leading-relaxed text-slate-500 mx-2"
+      class="text-base leading-relaxed text-slate-500 mx-2 mx-auto"
     >
       {{ props.summary }}
     </p>
-    <div
-      v-if="props.content"
-      class="text-base leading-relaxed text-slate-600 dark:text-slate-300"
-      v-html="safeHtml"
-    ></div>
   </section>
 </template>
 
