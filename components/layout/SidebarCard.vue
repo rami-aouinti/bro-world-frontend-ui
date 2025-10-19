@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { useIntersectionObserver, useResizeObserver } from "@vueuse/core";
+import { useIntersectionObserver } from "@vueuse/core";
 import { computed, defineAsyncComponent, onBeforeUnmount, ref, useAttrs, watch, watchEffect } from "vue";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
@@ -162,57 +162,41 @@ function updateParticlesAnimation() {
 }
 
 if (import.meta.client) {
-  function applyPaddingMeasurement(padding: number) {
-    const nextValue = `${Math.max(0, padding)}px`;
-    if (baseCardStyle.value["--card-x"] !== nextValue) {
-      baseCardStyle.value = {
-        ...baseCardStyle.value,
-        "--card-x": nextValue,
-      };
+  let stopVisibilityObserver: (() => void) | undefined;
+
+  const cleanupVisibilityObserver = () => {
+    if (stopVisibilityObserver) {
+      stopVisibilityObserver();
+      stopVisibilityObserver = undefined;
     }
-  }
+  };
 
-  const { stop: stopObserver } = useResizeObserver(cardRef, (entries) => {
-    const entry = entries[0];
-    if (!entry) {
-      return;
-    }
+  watch(
+    () => props.particles,
+    (enabled) => {
+      if (enabled) {
+        if (!stopVisibilityObserver) {
+          const { stop } = useIntersectionObserver(
+            cardRef,
+            (entries) => {
+              const entry = entries[0];
+              isCardVisible.value = Boolean(
+                entry?.isIntersecting && entry.intersectionRatio > 0,
+              );
+            },
+            {
+              threshold: [0, 0.2, 0.5],
+            },
+          );
 
-    const target = entry.target as HTMLElement;
-
-    const borderBox = Array.isArray(entry.borderBoxSize)
-      ? entry.borderBoxSize[0]
-      : entry.borderBoxSize;
-    const contentBox = Array.isArray(entry.contentBoxSize)
-      ? entry.contentBoxSize[0]
-      : entry.contentBoxSize;
-
-    let padding: number | null = null;
-
-    if (borderBox && contentBox) {
-      padding = (borderBox.inlineSize - contentBox.inlineSize) / 2;
-    } else if (entry.contentRect) {
-      const clientWidth = target.clientWidth;
-      const contentWidth = entry.contentRect.width;
-      if (typeof clientWidth === "number" && typeof contentWidth === "number") {
-        padding = (clientWidth - contentWidth) / 2;
+          stopVisibilityObserver = stop;
+        }
+      } else {
+        isCardVisible.value = false;
+        cleanupVisibilityObserver();
       }
-    }
-
-    if (padding !== null && Number.isFinite(padding) && padding >= 0) {
-      applyPaddingMeasurement(padding);
-    }
-  });
-
-  const { stop: stopVisibilityObserver } = useIntersectionObserver(
-    cardRef,
-    (entries) => {
-      const entry = entries[0];
-      isCardVisible.value = Boolean(entry?.isIntersecting && entry.intersectionRatio > 0);
     },
-    {
-      threshold: [0, 0.2, 0.5],
-    },
+    { immediate: true },
   );
 
   const stopParticlesWatcher = watchEffect(() => {
@@ -220,8 +204,7 @@ if (import.meta.client) {
   });
 
   onBeforeUnmount(() => {
-    stopObserver();
-    stopVisibilityObserver();
+    cleanupVisibilityObserver();
     stopParticlesWatcher();
     particlesRef.value?.stop();
   });
