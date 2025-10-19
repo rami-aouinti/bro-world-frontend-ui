@@ -2008,61 +2008,77 @@
       }
     },
     "game": {
-      "title": "Gaming",
-      "subtitle": "Launch vibrant player communities, live events, and monetisation loops without extra engineering time.",
-      "featuresTitle": "Level up every player journey",
-      "features": {
-        "community": {
-          "title": "Build communities that stay",
-          "description": "Host news, patch notes, and discussions with built-in moderation controls.",
-          "points": [
-            "Curate seasonal hubs that adapt to each franchise or guild.",
-            "Reward loyal fans with badges, drops, and cross-game progression.",
-            "Localise experiences with one click for global launches."
-          ]
-        },
-        "monetization": {
-          "title": "Unlock sustainable revenue",
-          "description": "Experiment with stores, battle passes, and bundles in a safe sandbox.",
-          "points": [
-            "Configure limited-time offers and track conversion instantly.",
-            "Integrate multiple payment providers and entitlement systems.",
-            "Balance in-game economies with configurable guardrails."
-          ]
-        },
-        "events": {
-          "title": "Orchestrate unforgettable events",
-          "description": "Coordinate tournaments, live ops, and creator collaborations effortlessly.",
-          "points": [
-            "Schedule announcements, streams, and drops in a unified timeline.",
-            "Share production checklists and asset packs with internal teams.",
-            "Track sentiment and uptime to react before the hype dips."
-          ]
+      "title": "ساحة الاختبارات",
+      "subtitle": "صمّم اختبارات متعددة المراحل مع فئات ومستويات وتصنيف مباشر.",
+      "menu": {
+        "player": "اللاعب جاهز!",
+        "guest": "ضيف",
+        "guestName": "ضيف",
+        "categoryPlaceholder": "اختر فئة",
+        "levelPlaceholder": "اختر مستوى",
+        "timer": "الوقت",
+        "score": "النتيجة",
+        "progress": "التقدم",
+        "pendingScore": "قيد الانتظار",
+        "helper": "اختر فئة ومستوى لبدء الاختبار. سجّل الدخول لحفظ التقدم."
+      },
+      "leaderboard": {
+        "title": "لوحة الصدارة",
+        "loading": "جارٍ التحميل…",
+        "empty": "يتم تحديث لوحة الصدارة بعد المحاولات الأولى."
+      },
+      "categories": {
+        "title": "اختر فئة",
+        "subtitle": "استكشف بنوك أسئلة قصصية من عالم Bro World.",
+        "reload": "إعادة التحميل",
+        "empty": "لا توجد فئات متاحة حالياً.",
+        "levels": "{count} مستويات",
+        "questions": "{count} أسئلة",
+        "players": "{count} لاعبين"
+      },
+      "levels": {
+        "title": "اختر مستوى",
+        "subtitle": "كل مستوى يزيد التحدي ويُسرّع المؤقت.",
+        "locked": "اختر فئة أولاً لعرض مستوياتها.",
+        "empty": "لا تتوفر مستويات لهذه الفئة.",
+        "questions": "{count} أسئلة",
+        "time": "{minutes} دقيقة"
+      },
+      "questions": {
+        "title": "السؤال {index} من {total}",
+        "progress": "{answered}/{total} تمت الإجابة",
+        "timer": "الوقت المنقضي",
+        "empty": "اختر مستوى لبدء الاختبار.",
+        "warning": "أجب على جميع الأسئلة قبل الإرسال.",
+        "checking": "جارٍ التحقق من الإجابات…",
+        "actions": {
+          "previous": "السابق",
+          "next": "التالي",
+          "submit": "إرسال الإجابات"
         }
       },
-      "workflowTitle": "Plan, launch, and grow",
-      "workflow": {
-        "steps": {
-          "launch": {
-            "title": "Launch",
-            "description": "Prototype your experience, test with closed groups, and ship with guardrails."
-          },
-          "engage": {
-            "title": "Engage",
-            "description": "Deliver live updates, challenges, and quests that feel fresh every session."
-          },
-          "grow": {
-            "title": "Grow",
-            "description": "Analyse cohorts, expand to new platforms, and activate creators responsibly."
-          }
+      "results": {
+        "title": "النتائج",
+        "score": "النتيجة",
+        "summary": "{correct}/{total} إجابات صحيحة",
+        "time": "الوقت المستغرق",
+        "breakdown": {
+          "correct": "صحيح",
+          "incorrect": "خاطئ",
+          "yourAnswer": "إجابتك",
+          "correctAnswer": "الإجابة الصحيحة",
+          "noAnswer": "لا توجد إجابة"
         }
       },
-      "stepLabel": "Stage {number}",
-      "cta": {
-        "title": "Ship the next fan-favourite season",
-        "description": "We partner with studios of every size to streamline community, monetisation, and live ops management.",
-        "button": "Plan a demo",
-        "buttonAria": "Open the contact page"
+      "auth": {
+        "title": "سجّل الدخول لحفظ تقدمك",
+        "subtitle": "سجّل الدخول أو أنشئ حساباً للظهور في لوحة الصدارة."
+      },
+      "errors": {
+        "categories": "تعذر تحميل فئات الاختبار.",
+        "levels": "تعذر تحميل المستويات لهذه الفئة.",
+        "questions": "تعذر تحميل أسئلة الاختبار.",
+        "validation": "تعذر التحقق من إجاباتك. حاول مرة أخرى."
       }
     },
     "ecommerce": {
