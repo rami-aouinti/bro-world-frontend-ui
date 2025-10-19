@@ -730,6 +730,8 @@ export const usePostsStore = defineStore("posts", () => {
   const items = useState<Record<string, PostsStorePost>>("posts-items", () => ({}));
   const listIds = useState<string[]>("posts-list-ids", () => []);
   const itemTimestamps = useState<Record<string, number>>("posts-item-timestamps", () => ({}));
+  const commentsCache = useState<Record<string, BlogCommentWithReplies[]>>("posts-comments-cache", () => ({}));
+  const commentTimestamps = useState<Record<string, number>>("posts-comments-timestamps", () => ({}));
   const cachedAt = useState<number | null>("posts-cached-at", () => null);
   const lastFetched = useState<number | null>("posts-last-fetched", () => null);
   const pending = useState<boolean>("posts-pending", () => false);
@@ -762,6 +764,38 @@ export const usePostsStore = defineStore("posts", () => {
 
     return resolvedPostCount.value < totalCount.value;
   });
+
+  function setCommentsCache(postId: string, comments: BlogCommentWithReplies[]) {
+    if (!postId) {
+      return;
+    }
+
+    commentsCache.value = {
+      ...commentsCache.value,
+      [postId]: comments,
+    };
+
+    commentTimestamps.value = {
+      ...commentTimestamps.value,
+      [postId]: Date.now(),
+    };
+  }
+
+  function invalidateCommentsCache(postId: string) {
+    if (!postId) {
+      return;
+    }
+
+    if (postId in commentsCache.value) {
+      const { [postId]: _, ...rest } = commentsCache.value;
+      commentsCache.value = rest;
+    }
+
+    if (postId in commentTimestamps.value) {
+      const { [postId]: _, ...rest } = commentTimestamps.value;
+      commentTimestamps.value = rest;
+    }
+  }
 
   function markItemTimestamp(id: string, timestamp: number) {
     itemTimestamps.value = {
@@ -1154,20 +1188,43 @@ export const usePostsStore = defineStore("posts", () => {
       try {
         const targets = Array.from(fetchTargets);
 
-        for (const target of targets) {
-          try {
-            const rawResponse = await fetcher<unknown>(target, {
+        if (targets.length === 0) {
+          throw new Error("No posts endpoints available.");
+        }
+
+        const requestPromises = targets.map((target) =>
+          Promise.resolve(
+            fetcher<unknown>(target, {
               method: "GET",
               query: queryParams,
-            });
+            }),
+          ).then((rawResponse) => ({ target, normalized: normalizePostsListResponse(rawResponse) })),
+        );
 
-            const normalized = normalizePostsListResponse(rawResponse);
-            setPostsFromResponse(normalized);
-            return normalized.data;
-          } catch (error_) {
-            lastError = error_;
+        let winner: { target: string; normalized: PostsListResponse };
+
+        try {
+          winner = await Promise.any(requestPromises);
+        } catch (aggregateError) {
+          if (aggregateError instanceof AggregateError && aggregateError.errors.length > 0) {
+            lastError = aggregateError.errors[aggregateError.errors.length - 1];
+          } else {
+            lastError = aggregateError;
+          }
+
+          const fallbackError =
+            lastError instanceof Error ? lastError : new Error(String(lastError ?? ""));
+          throw fallbackError;
+        } finally {
+          for (const pendingRequest of requestPromises) {
+            void pendingRequest.catch(() => {});
           }
         }
+
+        setPostsFromResponse(winner.normalized);
+        return winner.normalized.data;
+      } catch (error_) {
+        lastError = error_;
 
         const finalError =
           lastError instanceof Error ? lastError : new Error(String(lastError ?? ""));
@@ -1573,9 +1630,19 @@ export const usePostsStore = defineStore("posts", () => {
       throw new Error("Post identifier is required.");
     }
 
-    const fetcher = resolveApiFetcher();
+    const cachedComments = commentsCache.value[trimmedId];
+    const cachedTimestamp = commentTimestamps.value[trimmedId];
+    const now = Date.now();
+    const hasCached = Array.isArray(cachedComments);
+    const isFresh =
+      hasCached && typeof cachedTimestamp === "number" && now - cachedTimestamp < itemTtlMs;
 
-    try {
+    if (hasCached && isFresh) {
+      return cachedComments;
+    }
+
+    const fetchAndStore = async () => {
+      const fetcher = resolveApiFetcher();
       const response = await fetcher<BlogCommentWithReplies[] | unknown>(
         `/v1/posts/${encodeURIComponent(trimmedId)}/comments`,
         {
@@ -1587,7 +1654,21 @@ export const usePostsStore = defineStore("posts", () => {
         throw new Error("Invalid comments response.");
       }
 
+      setCommentsCache(trimmedId, response);
+
       return response;
+    };
+
+    if (hasCached) {
+      fetchAndStore().catch((error_) => {
+        console.error("Comments revalidation failed", error_);
+      });
+
+      return cachedComments;
+    }
+
+    try {
+      return await fetchAndStore();
     } catch (caughtError) {
       const message =
         caughtError instanceof Error ? caughtError.message : String(caughtError ?? "");
@@ -1621,6 +1702,8 @@ export const usePostsStore = defineStore("posts", () => {
           parentCommentId: sanitizeTextInput(parentCommentId) || null,
         },
       });
+
+      invalidateCommentsCache(trimmedId);
 
       await getPost(trimmedId, { force: true });
       await fetchPosts({ force: true });
@@ -1658,6 +1741,8 @@ export const usePostsStore = defineStore("posts", () => {
           body: { reactionType: trimmedReaction },
         },
       );
+
+      invalidateCommentsCache(trimmedId);
 
       await getPost(trimmedId, { force: true });
       await fetchPosts({ force: true });

@@ -2,12 +2,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createSSRApp, h } from "vue";
 
 import { createPinia } from "~/lib/pinia-shim";
-import type { BlogPost } from "~/lib/mock/blog";
+import type { BlogCommentWithReplies, BlogPost } from "~/lib/mock/blog";
 import {
   __getNuxtStateRef,
   __requestFetchSpy,
   __resetNuxtStateMocks,
   __resetRequestFetchMock,
+  useCookie,
 } from "#imports";
 
 const fetchSpy = __requestFetchSpy;
@@ -63,6 +64,34 @@ function makePost(id: string, overrides: Partial<BlogPost> = {}): BlogPost {
     },
     reactions_preview: [],
     comments_preview: [],
+    ...overrides,
+  };
+}
+
+function makeComment(
+  id: string,
+  overrides: Partial<BlogCommentWithReplies> = {},
+): BlogCommentWithReplies {
+  const numericId = Number.parseInt(id.replace(/[^0-9]/g, ""), 10) || 1;
+
+  return {
+    id,
+    content: `Comment ${id}`,
+    user: {
+      id: `comment-user-${id}`,
+      firstName: "Jane",
+      lastName: "Doe",
+      username: `jane-${id}`,
+      email: "jane@example.com",
+      enabled: true,
+      photo: null,
+    },
+    isReacted: null,
+    totalComments: 0,
+    reactions_count: 0,
+    publishedAt: new Date(2024, 0, numericId).toISOString(),
+    reactions_preview: [],
+    likes_count: 0,
     ...overrides,
   };
 }
@@ -482,5 +511,236 @@ describe("posts store", () => {
 
     await expect(firstFetch).resolves.toEqual([]);
     await expect(secondFetch).resolves.toEqual([]);
+  });
+
+  it("returns cached comments when they are still fresh", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const postId = "post-1";
+    const comments = [makeComment("comment-1")];
+
+    fetchSpy.mockResolvedValueOnce(comments);
+
+    const firstResult = await store.getComments(postId);
+    expect(firstResult).toEqual(comments);
+
+    const secondResult = await store.getComments(postId);
+    expect(secondResult).toEqual(comments);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("refreshes stale cached comments in the background", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const postId = "post-1";
+    const initialComments = [makeComment("comment-1")];
+    const updatedComments = [makeComment("comment-2")];
+
+    fetchSpy.mockResolvedValueOnce(initialComments);
+
+    const firstResult = await store.getComments(postId);
+    expect(firstResult).toEqual(initialComments);
+
+    const timestampRef = __getNuxtStateRef<Record<string, number>>("posts-comments-timestamps");
+    expect(timestampRef).toBeDefined();
+    timestampRef!.value = {
+      ...timestampRef!.value,
+      [postId]: Date.now() - 400_000,
+    };
+
+    const deferred = createDeferred<BlogCommentWithReplies[]>();
+    fetchSpy.mockImplementationOnce(() => deferred.promise);
+
+    const secondResult = await store.getComments(postId);
+    expect(secondResult).toEqual(initialComments);
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+
+    const cacheRef = __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>(
+      "posts-comments-cache",
+    );
+    expect(cacheRef).toBeDefined();
+
+    deferred.resolve(updatedComments);
+    await deferred.promise;
+    await Promise.resolve();
+
+    expect(cacheRef!.value[postId]).toEqual(updatedComments);
+  });
+
+  it("clears the cached comments after adding a new one", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const postId = "post-1";
+    const cacheRef = __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>(
+      "posts-comments-cache",
+    );
+    const timestampRef = __getNuxtStateRef<Record<string, number>>("posts-comments-timestamps");
+
+    expect(cacheRef).toBeDefined();
+    expect(timestampRef).toBeDefined();
+
+    cacheRef!.value = {
+      ...cacheRef!.value,
+      [postId]: [makeComment("comment-1")],
+    };
+    timestampRef!.value = {
+      ...timestampRef!.value,
+      [postId]: Date.now(),
+    };
+
+    const postsResponse = {
+      data: [],
+      page: 1,
+      limit: 10,
+      count: 0,
+      cachedAt: Date.now(),
+      revalidatedAt: null,
+      fromCache: false,
+    };
+
+    const postResponse = {
+      data: makePost(postId),
+      cachedAt: Date.now(),
+      fromCache: false,
+    };
+
+    fetchSpy.mockImplementation((url: unknown, options: Record<string, unknown> = {}) => {
+      const method = typeof options.method === "string" ? options.method : undefined;
+
+      if (typeof url === "string") {
+        if (url.includes(`/v1/posts/${postId}/comments`) && method === "POST") {
+          return Promise.resolve({});
+        }
+
+        if (url === `/v1/posts/${postId}` && method === "GET") {
+          return Promise.resolve(postResponse);
+        }
+
+        if (method === "GET") {
+          return Promise.resolve(postsResponse);
+        }
+      }
+
+      return Promise.resolve(postsResponse);
+    });
+
+    const sessionCookie = useCookie<string | null>("auth_session_token");
+    sessionCookie.value = "token";
+
+    await store.addComment(postId, "New comment");
+
+    expect(cacheRef!.value[postId]).toBeUndefined();
+    expect(timestampRef!.value[postId]).toBeUndefined();
+  });
+
+  it("clears the cached comments after reacting to one", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    app.runWithContext(() => {
+      store = usePostsStore();
+    });
+
+    const postId = "post-1";
+    const cacheRef = __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>(
+      "posts-comments-cache",
+    );
+    const timestampRef = __getNuxtStateRef<Record<string, number>>("posts-comments-timestamps");
+
+    cacheRef!.value = {
+      ...cacheRef!.value,
+      [postId]: [makeComment("comment-1")],
+    };
+    timestampRef!.value = {
+      ...timestampRef!.value,
+      [postId]: Date.now(),
+    };
+
+    const postsResponse = {
+      data: [],
+      page: 1,
+      limit: 10,
+      count: 0,
+      cachedAt: Date.now(),
+      revalidatedAt: null,
+      fromCache: false,
+    };
+
+    const postResponse = {
+      data: makePost(postId),
+      cachedAt: Date.now(),
+      fromCache: false,
+    };
+
+    fetchSpy.mockImplementation((url: unknown, options: Record<string, unknown> = {}) => {
+      const method = typeof options.method === "string" ? options.method : undefined;
+
+      if (typeof url === "string") {
+        if (url.includes(`/v1/posts/${postId}/comments/comment-1/reactions`) && method === "POST") {
+          return Promise.resolve({});
+        }
+
+        if (url === `/v1/posts/${postId}` && method === "GET") {
+          return Promise.resolve(postResponse);
+        }
+
+        if (method === "GET") {
+          return Promise.resolve(postsResponse);
+        }
+      }
+
+      return Promise.resolve(postsResponse);
+    });
+
+    const sessionCookie = useCookie<string | null>("auth_session_token");
+    sessionCookie.value = "token";
+
+    await store.reactToComment(postId, "comment-1", "like");
+
+    expect(cacheRef!.value[postId]).toBeUndefined();
+    expect(timestampRef!.value[postId]).toBeUndefined();
   });
 });
