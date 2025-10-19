@@ -63,6 +63,8 @@ export default {
     },
     fontFamily: {
       heading: [
+        "Space Grotesk",
+        "Plus Jakarta Sans",
         "system-ui",
         "-apple-system",
         "BlinkMacSystemFont",
@@ -72,6 +74,8 @@ export default {
         "sans-serif",
       ],
       sans: [
+        "Plus Jakarta Sans",
+        "Space Grotesk",
         "system-ui",
         "-apple-system",
         "BlinkMacSystemFont",
@@ -80,7 +84,17 @@ export default {
         "Arial",
         "sans-serif",
       ],
-      mono: ["monospace"],
+      mono: [
+        "JetBrains Mono",
+        "ui-monospace",
+        "SFMono-Regular",
+        "Menlo",
+        "Monaco",
+        "Consolas",
+        "Liberation Mono",
+        "Courier New",
+        "monospace",
+      ],
     },
     extend: {
       fontSize: {

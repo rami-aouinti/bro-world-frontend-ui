@@ -56,12 +56,14 @@
     --radius: 0.5rem;
 
     --heading:
-      "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", Arial,
-      sans-serif;
+      "Space Grotesk", "Plus Jakarta Sans", "system-ui", "-apple-system", "BlinkMacSystemFont",
+      "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --sans:
-      "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", Arial,
-      sans-serif;
-    --mono: "JetBrains Mono";
+      "Plus Jakarta Sans", "Space Grotesk", "system-ui", "-apple-system", "BlinkMacSystemFont",
+      "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --mono:
+      "JetBrains Mono", "ui-monospace", "SFMono-Regular", Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
   }
 
   .dark {

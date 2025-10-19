@@ -1087,19 +1087,6 @@ export default defineNuxtConfig({
       link: [
         {
           rel: "preconnect",
-          href: "https://fonts.googleapis.com",
-        },
-        {
-          rel: "preconnect",
-          href: "https://fonts.gstatic.com",
-          crossorigin: "",
-        },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Space+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap",
-        },
-        {
-          rel: "preconnect",
           href: "https://cdn.jsdelivr.net",
         },
         {
@@ -1125,13 +1112,32 @@ export default defineNuxtConfig({
     loadingStrategy: "defer",
   },
   fonts: {
-    families: [],
+    defaults: {
+      preload: true,
+      styles: ["normal"],
+      subsets: ["latin"],
+      weights: [400, 600],
+    },
+    families: [
+      {
+        name: "Plus Jakarta Sans",
+        provider: "google",
+      },
+      {
+        name: "Space Grotesk",
+        provider: "google",
+      },
+      {
+        name: "JetBrains Mono",
+        provider: "google",
+      },
+    ],
+    provider: "google",
     providers: {
-      google: false,
-      googleicons: false,
       bunny: false,
       fontshare: false,
       fontsource: false,
+      googleicons: false,
     },
   },
   compatibilityDate: "2025-06-10",
