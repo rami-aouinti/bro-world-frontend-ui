@@ -1,18 +1,22 @@
 import type { CookieOptions } from "nuxt/app";
 import type { H3Event } from "h3";
 import { getContext } from "unctx";
-import { createRequire } from "node:module";
 
 const contextOptions: Parameters<typeof getContext>[1] = {
   asyncContext: import.meta.server,
 };
 
+let AsyncLocalStorageCtor: typeof import("node:async_hooks").AsyncLocalStorage | undefined;
+
 if (import.meta.server) {
   try {
-    const require = createRequire(import.meta.url);
-    const { AsyncLocalStorage } = require("node:async_hooks") as typeof import("node:async_hooks");
-    contextOptions.AsyncLocalStorage = AsyncLocalStorage;
+    const nodeAsyncHooks = await import("node:async_hooks");
+    AsyncLocalStorageCtor = nodeAsyncHooks.AsyncLocalStorage;
   } catch {}
+}
+
+if (AsyncLocalStorageCtor) {
+  contextOptions.AsyncLocalStorage = AsyncLocalStorageCtor;
 }
 
 type MaybeEvent = H3Event | null | undefined;
