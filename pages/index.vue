@@ -437,6 +437,7 @@ const pageDescription = computed(() => t("blog.hero.description"));
 if (typeof definePageMeta === "function") {
   definePageMeta({
     showRightWidgets: true,
+    showContactSidebarCard: true,
     documentDriven: false,
     rightSidebarPreset: "dashboard",
   });
