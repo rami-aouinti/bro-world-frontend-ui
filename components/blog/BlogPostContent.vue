@@ -4,20 +4,40 @@
       {{ props.title }}
     </h2>
     <p
-      v-if="props.summary"
+      v-if="displaySummary"
       class="text-base leading-relaxed text-slate-500 mx-2 summary-clamp"
     >
-      {{ props.summary }}
+      {{ displaySummary }}
     </p>
   </section>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
 const props = defineProps<{
   title?: string;
   summary?: string;
   content?: string;
 }>();
+
+const displaySummary = computed(() => {
+  const trimmedSummary = props.summary?.trim();
+
+  if (trimmedSummary) {
+    return trimmedSummary;
+  }
+
+  const rawContent = props.content;
+
+  if (!rawContent) {
+    return "";
+  }
+
+  const textContent = rawContent.replace(/<[^>]*>/g, " ");
+
+  return textContent.replace(/\s+/g, " ").trim();
+});
 </script>
 
 <style scoped>
