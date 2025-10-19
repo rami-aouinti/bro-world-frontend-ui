@@ -1,11 +1,11 @@
 <template>
-  <section class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-2">
+  <section class="space-y-2 py-4 my-3 px-2 w-full max-w-[590px] mx-auto">
     <h2 class="text-xl font-semibold leading-tight text-foreground sm:text-2xl">
       {{ props.title }}
     </h2>
     <p
       v-if="props.summary"
-      class="text-base leading-relaxed text-slate-500"
+      class="text-base leading-relaxed text-slate-500 mx-2"
     >
       {{ props.summary }}
     </p>
