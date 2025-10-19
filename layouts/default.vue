@@ -144,7 +144,7 @@
                       />
                     </div>
                     <div
-                      v-else
+                      v-else-if="shouldShowDashboardRightSidebar"
                       class="flex flex-col gap-6"
                     >
                       <SidebarContactCard
@@ -316,6 +316,7 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings, SiteThemeDefinition } from "~/types/settings";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
+import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 
 const AppSidebar = defineAsyncComponent({
@@ -534,6 +535,16 @@ const vuetifyTheme = useTheme();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
+const routeRightSidebarPreset = computed<RightSidebarPreset>(() => {
+  const preset = currentRoute.value?.meta?.rightSidebarPreset;
+
+  if (preset === "dashboard") {
+    return "dashboard";
+  }
+
+  return "none";
+});
+
 const initialShowNavigation = useState(
   "layout-initial-show-navigation",
   () => currentRoute.value?.meta?.showNavbar !== false,
@@ -550,6 +561,9 @@ const shouldShowContactSidebarCard = computed(
   () => currentRoute.value?.meta?.showContactSidebarCard === true,
 );
 const { rightSidebarContent } = useLayoutRightSidebar();
+const shouldShowDashboardRightSidebar = computed(
+  () => routeRightSidebarPreset.value === "dashboard" && !rightSidebarContent.value,
+);
 const topBarRef = ref<InstanceType<typeof AppTopBar> | null>(null);
 const DEFAULT_APP_BAR_HEIGHT = 72;
 const DEFAULT_APP_BAR_HEIGHT_VALUE = `${DEFAULT_APP_BAR_HEIGHT}px`;
