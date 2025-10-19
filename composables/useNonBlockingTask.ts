@@ -11,14 +11,10 @@ export function useNonBlockingTask(options: { timeout?: number } = {}) {
 
   function schedule(task: () => void | Promise<void>) {
     if (!import.meta.client) {
-      try {
-        const maybePromise = task();
-
-        if (maybePromise instanceof Promise) {
-          void maybePromise.catch(logTaskError);
-        }
-      } catch (error) {
-        logTaskError(error);
+      if (typeof queueMicrotask === "function") {
+        queueMicrotask(() => {});
+      } else {
+        void Promise.resolve().then(() => {});
       }
 
       return;

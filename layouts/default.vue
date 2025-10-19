@@ -147,23 +147,7 @@
                       v-else-if="shouldShowDashboardRightSidebar"
                       class="flex flex-col gap-6"
                     >
-                      <SidebarContactCard
-                        v-if="shouldShowContactSidebarCard"
-                      />
-                      <SidebarWeatherCard
-                        v-if="weather"
-                        :weather="weather"
-                      />
-                      <SidebarLeaderboardCard
-                        v-if="leaderboard"
-                        :title="leaderboard.title"
-                        :live-label="leaderboard.live"
-                        :participants="leaderboard.participants"
-                      />
-                      <SidebarRatingCard
-                        v-if="rating"
-                        :rating="rating"
-                      />
+                      <SidebarHelpCenterCard />
                     </div>
                   </slot>
                 </AppSidebarRight>
