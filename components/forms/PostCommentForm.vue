@@ -12,11 +12,12 @@
         size="34"
         class="composer__avatar"
       >
-        <v-img
+        <NuxtImg
           :src="avatarSrc"
           alt=""
           width="34"
           height="34"
+          fit="cover"
         />
       </v-avatar>
 

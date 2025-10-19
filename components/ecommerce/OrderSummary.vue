@@ -17,10 +17,12 @@
             size="48"
             rounded
           >
-            <v-img
+            <NuxtImg
               :src="item.product.images[0]"
               :alt="t(item.product.nameKey)"
-              cover
+              width="48"
+              height="48"
+              fit="cover"
             />
           </v-avatar>
         </template>

@@ -19,11 +19,13 @@
             size="28"
             :class="['ring-1 ring-black/5 dark:ring-white/10', avatarClasses]"
           >
-            <v-img
+            <NuxtImg
               v-if="avatarSrc"
               :src="avatarSrc"
               :alt="heading"
-              cover
+              width="28"
+              height="28"
+              fit="cover"
             />
             <template v-else>
               <span class="text-[11px] font-semibold uppercase">

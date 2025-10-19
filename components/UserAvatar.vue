@@ -5,11 +5,13 @@
     class="user-avatar"
     variant="tonal"
   >
-    <v-img
+    <NuxtImg
       v-if="resolvedSrc"
       :src="resolvedSrc"
       :alt="altText"
-      cover
+      :width="avatarSize"
+      :height="avatarSize"
+      fit="cover"
     />
     <span
       v-else

@@ -56,10 +56,12 @@
                         size="64"
                         rounded
                       >
-                        <v-img
+                        <NuxtImg
                           :src="item.product.images[0]"
                           :alt="t(item.product.nameKey)"
-                          cover
+                          width="64"
+                          height="64"
+                          fit="cover"
                         />
                       </v-avatar>
                       <div>

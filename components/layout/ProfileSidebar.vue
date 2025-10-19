@@ -87,14 +87,14 @@
         </v-card-item>
         <v-card-text>
           <div class="photos-grid">
-            <v-img
+            <NuxtImg
               v-for="(photo, i) in photos.slice(0, 9)"
               :key="photo.id ?? i"
               :src="photo.src"
               :alt="photo.alt ?? 'photo-' + i"
-              aspect-ratio="1"
-              cover
+              fit="cover"
               class="rounded-lg"
+              style="width: 100%; aspect-ratio: 1 / 1;"
             />
           </div>
         </v-card-text>
@@ -135,10 +135,12 @@
                 size="72"
                 class="mb-2"
               >
-                <v-img
+                <NuxtImg
                   :src="friendAvatar(f)"
                   :alt="friendDisplayName(f)"
-                  cover
+                  width="72"
+                  height="72"
+                  fit="cover"
                 />
               </v-avatar>
               <div class="friend-name">{{ friendDisplayName(f) }}</div>

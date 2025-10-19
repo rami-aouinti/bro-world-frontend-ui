@@ -6,11 +6,12 @@
   >
     <div class="d-flex align-center ga-3">
       <v-avatar size="44">
-        <v-img
+        <NuxtImg
           :src="avatarSrc"
           alt="Avatar"
           width="44"
           height="44"
+          fit="cover"
         />
       </v-avatar>
 
