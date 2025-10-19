@@ -1,10 +1,10 @@
 <template>
-  <aside class="crm-sidebar" aria-label="Panneau des informations CRM">
+  <aside class="crm-sidebar" :aria-label="t('pages.crm.sidebar.ariaLabel')">
     <section class="crm-sidebar__section">
       <header class="crm-sidebar__header">
         <div>
-          <h2>Mes projets</h2>
-          <p>Vos initiatives actives pour le sprint sélectionné.</p>
+          <h2>{{ t("pages.crm.sidebar.projects.title") }}</h2>
+          <p>{{ t("pages.crm.sidebar.projects.subtitle") }}</p>
         </div>
         <v-btn
           color="primary"
@@ -13,13 +13,13 @@
           class="text-none font-weight-semibold"
           @click="$emit('create-project')"
         >
-          Nouveau projet
+          {{ t("pages.crm.sidebar.projects.actions.new") }}
         </v-btn>
       </header>
 
       <div v-if="projects.length === 0" class="crm-sidebar__empty">
         <v-icon icon="mdi:briefcase-outline" size="32" class="mb-3" />
-        <p>Aucun projet ne vous est attribué pour l’instant.</p>
+        <p>{{ t("pages.crm.sidebar.projects.empty.description") }}</p>
         <v-btn
           color="primary"
           variant="flat"
@@ -27,7 +27,7 @@
           class="text-none font-weight-semibold"
           @click="$emit('create-project')"
         >
-          Créer un projet
+          {{ t("pages.crm.sidebar.projects.actions.create") }}
         </v-btn>
       </div>
       <ul v-else class="crm-sidebar__project-list">
@@ -51,8 +51,8 @@
     <section class="crm-sidebar__section">
       <header class="crm-sidebar__header">
         <div>
-          <h2>Derniers tasks</h2>
-          <p>Les tâches les plus récemment créées.</p>
+          <h2>{{ t("pages.crm.sidebar.tasks.title") }}</h2>
+          <p>{{ t("pages.crm.sidebar.tasks.subtitle") }}</p>
         </div>
         <v-btn
           color="primary"
@@ -62,13 +62,13 @@
           :disabled="projects.length === 0"
           @click="$emit('create-task')"
         >
-          Nouveau task
+          {{ t("pages.crm.sidebar.tasks.actions.new") }}
         </v-btn>
       </header>
 
       <div v-if="recentTasks.length === 0" class="crm-sidebar__empty">
         <v-icon icon="mdi:clipboard-text-outline" size="32" class="mb-3" />
-        <p>Aucune tâche récente. Créez-en une pour démarrer votre sprint.</p>
+        <p>{{ t("pages.crm.sidebar.tasks.empty.description") }}</p>
       </div>
       <ul v-else class="crm-sidebar__task-list">
         <li
@@ -103,6 +103,8 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
 import type { CrmBoardTaskPriority } from "~/stores/crm-board";
 
 type ProjectSummary = {
@@ -134,6 +136,8 @@ const emits = defineEmits<{
   "create-project": [];
   "create-task": [];
 }>();
+
+const { t } = useI18n();
 </script>
 
 <style scoped>

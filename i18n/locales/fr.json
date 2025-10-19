@@ -2713,6 +2713,31 @@
         "title": "Répartition par phase",
         "subtitle": "Progression des projets par phase du pipeline.",
         "caption": "Prochain jalon le {date}"
+      },
+      "sidebar": {
+        "ariaLabel": "Panneau d'informations CRM",
+        "projects": {
+          "title": "Mes projets",
+          "subtitle": "Vos initiatives actives pour le sprint sélectionné.",
+          "actions": {
+            "new": "Nouveau projet",
+            "create": "Créer un projet"
+          },
+          "empty": {
+            "description": "Aucun projet ne vous est attribué pour l’instant."
+          }
+        },
+        "tasks": {
+          "title": "Dernières tâches",
+          "subtitle": "Les tâches créées le plus récemment.",
+          "actions": {
+            "new": "Nouvelle tâche"
+          },
+          "empty": {
+            "description": "Aucune tâche récente. Créez-en une pour démarrer votre sprint."
+          },
+          "projectFallback": "Projet inconnu"
+        }
       }
     },
     "login": {
