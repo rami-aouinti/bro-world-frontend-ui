@@ -28,7 +28,7 @@
       :title="props.title"
       :subtitle="props.subtitle"
       :locales="props.locales"
-      :current="props.current"
+      :current="currentLocale"
       :format-label="props.formatLabel"
       :get-flag="getFlag"
       @select="emit('change', $event)"
@@ -59,9 +59,22 @@ const props = defineProps<{
 const emit = defineEmits(["change"]);
 
 const metadata = computed<LocaleMetadata>(() => props.localeMetadata ?? {});
-const currentFlag = computed(() => metadata.value[props.current]?.flag ?? "");
+
+function normalizeLocale(code?: string | null): string {
+  const normalized = code?.trim();
+
+  if (!normalized) {
+    return "";
+  }
+
+  const [language = ""] = normalized.split(/[-_]/, 1);
+  return language.toLowerCase();
+}
+
+const currentLocale = computed(() => normalizeLocale(props.current));
+const currentFlag = computed(() => metadata.value[currentLocale.value]?.flag ?? "");
 
 function getFlag(code: string): string {
-  return metadata.value[code]?.flag ?? "";
+  return metadata.value[normalizeLocale(code)]?.flag ?? "";
 }
 </script>
