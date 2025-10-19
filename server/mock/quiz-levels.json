@@ -1,0 +1,25 @@
+{
+  "levels": [
+    {
+      "id": "starter",
+      "label": "Explorateur",
+      "description": "Découvrir les fondamentaux et valider les premières bonnes pratiques.",
+      "minimumScore": 0,
+      "badge": "mdi:map-search-outline"
+    },
+    {
+      "id": "advanced",
+      "label": "Orchestrateur",
+      "description": "Coordonner une communauté mature et piloter des expériences cross-fonctionnelles.",
+      "minimumScore": 600,
+      "badge": "mdi:trophy-outline"
+    },
+    {
+      "id": "expert",
+      "label": "Architecte",
+      "description": "Concevoir des systèmes d'apprentissage adaptatifs et scalables.",
+      "minimumScore": 850,
+      "badge": "mdi:home-lightning-bolt-outline"
+    }
+  ]
+}

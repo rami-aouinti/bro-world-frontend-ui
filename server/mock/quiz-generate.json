@@ -1,0 +1,51 @@
+{
+  "quizId": "mock-session-42",
+  "expiresAt": "2025-12-31T23:59:59.000Z",
+  "questions": [
+    {
+      "id": "mock-question-1",
+      "categoryId": "community-dynamics",
+      "levelId": "starter",
+      "type": "multiple-choice",
+      "prompt": "Quelle est la première étape pour relancer une communauté en perte d'engagement ?",
+      "choices": [
+        { "id": "a", "label": "Envoyer une newsletter plus souvent" },
+        { "id": "b", "label": "Interroger quelques membres clés pour identifier les blocages" },
+        { "id": "c", "label": "Multiplier les nouveaux canaux de communication" },
+        { "id": "d", "label": "Lancer immédiatement un concours" }
+      ],
+      "answer": "b",
+      "explanation": "Comprendre les causes racines avec les membres les plus engagés permet de prioriser des actions pertinentes."
+    },
+    {
+      "id": "mock-question-2",
+      "categoryId": "product-strategy",
+      "levelId": "advanced",
+      "type": "multiple-choice",
+      "prompt": "Quel indicateur suivre pour vérifier qu'une expérimentation produit répond à un vrai besoin ?",
+      "choices": [
+        { "id": "a", "label": "Le nombre de sessions live programmées" },
+        { "id": "b", "label": "Le taux d'activation des nouvelles fonctionnalités" },
+        { "id": "c", "label": "Le budget marketing consommé" },
+        { "id": "d", "label": "Le volume de commentaires sur les réseaux sociaux" }
+      ],
+      "answer": "b",
+      "explanation": "Un bon niveau d'activation indique que l'expérimentation répond à un besoin concret des utilisateurs." 
+    },
+    {
+      "id": "mock-question-3",
+      "categoryId": "go-to-market",
+      "levelId": "expert",
+      "type": "multiple-choice",
+      "prompt": "Comment prioriser les canaux d'acquisition lors d'un lancement international ?",
+      "choices": [
+        { "id": "a", "label": "Copier le mix marketing du marché domestique" },
+        { "id": "b", "label": "Investir uniquement dans les canaux payants" },
+        { "id": "c", "label": "Analyser les signaux organiques et tester rapidement chaque canal prioritaire" },
+        { "id": "d", "label": "Attendre un trimestre complet avant de mesurer" }
+      ],
+      "answer": "c",
+      "explanation": "Croiser signaux organiques et tests rapides permet d'ajuster l'investissement sur les canaux les plus prometteurs." 
+    }
+  ]
+}
