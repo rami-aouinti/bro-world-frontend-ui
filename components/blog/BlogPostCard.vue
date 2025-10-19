@@ -65,18 +65,6 @@
         @reply="openReply"
         @submit="handleCommentSubmit"
       />
-      <div
-        v-if="manualCommentsTriggerVisible"
-        class="comments-manual"
-      >
-        <button
-          type="button"
-          class="comments-manual__button"
-          @click="handleManualCommentsLoad"
-        >
-          {{ manualCommentsButtonLabel }}
-        </button>
-      </div>
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
         ref="loginPromptRef"
@@ -233,15 +221,6 @@ const commentsSectionRef = ref<HTMLElement | null>(null);
 const isCommentsSectionVisible = useElementVisibility(commentsSectionRef);
 const commentsActivated = ref(false);
 const shouldRenderCommentThread = computed(() => commentsActivated.value);
-const manualCommentsButtonLabel = computed(() => t("blog.comments.load"));
-const manualCommentsTriggerVisible = computed(
-  () =>
-    isHydrated.value &&
-    isAuthenticated.value &&
-    !shouldRenderCommentThread.value &&
-    !commentsLoading.value &&
-    !commentsError.value,
-);
 const loginDialogOpen = ref(false);
 const loginPromptRef = ref<HTMLButtonElement | null>(null);
 const loginDialogPreviousFocusedElement = ref<HTMLElement | null>(null);
@@ -639,18 +618,6 @@ function handleCommentButtonClick() {
   }
 
   requestComments();
-
-  nextTick(() => {
-    commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
-  });
-}
-
-function handleManualCommentsLoad() {
-  requestComments({ force: true });
-
-  if (!isCommentComposerVisible.value) {
-    isCommentComposerVisible.value = true;
-  }
 
   nextTick(() => {
     commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
