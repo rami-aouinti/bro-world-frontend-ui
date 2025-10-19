@@ -2566,28 +2566,28 @@
         "caption": "Следующий этап {date}"
       },
       "sidebar": {
-        "ariaLabel": "CRM insights panel",
+        "ariaLabel": "Панель сведений CRM",
         "projects": {
-          "title": "My projects",
-          "subtitle": "Your active initiatives for the selected sprint.",
+          "title": "Мои проекты",
+          "subtitle": "Ваши активные инициативы для выбранного спринта.",
           "actions": {
-            "new": "New project",
-            "create": "Create a project"
+            "new": "Новый проект",
+            "create": "Создать проект"
           },
           "empty": {
-            "description": "No project is assigned to you yet."
+            "description": "Вам ещё не назначили ни одного проекта."
           }
         },
         "tasks": {
-          "title": "Recent tasks",
-          "subtitle": "Tasks created most recently.",
+          "title": "Недавние задачи",
+          "subtitle": "Задачи, созданные совсем недавно.",
           "actions": {
-            "new": "New task"
+            "new": "Новая задача"
           },
           "empty": {
-            "description": "No recent tasks. Create one to kick off your sprint."
+            "description": "Нет недавних задач. Создайте одну, чтобы начать спринт."
           },
-          "projectFallback": "Unknown project"
+          "projectFallback": "Неизвестный проект"
         }
       }
     },

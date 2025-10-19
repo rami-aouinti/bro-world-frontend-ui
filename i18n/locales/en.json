@@ -2729,21 +2729,21 @@
         "caption": "Next milestone on {date}"
       },
       "sidebar": {
-        "ariaLabel": "CRM insights panel",
+        "ariaLabel": "CRM sidebar",
         "projects": {
           "title": "My projects",
-          "subtitle": "Your active initiatives for the selected sprint.",
+          "subtitle": "Active initiatives assigned to you for this sprint.",
           "actions": {
             "new": "New project",
-            "create": "Create a project"
+            "create": "Create project"
           },
           "empty": {
-            "description": "No project is assigned to you yet."
+            "description": "You're not assigned to any projects yet."
           }
         },
         "tasks": {
           "title": "Recent tasks",
-          "subtitle": "Tasks created most recently.",
+          "subtitle": "The tasks that were created most recently.",
           "actions": {
             "new": "New task"
           },

@@ -2566,28 +2566,28 @@
         "caption": "Prossimo milestone il {date}"
       },
       "sidebar": {
-        "ariaLabel": "CRM insights panel",
+        "ariaLabel": "Pannello informazioni CRM",
         "projects": {
-          "title": "My projects",
-          "subtitle": "Your active initiatives for the selected sprint.",
+          "title": "I miei progetti",
+          "subtitle": "Le tue iniziative attive per lo sprint selezionato.",
           "actions": {
-            "new": "New project",
-            "create": "Create a project"
+            "new": "Nuovo progetto",
+            "create": "Crea progetto"
           },
           "empty": {
-            "description": "No project is assigned to you yet."
+            "description": "Nessun progetto ti è ancora assegnato."
           }
         },
         "tasks": {
-          "title": "Recent tasks",
-          "subtitle": "Tasks created most recently.",
+          "title": "Attività recenti",
+          "subtitle": "Le attività create più di recente.",
           "actions": {
-            "new": "New task"
+            "new": "Nuova attività"
           },
           "empty": {
-            "description": "No recent tasks. Create one to kick off your sprint."
+            "description": "Nessuna attività recente. Creane una per avviare lo sprint."
           },
-          "projectFallback": "Unknown project"
+          "projectFallback": "Progetto sconosciuto"
         }
       }
     },
