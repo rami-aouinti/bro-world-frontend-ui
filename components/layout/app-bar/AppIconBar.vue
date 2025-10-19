@@ -6,7 +6,6 @@
           v-for="icon in props.appIcons"
           :key="`button-${icon.label}`"
           :aria-label="t(icon.label)"
-          :title="t(icon.label)"
           :class="props.iconTriggerClasses"
           :theme="props.isDark ? 'dark' : 'light'"
           :ripple="false"
@@ -45,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
@@ -94,8 +93,7 @@ const iconBarClasses = computed(() => {
   }
 
   classes.push(
-    "app-icon-bar flex items-center justify-center gap-3",
-    isHydrated.value ? "px-4 sm:px-6 md:px-8" : "px-8",
+    "app-icon-bar flex items-center justify-center gap-3 px-4 sm:px-6 md:px-8",
   );
 
   return classes;
