@@ -13,6 +13,8 @@ describe("optimizeAvatarUrl", () => {
     const url = new URL(result);
 
     expect(url.searchParams.get("size")).toBe("48x48");
+    expect(url.searchParams.get("width")).toBe("48");
+    expect(url.searchParams.get("height")).toBe("48");
     expect(url.searchParams.get("format")).toBe("webp");
   });
 
@@ -29,6 +31,8 @@ describe("optimizeAvatarUrl", () => {
     const url = new URL(result);
 
     expect(url.searchParams.get("size")).toBe("64x64");
+    expect(url.searchParams.get("width")).toBe("64");
+    expect(url.searchParams.get("height")).toBe("64");
     expect(url.searchParams.get("format")).toBe("webp");
   });
 
@@ -46,6 +50,23 @@ describe("optimizeAvatarUrl", () => {
 
     expect(url.searchParams.get("size")).toBe("32x32");
     expect(url.searchParams.get("format")).toBe("avif");
+  });
+
+  it("preserves explicit width and height parameters", () => {
+    const result = optimizeAvatarUrl(
+      "https://bro-world.org/uploads/avatar/example.jpg?width=200&height=100",
+      32,
+    );
+
+    if (!result) {
+      throw new Error("Expected a transformed URL");
+    }
+
+    const url = new URL(result);
+
+    expect(url.searchParams.get("width")).toBe("200");
+    expect(url.searchParams.get("height")).toBe("100");
+    expect(url.searchParams.get("size")).toBe("32x32");
   });
 
   it("returns untouched URLs for other hosts", () => {

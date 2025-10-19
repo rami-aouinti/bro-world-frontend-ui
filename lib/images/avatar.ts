@@ -59,6 +59,14 @@ export function optimizeAvatarUrl(input: string | null | undefined, size: number
     if (host.endsWith("bro-world.org") || host.endsWith("bro-world-space.com")) {
       url.searchParams.set("size", `${normalizedSize}x${normalizedSize}`);
 
+      if (!url.searchParams.has("width")) {
+        url.searchParams.set("width", String(normalizedSize));
+      }
+
+      if (!url.searchParams.has("height")) {
+        url.searchParams.set("height", String(normalizedSize));
+      }
+
       if (!url.searchParams.has("format")) {
         url.searchParams.set("format", "webp");
       }
