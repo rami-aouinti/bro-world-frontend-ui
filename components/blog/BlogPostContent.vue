@@ -5,7 +5,7 @@
     </h2>
     <p
       v-if="props.summary"
-      class="text-base leading-relaxed text-slate-500 mx-2"
+      class="text-base leading-relaxed text-slate-500 mx-2 summary-clamp"
     >
       {{ props.summary }}
     </p>
@@ -20,4 +20,12 @@ const props = defineProps<{
 }>();
 </script>
 
-<style scoped></style>
+<style scoped>
+.summary-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
