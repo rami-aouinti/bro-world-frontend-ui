@@ -482,11 +482,6 @@ export default defineNuxtConfig({
         "cache-control": "public, max-age=31536000, immutable",
       },
     },
-    "/_vercel/**": {
-      headers: {
-        "cache-control": "public, max-age=31536000, immutable",
-      },
-    },
     "/img/**": {
       headers: {
         "cache-control": "public, max-age=31536000, immutable",
