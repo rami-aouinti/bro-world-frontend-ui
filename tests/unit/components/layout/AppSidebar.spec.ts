@@ -2,6 +2,32 @@ import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { defineComponent, nextTick, ref } from "vue";
 
+const AuthLoginFormStub = Object.assign(
+  defineComponent({
+    name: "AuthLoginFormStub",
+    props: {
+      disabled: { type: Boolean, default: false },
+      variant: { type: String, default: "text" },
+    },
+    template: '<form class="auth-login-form-stub"><slot /></form>',
+  }),
+  { __isTeleport: false },
+);
+
+const SidebarCardStub = {
+  name: "SidebarCardStub",
+  template: '<div class="sidebar-card-stub"><slot /></div>',
+};
+
+const IconStub = {
+  name: "IconStub",
+  props: {
+    name: { type: String, default: undefined },
+    size: { type: [String, Number], default: undefined },
+  },
+  template: '<i class="icon-stub"><slot /></i>',
+};
+
 const mockIsAuthenticated = ref(false);
 const mockCurrentUser = ref<unknown | null>(null);
 const sidebarCache = new Map<string, ReturnType<typeof ref>>();
@@ -55,21 +81,13 @@ vi.mock("#imports", () => ({
   }),
 }));
 
-vi.mock("~/components/auth/LoginForm.vue", () => {
-  const component = defineComponent({
-    name: "AuthLoginFormStub",
-    props: ["disabled", "variant"],
-    template: '<form class="auth-login-form-stub"><slot /></form>',
-  });
+vi.mock("~/components/auth/LoginForm.vue", () => ({
+  __esModule: true,
+  default: AuthLoginFormStub,
+}));
 
-  return {
-    __esModule: true,
-    default: Object.assign(component, { __isTeleport: false }),
-  };
-});
-
-function flushPromises() {
-  return new Promise((resolve) => setTimeout(resolve, 0));
+async function flushPromises() {
+  await new Promise((resolve) => setTimeout(resolve, 0));
 }
 
 beforeEach(() => {
@@ -104,15 +122,8 @@ async function mountSidebar() {
   return mount(AppSidebar, {
     global: {
       stubs: {
-        SidebarCard: defineComponent({
-          name: "SidebarCardStub",
-          template: '<div class="sidebar-card-stub"><slot /></div>',
-        }),
-        Icon: defineComponent({
-          name: "IconStub",
-          props: ["name", "size"],
-          template: '<i class="icon-stub"><slot /></i>',
-        }),
+        SidebarCard: SidebarCardStub,
+        Icon: IconStub,
       },
     },
   });
