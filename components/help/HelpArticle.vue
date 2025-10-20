@@ -24,8 +24,8 @@
     </aside>
     <article
       ref="contentRef"
+      v-safe-html="safeHtml"
       class="help-article__content"
-      v-html="safeHtml"
     ></article>
     <div
       class="visually-hidden"

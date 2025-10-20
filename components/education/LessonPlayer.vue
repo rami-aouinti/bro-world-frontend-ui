@@ -37,8 +37,8 @@
     </header>
 
     <article
+      v-safe-html="lesson.content"
       class="lesson-content mb-6"
-      v-html="safeContent"
     />
 
     <section
