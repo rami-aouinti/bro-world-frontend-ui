@@ -36,6 +36,7 @@ export default withNuxt(
       globals: {
         ...globals.node,
         ...globals.browser,
+        globalThis: "readonly",
       },
     },
   },
