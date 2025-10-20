@@ -2,6 +2,7 @@
 // Icons that are only needed deeper in the experience should live in the lazy chunk
 // exported from `projectMdiIcons.full.ts` so they can be code-split and loaded on demand.
 import {
+  mdiAccount,
   mdiAccountOutline,
   mdiArrowLeft,
   mdiBellOutline,
@@ -26,6 +27,7 @@ import {
 } from "@mdi/js";
 
 export const coreProjectMdiIcons: Record<string, string> = {
+  "mdi-account": mdiAccount,
   "mdi-account-outline": mdiAccountOutline,
   "mdi-arrow-left": mdiArrowLeft,
   "mdi-bell-outline": mdiBellOutline,
