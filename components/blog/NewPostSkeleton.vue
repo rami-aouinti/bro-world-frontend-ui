@@ -13,6 +13,12 @@
       />
     </div>
 
+    <v-skeleton-loader
+      class="mt-3 w-100 rounded-lg"
+      type="text"
+      height="48"
+    />
+
     <v-divider class="my-2" />
 
     <div class="d-flex flex-wrap justify-center ga-4">
