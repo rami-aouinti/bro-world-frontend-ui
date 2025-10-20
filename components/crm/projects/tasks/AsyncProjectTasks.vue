@@ -47,54 +47,56 @@
         No tasks are scheduled for this project yet. Start planning in the CRM workspace.
       </v-alert>
 
-      <v-data-table
-        v-else
-        :headers="headers"
-        :items="tableItems"
-        :item-value="'id'"
-        density="comfortable"
-        class="crm-project-tasks-table"
-        hover
-      >
-        <template #[`item.name`]="{ item }">
-          <div class="d-flex flex-column gap-1">
-            <span class="text-body-1 font-weight-semibold">{{ item.name }}</span>
-            <span
-              v-if="item.brief"
-              class="text-body-2 text-medium-emphasis"
-              >{{ item.brief }}</span
-            >
-          </div>
-        </template>
+      <ClientOnly>
+        <VDataTable
+          v-else
+          :headers="headers"
+          :items="tableItems"
+          :item-value="'id'"
+          density="comfortable"
+          class="crm-project-tasks-table"
+          hover
+        >
+          <template #[`item.name`]="{ item }">
+            <div class="d-flex flex-column gap-1">
+              <span class="text-body-1 font-weight-semibold">{{ item.name }}</span>
+              <span
+                v-if="item.brief"
+                class="text-body-2 text-medium-emphasis"
+                >{{ item.brief }}</span
+              >
+            </div>
+          </template>
 
-        <template #[`item.status`]="{ item }">
-          <v-chip
-            :color="statusMeta(item.status).color"
-            variant="tonal"
-            size="small"
-            class="text-uppercase"
-          >
-            {{ statusMeta(item.status).label }}
-          </v-chip>
-        </template>
-
-        <template #[`item.schedule`]="{ item }">
-          <div class="d-flex flex-column">
-            <span class="text-body-2 font-weight-medium">{{ item.schedule }}</span>
-            <span
-              v-if="item.duration"
-              class="text-caption text-medium-emphasis"
-              >{{ item.duration }}</span
+          <template #[`item.status`]="{ item }">
+            <v-chip
+              :color="statusMeta(item.status).color"
+              variant="tonal"
+              size="small"
+              class="text-uppercase"
             >
-          </div>
-        </template>
-      </v-data-table>
+              {{ statusMeta(item.status).label }}
+            </v-chip>
+          </template>
+
+          <template #[`item.schedule`]="{ item }">
+            <div class="d-flex flex-column">
+              <span class="text-body-2 font-weight-medium">{{ item.schedule }}</span>
+              <span
+                v-if="item.duration"
+                class="text-caption text-medium-emphasis"
+                >{{ item.duration }}</span
+              >
+            </div>
+          </template>
+        </VDataTable>
+      </ClientOnly>
     </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useCrmTasksStore } from "~/stores/crm-tasks";
@@ -105,6 +107,10 @@ const props = defineProps<{
 
 const { locale } = useI18n();
 const tasksStore = useCrmTasksStore();
+
+const VDataTable = defineAsyncComponent(() =>
+  import("vuetify/labs/VDataTable").then((mod) => mod.VDataTable),
+);
 
 await tasksStore.listTasks(props.projectId);
 

@@ -69,77 +69,79 @@
             {{ tableError }}
           </v-alert>
 
-          <v-data-table
-            :headers="tableHeaders"
-            :items="tableItems"
-            :items-per-page="10"
-            :loading="tableLoading"
-            :search="tableSearch"
-            class="user-data-table"
-          >
-            <template #[`item.username`]="{ item }">
-              <span class="text-body-2 font-weight-medium">@{{ item.username }}</span>
-            </template>
+          <ClientOnly>
+            <VDataTable
+              :headers="tableHeaders"
+              :items="tableItems"
+              :items-per-page="10"
+              :loading="tableLoading"
+              :search="tableSearch"
+              class="user-data-table"
+            >
+              <template #[`item.username`]="{ item }">
+                <span class="text-body-2 font-weight-medium">@{{ item.username }}</span>
+              </template>
 
-            <template #[`item.firstName`]="{ item }">
-              <span class="text-body-2">{{ formatText(item.firstName) }}</span>
-            </template>
+              <template #[`item.firstName`]="{ item }">
+                <span class="text-body-2">{{ formatText(item.firstName) }}</span>
+              </template>
 
-            <template #[`item.lastName`]="{ item }">
-              <span class="text-body-2">{{ formatText(item.lastName) }}</span>
-            </template>
+              <template #[`item.lastName`]="{ item }">
+                <span class="text-body-2">{{ formatText(item.lastName) }}</span>
+              </template>
 
-            <template #[`item.email`]="{ item }">
-              <span class="text-body-2">{{ formatText(item.email) }}</span>
-            </template>
+              <template #[`item.email`]="{ item }">
+                <span class="text-body-2">{{ formatText(item.email) }}</span>
+              </template>
 
-            <template #[`item.language`]="{ item }">
-              <span class="text-body-2">{{ formatText(item.language) }}</span>
-            </template>
+              <template #[`item.language`]="{ item }">
+                <span class="text-body-2">{{ formatText(item.language) }}</span>
+              </template>
 
-            <template #[`item.locale`]="{ item }">
-              <span class="text-body-2">{{ formatText(item.locale) }}</span>
-            </template>
+              <template #[`item.locale`]="{ item }">
+                <span class="text-body-2">{{ formatText(item.locale) }}</span>
+              </template>
 
-            <template #[`item.timezone`]="{ item }">
-              <span class="text-body-2">{{ formatText(item.timezone) }}</span>
-            </template>
+              <template #[`item.timezone`]="{ item }">
+                <span class="text-body-2">{{ formatText(item.timezone) }}</span>
+              </template>
 
-            <template #[`item.enabled`]="{ item }">
-              <v-chip
-                :color="item.enabled ? 'success' : 'warning'"
-                size="small"
-                variant="tonal"
-                class="text-capitalize font-weight-medium"
-              >
-                {{
-                  item.enabled
-                    ? t("admin.userManagement.status.active")
-                    : t("admin.userManagement.status.disabled")
-                }}
-              </v-chip>
-            </template>
+              <template #[`item.enabled`]="{ item }">
+                <v-chip
+                  :color="item.enabled ? 'success' : 'warning'"
+                  size="small"
+                  variant="tonal"
+                  class="text-capitalize font-weight-medium"
+                >
+                  {{
+                    item.enabled
+                      ? t("admin.userManagement.status.active")
+                      : t("admin.userManagement.status.disabled")
+                  }}
+                </v-chip>
+              </template>
 
-            <template #[`item.actions`]="{ item }">
-              <v-btn
-                icon="mdi:eye"
-                size="small"
-                variant="text"
-                color="primary"
-                @click="openDetails(item.id)"
-              >
-                <Icon name="mdi:eye" />
-              </v-btn>
-            </template>
+              <template #[`item.actions`]="{ item }">
+                <v-btn
+                  icon="mdi:eye"
+                  size="small"
+                  variant="text"
+                  color="primary"
+                  @click="openDetails(item.id)"
+                >
+                  <Icon name="mdi:eye" />
+                </v-btn>
+              </template>
 
-            <template #bottom>
-              <div class="px-6 pb-4 text-body-2 text-medium-emphasis">
-                <span v-if="!tableItems.length && !tableLoading">
-                  {{ t("admin.userManagement.sections.data.table.empty") }}
-                </span>
-              </div>
-            </template>
-          </v-data-table>
+              <template #bottom>
+                <div class="px-6 pb-4 text-body-2 text-medium-emphasis">
+                  <span v-if="!tableItems.length && !tableLoading">
+                    {{ t("admin.userManagement.sections.data.table.empty") }}
+                  </span>
+                </div>
+              </template>
+            </VDataTable>
+          </ClientOnly>
         </SidebarCard>
 
         <v-dialog
@@ -221,7 +223,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, defineAsyncComponent, ref } from "vue";
 import { callOnce } from "#app";
 import { useAdminModulePage } from "~/composables/useAdminModulePage";
 import { useUsersStore } from "~/stores/users";
@@ -252,6 +254,10 @@ const section = computed<UserManagementSection>(() => {
 const pageKey = computed(() => `admin.userManagement.sections.${section.value}`);
 
 const { t, title, subtitle } = useAdminModulePage(pageKey);
+
+const VDataTable = defineAsyncComponent(() =>
+  import("vuetify/labs/VDataTable").then((mod) => mod.VDataTable),
+);
 
 const headingId = computed(() => `admin-user-management-${section.value}-title`);
 const isDataSection = computed(() => section.value === "data");

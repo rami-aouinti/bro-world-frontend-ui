@@ -1,11 +1,19 @@
 <template>
-  <v-dialog v-model="isOpen" max-width="560" persistent>
+  <v-dialog
+    v-model="isOpen"
+    max-width="560"
+    persistent
+  >
     <v-card>
       <v-card-title class="text-h5 font-weight-semibold">Nouvelle tâche</v-card-title>
       <v-card-subtitle>Planifiez une tâche pour votre sprint courant.</v-card-subtitle>
       <v-divider />
       <v-card-text>
-        <v-form ref="formRef" class="d-flex flex-column gap-4" @submit.prevent="handleSubmit">
+        <v-form
+          ref="formRef"
+          class="d-flex flex-column gap-4"
+          @submit.prevent="handleSubmit"
+        >
           <v-text-field
             v-model="form.title"
             label="Titre"
@@ -44,7 +52,10 @@
           />
 
           <v-row class="g-4">
-            <v-col cols="12" md="6">
+            <v-col
+              cols="12"
+              md="6"
+            >
               <v-select
                 v-model="form.priority"
                 :items="priorityItems"
@@ -55,7 +66,10 @@
                 prepend-inner-icon="mdi:flag"
               />
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col
+              cols="12"
+              md="6"
+            >
               <v-select
                 v-model="form.assigneeId"
                 :items="assigneeItems"
@@ -70,18 +84,26 @@
           </v-row>
 
           <v-row class="g-4">
-            <v-col cols="12" md="6">
-              <v-date-input
-                v-model="form.dueDate"
-                label="Échéance"
-                variant="outlined"
-                density="comfortable"
-                color="primary"
-                prepend-icon="mdi:calendar"
-                clearable
-              />
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <ClientOnly>
+                <VDateInput
+                  v-model="form.dueDate"
+                  label="Échéance"
+                  variant="outlined"
+                  density="comfortable"
+                  color="primary"
+                  prepend-icon="mdi:calendar"
+                  clearable
+                />
+              </ClientOnly>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col
+              cols="12"
+              md="6"
+            >
               <v-select
                 v-model="form.sprintId"
                 :items="sprintItems"
@@ -111,7 +133,11 @@
       </v-card-text>
       <v-divider />
       <v-card-actions class="justify-end">
-        <v-btn variant="text" @click="closeDialog">Annuler</v-btn>
+        <v-btn
+          variant="text"
+          @click="closeDialog"
+          >Annuler</v-btn
+        >
         <v-btn
           color="primary"
           variant="flat"
@@ -128,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, watch } from "vue";
+import { computed, defineAsyncComponent, nextTick, reactive, ref, watch } from "vue";
 import type { VForm } from "vuetify/components";
 
 import type { CrmBoardTaskPriority } from "~/stores/crm-board";
@@ -142,6 +168,10 @@ type SprintOption = { id: string; name: string };
 type UserOption = { id: string; name: string; initials: string };
 
 const isOpen = defineModel<boolean>({ default: false });
+
+const VDateInput = defineAsyncComponent(() =>
+  import("vuetify/labs/VDateInput").then((mod) => mod.VDateInput),
+);
 
 const props = defineProps<{
   projects: ProjectOption[];
@@ -205,9 +235,15 @@ const assigneeItems = computed<AssigneeOption[]>(() => [
   })),
 ]);
 
-const titleRules = [(value: string | null) => (value && value.trim().length > 0) || "Le titre est requis." ];
-const projectRules = [(value: string | null) => (value && value.trim().length > 0) || "Sélectionnez un projet." ];
-const sprintRules = [(value: string | null) => (value && value.trim().length > 0) || "Sélectionnez un sprint." ];
+const titleRules = [
+  (value: string | null) => (value && value.trim().length > 0) || "Le titre est requis.",
+];
+const projectRules = [
+  (value: string | null) => (value && value.trim().length > 0) || "Sélectionnez un projet.",
+];
+const sprintRules = [
+  (value: string | null) => (value && value.trim().length > 0) || "Sélectionnez un sprint.",
+];
 
 function closeDialog() {
   isOpen.value = false;

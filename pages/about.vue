@@ -1,10 +1,8 @@
 <template>
-  <main
-    aria-labelledby="about-heading"
-  >
+  <main aria-labelledby="about-heading">
     <header
-        class="mb-6"
-        aria-describedby="about-subtitle"
+      class="mb-6"
+      aria-describedby="about-subtitle"
     >
       <section
         class="mb-12"
@@ -305,12 +303,12 @@
           >
             {{ t("pages.about.timelineTitle") }}
           </h2>
-          <v-timeline
+          <VTimeline
             class="about-timeline"
             side="end"
             density="compact"
           >
-            <v-timeline-item
+            <VTimeline-item
               v-for="item in timeline"
               :key="item.year"
               :dot-color="item.color"
@@ -331,8 +329,8 @@
                   {{ item.description }}
                 </p>
               </v-card>
-            </v-timeline-item>
-          </v-timeline>
+            </VTimeline-item>
+          </VTimeline>
         </v-sheet>
       </section>
 
@@ -469,6 +467,7 @@
 import { computed, unref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSwitchLocalePath } from "#i18n";
+import { VTimeline, VTimelineItem } from "vuetify/components";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
@@ -501,9 +500,7 @@ const aboutTitle = computed(() => aboutContent.value.title?.trim() || t("pages.a
 const aboutSubtitle = computed(
   () => aboutContent.value.subtitle?.trim() || t("pages.about.subtitle"),
 );
-const aboutBody = computed(
-  () => aboutContent.value.body?.trim() || t("pages.about.missionBody"),
-);
+const aboutBody = computed(() => aboutContent.value.body?.trim() || t("pages.about.missionBody"));
 
 const heroActions = computed(() => [
   {

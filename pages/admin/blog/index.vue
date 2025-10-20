@@ -101,127 +101,129 @@
         />
       </div>
 
-      <v-data-table
-        v-model:sort-by="sortBy"
-        :headers="tableHeaders"
-        :items="paginatedPosts"
-        :items-length="totalItems"
-        :loading="isInitialLoading"
-        :no-data-text="noDataLabel"
-        :items-per-page="itemsPerPage"
-        :page="page"
-        item-value="id"
-        density="comfortable"
-        class="rounded-xl elevation-2"
-      >
-        <template #loading>
-          <v-skeleton-loader type="table-row@5" />
-        </template>
+      <ClientOnly>
+        <VDataTable
+          v-model:sort-by="sortBy"
+          :headers="tableHeaders"
+          :items="paginatedPosts"
+          :items-length="totalItems"
+          :loading="isInitialLoading"
+          :no-data-text="noDataLabel"
+          :items-per-page="itemsPerPage"
+          :page="page"
+          item-value="id"
+          density="comfortable"
+          class="rounded-xl elevation-2"
+        >
+          <template #loading>
+            <v-skeleton-loader type="table-row@5" />
+          </template>
 
-        <template #[`item.title`]="{ item }">
-          <div class="d-flex flex-column gap-1">
-            <div class="d-flex align-center gap-2">
-              <span class="text-body-1 font-weight-medium text-high-emphasis">{{
-                item.title
+          <template #[`item.title`]="{ item }">
+            <div class="d-flex flex-column gap-1">
+              <div class="d-flex align-center gap-2">
+                <span class="text-body-1 font-weight-medium text-high-emphasis">{{
+                  item.title
+                }}</span>
+                <v-chip
+                  v-if="item.isOptimistic"
+                  color="warning"
+                  size="x-small"
+                  variant="tonal"
+                  class="text-uppercase font-weight-medium"
+                >
+                  {{ t("admin.blog.table.optimisticBadge") }}
+                </v-chip>
+              </div>
+              <span class="text-body-2 text-medium-emphasis">{{
+                item.summary || t("admin.blog.table.noSummary")
               }}</span>
-              <v-chip
-                v-if="item.isOptimistic"
-                color="warning"
-                size="x-small"
-                variant="tonal"
-                class="text-uppercase font-weight-medium"
+            </div>
+          </template>
+
+          <template #[`item.author`]="{ item }">
+            <span class="text-body-2 text-medium-emphasis">{{ item.author }}</span>
+          </template>
+
+          <template #[`item.publishedTimestamp`]="{ item }">
+            <span class="text-body-2 text-medium-emphasis">{{ item.publishedLabel }}</span>
+          </template>
+
+          <template #[`item.reactions`]="{ item }">
+            <span class="text-body-2 font-weight-medium">{{ formatNumber(item.reactions) }}</span>
+          </template>
+
+          <template #[`item.comments`]="{ item }">
+            <span class="text-body-2 font-weight-medium">{{ formatNumber(item.comments) }}</span>
+          </template>
+
+          <template #[`item.actions`]="{ item }">
+            <div class="d-flex justify-end gap-1">
+              <v-btn
+                variant="text"
+                color="primary"
+                icon="mdi:eye-outline"
+                :aria-label="t('admin.blog.table.previewAria', { title: item.title })"
+                @click="openPreview(item)"
               >
-                {{ t("admin.blog.table.optimisticBadge") }}
-              </v-chip>
+                <Icon name="mdi:eye-outline" />
+              </v-btn>
+              <v-btn
+                variant="text"
+                color="primary"
+                icon="mdi:pencil-outline"
+                :loading="isUpdating(item.id)"
+                :disabled="isUpdating(item.id) || isDeleting(item.id)"
+                :aria-label="t('admin.blog.table.editAria', { title: item.title })"
+                @click="openEditDialog(item)"
+              >
+                <Icon name="mdi:pencil-outline" />
+              </v-btn>
+              <v-btn
+                variant="text"
+                color="error"
+                icon="mdi:delete-outline"
+                :loading="isDeleting(item.id)"
+                :disabled="isUpdating(item.id) || isDeleting(item.id)"
+                :aria-label="t('admin.blog.table.deleteAria', { title: item.title })"
+                @click="confirmDelete(item)"
+              >
+                <Icon name="mdi:delete-outline" />
+              </v-btn>
+              <v-btn
+                v-if="item.publicUrl"
+                variant="text"
+                color="primary"
+                icon="mdi:open-in-new"
+                :href="item.publicUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                :aria-label="t('admin.blog.table.viewAria', { title: item.title })"
+              >
+                <Icon name="mdi:open-in-new" />
+              </v-btn>
             </div>
-            <span class="text-body-2 text-medium-emphasis">{{
-              item.summary || t("admin.blog.table.noSummary")
-            }}</span>
-          </div>
-        </template>
+          </template>
 
-        <template #[`item.author`]="{ item }">
-          <span class="text-body-2 text-medium-emphasis">{{ item.author }}</span>
-        </template>
-
-        <template #[`item.publishedTimestamp`]="{ item }">
-          <span class="text-body-2 text-medium-emphasis">{{ item.publishedLabel }}</span>
-        </template>
-
-        <template #[`item.reactions`]="{ item }">
-          <span class="text-body-2 font-weight-medium">{{ formatNumber(item.reactions) }}</span>
-        </template>
-
-        <template #[`item.comments`]="{ item }">
-          <span class="text-body-2 font-weight-medium">{{ formatNumber(item.comments) }}</span>
-        </template>
-
-        <template #[`item.actions`]="{ item }">
-          <div class="d-flex justify-end gap-1">
-            <v-btn
-              variant="text"
-              color="primary"
-              icon="mdi:eye-outline"
-              :aria-label="t('admin.blog.table.previewAria', { title: item.title })"
-              @click="openPreview(item)"
+          <template #bottom>
+            <v-divider />
+            <div
+              class="d-flex flex-column flex-sm-row align-sm-center justify-space-between px-4 py-3 gap-4"
             >
-              <Icon name="mdi:eye-outline" />
-            </v-btn>
-            <v-btn
-              variant="text"
-              color="primary"
-              icon="mdi:pencil-outline"
-              :loading="isUpdating(item.id)"
-              :disabled="isUpdating(item.id) || isDeleting(item.id)"
-              :aria-label="t('admin.blog.table.editAria', { title: item.title })"
-              @click="openEditDialog(item)"
-            >
-              <Icon name="mdi:pencil-outline" />
-            </v-btn>
-            <v-btn
-              variant="text"
-              color="error"
-              icon="mdi:delete-outline"
-              :loading="isDeleting(item.id)"
-              :disabled="isUpdating(item.id) || isDeleting(item.id)"
-              :aria-label="t('admin.blog.table.deleteAria', { title: item.title })"
-              @click="confirmDelete(item)"
-            >
-              <Icon name="mdi:delete-outline" />
-            </v-btn>
-            <v-btn
-              v-if="item.publicUrl"
-              variant="text"
-              color="primary"
-              icon="mdi:open-in-new"
-              :href="item.publicUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              :aria-label="t('admin.blog.table.viewAria', { title: item.title })"
-            >
-              <Icon name="mdi:open-in-new" />
-            </v-btn>
-          </div>
-        </template>
-
-        <template #bottom>
-          <v-divider />
-          <div
-            class="d-flex flex-column flex-sm-row align-sm-center justify-space-between px-4 py-3 gap-4"
-          >
-            <div class="text-body-2 text-medium-emphasis">
-              {{ t("admin.blog.table.results", { count: formatNumber(totalItems) }) }}
+              <div class="text-body-2 text-medium-emphasis">
+                {{ t("admin.blog.table.results", { count: formatNumber(totalItems) }) }}
+              </div>
+              <v-pagination
+                v-model="page"
+                :length="totalPages"
+                :total-visible="5"
+                density="comfortable"
+                variant="tonal"
+              />
             </div>
-            <v-pagination
-              v-model="page"
-              :length="totalPages"
-              :total-visible="5"
-              density="comfortable"
-              variant="tonal"
-            />
-          </div>
-        </template>
-      </v-data-table>
+          </template>
+        </VDataTable>
+      </ClientOnly>
     </v-container>
 
     <v-dialog
@@ -460,6 +462,10 @@ const BlogPostForm = defineAsyncComponent({
   loader: () => import("~/components/forms/BlogPostForm.vue"),
   suspensible: false,
 });
+
+const VDataTable = defineAsyncComponent(() =>
+  import("vuetify/labs/VDataTable").then((mod) => mod.VDataTable),
+);
 
 const { t, locale } = useI18n();
 const pageDescription = computed(() => t("admin.blog.subtitle"));

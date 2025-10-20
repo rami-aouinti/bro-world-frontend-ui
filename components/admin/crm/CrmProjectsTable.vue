@@ -32,100 +32,102 @@
     />
 
     <template v-else>
-      <v-data-table
-        v-if="items.length"
-        :items="items"
-        :headers="headers"
-        :items-per-page="5"
-        class="elevation-0"
-        density="comfortable"
-        hover
-      >
-        <template #[`item.name`]="{ item }">
-          <div class="d-flex flex-column">
-            <span class="font-weight-semibold">{{ item.name }}</span>
-            <span
-              v-if="item.description"
-              class="text-caption text-medium-emphasis"
-            >
-              {{ item.description }}
-            </span>
-          </div>
-        </template>
-
-        <template #[`item.clientName`]="{ item }">
-          <div class="d-flex flex-column">
-            <span class="font-weight-medium">{{ item.clientName }}</span>
-            <span
-              v-if="item.pipeline"
-              class="text-caption text-medium-emphasis"
-            >
-              {{ item.pipeline }}
-            </span>
-          </div>
-        </template>
-
-        <template #[`item.ownerName`]="{ item }">
-          <div class="d-flex align-center gap-2">
-            <v-avatar
-              color="primary"
-              variant="tonal"
-              size="32"
-            >
-              <span class="text-subtitle-2 font-weight-medium">
-                {{ resolveInitials(item.ownerName) }}
-              </span>
-            </v-avatar>
+      <ClientOnly>
+        <VDataTable
+          v-if="items.length"
+          :items="items"
+          :headers="headers"
+          :items-per-page="5"
+          class="elevation-0"
+          density="comfortable"
+          hover
+        >
+          <template #[`item.name`]="{ item }">
             <div class="d-flex flex-column">
-              <span class="font-weight-medium">{{ item.ownerName }}</span>
+              <span class="font-weight-semibold">{{ item.name }}</span>
               <span
-                v-if="item.ownerId"
+                v-if="item.description"
                 class="text-caption text-medium-emphasis"
               >
-                {{ item.ownerId }}
+                {{ item.description }}
               </span>
             </div>
-          </div>
-        </template>
+          </template>
 
-        <template #[`item.status`]="{ item }">
-          <v-chip
-            :color="resolveStatusColor(item.status)"
-            variant="tonal"
-            size="small"
-            class="font-weight-medium text-capitalize"
-          >
-            {{ formatStatus(item.status) }}
-          </v-chip>
-        </template>
+          <template #[`item.clientName`]="{ item }">
+            <div class="d-flex flex-column">
+              <span class="font-weight-medium">{{ item.clientName }}</span>
+              <span
+                v-if="item.pipeline"
+                class="text-caption text-medium-emphasis"
+              >
+                {{ item.pipeline }}
+              </span>
+            </div>
+          </template>
 
-        <template #[`item.budget`]="{ item }">
-          <span class="font-weight-medium">{{ formatCurrency(item.budget) }}</span>
-        </template>
+          <template #[`item.ownerName`]="{ item }">
+            <div class="d-flex align-center gap-2">
+              <v-avatar
+                color="primary"
+                variant="tonal"
+                size="32"
+              >
+                <span class="text-subtitle-2 font-weight-medium">
+                  {{ resolveInitials(item.ownerName) }}
+                </span>
+              </v-avatar>
+              <div class="d-flex flex-column">
+                <span class="font-weight-medium">{{ item.ownerName }}</span>
+                <span
+                  v-if="item.ownerId"
+                  class="text-caption text-medium-emphasis"
+                >
+                  {{ item.ownerId }}
+                </span>
+              </div>
+            </div>
+          </template>
 
-        <template #[`item.probability`]="{ item }">
-          <v-chip
-            :color="resolveProbabilityColor(item.probability)"
-            variant="tonal"
-            size="small"
-            class="font-weight-medium"
-          >
-            {{ formatProbability(item.probability) }}
-          </v-chip>
-        </template>
-
-        <template #[`item.dueDate`]="{ item }">
-          <div class="d-flex flex-column">
-            <span class="font-weight-medium">{{ formatDate(item.dueDate) }}</span>
-            <span
-              v-if="item.finishDate"
-              class="text-caption text-medium-emphasis"
+          <template #[`item.status`]="{ item }">
+            <v-chip
+              :color="resolveStatusColor(item.status)"
+              variant="tonal"
+              size="small"
+              class="font-weight-medium text-capitalize"
             >
-              {{ formatDate(item.finishDate) }}
-            </span>
-          </div>
-        </template>
-      </v-data-table>
+              {{ formatStatus(item.status) }}
+            </v-chip>
+          </template>
+
+          <template #[`item.budget`]="{ item }">
+            <span class="font-weight-medium">{{ formatCurrency(item.budget) }}</span>
+          </template>
+
+          <template #[`item.probability`]="{ item }">
+            <v-chip
+              :color="resolveProbabilityColor(item.probability)"
+              variant="tonal"
+              size="small"
+              class="font-weight-medium"
+            >
+              {{ formatProbability(item.probability) }}
+            </v-chip>
+          </template>
+
+          <template #[`item.dueDate`]="{ item }">
+            <div class="d-flex flex-column">
+              <span class="font-weight-medium">{{ formatDate(item.dueDate) }}</span>
+              <span
+                v-if="item.finishDate"
+                class="text-caption text-medium-emphasis"
+              >
+                {{ formatDate(item.finishDate) }}
+              </span>
+            </div>
+          </template>
+        </VDataTable>
+      </ClientOnly>
 
       <div
         v-else
@@ -138,11 +140,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import type { CrmProject } from "~/stores/crm-projects";
 import type { DataTableHeaders } from "~/plugins/vuetify";
+
+const VDataTable = defineAsyncComponent(() =>
+  import("vuetify/labs/VDataTable").then((mod) => mod.VDataTable),
+);
 
 const props = defineProps<{
   title: string;

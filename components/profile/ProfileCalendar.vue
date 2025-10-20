@@ -80,25 +80,27 @@
             </v-alert>
 
             <template v-if="calendarEvents.length">
-              <v-calendar
-                v-model="focus"
-                :type="viewMode"
-                :events="calendarEvents"
-                :event-color="getEventColor"
-                :weekdays="weekdays"
-                :hide-header="false"
-                color="primary"
-                @event-click="onEventClick"
-                @click:event="onEventClick"
-                @click:day="onDayClick"
-                @click:date="onDayClick"
-              >
-                <template #event="{ event }">
-                  <div class="text-truncate font-weight-medium">
-                    {{ event.title }}
-                  </div>
-                </template>
-              </v-calendar>
+              <ClientOnly>
+                <VCalendar
+                  v-model="focus"
+                  :type="viewMode"
+                  :events="calendarEvents"
+                  :event-color="getEventColor"
+                  :weekdays="weekdays"
+                  :hide-header="false"
+                  color="primary"
+                  @event-click="onEventClick"
+                  @click:event="onEventClick"
+                  @click:day="onDayClick"
+                  @click:date="onDayClick"
+                >
+                  <template #event="{ event }">
+                    <div class="text-truncate font-weight-medium">
+                      {{ event.title }}
+                    </div>
+                  </template>
+                </VCalendar>
+              </ClientOnly>
 
               <v-divider class="my-4" />
 
@@ -283,21 +285,25 @@
               required
             />
             <div class="d-flex flex-column flex-md-row gap-4">
-              <v-date-input
-                v-model="eventForm.startDate"
-                :label="t('pages.profile.calendar.form.fields.startDate')"
-                :error-messages="eventErrors.startDate"
-                class="flex-grow-1"
-                hide-details="auto"
-              />
-              <v-date-input
-                v-model="eventForm.endDate"
-                :label="t('pages.profile.calendar.form.fields.endDate')"
-                :min="eventForm.startDate"
-                :error-messages="eventErrors.endDate"
-                class="flex-grow-1"
-                hide-details="auto"
-              />
+              <ClientOnly>
+                <VDateInput
+                  v-model="eventForm.startDate"
+                  :label="t('pages.profile.calendar.form.fields.startDate')"
+                  :error-messages="eventErrors.startDate"
+                  class="flex-grow-1"
+                  hide-details="auto"
+                />
+              </ClientOnly>
+              <ClientOnly>
+                <VDateInput
+                  v-model="eventForm.endDate"
+                  :label="t('pages.profile.calendar.form.fields.endDate')"
+                  :min="eventForm.startDate"
+                  :error-messages="eventErrors.endDate"
+                  class="flex-grow-1"
+                  hide-details="auto"
+                />
+              </ClientOnly>
             </div>
             <div class="d-flex flex-column flex-md-row gap-4">
               <v-text-field
@@ -422,7 +428,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, watch } from "vue";
+import { computed, defineAsyncComponent, nextTick, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import type { ProfileEvent } from "~/types/pages/profile";
@@ -435,6 +441,14 @@ interface CalendarDisplayEvent extends ProfileEvent {
 const { t, locale } = useI18n();
 
 const fetcher = resolveApiFetcher();
+
+const VCalendar = defineAsyncComponent(() =>
+  import("vuetify/labs/VCalendar").then((mod) => mod.VCalendar),
+);
+
+const VDateInput = defineAsyncComponent(() =>
+  import("vuetify/labs/VDateInput").then((mod) => mod.VDateInput),
+);
 
 const {
   data: eventsData,

@@ -33,14 +33,14 @@
         </v-btn>
       </v-alert>
 
-      <v-stepper
+      <VStepper
         v-else
         v-model="currentStep"
         elevation="0"
         color="primary"
       >
-        <v-stepper-header>
-          <v-stepper-item
+        <VStepperHeader>
+          <VStepperItem
             v-for="step in steps"
             :key="step.value"
             :value="step.value"
@@ -48,10 +48,10 @@
             :subtitle="t(step.subtitle)"
             :complete="isComplete(step.value)"
           />
-        </v-stepper-header>
+        </VStepperHeader>
 
-        <v-stepper-window>
-          <v-stepper-window-item value="shipping">
+        <VStepperWindow>
+          <VStepperWindowItem value="shipping">
             <v-row dense>
               <v-col
                 cols="12"
@@ -192,9 +192,9 @@
                 />
               </v-col>
             </v-row>
-          </v-stepper-window-item>
+          </VStepperWindowItem>
 
-          <v-stepper-window-item value="payment">
+          <VStepperWindowItem value="payment">
             <v-row dense>
               <v-col
                 cols="12"
@@ -264,8 +264,8 @@
                   <h3 class="text-subtitle-1 font-weight-semibold mb-4">
                     {{ t("demo.ecommerce.checkout.exampleOrdersTitle") }}
                   </h3>
-                  <v-timeline density="compact">
-                    <v-timeline-item
+                  <VTimeline density="compact">
+                    <VTimeline-item
                       v-for="order in demoOrders"
                       :key="order.id"
                       color="primary"
@@ -284,8 +284,8 @@
                       <div class="text-caption text-medium-emphasis mt-1">
                         {{ t(order.notesKey) }}
                       </div>
-                    </v-timeline-item>
-                  </v-timeline>
+                    </VTimeline-item>
+                  </VTimeline>
                 </v-card>
               </v-col>
               <v-col
@@ -313,9 +313,9 @@
                 </OrderSummary>
               </v-col>
             </v-row>
-          </v-stepper-window-item>
+          </VStepperWindowItem>
 
-          <v-stepper-window-item value="review">
+          <VStepperWindowItem value="review">
             <v-row dense>
               <v-col
                 cols="12"
@@ -402,9 +402,9 @@
                 </OrderSummary>
               </v-col>
             </v-row>
-          </v-stepper-window-item>
-        </v-stepper-window>
-      </v-stepper>
+          </VStepperWindowItem>
+        </VStepperWindow>
+      </VStepper>
     </v-container>
   </main>
 </template>
@@ -413,6 +413,15 @@
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useHead, useSeoMeta, useRuntimeConfig, useRoute, useRouter } from "#imports";
+import {
+  VStepper,
+  VStepperHeader,
+  VStepperItem,
+  VStepperWindow,
+  VStepperWindowItem,
+  VTimeline,
+  VTimelineItem,
+} from "vuetify/components";
 import OrderSummary from "~/components/ecommerce/OrderSummary.vue";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useDemoCartStore } from "~/stores/useDemoCart";

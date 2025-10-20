@@ -41,45 +41,49 @@
         cols="12"
         md="6"
       >
-        <v-date-input
-          v-model="task.startDate"
-          label="Start date"
-          variant="outlined"
-          density="comfortable"
-          color="primary"
-          prepend-icon="mdi:calendar-start"
-          :min="startDateMin"
-          :max="startDateMax"
-          :rules="startDateRules"
-          required
-          clearable
-        />
+        <ClientOnly>
+          <VDateInput
+            v-model="task.startDate"
+            label="Start date"
+            variant="outlined"
+            density="comfortable"
+            color="primary"
+            prepend-icon="mdi:calendar-start"
+            :min="startDateMin"
+            :max="startDateMax"
+            :rules="startDateRules"
+            required
+            clearable
+          />
+        </ClientOnly>
       </v-col>
 
       <v-col
         cols="12"
         md="6"
       >
-        <v-date-input
-          v-model="task.finishDate"
-          label="Finish date"
-          variant="outlined"
-          density="comfortable"
-          color="primary"
-          prepend-icon="mdi:calendar-check"
-          :min="finishDateMin"
-          :max="finishDateMax"
-          :rules="finishDateRules"
-          required
-          clearable
-        />
+        <ClientOnly>
+          <VDateInput
+            v-model="task.finishDate"
+            label="Finish date"
+            variant="outlined"
+            density="comfortable"
+            color="primary"
+            prepend-icon="mdi:calendar-check"
+            :min="finishDateMin"
+            :max="finishDateMax"
+            :rules="finishDateRules"
+            required
+            clearable
+          />
+        </ClientOnly>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 
 import type { CrmProject } from "~/stores/crm-projects";
 
@@ -96,6 +100,10 @@ const task = defineModel<TaskFormState>({ required: true });
 const props = defineProps<{
   project: CrmProject | null;
 }>();
+
+const VDateInput = defineAsyncComponent(() =>
+  import("vuetify/labs/VDateInput").then((mod) => mod.VDateInput),
+);
 
 function parseDate(value: string | null | undefined): number | null {
   if (typeof value !== "string") {

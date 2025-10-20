@@ -1,4 +1,4 @@
-import type { VDataTable } from "vuetify/components";
+import type { VDataTable } from "vuetify/labs/VDataTable";
 import {
   VAlert,
   VApp,
@@ -19,7 +19,6 @@ import {
   VCombobox,
   VCol,
   VContainer,
-  VDataTable as VDataTableComponent,
   VDialog,
   VDivider,
   VExpandTransition,
@@ -46,47 +45,34 @@ import {
   VPagination,
   VProgressCircular,
   VProgressLinear,
-  VRangeSlider,
   VRadio,
   VRadioGroup,
   VRating,
   VResponsive,
   VRow,
   VSlider,
-  VTab,
   VSelect,
   VSheet,
   VSkeletonLoader,
   VSnackbar,
+  VTab,
   VTabs,
-  VStepper,
-  VStepperHeader,
-  VStepperItem,
-  VStepperWindow,
-  VStepperWindowItem,
   VSpacer,
   VTable,
   VSwitch,
   VTextField,
   VTextarea,
-  VTimeline,
-  VTimelineItem,
   VToolbar,
   VTooltip,
 } from "vuetify/components";
 import { defineComponent, h, ref, watch } from "vue";
 import { Ripple } from "vuetify/directives";
-import { VCalendar } from "vuetify/labs/VCalendar";
-import { VDateInput } from "vuetify/labs/VDateInput";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { aliases } from "vuetify/iconsets/mdi-svg";
 import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables/icons";
 import { normalizeHexColor } from "~/lib/theme/colors";
-import {
-  coreProjectMdiIcons,
-  ensureProjectMdiIcons,
-} from "~/lib/vuetify/projectMdiIcons";
+import { coreProjectMdiIcons, ensureProjectMdiIcons } from "~/lib/vuetify/projectMdiIcons";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
 
@@ -790,7 +776,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       VCombobox,
       VCol,
       VContainer,
-      VDataTable: VDataTableComponent,
       VDialog,
       VDivider,
       VExpandTransition,
@@ -816,7 +801,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       VPagination,
       VProgressCircular,
       VProgressLinear,
-      VRangeSlider,
       VRadio,
       VRadioGroup,
       VRating,
@@ -830,22 +814,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       VSnackbar,
       VTabs,
       VEmptyState,
-      VStepper,
-      VStepperHeader,
-      VStepperItem,
-      VStepperWindow,
-      VStepperWindowItem,
       VSpacer,
       VTable,
       VSwitch,
       VTextField,
       VTextarea,
-      VTimeline,
-      VTimelineItem,
       VToolbar,
       VTooltip,
-      VCalendar,
-      VDateInput,
     },
     directives: {
       Ripple,

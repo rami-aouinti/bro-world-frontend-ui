@@ -114,28 +114,32 @@
                   cols="12"
                   md="6"
                 >
-                  <v-date-input
-                    v-model="eventForm.startDate"
-                    :label="t('pages.calendar.dialog.startLabel')"
-                    rounded="xl"
-                    color="primary"
-                    header-color="primary"
-                    prepend-inner-icon="$calendar"
-                    :error-messages="validationErrors.startDate"
-                  />
+                  <ClientOnly>
+                    <VDateInput
+                      v-model="eventForm.startDate"
+                      :label="t('pages.calendar.dialog.startLabel')"
+                      rounded="xl"
+                      color="primary"
+                      header-color="primary"
+                      prepend-inner-icon="$calendar"
+                      :error-messages="validationErrors.startDate"
+                    />
+                  </ClientOnly>
                 </v-col>
                 <v-col
                   cols="12"
                   md="6"
                 >
-                  <v-date-input
-                    v-model="eventForm.endDate"
-                    :label="t('pages.calendar.dialog.endLabel')"
-                    rounded="xl"
-                    color="primary"
-                    header-color="primary"
-                    prepend-inner-icon="$calendar"
-                  />
+                  <ClientOnly>
+                    <VDateInput
+                      v-model="eventForm.endDate"
+                      :label="t('pages.calendar.dialog.endLabel')"
+                      rounded="xl"
+                      color="primary"
+                      header-color="primary"
+                      prepend-inner-icon="$calendar"
+                    />
+                  </ClientOnly>
                 </v-col>
               </v-row>
               <v-row dense>
@@ -310,22 +314,24 @@
               {{ loadError }}
             </v-alert>
             <div class="px-2 pb-4">
-              <v-calendar
-                v-model="focus"
-                color="primary"
-                :events="calendarEvents"
-                :event-color="getEventColor"
-                :weekdays="weekdays"
-                type="month"
-                @click:day="onDayClick"
-                @click:event="onEventClick"
-              >
-                <template #event="{ event }">
-                  <div class="text-truncate font-weight-medium">
-                    {{ event.title }}
-                  </div>
-                </template>
-              </v-calendar>
+              <ClientOnly>
+                <VCalendar
+                  v-model="focus"
+                  color="primary"
+                  :events="calendarEvents"
+                  :event-color="getEventColor"
+                  :weekdays="weekdays"
+                  type="month"
+                  @click:day="onDayClick"
+                  @click:event="onEventClick"
+                >
+                  <template #event="{ event }">
+                    <div class="text-truncate font-weight-medium">
+                      {{ event.title }}
+                    </div>
+                  </template>
+                </VCalendar>
+              </ClientOnly>
             </div>
           </v-card-text>
         </v-card>
@@ -335,7 +341,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, nextTick, onMounted, reactive, ref } from "vue";
 import dayjs from "dayjs";
 import { useI18n } from "vue-i18n";
 import { useAuthSession } from "~/stores/auth-session";
@@ -383,6 +389,14 @@ const weekdays = [1, 2, 3, 4, 5, 6, 0];
 const { t } = useI18n();
 const authSession = useAuthSession();
 const eventStore = useEventStore();
+
+const VCalendar = defineAsyncComponent(() =>
+  import("vuetify/labs/VCalendar").then((mod) => mod.VCalendar),
+);
+
+const VDateInput = defineAsyncComponent(() =>
+  import("vuetify/labs/VDateInput").then((mod) => mod.VDateInput),
+);
 
 const isAuthenticated = computed(() => authSession.isAuthenticated);
 

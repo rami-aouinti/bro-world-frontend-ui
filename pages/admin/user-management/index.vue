@@ -66,93 +66,95 @@
           {{ combinedError }}
         </v-alert>
 
-        <v-data-table
-          :headers="headers"
-          :items="tableItems"
-          :items-per-page="10"
-          :loading="isLoading"
-          :search="search"
-          class="user-table"
-        >
-          <template #[`item.user`]="{ item }">
-            <div class="d-flex flex-column">
-              <span class="text-body-1 font-weight-medium">{{ item.displayName }}</span>
-              <span class="text-body-2 text-medium-emphasis">@{{ item.username }}</span>
-            </div>
-          </template>
+        <ClientOnly>
+          <VDataTable
+            :headers="headers"
+            :items="tableItems"
+            :items-per-page="10"
+            :loading="isLoading"
+            :search="search"
+            class="user-table"
+          >
+            <template #[`item.user`]="{ item }">
+              <div class="d-flex flex-column">
+                <span class="text-body-1 font-weight-medium">{{ item.displayName }}</span>
+                <span class="text-body-2 text-medium-emphasis">@{{ item.username }}</span>
+              </div>
+            </template>
 
-          <template #[`item.email`]="{ item }">
-            <span class="text-body-2">{{ item.email }}</span>
-          </template>
+            <template #[`item.email`]="{ item }">
+              <span class="text-body-2">{{ item.email }}</span>
+            </template>
 
-          <template #[`item.status`]="{ item }">
-            <v-chip
-              :color="item.enabled ? 'success' : 'warning'"
-              size="small"
-              variant="tonal"
-              class="text-capitalize font-weight-medium"
-            >
-              {{
-                item.enabled
-                  ? t("admin.userManagement.status.active")
-                  : t("admin.userManagement.status.disabled")
-              }}
-            </v-chip>
-          </template>
-
-          <template #[`item.roles`]="{ item }">
-            <div class="d-flex flex-wrap gap-2">
+            <template #[`item.status`]="{ item }">
               <v-chip
-                v-for="role in item.roles"
-                :key="`${item.id}-${role}`"
-                size="x-small"
-                color="primary"
+                :color="item.enabled ? 'success' : 'warning'"
+                size="small"
                 variant="tonal"
-                class="text-uppercase font-weight-medium"
+                class="text-capitalize font-weight-medium"
               >
-                {{ role }}
+                {{
+                  item.enabled
+                    ? t("admin.userManagement.status.active")
+                    : t("admin.userManagement.status.disabled")
+                }}
               </v-chip>
-            </div>
-          </template>
+            </template>
 
-          <template #[`item.updatedAt`]="{ item }">
-            <span class="text-body-2 text-medium-emphasis">{{ formatDate(item.updatedAt) }}</span>
-          </template>
+            <template #[`item.roles`]="{ item }">
+              <div class="d-flex flex-wrap gap-2">
+                <v-chip
+                  v-for="role in item.roles"
+                  :key="`${item.id}-${role}`"
+                  size="x-small"
+                  color="primary"
+                  variant="tonal"
+                  class="text-uppercase font-weight-medium"
+                >
+                  {{ role }}
+                </v-chip>
+              </div>
+            </template>
 
-          <template #[`item.actions`]="{ item }">
-            <div class="d-flex gap-2">
-              <v-btn
-                icon="mdi:pencil"
-                size="small"
-                variant="text"
-                color="primary"
-                :disabled="isDeleting(item.id)"
-                :loading="isUpdating(item.id)"
-                @click="openEditDialog(item.id)"
-              >
-                <Icon name="mdi:pencil" />
-              </v-btn>
-              <v-btn
-                icon="mdi:delete"
-                size="small"
-                variant="text"
-                color="error"
-                :loading="isDeleting(item.id)"
-                @click="openDeleteDialog(item.id)"
-              >
-                <Icon name="mdi:delete" />
-              </v-btn>
-            </div>
-          </template>
+            <template #[`item.updatedAt`]="{ item }">
+              <span class="text-body-2 text-medium-emphasis">{{ formatDate(item.updatedAt) }}</span>
+            </template>
 
-          <template #bottom>
-            <div class="px-6 pb-4 text-body-2 text-medium-emphasis">
-              <span v-if="!tableItems.length && !isLoading">
-                {{ t("admin.userManagement.table.empty") }}
-              </span>
-            </div>
-          </template>
-        </v-data-table>
+            <template #[`item.actions`]="{ item }">
+              <div class="d-flex gap-2">
+                <v-btn
+                  icon="mdi:pencil"
+                  size="small"
+                  variant="text"
+                  color="primary"
+                  :disabled="isDeleting(item.id)"
+                  :loading="isUpdating(item.id)"
+                  @click="openEditDialog(item.id)"
+                >
+                  <Icon name="mdi:pencil" />
+                </v-btn>
+                <v-btn
+                  icon="mdi:delete"
+                  size="small"
+                  variant="text"
+                  color="error"
+                  :loading="isDeleting(item.id)"
+                  @click="openDeleteDialog(item.id)"
+                >
+                  <Icon name="mdi:delete" />
+                </v-btn>
+              </div>
+            </template>
+
+            <template #bottom>
+              <div class="px-6 pb-4 text-body-2 text-medium-emphasis">
+                <span v-if="!tableItems.length && !isLoading">
+                  {{ t("admin.userManagement.table.empty") }}
+                </span>
+              </div>
+            </template>
+          </VDataTable>
+        </ClientOnly>
       </SidebarCard>
 
       <v-dialog
@@ -404,7 +406,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, reactive, ref } from "vue";
 import { callOnce } from "#app";
 import { useI18n } from "vue-i18n";
 import { useUsersStore } from "~/stores/users";
@@ -427,6 +429,10 @@ interface FormErrors {
 
 const { t, locale } = useI18n();
 const pageDescription = computed(() => t("admin.userManagement.page.subtitle"));
+
+const VDataTable = defineAsyncComponent(() =>
+  import("vuetify/labs/VDataTable").then((mod) => mod.VDataTable),
+);
 
 definePageMeta({
   middleware: ["auth", "admin"],

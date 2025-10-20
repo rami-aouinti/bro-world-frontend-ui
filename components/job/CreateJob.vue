@@ -3,13 +3,13 @@
     <v-card-title>{{ t("job.create") }}</v-card-title>
     <v-card-subtitle class="text-medium-emphasis"> {{ step }} / {{ totalSteps }} </v-card-subtitle>
     <v-card-text class="pa-6">
-      <v-stepper
+      <VStepper
         v-model="step"
         class="job-stepper"
         elevation="0"
       >
-        <v-stepper-header class="job-stepper__header">
-          <v-stepper-item
+        <VStepperHeader class="job-stepper__header">
+          <VStepperItem
             v-for="stepItem in steps"
             :key="stepItem.value"
             :complete="step > stepItem.value"
@@ -18,7 +18,7 @@
             :value="stepItem.value"
             :prepend-icon="stepItem.icon"
           />
-        </v-stepper-header>
+        </VStepperHeader>
 
         <div class="job-stepper__progress">
           <v-progress-linear
@@ -29,8 +29,8 @@
           />
         </div>
 
-        <v-stepper-window class="job-stepper__window">
-          <v-stepper-window-item :value="1">
+        <VStepperWindow class="job-stepper__window">
+          <VStepperWindowItem :value="1">
             <v-row
               v-if="companies.length"
               class="align-center mb-4"
@@ -79,9 +79,9 @@
                 {{ t("buttons.continue") }}
               </v-btn>
             </v-row>
-          </v-stepper-window-item>
+          </VStepperWindowItem>
 
-          <v-stepper-window-item :value="2">
+          <VStepperWindowItem :value="2">
             <v-row class="py-2">
               <v-col cols="12">
                 <v-text-field
@@ -135,9 +135,9 @@
                 {{ t("buttons.continue") }}
               </v-btn>
             </v-row>
-          </v-stepper-window-item>
+          </VStepperWindowItem>
 
-          <v-stepper-window-item :value="3">
+          <VStepperWindowItem :value="3">
             <v-row class="py-2">
               <v-col
                 cols="12"
@@ -188,7 +188,7 @@
                   {{ t("job.salaryRange") }}: {{ salaryRangeRange[0] }} € -
                   {{ salaryRangeRange[1] }} €
                 </div>
-                <v-range-slider
+                <VRangeSlider
                   v-model="salaryRangeRange"
                   :min="15000"
                   :max="150000"
@@ -213,9 +213,9 @@
                 {{ t("buttons.continue") }}
               </v-btn>
             </v-row>
-          </v-stepper-window-item>
+          </VStepperWindowItem>
 
-          <v-stepper-window-item :value="4">
+          <VStepperWindowItem :value="4">
             <v-row class="py-2">
               <v-col
                 cols="12"
@@ -331,9 +331,9 @@
                 {{ t("buttons.continue") }}
               </v-btn>
             </v-row>
-          </v-stepper-window-item>
+          </VStepperWindowItem>
 
-          <v-stepper-window-item :value="5">
+          <VStepperWindowItem :value="5">
             <v-row class="py-2">
               <v-col cols="12">
                 <v-textarea
@@ -360,9 +360,9 @@
                 {{ t("job.submit") }}
               </v-btn>
             </v-row>
-          </v-stepper-window-item>
-        </v-stepper-window>
-      </v-stepper>
+          </VStepperWindowItem>
+        </VStepperWindow>
+      </VStepper>
     </v-card-text>
   </v-card>
 </template>
@@ -371,6 +371,14 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
+import {
+  VRangeSlider,
+  VStepper,
+  VStepperHeader,
+  VStepperItem,
+  VStepperWindow,
+  VStepperWindowItem,
+} from "vuetify/components";
 import CreateCompany from "~/components/job/CreateCompany.vue";
 
 type Language = {

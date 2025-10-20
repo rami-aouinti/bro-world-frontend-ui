@@ -23,110 +23,112 @@
         {{ errorMessage }}
       </v-alert>
 
-      <v-data-table
-        :headers="headers"
-        :items="tableItems"
-        :item-value="'id'"
-        :loading="loading"
-        class="crm-projects-table"
-        hover
-      >
-        <template #loading>
-          <div class="py-8 text-body-2 text-medium-emphasis text-center">Loading projects…</div>
-        </template>
+      <ClientOnly>
+        <VDataTable
+          :headers="headers"
+          :items="tableItems"
+          :item-value="'id'"
+          :loading="loading"
+          class="crm-projects-table"
+          hover
+        >
+          <template #loading>
+            <div class="py-8 text-body-2 text-medium-emphasis text-center">Loading projects…</div>
+          </template>
 
-        <template #[`item.name`]="{ item }">
-          <div class="d-flex flex-column gap-1">
-            <NuxtLink
-              :to="item.detailPath"
-              class="text-body-1 font-weight-semibold text-decoration-none"
-            >
-              {{ item.name }}
-            </NuxtLink>
-            <div class="d-flex flex-wrap align-center gap-2 text-medium-emphasis text-caption">
-              <span v-if="item.pipeline">{{ item.pipeline }}</span>
-              <span
-                v-if="item.stage"
-                class="d-flex align-center gap-1"
+          <template #[`item.name`]="{ item }">
+            <div class="d-flex flex-column gap-1">
+              <NuxtLink
+                :to="item.detailPath"
+                class="text-body-1 font-weight-semibold text-decoration-none"
               >
-                <v-icon
-                  icon="mdi:chart-timeline-variant"
-                  size="16"
-                />
-                <span>{{ item.stage }}</span>
+                {{ item.name }}
+              </NuxtLink>
+              <div class="d-flex flex-wrap align-center gap-2 text-medium-emphasis text-caption">
+                <span v-if="item.pipeline">{{ item.pipeline }}</span>
+                <span
+                  v-if="item.stage"
+                  class="d-flex align-center gap-1"
+                >
+                  <v-icon
+                    icon="mdi:chart-timeline-variant"
+                    size="16"
+                  />
+                  <span>{{ item.stage }}</span>
+                </span>
+              </div>
+              <div
+                v-if="item.tags.length"
+                class="d-flex flex-wrap gap-1"
+              >
+                <v-chip
+                  v-for="tag in item.tags"
+                  :key="`${item.id}-tag-${tag}`"
+                  color="primary"
+                  size="x-small"
+                  variant="tonal"
+                  class="text-capitalize font-weight-medium"
+                >
+                  {{ tag }}
+                </v-chip>
+              </div>
+            </div>
+          </template>
+
+          <template #[`item.client`]="{ item }">
+            <span class="text-body-2">{{ item.client || "—" }}</span>
+          </template>
+
+          <template #[`item.owner`]="{ item }">
+            <span class="text-body-2">{{ item.owner || "—" }}</span>
+          </template>
+
+          <template #[`item.priority`]="{ item }">
+            <v-chip
+              v-if="item.priority"
+              :color="priorityColor(item.priority)"
+              size="small"
+              variant="tonal"
+              class="text-capitalize font-weight-medium"
+            >
+              {{ item.priority }}
+            </v-chip>
+            <span
+              v-else
+              class="text-body-2"
+              >—</span
+            >
+          </template>
+
+          <template #[`item.budget`]="{ item }">
+            <span class="text-body-2 text-medium-emphasis">{{ formatBudget(item.budget) }}</span>
+          </template>
+
+          <template #[`item.probability`]="{ item }">
+            <span class="text-body-2 text-medium-emphasis">{{
+              formatProbability(item.probability)
+            }}</span>
+          </template>
+
+          <template #[`item.dueDate`]="{ item }">
+            <span class="text-body-2 text-medium-emphasis">{{ formatDate(item.dueDate) }}</span>
+          </template>
+
+          <template #bottom>
+            <div class="px-6 pb-4 text-body-2 text-medium-emphasis">
+              <span v-if="!tableItems.length && !loading">
+                Add a project to populate your CRM pipeline.
               </span>
             </div>
-            <div
-              v-if="item.tags.length"
-              class="d-flex flex-wrap gap-1"
-            >
-              <v-chip
-                v-for="tag in item.tags"
-                :key="`${item.id}-tag-${tag}`"
-                color="primary"
-                size="x-small"
-                variant="tonal"
-                class="text-capitalize font-weight-medium"
-              >
-                {{ tag }}
-              </v-chip>
-            </div>
-          </div>
-        </template>
-
-        <template #[`item.client`]="{ item }">
-          <span class="text-body-2">{{ item.client || "—" }}</span>
-        </template>
-
-        <template #[`item.owner`]="{ item }">
-          <span class="text-body-2">{{ item.owner || "—" }}</span>
-        </template>
-
-        <template #[`item.priority`]="{ item }">
-          <v-chip
-            v-if="item.priority"
-            :color="priorityColor(item.priority)"
-            size="small"
-            variant="tonal"
-            class="text-capitalize font-weight-medium"
-          >
-            {{ item.priority }}
-          </v-chip>
-          <span
-            v-else
-            class="text-body-2"
-            >—</span
-          >
-        </template>
-
-        <template #[`item.budget`]="{ item }">
-          <span class="text-body-2 text-medium-emphasis">{{ formatBudget(item.budget) }}</span>
-        </template>
-
-        <template #[`item.probability`]="{ item }">
-          <span class="text-body-2 text-medium-emphasis">{{
-            formatProbability(item.probability)
-          }}</span>
-        </template>
-
-        <template #[`item.dueDate`]="{ item }">
-          <span class="text-body-2 text-medium-emphasis">{{ formatDate(item.dueDate) }}</span>
-        </template>
-
-        <template #bottom>
-          <div class="px-6 pb-4 text-body-2 text-medium-emphasis">
-            <span v-if="!tableItems.length && !loading">
-              Add a project to populate your CRM pipeline.
-            </span>
-          </div>
-        </template>
-      </v-data-table>
+          </template>
+        </VDataTable>
+      </ClientOnly>
     </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useLocalePath } from "#imports";
 
@@ -147,6 +149,10 @@ const props = withDefaults(
 
 const { locale } = useI18n();
 const localePath = useLocalePath();
+
+const VDataTable = defineAsyncComponent(() =>
+  import("vuetify/labs/VDataTable").then((mod) => mod.VDataTable),
+);
 
 const headers = computed(() => [
   { title: "Project", key: "name", sortable: false },

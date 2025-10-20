@@ -169,43 +169,49 @@
         cols="12"
         md="4"
       >
-        <v-date-input
-          v-model="project.startDate"
-          label="Start date"
-          variant="outlined"
-          density="comfortable"
-          color="primary"
-          prepend-icon="mdi:calendar-start"
-          clearable
-        />
+        <ClientOnly>
+          <VDateInput
+            v-model="project.startDate"
+            label="Start date"
+            variant="outlined"
+            density="comfortable"
+            color="primary"
+            prepend-icon="mdi:calendar-start"
+            clearable
+          />
+        </ClientOnly>
       </v-col>
       <v-col
         cols="12"
         md="4"
       >
-        <v-date-input
-          v-model="project.dueDate"
-          label="Due date"
-          variant="outlined"
-          density="comfortable"
-          color="primary"
-          prepend-icon="mdi:calendar-clock"
-          clearable
-        />
+        <ClientOnly>
+          <VDateInput
+            v-model="project.dueDate"
+            label="Due date"
+            variant="outlined"
+            density="comfortable"
+            color="primary"
+            prepend-icon="mdi:calendar-clock"
+            clearable
+          />
+        </ClientOnly>
       </v-col>
       <v-col
         cols="12"
         md="4"
       >
-        <v-date-input
-          v-model="project.finishDate"
-          label="Finish date"
-          variant="outlined"
-          density="comfortable"
-          color="primary"
-          prepend-icon="mdi:calendar-check"
-          clearable
-        />
+        <ClientOnly>
+          <VDateInput
+            v-model="project.finishDate"
+            label="Finish date"
+            variant="outlined"
+            density="comfortable"
+            color="primary"
+            prepend-icon="mdi:calendar-check"
+            clearable
+          />
+        </ClientOnly>
       </v-col>
     </v-row>
 
@@ -227,7 +233,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 
 export interface ProjectFormState {
   name: string;
@@ -247,6 +253,10 @@ export interface ProjectFormState {
 }
 
 const project = defineModel<ProjectFormState>({ required: true });
+
+const VDateInput = defineAsyncComponent(() =>
+  import("vuetify/labs/VDateInput").then((mod) => mod.VDateInput),
+);
 
 const pipelineOptions = ["Enterprise", "Growth", "Scale-Up", "SMB"];
 

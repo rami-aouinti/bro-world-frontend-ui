@@ -196,13 +196,15 @@
                   cols="12"
                   md="6"
                 >
-                  <v-date-input
-                    v-model="worldForm.launchDate"
-                    :label="t('pages.createWorld.form.fields.launchDate')"
-                    density="comfortable"
-                    variant="outlined"
-                    hide-details="auto"
-                  />
+                  <ClientOnly>
+                    <VDateInput
+                      v-model="worldForm.launchDate"
+                      :label="t('pages.createWorld.form.fields.launchDate')"
+                      density="comfortable"
+                      variant="outlined"
+                      hide-details="auto"
+                    />
+                  </ClientOnly>
                   <p class="text-body-2 text-medium-emphasis mt-1 mb-0">
                     {{ t("pages.createWorld.form.fields.launchDateHint") }}
                   </p>
@@ -408,9 +410,7 @@
                     v-if="plugin.routes?.length"
                     class="mt-4"
                   >
-                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">
-                      Routes
-                    </h5>
+                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">Routes</h5>
                     <ul class="plugin-meta-list">
                       <li
                         v-for="route in plugin.routes"
@@ -431,9 +431,7 @@
                     v-if="plugin.menus?.length"
                     class="mt-4"
                   >
-                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">
-                      Menus
-                    </h5>
+                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">Menus</h5>
                     <ul class="plugin-meta-list">
                       <li
                         v-for="menu in plugin.menus"
@@ -591,7 +589,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useWorldCreator } from "~/composables/useWorldCreator";
@@ -601,7 +599,11 @@ import {
   WORLD_PLUGIN_REGISTRY_MAP,
   type WorldPluginDefinition,
 } from "~/lib/world/plugins";
-import type { CreateWorldRequestPayload, WorldFormState, WorldSubmissionAction } from "~/types/world";
+import type {
+  CreateWorldRequestPayload,
+  WorldFormState,
+  WorldSubmissionAction,
+} from "~/types/world";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
@@ -658,6 +660,10 @@ const tagSuggestions = computed(() => [
 const { submitWorld, isSubmitting } = useWorldCreator();
 
 const pluginCategories = computed(() => groupWorldPluginsByCategory(WORLD_PLUGIN_REGISTRY));
+
+const VDateInput = defineAsyncComponent(() =>
+  import("vuetify/labs/VDateInput").then((mod) => mod.VDateInput),
+);
 
 const selectedPluginIds = ref<Set<string>>(new Set());
 
