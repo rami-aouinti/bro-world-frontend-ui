@@ -3,12 +3,6 @@
     <h2 class="text font-semibold leading-tight text-foreground">
       {{ props.title }}
     </h2>
-    <p
-      v-if="displaySummary"
-      class="text-base leading-relaxed text-foreground mx-2 summary-clamp"
-    >
-      {{ displaySummary }}
-    </p>
   </section>
 </template>
 
