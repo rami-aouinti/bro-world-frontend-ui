@@ -5,7 +5,7 @@
     </h2>
     <p
       v-if="displaySummary"
-      class="text-base leading-relaxed text-slate-500 mx-2 summary-clamp"
+      class="text-base leading-relaxed text-foreground mx-2 summary-clamp"
     >
       {{ displaySummary }}
     </p>
