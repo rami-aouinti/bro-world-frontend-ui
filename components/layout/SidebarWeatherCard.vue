@@ -12,31 +12,35 @@
         <h3 class="mt-3 text-2xl font-semibold text-foreground">
           {{ resolvedWeather.temperature }}
         </h3>
-        <p class="mt-2 text-sm text-muted-foreground">
-          <span
-            v-if="isLoading"
-            class="inline-flex items-center gap-1"
+        <div class="weather-card__details mt-2">
+          <div class="space-y-2">
+            <p class="text-sm text-muted-foreground">
+              <span
+                v-if="isLoading"
+                class="inline-flex items-center gap-1"
+              >
+                <span class="h-2 w-2 animate-pulse rounded-full bg-primary"></span>
+                {{ loadingLabel }}
+              </span>
+              <span v-else>{{ resolvedWeather.location }}</span>
+            </p>
+            <p
+              v-if="locationError"
+              class="text-xs text-red-500"
+            >
+              {{ locationError }}
+            </p>
+          </div>
+          <button
+            v-if="canRequestGeolocation"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-full border border-primary/20 px-3 py-1 text-xs font-medium text-primary transition hover:border-primary hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-60"
+            :disabled="isLoading"
+            @click="useCurrentLocation"
           >
-            <span class="h-2 w-2 animate-pulse rounded-full bg-primary"></span>
-            {{ loadingLabel }}
-          </span>
-          <span v-else>{{ resolvedWeather.location }}</span>
-        </p>
-        <p
-          v-if="locationError"
-          class="mt-2 text-xs text-red-500"
-        >
-          {{ locationError }}
-        </p>
-        <button
-          v-if="canRequestGeolocation"
-          type="button"
-          class="mt-3 inline-flex items-center gap-2 rounded-full border border-primary/20 px-3 py-1 text-xs font-medium text-primary transition hover:border-primary hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-60"
-          :disabled="isLoading"
-          @click="useCurrentLocation"
-        >
-          {{ useCurrentLocationLabel }}
-        </button>
+            {{ useCurrentLocationLabel }}
+          </button>
+        </div>
       </div>
       <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-3xl">
         {{ resolvedWeather.icon }}
@@ -224,3 +228,12 @@ function useCurrentLocation() {
   );
 }
 </script>
+
+<style scoped>
+.weather-card__details {
+  min-height: 4.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+</style>
