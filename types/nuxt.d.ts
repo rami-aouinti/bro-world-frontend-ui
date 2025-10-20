@@ -1,4 +1,5 @@
 import type { $Fetch } from "ofetch";
+import type { Directive } from "vue";
 import type { AlertMessage } from "~/types/alert-panel";
 import type { ApiFetcher } from "~/lib/api/http-client";
 import type { MercureEventSourceFactory } from "~/types/mercure";
@@ -22,6 +23,10 @@ declare module "vue" {
     $clearAlerts: () => void;
     $mercure: MercureEventSourceFactory;
     $html2pdf?: () => Promise<typeof window.html2pdf | null>;
+  }
+
+  interface GlobalDirectives {
+    safeHtml: Directive<HTMLElement, string | null | undefined>;
   }
 }
 

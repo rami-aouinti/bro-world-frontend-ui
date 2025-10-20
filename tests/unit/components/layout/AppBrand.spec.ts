@@ -8,7 +8,9 @@ interface IdleCallbackWindow extends Window {
   cancelIdleCallback?: (handle: number) => void;
 }
 
-const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
+function flushPromises() {
+  return new Promise((resolve) => setTimeout(resolve, 0));
+}
 
 function createMatchMedia(matches: boolean) {
   const listeners = new Set<(event: MediaQueryListEvent) => void>();
