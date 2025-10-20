@@ -33,12 +33,7 @@
             color="success"
             variant="tonal"
           >
-            {{
-              t("pages.education.course.completedLessons", {
-                count: completedLessons,
-                total: totalLessons,
-              })
-            }}
+            {{ completedLessonsLabel }}
           </v-chip>
         </div>
         <h1 class="text-h4 text-wrap mb-3">
@@ -82,6 +77,12 @@ const { t } = useI18n();
 
 const completedLessons = computed(() => props.completedLessons ?? 0);
 const totalLessons = computed(() => props.totalLessons ?? props.course.lessons.length);
+const completedLessonsLabel = computed(() =>
+  t("pages.education.course.completedLessons", {
+    count: completedLessons.value,
+    total: totalLessons.value,
+  }),
+);
 
 function formatDuration(duration: number) {
   if (duration < 60) {
