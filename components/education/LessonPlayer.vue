@@ -38,7 +38,7 @@
 
     <article
       class="lesson-content mb-6"
-      v-html="lesson.content"
+      v-html="safeContent"
     />
 
     <section
@@ -74,6 +74,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import DOMPurify from "dompurify";
 import type { RouteLocationRaw } from "vue-router";
 import ProgressBar from "~/components/education/ProgressBar.vue";
 import type { Lesson } from "~/types/education";
@@ -99,6 +100,27 @@ const nextLabel = computed(() =>
 
 const prevTo = computed(() => props.prevTo ?? null);
 const nextTo = computed(() => props.nextTo ?? null);
+
+const domPurifySanitize = (() => {
+  if (typeof DOMPurify?.sanitize === "function") {
+    return (value: string) => DOMPurify.sanitize(value);
+  }
+
+  if (typeof DOMPurify === "function") {
+    return (value: string) => DOMPurify(value);
+  }
+
+  return (value: string) => value;
+})();
+
+const safeContent = computed(() => {
+  const content = props.lesson.content ?? "";
+  if (import.meta.client) {
+    return domPurifySanitize(content);
+  }
+
+  return content;
+});
 </script>
 
 <style scoped>
