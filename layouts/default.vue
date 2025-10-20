@@ -186,7 +186,7 @@
             <template v-else>
               <div
                 v-if="canShowRightWidgets"
-                class="pane-scroll px-3 py-4"
+                class="pane-scroll"
               >
                 <div class="flex flex-col gap-6">
                   <SidebarWeatherCardSkeleton />
@@ -202,7 +202,7 @@
           <div class="right-drawer-wrapper">
             <div
               v-if="canShowRightWidgets"
-              class="pane-scroll px-3 py-4"
+              class="pane-scroll"
             >
               <div class="flex flex-col gap-6">
                 <SidebarWeatherCardSkeleton />
