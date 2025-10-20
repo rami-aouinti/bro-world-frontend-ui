@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-10">
-    <v-breadcrumbs
+    <VBreadcrumbs
       :items="breadcrumbs"
       class="mb-6"
     />
