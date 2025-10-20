@@ -28,6 +28,7 @@ import {
   VExpansionPanelTitle,
   VExpansionPanels,
   VForm,
+  VEmptyState,
   VHover,
   VIcon,
   VItem,
@@ -77,7 +78,6 @@ import { defineComponent, h, ref, watch } from "vue";
 import { Ripple } from "vuetify/directives";
 import { VCalendar } from "vuetify/labs/VCalendar";
 import { VDateInput } from "vuetify/labs/VDateInput";
-import { VEmptyState } from "vuetify/labs/VEmptyState";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { aliases } from "vuetify/iconsets/mdi-svg";
