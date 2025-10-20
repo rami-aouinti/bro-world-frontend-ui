@@ -101,6 +101,7 @@
               :reaction-labels="reactionLabels"
               :prefer-eager-media-loading="index === 0"
               :defer-offscreen="index > 0"
+              :reserve-space="index > 0"
               :intrinsic-height="blogPostCardIntrinsicHeight"
             />
           </template>
