@@ -1,9 +1,7 @@
 <template>
-  <v-card
-    class="post-skeleton"
-    variant="tonal"
-    elevation="6"
-    rounded="xl"
+  <SidebarCard
+    class="post-skeleton text-card-foreground px-3 py-3"
+    glow
     role="status"
     aria-live="polite"
     :aria-label="loadingLabel"
@@ -28,7 +26,7 @@
         :show-composer="showComposer"
       />
     </div>
-  </v-card>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">
@@ -38,6 +36,7 @@ import BlogPostContentSkeleton from "./BlogPostContentSkeleton.vue";
 import BlogPostReactCardSkeleton from "./BlogPostReactCardSkeleton.vue";
 import CommentThreadSkeleton from "./CommentThreadSkeleton.vue";
 import PostMetaSkeleton from "./PostMetaSkeleton.vue";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t } = useI18n();
 const props = withDefaults(
@@ -60,8 +59,6 @@ const showComposer = computed(() => showComments.value && props.showComposer);
 .post-skeleton {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1.5rem;
 }
 
 .post-skeleton__comments {
