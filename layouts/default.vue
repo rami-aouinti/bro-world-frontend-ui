@@ -118,7 +118,7 @@
               <div
                 v-if="canShowRightWidgets"
                 class="pane-scroll"
-                :class="{ hidden: !shouldRenderRightSidebarContent }"
+                :class="['px-3', 'py-4', { hidden: !shouldRenderRightSidebarContent }]"
                 :aria-hidden="!shouldRenderRightSidebarContent"
               >
                 <AppSidebarRight
@@ -138,9 +138,19 @@
                   >
                     <div
                       v-if="rightSidebarContent"
-                      :class="rightSidebarContent.wrapperClass ?? 'flex flex-col gap-6'"
+                      class="flex flex-col gap-6"
                     >
+                      <div
+                        v-if="rightSidebarContent.wrapperClass"
+                        :class="rightSidebarContent.wrapperClass"
+                      >
+                        <component
+                          :is="rightSidebarContent.component"
+                          v-bind="rightSidebarContent.props"
+                        />
+                      </div>
                       <component
+                        v-else
                         :is="rightSidebarContent.component"
                         v-bind="rightSidebarContent.props"
                       />
