@@ -149,6 +149,7 @@ import type {
 } from "~/lib/mock/blog";
 import type { CommentNode } from "~/components/blog/CommentThread.vue";
 import { optimizeAvatarUrl } from "~/lib/images/avatar";
+import BlogPostContent from "./BlogPostContent.vue";
 import CommentThreadSkeleton from "./CommentThreadSkeleton.vue";
 
 interface FeedbackState {
@@ -450,10 +451,6 @@ function handleCommentLike(commentId: string) {
     });
   });
 }
-const BlogPostContent = defineAsyncComponent({
-  loader: () => import("~/components/blog/BlogPostContent.vue"),
-  suspensible: false,
-});
 const BlogPostReactCard = defineAsyncComponent({
   loader: () => import("~/components/blog/BlogPostReactCard.vue"),
   suspensible: false,
