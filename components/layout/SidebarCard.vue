@@ -147,10 +147,6 @@ const offscreenStyle = computed(() => {
   style.containIntrinsicSize = `auto ${intrinsicSizeValue}`;
   style["--sidebar-card-intrinsic-size"] = intrinsicSizeValue;
 
-  if (!shouldDeferOffscreen.value) {
-    style.minHeight = intrinsicSizeValue;
-  }
-
   return style;
 });
 
