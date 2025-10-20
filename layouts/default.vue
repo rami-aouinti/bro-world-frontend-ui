@@ -118,7 +118,7 @@
               <div
                 v-if="canShowRightWidgets"
                 class="pane-scroll"
-                :class="['px-3', 'py-4', { hidden: !shouldRenderRightSidebarContent }]"
+                :class="[{ hidden: !shouldRenderRightSidebarContent }]"
                 :aria-hidden="!shouldRenderRightSidebarContent"
               >
                 <AppSidebarRight
