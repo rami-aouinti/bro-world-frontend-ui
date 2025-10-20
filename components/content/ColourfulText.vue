@@ -48,7 +48,7 @@ const shouldReduceMotion = ref(false);
 let intervalId: undefined | NodeJS.Timeout = undefined;
 let mediaQuery: MediaQueryList | undefined;
 
-const stopAnimationLoop = () => {
+function stopAnimationLoop() {
   if (intervalId) {
     clearInterval(intervalId);
     intervalId = undefined;
@@ -56,9 +56,9 @@ const stopAnimationLoop = () => {
 
   currentColors.value = props.colors;
   count.value = 0;
-};
+}
 
-const startAnimationLoop = () => {
+function startAnimationLoop() {
   if (intervalId || shouldReduceMotion.value) {
     return;
   }
@@ -75,9 +75,9 @@ const startAnimationLoop = () => {
       lastHidden.value = Date.now();
     }
   }, 5000);
-};
+}
 
-const applyMotionPreference = (matches: boolean) => {
+function applyMotionPreference(matches: boolean) {
   shouldReduceMotion.value = matches;
 
   if (matches) {
@@ -85,11 +85,11 @@ const applyMotionPreference = (matches: boolean) => {
   } else {
     startAnimationLoop();
   }
-};
+}
 
-const handlePreferenceChange = (event: MediaQueryListEvent) => {
+function handlePreferenceChange(event: MediaQueryListEvent) {
   applyMotionPreference(event.matches);
-};
+}
 
 onMounted(() => {
   if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
@@ -124,13 +124,13 @@ onUnmounted(() => {
   }
 });
 
-const getColorForIndex = (index: number) => {
+function getColorForIndex(index: number) {
   const palette = currentColors.value.length > 0 ? currentColors.value : props.colors;
   const safeIndex = palette.length === 0 ? 0 : index % palette.length;
   return palette[safeIndex] ?? props.startColor;
-};
+}
 
-const getInitialState = () => {
+function getInitialState() {
   if (shouldReduceMotion.value) {
     return {
       y: 0,
@@ -148,9 +148,9 @@ const getInitialState = () => {
     scale: 1,
     filter: "blur(5px)",
   };
-};
+}
 
-const getTransition = (index: number) => {
+function getTransition(index: number) {
   if (shouldReduceMotion.value) {
     return {
       duration: 0,
@@ -162,9 +162,9 @@ const getTransition = (index: number) => {
     duration: props.duration,
     delay: index * 0.05,
   };
-};
+}
 
-const getAnimateState = (index: number) => {
+function getAnimateState(index: number) {
   if (shouldReduceMotion.value) {
     return {
       y: 0,
@@ -182,9 +182,9 @@ const getAnimateState = (index: number) => {
     filter: ["blur(0px)", "blur(5px)", "blur(0px)"],
     color: getColorForIndex(index),
   };
-};
+}
 
-const getExitState = () => {
+function getExitState() {
   if (shouldReduceMotion.value) {
     return {
       y: 0,
@@ -202,7 +202,7 @@ const getExitState = () => {
     filter: "blur(5px)",
     color: props.startColor,
   };
-};
+}
 </script>
 
 <style scoped></style>

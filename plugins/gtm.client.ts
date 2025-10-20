@@ -46,14 +46,16 @@ function waitForInteraction(): Promise<void> {
   return new Promise((resolve) => {
     let settled = false;
     const events = ["click", "keydown", "pointerdown", "scroll", "touchstart"];
-    const onInteraction = () => cleanup();
 
     const idleWindow = window as typeof window & {
       requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
       cancelIdleCallback?: (handle: number) => void;
     };
 
-    const cleanup = () => {
+    let idleId: number | null = null;
+    let timeoutId: ReturnType<typeof window.setTimeout> | null = null;
+
+    function cleanup() {
       if (settled) {
         return;
       }
@@ -66,18 +68,20 @@ function waitForInteraction(): Promise<void> {
         window.clearTimeout(timeoutId);
       }
       resolve();
-    };
+    }
+
+    function onInteraction() {
+      cleanup();
+    }
 
     events.forEach((eventName) => {
       window.addEventListener(eventName, onInteraction, { once: true, passive: true });
     });
 
-    let idleId: number | null = null;
     if (typeof idleWindow.requestIdleCallback === "function") {
       idleId = idleWindow.requestIdleCallback(() => cleanup());
     }
 
-    let timeoutId: ReturnType<typeof window.setTimeout> | null = null;
     timeoutId = window.setTimeout(() => cleanup(), 1500);
   });
 }

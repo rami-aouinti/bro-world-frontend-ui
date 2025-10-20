@@ -67,7 +67,7 @@ let idleCallbackId: number | null = null;
 let timeoutId: ReturnType<typeof setTimeout> | null = null;
 let mediaQuery: MediaQueryList | undefined;
 
-const clearScheduledLoad = () => {
+function clearScheduledLoad() {
   if (idleCallbackId !== null && typeof window !== "undefined" && "cancelIdleCallback" in window) {
     window.cancelIdleCallback(idleCallbackId);
   }
@@ -76,18 +76,18 @@ const clearScheduledLoad = () => {
   }
   idleCallbackId = null;
   timeoutId = null;
-};
+}
 
-const loadAnimatedHighlight = async () => {
+async function loadAnimatedHighlight() {
   if (highlightComponent.value) {
     return;
   }
 
   const module = await import("~/components/content/ColourfulText.vue");
   highlightComponent.value = module.default;
-};
+}
 
-const scheduleAnimatedHighlight = () => {
+function scheduleAnimatedHighlight() {
   if (highlightComponent.value) {
     return;
   }
@@ -110,15 +110,15 @@ const scheduleAnimatedHighlight = () => {
   } else {
     timeoutId = setTimeout(run, 300);
   }
-};
+}
 
-const handleMotionPreference = (event: MediaQueryListEvent | MediaQueryList) => {
+function handleMotionPreference(event: MediaQueryListEvent | MediaQueryList) {
   if (!event.matches) {
     scheduleAnimatedHighlight();
   } else {
     clearScheduledLoad();
   }
-};
+}
 
 onMounted(() => {
   if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
