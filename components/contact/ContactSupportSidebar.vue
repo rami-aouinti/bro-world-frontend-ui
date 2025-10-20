@@ -50,7 +50,7 @@
               :rel="channel.rel"
               color="primary"
               variant="text"
-              class="justify-start px-0"
+              class="justify-center px-0 mx-auto"
               :aria-label="channel.ctaLabel"
             >
               {{ channel.cta }}
