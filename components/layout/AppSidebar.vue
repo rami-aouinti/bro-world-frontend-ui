@@ -6,9 +6,11 @@
   >
     <SidebarCard
       class="text-card-foreground px-3 py-2"
+      :class="{ 'sidebar-login-card': !isAuthenticated }"
       glow
     >
       <slot
+        v-if="isAuthenticated"
         :items="localizedItems"
         :active-key="resolvedActiveKey"
         :resolve-label="resolveLabel"
@@ -108,12 +110,30 @@
           </nav>
         </div>
       </slot>
+      <template v-else>
+        <div class="sidebar-login-card__content">
+          <h2 class="sidebar-login-card__title text-foreground">Bro World</h2>
+          <AuthSocial
+            class="sidebar-login-card__socials"
+            size="compact"
+            :loading="isRedirecting"
+            @redirect="handleSocialRedirect"
+          />
+
+          <div class="sidebar-login-card__form">
+            <AuthLoginForm
+              variant="compact"
+              :disabled="isRedirecting"
+            />
+          </div>
+        </div>
+      </template>
     </SidebarCard>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, defineAsyncComponent, ref, watch } from "vue";
 import { NuxtLink } from "#components";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
 import {
@@ -125,6 +145,17 @@ import { useAuthSession } from "~/stores/auth-session";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
+import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
+
+const AuthLoginForm = defineAsyncComponent({
+  loader: () => import("~/components/auth/LoginForm.vue"),
+  suspensible: false,
+});
+
+const AuthSocial = defineAsyncComponent({
+  loader: () => import("~/components/auth/Social.vue"),
+  suspensible: false,
+});
 
 type SidebarVariant = "default" | "profile";
 
@@ -157,6 +188,9 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const auth = useAuthSession();
 const siteSettings = useSiteSettingsState();
+
+const isAuthenticated = computed(() => auth.isAuthenticated.value);
+const isRedirecting = ref(false);
 
 const canAccessAdmin = computed(() => {
   if (!auth.isAuthenticated.value) return false;
@@ -198,6 +232,15 @@ const sidebarCache = useState<SidebarCacheState>("app-sidebar-cache", () => ({
   default: [],
   profile: [],
 }));
+
+watch(
+  () => auth.isAuthenticated.value,
+  (value) => {
+    if (value) {
+      isRedirecting.value = false;
+    }
+  },
+);
 
 const expandedGroupKeys = computed<string[]>({
   get() {
@@ -307,6 +350,18 @@ function handleParentSelect(item: LayoutSidebarItem) {
 
 function handleChildSelect(key: string) {
   emit("select", key);
+}
+
+function handleSocialRedirect(provider: SocialProvider) {
+  const target = resolveSocialRedirect(provider);
+
+  if (!target) return;
+
+  isRedirecting.value = true;
+
+  if (import.meta.client) {
+    window.location.href = target;
+  }
 }
 
 function resolveLabel(item: LayoutSidebarItem): string {
@@ -522,5 +577,64 @@ function resolveLocalizedPath(target?: string): string | undefined {
 .sidebar-icon-placeholder--sm {
   width: 18px;
   height: 18px;
+}
+
+.sidebar-login-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
+  padding: 1.75rem 1.25rem;
+  box-shadow:
+    0 5px 5px rgba(var(--v-theme-primary), 0.2),
+    0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+.sidebar-login-card__particles {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+}
+
+.sidebar-login-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.sidebar-login-card__title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.sidebar-login-card__subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgba(71, 85, 105, 0.75);
+}
+
+.sidebar-login-card__socials {
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-login-card__form {
+  margin-top: 0.5rem;
+}
+
+.sidebar-login-card ::v-deep(.login-form__inner) {
+  gap: 0.75rem;
+}
+
+.sidebar-login-card ::v-deep(.login-field) {
+  box-shadow: 0 12px 26px rgba(236, 72, 153, 0.18);
+}
+
+.sidebar-login-card ::v-deep(.login-form__submit) {
+  box-shadow: 0 16px 32px rgba(236, 72, 153, 0.28);
 }
 </style>
