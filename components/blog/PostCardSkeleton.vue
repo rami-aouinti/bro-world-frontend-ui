@@ -45,7 +45,7 @@ const props = withDefaults(
     showComposer?: boolean;
   }>(),
   {
-    showCommentSkeleton: true,
+    showCommentSkeleton: false,
     showComposer: false,
   },
 );
