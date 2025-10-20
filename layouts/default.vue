@@ -292,7 +292,6 @@
 import {
   computed,
   defineAsyncComponent,
-  defineComponent,
   nextTick,
   onMounted,
   onBeforeUnmount,
@@ -321,6 +320,8 @@ import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/co
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants";
+import VercelAnalyticsPlaceholder from "@/components/layout/analytics/VercelAnalyticsPlaceholder";
+import SpeedInsightsPlaceholder from "@/components/layout/analytics/SpeedInsightsPlaceholder";
 
 const AppSidebar = defineAsyncComponent({
   loader: () => import("@/components/layout/AppSidebar.vue"),
@@ -375,10 +376,7 @@ const SidebarContactCardSkeleton = defineAsyncComponent({
 const LazyAnalytics = defineAsyncComponent({
   loader: async () => {
     if (import.meta.server) {
-      return defineComponent({
-        name: "VercelAnalyticsPlaceholder",
-        render: () => null,
-      });
+      return VercelAnalyticsPlaceholder;
     }
 
     const module = await import("@vercel/analytics/vue");
@@ -390,10 +388,7 @@ const LazyAnalytics = defineAsyncComponent({
 const LazySpeedInsights = defineAsyncComponent({
   loader: async () => {
     if (import.meta.server) {
-      return defineComponent({
-        name: "SpeedInsightsPlaceholder",
-        render: () => null,
-      });
+      return SpeedInsightsPlaceholder;
     }
 
     const module = await import("@vercel/speed-insights/nuxt");
