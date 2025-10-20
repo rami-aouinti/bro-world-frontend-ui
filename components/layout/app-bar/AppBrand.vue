@@ -92,7 +92,7 @@ function scheduleAnimatedHighlight() {
     return;
   }
 
-  const run = () => {
+  function run() {
     idleCallbackId = null;
     timeoutId = null;
 
@@ -101,7 +101,7 @@ function scheduleAnimatedHighlight() {
     }
 
     void loadAnimatedHighlight();
-  };
+  }
 
   clearScheduledLoad();
 
