@@ -40,6 +40,7 @@ const props = withDefaults(
     glow?: boolean;
     deferOffscreen?: boolean;
     intrinsicHeight?: number;
+    reserveSpace?: boolean;
   }>(),
   {
     tag: "div",
@@ -54,6 +55,7 @@ const props = withDefaults(
     glow: false,
     deferOffscreen: false,
     intrinsicHeight: 600,
+    reserveSpace: true,
   },
 );
 
@@ -112,6 +114,7 @@ watch(
 );
 
 const shouldDeferOffscreen = computed(() => Boolean(props.deferOffscreen));
+const shouldReserveSpace = computed(() => props.reserveSpace !== false);
 
 const intrinsicHeightValue = computed(() => {
   const rawValue = Number(props.intrinsicHeight);
@@ -124,18 +127,31 @@ const intrinsicHeightValue = computed(() => {
 });
 
 const offscreenStyle = computed(() => {
-  if (!shouldDeferOffscreen.value) {
-    return {} as Record<string, string>;
+  const style: Record<string, string> = {};
+
+  if (!shouldReserveSpace.value && !shouldDeferOffscreen.value) {
+    return style;
+  }
+
+  if (shouldDeferOffscreen.value) {
+    style.contentVisibility = "auto";
+  }
+
+  if (!shouldReserveSpace.value) {
+    return style;
   }
 
   const intrinsicHeight = Math.max(1, intrinsicHeightValue.value);
   const intrinsicSizeValue = `${intrinsicHeight}px`;
 
-  return {
-    contentVisibility: "auto",
-    containIntrinsicSize: `auto ${intrinsicSizeValue}`,
-    "--sidebar-card-intrinsic-size": intrinsicSizeValue,
-  } as Record<string, string>;
+  style.containIntrinsicSize = `auto ${intrinsicSizeValue}`;
+  style["--sidebar-card-intrinsic-size"] = intrinsicSizeValue;
+
+  if (!shouldDeferOffscreen.value) {
+    style.minHeight = intrinsicSizeValue;
+  }
+
+  return style;
 });
 
 const cardStyle = computed(() => ({
