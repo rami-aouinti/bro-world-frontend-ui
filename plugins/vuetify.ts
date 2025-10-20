@@ -240,7 +240,7 @@ const MdiSvgIcon = defineComponent({
   name: "AppMdiSvgIcon",
   props: makeIconProps(),
   setup(props, { attrs, slots }) {
-    const resolved = ref<IconValue>("");
+    const resolved = ref<IconValue>(resolveMdiIconValue(props.icon ?? "").icon);
 
     async function updateIcon(icon: IconValue) {
       const target = icon ?? "";
