@@ -82,6 +82,7 @@
       <PostCardSkeleton
         v-for="index in 2"
         :key="index"
+        :show-comment-skeleton="false"
       />
     </div>
 
@@ -104,7 +105,7 @@
             />
           </template>
           <template #fallback>
-            <PostCardSkeleton />
+            <PostCardSkeleton :show-comment-skeleton="false" />
           </template>
         </Suspense>
 
@@ -117,6 +118,7 @@
           <PostCardSkeleton
             v-for="index in skeletonBatchSize"
             :key="`loading-${index}`"
+            :show-comment-skeleton="false"
           />
         </div>
 
