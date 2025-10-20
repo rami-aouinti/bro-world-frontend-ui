@@ -184,12 +184,12 @@ function updateParticlesAnimation() {
 if (import.meta.client) {
   let stopVisibilityObserver: (() => void) | undefined;
 
-  const cleanupVisibilityObserver = () => {
+  function cleanupVisibilityObserver() {
     if (stopVisibilityObserver) {
       stopVisibilityObserver();
       stopVisibilityObserver = undefined;
     }
-  };
+  }
 
   watch(
     () => props.particles,

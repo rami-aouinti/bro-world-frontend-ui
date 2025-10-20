@@ -1638,7 +1638,7 @@ export const usePostsStore = defineStore("posts", () => {
       return cachedComments;
     }
 
-    const fetchAndStore = async () => {
+    async function fetchAndStore() {
       const fetcher = resolveApiFetcher();
       const response = await fetcher<BlogCommentWithReplies[] | unknown>(
         `/v1/posts/${encodeURIComponent(trimmedId)}/comments`,
@@ -1654,7 +1654,7 @@ export const usePostsStore = defineStore("posts", () => {
       setCommentsCache(trimmedId, response);
 
       return response;
-    };
+    }
 
     if (hasCached) {
       fetchAndStore().catch((error_) => {

@@ -3,9 +3,14 @@ import { mount } from "@vue/test-utils";
 import { nextTick, ref } from "vue";
 import AppBrand from "~/components/layout/app-bar/AppBrand.vue";
 
+interface IdleCallbackWindow extends Window {
+  requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+  cancelIdleCallback?: (handle: number) => void;
+}
+
 const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 
-const createMatchMedia = (matches: boolean) => {
+function createMatchMedia(matches: boolean) {
   const listeners = new Set<(event: MediaQueryListEvent) => void>();
 
   const mediaQuery: MediaQueryList & { dispatch: (matchesOverride: boolean) => void } = {
@@ -33,7 +38,7 @@ const createMatchMedia = (matches: boolean) => {
   };
 
   return mediaQuery;
-};
+}
 
 vi.mock("~/composables/usePrimaryGradient", () => ({
   usePrimaryGradient: () => ({
@@ -61,30 +66,31 @@ vi.mock("~/components/content/ColourfulText.vue", () => ({
 }));
 
 describe("AppBrand", () => {
+  const idleWindow = window as IdleCallbackWindow;
   const originalMatchMedia = window.matchMedia;
-  const originalRequestIdleCallback = (window as any).requestIdleCallback;
-  const originalCancelIdleCallback = (window as any).cancelIdleCallback;
+  const originalRequestIdleCallback = idleWindow.requestIdleCallback;
+  const originalCancelIdleCallback = idleWindow.cancelIdleCallback;
   let idleCallbacks: Array<
     (deadline: { didTimeout: boolean; timeRemaining: () => number }) => void
   >;
 
   beforeEach(() => {
     idleCallbacks = [];
-    (window as any).requestIdleCallback = vi.fn(
+    idleWindow.requestIdleCallback = vi.fn(
       (callback: (deadline: { didTimeout: boolean; timeRemaining: () => number }) => void) => {
         idleCallbacks.push(callback);
         return idleCallbacks.length;
       },
     );
-    (window as any).cancelIdleCallback = vi.fn((id: number) => {
+    idleWindow.cancelIdleCallback = vi.fn((id: number) => {
       idleCallbacks[id - 1] = () => {};
     });
   });
 
   afterEach(() => {
     window.matchMedia = originalMatchMedia;
-    (window as any).requestIdleCallback = originalRequestIdleCallback;
-    (window as any).cancelIdleCallback = originalCancelIdleCallback;
+    idleWindow.requestIdleCallback = originalRequestIdleCallback;
+    idleWindow.cancelIdleCallback = originalCancelIdleCallback;
     vi.restoreAllMocks();
   });
 
@@ -133,7 +139,7 @@ describe("AppBrand", () => {
     const highlight = wrapper.get('[data-testid="app-brand-highlight"]');
     expect(highlight.text()).toBe("World");
     expect(wrapper.find(".colourful-text-stub").exists()).toBe(false);
-    expect((window as any).requestIdleCallback).not.toHaveBeenCalled();
+    expect(idleWindow.requestIdleCallback).not.toHaveBeenCalled();
     expect(timeoutSpy).not.toHaveBeenCalled();
 
     mockMediaQuery.dispatch(false);
