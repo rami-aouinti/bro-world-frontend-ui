@@ -9,7 +9,7 @@
         <div class="h-3 w-12 rounded-full bg-primary/30" />
       </header>
 
-      <ul class="space-y-4 px-2">
+      <ul class="space-y-4 px-2 mx-2">
         <li
           v-for="index in 3"
           :key="index"

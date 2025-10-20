@@ -8,7 +8,7 @@
       <span class="text-xs uppercase tracking-[0.3em] text-primary/70">{{ liveLabel }}</span>
     </header>
 
-    <ul class="space-y-4 px-2">
+    <ul class="space-y-4 px-2 mx-2">
       <li
         v-for="participant in participants"
         :key="participant.name"
