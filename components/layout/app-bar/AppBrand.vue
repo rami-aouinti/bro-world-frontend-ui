@@ -10,16 +10,24 @@
         class="text-inherit"
         >{{ brandParts.prefix }}</span
       >
-      <LazyColourfulText
-        :colors="colors"
-        :text="brandParts.highlight"
-      />
+      <span class="text-inherit" data-testid="app-brand-highlight">
+        <component
+          v-if="highlightComponent"
+          :is="highlightComponent"
+          :colors="colors"
+          :text="brandParts.highlight"
+        />
+        <template v-else>
+          {{ brandParts.highlight }}
+        </template>
+      </span>
     </h1>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onBeforeUnmount, onMounted, shallowRef } from "vue";
+import type { Component } from "vue";
 import { usePrimaryGradient } from "~/composables/usePrimaryGradient";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
@@ -48,5 +56,94 @@ const brandParts = computed(() => {
     prefix: segments.slice(0, -1).join(" "),
     highlight: segments[segments.length - 1],
   };
+});
+
+const highlightComponent = shallowRef<Component | null>(null);
+
+let idleCallbackId: number | null = null;
+let timeoutId: ReturnType<typeof setTimeout> | null = null;
+let mediaQuery: MediaQueryList | undefined;
+
+const clearScheduledLoad = () => {
+  if (idleCallbackId !== null && typeof window !== "undefined" && "cancelIdleCallback" in window) {
+    window.cancelIdleCallback(idleCallbackId);
+  }
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId);
+  }
+  idleCallbackId = null;
+  timeoutId = null;
+};
+
+const loadAnimatedHighlight = async () => {
+  if (highlightComponent.value) {
+    return;
+  }
+
+  const module = await import("~/components/content/ColourfulText.vue");
+  highlightComponent.value = module.default;
+};
+
+const scheduleAnimatedHighlight = () => {
+  if (highlightComponent.value) {
+    return;
+  }
+
+  const run = () => {
+    idleCallbackId = null;
+    timeoutId = null;
+
+    if (mediaQuery?.matches) {
+      return;
+    }
+
+    void loadAnimatedHighlight();
+  };
+
+  clearScheduledLoad();
+
+  if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+    idleCallbackId = window.requestIdleCallback(run);
+  } else {
+    timeoutId = setTimeout(run, 300);
+  }
+};
+
+const handleMotionPreference = (event: MediaQueryListEvent | MediaQueryList) => {
+  if (!event.matches) {
+    scheduleAnimatedHighlight();
+  } else {
+    clearScheduledLoad();
+  }
+};
+
+onMounted(() => {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    scheduleAnimatedHighlight();
+    return;
+  }
+
+  mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  handleMotionPreference(mediaQuery);
+
+  if ("addEventListener" in mediaQuery) {
+    mediaQuery.addEventListener("change", handleMotionPreference);
+  } else if ("addListener" in mediaQuery) {
+    mediaQuery.addListener(handleMotionPreference);
+  }
+});
+
+onBeforeUnmount(() => {
+  clearScheduledLoad();
+
+  if (!mediaQuery) {
+    return;
+  }
+
+  if ("removeEventListener" in mediaQuery) {
+    mediaQuery.removeEventListener("change", handleMotionPreference);
+  } else if ("removeListener" in mediaQuery) {
+    mediaQuery.removeListener(handleMotionPreference);
+  }
 });
 </script>
