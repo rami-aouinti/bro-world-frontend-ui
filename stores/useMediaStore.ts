@@ -50,9 +50,10 @@ function getKey(folderId: string | null | undefined, isTrash: boolean) {
 }
 
 function createUploadTask(file: File, folderId: string | null): UploadTask {
-  const id = typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
-    ? crypto.randomUUID()
-    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const id =
+    typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
   return {
     id,
@@ -74,7 +75,10 @@ export const useMediaStore = defineStore("media", () => {
   const selection = useState<string[]>("media-selection", () => []);
   const selectedType = useState<"file" | "folder" | null>("media-selection-type", () => null);
   const trashMode = useState<boolean>("media-trash-mode", () => false);
-  const sort = useState<MediaSortOption>("media-sort", () => ({ field: "updatedAt", direction: "desc" }));
+  const sort = useState<MediaSortOption>("media-sort", () => ({
+    field: "updatedAt",
+    direction: "desc",
+  }));
   const error = useState<string | null>("media-error", () => null);
   const preview = useState<MediaFile | null>("media-preview", () => null);
   const uploadQueue = useState<UploadTask[]>("media-upload-queue", () => []);
@@ -145,7 +149,10 @@ export const useMediaStore = defineStore("media", () => {
     const key = getKey(parentId, false);
     const list = folders.value[key] ?? [];
     const index = list.findIndex((item) => item.id === folder.id);
-    const next = index === -1 ? [...list, folder] : [...list.slice(0, index), folder, ...list.slice(index + 1)];
+    const next =
+      index === -1
+        ? [...list, folder]
+        : [...list.slice(0, index), folder, ...list.slice(index + 1)];
     folders.value = { ...folders.value, [key]: next };
   }
 
@@ -164,7 +171,8 @@ export const useMediaStore = defineStore("media", () => {
     const key = getKey(folderId, false);
     const list = files.value[key] ?? [];
     const index = list.findIndex((item) => item.id === file.id);
-    const next = index === -1 ? [...list, file] : [...list.slice(0, index), file, ...list.slice(index + 1)];
+    const next =
+      index === -1 ? [...list, file] : [...list.slice(0, index), file, ...list.slice(index + 1)];
     files.value = { ...files.value, [key]: next };
   }
 
@@ -197,7 +205,11 @@ export const useMediaStore = defineStore("media", () => {
 
   async function fetchFolders(parentId: string | null, options: FetchOptions = {}) {
     const key = getKey(parentId, false);
-    if (!options.force && folders.value[key] && (lastFetchedAt.value[key] ?? 0) > Date.now() - 30000) {
+    if (
+      !options.force &&
+      folders.value[key] &&
+      (lastFetchedAt.value[key] ?? 0) > Date.now() - 30000
+    ) {
       return folders.value[key];
     }
 
@@ -537,9 +549,7 @@ export const useMediaStore = defineStore("media", () => {
       return;
     }
 
-    await (trashMode.value
-      ? fetchTrash(cwd.value, { cursor })
-      : fetchFiles(cwd.value, { cursor }));
+    await (trashMode.value ? fetchTrash(cwd.value, { cursor }) : fetchFiles(cwd.value, { cursor }));
   }
 
   return {

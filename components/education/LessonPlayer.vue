@@ -3,7 +3,9 @@
     <header class="d-flex flex-column flex-md-row justify-space-between align-start gap-4 mb-4">
       <div>
         <p class="text-caption text-medium-emphasis mb-1">
-          {{ t("pages.education.lesson.position", { index: lessonIndex + 1, total: totalLessons }) }}
+          {{
+            t("pages.education.lesson.position", { index: lessonIndex + 1, total: totalLessons })
+          }}
         </p>
         <h2 class="text-h5 mb-2">{{ lesson.title }}</h2>
         <p class="text-body-2 text-medium-emphasis">
@@ -25,7 +27,11 @@
             icon="mdi:check-circle-outline"
             start
           />
-          {{ isCompleted ? t("pages.education.lesson.completed") : t("pages.education.lesson.markDone") }}
+          {{
+            isCompleted
+              ? t("pages.education.lesson.completed")
+              : t("pages.education.lesson.markDone")
+          }}
         </v-btn>
       </div>
     </header>

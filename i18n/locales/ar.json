@@ -1982,11 +1982,7 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": [
-              "Design Systems",
-              "Figma",
-              "User Research"
-            ],
+            "tags": ["Design Systems", "Figma", "User Research"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -2000,11 +1996,7 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": [
-              "Python",
-              "LangChain",
-              "Hiring Ops"
-            ],
+            "tags": ["Python", "LangChain", "Hiring Ops"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -2018,11 +2010,7 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": [
-              "B2B SaaS",
-              "Enterprise Sales",
-              "Forecasting"
-            ],
+            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -2036,11 +2024,7 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": [
-              "Implementation",
-              "Change Management",
-              "ATS Integrations"
-            ],
+            "tags": ["Implementation", "Change Management", "ATS Integrations"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -3167,41 +3151,25 @@
           "content": {
             "title": "إدارة المحتوى",
             "description": "خطط للمقالات والفعاليات والموارد التعليمية وانشرها أو أرشفها.",
-            "tags": [
-              "سير عمل تحريري",
-              "مراجعة",
-              "جدولة"
-            ],
+            "tags": ["سير عمل تحريري", "مراجعة", "جدولة"],
             "status": "هناك 12 عنصراً بحاجة إلى مراجعة تحريرية."
           },
           "community": {
             "title": "المجتمع والإشراف",
             "description": "اضبط قواعد الإشراف وتابع البلاغات والعقوبات.",
-            "tags": [
-              "بلاغات",
-              "عقوبات",
-              "رسائل خاصة"
-            ],
+            "tags": ["بلاغات", "عقوبات", "رسائل خاصة"],
             "status": "متوسط وقت الاستجابة: ساعة و42 دقيقة."
           },
           "commerce": {
             "title": "الربحية والعروض",
             "description": "أدر الاشتراكات والرموز الترويجية والشراكات التجارية.",
-            "tags": [
-              "اشتراكات",
-              "فوترة",
-              "قسائم"
-            ],
+            "tags": ["اشتراكات", "فوترة", "قسائم"],
             "status": "ارتفع معدل التحويل بنسبة 3.4٪ هذا الأسبوع."
           },
           "governance": {
             "title": "الحوكمة والامتثال",
             "description": "دقق صلاحيات الوصول، أدر الأدوار الحساسة وجهّز تقارير الامتثال.",
-            "tags": [
-              "تدقيق",
-              "أدوار",
-              "تتبع"
-            ],
+            "tags": ["تدقيق", "أدوار", "تتبع"],
             "status": "آخر تدقيق شامل تم قبل 5 أيام."
           }
         }

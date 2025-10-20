@@ -13,7 +13,10 @@
       aria-busy="true"
     >
       <span class="sr-only">{{ t("layout.routeLoadingOverlay.srLabel") }}</span>
-      <div class="route-loader" aria-hidden="true">
+      <div
+        class="route-loader"
+        aria-hidden="true"
+      >
         <div class="route-loader__orb">
           <span class="route-loader__pulse" />
           <span class="route-loader__spinner" />
@@ -103,12 +106,14 @@ const { t } = useI18n();
   width: 100%;
   height: 100%;
   border-radius: 999px;
-  background:
-    conic-gradient(from 90deg, rgba(14, 165, 233, 0), rgba(14, 165, 233, 0.85), rgba(14, 165, 233, 0));
-  mask:
-    radial-gradient(circle, transparent calc(50% - 10px), black calc(50% - 9px));
-  -webkit-mask:
-    radial-gradient(circle, transparent calc(50% - 10px), black calc(50% - 9px));
+  background: conic-gradient(
+    from 90deg,
+    rgba(14, 165, 233, 0),
+    rgba(14, 165, 233, 0.85),
+    rgba(14, 165, 233, 0)
+  );
+  mask: radial-gradient(circle, transparent calc(50% - 10px), black calc(50% - 9px));
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 10px), black calc(50% - 9px));
   animation: route-loader-spin 1.6s linear infinite;
 }
 
@@ -166,7 +171,12 @@ const { t } = useI18n();
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(120deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.85), rgba(129, 140, 248, 0.65));
+  background: linear-gradient(
+    120deg,
+    rgba(14, 165, 233, 0.15),
+    rgba(56, 189, 248, 0.85),
+    rgba(129, 140, 248, 0.65)
+  );
   transform: translateX(-100%);
   animation: route-loader-progress 1.8s ease-in-out infinite;
 }

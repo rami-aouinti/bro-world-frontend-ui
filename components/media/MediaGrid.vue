@@ -1,12 +1,34 @@
 <template>
-  <div class="media-grid" role="grid" :aria-label="t('media.grid.ariaLabel')">
-    <VRow v-if="loading" dense class="media-grid__skeleton">
-      <VCol v-for="index in 8" :key="index" cols="12" sm="6" md="4" lg="3">
-        <VSkeletonLoader type="image, paragraph" class="media-grid__skeleton-tile" />
+  <div
+    class="media-grid"
+    role="grid"
+    :aria-label="t('media.grid.ariaLabel')"
+  >
+    <VRow
+      v-if="loading"
+      dense
+      class="media-grid__skeleton"
+    >
+      <VCol
+        v-for="index in 8"
+        :key="index"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
+        <VSkeletonLoader
+          type="image, paragraph"
+          class="media-grid__skeleton-tile"
+        />
       </VCol>
     </VRow>
 
-    <VRow v-else-if="items.length" dense class="media-grid__list">
+    <VRow
+      v-else-if="items.length"
+      dense
+      class="media-grid__list"
+    >
       <VCol
         v-for="file in items"
         :key="file.id"
@@ -38,10 +60,21 @@
             loading="lazy"
             decoding="async"
           />
-          <div v-else class="media-grid__placeholder" aria-hidden="true">
-            <VIcon icon="mdi-file" size="48" />
+          <div
+            v-else
+            class="media-grid__placeholder"
+            aria-hidden="true"
+          >
+            <VIcon
+              icon="mdi-file"
+              size="48"
+            />
           </div>
-          <VCardTitle class="media-grid__title" :title="file.name">{{ file.name }}</VCardTitle>
+          <VCardTitle
+            class="media-grid__title"
+            :title="file.name"
+            >{{ file.name }}</VCardTitle
+          >
           <VCardSubtitle class="media-grid__meta">
             <span>{{ file.mime }}</span>
             <span>•</span>
@@ -51,8 +84,16 @@
       </VCol>
     </VRow>
 
-    <div v-else class="media-grid__empty" role="status">
-      <VIcon icon="mdi-folder-open" size="48" class="mb-2" />
+    <div
+      v-else
+      class="media-grid__empty"
+      role="status"
+    >
+      <VIcon
+        icon="mdi-folder-open"
+        size="48"
+        class="mb-2"
+      />
       <p class="text-medium-emphasis">{{ gridEmptyMessage }}</p>
     </div>
   </div>

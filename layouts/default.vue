@@ -150,8 +150,8 @@
                         />
                       </div>
                       <component
-                        v-else
                         :is="rightSidebarContent.component"
+                        v-else
                         v-bind="rightSidebarContent.props"
                       />
                     </div>
@@ -570,9 +570,8 @@ const routeRightSidebarPreset = computed<RightSidebarPreset>(() => {
   return "none";
 });
 
-const initialShowContactSidebarCard = useState(
-  "layout-initial-show-contact-card",
-  () => Boolean(currentRoute.value?.meta?.showContactSidebarCard),
+const initialShowContactSidebarCard = useState("layout-initial-show-contact-card", () =>
+  Boolean(currentRoute.value?.meta?.showContactSidebarCard),
 );
 
 const shouldShowContactSidebarCard = computed(() => {
@@ -656,8 +655,7 @@ const initialLayoutInsets = useState<LayoutInsets>("layout-initial-insets", () =
   const isDesktop = !initialIsMobile.value;
   const top = resolvedAppBarHeight.value || APP_TOP_BAR_HEIGHT_VALUE;
   const left = isDesktop ? "320px" : "0px";
-  const right =
-    isDesktop && initialShowRightWidgets.value ? "340px" : "0px";
+  const right = isDesktop && initialShowRightWidgets.value ? "340px" : "0px";
 
   return {
     top,
@@ -788,8 +786,7 @@ const layoutInsets = computed(() => {
   const top = resolvedAppBarHeight.value || APP_TOP_BAR_HEIGHT_VALUE;
   const isDesktop = !isMobile.value;
   const left = isDesktop && leftDrawer.value ? "320px" : "0px";
-  const right =
-    isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
+  const right = isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
 
   return {
     top,
@@ -1042,11 +1039,26 @@ const baseAppIcons: Array<{
   to?: string;
   plugin?: string;
 }> = [
-  { name: "mdi:shopping-outline", label: "layout.appIcons.ecommerce", to: "/ecommerce", plugin: "ecommerce" },
-  { name: "mdi:school-outline", label: "layout.appIcons.education", to: "/education", plugin: "education" },
+  {
+    name: "mdi:shopping-outline",
+    label: "layout.appIcons.ecommerce",
+    to: "/ecommerce",
+    plugin: "ecommerce",
+  },
+  {
+    name: "mdi:school-outline",
+    label: "layout.appIcons.education",
+    to: "/education",
+    plugin: "education",
+  },
   { name: "mdi:briefcase-outline", label: "layout.appIcons.briefcase" },
   { name: "mdi:database", label: "layout.appIcons.database" },
-  { name: "mdi:gamepad-variant-outline", label: "layout.appIcons.game", to: "/game", plugin: "game" },
+  {
+    name: "mdi:gamepad-variant-outline",
+    label: "layout.appIcons.game",
+    to: "/game",
+    plugin: "game",
+  },
 ];
 
 const appIcons = computed(() =>

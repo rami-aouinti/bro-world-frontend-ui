@@ -105,10 +105,7 @@ const query = ref("");
 
 const helpLink = computed(() => localePath({ name: "help" }));
 
-const {
-  data: popularArticles,
-  pending: isLoadingArticles,
-} = await useAsyncData(
+const { data: popularArticles, pending: isLoadingArticles } = await useAsyncData(
   "sidebar-help-articles",
   () =>
     $fetch<HelpArticleSummary[]>("/api/help/articles", {
@@ -122,9 +119,7 @@ const {
 const resultsCount = computed(() => popularArticles.value?.length ?? 0);
 const isLoadingCount = computed(() => isLoadingArticles.value);
 const resultsLabel = computed(() =>
-  resultsCount.value === 1
-    ? t("pages.help.faqCountSingular")
-    : t("pages.help.faqCountPlural"),
+  resultsCount.value === 1 ? t("pages.help.faqCountSingular") : t("pages.help.faqCountPlural"),
 );
 const resultsText = computed(() => `${resultsCount.value} ${resultsLabel.value}`);
 

@@ -80,7 +80,7 @@ export const jobListSample: JobSummary[] = [
     description:
       "Vous serez responsable de l'expérience utilisateur globale des produits internes et clients.",
     requirements: [
-      "Solide expérience en design produit", 
+      "Solide expérience en design produit",
       "Capacité à prototyper et tester rapidement",
       "Culture data et intérêt pour l'inclusion",
     ],

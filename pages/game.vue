@@ -24,7 +24,9 @@
                   />
                   <div>
                     <p class="text-body-2 text-medium-emphasis mb-1">
-                      {{ isAuthenticated ? t("pages.game.menu.player") : t("pages.game.menu.guest") }}
+                      {{
+                        isAuthenticated ? t("pages.game.menu.player") : t("pages.game.menu.guest")
+                      }}
                     </p>
                     <h2 class="text-subtitle-1 font-weight-bold mb-0">
                       {{ selectedCategory?.title ?? t("pages.game.menu.categoryPlaceholder") }}
@@ -55,9 +57,7 @@
                     <p class="game-menu-stat__label">
                       {{ t("pages.game.menu.progress") }}
                     </p>
-                    <p class="game-menu-stat__value">
-                      {{ answeredCount }} / {{ totalQuestions }}
-                    </p>
+                    <p class="game-menu-stat__value">{{ answeredCount }} / {{ totalQuestions }}</p>
                   </div>
                 </div>
               </div>
@@ -134,7 +134,10 @@
         >
           {{ t("pages.game.title") }}
         </h1>
-        <p class="text-body-1 text-medium-emphasis mx-auto mb-0" style="max-width: 640px">
+        <p
+          class="text-body-1 text-medium-emphasis mx-auto mb-0"
+          style="max-width: 640px"
+        >
           {{ t("pages.game.subtitle") }}
         </p>
       </header>
@@ -149,8 +152,13 @@
           class="d-flex flex-column gap-6"
         >
           <section aria-labelledby="game-categories-title">
-            <v-card class="border-radius-xl" elevation="10">
-              <v-card-title class="d-flex flex-column flex-sm-row flex-wrap align-sm-center justify-space-between gap-2">
+            <v-card
+              class="border-radius-xl"
+              elevation="10"
+            >
+              <v-card-title
+                class="d-flex flex-column flex-sm-row flex-wrap align-sm-center justify-space-between gap-2"
+              >
                 <div>
                   <h2
                     id="game-categories-title"
@@ -226,7 +234,11 @@
                               size="28"
                               color="primary"
                             />
-                            <span v-else class="text-h5">🎮</span>
+                            <span
+                              v-else
+                              class="text-h5"
+                              >🎮</span
+                            >
                           </div>
                           <v-chip
                             v-if="category.stats?.levels"
@@ -234,7 +246,9 @@
                             size="small"
                             variant="tonal"
                           >
-                            {{ t("pages.game.categories.levels", { count: category.stats.levels }) }}
+                            {{
+                              t("pages.game.categories.levels", { count: category.stats.levels })
+                            }}
                           </v-chip>
                         </div>
                         <h3 class="text-subtitle-1 font-weight-semibold mb-2">
@@ -245,10 +259,16 @@
                         </p>
                         <div class="d-flex gap-4 mt-4 text-caption text-medium-emphasis">
                           <span v-if="category.stats?.questions">
-                            {{ t("pages.game.categories.questions", { count: category.stats.questions }) }}
+                            {{
+                              t("pages.game.categories.questions", {
+                                count: category.stats.questions,
+                              })
+                            }}
                           </span>
                           <span v-if="category.stats?.players">
-                            {{ t("pages.game.categories.players", { count: category.stats.players }) }}
+                            {{
+                              t("pages.game.categories.players", { count: category.stats.players })
+                            }}
                           </span>
                         </div>
                       </v-card-text>
@@ -260,8 +280,13 @@
           </section>
 
           <section aria-labelledby="game-levels-title">
-            <v-card class="border-radius-xl" elevation="10">
-              <v-card-title class="d-flex flex-column flex-sm-row flex-wrap align-sm-center justify-space-between gap-2">
+            <v-card
+              class="border-radius-xl"
+              elevation="10"
+            >
+              <v-card-title
+                class="d-flex flex-column flex-sm-row flex-wrap align-sm-center justify-space-between gap-2"
+              >
                 <div>
                   <h2
                     id="game-levels-title"
@@ -305,7 +330,10 @@
                 >
                   {{ t("pages.game.levels.empty") }}
                 </p>
-                <div v-else class="d-flex flex-column gap-3">
+                <div
+                  v-else
+                  class="d-flex flex-column gap-3"
+                >
                   <v-sheet
                     v-for="level in levels"
                     :key="level.id"
@@ -326,7 +354,9 @@
                           {{ level.description }}
                         </p>
                       </div>
-                      <div class="d-flex flex-wrap align-center gap-3 text-caption text-medium-emphasis">
+                      <div
+                        class="d-flex flex-wrap align-center gap-3 text-caption text-medium-emphasis"
+                      >
                         <v-chip
                           v-if="level.difficulty"
                           size="small"
@@ -350,7 +380,10 @@
           </section>
 
           <section aria-labelledby="game-questions-title">
-            <v-card class="border-radius-xl" elevation="12">
+            <v-card
+              class="border-radius-xl"
+              elevation="12"
+            >
               <template v-if="questionsLoading">
                 <v-card-text>
                   <v-skeleton-loader
@@ -385,16 +418,28 @@
                     </p>
                   </div>
                   <div v-else>
-                    <div class="d-flex flex-column flex-sm-row justify-space-between align-start align-sm-center gap-3 mb-4">
+                    <div
+                      class="d-flex flex-column flex-sm-row justify-space-between align-start align-sm-center gap-3 mb-4"
+                    >
                       <div>
                         <h2
                           id="game-questions-title"
                           class="text-h5 font-weight-semibold mb-1"
                         >
-                          {{ t("pages.game.questions.title", { index: currentQuestionIndex + 1, total: totalQuestions }) }}
+                          {{
+                            t("pages.game.questions.title", {
+                              index: currentQuestionIndex + 1,
+                              total: totalQuestions,
+                            })
+                          }}
                         </h2>
                         <p class="text-body-2 text-medium-emphasis mb-0">
-                          {{ t("pages.game.questions.progress", { answered: answeredCount, total: totalQuestions }) }}
+                          {{
+                            t("pages.game.questions.progress", {
+                              answered: answeredCount,
+                              total: totalQuestions,
+                            })
+                          }}
                         </p>
                       </div>
                       <div class="text-body-2 text-medium-emphasis">
@@ -493,7 +538,10 @@
             v-if="isResultAvailable"
             aria-labelledby="game-results-title"
           >
-            <v-card class="border-radius-xl" elevation="12">
+            <v-card
+              class="border-radius-xl"
+              elevation="12"
+            >
               <v-card-title>
                 <h2
                   id="game-results-title"
@@ -515,10 +563,20 @@
                   </div>
                   <div class="game-result-stat">
                     <p class="game-result-stat__label">
-                      {{ t("pages.game.results.summary", { correct: validationResult?.correct ?? 0, total: validationResult?.total ?? 0 }) }}
+                      {{
+                        t("pages.game.results.summary", {
+                          correct: validationResult?.correct ?? 0,
+                          total: validationResult?.total ?? 0,
+                        })
+                      }}
                     </p>
                     <p class="game-result-stat__value">
-                      {{ t("pages.game.questions.progress", { answered: validationResult?.correct ?? 0, total: validationResult?.total ?? 0 }) }}
+                      {{
+                        t("pages.game.questions.progress", {
+                          answered: validationResult?.correct ?? 0,
+                          total: validationResult?.total ?? 0,
+                        })
+                      }}
                     </p>
                   </div>
                   <div class="game-result-stat">
@@ -546,13 +604,20 @@
                       <div class="d-flex justify-space-between align-center">
                         <strong>{{ findQuestionPrompt(entry.questionId) }}</strong>
                         <span class="text-caption text-medium-emphasis">
-                          {{ entry.isCorrect ? t("pages.game.results.breakdown.correct") : t("pages.game.results.breakdown.incorrect") }}
+                          {{
+                            entry.isCorrect
+                              ? t("pages.game.results.breakdown.correct")
+                              : t("pages.game.results.breakdown.incorrect")
+                          }}
                         </span>
                       </div>
                       <span class="text-body-2">
                         <strong>{{ t("pages.game.results.breakdown.yourAnswer") }}:</strong>
                         <span>
-                          {{ resolveOptionLabel(entry.questionId, entry.answer) ?? t("pages.game.results.breakdown.noAnswer") }}
+                          {{
+                            resolveOptionLabel(entry.questionId, entry.answer) ??
+                            t("pages.game.results.breakdown.noAnswer")
+                          }}
                         </span>
                       </span>
                       <span
@@ -560,7 +625,10 @@
                         class="text-body-2"
                       >
                         <strong>{{ t("pages.game.results.breakdown.correctAnswer") }}:</strong>
-                        <span>{{ resolveOptionLabel(entry.questionId, entry.correctAnswer) ?? entry.correctAnswer }}</span>
+                        <span>{{
+                          resolveOptionLabel(entry.questionId, entry.correctAnswer) ??
+                          entry.correctAnswer
+                        }}</span>
                       </span>
                       <span
                         v-if="entry.explanation"
@@ -582,7 +650,10 @@
           class="d-flex flex-column gap-6"
         >
           <section aria-labelledby="game-session-title">
-            <v-card class="border-radius-xl" elevation="10">
+            <v-card
+              class="border-radius-xl"
+              elevation="10"
+            >
               <v-card-text>
                 <div v-if="isAuthenticated">
                   <div class="d-flex align-center gap-4 mb-4">
@@ -635,7 +706,10 @@
             v-if="selectedLevel"
             aria-labelledby="game-level-details-title"
           >
-            <v-card class="border-radius-xl" elevation="10">
+            <v-card
+              class="border-radius-xl"
+              elevation="10"
+            >
               <v-card-title>
                 <h2
                   id="game-level-details-title"
@@ -670,14 +744,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  defineAsyncComponent,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-} from "vue";
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import UserAvatar from "~/components/UserAvatar.vue";
@@ -804,7 +871,9 @@ const currentUserName = computed(() => {
     return t("pages.game.menu.guestName");
   }
 
-  const parts = [user.firstName, user.lastName].filter((value): value is string => Boolean(value?.trim()));
+  const parts = [user.firstName, user.lastName].filter((value): value is string =>
+    Boolean(value?.trim()),
+  );
 
   if (parts.length) {
     return parts.join(" ");
@@ -845,17 +914,19 @@ const isRedirecting = ref(false);
 
 let timerHandle: ReturnType<typeof setInterval> | null = null;
 
-const selectedCategory = computed(() =>
-  categories.value.find((category) => category.id === selectedCategoryId.value) ?? null,
+const selectedCategory = computed(
+  () => categories.value.find((category) => category.id === selectedCategoryId.value) ?? null,
 );
 
-const selectedLevel = computed(() =>
-  levels.value.find((level) => level.id === selectedLevelId.value) ?? null,
+const selectedLevel = computed(
+  () => levels.value.find((level) => level.id === selectedLevelId.value) ?? null,
 );
 
 const totalQuestions = computed(() => questions.value.length);
-const answeredCount = computed(() =>
-  Object.values(answers.value).filter((value) => typeof value === "string" && value.trim()).length,
+const answeredCount = computed(
+  () =>
+    Object.values(answers.value).filter((value) => typeof value === "string" && value.trim())
+      .length,
 );
 const progressValue = computed(() => {
   if (!totalQuestions.value) {
@@ -1011,8 +1082,7 @@ function normalizeCategory(raw: unknown, index: number): QuizCategory | null {
   const data = raw as Record<string, unknown>;
   const id =
     getString(data.id) ?? getString(data.slug) ?? getString(data.code) ?? `category-${index}`;
-  const title =
-    getString(data.title) ?? getString(data.name) ?? getString(data.label) ?? id;
+  const title = getString(data.title) ?? getString(data.name) ?? getString(data.label) ?? id;
   const description =
     getString(data.description) ?? getString(data.summary) ?? getString(data.subtitle) ?? null;
   const icon = getString(data.icon) ?? getString(data.emoji) ?? null;
@@ -1025,20 +1095,12 @@ function normalizeCategory(raw: unknown, index: number): QuizCategory | null {
   const statsRecord = statsSource as Record<string, unknown> | null;
 
   const levelsCount = getNumber(data.levels ?? statsRecord?.levels ?? statsRecord?.levelCount);
-  const questionCount =
-    getNumber(
-      data.questionCount ??
-        data.questions ??
-        statsRecord?.questions ??
-        statsRecord?.questionCount,
-    );
-  const playersCount =
-    getNumber(
-      data.players ??
-        data.participants ??
-        statsRecord?.players ??
-        statsRecord?.participants,
-    );
+  const questionCount = getNumber(
+    data.questionCount ?? data.questions ?? statsRecord?.questions ?? statsRecord?.questionCount,
+  );
+  const playersCount = getNumber(
+    data.players ?? data.participants ?? statsRecord?.players ?? statsRecord?.participants,
+  );
 
   return {
     id,
@@ -1161,16 +1223,16 @@ function normalizeValidationResponse(input: unknown): QuizValidationResult | nul
     getNumber(data.correct ?? summaryRecord?.correct ?? data.scoreCorrect) ?? undefined;
   const total = getNumber(data.total ?? summaryRecord?.total ?? data.scoreTotal) ?? undefined;
 
-  const percentageRaw =
-    getNumber(data.scorePercentage ?? data.percentage ?? summaryRecord?.percentage ?? null);
-  const accuracyRaw =
-    getNumber(
-      data.accuracy ??
-        summaryRecord?.accuracy ??
-        data.ratio ??
-        summaryRecord?.ratio ??
-        summaryRecord?.accuracyRatio,
-    );
+  const percentageRaw = getNumber(
+    data.scorePercentage ?? data.percentage ?? summaryRecord?.percentage ?? null,
+  );
+  const accuracyRaw = getNumber(
+    data.accuracy ??
+      summaryRecord?.accuracy ??
+      data.ratio ??
+      summaryRecord?.ratio ??
+      summaryRecord?.accuracyRatio,
+  );
 
   const normalizedAccuracy =
     accuracyRaw != null
@@ -1209,9 +1271,7 @@ function normalizeValidationResponse(input: unknown): QuizValidationResult | nul
 
       const record = entry as Record<string, unknown>;
       const questionId =
-        getString(record.questionId) ??
-        getString(record.id) ??
-        getString(record.question);
+        getString(record.questionId) ?? getString(record.id) ?? getString(record.question);
 
       if (!questionId) {
         continue;
@@ -1233,9 +1293,7 @@ function normalizeValidationResponse(input: unknown): QuizValidationResult | nul
         getString(record.response);
 
       const correctAnswer =
-        getString(record.correctAnswer) ??
-        getString(record.expected) ??
-        getString(record.solution);
+        getString(record.correctAnswer) ?? getString(record.expected) ?? getString(record.solution);
 
       const explanation = getString(record.explanation) ?? getString(record.feedback) ?? null;
 
@@ -1255,7 +1313,8 @@ function normalizeValidationResponse(input: unknown): QuizValidationResult | nul
       return {
         correct: computedCorrect,
         total: breakdown.length,
-        accuracy: normalizedAccuracy ?? (breakdown.length ? computedCorrect / breakdown.length : null),
+        accuracy:
+          normalizedAccuracy ?? (breakdown.length ? computedCorrect / breakdown.length : null),
         score: normalizedScore,
         breakdown,
       };
@@ -1291,7 +1350,10 @@ function normalizeLeaderboard(input: unknown): QuizLeaderboardEntry[] {
 
     const data = raw as Record<string, unknown>;
     const player =
-      getString(data.player) ?? getString(data.user) ?? getString(data.name) ?? `Player ${index + 1}`;
+      getString(data.player) ??
+      getString(data.user) ??
+      getString(data.name) ??
+      `Player ${index + 1}`;
     const score = getNumber(data.score ?? data.percentage ?? data.points ?? data.value);
 
     if (score == null) {
@@ -1594,7 +1656,10 @@ function findQuestionPrompt(questionId: string): string {
   );
 }
 
-function resolveOptionLabel(questionId: string, optionKey: string | null | undefined): string | null {
+function resolveOptionLabel(
+  questionId: string,
+  optionKey: string | null | undefined,
+): string | null {
   if (!optionKey) {
     return null;
   }
@@ -1642,7 +1707,10 @@ watch(
       return;
     }
 
-    if (selectedCategoryId.value && list.some((category) => category.id === selectedCategoryId.value)) {
+    if (
+      selectedCategoryId.value &&
+      list.some((category) => category.id === selectedCategoryId.value)
+    ) {
       return;
     }
 
@@ -1734,7 +1802,9 @@ await loadCategories();
 }
 
 .game-category-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
 }
 
@@ -1754,7 +1824,9 @@ await loadCategories();
 
 .game-level-card {
   padding: 20px;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .game-level-card:hover {

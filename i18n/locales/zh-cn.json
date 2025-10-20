@@ -1557,11 +1557,7 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": [
-              "Design Systems",
-              "Figma",
-              "User Research"
-            ],
+            "tags": ["Design Systems", "Figma", "User Research"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1575,11 +1571,7 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": [
-              "Python",
-              "LangChain",
-              "Hiring Ops"
-            ],
+            "tags": ["Python", "LangChain", "Hiring Ops"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1593,11 +1585,7 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": [
-              "B2B SaaS",
-              "Enterprise Sales",
-              "Forecasting"
-            ],
+            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1611,11 +1599,7 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": [
-              "Implementation",
-              "Change Management",
-              "ATS Integrations"
-            ],
+            "tags": ["Implementation", "Change Management", "ATS Integrations"],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -2181,10 +2165,7 @@
             "date": "第 1 周",
             "title": "消除布局位移",
             "description": "审计所有信息流卡片和故事，确保尺寸可预期。",
-            "actions": [
-              "为故事缩略图和帖子插图添加宽高比。",
-              "在骨架占位符后固定广告容器。"
-            ]
+            "actions": ["为故事缩略图和帖子插图添加宽高比。", "在骨架占位符后固定广告容器。"]
           },
           "week2": {
             "date": "第 2 周",
@@ -2389,76 +2370,76 @@
       "title": "性能",
       "description": "跟踪预算和审计，让 Bro World 在每个社区都保持高速。"
     },
-      "crm": {
-        "title": "@:seo.crm.title",
-        "subtitle": "@:seo.crm.subtitle",
-        "actions": {
-          "newProject": "@:seo.crm.actions.newProject",
-          "viewPipeline": "@:seo.crm.actions.viewPipeline"
-        },
-        "metrics": {
-          "title": "@:seo.crm.metrics.title",
-          "subtitle": "@:seo.crm.metrics.subtitle",
-          "total": "@:seo.crm.metrics.total",
-          "totalCaption": "@:seo.crm.metrics.totalCaption",
-          "inProgress": "@:seo.crm.metrics.inProgress",
-          "inProgressCaption": "@:seo.crm.metrics.inProgressCaption",
-          "atRisk": "@:seo.crm.metrics.atRisk",
-          "atRiskCaption": "@:seo.crm.metrics.atRiskCaption",
-          "pipelineValue": "@:seo.crm.metrics.pipelineValue",
-          "pipelineValueCaption": "@:seo.crm.metrics.pipelineValueCaption"
-        },
-        "table": {
-          "title": "@:seo.crm.table.title",
-          "subtitle": "@:seo.crm.table.subtitle",
-          "empty": "@:seo.crm.table.empty",
-          "headers": {
-            "name": "@:seo.crm.table.headers.name",
-            "client": "@:seo.crm.table.headers.client",
-            "owner": "@:seo.crm.table.headers.owner",
-            "status": "@:seo.crm.table.headers.status",
-            "stage": "@:seo.crm.table.headers.stage",
-            "budget": "@:seo.crm.table.headers.budget",
-            "probability": "@:seo.crm.table.headers.probability",
-            "dueDate": "@:seo.crm.table.headers.dueDate"
-          }
-        },
-        "upcoming": {
-          "title": "@:seo.crm.upcoming.title",
-          "subtitle": "@:seo.crm.upcoming.subtitle",
-          "empty": "@:seo.crm.upcoming.empty"
-        },
-        "stages": {
-          "title": "@:seo.crm.stages.title",
-          "subtitle": "@:seo.crm.stages.subtitle",
-          "caption": "@:seo.crm.stages.caption"
-        },
-        "sidebar": {
-          "ariaLabel": "@:seo.crm.sidebar.ariaLabel",
-          "projects": {
-            "title": "@:seo.crm.sidebar.projects.title",
-            "subtitle": "@:seo.crm.sidebar.projects.subtitle",
-            "actions": {
-              "new": "@:seo.crm.sidebar.projects.actions.new",
-              "create": "@:seo.crm.sidebar.projects.actions.create"
-            },
-            "empty": {
-              "description": "@:seo.crm.sidebar.projects.empty.description"
-            }
-          },
-          "tasks": {
-            "title": "@:seo.crm.sidebar.tasks.title",
-            "subtitle": "@:seo.crm.sidebar.tasks.subtitle",
-            "actions": {
-              "new": "@:seo.crm.sidebar.tasks.actions.new"
-            },
-            "empty": {
-              "description": "@:seo.crm.sidebar.tasks.empty.description"
-            },
-            "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
-          }
+    "crm": {
+      "title": "@:seo.crm.title",
+      "subtitle": "@:seo.crm.subtitle",
+      "actions": {
+        "newProject": "@:seo.crm.actions.newProject",
+        "viewPipeline": "@:seo.crm.actions.viewPipeline"
+      },
+      "metrics": {
+        "title": "@:seo.crm.metrics.title",
+        "subtitle": "@:seo.crm.metrics.subtitle",
+        "total": "@:seo.crm.metrics.total",
+        "totalCaption": "@:seo.crm.metrics.totalCaption",
+        "inProgress": "@:seo.crm.metrics.inProgress",
+        "inProgressCaption": "@:seo.crm.metrics.inProgressCaption",
+        "atRisk": "@:seo.crm.metrics.atRisk",
+        "atRiskCaption": "@:seo.crm.metrics.atRiskCaption",
+        "pipelineValue": "@:seo.crm.metrics.pipelineValue",
+        "pipelineValueCaption": "@:seo.crm.metrics.pipelineValueCaption"
+      },
+      "table": {
+        "title": "@:seo.crm.table.title",
+        "subtitle": "@:seo.crm.table.subtitle",
+        "empty": "@:seo.crm.table.empty",
+        "headers": {
+          "name": "@:seo.crm.table.headers.name",
+          "client": "@:seo.crm.table.headers.client",
+          "owner": "@:seo.crm.table.headers.owner",
+          "status": "@:seo.crm.table.headers.status",
+          "stage": "@:seo.crm.table.headers.stage",
+          "budget": "@:seo.crm.table.headers.budget",
+          "probability": "@:seo.crm.table.headers.probability",
+          "dueDate": "@:seo.crm.table.headers.dueDate"
         }
       },
+      "upcoming": {
+        "title": "@:seo.crm.upcoming.title",
+        "subtitle": "@:seo.crm.upcoming.subtitle",
+        "empty": "@:seo.crm.upcoming.empty"
+      },
+      "stages": {
+        "title": "@:seo.crm.stages.title",
+        "subtitle": "@:seo.crm.stages.subtitle",
+        "caption": "@:seo.crm.stages.caption"
+      },
+      "sidebar": {
+        "ariaLabel": "@:seo.crm.sidebar.ariaLabel",
+        "projects": {
+          "title": "@:seo.crm.sidebar.projects.title",
+          "subtitle": "@:seo.crm.sidebar.projects.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.projects.actions.new",
+            "create": "@:seo.crm.sidebar.projects.actions.create"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.projects.empty.description"
+          }
+        },
+        "tasks": {
+          "title": "@:seo.crm.sidebar.tasks.title",
+          "subtitle": "@:seo.crm.sidebar.tasks.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.tasks.actions.new"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.tasks.empty.description"
+          },
+          "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
+        }
+      }
+    },
     "login": {
       "title": "登录",
       "description": "登录您的 Bro World 帐号，继续与社区协作。"
@@ -2800,41 +2781,25 @@
           "content": {
             "title": "内容管理",
             "description": "规划、发布与归档文章、活动以及学习资源。",
-            "tags": [
-              "内容流程",
-              "审核",
-              "排期"
-            ],
+            "tags": ["内容流程", "审核", "排期"],
             "status": "有12条内容等待编辑审核。"
           },
           "community": {
             "title": "社区与审核",
             "description": "配置审核规则，管理举报与处罚。",
-            "tags": [
-              "举报",
-              "处罚",
-              "私信"
-            ],
+            "tags": ["举报", "处罚", "私信"],
             "status": "平均响应时间：1小时42分。"
           },
           "commerce": {
             "title": "变现与优惠",
             "description": "管理订阅、优惠码和商业合作。",
-            "tags": [
-              "订阅",
-              "计费",
-              "优惠券"
-            ],
+            "tags": ["订阅", "计费", "优惠券"],
             "status": "本周转化率提升3.4%。"
           },
           "governance": {
             "title": "治理与合规",
             "description": "审计访问权限，管理敏感角色并准备合规报告。",
-            "tags": [
-              "审计",
-              "角色",
-              "可追溯性"
-            ],
+            "tags": ["审计", "角色", "可追溯性"],
             "status": "最近一次完整审计在5天前完成。"
           }
         }

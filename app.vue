@@ -213,8 +213,7 @@ const resolvedSeoMeta = computed(() => {
 
   return {
     title: currentMeta.title ?? matchedMeta.title ?? siteConfig.value.name,
-    description:
-      currentMeta.description ?? matchedMeta.description ?? siteConfig.value.description,
+    description: currentMeta.description ?? matchedMeta.description ?? siteConfig.value.description,
     keywords: currentMeta.keywords ?? matchedMeta.keywords ?? DEFAULT_SEO_KEYWORDS,
   };
 });

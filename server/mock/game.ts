@@ -95,7 +95,8 @@ export const gameQuestsMock: GameQuestMock[] = [
   {
     id: "quest-weekly-ranked",
     title: "Win three ranked matches",
-    description: "Queue for ranked mode and secure three victories to maintain your Diamond tier placement.",
+    description:
+      "Queue for ranked mode and secure three victories to maintain your Diamond tier placement.",
     progress: 2,
     goal: 3,
     reward: {
@@ -111,7 +112,8 @@ export const gameQuestsMock: GameQuestMock[] = [
   {
     id: "quest-daily-artifact",
     title: "Capture six data artifacts",
-    description: "Deploy to orbital outposts and extract encrypted artifacts before the opposing squad.",
+    description:
+      "Deploy to orbital outposts and extract encrypted artifacts before the opposing squad.",
     progress: 6,
     goal: 6,
     reward: {

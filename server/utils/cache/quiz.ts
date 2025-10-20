@@ -48,7 +48,12 @@ function sanitizeQuizLandingDataCandidate(candidate: unknown): QuizLandingData |
 
   const record = candidate as Partial<QuizLandingData>;
 
-  if (!record.hero || typeof record.hero !== "object" || !record.cta || typeof record.cta !== "object") {
+  if (
+    !record.hero ||
+    typeof record.hero !== "object" ||
+    !record.cta ||
+    typeof record.cta !== "object"
+  ) {
     return null;
   }
 
@@ -226,4 +231,3 @@ export async function invalidateQuizLandingCache(): Promise<void> {
     console.error("[quiz-cache] Failed to invalidate quiz cache", error);
   }
 }
-

@@ -1,7 +1,11 @@
 <template>
-  <VDialog :model-value="modelValue" max-width="480" @update:model-value="emit('update:modelValue', $event)">
+  <VDialog
+    :model-value="modelValue"
+    max-width="480"
+    @update:model-value="emit('update:modelValue', $event)"
+  >
     <VCard>
-      <VCardTitle>{{ t('media.move.title') }}</VCardTitle>
+      <VCardTitle>{{ t("media.move.title") }}</VCardTitle>
       <VCardText>
         <VSelect
           v-model="destination"
@@ -14,9 +18,18 @@
       </VCardText>
       <VCardActions>
         <VSpacer />
-        <VBtn variant="text" @click="close">{{ t('common.close') }}</VBtn>
-        <VBtn color="primary" :loading="loading" :disabled="destination === null" @click="confirm">
-          {{ t('media.move.confirm') }}
+        <VBtn
+          variant="text"
+          @click="close"
+          >{{ t("common.close") }}</VBtn
+        >
+        <VBtn
+          color="primary"
+          :loading="loading"
+          :disabled="destination === null"
+          @click="confirm"
+        >
+          {{ t("media.move.confirm") }}
         </VBtn>
       </VCardActions>
     </VCard>

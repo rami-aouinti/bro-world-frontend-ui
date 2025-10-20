@@ -1,5 +1,9 @@
 <template>
-  <VBreadcrumbs :items="normalizedItems" density="comfortable" class="media-breadcrumbs">
+  <VBreadcrumbs
+    :items="normalizedItems"
+    density="comfortable"
+    class="media-breadcrumbs"
+  >
     <template #divider>
       <VIcon icon="mdi-chevron-right" />
     </template>

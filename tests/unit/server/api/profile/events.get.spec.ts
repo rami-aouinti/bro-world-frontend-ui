@@ -3,10 +3,6 @@ import { createError, type H3Event } from "h3";
 import handler from "~/server/api/profile/events.get";
 import { fetchProfileEventsFromSource } from "~/server/utils/users/api";
 
-import { createError, type H3Event } from "h3";
-import handler from "~/server/api/profile/events.get";
-import { fetchProfileEventsFromSource } from "~/server/utils/users/api";
-
 const defineEventHandlerMock = vi.hoisted(() => {
   const mock = vi.fn(<T extends (...args: unknown[]) => unknown>(handler: T) => handler);
   (globalThis as Record<string, unknown>).defineEventHandler = mock;

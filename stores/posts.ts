@@ -685,9 +685,7 @@ function computePostSignature(post: PostsStorePost): string {
     return String(candidate);
   }
 
-  const user = post.user as
-    | (BlogPost["user"] & { updatedAt?: string | number | null })
-    | undefined;
+  const user = post.user as (BlogPost["user"] & { updatedAt?: string | number | null }) | undefined;
   const userKey = user
     ? [
         user.id ?? "",
@@ -788,8 +786,14 @@ export const usePostsStore = defineStore("posts", () => {
   const items = useState<Record<string, PostsStorePost>>("posts-items", () => ({}));
   const listIds = useState<string[]>("posts-list-ids", () => []);
   const itemTimestamps = useState<Record<string, number>>("posts-item-timestamps", () => ({}));
-  const commentsCache = useState<Record<string, BlogCommentWithReplies[]>>("posts-comments-cache", () => ({}));
-  const commentTimestamps = useState<Record<string, number>>("posts-comments-timestamps", () => ({}));
+  const commentsCache = useState<Record<string, BlogCommentWithReplies[]>>(
+    "posts-comments-cache",
+    () => ({}),
+  );
+  const commentTimestamps = useState<Record<string, number>>(
+    "posts-comments-timestamps",
+    () => ({}),
+  );
   const cachedAt = useState<number | null>("posts-cached-at", () => null);
   const lastFetched = useState<number | null>("posts-last-fetched", () => null);
   const pending = useState<boolean>("posts-pending", () => false);
@@ -1211,7 +1215,10 @@ export const usePostsStore = defineStore("posts", () => {
               method: "GET",
               query: queryParams,
             }),
-          ).then((rawResponse) => ({ target, normalized: normalizePostsListResponse(rawResponse) })),
+          ).then((rawResponse) => ({
+            target,
+            normalized: normalizePostsListResponse(rawResponse),
+          })),
         );
 
         let winner: { target: string; normalized: PostsListResponse };

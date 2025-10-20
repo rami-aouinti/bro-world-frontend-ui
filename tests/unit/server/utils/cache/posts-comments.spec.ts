@@ -167,12 +167,7 @@ describe("posts comments cache", () => {
 
     const cacheKey = getPostCommentsCacheKey(event, "post-1");
 
-    expect(pipelineSetMock).toHaveBeenCalledWith(
-      cacheKey,
-      expect.any(String),
-      "EX",
-      180,
-    );
+    expect(pipelineSetMock).toHaveBeenCalledWith(cacheKey, expect.any(String), "EX", 180);
 
     const serialized = pipelineSetMock.mock.calls[0][1] as string;
     const parsed = JSON.parse(serialized) as {
@@ -226,11 +221,9 @@ describe("posts comments cache", () => {
     vi.setSystemTime(now);
 
     vi.resetModules();
-    const {
-      cachePostComments,
-      getCachedPostComments,
-      invalidatePostComments,
-    } = await import("~/server/utils/cache/posts");
+    const { cachePostComments, getCachedPostComments, invalidatePostComments } = await import(
+      "~/server/utils/cache/posts"
+    );
 
     const event = { context: {} } as H3Event;
 

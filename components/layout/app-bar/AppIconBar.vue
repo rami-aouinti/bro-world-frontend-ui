@@ -92,9 +92,7 @@ const iconBarClasses = computed(() => {
     classes.push(wrapper);
   }
 
-  classes.push(
-    "app-icon-bar flex items-center justify-center gap-3 px-4 sm:px-6 md:px-8",
-  );
+  classes.push("app-icon-bar flex items-center justify-center gap-3 px-4 sm:px-6 md:px-8");
 
   return classes;
 });

@@ -42,7 +42,7 @@ const sticky = computed(() => props.sticky);
 @reference "../../assets/css/tailwind.css";
 
 .app-card {
-  padding: 1.5rem 1.25rem;
+  padding: 1.5rem 0.25rem;
 }
 
 .app-sidebar {

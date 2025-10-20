@@ -118,7 +118,7 @@
                       :src="highlightedAlbum.cover"
                       :alt="highlightedAlbum.title"
                       fit="cover"
-                      style="width: 100%; aspect-ratio: 4 / 3;"
+                      style="width: 100%; aspect-ratio: 4 / 3"
                     />
                   </div>
                   <h3 class="text-subtitle-1 font-weight-semibold mb-1">

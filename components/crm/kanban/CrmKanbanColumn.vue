@@ -16,7 +16,10 @@
           :style="{ backgroundColor: meta.accentColor }"
           aria-hidden="true"
         >
-          <v-icon :icon="meta.icon" size="20" />
+          <v-icon
+            :icon="meta.icon"
+            size="20"
+          />
         </div>
         <div>
           <h3 :id="columnLabelId">{{ meta.title }}</h3>
@@ -50,7 +53,10 @@
           >
             {{ task.priority }}
           </span>
-          <span class="kanban-card__project" :style="{ color: task.projectColor }">
+          <span
+            class="kanban-card__project"
+            :style="{ color: task.projectColor }"
+          >
             {{ task.projectKey }}
           </span>
         </div>
@@ -69,11 +75,18 @@
               {{ task.assigneeInitials }}
             </div>
             <span class="kanban-card__assignee-name">
-              {{ task.assigneeName || 'Non assigné' }}
+              {{ task.assigneeName || "Non assigné" }}
             </span>
           </div>
-          <span v-if="task.dueDateLabel" class="kanban-card__due-date">
-            <v-icon icon="mdi:calendar" size="16" class="me-1" />
+          <span
+            v-if="task.dueDateLabel"
+            class="kanban-card__due-date"
+          >
+            <v-icon
+              icon="mdi:calendar"
+              size="16"
+              class="me-1"
+            />
             {{ task.dueDateLabel }}
           </span>
         </div>
@@ -169,7 +182,9 @@ function handleDrop(event: DragEvent) {
     return;
   }
 
-  const targetElement = (event.target as HTMLElement | null)?.closest<HTMLElement>("[data-task-id]");
+  const targetElement = (event.target as HTMLElement | null)?.closest<HTMLElement>(
+    "[data-task-id]",
+  );
   let beforeTaskId: string | null = null;
 
   if (targetElement) {
@@ -197,7 +212,9 @@ function handleDrop(event: DragEvent) {
   border-radius: 1rem;
   padding: 1.25rem;
   min-height: 420px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .kanban-column--active {
@@ -268,7 +285,9 @@ function handleDrop(event: DragEvent) {
   gap: 0.5rem;
   cursor: grab;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .kanban-card:focus-visible {

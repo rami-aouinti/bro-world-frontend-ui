@@ -19,9 +19,7 @@ vi.mock("~/server/utils/cache/jobs", () => ({
 }));
 
 const cachedData: JobData = {
-  companies: [
-    { id: "c-1", name: "Cached Co" },
-  ],
+  companies: [{ id: "c-1", name: "Cached Co" }],
   jobs: [
     {
       id: "j-1",
@@ -41,9 +39,7 @@ const cachedData: JobData = {
 };
 
 const rawFileData = {
-  companies: [
-    { name: "File Co", description: "desc" },
-  ],
+  companies: [{ name: "File Co", description: "desc" }],
   jobs: [
     {
       id: "raw-1",

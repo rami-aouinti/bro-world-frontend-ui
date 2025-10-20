@@ -1,5 +1,9 @@
 <template>
-  <div class="kanban-board" role="list" aria-label="Kanban du sprint">
+  <div
+    class="kanban-board"
+    role="list"
+    aria-label="Kanban du sprint"
+  >
     <CrmKanbanColumn
       v-for="column in columns"
       :key="column.meta.status"
@@ -169,7 +173,11 @@ const columns = computed(() => {
   }));
 });
 
-function handleMove(payload: { status: CrmBoardTaskStatus; taskId: string; beforeTaskId: string | null }) {
+function handleMove(payload: {
+  status: CrmBoardTaskStatus;
+  taskId: string;
+  beforeTaskId: string | null;
+}) {
   emit("move", {
     taskId: payload.taskId,
     status: payload.status,

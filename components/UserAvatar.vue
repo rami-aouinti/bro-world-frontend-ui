@@ -60,8 +60,8 @@ const normalizedSize = computed(() => {
   return 56;
 });
 
-const resolvedSrc = computed(() =>
-  optimizeAvatarUrl(props.src ?? null, normalizedSize.value) ?? props.src ?? null,
+const resolvedSrc = computed(
+  () => optimizeAvatarUrl(props.src ?? null, normalizedSize.value) ?? props.src ?? null,
 );
 
 const altText = computed(() => props.alt ?? props.name ?? "User avatar");
@@ -73,18 +73,13 @@ const initials = computed(() => {
     return "👤";
   }
 
-  const pieces = source
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2);
+  const pieces = source.split(/\s+/).filter(Boolean).slice(0, 2);
 
   if (!pieces.length) {
     return "👤";
   }
 
-  return pieces
-    .map((part) => part.charAt(0).toUpperCase())
-    .join("");
+  return pieces.map((part) => part.charAt(0).toUpperCase()).join("");
 });
 
 const avatarSize = computed(() => normalizedSize.value);

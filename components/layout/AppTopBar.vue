@@ -266,7 +266,7 @@ const notificationsButtonLabel = computed(() => {
 });
 
 const messengerPreviewConversations = computed(() =>
-  props.messengerEnabled ? messenger.previewConversations.value ?? [] : [],
+  props.messengerEnabled ? (messenger.previewConversations.value ?? []) : [],
 );
 const messengerUnreadCount = computed(() =>
   props.messengerEnabled ? messenger.unreadTotal.value : 0,

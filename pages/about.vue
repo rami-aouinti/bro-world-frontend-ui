@@ -1,10 +1,8 @@
 <template>
-  <main
-    aria-labelledby="about-heading"
-  >
+  <main aria-labelledby="about-heading">
     <header
-        class="mb-6"
-        aria-describedby="about-subtitle"
+      class="mb-6"
+      aria-describedby="about-subtitle"
     >
       <section
         class="mb-12"
@@ -501,9 +499,7 @@ const aboutTitle = computed(() => aboutContent.value.title?.trim() || t("pages.a
 const aboutSubtitle = computed(
   () => aboutContent.value.subtitle?.trim() || t("pages.about.subtitle"),
 );
-const aboutBody = computed(
-  () => aboutContent.value.body?.trim() || t("pages.about.missionBody"),
-);
+const aboutBody = computed(() => aboutContent.value.body?.trim() || t("pages.about.missionBody"));
 
 const heroActions = computed(() => [
   {

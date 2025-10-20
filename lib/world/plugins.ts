@@ -77,7 +77,11 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       "SEO-ready metadata controls",
     ],
     routes: [
-      { path: "/blog", label: "Blog home", description: "Landing page with hero, featured posts, and search." },
+      {
+        path: "/blog",
+        label: "Blog home",
+        description: "Landing page with hero, featured posts, and search.",
+      },
       {
         path: "/blog/:slug",
         label: "Article detail",
@@ -85,8 +89,16 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       },
     ],
     menus: [
-      { id: "main", label: "Main navigation", description: "Adds Blog to the primary header menu." },
-      { id: "footer", label: "Footer navigation", description: "Links to the blog archive and RSS feed." },
+      {
+        id: "main",
+        label: "Main navigation",
+        description: "Adds Blog to the primary header menu.",
+      },
+      {
+        id: "footer",
+        label: "Footer navigation",
+        description: "Links to the blog archive and RSS feed.",
+      },
     ],
   },
   {
@@ -101,11 +113,23 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       "Completion certificates and badges",
     ],
     routes: [
-      { path: "/academy", label: "Academy overview", description: "Course catalogue with filters and featured tracks." },
-      { path: "/academy/courses/:slug", label: "Course detail", description: "Syllabus, instructors, and enrollment actions." },
+      {
+        path: "/academy",
+        label: "Academy overview",
+        description: "Course catalogue with filters and featured tracks.",
+      },
+      {
+        path: "/academy/courses/:slug",
+        label: "Course detail",
+        description: "Syllabus, instructors, and enrollment actions.",
+      },
     ],
     menus: [
-      { id: "learn", label: "Learning hub", description: "Adds Academy to contextual learning menus." },
+      {
+        id: "learn",
+        label: "Learning hub",
+        description: "Adds Academy to contextual learning menus.",
+      },
     ],
   },
   {
@@ -120,11 +144,23 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       "Player progression analytics",
     ],
     routes: [
-      { path: "/game", label: "Game hub", description: "Game overview with news, updates, and quick actions." },
-      { path: "/game/leaderboards", label: "Leaderboards", description: "Global and seasonal rankings with filters." },
+      {
+        path: "/game",
+        label: "Game hub",
+        description: "Game overview with news, updates, and quick actions.",
+      },
+      {
+        path: "/game/leaderboards",
+        label: "Leaderboards",
+        description: "Global and seasonal rankings with filters.",
+      },
     ],
     menus: [
-      { id: "community", label: "Community hub", description: "Highlights competitive events and patch timelines." },
+      {
+        id: "community",
+        label: "Community hub",
+        description: "Highlights competitive events and patch timelines.",
+      },
     ],
   },
   {
@@ -139,10 +175,18 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       "Integration ready webhooks",
     ],
     routes: [
-      { path: "/messages", label: "Inbox", description: "Unified messaging inbox with channel filters." },
+      {
+        path: "/messages",
+        label: "Inbox",
+        description: "Unified messaging inbox with channel filters.",
+      },
     ],
     menus: [
-      { id: "quick-actions", label: "Quick actions", description: "Adds messaging shortcuts to the floating launcher." },
+      {
+        id: "quick-actions",
+        label: "Quick actions",
+        description: "Adds messaging shortcuts to the floating launcher.",
+      },
     ],
   },
   {
@@ -157,11 +201,23 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       "Automated handover reminders",
     ],
     routes: [
-      { path: "/crm", label: "CRM workspace", description: "Pipeline overview with metrics and tables." },
-      { path: "/crm/projects/:id", label: "Project detail", description: "Deal timeline, tasks, and attachments." },
+      {
+        path: "/crm",
+        label: "CRM workspace",
+        description: "Pipeline overview with metrics and tables.",
+      },
+      {
+        path: "/crm/projects/:id",
+        label: "Project detail",
+        description: "Deal timeline, tasks, and attachments.",
+      },
     ],
     menus: [
-      { id: "sidebar", label: "Operations sidebar", description: "Adds CRM projects to the operator sidebar." },
+      {
+        id: "sidebar",
+        label: "Operations sidebar",
+        description: "Adds CRM projects to the operator sidebar.",
+      },
     ],
   },
   {
@@ -176,7 +232,11 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       "Interview scheduling integrations",
     ],
     routes: [
-      { path: "/careers", label: "Careers home", description: "Listing of open roles with departments and locations." },
+      {
+        path: "/careers",
+        label: "Careers home",
+        description: "Listing of open roles with departments and locations.",
+      },
       {
         path: "/careers/:slug",
         label: "Role detail",
@@ -184,8 +244,16 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       },
     ],
     menus: [
-      { id: "primary", label: "Primary navigation", description: "Adds Careers to the global navigation." },
-      { id: "footer", label: "Footer resources", description: "Links to hiring FAQs and talent community." },
+      {
+        id: "primary",
+        label: "Primary navigation",
+        description: "Adds Careers to the global navigation.",
+      },
+      {
+        id: "footer",
+        label: "Footer resources",
+        description: "Links to hiring FAQs and talent community.",
+      },
     ],
   },
   {
@@ -200,13 +268,33 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
       "Secure checkout with order receipts",
     ],
     routes: [
-      { path: "/shop", label: "Storefront", description: "Featured products with filters and merchandising." },
-      { path: "/shop/product/:slug", label: "Product detail", description: "Gallery, specs, availability, and reviews." },
-      { path: "/shop/cart", label: "Cart", description: "Cart summary with upsell modules and promo codes." },
+      {
+        path: "/shop",
+        label: "Storefront",
+        description: "Featured products with filters and merchandising.",
+      },
+      {
+        path: "/shop/product/:slug",
+        label: "Product detail",
+        description: "Gallery, specs, availability, and reviews.",
+      },
+      {
+        path: "/shop/cart",
+        label: "Cart",
+        description: "Cart summary with upsell modules and promo codes.",
+      },
     ],
     menus: [
-      { id: "header", label: "Header navigation", description: "Adds Shop with badge indicators to the main nav." },
-      { id: "account", label: "Account menu", description: "Links to orders, subscriptions, and saved items." },
+      {
+        id: "header",
+        label: "Header navigation",
+        description: "Adds Shop with badge indicators to the main nav.",
+      },
+      {
+        id: "account",
+        label: "Account menu",
+        description: "Links to orders, subscriptions, and saved items.",
+      },
     ],
   },
 ];

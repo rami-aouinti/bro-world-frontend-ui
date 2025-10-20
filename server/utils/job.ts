@@ -1,11 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import {
-  invalidateCachedJobs,
-  readCachedJobs,
-  writeCachedJobs,
-} from "~/server/utils/cache/jobs";
+import { invalidateCachedJobs, readCachedJobs, writeCachedJobs } from "~/server/utils/cache/jobs";
 
 interface MockCompany {
   id: string;

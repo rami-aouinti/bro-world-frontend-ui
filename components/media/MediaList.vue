@@ -1,9 +1,21 @@
 <template>
-  <div class="media-list" role="region" :aria-busy="loading">
-    <VTable density="comfortable" hover class="media-list__table">
+  <div
+    class="media-list"
+    role="region"
+    :aria-busy="loading"
+  >
+    <VTable
+      density="comfortable"
+      hover
+      class="media-list__table"
+    >
       <thead>
         <tr>
-          <th v-for="(header, index) in formattedHeaders" :key="index" scope="col">
+          <th
+            v-for="(header, index) in formattedHeaders"
+            :key="index"
+            scope="col"
+          >
             {{ header }}
           </th>
         </tr>
@@ -21,29 +33,56 @@
         >
           <td data-title="name">
             <div class="d-flex align-center gap-2">
-              <VIcon :icon="file.kind === 'image' ? 'mdi-image' : file.kind === 'video' ? 'mdi-video' : 'mdi-file'" />
-              <span class="media-list__cell-text" :title="file.name">{{ file.name }}</span>
+              <VIcon
+                :icon="
+                  file.kind === 'image'
+                    ? 'mdi-image'
+                    : file.kind === 'video'
+                      ? 'mdi-video'
+                      : 'mdi-file'
+                "
+              />
+              <span
+                class="media-list__cell-text"
+                :title="file.name"
+                >{{ file.name }}</span
+              >
             </div>
           </td>
           <td data-title="type">{{ file.mime }}</td>
           <td data-title="size">{{ formatSize(file.size) }}</td>
           <td data-title="updated">
-            <time :datetime="file.updatedAt">{{ dateFormatter.format(new Date(file.updatedAt)) }}</time>
+            <time :datetime="file.updatedAt">{{
+              dateFormatter.format(new Date(file.updatedAt))
+            }}</time>
           </td>
         </tr>
       </tbody>
       <tbody v-else-if="loading">
-        <tr v-for="index in 5" :key="`skeleton-${index}`">
+        <tr
+          v-for="index in 5"
+          :key="`skeleton-${index}`"
+        >
           <td colspan="4">
-            <VSkeletonLoader type="text" class="media-list__skeleton" />
+            <VSkeletonLoader
+              type="text"
+              class="media-list__skeleton"
+            />
           </td>
         </tr>
       </tbody>
       <tbody v-else>
         <tr>
           <td :colspan="formattedHeaders.length">
-            <div class="media-list__empty" role="status">
-              <VIcon icon="mdi-file-search" size="40" class="mb-2" />
+            <div
+              class="media-list__empty"
+              role="status"
+            >
+              <VIcon
+                icon="mdi-file-search"
+                size="40"
+                class="mb-2"
+              />
               <p class="text-medium-emphasis">{{ t("media.list.empty") }}</p>
             </div>
           </td>

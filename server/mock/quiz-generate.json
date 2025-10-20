@@ -30,7 +30,7 @@
         { "id": "d", "label": "Le volume de commentaires sur les réseaux sociaux" }
       ],
       "answer": "b",
-      "explanation": "Un bon niveau d'activation indique que l'expérimentation répond à un besoin concret des utilisateurs." 
+      "explanation": "Un bon niveau d'activation indique que l'expérimentation répond à un besoin concret des utilisateurs."
     },
     {
       "id": "mock-question-3",
@@ -41,11 +41,14 @@
       "choices": [
         { "id": "a", "label": "Copier le mix marketing du marché domestique" },
         { "id": "b", "label": "Investir uniquement dans les canaux payants" },
-        { "id": "c", "label": "Analyser les signaux organiques et tester rapidement chaque canal prioritaire" },
+        {
+          "id": "c",
+          "label": "Analyser les signaux organiques et tester rapidement chaque canal prioritaire"
+        },
         { "id": "d", "label": "Attendre un trimestre complet avant de mesurer" }
       ],
       "answer": "c",
-      "explanation": "Croiser signaux organiques et tests rapides permet d'ajuster l'investissement sur les canaux les plus prometteurs." 
+      "explanation": "Croiser signaux organiques et tests rapides permet d'ajuster l'investissement sur les canaux les plus prometteurs."
     }
   ]
 }

@@ -1,11 +1,18 @@
 <template>
-  <main class="crm-index" aria-labelledby="crm-index-heading">
-    <v-container fluid class="py-10 px-6 px-md-10">
+  <main
+    class="crm-index"
+    aria-labelledby="crm-index-heading"
+  >
+    <v-container
+      fluid
+      class="py-10 px-6 px-md-10"
+    >
       <header class="crm-index__header">
         <div class="crm-index__header-text">
           <h1 id="crm-index-heading">CRM — Index</h1>
           <p>
-            Visualisez vos tâches de sprint, organisez-les par statut et accédez rapidement à vos projets.
+            Visualisez vos tâches de sprint, organisez-les par statut et accédez rapidement à vos
+            projets.
           </p>
         </div>
         <div class="crm-index__header-actions">
@@ -201,7 +208,11 @@ function handleSprintChange(sprintId: string) {
   }
 }
 
-function handleMoveTask(payload: { taskId: string; status: CrmBoardTaskStatus; beforeTaskId: string | null }) {
+function handleMoveTask(payload: {
+  taskId: string;
+  status: CrmBoardTaskStatus;
+  beforeTaskId: string | null;
+}) {
   board.moveTask(payload.taskId, payload.status, payload.beforeTaskId);
 }
 

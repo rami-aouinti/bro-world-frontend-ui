@@ -408,9 +408,7 @@
                     v-if="plugin.routes?.length"
                     class="mt-4"
                   >
-                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">
-                      Routes
-                    </h5>
+                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">Routes</h5>
                     <ul class="plugin-meta-list">
                       <li
                         v-for="route in plugin.routes"
@@ -431,9 +429,7 @@
                     v-if="plugin.menus?.length"
                     class="mt-4"
                   >
-                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">
-                      Menus
-                    </h5>
+                    <h5 class="text-caption text-medium-emphasis text-uppercase mb-1">Menus</h5>
                     <ul class="plugin-meta-list">
                       <li
                         v-for="menu in plugin.menus"
@@ -601,7 +597,11 @@ import {
   WORLD_PLUGIN_REGISTRY_MAP,
   type WorldPluginDefinition,
 } from "~/lib/world/plugins";
-import type { CreateWorldRequestPayload, WorldFormState, WorldSubmissionAction } from "~/types/world";
+import type {
+  CreateWorldRequestPayload,
+  WorldFormState,
+  WorldSubmissionAction,
+} from "~/types/world";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();

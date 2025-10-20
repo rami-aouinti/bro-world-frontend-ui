@@ -1,5 +1,9 @@
 <template>
-  <div class="media-toolbar d-flex align-center flex-wrap gap-3" role="toolbar" :aria-busy="loading">
+  <div
+    class="media-toolbar d-flex align-center flex-wrap gap-3"
+    role="toolbar"
+    :aria-busy="loading"
+  >
     <VBtn
       color="primary"
       variant="flat"
@@ -22,7 +26,11 @@
       {{ t("media.toolbar.upload") }}
     </VBtn>
 
-    <VDivider vertical class="mx-2" role="presentation" />
+    <VDivider
+      vertical
+      class="mx-2"
+      role="presentation"
+    />
 
     <VBtnToggle
       density="comfortable"
@@ -34,11 +42,23 @@
       :aria-label="viewLabel"
       @update:model-value="(value) => emit('change-view', value as MediaViewMode)"
     >
-      <VBtn value="grid" icon="mdi-view-grid" :aria-label="t('media.toolbar.gridView')" />
-      <VBtn value="list" icon="mdi-view-list" :aria-label="t('media.toolbar.listView')" />
+      <VBtn
+        value="grid"
+        icon="mdi-view-grid"
+        :aria-label="t('media.toolbar.gridView')"
+      />
+      <VBtn
+        value="list"
+        icon="mdi-view-list"
+        :aria-label="t('media.toolbar.listView')"
+      />
     </VBtnToggle>
 
-    <VDivider vertical class="mx-2" role="presentation" />
+    <VDivider
+      vertical
+      class="mx-2"
+      role="presentation"
+    />
 
     <VBtn
       :color="trashMode ? 'primary' : 'default'"
@@ -61,7 +81,10 @@
       :aria-label="t('media.toolbar.refresh')"
       @click="emit('refresh')"
     >
-      <VIcon icon="mdi-refresh" :class="{ 'media-toolbar__spinner--spinning': loading }" />
+      <VIcon
+        icon="mdi-refresh"
+        :class="{ 'media-toolbar__spinner--spinning': loading }"
+      />
     </VBtn>
   </div>
 </template>

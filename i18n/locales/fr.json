@@ -1802,11 +1802,7 @@
             "type": "CDI",
             "salary": "58k€ - 72k€ · 0,05 % BSPCE",
             "description": "Imaginez des expériences multi-plateformes pour les recruteurs et les candidats, web et mobile.",
-            "tags": [
-              "Design System",
-              "Figma",
-              "Recherche utilisateur"
-            ],
+            "tags": ["Design System", "Figma", "Recherche utilisateur"],
             "apply": {
               "label": "Postuler",
               "aria": "Postuler au poste de Senior Product Designer",
@@ -1820,11 +1816,7 @@
             "type": "CDI",
             "salary": "70k€ - 90k€ · bonus",
             "description": "Construisez des copilotes IA qui automatisent le sourcing, le screening et la planification.",
-            "tags": [
-              "Python",
-              "LangChain",
-              "Hiring Ops"
-            ],
+            "tags": ["Python", "LangChain", "Hiring Ops"],
             "apply": {
               "label": "Postuler",
               "aria": "Postuler au poste d'AI Recruiter Strategist",
@@ -1838,11 +1830,7 @@
             "type": "CDI",
             "salary": "65k€ fixe · 50 % variable",
             "description": "Pilotez la génération de pipeline et accompagnez les AEs sur des deals complexes.",
-            "tags": [
-              "B2B SaaS",
-              "Vente Enterprise",
-              "Forecast"
-            ],
+            "tags": ["B2B SaaS", "Vente Enterprise", "Forecast"],
             "apply": {
               "label": "Postuler",
               "aria": "Postuler au poste d'Enterprise Sales Lead",
@@ -1856,11 +1844,7 @@
             "type": "CDI",
             "salary": "45k€ - 55k€",
             "description": "Accompagnez les équipes Talent lors de l'onboarding, du lancement des workflows et du suivi d'adoption.",
-            "tags": [
-              "Implementation",
-              "Conduite du changement",
-              "Intégrations ATS"
-            ],
+            "tags": ["Implementation", "Conduite du changement", "Intégrations ATS"],
             "apply": {
               "label": "Postuler",
               "aria": "Postuler au poste de Customer Success Partner",
@@ -3313,41 +3297,25 @@
           "content": {
             "title": "Gestion du contenu",
             "description": "Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.",
-            "tags": [
-              "Workflow éditorial",
-              "Validation",
-              "Programmation"
-            ],
+            "tags": ["Workflow éditorial", "Validation", "Programmation"],
             "status": "12 contenus nécessitent une revue éditoriale."
           },
           "community": {
             "title": "Communauté & modération",
             "description": "Paramétrez les règles de modération, gérez les signalements et les sanctions.",
-            "tags": [
-              "Signalements",
-              "Sanctions",
-              "Messages privés"
-            ],
+            "tags": ["Signalements", "Sanctions", "Messages privés"],
             "status": "Temps moyen de réponse : 1 h 42."
           },
           "commerce": {
             "title": "Monétisation & offres",
             "description": "Administrez les abonnements, codes promotionnels et partenariats commerciaux.",
-            "tags": [
-              "Abonnements",
-              "Facturation",
-              "Coupons"
-            ],
+            "tags": ["Abonnements", "Facturation", "Coupons"],
             "status": "Taux de conversion en hausse de 3,4 % cette semaine."
           },
           "governance": {
             "title": "Gouvernance & conformité",
             "description": "Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.",
-            "tags": [
-              "Audit",
-              "Rôles",
-              "Traçabilité"
-            ],
+            "tags": ["Audit", "Rôles", "Traçabilité"],
             "status": "Dernier audit complet réalisé il y a 5 jours."
           }
         }

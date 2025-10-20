@@ -4,7 +4,10 @@
       <div>
         <p class="text-caption text-medium-emphasis mb-1">
           {{
-            t("pages.education.quiz.progress", { index: currentQuestionIndex + 1, total: totalQuestions })
+            t("pages.education.quiz.progress", {
+              index: currentQuestionIndex + 1,
+              total: totalQuestions,
+            })
           }}
         </p>
         <h2 class="text-h5 mb-2">{{ currentQuestion.question }}</h2>

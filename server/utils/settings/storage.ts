@@ -281,9 +281,7 @@ function sanitizeMenu(menu: Partial<SiteMenuItem>, order: number): SiteMenuItem 
   const icon = menu.icon?.trim() || null;
 
   const normalizedOrder =
-    typeof menu.order === "number" && Number.isFinite(menu.order)
-      ? menu.order
-      : order;
+    typeof menu.order === "number" && Number.isFinite(menu.order) ? menu.order : order;
 
   const children = Array.isArray(menu.children)
     ? menu.children
@@ -740,17 +738,17 @@ function sanitizeWorldCandidate(
   const name =
     typeof source.name === "string" && source.name.trim()
       ? source.name.trim()
-      : fallbackWorld?.name ?? "Untitled world";
+      : (fallbackWorld?.name ?? "Untitled world");
 
   const slugSource =
     typeof source.slug === "string" && source.slug.trim()
       ? source.slug.trim()
-      : fallbackWorld?.slug ?? name;
+      : (fallbackWorld?.slug ?? name);
 
   const id =
     typeof source.id === "string" && source.id.trim()
       ? source.id.trim()
-      : fallbackWorld?.id ?? slugify(slugSource);
+      : (fallbackWorld?.id ?? slugify(slugSource));
 
   const fallbackPlugins = fallbackWorld?.pluginIds ?? [];
   const pluginIds = sanitizePluginIdCollection(
@@ -768,18 +766,18 @@ function sanitizeWorldCandidate(
   const tags = Array.isArray(source.tags)
     ? source.tags.map((tag) => String(tag).trim()).filter((tag) => tag.length > 0)
     : fallbackWorld?.tags
-    ? [...fallbackWorld.tags]
-    : [];
+      ? [...fallbackWorld.tags]
+      : [];
 
   const createdAt =
     typeof source.createdAt === "string" && source.createdAt.trim()
       ? source.createdAt.trim()
-      : fallbackWorld?.createdAt ?? now;
+      : (fallbackWorld?.createdAt ?? now);
 
   const updatedAt =
     typeof source.updatedAt === "string" && source.updatedAt.trim()
       ? source.updatedAt.trim()
-      : fallbackWorld?.updatedAt ?? now;
+      : (fallbackWorld?.updatedAt ?? now);
 
   return {
     id,
@@ -789,47 +787,47 @@ function sanitizeWorldCandidate(
     locale:
       typeof source.locale === "string" && source.locale.trim()
         ? source.locale.trim()
-        : fallbackWorld?.locale ?? null,
+        : (fallbackWorld?.locale ?? null),
     description:
       typeof source.description === "string"
         ? source.description.trim() || null
-        : fallbackWorld?.description ?? null,
+        : (fallbackWorld?.description ?? null),
     visibility:
       typeof source.visibility === "string"
         ? source.visibility.trim() || null
-        : fallbackWorld?.visibility ?? null,
+        : (fallbackWorld?.visibility ?? null),
     region:
       typeof source.region === "string"
         ? source.region.trim() || null
-        : fallbackWorld?.region ?? null,
+        : (fallbackWorld?.region ?? null),
     theme:
       typeof source.theme === "string"
         ? source.theme.trim() || null
-        : fallbackWorld?.theme ?? null,
+        : (fallbackWorld?.theme ?? null),
     launchDate:
       typeof source.launchDate === "string"
         ? source.launchDate.trim() || null
-        : fallbackWorld?.launchDate ?? null,
+        : (fallbackWorld?.launchDate ?? null),
     tags,
     guidelines:
       typeof source.guidelines === "string"
         ? source.guidelines.trim() || null
-        : fallbackWorld?.guidelines ?? null,
+        : (fallbackWorld?.guidelines ?? null),
     enableMonetization:
       source.enableMonetization === undefined
-        ? fallbackWorld?.enableMonetization ?? false
+        ? (fallbackWorld?.enableMonetization ?? false)
         : Boolean(source.enableMonetization),
     enableIntegrations:
       source.enableIntegrations === undefined
-        ? fallbackWorld?.enableIntegrations ?? false
+        ? (fallbackWorld?.enableIntegrations ?? false)
         : Boolean(source.enableIntegrations),
     requireVerification:
       source.requireVerification === undefined
-        ? fallbackWorld?.requireVerification ?? false
+        ? (fallbackWorld?.requireVerification ?? false)
         : Boolean(source.requireVerification),
     allowGuests:
       source.allowGuests === undefined
-        ? fallbackWorld?.allowGuests ?? true
+        ? (fallbackWorld?.allowGuests ?? true)
         : Boolean(source.allowGuests),
     createdAt,
     updatedAt,
@@ -849,11 +847,12 @@ function sanitizeWorldCollection(
 
   for (const entry of source) {
     const candidate = (entry ?? null) as Partial<SiteWorldSettings> | null;
-    const fallbackMatch = fallback.find(
-      (world) =>
-        (candidate?.id && world.id === candidate.id) ||
-        (candidate?.slug && world.slug === candidate.slug),
-    ) ?? null;
+    const fallbackMatch =
+      fallback.find(
+        (world) =>
+          (candidate?.id && world.id === candidate.id) ||
+          (candidate?.slug && world.slug === candidate.slug),
+      ) ?? null;
 
     const sanitized = sanitizeWorldCandidate(candidate, fallbackMatch, { requirePlugins: false });
     if (!sanitized || seen.has(sanitized.id)) {
@@ -878,7 +877,9 @@ function sanitizeWorldCollection(
 
   if (!normalized.length) {
     const fallbackDefault = defaultSiteSettings.worlds?.[0] ?? null;
-    const sanitizedDefault = sanitizeWorldCandidate(null, fallbackDefault, { requirePlugins: false });
+    const sanitizedDefault = sanitizeWorldCandidate(null, fallbackDefault, {
+      requirePlugins: false,
+    });
     if (sanitizedDefault && !seen.has(sanitizedDefault.id)) {
       normalized.push(sanitizedDefault);
       seen.add(sanitizedDefault.id);
@@ -925,10 +926,10 @@ function normalizeSettings(settings: SiteSettings): SiteSettings {
   const menuBlueprintSource = settings.menuBlueprints?.length
     ? settings.menuBlueprints
     : settings.menus?.length
-    ? settings.menus
-    : defaults.menuBlueprints?.length
-    ? defaults.menuBlueprints
-    : defaults.menus;
+      ? settings.menus
+      : defaults.menuBlueprints?.length
+        ? defaults.menuBlueprints
+        : defaults.menus;
   const sortedBlueprints = [...menuBlueprintSource].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   const normalizedMenuBlueprints = sortedBlueprints.map((menu, index) => sanitizeMenu(menu, index));
 
@@ -1237,21 +1238,25 @@ export async function updateSiteSettings(
   const blueprintFallback = current.menuBlueprints?.length
     ? current.menuBlueprints
     : current.menus?.length
-    ? current.menus
-    : defaults.menuBlueprints?.length
-    ? defaults.menuBlueprints
-    : defaults.menus;
+      ? current.menus
+      : defaults.menuBlueprints?.length
+        ? defaults.menuBlueprints
+        : defaults.menus;
   const requestedBlueprints = Array.isArray(payload.menuBlueprints)
     ? payload.menuBlueprints
     : Array.isArray(payload.menus)
-    ? payload.menus
-    : blueprintFallback;
+      ? payload.menus
+      : blueprintFallback;
   const sortedBlueprints = [...requestedBlueprints].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   const normalizedMenuBlueprints = sortedBlueprints.map((menu, index) => sanitizeMenu(menu, index));
-  const clonedMenuBlueprints = normalizedMenuBlueprints.map((menu) => sanitizeMenu(menu, menu.order ?? 0));
+  const clonedMenuBlueprints = normalizedMenuBlueprints.map((menu) =>
+    sanitizeMenu(menu, menu.order ?? 0),
+  );
 
   const worldFallback = current.worlds?.length ? current.worlds : defaults.worlds;
-  const requestedWorlds = Array.isArray(payload.worlds) ? payload.worlds : current.worlds ?? defaults.worlds;
+  const requestedWorlds = Array.isArray(payload.worlds)
+    ? payload.worlds
+    : (current.worlds ?? defaults.worlds);
   const normalizedWorlds = sanitizeWorldCollection(requestedWorlds, worldFallback);
   const requestedActiveWorldId =
     payload.activeWorldId ??
@@ -1329,14 +1334,14 @@ export async function createWorld(
   const blueprintSource = current.menuBlueprints?.length
     ? current.menuBlueprints
     : current.menus?.length
-    ? current.menus
-    : defaults.menuBlueprints?.length
-    ? defaults.menuBlueprints
-    : defaults.menus;
+      ? current.menus
+      : defaults.menuBlueprints?.length
+        ? defaults.menuBlueprints
+        : defaults.menus;
   const normalizedBlueprints = blueprintSource.map((menu, index) => sanitizeMenu(menu, index));
   const clonedBlueprints = normalizedBlueprints.map((menu) => sanitizeMenu(menu, menu.order ?? 0));
 
-  const fallbackWorlds = current.worlds?.length ? current.worlds : defaults.worlds ?? [];
+  const fallbackWorlds = current.worlds?.length ? current.worlds : (defaults.worlds ?? []);
 
   const proposedWorld: Partial<SiteWorldSettings> = {
     id: payload.slug?.trim() || slugify(payload.name || "Untitled world"),
@@ -1356,13 +1361,16 @@ export async function createWorld(
     pluginIds: payload.pluginIds,
   };
 
-  const fallbackWorld = fallbackWorlds.find(
-    (world) =>
-      (proposedWorld.id && world.id === proposedWorld.id) ||
-      (proposedWorld.slug && world.slug === proposedWorld.slug),
-  ) ?? null;
+  const fallbackWorld =
+    fallbackWorlds.find(
+      (world) =>
+        (proposedWorld.id && world.id === proposedWorld.id) ||
+        (proposedWorld.slug && world.slug === proposedWorld.slug),
+    ) ?? null;
 
-  const sanitizedWorld = sanitizeWorldCandidate(proposedWorld, fallbackWorld, { requirePlugins: true });
+  const sanitizedWorld = sanitizeWorldCandidate(proposedWorld, fallbackWorld, {
+    requirePlugins: true,
+  });
 
   if (!sanitizedWorld || !sanitizedWorld.pluginIds.length) {
     throw createError({
@@ -1372,7 +1380,10 @@ export async function createWorld(
   }
 
   sanitizedWorld.locale =
-    sanitizedWorld.locale ?? current.defaultLanguage ?? defaults.defaultLanguage ?? defaultLanguageCode;
+    sanitizedWorld.locale ??
+    current.defaultLanguage ??
+    defaults.defaultLanguage ??
+    defaultLanguageCode;
 
   if (fallbackWorld?.createdAt) {
     sanitizedWorld.createdAt = fallbackWorld.createdAt;

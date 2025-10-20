@@ -6,7 +6,8 @@
   position: relative;
   overflow: hidden;
   padding: clamp(24px, 6vw, 80px) 16px;
-  background: radial-gradient(circle at top left, rgba(88, 101, 242, 0.25), transparent 55%),
+  background:
+    radial-gradient(circle at top left, rgba(88, 101, 242, 0.25), transparent 55%),
     radial-gradient(circle at bottom right, rgba(45, 212, 191, 0.18), transparent 60%),
     linear-gradient(160deg, #0f172a 0%, #020617 50%, #0b1120 100%);
 }

@@ -48,7 +48,9 @@
                       class="sidebar-icon-placeholder"
                       aria-hidden="true"
                     ></span>
-                    <span class="text-sm font-medium text-foreground">{{ resolveLabel(item) }}</span>
+                    <span class="text-sm font-medium text-foreground">{{
+                      resolveLabel(item)
+                    }}</span>
                   </div>
                   <button
                     v-if="item.children?.length"

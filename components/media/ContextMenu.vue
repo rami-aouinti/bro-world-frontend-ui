@@ -8,9 +8,17 @@
     @update:model-value="emit('update:modelValue', $event)"
   >
     <VList density="compact">
-      <VListItem v-for="item in props.items" :key="item.value" :disabled="item.disabled" @click="onSelect(item)">
+      <VListItem
+        v-for="item in props.items"
+        :key="item.value"
+        :disabled="item.disabled"
+        @click="onSelect(item)"
+      >
         <template #prepend>
-          <VIcon v-if="item.icon" :icon="item.icon" />
+          <VIcon
+            v-if="item.icon"
+            :icon="item.icon"
+          />
         </template>
         <VListItemTitle :class="{ 'text-error': item.danger }">
           {{ t(item.labelKey) }}

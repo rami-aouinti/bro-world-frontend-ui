@@ -94,7 +94,7 @@
               :alt="photo.alt ?? 'photo-' + i"
               fit="cover"
               class="rounded-lg"
-              style="width: 100%; aspect-ratio: 1 / 1;"
+              style="width: 100%; aspect-ratio: 1 / 1"
             />
           </div>
         </v-card-text>

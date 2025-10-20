@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col gap-4">
     <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        glow
       v-for="point in points"
       :key="point.title"
+      class="text-card-foreground px-3 py-2"
+      glow
       elevation="0"
       rounded="lg"
     >

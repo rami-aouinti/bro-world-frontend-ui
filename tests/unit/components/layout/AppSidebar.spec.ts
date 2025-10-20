@@ -59,7 +59,7 @@ vi.mock("~/components/auth/LoginForm.vue", () => {
   const component = defineComponent({
     name: "AuthLoginFormStub",
     props: ["disabled", "variant"],
-    template: "<form class=\"auth-login-form-stub\"><slot /></form>",
+    template: '<form class="auth-login-form-stub"><slot /></form>',
   });
 
   return {
@@ -67,7 +67,6 @@ vi.mock("~/components/auth/LoginForm.vue", () => {
     default: Object.assign(component, { __isTeleport: false }),
   };
 });
-
 
 const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 
@@ -105,12 +104,12 @@ async function mountSidebar() {
       stubs: {
         SidebarCard: defineComponent({
           name: "SidebarCardStub",
-          template: "<div class=\"sidebar-card-stub\"><slot /></div>",
+          template: '<div class="sidebar-card-stub"><slot /></div>',
         }),
         Icon: defineComponent({
           name: "IconStub",
           props: ["name", "size"],
-          template: "<i class=\"icon-stub\"><slot /></i>",
+          template: '<i class="icon-stub"><slot /></i>',
         }),
       },
     },

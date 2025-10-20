@@ -24,31 +24,53 @@
     </template>
 
     <template #breadcrumbs>
-      <MediaBreadcrumbs :items="breadcrumbs" @navigate="handleTreeSelect" />
+      <MediaBreadcrumbs
+        :items="breadcrumbs"
+        @navigate="handleTreeSelect"
+      />
     </template>
 
-    <div class="media-content" role="region" :aria-busy="mediaStore.isLoading">
+    <div
+      class="media-content"
+      role="region"
+      :aria-busy="mediaStore.isLoading"
+    >
       <template v-if="mediaStore.trashMode">
-        <VTable density="comfortable" class="mb-6">
+        <VTable
+          density="comfortable"
+          class="mb-6"
+        >
           <thead>
             <tr>
-              <th>{{ t('media.trash.name') }}</th>
-              <th>{{ t('media.trash.type') }}</th>
-              <th>{{ t('media.trash.deletedAt') }}</th>
-              <th class="text-end">{{ t('media.trash.actions') }}</th>
+              <th>{{ t("media.trash.name") }}</th>
+              <th>{{ t("media.trash.type") }}</th>
+              <th>{{ t("media.trash.deletedAt") }}</th>
+              <th class="text-end">{{ t("media.trash.actions") }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in trashItems" :key="`${item.type}-${item.id}`">
+            <tr
+              v-for="item in trashItems"
+              :key="`${item.type}-${item.id}`"
+            >
               <td>{{ item.item.name }}</td>
-              <td>{{ t(item.type === 'file' ? 'media.trash.file' : 'media.trash.folder') }}</td>
+              <td>{{ t(item.type === "file" ? "media.trash.file" : "media.trash.folder") }}</td>
               <td>{{ new Date(item.deletedAt).toLocaleString() }}</td>
               <td class="text-end">
-                <VBtn size="small" variant="text" @click="restoreTrashItem(item)">
-                  {{ t('media.actions.restore') }}
+                <VBtn
+                  size="small"
+                  variant="text"
+                  @click="restoreTrashItem(item)"
+                >
+                  {{ t("media.actions.restore") }}
                 </VBtn>
-                <VBtn size="small" color="error" variant="text" @click="purgeTrashItem(item)">
-                  {{ t('media.actions.deleteForever') }}
+                <VBtn
+                  size="small"
+                  color="error"
+                  variant="text"
+                  @click="purgeTrashItem(item)"
+                >
+                  {{ t("media.actions.deleteForever") }}
                 </VBtn>
               </td>
             </tr>
@@ -78,13 +100,19 @@
     </div>
   </MediaLayout>
 
-  <UploadDialog v-model="uploadDialogOpen" :tasks="uploadTasks" @upload="handleUpload" />
+  <UploadDialog
+    v-model="uploadDialogOpen"
+    :tasks="uploadTasks"
+    @upload="handleUpload"
+  />
 
   <RenameDialog
     v-model="renameState.open"
     :value="renameState.value"
     :loading="renameLoading"
-    :title-key="renameState.type === 'create-folder' ? 'media.createFolder.title' : 'media.rename.title'"
+    :title-key="
+      renameState.type === 'create-folder' ? 'media.createFolder.title' : 'media.rename.title'
+    "
     @save="handleRename"
   />
 
@@ -238,9 +266,7 @@ const treeItems = computed<MediaTreeItem[]>(() => {
 });
 
 const moveOptions = computed<MoveOption[]>(() => {
-  const options: MoveOption[] = [
-    { id: null, label: t("media.move.rootOption") },
-  ];
+  const options: MoveOption[] = [{ id: null, label: t("media.move.rootOption") }];
 
   for (const folder of allFolders.value.values()) {
     options.push({
@@ -261,7 +287,12 @@ const contextMenuItems = computed<ContextMenuItem[]>(() => {
   if (mediaStore.trashMode) {
     return [
       { value: "restore", labelKey: "media.actions.restore", icon: "mdi-restore" },
-      { value: "purge", labelKey: "media.actions.deleteForever", icon: "mdi-delete-forever", danger: true },
+      {
+        value: "purge",
+        labelKey: "media.actions.deleteForever",
+        icon: "mdi-delete-forever",
+        danger: true,
+      },
     ];
   }
 
@@ -345,15 +376,25 @@ function openDelete(mode: "soft" | "purge" = "soft") {
 async function handleDelete() {
   if (deleteState.mode === "purge") {
     await mediaStore.purgeEntities({
-      fileIds: contextMenuState.targetType === "file" && contextMenuState.targetId ? [contextMenuState.targetId] : [],
+      fileIds:
+        contextMenuState.targetType === "file" && contextMenuState.targetId
+          ? [contextMenuState.targetId]
+          : [],
       folderIds:
-        contextMenuState.targetType === "folder" && contextMenuState.targetId ? [contextMenuState.targetId] : [],
+        contextMenuState.targetType === "folder" && contextMenuState.targetId
+          ? [contextMenuState.targetId]
+          : [],
     });
   } else {
     await mediaStore.softDeleteEntities({
-      fileIds: contextMenuState.targetType === "file" && contextMenuState.targetId ? [contextMenuState.targetId] : [],
+      fileIds:
+        contextMenuState.targetType === "file" && contextMenuState.targetId
+          ? [contextMenuState.targetId]
+          : [],
       folderIds:
-        contextMenuState.targetType === "folder" && contextMenuState.targetId ? [contextMenuState.targetId] : [],
+        contextMenuState.targetType === "folder" && contextMenuState.targetId
+          ? [contextMenuState.targetId]
+          : [],
     });
   }
 
@@ -368,9 +409,14 @@ async function handleMove(destination: string | null) {
   moveState.loading = true;
   await mediaStore.moveEntities({
     destinationId: destination,
-    fileIds: contextMenuState.targetType === "file" && contextMenuState.targetId ? [contextMenuState.targetId] : [],
+    fileIds:
+      contextMenuState.targetType === "file" && contextMenuState.targetId
+        ? [contextMenuState.targetId]
+        : [],
     folderIds:
-      contextMenuState.targetType === "folder" && contextMenuState.targetId ? [contextMenuState.targetId] : [],
+      contextMenuState.targetType === "folder" && contextMenuState.targetId
+        ? [contextMenuState.targetId]
+        : [],
   });
   moveState.loading = false;
   moveState.open = false;

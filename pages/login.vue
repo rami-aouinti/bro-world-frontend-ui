@@ -28,7 +28,9 @@
             >
               <div class="py-4 text-center text-white">
                 <div class="text-h4 font-weight-bold">Bro World</div>
-                <p class="text-body-2 text-high-emphasis mb-0">Where your friends, games, and stories come together</p>
+                <p class="text-body-2 text-high-emphasis mb-0">
+                  Where your friends, games, and stories come together
+                </p>
               </div>
               <AuthSocial
                 :loading="isRedirecting"
@@ -40,7 +42,8 @@
               <div class="login-intro mb-8">
                 <div class="text-h5 font-weight-bold text-white mb-2">Welcome back</div>
                 <p class="text-body-2 mb-6 text-medium-emphasis">
-                  Sign in to pick up conversations, continue your quests, and explore fresh updates curated just for you.
+                  Sign in to pick up conversations, continue your quests, and explore fresh updates
+                  curated just for you.
                 </p>
                 <div class="login-highlights">
                   <v-chip

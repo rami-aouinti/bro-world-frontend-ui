@@ -228,10 +228,7 @@ describe("education caching", () => {
       "test:cache:public:education:certificates",
       expect.any(String),
     );
-    expect(redisExpireMock).toHaveBeenCalledWith(
-      "test:cache:public:education:certificates",
-      3600,
-    );
+    expect(redisExpireMock).toHaveBeenCalledWith("test:cache:public:education:certificates", 3600);
 
     const storedPayload = JSON.parse(redisLpushMock.mock.calls[0]?.[1] ?? "{}");
     expect(storedPayload).toMatchObject({
@@ -245,11 +242,7 @@ describe("education caching", () => {
     redisLrangeMock.mockResolvedValueOnce([JSON.stringify(certificate)]);
 
     const certificates = await listCertificates();
-    expect(redisLrangeMock).toHaveBeenCalledWith(
-      "test:cache:public:education:certificates",
-      0,
-      -1,
-    );
+    expect(redisLrangeMock).toHaveBeenCalledWith("test:cache:public:education:certificates", 0, -1);
     expect(certificates).toEqual([certificate]);
 
     const found = await findCertificate(certificate.id);

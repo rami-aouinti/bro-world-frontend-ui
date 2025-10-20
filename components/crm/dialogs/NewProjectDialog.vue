@@ -1,11 +1,19 @@
 <template>
-  <v-dialog v-model="isOpen" max-width="480" persistent>
+  <v-dialog
+    v-model="isOpen"
+    max-width="480"
+    persistent
+  >
     <v-card>
       <v-card-title class="text-h5 font-weight-semibold">Nouveau projet</v-card-title>
       <v-card-subtitle>Renseignez les informations principales du projet.</v-card-subtitle>
       <v-divider />
       <v-card-text>
-        <v-form ref="formRef" class="d-flex flex-column gap-4" @submit.prevent="handleSubmit">
+        <v-form
+          ref="formRef"
+          class="d-flex flex-column gap-4"
+          @submit.prevent="handleSubmit"
+        >
           <v-text-field
             v-model="form.name"
             label="Nom du projet"
@@ -28,8 +36,8 @@
             hint="2 à 6 lettres en majuscules"
             persistent-hint
             :rules="keyRules"
-            @update:model-value="handleKeyInput"
             autocomplete="off"
+            @update:model-value="handleKeyInput"
           />
 
           <v-text-field
@@ -58,7 +66,11 @@
       </v-card-text>
       <v-divider />
       <v-card-actions class="justify-end">
-        <v-btn variant="text" @click="closeDialog">Annuler</v-btn>
+        <v-btn
+          variant="text"
+          @click="closeDialog"
+          >Annuler</v-btn
+        >
         <v-btn
           color="primary"
           variant="flat"
@@ -98,7 +110,9 @@ const form = reactive({
 const loading = computed(() => props.loading ?? false);
 const error = computed(() => props.error ?? null);
 
-const nameRules = [(value: string | null) => (value && value.trim().length > 0) || "Le nom est requis." ];
+const nameRules = [
+  (value: string | null) => (value && value.trim().length > 0) || "Le nom est requis.",
+];
 const keyRules = [
   (value: string | null) => {
     if (!value || value.trim().length === 0) {
@@ -113,7 +127,9 @@ const colorRules = [
       return "La couleur est requise.";
     }
     const normalized = value.trim().startsWith("#") ? value.trim() : `#${value.trim()}`;
-    return /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(normalized) || "Renseignez un code hex valide.";
+    return (
+      /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(normalized) || "Renseignez un code hex valide."
+    );
   },
 ];
 

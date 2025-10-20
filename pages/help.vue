@@ -1,12 +1,13 @@
 <template>
-  <main
-    aria-labelledby="help-heading"
-  >
+  <main aria-labelledby="help-heading">
     <header
-        class="mb-6"
-        aria-describedby="help-subtitle"
+      class="mb-6"
+      aria-describedby="help-subtitle"
     >
-      <section class="mb-10" aria-labelledby="help-faq">
+      <section
+        class="mb-10"
+        aria-labelledby="help-faq"
+      >
         <v-sheet
           class="help-faq"
           rounded="xl"
@@ -79,19 +80,17 @@
           </v-expansion-panels>
         </v-sheet>
       </section>
-      <section
-          aria-labelledby="quick-actions"
-      >
+      <section aria-labelledby="quick-actions">
         <v-sheet
-            class="help-actions"
-            elevation="0"
-            rounded="xl"
+          class="help-actions"
+          elevation="0"
+          rounded="xl"
         >
           <div class="d-flex align-center justify-space-between flex-wrap gap-4 mb-6">
             <div>
               <h2
-                  id="quick-actions"
-                  class="text-h5 font-weight-semibold mb-1"
+                id="quick-actions"
+                class="text-h5 font-weight-semibold mb-1"
               >
                 {{ t("pages.help.quickLinksTitle") }}
               </h2>
@@ -101,28 +100,28 @@
             </div>
           </div>
           <v-row
-              class="help-actions__row"
-              dense
+            class="help-actions__row"
+            dense
           >
             <v-col
-                v-for="action in actions"
-                :key="action.label"
-                cols="12"
-                md="12"
+              v-for="action in actions"
+              :key="action.label"
+              cols="12"
+              md="12"
             >
               <v-card
-                  class="help-actions__card"
-                  elevation="0"
-                  rounded="lg"
+                class="help-actions__card"
+                elevation="0"
+                rounded="lg"
               >
                 <div class="d-flex align-start mb-4">
                   <v-avatar
-                      class="help-actions__icon mr-3"
-                      size="42"
+                    class="help-actions__icon mr-3"
+                    size="42"
                   >
                     <v-icon
-                        :icon="action.icon"
-                        aria-hidden="true"
+                      :icon="action.icon"
+                      aria-hidden="true"
                     />
                   </v-avatar>
                   <div>
@@ -135,14 +134,14 @@
                   </div>
                 </div>
                 <v-btn
-                    :href="action.href"
-                    :to="action.to"
-                    :target="action.target"
-                    :rel="action.rel"
-                    color="primary"
-                    variant="text"
-                    class="justify-start px-0"
-                    :aria-label="action.ariaLabel"
+                  :href="action.href"
+                  :to="action.to"
+                  :target="action.target"
+                  :rel="action.rel"
+                  color="primary"
+                  variant="text"
+                  class="justify-start px-0"
+                  :aria-label="action.ariaLabel"
                 >
                   {{ action.cta }}
                 </v-btn>

@@ -11,15 +11,30 @@
           <h3 class="text-h6 mb-1">{{ file?.name }}</h3>
           <p class="text-caption text-medium-emphasis">{{ file?.mime }}</p>
         </div>
-        <VBtn icon="mdi-close" variant="text" :aria-label="t('common.close')" @click="close" />
+        <VBtn
+          icon="mdi-close"
+          variant="text"
+          :aria-label="t('common.close')"
+          @click="close"
+        />
       </div>
     </template>
 
     <div class="preview-drawer__body px-4">
-      <div v-if="loading" class="d-flex justify-center py-8">
-        <VProgressCircular indeterminate color="primary" />
+      <div
+        v-if="loading"
+        class="d-flex justify-center py-8"
+      >
+        <VProgressCircular
+          indeterminate
+          color="primary"
+        />
       </div>
-      <div v-else-if="file" class="preview-drawer__preview" :aria-label="t('media.preview.ariaLabel')">
+      <div
+        v-else-if="file"
+        class="preview-drawer__preview"
+        :aria-label="t('media.preview.ariaLabel')"
+      >
         <NuxtImg
           v-if="isImage && previewSource"
           :src="previewSource"
@@ -32,24 +47,50 @@
           loading="lazy"
           decoding="async"
         />
-        <video v-else-if="isVideo && previewSource" controls :poster="file.thumbnails?.video">
-          <source :src="file.thumbnails?.large ?? file.thumbnails?.medium ?? previewSource" :type="file.mime" />
+        <video
+          v-else-if="isVideo && previewSource"
+          controls
+          :poster="file.thumbnails?.video"
+        >
+          <source
+            :src="file.thumbnails?.large ?? file.thumbnails?.medium ?? previewSource"
+            :type="file.mime"
+          />
         </video>
-        <iframe v-else-if="isPdf && previewSource" :src="previewSource" class="preview-drawer__iframe" />
-        <div v-else class="preview-drawer__fallback">
-          <VIcon icon="mdi-file" size="48" class="mb-2" />
-          <p class="text-body-2 text-medium-emphasis">{{ t('media.preview.unavailable') }}</p>
+        <iframe
+          v-else-if="isPdf && previewSource"
+          :src="previewSource"
+          class="preview-drawer__iframe"
+        />
+        <div
+          v-else
+          class="preview-drawer__fallback"
+        >
+          <VIcon
+            icon="mdi-file"
+            size="48"
+            class="mb-2"
+          />
+          <p class="text-body-2 text-medium-emphasis">{{ t("media.preview.unavailable") }}</p>
         </div>
       </div>
-      <div v-else class="preview-drawer__empty text-medium-emphasis">
-        {{ t('media.preview.empty') }}
+      <div
+        v-else
+        class="preview-drawer__empty text-medium-emphasis"
+      >
+        {{ t("media.preview.empty") }}
       </div>
     </div>
 
     <template #append>
       <div class="preview-drawer__actions px-4 py-3 d-flex gap-3">
-        <VBtn variant="outlined" block :disabled="!file" @click="triggerDownload">
-          {{ t('media.preview.download') }}
+        <VBtn
+          variant="outlined"
+          block
+          :disabled="!file"
+          @click="triggerDownload"
+        >
+          {{ t("media.preview.download") }}
         </VBtn>
       </div>
     </template>

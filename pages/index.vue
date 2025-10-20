@@ -42,7 +42,10 @@
         </Suspense>
 
         <div class="my-4">
-          <SidebarCard class="text-card-foreground px-3 py-2" glow>
+          <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
+          >
             <input
               ref="storyFileInput"
               type="file"
@@ -501,9 +504,7 @@ const BlogPostCard = defineAsyncComponent({
   suspensible: false,
 });
 
-const showAuthenticatedSkeletonsState = computed(
-  () => !isAuthReady.value || pending.value,
-);
+const showAuthenticatedSkeletonsState = computed(() => !isAuthReady.value || pending.value);
 
 let hasPrefetchedFirstBlogPostCard = false;
 
@@ -540,10 +541,7 @@ watch(
   (hydrated) => {
     if (hydrated) {
       setSharedStateValue(initialAuthAccessState, canAccessAuthenticatedContent.value);
-      setSharedStateValue(
-        initialSkeletonVisibilityState,
-        showAuthenticatedSkeletonsState.value,
-      );
+      setSharedStateValue(initialSkeletonVisibilityState, showAuthenticatedSkeletonsState.value);
     }
   },
   { immediate: false },
@@ -555,10 +553,7 @@ const skeletonBatchSize = computed(() => {
 });
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
-const initialLoadError = resolveSharedState<string | null>(
-  "index:initial-load-error",
-  () => null,
-);
+const initialLoadError = resolveSharedState<string | null>("index:initial-load-error", () => null);
 
 const isLoadErrorDismissed = ref(false);
 const loadMoreRequestInFlight = ref(false);
@@ -705,7 +700,7 @@ await callOnceFn("pages:index:initial-posts", async () => {
           })
           .catch(() => {
             void triggerInitialLoad().finally(resolve);
-        });
+          });
       });
     });
 
@@ -717,12 +712,7 @@ await callOnceFn("pages:index:initial-posts", async () => {
 
 if (import.meta.client) {
   onMounted(() => {
-    if (
-      posts.value.length > 0 ||
-      pending.value ||
-      loadingMore.value ||
-      initialLoadPromise.value
-    ) {
+    if (posts.value.length > 0 || pending.value || loadingMore.value || initialLoadPromise.value) {
       return;
     }
 

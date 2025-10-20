@@ -1,10 +1,8 @@
 <template>
-  <main
-    aria-labelledby="contact-heading"
-  >
+  <main aria-labelledby="contact-heading">
     <header
-        class="mb-6"
-        aria-describedby="contact-subtitle"
+      class="mb-6"
+      aria-describedby="contact-subtitle"
     >
       <v-row
         class="align-stretch contact-layout"

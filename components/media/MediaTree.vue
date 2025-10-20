@@ -1,5 +1,9 @@
 <template>
-  <div class="media-tree" role="navigation" :aria-label="t('media.tree.ariaLabel')">
+  <div
+    class="media-tree"
+    role="navigation"
+    :aria-label="t('media.tree.ariaLabel')"
+  >
     <VTreeview
       v-model:selected="selectedIds"
       :items="normalizedItems"

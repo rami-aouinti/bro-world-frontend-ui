@@ -579,9 +579,8 @@ describe("posts store", () => {
     expect(secondResult).toEqual(initialComments);
     expect(fetchSpy).toHaveBeenCalledTimes(2);
 
-    const cacheRef = __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>(
-      "posts-comments-cache",
-    );
+    const cacheRef =
+      __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>("posts-comments-cache");
     expect(cacheRef).toBeDefined();
 
     deferred.resolve(updatedComments);
@@ -607,9 +606,8 @@ describe("posts store", () => {
     });
 
     const postId = "post-1";
-    const cacheRef = __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>(
-      "posts-comments-cache",
-    );
+    const cacheRef =
+      __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>("posts-comments-cache");
     const timestampRef = __getNuxtStateRef<Record<string, number>>("posts-comments-timestamps");
 
     expect(cacheRef).toBeDefined();
@@ -685,9 +683,8 @@ describe("posts store", () => {
     });
 
     const postId = "post-1";
-    const cacheRef = __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>(
-      "posts-comments-cache",
-    );
+    const cacheRef =
+      __getNuxtStateRef<Record<string, BlogCommentWithReplies[]>>("posts-comments-cache");
     const timestampRef = __getNuxtStateRef<Record<string, number>>("posts-comments-timestamps");
 
     cacheRef!.value = {

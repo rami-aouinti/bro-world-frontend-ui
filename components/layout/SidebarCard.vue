@@ -19,7 +19,15 @@
 
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { computed, defineAsyncComponent, onBeforeUnmount, ref, useAttrs, watch, watchEffect } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  onBeforeUnmount,
+  ref,
+  useAttrs,
+  watch,
+  watchEffect,
+} from "vue";
 
 type PaddingSize = "none" | "sm" | "md" | "lg";
 
@@ -192,9 +200,7 @@ if (import.meta.client) {
             cardRef,
             (entries) => {
               const entry = entries[0];
-              isCardVisible.value = Boolean(
-                entry?.isIntersecting && entry.intersectionRatio > 0,
-              );
+              isCardVisible.value = Boolean(entry?.isIntersecting && entry.intersectionRatio > 0);
             },
             {
               threshold: [0, 0.2, 0.5],

@@ -87,10 +87,7 @@ function mergeBlueprintNode(base: MenuBlueprint, addition: MenuBlueprint): MenuB
   return merged;
 }
 
-function mergeMenuBlueprints(
-  base: MenuBlueprint[],
-  additions: MenuBlueprint[],
-): MenuBlueprint[] {
+function mergeMenuBlueprints(base: MenuBlueprint[], additions: MenuBlueprint[]): MenuBlueprint[] {
   const result: MenuBlueprint[] = base.map((item) => cloneMenuBlueprint(item));
 
   for (const addition of additions) {

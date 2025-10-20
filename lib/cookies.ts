@@ -27,7 +27,9 @@ if (import.meta.server) {
 
   if (nodeRequire) {
     try {
-      const { AsyncLocalStorage } = nodeRequire("node:async_hooks") as typeof import("node:async_hooks");
+      const { AsyncLocalStorage } = nodeRequire(
+        "node:async_hooks",
+      ) as typeof import("node:async_hooks");
       contextOptions.AsyncLocalStorage = AsyncLocalStorage;
     } catch {
       // ignore resolution errors and fall back to default context behaviour
@@ -43,10 +45,7 @@ type NuxtAppContext = {
   };
 };
 
-const nuxtAppContext = getContext<NuxtAppContext>(
-  "nuxt-app",
-  contextOptions,
-);
+const nuxtAppContext = getContext<NuxtAppContext>("nuxt-app", contextOptions);
 
 function resolveActiveRequestEvent(): MaybeEvent {
   if (!import.meta.server) {

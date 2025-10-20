@@ -63,7 +63,10 @@ function normalizeHexColor(candidate: string): string {
 }
 
 function normalizeProjectKey(candidate: string): string {
-  const value = (candidate ?? "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 6);
+  const value = (candidate ?? "")
+    .toUpperCase()
+    .replace(/[^A-Z]/g, "")
+    .slice(0, 6);
   if (value.length < 2) {
     throw new Error("La clé projet doit comporter entre 2 et 6 lettres.");
   }
@@ -106,10 +109,17 @@ function generateTaskId(): string {
 
 export const useCrmBoardStore = defineStore("crm-board", () => {
   const usersState = useState<CrmBoardUser[]>("crm-board:users", () => [...crmBoardUsersMock]);
-  const projectsState = useState<CrmBoardProject[]>("crm-board:projects", () => [...crmBoardProjectsMock]);
-  const sprintsState = useState<CrmBoardSprint[]>("crm-board:sprints", () => [...crmBoardSprintsMock]);
+  const projectsState = useState<CrmBoardProject[]>("crm-board:projects", () => [
+    ...crmBoardProjectsMock,
+  ]);
+  const sprintsState = useState<CrmBoardSprint[]>("crm-board:sprints", () => [
+    ...crmBoardSprintsMock,
+  ]);
   const tasksState = useState<CrmBoardTask[]>("crm-board:tasks", () => [...crmBoardTasksMock]);
-  const currentUserIdState = useState<string | null>("crm-board:current-user-id", () => crmBoardCurrentUserId);
+  const currentUserIdState = useState<string | null>(
+    "crm-board:current-user-id",
+    () => crmBoardCurrentUserId,
+  );
   const activeSprintIdState = useState<string | null>("crm-board:active-sprint-id", () => {
     const activeSprint = crmBoardSprintsMock.find((sprint) => sprint.isActive);
     return activeSprint?.id ?? crmBoardSprintsMock[0]?.id ?? null;
@@ -174,7 +184,11 @@ export const useCrmBoardStore = defineStore("crm-board", () => {
     }
   }
 
-  function moveTask(taskId: string, status: CrmBoardTaskStatus, beforeTaskId: string | null = null): boolean {
+  function moveTask(
+    taskId: string,
+    status: CrmBoardTaskStatus,
+    beforeTaskId: string | null = null,
+  ): boolean {
     const sprintId = activeSprintIdState.value;
     if (!sprintId) {
       return false;
@@ -193,7 +207,9 @@ export const useCrmBoardStore = defineStore("crm-board", () => {
 
     const previousStatus = task.status;
 
-    const sprintTasks = tasksCopy.filter((candidate) => candidate.sprintId === sprintId && candidate.id !== taskId);
+    const sprintTasks = tasksCopy.filter(
+      (candidate) => candidate.sprintId === sprintId && candidate.id !== taskId,
+    );
 
     const previousColumn = sprintTasks
       .filter((candidate) => candidate.status === previousStatus)

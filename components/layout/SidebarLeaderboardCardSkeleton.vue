@@ -15,7 +15,9 @@
           :key="index"
           class="-mx-[var(--card-x)] my-2 flex items-center gap-3 rounded-2xl border border-border/60 bg-muted/30 px-[var(--card-x)] py-3 text-sm"
         >
-          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-muted/50 text-base font-semibold text-primary">
+          <span
+            class="flex h-10 w-10 items-center justify-center rounded-xl bg-muted/50 text-base font-semibold text-primary"
+          >
             <span class="h-4 w-4 rounded-full bg-muted/70" />
           </span>
           <div class="flex flex-1 flex-col gap-2">

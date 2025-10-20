@@ -1,7 +1,11 @@
 <template>
-  <VDialog :model-value="modelValue" max-width="480" @update:model-value="emit('update:modelValue', $event)">
+  <VDialog
+    :model-value="modelValue"
+    max-width="480"
+    @update:model-value="emit('update:modelValue', $event)"
+  >
     <VCard>
-      <VCardTitle>{{ t(titleKey ?? 'media.rename.title') }}</VCardTitle>
+      <VCardTitle>{{ t(titleKey ?? "media.rename.title") }}</VCardTitle>
       <VCardText>
         <VTextField
           v-model="name"
@@ -13,9 +17,18 @@
       </VCardText>
       <VCardActions>
         <VSpacer />
-        <VBtn variant="text" @click="close">{{ t('common.close') }}</VBtn>
-        <VBtn color="primary" :loading="loading" :disabled="!name.trim()" @click="save">
-          {{ t('media.rename.save') }}
+        <VBtn
+          variant="text"
+          @click="close"
+          >{{ t("common.close") }}</VBtn
+        >
+        <VBtn
+          color="primary"
+          :loading="loading"
+          :disabled="!name.trim()"
+          @click="save"
+        >
+          {{ t("media.rename.save") }}
         </VBtn>
       </VCardActions>
     </VCard>

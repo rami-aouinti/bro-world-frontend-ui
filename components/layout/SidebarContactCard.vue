@@ -41,35 +41,42 @@
               </p>
             </div>
           </div>
-
-          <NuxtLink
+          <div
             v-if="channel.to"
-            :to="channel.to"
-            class="inline-flex w-fit items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/80 focus-visible:underline"
-            :aria-label="channel.ctaLabel"
+            class="justify-center px-0 mx-auto"
           >
-            {{ channel.cta }}
-            <v-icon
-              icon="mdi:arrow-top-right"
-              size="16"
-              aria-hidden="true"
-            />
-          </NuxtLink>
-          <a
+            <NuxtLink
+              :to="channel.to"
+              class="inline-flex w-fit items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/80 focus-visible:underline"
+              :aria-label="channel.ctaLabel"
+            >
+              {{ channel.cta }}
+              <v-icon
+                icon="mdi:arrow-top-right"
+                size="16"
+                aria-hidden="true"
+              />
+            </NuxtLink>
+          </div>
+          <div
             v-else-if="channel.href"
-            :href="channel.href"
-            :target="channel.target"
-            :rel="channel.rel"
-            class="inline-flex w-fit items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/80 focus-visible:underline"
-            :aria-label="channel.ctaLabel"
+            class="justify-center px-0 mx-auto"
           >
-            {{ channel.cta }}
-            <v-icon
-              :icon="channel.target === '_blank' ? 'mdi:open-in-new' : 'mdi:arrow-top-right'"
-              size="16"
-              aria-hidden="true"
-            />
-          </a>
+            <a
+              :href="channel.href"
+              :target="channel.target"
+              :rel="channel.rel"
+              class="inline-flex w-fit items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/80 focus-visible:underline"
+              :aria-label="channel.ctaLabel"
+            >
+              {{ channel.cta }}
+              <v-icon
+                :icon="channel.target === '_blank' ? 'mdi:open-in-new' : 'mdi:arrow-top-right'"
+                size="16"
+                aria-hidden="true"
+              />
+            </a>
+          </div>
         </li>
       </ul>
     </div>

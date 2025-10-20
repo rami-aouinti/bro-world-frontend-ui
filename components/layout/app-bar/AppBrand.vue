@@ -10,10 +10,13 @@
         class="text-inherit"
         >{{ brandParts.prefix }}</span
       >
-      <span class="text-inherit" data-testid="app-brand-highlight">
+      <span
+        class="text-inherit"
+        data-testid="app-brand-highlight"
+      >
         <component
-          v-if="highlightComponent"
           :is="highlightComponent"
+          v-if="highlightComponent"
           :colors="colors"
           :text="brandParts.highlight"
         />

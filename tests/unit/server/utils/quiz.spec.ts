@@ -61,7 +61,7 @@ describe("getQuizLandingData", () => {
   it("returns cached data from Redis when available", async () => {
     __setMockRuntimeConfig({
       redis: {
-        url: "redis://cache", 
+        url: "redis://cache",
         quizTtl: 180,
       },
     });
@@ -92,8 +92,8 @@ describe("getQuizLandingData", () => {
   it("loads quiz data from disk and populates Redis when cache is missing", async () => {
     __setMockRuntimeConfig({
       redis: {
-        url: "redis://cache", 
-        keyPrefix: "test", 
+        url: "redis://cache",
+        keyPrefix: "test",
         quizTtl: 90,
       },
     });
@@ -161,8 +161,8 @@ describe("invalidateQuizCache", () => {
   it("clears Redis entry when available", async () => {
     __setMockRuntimeConfig({
       redis: {
-        url: "redis://cache", 
-        keyPrefix: "test", 
+        url: "redis://cache",
+        keyPrefix: "test",
         quizTtl: 45,
       },
     });
@@ -187,4 +187,3 @@ describe("invalidateQuizCache", () => {
     expect(redisDelMock).toHaveBeenCalledWith("test:cache:public:quiz:landing");
   });
 });
-

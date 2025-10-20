@@ -1,5 +1,8 @@
 <template>
-  <aside class="crm-sidebar" :aria-label="t('pages.crm.sidebar.ariaLabel')">
+  <aside
+    class="crm-sidebar"
+    :aria-label="t('pages.crm.sidebar.ariaLabel')"
+  >
     <section class="crm-sidebar__section">
       <header class="crm-sidebar__header">
         <div>
@@ -17,8 +20,15 @@
         </v-btn>
       </header>
 
-      <div v-if="projects.length === 0" class="crm-sidebar__empty">
-        <v-icon icon="mdi:briefcase-outline" size="32" class="mb-3" />
+      <div
+        v-if="projects.length === 0"
+        class="crm-sidebar__empty"
+      >
+        <v-icon
+          icon="mdi:briefcase-outline"
+          size="32"
+          class="mb-3"
+        />
         <p>{{ t("pages.crm.sidebar.projects.empty.description") }}</p>
         <v-btn
           color="primary"
@@ -30,13 +40,20 @@
           {{ t("pages.crm.sidebar.projects.actions.create") }}
         </v-btn>
       </div>
-      <ul v-else class="crm-sidebar__project-list">
+      <ul
+        v-else
+        class="crm-sidebar__project-list"
+      >
         <li
           v-for="project in projects"
           :key="project.id"
           class="crm-sidebar__project-item"
         >
-          <div class="crm-sidebar__project-avatar" :style="{ backgroundColor: project.color }" aria-hidden="true">
+          <div
+            class="crm-sidebar__project-avatar"
+            :style="{ backgroundColor: project.color }"
+            aria-hidden="true"
+          >
             {{ project.key.slice(0, 2) }}
           </div>
           <div class="crm-sidebar__project-content">
@@ -66,11 +83,21 @@
         </v-btn>
       </header>
 
-      <div v-if="recentTasks.length === 0" class="crm-sidebar__empty">
-        <v-icon icon="mdi:clipboard-text-outline" size="32" class="mb-3" />
+      <div
+        v-if="recentTasks.length === 0"
+        class="crm-sidebar__empty"
+      >
+        <v-icon
+          icon="mdi:clipboard-text-outline"
+          size="32"
+          class="mb-3"
+        />
         <p>{{ t("pages.crm.sidebar.tasks.empty.description") }}</p>
       </div>
-      <ul v-else class="crm-sidebar__task-list">
+      <ul
+        v-else
+        class="crm-sidebar__task-list"
+      >
         <li
           v-for="task in recentTasks"
           :key="task.id"
@@ -81,7 +108,7 @@
             :style="{ backgroundColor: task.assigneeColor || '#475569' }"
             aria-hidden="true"
           >
-            {{ task.assigneeInitials || 'NA' }}
+            {{ task.assigneeInitials || "NA" }}
           </div>
           <div class="crm-sidebar__task-content">
             <p class="crm-sidebar__task-title">{{ task.title }}</p>

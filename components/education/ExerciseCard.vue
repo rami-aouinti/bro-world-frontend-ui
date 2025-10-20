@@ -32,7 +32,11 @@
         border="start"
         class="mt-4"
       >
-        {{ isCorrect ? t("pages.education.exercise.correct") : t("pages.education.exercise.incorrect") }}
+        {{
+          isCorrect
+            ? t("pages.education.exercise.correct")
+            : t("pages.education.exercise.incorrect")
+        }}
       </v-alert>
     </v-card-text>
     <v-card-actions class="justify-end">

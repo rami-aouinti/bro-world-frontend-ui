@@ -1,10 +1,7 @@
 import Redis from "ioredis";
 import { useRuntimeConfig } from "#imports";
 
-import {
-  CACHE_NAMESPACE_PUBLIC,
-  createPrefixedCacheKey,
-} from "~/lib/cache/namespaces";
+import { CACHE_NAMESPACE_PUBLIC, createPrefixedCacheKey } from "~/lib/cache/namespaces";
 import type {
   Category,
   Certificate,
@@ -95,11 +92,17 @@ function sanitizeEducationDataCandidate(candidate: unknown): CachedEducationData
     courses?: Array<Partial<CachedEducationCourse & { lessons?: Lesson[]; quiz?: QuizQuestion[] }>>;
   };
 
-  if (!Array.isArray(record.categories) || !Array.isArray(record.courses) || !Array.isArray(record.exercises)) {
+  if (
+    !Array.isArray(record.categories) ||
+    !Array.isArray(record.courses) ||
+    !Array.isArray(record.exercises)
+  ) {
     return null;
   }
 
-  const categories = record.categories.filter((category): category is Category => Boolean(category));
+  const categories = record.categories.filter((category): category is Category =>
+    Boolean(category),
+  );
 
   const courses = record.courses
     .map((course) => {
@@ -127,7 +130,9 @@ function sanitizeEducationDataCandidate(candidate: unknown): CachedEducationData
 
       const lessons = Array.isArray(base.lessons) ? (base.lessons as Lesson[]) : [];
       const quiz = Array.isArray(base.quiz) ? (base.quiz as QuizQuestion[]) : [];
-      const exercises = Array.isArray(base.exercises) ? (base.exercises as ExerciseWithCourse[]) : [];
+      const exercises = Array.isArray(base.exercises)
+        ? (base.exercises as ExerciseWithCourse[])
+        : [];
 
       return {
         ...(base as Course),
@@ -138,7 +143,9 @@ function sanitizeEducationDataCandidate(candidate: unknown): CachedEducationData
     })
     .filter((course): course is CachedEducationCourse => Boolean(course));
 
-  const exercises = record.exercises.filter((exercise): exercise is ExerciseWithCourse => Boolean(exercise));
+  const exercises = record.exercises.filter((exercise): exercise is ExerciseWithCourse =>
+    Boolean(exercise),
+  );
 
   return {
     categories,
@@ -190,9 +197,12 @@ function getCacheConfig(): EducationCacheConfig {
   return {
     url: typeof redis.url === "string" ? redis.url : "",
     tls: Boolean(redis.tls),
-    keyPrefix: typeof redis.keyPrefix === "string" && redis.keyPrefix ? redis.keyPrefix : "bro-world",
+    keyPrefix:
+      typeof redis.keyPrefix === "string" && redis.keyPrefix ? redis.keyPrefix : "bro-world",
     educationTtl:
-      Number.isFinite(ttlCandidate) && ttlCandidate > 0 ? Number(ttlCandidate) : DEFAULT_EDUCATION_TTL_SECONDS,
+      Number.isFinite(ttlCandidate) && ttlCandidate > 0
+        ? Number(ttlCandidate)
+        : DEFAULT_EDUCATION_TTL_SECONDS,
     certificateTtl:
       Number.isFinite(certificateTtlCandidate) && certificateTtlCandidate > 0
         ? Number(certificateTtlCandidate)
@@ -206,11 +216,22 @@ function getBaseCacheKey(config: EducationCacheConfig): string {
 
 function getLocaleCacheKey(config: EducationCacheConfig, locale: string): string {
   const normalized = locale?.toLowerCase() || "en";
-  return createPrefixedCacheKey(config.keyPrefix, CACHE_NAMESPACE_PUBLIC, "education", "locale", normalized);
+  return createPrefixedCacheKey(
+    config.keyPrefix,
+    CACHE_NAMESPACE_PUBLIC,
+    "education",
+    "locale",
+    normalized,
+  );
 }
 
 function getCertificateCacheKey(config: EducationCacheConfig): string {
-  return createPrefixedCacheKey(config.keyPrefix, CACHE_NAMESPACE_PUBLIC, "education", "certificates");
+  return createPrefixedCacheKey(
+    config.keyPrefix,
+    CACHE_NAMESPACE_PUBLIC,
+    "education",
+    "certificates",
+  );
 }
 
 async function getRedisClient(): Promise<Redis | null> {
@@ -384,7 +405,12 @@ export async function writeCachedEducationData(
   }
 
   try {
-    await client.set(getLocaleCacheKey(config, normalized), JSON.stringify(sanitized), "EX", config.educationTtl);
+    await client.set(
+      getLocaleCacheKey(config, normalized),
+      JSON.stringify(sanitized),
+      "EX",
+      config.educationTtl,
+    );
   } catch (error) {
     console.error("[education-cache] Failed to write localized education cache", error);
   }
@@ -410,7 +436,10 @@ export async function invalidateCachedEducationData(locale?: string): Promise<vo
     const config = getCacheConfig();
 
     try {
-      const keys = [getBaseCacheKey(config), ...locales.map((loc) => getLocaleCacheKey(config, loc))];
+      const keys = [
+        getBaseCacheKey(config),
+        ...locales.map((loc) => getLocaleCacheKey(config, loc)),
+      ];
 
       if (keys.length) {
         await client.del(...keys);
@@ -475,7 +504,10 @@ export async function readCachedCertificates(): Promise<Certificate[]> {
       return [];
     }
 
-    globalScope.__broEducationMemoryCertificates = writeMemoryEntry(certificates, config.certificateTtl);
+    globalScope.__broEducationMemoryCertificates = writeMemoryEntry(
+      certificates,
+      config.certificateTtl,
+    );
     return structuredClone(certificates);
   } catch (error) {
     console.error("[education-cache] Failed to read certificates cache", error);
@@ -491,7 +523,8 @@ export async function prependCachedCertificate(certificate: Certificate): Promis
     return;
   }
 
-  const existingMemory = readMemoryEntry(globalScope.__broEducationMemoryCertificates ?? null) ?? [];
+  const existingMemory =
+    readMemoryEntry(globalScope.__broEducationMemoryCertificates ?? null) ?? [];
   const updated = [sanitized, ...existingMemory.filter((entry) => entry.id !== sanitized.id)];
   globalScope.__broEducationMemoryCertificates = writeMemoryEntry(updated, config.certificateTtl);
 

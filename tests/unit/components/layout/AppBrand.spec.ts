@@ -56,7 +56,7 @@ vi.mock("~/components/content/ColourfulText.vue", () => ({
   default: {
     name: "ColourfulText",
     props: ["text"],
-    template: "<span class=\"colourful-text-stub\">{{ text }}</span>",
+    template: '<span class="colourful-text-stub">{{ text }}</span>',
   },
 }));
 
@@ -64,7 +64,9 @@ describe("AppBrand", () => {
   const originalMatchMedia = window.matchMedia;
   const originalRequestIdleCallback = (window as any).requestIdleCallback;
   const originalCancelIdleCallback = (window as any).cancelIdleCallback;
-  let idleCallbacks: Array<(deadline: { didTimeout: boolean; timeRemaining: () => number }) => void>;
+  let idleCallbacks: Array<
+    (deadline: { didTimeout: boolean; timeRemaining: () => number }) => void
+  >;
 
   beforeEach(() => {
     idleCallbacks = [];

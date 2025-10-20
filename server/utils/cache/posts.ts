@@ -1,11 +1,7 @@
 import { createHash } from "node:crypto";
 import Redis from "ioredis";
 import type { H3Event } from "h3";
-import type {
-  BlogApiResponse,
-  BlogCommentWithReplies,
-  BlogPost,
-} from "~/lib/mock/blog";
+import type { BlogApiResponse, BlogCommentWithReplies, BlogPost } from "~/lib/mock/blog";
 import { CACHE_NAMESPACE_BLOG, createPrefixedCacheKey } from "~/lib/cache/namespaces";
 import type { NormalizedPostsListQuery } from "../posts/types";
 
@@ -234,14 +230,7 @@ function getItemTag(prefix: string, postId: string) {
 }
 
 function getCommentsTag(prefix: string, postId: string) {
-  return createPrefixedCacheKey(
-    prefix,
-    CACHE_NAMESPACE_BLOG,
-    "posts",
-    "tag",
-    "comments",
-    postId,
-  );
+  return createPrefixedCacheKey(prefix, CACHE_NAMESPACE_BLOG, "posts", "tag", "comments", postId);
 }
 
 function getAuthorTag(prefix: string, authorId: string) {

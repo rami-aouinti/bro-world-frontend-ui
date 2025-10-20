@@ -42,7 +42,9 @@
           <span class="text-body-2 text-medium-emphasis">{{
             t("pages.education.certificate.organization")
           }}</span>
-          <span class="text-caption">{{ t("pages.education.certificate.organizationTagline") }}</span>
+          <span class="text-caption">{{
+            t("pages.education.certificate.organizationTagline")
+          }}</span>
         </div>
       </footer>
     </div>

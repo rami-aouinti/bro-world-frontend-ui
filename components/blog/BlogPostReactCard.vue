@@ -102,31 +102,31 @@
             </v-btn>
           </template>
 
-        <v-sheet
-          elevation="10"
-          class="rounded-lg"
-          width="280"
-        >
-          <v-list
-            density="comfortable"
-            nav
+          <v-sheet
+            elevation="10"
+            class="rounded-lg"
+            width="280"
           >
-            <v-list-item
-              v-for="option in shareOptions"
-              :key="option.value"
-              :disabled="option.disabled"
-              @click="handleShareOption(option.value)"
+            <v-list
+              density="comfortable"
+              nav
             >
-              <template #prepend>
-                <Icon
-                  :name="option.icon"
-                  class="me-3"
-                />
-              </template>
-              <v-list-item-title>{{ option.label }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-sheet>
+              <v-list-item
+                v-for="option in shareOptions"
+                :key="option.value"
+                :disabled="option.disabled"
+                @click="handleShareOption(option.value)"
+              >
+                <template #prepend>
+                  <Icon
+                    :name="option.icon"
+                    class="me-3"
+                  />
+                </template>
+                <v-list-item-title>{{ option.label }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-sheet>
         </v-menu>
       </div>
     </div>
@@ -141,8 +141,8 @@
 
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent } from "vue";
-import { onNuxtReady } from "#app";
-import { useNuxtApp } from "#app";
+import { onNuxtReady, useNuxtApp } from "#app";
+
 import { useI18n } from "vue-i18n";
 import type { Reaction as PickerReaction } from "~/components/blog/ReactionPicker.vue";
 import { useAuthSession } from "~/stores/auth-session";

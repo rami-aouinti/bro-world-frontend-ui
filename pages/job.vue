@@ -23,7 +23,10 @@
           @update:location="selectedLocations = $event"
         />
 
-        <div v-if="pending" class="mt-4">
+        <div
+          v-if="pending"
+          class="mt-4"
+        >
           <v-row>
             <v-col
               v-for="n in 6"
@@ -70,11 +73,7 @@
             id="job-create-heading"
             class="text-h5 font-weight-semibold mb-4"
           >
-            {{
-              activeCreation === "job"
-                ? t("job.create")
-                : t("applicant.create")
-            }}
+            {{ activeCreation === "job" ? t("job.create") : t("applicant.create") }}
           </h2>
 
           <CreateJob
@@ -118,9 +117,7 @@ import CreateJob from "~/components/job/CreateJob.vue";
 import JobCreateButtons from "~/components/job/JobCreateButtons.vue";
 import JobList from "~/components/job/JobList.vue";
 import JobTopFilters from "~/components/job/JobTopFilters.vue";
-import JobSidebarFilters, {
-  type JobCompany,
-} from "~/components/job/JobSidebarFilters.vue";
+import JobSidebarFilters, { type JobCompany } from "~/components/job/JobSidebarFilters.vue";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { jobCompaniesSample, jobListSample } from "~/lib/mock/jobs";

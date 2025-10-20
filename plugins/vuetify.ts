@@ -83,10 +83,7 @@ import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { aliases } from "vuetify/iconsets/mdi-svg";
 import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables/icons";
 import { normalizeHexColor } from "~/lib/theme/colors";
-import {
-  coreProjectMdiIcons,
-  ensureProjectMdiIcons,
-} from "~/lib/vuetify/projectMdiIcons";
+import { coreProjectMdiIcons, ensureProjectMdiIcons } from "~/lib/vuetify/projectMdiIcons";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
 

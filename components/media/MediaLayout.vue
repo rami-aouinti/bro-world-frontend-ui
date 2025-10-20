@@ -1,6 +1,12 @@
 <template>
-  <VContainer fluid class="media-layout pa-0">
-    <VRow class="g-0 flex-nowrap h-100" no-gutters>
+  <VContainer
+    fluid
+    class="media-layout pa-0"
+  >
+    <VRow
+      class="g-0 flex-nowrap h-100"
+      no-gutters
+    >
       <VCol
         cols="12"
         md="3"
@@ -10,14 +16,28 @@
       >
         <slot name="tree" />
       </VCol>
-      <VCol cols="12" md="9" lg="10" class="media-layout__content">
-        <div class="media-layout__toolbar" data-testid="media-toolbar">
+      <VCol
+        cols="12"
+        md="9"
+        lg="10"
+        class="media-layout__content"
+      >
+        <div
+          class="media-layout__toolbar"
+          data-testid="media-toolbar"
+        >
           <slot name="toolbar" />
         </div>
-        <div class="media-layout__breadcrumbs" data-testid="media-breadcrumbs">
+        <div
+          class="media-layout__breadcrumbs"
+          data-testid="media-breadcrumbs"
+        >
           <slot name="breadcrumbs" />
         </div>
-        <div class="media-layout__body" data-testid="media-body">
+        <div
+          class="media-layout__body"
+          data-testid="media-body"
+        >
           <slot />
         </div>
       </VCol>
