@@ -33,7 +33,7 @@
         autocomplete="username"
         spellcheck="false"
         :style="inputDirectionStyle"
-        prepend-inner-icon="mdi:account"
+        :prepend-inner-icon="isHydrated ? 'mdi:account' : undefined"
         @update:model-value="handleFieldInput"
       />
 
@@ -50,7 +50,10 @@
         :style="inputDirectionStyle"
         @update:model-value="handleFieldInput"
       >
-        <template #append-inner>
+        <template
+          v-if="isHydrated"
+          #append-inner
+        >
           <v-btn
             :aria-label="passwordToggleAriaLabel"
             :disabled="isDisabled"
@@ -117,6 +120,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
+import { onNuxtReady } from "#app";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
@@ -149,6 +153,7 @@ const formClasses = computed(() => ({ "login-form--compact": isCompact.value }))
 
 const username = ref("");
 const password = ref("");
+const isHydrated = ref(false);
 const showPassword = ref(false);
 const formError = ref("");
 
@@ -165,6 +170,12 @@ const redirectFromQuery = computed(() => {
   const redirectQuery = currentRoute?.query?.redirect;
   return typeof redirectQuery === "string" ? redirectQuery : null;
 });
+
+if (import.meta.client) {
+  onNuxtReady(() => {
+    isHydrated.value = true;
+  });
+}
 
 watch(
   () => auth.loginError.value,
