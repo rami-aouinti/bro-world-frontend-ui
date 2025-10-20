@@ -498,7 +498,9 @@ const StoryViewerModal = defineAsyncComponent({
   loader: () => import("~/components/stories/StoryViewerModal.vue"),
   suspensible: false,
 });
-const blogPostCardLoader = () => import("~/components/blog/BlogPostCard.vue");
+function blogPostCardLoader() {
+  return import("~/components/blog/BlogPostCard.vue");
+}
 const BlogPostCard = defineAsyncComponent({
   loader: blogPostCardLoader,
   suspensible: false,

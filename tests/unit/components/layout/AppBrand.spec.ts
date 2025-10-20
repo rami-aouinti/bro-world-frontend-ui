@@ -10,7 +10,7 @@ interface IdleCallbackWindow extends Window {
 
 const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 
-const createMatchMedia = (matches: boolean) => {
+function createMatchMedia(matches: boolean) {
   const listeners = new Set<(event: MediaQueryListEvent) => void>();
 
   const mediaQuery: MediaQueryList & { dispatch: (matchesOverride: boolean) => void } = {
@@ -38,7 +38,7 @@ const createMatchMedia = (matches: boolean) => {
   };
 
   return mediaQuery;
-};
+}
 
 vi.mock("~/composables/usePrimaryGradient", () => ({
   usePrimaryGradient: () => ({
