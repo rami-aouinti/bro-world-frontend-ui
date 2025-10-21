@@ -398,7 +398,9 @@
           "content": "Contenuto"
         },
         "comment": "Commenta",
-        "share": "Condividi"
+        "share": "Condividi",
+        "viewPost": "Leggi di più",
+        "viewPostAria": "Apri il post \"{title}\""
       },
       "shareMenu": {
         "feed": "Condividi nel feed",
@@ -422,7 +424,10 @@
         "successTitle": "Post condiviso",
         "successMessage": "Il tuo aggiornamento è stato aggiunto al tuo feed."
       },
-      "loading": "Caricamento del post"
+      "loading": "Caricamento del post",
+      "detailHeading": "Dettagli del post",
+      "notFound": "Questo post non è stato trovato.",
+      "backToFeed": "Torna al feed"
     },
     "comments": {
       "label": "Partecipa alla conversazione",

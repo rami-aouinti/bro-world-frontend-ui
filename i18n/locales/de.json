@@ -459,7 +459,9 @@
           "content": "Inhalt"
         },
         "comment": "Kommentieren",
-        "share": "Teilen"
+        "share": "Teilen",
+        "viewPost": "Mehr lesen",
+        "viewPostAria": "Beitrag \"{title}\" öffnen"
       },
       "shareMenu": {
         "feed": "Im Feed teilen",
@@ -483,7 +485,10 @@
         "successTitle": "Beitrag geteilt",
         "successMessage": "Dein Update wurde in deinem Feed veröffentlicht."
       },
-      "loading": "Beitrag wird geladen"
+      "loading": "Beitrag wird geladen",
+      "detailHeading": "Beitragsdetails",
+      "notFound": "Dieser Beitrag wurde nicht gefunden.",
+      "backToFeed": "Zurück zum Feed"
     },
     "comments": {
       "label": "Beteilige dich an der Diskussion",

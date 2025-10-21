@@ -76,11 +76,8 @@ import {
 } from "vuetify/components";
 import { defineComponent, h, ref, watch } from "vue";
 import { Ripple } from "vuetify/directives";
-import { VCalendar } from "vuetify/labs/VCalendar";
-import { VDateInput } from "vuetify/labs/VDateInput";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
-import { aliases } from "vuetify/iconsets/mdi-svg";
 import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables/icons";
 import { normalizeHexColor } from "~/lib/theme/colors";
 import { coreProjectMdiIcons, ensureProjectMdiIcons } from "~/lib/vuetify/projectMdiIcons";
@@ -119,16 +116,14 @@ const projectMdiAliasEntries = Object.fromEntries(
   Object.entries(coreProjectMdiIcons).map(([name, value]) => [name, withSvgPrefix(value)]),
 );
 
-let minimalAliases = createMdiAliasVariants({
-  ...aliases,
-  ...projectMdiAliasEntries,
-});
+let minimalAliases = createMdiAliasVariants(projectMdiAliasEntries);
 
 function rebuildAliasRegistry() {
-  minimalAliases = createMdiAliasVariants({
-    ...aliases,
-    ...projectMdiAliasEntries,
-  });
+  minimalAliases = createMdiAliasVariants(projectMdiAliasEntries);
+}
+
+export function getRegisteredMdiAliases(): Readonly<Record<string, IconValue>> {
+  return { ...minimalAliases };
 }
 
 export async function loadProjectMdiIcons(names: string[]): Promise<void> {
@@ -841,8 +836,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       VTimelineItem,
       VToolbar,
       VTooltip,
-      VCalendar,
-      VDateInput,
     },
     directives: {
       Ripple,
