@@ -3,7 +3,7 @@
     <v-skeleton-loader
       v-for="n in 3"
       :key="`job-skeleton-${n}`"
-      class="mb-4 pa-3"
+      class="mb-4"
       height="180"
       rounded="xl"
       type="card"
@@ -12,12 +12,11 @@
 
   <template v-else>
     <div v-if="jobs.length">
-      <v-card
-        v-for="job in jobs"
-        :key="job.id"
-        class="mb-4 pa-3"
-        rounded="xl"
-        variant="text"
+      <SidebarCard
+          v-for="job in jobs"
+          :key="job.id"
+          class="text-card-foreground px-3 py-3"
+          glow
       >
         <JobDetails :job="job" />
         <v-btn
@@ -28,7 +27,7 @@
         >
           {{ t("job.apply") }}
         </v-btn>
-      </v-card>
+      </SidebarCard>
     </div>
 
     <v-alert

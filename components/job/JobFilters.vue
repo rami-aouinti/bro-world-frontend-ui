@@ -1,4 +1,49 @@
 <template>
+  <v-row
+      class="mb-4"
+      justify="center"
+  >
+    <v-col
+        cols="12"
+        md="6"
+        class="text-center"
+    >
+      <v-btn
+          block
+          color="primary"
+          prepend-icon="mdi-plus"
+          rounded
+          variant="outlined"
+          @click="emit('create-job')"
+      >
+        {{ t("job.job") }}
+      </v-btn>
+    </v-col>
+    <v-col
+        cols="12"
+        md="6"
+        class="text-center"
+    >
+      <v-btn
+          block
+          color="primary"
+          prepend-icon="mdi-account-plus"
+          rounded
+          variant="outlined"
+          @click="emit('create-applicant')"
+      >
+        {{ t("applicant.applicant") }}
+      </v-btn>
+    </v-col>
+  </v-row>
+  <v-text-field
+      v-model="selectedLocations"
+      :label="t('job.location')"
+      density="compact"
+      prepend-inner-icon="mdi-earth"
+      rounded="xl"
+      variant="outlined"
+  />
   <v-combobox
     v-model="selectedCompany"
     :items="companyNames"
@@ -76,14 +121,17 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
+  (e: "create-job"): void;
+  (e: "create-applicant"): void;
   (e: "update:experience", value: number | null): void;
   (e: "update:company", value: string): void;
   (e: "update:salaryRange", value: number): void;
   (e: "update:skills", value: string[]): void;
   (e: "update:work", value: string[]): void;
   (e: "update:contract", value: string[]): void;
+  (e: "update:search", value: string): void;
+  (e: "update:location", value: string): void;
 }>();
-
 const { t } = useI18n();
 
 const vuetifyComponentsPromise = import("vuetify/components");
@@ -105,6 +153,11 @@ const contractOptions = ["Fulltime", "Parttime"];
 
 const companyNames = computed(() => props.companies.map((company) => company.name));
 
+
+const search = ref("");
+const selectedLocations = ref("");
+watch(search, (value) => emit("update:search", value));
+watch(selectedLocations, (value) => emit("update:location", value));
 watch(selectedExperience, (value) => emit("update:experience", value));
 watch(selectedCompany, (value) => emit("update:company", value ?? ""));
 watch(salaryRange, (value) => emit("update:salaryRange", value));

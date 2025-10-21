@@ -182,6 +182,7 @@
     "cancel": "Cancel"
   },
   "job": {
+    "job": "Job",
     "create": "Create job",
     "createdSuccess": "Job created successfully.",
     "createError": "Unable to create the job. Please try again.",
@@ -215,6 +216,7 @@
     "languages": "Languages"
   },
   "applicant": {
+    "applicant": "Applicant",
     "create": "Create applicant",
     "createdSuccess": "Applicant saved successfully.",
     "createError": "Unable to create the applicant.",

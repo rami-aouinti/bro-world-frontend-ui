@@ -5,7 +5,7 @@
   >
     <v-col
       cols="12"
-      md="12"
+      md="6"
       class="text-center"
     >
       <v-btn
@@ -16,12 +16,12 @@
         variant="outlined"
         @click="emit('create-job')"
       >
-        {{ t("job.create") }}
+        {{ t("job.job") }}
       </v-btn>
     </v-col>
     <v-col
       cols="12"
-      md="12"
+      md="6"
       class="text-center"
     >
       <v-btn
@@ -29,10 +29,10 @@
         color="primary"
         prepend-icon="mdi-account-plus"
         rounded
-        variant="text"
+        variant="outlined"
         @click="emit('create-applicant')"
       >
-        {{ t("applicant.create") }}
+        {{ t("applicant.applicant") }}
       </v-btn>
     </v-col>
   </v-row>
