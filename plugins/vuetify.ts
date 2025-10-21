@@ -76,8 +76,6 @@ import {
 } from "vuetify/components";
 import { defineComponent, h, ref, watch } from "vue";
 import { Ripple } from "vuetify/directives";
-import { VCalendar } from "vuetify/labs/VCalendar";
-import { VDateInput } from "vuetify/labs/VDateInput";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables/icons";
@@ -838,8 +836,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       VTimelineItem,
       VToolbar,
       VTooltip,
-      VCalendar,
-      VDateInput,
     },
     directives: {
       Ripple,
