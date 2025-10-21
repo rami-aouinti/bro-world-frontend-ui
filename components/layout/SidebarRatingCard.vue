@@ -5,11 +5,14 @@
     class="text-card-foreground px-3 py-2"
     glow
   >
-    <header class="flex items-center justify-between text-card-foreground">
+    <header class="flex items-center justify-between text-card-foreground gap-2">
       <div>
-        <h3 class="text-lg font-semibold text-foreground">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
           {{ cardTitle }}
-        </h3>
+        </p>
+        <h4 class="mt-3 text-xl font-semibold text-foreground">
+          {{ cardTitle }}
+        </h4>
         <p class="text-sm text-muted-foreground">
           {{ cardSubtitle }}
         </p>

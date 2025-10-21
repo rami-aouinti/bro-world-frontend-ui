@@ -3,9 +3,13 @@
     class="text-card-foreground px-3 py-2"
     glow
   >
-    <header class="flex items-center justify-between text-card-foreground">
-      <h3 class="text-lg font-semibold text-foreground">{{ title }}</h3>
-      <span class="text-xs uppercase tracking-[0.3em] text-primary/70">{{ liveLabel }}</span>
+    <header class="flex items-center justify-between text-card-foreground gap-2">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+          {{ title }}
+        </p>
+        <h4 class="mt-3 text-xl font-semibold text-foreground">{{ title }}</h4>
+      </div>
     </header>
 
     <ul class="space-y-4 px-2 mx-2">
