@@ -398,7 +398,9 @@
           "content": "Contenido"
         },
         "comment": "Comentar",
-        "share": "Compartir"
+        "share": "Compartir",
+        "viewPost": "Leer más",
+        "viewPostAria": "Abrir la publicación \"{title}\""
       },
       "shareMenu": {
         "feed": "Compartir en el feed",
@@ -422,7 +424,10 @@
         "successTitle": "Publicación compartida",
         "successMessage": "Tu actualización se agregó a tu feed."
       },
-      "loading": "Cargando publicación"
+      "loading": "Cargando publicación",
+      "detailHeading": "Detalles de la publicación",
+      "notFound": "No se ha podido encontrar esta publicación.",
+      "backToFeed": "Volver al feed"
     },
     "comments": {
       "label": "Únete a la conversación",

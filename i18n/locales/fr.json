@@ -459,7 +459,9 @@
           "content": "Contenu"
         },
         "comment": "Commenter",
-        "share": "Partager"
+        "share": "Partager",
+        "viewPost": "Lire la suite",
+        "viewPostAria": "Ouvrir l’article \"{title}\""
       },
       "shareMenu": {
         "feed": "Partager dans le fil",
@@ -483,7 +485,10 @@
         "successTitle": "Publication partagée",
         "successMessage": "Votre mise à jour a été ajoutée à votre fil."
       },
-      "loading": "Chargement de la publication"
+      "loading": "Chargement de la publication",
+      "detailHeading": "Détails de la publication",
+      "notFound": "Cette publication est introuvable.",
+      "backToFeed": "Retour au fil d'actualité"
     },
     "comments": {
       "label": "Participez à la discussion",

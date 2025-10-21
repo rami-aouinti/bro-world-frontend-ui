@@ -476,7 +476,9 @@
           "content": "Content"
         },
         "comment": "Comment",
-        "share": "Share"
+        "share": "Share",
+        "viewPost": "Read more",
+        "viewPostAria": "Open the post \"{title}\""
       },
       "shareMenu": {
         "feed": "Share to feed",
@@ -500,7 +502,10 @@
         "successTitle": "Post shared",
         "successMessage": "Your update was added to your feed."
       },
-      "loading": "Loading post"
+      "loading": "Loading post",
+      "detailHeading": "Post details",
+      "notFound": "This post could not be found.",
+      "backToFeed": "Back to feed"
     },
     "comments": {
       "label": "Join the discussion",
