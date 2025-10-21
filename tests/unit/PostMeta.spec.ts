@@ -43,6 +43,8 @@ function mountComponent(options: Record<string, unknown> = {}) {
       plugins: [i18n],
       stubs: {
         ClientOnly: { template: "<div><slot /><slot name='fallback' /></div>" },
+        NuxtImg: { template: "<img />" },
+        NuxtLink: { template: "<a><slot /></a>" },
       },
     },
   });

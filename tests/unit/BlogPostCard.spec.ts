@@ -25,6 +25,20 @@ vi.mock("~/composables/usePostsStore", () => ({
   }),
 }));
 
+vi.mock("~/composables/useNonBlockingTask", () => ({
+  useNonBlockingTask: () => ({
+    schedule: (task: () => void | Promise<void>) => {
+      const result = task();
+
+      if (result instanceof Promise) {
+        return result;
+      }
+
+      return result;
+    },
+  }),
+}));
+
 const authState = {
   currentUser: ref(null),
   isAuthenticated: ref(true),
@@ -50,6 +64,31 @@ vi.mock("#imports", async () => {
 
   return {
     useI18n: vueI18n.useI18n,
+    useLocalePath: () => (route: unknown) => {
+      if (typeof route === "string") {
+        return route;
+      }
+
+      if (
+        route &&
+        typeof route === "object" &&
+        "params" in route &&
+        route.params &&
+        typeof route.params === "object"
+      ) {
+        const params = route.params as Record<string, string>;
+
+        if ("slug" in params) {
+          return `/post/${params.slug}`;
+        }
+
+        if ("id" in params) {
+          return `/blog/author/${params.id}`;
+        }
+      }
+
+      return "/";
+    },
   };
 });
 
@@ -147,6 +186,12 @@ function mountComponent() {
         },
         BlogPostDeleteDialog: {
           template: "<div data-test='delete-dialog-stub'></div>",
+        },
+        NuxtLink: {
+          template: "<a><slot /></a>",
+        },
+        Icon: {
+          template: "<i><slot /></i>",
         },
         teleport: true,
       },

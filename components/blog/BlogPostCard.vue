@@ -28,7 +28,7 @@
       @delete="openDeleteDialog"
     />
     <component
-      :is="isPostLinkActive ? 'NuxtLink' : 'div'"
+      :is="isPostLinkActive ? NuxtLink : 'div'"
       v-bind="postLinkProps"
       class="group block text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background rounded-lg"
       data-test="blog-post-link"
@@ -85,6 +85,26 @@
         @reply="openReply"
         @submit="handleCommentSubmit"
       />
+      <template v-else>
+        <div class="flex flex-col gap-2 py-4">
+          <button
+            type="button"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            data-test="load-comments-button"
+            @click="handleLoadCommentsClick"
+          >
+            <Icon
+              name="mdi:comment-text-outline"
+              class="h-4 w-4"
+              aria-hidden="true"
+            />
+            {{ loadCommentsLabel }}
+          </button>
+          <p class="text-center text-xs text-muted-foreground">
+            {{ loadCommentsHint }}
+          </p>
+        </div>
+      </template>
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
         ref="loginPromptRef"
@@ -158,6 +178,7 @@ import { useElementVisibility } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { onNuxtReady, useNuxtApp } from "#app";
 import { useLocalePath } from "#imports";
+import { NuxtLink } from "#components";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
@@ -344,6 +365,8 @@ const editLabel = computed(() => t("blog.posts.actions.edit"));
 const deleteLabel = computed(() => t("blog.posts.actions.delete"));
 const preferEagerMediaLoading = computed(() => Boolean(props.preferEagerMediaLoading));
 const isPostReacted = computed(() => Boolean(post.value.isReacted));
+const loadCommentsLabel = computed(() => t("blog.comments.load"));
+const loadCommentsHint = computed(() => t("blog.comments.activationHint"));
 
 const emptyCommentNodes: BlogCommentWithReplies[] = [];
 const commentThreadNodes = computed(() => {
@@ -709,6 +732,10 @@ function handleCommentButtonClick() {
   nextTick(() => {
     commentsSectionRef.value?.scrollIntoView({ behavior: "smooth", block: "center" });
   });
+}
+
+function handleLoadCommentsClick() {
+  requestComments({ force: true });
 }
 
 async function handleCommentSubmit(text: string) {
