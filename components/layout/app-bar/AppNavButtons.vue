@@ -1,13 +1,57 @@
 <template>
   <div class="flex items-center gap-3 sm:gap-6">
-    <LayoutSearchButton
-      v-if="!props.isMobile"
-      :class="desktopSearchClasses"
-    />
+    <button
+      v-show="props.isMobile"
+      type="button"
+      :class="props.iconTriggerClasses"
+      :aria-label="props.navigationLabel"
+      @click="emit('toggle-left')"
+    >
+      <AppIcon
+        name="mdi:menu"
+        :size="24"
+      />
+    </button>
+
+    <div :class="navGroupClasses">
+      <button
+        type="button"
+        :class="props.iconTriggerClasses"
+        :aria-label="props.goBackLabel"
+        @click="emit('go-back')"
+      >
+        <AppIcon
+          name="mdi:arrow-left"
+          :size="22"
+        />
+      </button>
+      <button
+        type="button"
+        :class="[
+          props.iconTriggerClasses,
+          props.refreshing ? 'pointer-events-none opacity-60' : '',
+        ]"
+        :aria-label="props.refreshLabel"
+        :aria-busy="props.refreshing"
+        :disabled="props.refreshing"
+        @click="emit('refresh')"
+      >
+        <AppIcon
+          :name="props.refreshing ? 'mdi:loading' : 'mdi:refresh'"
+          :size="22"
+          :class="{ 'animate-spin': props.refreshing }"
+        />
+      </button>
+      <LayoutSearchButton
+        v-if="!props.isMobile"
+        :class="desktopSearchClasses"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import LayoutSearchButton from "../LayoutSearchButton.vue";
 
 const props = withDefaults(
@@ -23,5 +67,15 @@ const props = withDefaults(
     refreshing: false,
   },
 );
-const desktopSearchClasses = "hidden md:inline-flex";
+const emit = defineEmits(["toggle-left", "go-back", "refresh"]);
+
+const navGroupClasses = computed(() => {
+  if (props.isMobile) {
+    return "flex items-center gap-3 px-4";
+  }
+
+  return "flex items-center gap-12 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8";
+});
+
+const desktopSearchClasses = computed(() => "hidden md:inline-flex");
 </script>
