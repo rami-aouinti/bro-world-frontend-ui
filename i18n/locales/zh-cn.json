@@ -403,7 +403,8 @@
         "comment": "评论",
         "share": "分享",
         "viewPost": "阅读更多",
-        "viewPostAria": "打开帖子 \"{title}\""
+        "viewPostAria": "打开帖子 \"{title}\"",
+        "viewAuthorAria": "打开{name}的个人主页"
       },
       "shareMenu": {
         "feed": "分享到动态",
@@ -431,6 +432,16 @@
       "detailHeading": "帖子详情",
       "notFound": "未找到该帖子。",
       "backToFeed": "返回动态"
+    },
+    "authors": {
+      "title": "作者主页",
+      "description": "浏览{name}分享的帖子。",
+      "defaultDescription": "浏览社区作者分享的帖子。",
+      "heading": "{name}",
+      "subtitle": "该作者的最新动态。",
+      "postsHeading": "最新帖子",
+      "empty": "该作者还没有分享任何帖子。",
+      "notFound": "未找到该作者。"
     },
     "comments": {
       "label": "加入讨论",

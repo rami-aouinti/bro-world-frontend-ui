@@ -461,7 +461,8 @@
         "comment": "Commenter",
         "share": "Partager",
         "viewPost": "Lire la suite",
-        "viewPostAria": "Ouvrir l’article \"{title}\""
+        "viewPostAria": "Ouvrir l’article \"{title}\"",
+        "viewAuthorAria": "Ouvrir la page de profil de {name}"
       },
       "shareMenu": {
         "feed": "Partager dans le fil",
@@ -489,6 +490,16 @@
       "detailHeading": "Détails de la publication",
       "notFound": "Cette publication est introuvable.",
       "backToFeed": "Retour au fil d'actualité"
+    },
+    "authors": {
+      "title": "Profil de l'auteur",
+      "description": "Découvrez les publications partagées par {name}.",
+      "defaultDescription": "Découvrez les publications partagées par les auteurs de la communauté.",
+      "heading": "{name}",
+      "subtitle": "Dernières actualités de cet auteur.",
+      "postsHeading": "Publications récentes",
+      "empty": "Cet auteur n'a pas encore partagé de publication.",
+      "notFound": "Cet auteur est introuvable."
     },
     "comments": {
       "label": "Participez à la discussion",

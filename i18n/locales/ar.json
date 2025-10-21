@@ -463,7 +463,8 @@
         "comment": "تعليق",
         "share": "مشاركة",
         "viewPost": "قراءة المزيد",
-        "viewPostAria": "فتح المنشور \"{title}\""
+        "viewPostAria": "فتح المنشور \"{title}\"",
+        "viewAuthorAria": "فتح صفحة ملف {name} الشخصية"
       },
       "shareMenu": {
         "feed": "المشاركة على الخلاصة",
@@ -491,6 +492,16 @@
       "detailHeading": "تفاصيل المنشور",
       "notFound": "تعذّر العثور على هذا المنشور.",
       "backToFeed": "العودة إلى الخلاصة"
+    },
+    "authors": {
+      "title": "ملف المؤلف",
+      "description": "استكشف المنشورات التي شاركها {name}.",
+      "defaultDescription": "استكشف المنشورات التي يشاركها مؤلفو المجتمع.",
+      "heading": "{name}",
+      "subtitle": "أحدث التحديثات من هذا المؤلف.",
+      "postsHeading": "أحدث المنشورات",
+      "empty": "لم يشارك هذا المؤلف أي منشورات بعد.",
+      "notFound": "تعذر العثور على هذا المؤلف."
     },
     "comments": {
       "label": "انضم إلى النقاش",

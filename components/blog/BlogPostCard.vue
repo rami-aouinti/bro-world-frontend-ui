@@ -21,6 +21,8 @@
       :edit-label="editLabel"
       :delete-label="deleteLabel"
       :prefer-eager-media-loading="preferEagerMediaLoading"
+      :author-link="authorLink"
+      :author-link-aria-label="authorLinkAriaLabel"
       @follow="handleFollow"
       @edit="openEditModal"
       @delete="openDeleteDialog"
@@ -235,6 +237,23 @@ const postLink = computed(() => {
     return `/post/${encodeURIComponent(slug)}`;
   }
 });
+const authorLink = computed(() => {
+  const id = postUser.value?.id?.trim();
+
+  if (!id) {
+    return null;
+  }
+
+  try {
+    return localePath({ name: "blog-author-id", params: { id } });
+  } catch (error) {
+    if (import.meta.dev) {
+      console.warn("[BlogPostCard] Failed to resolve localized author link", error);
+    }
+
+    return `/blog/author/${encodeURIComponent(id)}`;
+  }
+});
 const enablePostLink = computed(() => props.enablePostLink !== false);
 const isPostLinkActive = computed(() => enablePostLink.value && Boolean(postLink.value));
 const viewPostLabel = computed(() => t("blog.posts.actions.viewPost"));
@@ -253,6 +272,11 @@ const postLinkProps = computed(() => {
     "aria-label": viewPostAriaLabel.value,
   } as const;
 });
+const authorLinkAriaLabel = computed(() =>
+  t("blog.posts.actions.viewAuthorAria", {
+    name: postUserAriaName.value,
+  }),
+);
 const shouldShowPostLinkCta = computed(
   () => isPostLinkActive.value && props.showPostLinkCta !== false,
 );

@@ -400,7 +400,8 @@
         "comment": "Commenta",
         "share": "Condividi",
         "viewPost": "Leggi di più",
-        "viewPostAria": "Apri il post \"{title}\""
+        "viewPostAria": "Apri il post \"{title}\"",
+        "viewAuthorAria": "Apri la pagina profilo di {name}"
       },
       "shareMenu": {
         "feed": "Condividi nel feed",
@@ -428,6 +429,16 @@
       "detailHeading": "Dettagli del post",
       "notFound": "Questo post non è stato trovato.",
       "backToFeed": "Torna al feed"
+    },
+    "authors": {
+      "title": "Profilo autore",
+      "description": "Esplora i post condivisi da {name}.",
+      "defaultDescription": "Esplora i post condivisi dagli autori della community.",
+      "heading": "{name}",
+      "subtitle": "Gli aggiornamenti più recenti di questo autore.",
+      "postsHeading": "Post recenti",
+      "empty": "Questo autore non ha ancora condiviso post.",
+      "notFound": "Autore non trovato."
     },
     "comments": {
       "label": "Partecipa alla conversazione",

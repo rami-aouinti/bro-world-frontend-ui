@@ -400,7 +400,8 @@
         "comment": "Comentar",
         "share": "Compartir",
         "viewPost": "Leer más",
-        "viewPostAria": "Abrir la publicación \"{title}\""
+        "viewPostAria": "Abrir la publicación \"{title}\"",
+        "viewAuthorAria": "Abrir la página de perfil de {name}"
       },
       "shareMenu": {
         "feed": "Compartir en el feed",
@@ -428,6 +429,16 @@
       "detailHeading": "Detalles de la publicación",
       "notFound": "No se ha podido encontrar esta publicación.",
       "backToFeed": "Volver al feed"
+    },
+    "authors": {
+      "title": "Perfil del autor",
+      "description": "Explora las publicaciones compartidas por {name}.",
+      "defaultDescription": "Explora las publicaciones compartidas por los autores de la comunidad.",
+      "heading": "{name}",
+      "subtitle": "Últimas novedades de este autor.",
+      "postsHeading": "Publicaciones recientes",
+      "empty": "Este autor aún no ha compartido publicaciones.",
+      "notFound": "No se ha encontrado a este autor."
     },
     "comments": {
       "label": "Únete a la conversación",
