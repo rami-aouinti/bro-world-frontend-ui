@@ -69,28 +69,19 @@ const cssVars = computed(() => ({
 }
 
 .border-beam::after {
-  padding: var(--border-beam-border-width);
-  background: conic-gradient(
-    from var(--border-beam-anchor),
-    transparent,
-    var(--border-beam-color-from),
-    var(--border-beam-color-to),
-    transparent 60%
-  );
-  background-size: var(--border-beam-size) var(--border-beam-size);
-  background-repeat: no-repeat;
+  border: var(--border-beam-border-width) solid transparent;
+  border-image: conic-gradient(
+      from var(--border-beam-anchor),
+      transparent,
+      var(--border-beam-color-from),
+      var(--border-beam-color-to),
+      transparent 60%
+    )
+    1;
   animation: border-beam-spin var(--border-beam-duration) linear infinite;
   animation-delay: var(--border-beam-delay);
-  filter: blur(0.5px);
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
   opacity: 0.85;
+  will-change: transform, opacity;
 }
 
 @keyframes border-beam-spin {
