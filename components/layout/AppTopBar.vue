@@ -30,24 +30,24 @@
     />
 
     <div
-      v-if="showInlineSearch"
-      class="hidden flex-1 items-center px-4 md:flex"
+        v-if="!props.isMobile"
+        class="flex-1 items-center px-4 md:flex"
     >
-      <LayoutSearchButton class="w-full max-w-2xl" />
+      <v-autocomplete
+          :items="items"
+          append-inner-icon="mdi-microphone"
+          class="mx-auto my-auto"
+          density="comfortable"
+          menu-icon=""
+          placeholder="Search Anything in BroWorld"
+          prepend-inner-icon="mdi-magnify"
+          style="max-width: 350px;"
+          variant="solo"
+          auto-select-first
+          item-props
+          rounded
+      ></v-autocomplete>
     </div>
-    <div
-      v-else-if="showSearchButton"
-      class="hidden md:flex"
-    >
-      <LayoutSearchButton />
-    </div>
-
-    <AppIconBar
-      :app-icons="props.appIcons"
-      :icon-trigger-classes="iconTriggerClasses"
-      :is-dark="props.isDark"
-      :wrapper-classes="iconWrapperClasses"
-    />
 
     <template #append>
       <div class="app-top-bar__append">
@@ -116,7 +116,6 @@ import { onNuxtReady } from "#app";
 import { APP_TOP_BAR_HEIGHT } from "./app-bar/constants";
 import AppBrand from "./app-bar/AppBrand.vue";
 import AppNavButtons from "./app-bar/AppNavButtons.vue";
-import AppIconBar from "./app-bar/AppIconBar.vue";
 import RightControls from "./app-bar/RightControls.vue";
 import UserMenu from "./app-bar/UserMenu.vue";
 import LocaleMenu from "./app-bar/LocaleMenu.vue";
@@ -178,6 +177,30 @@ const localeMetadata = {
   ru: { label: "Русский", flag: "ru" },
   ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
+
+const items = [
+  {
+    prependIcon: 'mdi-clock-outline',
+    title: 'recipe with chicken',
+  },
+  {
+    prependIcon: 'mdi-clock-outline',
+    title: 'best hiking trails near me',
+  },
+  {
+    prependIcon: 'mdi-clock-outline',
+    title: 'how to learn a new language',
+  },
+  {
+    prependIcon: 'mdi-clock-outline',
+    title: 'DIY home organization ideas',
+  },
+  {
+    prependIcon: 'mdi-clock-outline',
+    title: 'latest fashion trends',
+  },
+]
+
 const navigationLabel = computed(() => t("layout.actions.openNavigation"));
 const goBackLabel = computed(() => t("layout.actions.goBack"));
 const refreshLabel = computed(() => t("layout.actions.refresh"));
