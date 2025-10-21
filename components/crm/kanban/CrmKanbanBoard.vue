@@ -42,37 +42,39 @@ const emit = defineEmits<{
 
 const draggingTaskId = ref<string | null>(null);
 
+const themeSecondaryColor = "rgb(var(--v-theme-secondary))";
+
 const columnMetas: KanbanColumnMeta[] = [
   {
     status: "todo",
     title: "À faire",
     subtitle: "Prêt à être démarré",
-    accentColor: "#0ea5e9",
-    backgroundColor: "#e0f2fe",
+    accentColor: "rgb(var(--v-theme-info))",
+    backgroundColor: "rgba(var(--v-theme-info), 0.14)",
     icon: "mdi:playlist-plus",
   },
   {
     status: "in-progress",
     title: "En cours",
     subtitle: "Tâches actives",
-    accentColor: "#f97316",
-    backgroundColor: "#ffedd5",
+    accentColor: "rgb(var(--v-theme-primary))",
+    backgroundColor: "rgba(var(--v-theme-primary), 0.18)",
     icon: "mdi:progress-clock",
   },
   {
     status: "review",
     title: "Revue",
     subtitle: "En attente de validation",
-    accentColor: "#a855f7",
-    backgroundColor: "#f3e8ff",
+    accentColor: "rgb(var(--v-theme-secondary))",
+    backgroundColor: "rgba(var(--v-theme-secondary), 0.18)",
     icon: "mdi:eye-check-outline",
   },
   {
     status: "done",
     title: "Terminé",
     subtitle: "Tâches finalisées",
-    accentColor: "#22c55e",
-    backgroundColor: "#dcfce7",
+    accentColor: "rgb(var(--v-theme-success))",
+    backgroundColor: "rgba(var(--v-theme-success), 0.2)",
     icon: "mdi:check-circle",
   },
 ];
@@ -80,14 +82,26 @@ const columnMetas: KanbanColumnMeta[] = [
 function resolvePriorityMeta(priority: CrmBoardTaskPriority) {
   switch (priority) {
     case "Urgent":
-      return { color: "#dc2626", text: "#fef2f2" };
+      return {
+        color: "rgba(var(--v-theme-error), 0.18)",
+        text: "rgb(var(--v-theme-error))",
+      };
     case "High":
-      return { color: "#f97316", text: "#fff7ed" };
+      return {
+        color: "rgba(var(--v-theme-warning), 0.18)",
+        text: "rgb(var(--v-theme-warning))",
+      };
     case "Medium":
-      return { color: "#0284c7", text: "#e0f2fe" };
+      return {
+        color: "rgba(var(--v-theme-info), 0.18)",
+        text: "rgb(var(--v-theme-info))",
+      };
     case "Low":
     default:
-      return { color: "#0f766e", text: "#ecfdf5" };
+      return {
+        color: "rgba(var(--v-theme-success), 0.2)",
+        text: "rgb(var(--v-theme-success))",
+      };
   }
 }
 
@@ -100,11 +114,11 @@ function buildAssignee(user: CrmBoardUser | undefined) {
     };
   }
 
-  return {
-    name: user.name,
-    initials: user.initials,
-    color: user.avatarColor,
-  };
+    return {
+      name: user.name,
+      initials: user.initials,
+      color: user.avatarColor || themeSecondaryColor,
+    };
 }
 
 function formatDueDate(value: string | null | undefined) {
@@ -142,7 +156,7 @@ const columns = computed(() => {
       title: task.title,
       projectName: project?.name ?? "Projet inconnu",
       projectKey: project?.key ?? "N/A",
-      projectColor: project?.color ?? "#94a3b8",
+      projectColor: project?.color ?? themeSecondaryColor,
       assigneeName: assignee.name,
       assigneeInitials: assignee.initials,
       assigneeColor: assignee.color,
