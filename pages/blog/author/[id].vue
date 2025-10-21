@@ -118,7 +118,9 @@ import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const BlogPostCard = defineAsyncComponent({ loader: blogPostCardLoader });
-const PostCardSkeleton = defineAsyncComponent(() => import("~/components/blog/PostCardSkeleton.vue"));
+const PostCardSkeleton = defineAsyncComponent(
+  () => import("~/components/blog/PostCardSkeleton.vue"),
+);
 
 await prefetchBlogPostCard();
 
@@ -247,7 +249,9 @@ const authorHeading = computed(() =>
   author.value ? t("blog.authors.heading", { name: authorName.value }) : t("blog.authors.title"),
 );
 const authorSubtitle = computed(() => t("blog.authors.subtitle"));
-const authorAvatar = computed(() => optimizeAvatarUrl(author.value?.photo ?? null, 80) ?? defaultAvatar);
+const authorAvatar = computed(
+  () => optimizeAvatarUrl(author.value?.photo ?? null, 80) ?? defaultAvatar,
+);
 
 const errorMessage = computed(() => {
   if (!error.value) {

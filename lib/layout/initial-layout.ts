@@ -6,16 +6,11 @@ export interface DetectInitialIsMobileOptions {
   defaultValue?: boolean;
 }
 
-const MOBILE_USER_AGENT_REGEX = /mobile|iphone|ipod|ipad|android|iemobile|blackberry|kindle|silk|opera (?:mini|mobi)|fennec|windows phone|webos/i;
+const MOBILE_USER_AGENT_REGEX =
+  /mobile|iphone|ipod|ipad|android|iemobile|blackberry|kindle|silk|opera (?:mini|mobi)|fennec|windows phone|webos/i;
 
 export function detectInitialIsMobile(options: DetectInitialIsMobileOptions = {}): boolean {
-  const {
-    mobileHint,
-    viewportWidthHint,
-    userAgent,
-    smBreakpoint,
-    defaultValue = true,
-  } = options;
+  const { mobileHint, viewportWidthHint, userAgent, smBreakpoint, defaultValue = true } = options;
 
   if (mobileHint === "?1") {
     return true;
@@ -99,7 +94,8 @@ export function createInitialLayoutState(
     } as const;
   }
 
-  const topInset = typeof appBarHeight === "string" && appBarHeight.length > 0 ? appBarHeight : "0px";
+  const topInset =
+    typeof appBarHeight === "string" && appBarHeight.length > 0 ? appBarHeight : "0px";
   const leftInset = isMobile ? "0px" : leftDrawerWidth;
   const rightInset = !isMobile && showRightWidgets ? rightDrawerWidth : "0px";
 

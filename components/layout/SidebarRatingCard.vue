@@ -163,9 +163,7 @@ import type { ApiRequestOptions } from "~/lib/api/http-client";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VRating = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VRating),
-);
+const VRating = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VRating));
 
 interface SidebarRatingCardProps {
   rating?: {

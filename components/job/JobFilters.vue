@@ -88,13 +88,9 @@ const { t } = useI18n();
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VCombobox = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VCombobox),
-);
+const VCombobox = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VCombobox));
 
-const VSlider = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VSlider),
-);
+const VSlider = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VSlider));
 
 const selectedExperience = ref<number | null>(null);
 const salaryRange = ref(50);

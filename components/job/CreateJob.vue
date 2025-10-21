@@ -375,9 +375,7 @@ import CreateCompany from "~/components/job/CreateCompany.vue";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VStepper = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VStepper),
-);
+const VStepper = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VStepper));
 
 const VStepperHeader = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VStepperHeader),

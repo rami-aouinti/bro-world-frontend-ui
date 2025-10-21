@@ -93,9 +93,7 @@ export const useCrmParticipantsStore = defineStore("crm-participants", () => {
     typeof process !== "undefined"
       ? process.env?.NUXT_PUBLIC_CRM_PARTICIPANTS_USE_MOCKS
       : undefined;
-  const configMockFlag = resolveRuntimeBooleanFlag(
-    runtimeConfig.public?.crmParticipants?.useMocks,
-  );
+  const configMockFlag = resolveRuntimeBooleanFlag(runtimeConfig.public?.crmParticipants?.useMocks);
   const globalMockFlag = resolveRuntimeBooleanFlag(runtimeConfig.public?.useMockData);
   const useMockData = ((): boolean => {
     if (typeof envMockFlag !== "undefined") {

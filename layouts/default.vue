@@ -523,7 +523,7 @@ const resolvedViewportWidth =
     ? viewportWidthHint
     : null;
 const mobileUaHint = import.meta.server ? (layoutClientHints?.["sec-ch-ua-mobile"] ?? null) : null;
-const userAgentHint = import.meta.server ? layoutClientHints?.["user-agent"] ?? null : null;
+const userAgentHint = import.meta.server ? (layoutClientHints?.["user-agent"] ?? null) : null;
 
 const initialResolvedColorMode = useState<"light" | "dark">("layout-initial-color-mode", () => {
   if (colorMode.value === "dark" || colorMode.value === "light") {
@@ -600,7 +600,8 @@ const showNavigation = computed(() => {
 });
 const { rightSidebarContent } = useLayoutRightSidebar();
 const rightSidebarPlaceholderStyle = computed<CSSProperties>(() => {
-  const rawHeight = rightSidebarContent.value?.intrinsicHeight ?? DEFAULT_RIGHT_SIDEBAR_INTRINSIC_HEIGHT;
+  const rawHeight =
+    rightSidebarContent.value?.intrinsicHeight ?? DEFAULT_RIGHT_SIDEBAR_INTRINSIC_HEIGHT;
   const numericHeight = typeof rawHeight === "number" ? Math.max(0, Math.round(rawHeight)) : null;
   const heightValue = numericHeight !== null ? `${numericHeight}px` : String(rawHeight);
 
@@ -645,7 +646,7 @@ const routeLoadingState = useState("route:loading", () => false);
 
 const initialLayoutStateSnapshot = import.meta.client
   ? computeInitialLayoutState(initialIsMobile.value)
-  : serverInitialLayoutState ?? computeInitialLayoutState(true);
+  : (serverInitialLayoutState ?? computeInitialLayoutState(true));
 
 const leftDrawerState = ref(initialLayoutStateSnapshot.leftDrawer);
 const rightDrawerState = ref(initialLayoutStateSnapshot.rightDrawer);

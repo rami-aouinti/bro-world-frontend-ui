@@ -125,13 +125,9 @@ import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VTabs = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VTabs),
-);
+const VTabs = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VTabs));
 
-const VTab = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VTab),
-);
+const VTab = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VTab));
 
 const VEmptyState = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VEmptyState),

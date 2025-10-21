@@ -270,9 +270,7 @@ const ProfileEditSidebarContent = defineAsyncComponent({
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VCombobox = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VCombobox),
-);
+const VCombobox = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VCombobox));
 
 const { t } = useI18n();
 

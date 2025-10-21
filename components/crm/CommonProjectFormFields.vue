@@ -262,7 +262,5 @@ const nameRules = computed(() => [
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VCombobox = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VCombobox),
-);
+const VCombobox = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VCombobox));
 </script>

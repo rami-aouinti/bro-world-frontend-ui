@@ -1,4 +1,11 @@
-import { defineEventHandler, getRouterParam, sendStream, setResponseHeader, setResponseStatus, createError } from "h3";
+import {
+  defineEventHandler,
+  getRouterParam,
+  sendStream,
+  setResponseHeader,
+  setResponseStatus,
+  createError,
+} from "h3";
 import { Readable } from "node:stream";
 import type { ReadableStream as WebReadableStream } from "node:stream/web";
 
@@ -16,8 +23,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     response = await fetch(upstreamUrl);
-  }
-  catch (error: unknown) {
+  } catch (error: unknown) {
     throw createError({
       statusCode: 502,
       statusMessage: "Failed to reach Clarity upstream",

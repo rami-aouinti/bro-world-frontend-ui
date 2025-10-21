@@ -17,8 +17,8 @@
     ></span>
     <AppBrand class="ml-2 mr-3 px-3 sm:mr-4 sm:px-4 md:mr-6 md:px-6" />
     <AppNavButtons
-      class="ml-2"
       v-if="!props.isMobile"
+      class="ml-2"
       :is-mobile="props.isMobile"
       :icon-trigger-classes="iconTriggerClasses"
       :navigation-label="navigationLabel"
@@ -46,10 +46,18 @@
         item-props
       >
         <template #prepend-inner>
-          <v-icon class="mr-2 text-foreground/70" size="20">mdi-magnify</v-icon>
+          <v-icon
+            class="mr-2 text-foreground/70"
+            size="20"
+            >mdi-magnify</v-icon
+          >
         </template>
         <template #append-inner>
-          <v-icon class="text-foreground/70" size="20">mdi-microphone</v-icon>
+          <v-icon
+            class="text-foreground/70"
+            size="20"
+            >mdi-microphone</v-icon
+          >
         </template>
       </v-autocomplete>
     </div>
@@ -191,26 +199,26 @@ const localeMetadata = {
 
 const items = [
   {
-    prependIcon: 'mdi-clock-outline',
-    title: 'recipe with chicken',
+    prependIcon: "mdi-clock-outline",
+    title: "recipe with chicken",
   },
   {
-    prependIcon: 'mdi-clock-outline',
-    title: 'best hiking trails near me',
+    prependIcon: "mdi-clock-outline",
+    title: "best hiking trails near me",
   },
   {
-    prependIcon: 'mdi-clock-outline',
-    title: 'how to learn a new language',
+    prependIcon: "mdi-clock-outline",
+    title: "how to learn a new language",
   },
   {
-    prependIcon: 'mdi-clock-outline',
-    title: 'DIY home organization ideas',
+    prependIcon: "mdi-clock-outline",
+    title: "DIY home organization ideas",
   },
   {
-    prependIcon: 'mdi-clock-outline',
-    title: 'latest fashion trends',
+    prependIcon: "mdi-clock-outline",
+    title: "latest fashion trends",
   },
-]
+];
 
 const navigationLabel = computed(() => t("layout.actions.openNavigation"));
 const goBackLabel = computed(() => t("layout.actions.goBack"));

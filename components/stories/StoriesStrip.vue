@@ -95,7 +95,7 @@ onMounted(updateOverflow);
 watch(
   () => [props.items, props.items?.length],
   () => updateOverflow(),
-  { flush: "post" }
+  { flush: "post" },
 );
 
 useResizeObserver(viewport, () => updateOverflow());

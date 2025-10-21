@@ -23,21 +23,20 @@ function createDeferred<T>(): Deferred<T> {
 }
 
 const createMockComponent = vi.hoisted(
-  () =>
-    (name: string, slot?: string) =>
-      defineComponent({
-        name,
-        setup(_, { slots }) {
-          return () =>
-            h(
-              "div",
-              {
-                "data-test": name.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
-              },
-              slot ? slot : slots.default?.(),
-            );
-        },
-      }),
+  () => (name: string, slot?: string) =>
+    defineComponent({
+      name,
+      setup(_, { slots }) {
+        return () =>
+          h(
+            "div",
+            {
+              "data-test": name.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
+            },
+            slot ? slot : slots.default?.(),
+          );
+      },
+    }),
 );
 
 const asyncComponentDeferreds = vi.hoisted(() => ({
@@ -200,7 +199,11 @@ describe("pages/index Suspense fallbacks", () => {
 
     schedule.mockClear();
 
-    (globalThis as { useNuxtApp?: () => { isHydrating: boolean; $i18n: { t: (key: string) => string } } }).useNuxtApp = () => ({
+    (
+      globalThis as {
+        useNuxtApp?: () => { isHydrating: boolean; $i18n: { t: (key: string) => string } };
+      }
+    ).useNuxtApp = () => ({
       isHydrating: false,
       $i18n: { t: (key: string) => key },
     });

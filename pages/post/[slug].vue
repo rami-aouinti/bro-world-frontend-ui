@@ -79,7 +79,9 @@ import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const BlogPostCard = defineAsyncComponent({ loader: blogPostCardLoader });
-const PostCardSkeleton = defineAsyncComponent(() => import("~/components/blog/PostCardSkeleton.vue"));
+const PostCardSkeleton = defineAsyncComponent(
+  () => import("~/components/blog/PostCardSkeleton.vue"),
+);
 
 await prefetchBlogPostCard();
 
@@ -112,7 +114,12 @@ const reactionLabels = computed<Record<ReactionType, string>>(() => ({
 }));
 
 function sanitizeText(value?: string | null) {
-  return value?.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() ?? "";
+  return (
+    value
+      ?.replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim() ?? ""
+  );
 }
 
 function findPostInStore(targetSlug: string) {
@@ -192,7 +199,11 @@ async function resolvePost(targetSlug: string): Promise<BlogPost> {
   throw createError({ statusCode: 404, statusMessage: t("blog.posts.notFound") });
 }
 
-const { data: post, pending, error } = await useAsyncData(
+const {
+  data: post,
+  pending,
+  error,
+} = await useAsyncData(
   () => `post-${slug.value}`,
   async () => resolvePost(slug.value),
   { watch: [slug] },

@@ -420,9 +420,7 @@ import { demoEcommerceOrders } from "~/lib/demo/ecommerce";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VStepper = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VStepper),
-);
+const VStepper = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VStepper));
 
 const VStepperHeader = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VStepperHeader),
@@ -440,9 +438,7 @@ const VStepperWindowItem = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VStepperWindowItem),
 );
 
-const VTimeline = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VTimeline),
-);
+const VTimeline = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VTimeline));
 
 const VTimelineItem = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VTimelineItem),

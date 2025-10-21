@@ -210,9 +210,7 @@ import { formatCurrency } from "~/lib/demo/ecommerce";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VTable = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VTable),
-);
+const VTable = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VTable));
 
 const VEmptyState = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VEmptyState),

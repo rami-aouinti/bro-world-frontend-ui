@@ -211,9 +211,7 @@ const ProfileSecurityTwoFactorSection = defineAsyncComponent({
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VTable = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VTable),
-);
+const VTable = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VTable));
 
 const { t, locale } = useI18n();
 const auth = useAuthSession();

@@ -72,9 +72,7 @@
             class="align-stretch"
             dense
           >
-            <v-col
-              cols="12"
-            >
+            <v-col cols="12">
               <div class="about-section__heading">
                 <h2
                   id="values-title"
@@ -448,9 +446,7 @@ import MissionSidebarCards from "~/components/about/MissionSidebarCards.vue";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
-const VTimeline = defineAsyncComponent(() =>
-  vuetifyComponentsPromise.then((mod) => mod.VTimeline),
-);
+const VTimeline = defineAsyncComponent(() => vuetifyComponentsPromise.then((mod) => mod.VTimeline));
 
 const VTimelineItem = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VTimelineItem),
