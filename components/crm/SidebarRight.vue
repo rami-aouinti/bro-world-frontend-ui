@@ -177,14 +177,16 @@ const { t } = useI18n();
 }
 
 .crm-sidebar__section {
-  background: white;
-  border-radius: 1rem;
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  background:
+    linear-gradient(135deg, rgba(var(--v-theme-primary), 0.12), transparent 45%),
+    rgba(var(--v-theme-surface), 0.9);
+  border-radius: var(--ui-radius-lg);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.35);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 18px 40px -24px rgba(var(--v-theme-shadow), 0.4);
 }
 
 .crm-sidebar__header {
@@ -198,17 +200,18 @@ const { t } = useI18n();
   margin: 0;
   font-size: 1.15rem;
   font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .crm-sidebar__header p {
   margin: 0.3rem 0 0;
   font-size: 0.85rem;
-  color: rgb(100 116 139);
+  color: rgba(var(--v-theme-on-surface), 0.65);
 }
 
 .crm-sidebar__empty {
   text-align: center;
-  color: rgb(100 116 139);
+  color: rgba(var(--v-theme-on-surface), 0.65);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -236,10 +239,10 @@ const { t } = useI18n();
 .crm-sidebar__task-avatar {
   width: 2.6rem;
   height: 2.6rem;
-  border-radius: 0.9rem;
+  border-radius: var(--ui-radius-md);
   display: grid;
   place-items: center;
-  color: white;
+  color: rgb(var(--v-theme-on-secondary));
   font-weight: 700;
   font-size: 0.95rem;
 }
@@ -255,26 +258,26 @@ const { t } = useI18n();
   margin: 0;
   font-size: 0.95rem;
   font-weight: 600;
-  color: rgb(15 23 42);
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .crm-sidebar__project-key,
 .crm-sidebar__task-meta {
   font-size: 0.8rem;
-  color: rgb(100 116 139);
+  color: rgba(var(--v-theme-on-surface), 0.65);
 }
 
 .crm-sidebar__project-badge {
-  background: rgba(15, 23, 42, 0.08);
-  color: rgb(15 23 42);
+  background: rgba(var(--v-theme-secondary), 0.16);
+  color: rgb(var(--v-theme-on-secondary));
   font-weight: 600;
-  border-radius: 999px;
+  border-radius: var(--ui-radius-pill);
   padding: 0.25rem 0.8rem;
 }
 
 .crm-sidebar__task-priority {
   padding: 0.25rem 0.6rem;
-  border-radius: 999px;
+  border-radius: var(--ui-radius-pill);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;

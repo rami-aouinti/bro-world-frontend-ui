@@ -118,12 +118,14 @@ const sprintSelectItems = computed(() =>
   })),
 );
 
+const themeSecondaryColor = "rgb(var(--v-theme-secondary))";
+
 const projectSummaries = computed(() =>
   board.projectsForCurrentUser.value.map((project) => ({
     id: project.id,
     name: project.name,
     key: project.key || project.name.slice(0, 3).toUpperCase(),
-    color: project.color || "#64748b",
+    color: project.color || themeSecondaryColor,
     taskCount: board.taskCountForProjectInSprint(project.id, activeSprintId.value),
   })),
 );
@@ -131,14 +133,26 @@ const projectSummaries = computed(() =>
 function resolvePriorityMeta(priority: CrmBoardTaskPriority) {
   switch (priority) {
     case "Urgent":
-      return { color: "#dc2626", text: "#fef2f2" };
+      return {
+        color: "rgba(var(--v-theme-error), 0.16)",
+        text: "rgb(var(--v-theme-error))",
+      };
     case "High":
-      return { color: "#f97316", text: "#fff7ed" };
+      return {
+        color: "rgba(var(--v-theme-warning), 0.16)",
+        text: "rgb(var(--v-theme-warning))",
+      };
     case "Medium":
-      return { color: "#0284c7", text: "#e0f2fe" };
+      return {
+        color: "rgba(var(--v-theme-info), 0.16)",
+        text: "rgb(var(--v-theme-info))",
+      };
     case "Low":
     default:
-      return { color: "#0f766e", text: "#ecfdf5" };
+      return {
+        color: "rgba(var(--v-theme-success), 0.16)",
+        text: "rgb(var(--v-theme-success))",
+      };
   }
 }
 
@@ -172,7 +186,7 @@ const recentTaskSummaries = computed(() => {
       priorityColor: priorityMeta.color,
       priorityTextColor: priorityMeta.text,
       assigneeInitials: assignee?.initials ?? null,
-      assigneeColor: assignee?.avatarColor ?? null,
+      assigneeColor: assignee?.avatarColor ?? themeSecondaryColor,
     };
   });
 });
@@ -280,7 +294,14 @@ registerRightSidebarContent(sidebarContent);
 <style scoped>
 .crm-index {
   min-height: 100vh;
-  background: linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(241, 245, 249, 0.7) 100%);
+  background:
+    radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.12), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(var(--v-theme-secondary), 0.1), transparent 60%),
+    linear-gradient(
+      180deg,
+      rgba(var(--v-theme-surface), 1) 0%,
+      rgba(var(--v-theme-surface-variant), 0.55) 100%
+    );
 }
 
 .crm-index__header {
@@ -302,13 +323,13 @@ registerRightSidebarContent(sidebarContent);
   margin: 0 0 0.5rem;
   font-size: clamp(2rem, 3vw, 2.6rem);
   font-weight: 700;
-  color: rgb(15 23 42);
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .crm-index__header-text p {
   margin: 0;
   max-width: 560px;
-  color: rgb(71 85 105);
+  color: rgba(var(--v-theme-on-surface), 0.72);
   font-size: 1rem;
 }
 

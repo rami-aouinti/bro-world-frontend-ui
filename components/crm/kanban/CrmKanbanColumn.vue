@@ -4,6 +4,7 @@
     :class="{ 'kanban-column--active': isDragOver }"
     :aria-labelledby="columnLabelId"
     role="list"
+    :style="{ '--kanban-column-accent': meta.backgroundColor }"
     @dragover.prevent="handleDragOver"
     @dragenter="handleDragEnter"
     @dragleave="handleDragLeave"
@@ -66,12 +67,12 @@
         </p>
         <div class="kanban-card__footer">
           <div class="kanban-card__assignee">
-            <div
-              v-if="task.assigneeInitials"
-              class="kanban-card__avatar"
-              :style="{ backgroundColor: task.assigneeColor || '#64748b' }"
-              aria-hidden="true"
-            >
+          <div
+            v-if="task.assigneeInitials"
+            class="kanban-card__avatar"
+            :style="{ backgroundColor: task.assigneeColor || 'rgb(var(--v-theme-secondary))' }"
+            aria-hidden="true"
+          >
               {{ task.assigneeInitials }}
             </div>
             <span class="kanban-card__assignee-name">
@@ -207,19 +208,28 @@ function handleDrop(event: DragEvent) {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: rgba(148, 163, 184, 0.14);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 1rem;
+  background:
+    linear-gradient(
+      135deg,
+      var(--kanban-column-accent, rgba(var(--v-theme-primary), 0.12)),
+      transparent 55%
+    ),
+    rgba(var(--v-theme-surface), 0.88);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.35);
+  border-radius: var(--ui-radius-lg);
   padding: 1.25rem;
   min-height: 420px;
   transition:
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  box-shadow: 0 18px 40px -26px rgba(var(--v-theme-shadow), 0.45);
 }
 
 .kanban-column--active {
-  border-color: rgba(59, 130, 246, 0.6);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: rgba(var(--v-theme-primary), 0.45);
+  box-shadow: 0 0 0 3px rgba(var(--v-theme-primary), 0.18);
+  transform: translateY(-2px);
 }
 
 .kanban-column__header {
@@ -239,28 +249,29 @@ function handleDrop(event: DragEvent) {
   margin: 0;
   font-size: 1.1rem;
   font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .kanban-column__title p {
   margin: 0.125rem 0 0;
-  color: rgb(100 116 139);
+  color: rgba(var(--v-theme-on-surface), 0.65);
   font-size: 0.85rem;
 }
 
 .kanban-column__icon {
   width: 2rem;
   height: 2rem;
-  border-radius: 0.75rem;
+  border-radius: var(--ui-radius-md);
   display: grid;
   place-items: center;
-  color: white;
+  color: rgb(var(--v-theme-on-primary));
 }
 
 .kanban-column__badge {
-  background: rgba(15, 23, 42, 0.08);
-  color: rgb(15 23 42);
+  background: rgba(var(--v-theme-secondary), 0.18);
+  color: rgb(var(--v-theme-on-surface));
   font-weight: 600;
-  border-radius: 999px;
+  border-radius: var(--ui-radius-pill);
   padding: 0.25rem 0.75rem;
   min-width: 2.25rem;
   text-align: center;
@@ -276,22 +287,22 @@ function handleDrop(event: DragEvent) {
 }
 
 .kanban-card {
-  background: white;
-  border-radius: 0.75rem;
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(var(--v-theme-surface), 0.95);
+  border-radius: var(--ui-radius-md);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.35);
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   cursor: grab;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 12px 28px -18px rgba(var(--v-theme-shadow), 0.42);
   transition:
     box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 
 .kanban-card:focus-visible {
-  outline: 3px solid rgba(59, 130, 246, 0.35);
+  outline: var(--ui-focus);
   outline-offset: 3px;
 }
 
@@ -315,7 +326,7 @@ function handleDrop(event: DragEvent) {
   align-items: center;
   justify-content: center;
   padding: 0.2rem 0.6rem;
-  border-radius: 999px;
+  border-radius: var(--ui-radius-pill);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -332,13 +343,13 @@ function handleDrop(event: DragEvent) {
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
-  color: rgb(15 23 42);
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .kanban-card__subtitle {
   margin: 0;
   font-size: 0.85rem;
-  color: rgb(100 116 139);
+  color: rgba(var(--v-theme-on-surface), 0.65);
 }
 
 .kanban-card__footer {
@@ -359,7 +370,7 @@ function handleDrop(event: DragEvent) {
 .kanban-card__avatar {
   width: 2rem;
   height: 2rem;
-  border-radius: 999px;
+  border-radius: var(--ui-radius-pill);
   font-size: 0.85rem;
   font-weight: 600;
   color: white;
@@ -369,7 +380,7 @@ function handleDrop(event: DragEvent) {
 
 .kanban-card__assignee-name {
   font-size: 0.85rem;
-  color: rgb(30 41 59);
+  color: rgba(var(--v-theme-on-surface), 0.78);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -380,16 +391,16 @@ function handleDrop(event: DragEvent) {
   align-items: center;
   gap: 0.25rem;
   font-size: 0.8rem;
-  color: rgb(30 64 175);
+  color: rgb(var(--v-theme-primary));
   font-weight: 600;
 }
 
 .kanban-column__empty {
-  border: 1px dashed rgba(148, 163, 184, 0.6);
-  border-radius: 0.75rem;
+  border: 1px dashed rgba(var(--v-theme-outline), 0.45);
+  border-radius: var(--ui-radius-md);
   padding: 1.5rem;
   text-align: center;
-  color: rgb(100 116 139);
+  color: rgba(var(--v-theme-on-surface), 0.65);
   font-size: 0.9rem;
 }
 </style>
