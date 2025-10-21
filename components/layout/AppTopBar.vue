@@ -35,12 +35,12 @@
     >
       <v-autocomplete
         :items="items"
-        class="mx-auto w-full max-w-[360px] rounded-2xl border border-white/5 bg-background/60 text-sm backdrop-blur md:max-w-[420px]"
+        class="app-top-bar__search mx-auto w-full max-w-[360px] rounded-2xl bg-background/60 text-sm backdrop-blur md:max-w-[420px]"
         density="compact"
         hide-details
         menu-icon=""
         placeholder="Search Anything in BroWorld"
-        variant="solo"
+        variant="solo-filled"
         auto-select-first
         item-props
       >
@@ -452,6 +452,13 @@ function markAllNotifications() {
 .app-top-bar :deep(.v-toolbar__content) {
   background-color: transparent !important;
   color: inherit;
+}
+
+.app-top-bar :deep(.app-top-bar__search .v-field) {
+  background-color: rgba(var(--v-theme-background), 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: inherit;
+  box-shadow: none;
 }
 
 .app-top-bar :deep(.v-btn),
