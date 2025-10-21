@@ -140,19 +140,27 @@
                       v-if="rightSidebarContent"
                       class="flex flex-col gap-6"
                     >
-                      <div
-                        v-if="rightSidebarContent.wrapperClass"
-                        :class="rightSidebarContent.wrapperClass"
-                      >
+                      <template v-if="rightSidebarContent.component">
+                        <div
+                          v-if="rightSidebarContent.wrapperClass"
+                          :class="rightSidebarContent.wrapperClass"
+                        >
+                          <component
+                            :is="rightSidebarContent.component"
+                            v-bind="rightSidebarContent.props"
+                          />
+                        </div>
                         <component
                           :is="rightSidebarContent.component"
+                          v-else
                           v-bind="rightSidebarContent.props"
                         />
-                      </div>
-                      <component
-                        :is="rightSidebarContent.component"
+                      </template>
+                      <div
                         v-else
-                        v-bind="rightSidebarContent.props"
+                        :class="['right-sidebar-placeholder', rightSidebarContent.wrapperClass]"
+                        :style="rightSidebarPlaceholderStyle"
+                        aria-hidden="true"
                       />
                     </div>
                     <div
@@ -298,12 +306,16 @@ import {
   ref,
   watch,
   watchEffect,
+  type CSSProperties,
 } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
 import { useIntersectionObserver, useResizeObserver } from "@vueuse/core";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
-import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import {
+  useLayoutRightSidebar,
+  DEFAULT_RIGHT_SIDEBAR_INTRINSIC_HEIGHT,
+} from "~/composables/useLayoutRightSidebar";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
 import {
@@ -592,6 +604,16 @@ const showNavigation = computed(() => {
   return currentRoute.value?.meta?.showNavbar !== false;
 });
 const { rightSidebarContent } = useLayoutRightSidebar();
+const rightSidebarPlaceholderStyle = computed<CSSProperties>(() => {
+  const rawHeight = rightSidebarContent.value?.intrinsicHeight ?? DEFAULT_RIGHT_SIDEBAR_INTRINSIC_HEIGHT;
+  const numericHeight = typeof rawHeight === "number" ? Math.max(0, Math.round(rawHeight)) : null;
+  const heightValue = numericHeight !== null ? `${numericHeight}px` : String(rawHeight);
+
+  return {
+    containIntrinsicSize: heightValue,
+    minBlockSize: heightValue,
+  } satisfies CSSProperties;
+});
 const shouldShowDashboardRightSidebar = computed(
   () => routeRightSidebarPreset.value === "dashboard" && !rightSidebarContent.value,
 );
