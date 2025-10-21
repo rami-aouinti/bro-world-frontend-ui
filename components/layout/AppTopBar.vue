@@ -30,23 +30,27 @@
     />
 
     <div
-        v-if="!props.isMobile"
-        class="flex-1 items-center px-4 md:flex"
+      v-if="!props.isMobile"
+      class="flex flex-1 justify-center px-4"
     >
       <v-autocomplete
-          :items="items"
-          append-inner-icon="mdi-microphone"
-          class="mx-auto my-auto"
-          density="comfortable"
-          menu-icon=""
-          placeholder="Search Anything in BroWorld"
-          prepend-inner-icon="mdi-magnify"
-          style="max-width: 350px;"
-          variant="solo"
-          auto-select-first
-          item-props
-          rounded
-      ></v-autocomplete>
+        :items="items"
+        class="mx-auto w-full max-w-[360px] rounded-2xl border border-white/5 bg-background/60 text-sm backdrop-blur md:max-w-[420px]"
+        density="comfortable"
+        hide-details
+        menu-icon=""
+        placeholder="Search Anything in BroWorld"
+        variant="solo-filled"
+        auto-select-first
+        item-props
+      >
+        <template #prepend-inner>
+          <v-icon class="mr-2 text-foreground/70" size="20">mdi-magnify</v-icon>
+        </template>
+        <template #append-inner>
+          <v-icon class="text-foreground/70" size="20">mdi-microphone</v-icon>
+        </template>
+      </v-autocomplete>
     </div>
 
     <template #append>
