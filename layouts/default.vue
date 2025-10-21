@@ -30,7 +30,7 @@
 
     <!-- LEFT DRAWER -->
     <v-navigation-drawer
-      v-if="showNavigation && isMobile"
+      v-if="showNavigation"
       v-model="leftDrawer"
       app
       :mobile="isMobile"
@@ -79,7 +79,7 @@
 
     <!-- RIGHT DRAWER -->
     <v-navigation-drawer
-      v-if="showNavigation && isMobile"
+      v-if="showNavigation"
       v-model="rightDrawer"
       app
       :mobile="isMobile"
@@ -249,195 +249,6 @@
             :class="{ 'app-container-wrapper--loading': !areSidebarsReady }"
           >
             <div
-              v-if="shouldShowDesktopSidebars"
-              class="app-grid"
-              :class="{
-                'app-grid--left-hidden': !shouldShowDesktopLeftSidebar,
-                'app-grid--right-hidden': !shouldShowDesktopRightSidebar,
-              }"
-            >
-              <div
-                v-if="shouldShowDesktopLeftSidebar"
-                class="app-grid__sidebar app-grid__sidebar--left"
-              >
-                <div class="app-grid__panel">
-                  <template v-if="isHydrated && shouldRenderParticles">
-                    <ParticlesBg
-                      ref="leftParticlesRef"
-                      class="sidebar-default-card__particles"
-                      :quantity="30"
-                      :ease="40"
-                      :staticity="12"
-                      :auto-start="false"
-                      refresh
-                    />
-                  </template>
-                  <span
-                    v-else
-                    class="sidebar-default-card__particles"
-                    aria-hidden="true"
-                  />
-                  <div class="pane-scroll py-5">
-                    <slot
-                      name="left-sidebar"
-                      :items="sidebarItems"
-                      :variant="sidebarVariant"
-                      :active-key="activeSidebar"
-                      :on-select="handleSidebarSelect"
-                    >
-                      <AppSidebar
-                        :is-dark="isDark"
-                        :items="sidebarItems"
-                        :variant="sidebarVariant"
-                        :active-key="activeSidebar"
-                        @select="handleSidebarSelect"
-                      />
-                    </slot>
-                  </div>
-                </div>
-              </div>
-              <div class="app-grid__main">
-                <div
-                  class="app-container app-container--content"
-                  :class="{ 'app-container--content-hidden': !areSidebarsReady }"
-                  :aria-hidden="!areSidebarsReady"
-                  :inert="!areSidebarsReady ? '' : undefined"
-                >
-                  <slot />
-                </div>
-              </div>
-              <div
-                v-if="shouldShowDesktopRightSidebar"
-                class="app-grid__sidebar app-grid__sidebar--right"
-                data-test="app-right-drawer"
-              >
-                <div class="app-grid__panel">
-                  <template v-if="isHydrated && canShowRightWidgets && shouldRenderParticles">
-                    <ParticlesBg
-                      ref="rightParticlesRef"
-                      class="sidebar-default-card__particles"
-                      :quantity="30"
-                      :ease="40"
-                      :staticity="12"
-                      :auto-start="false"
-                      refresh
-                    />
-                  </template>
-                  <span
-                    v-else
-                    class="sidebar-default-card__particles"
-                    aria-hidden="true"
-                  />
-                  <Suspense
-                    @resolve="handleRightDrawerResolve"
-                    @pending="handleRightDrawerPending"
-                  >
-                    <template #default>
-                      <div class="right-drawer-wrapper">
-                        <div
-                          class="pane-scroll"
-                          :class="['px-1', { hidden: !shouldRenderRightSidebarContent }]"
-                          :aria-hidden="!shouldRenderRightSidebarContent"
-                        >
-                          <AppSidebarRight
-                            v-if="shouldRenderRightSidebarContent"
-                            :is-dark="isDark"
-                            :items="sidebarItems"
-                            :active-key="activeSidebar"
-                            :eager="rightDrawer"
-                            @select="handleSidebarSelect"
-                          >
-                            <slot
-                              name="right-sidebar"
-                              :weather="weather"
-                              :leaderboard="leaderboard"
-                              :rating="rating"
-                              :user="user"
-                            >
-                              <div
-                                v-if="rightSidebarContent"
-                                class="flex flex-col gap-6"
-                              >
-                                <div
-                                  v-if="rightSidebarContent.wrapperClass"
-                                  :class="rightSidebarContent.wrapperClass"
-                                >
-                                  <template v-if="rightSidebarContent.component">
-                                    <div
-                                      v-if="rightSidebarContent.wrapperClass"
-                                      :class="rightSidebarContent.wrapperClass"
-                                    >
-                                      <component
-                                        :is="rightSidebarContent.component"
-                                        v-bind="rightSidebarContent.props"
-                                      />
-                                    </div>
-                                    <component
-                                      :is="rightSidebarContent.component"
-                                      v-else
-                                      v-bind="rightSidebarContent.props"
-                                    />
-                                  </template>
-                                  <div
-                                    v-else
-                                    :class="['right-sidebar-placeholder', rightSidebarContent.wrapperClass]"
-                                    :style="rightSidebarPlaceholderStyle"
-                                    aria-hidden="true"
-                                  />
-                                </div>
-                                <component
-                                  :is="rightSidebarContent.component"
-                                  v-else
-                                  v-bind="rightSidebarContent.props"
-                                />
-                              </div>
-                              <div
-                                v-else-if="shouldShowDashboardRightSidebar"
-                                class="flex flex-col gap-6"
-                              >
-                                <SidebarWeatherCard
-                                  v-if="weather"
-                                  :weather="weather"
-                                />
-                                <SidebarLeaderboardCard
-                                  v-if="leaderboard.participants.length > 0"
-                                  :title="leaderboard.title"
-                                  :live-label="leaderboard.live"
-                                  :participants="leaderboard.participants"
-                                />
-                                <SidebarRatingCard
-                                  v-if="rating"
-                                  :rating="{
-                                    title: rating.title,
-                                    subtitle: rating.subtitle,
-                                    icon: rating.icon,
-                                  }"
-                                />
-                                <SidebarContactCard v-if="shouldShowContactSidebarCard" />
-                              </div>
-                            </slot>
-                          </AppSidebarRight>
-                        </div>
-                      </div>
-                    </template>
-                    <template #fallback>
-                      <div class="right-drawer-wrapper">
-                        <div class="pane-scroll">
-                          <div class="flex flex-col gap-6">
-                            <SidebarWeatherCardSkeleton />
-                            <SidebarLeaderboardCardSkeleton />
-                            <SidebarRatingCardSkeleton />
-                            <SidebarContactCardSkeleton v-if="shouldShowContactSidebarCard" />
-                          </div>
-                        </div>
-                      </div>
-                    </template>
-                  </Suspense>
-                </div>
-              </div>
-            </div>
-            <div
-              v-else
               class="app-container app-container--content"
               :class="{ 'app-container--content-hidden': !areSidebarsReady }"
               :aria-hidden="!areSidebarsReady"
@@ -970,8 +781,9 @@ const layoutInsets = computed(() => {
   }
 
   const top = resolvedAppBarHeight.value || APP_TOP_BAR_HEIGHT_VALUE;
-  const left = "0px";
-  const right = "0px";
+  const isDesktop = !isMobile.value;
+  const left = isDesktop && leftDrawer.value ? "320px" : "0px";
+  const right = isDesktop && canShowRightWidgets.value && rightDrawer.value ? "340px" : "0px";
 
   return {
     top,
@@ -1025,15 +837,6 @@ const showRightWidgets = computed(() => {
 });
 
 const canShowRightWidgets = computed(() => showNavigation.value && showRightWidgets.value);
-const shouldShowDesktopSidebars = computed(
-  () => showNavigation.value && !isMobile.value,
-);
-const shouldShowDesktopLeftSidebar = computed(
-  () => shouldShowDesktopSidebars.value && leftDrawer.value,
-);
-const shouldShowDesktopRightSidebar = computed(
-  () => shouldShowDesktopSidebars.value && canShowRightWidgets.value && rightDrawer.value,
-);
 
 if (import.meta.client) {
   const { stop: stopMainParticlesObserver } = useIntersectionObserver(
@@ -1600,63 +1403,6 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 
 .right-drawer-wrapper {
   display: contents;
-}
-
-.app-grid {
-  position: relative;
-  display: grid;
-  width: 100%;
-  gap: clamp(16px, 4vw, 24px);
-  grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
-  grid-template-areas: "left main right";
-  align-items: start;
-}
-
-.app-grid--left-hidden {
-  grid-template-columns: minmax(0, 9fr) minmax(0, 3fr);
-  grid-template-areas: "main right";
-}
-
-.app-grid--right-hidden {
-  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
-  grid-template-areas: "left main";
-}
-
-.app-grid--left-hidden.app-grid--right-hidden {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "main";
-}
-
-.app-grid__sidebar {
-  position: relative;
-  min-width: 0;
-}
-
-.app-grid__sidebar--left {
-  grid-area: left;
-}
-
-.app-grid__sidebar--right {
-  grid-area: right;
-}
-
-.app-grid__main {
-  grid-area: main;
-  min-width: 0;
-}
-
-.app-grid__panel {
-  position: relative;
-  height: 100%;
-  border-radius: clamp(20px, 5vw, 28px);
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
-  background: color-mix(in srgb, rgb(var(--v-theme-surface)) 94%, transparent);
-  overflow: hidden;
-  backdrop-filter: blur(18px);
-}
-
-.app-grid__panel .pane-scroll {
-  height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
 }
 
 .main-scroll {
