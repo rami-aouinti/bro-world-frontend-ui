@@ -42,24 +42,17 @@
           :class="{ 'animate-spin': props.refreshing }"
         />
       </button>
-      <button
-        v-show="!props.isMobile"
-        type="button"
-        :class="props.iconTriggerClasses"
-        :aria-label="props.navigationLabel"
-        @click="emit('toggle-left')"
-      >
-        <AppIcon
-          name="mdi:format-align-justify"
-          :size="22"
-        />
-      </button>
+      <LayoutSearchButton
+        v-if="!props.isMobile"
+        :class="desktopSearchClasses"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import LayoutSearchButton from "../LayoutSearchButton.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -83,4 +76,6 @@ const navGroupClasses = computed(() => {
 
   return "flex items-center gap-12 px-4 sm:gap-4 sm:px-6 md:gap-6 md:px-8";
 });
+
+const desktopSearchClasses = computed(() => "hidden md:inline-flex");
 </script>
