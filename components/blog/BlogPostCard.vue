@@ -85,26 +85,6 @@
         @reply="openReply"
         @submit="handleCommentSubmit"
       />
-      <template v-else>
-        <div class="flex flex-col gap-2 py-4">
-          <button
-            type="button"
-            class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            data-test="load-comments-button"
-            @click="handleLoadCommentsClick"
-          >
-            <Icon
-              name="mdi:comment-text-outline"
-              class="h-4 w-4"
-              aria-hidden="true"
-            />
-            {{ loadCommentsLabel }}
-          </button>
-          <p class="text-center text-xs text-muted-foreground">
-            {{ loadCommentsHint }}
-          </p>
-        </div>
-      </template>
       <button
         v-if="commentsError === loginToViewCommentsMessage && !commentsLoading"
         ref="loginPromptRef"
