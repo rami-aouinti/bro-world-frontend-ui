@@ -1,6 +1,11 @@
 <template>
   <header class="flex flex-wrap items-start justify-between gap-4">
-    <div class="flex items-center gap-3">
+    <component
+      :is="authorLink ? 'NuxtLink' : 'div'"
+      v-bind="authorLinkAttributes"
+      class="flex items-center gap-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background rounded-full px-1 -mx-1 py-1"
+      data-test="post-author-link"
+    >
       <div class="h-12 w-12 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
         <NuxtImg
           :src="avatarSrc"
@@ -21,7 +26,7 @@
           {{ publishedLabel }}
         </p>
       </div>
-    </div>
+    </component>
     <ClientOnly>
       <AuthorActionMenu
         data-test="author-actions"
@@ -60,6 +65,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import type { RouteLocationRaw } from "vue-router";
 import type { BlogUser } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
 import { optimizeAvatarUrl } from "~/lib/images/avatar";
@@ -82,6 +88,8 @@ const props = withDefaults(
     editLabel?: string;
     deleteLabel?: string;
     preferEagerMediaLoading?: boolean;
+    authorLink?: RouteLocationRaw | null;
+    authorLinkAriaLabel?: string;
   }>(),
   {
     isAuthor: false,
@@ -96,6 +104,7 @@ const props = withDefaults(
     editLabel: "Edit",
     deleteLabel: "Delete",
     preferEagerMediaLoading: false,
+    authorLink: null,
   },
 );
 
@@ -119,6 +128,23 @@ const actionsAriaLabel = computed(() => props.actionsAriaLabel);
 const editLabel = computed(() => props.editLabel);
 const deleteLabel = computed(() => props.deleteLabel);
 const preferEagerMediaLoading = computed(() => props.preferEagerMediaLoading);
+const authorLink = computed(() => props.authorLink ?? null);
+const authorLinkAriaLabel = computed(() => props.authorLinkAriaLabel ?? undefined);
+const authorLinkAttributes = computed<Record<string, unknown>>(() => {
+  if (!authorLink.value) {
+    return {};
+  }
+
+  const attributes: Record<string, unknown> = {
+    to: authorLink.value,
+  };
+
+  if (authorLinkAriaLabel.value) {
+    attributes["aria-label"] = authorLinkAriaLabel.value;
+  }
+
+  return attributes;
+});
 const imageLoadingMode = computed(() => (preferEagerMediaLoading.value ? "eager" : "lazy"));
 const imageFetchPriority = computed(() => (preferEagerMediaLoading.value ? "high" : undefined));
 const avatarSize = 48;

@@ -461,7 +461,8 @@
         "comment": "Kommentieren",
         "share": "Teilen",
         "viewPost": "Mehr lesen",
-        "viewPostAria": "Beitrag \"{title}\" öffnen"
+        "viewPostAria": "Beitrag \"{title}\" öffnen",
+        "viewAuthorAria": "Profilseite von {name} öffnen"
       },
       "shareMenu": {
         "feed": "Im Feed teilen",
@@ -489,6 +490,16 @@
       "detailHeading": "Beitragsdetails",
       "notFound": "Dieser Beitrag wurde nicht gefunden.",
       "backToFeed": "Zurück zum Feed"
+    },
+    "authors": {
+      "title": "Autorprofil",
+      "description": "Entdecke Beiträge von {name}.",
+      "defaultDescription": "Entdecke Beiträge unserer Community-Autoren.",
+      "heading": "{name}",
+      "subtitle": "Neueste Updates dieses Autors.",
+      "postsHeading": "Neueste Beiträge",
+      "empty": "Dieser Autor hat noch keine Beiträge geteilt.",
+      "notFound": "Dieser Autor wurde nicht gefunden."
     },
     "comments": {
       "label": "Beteilige dich an der Diskussion",

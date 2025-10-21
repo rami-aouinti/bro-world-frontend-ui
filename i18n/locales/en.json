@@ -478,7 +478,8 @@
         "comment": "Comment",
         "share": "Share",
         "viewPost": "Read more",
-        "viewPostAria": "Open the post \"{title}\""
+        "viewPostAria": "Open the post \"{title}\"",
+        "viewAuthorAria": "Open {name}'s profile page"
       },
       "shareMenu": {
         "feed": "Share to feed",
@@ -506,6 +507,16 @@
       "detailHeading": "Post details",
       "notFound": "This post could not be found.",
       "backToFeed": "Back to feed"
+    },
+    "authors": {
+      "title": "Author profile",
+      "description": "Explore posts shared by {name}.",
+      "defaultDescription": "Explore posts shared by our community authors.",
+      "heading": "{name}",
+      "subtitle": "Latest updates from this author.",
+      "postsHeading": "Recent posts",
+      "empty": "This author hasn't shared any posts yet.",
+      "notFound": "This author could not be found."
     },
     "comments": {
       "label": "Join the discussion",
