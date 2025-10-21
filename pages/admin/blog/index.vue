@@ -465,6 +465,7 @@ const { t, locale } = useI18n();
 const pageDescription = computed(() => t("admin.blog.subtitle"));
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   showRightWidgets: false,
 });

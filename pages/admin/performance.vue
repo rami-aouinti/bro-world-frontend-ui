@@ -95,6 +95,7 @@ const currentRoute = computed(() => router.currentRoute.value);
 const pageDescription = computed(() => t("seo.performance.description"));
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   documentDriven: false,
   showRightWidgets: false,
