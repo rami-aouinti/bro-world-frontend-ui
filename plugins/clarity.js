@@ -47,7 +47,17 @@ export default defineNuxtPlugin(() => {
       t = l.createElement(r);
       t.async = true;
       t.setAttribute("data-loaded-by", "nuxt-clarity-plugin");
-      t.src = `https://www.clarity.ms/tag/${i}`;
+      t.addEventListener(
+        "error",
+        () => {
+          t.removeAttribute("data-proxy-src");
+          t.src = `https://www.clarity.ms/tag/${i}`;
+        },
+        { once: true },
+      );
+      const proxySrc = `/scripts/clarity/${i}.js`;
+      t.setAttribute("data-proxy-src", proxySrc);
+      t.src = proxySrc;
       y = l.getElementsByTagName(r)[0];
 
       if (y?.parentNode) {

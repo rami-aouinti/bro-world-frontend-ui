@@ -481,6 +481,11 @@ export default defineNuxtConfig({
         "cache-control": "public, max-age=31536000, immutable",
       },
     },
+    "/_ipx/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
     "/img/**": {
       headers: {
         "cache-control": "public, max-age=31536000, immutable",
@@ -492,6 +497,11 @@ export default defineNuxtConfig({
       },
     },
     "/icons/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
+    "/scripts/**": {
       headers: {
         "cache-control": "public, max-age=31536000, immutable",
       },
@@ -675,7 +685,12 @@ export default defineNuxtConfig({
   image: {
     format: ["webp", "avif"],
     dir: "public",
-    domains: ["images.unsplash.com", "bro-world-space.com", "bro-world.org"],
+    domains: [
+      "images.unsplash.com",
+      "bro-world-space.com",
+      "bro-world.org",
+      "avatars.githubusercontent.com",
+    ],
     screens: {
       sm: 320,
       md: 640,
@@ -686,7 +701,12 @@ export default defineNuxtConfig({
     ipx: {
       dir: "public",
       allowFiles: true,
-      domains: ["images.unsplash.com", "bro-world-space.com", "bro-world.org"],
+      domains: [
+        "images.unsplash.com",
+        "bro-world-space.com",
+        "bro-world.org",
+        "avatars.githubusercontent.com",
+      ],
     },
     presets: {
       lcp: {

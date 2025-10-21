@@ -252,6 +252,7 @@ const { t } = useI18n();
 const pageDescription = computed(() => t("admin.settings.sections.navigation.subtitle"));
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   showRightWidgets: true,
   documentDriven: false,
