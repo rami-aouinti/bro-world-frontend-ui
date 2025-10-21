@@ -1,138 +1,138 @@
 <template>
-  <aside
-    class="crm-sidebar"
-    :aria-label="t('pages.crm.sidebar.ariaLabel')"
+  <SidebarCard
+    class="text-card-foreground px-3 py-2"
+    glow
   >
-    <section class="crm-sidebar__section">
-      <header class="crm-sidebar__header">
-        <div>
-          <h2>{{ t("pages.crm.sidebar.projects.title") }}</h2>
-          <p>{{ t("pages.crm.sidebar.projects.subtitle") }}</p>
-        </div>
-        <v-btn
-          color="primary"
-          variant="tonal"
-          prepend-icon="mdi:plus"
-          class="text-none font-weight-semibold"
-          @click="$emit('create-project')"
-        >
-          {{ t("pages.crm.sidebar.projects.actions.new") }}
-        </v-btn>
-      </header>
-
-      <div
-        v-if="projects.length === 0"
-        class="crm-sidebar__empty"
-      >
-        <v-icon
-          icon="mdi:briefcase-outline"
-          size="32"
-          class="mb-3"
-        />
-        <p>{{ t("pages.crm.sidebar.projects.empty.description") }}</p>
-        <v-btn
-          color="primary"
-          variant="flat"
-          prepend-icon="mdi:plus"
-          class="text-none font-weight-semibold"
-          @click="$emit('create-project')"
-        >
-          {{ t("pages.crm.sidebar.projects.actions.create") }}
-        </v-btn>
+    <header class="crm-sidebar__header">
+      <div>
+        <h2>{{ t("pages.crm.sidebar.projects.title") }}</h2>
       </div>
-      <ul
-        v-else
-        class="crm-sidebar__project-list"
+      <v-btn
+        color="primary"
+        variant="tonal"
+        prepend-icon="mdi:plus"
+        class="text-none font-weight-semibold"
+        @click="$emit('create-project')"
       >
-        <li
-          v-for="project in projects"
-          :key="project.id"
-          class="crm-sidebar__project-item"
-        >
-          <div
-            class="crm-sidebar__project-avatar"
-            :style="{ backgroundColor: project.color }"
-            aria-hidden="true"
-          >
-            {{ project.key.slice(0, 2) }}
-          </div>
-          <div class="crm-sidebar__project-content">
-            <p class="crm-sidebar__project-name">{{ project.name }}</p>
-            <span class="crm-sidebar__project-key">{{ project.key }}</span>
-          </div>
-          <span class="crm-sidebar__project-badge">{{ project.taskCount }}</span>
-        </li>
-      </ul>
-    </section>
+        {{ t("pages.crm.sidebar.projects.actions.new") }}
+      </v-btn>
+    </header>
 
-    <section class="crm-sidebar__section">
-      <header class="crm-sidebar__header">
-        <div>
-          <h2>{{ t("pages.crm.sidebar.tasks.title") }}</h2>
-          <p>{{ t("pages.crm.sidebar.tasks.subtitle") }}</p>
+    <div
+      v-if="projects.length === 0"
+      class="crm-sidebar__empty"
+    >
+      <v-icon
+        icon="mdi:briefcase-outline"
+        size="32"
+        class="mb-3"
+      />
+      <p>{{ t("pages.crm.sidebar.projects.empty.description") }}</p>
+      <v-btn
+        color="primary"
+        variant="flat"
+        prepend-icon="mdi:plus"
+        class="text-none font-weight-semibold"
+        @click="$emit('create-project')"
+      >
+        {{ t("pages.crm.sidebar.projects.actions.create") }}
+      </v-btn>
+    </div>
+    <ul
+      v-else
+      class="crm-sidebar__project-list"
+    >
+      <li
+        v-for="project in projects"
+        :key="project.id"
+        class="crm-sidebar__project-item"
+      >
+        <div
+          class="crm-sidebar__project-avatar"
+          :style="{ backgroundColor: project.color }"
+          aria-hidden="true"
+        >
+          {{ project.key.slice(0, 2) }}
         </div>
-        <v-btn
-          color="primary"
-          variant="tonal"
-          prepend-icon="mdi:clipboard-plus"
-          class="text-none font-weight-semibold"
-          :disabled="projects.length === 0"
-          @click="$emit('create-task')"
-        >
-          {{ t("pages.crm.sidebar.tasks.actions.new") }}
-        </v-btn>
-      </header>
+        <div class="crm-sidebar__project-content">
+          <p class="crm-sidebar__project-name">{{ project.name }}</p>
+          <span class="crm-sidebar__project-key">{{ project.key }}</span>
+        </div>
+        <span class="crm-sidebar__project-badge">{{ project.taskCount }}</span>
+      </li>
+    </ul>
+  </SidebarCard>
 
-      <div
-        v-if="recentTasks.length === 0"
-        class="crm-sidebar__empty"
-      >
-        <v-icon
-          icon="mdi:clipboard-text-outline"
-          size="32"
-          class="mb-3"
-        />
-        <p>{{ t("pages.crm.sidebar.tasks.empty.description") }}</p>
+  <SidebarCard
+    class="text-card-foreground px-3 py-2"
+    glow
+  >
+    <header class="crm-sidebar__header">
+      <div>
+        <h2>{{ t("pages.crm.sidebar.tasks.title") }}</h2>
       </div>
-      <ul
-        v-else
-        class="crm-sidebar__task-list"
+      <v-btn
+        color="primary"
+        variant="tonal"
+        prepend-icon="mdi:clipboard-plus"
+        class="text-none font-weight-semibold"
+        :disabled="projects.length === 0"
+        @click="$emit('create-task')"
       >
-        <li
-          v-for="task in recentTasks"
-          :key="task.id"
-          class="crm-sidebar__task-item"
+        {{ t("pages.crm.sidebar.tasks.actions.new") }}
+      </v-btn>
+    </header>
+
+    <div
+      v-if="recentTasks.length === 0"
+      class="crm-sidebar__empty"
+    >
+      <v-icon
+        icon="mdi:clipboard-text-outline"
+        size="32"
+        class="mb-3"
+      />
+      <p>{{ t("pages.crm.sidebar.tasks.empty.description") }}</p>
+    </div>
+    <ul
+      v-else
+      class="crm-sidebar__task-list"
+    >
+      <li
+        v-for="task in recentTasks"
+        :key="task.id"
+        class="crm-sidebar__task-item"
+      >
+        <div
+          class="crm-sidebar__task-avatar"
+          :style="{ backgroundColor: task.assigneeColor || '#475569' }"
+          aria-hidden="true"
         >
-          <div
-            class="crm-sidebar__task-avatar"
-            :style="{ backgroundColor: task.assigneeColor || '#475569' }"
-            aria-hidden="true"
-          >
-            {{ task.assigneeInitials || "NA" }}
-          </div>
-          <div class="crm-sidebar__task-content">
-            <p class="crm-sidebar__task-title">{{ task.title }}</p>
-            <span class="crm-sidebar__task-meta">
-              {{ task.projectName }}
-              <span v-if="task.dueDateLabel"> • {{ task.dueDateLabel }}</span>
-            </span>
-          </div>
-          <span
-            class="crm-sidebar__task-priority"
-            :style="{ backgroundColor: task.priorityColor, color: task.priorityTextColor }"
-          >
-            {{ task.priority }}
+          {{ task.assigneeInitials || "NA" }}
+        </div>
+        <div class="crm-sidebar__task-content">
+          <p class="crm-sidebar__task-title">{{ task.title }}</p>
+          <span class="crm-sidebar__task-meta">
+            {{ task.projectName }}
+            <span v-if="task.dueDateLabel"> • {{ task.dueDateLabel }}</span>
           </span>
-        </li>
-      </ul>
-    </section>
-  </aside>
+        </div>
+        <span
+          class="crm-sidebar__task-priority"
+          :style="{ backgroundColor: task.priorityColor, color: task.priorityTextColor }"
+        >
+          {{ task.priority }}
+        </span>
+      </li>
+    </ul>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 
 import type { CrmBoardTaskPriority } from "~/stores/crm-board";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 type ProjectSummary = {
   id: string;

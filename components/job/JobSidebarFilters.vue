@@ -1,5 +1,4 @@
 <template>
-
   <SidebarCard
     class="text-card-foreground px-3 py-2"
     glow

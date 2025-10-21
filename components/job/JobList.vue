@@ -13,10 +13,10 @@
   <template v-else>
     <div v-if="jobs.length">
       <SidebarCard
-          v-for="job in jobs"
-          :key="job.id"
-          class="text-card-foreground px-3 py-3"
-          glow
+        v-for="job in jobs"
+        :key="job.id"
+        class="text-card-foreground px-3 py-3"
+        glow
       >
         <JobDetails :job="job" />
         <v-btn

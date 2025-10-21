@@ -1,57 +1,49 @@
 <template>
-  <main
-    class="crm-index"
-    aria-labelledby="crm-index-heading"
-  >
-    <v-container
-      fluid
-      class="py-10 px-6 px-md-10"
-    >
-      <header class="crm-index__header">
-        <div class="crm-index__header-text">
-          <h1 id="crm-index-heading">CRM — Index</h1>
-          <p>
-            Visualisez vos tâches de sprint, organisez-les par statut et accédez rapidement à vos
-            projets.
-          </p>
-        </div>
-        <div class="crm-index__header-actions">
-          <v-select
-            :model-value="activeSprintId"
-            :items="sprintSelectItems"
-            label="Sprint"
-            item-title="label"
-            item-value="value"
-            variant="outlined"
-            density="comfortable"
-            color="primary"
-            prepend-inner-icon="mdi:flag-checkered"
-            class="crm-index__sprint-select"
-            @update:model-value="handleSprintChange"
-          />
-          <v-btn
-            color="primary"
-            variant="flat"
-            prepend-icon="mdi:clipboard-plus"
-            class="text-none font-weight-semibold"
-            :disabled="projectOptionsForTasks.length === 0"
-            @click="openTaskDialog"
-          >
-            {{ t("pages.crm.sidebar.tasks.actions.new") }}
-          </v-btn>
-        </div>
-      </header>
-
-      <section class="crm-index__content">
-        <CrmKanbanBoard
-          class="crm-index__board"
-          :tasks="kanbanTasks"
-          :projects-by-id="projectMap"
-          :users-by-id="userMap"
-          @move="handleMoveTask"
+  <main aria-labelledby="crm-index-heading">
+    <header class="crm-index__header">
+      <div class="crm-index__header-text">
+        <h1 id="crm-index-heading">CRM — Index</h1>
+        <p>
+          Visualisez vos tâches de sprint, organisez-les par statut et accédez rapidement à vos
+          projets.
+        </p>
+      </div>
+      <div class="crm-index__header-actions">
+        <v-select
+          :model-value="activeSprintId"
+          :items="sprintSelectItems"
+          label="Sprint"
+          item-title="label"
+          item-value="value"
+          variant="outlined"
+          density="comfortable"
+          color="primary"
+          prepend-inner-icon="mdi:flag-checkered"
+          class="crm-index__sprint-select"
+          @update:model-value="handleSprintChange"
         />
-      </section>
-    </v-container>
+        <v-btn
+          color="primary"
+          variant="flat"
+          prepend-icon="mdi:clipboard-plus"
+          class="text-none font-weight-semibold"
+          :disabled="projectOptionsForTasks.length === 0"
+          @click="openTaskDialog"
+        >
+          {{ t("pages.crm.sidebar.tasks.actions.new") }}
+        </v-btn>
+      </div>
+    </header>
+
+    <section class="crm-index__content">
+      <CrmKanbanBoard
+        class="crm-index__board"
+        :tasks="kanbanTasks"
+        :projects-by-id="projectMap"
+        :users-by-id="userMap"
+        @move="handleMoveTask"
+      />
+    </section>
 
     <NewProjectDialog
       v-model="isProjectDialogOpen"

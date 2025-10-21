@@ -1,48 +1,48 @@
 <template>
   <v-row
-      class="mb-4"
-      justify="center"
+    class="mb-4"
+    justify="center"
   >
     <v-col
-        cols="12"
-        md="6"
-        class="text-center"
+      cols="12"
+      md="6"
+      class="text-center"
     >
       <v-btn
-          block
-          color="primary"
-          prepend-icon="mdi-plus"
-          rounded
-          variant="outlined"
-          @click="emit('create-job')"
+        block
+        color="primary"
+        prepend-icon="mdi-plus"
+        rounded
+        variant="outlined"
+        @click="emit('create-job')"
       >
         {{ t("job.job") }}
       </v-btn>
     </v-col>
     <v-col
-        cols="12"
-        md="6"
-        class="text-center"
+      cols="12"
+      md="6"
+      class="text-center"
     >
       <v-btn
-          block
-          color="primary"
-          prepend-icon="mdi-account-plus"
-          rounded
-          variant="outlined"
-          @click="emit('create-applicant')"
+        block
+        color="primary"
+        prepend-icon="mdi-account-plus"
+        rounded
+        variant="outlined"
+        @click="emit('create-applicant')"
       >
         {{ t("applicant.applicant") }}
       </v-btn>
     </v-col>
   </v-row>
   <v-text-field
-      v-model="selectedLocations"
-      :label="t('job.location')"
-      density="compact"
-      prepend-inner-icon="mdi-earth"
-      rounded="xl"
-      variant="outlined"
+    v-model="selectedLocations"
+    :label="t('job.location')"
+    density="compact"
+    prepend-inner-icon="mdi-earth"
+    rounded="xl"
+    variant="outlined"
   />
   <v-combobox
     v-model="selectedCompany"
@@ -152,7 +152,6 @@ const workOptions = ["Remote", "Onsite", "Hybrid"];
 const contractOptions = ["Fulltime", "Parttime"];
 
 const companyNames = computed(() => props.companies.map((company) => company.name));
-
 
 const search = ref("");
 const selectedLocations = ref("");

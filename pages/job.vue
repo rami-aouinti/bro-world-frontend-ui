@@ -1,82 +1,79 @@
 <template>
   <main aria-labelledby="job-heading">
     <section>
-
-      <div
-          v-if="pending"
-      >
+      <div v-if="pending">
         <v-row>
           <v-col
-              v-for="n in 6"
-              :key="n"
-              cols="12"
+            v-for="n in 6"
+            :key="n"
+            cols="12"
           >
             <v-skeleton-loader
-                class="pa-4 rounded-xl"
-                height="200"
-                rounded="xl"
-                type="card"
+              class="pa-4 rounded-xl"
+              height="200"
+              rounded="xl"
+              type="card"
             />
           </v-col>
         </v-row>
       </div>
 
       <JobList
-          v-else
-          :filtered="jobStore.loaded"
-          :jobs="jobStore.jobs"
-          @apply="openApplyModal"
+        v-else
+        :filtered="jobStore.loaded"
+        :jobs="jobStore.jobs"
+        @apply="openApplyModal"
       />
 
       <v-pagination
-          v-model="currentPage"
-          class="mt-4"
-          color="primary"
-          rounded="circle"
-          :length="totalPages"
+        v-model="currentPage"
+        class="mt-4"
+        color="primary"
+        rounded="circle"
+        :length="totalPages"
       />
     </section>
 
     <section
-        v-if="activeCreation !== 'none'"
-        ref="creationSectionRef"
-        class="mt-8"
-        aria-labelledby="job-create-heading"
+      v-if="activeCreation !== 'none'"
+      ref="creationSectionRef"
+      class="mt-8"
+      aria-labelledby="job-create-heading"
     >
       <SidebarCard
-          class="text-card-foreground px-3 py-4"
-          glow
+        class="text-card-foreground px-3 py-4"
+        glow
       >
         <h2
-            id="job-create-heading"
-            class="text-h5 font-weight-semibold mb-4"
+          id="job-create-heading"
+          class="text-h5 font-weight-semibold mb-4"
         >
           {{ activeCreation === "job" ? t("job.create") : t("applicant.create") }}
         </h2>
 
         <CreateJob
-            v-if="activeCreation === 'job'"
-            @job-created="refreshJobs"
+          v-if="activeCreation === 'job'"
+          @job-created="refreshJobs"
         />
 
         <div v-else>
           <div
-              v-if="selectedJob"
-              class="mb-4 d-flex align-center gap-2"
+            v-if="selectedJob"
+            class="mb-4 d-flex align-center gap-2"
           >
             <v-chip
-                color="primary"
-                variant="tonal"
-                class="font-medium"
+              color="primary"
+              variant="tonal"
+              class="font-medium"
             >
               {{ selectedJob.title }}
             </v-chip>
           </div>
 
           <CreateApplicant
-              :selected-job-id="selectedJobId"
-              @applicant-created="onApplicantCreated"
-              @cancel="selectCreation('none')"
+            :selected-job-id="selectedJobId"
+            @applicant-created="onApplicantCreated"
+            @cancel="selectCreation('none')"
           />
         </div>
       </SidebarCard>

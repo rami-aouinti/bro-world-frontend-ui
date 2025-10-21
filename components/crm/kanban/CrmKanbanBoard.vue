@@ -114,11 +114,11 @@ function buildAssignee(user: CrmBoardUser | undefined) {
     };
   }
 
-    return {
-      name: user.name,
-      initials: user.initials,
-      color: user.avatarColor || themeSecondaryColor,
-    };
+  return {
+    name: user.name,
+    initials: user.initials,
+    color: user.avatarColor || themeSecondaryColor,
+  };
 }
 
 function formatDueDate(value: string | null | undefined) {

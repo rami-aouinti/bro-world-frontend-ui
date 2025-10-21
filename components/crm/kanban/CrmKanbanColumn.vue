@@ -67,12 +67,12 @@
         </p>
         <div class="kanban-card__footer">
           <div class="kanban-card__assignee">
-          <div
-            v-if="task.assigneeInitials"
-            class="kanban-card__avatar"
-            :style="{ backgroundColor: task.assigneeColor || 'rgb(var(--v-theme-secondary))' }"
-            aria-hidden="true"
-          >
+            <div
+              v-if="task.assigneeInitials"
+              class="kanban-card__avatar"
+              :style="{ backgroundColor: task.assigneeColor || 'rgb(var(--v-theme-secondary))' }"
+              aria-hidden="true"
+            >
               {{ task.assigneeInitials }}
             </div>
             <span class="kanban-card__assignee-name">
