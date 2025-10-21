@@ -5,12 +5,52 @@ import { useRuntimeConfig } from "#imports";
 
 export type RuntimeConfigEvent = Parameters<typeof useRuntimeConfig>[0];
 
+function resolveBooleanFlag(value: unknown): boolean {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "number") {
+    if (value === 1) {
+      return true;
+    }
+
+    if (value === 0) {
+      return false;
+    }
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+
+    if (!normalized) {
+      return false;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return false;
+}
+
 export function resolveGameApiBase(event: RuntimeConfigEvent) {
   const config = useRuntimeConfig(event);
   const base = config.public?.apiGameBase;
   const normalized = typeof base === "string" ? base.trim() : "";
 
-  if (!normalized || normalized === "mock") {
+  const shouldUseMock =
+    !normalized ||
+    normalized === "mock" ||
+    resolveBooleanFlag(config.public?.useMockData) ||
+    resolveBooleanFlag((config as { useMockData?: unknown }).useMockData);
+
+  if (shouldUseMock) {
     return {
       baseUrl: null as string | null,
       useMock: true,

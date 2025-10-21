@@ -42,6 +42,40 @@ function normalizeSegments(raw: string | string[] | undefined): string[] {
     .filter((segment) => segment.length > 0);
 }
 
+function resolveBooleanFlag(value: unknown): boolean {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "number") {
+    if (value === 1) {
+      return true;
+    }
+
+    if (value === 0) {
+      return false;
+    }
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+
+    if (!normalized) {
+      return false;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return false;
+}
+
 function normalizeRequest(event: Parameters<typeof getMethod>[0]): NormalizedRequestContext {
   const method = getMethod(event).toUpperCase();
   const segments = normalizeSegments(event.context.params?.path);
@@ -144,7 +178,10 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event) as QueryObject;
   const { method, segments } = normalizeRequest(event);
   const base = config.public?.apiGameBase ?? "https://game.bro-world.org";
-  const shouldUseMock = typeof base === "string" && base.trim().toLowerCase() === "mock";
+  const shouldUseMock =
+    (typeof base === "string" && base.trim().toLowerCase() === "mock") ||
+    resolveBooleanFlag(config.public?.useMockData) ||
+    resolveBooleanFlag((config as { useMockData?: unknown }).useMockData);
 
   let token: string | null = null;
 

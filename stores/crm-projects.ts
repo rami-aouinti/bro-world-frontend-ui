@@ -443,8 +443,13 @@ export const useCrmProjectsStore = defineStore("crm-projects", () => {
   const envMockFlag =
     typeof process !== "undefined" ? process.env?.NUXT_PUBLIC_CRM_PROJECTS_USE_MOCKS : undefined;
   const configMockFlag = runtimeConfig.public?.crmProjects?.useMocks;
+  const globalMockFlag = runtimeConfig.public?.useMockData;
   const useMockData = resolveBooleanFlag(
-    typeof envMockFlag !== "undefined" ? envMockFlag : configMockFlag,
+    typeof envMockFlag !== "undefined"
+      ? envMockFlag
+      : typeof configMockFlag !== "undefined"
+        ? configMockFlag
+        : globalMockFlag,
     true,
   );
   const mockProjects = useState<CrmProject[]>("crm-projects:mock-data", () => loadMockProjects());

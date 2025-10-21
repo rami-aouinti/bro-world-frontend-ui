@@ -58,6 +58,57 @@ type ProfileEventsSource = ProfileEvent[] | ProfileEventsEnvelope | null | undef
 
 const mockFallbackWarnings = new Set<string>();
 
+function resolveBooleanFlag(flag: unknown): boolean | undefined {
+  if (typeof flag === "boolean") {
+    return flag;
+  }
+
+  if (typeof flag === "number") {
+    if (flag === 1) {
+      return true;
+    }
+
+    if (flag === 0) {
+      return false;
+    }
+  }
+
+  if (typeof flag === "string") {
+    const normalized = flag.trim().toLowerCase();
+
+    if (!normalized) {
+      return undefined;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return undefined;
+}
+
+function shouldServeMockData(event: H3Event): boolean {
+  const config = useRuntimeConfig(event);
+  const candidates = [
+    resolveBooleanFlag(config.users?.useMocks),
+    resolveBooleanFlag((config as { useMockData?: unknown }).useMockData),
+    resolveBooleanFlag(config.public?.useMockData),
+  ];
+
+  for (const flag of candidates) {
+    if (typeof flag !== "undefined") {
+      return flag;
+    }
+  }
+
+  return false;
+}
+
 function extractErrorReason(error: unknown): string | null {
   if (!error) {
     return null;
@@ -604,6 +655,10 @@ function unwrapUser(payload: UserSource): UsersApiUser {
 }
 
 export async function fetchUsersListFromSource(event: H3Event) {
+  if (shouldServeMockData(event)) {
+    return unwrapUsersList(usersListSample);
+  }
+
   try {
     const payload = await requestUsersApi<UsersListSource>(event, "/user", { method: "GET" });
     return unwrapUsersList(payload);
@@ -624,6 +679,10 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
   const serviceToken = resolveUsersServiceToken(config);
 
   appendHeader(event, "vary", "Authorization");
+
+  if (shouldServeMockData(event)) {
+    return unwrapProfile(profileSample);
+  }
 
   let sessionToken = getSessionToken(event);
 
@@ -696,6 +755,10 @@ export async function fetchCurrentProfileFromSource(event: H3Event) {
 }
 
 export async function fetchProfileEventsFromSource(event: H3Event, query: QueryObject = {}) {
+  if (shouldServeMockData(event)) {
+    return normalizeProfileEvents(profileEventsSample);
+  }
+
   try {
     const payload = await requestUsersApi<ProfileEventsSource>(event, "/profile/events", {
       method: "GET",
@@ -725,6 +788,20 @@ export async function fetchUserFromSource(event: H3Event, id: string) {
     });
   }
 
+  if (shouldServeMockData(event)) {
+    const candidate = usersListSample.find((entry) => entry.id === trimmedId);
+
+    if (!candidate) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: "User not found",
+        data: { message: "The requested user could not be found." },
+      });
+    }
+
+    return unwrapUser(candidate);
+  }
+
   const payload = await requestUsersApi<UserSource>(
     event,
     `/user/${encodeURIComponent(trimmedId)}`,
@@ -735,6 +812,16 @@ export async function fetchUserFromSource(event: H3Event, id: string) {
 }
 
 export async function createUserThroughApi(event: H3Event, payload: Partial<AuthUser>) {
+  if (shouldServeMockData(event)) {
+    throw createError({
+      statusCode: 501,
+      statusMessage: "User management is unavailable in mock mode.",
+      data: {
+        message: "Creating users is not supported while mock data is enabled.",
+      },
+    });
+  }
+
   const response = await requestUsersApi<UserSource>(event, "/user", {
     method: "POST",
     body: payload,
@@ -751,6 +838,16 @@ export async function updateUserThroughApi(event: H3Event, id: string, payload: 
       statusCode: 400,
       statusMessage: "Missing user identifier",
       data: { message: "A user identifier is required." },
+    });
+  }
+
+  if (shouldServeMockData(event)) {
+    throw createError({
+      statusCode: 501,
+      statusMessage: "User management is unavailable in mock mode.",
+      data: {
+        message: "Updating users is not supported while mock data is enabled.",
+      },
     });
   }
 
@@ -777,10 +874,24 @@ export async function deleteUserThroughApi(event: H3Event, id: string) {
     });
   }
 
+  if (shouldServeMockData(event)) {
+    throw createError({
+      statusCode: 501,
+      statusMessage: "User management is unavailable in mock mode.",
+      data: {
+        message: "Deleting users is not supported while mock data is enabled.",
+      },
+    });
+  }
+
   await requestUsersApi(event, `/user/${encodeURIComponent(trimmedId)}`, { method: "DELETE" });
 }
 
 export async function fetchUsersCountFromSource(event: H3Event) {
+  if (shouldServeMockData(event)) {
+    return { count: usersListSample.length };
+  }
+
   const config = useRuntimeConfig(event);
   const serviceToken = resolveUsersServiceToken(config);
   const forwardedAuthorization = getHeader(event, "authorization")?.trim();

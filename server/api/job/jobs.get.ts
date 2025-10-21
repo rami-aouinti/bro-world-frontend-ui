@@ -3,6 +3,40 @@ import { listJobs, type ListJobsQuery } from "~/server/utils/job";
 import { getUserToken } from "~/server/utils/getUserToken";
 import { requestWithRetry } from "~/server/utils/requestWithRetry";
 
+function resolveBooleanFlag(value: unknown): boolean {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "number") {
+    if (value === 1) {
+      return true;
+    }
+
+    if (value === 0) {
+      return false;
+    }
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+
+    if (!normalized) {
+      return false;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return false;
+}
+
 type QueryValue = string | string[] | undefined;
 
 function toArray(value: QueryValue): string[] {
@@ -72,7 +106,11 @@ export default defineEventHandler(async (event) => {
   const baseUrl = `${config.public.apiJobBase}/api/v1/job`;
   const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
 
-  const shouldUseMock = config.public.apiJobBase === "mock";
+  const shouldUseMock =
+    (typeof config.public.apiJobBase === "string" &&
+      config.public.apiJobBase.trim().toLowerCase() === "mock") ||
+    resolveBooleanFlag(config.public?.useMockData) ||
+    resolveBooleanFlag((config as { useMockData?: unknown }).useMockData);
 
   if (shouldUseMock) {
     return listJobs(queryPayload);

@@ -198,6 +198,42 @@ function resolveFromRoot(...segments: string[]) {
   return resolvePath(projectRoot ?? currentDir, ...segments);
 }
 
+function resolveOptionalBooleanEnv(value: string | undefined): boolean | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  const normalized = value.trim().toLowerCase();
+
+  if (!normalized) {
+    return undefined;
+  }
+
+  if (["1", "true", "yes", "on"].includes(normalized)) {
+    return true;
+  }
+
+  if (["0", "false", "no", "off"].includes(normalized)) {
+    return false;
+  }
+
+  return undefined;
+}
+
+function resolveBooleanEnvFlag(value: string | undefined, fallback: boolean): boolean {
+  const resolved = resolveOptionalBooleanEnv(value);
+  return typeof resolved === "undefined" ? fallback : resolved;
+}
+
+const publicUseMockFlag = resolveOptionalBooleanEnv(process.env.NUXT_PUBLIC_USE_MOCK_DATA);
+const privateUseMockFlag = resolveOptionalBooleanEnv(process.env.NUXT_USE_MOCK_DATA);
+const globalUseMockDataFlag =
+  typeof privateUseMockFlag !== "undefined"
+    ? privateUseMockFlag
+    : typeof publicUseMockFlag !== "undefined"
+      ? publicUseMockFlag
+      : false;
+
 const redisUrl = process.env.NUXT_REDIS_URL?.trim();
 const redisTls = process.env.NUXT_REDIS_TLS === "true";
 
@@ -722,6 +758,7 @@ export default defineNuxtConfig({
   ignore: ["components/**/index.ts", "components/**/shaders.ts", "components/**/types.ts"],
 
   runtimeConfig: {
+    useMockData: globalUseMockDataFlag,
     mercure: {
       hubUrl: process.env.NUXT_MERCURE_HUB_URL ?? "https://bro-world.org/.well-known/mercure",
       token:
@@ -764,8 +801,10 @@ export default defineNuxtConfig({
     users: {
       apiBase: process.env.NUXT_USERS_API_BASE ?? "https://bro-world.org/api/v1",
       apiToken: process.env.NUXT_USERS_API_TOKEN ?? process.env.NUXT_AUTH_API_TOKEN ?? "",
+      useMocks: resolveBooleanEnvFlag(process.env.NUXT_USERS_USE_MOCKS, globalUseMockDataFlag),
     },
     public: {
+      useMockData: globalUseMockDataFlag,
       redis: {
         listTtl: Number.parseInt(process.env.NUXT_REDIS_POST_LIST_TTL ?? "60", 10),
         itemTtl: Number.parseInt(process.env.NUXT_REDIS_POST_ITEM_TTL ?? "300", 10),
@@ -808,6 +847,18 @@ export default defineNuxtConfig({
       },
       NUXT_CLARITY_ID: process.env.NUXT_CLARITY_ID,
       NUXT_ADSENSE_ACCOUNT: process.env.NUXT_ADSENSE_ACCOUNT,
+      crmParticipants: {
+        useMocks: resolveOptionalBooleanEnv(process.env.NUXT_PUBLIC_CRM_PARTICIPANTS_USE_MOCKS),
+      },
+      crmRequests: {
+        useMocks: resolveOptionalBooleanEnv(process.env.NUXT_PUBLIC_CRM_REQUESTS_USE_MOCKS),
+      },
+      crmProjects: {
+        useMocks: resolveOptionalBooleanEnv(process.env.NUXT_PUBLIC_CRM_PROJECTS_USE_MOCKS),
+      },
+      crmTasks: {
+        useMocks: resolveOptionalBooleanEnv(process.env.NUXT_PUBLIC_CRM_TASKS_USE_MOCKS),
+      },
       blogApiEndpoint:
         process.env.NUXT_PUBLIC_BLOG_API_ENDPOINT ?? "https://blog.bro-world.org/public/post",
       blogCommentApiEndpoint:
