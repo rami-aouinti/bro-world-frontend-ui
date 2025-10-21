@@ -74,11 +74,14 @@ import { useI18n } from "vue-i18n";
 import { createError } from "#imports";
 
 import { usePostsStore } from "~/composables/usePostsStore";
+import { blogPostCardLoader, prefetchBlogPostCard } from "~/lib/prefetch/blog-post-card";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
-const BlogPostCard = defineAsyncComponent(() => import("~/components/blog/BlogPostCard.vue"));
+const BlogPostCard = defineAsyncComponent({ loader: blogPostCardLoader });
 const PostCardSkeleton = defineAsyncComponent(() => import("~/components/blog/PostCardSkeleton.vue"));
+
+await prefetchBlogPostCard();
 
 const route = useRoute();
 const localePath = useLocalePath();

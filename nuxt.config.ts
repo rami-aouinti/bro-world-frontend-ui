@@ -320,7 +320,6 @@ export default defineNuxtConfig({
   css: [
     "vuetify/styles",
     "flag-icons/css/flag-icons.min.css",
-    "~/assets/styles/material-dashboard.scss",
     "~/assets/styles/index.css",
   ],
 
@@ -498,6 +497,11 @@ export default defineNuxtConfig({
       },
     },
     "/icons/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
+    "/scripts/**": {
       headers: {
         "cache-control": "public, max-age=31536000, immutable",
       },
