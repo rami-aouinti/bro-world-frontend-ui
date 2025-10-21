@@ -7,7 +7,6 @@ export interface DetectInitialIsMobileOptions {
 }
 
 const MOBILE_USER_AGENT_REGEX = /mobile|iphone|ipod|ipad|android|iemobile|blackberry|kindle|silk|opera (?:mini|mobi)|fennec|windows phone|webos/i;
-const DESKTOP_USER_AGENT_REGEX = /windows nt|macintosh|mac os x|linux x86_64|x11; linux|cros \w+/i;
 
 export function detectInitialIsMobile(options: DetectInitialIsMobileOptions = {}): boolean {
   const {
@@ -41,14 +40,8 @@ export function detectInitialIsMobile(options: DetectInitialIsMobileOptions = {}
   }
 
   if (typeof userAgent === "string" && userAgent.length > 0) {
-    const normalizedUserAgent = userAgent.toLowerCase();
-
-    if (MOBILE_USER_AGENT_REGEX.test(normalizedUserAgent)) {
+    if (MOBILE_USER_AGENT_REGEX.test(userAgent.toLowerCase())) {
       return true;
-    }
-
-    if (DESKTOP_USER_AGENT_REGEX.test(normalizedUserAgent)) {
-      return false;
     }
   }
 
