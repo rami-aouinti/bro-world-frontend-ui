@@ -500,7 +500,10 @@
         "successTitle": "Post shared",
         "successMessage": "Your update was added to your feed."
       },
-      "loading": "Loading post"
+      "loading": "Loading post",
+      "detailHeading": "Post details",
+      "notFound": "This post could not be found.",
+      "backToFeed": "Back to feed"
     },
     "comments": {
       "label": "Join the discussion",

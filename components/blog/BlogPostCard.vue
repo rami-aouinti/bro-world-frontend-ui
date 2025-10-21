@@ -25,11 +25,18 @@
       @edit="openEditModal"
       @delete="openDeleteDialog"
     />
-    <BlogPostContent
-      :title="post.title"
-      :summary="post.summary"
-      :content="post.content"
-    />
+    <component
+      :is="postLink ? 'NuxtLink' : 'div'"
+      v-bind="postLink ? { to: postLink } : null"
+      class="block text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background rounded-lg"
+      data-test="blog-post-link"
+    >
+      <BlogPostContent
+        :title="post.title"
+        :summary="post.summary"
+        :content="post.content"
+      />
+    </component>
     <BlogPostReactCard
       :counts="{ care: 0, haha: 0, love: 0, wow: 0, like: 4, sad: 2, angry: 1 }"
       :node="post"
@@ -137,6 +144,7 @@ import { computed, defineAsyncComponent, nextTick, reactive, ref, shallowRef, wa
 import { useElementVisibility } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { onNuxtReady, useNuxtApp } from "#app";
+import { useLocalePath } from "#imports";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
@@ -170,6 +178,7 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 const postUserAriaName = computed(
   () =>
     postUserDisplayName.value ||
@@ -196,6 +205,23 @@ const {
 } = useAuthStore();
 const post = computed(() => props.post);
 const postId = computed(() => post.value.id?.trim() ?? "");
+const postLink = computed(() => {
+  const slug = post.value.slug?.trim();
+
+  if (!slug) {
+    return null;
+  }
+
+  try {
+    return localePath({ name: "post-slug", params: { slug } });
+  } catch (error) {
+    if (import.meta.dev) {
+      console.warn("[BlogPostCard] Failed to resolve localized post link", error);
+    }
+
+    return `/post/${encodeURIComponent(slug)}`;
+  }
+});
 const postUser = computed(() => post.value.user);
 const postUserDisplayName = computed(() => {
   const user = postUser.value;
