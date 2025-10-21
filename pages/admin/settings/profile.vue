@@ -102,12 +102,15 @@ import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAdminSettingsEditor } from "~/composables/useAdminSettingsEditor";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const AdminSettingsLayout = defineAsyncComponent({
   loader: () => import("~/components/admin/settings/AdminSettingsLayout.vue"),
   suspensible: false,
 });
 
 const { t } = useI18n();
+await useLocaleNamespaces(["admin"]);
 const pageDescription = computed(() => t("admin.settings.sections.profile.subtitle"));
 
 definePageMeta({

@@ -115,7 +115,10 @@ import QuizRunner from "~/components/education/QuizRunner.vue";
 import { useEducationStore } from "~/stores/education";
 import type { SubmitQuizResult } from "~/types/education";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, locale } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const route = useRoute();
 const store = useEducationStore();
 

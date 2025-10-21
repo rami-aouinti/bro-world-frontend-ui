@@ -1,0 +1,63 @@
+{
+  "help": {
+    "meta": {
+      "title": "Hilfe-Center",
+      "description": "Finden Sie schnelle Antworten, Leitfäden und FAQs für {site}."
+    },
+    "hero": {
+      "badge": "Support",
+      "title": "Wie können wir helfen?",
+      "subtitle": "Durchstöbern Sie Leitfäden, Troubleshooting-Schritte und Tipps, um die Plattform optimal zu nutzen.",
+      "searchPlaceholder": "Nach Thema oder Stichwort suchen…",
+      "searchAria": "Im Hilfe-Center suchen",
+      "popular": "Beliebt"
+    },
+    "categories": {
+      "title": "Nach Kategorie",
+      "subtitle": "Wir haben unsere wichtigsten Anleitungen gebündelt, damit Sie sofort loslegen können.",
+      "count": "{count} Artikel"
+    },
+    "faq": {
+      "title": "Schnelle FAQ",
+      "subtitle": "Antworten auf die häufigsten Fragen.",
+      "items": [
+        {
+          "q": "Wie erstelle ich ein Konto?",
+          "a": "Füllen Sie das Registrierungsformular mit Ihrer Geschäfts-E-Mail aus, bestätigen Sie diese innerhalb von 24 Stunden und vervollständigen Sie Ihr Profil."
+        },
+        {
+          "q": "Kann ich mein Team einladen?",
+          "a": "Administratoren können Kolleginnen und Kollegen über Einstellungen → Mitglieder einladen und ihre Rechte jederzeit verwalten."
+        },
+        {
+          "q": "Wo lade ich Rechnungen herunter?",
+          "a": "Unter Abrechnung → Rechnungen können Sie rechtskonforme PDF-Belege herunterladen."
+        }
+      ]
+    },
+    "search": {
+      "resultsLabel": "Suchergebnisse im Hilfe-Center"
+    },
+    "article": {
+      "toc": "In diesem Artikel",
+      "copyLink": "Abschnittslink kopieren",
+      "copied": "Abschnittslink kopiert",
+      "updated": "Aktualisiert {date}",
+      "related": "Verwandte Artikel",
+      "feedback": {
+        "question": "War dieser Artikel hilfreich?",
+        "yes": "Ja",
+        "no": "Nein",
+        "thanks": "Vielen Dank für Ihr Feedback!"
+      }
+    },
+    "empty": {
+      "title": "Keine Ergebnisse",
+      "subtitle": "Versuchen Sie ein anderes Stichwort oder wählen Sie eine Kategorie."
+    },
+    "breadcrumbs": {
+      "home": "Startseite",
+      "help": "Hilfe-Center"
+    }
+  }
+}

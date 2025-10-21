@@ -96,7 +96,10 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAuthSession } from "~/stores/auth-session";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t } = useI18n();
+await useLocaleNamespaces(["admin"]);
 const pageDescription = computed(() => t("admin.statistics.page.subtitle"));
 
 definePageMeta({

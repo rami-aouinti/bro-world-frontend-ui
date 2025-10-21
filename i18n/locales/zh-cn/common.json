@@ -1,0 +1,403 @@
+{
+  "$vuetify": {
+    "loading": "加载中…"
+  },
+  "common": {
+    "InspiraUIPro": "Inspira UI 专业版",
+    "close": "关闭",
+    "loading": "加载中…"
+  },
+  "layout": {
+    "loadingOverlay": {
+      "srLabel": "正在加载 Bro World",
+      "title": "Bro World 正在加载…",
+      "description": "我们正在准备完整体验：顶栏、侧边栏和内容。"
+    },
+    "routeLoadingOverlay": {
+      "srLabel": "正在加载页面",
+      "title": "加载中",
+      "subtitle": "我们正在为你准备宇宙…"
+    },
+    "actions": {
+      "openNavigation": "打开导航菜单",
+      "openWidgets": "打开快速小部件",
+      "toggleTheme": "切换主题",
+      "goBack": "返回",
+      "refresh": "刷新",
+      "notifications": "打开通知",
+      "messages": "打开消息",
+      "cart": "打开包",
+      "profile": "打开个人菜单",
+      "viewProfile": "查看个人资料",
+      "signOut": "退出登录",
+      "changeLanguage": "切换语言（当前：{locale}）"
+    },
+    "notificationsMenu": {
+      "title": "通知",
+      "subtitle": "来自网络的最新更新",
+      "markAll": "全部标记为已读",
+      "empty": "已全部查看！",
+      "badgeLabel": "{count} 条未读通知",
+      "items": {
+        "newFollower": {
+          "title": "新的关注者",
+          "description": "Alex Carter 开始关注你。",
+          "time": "2 分钟前"
+        },
+        "newComment": {
+          "title": "新的评论",
+          "description": "Maria 在你的动态下留言。",
+          "time": "12 分钟前"
+        },
+        "systemUpdate": {
+          "title": "日程提醒",
+          "description": "系统维护已安排在今晚。",
+          "time": "1 小时前"
+        }
+      }
+    },
+    "messengerMenu": {
+      "title": "消息",
+      "subtitle": "最近的会话",
+      "viewAll": "查看全部",
+      "empty": "暂无新消息",
+      "badgeLabel": "{count} 条未读消息"
+    },
+    "userMenu": {
+      "signedInAs": "已登录身份",
+      "guestTitle": "欢迎",
+      "guestSubtitle": "登录即可解锁个性化体验",
+      "admin": "管理后台"
+    },
+    "localeMenu": {
+      "title": "语言",
+      "subtitle": "提供 {count} 种语言"
+    },
+    "search": {
+      "placeholder": "Search..."
+    },
+    "appIcons": {
+      "academy": "学院",
+      "briefcase": "工作",
+      "store": "商店",
+      "database": "数据",
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "游戏和测验"
+    },
+    "sidebar": {
+      "title": "连接",
+      "navigate": "跳转到分区",
+      "items": {
+        "apps": "应用",
+        "calendar": "日历",
+        "cv": "简历",
+        "createWorld": "Create world",
+        "jobs": "职位",
+        "profile": "个人资料",
+        "profileOverview": "总览",
+        "profileSettings": "账户设置",
+        "profileSecurity": "密码与安全",
+        "profileFriends": "好友",
+        "profilePhotos": "照片与媒体",
+        "admin": "管理后台",
+        "adminGeneral": "总览",
+        "adminStatistics": "统计",
+        "adminGeneralSetting": "通用设置",
+        "adminData": "数据",
+        "adminCrons": "定时任务",
+        "adminSettings": "站点设置",
+        "adminCrm": "CRM 工作区",
+        "adminUserManagement": "用户管理",
+        "adminBlogManagement": "博客管理",
+        "adminJobManagement": "职位管理",
+        "adminEcommerceManagement": "电商管理",
+        "adminEducationManagement": "教育管理",
+        "adminGameManagement": "游戏管理",
+        "adminBlog": "博客",
+        "help": "帮助",
+        "about": "关于",
+        "contact": "联系",
+        "game": "游戏和测验",
+        "crm": "CRM 工作区",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "概览",
+        "ecommerceCatalog": "产品目录",
+        "ecommerceCart": "购物车",
+        "ecommerceCheckout": "结账",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "学院",
+        "performance": "性能"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "今日天气",
+        "condition": "多云",
+        "subtitle": "体感 11°"
+      },
+      "news": {
+        "title": "新闻",
+        "items": {
+          "0": {
+            "title": "产品发布彩排",
+            "timestamp": "5 分钟前"
+          },
+          "1": {
+            "title": "增长报告已发布",
+            "timestamp": "15 分钟前"
+          }
+        }
+      },
+      "rating": {
+        "title": "评分概览",
+        "subtitle": "尚无评价",
+        "edit": "添加评分",
+        "share": "分享",
+        "actionsLabel": "评分操作"
+      },
+      "feed": {
+        "title": "活动动态"
+      }
+    },
+    "profileSidebar": {
+      "editBio": "编辑",
+      "editDetails": "编辑详细信息",
+      "addFeatured": "添加精选内容",
+      "photosTitle": "照片",
+      "viewAllPhotos": "查看所有照片",
+      "friendsTitle": "好友",
+      "viewAllFriends": "查看所有好友",
+      "livesIn": "居住在{location}",
+      "from": "来自{location}"
+    }
+  },
+  "buttons": {
+    "more": "Show more",
+    "less": "Show less",
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel"
+  },
+  "nav": {
+    "Docs": "文档",
+    "GettingStarted": "快速开始",
+    "GettingStartedDescription": "介绍 Inspira UI 及其核心概念。",
+    "Installation": "安装",
+    "InstallationDescription": "按照指南一步一步地在您的项目中安装 Inspira UI。",
+    "Components": "组件",
+    "ComponentsDescription": "探讨所有可用的组件及其用法。",
+    "V1DocsDescription": "使用 Tailwind CSS v3 的 Inspira UI 的文档。",
+    "Community": "社区",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Inspira UI 的源代码",
+    "Discord": "Discord",
+    "DiscordDescription": "连接 Discord 社区",
+    "Forum": "论坛",
+    "ForumDiscord": "加入论坛"
+  },
+  "seo": {
+    "profile": {
+      "title": "个人资料",
+      "description": "查看您的个人信息和账号活动。"
+    },
+    "profileFriends": {
+      "title": "人脉",
+      "description": "浏览你的合作者、推荐联系人和实时动态。"
+    },
+    "profilePhotos": {
+      "title": "照片库",
+      "description": "整理发布亮点、影棚拍摄和调研档案。"
+    },
+    "profileEdit": {
+      "title": "编辑个人资料",
+      "description": "更新联系方式、技能和社交链接。"
+    },
+    "profileSecurity": {
+      "title": "密码与安全",
+      "description": "管理登录凭据、双重验证以及受信任的设备。"
+    },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
+    },
+    "job": {
+      "title": "Jobs",
+      "description": "Plan, track, and optimise hiring programmes."
+    },
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "calendar": {
+      "title": "日程",
+      "cardTitle": "日程概览",
+      "menuTitle": "今日事件",
+      "menuEmpty": "今天暂无事件",
+      "authNotice": "登录后即可查看并管理你的事件。",
+      "rangeAllDay": "全天",
+      "fallbackTitle": "未命名事件",
+      "actions": {
+        "newEvent": "新建事件"
+      },
+      "dialog": {
+        "createTitle": "新建事件",
+        "editTitle": "编辑事件",
+        "titleLabel": "事件标题",
+        "startLabel": "开始日期",
+        "endLabel": "结束日期",
+        "startTimeLabel": "开始时间",
+        "endTimeLabel": "结束时间",
+        "allDayLabel": "全天事件",
+        "privateLabel": "私密事件",
+        "locationLabel": "地点",
+        "descriptionLabel": "描述",
+        "save": "保存",
+        "cancel": "关闭",
+        "delete": "删除",
+        "confirmDelete": "删除事件",
+        "confirmDeleteMessage": "该操作无法撤销，确定要删除此事件吗？"
+      },
+      "validation": {
+        "title": "请填写标题。",
+        "startDate": "请选择开始日期。",
+        "startTime": "请选择开始时间。",
+        "endTime": "结束时间必须晚于开始时间。",
+        "range": "事件的结束时间必须晚于开始时间。"
+      },
+      "errors": {
+        "save": "暂时无法保存更改，请稍后再试。",
+        "delete": "暂时无法删除事件，请稍后再试。",
+        "load": "暂时无法加载事件，请稍后再试。"
+      }
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "description": "Design interactive quiz journeys with adaptive question banks."
+    },
+    "education": {
+      "title": "教育",
+      "description": "打造协作且数据驱动的学习体验。"
+    },
+    "academy": {
+      "title": "学院",
+      "description": "探索 Bro World 精心设计的学习路径、练习与认证。"
+    },
+    "performance": {
+      "title": "性能",
+      "description": "跟踪预算和审计，让 Bro World 在每个社区都保持高速。"
+    },
+    "crm": {
+      "title": "@:seo.crm.title",
+      "subtitle": "@:seo.crm.subtitle",
+      "actions": {
+        "newProject": "@:seo.crm.actions.newProject",
+        "viewPipeline": "@:seo.crm.actions.viewPipeline"
+      },
+      "metrics": {
+        "title": "@:seo.crm.metrics.title",
+        "subtitle": "@:seo.crm.metrics.subtitle",
+        "total": "@:seo.crm.metrics.total",
+        "totalCaption": "@:seo.crm.metrics.totalCaption",
+        "inProgress": "@:seo.crm.metrics.inProgress",
+        "inProgressCaption": "@:seo.crm.metrics.inProgressCaption",
+        "atRisk": "@:seo.crm.metrics.atRisk",
+        "atRiskCaption": "@:seo.crm.metrics.atRiskCaption",
+        "pipelineValue": "@:seo.crm.metrics.pipelineValue",
+        "pipelineValueCaption": "@:seo.crm.metrics.pipelineValueCaption"
+      },
+      "table": {
+        "title": "@:seo.crm.table.title",
+        "subtitle": "@:seo.crm.table.subtitle",
+        "empty": "@:seo.crm.table.empty",
+        "headers": {
+          "name": "@:seo.crm.table.headers.name",
+          "client": "@:seo.crm.table.headers.client",
+          "owner": "@:seo.crm.table.headers.owner",
+          "status": "@:seo.crm.table.headers.status",
+          "stage": "@:seo.crm.table.headers.stage",
+          "budget": "@:seo.crm.table.headers.budget",
+          "probability": "@:seo.crm.table.headers.probability",
+          "dueDate": "@:seo.crm.table.headers.dueDate"
+        }
+      },
+      "upcoming": {
+        "title": "@:seo.crm.upcoming.title",
+        "subtitle": "@:seo.crm.upcoming.subtitle",
+        "empty": "@:seo.crm.upcoming.empty"
+      },
+      "stages": {
+        "title": "@:seo.crm.stages.title",
+        "subtitle": "@:seo.crm.stages.subtitle",
+        "caption": "@:seo.crm.stages.caption"
+      },
+      "sidebar": {
+        "ariaLabel": "@:seo.crm.sidebar.ariaLabel",
+        "projects": {
+          "title": "@:seo.crm.sidebar.projects.title",
+          "subtitle": "@:seo.crm.sidebar.projects.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.projects.actions.new",
+            "create": "@:seo.crm.sidebar.projects.actions.create"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.projects.empty.description"
+          }
+        },
+        "tasks": {
+          "title": "@:seo.crm.sidebar.tasks.title",
+          "subtitle": "@:seo.crm.sidebar.tasks.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.tasks.actions.new"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.tasks.empty.description"
+          },
+          "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
+        }
+      }
+    },
+    "login": {
+      "title": "登录",
+      "description": "登录您的 Bro World 帐号，继续与社区协作。"
+    },
+    "register": {
+      "title": "创建帐号",
+      "description": "加入 Bro World，分享创意、打造新世界，并与团队保持紧密联系。"
+    },
+    "forgotPassword": {
+      "title": "重置密码",
+      "description": "通过安全的重置链接，重新获得对 Bro World 帐号的访问权。"
+    },
+    "logout": {
+      "title": "退出登录",
+      "description": "退出 Bro World，并在共享设备上保护您的帐号安全。"
+    },
+    "messenger": {
+      "title": "消息",
+      "description": "与团队交流、分享更新，让对话井然有序。"
+    }
+  }
+}

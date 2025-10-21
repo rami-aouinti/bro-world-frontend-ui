@@ -471,9 +471,12 @@ import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 import MissionSidebarCards from "~/components/about/MissionSidebarCards.vue";
 
 const { t, locale, locales, defaultLocale, localeProperties } = useI18n();
+
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const localePath = useResolvedLocalePath();
 const switchLocalePath = useSwitchLocalePath();

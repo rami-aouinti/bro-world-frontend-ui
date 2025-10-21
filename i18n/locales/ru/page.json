@@ -1,0 +1,21 @@
+{
+  "page": {
+    "home": {
+      "SupportUs": "Поддержите нас",
+      "AllComponents": "Все компоненты",
+      "OpenSourceComponentsToBuild": "Open-source компоненты для создания",
+      "Stunning": "потрясающих",
+      "Beautiful": "красивых",
+      "WebsitesUsingVueAndNuxt": "сайтов на Vue и Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Интегрируйте любимый UI-фреймворк",
+      "Features": "Возможности",
+      "CheckOutSomeExamples": "Посмотрите несколько примеров!",
+      "3DCardHoverEffect": "3D-эффект наведения на карточку",
+      "RadiantText": "Светящийся текст",
+      "LovedByCommunity": "Любимые сообществом",
+      "WhatAreYouWaitingFor": "Чего вы ждёте?",
+      "GetStartedAndStartBuildingAwesomeUI": "Начните и создавайте потрясающий интерфейс",
+      "GetStarted": "Начать"
+    }
+  }
+}

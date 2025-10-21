@@ -1,0 +1,305 @@
+{
+  "blog": {
+    "hero": {
+      "eyebrow": "Community feed",
+      "title": "See what's happening across BroWorld",
+      "description": "Follow community highlights, discover new resources, and keep up with what builders are shipping right now.",
+      "primaryAction": "Explore latest posts",
+      "secondaryAction": "Browse documentation",
+      "stats": {
+        "members": "Active members",
+        "reactions": "Reactions shared",
+        "comments": "Comments posted"
+      }
+    },
+    "composer": {
+      "title": "Share something with the community",
+      "subtitle": "Start a conversation and inspire other builders.",
+      "label": "Your message",
+      "placeholder": "What would you like to talk about?",
+      "characterCount": "{count} characters",
+      "submit": "Publish post",
+      "submitting": "Publishing...",
+      "success": "Your post has been published successfully!",
+      "error": "We couldn't publish your post. Please try again.",
+      "validation": "Write a message before publishing."
+    },
+    "newPost": {
+      "placeholder": "What's on your mind, {name}?",
+      "quickActions": {
+        "liveVideo": "Live video",
+        "photoVideo": "Photo/Video",
+        "feelingActivity": "Feeling/Activity"
+      },
+      "dialog": {
+        "title": "Create post",
+        "addToPost": "Add something to your post",
+        "postButton": "Post"
+      },
+      "audience": {
+        "public": "Public",
+        "friends": "Friends",
+        "private": "Only me"
+      },
+      "attachments": {
+        "media": "Photo/Video",
+        "tag": "Tag people",
+        "feeling": "Feeling/Activity",
+        "location": "Check in",
+        "gif": "GIF",
+        "poll": "Add poll"
+      }
+    },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
+    "reactions": {
+      "post": {
+        "publishedOn": "Published on {date}",
+        "reactions": "{count} reactions",
+        "comments": "{count} comments",
+        "recentComments": "Recent comments",
+        "commentPreviews": "{count} previews",
+        "reactionSpotlight": "Reaction spotlight"
+      },
+      "comment": {
+        "reactions": "{count} reactions",
+        "replies": "{count} replies"
+      },
+      "reactionTypes": {
+        "like": "Like",
+        "love": "Love",
+        "wow": "Wow",
+        "haha": "Haha",
+        "sad": "Sad",
+        "angry": "Angry",
+        "dislike": "Dislike",
+        "care": "Care"
+      },
+      "posts": {
+        "publishedOn": "Published on {date}",
+        "reactionCount": "{count} reactions",
+        "commentCount": "{count} comments",
+        "recentComments": "Recent comments",
+        "previewCount": "{count} previews",
+        "highlightedReactions": "Fan favorite reactions",
+        "reactLabel": "Add your reaction",
+        "reactionError": "We couldn't react to this post. Please try again.",
+        "likeAction": "Like",
+        "unlikeAction": "Unlike",
+        "toggleReaction": "Toggle like on this post"
+      },
+      "comments": {
+        "reactionCount": "{count} reactions",
+        "replyCount": "{count} replies",
+        "likeAction": "Like",
+        "unlikeAction": "Unlike",
+        "toggleReaction": "Toggle like on this comment"
+      }
+    },
+    "posts": {
+      "actions": {
+        "follow": "Follow",
+        "following": "Following",
+        "followAria": "Follow {name}",
+        "followingAria": "You are following {name}",
+        "openMenu": "Open post actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "statistics": "{reactions} reactions and {comments} comments",
+        "editTitle": "Edit post",
+        "editDescription": "Update the details of your post below.",
+        "save": "Save",
+        "cancel": "Cancel",
+        "deleteTitle": "Delete this post?",
+        "deleteDescription": "This action cannot be undone. The post will be removed for everyone.",
+        "deleteConfirm": "Delete",
+        "editSuccessTitle": "Post updated",
+        "editSuccessDescription": "Your changes have been saved successfully.",
+        "editErrorTitle": "Update failed",
+        "editErrorDescription": "We couldn't update this post. Please try again.",
+        "deleteSuccessTitle": "Post deleted",
+        "deleteSuccessDescription": "The post has been removed from the feed.",
+        "deleteErrorTitle": "Delete failed",
+        "deleteErrorDescription": "We couldn't delete this post. Please try again.",
+        "followSuccessTitle": "Author followed",
+        "followSuccessDescription": "You're now following {name}.",
+        "followErrorTitle": "Follow failed",
+        "followErrorDescription": "We couldn't follow this author. Please try again.",
+        "fields": {
+          "title": "Title",
+          "summary": "Summary",
+          "content": "Content"
+        },
+        "comment": "Comment",
+        "share": "Share",
+        "viewPost": "Read more",
+        "viewPostAria": "Open the post \"{title}\""
+      },
+      "shareMenu": {
+        "feed": "Share to feed",
+        "story": "Share to your story",
+        "messenger": "Send in Messenger",
+        "whatsapp": "Send on WhatsApp",
+        "page": "Share to a Page",
+        "group": "Share to a group",
+        "profile": "Share to a friend's profile",
+        "comingSoonTitle": "Not yet available",
+        "comingSoonDescription": "This sharing option is coming soon."
+      },
+      "shareDialog": {
+        "title": "Create post",
+        "placeholder": "Say something about this...",
+        "placeholderNamed": "Say something about this, {name}...",
+        "defaultName": "You",
+        "submit": "Share",
+        "cancel": "Cancel",
+        "feedAudience": "Feed",
+        "successTitle": "Post shared",
+        "successMessage": "Your update was added to your feed."
+      },
+      "loading": "Loading post",
+      "detailHeading": "Post details",
+      "notFound": "This post could not be found.",
+      "backToFeed": "Back to feed"
+    },
+    "comments": {
+      "label": "Join the discussion",
+      "placeholder": "Share your thoughts with the community...",
+      "characterCount": "{count} characters",
+      "submit": "Post comment",
+      "submitting": "Posting...",
+      "loading": "Loading comments...",
+      "load": "Load comments",
+      "activationHint": "Comments load when this section becomes visible or when you press the button.",
+      "success": "Your comment has been added.",
+      "error": "We couldn't add your comment. Please try again.",
+      "validation": "Write a comment before posting.",
+      "empty": "No comments yet. Be the first to start the conversation!",
+      "reply": "Reply",
+      "replying": "Replying...",
+      "replyPlaceholder": "Write your reply...",
+      "addEmoji": "Add emoji",
+      "addMedia": "Add media",
+      "addGif": "Add GIF",
+      "replySubmit": "Send reply",
+      "replySuccess": "Your reply has been added.",
+      "replyError": "We couldn't publish your reply. Please try again.",
+      "replyValidation": "Write a reply before sending.",
+      "cancelReply": "Cancel",
+      "replyUnavailable": "Replying isn't available right now.",
+      "reactionUnavailable": "Reacting isn't available right now.",
+      "reactionError": "We couldn't react to this comment. Please try again.",
+      "placeholderWithName": "Comment as {name}",
+      "sort": {
+        "menuAria": "Comment sorting",
+        "options": {
+          "relevant": {
+            "label": "Most relevant",
+            "description": "Show comments from friends and those with the most engagement first."
+          },
+          "newest": {
+            "label": "Newest first",
+            "description": "Display comments in reverse chronological order."
+          },
+          "all": {
+            "label": "All comments",
+            "description": "Show every comment, including potential spam."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "View all {count} replies",
+        "hideReplies": "Hide replies"
+      }
+    },
+    "sidebar": {
+      "weather": {
+        "badge": "News",
+        "title": "Rain ahead",
+        "subtitle": "Get ready for a rainy day with light winds.",
+        "icon": "🌧️",
+        "location": "Berlin, Germany",
+        "locationLabel": "Location",
+        "temperature": "18°C",
+        "temperatureLabel": "Temperature",
+        "tipLabel": "Tip",
+        "tip": "Don't forget your umbrella to stay dry.",
+        "loading": "Updating weather…",
+        "actions": {
+          "useCurrentLocation": "Use current location"
+        },
+        "errors": {
+          "unavailable": "Weather updates are unavailable.",
+          "denied": "We couldn't access your location. Showing the default forecast.",
+          "unsupported": "Geolocation is not supported by your browser.",
+          "updateFailed": "Unable to update the weather right now."
+        }
+      },
+      "leaderboard": {
+        "title": "Top 3 in Quiz",
+        "live": "live",
+        "participants": {
+          "first": {
+            "name": "Bro World",
+            "role": "Product Team",
+            "score": "982 pts"
+          },
+          "second": {
+            "name": "Adam Don",
+            "role": "Community",
+            "score": "953 pts"
+          },
+          "third": {
+            "name": "Nina Ko",
+            "role": "Marketing",
+            "score": "917 pts"
+          }
+        }
+      },
+      "rating": {
+        "title": "Rating overview",
+        "subtitle": "Member feedback for the week",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
+        "stars": 5,
+        "categories": {
+          "engagement": {
+            "label": "Engagement",
+            "value": 92
+          },
+          "content": {
+            "label": "Content",
+            "value": 88
+          },
+          "responsiveness": {
+            "label": "Responsiveness",
+            "value": 84
+          }
+        }
+      },
+      "title": "Stay connected",
+      "subtitle": "Resources to keep up with the BroWorld community.",
+      "widgets": {
+        "community": {
+          "title": "Join the community",
+          "description": "Chat with other builders, share ideas, and get instant help.",
+          "action": "Open Discord"
+        },
+        "docs": {
+          "title": "Browse the docs",
+          "description": "Learn how to make the most of BroWorld components in your projects.",
+          "action": "Read documentation"
+        },
+        "contribute": {
+          "title": "Contribute an article",
+          "description": "Share your insights with the community and help others grow.",
+          "action": "Submit content"
+        }
+      }
+    }
+  }
+}

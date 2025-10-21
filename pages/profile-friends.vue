@@ -335,7 +335,10 @@ import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useProfileStore } from "~/stores/profile";
 import type { FriendCard, FriendEntry } from "~/types/pages/profile";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);

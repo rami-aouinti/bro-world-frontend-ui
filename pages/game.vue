@@ -751,6 +751,8 @@ import UserAvatar from "~/components/UserAvatar.vue";
 import { useUserSession } from "~/composables/useUserSession";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const AuthLoginForm = defineAsyncComponent({
   loader: () => import("~/components/auth/LoginForm.vue"),
   suspensible: false,
@@ -822,6 +824,7 @@ interface QuizLeaderboardEntry {
 }
 
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 

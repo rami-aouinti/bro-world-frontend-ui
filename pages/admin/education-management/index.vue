@@ -35,6 +35,10 @@
 import { computed } from "vue";
 import { useAdminModulePage } from "~/composables/useAdminModulePage";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
+await useLocaleNamespaces(["admin"]);
+
 const { t, title, subtitle } = useAdminModulePage("admin.educationManagement");
 const pageDescription = computed(() => subtitle.value);
 

@@ -1,0 +1,19 @@
+{
+  "messenger": {
+    "searchPlaceholder": "ابحث في المحادثات",
+    "emptyList": "لا توجد محادثات بعد",
+    "unknownParticipant": "غير معروف",
+    "emptyTitle": "اختر محادثة",
+    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
+    "emptyCtaLabel": "ابدأ محادثة",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "اكتب رسالة...",
+    "sendLabel": "إرسال",
+    "sendingLabel": "جارٍ الإرسال...",
+    "sendErrorStatus": "لم يتم التسليم",
+    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
+    "noMessages": "لا توجد رسائل بعد",
+    "loadOlder": "تحميل الرسائل السابقة",
+    "participantsLabel": "{count} مشارك"
+  }
+}

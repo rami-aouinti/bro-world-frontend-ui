@@ -104,11 +104,14 @@
 import { computed } from "vue";
 import { createError } from "h3";
 import { useRoute } from "vue-router";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 import CourseHeader from "~/components/education/CourseHeader.vue";
 import ProgressBar from "~/components/education/ProgressBar.vue";
 import { useEducationStore } from "~/stores/education";
 
 const { t } = useI18n();
+
+await useLocaleNamespaces(["pages"]);
 const route = useRoute();
 const store = useEducationStore();
 

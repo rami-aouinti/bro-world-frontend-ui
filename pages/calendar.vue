@@ -338,6 +338,7 @@
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import dayjs from "dayjs";
 import { useI18n } from "vue-i18n";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 import { useAuthSession } from "~/stores/auth-session";
 import { useEventStore } from "~/stores/useEventStore";
 import type { ProfileEvent } from "~/types/pages/profile";
@@ -381,6 +382,8 @@ const DEFAULT_END_TIME = "10:00";
 const weekdays = [1, 2, 3, 4, 5, 6, 0];
 
 const { t } = useI18n();
+
+await useLocaleNamespaces(["pages"]);
 const authSession = useAuthSession();
 const eventStore = useEventStore();
 

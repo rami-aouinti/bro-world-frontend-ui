@@ -158,6 +158,7 @@ import MediaList from "~/components/media/MediaList.vue";
 import MediaBreadcrumbs, {
   type MediaBreadcrumbItem,
 } from "~/components/media/MediaBreadcrumbs.vue";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 import UploadDialog from "~/components/media/UploadDialog.vue";
 import RenameDialog from "~/components/media/RenameDialog.vue";
 import DeleteDialog from "~/components/media/DeleteDialog.vue";
@@ -169,6 +170,7 @@ import type { Folder, MediaFile, TrashItem } from "~/types/media";
 
 const mediaStore = useMediaStore();
 const { t } = useI18n();
+await useLocaleNamespaces(["media"]);
 
 const uploadDialogOpen = ref(false);
 const renameState = reactive({

@@ -163,7 +163,10 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const pageDescription = computed(() => t("seo.ecommerce.description"));
 
 definePageMeta({

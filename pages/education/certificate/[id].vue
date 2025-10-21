@@ -27,7 +27,10 @@ import CertificateSheet from "~/components/education/CertificateSheet.vue";
 import { useEducationStore } from "~/stores/education";
 import type { Certificate } from "~/types/education";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const route = useRoute();
 const store = useEducationStore();
 

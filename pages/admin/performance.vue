@@ -72,6 +72,8 @@
 import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const METRIC_ICON_MAP = Object.freeze({
   fcp: "mdi:flash", // First Contentful Paint
   lcp: "mdi:clock-fast",
@@ -88,6 +90,7 @@ const OPPORTUNITY_ICON_MAP = Object.freeze({
 } satisfies Record<string, { icon: string; color: string }>);
 
 const { t, tm, rt, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);

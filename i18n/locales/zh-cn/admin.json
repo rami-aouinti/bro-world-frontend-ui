@@ -1,0 +1,614 @@
+{
+  "admin": {
+    "metaTitle": "管理",
+    "page": {
+      "title": "管理中心",
+      "subtitle": "只需几次点击即可掌控整个平台，监控关键指标并启用合适的功能。"
+    },
+    "settings": {
+      "metaTitle": "Site settings",
+      "page": {
+        "title": "Site settings",
+        "subtitle": "Configure the brand, theme palette, and navigation structure for your community."
+      },
+      "navigation": {
+        "title": "Sections"
+      },
+      "sections": {
+        "general": {
+          "title": "Brand identity",
+          "subtitle": "Update the site name and tagline displayed across the workspace.",
+          "badge": "Core"
+        },
+        "theme": {
+          "title": "Themes",
+          "subtitle": "Curate available themes and choose which one is active by default.",
+          "active": "Default theme"
+        },
+        "profile": {
+          "title": "Profile personalisation",
+          "subtitle": "Control how members can customise their public profile.",
+          "badge": "Profiles"
+        },
+        "appearance": {
+          "title": "Theme mode",
+          "subtitle": "Set the default mode and manage the theme toggle behaviour.",
+          "badge": "Display"
+        },
+        "pages": {
+          "title": "Static pages",
+          "subtitle": "Edit the hero content displayed on About, Contact, and Help.",
+          "badge": "Content",
+          "labels": {
+            "about": "About page",
+            "contact": "Contact page",
+            "help": "Help centre"
+          },
+          "descriptions": {
+            "about": "Update the mission statement and introduction shown on the About page.",
+            "contact": "Customise the hero copy for your support and contact information.",
+            "help": "Define the messaging that appears at the top of the help centre."
+          }
+        },
+        "navigation": {
+          "title": "Navigation menu",
+          "subtitle": "Add, reorder, and secure sidebar entries for every audience.",
+          "badge": "Menus",
+          "children": "Child links"
+        }
+      },
+      "fields": {
+        "siteName": "Site name",
+        "language": "内容语言",
+        "tagline": "Tagline",
+        "themeName": "Theme name",
+        "themeDescription": "Description",
+        "themePrimary": "Primary color",
+        "themeAccent": "Accent color",
+        "themeSurface": "Surface color",
+        "menuLabel": "Menu label",
+        "menuPath": "Destination path",
+        "menuIcon": "Icon (optional)",
+        "menuAdmin": "Admin only",
+        "menuVisible": "Visible",
+        "profileAllowCustomization": "Allow profile customization",
+        "profileAllowThemeSelection": "Allow profile theme selection",
+        "profileAllowAvatarUploads": "Allow avatar uploads",
+        "profileAllowCoverUploads": "Allow cover uploads",
+        "profileShowContact": "Show contact section",
+        "profileShowDetails": "Show details section",
+        "profileShowSocial": "Show social insights",
+        "profileDefaultBio": "Default bio fallback",
+        "uiAllowThemeSwitching": "Allow visitors to toggle theme",
+        "themeModeSystem": "Follow system",
+        "themeModeLight": "Light mode",
+        "themeModeDark": "Dark mode",
+        "pageTitle": "Title",
+        "pageSubtitle": "Subtitle",
+        "pageBody": "Body content"
+      },
+      "themeCustomizer": {
+        "title": "自定义",
+        "color": "颜色",
+        "radius": "圆角",
+        "theme": "主题",
+        "light": "浅色",
+        "dark": "深色",
+        "system": "系统"
+      },
+      "helpers": {
+        "themeModeSystem": "Automatically adapts to each visitor's device preference.",
+        "themeModeLight": "Always display the interface in light mode.",
+        "themeModeDark": "Always display the interface in dark mode."
+      },
+      "placeholders": {
+        "siteName": "Enter a public site name",
+        "tagline": "Describe your mission in one sentence"
+      },
+      "actions": {
+        "save": "Save settings",
+        "reset": "Discard changes",
+        "addTheme": "Add theme",
+        "addMenu": "Add menu",
+        "addChild": "Add child link",
+        "removeMenu": "Remove",
+        "moveUp": "Move up",
+        "moveDown": "Move down"
+      },
+      "feedback": {
+        "saved": "Site configuration updated successfully.",
+        "error": "We couldn't update the configuration. Try again later."
+      },
+      "defaults": {
+        "themeName": "New theme",
+        "menuLabel": "New menu",
+        "submenuLabel": "New submenu"
+      }
+    },
+    "userManagement": {
+      "title": "User management",
+      "subtitle": "Invite, update, or deactivate accounts in real-time.",
+      "actions": {
+        "add": "Invite user"
+      },
+      "table": {
+        "search": "Search users",
+        "empty": "No users found.",
+        "columns": {
+          "user": "User",
+          "email": "Email",
+          "status": "Status",
+          "roles": "Roles",
+          "updatedAt": "Last update",
+          "actions": "Actions"
+        }
+      },
+      "errors": {
+        "unauthorized": "您没有查看用户的权限。请使用管理员账户登录。",
+        "generic": "无法加载用户列表。请稍后重试。"
+      },
+      "status": {
+        "active": "Active",
+        "disabled": "Disabled"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Invite a new user",
+          "submit": "Create user"
+        },
+        "edit": {
+          "title": "Update user",
+          "submit": "Save changes"
+        },
+        "delete": {
+          "title": "Remove user",
+          "description": "Are you sure you want to remove {name}? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "form": {
+        "username": "Username",
+        "email": "Email",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "roles": "Roles",
+        "rolesHint": "Select one or more roles",
+        "enabled": "Account enabled"
+      },
+      "validation": {
+        "username": "Username is required.",
+        "email": "A valid email address is required.",
+        "roles": "Select at least one role."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "User data",
+          "page": {
+            "title": "User data",
+            "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "User crons",
+          "page": {
+            "title": "Scheduled automations",
+            "subtitle": "Monitor background jobs that sync accounts, cleanse inactive users, and dispatch notifications."
+          }
+        }
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "博客管理",
+      "page": {
+        "title": "博客管理",
+        "subtitle": "策划社区故事并发布官方公告。"
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Blog data",
+          "page": {
+            "title": "Content data",
+            "subtitle": "Inspect metrics, search indexes, and data feeds powering editorial workflows."
+          }
+        },
+        "crons": {
+          "metaTitle": "Blog crons",
+          "page": {
+            "title": "Scheduled publishing",
+            "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
+      }
+    },
+    "actions": {
+      "newAdminRole": "新建管理员角色",
+      "exportReport": "导出报告"
+    },
+    "sections": {
+      "stats": {
+        "title": "实时概览",
+        "subtitle": "汇总最近24小时的数据",
+        "metrics": {
+          "users": {
+            "label": "活跃用户",
+            "trend": "本周增长12%",
+            "caption": "每次会话的平均互动",
+            "description": "统计最近24小时内登录的成员数量。"
+          },
+          "content": {
+            "label": "已发布内容",
+            "trend": "较昨日提升5%",
+            "caption": "新增文章与公告",
+            "description": "已审核通过的帖子、活动和公告总数。"
+          },
+          "reports": {
+            "label": "已处理举报",
+            "trend": "较平均值下降8%",
+            "caption": "平均处理时长：1小时42分",
+            "description": "由支持团队完成的内容审核工单。"
+          },
+          "availability": {
+            "label": "可用率",
+            "value": "{value}%",
+            "trend": "提升0.2个百分点",
+            "caption": "过去30天",
+            "description": "覆盖所有关键服务的综合指标。"
+          }
+        }
+      },
+      "controls": {
+        "title": "全局控制",
+        "subtitle": "启用或停用关键站点功能",
+        "toggles": {
+          "maintenance": {
+            "label": "维护模式",
+            "description": "显示维护提示，并仅允许管理员访问。",
+            "helper": "仅在重大更新时建议启用。",
+            "enabled": "维护模式已开启",
+            "disabled": "维护模式已关闭"
+          },
+          "registrations": {
+            "label": "开放注册",
+            "description": "允许新成员无需邀请即可创建账号。",
+            "helper": "请通过增长报告监控流量。",
+            "enabled": "允许注册",
+            "disabled": "注册关闭"
+          },
+          "moderation": {
+            "label": "辅助审核",
+            "description": "发布前自动检测敏感内容。",
+            "helper": "可在高级审核模块中进行微调。",
+            "enabled": "自动化已开启",
+            "disabled": "自动化已关闭"
+          },
+          "broadcast": {
+            "label": "置顶全站公告",
+            "description": "在所有公开页面顶部展示信息横幅。",
+            "helper": "适用于官方或紧急通知。",
+            "enabled": "公告可见",
+            "disabled": "公告隐藏"
+          }
+        }
+      },
+      "quickActions": {
+        "title": "快速操作",
+        "subtitle": "启动最常用的管理任务",
+        "button": "执行",
+        "items": {
+          "contentReview": {
+            "title": "审批待发布内容",
+            "description": "在上线之前审核社区投稿。"
+          },
+          "securityScan": {
+            "title": "执行安全扫描",
+            "description": "自动检查权限和敏感角色。"
+          },
+          "communityUpdate": {
+            "title": "发送全站更新",
+            "description": "为所有成员安排简报或推送通知。"
+          }
+        }
+      },
+      "modules": {
+        "title": "管理模块",
+        "subtitle": "访问平台各支柱的专属空间",
+        "openButton": "打开模块",
+        "policiesButton": "查看政策",
+        "items": {
+          "content": {
+            "title": "内容管理",
+            "description": "规划、发布与归档文章、活动以及学习资源。",
+            "tags": [
+              "内容流程",
+              "审核",
+              "排期"
+            ],
+            "status": "有12条内容等待编辑审核。"
+          },
+          "community": {
+            "title": "社区与审核",
+            "description": "配置审核规则，管理举报与处罚。",
+            "tags": [
+              "举报",
+              "处罚",
+              "私信"
+            ],
+            "status": "平均响应时间：1小时42分。"
+          },
+          "commerce": {
+            "title": "变现与优惠",
+            "description": "管理订阅、优惠码和商业合作。",
+            "tags": [
+              "订阅",
+              "计费",
+              "优惠券"
+            ],
+            "status": "本周转化率提升3.4%。"
+          },
+          "governance": {
+            "title": "治理与合规",
+            "description": "审计访问权限，管理敏感角色并准备合规报告。",
+            "tags": [
+              "审计",
+              "角色",
+              "可追溯性"
+            ],
+            "status": "最近一次完整审计在5天前完成。"
+          }
+        }
+      },
+      "activity": {
+        "title": "最近活动",
+        "subtitle": "跟踪管理员执行的操作",
+        "cta": "完整历史",
+        "items": {
+          "1": {
+            "title": "发布18条内容审核",
+            "description": "Clara Dupont 批准了博客栏目待发布的内容批次。",
+            "time": "12分钟前"
+          },
+          "2": {
+            "title": "分配新角色",
+            "description": "Ahmed B. 获得社区区域的高级版主权限。",
+            "time": "47分钟前"
+          },
+          "3": {
+            "title": "已解决严重举报",
+            "description": "一条仇恨言论举报内容被移除，相关用户已停权。",
+            "time": "2小时前"
+          }
+        }
+      },
+      "health": {
+        "title": "系统健康",
+        "subtitle": "监控关键流程及其运行状态",
+        "cta": "状态中心",
+        "uptimeLabel": "可用性",
+        "items": {
+          "api": {
+            "name": "公共 API",
+            "description": "面向第三方集成的 GraphQL 流程与 Webhook。",
+            "status": "运行正常"
+          },
+          "payments": {
+            "name": "支付网关",
+            "description": "交易、账单及财务 Webhook。",
+            "status": "轻微故障"
+          },
+          "notifications": {
+            "name": "实时通知",
+            "description": "事务型邮件与推送通知。",
+            "status": "运行正常"
+          }
+        }
+      },
+      "resources": {
+        "title": "资源与合规",
+        "subtitle": "确保团队拥有正确指引以保持站点质量。",
+        "knowledgeBase": "知识中心",
+        "complianceAudit": "合规审计",
+        "download": "下载",
+        "items": {
+          "charter": {
+            "title": "内容规范与审核指南",
+            "description": "平台内容发布的官方规则。"
+          },
+          "security": {
+            "title": "安全事件响应流程",
+            "description": "发生安全漏洞或入侵尝试时的操作清单。"
+          },
+          "compliance": {
+            "title": "GDPR 与数据处理文档",
+            "description": "梳理处理活动、保留期限及用户回复模板。"
+          }
+        }
+      }
+    },
+    "blog": {
+      "metaTitle": "Blog management",
+      "title": "Blog posts",
+      "subtitle": "Review, publish, and maintain articles in one place.",
+      "actions": {
+        "create": "New post",
+        "createAria": "Create a new blog post",
+        "refresh": "Refresh",
+        "refreshAria": "Refresh posts list",
+        "refreshSuccess": "Posts list refreshed."
+      },
+      "table": {
+        "searchLabel": "Search posts",
+        "searchPlaceholder": "Filter by title, summary, or author",
+        "itemsPerPageLabel": "Items per page",
+        "empty": "No posts available yet.",
+        "emptySearch": "No posts match your search.",
+        "headers": {
+          "title": "Title",
+          "author": "Author",
+          "publishedAt": "Published",
+          "reactions": "Reactions",
+          "comments": "Comments",
+          "actions": "Actions"
+        },
+        "optimisticBadge": "Pending sync",
+        "noSummary": "No summary provided.",
+        "untitled": "Untitled post",
+        "unknownAuthor": "Unknown author",
+        "notPublished": "Not published",
+        "previewAria": "Preview “{title}”",
+        "editAria": "Edit “{title}”",
+        "deleteAria": "Delete “{title}”",
+        "viewAria": "Open public page for “{title}”",
+        "results": "{count} results"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Create a new post",
+          "submit": "Publish post"
+        },
+        "edit": {
+          "title": "Edit post",
+          "submit": "Save changes"
+        },
+        "preview": {
+          "title": "Quick preview",
+          "summaryLabel": "Summary",
+          "contentLabel": "Content",
+          "openPublic": "Open public page"
+        },
+        "delete": {
+          "title": "Delete post",
+          "description": "This action cannot be undone. The post will be removed from the blog.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        },
+        "form": {
+          "titleLabel": "Title",
+          "summaryLabel": "Summary",
+          "contentLabel": "Content"
+        }
+      },
+      "feedback": {
+        "created": "Post created successfully.",
+        "updated": "Post updated successfully.",
+        "deleted": "Post deleted successfully.",
+        "loadError": "Unable to load posts. Please try again.",
+        "actionError": "Something went wrong. Please try again."
+      },
+      "validation": {
+        "contentRequired": "Content is required."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "博客数据",
+          "page": {
+            "title": "内容数据",
+            "subtitle": "查看支持编辑工作流的指标、搜索索引和数据源。"
+          }
+        },
+        "crons": {
+          "metaTitle": "博客定时任务",
+          "page": {
+            "title": "计划发布",
+            "subtitle": "审查负责导入、社交分发和自动发布时间窗口的定时任务。"
+          }
+        }
+      }
+    },
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
+          }
+        }
+      }
+    }
+  }
+}

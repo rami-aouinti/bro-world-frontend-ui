@@ -24,9 +24,12 @@ import { computed, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useAuthSession } from "~/stores/auth-session";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const auth = useAuthSession();
 const router = useRouter();
 const { t } = useI18n();
+await useLocaleNamespaces(["auth"]);
 const { localePath } = useI18nDocs();
 
 const pageDescription = computed(() => t("seo.logout.description"));

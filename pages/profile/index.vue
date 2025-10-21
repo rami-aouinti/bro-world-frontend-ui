@@ -244,6 +244,7 @@ import type {
   ProfileUser,
   SidebarFriend,
 } from "~/types/pages/profile";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 
 const ProfileSidebar = defineAsyncComponent({
   loader: () => import("~/components/layout/ProfileSidebar.vue"),
@@ -265,6 +266,7 @@ definePageMeta({
   documentDriven: false,
 });
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 
 const pageDescription = computed(() => t("seo.profile.description"));
 

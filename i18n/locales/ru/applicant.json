@@ -1,0 +1,21 @@
+{
+  "applicant": {
+    "create": "Create applicant",
+    "createdSuccess": "Applicant saved successfully.",
+    "createError": "Unable to create the applicant.",
+    "submit": "Submit",
+    "submitError": "Unable to submit the application.",
+    "submitSuccess": "Application submitted.",
+    "selectError": "Select an applicant before submitting.",
+    "upload": "Upload",
+    "uploadResume": "Upload resume",
+    "uploadError": "Unable to upload the resume.",
+    "uploadSuccess": "Resume uploaded successfully.",
+    "noResume": "no resume",
+    "noFile": "Choose a file before uploading.",
+    "name": "Name",
+    "contactEmail": "Contact email",
+    "preferences": "Job preferences",
+    "resume": "Resume"
+  }
+}

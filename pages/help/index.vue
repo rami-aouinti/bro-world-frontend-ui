@@ -72,7 +72,10 @@ import HelpCategoryCard from "~/components/help/HelpCategoryCard.vue";
 import HelpFaq from "~/components/help/HelpFaq.vue";
 import type { HelpArticleSummary, HelpCategory } from "~/types/help";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, tm, locale } = useI18n();
+await useLocaleNamespaces(["help"]);
 const runtimeConfig = useRuntimeConfig();
 const siteName = runtimeConfig.public?.siteName || "Bro World";
 const localePath = useLocalePath();

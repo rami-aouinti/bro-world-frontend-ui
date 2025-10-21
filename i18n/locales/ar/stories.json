@@ -1,0 +1,25 @@
+{
+  "stories": {
+    "card": {
+      "createLabel": "إنشاء قصة",
+      "openAria": "فتح قصة {name}",
+      "openAriaFallback": "فتح قصة",
+      "imageAlt": "صورة غلاف القصة",
+      "avatarAlt": "أفاتار القصة"
+    },
+    "strip": {
+      "ariaLabel": "القصص",
+      "scrollLeft": "تمرير القصص إلى اليسار",
+      "scrollRight": "تمرير القصص إلى اليمين"
+    },
+    "viewer": {
+      "close": "إغلاق الستوري",
+      "imageAlt": "محتوى الستوري",
+      "avatarAlt": "صورة الستوري",
+      "expired": "لم تعد الستوري مرئية.",
+      "reactPrompt": "تفاعل مع هذه الستوري",
+      "messageLabel": "إرسال رسالة",
+      "send": "إرسال"
+    }
+  }
+}

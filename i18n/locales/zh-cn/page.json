@@ -1,0 +1,21 @@
+{
+  "page": {
+    "home": {
+      "SupportUs": "支持我们",
+      "AllComponents": "所有组件",
+      "OpenSourceComponentsToBuild": "开源组件构建",
+      "Stunning": "惊人的",
+      "Beautiful": "漂亮的",
+      "WebsitesUsingVueAndNuxt": "Vue 和 Nuxt 的网站",
+      "IntegrateWithYourFavouriteUIframework": "与您最喜欢的UI框架集成",
+      "Features": "功能特性",
+      "CheckOutSomeExamples": "案例展示",
+      "3DCardHoverEffect": "鼠标悬停3D效果卡片",
+      "RadiantText": "镭射字",
+      "LovedByCommunity": "深受喜爱的社区",
+      "WhatAreYouWaitingFor": "你还在等什么?",
+      "GetStartedAndStartBuildingAwesomeUI": "开始构建出色的 UI 吧",
+      "GetStarted": "开始"
+    }
+  }
+}

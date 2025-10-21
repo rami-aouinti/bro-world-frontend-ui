@@ -1,0 +1,28 @@
+{
+  "register": {
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "repeatPassword": "Passwort bestätigen",
+    "agree": "Ich akzeptiere die",
+    "terms": "Allgemeinen Geschäftsbedingungen",
+    "requirements": "Passwort-Anforderungen",
+    "requirement1": "Muss mindestens 8 Zeichen enthalten.",
+    "requirement2": "Sollte Zahlen oder Sonderzeichen für zusätzliche Sicherheit enthalten.",
+    "signUp": "Konto erstellen",
+    "haveAccount": "Sie haben bereits ein Konto?",
+    "signIn": "Anmelden",
+    "termsTitle": "Allgemeine Geschäftsbedingungen",
+    "errorTerms": "Sie müssen den Allgemeinen Geschäftsbedingungen zustimmen.",
+    "errorMissing": "Bitte füllen Sie alle Pflichtfelder aus.",
+    "errorMismatch": "Die Passwörter stimmen nicht überein.",
+    "errorGeneric": "Beim Erstellen des Kontos ist ein Fehler aufgetreten.",
+    "errorTitle": "Kontoerstellung fehlgeschlagen",
+    "successTitle": "Konto erstellt",
+    "success": "Ihr Konto wurde erfolgreich erstellt.",
+    "termsIntro": "Mit dem Erstellen eines Kontos bestätigen Sie, dass Sie unsere Richtlinien verstehen und akzeptieren.",
+    "termsPoint1": "Wir verwenden Ihre Informationen nur, um Ihr Konto zu erstellen und zu schützen.",
+    "termsPoint2": "Sie können Ihre Benachrichtigungseinstellungen jederzeit anpassen.",
+    "termsPoint3": "Durch das Löschen Ihres Kontos werden Ihre Daten innerhalb von 30 Tagen aus unseren aktiven Systemen entfernt.",
+    "termsOutro": "Kontaktieren Sie unser Support-Team, wenn Sie Fragen zum Umgang mit Ihren Daten haben."
+  }
+}

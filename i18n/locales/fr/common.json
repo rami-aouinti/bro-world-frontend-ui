@@ -1,0 +1,493 @@
+{
+  "$vuetify": {
+    "loading": "Chargement…"
+  },
+  "common": {
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Fermer",
+    "loading": "Chargement…"
+  },
+  "layout": {
+    "loadingOverlay": {
+      "srLabel": "Chargement de Bro World",
+      "title": "Bro World se charge…",
+      "description": "Nous préparons l'expérience complète : barre supérieure, panneaux et contenu."
+    },
+    "routeLoadingOverlay": {
+      "srLabel": "Chargement de la page",
+      "title": "Chargement",
+      "subtitle": "Nous préparons votre univers…"
+    },
+    "actions": {
+      "openNavigation": "Ouvrir le menu de navigation",
+      "openWidgets": "Ouvrir les widgets rapides",
+      "toggleTheme": "Changer de thème",
+      "goBack": "Revenir en arrière",
+      "refresh": "Actualiser",
+      "notifications": "Ouvrir les notifications",
+      "messages": "Ouvrir Messenger",
+      "cart": "Ouvrir le sac",
+      "profile": "Ouvrir le menu profil",
+      "viewProfile": "Voir le profil",
+      "signOut": "Se déconnecter",
+      "changeLanguage": "Changer de langue (actuel : {locale})"
+    },
+    "notificationsMenu": {
+      "title": "Notifications",
+      "subtitle": "Dernières actualités de votre réseau",
+      "markAll": "Tout marquer comme lu",
+      "empty": "Vous êtes à jour !",
+      "badgeLabel": "{count} notifications non lues",
+      "items": {
+        "newFollower": {
+          "title": "Nouvel abonné",
+          "description": "Alex Carter a commencé à vous suivre.",
+          "time": "il y a 2 min"
+        },
+        "newComment": {
+          "title": "Nouveau commentaire",
+          "description": "Maria a commenté votre publication.",
+          "time": "il y a 12 min"
+        },
+        "systemUpdate": {
+          "title": "Rappel de planification",
+          "description": "Une maintenance du système est prévue ce soir.",
+          "time": "il y a 1 h"
+        }
+      }
+    },
+    "messengerMenu": {
+      "title": "Messages",
+      "subtitle": "Conversations récentes",
+      "viewAll": "Tout voir",
+      "empty": "Aucun nouveau message",
+      "badgeLabel": "{count} messages non lus"
+    },
+    "userMenu": {
+      "signedInAs": "Connecté en tant que",
+      "guestTitle": "Bienvenue",
+      "guestSubtitle": "Connectez-vous pour profiter d'une expérience personnalisée",
+      "admin": "Administration"
+    },
+    "localeMenu": {
+      "title": "Langue",
+      "subtitle": "Disponible en {count} langues"
+    },
+    "search": {
+      "placeholder": "Rechercher…"
+    },
+    "appIcons": {
+      "academy": "Académie",
+      "briefcase": "Travail",
+      "store": "Boutique",
+      "database": "Données",
+      "ecommerce": "E-commerce",
+      "education": "Éducation",
+      "quiz": "Quiz",
+      "game": "Jeux & Quiz"
+    },
+    "sidebar": {
+      "title": "Connexion",
+      "navigate": "Aller à la section",
+      "items": {
+        "apps": "Applications",
+        "calendar": "Calendrier",
+        "cv": "CV",
+        "createWorld": "Créer un monde",
+        "jobs": "Emplois",
+        "game": "Jeux & Quiz",
+        "crm": "Espace CRM",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "Vue d'ensemble",
+        "ecommerceCatalog": "Catalogue produits",
+        "ecommerceCart": "Panier",
+        "ecommerceCheckout": "Paiement",
+        "education": "Éducation",
+        "quiz": "Quiz",
+        "academy": "Académie",
+        "profile": "Profil",
+        "profileOverview": "Vue d'ensemble",
+        "profileSettings": "Paramètres du compte",
+        "profileSecurity": "Mot de passe et sécurité",
+        "profileFriends": "Amis",
+        "profilePhotos": "Photos et médias",
+        "admin": "Administration",
+        "adminGeneral": "Général",
+        "adminStatistics": "Statistiques",
+        "adminGeneralSetting": "Paramètres généraux",
+        "adminData": "Données",
+        "adminCrons": "Tâches planifiées",
+        "adminSettings": "Paramètres du site",
+        "adminCrm": "Espace CRM",
+        "adminUserManagement": "Gestion des utilisateurs",
+        "adminBlogManagement": "Gestion du blog",
+        "adminJobManagement": "Gestion des offres d'emploi",
+        "adminEcommerceManagement": "Gestion du e-commerce",
+        "adminEducationManagement": "Gestion de l'éducation",
+        "adminGameManagement": "Gestion des jeux",
+        "adminBlog": "Blog",
+        "help": "Aide",
+        "about": "À propos",
+        "contact": "Contact",
+        "performance": "Performance"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Météo du jour",
+        "condition": "Nuageux",
+        "subtitle": "Ressenti 11°"
+      },
+      "news": {
+        "title": "Actualités",
+        "items": {
+          "0": {
+            "title": "Répétition du lancement produit",
+            "timestamp": "Il y a 5 min"
+          },
+          "1": {
+            "title": "Rapport de croissance disponible",
+            "timestamp": "Il y a 15 min"
+          }
+        }
+      },
+      "rating": {
+        "title": "Vue d'ensemble des notes",
+        "subtitle": "Aucun avis pour le moment",
+        "edit": "Ajouter une note",
+        "share": "Partager",
+        "actionsLabel": "Actions de notation"
+      },
+      "feed": {
+        "title": "Flux d'activité"
+      }
+    },
+    "profileSidebar": {
+      "editBio": "Modifier",
+      "editDetails": "Modifier les détails",
+      "addFeatured": "Ajouter du contenu à la une",
+      "photosTitle": "Photos",
+      "viewAllPhotos": "Voir toutes les photos",
+      "friendsTitle": "Amis",
+      "viewAllFriends": "Voir tous les amis",
+      "livesIn": "Habite à {location}",
+      "from": "Originaire de {location}"
+    }
+  },
+  "buttons": {
+    "more": "Show more",
+    "less": "Show less",
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel"
+  },
+  "nav": {
+    "Docs": "Docs",
+    "GettingStarted": "Bien démarrer",
+    "GettingStartedDescription": "Présentation d'Inspira UI et de ses concepts clés.",
+    "Installation": "Installation",
+    "InstallationDescription": "Suivez le guide étape par étape pour installer Inspira UI dans votre projet.",
+    "Components": "Composants",
+    "ComponentsDescription": "Explorez tous les composants disponibles et leur utilisation.",
+    "V1DocsDescription": "Documentation pour utiliser Inspira UI avec Tailwind CSS v3.",
+    "Community": "Communauté",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Code source d'Inspira UI.",
+    "Discord": "Discord",
+    "DiscordDescription": "Rejoignez la communauté sur Discord",
+    "Forum": "Forum",
+    "ForumDiscord": "Rejoindre le forum"
+  },
+  "seo": {
+    "about": {
+      "title": "À propos",
+      "description": "Découvrez notre mission et notre équipe."
+    },
+    "help": {
+      "title": "Aide",
+      "description": "FAQ et ressources d’assistance."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contactez notre équipe."
+    },
+    "profile": {
+      "title": "Profil",
+      "description": "Consultez vos informations personnelles et l’activité du compte."
+    },
+    "profileFriends": {
+      "title": "Connexions",
+      "description": "Parcourez vos collaborateurs, les contacts suggérés et l’activité en temps réel."
+    },
+    "profilePhotos": {
+      "title": "Bibliothèque de photos",
+      "description": "Organisez les moments forts des lancements, des sessions en studio et des voyages de recherche."
+    },
+    "profileEdit": {
+      "title": "Modifier le profil",
+      "description": "Mettez à jour vos coordonnées, compétences et liens sociaux."
+    },
+    "profileSecurity": {
+      "title": "Mot de passe et sécurité",
+      "description": "Gérez vos identifiants de connexion, l'authentification à deux facteurs et les appareils de confiance."
+    },
+    "createWorld": {
+      "title": "Créer un monde",
+      "description": "Préparez un nouvel univers BroWorld avec des modèles pour la communauté, l’économie et la gouvernance."
+    },
+    "job": {
+      "title": "Emplois",
+      "description": "Planifiez, suivez et optimisez vos programmes de recrutement."
+    },
+    "game": {
+      "title": "Jeux vidéo",
+      "description": "Offrez des expériences de jeu en direct, des communautés et des leviers de monétisation."
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "description": "Lancez et faites évoluer des parcours de vente modernes.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "description": "Design interactive quiz journeys with adaptive question banks."
+    },
+    "education": {
+      "title": "Éducation",
+      "description": "Concevez des expériences d'apprentissage collaboratives et pilotées par les données."
+    },
+    "academy": {
+      "title": "Académie",
+      "description": "Découvrez les parcours d’apprentissage structurés, exercices et certifications de Bro World."
+    },
+    "performance": {
+      "badge": "Rapport de performance",
+      "title": "Instantané de la qualité d'expérience",
+      "subtitle": "Un focus sur les performances du fil d'actualités sur des appareils réels.",
+      "updated": "Audit réalisé le 8 avril 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "Score global"
+      },
+      "metrics": {
+        "title": "Indicateurs clés d'expérience",
+        "subtitle": "Basé sur des analyses Lighthouse mobiles (Moto G Power émulé).",
+        "status": {
+          "good": "Sous contrôle",
+          "average": "À surveiller",
+          "poor": "Nécessite une action"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "Les premiers pixels significatifs s'affichent en moins d'une seconde.",
+            "trend": "Stable lors des 7 derniers déploiements.",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "Le média principal charge après le squelette mais reste dans les seuils Web Vitals.",
+            "trend": "Optimiser en préchargeant le sprite de l'image vedette.",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Des tâches longues pendant l'hydratation monopolisent le thread.",
+            "trend": "Causé par le chargement anticipé de widgets optionnels.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "La complétude visuelle est correcte mais peut être améliorée.",
+            "trend": "Gagne fortement à prioriser la livraison du CSS.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "Les cartes et le rail d'histoires bougent quand le contenu arrive tard.",
+            "trend": "Fixer les médias avec des ratios d'aspect pour stabiliser le fil.",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "Opportunités à fort impact",
+        "subtitle": "Correctifs prioritaires pour adresser les indicateurs en rouge.",
+        "items": {
+          "layout": {
+            "title": "Stabiliser les emplacements média et widgets",
+            "description": "Réserver de l'espace pour les bannières, carrousels et publicités dynamiques.",
+            "impact": "Fort impact",
+            "action": "Adopter des ratios d'aspect et hauteurs de squelette pour les éléments du fil."
+          },
+          "script": {
+            "title": "Différer les scripts non critiques",
+            "description": "Scinder l'analytics, les réactions et la messagerie hors du bundle principal.",
+            "impact": "Fort impact",
+            "action": "Hydrater les widgets optionnels à l'interaction via `defineAsyncComponent`."
+          },
+          "assets": {
+            "title": "Optimiser les visuels vedettes",
+            "description": "Compresser le collage principal et servir des sources AVIF par défaut.",
+            "impact": "Impact moyen",
+            "action": "Précharger la première image du fil et diffuser les autres en chargement différé."
+          },
+          "monitoring": {
+            "title": "Étendre la couverture Core Web Vitals",
+            "description": "Segmenter les métriques par route et type d'appareil.",
+            "impact": "Fondamental",
+            "action": "Envoyer les mesures `web-vitals` vers le lac analytique pour suivre les régressions."
+          }
+        }
+      },
+      "timeline": {
+        "title": "Feuille de route d'amélioration",
+        "subtitle": "Un déploiement réaliste pour livrer et vérifier les correctifs.",
+        "items": {
+          "week1": {
+            "date": "Semaine 1",
+            "title": "Éliminer les décalages de mise en page",
+            "description": "Auditer toutes les cartes et stories pour un dimensionnement déterministe.",
+            "actions": [
+              "Ajouter des ratios d'aspect aux miniatures et illustrations.",
+              "Bloquer les conteneurs publicitaires derrière des placeholders."
+            ]
+          },
+          "week2": {
+            "date": "Semaine 2",
+            "title": "Fragmenter les longues tâches",
+            "description": "Déporter la logique optionnelle dans des callbacks idle et des frontières async.",
+            "actions": [
+              "Découper le tiroir messagerie et le panneau des réactions.",
+              "Utiliser `requestIdleCallback` avant d'initialiser les SDK analytics."
+            ]
+          },
+          "week3": {
+            "date": "Semaine 3",
+            "title": "Vérifier les gains via le RUM",
+            "description": "Déployer le suivi Core Web Vitals aux cohortes de production.",
+            "actions": [
+              "Envoyer les métriques au lac de monitoring avec les métadonnées de build.",
+              "Alerter sur les régressions LCP/TBT au-delà de 10 % semaine après semaine."
+            ]
+          }
+        }
+      }
+    },
+    "crm": {
+      "title": "Espace CRM",
+      "subtitle": "Suivez les opportunités actives, les responsables et les remises en main en un coup d'œil.",
+      "actions": {
+        "newProject": "Nouveau projet",
+        "viewPipeline": "Voir le pipeline"
+      },
+      "metrics": {
+        "title": "Vue d'ensemble du pipeline",
+        "subtitle": "Aperçu du flux d'affaires par statut actuel.",
+        "total": "Projets",
+        "totalCaption": "Opportunités actives dans l'ensemble des pipelines.",
+        "inProgress": "En cours",
+        "inProgressCaption": "Équipes actuellement en exécution.",
+        "atRisk": "À risque",
+        "atRiskCaption": "Affaires nécessitant une attention immédiate.",
+        "pipelineValue": "Valeur du pipeline",
+        "pipelineValueCaption": "Revenu estimé sécurisé dans le pipeline."
+      },
+      "table": {
+        "title": "Projets actifs",
+        "subtitle": "Dernières initiatives CRM avec responsables et jalons.",
+        "empty": "Aucun projet CRM trouvé.",
+        "headers": {
+          "name": "Projet",
+          "client": "Client",
+          "owner": "Responsable",
+          "status": "Statut",
+          "stage": "Phase",
+          "budget": "Budget",
+          "probability": "Probabilité de gain",
+          "dueDate": "Date d'échéance"
+        }
+      },
+      "upcoming": {
+        "title": "Prochains transferts",
+        "subtitle": "Prochains jalons de livraison du pipeline.",
+        "empty": "Aucune échéance à venir."
+      },
+      "stages": {
+        "title": "Répartition par phase",
+        "subtitle": "Progression des projets par phase du pipeline.",
+        "caption": "Prochain jalon le {date}"
+      },
+      "sidebar": {
+        "ariaLabel": "Panneau d'informations CRM",
+        "projects": {
+          "title": "Mes projets",
+          "subtitle": "Vos initiatives actives pour le sprint sélectionné.",
+          "actions": {
+            "new": "Nouveau projet",
+            "create": "Créer un projet"
+          },
+          "empty": {
+            "description": "Aucun projet ne vous est attribué pour l’instant."
+          }
+        },
+        "tasks": {
+          "title": "Dernières tâches",
+          "subtitle": "Les tâches créées le plus récemment.",
+          "actions": {
+            "new": "Nouvelle tâche"
+          },
+          "empty": {
+            "description": "Aucune tâche récente. Créez-en une pour démarrer votre sprint."
+          },
+          "projectFallback": "Projet inconnu"
+        }
+      }
+    },
+    "login": {
+      "title": "Connexion",
+      "description": "Connectez-vous à votre compte Bro World pour continuer à collaborer avec la communauté."
+    },
+    "register": {
+      "title": "Créer un compte",
+      "description": "Rejoignez Bro World pour partager des idées, lancer de nouveaux mondes et rester proche de votre équipe."
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Récupérez l’accès à votre compte Bro World grâce à un lien de réinitialisation sécurisé."
+    },
+    "logout": {
+      "title": "Déconnexion",
+      "description": "Déconnectez-vous de Bro World et protégez votre compte sur les appareils partagés."
+    },
+    "messenger": {
+      "title": "Messagerie",
+      "description": "Discutez avec votre équipe, partagez des nouvelles et gardez vos conversations organisées."
+    }
+  }
+}

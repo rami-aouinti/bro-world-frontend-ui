@@ -1,0 +1,19 @@
+{
+  "messenger": {
+    "searchPlaceholder": "Search conversations",
+    "emptyList": "No conversations yet",
+    "unknownParticipant": "Unknown",
+    "emptyTitle": "Select a conversation",
+    "emptyDescription": "Choose a conversation from the list to read and send messages.",
+    "emptyCtaLabel": "Start a conversation",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Write a message...",
+    "sendLabel": "Send",
+    "sendingLabel": "Sending…",
+    "sendErrorStatus": "Not delivered",
+    "shortcutsHint": "Press Ctrl+Enter to send",
+    "noMessages": "No messages yet",
+    "loadOlder": "Load earlier messages",
+    "participantsLabel": "{count} participants"
+  }
+}

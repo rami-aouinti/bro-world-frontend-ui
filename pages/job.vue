@@ -123,6 +123,8 @@ import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { jobCompaniesSample, jobListSample } from "~/lib/mock/jobs";
 import { useJobStore, type JobSummary } from "~/stores/useJobStore";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 definePageMeta({
   description: "Job page",
   breadcrumb: "disabled",
@@ -132,6 +134,7 @@ definePageMeta({
 
 const jobStore = useJobStore();
 const { t } = useI18n();
+await useLocaleNamespaces(["job", "applicant"]);
 const { $notify: notify, $fetch } = useNuxtApp();
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 

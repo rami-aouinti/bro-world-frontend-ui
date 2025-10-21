@@ -418,8 +418,11 @@ import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useDemoCartStore } from "~/stores/useDemoCart";
 import { demoEcommerceOrders } from "~/lib/demo/ecommerce";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const cart = useDemoCartStore();
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["demo"]);
 const localePath = useResolvedLocalePath();
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();

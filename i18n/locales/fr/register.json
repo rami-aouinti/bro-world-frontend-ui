@@ -1,0 +1,28 @@
+{
+  "register": {
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "repeatPassword": "Confirmez le mot de passe",
+    "agree": "J'accepte les",
+    "terms": "conditions générales",
+    "requirements": "Exigences du mot de passe",
+    "requirement1": "Doit contenir au moins 8 caractères.",
+    "requirement2": "Inclure des chiffres ou des caractères spéciaux pour plus de sécurité.",
+    "signUp": "Créer un compte",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "signIn": "Se connecter",
+    "termsTitle": "Conditions générales",
+    "errorTerms": "Vous devez accepter les conditions générales.",
+    "errorMissing": "Veuillez remplir tous les champs obligatoires.",
+    "errorMismatch": "Les mots de passe ne correspondent pas.",
+    "errorGeneric": "Une erreur est survenue lors de la création du compte.",
+    "errorTitle": "Échec de la création du compte",
+    "successTitle": "Compte créé",
+    "success": "Votre compte a été créé avec succès.",
+    "termsIntro": "En créant un compte, vous confirmez comprendre et accepter nos politiques.",
+    "termsPoint1": "Nous utilisons vos informations uniquement pour créer et sécuriser votre compte.",
+    "termsPoint2": "Vous pouvez modifier vos préférences de notification à tout moment.",
+    "termsPoint3": "La suppression de votre compte entraîne l'effacement de vos données de nos systèmes actifs sous 30 jours.",
+    "termsOutro": "Contactez notre équipe d'assistance si vous avez des questions sur la gestion de vos données."
+  }
+}

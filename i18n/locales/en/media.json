@@ -1,0 +1,84 @@
+{
+  "media": {
+    "toolbar": {
+      "newFolder": "New folder",
+      "upload": "Upload",
+      "gridView": "Grid view",
+      "listView": "List view",
+      "showTrash": "Open trash",
+      "hideTrash": "Close trash",
+      "refresh": "Refresh"
+    },
+    "tree": {
+      "ariaLabel": "Media folders"
+    },
+    "breadcrumbs": {
+      "root": "My media"
+    },
+    "grid": {
+      "empty": "This folder is empty",
+      "ariaLabel": "Media grid"
+    },
+    "list": {
+      "columns": {
+        "name": "Name",
+        "type": "Type",
+        "size": "Size",
+        "updatedAt": "Updated"
+      },
+      "empty": "No files in this folder"
+    },
+    "upload": {
+      "title": "Upload files",
+      "dropTitle": "Drop files here",
+      "dropSubtitle": "or browse your device to select files",
+      "browse": "Browse files",
+      "queue": "Upload queue",
+      "empty": "No uploads in progress"
+    },
+    "rename": {
+      "title": "Rename",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter a name",
+      "save": "Save"
+    },
+    "delete": {
+      "title": "Move to trash",
+      "description": "Deleted items are kept for 30 days in the trash.",
+      "confirm": "Delete",
+      "purgeTitle": "Delete permanently",
+      "purgeDescription": "This will permanently delete the selected item. This action cannot be undone."
+    },
+    "move": {
+      "title": "Move to folder",
+      "destinationLabel": "Destination",
+      "confirm": "Move",
+      "rootOption": "Top level"
+    },
+    "preview": {
+      "ariaLabel": "File preview",
+      "unavailable": "Preview unavailable",
+      "empty": "Select a file to preview",
+      "download": "Download"
+    },
+    "createFolder": {
+      "title": "Create folder"
+    },
+    "actions": {
+      "open": "Open",
+      "rename": "Rename",
+      "move": "Move",
+      "delete": "Delete",
+      "deleteForever": "Delete permanently",
+      "restore": "Restore"
+    },
+    "trash": {
+      "name": "Name",
+      "type": "Type",
+      "deletedAt": "Deleted",
+      "actions": "Actions",
+      "file": "File",
+      "folder": "Folder"
+    }
+  }
+}

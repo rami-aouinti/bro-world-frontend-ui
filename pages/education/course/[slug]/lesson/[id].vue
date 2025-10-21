@@ -43,7 +43,10 @@ import LessonPlayer from "~/components/education/LessonPlayer.vue";
 import { useEducationStore } from "~/stores/education";
 import type { Exercise, Lesson } from "~/types/education";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const route = useRoute();
 const store = useEducationStore();
 

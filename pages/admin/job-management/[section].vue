@@ -35,6 +35,8 @@
 import { computed } from "vue";
 import { useAdminModulePage } from "~/composables/useAdminModulePage";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
@@ -53,6 +55,8 @@ const section = computed<JobManagementSection>(() => {
 });
 
 const pageKey = computed(() => `admin.jobManagement.sections.${section.value}`);
+
+await useLocaleNamespaces(["admin"]);
 
 const { t, title, subtitle } = useAdminModulePage(pageKey);
 const pageDescription = computed(() => subtitle.value);

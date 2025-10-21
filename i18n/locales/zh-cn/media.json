@@ -1,0 +1,84 @@
+{
+  "media": {
+    "toolbar": {
+      "newFolder": "新建文件夹",
+      "upload": "上传",
+      "gridView": "网格视图",
+      "listView": "列表视图",
+      "showTrash": "打开回收站",
+      "hideTrash": "关闭回收站",
+      "refresh": "刷新"
+    },
+    "tree": {
+      "ariaLabel": "媒体文件夹"
+    },
+    "breadcrumbs": {
+      "root": "我的媒体"
+    },
+    "grid": {
+      "empty": "此文件夹为空",
+      "ariaLabel": "媒体网格"
+    },
+    "list": {
+      "columns": {
+        "name": "名称",
+        "type": "类型",
+        "size": "大小",
+        "updatedAt": "更新于"
+      },
+      "empty": "此文件夹中没有文件"
+    },
+    "upload": {
+      "title": "上传文件",
+      "dropTitle": "将文件拖到此处",
+      "dropSubtitle": "或浏览设备选择文件",
+      "browse": "浏览文件",
+      "queue": "上传队列",
+      "empty": "没有正在进行的上传"
+    },
+    "rename": {
+      "title": "重命名",
+      "nameLabel": "名称",
+      "namePlaceholder": "输入名称",
+      "save": "保存"
+    },
+    "delete": {
+      "title": "移至回收站",
+      "description": "删除的项目将在回收站保留 30 天。",
+      "confirm": "删除",
+      "purgeTitle": "永久删除",
+      "purgeDescription": "这将永久删除所选项目，此操作无法撤销。"
+    },
+    "move": {
+      "title": "移动到文件夹",
+      "destinationLabel": "目标位置",
+      "confirm": "移动",
+      "rootOption": "根级别"
+    },
+    "preview": {
+      "ariaLabel": "文件预览",
+      "unavailable": "无法预览",
+      "empty": "选择一个文件进行预览",
+      "download": "下载"
+    },
+    "createFolder": {
+      "title": "创建文件夹"
+    },
+    "actions": {
+      "open": "打开",
+      "rename": "重命名",
+      "move": "移动",
+      "delete": "删除",
+      "deleteForever": "永久删除",
+      "restore": "恢复"
+    },
+    "trash": {
+      "name": "名称",
+      "type": "类型",
+      "deletedAt": "删除时间",
+      "actions": "操作",
+      "file": "文件",
+      "folder": "文件夹"
+    }
+  }
+}

@@ -62,12 +62,15 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import ContactSupportSidebar from "~/components/contact/ContactSupportSidebar.vue";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const ContactForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ContactForm.vue"),
   suspensible: false,
 });
 
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const pageDescription = computed(() => t("seo.contact.description"));
 
 definePageMeta({

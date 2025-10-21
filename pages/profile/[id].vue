@@ -233,7 +233,10 @@ import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { friendCards, findFriendById } from "~/lib/users/mock-friends";
 import type { FriendCard } from "~/types/pages/profile";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const route = useRoute();

@@ -63,8 +63,11 @@ import { createError } from "h3";
 import HelpBreadcrumbs from "~/components/help/HelpBreadcrumbs.vue";
 import type { HelpArticleSummary, HelpCategory } from "~/types/help";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const route = useRoute();
 const { t, locale } = useI18n();
+await useLocaleNamespaces(["help"]);
 const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();
 const siteName = runtimeConfig.public?.siteName || "Bro World";

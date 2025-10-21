@@ -152,6 +152,8 @@ import { useAuthSession } from "~/stores/auth-session";
 import { useProfileStore } from "~/stores/profile";
 import type { Story, StoryReaction } from "~/types/stories";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const blogPostCardIntrinsicHeight = 520;
 const auth = useAuthSession();
@@ -441,6 +443,7 @@ const reactionEmojis: Record<ReactionType, string> = {
 };
 
 const { t } = useI18n();
+await useLocaleNamespaces(["blog"]);
 
 const pageDescription = computed(() => t("blog.hero.description"));
 

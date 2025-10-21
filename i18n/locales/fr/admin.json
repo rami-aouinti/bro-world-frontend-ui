@@ -1,0 +1,666 @@
+{
+  "admin": {
+    "common": {
+      "comingSoon": "Ce module arrive bientôt."
+    },
+    "metaTitle": "Administration",
+    "page": {
+      "title": "Espace d'administration",
+      "subtitle": "Pilotez l'ensemble de la plateforme, suivez les indicateurs clés et activez les bons leviers en quelques clics."
+    },
+    "statistics": {
+      "metaTitle": "Statistiques",
+      "page": {
+        "title": "Statistiques de la plateforme",
+        "subtitle": "Surveillez les tendances d’utilisation et les indicateurs essentiels de votre communauté."
+      },
+      "cards": {
+        "users": {
+          "title": "Utilisateurs enregistrés",
+          "description": "Nombre total de comptes actuellement disponibles sur la plateforme."
+        }
+      },
+      "actions": {
+        "refresh": "Actualiser les données"
+      },
+      "errors": {
+        "load": "Impossible de charger les statistiques."
+      }
+    },
+    "settings": {
+      "metaTitle": "Paramètres du site",
+      "page": {
+        "title": "Paramètres du site",
+        "subtitle": "Configurez l'identité de marque, la palette de thèmes et la navigation de votre communauté."
+      },
+      "navigation": {
+        "title": "Sections"
+      },
+      "sections": {
+        "general": {
+          "title": "Identité de marque",
+          "subtitle": "Mettez à jour le nom du site et la signature affichés sur l'ensemble de l'espace.",
+          "badge": "Essentiel"
+        },
+        "theme": {
+          "title": "Thèmes",
+          "subtitle": "Composez les thèmes disponibles et choisissez celui appliqué par défaut.",
+          "active": "Thème par défaut"
+        },
+        "profile": {
+          "title": "Personnalisation du profil",
+          "subtitle": "Définissez ce que les membres peuvent ajuster sur leur profil public.",
+          "badge": "Profils"
+        },
+        "appearance": {
+          "title": "Mode d'affichage",
+          "subtitle": "Choisissez le mode par défaut et la gestion du changement de thème.",
+          "badge": "Affichage"
+        },
+        "pages": {
+          "title": "Pages statiques",
+          "subtitle": "Modifiez le contenu d'introduction des pages À propos, Contact et Aide.",
+          "badge": "Contenu",
+          "labels": {
+            "about": "Page À propos",
+            "contact": "Page Contact",
+            "help": "Centre d'aide"
+          },
+          "descriptions": {
+            "about": "Mettez à jour la mission présentée sur la page À propos.",
+            "contact": "Personnalisez le texte d'accueil de la page de contact.",
+            "help": "Définissez le message affiché en tête du centre d'aide."
+          }
+        },
+        "navigation": {
+          "title": "Menu de navigation",
+          "subtitle": "Ajoutez, réorganisez et sécurisez les entrées de la barre latérale pour chaque audience.",
+          "badge": "Menus",
+          "children": "Liens enfants"
+        }
+      },
+      "fields": {
+        "siteName": "Nom du site",
+        "language": "Langue du contenu",
+        "tagline": "Accroche",
+        "themeName": "Nom du thème",
+        "themeDescription": "Description",
+        "themePrimary": "Couleur principale",
+        "themeAccent": "Couleur d'accent",
+        "themeSurface": "Couleur de surface",
+        "menuLabel": "Libellé du menu",
+        "menuPath": "Chemin de destination",
+        "menuIcon": "Icône (optionnel)",
+        "menuAdmin": "Réservé aux admins",
+        "menuVisible": "Visible",
+        "profileAllowCustomization": "Autoriser la personnalisation du profil",
+        "profileAllowThemeSelection": "Autoriser la sélection de thème du profil",
+        "profileAllowAvatarUploads": "Autoriser le téléversement d'avatar",
+        "profileAllowCoverUploads": "Autoriser le téléversement de bannière",
+        "profileShowContact": "Afficher la section contact",
+        "profileShowDetails": "Afficher la section détails",
+        "profileShowSocial": "Afficher les informations sociales",
+        "profileDefaultBio": "Biographie par défaut",
+        "uiAllowThemeSwitching": "Autoriser le changement de thème",
+        "themeModeSystem": "Suivre le système",
+        "themeModeLight": "Mode clair",
+        "themeModeDark": "Mode sombre",
+        "pageTitle": "Titre",
+        "pageSubtitle": "Sous-titre",
+        "pageBody": "Contenu principal"
+      },
+      "themeCustomizer": {
+        "title": "Personnaliser",
+        "color": "Couleur",
+        "radius": "Rayon",
+        "theme": "Thème",
+        "light": "Clair",
+        "dark": "Sombre",
+        "system": "Système"
+      },
+      "helpers": {
+        "themeModeSystem": "S'adapte automatiquement aux préférences du terminal de chaque visiteur.",
+        "themeModeLight": "Affiche toujours l'interface en mode clair.",
+        "themeModeDark": "Affiche toujours l'interface en mode sombre."
+      },
+      "placeholders": {
+        "siteName": "Saisissez le nom public du site",
+        "tagline": "Décrivez votre mission en une phrase"
+      },
+      "actions": {
+        "save": "Enregistrer",
+        "reset": "Annuler les modifications",
+        "addTheme": "Ajouter un thème",
+        "addMenu": "Ajouter un menu",
+        "addChild": "Ajouter un sous-lien",
+        "removeMenu": "Supprimer",
+        "moveUp": "Monter",
+        "moveDown": "Descendre"
+      },
+      "feedback": {
+        "saved": "Configuration mise à jour avec succès.",
+        "error": "Impossible de mettre à jour la configuration. Réessayez plus tard."
+      },
+      "defaults": {
+        "themeName": "Nouveau thème",
+        "menuLabel": "Nouveau menu",
+        "submenuLabel": "Nouveau sous-menu"
+      }
+    },
+    "userManagement": {
+      "title": "Gestion des utilisateurs",
+      "subtitle": "Invitez, mettez à jour ou désactivez des comptes en temps réel.",
+      "actions": {
+        "add": "Inviter un utilisateur"
+      },
+      "table": {
+        "search": "Rechercher un utilisateur",
+        "empty": "Aucun utilisateur trouvé.",
+        "columns": {
+          "user": "Utilisateur",
+          "email": "E-mail",
+          "status": "Statut",
+          "roles": "Rôles",
+          "updatedAt": "Dernière mise à jour",
+          "actions": "Actions"
+        }
+      },
+      "errors": {
+        "unauthorized": "Vous n'avez pas l'autorisation d'afficher les utilisateurs. Connectez-vous avec un compte administrateur.",
+        "generic": "Impossible de charger la liste des utilisateurs. Veuillez réessayer plus tard."
+      },
+      "status": {
+        "active": "Actif",
+        "disabled": "Désactivé"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Inviter un nouvel utilisateur",
+          "submit": "Créer l’utilisateur"
+        },
+        "edit": {
+          "title": "Mettre à jour l’utilisateur",
+          "submit": "Enregistrer"
+        },
+        "delete": {
+          "title": "Supprimer l’utilisateur",
+          "description": "Confirmez-vous la suppression de {name} ? Cette action est irréversible.",
+          "confirm": "Supprimer",
+          "cancel": "Annuler"
+        }
+      },
+      "form": {
+        "username": "Nom d’utilisateur",
+        "email": "E-mail",
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "roles": "Rôles",
+        "rolesHint": "Sélectionnez un ou plusieurs rôles",
+        "enabled": "Compte activé"
+      },
+      "validation": {
+        "username": "Le nom d’utilisateur est requis.",
+        "email": "Une adresse e-mail valide est requise.",
+        "roles": "Sélectionnez au moins un rôle."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données utilisateurs",
+          "page": {
+            "title": "Données utilisateurs",
+            "subtitle": "Passez en revue les jeux de données qui alimentent l'identité, les permissions et les analyses d'engagement."
+          },
+          "table": {
+            "search": "Rechercher dans l’ensemble de données",
+            "columns": {
+              "username": "Nom d’utilisateur",
+              "firstName": "Prénom",
+              "lastName": "Nom",
+              "email": "E-mail",
+              "language": "Langue",
+              "locale": "Paramètres régionaux",
+              "timezone": "Fuseau horaire",
+              "enabled": "Statut",
+              "actions": "Actions"
+            },
+            "empty": "Aucun enregistrement utilisateur trouvé."
+          },
+          "actions": {
+            "refresh": "Actualiser"
+          },
+          "details": {
+            "title": "Détails de l’utilisateur",
+            "close": "Fermer",
+            "empty": "Sélectionnez un utilisateur pour afficher son profil.",
+            "fields": {
+              "username": "Nom d’utilisateur",
+              "email": "E-mail",
+              "firstName": "Prénom",
+              "lastName": "Nom",
+              "language": "Langue",
+              "locale": "Paramètres régionaux",
+              "timezone": "Fuseau horaire",
+              "enabled": "Statut"
+            }
+          }
+        },
+        "crons": {
+          "metaTitle": "Tâches planifiées utilisateurs",
+          "page": {
+            "title": "Automatisations programmées",
+            "subtitle": "Surveillez les tâches en arrière-plan qui synchronisent les comptes, nettoient les inactifs et envoient les notifications."
+          }
+        }
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "Gestion du blog",
+      "page": {
+        "title": "Gestion du blog",
+        "subtitle": "Publiez des annonces et mettez en avant les histoires de la communauté."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données du blog",
+          "page": {
+            "title": "Données de contenu",
+            "subtitle": "Analysez les métriques, les index de recherche et les flux de données qui soutiennent les workflows éditoriaux."
+          }
+        },
+        "crons": {
+          "metaTitle": "Tâches planifiées du blog",
+          "page": {
+            "title": "Publications planifiées",
+            "subtitle": "Auditez les tâches cron responsables des imports, des diffusions sociales et des fenêtres de publication automatisées."
+          }
+        }
+      }
+    },
+    "jobManagement": {
+      "metaTitle": "Gestion des emplois",
+      "page": {
+        "title": "Gestion des emplois",
+        "subtitle": "Configurez les workflows de recrutement et gérez chaque offre depuis un hub central."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données des emplois",
+          "page": {
+            "title": "Données sur les emplois",
+            "subtitle": "Explorez les pipelines de candidats, les canaux de sourcing et les jeux de données de scoring automatisé."
+          }
+        },
+        "crons": {
+          "metaTitle": "Tâches planifiées des emplois",
+          "page": {
+            "title": "Routines programmées",
+            "subtitle": "Surveillez les exports, rappels et séquences de relance exécutés selon un calendrier."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "Gestion e-commerce",
+      "page": {
+        "title": "Gestion e-commerce",
+        "subtitle": "Contrôlez les mises à jour du catalogue, la configuration de la vitrine et les opérations transactionnelles."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données e-commerce",
+          "page": {
+            "title": "Données commerciales",
+            "subtitle": "Analysez les flux d’inventaire, les exports de commandes et les rapports de rapprochement financier."
+          }
+        },
+        "crons": {
+          "metaTitle": "Tâches planifiées e-commerce",
+          "page": {
+            "title": "Tâches automatisées",
+            "subtitle": "Suivez les synchronisations d’inventaire, de fulfillment et de notifications de paiement."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Gestion de l'éducation",
+      "page": {
+        "title": "Gestion de l'éducation",
+        "subtitle": "Administrez les cours, cohortes et expériences d’apprentissage proposées à votre communauté."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données éducatives",
+          "page": {
+            "title": "Données d'apprentissage",
+            "subtitle": "Consultez les inscriptions, évaluations et jeux de données de progression pour guider vos décisions pédagogiques."
+          }
+        },
+        "crons": {
+          "metaTitle": "Tâches planifiées de l'éducation",
+          "page": {
+            "title": "Automatisations pédagogiques",
+            "subtitle": "Supervisez les rappels programmés, les sorties de programme et les pipelines d’évaluation."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Gestion des jeux",
+      "page": {
+        "title": "Gestion des jeux",
+        "subtitle": "Supervisez catalogues de jeux, événements en direct et boucles d’engagement depuis un point unique."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données de jeu",
+          "page": {
+            "title": "Données de gameplay",
+            "subtitle": "Plongez dans les classements, la télémétrie des matchs et les analyses de monétisation."
+          }
+        },
+        "crons": {
+          "metaTitle": "Tâches planifiées de jeu",
+          "page": {
+            "title": "Opérations programmées",
+            "subtitle": "Vérifiez les tâches cron qui font tourner les événements, actualisent les récompenses et diffusent les mises à jour."
+          }
+        }
+      }
+    },
+    "actions": {
+      "newAdminRole": "Nouveau rôle admin",
+      "exportReport": "Exporter le rapport"
+    },
+    "sections": {
+      "stats": {
+        "title": "Aperçu en temps réel",
+        "subtitle": "Données consolidées sur les dernières 24 heures",
+        "metrics": {
+          "users": {
+            "label": "Utilisateurs actifs",
+            "trend": "+12% cette semaine",
+            "caption": "Engagement moyen par session",
+            "description": "Mesure le nombre de membres connectés au cours des dernières 24 heures."
+          },
+          "content": {
+            "label": "Contenus publiés",
+            "trend": "+5% vs. hier",
+            "caption": "Nouveaux articles et annonces",
+            "description": "Nombre total de publications, événements et annonces validés."
+          },
+          "reports": {
+            "label": "Signalements traités",
+            "trend": "-8% vs. moyenne",
+            "caption": "Temps moyen de résolution : 1h42",
+            "description": "Tickets de modération résolus par l’équipe de support."
+          },
+          "availability": {
+            "label": "Taux de disponibilité",
+            "value": "{value}%",
+            "trend": "+0,2 point",
+            "caption": "Sur les 30 derniers jours",
+            "description": "Indicateur consolidé sur l’ensemble des services critiques."
+          }
+        }
+      },
+      "controls": {
+        "title": "Contrôles globaux",
+        "subtitle": "Activez ou désactivez les fonctionnalités critiques du site",
+        "toggles": {
+          "maintenance": {
+            "label": "Mode maintenance",
+            "description": "Activez un message de maintenance et restreignez l’accès aux administrateurs uniquement.",
+            "helper": "Recommandé uniquement pour les mises à jour majeures.",
+            "enabled": "Maintenance activée",
+            "disabled": "Maintenance désactivée"
+          },
+          "registrations": {
+            "label": "Inscriptions ouvertes",
+            "description": "Permettez aux nouveaux membres de créer un compte sans invitation préalable.",
+            "helper": "Surveillez l’afflux via les rapports de croissance.",
+            "enabled": "Inscriptions autorisées",
+            "disabled": "Inscriptions fermées"
+          },
+          "moderation": {
+            "label": "Modération assistée",
+            "description": "Lance automatiquement la détection de contenu sensible avant publication.",
+            "helper": "Réglable depuis le module de modération avancée.",
+            "enabled": "Automatisation active",
+            "disabled": "Automatisation inactive"
+          },
+          "broadcast": {
+            "label": "Annonce globale épinglée",
+            "description": "Affiche une bannière d’information en haut de toutes les pages publiques.",
+            "helper": "Utilisez-le pour les communications officielles ou urgentes.",
+            "enabled": "Annonce visible",
+            "disabled": "Annonce masquée"
+          }
+        }
+      },
+      "quickActions": {
+        "title": "Actions rapides",
+        "subtitle": "Déclenchez les opérations de gestion les plus utilisées",
+        "button": "Lancer",
+        "items": {
+          "contentReview": {
+            "title": "Valider les contenus en attente",
+            "description": "Passez en revue les contributions de la communauté avant leur mise en ligne."
+          },
+          "securityScan": {
+            "title": "Analyser la sécurité",
+            "description": "Lancez un contrôle automatisé des permissions et des rôles sensibles."
+          },
+          "communityUpdate": {
+            "title": "Envoyer une mise à jour globale",
+            "description": "Programmez une newsletter ou une notification push à l’ensemble des membres."
+          }
+        }
+      },
+      "modules": {
+        "title": "Modules de gestion",
+        "subtitle": "Retrouvez les espaces dédiés à chaque pilier de la plateforme",
+        "openButton": "Ouvrir le module",
+        "policiesButton": "Voir les politiques",
+        "items": {
+          "content": {
+            "title": "Gestion du contenu",
+            "description": "Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.",
+            "tags": [
+              "Workflow éditorial",
+              "Validation",
+              "Programmation"
+            ],
+            "status": "12 contenus nécessitent une revue éditoriale."
+          },
+          "community": {
+            "title": "Communauté & modération",
+            "description": "Paramétrez les règles de modération, gérez les signalements et les sanctions.",
+            "tags": [
+              "Signalements",
+              "Sanctions",
+              "Messages privés"
+            ],
+            "status": "Temps moyen de réponse : 1 h 42."
+          },
+          "commerce": {
+            "title": "Monétisation & offres",
+            "description": "Administrez les abonnements, codes promotionnels et partenariats commerciaux.",
+            "tags": [
+              "Abonnements",
+              "Facturation",
+              "Coupons"
+            ],
+            "status": "Taux de conversion en hausse de 3,4 % cette semaine."
+          },
+          "governance": {
+            "title": "Gouvernance & conformité",
+            "description": "Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.",
+            "tags": [
+              "Audit",
+              "Rôles",
+              "Traçabilité"
+            ],
+            "status": "Dernier audit complet réalisé il y a 5 jours."
+          }
+        }
+      },
+      "activity": {
+        "title": "Activité récente",
+        "subtitle": "Suivi des actions réalisées par les administrateurs",
+        "cta": "Historique complet",
+        "items": {
+          "1": {
+            "title": "Revue de 18 contenus publiée",
+            "description": "Clara Dupont a validé le lot de contenus en attente pour la rubrique Blog.",
+            "time": "Il y a 12 minutes"
+          },
+          "2": {
+            "title": "Nouveau rôle attribué",
+            "description": "Ahmed B. a reçu les permissions de modérateur senior pour la zone Communauté.",
+            "time": "Il y a 47 minutes"
+          },
+          "3": {
+            "title": "Signalement critique résolu",
+            "description": "Un contenu signalé pour incitation à la haine a été supprimé et l’utilisateur suspendu.",
+            "time": "Il y a 2 heures"
+          }
+        }
+      },
+      "health": {
+        "title": "Santé du système",
+        "subtitle": "Surveillez les flux critiques et leur état opérationnel",
+        "cta": "Centre de statut",
+        "uptimeLabel": "Disponibilité",
+        "items": {
+          "api": {
+            "name": "API publique",
+            "description": "Flux GraphQL et Webhooks pour les intégrations tierces.",
+            "status": "Opérationnel"
+          },
+          "payments": {
+            "name": "Passerelle de paiement",
+            "description": "Transactions, facturation et webhooks financiers.",
+            "status": "Incident mineur"
+          },
+          "notifications": {
+            "name": "Notifications temps réel",
+            "description": "Envoi d’e-mails transactionnels et de notifications push.",
+            "status": "Opérationnel"
+          }
+        }
+      },
+      "resources": {
+        "title": "Ressources & conformité",
+        "subtitle": "Assurez-vous que vos équipes disposent des bonnes directives pour maintenir la qualité du site.",
+        "knowledgeBase": "Centre de connaissances",
+        "complianceAudit": "Audit de conformité",
+        "download": "Télécharger",
+        "items": {
+          "charter": {
+            "title": "Charte éditoriale & guide de modération",
+            "description": "Règles officielles qui encadrent la publication de contenu sur la plateforme."
+          },
+          "security": {
+            "title": "Procédure de gestion des incidents de sécurité",
+            "description": "Checklist opérationnelle en cas de faille de sécurité ou de tentative d’intrusion."
+          },
+          "compliance": {
+            "title": "Document RGPD & traitement des données",
+            "description": "Inventaire des traitements, durées de conservation et modèles de réponse aux utilisateurs."
+          }
+        }
+      }
+    },
+    "blog": {
+      "metaTitle": "Gestion du blog",
+      "title": "Articles du blog",
+      "subtitle": "Modérez, publiez et maintenez les contenus depuis un espace centralisé.",
+      "actions": {
+        "create": "Nouvel article",
+        "createAria": "Créer un nouvel article de blog",
+        "refresh": "Actualiser",
+        "refreshAria": "Actualiser la liste des articles",
+        "refreshSuccess": "Liste des articles actualisée."
+      },
+      "table": {
+        "searchLabel": "Rechercher un article",
+        "searchPlaceholder": "Filtrer par titre, résumé ou auteur",
+        "itemsPerPageLabel": "Articles par page",
+        "empty": "Aucun article publié pour le moment.",
+        "emptySearch": "Aucun article ne correspond à votre recherche.",
+        "headers": {
+          "title": "Titre",
+          "author": "Auteur",
+          "publishedAt": "Publication",
+          "reactions": "Réactions",
+          "comments": "Commentaires",
+          "actions": "Actions"
+        },
+        "optimisticBadge": "En attente de synchro",
+        "noSummary": "Aucun résumé pour le moment.",
+        "untitled": "Article sans titre",
+        "unknownAuthor": "Auteur inconnu",
+        "notPublished": "Non publié",
+        "previewAria": "Prévisualiser « {title} »",
+        "editAria": "Modifier « {title} »",
+        "deleteAria": "Supprimer « {title} »",
+        "viewAria": "Ouvrir la page publique de « {title} »",
+        "results": "{count} résultats"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Créer un nouvel article",
+          "submit": "Publier l’article"
+        },
+        "edit": {
+          "title": "Modifier l’article",
+          "submit": "Enregistrer"
+        },
+        "preview": {
+          "title": "Aperçu rapide",
+          "summaryLabel": "Résumé",
+          "contentLabel": "Contenu",
+          "openPublic": "Ouvrir la page publique"
+        },
+        "delete": {
+          "title": "Supprimer l’article",
+          "description": "Cette action est irréversible. L’article sera retiré du blog.",
+          "confirm": "Supprimer",
+          "cancel": "Annuler"
+        },
+        "form": {
+          "titleLabel": "Titre",
+          "summaryLabel": "Résumé",
+          "contentLabel": "Contenu"
+        }
+      },
+      "feedback": {
+        "created": "Article créé avec succès.",
+        "updated": "Article mis à jour avec succès.",
+        "deleted": "Article supprimé avec succès.",
+        "loadError": "Impossible de charger les articles. Veuillez réessayer.",
+        "actionError": "Une erreur est survenue. Veuillez réessayer."
+      },
+      "validation": {
+        "contentRequired": "Le contenu est requis."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Données du blog",
+          "page": {
+            "title": "Données de contenu",
+            "subtitle": "Analysez les métriques, les index de recherche et les flux de données qui soutiennent les workflows éditoriaux."
+          }
+        },
+        "crons": {
+          "metaTitle": "Crons du blog",
+          "page": {
+            "title": "Publications planifiées",
+            "subtitle": "Auditez les tâches cron responsables des imports, des diffusions sociales et des fenêtres de publication automatisées."
+          }
+        }
+      }
+    }
+  }
+}

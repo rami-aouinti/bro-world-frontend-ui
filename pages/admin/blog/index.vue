@@ -456,12 +456,15 @@ import type { BlogPost } from "~/lib/mock/blog";
 import type { BlogPostFormValue } from "~/types/forms/blog";
 import type { AdminPostRaw, AdminPostRow } from "~/types/pages/admin/blog";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const BlogPostForm = defineAsyncComponent({
   loader: () => import("~/components/forms/BlogPostForm.vue"),
   suspensible: false,
 });
 
 const { t, locale } = useI18n();
+await useLocaleNamespaces(["admin"]);
 const pageDescription = computed(() => t("admin.blog.subtitle"));
 
 definePageMeta({

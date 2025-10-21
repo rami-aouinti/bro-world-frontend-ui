@@ -1,0 +1,305 @@
+{
+  "blog": {
+    "hero": {
+      "eyebrow": "Feed de la comunidad",
+      "title": "Descubre qué ocurre en BroWorld",
+      "description": "Sigue los momentos destacados de la comunidad, descubre nuevos recursos y mantente al día con lo que los builders están lanzando ahora.",
+      "primaryAction": "Explorar las últimas publicaciones",
+      "secondaryAction": "Consultar la documentación",
+      "stats": {
+        "members": "Miembros activos",
+        "reactions": "Reacciones compartidas",
+        "comments": "Comentarios publicados"
+      }
+    },
+    "composer": {
+      "title": "Comparte algo con la comunidad",
+      "subtitle": "Inicia una conversación e inspira a otros creadores.",
+      "label": "Tu mensaje",
+      "placeholder": "¿De qué te gustaría hablar?",
+      "characterCount": "{count} caracteres",
+      "submit": "Publicar entrada",
+      "submitting": "Publicando...",
+      "success": "¡Tu publicación se ha publicado correctamente!",
+      "error": "No pudimos publicar tu mensaje. Inténtalo de nuevo.",
+      "validation": "Escribe un mensaje antes de publicar."
+    },
+    "newPost": {
+      "placeholder": "¿Qué estás pensando, {name}?",
+      "quickActions": {
+        "liveVideo": "Video en vivo",
+        "photoVideo": "Foto/Video",
+        "feelingActivity": "Sentimiento/Actividad"
+      },
+      "dialog": {
+        "title": "Crear publicación",
+        "addToPost": "Añade algo a tu publicación",
+        "postButton": "Publicar"
+      },
+      "audience": {
+        "public": "Público",
+        "friends": "Amigos",
+        "private": "Solo yo"
+      },
+      "attachments": {
+        "media": "Foto/Video",
+        "tag": "Etiquetar personas",
+        "feeling": "Sentimiento/Actividad",
+        "location": "Ubicación",
+        "gif": "GIF",
+        "poll": "Agregar encuesta"
+      }
+    },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
+    "reactions": {
+      "post": {
+        "publishedOn": "Publicado el {date}",
+        "reactions": "{count} reacciones",
+        "comments": "{count} comentarios",
+        "recentComments": "Comentarios recientes",
+        "commentPreviews": "{count} vistas previas",
+        "reactionSpotlight": "Reacciones destacadas"
+      },
+      "comment": {
+        "reactions": "{count} reacciones",
+        "replies": "{count} respuestas"
+      },
+      "reactionTypes": {
+        "like": "Me gusta",
+        "love": "Me encanta",
+        "wow": "Wow",
+        "haha": "Jaja",
+        "sad": "Triste",
+        "angry": "Enfadado",
+        "dislike": "No me gusta",
+        "care": "Me importa"
+      },
+      "posts": {
+        "publishedOn": "Publicado el {date}",
+        "reactionCount": "{count} reacciones",
+        "commentCount": "{count} comentarios",
+        "recentComments": "Comentarios recientes",
+        "previewCount": "{count} vistas previas",
+        "highlightedReactions": "Reacciones favoritas de los fans",
+        "reactLabel": "Añade tu reacción",
+        "reactionError": "No pudimos reaccionar a esta publicación. Inténtalo de nuevo.",
+        "likeAction": "Me gusta",
+        "unlikeAction": "Quitar me gusta",
+        "toggleReaction": "Cambiar el me gusta de esta publicación"
+      },
+      "comments": {
+        "reactionCount": "{count} reacciones",
+        "replyCount": "{count} respuestas",
+        "likeAction": "Me gusta",
+        "unlikeAction": "Quitar me gusta",
+        "toggleReaction": "Cambiar el me gusta de este comentario"
+      }
+    },
+    "posts": {
+      "actions": {
+        "follow": "Seguir",
+        "following": "Siguiendo",
+        "followAria": "Seguir a {name}",
+        "followingAria": "Ya sigues a {name}",
+        "openMenu": "Abrir acciones de la publicación",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "statistics": "{reactions} reacciones y {comments} comentarios",
+        "editTitle": "Editar publicación",
+        "editDescription": "Actualiza los detalles de tu publicación a continuación.",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "deleteTitle": "¿Eliminar esta publicación?",
+        "deleteDescription": "Esta acción no se puede deshacer. La publicación se eliminará para todos.",
+        "deleteConfirm": "Eliminar",
+        "editSuccessTitle": "Publicación actualizada",
+        "editSuccessDescription": "Tus cambios se han guardado correctamente.",
+        "editErrorTitle": "Fallo al actualizar",
+        "editErrorDescription": "No pudimos actualizar esta publicación. Inténtalo de nuevo.",
+        "deleteSuccessTitle": "Publicación eliminada",
+        "deleteSuccessDescription": "La publicación se ha eliminado del feed.",
+        "deleteErrorTitle": "Fallo al eliminar",
+        "deleteErrorDescription": "No pudimos eliminar esta publicación. Inténtalo de nuevo.",
+        "followSuccessTitle": "Autor seguido",
+        "followSuccessDescription": "Ahora sigues a {name}.",
+        "followErrorTitle": "Fallo al seguir",
+        "followErrorDescription": "No pudimos seguir a este autor. Inténtalo de nuevo.",
+        "fields": {
+          "title": "Título",
+          "summary": "Resumen",
+          "content": "Contenido"
+        },
+        "comment": "Comentar",
+        "share": "Compartir",
+        "viewPost": "Leer más",
+        "viewPostAria": "Abrir la publicación \"{title}\""
+      },
+      "shareMenu": {
+        "feed": "Compartir en el feed",
+        "story": "Compartir en tu historia",
+        "messenger": "Enviar por Messenger",
+        "whatsapp": "Enviar por WhatsApp",
+        "page": "Compartir en una página",
+        "group": "Compartir en un grupo",
+        "profile": "Compartir en el perfil de un amigo",
+        "comingSoonTitle": "Aún no disponible",
+        "comingSoonDescription": "Esta opción para compartir estará disponible pronto."
+      },
+      "shareDialog": {
+        "title": "Crear publicación",
+        "placeholder": "Di algo sobre esto...",
+        "placeholderNamed": "Di algo sobre esto, {name}...",
+        "defaultName": "Tú",
+        "submit": "Compartir",
+        "cancel": "Cancelar",
+        "feedAudience": "Feed",
+        "successTitle": "Publicación compartida",
+        "successMessage": "Tu actualización se agregó a tu feed."
+      },
+      "loading": "Cargando publicación",
+      "detailHeading": "Detalles de la publicación",
+      "notFound": "No se ha podido encontrar esta publicación.",
+      "backToFeed": "Volver al feed"
+    },
+    "comments": {
+      "label": "Únete a la conversación",
+      "placeholder": "Comparte tus ideas con la comunidad...",
+      "characterCount": "{count} caracteres",
+      "submit": "Publicar comentario",
+      "submitting": "Publicando...",
+      "loading": "Cargando comentarios...",
+      "load": "Cargar comentarios",
+      "activationHint": "Los comentarios se cargan cuando esta sección es visible o cuando presionas el botón.",
+      "success": "Tu comentario se agregó correctamente.",
+      "error": "No pudimos agregar tu comentario. Inténtalo de nuevo.",
+      "validation": "Escribe un comentario antes de publicar.",
+      "empty": "Aún no hay comentarios. ¡Sé la primera persona en participar!",
+      "reply": "Responder",
+      "replying": "Respondiendo...",
+      "replyPlaceholder": "Escribe tu respuesta...",
+      "addEmoji": "Añadir emoji",
+      "addMedia": "Añadir contenido multimedia",
+      "addGif": "Añadir GIF",
+      "replySubmit": "Enviar respuesta",
+      "replySuccess": "Tu respuesta se agregó correctamente.",
+      "replyError": "No pudimos publicar tu respuesta. Inténtalo de nuevo.",
+      "replyValidation": "Escribe una respuesta antes de enviarla.",
+      "cancelReply": "Cancelar",
+      "replyUnavailable": "Las respuestas no están disponibles en este momento.",
+      "reactionUnavailable": "Las reacciones no están disponibles en este momento.",
+      "reactionError": "No pudimos reaccionar a este comentario. Inténtalo de nuevo.",
+      "placeholderWithName": "Comentar como {name}",
+      "sort": {
+        "menuAria": "Ordenar comentarios",
+        "options": {
+          "relevant": {
+            "label": "Más relevantes",
+            "description": "Mostrar primero los comentarios de amigos y los que tienen más interacción."
+          },
+          "newest": {
+            "label": "Más recientes",
+            "description": "Mostrar todos los comentarios, del más reciente al más antiguo."
+          },
+          "all": {
+            "label": "Todos los comentarios",
+            "description": "Mostrar todos los comentarios, incluso el posible spam."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "Ver las {count} respuestas",
+        "hideReplies": "Ocultar respuestas"
+      }
+    },
+    "sidebar": {
+      "weather": {
+        "badge": "Noticias",
+        "title": "Lluvia en camino",
+        "subtitle": "Prepárate para un día lluvioso con vientos suaves.",
+        "icon": "🌧️",
+        "location": "Berlín, Alemania",
+        "locationLabel": "Ubicación",
+        "temperature": "18°C",
+        "temperatureLabel": "Temperatura",
+        "tipLabel": "Consejo",
+        "tip": "No olvides tu paraguas para mantenerte seco.",
+        "loading": "Actualizando el clima…",
+        "actions": {
+          "useCurrentLocation": "Usar ubicación actual"
+        },
+        "errors": {
+          "unavailable": "Las actualizaciones del clima no están disponibles.",
+          "denied": "No pudimos acceder a tu ubicación. Mostrando el pronóstico predeterminado.",
+          "unsupported": "Tu navegador no admite la geolocalización.",
+          "updateFailed": "No se puede actualizar el clima en este momento."
+        }
+      },
+      "leaderboard": {
+        "title": "Top 3 del quiz",
+        "live": "en vivo",
+        "participants": {
+          "first": {
+            "name": "Bro World",
+            "role": "Equipo de producto",
+            "score": "982 pts"
+          },
+          "second": {
+            "name": "Adam Don",
+            "role": "Comunidad",
+            "score": "953 pts"
+          },
+          "third": {
+            "name": "Nina Ko",
+            "role": "Marketing",
+            "score": "917 pts"
+          }
+        }
+      },
+      "rating": {
+        "title": "Resumen de valoraciones",
+        "subtitle": "Comentarios de los miembros de la semana",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
+        "stars": 5,
+        "categories": {
+          "engagement": {
+            "label": "Participación",
+            "value": 92
+          },
+          "content": {
+            "label": "Contenido",
+            "value": 88
+          },
+          "responsiveness": {
+            "label": "Capacidad de respuesta",
+            "value": 84
+          }
+        }
+      },
+      "title": "Mantente conectado",
+      "subtitle": "Recursos para seguir el ritmo de la comunidad de BroWorld.",
+      "widgets": {
+        "community": {
+          "title": "Únete a la comunidad",
+          "description": "Chatea con otros creadores, comparte ideas y recibe ayuda al instante.",
+          "action": "Abrir Discord"
+        },
+        "docs": {
+          "title": "Explora la documentación",
+          "description": "Aprende a sacar el máximo provecho de los componentes de BroWorld en tus proyectos.",
+          "action": "Leer documentación"
+        },
+        "contribute": {
+          "title": "Contribuye con un artículo",
+          "description": "Comparte tus conocimientos con la comunidad y ayuda a otros a crecer.",
+          "action": "Enviar contenido"
+        }
+      }
+    }
+  }
+}

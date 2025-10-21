@@ -1,0 +1,19 @@
+{
+  "messenger": {
+    "searchPlaceholder": "Buscar conversaciones",
+    "emptyList": "Todavía no hay conversaciones",
+    "unknownParticipant": "Desconocido",
+    "emptyTitle": "Selecciona una conversación",
+    "emptyDescription": "Elige una conversación de la lista para leer y enviar mensajes.",
+    "emptyCtaLabel": "Iniciar una conversación",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Escribe un mensaje...",
+    "sendLabel": "Enviar",
+    "sendingLabel": "Enviando…",
+    "sendErrorStatus": "No entregado",
+    "shortcutsHint": "Presiona Ctrl+Enter para enviar",
+    "noMessages": "Aún no hay mensajes",
+    "loadOlder": "Cargar mensajes anteriores",
+    "participantsLabel": "{count} participantes"
+  }
+}

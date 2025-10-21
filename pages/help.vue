@@ -162,7 +162,10 @@ import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);

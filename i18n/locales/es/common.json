@@ -1,0 +1,361 @@
+{
+  "$vuetify": {
+    "loading": "Cargando…"
+  },
+  "common": {
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Cerrar",
+    "loading": "Cargando…"
+  },
+  "layout": {
+    "loadingOverlay": {
+      "srLabel": "Cargando Bro World",
+      "title": "Bro World se está cargando…",
+      "description": "Estamos preparando la experiencia completa: barra superior, paneles y contenido."
+    },
+    "routeLoadingOverlay": {
+      "srLabel": "Cargando la página",
+      "title": "Cargando",
+      "subtitle": "Estamos preparando tu universo…"
+    },
+    "actions": {
+      "openNavigation": "Abrir menú de navegación",
+      "openWidgets": "Abrir widgets rápidos",
+      "toggleTheme": "Cambiar tema",
+      "goBack": "Volver",
+      "refresh": "Actualizar",
+      "notifications": "Abrir notificaciones",
+      "messages": "Abrir Messenger",
+      "cart": "Abrir bolsa",
+      "profile": "Abrir menú de perfil",
+      "viewProfile": "Ver perfil",
+      "signOut": "Cerrar sesión",
+      "changeLanguage": "Cambiar idioma (actual: {locale})"
+    },
+    "notificationsMenu": {
+      "title": "Notificaciones",
+      "subtitle": "Últimas novedades de tu red",
+      "markAll": "Marcar todo como leído",
+      "empty": "¡Estás al día!",
+      "badgeLabel": "{count} notificaciones sin leer",
+      "items": {
+        "newFollower": {
+          "title": "Nuevo seguidor",
+          "description": "Alex Carter comenzó a seguirte.",
+          "time": "hace 2 min"
+        },
+        "newComment": {
+          "title": "Nuevo comentario",
+          "description": "María dejó un comentario en tu publicación.",
+          "time": "hace 12 min"
+        },
+        "systemUpdate": {
+          "title": "Recordatorio de agenda",
+          "description": "El mantenimiento del sistema está previsto para esta noche.",
+          "time": "hace 1 h"
+        }
+      }
+    },
+    "messengerMenu": {
+      "title": "Mensajes",
+      "subtitle": "Conversaciones recientes",
+      "viewAll": "Ver todo",
+      "empty": "No hay mensajes nuevos",
+      "badgeLabel": "{count} mensajes sin leer"
+    },
+    "userMenu": {
+      "signedInAs": "Conectado como",
+      "guestTitle": "Bienvenido",
+      "guestSubtitle": "Inicia sesión para disfrutar de una experiencia personalizada",
+      "admin": "Administración"
+    },
+    "localeMenu": {
+      "title": "Idioma",
+      "subtitle": "Disponible en {count} idiomas"
+    },
+    "search": {
+      "placeholder": "Search..."
+    },
+    "appIcons": {
+      "academy": "Academia",
+      "briefcase": "Trabajo",
+      "store": "Tienda",
+      "database": "Datos",
+      "ecommerce": "E-commerce",
+      "education": "Educación",
+      "quiz": "Quiz",
+      "game": "Juegos y Quiz"
+    },
+    "sidebar": {
+      "title": "Conectar",
+      "navigate": "Ir a la sección",
+      "items": {
+        "apps": "Aplicaciones",
+        "calendar": "Calendario",
+        "cv": "CV",
+        "createWorld": "Create world",
+        "jobs": "Empleos",
+        "profile": "Perfil",
+        "profileOverview": "Resumen",
+        "profileSettings": "Configuración de la cuenta",
+        "profileSecurity": "Contraseña y seguridad",
+        "profileFriends": "Amigos",
+        "profilePhotos": "Fotos y multimedia",
+        "admin": "Administración",
+        "adminGeneral": "General",
+        "adminStatistics": "Estadísticas",
+        "adminGeneralSetting": "Configuración general",
+        "adminData": "Datos",
+        "adminCrons": "Tareas programadas",
+        "adminSettings": "Configuración del sitio",
+        "adminCrm": "Espacio CRM",
+        "adminUserManagement": "Gestión de usuarios",
+        "adminBlogManagement": "Gestión del blog",
+        "adminJobManagement": "Gestión de ofertas de empleo",
+        "adminEcommerceManagement": "Gestión de comercio electrónico",
+        "adminEducationManagement": "Gestión educativa",
+        "adminGameManagement": "Gestión de juegos",
+        "adminBlog": "Blog",
+        "help": "Ayuda",
+        "about": "Acerca de",
+        "contact": "Contacto",
+        "game": "Juegos y Quiz",
+        "crm": "Espacio CRM",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "Resumen",
+        "ecommerceCatalog": "Catálogo de productos",
+        "ecommerceCart": "Carrito",
+        "ecommerceCheckout": "Pago",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "Academia",
+        "performance": "Rendimiento"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Clima de hoy",
+        "condition": "Nublado",
+        "subtitle": "Sensación 11°"
+      },
+      "news": {
+        "title": "Noticias",
+        "items": {
+          "0": {
+            "title": "Ensayo de lanzamiento de producto",
+            "timestamp": "Hace 5 min"
+          },
+          "1": {
+            "title": "Informe de crecimiento disponible",
+            "timestamp": "Hace 15 min"
+          }
+        }
+      },
+      "rating": {
+        "title": "Resumen de calificaciones",
+        "subtitle": "Sin reseñas aún",
+        "edit": "Agregar calificación",
+        "share": "Compartir",
+        "actionsLabel": "Acciones de calificación"
+      },
+      "feed": {
+        "title": "Actividad reciente"
+      }
+    },
+    "profileSidebar": {
+      "editBio": "Editar",
+      "editDetails": "Editar detalles",
+      "addFeatured": "Agregar contenido destacado",
+      "photosTitle": "Fotos",
+      "viewAllPhotos": "Ver todas las fotos",
+      "friendsTitle": "Amigos",
+      "viewAllFriends": "Ver todos los amigos",
+      "livesIn": "Vive en {location}",
+      "from": "De {location}"
+    }
+  },
+  "buttons": {
+    "more": "Show more",
+    "less": "Show less",
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel"
+  },
+  "nav": {
+    "Docs": "Documentación",
+    "GettingStarted": "Primeros pasos",
+    "GettingStartedDescription": "Introducción a Inspira UI y sus conceptos clave.",
+    "Installation": "Instalación",
+    "InstallationDescription": "Sigue la guía paso a paso para instalar Inspira UI en tu proyecto.",
+    "Components": "Componentes",
+    "ComponentsDescription": "Explora todos los componentes disponibles y cómo usarlos.",
+    "V1DocsDescription": "Documentación para usar Inspira UI con Tailwind CSS v3.",
+    "Community": "Comunidad",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Código fuente de Inspira UI.",
+    "Discord": "Discord",
+    "DiscordDescription": "Conéctate con la comunidad en Discord",
+    "Forum": "Foro",
+    "ForumDiscord": "Únete al foro"
+  },
+  "seo": {
+    "profile": {
+      "title": "Perfil",
+      "description": "Consulta los detalles de tu cuenta y actividad."
+    },
+    "profileFriends": {
+      "title": "Conexiones",
+      "description": "Explora tus colaboradores, contactos sugeridos y actividad en tiempo real."
+    },
+    "profilePhotos": {
+      "title": "Biblioteca de fotos",
+      "description": "Organiza los momentos destacados de lanzamientos, sesiones de estudio y archivos de investigación."
+    },
+    "profileEdit": {
+      "title": "Editar perfil",
+      "description": "Actualiza tu información de contacto, habilidades y enlaces sociales."
+    },
+    "profileSecurity": {
+      "title": "Contraseña y seguridad",
+      "description": "Administra credenciales de acceso, verificación en dos pasos y dispositivos de confianza."
+    },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
+    },
+    "job": {
+      "title": "Jobs",
+      "description": "Plan, track, and optimise hiring programmes."
+    },
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "description": "Design interactive quiz journeys with adaptive question banks."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Design collaborative, data-informed learning experiences."
+    },
+    "academy": {
+      "title": "Academy",
+      "description": "Explore Bro World's structured learning paths, exercises, and certifications."
+    },
+    "performance": {
+      "title": "Rendimiento",
+      "description": "Controla presupuestos y auditorías para que Bro World siga siendo rápido para cada comunidad."
+    },
+    "crm": {
+      "title": "Espacio CRM",
+      "subtitle": "Supervisa oportunidades activas, responsables y entregas en un solo lugar.",
+      "actions": {
+        "newProject": "Nuevo proyecto",
+        "viewPipeline": "Ver pipeline"
+      },
+      "metrics": {
+        "title": "Resumen del pipeline",
+        "subtitle": "Instantánea del flujo de oportunidades según su estado.",
+        "total": "Proyectos",
+        "totalCaption": "Oportunidades activas en todos los pipelines.",
+        "inProgress": "En progreso",
+        "inProgressCaption": "Equipos ejecutando flujos de trabajo ahora mismo.",
+        "atRisk": "En riesgo",
+        "atRiskCaption": "Negocios que requieren atención inmediata.",
+        "pipelineValue": "Valor del pipeline",
+        "pipelineValueCaption": "Ingresos estimados asegurados en el pipeline."
+      },
+      "table": {
+        "title": "Proyectos activos",
+        "subtitle": "Últimas iniciativas CRM con responsables y hitos.",
+        "empty": "No se encontraron proyectos CRM.",
+        "headers": {
+          "name": "Proyecto",
+          "client": "Cliente",
+          "owner": "Responsable",
+          "status": "Estado",
+          "stage": "Fase",
+          "budget": "Presupuesto",
+          "probability": "Probabilidad de éxito",
+          "dueDate": "Fecha límite"
+        }
+      },
+      "upcoming": {
+        "title": "Próximas entregas",
+        "subtitle": "Siguientes hitos de entrega en el pipeline.",
+        "empty": "Sin fechas próximas."
+      },
+      "stages": {
+        "title": "Distribución por fase",
+        "subtitle": "Cómo avanzan los proyectos por fase del pipeline.",
+        "caption": "Próximo hito el {date}"
+      },
+      "sidebar": {
+        "ariaLabel": "Panel de información CRM",
+        "projects": {
+          "title": "Mis proyectos",
+          "subtitle": "Tus iniciativas activas para el sprint seleccionado.",
+          "actions": {
+            "new": "Nuevo proyecto",
+            "create": "Crear proyecto"
+          },
+          "empty": {
+            "description": "Todavía no tienes ningún proyecto asignado."
+          }
+        },
+        "tasks": {
+          "title": "Tareas recientes",
+          "subtitle": "Tareas creadas más recientemente.",
+          "actions": {
+            "new": "Nueva tarea"
+          },
+          "empty": {
+            "description": "No hay tareas recientes. Crea una para iniciar tu sprint."
+          },
+          "projectFallback": "Proyecto desconocido"
+        }
+      }
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "description": "Accede a tu cuenta de Bro World y continúa colaborando con la comunidad."
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "description": "Únete a Bro World para compartir ideas, lanzar nuevos mundos y mantenerte cerca de tu equipo."
+    },
+    "forgotPassword": {
+      "title": "Restablecer contraseña",
+      "description": "Recupera el acceso a tu cuenta de Bro World con un enlace seguro de restablecimiento."
+    },
+    "logout": {
+      "title": "Cerrar sesión",
+      "description": "Cierra sesión en Bro World y protege tu cuenta en dispositivos compartidos."
+    },
+    "messenger": {
+      "title": "Mensajería",
+      "description": "Chatea con tu equipo, comparte novedades y mantén las conversaciones organizadas."
+    }
+  }
+}

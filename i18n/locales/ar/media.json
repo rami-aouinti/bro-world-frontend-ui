@@ -1,0 +1,84 @@
+{
+  "media": {
+    "toolbar": {
+      "newFolder": "مجلد جديد",
+      "upload": "تحميل",
+      "gridView": "عرض الشبكة",
+      "listView": "عرض القائمة",
+      "showTrash": "فتح سلة المهملات",
+      "hideTrash": "إغلاق سلة المهملات",
+      "refresh": "تحديث"
+    },
+    "tree": {
+      "ariaLabel": "مجلدات الوسائط"
+    },
+    "breadcrumbs": {
+      "root": "وسائطي"
+    },
+    "grid": {
+      "empty": "هذا المجلد فارغ",
+      "ariaLabel": "شبكة الوسائط"
+    },
+    "list": {
+      "columns": {
+        "name": "الاسم",
+        "type": "النوع",
+        "size": "الحجم",
+        "updatedAt": "آخر تحديث"
+      },
+      "empty": "لا توجد ملفات في هذا المجلد"
+    },
+    "upload": {
+      "title": "تحميل ملفات",
+      "dropTitle": "أسقط الملفات هنا",
+      "dropSubtitle": "أو تصفح جهازك لاختيار ملفات",
+      "browse": "تصفح الملفات",
+      "queue": "قائمة التحميل",
+      "empty": "لا توجد عمليات تحميل جارية"
+    },
+    "rename": {
+      "title": "إعادة تسمية",
+      "nameLabel": "الاسم",
+      "namePlaceholder": "أدخل اسماً",
+      "save": "حفظ"
+    },
+    "delete": {
+      "title": "نقل إلى سلة المهملات",
+      "description": "يتم الاحتفاظ بالعناصر المحذوفة لمدة 30 يوماً في سلة المهملات.",
+      "confirm": "حذف",
+      "purgeTitle": "حذف نهائي",
+      "purgeDescription": "سيتم حذف العنصر المحدد نهائياً. لا يمكن التراجع عن هذا الإجراء."
+    },
+    "move": {
+      "title": "نقل إلى مجلد",
+      "destinationLabel": "الوجهة",
+      "confirm": "نقل",
+      "rootOption": "المستوى الرئيسي"
+    },
+    "preview": {
+      "ariaLabel": "معاينة الملف",
+      "unavailable": "المعاينة غير متاحة",
+      "empty": "اختر ملفاً لمعاينته",
+      "download": "تنزيل"
+    },
+    "createFolder": {
+      "title": "إنشاء مجلد"
+    },
+    "actions": {
+      "open": "فتح",
+      "rename": "إعادة تسمية",
+      "move": "نقل",
+      "delete": "حذف",
+      "deleteForever": "حذف نهائي",
+      "restore": "استعادة"
+    },
+    "trash": {
+      "name": "الاسم",
+      "type": "النوع",
+      "deletedAt": "تاريخ الحذف",
+      "actions": "إجراءات",
+      "file": "ملف",
+      "folder": "مجلد"
+    }
+  }
+}

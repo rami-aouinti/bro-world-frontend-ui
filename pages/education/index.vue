@@ -39,7 +39,10 @@ import { useI18n } from "vue-i18n";
 import CategoryCard from "~/components/education/CategoryCard.vue";
 import { useEducationStore } from "~/stores/education";
 
-const { t, locale, localeProperties } = useI18n();
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
+const { t, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const store = useEducationStore();
 const pageDescription = computed(() => t("seo.pages.education.description"));
 

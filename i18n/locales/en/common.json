@@ -1,0 +1,373 @@
+{
+  "$vuetify": {
+    "loading": "Loading…"
+  },
+  "common": {
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Close",
+    "loading": "Loading…"
+  },
+  "layout": {
+    "loadingOverlay": {
+      "srLabel": "Loading Bro World",
+      "title": "Bro World is loading…",
+      "description": "We're preparing the full experience: top bar, panels, and content."
+    },
+    "routeLoadingOverlay": {
+      "srLabel": "Loading page",
+      "title": "Loading",
+      "subtitle": "We're preparing your universe…"
+    },
+    "actions": {
+      "openNavigation": "Open navigation menu",
+      "openWidgets": "Open quick widgets",
+      "toggleTheme": "Toggle theme",
+      "goBack": "Go back",
+      "refresh": "Refresh",
+      "notifications": "Open notifications",
+      "messages": "Open messenger",
+      "cart": "Open bag",
+      "profile": "Open profile menu",
+      "viewProfile": "View profile",
+      "signOut": "Sign out",
+      "changeLanguage": "Change language (current: {locale})"
+    },
+    "notificationsMenu": {
+      "title": "Notifications",
+      "subtitle": "Latest updates from your network",
+      "markAll": "Mark all as read",
+      "empty": "You're all caught up!",
+      "badgeLabel": "{count} unread notifications",
+      "items": {
+        "newFollower": {
+          "title": "New follower",
+          "description": "Alex Carter started following you.",
+          "time": "2m ago"
+        },
+        "newComment": {
+          "title": "New comment",
+          "description": "Maria left a comment on your update.",
+          "time": "12m ago"
+        },
+        "systemUpdate": {
+          "title": "Schedule reminder",
+          "description": "System maintenance is planned for tonight.",
+          "time": "1h ago"
+        }
+      }
+    },
+    "messengerMenu": {
+      "title": "Messages",
+      "subtitle": "Recent conversations",
+      "viewAll": "View all",
+      "empty": "You're up to date!",
+      "badgeLabel": "{count} unread messages"
+    },
+    "userMenu": {
+      "signedInAs": "Signed in as",
+      "guestTitle": "Welcome",
+      "guestSubtitle": "Sign in to unlock personalised features",
+      "admin": "Administration"
+    },
+    "localeMenu": {
+      "title": "Language",
+      "subtitle": "Available in {count} languages"
+    },
+    "search": {
+      "placeholder": "Search..."
+    },
+    "appIcons": {
+      "academy": "Academy",
+      "briefcase": "Work",
+      "store": "Store",
+      "database": "Data",
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "Gaming & Quiz"
+    },
+    "sidebar": {
+      "title": "Connect",
+      "navigate": "Navigate to section",
+      "items": {
+        "apps": "Apps",
+        "calendar": "Calendar",
+        "cv": "CV",
+        "createWorld": "Create world",
+        "jobs": "Jobs",
+        "game": "Gaming & Quiz",
+        "crm": "CRM workspace",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "Overview",
+        "ecommerceCatalog": "Product catalog",
+        "ecommerceCart": "Cart",
+        "ecommerceCheckout": "Checkout",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "Academy",
+        "performance": "Performance",
+        "profile": "Profile",
+        "profileOverview": "Overview",
+        "profileSettings": "Account settings",
+        "profileSecurity": "Password & security",
+        "profileFriends": "Friends",
+        "profilePhotos": "Photos & media",
+        "admin": "Administration",
+        "adminGeneral": "General",
+        "adminStatistics": "Statistics",
+        "adminGeneralSetting": "General settings",
+        "adminData": "Data",
+        "adminCrons": "Scheduled tasks",
+        "adminSettings": "Site settings",
+        "adminCrm": "CRM workspace",
+        "adminUserManagement": "User management",
+        "adminBlogManagement": "Blog management",
+        "adminJobManagement": "Job management",
+        "adminEcommerceManagement": "E-commerce management",
+        "adminEducationManagement": "Education management",
+        "adminGameManagement": "Game management",
+        "adminBlog": "Blog",
+        "help": "Help",
+        "about": "About",
+        "contact": "Contact"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Weather today",
+        "condition": "Cloudy",
+        "subtitle": "Feels like 11°"
+      },
+      "news": {
+        "title": "News",
+        "items": {
+          "0": {
+            "title": "Product launch rehearsal",
+            "timestamp": "5 min ago"
+          },
+          "1": {
+            "title": "Growth report available",
+            "timestamp": "15 min ago"
+          }
+        }
+      },
+      "rating": {
+        "title": "Rating overview",
+        "subtitle": "No reviews yet",
+        "edit": "Add rating",
+        "share": "Share",
+        "actionsLabel": "Rating actions"
+      },
+      "feed": {
+        "title": "Activity feed"
+      }
+    },
+    "profileSidebar": {
+      "editBio": "Edit",
+      "editDetails": "Edit details",
+      "addFeatured": "Add featured content",
+      "photosTitle": "Photos",
+      "viewAllPhotos": "View all photos",
+      "friendsTitle": "Friends",
+      "viewAllFriends": "View all friends",
+      "livesIn": "Lives in {location}",
+      "from": "From {location}"
+    }
+  },
+  "buttons": {
+    "more": "Show more",
+    "less": "Show less",
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel"
+  },
+  "nav": {
+    "Docs": "Docs",
+    "GettingStarted": "Getting Started",
+    "GettingStartedDescription": "Introduction to Inspira UI and its core concepts.",
+    "Installation": "Installation",
+    "InstallationDescription": "Follow the step-by-step guide to install Inspira UI in your project.",
+    "Components": "Components",
+    "ComponentsDescription": "Explore all available components and their usage.",
+    "V1DocsDescription": "Docs for using Inspira UI with Tailwind CSS v3.",
+    "Community": "Community",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Source code for Inspira UI.",
+    "Discord": "Discord",
+    "DiscordDescription": "Connect with community on Discord",
+    "Forum": "Forum",
+    "ForumDiscord": "Join the forum"
+  },
+  "seo": {
+    "about": {
+      "title": "About",
+      "description": "Learn about our mission and team."
+    },
+    "help": {
+      "title": "Help",
+      "description": "FAQ and support resources."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch with our team."
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "View your personal details and account activity."
+    },
+    "profileFriends": {
+      "title": "Connections",
+      "description": "Browse your collaborators, suggested contacts, and real-time activity."
+    },
+    "profilePhotos": {
+      "title": "Photo library",
+      "description": "Organise launch highlights, studio shoots, and research archives."
+    },
+    "profileEdit": {
+      "title": "Edit profile",
+      "description": "Update your contact information, skills, and social links."
+    },
+    "profileSecurity": {
+      "title": "Password & security",
+      "description": "Manage sign-in credentials, two-factor authentication, and trusted devices."
+    },
+    "job": {
+      "title": "Jobs",
+      "description": "Plan, track, and optimise hiring programmes."
+    },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
+    },
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "description": "Design interactive quiz journeys with adaptive question banks."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Design collaborative, data-informed learning experiences."
+    },
+    "academy": {
+      "title": "Academy",
+      "description": "Explore Bro World's structured learning paths, exercises, and certifications."
+    },
+    "performance": {
+      "title": "Performance",
+      "description": "Track the budgets and audits keeping BroWorld fast for every community."
+    },
+    "crm": {
+      "title": "CRM workspace",
+      "subtitle": "Monitor active opportunities, owners, and handovers in one view.",
+      "actions": {
+        "newProject": "New project",
+        "viewPipeline": "View pipeline"
+      },
+      "metrics": {
+        "title": "Pipeline overview",
+        "subtitle": "Snapshot of the current deal flow by status.",
+        "total": "Projects",
+        "totalCaption": "Active opportunities across every pipeline.",
+        "inProgress": "In progress",
+        "inProgressCaption": "Teams currently executing workstreams.",
+        "atRisk": "At risk",
+        "atRiskCaption": "Deals requiring immediate attention.",
+        "pipelineValue": "Pipeline value",
+        "pipelineValueCaption": "Estimated revenue secured in the pipeline."
+      },
+      "table": {
+        "title": "Active projects",
+        "subtitle": "Latest CRM initiatives with owners and milestones.",
+        "empty": "No CRM projects found.",
+        "headers": {
+          "name": "Project",
+          "client": "Client",
+          "owner": "Owner",
+          "status": "Status",
+          "stage": "Stage",
+          "budget": "Budget",
+          "probability": "Win probability",
+          "dueDate": "Due date"
+        }
+      },
+      "upcoming": {
+        "title": "Upcoming handovers",
+        "subtitle": "Next delivery checkpoints across the pipeline.",
+        "empty": "No upcoming deadlines."
+      },
+      "stages": {
+        "title": "Stage distribution",
+        "subtitle": "How projects are progressing by pipeline stage.",
+        "caption": "Next milestone on {date}"
+      },
+      "sidebar": {
+        "ariaLabel": "CRM sidebar",
+        "projects": {
+          "title": "My projects",
+          "subtitle": "Active initiatives assigned to you for this sprint.",
+          "actions": {
+            "new": "New project",
+            "create": "Create project"
+          },
+          "empty": {
+            "description": "You're not assigned to any projects yet."
+          }
+        },
+        "tasks": {
+          "title": "Recent tasks",
+          "subtitle": "The tasks that were created most recently.",
+          "actions": {
+            "new": "New task"
+          },
+          "empty": {
+            "description": "No recent tasks. Create one to kick off your sprint."
+          },
+          "projectFallback": "Unknown project"
+        }
+      }
+    },
+    "login": {
+      "title": "Log in",
+      "description": "Access your Bro World account to continue collaborating with the community."
+    },
+    "register": {
+      "title": "Create account",
+      "description": "Join Bro World to share ideas, launch new worlds, and stay close to your team."
+    },
+    "forgotPassword": {
+      "title": "Reset password",
+      "description": "Recover access to your Bro World account with a secure reset link."
+    },
+    "logout": {
+      "title": "Sign out",
+      "description": "Sign out of Bro World and keep your account secure on shared devices."
+    },
+    "messenger": {
+      "title": "Messenger",
+      "description": "Chat with teammates, share updates, and keep conversations organised."
+    }
+  }
+}

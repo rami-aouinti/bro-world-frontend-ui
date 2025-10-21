@@ -589,6 +589,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useWorldCreator } from "~/composables/useWorldCreator";
 import {
@@ -604,6 +605,8 @@ import type {
 } from "~/types/world";
 
 const { t, locale, localeProperties } = useI18n();
+
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const localePath = useResolvedLocalePath();

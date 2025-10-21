@@ -1,0 +1,21 @@
+{
+  "page": {
+    "home": {
+      "SupportUs": "Soutenez-nous",
+      "AllComponents": "Tous les composants",
+      "OpenSourceComponentsToBuild": "Des composants open source pour créer",
+      "Stunning": "étonnantes",
+      "Beautiful": "magnifiques",
+      "WebsitesUsingVueAndNuxt": "sites web avec Vue & Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Intégrez votre framework UI préféré",
+      "Features": "Fonctionnalités",
+      "CheckOutSomeExamples": "Découvrez quelques exemples !",
+      "3DCardHoverEffect": "Effet de survol carte 3D",
+      "RadiantText": "Texte lumineux",
+      "LovedByCommunity": "Apprécié par la communauté",
+      "WhatAreYouWaitingFor": "Qu'attendez-vous ?",
+      "GetStartedAndStartBuildingAwesomeUI": "Commencez et créez une interface incroyable",
+      "GetStarted": "Commencer"
+    }
+  }
+}

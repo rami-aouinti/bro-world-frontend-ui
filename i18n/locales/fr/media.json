@@ -1,0 +1,84 @@
+{
+  "media": {
+    "toolbar": {
+      "newFolder": "Nouveau dossier",
+      "upload": "Téléverser",
+      "gridView": "Vue grille",
+      "listView": "Vue liste",
+      "showTrash": "Ouvrir la corbeille",
+      "hideTrash": "Fermer la corbeille",
+      "refresh": "Actualiser"
+    },
+    "tree": {
+      "ariaLabel": "Dossiers média"
+    },
+    "breadcrumbs": {
+      "root": "Mes médias"
+    },
+    "grid": {
+      "empty": "Ce dossier est vide",
+      "ariaLabel": "Grille de médias"
+    },
+    "list": {
+      "columns": {
+        "name": "Nom",
+        "type": "Type",
+        "size": "Taille",
+        "updatedAt": "Mis à jour"
+      },
+      "empty": "Aucun fichier dans ce dossier"
+    },
+    "upload": {
+      "title": "Téléverser des fichiers",
+      "dropTitle": "Déposez les fichiers ici",
+      "dropSubtitle": "ou parcourez votre appareil pour sélectionner des fichiers",
+      "browse": "Parcourir les fichiers",
+      "queue": "File de téléversement",
+      "empty": "Aucun téléversement en cours"
+    },
+    "rename": {
+      "title": "Renommer",
+      "nameLabel": "Nom",
+      "namePlaceholder": "Saisissez un nom",
+      "save": "Enregistrer"
+    },
+    "delete": {
+      "title": "Mettre à la corbeille",
+      "description": "Les éléments supprimés sont conservés 30 jours dans la corbeille.",
+      "confirm": "Supprimer",
+      "purgeTitle": "Supprimer définitivement",
+      "purgeDescription": "Cette action supprimera définitivement l'élément sélectionné. Cette action est irréversible."
+    },
+    "move": {
+      "title": "Déplacer vers un dossier",
+      "destinationLabel": "Destination",
+      "confirm": "Déplacer",
+      "rootOption": "Niveau racine"
+    },
+    "preview": {
+      "ariaLabel": "Aperçu du fichier",
+      "unavailable": "Aperçu indisponible",
+      "empty": "Sélectionnez un fichier à prévisualiser",
+      "download": "Télécharger"
+    },
+    "createFolder": {
+      "title": "Créer un dossier"
+    },
+    "actions": {
+      "open": "Ouvrir",
+      "rename": "Renommer",
+      "move": "Déplacer",
+      "delete": "Supprimer",
+      "deleteForever": "Supprimer définitivement",
+      "restore": "Restaurer"
+    },
+    "trash": {
+      "name": "Nom",
+      "type": "Type",
+      "deletedAt": "Supprimé le",
+      "actions": "Actions",
+      "file": "Fichier",
+      "folder": "Dossier"
+    }
+  }
+}

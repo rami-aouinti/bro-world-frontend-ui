@@ -76,6 +76,8 @@ import { createError } from "#imports";
 import { usePostsStore } from "~/composables/usePostsStore";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const BlogPostCard = defineAsyncComponent(() => import("~/components/blog/BlogPostCard.vue"));
 const PostCardSkeleton = defineAsyncComponent(() => import("~/components/blog/PostCardSkeleton.vue"));
@@ -83,6 +85,7 @@ const PostCardSkeleton = defineAsyncComponent(() => import("~/components/blog/Po
 const route = useRoute();
 const localePath = useLocalePath();
 const { t } = useI18n();
+await useLocaleNamespaces(["blog"]);
 const postsStore = usePostsStore();
 
 const slug = computed(() => String(route.params.slug ?? ""));

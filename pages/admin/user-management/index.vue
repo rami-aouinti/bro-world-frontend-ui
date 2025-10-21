@@ -409,6 +409,8 @@ import { callOnce } from "#app";
 import { useI18n } from "vue-i18n";
 import { useUsersStore } from "~/stores/users";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 interface EditableUserForm {
   username: string;
   email: string;
@@ -426,6 +428,7 @@ interface FormErrors {
 }
 
 const { t, locale } = useI18n();
+await useLocaleNamespaces(["admin"]);
 const pageDescription = computed(() => t("admin.userManagement.page.subtitle"));
 
 definePageMeta({

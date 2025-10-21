@@ -1,0 +1,25 @@
+{
+  "stories": {
+    "card": {
+      "createLabel": "Create story",
+      "openAria": "Open story of {name}",
+      "openAriaFallback": "Open story",
+      "imageAlt": "Story cover image",
+      "avatarAlt": "Story avatar"
+    },
+    "strip": {
+      "ariaLabel": "Stories",
+      "scrollLeft": "Scroll stories left",
+      "scrollRight": "Scroll stories right"
+    },
+    "viewer": {
+      "close": "Close story",
+      "imageAlt": "Story content",
+      "avatarAlt": "Story avatar",
+      "expired": "The story is no longer visible.",
+      "reactPrompt": "React to this story",
+      "messageLabel": "Send a message",
+      "send": "Send"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "messenger": {
+    "searchPlaceholder": "Поиск по перепискам",
+    "emptyList": "Пока нет переписок",
+    "unknownParticipant": "Неизвестно",
+    "emptyTitle": "Выберите беседу",
+    "emptyDescription": "Выберите беседу из списка, чтобы читать и отправлять сообщения.",
+    "emptyCtaLabel": "Начать беседу",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Напишите сообщение...",
+    "sendLabel": "Отправить",
+    "sendingLabel": "Отправка…",
+    "sendErrorStatus": "Не доставлено",
+    "shortcutsHint": "Нажмите Ctrl+Enter для отправки",
+    "noMessages": "Сообщений пока нет",
+    "loadOlder": "Загрузить предыдущие сообщения",
+    "participantsLabel": "{count} участников"
+  }
+}

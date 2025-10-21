@@ -468,6 +468,8 @@
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
@@ -475,6 +477,7 @@ definePageMeta({
 });
 
 const { t, tm, locale } = useI18n();
+await useLocaleNamespaces(["admin"]);
 
 useHead({
   title: computed(() => t("admin.metaTitle")),

@@ -1,0 +1,305 @@
+{
+  "blog": {
+    "hero": {
+      "eyebrow": "Community-Feed",
+      "title": "Erfahre, was in BroWorld passiert",
+      "description": "Verfolge Highlights der Community, entdecke neue Ressourcen und bleib über aktuelle Projekte informiert.",
+      "primaryAction": "Neueste Beiträge entdecken",
+      "secondaryAction": "Dokumentation ansehen",
+      "stats": {
+        "members": "Aktive Mitglieder",
+        "reactions": "Geteilte Reaktionen",
+        "comments": "Verfasste Kommentare"
+      }
+    },
+    "composer": {
+      "title": "Teile etwas mit der Community",
+      "subtitle": "Starte ein Gespräch und inspiriere andere Builder.",
+      "label": "Deine Nachricht",
+      "placeholder": "Worüber möchtest du sprechen?",
+      "characterCount": "{count} Zeichen",
+      "submit": "Beitrag veröffentlichen",
+      "submitting": "Veröffentlichen...",
+      "success": "Dein Beitrag wurde erfolgreich veröffentlicht!",
+      "error": "Dein Beitrag konnte nicht veröffentlicht werden. Bitte versuche es erneut.",
+      "validation": "Schreibe eine Nachricht, bevor du veröffentlichst."
+    },
+    "newPost": {
+      "placeholder": "Was machst du gerade, {name}?",
+      "quickActions": {
+        "liveVideo": "Live-Video",
+        "photoVideo": "Foto/Video",
+        "feelingActivity": "Gefühl/Aktivität"
+      },
+      "dialog": {
+        "title": "Beitrag erstellen",
+        "addToPost": "Füge noch etwas zu deinem Beitrag hinzu",
+        "postButton": "Posten"
+      },
+      "audience": {
+        "public": "Öffentlich",
+        "friends": "Freunde",
+        "private": "Nur ich"
+      },
+      "attachments": {
+        "media": "Foto/Video",
+        "tag": "Person markieren",
+        "feeling": "Gefühl/Aktivität",
+        "location": "Standort",
+        "gif": "GIF",
+        "poll": "Umfrage hinzufügen"
+      }
+    },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
+    "reactions": {
+      "post": {
+        "publishedOn": "Veröffentlicht am {date}",
+        "reactions": "{count} Reaktionen",
+        "comments": "{count} Kommentare",
+        "recentComments": "Neueste Kommentare",
+        "commentPreviews": "{count} Vorschauen",
+        "reactionSpotlight": "Reaktions-Highlights"
+      },
+      "comment": {
+        "reactions": "{count} Reaktionen",
+        "replies": "{count} Antworten"
+      },
+      "reactionTypes": {
+        "like": "Gefällt mir",
+        "love": "Liebe",
+        "wow": "Wow",
+        "haha": "Haha",
+        "sad": "Traurig",
+        "angry": "Wütend",
+        "dislike": "Gefällt mir nicht",
+        "care": "Mitgefühl"
+      },
+      "posts": {
+        "publishedOn": "Veröffentlicht am {date}",
+        "reactionCount": "{count} Reaktionen",
+        "commentCount": "{count} Kommentare",
+        "recentComments": "Aktuelle Kommentare",
+        "previewCount": "{count} Vorschauen",
+        "highlightedReactions": "Beliebte Reaktionen",
+        "reactLabel": "Reagiere auf diesen Beitrag",
+        "reactionError": "Die Reaktion auf diesen Beitrag ist fehlgeschlagen. Bitte versuche es erneut.",
+        "likeAction": "Gefällt mir",
+        "unlikeAction": "Gefällt mir nicht mehr",
+        "toggleReaction": "Gefällt mir für diesen Beitrag umschalten"
+      },
+      "comments": {
+        "reactionCount": "{count} Reaktionen",
+        "replyCount": "{count} Antworten",
+        "likeAction": "Gefällt mir",
+        "unlikeAction": "Gefällt mir nicht mehr",
+        "toggleReaction": "Gefällt mir für diesen Kommentar umschalten"
+      }
+    },
+    "posts": {
+      "actions": {
+        "follow": "Folgen",
+        "following": "Folgt",
+        "followAria": "{name} folgen",
+        "followingAria": "Sie folgen {name}",
+        "openMenu": "Beitragsaktionen öffnen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "statistics": "{reactions} Reaktionen und {comments} Kommentare",
+        "editTitle": "Beitrag bearbeiten",
+        "editDescription": "Aktualisieren Sie unten die Details Ihres Beitrags.",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "deleteTitle": "Diesen Beitrag löschen?",
+        "deleteDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Der Beitrag wird für alle entfernt.",
+        "deleteConfirm": "Löschen",
+        "editSuccessTitle": "Beitrag aktualisiert",
+        "editSuccessDescription": "Ihre Änderungen wurden erfolgreich gespeichert.",
+        "editErrorTitle": "Aktualisierung fehlgeschlagen",
+        "editErrorDescription": "Der Beitrag konnte nicht aktualisiert werden. Bitte erneut versuchen.",
+        "deleteSuccessTitle": "Beitrag gelöscht",
+        "deleteSuccessDescription": "Der Beitrag wurde aus dem Feed entfernt.",
+        "deleteErrorTitle": "Löschen fehlgeschlagen",
+        "deleteErrorDescription": "Der Beitrag konnte nicht gelöscht werden. Bitte erneut versuchen.",
+        "followSuccessTitle": "Autor gefolgt",
+        "followSuccessDescription": "Sie folgen nun {name}.",
+        "followErrorTitle": "Folgen fehlgeschlagen",
+        "followErrorDescription": "Der Autor konnte nicht gefolgt werden. Bitte erneut versuchen.",
+        "fields": {
+          "title": "Titel",
+          "summary": "Zusammenfassung",
+          "content": "Inhalt"
+        },
+        "comment": "Kommentieren",
+        "share": "Teilen",
+        "viewPost": "Mehr lesen",
+        "viewPostAria": "Beitrag \"{title}\" öffnen"
+      },
+      "shareMenu": {
+        "feed": "Im Feed teilen",
+        "story": "In deiner Story teilen",
+        "messenger": "Über Messenger senden",
+        "whatsapp": "Über WhatsApp senden",
+        "page": "Auf einer Seite teilen",
+        "group": "In einer Gruppe teilen",
+        "profile": "Auf dem Profil eines Freundes teilen",
+        "comingSoonTitle": "Noch nicht verfügbar",
+        "comingSoonDescription": "Diese Freigabeoption ist bald verfügbar."
+      },
+      "shareDialog": {
+        "title": "Beitrag erstellen",
+        "placeholder": "Sag etwas dazu...",
+        "placeholderNamed": "Sag etwas dazu, {name}...",
+        "defaultName": "Du",
+        "submit": "Teilen",
+        "cancel": "Abbrechen",
+        "feedAudience": "Feed",
+        "successTitle": "Beitrag geteilt",
+        "successMessage": "Dein Update wurde in deinem Feed veröffentlicht."
+      },
+      "loading": "Beitrag wird geladen",
+      "detailHeading": "Beitragsdetails",
+      "notFound": "Dieser Beitrag wurde nicht gefunden.",
+      "backToFeed": "Zurück zum Feed"
+    },
+    "comments": {
+      "label": "Beteilige dich an der Diskussion",
+      "placeholder": "Teile deine Gedanken mit der Community...",
+      "characterCount": "{count} Zeichen",
+      "submit": "Kommentar veröffentlichen",
+      "submitting": "Wird veröffentlicht...",
+      "loading": "Kommentare werden geladen...",
+      "load": "Kommentare laden",
+      "activationHint": "Kommentare werden geladen, sobald dieser Bereich sichtbar ist oder wenn du den Button drückst.",
+      "success": "Dein Kommentar wurde hinzugefügt.",
+      "error": "Dein Kommentar konnte nicht hinzugefügt werden. Bitte versuche es erneut.",
+      "validation": "Schreibe einen Kommentar, bevor du veröffentlichst.",
+      "empty": "Noch keine Kommentare. Starte die Unterhaltung!",
+      "reply": "Antworten",
+      "replying": "Antwort wird gesendet...",
+      "replyPlaceholder": "Schreibe deine Antwort...",
+      "addEmoji": "Emoji hinzufügen",
+      "addMedia": "Medien hinzufügen",
+      "addGif": "GIF hinzufügen",
+      "replySubmit": "Antwort senden",
+      "replySuccess": "Deine Antwort wurde hinzugefügt.",
+      "replyError": "Deine Antwort konnte nicht veröffentlicht werden. Bitte versuche es erneut.",
+      "replyValidation": "Schreibe eine Antwort, bevor du sie sendest.",
+      "cancelReply": "Abbrechen",
+      "replyUnavailable": "Antworten sind derzeit nicht verfügbar.",
+      "reactionUnavailable": "Reaktionen sind derzeit nicht verfügbar.",
+      "reactionError": "Auf diesen Kommentar konnte nicht reagiert werden. Bitte versuche es erneut.",
+      "placeholderWithName": "Kommentieren als {name}",
+      "sort": {
+        "menuAria": "Kommentar-Sortierung",
+        "options": {
+          "relevant": {
+            "label": "Relevanteste",
+            "description": "Zeigt zuerst Kommentare von Freunden und mit den meisten Interaktionen an."
+          },
+          "newest": {
+            "label": "Neueste zuerst",
+            "description": "Zeigt alle Kommentare in umgekehrter chronologischer Reihenfolge."
+          },
+          "all": {
+            "label": "Alle Kommentare",
+            "description": "Zeigt alle Kommentare an, einschließlich möglichem Spam."
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "Alle {count} Antworten anzeigen",
+        "hideReplies": "Antworten ausblenden"
+      }
+    },
+    "sidebar": {
+      "weather": {
+        "badge": "Neuigkeiten",
+        "title": "Regen in Sicht",
+        "subtitle": "Bereite dich auf einen regnerischen Tag mit leichtem Wind vor.",
+        "icon": "🌧️",
+        "location": "Berlin, Deutschland",
+        "locationLabel": "Ort",
+        "temperature": "18°C",
+        "temperatureLabel": "Temperatur",
+        "tipLabel": "Tipp",
+        "tip": "Vergiss deinen Regenschirm nicht, um trocken zu bleiben.",
+        "loading": "Wetter wird aktualisiert …",
+        "actions": {
+          "useCurrentLocation": "Aktuellen Standort verwenden"
+        },
+        "errors": {
+          "unavailable": "Wetteraktualisierungen sind nicht verfügbar.",
+          "denied": "Wir konnten nicht auf deinen Standort zugreifen. Anzeige der Standardvorhersage.",
+          "unsupported": "Dein Browser unterstützt keine Standortbestimmung.",
+          "updateFailed": "Das Wetter kann gerade nicht aktualisiert werden."
+        }
+      },
+      "leaderboard": {
+        "title": "Top 3 im Quiz",
+        "live": "live",
+        "participants": {
+          "first": {
+            "name": "Bro World",
+            "role": "Produktteam",
+            "score": "982 Pkt"
+          },
+          "second": {
+            "name": "Adam Don",
+            "role": "Community",
+            "score": "953 Pkt"
+          },
+          "third": {
+            "name": "Nina Ko",
+            "role": "Marketing",
+            "score": "917 Pkt"
+          }
+        }
+      },
+      "rating": {
+        "title": "Bewertungsübersicht",
+        "subtitle": "Rückmeldungen der Mitglieder dieser Woche",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
+        "stars": 5,
+        "categories": {
+          "engagement": {
+            "label": "Engagement",
+            "value": 92
+          },
+          "content": {
+            "label": "Inhalt",
+            "value": 88
+          },
+          "responsiveness": {
+            "label": "Reaktionsfähigkeit",
+            "value": 84
+          }
+        }
+      },
+      "title": "Bleib in Verbindung",
+      "subtitle": "Ressourcen, um mit der BroWorld-Community Schritt zu halten.",
+      "widgets": {
+        "community": {
+          "title": "Trete der Community bei",
+          "description": "Tausche dich mit anderen Buildern aus, teile Ideen und erhalte schnelle Hilfe.",
+          "action": "Discord öffnen"
+        },
+        "docs": {
+          "title": "Dokumentation entdecken",
+          "description": "Lerne, wie du das Beste aus den BroWorld-Komponenten in deinen Projekten herausholst.",
+          "action": "Dokumentation lesen"
+        },
+        "contribute": {
+          "title": "Einen Artikel beitragen",
+          "description": "Teile dein Wissen mit der Community und unterstütze andere beim Lernen.",
+          "action": "Inhalt einreichen"
+        }
+      }
+    }
+  }
+}

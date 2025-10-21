@@ -1,0 +1,21 @@
+{
+  "page": {
+    "home": {
+      "SupportUs": "Support Us",
+      "AllComponents": "All Components",
+      "OpenSourceComponentsToBuild": "Open source components to build",
+      "Stunning": "stunning",
+      "Beautiful": "beautiful",
+      "WebsitesUsingVueAndNuxt": "websites using Vue & Nuxt",
+      "IntegrateWithYourFavouriteUIframework": "Integrate with your favourite UI framework",
+      "Features": "Features",
+      "CheckOutSomeExamples": "Check out some examples!",
+      "3DCardHoverEffect": "3D Card Hover Effect",
+      "RadiantText": "Radiant Text",
+      "LovedByCommunity": "Loved by community",
+      "WhatAreYouWaitingFor": "What are you waiting for?",
+      "GetStartedAndStartBuildingAwesomeUI": "Get started and start building awesome UI",
+      "GetStarted": "Get Started"
+    }
+  }
+}

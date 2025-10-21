@@ -1,0 +1,12 @@
+{
+  "company": {
+    "title": "Company",
+    "create": "Create company",
+    "createSuccess": "Company saved successfully.",
+    "createError": "Unable to create the company.",
+    "name": "Company name",
+    "description": "Company description",
+    "website": "Website",
+    "submit": "Save"
+  }
+}

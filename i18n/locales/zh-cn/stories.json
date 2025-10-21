@@ -1,0 +1,25 @@
+{
+  "stories": {
+    "card": {
+      "createLabel": "创建快拍",
+      "openAria": "打开{name}的快拍",
+      "openAriaFallback": "打开快拍",
+      "imageAlt": "快拍封面图",
+      "avatarAlt": "快拍头像"
+    },
+    "strip": {
+      "ariaLabel": "快拍",
+      "scrollLeft": "向左滚动快拍",
+      "scrollRight": "向右滚动快拍"
+    },
+    "viewer": {
+      "close": "关闭快拍",
+      "imageAlt": "快拍内容",
+      "avatarAlt": "快拍头像",
+      "expired": "快拍已隐藏。",
+      "reactPrompt": "对这个快拍做出反应",
+      "messageLabel": "发送消息",
+      "send": "发送"
+    }
+  }
+}

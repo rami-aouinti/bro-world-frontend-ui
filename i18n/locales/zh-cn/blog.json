@@ -1,0 +1,308 @@
+{
+  "blog": {
+    "hero": {
+      "eyebrow": "社区动态",
+      "title": "了解 BroWorld 的最新动态",
+      "description": "关注社区亮点，发现新资源，并随时掌握大家正在构建的内容。",
+      "primaryAction": "浏览最新帖子",
+      "secondaryAction": "查看文档",
+      "stats": {
+        "members": "活跃成员",
+        "reactions": "已分享的反应",
+        "comments": "发布的评论"
+      }
+    },
+    "composer": {
+      "title": "与社区分享点什么",
+      "subtitle": "开启一段对话，激励其他创作者。",
+      "label": "你的消息",
+      "placeholder": "你想聊些什么？",
+      "characterCount": "{count} 个字符",
+      "submit": "发布帖子",
+      "submitting": "正在发布...",
+      "success": "你的帖子已成功发布！",
+      "error": "帖子发布失败，请重试。",
+      "validation": "发布前请先填写内容。"
+    },
+    "newPost": {
+      "placeholder": "在想些什么，{name}？",
+      "quickActions": {
+        "liveVideo": "直播视频",
+        "photoVideo": "照片/视频",
+        "feelingActivity": "心情/活动"
+      },
+      "dialog": {
+        "title": "创建帖子",
+        "addToPost": "为你的帖子添加内容",
+        "postButton": "发布"
+      },
+      "audience": {
+        "public": "公开",
+        "friends": "好友",
+        "private": "仅自己"
+      },
+      "attachments": {
+        "media": "照片/视频",
+        "tag": "标记好友",
+        "feeling": "心情/活动",
+        "location": "位置",
+        "gif": "GIF",
+        "poll": "添加投票"
+      }
+    },
+    "auth": {
+      "postRequired": "Sign in to share what's on your mind.",
+      "reactionRequired": "Sign in to react to posts.",
+      "commentRequired": "Sign in to join the discussion."
+    },
+    "reactions": {
+      "like": "点赞",
+      "love": "喜爱",
+      "wow": "惊讶",
+      "post": {
+        "publishedOn": "发布于 {date}",
+        "reactions": "{count} 条互动",
+        "comments": "{count} 条评论",
+        "recentComments": "最新评论",
+        "commentPreviews": "{count} 条预览",
+        "reactionSpotlight": "精选互动"
+      },
+      "comment": {
+        "reactions": "{count} 条互动",
+        "replies": "{count} 条回复"
+      },
+      "reactionTypes": {
+        "like": "点赞",
+        "love": "喜爱",
+        "wow": "惊叹",
+        "haha": "哈哈",
+        "sad": "难过",
+        "angry": "生气",
+        "dislike": "不喜欢",
+        "care": "关心"
+      },
+      "posts": {
+        "publishedOn": "发布于 {date}",
+        "reactionCount": "{count} 个反应",
+        "commentCount": "{count} 条评论",
+        "recentComments": "最新评论",
+        "previewCount": "{count} 条预览",
+        "highlightedReactions": "精选反应",
+        "reactLabel": "添加你的回应",
+        "reactionError": "无法对该帖子进行回应，请重试。",
+        "likeAction": "点赞",
+        "unlikeAction": "取消点赞",
+        "toggleReaction": "切换此帖的点赞状态"
+      },
+      "comments": {
+        "reactionCount": "{count} 个反应",
+        "replyCount": "{count} 条回复",
+        "likeAction": "点赞",
+        "unlikeAction": "取消点赞",
+        "toggleReaction": "切换此评论的点赞状态"
+      }
+    },
+    "posts": {
+      "actions": {
+        "follow": "关注",
+        "following": "已关注",
+        "followAria": "关注 {name}",
+        "followingAria": "你已关注 {name}",
+        "openMenu": "打开帖子操作",
+        "edit": "编辑",
+        "delete": "删除",
+        "statistics": "{reactions} 条互动和 {comments} 条评论",
+        "editTitle": "编辑帖子",
+        "editDescription": "在下方更新帖子内容。",
+        "save": "保存",
+        "cancel": "取消",
+        "deleteTitle": "删除此帖子？",
+        "deleteDescription": "此操作无法撤销，帖子将对所有人删除。",
+        "deleteConfirm": "删除",
+        "editSuccessTitle": "帖子已更新",
+        "editSuccessDescription": "修改内容已成功保存。",
+        "editErrorTitle": "更新失败",
+        "editErrorDescription": "无法更新此帖子，请稍后再试。",
+        "deleteSuccessTitle": "帖子已删除",
+        "deleteSuccessDescription": "帖子已从动态中移除。",
+        "deleteErrorTitle": "删除失败",
+        "deleteErrorDescription": "无法删除此帖子，请稍后再试。",
+        "followSuccessTitle": "已关注作者",
+        "followSuccessDescription": "你现在关注了 {name}。",
+        "followErrorTitle": "关注失败",
+        "followErrorDescription": "无法关注该作者，请稍后再试。",
+        "fields": {
+          "title": "标题",
+          "summary": "摘要",
+          "content": "内容"
+        },
+        "comment": "评论",
+        "share": "分享",
+        "viewPost": "阅读更多",
+        "viewPostAria": "打开帖子 \"{title}\""
+      },
+      "shareMenu": {
+        "feed": "分享到动态",
+        "story": "分享到你的限时动态",
+        "messenger": "通过 Messenger 发送",
+        "whatsapp": "通过 WhatsApp 发送",
+        "page": "分享到专页",
+        "group": "分享到社群",
+        "profile": "分享到好友的主页",
+        "comingSoonTitle": "尚未开放",
+        "comingSoonDescription": "此分享选项即将推出。"
+      },
+      "shareDialog": {
+        "title": "创建帖子",
+        "placeholder": "说点什么吧...",
+        "placeholderNamed": "说点什么吧，{name}...",
+        "defaultName": "你",
+        "submit": "分享",
+        "cancel": "取消",
+        "feedAudience": "动态",
+        "successTitle": "帖子已分享",
+        "successMessage": "你的更新已发布到你的动态。"
+      },
+      "loading": "正在加载帖子",
+      "detailHeading": "帖子详情",
+      "notFound": "未找到该帖子。",
+      "backToFeed": "返回动态"
+    },
+    "comments": {
+      "label": "加入讨论",
+      "placeholder": "与社区分享你的想法...",
+      "characterCount": "{count} 个字符",
+      "submit": "发布评论",
+      "submitting": "发布中...",
+      "loading": "正在加载评论...",
+      "load": "加载评论",
+      "activationHint": "当此区域可见或点击按钮时将加载评论。",
+      "success": "你的评论已添加。",
+      "error": "无法添加评论，请重试。",
+      "validation": "发布前请先写下评论。",
+      "empty": "暂无评论，快来抢沙发吧！",
+      "reply": "回复",
+      "replying": "正在回复...",
+      "replyPlaceholder": "写下你的回复...",
+      "addEmoji": "添加表情符号",
+      "addMedia": "添加媒体",
+      "addGif": "添加 GIF",
+      "replySubmit": "发送回复",
+      "replySuccess": "你的回复已添加。",
+      "replyError": "无法发布回复，请重试。",
+      "replyValidation": "发送前请先写下回复。",
+      "cancelReply": "取消",
+      "replyUnavailable": "暂时无法回复。",
+      "reactionUnavailable": "暂时无法添加回应。",
+      "reactionError": "无法对该评论进行回应，请重试。",
+      "placeholderWithName": "以{name}的身份发表评论",
+      "sort": {
+        "menuAria": "评论排序",
+        "options": {
+          "relevant": {
+            "label": "最相关",
+            "description": "优先显示好友评论和互动最多的评论。"
+          },
+          "newest": {
+            "label": "最新优先",
+            "description": "按时间倒序显示所有评论。"
+          },
+          "all": {
+            "label": "全部评论",
+            "description": "显示所有评论，包括可能的垃圾信息。"
+          }
+        }
+      },
+      "thread": {
+        "showReplies": "查看全部{count}条回复",
+        "hideReplies": "收起回复"
+      }
+    },
+    "sidebar": {
+      "weather": {
+        "badge": "资讯",
+        "title": "即将降雨",
+        "subtitle": "准备迎接一个有小风的雨天。",
+        "icon": "🌧️",
+        "location": "德国柏林",
+        "locationLabel": "位置",
+        "temperature": "18°C",
+        "temperatureLabel": "气温",
+        "tipLabel": "提示",
+        "tip": "别忘了带伞保持干爽。",
+        "loading": "正在更新天气…",
+        "actions": {
+          "useCurrentLocation": "使用当前位置"
+        },
+        "errors": {
+          "unavailable": "天气更新不可用。",
+          "denied": "无法获取您的位置。显示默认天气预报。",
+          "unsupported": "您的浏览器不支持地理位置。",
+          "updateFailed": "暂时无法更新天气信息。"
+        }
+      },
+      "leaderboard": {
+        "title": "测验前三名",
+        "live": "实时",
+        "participants": {
+          "first": {
+            "name": "Bro World",
+            "role": "产品团队",
+            "score": "982 分"
+          },
+          "second": {
+            "name": "Adam Don",
+            "role": "社区",
+            "score": "953 分"
+          },
+          "third": {
+            "name": "Nina Ko",
+            "role": "市场",
+            "score": "917 分"
+          }
+        }
+      },
+      "rating": {
+        "title": "评分概览",
+        "subtitle": "本周会员反馈",
+        "average": "4.7",
+        "total": 5,
+        "icon": "⭐",
+        "stars": 5,
+        "categories": {
+          "engagement": {
+            "label": "参与度",
+            "value": 92
+          },
+          "content": {
+            "label": "内容",
+            "value": 88
+          },
+          "responsiveness": {
+            "label": "响应速度",
+            "value": 84
+          }
+        }
+      },
+      "title": "保持联系",
+      "subtitle": "帮助你紧跟 BroWorld 社区的最新动态。",
+      "widgets": {
+        "community": {
+          "title": "加入社区",
+          "description": "与其他开发者交流，分享想法并获取即时帮助。",
+          "action": "打开 Discord"
+        },
+        "docs": {
+          "title": "浏览文档",
+          "description": "了解如何在项目中充分利用 BroWorld 组件。",
+          "action": "阅读文档"
+        },
+        "contribute": {
+          "title": "投稿文章",
+          "description": "与社区分享你的经验，帮助更多人进步。",
+          "action": "提交内容"
+        }
+      }
+    }
+  }
+}

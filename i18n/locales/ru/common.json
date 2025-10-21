@@ -1,0 +1,361 @@
+{
+  "$vuetify": {
+    "loading": "Загрузка…"
+  },
+  "common": {
+    "InspiraUIPro": "Inspira UI Pro",
+    "close": "Закрыть",
+    "loading": "Загрузка…"
+  },
+  "layout": {
+    "loadingOverlay": {
+      "srLabel": "Загрузка Bro World",
+      "title": "Bro World загружается…",
+      "description": "Мы готовим полный опыт: верхняя панель, боковые панели и контент."
+    },
+    "routeLoadingOverlay": {
+      "srLabel": "Загрузка страницы",
+      "title": "Загрузка",
+      "subtitle": "Мы подготавливаем вашу вселенную…"
+    },
+    "actions": {
+      "openNavigation": "Открыть меню навигации",
+      "openWidgets": "Открыть виджеты",
+      "toggleTheme": "Переключить тему",
+      "goBack": "Назад",
+      "refresh": "Обновить",
+      "notifications": "Открыть уведомления",
+      "messages": "Открыть мессенджер",
+      "cart": "Открыть сумку",
+      "profile": "Открыть меню профиля",
+      "viewProfile": "Просмотреть профиль",
+      "signOut": "Выйти",
+      "changeLanguage": "Изменить язык (текущий: {locale})"
+    },
+    "notificationsMenu": {
+      "title": "Уведомления",
+      "subtitle": "Последние обновления вашей сети",
+      "markAll": "Отметить всё как прочитанное",
+      "empty": "Вы в курсе событий!",
+      "badgeLabel": "{count} непрочитанных уведомлений",
+      "items": {
+        "newFollower": {
+          "title": "Новый подписчик",
+          "description": "Алекс Картер теперь подписан на вас.",
+          "time": "2 мин назад"
+        },
+        "newComment": {
+          "title": "Новый комментарий",
+          "description": "Мария оставила комментарий к вашей записи.",
+          "time": "12 мин назад"
+        },
+        "systemUpdate": {
+          "title": "Напоминание о расписании",
+          "description": "Системное обслуживание запланировано на сегодняшний вечер.",
+          "time": "1 ч назад"
+        }
+      }
+    },
+    "messengerMenu": {
+      "title": "Сообщения",
+      "subtitle": "Последние беседы",
+      "viewAll": "Показать все",
+      "empty": "Новых сообщений нет",
+      "badgeLabel": "{count} непрочитанных сообщений"
+    },
+    "userMenu": {
+      "signedInAs": "Выполнен вход как",
+      "guestTitle": "Добро пожаловать",
+      "guestSubtitle": "Войдите, чтобы получить персонализированный опыт",
+      "admin": "Администрирование"
+    },
+    "localeMenu": {
+      "title": "Язык",
+      "subtitle": "Доступно на {count} языках"
+    },
+    "search": {
+      "placeholder": "Search..."
+    },
+    "appIcons": {
+      "academy": "Академия",
+      "briefcase": "Работа",
+      "store": "Магазин",
+      "database": "Данные",
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "Игры и викторины"
+    },
+    "sidebar": {
+      "title": "Подключение",
+      "navigate": "Перейти к разделу",
+      "items": {
+        "apps": "Приложения",
+        "calendar": "Календарь",
+        "cv": "Резюме",
+        "createWorld": "Create world",
+        "jobs": "Вакансии",
+        "profile": "Профиль",
+        "profileOverview": "Обзор",
+        "profileSettings": "Настройки аккаунта",
+        "profileSecurity": "Пароль и безопасность",
+        "profileFriends": "Друзья",
+        "profilePhotos": "Фото и медиа",
+        "admin": "Администрирование",
+        "adminGeneral": "Общее",
+        "adminStatistics": "Статистика",
+        "adminGeneralSetting": "Общие настройки",
+        "adminData": "Данные",
+        "adminCrons": "Запланированные задачи",
+        "adminSettings": "Настройки сайта",
+        "adminCrm": "CRM-пространство",
+        "adminUserManagement": "Управление пользователями",
+        "adminBlogManagement": "Управление блогом",
+        "adminJobManagement": "Управление вакансиями",
+        "adminEcommerceManagement": "Управление электронной коммерцией",
+        "adminEducationManagement": "Управление обучением",
+        "adminGameManagement": "Управление играми",
+        "adminBlog": "Блог",
+        "help": "Помощь",
+        "about": "О нас",
+        "contact": "Контакты",
+        "game": "Игры и викторины",
+        "crm": "CRM-пространство",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "Обзор",
+        "ecommerceCatalog": "Каталог товаров",
+        "ecommerceCart": "Корзина",
+        "ecommerceCheckout": "Оформление заказа",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "Академия",
+        "performance": "Производительность"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "Погода сегодня",
+        "condition": "Облачно",
+        "subtitle": "Ощущается как 11°"
+      },
+      "news": {
+        "title": "Новости",
+        "items": {
+          "0": {
+            "title": "Репетиция запуска продукта",
+            "timestamp": "5 минут назад"
+          },
+          "1": {
+            "title": "Доступен отчет о росте",
+            "timestamp": "15 минут назад"
+          }
+        }
+      },
+      "rating": {
+        "title": "Обзор оценок",
+        "subtitle": "Отзывов пока нет",
+        "edit": "Добавить оценку",
+        "share": "Поделиться",
+        "actionsLabel": "Действия с оценками"
+      },
+      "feed": {
+        "title": "Лента активности"
+      }
+    },
+    "profileSidebar": {
+      "editBio": "Редактировать",
+      "editDetails": "Редактировать сведения",
+      "addFeatured": "Добавить избранный контент",
+      "photosTitle": "Фотографии",
+      "viewAllPhotos": "Посмотреть все фотографии",
+      "friendsTitle": "Друзья",
+      "viewAllFriends": "Посмотреть всех друзей",
+      "livesIn": "Живёт в {location}",
+      "from": "Из {location}"
+    }
+  },
+  "buttons": {
+    "more": "Show more",
+    "less": "Show less",
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel"
+  },
+  "nav": {
+    "Docs": "Документация",
+    "GettingStarted": "Начало работы",
+    "GettingStartedDescription": "Введение в Inspira UI и его ключевые концепции.",
+    "Installation": "Установка",
+    "InstallationDescription": "Следуйте пошаговому руководству по установке Inspira UI в ваш проект.",
+    "Components": "Компоненты",
+    "ComponentsDescription": "Изучите все доступные компоненты и способы их использования.",
+    "V1DocsDescription": "Документация по работе с Inspira UI и Tailwind CSS v3.",
+    "Community": "Сообщество",
+    "GitHub": "GitHub",
+    "GitHubDescription": "Исходный код Inspira UI.",
+    "Discord": "Discord",
+    "DiscordDescription": "Присоединяйтесь к сообществу в Discord",
+    "Forum": "Форум",
+    "ForumDiscord": "Перейти на форум"
+  },
+  "seo": {
+    "profile": {
+      "title": "Профиль",
+      "description": "Просматривайте личные данные и активность аккаунта."
+    },
+    "profileFriends": {
+      "title": "Связи",
+      "description": "Изучайте коллег, рекомендованные контакты и активность в реальном времени."
+    },
+    "profilePhotos": {
+      "title": "Фототека",
+      "description": "Организуйте яркие моменты запусков, студийных съёмок и исследовательских архивов."
+    },
+    "profileEdit": {
+      "title": "Редактировать профиль",
+      "description": "Обновляйте контактные данные, навыки и ссылки на соцсети."
+    },
+    "profileSecurity": {
+      "title": "Пароль и безопасность",
+      "description": "Управляйте данными входа, двухфакторной аутентификацией и доверенными устройствами."
+    },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
+    },
+    "job": {
+      "title": "Jobs",
+      "description": "Plan, track, and optimise hiring programmes."
+    },
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "description": "Design interactive quiz journeys with adaptive question banks."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Design collaborative, data-informed learning experiences."
+    },
+    "academy": {
+      "title": "Academy",
+      "description": "Explore Bro World's structured learning paths, exercises, and certifications."
+    },
+    "performance": {
+      "title": "Производительность",
+      "description": "Следите за бюджетами и аудитами, чтобы Bro World оставался быстрым для каждой комьюнити."
+    },
+    "crm": {
+      "title": "CRM-пространство",
+      "subtitle": "Отслеживайте активные сделки, ответственных и передачи в одном окне.",
+      "actions": {
+        "newProject": "Новый проект",
+        "viewPipeline": "Просмотреть pipeline"
+      },
+      "metrics": {
+        "title": "Обзор pipeline",
+        "subtitle": "Срез текущего потока сделок по статусам.",
+        "total": "Проекты",
+        "totalCaption": "Активные возможности во всех воронках.",
+        "inProgress": "В работе",
+        "inProgressCaption": "Команды, которые сейчас выполняют задачи.",
+        "atRisk": "Под угрозой",
+        "atRiskCaption": "Сделки, требующие немедленного внимания.",
+        "pipelineValue": "Стоимость pipeline",
+        "pipelineValueCaption": "Оценочная выручка, зафиксированная в воронке."
+      },
+      "table": {
+        "title": "Активные проекты",
+        "subtitle": "Последние CRM-инициативы с ответственными и контрольными точками.",
+        "empty": "CRM-проекты не найдены.",
+        "headers": {
+          "name": "Проект",
+          "client": "Клиент",
+          "owner": "Ответственный",
+          "status": "Статус",
+          "stage": "Этап",
+          "budget": "Бюджет",
+          "probability": "Вероятность успеха",
+          "dueDate": "Срок"
+        }
+      },
+      "upcoming": {
+        "title": "Ближайшие передачи",
+        "subtitle": "Следующие контрольные точки в pipeline.",
+        "empty": "Ближайших сроков нет."
+      },
+      "stages": {
+        "title": "Распределение по этапам",
+        "subtitle": "Как проекты двигаются по этапам воронки.",
+        "caption": "Следующий этап {date}"
+      },
+      "sidebar": {
+        "ariaLabel": "Панель сведений CRM",
+        "projects": {
+          "title": "Мои проекты",
+          "subtitle": "Ваши активные инициативы для выбранного спринта.",
+          "actions": {
+            "new": "Новый проект",
+            "create": "Создать проект"
+          },
+          "empty": {
+            "description": "Вам ещё не назначили ни одного проекта."
+          }
+        },
+        "tasks": {
+          "title": "Недавние задачи",
+          "subtitle": "Задачи, созданные совсем недавно.",
+          "actions": {
+            "new": "Новая задача"
+          },
+          "empty": {
+            "description": "Нет недавних задач. Создайте одну, чтобы начать спринт."
+          },
+          "projectFallback": "Неизвестный проект"
+        }
+      }
+    },
+    "login": {
+      "title": "Войти",
+      "description": "Войдите в свой аккаунт Bro World и продолжайте сотрудничать с сообществом."
+    },
+    "register": {
+      "title": "Создать аккаунт",
+      "description": "Присоединяйтесь к Bro World, чтобы делиться идеями, запускать новые миры и оставаться рядом со своей командой."
+    },
+    "forgotPassword": {
+      "title": "Сбросить пароль",
+      "description": "Восстановите доступ к аккаунту Bro World с помощью защищенной ссылки для сброса."
+    },
+    "logout": {
+      "title": "Выйти",
+      "description": "Выйдите из Bro World и защитите свой аккаунт на общих устройствах."
+    },
+    "messenger": {
+      "title": "Мессенджер",
+      "description": "Общайтесь с командой, делитесь обновлениями и держите разговоры в порядке."
+    }
+  }
+}

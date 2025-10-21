@@ -89,6 +89,7 @@ import {
   type CrmBoardTaskStatus,
   type CrmBoardUser,
 } from "~/stores/crm-board";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 
 definePageMeta({
   showRightWidgets: true,
@@ -97,6 +98,7 @@ definePageMeta({
 
 const board = useCrmBoardStore();
 const { locale, t } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 
 const isProjectDialogOpen = ref(false);

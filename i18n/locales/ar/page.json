@@ -1,0 +1,21 @@
+{
+  "page": {
+    "home": {
+      "SupportUs": "ادعمنا",
+      "AllComponents": "جميع المكوّنات",
+      "OpenSourceComponentsToBuild": "مكوّنات مفتوحة المصدر لتبني بها",
+      "Stunning": "مذهلة",
+      "Beautiful": "جميلة",
+      "WebsitesUsingVueAndNuxt": "مواقع باستخدام Vue وNuxt",
+      "IntegrateWithYourFavouriteUIframework": "ادمج مع إطار الواجهة المفضل لديك",
+      "Features": "الميزات",
+      "CheckOutSomeExamples": "اطلع على بعض الأمثلة!",
+      "3DCardHoverEffect": "تأثير تحويم بطاقة ثلاثية الأبعاد",
+      "RadiantText": "نص متألق",
+      "LovedByCommunity": "محبوب من المجتمع",
+      "WhatAreYouWaitingFor": "ما الذي تنتظره؟",
+      "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
+      "GetStarted": "ابدأ الآن"
+    }
+  }
+}

@@ -120,11 +120,13 @@ import {
   getInventoryForProduct,
   getProductsMatchingQuery,
 } from "~/lib/demo/ecommerce";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 import { useDemoCartStore } from "~/stores/useDemoCart";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 
 const cart = useDemoCartStore();
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["demo"]);
 const route = useRoute();
 const localePath = useResolvedLocalePath();
 

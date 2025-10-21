@@ -1,0 +1,666 @@
+{
+  "admin": {
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
+    "metaTitle": "Administration",
+    "page": {
+      "title": "Administration hub",
+      "subtitle": "Manage the entire platform, monitor key metrics, and activate the right levers in a few clicks."
+    },
+    "statistics": {
+      "metaTitle": "Statistics",
+      "page": {
+        "title": "Platform statistics",
+        "subtitle": "Keep an eye on usage trends and key health indicators for your community."
+      },
+      "cards": {
+        "users": {
+          "title": "Registered users",
+          "description": "Total number of accounts currently available across the platform."
+        }
+      },
+      "actions": {
+        "refresh": "Refresh data"
+      },
+      "errors": {
+        "load": "Unable to load statistics."
+      }
+    },
+    "settings": {
+      "metaTitle": "Site settings",
+      "page": {
+        "title": "Site settings",
+        "subtitle": "Configure the brand, theme palette, and navigation structure for your community."
+      },
+      "navigation": {
+        "title": "Sections"
+      },
+      "sections": {
+        "general": {
+          "title": "Brand identity",
+          "subtitle": "Update the site name and tagline displayed across the workspace.",
+          "badge": "Core"
+        },
+        "theme": {
+          "title": "Themes",
+          "subtitle": "Curate available themes and choose which one is active by default.",
+          "active": "Default theme"
+        },
+        "profile": {
+          "title": "Profile personalisation",
+          "subtitle": "Control how members can customise their public profile.",
+          "badge": "Profiles"
+        },
+        "appearance": {
+          "title": "Theme mode",
+          "subtitle": "Set the default mode and manage the theme toggle behaviour.",
+          "badge": "Display"
+        },
+        "pages": {
+          "title": "Static pages",
+          "subtitle": "Edit the hero content displayed on About, Contact, and Help.",
+          "badge": "Content",
+          "labels": {
+            "about": "About page",
+            "contact": "Contact page",
+            "help": "Help centre"
+          },
+          "descriptions": {
+            "about": "Update the mission statement and introduction shown on the About page.",
+            "contact": "Customise the hero copy for your support and contact information.",
+            "help": "Define the messaging that appears at the top of the help centre."
+          }
+        },
+        "navigation": {
+          "title": "Navigation menu",
+          "subtitle": "Add, reorder, and secure sidebar entries for every audience.",
+          "badge": "Menus",
+          "children": "Child links"
+        }
+      },
+      "fields": {
+        "siteName": "Site name",
+        "language": "Content language",
+        "tagline": "Tagline",
+        "themeName": "Theme name",
+        "themeDescription": "Description",
+        "themePrimary": "Primary color",
+        "themeAccent": "Accent color",
+        "themeSurface": "Surface color",
+        "menuLabel": "Menu label",
+        "menuPath": "Destination path",
+        "menuIcon": "Icon (optional)",
+        "menuAdmin": "Admin only",
+        "menuVisible": "Visible",
+        "profileAllowCustomization": "Allow profile customization",
+        "profileAllowThemeSelection": "Allow profile theme selection",
+        "profileAllowAvatarUploads": "Allow avatar uploads",
+        "profileAllowCoverUploads": "Allow cover uploads",
+        "profileShowContact": "Show contact section",
+        "profileShowDetails": "Show details section",
+        "profileShowSocial": "Show social insights",
+        "profileDefaultBio": "Default bio fallback",
+        "uiAllowThemeSwitching": "Allow visitors to toggle theme",
+        "themeModeSystem": "Follow system",
+        "themeModeLight": "Light mode",
+        "themeModeDark": "Dark mode",
+        "pageTitle": "Title",
+        "pageSubtitle": "Subtitle",
+        "pageBody": "Body content"
+      },
+      "themeCustomizer": {
+        "title": "Customize",
+        "color": "Color",
+        "radius": "Radius",
+        "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
+      "helpers": {
+        "themeModeSystem": "Automatically adapts to each visitor's device preference.",
+        "themeModeLight": "Always display the interface in light mode.",
+        "themeModeDark": "Always display the interface in dark mode."
+      },
+      "placeholders": {
+        "siteName": "Enter a public site name",
+        "tagline": "Describe your mission in one sentence"
+      },
+      "actions": {
+        "save": "Save settings",
+        "reset": "Discard changes",
+        "addTheme": "Add theme",
+        "addMenu": "Add menu",
+        "addChild": "Add child link",
+        "removeMenu": "Remove",
+        "moveUp": "Move up",
+        "moveDown": "Move down"
+      },
+      "feedback": {
+        "saved": "Site configuration updated successfully.",
+        "error": "We couldn't update the configuration. Try again later."
+      },
+      "defaults": {
+        "themeName": "New theme",
+        "menuLabel": "New menu",
+        "submenuLabel": "New submenu"
+      }
+    },
+    "userManagement": {
+      "title": "User management",
+      "subtitle": "Invite, update, or deactivate accounts in real-time.",
+      "actions": {
+        "add": "Invite user"
+      },
+      "table": {
+        "search": "Search users",
+        "empty": "No users found.",
+        "columns": {
+          "user": "User",
+          "email": "Email",
+          "status": "Status",
+          "roles": "Roles",
+          "updatedAt": "Last update",
+          "actions": "Actions"
+        }
+      },
+      "errors": {
+        "unauthorized": "You don't have permission to view users. Sign in with an administrator account.",
+        "generic": "We couldn't load the users list. Please try again later."
+      },
+      "status": {
+        "active": "Active",
+        "disabled": "Disabled"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Invite a new user",
+          "submit": "Create user"
+        },
+        "edit": {
+          "title": "Update user",
+          "submit": "Save changes"
+        },
+        "delete": {
+          "title": "Remove user",
+          "description": "Are you sure you want to remove {name}? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "form": {
+        "username": "Username",
+        "email": "Email",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "roles": "Roles",
+        "rolesHint": "Select one or more roles",
+        "enabled": "Account enabled"
+      },
+      "validation": {
+        "username": "Username is required.",
+        "email": "A valid email address is required.",
+        "roles": "Select at least one role."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "User data",
+          "page": {
+            "title": "User data",
+            "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          },
+          "table": {
+            "search": "Search dataset",
+            "columns": {
+              "username": "Username",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "email": "Email",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status",
+              "actions": "Actions"
+            },
+            "empty": "No user records found."
+          },
+          "actions": {
+            "refresh": "Refresh"
+          },
+          "details": {
+            "title": "User details",
+            "close": "Close",
+            "empty": "Select a user to inspect their profile.",
+            "fields": {
+              "username": "Username",
+              "email": "Email",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status"
+            }
+          }
+        },
+        "crons": {
+          "metaTitle": "User crons",
+          "page": {
+            "title": "Scheduled automations",
+            "subtitle": "Monitor background jobs that sync accounts, cleanse inactive users, and dispatch notifications."
+          }
+        }
+      }
+    },
+    "blogManagement": {
+      "metaTitle": "Blog administration",
+      "page": {
+        "title": "Blog administration",
+        "subtitle": "Curate stories and publish announcements for the community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Blog data",
+          "page": {
+            "title": "Content data",
+            "subtitle": "Inspect metrics, search indexes, and data feeds powering editorial workflows."
+          }
+        },
+        "crons": {
+          "metaTitle": "Blog crons",
+          "page": {
+            "title": "Scheduled publishing",
+            "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
+      }
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
+          }
+        }
+      }
+    },
+    "actions": {
+      "newAdminRole": "New admin role",
+      "exportReport": "Export report"
+    },
+    "sections": {
+      "stats": {
+        "title": "Real-time overview",
+        "subtitle": "Consolidated data from the last 24 hours",
+        "metrics": {
+          "users": {
+            "label": "Active users",
+            "trend": "+12% this week",
+            "caption": "Average engagement per session",
+            "description": "Counts members who signed in over the past 24 hours."
+          },
+          "content": {
+            "label": "Published content",
+            "trend": "+5% vs. yesterday",
+            "caption": "New articles and announcements",
+            "description": "Total posts, events, and announcements that were approved."
+          },
+          "reports": {
+            "label": "Reports handled",
+            "trend": "-8% vs. average",
+            "caption": "Mean resolution time: 1h42",
+            "description": "Moderation tickets resolved by the support team."
+          },
+          "availability": {
+            "label": "Availability rate",
+            "value": "{value}%",
+            "trend": "+0.2 point",
+            "caption": "Over the last 30 days",
+            "description": "Consolidated indicator across all critical services."
+          }
+        }
+      },
+      "controls": {
+        "title": "Global controls",
+        "subtitle": "Toggle critical platform features on or off",
+        "toggles": {
+          "maintenance": {
+            "label": "Maintenance mode",
+            "description": "Show a maintenance message and restrict access to administrators only.",
+            "helper": "Recommended only for major updates.",
+            "enabled": "Maintenance enabled",
+            "disabled": "Maintenance disabled"
+          },
+          "registrations": {
+            "label": "Open registrations",
+            "description": "Allow new members to create an account without an invitation.",
+            "helper": "Track the influx through growth reports.",
+            "enabled": "Signups allowed",
+            "disabled": "Signups closed"
+          },
+          "moderation": {
+            "label": "Assisted moderation",
+            "description": "Run automatic sensitive content detection before publishing.",
+            "helper": "Fine-tune it from the advanced moderation module.",
+            "enabled": "Automation on",
+            "disabled": "Automation off"
+          },
+          "broadcast": {
+            "label": "Pinned global announcement",
+            "description": "Display an information banner at the top of every public page.",
+            "helper": "Use it for official or urgent communications.",
+            "enabled": "Announcement visible",
+            "disabled": "Announcement hidden"
+          }
+        }
+      },
+      "quickActions": {
+        "title": "Quick actions",
+        "subtitle": "Trigger the most common management tasks",
+        "button": "Run",
+        "items": {
+          "contentReview": {
+            "title": "Approve pending content",
+            "description": "Review community contributions before they go live."
+          },
+          "securityScan": {
+            "title": "Run security scan",
+            "description": "Launch an automated check of permissions and sensitive roles."
+          },
+          "communityUpdate": {
+            "title": "Send a global update",
+            "description": "Schedule a newsletter or push notification for all members."
+          }
+        }
+      },
+      "modules": {
+        "title": "Management modules",
+        "subtitle": "Access the dedicated workspace for each pillar of the platform",
+        "openButton": "Open module",
+        "policiesButton": "View policies",
+        "items": {
+          "content": {
+            "title": "Content management",
+            "description": "Plan, publish, and archive articles, events, and learning resources.",
+            "tags": [
+              "Editorial workflow",
+              "Review",
+              "Scheduling"
+            ],
+            "status": "12 items require editorial review."
+          },
+          "community": {
+            "title": "Community & moderation",
+            "description": "Configure moderation rules, manage reports, and handle sanctions.",
+            "tags": [
+              "Reports",
+              "Sanctions",
+              "Private messages"
+            ],
+            "status": "Average response time: 1h42."
+          },
+          "commerce": {
+            "title": "Monetization & offers",
+            "description": "Manage subscriptions, promo codes, and commercial partnerships.",
+            "tags": [
+              "Subscriptions",
+              "Billing",
+              "Coupons"
+            ],
+            "status": "Conversion rate up by 3.4% this week."
+          },
+          "governance": {
+            "title": "Governance & compliance",
+            "description": "Audit access, manage privileged roles, and prepare compliance reports.",
+            "tags": [
+              "Audit",
+              "Roles",
+              "Traceability"
+            ],
+            "status": "Last full audit completed 5 days ago."
+          }
+        }
+      },
+      "activity": {
+        "title": "Recent activity",
+        "subtitle": "Track actions taken by administrators",
+        "cta": "Full history",
+        "items": {
+          "1": {
+            "title": "Review of 18 items published",
+            "description": "Clara Dupont approved the pending content batch for the Blog section.",
+            "time": "12 minutes ago"
+          },
+          "2": {
+            "title": "New role assigned",
+            "description": "Ahmed B. received senior moderator permissions for the Community area.",
+            "time": "47 minutes ago"
+          },
+          "3": {
+            "title": "Critical report resolved",
+            "description": "A post flagged for hate speech was removed and the user suspended.",
+            "time": "2 hours ago"
+          }
+        }
+      },
+      "health": {
+        "title": "System health",
+        "subtitle": "Monitor critical flows and their operational status",
+        "cta": "Status center",
+        "uptimeLabel": "Availability",
+        "items": {
+          "api": {
+            "name": "Public API",
+            "description": "GraphQL flows and webhooks for third-party integrations.",
+            "status": "Operational"
+          },
+          "payments": {
+            "name": "Payment gateway",
+            "description": "Transactions, invoicing, and financial webhooks.",
+            "status": "Minor incident"
+          },
+          "notifications": {
+            "name": "Real-time notifications",
+            "description": "Transactional emails and push notifications.",
+            "status": "Operational"
+          }
+        }
+      },
+      "resources": {
+        "title": "Resources & compliance",
+        "subtitle": "Make sure teams have the right guidance to keep the site quality high.",
+        "knowledgeBase": "Knowledge center",
+        "complianceAudit": "Compliance audit",
+        "download": "Download",
+        "items": {
+          "charter": {
+            "title": "Editorial charter & moderation guide",
+            "description": "Official rules governing publication on the platform."
+          },
+          "security": {
+            "title": "Security incident response procedure",
+            "description": "Operational checklist for security breaches or intrusion attempts."
+          },
+          "compliance": {
+            "title": "GDPR & data processing document",
+            "description": "Inventory of processing activities, retention periods, and response templates for users."
+          }
+        }
+      }
+    },
+    "blog": {
+      "metaTitle": "Blog management",
+      "title": "Blog posts",
+      "subtitle": "Review, publish, and maintain articles in one place.",
+      "actions": {
+        "create": "New post",
+        "createAria": "Create a new blog post",
+        "refresh": "Refresh",
+        "refreshAria": "Refresh posts list",
+        "refreshSuccess": "Posts list refreshed."
+      },
+      "table": {
+        "searchLabel": "Search posts",
+        "searchPlaceholder": "Filter by title, summary, or author",
+        "itemsPerPageLabel": "Items per page",
+        "empty": "No posts available yet.",
+        "emptySearch": "No posts match your search.",
+        "headers": {
+          "title": "Title",
+          "author": "Author",
+          "publishedAt": "Published",
+          "reactions": "Reactions",
+          "comments": "Comments",
+          "actions": "Actions"
+        },
+        "optimisticBadge": "Pending sync",
+        "noSummary": "No summary provided.",
+        "untitled": "Untitled post",
+        "unknownAuthor": "Unknown author",
+        "notPublished": "Not published",
+        "previewAria": "Preview “{title}”",
+        "editAria": "Edit “{title}”",
+        "deleteAria": "Delete “{title}”",
+        "viewAria": "Open public page for “{title}”",
+        "results": "{count} results"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Create a new post",
+          "submit": "Publish post"
+        },
+        "edit": {
+          "title": "Edit post",
+          "submit": "Save changes"
+        },
+        "preview": {
+          "title": "Quick preview",
+          "summaryLabel": "Summary",
+          "contentLabel": "Content",
+          "openPublic": "Open public page"
+        },
+        "delete": {
+          "title": "Delete post",
+          "description": "This action cannot be undone. The post will be removed from the blog.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        },
+        "form": {
+          "titleLabel": "Title",
+          "summaryLabel": "Summary",
+          "contentLabel": "Content"
+        }
+      },
+      "feedback": {
+        "created": "Post created successfully.",
+        "updated": "Post updated successfully.",
+        "deleted": "Post deleted successfully.",
+        "loadError": "Unable to load posts. Please try again.",
+        "actionError": "Something went wrong. Please try again."
+      },
+      "validation": {
+        "contentRequired": "Content is required."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Blog data",
+          "page": {
+            "title": "Content data",
+            "subtitle": "Inspect metrics, search indexes, and data feeds powering editorial workflows."
+          }
+        },
+        "crons": {
+          "metaTitle": "Blog crons",
+          "page": {
+            "title": "Scheduled publishing",
+            "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
+      }
+    }
+  }
+}

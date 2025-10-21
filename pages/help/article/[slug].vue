@@ -79,8 +79,11 @@ import HelpBreadcrumbs from "~/components/help/HelpBreadcrumbs.vue";
 import HelpFeedback from "~/components/help/HelpFeedback.vue";
 import type { HelpArticleDetail, HelpArticleSummary } from "~/types/help";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const route = useRoute();
 const { t, locale } = useI18n();
+await useLocaleNamespaces(["help"]);
 const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();
 const requestUrl = useRequestURL();

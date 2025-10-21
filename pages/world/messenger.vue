@@ -67,8 +67,11 @@ import ChatList from "~/components/messenger/ChatList.vue";
 import ChatWindow from "~/components/messenger/ChatWindow.vue";
 import { useMessengerStore } from "~/stores/messenger";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const messenger = useMessengerStore();
 const { t } = useI18n();
+await useLocaleNamespaces(["messenger"]);
 
 const canTeleport = ref(false);
 

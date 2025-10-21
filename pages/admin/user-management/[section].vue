@@ -227,6 +227,8 @@ import { useAdminModulePage } from "~/composables/useAdminModulePage";
 import { useUsersStore } from "~/stores/users";
 import type { UsersStoreUser } from "~/stores/users";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 definePageMeta({
   middleware: ["auth", "admin"],
   showRightWidgets: false,
@@ -250,6 +252,8 @@ const section = computed<UserManagementSection>(() => {
 });
 
 const pageKey = computed(() => `admin.userManagement.sections.${section.value}`);
+
+await useLocaleNamespaces(["admin"]);
 
 const { t, title, subtitle } = useAdminModulePage(pageKey);
 

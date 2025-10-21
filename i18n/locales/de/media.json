@@ -1,0 +1,84 @@
+{
+  "media": {
+    "toolbar": {
+      "newFolder": "Neuer Ordner",
+      "upload": "Hochladen",
+      "gridView": "Rasteransicht",
+      "listView": "Listenansicht",
+      "showTrash": "Papierkorb öffnen",
+      "hideTrash": "Papierkorb schließen",
+      "refresh": "Aktualisieren"
+    },
+    "tree": {
+      "ariaLabel": "Medienordner"
+    },
+    "breadcrumbs": {
+      "root": "Meine Medien"
+    },
+    "grid": {
+      "empty": "Dieser Ordner ist leer",
+      "ariaLabel": "Medienraster"
+    },
+    "list": {
+      "columns": {
+        "name": "Name",
+        "type": "Typ",
+        "size": "Größe",
+        "updatedAt": "Aktualisiert"
+      },
+      "empty": "Keine Dateien in diesem Ordner"
+    },
+    "upload": {
+      "title": "Dateien hochladen",
+      "dropTitle": "Dateien hier ablegen",
+      "dropSubtitle": "oder Gerät durchsuchen, um Dateien auszuwählen",
+      "browse": "Dateien auswählen",
+      "queue": "Upload-Warteschlange",
+      "empty": "Keine laufenden Uploads"
+    },
+    "rename": {
+      "title": "Umbenennen",
+      "nameLabel": "Name",
+      "namePlaceholder": "Name eingeben",
+      "save": "Speichern"
+    },
+    "delete": {
+      "title": "In den Papierkorb verschieben",
+      "description": "Gelöschte Elemente bleiben 30 Tage im Papierkorb.",
+      "confirm": "Löschen",
+      "purgeTitle": "Endgültig löschen",
+      "purgeDescription": "Dadurch wird das ausgewählte Element endgültig gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden."
+    },
+    "move": {
+      "title": "In Ordner verschieben",
+      "destinationLabel": "Zielordner",
+      "confirm": "Verschieben",
+      "rootOption": "Oberste Ebene"
+    },
+    "preview": {
+      "ariaLabel": "Dateivorschau",
+      "unavailable": "Vorschau nicht verfügbar",
+      "empty": "Wählen Sie eine Datei zur Vorschau aus",
+      "download": "Herunterladen"
+    },
+    "createFolder": {
+      "title": "Ordner erstellen"
+    },
+    "actions": {
+      "open": "Öffnen",
+      "rename": "Umbenennen",
+      "move": "Verschieben",
+      "delete": "Löschen",
+      "deleteForever": "Endgültig löschen",
+      "restore": "Wiederherstellen"
+    },
+    "trash": {
+      "name": "Name",
+      "type": "Typ",
+      "deletedAt": "Gelöscht am",
+      "actions": "Aktionen",
+      "file": "Datei",
+      "folder": "Ordner"
+    }
+  }
+}

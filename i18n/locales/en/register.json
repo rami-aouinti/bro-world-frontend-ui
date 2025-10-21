@@ -1,0 +1,28 @@
+{
+  "register": {
+    "email": "Email address",
+    "password": "Password",
+    "repeatPassword": "Confirm password",
+    "agree": "I agree to the",
+    "terms": "terms and conditions",
+    "requirements": "Password requirements",
+    "requirement1": "Must contain at least 8 characters.",
+    "requirement2": "Should include numbers or special characters for extra security.",
+    "signUp": "Create account",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "termsTitle": "Terms & Conditions",
+    "errorTerms": "You must agree to the terms and conditions.",
+    "errorMissing": "Please complete all required fields.",
+    "errorMismatch": "Passwords do not match.",
+    "errorGeneric": "Something went wrong while creating your account.",
+    "errorTitle": "Account creation failed",
+    "successTitle": "Account created",
+    "success": "Your account has been created successfully.",
+    "termsIntro": "By creating an account you confirm that you understand and accept our policies.",
+    "termsPoint1": "We only use your information to create and secure your account.",
+    "termsPoint2": "You can update your notification preferences at any time.",
+    "termsPoint3": "Deleting your account will remove your data from our active systems within 30 days.",
+    "termsOutro": "Please contact our support team if you have any questions about how we handle your data."
+  }
+}

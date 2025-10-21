@@ -197,9 +197,11 @@ import OrderSummary from "~/components/ecommerce/OrderSummary.vue";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { getProductBySlug, getInventoryForProduct, formatCurrency } from "~/lib/demo/ecommerce";
 import { useDemoCartStore } from "~/stores/useDemoCart";
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
 
 const cart = useDemoCartStore();
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["demo"]);
 const route = useRoute();
 const localePath = useResolvedLocalePath();
 const runtimeConfig = useRuntimeConfig();

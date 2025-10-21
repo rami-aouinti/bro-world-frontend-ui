@@ -1,0 +1,415 @@
+{
+  "$vuetify": {
+    "loading": "جارٍ التحميل…"
+  },
+  "common": {
+    "InspiraUIPro": "إنسبيرا UI برو",
+    "close": "إغلاق",
+    "loading": "جارٍ التحميل…"
+  },
+  "layout": {
+    "loadingOverlay": {
+      "srLabel": "جارٍ تحميل برو وورلد",
+      "title": "جارٍ تحميل برو وورلد…",
+      "description": "نجهّز لك التجربة الكاملة: الشريط العلوي، اللوحات، والمحتوى."
+    },
+    "routeLoadingOverlay": {
+      "srLabel": "جارٍ تحميل الصفحة",
+      "title": "جارٍ التحميل",
+      "subtitle": "نحضّر عالمك…"
+    },
+    "actions": {
+      "openNavigation": "فتح قائمة التنقل",
+      "openWidgets": "فتح الويدجت السريعة",
+      "toggleTheme": "تغيير السمة",
+      "goBack": "العودة",
+      "refresh": "تحديث",
+      "notifications": "فتح الإشعارات",
+      "messages": "فتح الرسائل",
+      "cart": "فتح الحقيبة",
+      "profile": "فتح قائمة الملف الشخصي",
+      "viewProfile": "عرض الملف الشخصي",
+      "signOut": "تسجيل الخروج",
+      "changeLanguage": "تغيير اللغة (الحالية: {locale})"
+    },
+    "notificationsMenu": {
+      "title": "الإشعارات",
+      "subtitle": "آخر التحديثات من شبكتك",
+      "markAll": "وضع الكل كمقروء",
+      "empty": "أنت على اطلاع كامل!",
+      "badgeLabel": "{count} إشعارات غير مقروءة",
+      "items": {
+        "newFollower": {
+          "title": "متابع جديد",
+          "description": "بدأ أليكس كارتر بمتابعتك.",
+          "time": "منذ دقيقتين"
+        },
+        "newComment": {
+          "title": "تعليق جديد",
+          "description": "تركت ماريا تعليقًا على منشورك.",
+          "time": "منذ 12 دقيقة"
+        },
+        "systemUpdate": {
+          "title": "تذكير بالجدولة",
+          "description": "تم جدولة صيانة للنظام هذا المساء.",
+          "time": "منذ ساعة"
+        }
+      }
+    },
+    "messengerMenu": {
+      "title": "الرسائل",
+      "subtitle": "أحدث المحادثات",
+      "viewAll": "عرض الكل",
+      "empty": "لا توجد رسائل جديدة",
+      "badgeLabel": "{count} رسالة غير مقروءة"
+    },
+    "userMenu": {
+      "signedInAs": "مسجل الدخول باسم",
+      "guestTitle": "مرحبًا بك",
+      "guestSubtitle": "سجّل الدخول للحصول على تجربة مخصصة",
+      "admin": "لوحة الإدارة"
+    },
+    "localeMenu": {
+      "title": "اللغة",
+      "subtitle": "متاحة بـ {count} لغات"
+    },
+    "search": {
+      "placeholder": "Search..."
+    },
+    "appIcons": {
+      "academy": "الأكاديمية",
+      "briefcase": "العمل",
+      "store": "المتجر",
+      "database": "البيانات",
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "quiz": "Quiz",
+      "game": "الألعاب والاختبارات"
+    },
+    "sidebar": {
+      "title": "اتصال",
+      "navigate": "الانتقال إلى القسم",
+      "items": {
+        "apps": "التطبيقات",
+        "calendar": "التقويم",
+        "cv": "السيرة الذاتية",
+        "createWorld": "Create world",
+        "jobs": "الوظائف",
+        "profile": "الملف الشخصي",
+        "profileOverview": "نظرة عامة",
+        "profileSettings": "إعدادات الحساب",
+        "profileSecurity": "كلمة المرور والأمان",
+        "profileFriends": "الأصدقاء",
+        "profilePhotos": "الصور والوسائط",
+        "admin": "لوحة الإدارة",
+        "adminGeneral": "عام",
+        "adminStatistics": "إحصائيات",
+        "adminGeneralSetting": "الإعدادات العامة",
+        "adminData": "البيانات",
+        "adminCrons": "المهام المجدولة",
+        "adminSettings": "إعدادات الموقع",
+        "adminCrm": "مساحة CRM",
+        "adminUserManagement": "إدارة المستخدمين",
+        "adminBlogManagement": "إدارة المدونة",
+        "adminJobManagement": "إدارة الوظائف",
+        "adminEcommerceManagement": "إدارة المتجر الإلكتروني",
+        "adminEducationManagement": "إدارة التعليم",
+        "adminGameManagement": "إدارة الألعاب",
+        "adminBlog": "المدونة",
+        "help": "المساعدة",
+        "about": "حول",
+        "contact": "اتصال",
+        "game": "الألعاب والاختبارات",
+        "crm": "مساحة CRM",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "نظرة عامة",
+        "ecommerceCatalog": "كتالوج المنتجات",
+        "ecommerceCart": "عربة التسوق",
+        "ecommerceCheckout": "الدفع",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "الأكاديمية",
+        "performance": "الأداء"
+      }
+    },
+    "widgets": {
+      "weather": {
+        "title": "طقس اليوم",
+        "condition": "غائم",
+        "subtitle": "درجة الإحساس 11°"
+      },
+      "news": {
+        "title": "أخبار",
+        "items": {
+          "0": {
+            "title": "بروفة إطلاق المنتج",
+            "timestamp": "منذ 5 دقائق"
+          },
+          "1": {
+            "title": "تقرير النمو متاح",
+            "timestamp": "منذ 15 دقيقة"
+          }
+        }
+      },
+      "rating": {
+        "title": "نظرة عامة على التقييم",
+        "subtitle": "لا توجد مراجعات بعد",
+        "edit": "إضافة تقييم",
+        "share": "مشاركة",
+        "actionsLabel": "إجراءات التقييم"
+      },
+      "feed": {
+        "title": "تغذية النشاط"
+      }
+    },
+    "profileSidebar": {
+      "editBio": "تعديل",
+      "editDetails": "تعديل التفاصيل",
+      "addFeatured": "إضافة محتوى مميز",
+      "photosTitle": "الصور",
+      "viewAllPhotos": "عرض جميع الصور",
+      "friendsTitle": "الأصدقاء",
+      "viewAllFriends": "عرض جميع الأصدقاء",
+      "livesIn": "يعيش في {location}",
+      "from": "من {location}"
+    }
+  },
+  "buttons": {
+    "more": "Show more",
+    "less": "Show less",
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel"
+  },
+  "nav": {
+    "Docs": "التوثيق",
+    "GettingStarted": "البدء",
+    "GettingStartedDescription": "مقدمة عن Inspira UI وأهم مفاهيمه.",
+    "Installation": "التثبيت",
+    "InstallationDescription": "اتبع الدليل خطوة بخطوة لتثبيت Inspira UI في مشروعك.",
+    "Components": "المكوّنات",
+    "ComponentsDescription": "استكشف جميع المكوّنات المتاحة وكيفية استخدامها.",
+    "V1DocsDescription": "توثيق استخدام Inspira UI مع Tailwind CSS v3.",
+    "Community": "المجتمع",
+    "GitHub": "غيتهاب",
+    "GitHubDescription": "الكود المصدري لـ Inspira UI.",
+    "Discord": "ديسكورد",
+    "DiscordDescription": "تواصل مع المجتمع عبر ديسكورد",
+    "Forum": "المنتدى",
+    "ForumDiscord": "انضم إلى المنتدى"
+  },
+  "seo": {
+    "about": {
+      "title": "نبذة عنا",
+      "description": "تعرّف على مهمتنا وفريقنا."
+    },
+    "help": {
+      "title": "مساعدة",
+      "description": "الأسئلة الشائعة وموارد الدعم."
+    },
+    "contact": {
+      "title": "اتصل بنا",
+      "description": "تواصل مع فريقنا."
+    },
+    "profile": {
+      "title": "الملف الشخصي",
+      "description": "اطّلع على بياناتك الشخصية ونشاط حسابك."
+    },
+    "profileFriends": {
+      "title": "العلاقات",
+      "description": "استكشف المتعاونين والعلاقات المقترحة والنشاط الفوري."
+    },
+    "profilePhotos": {
+      "title": "مكتبة الصور",
+      "description": "نظّم أبرز لحظات الإطلاق وجلسات الاستوديو وأرشيفات البحث."
+    },
+    "profileEdit": {
+      "title": "تعديل الملف الشخصي",
+      "description": "حدّث معلومات الاتصال والمهارات وروابط التواصل الاجتماعي."
+    },
+    "profileSecurity": {
+      "title": "كلمة المرور والأمان",
+      "description": "أدِر بيانات تسجيل الدخول والمصادقة الثنائية والأجهزة الموثوقة."
+    },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
+    },
+    "job": {
+      "title": "Jobs",
+      "description": "Plan, track, and optimise hiring programmes."
+    },
+    "game": {
+      "title": "Gaming",
+      "description": "Deliver live game experiences, communities, and monetisation."
+    },
+    "calendar": {
+      "title": "التقويم",
+      "cardTitle": "نظرة عامة على التقويم",
+      "menuTitle": "أحداث اليوم",
+      "menuEmpty": "لا توجد أحداث اليوم",
+      "authNotice": "سجّل الدخول للاطلاع على أحداثك وإدارتها.",
+      "rangeAllDay": "طوال اليوم",
+      "fallbackTitle": "حدث بدون عنوان",
+      "actions": {
+        "newEvent": "حدث جديد"
+      },
+      "dialog": {
+        "createTitle": "حدث جديد",
+        "editTitle": "تعديل الحدث",
+        "titleLabel": "عنوان الحدث",
+        "startLabel": "تاريخ البدء",
+        "endLabel": "تاريخ الانتهاء",
+        "startTimeLabel": "وقت البدء",
+        "endTimeLabel": "وقت الانتهاء",
+        "allDayLabel": "حدث طوال اليوم",
+        "privateLabel": "حدث خاص",
+        "locationLabel": "الموقع",
+        "descriptionLabel": "الوصف",
+        "save": "حفظ",
+        "cancel": "إغلاق",
+        "delete": "حذف",
+        "confirmDelete": "حذف الحدث",
+        "confirmDeleteMessage": "هذا الإجراء لا يمكن التراجع عنه. هل تريد حذف الحدث؟"
+      },
+      "validation": {
+        "title": "يرجى إضافة عنوان.",
+        "startDate": "اختر تاريخ البدء.",
+        "startTime": "اختر وقت البدء.",
+        "endTime": "يجب أن يكون وقت الانتهاء بعد وقت البدء.",
+        "range": "يجب أن يكون انتهاء الحدث بعد بدايته."
+      },
+      "errors": {
+        "save": "تعذّر حفظ التغييرات. حاول مرة أخرى.",
+        "delete": "تعذّر حذف الحدث. حاول مرة أخرى.",
+        "load": "تعذّر تحميل الأحداث. حاول مرة أخرى."
+      }
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "description": "Launch and scale modern retail journeys.",
+      "catalog": {
+        "title": "Product catalog",
+        "description": "Explore curated workspace, wellbeing, and travel essentials."
+      },
+      "product": {
+        "title": "Product detail",
+        "description": "Discover detailed specs, pricing, and availability across the demo range."
+      },
+      "cart": {
+        "title": "Cart",
+        "description": "Review selected items, adjust quantities, and prepare for checkout."
+      },
+      "checkout": {
+        "title": "Checkout",
+        "description": "Complete shipping, payment, and review steps before placing your order."
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "description": "Design interactive quiz journeys with adaptive question banks."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Design collaborative, data-informed learning experiences."
+    },
+    "academy": {
+      "title": "Academy",
+      "description": "Explore Bro World's structured learning paths, exercises, and certifications."
+    },
+    "performance": {
+      "title": "الأداء",
+      "description": "تتبع الميزانيات والمراجعات للحفاظ على سرعة برو وورلد لكل مجتمع."
+    },
+    "crm": {
+      "title": "مساحة CRM",
+      "subtitle": "راقب الفرص النشطة والمسؤولين وعمليات التسليم القادمة في مكان واحد.",
+      "actions": {
+        "newProject": "مشروع جديد",
+        "viewPipeline": "عرض خط المبيعات"
+      },
+      "metrics": {
+        "title": "نظرة عامة على خط المبيعات",
+        "subtitle": "لمحة عن تدفق الصفقات حسب الحالة الحالية.",
+        "total": "المشاريع",
+        "totalCaption": "الفرص النشطة في جميع الخطوط.",
+        "inProgress": "قيد التنفيذ",
+        "inProgressCaption": "الفرق التي تعمل حالياً على المسارات.",
+        "atRisk": "في خطر",
+        "atRiskCaption": "الصفقات التي تحتاج إلى اهتمام فوري.",
+        "pipelineValue": "قيمة الخط",
+        "pipelineValueCaption": "الإيرادات التقديرية الموجودة في الخط."
+      },
+      "table": {
+        "title": "المشاريع النشطة",
+        "subtitle": "أحدث مبادرات CRM مع المسؤولين والمعالم.",
+        "empty": "لا توجد مشاريع CRM.",
+        "headers": {
+          "name": "المشروع",
+          "client": "العميل",
+          "owner": "المسؤول",
+          "status": "الحالة",
+          "stage": "المرحلة",
+          "budget": "الميزانية",
+          "probability": "احتمال الفوز",
+          "dueDate": "تاريخ التسليم"
+        }
+      },
+      "upcoming": {
+        "title": "عمليات التسليم القادمة",
+        "subtitle": "أقرب نقاط التسليم داخل الخط.",
+        "empty": "لا توجد مواعيد قريبة."
+      },
+      "stages": {
+        "title": "توزيع المراحل",
+        "subtitle": "كيفية تقدم المشاريع عبر مراحل الخط.",
+        "caption": "المعلم التالي في {date}"
+      },
+      "sidebar": {
+        "ariaLabel": "لوحة معلومات إدارة علاقات العملاء",
+        "projects": {
+          "title": "مشاريعي",
+          "subtitle": "مبادراتك النشطة للسبرينت المحدد.",
+          "actions": {
+            "new": "مشروع جديد",
+            "create": "إنشاء مشروع"
+          },
+          "empty": {
+            "description": "لم يتم إسناد أي مشروع إليك بعد."
+          }
+        },
+        "tasks": {
+          "title": "المهام الأخيرة",
+          "subtitle": "أحدث المهام التي تم إنشاؤها.",
+          "actions": {
+            "new": "مهمة جديدة"
+          },
+          "empty": {
+            "description": "لا توجد مهام حديثة. أنشئ مهمة لبدء السبرينت."
+          },
+          "projectFallback": "مشروع غير معروف"
+        }
+      }
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "description": "ادخل إلى حسابك في برو وورلد لمتابعة التعاون مع المجتمع."
+    },
+    "register": {
+      "title": "إنشاء حساب",
+      "description": "انضم إلى برو وورلد لمشاركة الأفكار وإطلاق عوالم جديدة والبقاء قريبًا من فريقك."
+    },
+    "forgotPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "description": "استعد الوصول إلى حسابك في برو وورلد عبر رابط إعادة تعيين آمن."
+    },
+    "logout": {
+      "title": "تسجيل الخروج",
+      "description": "سجّل الخروج من برو وورلد واحم حسابك على الأجهزة المشتركة."
+    },
+    "messenger": {
+      "title": "الرسائل",
+      "description": "تواصل مع أعضاء الفريق وشارك التحديثات وحافظ على تنظيم المحادثات."
+    }
+  }
+}

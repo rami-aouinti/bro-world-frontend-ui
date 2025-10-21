@@ -191,7 +191,10 @@ import { useCrmProjectsStore } from "~/stores/crm-projects";
 import AdminMetricCard from "~/components/admin/dashboard/AdminMetricCard.vue";
 import type { DataTableHeaders } from "~/plugins/vuetify";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, n } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);

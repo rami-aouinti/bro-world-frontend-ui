@@ -424,7 +424,10 @@ import { useI18n } from "vue-i18n";
 import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
 import type { AlbumSummary, PhotoItem } from "~/types/pages/profile";
 
+import { useLocaleNamespaces } from "~/composables/useLocaleNamespaces";
+
 const { t, locale, localeProperties } = useI18n();
+await useLocaleNamespaces(["pages"]);
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);

@@ -1,0 +1,28 @@
+{
+  "register": {
+    "email": "Indirizzo email",
+    "password": "Password",
+    "repeatPassword": "Conferma password",
+    "agree": "Accetto i",
+    "terms": "termini e condizioni",
+    "requirements": "Requisiti della password",
+    "requirement1": "Deve contenere almeno 8 caratteri.",
+    "requirement2": "Dovrebbe includere numeri o caratteri speciali per maggiore sicurezza.",
+    "signUp": "Crea account",
+    "haveAccount": "Hai già un account?",
+    "signIn": "Accedi",
+    "termsTitle": "Termini e condizioni",
+    "errorTerms": "Devi accettare i termini e le condizioni.",
+    "errorMissing": "Completa tutti i campi obbligatori.",
+    "errorMismatch": "Le password non coincidono.",
+    "errorGeneric": "Si è verificato un errore durante la creazione dell'account.",
+    "errorTitle": "Creazione dell'account non riuscita",
+    "successTitle": "Account creato",
+    "success": "Il tuo account è stato creato con successo.",
+    "termsIntro": "Creando un account confermi di aver compreso e accettato le nostre policy.",
+    "termsPoint1": "Utilizziamo le tue informazioni solo per creare e proteggere il tuo account.",
+    "termsPoint2": "Puoi aggiornare le preferenze di notifica in qualsiasi momento.",
+    "termsPoint3": "Eliminando il tuo account, i tuoi dati verranno rimossi dai nostri sistemi attivi entro 30 giorni.",
+    "termsOutro": "Contatta il nostro team di supporto se hai domande su come gestiamo i tuoi dati."
+  }
+}
