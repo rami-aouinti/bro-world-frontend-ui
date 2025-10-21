@@ -161,6 +161,7 @@ registerRightSidebarContent(
       availabilityBody: availabilityBody.value,
     },
     wrapperClass: "flex flex-col gap-6",
+    intrinsicHeight: 720,
   })),
 );
 </script>
