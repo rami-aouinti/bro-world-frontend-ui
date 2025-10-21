@@ -40,7 +40,7 @@
         hide-details
         menu-icon=""
         placeholder="Search Anything in BroWorld"
-        variant="solo-filled"
+        variant="text"
         auto-select-first
         item-props
       >
