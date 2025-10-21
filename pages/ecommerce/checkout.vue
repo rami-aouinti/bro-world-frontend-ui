@@ -410,13 +410,43 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import { computed, defineAsyncComponent, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useHead, useSeoMeta, useRuntimeConfig, useRoute, useRouter } from "#imports";
 import OrderSummary from "~/components/ecommerce/OrderSummary.vue";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useDemoCartStore } from "~/stores/useDemoCart";
 import { demoEcommerceOrders } from "~/lib/demo/ecommerce";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VStepper = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepper),
+);
+
+const VStepperHeader = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperHeader),
+);
+
+const VStepperItem = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperItem),
+);
+
+const VStepperWindow = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperWindow),
+);
+
+const VStepperWindowItem = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperWindowItem),
+);
+
+const VTimeline = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTimeline),
+);
+
+const VTimelineItem = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTimelineItem),
+);
 
 const cart = useDemoCartStore();
 const { t, locale, localeProperties } = useI18n();

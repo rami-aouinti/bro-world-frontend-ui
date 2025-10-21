@@ -587,7 +587,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useWorldCreator } from "~/composables/useWorldCreator";
@@ -602,6 +602,12 @@ import type {
   WorldFormState,
   WorldSubmissionAction,
 } from "~/types/world";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VCombobox = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VCombobox),
+);
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();

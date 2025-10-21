@@ -268,6 +268,12 @@ const ProfileEditSidebarContent = defineAsyncComponent({
   suspensible: false,
 });
 
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VCombobox = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VCombobox),
+);
+
 const { t } = useI18n();
 
 const BIO_MAX_LENGTH = 280;

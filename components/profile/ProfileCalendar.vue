@@ -422,10 +422,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, watch } from "vue";
+import { computed, defineAsyncComponent, nextTick, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import type { ProfileEvent } from "~/types/pages/profile";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VBtnToggle = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VBtnToggle),
+);
 
 interface CalendarDisplayEvent extends ProfileEvent {
   color: string;

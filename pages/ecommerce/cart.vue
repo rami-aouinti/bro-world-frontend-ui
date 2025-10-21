@@ -200,13 +200,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, watch } from "vue";
+import { computed, defineAsyncComponent, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useHead, useSeoMeta, useRuntimeConfig, useRoute } from "#imports";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import OrderSummary from "~/components/ecommerce/OrderSummary.vue";
 import { useDemoCartStore } from "~/stores/useDemoCart";
 import { formatCurrency } from "~/lib/demo/ecommerce";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTable),
+);
+
+const VEmptyState = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VEmptyState),
+);
 
 const cart = useDemoCartStore();
 const { t, locale, localeProperties } = useI18n();

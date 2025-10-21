@@ -111,7 +111,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, defineAsyncComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSeoMeta, useHead, useRoute, useRuntimeConfig } from "#imports";
 import ProductCard from "~/components/ecommerce/ProductCard.vue";
@@ -122,6 +122,20 @@ import {
 } from "~/lib/demo/ecommerce";
 import { useDemoCartStore } from "~/stores/useDemoCart";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VTabs = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTabs),
+);
+
+const VTab = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTab),
+);
+
+const VEmptyState = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VEmptyState),
+);
 
 const cart = useDemoCartStore();
 const { t, locale, localeProperties } = useI18n();

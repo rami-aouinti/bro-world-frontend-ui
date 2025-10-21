@@ -221,11 +221,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, defineAsyncComponent, ref } from "vue";
 import { callOnce } from "#app";
 import { useAdminModulePage } from "~/composables/useAdminModulePage";
 import { useUsersStore } from "~/stores/users";
 import type { UsersStoreUser } from "~/stores/users";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VDataTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VDataTable),
+);
 
 definePageMeta({
   middleware: ["auth", "admin"],

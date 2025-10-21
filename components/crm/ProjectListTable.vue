@@ -126,11 +126,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useLocalePath } from "#imports";
 
 import type { CrmProject } from "~/stores/crm-projects";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VDataTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VDataTable),
+);
 
 const props = withDefaults(
   defineProps<{
