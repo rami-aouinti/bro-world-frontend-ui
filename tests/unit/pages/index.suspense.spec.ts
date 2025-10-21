@@ -90,6 +90,14 @@ vi.mock("~/components/stories/StoriesStrip.vue", () => storiesStripDeferredRef.c
 vi.mock("~/components/stories/StoryViewerModal.vue", () => storyViewerDeferredRef.current.promise);
 
 vi.mock("~/components/blog/BlogPostCard.vue", () => blogPostDeferredRef.current.promise);
+vi.mock("~/lib/prefetch/blog-post-card", () => {
+  const loader = vi.fn(() => blogPostDeferredRef.current.promise);
+
+  return {
+    blogPostCardLoader: loader,
+    prefetchBlogPostCard: vi.fn(() => loader()),
+  };
+});
 
 const isReady = ref(true);
 const isAuthenticated = ref(true);
