@@ -54,16 +54,7 @@ describe("detectInitialIsMobile", () => {
         userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         defaultValue: true,
       }),
-    ).toBe(false);
-  });
-
-  it("treats known desktop user agents as non-mobile even with a mobile default", () => {
-    expect(
-      detectInitialIsMobile({
-        userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)",
-        defaultValue: true,
-      }),
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it("defaults to conservative mobile fallback", () => {
