@@ -76,6 +76,7 @@ const { t } = useI18n();
 const pageDescription = computed(() => t("admin.settings.page.subtitle"));
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   documentDriven: false,
 });

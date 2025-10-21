@@ -100,6 +100,7 @@ const { t } = useI18n();
 const pageDescription = computed(() => t("admin.statistics.page.subtitle"));
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   showRightWidgets: false,
 });

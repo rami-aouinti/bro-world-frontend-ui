@@ -228,6 +228,7 @@ import { useUsersStore } from "~/stores/users";
 import type { UsersStoreUser } from "~/stores/users";
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   showRightWidgets: false,
 });
