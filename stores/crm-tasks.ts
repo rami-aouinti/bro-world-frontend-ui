@@ -235,6 +235,40 @@ function createParamsKey(params: Record<string, unknown> | undefined): string {
   }
 }
 
+function resolveRuntimeBooleanFlag(flag: unknown): boolean | undefined {
+  if (typeof flag === "boolean") {
+    return flag;
+  }
+
+  if (typeof flag === "number") {
+    if (flag === 1) {
+      return true;
+    }
+
+    if (flag === 0) {
+      return false;
+    }
+  }
+
+  if (typeof flag === "string") {
+    const normalized = flag.trim().toLowerCase();
+
+    if (!normalized) {
+      return undefined;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return undefined;
+}
+
 export const useCrmTasksStore = defineStore("crm-tasks", () => {
   const items = useState<Record<string, CrmTask[]>>("crm-tasks:items", () => ({}));
   const pending = useState<Record<string, boolean>>("crm-tasks:pending", () => ({}));
@@ -246,21 +280,19 @@ export const useCrmTasksStore = defineStore("crm-tasks", () => {
   const runtimeConfig = useRuntimeConfig();
   const envMockFlag =
     typeof process !== "undefined" ? process.env?.NUXT_PUBLIC_CRM_TASKS_USE_MOCKS : undefined;
-  const configMockFlag = runtimeConfig.public?.crmTasks?.useMocks;
+  const configMockFlag = resolveRuntimeBooleanFlag(runtimeConfig.public?.crmTasks?.useMocks);
+  const globalMockFlag = resolveRuntimeBooleanFlag(runtimeConfig.public?.useMockData);
   const useMockData = ((): boolean => {
     if (typeof envMockFlag !== "undefined") {
       return envMockFlag === "1" || envMockFlag === "true" || envMockFlag === true;
     }
 
-    if (typeof configMockFlag !== "undefined") {
-      if (typeof configMockFlag === "boolean") {
-        return configMockFlag;
-      }
+    if (typeof configMockFlag === "boolean") {
+      return configMockFlag;
+    }
 
-      if (typeof configMockFlag === "string") {
-        const normalized = configMockFlag.trim().toLowerCase();
-        return ["1", "true", "yes", "on"].includes(normalized);
-      }
+    if (typeof globalMockFlag === "boolean") {
+      return globalMockFlag;
     }
 
     return true;

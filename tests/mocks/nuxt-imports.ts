@@ -96,10 +96,15 @@ function createDefaultDocsConfig(): DocsConfig {
 }
 
 type RuntimeConfig = {
+  useMockData: boolean;
+  users: {
+    useMocks: boolean;
+  };
   public: {
     siteUrl: string;
     apiBase: string;
     postsApiBase: string;
+    useMockData: boolean;
     redis: {
       listTtl: number;
       itemTtl: number;
@@ -108,7 +113,16 @@ type RuntimeConfig = {
       educationTtl: number;
       certificateTtl: number;
     };
+    crmParticipants: {
+      useMocks: boolean;
+    };
+    crmRequests: {
+      useMocks: boolean;
+    };
     crmProjects: {
+      useMocks: boolean;
+    };
+    crmTasks: {
       useMocks: boolean;
     };
   };
@@ -130,10 +144,15 @@ type RuntimeConfig = {
 
 function createDefaultRuntimeConfig(): RuntimeConfig {
   return {
+    useMockData: true,
+    users: {
+      useMocks: true,
+    },
     public: {
       siteUrl: "",
       apiBase: "/api",
       postsApiBase: "https://fallback.test/",
+      useMockData: true,
       redis: {
         listTtl: 60,
         itemTtl: 300,
@@ -142,7 +161,16 @@ function createDefaultRuntimeConfig(): RuntimeConfig {
         educationTtl: 300,
         certificateTtl: 60 * 60 * 24 * 7,
       },
+      crmParticipants: {
+        useMocks: true,
+      },
+      crmRequests: {
+        useMocks: true,
+      },
       crmProjects: {
+        useMocks: true,
+      },
+      crmTasks: {
         useMocks: true,
       },
     },

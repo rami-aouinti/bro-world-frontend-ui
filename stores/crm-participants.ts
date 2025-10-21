@@ -27,6 +27,40 @@ function wait(delay: number) {
   return new Promise((resolve) => setTimeout(resolve, delay));
 }
 
+function resolveRuntimeBooleanFlag(flag: unknown): boolean | undefined {
+  if (typeof flag === "boolean") {
+    return flag;
+  }
+
+  if (typeof flag === "number") {
+    if (flag === 1) {
+      return true;
+    }
+
+    if (flag === 0) {
+      return false;
+    }
+  }
+
+  if (typeof flag === "string") {
+    const normalized = flag.trim().toLowerCase();
+
+    if (!normalized) {
+      return undefined;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return undefined;
+}
+
 function normalizeParticipant(candidate: CrmParticipantMockEntry): CrmParticipant {
   return {
     id: candidate.id,
@@ -59,21 +93,21 @@ export const useCrmParticipantsStore = defineStore("crm-participants", () => {
     typeof process !== "undefined"
       ? process.env?.NUXT_PUBLIC_CRM_PARTICIPANTS_USE_MOCKS
       : undefined;
-  const configMockFlag = runtimeConfig.public?.crmParticipants?.useMocks;
+  const configMockFlag = resolveRuntimeBooleanFlag(
+    runtimeConfig.public?.crmParticipants?.useMocks,
+  );
+  const globalMockFlag = resolveRuntimeBooleanFlag(runtimeConfig.public?.useMockData);
   const useMockData = ((): boolean => {
     if (typeof envMockFlag !== "undefined") {
       return envMockFlag === "1" || envMockFlag === "true" || envMockFlag === true;
     }
 
-    if (typeof configMockFlag !== "undefined") {
-      if (typeof configMockFlag === "boolean") {
-        return configMockFlag;
-      }
+    if (typeof configMockFlag === "boolean") {
+      return configMockFlag;
+    }
 
-      if (typeof configMockFlag === "string") {
-        const normalized = configMockFlag.trim().toLowerCase();
-        return ["1", "true", "yes", "on"].includes(normalized);
-      }
+    if (typeof globalMockFlag === "boolean") {
+      return globalMockFlag;
     }
 
     return true;
