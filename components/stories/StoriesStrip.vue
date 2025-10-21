@@ -62,7 +62,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { useResizeObserver } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import type { Story } from "~/types/stories";
 
@@ -77,16 +78,27 @@ const { t } = useI18n();
 
 const viewport = ref<HTMLElement | null>(null); // -> conteneur qui SCROLLE
 const scroller = ref<HTMLElement | null>(null); // -> rail largeur = contenu
+const hasOverflow = ref(false);
 
 function scrollBy(delta = 280) {
   viewport.value?.scrollBy({ left: delta, behavior: "smooth" });
 }
 
-const hasOverflow = computed(() => {
+function updateOverflow() {
   const v = viewport.value;
   const s = scroller.value;
-  return v && s ? s.scrollWidth > v.clientWidth + 1 : false;
-});
+  hasOverflow.value = !!(v && s && s.scrollWidth > v.clientWidth + 1);
+}
+
+onMounted(updateOverflow);
+
+watch(
+  () => [props.items, props.items?.length],
+  () => updateOverflow(),
+  { flush: "post" }
+);
+
+useResizeObserver(viewport, () => updateOverflow());
 </script>
 
 <style scoped>
