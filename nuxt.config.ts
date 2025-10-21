@@ -351,6 +351,7 @@ export default defineNuxtConfig({
     { src: "~/plugins/clarity.js", mode: "client" },
     "~/plugins/vuetify",
     "~/plugins/vuetify-i18n.ts",
+    "~/plugins/v-calendar.client",
   ],
 
   css: [
@@ -361,7 +362,7 @@ export default defineNuxtConfig({
   ],
 
   build: {
-    transpile: ["vuetify"],
+    transpile: ["vuetify", "v-calendar"],
   },
 
   vite: {
