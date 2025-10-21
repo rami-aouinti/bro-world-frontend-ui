@@ -74,7 +74,6 @@
           >
             <v-col
               cols="12"
-              md="7"
             >
               <div class="about-section__heading">
                 <h2
@@ -122,32 +121,6 @@
                 </v-col>
               </v-row>
             </v-col>
-            <v-col
-              cols="12"
-              md="5"
-            >
-              <v-sheet
-                class="about-media"
-                elevation="0"
-                rounded="lg"
-              >
-                <v-responsive
-                  aspect-ratio="4/3"
-                  class="about-media__placeholder"
-                >
-                  <div class="about-media__content">
-                    <v-icon
-                      icon="mdi:image-outline"
-                      size="48"
-                      aria-hidden="true"
-                    />
-                    <p class="text-body-2 text-medium-emphasis mb-0 text-center">
-                      {{ t("pages.about.valuesMediaPlaceholder") }}
-                    </p>
-                  </div>
-                </v-responsive>
-              </v-sheet>
-            </v-col>
           </v-row>
         </v-sheet>
       </section>
@@ -177,8 +150,8 @@
               v-for="metric in metrics"
               :key="metric.label"
               cols="12"
-              sm="6"
-              lg="3"
+              sm="12"
+              lg="6"
             >
               <v-card
                 class="about-metric-card"
@@ -223,8 +196,8 @@
               v-for="member in teamMembers"
               :key="member.name"
               cols="12"
-              sm="6"
-              lg="3"
+              sm="12"
+              lg="6"
             >
               <v-card
                 class="about-team-card"
