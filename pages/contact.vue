@@ -67,6 +67,8 @@ const ContactForm = defineAsyncComponent({
   suspensible: false,
 });
 
+const CONTACT_SUPPORT_SIDEBAR_INTRINSIC_HEIGHT = 1312;
+
 const { t, locale, localeProperties } = useI18n();
 const pageDescription = computed(() => t("seo.contact.description"));
 
@@ -161,6 +163,7 @@ registerRightSidebarContent(
       availabilityBody: availabilityBody.value,
     },
     wrapperClass: "flex flex-col gap-6",
+    intrinsicHeight: CONTACT_SUPPORT_SIDEBAR_INTRINSIC_HEIGHT,
   })),
 );
 </script>
