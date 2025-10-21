@@ -109,7 +109,7 @@ useResizeObserver(viewport, () => updateOverflow());
 
 /* Viewport centré, largeur limitée, et *c'est lui qui scrolle* */
 .stories-viewport {
-  max-inline-size: clamp(360px, 80vw, 572px);
+  max-inline-size: min(100%, 572px);
   inline-size: 100%;
   margin-inline: auto;
   overflow-x: auto; /* SCROLL ICI */
