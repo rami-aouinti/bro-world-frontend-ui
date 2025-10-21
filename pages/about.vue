@@ -464,7 +464,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, unref } from "vue";
+import { computed, defineAsyncComponent, unref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSwitchLocalePath } from "#i18n";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
@@ -472,6 +472,16 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import MissionSidebarCards from "~/components/about/MissionSidebarCards.vue";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VTimeline = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTimeline),
+);
+
+const VTimelineItem = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTimelineItem),
+);
 
 const { t, locale, locales, defaultLocale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();

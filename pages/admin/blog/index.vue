@@ -461,6 +461,16 @@ const BlogPostForm = defineAsyncComponent({
   suspensible: false,
 });
 
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VDataTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VDataTable),
+);
+
+const VPagination = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VPagination),
+);
+
 const { t, locale } = useI18n();
 const pageDescription = computed(() => t("admin.blog.subtitle"));
 

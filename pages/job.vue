@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, defineAsyncComponent, nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
 
@@ -122,6 +122,12 @@ import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { jobCompaniesSample, jobListSample } from "~/lib/mock/jobs";
 import { useJobStore, type JobSummary } from "~/stores/useJobStore";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VPagination = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VPagination),
+);
 
 definePageMeta({
   description: "Job page",

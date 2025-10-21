@@ -94,10 +94,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useCrmTasksStore } from "~/stores/crm-tasks";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VDataTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VDataTable),
+);
 
 const props = defineProps<{
   projectId: string;

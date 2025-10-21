@@ -368,10 +368,36 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, defineAsyncComponent, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
 import CreateCompany from "~/components/job/CreateCompany.vue";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VStepper = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepper),
+);
+
+const VStepperHeader = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperHeader),
+);
+
+const VStepperItem = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperItem),
+);
+
+const VStepperWindow = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperWindow),
+);
+
+const VStepperWindowItem = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VStepperWindowItem),
+);
+
+const VRangeSlider = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VRangeSlider),
+);
 
 type Language = {
   name: string;

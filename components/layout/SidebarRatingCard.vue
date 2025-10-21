@@ -149,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import { computed, defineAsyncComponent, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { AxiosError } from "axios";
 import type { FetchError } from "ofetch";
@@ -157,6 +157,12 @@ import { useAuthSession } from "~/stores/auth-session";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import type { ApiRequestOptions } from "~/lib/api/http-client";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VRating = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VRating),
+);
 
 interface SidebarRatingCardProps {
   rating?: {

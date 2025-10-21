@@ -209,6 +209,12 @@ const ProfileSecurityTwoFactorSection = defineAsyncComponent({
   suspensible: false,
 });
 
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VTable),
+);
+
 const { t, locale } = useI18n();
 const auth = useAuthSession();
 const usernameFieldId = `profile-security-username-${useId()}`;

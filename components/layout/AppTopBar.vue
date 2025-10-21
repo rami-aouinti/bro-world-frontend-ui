@@ -115,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, defineAsyncComponent, ref } from "vue";
 import { onNuxtReady } from "#app";
 import { APP_TOP_BAR_HEIGHT } from "./app-bar/constants";
 import AppBrand from "./app-bar/AppBrand.vue";
@@ -128,6 +128,12 @@ import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import type { AppNotification } from "~/types/layout";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VAutocomplete = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VAutocomplete),
+);
 
 type AppIcon = { name: string; label: string; size?: number; to?: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };

@@ -227,7 +227,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 
 export interface ProjectFormState {
   name: string;
@@ -259,4 +259,10 @@ const priorityOptions = ["low", "medium", "high"];
 const nameRules = computed(() => [
   (value: string) => !!value?.trim() || "Please provide a project name.",
 ]);
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VCombobox = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VCombobox),
+);
 </script>

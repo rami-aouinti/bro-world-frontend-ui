@@ -404,10 +404,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, defineAsyncComponent, reactive, ref } from "vue";
 import { callOnce } from "#app";
 import { useI18n } from "vue-i18n";
 import { useUsersStore } from "~/stores/users";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VDataTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VDataTable),
+);
 
 interface EditableUserForm {
   username: string;

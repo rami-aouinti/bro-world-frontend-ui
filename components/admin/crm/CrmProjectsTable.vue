@@ -138,11 +138,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import type { CrmProject } from "~/stores/crm-projects";
 import type { DataTableHeaders } from "~/plugins/vuetify";
+
+const vuetifyComponentsPromise = import("vuetify/components");
+
+const VDataTable = defineAsyncComponent(() =>
+  vuetifyComponentsPromise.then((mod) => mod.VDataTable),
+);
 
 const props = defineProps<{
   title: string;
