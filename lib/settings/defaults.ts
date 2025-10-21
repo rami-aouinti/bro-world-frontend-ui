@@ -795,6 +795,7 @@ const PLUGIN_MENU_CONTRIBUTIONS: Record<string, MenuBlueprint[]> = {
 };
 
 export const DEFAULT_WORLD_PLUGIN_IDS = [
+  "messenger",
   "job-board",
   "game",
   "crm",

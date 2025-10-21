@@ -12,6 +12,31 @@
         :size="22"
       />
     </button>
+    <NotificationMenu
+      v-if="isAuthenticated"
+      :items="props.notifications"
+      :icon-trigger-classes="props.iconTriggerClasses"
+      :title="props.notificationsTitle"
+      :subtitle="props.notificationsSubtitle"
+      :empty-text="props.notificationsEmpty"
+      :mark-all-text="props.notificationsMarkAll"
+      :button-label="props.notificationsButtonLabel"
+      :unread-count="props.notificationCount"
+      @mark-all="emit('mark-all-notifications')"
+    />
+    <button
+      v-else
+      type="button"
+      :class="[props.iconTriggerClasses, 'opacity-60']"
+      :aria-label="props.notificationsButtonLabel"
+      aria-disabled="true"
+      disabled
+    >
+      <AppIcon
+        name="mdi:bell-outline"
+        :size="26"
+      />
+    </button>
     <MessengerMenu
       v-if="props.messengerEnabled && isAuthenticated"
       :conversations="props.messengerConversations"
@@ -35,31 +60,6 @@
     >
       <AppIcon
         name="mdi:message-outline"
-        :size="26"
-      />
-    </button>
-    <NotificationMenu
-      v-if="isAuthenticated"
-      :items="props.notifications"
-      :icon-trigger-classes="props.iconTriggerClasses"
-      :title="props.notificationsTitle"
-      :subtitle="props.notificationsSubtitle"
-      :empty-text="props.notificationsEmpty"
-      :mark-all-text="props.notificationsMarkAll"
-      :button-label="props.notificationsButtonLabel"
-      :unread-count="props.notificationCount"
-      @mark-all="emit('mark-all-notifications')"
-    />
-    <button
-      v-else
-      type="button"
-      :class="[props.iconTriggerClasses, 'opacity-60']"
-      :aria-label="props.notificationsButtonLabel"
-      aria-disabled="true"
-      disabled
-    >
-      <AppIcon
-        name="mdi:bell-outline"
         :size="26"
       />
     </button>
