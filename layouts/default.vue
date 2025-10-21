@@ -1477,7 +1477,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 @media (max-width: 960px) {
   .app-container {
     border-radius: var(--radius, var(--ui-card-radius));
-    padding: clamp(20px, 6vw, 32px);
+    padding: clamp(12px, 4vw, 24px);
   }
 }
 </style>
