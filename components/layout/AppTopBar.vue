@@ -36,7 +36,7 @@
       <v-autocomplete
         :items="items"
         class="mx-auto w-full max-w-[360px] rounded-2xl border border-white/5 bg-background/60 text-sm backdrop-blur md:max-w-[420px]"
-        density="comfortable"
+        density="compact"
         hide-details
         menu-icon=""
         placeholder="Search Anything in BroWorld"
