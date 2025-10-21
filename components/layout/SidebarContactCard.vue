@@ -2,6 +2,7 @@
   <SidebarCard
     class="text-card-foreground px-3 py-2"
     glow
+    :intrinsic-height="INTRINSIC_HEIGHT"
   >
     <div class="flex flex-col gap-5">
       <header class="flex flex-col gap-2">
@@ -93,6 +94,8 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 const { t } = useI18n();
 const localePath = useResolvedLocalePath();
 const siteSettings = useSiteSettingsState();
+
+const INTRINSIC_HEIGHT = 448;
 
 const contactContent = computed(
   () => siteSettings.value?.pages.contact ?? getDefaultSiteSettings().pages.contact,
