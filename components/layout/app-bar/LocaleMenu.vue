@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import "./locale-flags.css";
 import { computed, defineAsyncComponent } from "vue";
 
 const LocaleMenuContent = defineAsyncComponent({
