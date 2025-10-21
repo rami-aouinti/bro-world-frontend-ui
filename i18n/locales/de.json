@@ -459,7 +459,9 @@
           "content": "Inhalt"
         },
         "comment": "Kommentieren",
-        "share": "Teilen"
+        "share": "Teilen",
+        "viewPost": "Mehr lesen",
+        "viewPostAria": "Beitrag \"{title}\" öffnen"
       },
       "shareMenu": {
         "feed": "Im Feed teilen",

@@ -398,7 +398,9 @@
           "content": "Contenido"
         },
         "comment": "Comentar",
-        "share": "Compartir"
+        "share": "Compartir",
+        "viewPost": "Leer más",
+        "viewPostAria": "Abrir la publicación \"{title}\""
       },
       "shareMenu": {
         "feed": "Compartir en el feed",

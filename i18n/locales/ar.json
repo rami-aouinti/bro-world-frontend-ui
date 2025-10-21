@@ -461,7 +461,9 @@
           "content": "المحتوى"
         },
         "comment": "تعليق",
-        "share": "مشاركة"
+        "share": "مشاركة",
+        "viewPost": "قراءة المزيد",
+        "viewPostAria": "فتح المنشور \"{title}\""
       },
       "shareMenu": {
         "feed": "المشاركة على الخلاصة",

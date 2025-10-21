@@ -50,6 +50,7 @@
         :reaction-emojis="reactionEmojis"
         :reaction-labels="reactionLabels"
         :prefer-eager-media-loading="true"
+        :enable-post-link="false"
       />
 
       <v-alert

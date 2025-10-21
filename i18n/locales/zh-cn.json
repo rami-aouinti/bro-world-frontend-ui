@@ -401,7 +401,9 @@
           "content": "内容"
         },
         "comment": "评论",
-        "share": "分享"
+        "share": "分享",
+        "viewPost": "阅读更多",
+        "viewPostAria": "打开帖子 \"{title}\""
       },
       "shareMenu": {
         "feed": "分享到动态",

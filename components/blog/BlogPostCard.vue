@@ -26,9 +26,9 @@
       @delete="openDeleteDialog"
     />
     <component
-      :is="postLink ? 'NuxtLink' : 'div'"
-      v-bind="postLink ? { to: postLink } : null"
-      class="block text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background rounded-lg"
+      :is="isPostLinkActive ? 'NuxtLink' : 'div'"
+      v-bind="postLinkProps"
+      class="group block text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background rounded-lg"
       data-test="blog-post-link"
     >
       <BlogPostContent
@@ -36,6 +36,17 @@
         :summary="post.summary"
         :content="post.content"
       />
+      <span
+        v-if="shouldShowPostLinkCta"
+        class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors group-hover:text-primary group-hover:underline"
+      >
+        {{ viewPostLabel }}
+        <Icon
+          name="mdi:arrow-top-right"
+          class="h-4 w-4"
+          aria-hidden="true"
+        />
+      </span>
     </component>
     <BlogPostReactCard
       :counts="{ care: 0, haha: 0, love: 0, wow: 0, like: 4, sad: 2, angry: 1 }"
@@ -175,6 +186,8 @@ const props = defineProps<{
   reactionEmojis: Record<ReactionType, string>;
   reactionLabels: Record<ReactionType, string>;
   preferEagerMediaLoading?: boolean;
+  enablePostLink?: boolean;
+  showPostLinkCta?: boolean;
 }>();
 
 const { t } = useI18n();
@@ -222,6 +235,27 @@ const postLink = computed(() => {
     return `/post/${encodeURIComponent(slug)}`;
   }
 });
+const enablePostLink = computed(() => props.enablePostLink !== false);
+const isPostLinkActive = computed(() => enablePostLink.value && Boolean(postLink.value));
+const viewPostLabel = computed(() => t("blog.posts.actions.viewPost"));
+const viewPostAriaLabel = computed(() =>
+  t("blog.posts.actions.viewPostAria", {
+    title: post.value.title?.trim() || t("blog.posts.detailHeading"),
+  }),
+);
+const postLinkProps = computed(() => {
+  if (!isPostLinkActive.value) {
+    return null;
+  }
+
+  return {
+    to: postLink.value,
+    "aria-label": viewPostAriaLabel.value,
+  } as const;
+});
+const shouldShowPostLinkCta = computed(
+  () => isPostLinkActive.value && props.showPostLinkCta !== false,
+);
 const postUser = computed(() => post.value.user);
 const postUserDisplayName = computed(() => {
   const user = postUser.value;

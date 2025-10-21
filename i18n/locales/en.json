@@ -476,7 +476,9 @@
           "content": "Content"
         },
         "comment": "Comment",
-        "share": "Share"
+        "share": "Share",
+        "viewPost": "Read more",
+        "viewPostAria": "Open the post \"{title}\""
       },
       "shareMenu": {
         "feed": "Share to feed",
