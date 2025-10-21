@@ -363,6 +363,9 @@ async function confirmDelete() {
   border-radius: var(--ui-card-radius, calc(var(--radius, var(--ui-radius)) + 8px));
   background-color: white;
   color: #111827;
+  max-width: 40rem;
+  width: 100%;
+  margin-inline: auto;
 }
 
 .post-card__header {
