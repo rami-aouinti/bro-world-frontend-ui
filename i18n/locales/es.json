@@ -422,7 +422,10 @@
         "successTitle": "Publicación compartida",
         "successMessage": "Tu actualización se agregó a tu feed."
       },
-      "loading": "Cargando publicación"
+      "loading": "Cargando publicación",
+      "detailHeading": "Detalles de la publicación",
+      "notFound": "No se ha podido encontrar esta publicación.",
+      "backToFeed": "Volver al feed"
     },
     "comments": {
       "label": "Únete a la conversación",

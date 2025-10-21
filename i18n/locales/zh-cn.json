@@ -425,7 +425,10 @@
         "successTitle": "帖子已分享",
         "successMessage": "你的更新已发布到你的动态。"
       },
-      "loading": "正在加载帖子"
+      "loading": "正在加载帖子",
+      "detailHeading": "帖子详情",
+      "notFound": "未找到该帖子。",
+      "backToFeed": "返回动态"
     },
     "comments": {
       "label": "加入讨论",

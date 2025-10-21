@@ -483,7 +483,10 @@
         "successTitle": "Beitrag geteilt",
         "successMessage": "Dein Update wurde in deinem Feed veröffentlicht."
       },
-      "loading": "Beitrag wird geladen"
+      "loading": "Beitrag wird geladen",
+      "detailHeading": "Beitragsdetails",
+      "notFound": "Dieser Beitrag wurde nicht gefunden.",
+      "backToFeed": "Zurück zum Feed"
     },
     "comments": {
       "label": "Beteilige dich an der Diskussion",

@@ -422,7 +422,10 @@
         "successTitle": "Post condiviso",
         "successMessage": "Il tuo aggiornamento è stato aggiunto al tuo feed."
       },
-      "loading": "Caricamento del post"
+      "loading": "Caricamento del post",
+      "detailHeading": "Dettagli del post",
+      "notFound": "Questo post non è stato trovato.",
+      "backToFeed": "Torna al feed"
     },
     "comments": {
       "label": "Partecipa alla conversazione",
