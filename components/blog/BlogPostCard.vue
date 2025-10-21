@@ -238,6 +238,10 @@ const postLink = computed(() => {
   }
 });
 const authorLink = computed(() => {
+  if (!isHydrated.value) {
+    return null;
+  }
+
   const id = postUser.value?.id?.trim();
 
   if (!id) {
@@ -255,7 +259,9 @@ const authorLink = computed(() => {
   }
 });
 const enablePostLink = computed(() => props.enablePostLink !== false);
-const isPostLinkActive = computed(() => enablePostLink.value && Boolean(postLink.value));
+const isPostLinkActive = computed(
+  () => isHydrated.value && enablePostLink.value && Boolean(postLink.value),
+);
 const viewPostLabel = computed(() => t("blog.posts.actions.viewPost"));
 const viewPostAriaLabel = computed(() =>
   t("blog.posts.actions.viewPostAria", {

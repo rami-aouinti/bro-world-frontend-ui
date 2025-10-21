@@ -1,13 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { flushPromises, mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 
 import BlogPostCard from "~/components/blog/BlogPostCard.vue";
 import en from "~/i18n/locales/en.json";
 
 const visibilityRef = ref(false);
 const getCommentsMock = vi.fn<(postId: string) => Promise<unknown[]>>();
+const notifyMock = vi.fn();
 
 vi.mock("@vueuse/core", () => ({
   useElementVisibility: () => visibilityRef,
@@ -39,8 +40,9 @@ vi.mock("~/composables/useAuthStore", () => ({
 
 vi.mock("#app", () => ({
   useNuxtApp: () => ({
-    $notify: vi.fn(),
+    $notify: notifyMock,
   }),
+  onNuxtReady: () => undefined,
 }));
 
 vi.mock("#imports", async () => {
@@ -63,8 +65,6 @@ const translator = i18n.global;
   locale: translator.locale,
   t: translator.t.bind(translator),
 });
-
-const notifyMock = vi.fn();
 
 (globalThis as Record<string, unknown>).useNuxtApp = () => ({
   $notify: notifyMock,
@@ -132,6 +132,7 @@ function mountComponent() {
             "<div><header><slot name='header' /></header><section><slot /></section><footer><slot name='footer' /></footer></div>",
         },
         SidebarCard: { template: "<div><slot /></div>" },
+        NuxtLink: { template: "<a><slot /></a>" },
         RadiantText: {
           template: "<div><slot /></div>",
         },
@@ -160,6 +161,28 @@ describe("BlogPostCard", () => {
     getCommentsMock.mockResolvedValue([]);
     notifyMock.mockReset();
     authState.isAuthenticated.value = true;
+  });
+
+  it("keeps post and author links inactive until hydration", async () => {
+    const wrapper = mountComponent();
+    const vm = wrapper.vm as unknown as {
+      isHydrated: Ref<boolean>;
+      isPostLinkActive: boolean;
+      authorLink: string | null;
+    };
+
+    const postLinkElement = wrapper.find("[data-test='blog-post-link']");
+
+    expect(postLinkElement.element.tagName).toBe("DIV");
+    expect(vm.isPostLinkActive).toBe(false);
+    expect(vm.authorLink).toBeNull();
+
+    vm.isHydrated.value = true;
+    await wrapper.vm.$nextTick();
+
+    expect(vm.isPostLinkActive).toBe(true);
+    expect(vm.authorLink).not.toBeNull();
+    expect(wrapper.find("[data-test='blog-post-link']").element.tagName).toBe("A");
   });
 
   it("loads comments when the section becomes visible", async () => {
