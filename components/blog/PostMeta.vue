@@ -1,7 +1,7 @@
 <template>
   <header class="flex flex-wrap items-start justify-between gap-4">
     <component
-      :is="authorLink ? 'NuxtLink' : 'div'"
+      :is="authorLink ? NuxtLink : 'div'"
       v-bind="authorLinkAttributes"
       class="flex items-center gap-3 text-inherit no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background rounded-full px-1 -mx-1 py-1"
       data-test="post-author-link"
@@ -70,6 +70,7 @@ import type { BlogUser } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
 import { optimizeAvatarUrl } from "~/lib/images/avatar";
 import AuthorActionMenu from "~/components/blog/AuthorActionMenu.vue";
+import { NuxtLink } from "#components";
 
 const props = withDefaults(
   defineProps<{
