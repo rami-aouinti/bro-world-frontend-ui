@@ -52,6 +52,8 @@ import {
   VToolbar,
   VTooltip,
 } from "vuetify/components";
+import { VCalendar } from "vuetify/labs/VCalendar";
+import { VDateInput } from "vuetify/labs/VDateInput";
 import { defineComponent, h, ref, watch } from "vue";
 import { Ripple } from "vuetify/directives";
 import { createVuetify } from "vuetify";
@@ -792,6 +794,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       VTextarea,
       VToolbar,
       VTooltip,
+      VCalendar,
+      VDateInput,
     },
     directives: {
       Ripple,
