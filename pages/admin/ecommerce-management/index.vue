@@ -39,6 +39,7 @@ const { t, title, subtitle } = useAdminModulePage("admin.ecommerceManagement");
 const pageDescription = computed(() => subtitle.value);
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   showRightWidgets: false,
 });

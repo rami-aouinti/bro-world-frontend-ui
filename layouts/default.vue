@@ -114,88 +114,91 @@
       >
         <template #default>
           <div class="right-drawer-wrapper">
-            <template v-if="isHydrated">
-              <div
-                v-if="canShowRightWidgets"
-                class="pane-scroll"
-                :class="['px-1', { hidden: !shouldRenderRightSidebarContent }]"
-                :aria-hidden="!shouldRenderRightSidebarContent"
+            <div
+              v-if="canShowRightWidgets"
+              class="pane-scroll"
+              :class="['px-1', { hidden: !shouldRenderRightSidebarContent }]"
+              :aria-hidden="!shouldRenderRightSidebarContent"
+            >
+              <AppSidebarRight
+                v-if="shouldRenderRightSidebarContent"
+                :is-dark="isDark"
+                :items="sidebarItems"
+                :active-key="activeSidebar"
+                :eager="rightDrawer"
+                @select="handleSidebarSelect"
               >
-                <AppSidebarRight
-                  v-if="shouldRenderRightSidebarContent"
-                  :is-dark="isDark"
-                  :items="sidebarItems"
-                  :active-key="activeSidebar"
-                  :eager="rightDrawer"
-                  @select="handleSidebarSelect"
+                <slot
+                  name="right-sidebar"
+                  :weather="weather"
+                  :leaderboard="leaderboard"
+                  :rating="rating"
+                  :user="user"
                 >
-                  <slot
-                    name="right-sidebar"
-                    :weather="weather"
-                    :leaderboard="leaderboard"
-                    :rating="rating"
-                    :user="user"
+                  <div
+                    v-if="rightSidebarContent"
+                    class="flex flex-col gap-6"
                   >
                     <div
-                      v-if="rightSidebarContent"
-                      class="flex flex-col gap-6"
+                      v-if="rightSidebarContent.wrapperClass"
+                      :class="rightSidebarContent.wrapperClass"
                     >
-                      <div
-                        v-if="rightSidebarContent.wrapperClass"
-                        :class="rightSidebarContent.wrapperClass"
-                      >
+                      <template v-if="rightSidebarContent.component">
+                        <div
+                          v-if="rightSidebarContent.wrapperClass"
+                          :class="rightSidebarContent.wrapperClass"
+                        >
+                          <component
+                            :is="rightSidebarContent.component"
+                            v-bind="rightSidebarContent.props"
+                          />
+                        </div>
                         <component
                           :is="rightSidebarContent.component"
+                          v-else
                           v-bind="rightSidebarContent.props"
                         />
-                      </div>
-                      <component
-                        :is="rightSidebarContent.component"
+                      </template>
+                      <div
                         v-else
-                        v-bind="rightSidebarContent.props"
+                        :class="['right-sidebar-placeholder', rightSidebarContent.wrapperClass]"
+                        :style="rightSidebarPlaceholderStyle"
+                        aria-hidden="true"
                       />
                     </div>
-                    <div
-                      v-else-if="shouldShowDashboardRightSidebar"
-                      class="flex flex-col gap-6"
-                    >
-                      <SidebarWeatherCard
-                        v-if="weather"
-                        :weather="weather"
-                      />
-                      <SidebarLeaderboardCard
-                        v-if="leaderboard.participants.length > 0"
-                        :title="leaderboard.title"
-                        :live-label="leaderboard.live"
-                        :participants="leaderboard.participants"
-                      />
-                      <SidebarRatingCard
-                        v-if="rating"
-                        :rating="{
-                          title: rating.title,
-                          subtitle: rating.subtitle,
-                          icon: rating.icon,
-                        }"
-                      />
-                      <SidebarContactCard v-if="shouldShowContactSidebarCard" />
-                    </div>
-                  </slot>
-                </AppSidebarRight>
-              </div>
-            </template>
-            <template v-else>
-              <div
-                v-if="canShowRightWidgets"
-                class="pane-scroll"
-              >
-                <div class="flex flex-col gap-6">
-                  <SidebarWeatherCardSkeleton />
-                  <SidebarLeaderboardCardSkeleton />
-                  <SidebarRatingCardSkeleton />
-                  <SidebarContactCardSkeleton v-if="shouldShowContactSidebarCard" />
-                </div>
-              </div>
-            </template>
+                    <component
+                      :is="rightSidebarContent.component"
+                      v-else
+                      v-bind="rightSidebarContent.props"
+                    />
+                  </div>
+                  <div
+                    v-else-if="shouldShowDashboardRightSidebar"
+                    class="flex flex-col gap-6"
+                  >
+                    <SidebarWeatherCard
+                      v-if="weather"
+                      :weather="weather"
+                    />
+                    <SidebarLeaderboardCard
+                      v-if="leaderboard.participants.length > 0"
+                      :title="leaderboard.title"
+                      :live-label="leaderboard.live"
+                      :participants="leaderboard.participants"
+                    />
+                    <SidebarRatingCard
+                      v-if="rating"
+                      :rating="{
+                        title: rating.title,
+                        subtitle: rating.subtitle,
+                        icon: rating.icon,
+                      }"
+                    />
+                    <SidebarContactCard v-if="shouldShowContactSidebarCard" />
+                  </div>
+                </slot>
+              </AppSidebarRight>
+            </div>
           </div>
         </template>
         <template #fallback>
@@ -298,12 +301,16 @@ import {
   ref,
   watch,
   watchEffect,
+  type CSSProperties,
 } from "vue";
 import { useDisplay, useTheme } from "vuetify";
 import { useRequestHeaders, useState, refreshNuxtData, useCookie } from "#imports";
 import { useIntersectionObserver, useResizeObserver } from "@vueuse/core";
 import { useRightSidebarData } from "@/composables/useRightSidebarData";
-import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import {
+  useLayoutRightSidebar,
+  DEFAULT_RIGHT_SIDEBAR_INTRINSIC_HEIGHT,
+} from "~/composables/useLayoutRightSidebar";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
 import {
@@ -592,6 +599,16 @@ const showNavigation = computed(() => {
   return currentRoute.value?.meta?.showNavbar !== false;
 });
 const { rightSidebarContent } = useLayoutRightSidebar();
+const rightSidebarPlaceholderStyle = computed<CSSProperties>(() => {
+  const rawHeight = rightSidebarContent.value?.intrinsicHeight ?? DEFAULT_RIGHT_SIDEBAR_INTRINSIC_HEIGHT;
+  const numericHeight = typeof rawHeight === "number" ? Math.max(0, Math.round(rawHeight)) : null;
+  const heightValue = numericHeight !== null ? `${numericHeight}px` : String(rawHeight);
+
+  return {
+    containIntrinsicSize: heightValue,
+    minBlockSize: heightValue,
+  } satisfies CSSProperties;
+});
 const shouldShowDashboardRightSidebar = computed(
   () => routeRightSidebarPreset.value === "dashboard" && !rightSidebarContent.value,
 );

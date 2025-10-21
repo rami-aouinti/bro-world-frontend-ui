@@ -197,6 +197,7 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   documentDriven: false,
   showRightWidgets: false,

@@ -58,6 +58,7 @@ const { t, title, subtitle } = useAdminModulePage(pageKey);
 const pageDescription = computed(() => subtitle.value);
 
 definePageMeta({
+  layout: "admin",
   middleware: ["auth", "admin"],
   showRightWidgets: false,
 });

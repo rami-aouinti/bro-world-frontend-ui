@@ -142,11 +142,12 @@ import { useIntersectionObserver } from "@vueuse/core";
 import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { callOnce, onNuxtReady, useNuxtApp, useState } from "#app";
-import { definePageMeta } from "#imports";
+import { definePageMeta, useSeoMeta } from "#imports";
 import NewPostSkeleton from "~/components/blog/NewPostSkeleton.vue";
 import StoriesStripSkeleton from "~/components/stories/StoriesStripSkeleton.vue";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
+import { blogPostCardLoader, prefetchBlogPostCard } from "~/lib/prefetch/blog-post-card";
 import type { ReactionType } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
 import { useProfileStore } from "~/stores/profile";
@@ -496,9 +497,6 @@ const StoriesStrip = defineAsyncComponent({
 const StoryViewerModal = defineAsyncComponent({
   loader: () => import("~/components/stories/StoryViewerModal.vue"),
 });
-function blogPostCardLoader() {
-  return import("~/components/blog/BlogPostCard.vue");
-}
 const BlogPostCard = defineAsyncComponent({
   loader: blogPostCardLoader,
 });
@@ -515,9 +513,7 @@ watch(
     }
 
     hasPrefetchedFirstBlogPostCard = true;
-    void callOnceFn("index:prefetch-first-blog-post-card", async () => {
-      await blogPostCardLoader();
-    });
+    void callOnceFn("index:prefetch-first-blog-post-card", prefetchBlogPostCard);
   },
   { immediate: true, flush: "post" },
 );
