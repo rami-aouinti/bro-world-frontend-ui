@@ -319,6 +319,7 @@ export default defineNuxtConfig({
 
   css: [
     "vuetify/styles",
+    "~/assets/styles/flag-icons.scss",
     "~/assets/styles/material-dashboard.scss",
     "~/assets/styles/index.css",
   ],

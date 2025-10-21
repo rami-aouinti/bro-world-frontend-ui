@@ -1,0 +1,12 @@
+@use "flag-icons/sass/flag-icons" with (
+  $flag-icons-included-countries: (
+    gb,
+    de,
+    fr,
+    tn,
+    it,
+    es,
+    ru,
+  ),
+  $flag-icons-path: "flag-icons/flags",
+);
