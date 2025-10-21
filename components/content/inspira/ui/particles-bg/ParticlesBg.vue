@@ -349,15 +349,17 @@ function resizeCanvas() {
       context.value = canvasRef.value.getContext("2d");
     }
 
+    const rect = canvasContainerRef.value.getBoundingClientRect();
+
     circles.length = 0;
-    canvasSize.w = canvasContainerRef.value.offsetWidth;
-    canvasSize.h = canvasContainerRef.value.offsetHeight;
-    canvasRef.value.width = canvasSize.w * pixelRatio.value;
-    canvasRef.value.height = canvasSize.h * pixelRatio.value;
-    canvasRef.value.style.width = canvasSize.w + "px";
-    canvasRef.value.style.height = canvasSize.h + "px";
+    canvasSize.w = rect.width;
+    canvasSize.h = rect.height;
+    canvasRef.value.width = rect.width * pixelRatio.value;
+    canvasRef.value.height = rect.height * pixelRatio.value;
+    canvasRef.value.style.width = `${rect.width}px`;
+    canvasRef.value.style.height = `${rect.height}px`;
     context.value?.setTransform(pixelRatio.value, 0, 0, pixelRatio.value, 0, 0);
-    canvasRect.value = canvasRef.value.getBoundingClientRect();
+    canvasRect.value = new DOMRect(rect.left, rect.top, rect.width, rect.height);
   }
 }
 
