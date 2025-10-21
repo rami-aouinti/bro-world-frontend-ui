@@ -322,6 +322,7 @@ import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants";
 import VercelAnalyticsPlaceholder from "@/components/layout/analytics/VercelAnalyticsPlaceholder";
 import SpeedInsightsPlaceholder from "@/components/layout/analytics/SpeedInsightsPlaceholder";
+import { createInitialLayoutState } from "~/lib/layout/initial-layout";
 
 const AppSidebar = defineAsyncComponent({
   loader: () => import("@/components/layout/AppSidebar.vue"),
@@ -505,7 +506,7 @@ const colorSchemeHint = import.meta.server
       | null)
   : null;
 const layoutClientHints = import.meta.server
-  ? useRequestHeaders(["sec-ch-viewport-width", "sec-ch-ua-mobile"])
+  ? useRequestHeaders(["sec-ch-viewport-width", "sec-ch-ua-mobile", "user-agent"])
   : null;
 const viewportWidthHint = import.meta.server
   ? Number.parseInt(layoutClientHints?.["sec-ch-viewport-width"] ?? "", 10)
@@ -515,6 +516,7 @@ const resolvedViewportWidth =
     ? viewportWidthHint
     : null;
 const mobileUaHint = import.meta.server ? (layoutClientHints?.["sec-ch-ua-mobile"] ?? null) : null;
+const userAgentHint = import.meta.server ? layoutClientHints?.["user-agent"] ?? null : null;
 
 const initialResolvedColorMode = useState<"light" | "dark">("layout-initial-color-mode", () => {
   if (colorMode.value === "dark" || colorMode.value === "light") {
@@ -601,32 +603,35 @@ const initialShowRightWidgets = useState(
   "layout-initial-show-right-widgets",
   () => currentRoute.value?.meta?.showRightWidgets !== false,
 );
+
+function computeInitialLayoutState(defaultValue: boolean) {
+  return createInitialLayoutState({
+    showNavigation: showNavigation.value,
+    showRightWidgets: initialShowRightWidgets.value,
+    appBarHeight: resolvedAppBarHeight.value || APP_TOP_BAR_HEIGHT_VALUE,
+    mobileHint: mobileUaHint,
+    viewportWidthHint: resolvedViewportWidth,
+    userAgent: userAgentHint,
+    smBreakpoint: display.thresholds.value.sm ?? null,
+    defaultValue,
+  });
+}
+
+const serverInitialLayoutState = import.meta.server ? computeInitialLayoutState(true) : null;
 const initialIsMobile = useState("layout-initial-is-mobile", () => {
-  if (import.meta.server) {
-    if (mobileUaHint === "?1") {
-      return true;
-    }
-
-    if (mobileUaHint === "?0") {
-      return false;
-    }
-
-    if (resolvedViewportWidth !== null) {
-      const { sm } = display.thresholds.value;
-      return resolvedViewportWidth < sm;
-    }
-  }
-
-  return display.mobile.value;
+  const snapshot = serverInitialLayoutState ?? computeInitialLayoutState(true);
+  return snapshot.isMobile;
 });
 const { locale, availableLocales, setLocale } = useI18n();
 const auth = useAuthSession();
 const routeLoadingState = useState("route:loading", () => false);
 
-const leftDrawerState = ref(showNavigation.value && !initialIsMobile.value);
-const rightDrawerState = ref(
-  showNavigation.value && !initialIsMobile.value && initialShowRightWidgets.value,
-);
+const initialLayoutStateSnapshot = import.meta.client
+  ? computeInitialLayoutState(initialIsMobile.value)
+  : serverInitialLayoutState ?? computeInitialLayoutState(true);
+
+const leftDrawerState = ref(initialLayoutStateSnapshot.leftDrawer);
+const rightDrawerState = ref(initialLayoutStateSnapshot.rightDrawer);
 
 type LayoutInsets = {
   top: string;
@@ -636,28 +641,8 @@ type LayoutInsets = {
 };
 
 const initialLayoutInsets = useState<LayoutInsets>("layout-initial-insets", () => {
-  const navigationVisible = showNavigation.value;
-
-  if (!navigationVisible) {
-    return {
-      top: "0px",
-      right: "0px",
-      bottom: "0px",
-      left: "0px",
-    } satisfies LayoutInsets;
-  }
-
-  const isDesktop = !initialIsMobile.value;
-  const top = resolvedAppBarHeight.value || APP_TOP_BAR_HEIGHT_VALUE;
-  const left = isDesktop ? "320px" : "0px";
-  const right = isDesktop && initialShowRightWidgets.value ? "340px" : "0px";
-
-  return {
-    top,
-    right,
-    bottom: "0px",
-    left,
-  } satisfies LayoutInsets;
+  const snapshot = serverInitialLayoutState ?? computeInitialLayoutState(true);
+  return snapshot.insets;
 });
 
 const isLeftDrawerReady = ref(!showNavigation.value);
