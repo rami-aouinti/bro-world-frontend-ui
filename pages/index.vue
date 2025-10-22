@@ -107,16 +107,7 @@ const membershipStore = useWorldMembershipsStore();
 
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
-const worlds = computed(() => siteSettings.value.worlds ?? []);
-const visibleWorlds = computed(() => {
-  const activeWorlds = siteSettingsState.activeWorlds?.value ?? [];
-
-  if (activeWorlds.length > 0) {
-    return activeWorlds;
-  }
-
-  return worlds.value;
-});
+const visibleWorlds = computed(() => siteSettings.value.worlds ?? []);
 const worldSearchQuery = useWorldSearchQuery();
 const searchQueryDisplay = computed(() =>
   typeof worldSearchQuery.value === "string"
