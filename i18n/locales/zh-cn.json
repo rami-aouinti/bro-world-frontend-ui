@@ -926,6 +926,27 @@
         "title": "@:education.catalog.title",
         "subtitle": "@:education.catalog.subtitle"
       },
+      "sidebar": {
+        "overviewTitle": "Keep learning momentum",
+        "overviewDescription": "Track your progress, revisit favourite categories, and stay motivated as you explore new skills.",
+        "stats": {
+          "categories": {
+            "label": "Categories",
+            "value": "{count} categories"
+          },
+          "courses": {
+            "label": "Courses",
+            "value": "{count} courses"
+          },
+          "certificates": {
+            "label": "Certificates earned",
+            "value": "{count} certificates"
+          }
+        },
+        "featuredTitle": "Featured categories",
+        "featuredDescription": "Jump back into these curated spaces to continue learning.",
+        "featuredEmpty": "New categories are coming soon."
+      },
       "category": {
         "courses": "@:education.category.courses",
         "viewCourses": "@:education.category.viewCourses",
