@@ -4,36 +4,36 @@
       class="mb-6"
       aria-describedby="contact-subtitle"
     >
-      <v-row
-        class="align-stretch contact-layout"
-        dense
+      <SidebarCard
+          class="text-card-foreground px-3 py-2"
+          glow
       >
-        <v-col cols="12">
-          <v-sheet
-            class="contact-panel contact-panel--primary"
-            elevation="0"
-            rounded="xl"
-          >
-            <article aria-describedby="contact-intro">
-              <div class="contact-badge">
-                <v-icon
-                  icon="mdi:message-processing-outline"
-                  size="22"
-                  class="mr-2"
-                  aria-hidden="true"
-                />
-                <span class="text-caption font-weight-medium text-uppercase tracking-wide">
+        <v-row
+            class="align-stretch contact-layout"
+            dense
+        >
+          <v-col cols="12">
+
+              <article aria-describedby="contact-intro">
+                <div class="contact-badge">
+                  <v-icon
+                      icon="mdi:message-processing-outline"
+                      size="22"
+                      class="mr-2"
+                      aria-hidden="true"
+                  />
+                  <span class="text-caption font-weight-medium text-uppercase tracking-wide">
                   {{ t("pages.contact.details.title") }}
                 </span>
-              </div>
-            </article>
+                </div>
+              </article>
 
-            <div class="contact-form-wrapper">
-              <ContactForm :show-heading="false" />
-            </div>
-          </v-sheet>
-        </v-col>
-      </v-row>
+              <div class="contact-form-wrapper">
+                <ContactForm :show-heading="false" />
+              </div>
+          </v-col>
+        </v-row>
+      </SidebarCard>
     </header>
   </main>
 </template>
@@ -46,6 +46,7 @@ import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import ContactSupportSidebar from "~/components/contact/ContactSupportSidebar.vue";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const ContactForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ContactForm.vue"),
