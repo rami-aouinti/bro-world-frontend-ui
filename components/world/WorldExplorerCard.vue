@@ -145,31 +145,15 @@ function handleActivate() {
   height: 100%;
   border-radius: 1rem;
   padding: 1.25rem;
-  background:
-      radial-gradient(120% 100% at 10% 0%, color-mix(in oklab, hsl(var(--primary)) 12%, transparent) 0%, transparent 60%),
-      linear-gradient(180deg, color-mix(in oklab, hsl(var(--card)) 96%, transparent) 0%, color-mix(in oklab, hsl(var(--card)) 85%, transparent) 100%);
-  border: 1px solid color-mix(in oklab, hsl(var(--primary)) 22%, hsl(var(--border)));
-  box-shadow:
-      0 1px 0 0 color-mix(in oklab, hsl(var(--primary)) 20%, transparent) inset,
-      0 12px 30px -12px rgba(0,0,0,.45);
-  backdrop-filter: blur(6px);
   transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
   isolation: isolate;
 }
 .world-explorer-card::after {
   content: "";
   position: absolute; inset: 0; pointer-events: none; opacity: .7;
-  background-image:
-      radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.12) 50%, transparent 52%),
-      radial-gradient(1.5px 1.5px at 75% 65%, rgba(255,255,255,.1) 50%, transparent 52%),
-      radial-gradient(1.2px 1.2px at 40% 80%, rgba(255,255,255,.08) 50%, transparent 52%);
 }
 .world-explorer-card:hover {
   transform: translateY(-4px);
-  box-shadow:
-      0 1px 0 0 color-mix(in oklab, hsl(var(--primary)) 25%, transparent) inset,
-      0 16px 44px -14px rgba(0,0,0,.55);
-  border-color: color-mix(in oklab, hsl(var(--primary)) 36%, hsl(var(--border)));
 }
 .world-explorer-card:focus-within {
   outline: 0;
