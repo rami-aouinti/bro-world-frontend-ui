@@ -86,8 +86,9 @@ const pageDescription = computed(() => t("pages.index.description"));
 
 if (typeof definePageMeta === "function") {
   definePageMeta({
-    showRightWidgets: false,
-    showContactSidebarCard: false,
+    showNavbar: false,
+    showRightWidgets: true,
+    showContactSidebarCard: true,
     documentDriven: false,
     rightSidebarPreset: "dashboard",
   });
