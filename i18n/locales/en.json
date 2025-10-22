@@ -750,6 +750,25 @@
     "termsOutro": "Please contact our support team if you have any questions about how we handle your data."
   },
   "pages": {
+    "error": {
+      "badge": "Error {code}",
+      "statusAnnouncement": "Error code {code}",
+      "sidebarLabel": "Helpful widgets",
+      "notFound": {
+        "title": "We can't find that page",
+        "subtitle": "The link may be outdated or the page has moved.",
+        "description": "Try heading back home or opening the help centre to keep exploring."
+      },
+      "generic": {
+        "title": "Something went wrong",
+        "subtitle": "An unexpected error stopped this page from loading.",
+        "description": "You can refresh the page or return home to continue navigating."
+      },
+      "actions": {
+        "home": "Back to home",
+        "help": "Visit help centre"
+      }
+    },
     "notifications": {
       "description": "Catch up on the latest updates from your community.",
       "summary": {
