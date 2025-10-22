@@ -22,6 +22,8 @@
       :mark-all-text="props.notificationsMarkAll"
       :button-label="props.notificationsButtonLabel"
       :unread-count="props.notificationCount"
+      :view-all-text="props.notificationsViewAll"
+      :view-all-to="props.notificationsViewAllTo"
       @mark-all="emit('mark-all-notifications')"
     />
     <button
@@ -116,6 +118,8 @@ const props = withDefaults(
     notificationsEmpty: string;
     notificationsMarkAll: string;
     notificationsButtonLabel: string;
+    notificationsViewAll?: string;
+    notificationsViewAllTo?: string;
     messengerConversations: MessengerConversation[];
     messengerUnreadCount: number;
     messengerButtonLabel: string;

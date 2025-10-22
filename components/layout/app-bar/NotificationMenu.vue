@@ -38,6 +38,8 @@
       :subtitle="props.subtitle"
       :empty-text="props.emptyText"
       :mark-all-text="props.markAllText"
+      :view-all-text="props.viewAllText"
+      :view-all-to="props.viewAllTo"
       @mark-all="handleMarkAll"
     />
   </v-menu>
@@ -61,6 +63,8 @@ const props = defineProps<{
   markAllText: string;
   buttonLabel: string;
   unreadCount: number;
+  viewAllText?: string;
+  viewAllTo?: string;
 }>();
 
 const emit = defineEmits<{
