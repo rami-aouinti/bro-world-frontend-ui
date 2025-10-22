@@ -74,7 +74,7 @@
                     />
                   </div>
                 </template>
-                <div class="d-flex flex-column gap-1">
+                <div class="d-flex flex-column gap-1 mx-4">
                   <p class="text-body-1 font-weight-medium mb-0">
                     {{ item.title }}
                   </p>
