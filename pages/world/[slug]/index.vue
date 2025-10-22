@@ -92,6 +92,7 @@ if (typeof definePageMeta === "function") {
     documentDriven: false,
     rightSidebarPreset: "dashboard",
     requiresPlugin: "blog",
+    navbarSearchContext: "posts",
   });
 }
 

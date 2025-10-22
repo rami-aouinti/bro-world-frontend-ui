@@ -12,6 +12,11 @@ type StateRef<T> = ReturnType<typeof ref<T>>;
 
 const stateRegistry = new Map<string, StateRef<unknown>>();
 const cookieRegistry = new Map<string, StateRef<unknown>>();
+const routeRef = ref({
+  path: "/",
+  name: "index",
+  meta: {} as Record<string, unknown>,
+});
 
 type DocsConfig = {
   site: {
@@ -346,10 +351,33 @@ export function useI18n() {
   };
 }
 
+export function useRoute() {
+  return routeRef.value;
+}
+
+export function __setMockRoute(
+  route: Partial<{ path: string; name: string | null; meta: Record<string, unknown> }> | null,
+) {
+  if (!route) {
+    routeRef.value = { path: "/", name: "index", meta: {} };
+    return;
+  }
+
+  routeRef.value = {
+    path: typeof route.path === "string" ? route.path : routeRef.value.path,
+    name: (route.name ?? routeRef.value.name) as string | null,
+    meta: {
+      ...(routeRef.value.meta ?? {}),
+      ...(route.meta ?? {}),
+    },
+  };
+}
+
 export function __resetNuxtStateMocks() {
   stateRegistry.clear();
   cookieRegistry.clear();
   docsConfig.value = createDefaultDocsConfig();
+  routeRef.value = { path: "/", name: "index", meta: {} };
 }
 
 export function __getNuxtStateRef<T>(key: string): StateRef<T> | undefined {

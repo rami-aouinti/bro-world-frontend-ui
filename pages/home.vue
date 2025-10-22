@@ -92,7 +92,7 @@
     <template v-else>
       <div class="flex flex-col gap-4">
         <Suspense
-          v-for="(post, index) in posts"
+          v-for="(post, index) in filteredPosts"
           :key="post.id ?? `post-${index}`"
         >
           <template #default>
@@ -113,7 +113,16 @@
         </Suspense>
 
         <div
-          v-if="loadingMore"
+          v-if="isFilteringPosts && !filteredPosts.length && !loadingMore"
+          class="rounded-xl border border-border bg-card px-6 py-10 text-center text-muted-foreground"
+          data-test="posts-search-empty"
+        >
+          <p class="text-base font-semibold">{{ postsSearchEmptyLabel }}</p>
+          <p class="mt-2 text-sm">{{ postsSearchSuggestionLabel }}</p>
+        </div>
+
+        <div
+          v-if="loadingMore && !isFilteringPosts"
           class="grid gap-4"
           aria-live="polite"
           data-test="posts-loading-more"
@@ -126,7 +135,7 @@
         </div>
 
         <div
-          v-if="hasMore"
+          v-if="hasMore && !isFilteringPosts"
           ref="loadMoreTrigger"
           class="h-1 w-full"
           aria-hidden="true"
@@ -146,6 +155,7 @@ import { definePageMeta, useSeoMeta } from "#imports";
 import NewPostSkeleton from "~/components/blog/NewPostSkeleton.vue";
 import StoriesStripSkeleton from "~/components/stories/StoriesStripSkeleton.vue";
 import { usePostsStore } from "~/composables/usePostsStore";
+import { useNavbarSearchQuery, filterPostsByQuery, normalizeSearchQuery } from "~/composables/useNavbarSearch";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 import { blogPostCardLoader, prefetchBlogPostCard } from "~/lib/prefetch/blog-post-card";
 import type { ReactionType } from "~/lib/mock/blog";
@@ -451,6 +461,7 @@ if (typeof definePageMeta === "function") {
     showContactSidebarCard: true,
     documentDriven: false,
     rightSidebarPreset: "dashboard",
+    navbarSearchContext: "posts",
   });
 }
 
@@ -484,6 +495,14 @@ const {
 } = usePostsStore();
 
 const error = storeError ?? ref<string | null>(null);
+
+const navbarSearch = useNavbarSearchQuery({ context: "posts" });
+const navbarSearchQuery = navbarSearch.query;
+const normalizedNavbarSearchQuery = computed(() => normalizeSearchQuery(navbarSearchQuery.value));
+const filteredPosts = computed(() => filterPostsByQuery(posts.value, navbarSearchQuery.value));
+const isFilteringPosts = computed(() => normalizedNavbarSearchQuery.value.length > 0);
+const postsSearchEmptyLabel = computed(() => t("admin.blog.table.emptySearch"));
+const postsSearchSuggestionLabel = computed(() => t("admin.blog.table.searchPlaceholder"));
 async function callOnceFn<T>(key: string, task: () => Promise<T> | T) {
   if (typeof callOnce === "function") {
     return await callOnce(key, task);

@@ -1,5 +1,7 @@
-import { useState } from "#imports";
+import { useNavbarSearchQuery } from "./useNavbarSearch";
 
 export function useWorldSearchQuery() {
-  return useState<string>("world-search-query", () => "");
+  return useNavbarSearchQuery({ context: "worlds" }).query;
 }
+
+export { useNavbarSearchQuery } from "./useNavbarSearch";
