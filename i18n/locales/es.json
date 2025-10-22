@@ -101,6 +101,7 @@
         "profileOverview": "Resumen",
         "profileSettings": "Configuración de la cuenta",
         "profileSecurity": "Contraseña y seguridad",
+        "profileNotifications": "Notificaciones",
         "profileCalendar": "Calendario",
         "profileFriends": "Amigos",
         "profilePhotos": "Fotos y multimedia",
@@ -1276,6 +1277,104 @@
       },
       "recoveryCodes": {
         "title": "Guarda estos códigos de recuperación de un solo uso"
+      }
+    },
+    "profileNotifications": {
+      "title": "Preferencias de notificaciones",
+      "subtitle": "Elige cómo y cuándo te avisamos sobre la nueva actividad.",
+      "actions": {
+        "save": "Guardar preferencias",
+        "reset": "Restablecer"
+      },
+      "channelLabels": {
+        "email": "Correo electrónico",
+        "push": "Notificaciones push",
+        "sms": "SMS",
+        "inApp": "Alertas en la aplicación"
+      },
+      "sections": {
+        "channels": {
+          "title": "Canales de entrega",
+          "description": "Selecciona los canales que usaremos cuando ocurra algo importante."
+        },
+        "email": {
+          "title": "Actualizaciones por correo",
+          "description": "Mantente al día incluso cuando no estás en BroWorld.",
+          "items": {
+            "comments": "Comentarios en mis publicaciones",
+            "mentions": "Menciones a mi usuario",
+            "follows": "Nuevos seguidores",
+            "messages": "Mensajes directos",
+            "newsletters": "Boletines y consejos del producto"
+          }
+        },
+        "inApp": {
+          "title": "Notificaciones dentro de la app",
+          "description": "Controla las alertas que verás mientras trabajas en BroWorld.",
+          "items": {
+            "productUpdates": "Lanzamientos y novedades de la hoja de ruta",
+            "eventReminders": "Recordatorios de eventos e invitaciones de calendario",
+            "securityAlerts": "Alertas de seguridad y avisos de inicio de sesión",
+            "communityHighlights": "Lo más destacado y tendencias de la comunidad"
+          },
+          "playSounds": "Reproducir un sonido suave para las alertas prioritarias",
+          "smartSummaries": "Mostrar resúmenes inteligentes en el centro de notificaciones"
+        },
+        "digest": {
+          "title": "Resumen periódico",
+          "description": "Agruparemos la actividad más tranquila en un solo correo para revisarla rápidamente.",
+          "enableLabel": "Enviarme un resumen",
+          "frequencyLabel": "Frecuencia del resumen",
+          "timeLabel": "Hora de entrega preferida",
+          "options": {
+            "daily": "Diario",
+            "weekly": "Semanal",
+            "monthly": "Mensual"
+          },
+          "helper": "Resumen {frequency} programado para las {time}.",
+          "helperDisabled": "Los resúmenes están desactivados. Actívalos para recibir un correo con el resumen."
+        },
+        "quietHours": {
+          "title": "Horas de silencio",
+          "description": "Silencia las alertas no críticas durante tus momentos de concentración o por la noche.",
+          "enableLabel": "Activar horas de silencio",
+          "start": "Hora de inicio",
+          "end": "Hora de finalización"
+        },
+        "security": {
+          "title": "Alertas críticas",
+          "description": "Siempre te avisaremos sobre cambios de contraseña, exportaciones o riesgos de seguridad.",
+          "label": "Avisarme por correo sobre alertas de seguridad críticas"
+        }
+      },
+      "helpers": {
+        "emailDisabled": "Añade un correo a tu perfil para activar las notificaciones por e-mail.",
+        "securityAlwaysOn": "Las alertas de seguridad críticas siempre están activas para tu cuenta."
+      },
+      "snackbar": {
+        "saved": "Preferencias de notificaciones actualizadas.",
+        "reset": "Preferencias restauradas a la última versión guardada."
+      },
+      "sidebar": {
+        "digestTitle": "Programación del resumen",
+        "digestDay": "lunes",
+        "digestLine": "Tu próximo resumen llegará el {day} a las {time}.",
+        "digestInfo": "Ajusta la hora o la frecuencia cuando necesites un repaso rápido.",
+        "tipsTitle": "Consejos rápidos",
+        "tips": {
+          "mobile": {
+            "title": "Activa la app móvil",
+            "subtitle": "Instala BroWorld en iOS o Android para recibir notificaciones push y widgets."
+          },
+          "channels": {
+            "title": "Equilibra tus canales",
+            "subtitle": "Usa el correo para resúmenes semanales y las alertas in-app para la colaboración diaria."
+          },
+          "updates": {
+            "title": "Destaca lo importante",
+            "subtitle": "Fija los proyectos clave para que los resúmenes destaquen primero la actividad relevante."
+          }
+        }
       }
     },
     "playground": {
@@ -2612,6 +2711,10 @@
     "profileSecurity": {
       "title": "Contraseña y seguridad",
       "description": "Administra credenciales de acceso, verificación en dos pasos y dispositivos de confianza."
+    },
+    "profileNotifications": {
+      "title": "Preferencias de notificaciones",
+      "description": "Decide qué alertas recibes por correo, push o mensajes dentro de la app."
     },
     "createWorld": {
       "title": "Create world",
