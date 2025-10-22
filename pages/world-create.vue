@@ -475,11 +475,11 @@
                 {{ pluginSummaryDescription }}
               </p>
               <ul
-                v-if="selectedPlugins.length"
+                v-if="pluginSummaryItems.length"
                 class="plugin-meta-list mb-0"
               >
                 <li
-                  v-for="plugin in selectedPlugins"
+                  v-for="plugin in pluginSummaryItems"
                   :key="plugin.id"
                   class="text-body-2"
                 >
@@ -591,6 +591,8 @@ import { computed, defineAsyncComponent, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useWorldCreator } from "~/composables/useWorldCreator";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import WorldCreateSidebar from "~/components/world/WorldCreateSidebar.vue";
 import {
   groupWorldPluginsByCategory,
   WORLD_PLUGIN_REGISTRY,
@@ -683,13 +685,21 @@ const pluginSelectionError = computed(() =>
 );
 
 const pluginSummaryTitle = computed(() =>
-  selectedPlugins.value.length > 0 ? "Selected plugins" : "No plugins selected yet",
+  selectedPlugins.value.length > 0
+    ? t("pages.createWorld.sidebar.plugins.selectedTitle")
+    : t("pages.createWorld.sidebar.plugins.emptyTitle"),
 );
 
 const pluginSummaryDescription = computed(() =>
   selectedPlugins.value.length > 0
-    ? "The following plugins will be included in your provisioning request:"
-    : "Choose plugins to preview the capabilities that will be provisioned.",
+    ? t("pages.createWorld.sidebar.plugins.selectedDescription")
+    : t("pages.createWorld.sidebar.plugins.emptyDescription"),
+);
+
+const pluginSidebarHint = computed(() => t("pages.createWorld.sidebar.plugins.emptyHint"));
+
+const pluginSummaryItems = computed(() =>
+  selectedPlugins.value.map((plugin) => ({ id: plugin.id, name: plugin.name })),
 );
 
 const submissionSuccessMessage = computed(() => {
@@ -793,7 +803,50 @@ const creationSteps = computed(() => [
   },
 ]);
 
+const workflowSidebarSteps = computed(() =>
+  creationSteps.value.map((step, index) => ({
+    ...step,
+    orderLabel: t("pages.createWorld.workflow.stepLabel", { number: index + 1 }),
+  })),
+);
+
+const sidebarWorkflow = computed(() => ({
+  title: t("pages.createWorld.workflow.title"),
+  subtitle: t("pages.createWorld.workflow.subtitle"),
+  steps: workflowSidebarSteps.value,
+}));
+
+const sidebarPlugins = computed(() => ({
+  title: pluginSummaryTitle.value,
+  description: pluginSummaryDescription.value,
+  items: pluginSummaryItems.value,
+  emptyHint: pluginSidebarHint.value,
+}));
+
 const contactLink = computed(() => localePath("/contact"));
+
+const sidebarCta = computed(() => ({
+  title: t("pages.createWorld.cta.title"),
+  description: t("pages.createWorld.cta.description"),
+  button: t("pages.createWorld.cta.button"),
+  buttonAria: t("pages.createWorld.cta.buttonAria"),
+  to: contactLink.value,
+}));
+
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+
+registerRightSidebarContent(
+  computed(() => ({
+    component: WorldCreateSidebar,
+    props: {
+      workflow: sidebarWorkflow.value,
+      plugins: sidebarPlugins.value,
+      cta: sidebarCta.value,
+    },
+    wrapperClass: "flex flex-col gap-6",
+    intrinsicHeight: 960,
+  })),
+);
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 

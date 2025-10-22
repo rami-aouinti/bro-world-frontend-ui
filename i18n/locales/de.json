@@ -1908,6 +1908,15 @@
           }
         }
       },
+      "sidebar": {
+        "plugins": {
+          "selectedTitle": "Selected plugins",
+          "emptyTitle": "No plugins selected yet",
+          "selectedDescription": "The following plugins will be included in your provisioning request:",
+          "emptyDescription": "Choose plugins to preview the capabilities that will be provisioned.",
+          "emptyHint": "Toggle plugins in the list to build your stack."
+        }
+      },
       "workflow": {
         "title": "Launch with confidence",
         "subtitle": "Follow a proven cadence from vision to expansion.",
