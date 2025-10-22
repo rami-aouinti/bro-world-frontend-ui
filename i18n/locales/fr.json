@@ -1726,6 +1726,15 @@
           }
         }
       },
+      "sidebar": {
+        "plugins": {
+          "selectedTitle": "Plugins sélectionnés",
+          "emptyTitle": "Aucun plugin sélectionné pour le moment",
+          "selectedDescription": "Les plugins suivants seront inclus dans votre demande de provisionnement :",
+          "emptyDescription": "Choisissez des plugins pour prévisualiser les fonctionnalités qui seront provisionnées.",
+          "emptyHint": "Activez les plugins dans la liste pour composer votre stack."
+        }
+      },
       "workflow": {
         "title": "Lancez en toute confiance",
         "subtitle": "Suivez un rythme éprouvé, de la vision à l’expansion.",
