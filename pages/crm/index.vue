@@ -285,7 +285,6 @@ registerRightSidebarContent(sidebarContent);
 
 <style scoped>
 .crm-index {
-  min-height: 100vh;
   background:
     radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.12), transparent 55%),
     radial-gradient(circle at bottom right, rgba(var(--v-theme-secondary), 0.1), transparent 60%),

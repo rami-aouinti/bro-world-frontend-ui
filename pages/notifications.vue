@@ -175,7 +175,6 @@ function resolveColorClass(color?: (typeof notifications.value)[number]["color"]
 
 <style scoped>
 .notifications-page {
-  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
   background:
     radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.08), transparent 45%),
     radial-gradient(circle at bottom right, rgba(var(--v-theme-primary), 0.06), transparent 40%);
