@@ -144,11 +144,12 @@ useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 
-definePageMeta({
-  alias: ["/world/:worldSlug/ecommerce/catalog"],
-  documentDriven: false,
-  requiresPlugin: "ecommerce",
-});
+if (typeof definePageMeta === "function") {
+  definePageMeta({
+    documentDriven: false,
+    requiresPlugin: "ecommerce",
+  });
+}
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
