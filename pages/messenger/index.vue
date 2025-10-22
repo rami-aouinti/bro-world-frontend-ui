@@ -22,12 +22,13 @@ const router = useRouter();
 const { t } = useI18n();
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 
-definePageMeta({
-  alias: ["/world/:worldSlug/messenger"],
-  documentDriven: false,
-  showRightWidgets: true,
-  requiresPlugin: "messenger",
-});
+if (typeof definePageMeta === "function") {
+  definePageMeta({
+    documentDriven: false,
+    showRightWidgets: true,
+    requiresPlugin: "messenger",
+  });
+}
 
 const pageDescription = computed(() => t("seo.messenger.description"));
 

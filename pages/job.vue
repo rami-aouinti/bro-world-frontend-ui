@@ -103,13 +103,14 @@ const VPagination = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VPagination),
 );
 
-definePageMeta({
-  alias: ["/world/:worldSlug/job"],
-  description: "Job page",
-  breadcrumb: "disabled",
-  requiresPlugin: "job-board",
-  showRightWidgets: true,
-});
+if (typeof definePageMeta === "function") {
+  definePageMeta({
+    description: "Job page",
+    breadcrumb: "disabled",
+    requiresPlugin: "job-board",
+    showRightWidgets: true,
+  });
+}
 
 const jobStore = useJobStore();
 const { t } = useI18n();
