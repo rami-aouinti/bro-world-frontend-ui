@@ -259,6 +259,7 @@ useSeoMeta(() => ({
 }));
 
 definePageMeta({
+  alias: ["/world/:worldSlug/ecommerce/cart"],
   documentDriven: false,
   requiresPlugin: "ecommerce",
 });

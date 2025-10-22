@@ -309,9 +309,10 @@ import {
   getDefaultMenuBlueprints,
   getDefaultSiteSettings,
 } from "~/lib/settings/defaults";
-import type { SiteSettings, SiteThemeDefinition, SiteWorldSettings } from "~/types/settings";
+import type { SiteMenuItem, SiteSettings, SiteThemeDefinition, SiteWorldSettings } from "~/types/settings";
+import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
 import { withSecureCookieOptions } from "~/lib/cookies";
-import { getAllPluginIds, getPluginQuickLaunchEntries } from "~/lib/navigation/plugins";
+import { getAllPluginIds, getPluginMenuBlueprints, getPluginQuickLaunchEntries } from "~/lib/navigation/plugins";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
@@ -924,6 +925,86 @@ const isRightDrawerReady = ref(!canShowRightWidgets.value);
 const siteSettingsState = useSiteSettingsState();
 
 const allPluginIds = getAllPluginIds();
+
+function collectPluginMenuPaths(
+  menus: readonly MenuBlueprint[] | undefined,
+  target: Set<string>,
+): void {
+  if (!menus?.length) {
+    return;
+  }
+
+  for (const menu of menus) {
+    const destination = typeof menu.to === "string" ? menu.to.trim() : "";
+
+    if (destination.startsWith("/") && !destination.startsWith("/admin")) {
+      target.add(destination);
+    }
+
+    if (menu.children?.length) {
+      collectPluginMenuPaths(menu.children, target);
+    }
+  }
+}
+
+function scopePathToWorld(basePath: string, path: string): string {
+  const normalized = path.replace(/^\/+/, "");
+  return normalized ? `${basePath}/${normalized}` : basePath;
+}
+
+function shouldScopeMenuToWorld(path: string, pluginPaths: Set<string>): boolean {
+  if (!path.startsWith("/")) {
+    return false;
+  }
+
+  if (path.startsWith("/admin")) {
+    return false;
+  }
+
+  if (path.startsWith("/world/")) {
+    return false;
+  }
+
+  return pluginPaths.has(path);
+}
+
+function scopeMenusToWorld(
+  menus: readonly SiteMenuItem[],
+  basePath: string,
+  pluginPaths: Set<string>,
+): SiteMenuItem[] {
+  return menus.map((menu) => {
+    const scopedChildren = menu.children?.length
+      ? scopeMenusToWorld(menu.children, basePath, pluginPaths)
+      : menu.children;
+
+    const destination = typeof menu.to === "string" ? menu.to.trim() : "";
+    const shouldScope = destination && shouldScopeMenuToWorld(destination, pluginPaths);
+
+    const next: SiteMenuItem = {
+      ...menu,
+    };
+
+    if (shouldScope) {
+      next.to = scopePathToWorld(basePath, destination);
+    }
+
+    if (Array.isArray(scopedChildren)) {
+      next.children = scopedChildren;
+    } else if (Array.isArray(menu.children) && menu.children.length === 0) {
+      next.children = [];
+    }
+
+    return next;
+  });
+}
+
+const pluginMenuPaths = computed(() => {
+  const paths = new Set<string>();
+  collectPluginMenuPaths(getPluginMenuBlueprints(allPluginIds), paths);
+  return paths;
+});
+
 const quickLaunchRegistry = getPluginQuickLaunchEntries();
 
 function appendWorldPlugins(
@@ -1043,6 +1124,79 @@ const activeWorldForDisplay = computed(() => {
 
   const worlds = siteSettings.value.worlds ?? [];
   return worlds[0] ?? null;
+});
+
+const shouldUseWorldScopedNavigation = computed(() => {
+  const path = currentRoute.value?.path ?? "";
+  return /^\/world(?:\/|$)/.test(path);
+});
+
+function normalizeWorldSlugParam(value: unknown): string | null {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed || null;
+  }
+
+  if (Array.isArray(value)) {
+    for (const entry of value) {
+      if (typeof entry === "string") {
+        const trimmed = entry.trim();
+        if (trimmed) {
+          return trimmed;
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
+const routeWorldSlug = computed(() => {
+  const params = currentRoute.value?.params ?? {};
+  const fromParams = normalizeWorldSlugParam((params as Record<string, unknown>).slug);
+  const path = currentRoute.value?.path ?? "";
+  const match = path.match(/^\/world\/([^/]+)/);
+  const candidates = [fromParams, match ? match[1] : null];
+  const worlds = siteSettings.value.worlds ?? [];
+
+  for (const candidate of candidates) {
+    if (!candidate) {
+      continue;
+    }
+
+    const normalized = candidate.trim().toLowerCase();
+    const matched = worlds.find((world) => {
+      const worldSlug = world.slug?.trim().toLowerCase() ?? "";
+      const worldId = world.id?.trim().toLowerCase() ?? "";
+      return normalized === worldSlug || normalized === worldId;
+    });
+
+    if (matched) {
+      return matched.slug?.trim() || matched.id?.trim() || null;
+    }
+  }
+
+  return null;
+});
+
+const activeWorldSlug = computed(() => {
+  const world = activeWorldForDisplay.value;
+  if (!world) {
+    return null;
+  }
+
+  const slug = typeof world.slug === "string" ? world.slug.trim() : "";
+  if (slug) {
+    return slug;
+  }
+
+  const id = typeof world.id === "string" ? world.id.trim() : "";
+  return id || null;
+});
+
+const worldNavigationBasePath = computed(() => {
+  const slug = routeWorldSlug.value ?? activeWorldSlug.value;
+  return slug ? `/world/${slug}` : null;
 });
 
 const shouldShowWorldSummary = computed(() => Boolean(activeWorldForDisplay.value));
@@ -1181,15 +1335,39 @@ const baseMenuSource = computed(() => {
   return getDefaultMenuBlueprints();
 });
 
-const composedSidebarMenus = computed(() =>
-  composeMenusWithPlugins(baseMenuSource.value, resolvedPluginIds.value),
-);
+const composedSidebarMenus = computed(() => {
+  const menus = composeMenusWithPlugins(baseMenuSource.value, resolvedPluginIds.value);
 
-const appIcons = computed(() =>
-  quickLaunchRegistry
+  if (!shouldUseWorldScopedNavigation.value) {
+    return menus;
+  }
+
+  const basePath = worldNavigationBasePath.value;
+  if (!basePath) {
+    return menus;
+  }
+
+  return scopeMenusToWorld(menus, basePath, pluginMenuPaths.value);
+});
+
+const appIcons = computed(() => {
+  const shouldScope = shouldUseWorldScopedNavigation.value;
+  const basePath = worldNavigationBasePath.value;
+  const pluginPaths = pluginMenuPaths.value;
+
+  return quickLaunchRegistry
     .filter((entry) => resolvedPluginSet.value.has(entry.pluginId))
-    .map(({ icon, label, to }) => ({ name: icon, label, to })),
-);
+    .map(({ icon, label, to }) => {
+      const destination = typeof to === "string" ? to.trim() : "";
+
+      const scopedTo =
+        destination && shouldScope && basePath && shouldScopeMenuToWorld(destination, pluginPaths)
+          ? scopePathToWorld(basePath, destination)
+          : destination;
+
+      return { name: icon, label, to: scopedTo || destination || "/" };
+    });
+});
 
 const canAccessAdmin = computed(() => {
   if (!auth.isAuthenticated.value) return false;

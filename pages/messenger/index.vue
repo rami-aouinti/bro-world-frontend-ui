@@ -23,6 +23,7 @@ const { t } = useI18n();
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 
 definePageMeta({
+  alias: ["/world/:worldSlug/messenger"],
   documentDriven: false,
   showRightWidgets: true,
   requiresPlugin: "messenger",

@@ -83,6 +83,7 @@ import {
 } from "~/stores/crm-board";
 
 definePageMeta({
+  alias: ["/world/:worldSlug/crm"],
   showRightWidgets: true,
   requiresPlugin: "crm",
 });

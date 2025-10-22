@@ -145,6 +145,7 @@ useSeoMeta(() => ({
 }));
 
 definePageMeta({
+  alias: ["/world/:worldSlug/ecommerce/catalog"],
   documentDriven: false,
   requiresPlugin: "ecommerce",
 });
