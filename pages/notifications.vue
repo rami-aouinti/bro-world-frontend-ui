@@ -1,123 +1,115 @@
 <template>
   <main
-    class="notifications-page"
     aria-labelledby="notifications-title"
   >
-    <v-container
-      class="py-8"
-      fluid
-    >
-      <v-row justify="center">
-        <v-col
+    <v-row>
+      <v-col
           cols="12"
-          md="8"
-          lg="6"
-        >
-          <header
+      >
+        <header
             class="mb-6"
             aria-describedby="notifications-description"
-          >
-            <h1
+        >
+          <h1
               id="notifications-title"
               class="text-h4 font-weight-semibold mb-2"
-            >
-              {{ notificationsTitle }}
-            </h1>
-            <p
+          >
+            {{ notificationsTitle }}
+          </h1>
+          <p
               v-if="notificationsSubtitle"
               id="notifications-description"
               class="text-body-1 text-medium-emphasis mb-4"
-            >
-              {{ notificationsSubtitle }}
-            </p>
-            <p
+          >
+            {{ notificationsSubtitle }}
+          </p>
+          <p
               v-else
               id="notifications-description"
               class="text-body-1 text-medium-emphasis mb-4"
-            >
-              {{ description }}
-            </p>
-            <div class="d-flex flex-wrap align-center gap-3">
-              <v-btn
+          >
+            {{ description }}
+          </p>
+          <div class="d-flex flex-wrap align-center gap-3">
+            <v-btn
                 color="primary"
                 variant="flat"
                 :disabled="!hasUnread"
                 @click="handleMarkAll"
-              >
-                {{ notificationsMarkAll }}
-              </v-btn>
-              <span class="text-body-2 text-medium-emphasis">
+            >
+              {{ notificationsMarkAll }}
+            </v-btn>
+            <span class="text-body-2 text-medium-emphasis">
                 {{ summary }}
               </span>
-            </div>
-          </header>
+          </div>
+        </header>
 
-          <v-card
+        <v-card
             class="notifications-card"
             rounded="xl"
             elevation="0"
-          >
-            <template v-if="notifications.length">
-              <v-list
+        >
+          <template v-if="notifications.length">
+            <v-list
                 class="py-0"
                 lines="two"
-              >
-                <v-list-item
+            >
+              <v-list-item
                   v-for="item in notifications"
                   :key="item.id"
                   :class="[
                     'notifications-item',
                     !item.read ? 'notifications-item--unread' : '',
                   ]"
-                >
-                  <template #prepend>
-                    <div
+              >
+                <template #prepend>
+                  <div
                       class="notifications-item__icon"
                       :class="resolveColorClass(item.color)"
-                    >
-                      <AppIcon
+                  >
+                    <AppIcon
                         :name="item.icon"
                         :size="22"
-                      />
-                    </div>
-                  </template>
-                  <div class="d-flex flex-column gap-1">
-                    <p class="text-body-1 font-weight-medium mb-0">
-                      {{ item.title }}
-                    </p>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ item.description }}
-                    </p>
+                    />
                   </div>
-                  <template #append>
+                </template>
+                <div class="d-flex flex-column gap-1">
+                  <p class="text-body-1 font-weight-medium mb-0">
+                    {{ item.title }}
+                  </p>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ item.description }}
+                  </p>
+                </div>
+                <template #append>
                     <span class="text-caption text-medium-emphasis">
                       {{ item.time }}
                     </span>
-                  </template>
-                </v-list-item>
-              </v-list>
-            </template>
-            <div
+                </template>
+              </v-list-item>
+            </v-list>
+          </template>
+          <div
               v-else
               class="notifications-empty"
-            >
-              <div class="notifications-empty__icon">
-                <AppIcon
+          >
+            <div class="notifications-empty__icon">
+              <AppIcon
                   name="mdi:bell-outline"
                   :size="32"
-                />
-              </div>
-              <p class="text-body-1 font-weight-medium mb-1">
-                {{ notificationsEmpty }}
-              </p>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ description }}
-              </p>
+              />
             </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+            <p class="text-body-1 font-weight-medium mb-1">
+              {{ notificationsEmpty }}
+            </p>
+            <p class="text-body-2 text-medium-emphasis mb-0">
+              {{ description }}
+            </p>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
   </main>
 </template>
 
@@ -127,8 +119,11 @@ import { useI18n } from "vue-i18n";
 import { useNotifications } from "~/composables/useNotifications";
 
 definePageMeta({
+  showRightWidgets: true,
+  showContactSidebarCard: true,
   documentDriven: false,
   middleware: "auth",
+  rightSidebarPreset: "dashboard",
 });
 
 const { t } = useI18n();
