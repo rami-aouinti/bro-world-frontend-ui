@@ -9,9 +9,9 @@
         to="#menu-bar-world"
       >
         <div class="px-4 pt-4 pb-3">
-          <v-card
-            class="border-radius-xl"
-            elevation="12"
+          <SidebarCard
+              class="text-card-foreground px-3 py-2"
+              glow
           >
             <v-card-text class="d-flex flex-column gap-4">
               <div class="d-flex flex-column flex-md-row justify-space-between gap-4">
@@ -119,7 +119,7 @@
                 </v-list>
               </div>
             </v-card-text>
-          </v-card>
+          </SidebarCard>
         </div>
       </teleport>
     </client-only>
