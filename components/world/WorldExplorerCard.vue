@@ -23,24 +23,8 @@
       </div>
 
       <v-chip
-        v-if="isActive"
         class="world-explorer-card__badge"
-        color="success"
-        size="small"
-        variant="outlined"
-      >
-        <div
-          v-if="hasRating"
-          class="world-explorer-card__stat"
-        >
-          {{ ratingLabel }}
-        </div>
-      </v-chip>
-
-      <v-chip
-        v-else
-        class="world-explorer-card__badge"
-        color="error"
+        :color="statusChipColor"
         size="small"
         variant="outlined"
       >
@@ -140,6 +124,7 @@ import type { WorldMembership } from "~/types/world-membership";
 const props = defineProps<{
   world: SiteWorldSettings;
   isActive?: boolean;
+  membership?: WorldMembership | null;
 }>();
 
 const emit = defineEmits<{ (event: "activate", worldId: string): void }>();

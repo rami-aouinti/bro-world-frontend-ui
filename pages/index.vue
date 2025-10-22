@@ -16,19 +16,6 @@
       <p class="world-explorer-page__description">
         {{ pageDescription }}
       </p>
-      <v-text-field
-        v-model="searchQuery"
-        class="world-explorer-page__search"
-        :label="t('pages.index.search.label')"
-        :placeholder="t('pages.index.search.placeholder')"
-        :aria-label="t('pages.index.search.ariaLabel')"
-        type="search"
-        density="comfortable"
-        variant="outlined"
-        prepend-inner-icon="mdi-magnify"
-        clearable
-        hide-details="auto"
-      />
     </header>
 
     <section
@@ -46,7 +33,8 @@
           v-for="world in filteredWorlds"
           :key="world.id"
           :world="world"
-          :is-active="world.id === activeWorldId"
+          :membership="membershipMap[world.id] ?? null"
+          :is-active="activeWorldIds.includes(world.id)"
           class="world-explorer-page__card"
           data-test="world-explorer-card"
           @activate="setActiveWorld"
@@ -57,7 +45,7 @@
       v-else-if="hasWorlds"
       class="world-explorer-page__empty"
       glow
-        data-test="world-explorer-empty"
+      data-test="world-explorer-empty"
     >
       <div>
         <h2 class="world-explorer-page__empty-title">
@@ -88,26 +76,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { definePageMeta, useSeoMeta } from "#imports";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import WorldExplorerCard from "~/components/world/WorldExplorerCard.vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { useWorldSearchQuery } from "~/composables/useWorldSearch";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings } from "~/types/settings";
+import { useWorldMembershipsStore } from "~/stores/world-memberships";
 
 const { t } = useI18n();
 const siteSettingsState = useSiteSettingsState();
+const membershipStore = useWorldMembershipsStore();
 
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
-const searchQuery = ref("");
+const worldSearchQuery = useWorldSearchQuery();
 const searchQueryDisplay = computed(() =>
-  typeof searchQuery.value === "string"
-    ? searchQuery.value
-    : String(searchQuery.value ?? ""),
+  typeof worldSearchQuery.value === "string"
+    ? worldSearchQuery.value
+    : String(worldSearchQuery.value ?? ""),
 );
 const searchQueryLabel = computed(() => {
   const trimmed = searchQueryDisplay.value.trim();
@@ -169,25 +160,35 @@ const activeWorldId = computed(
   () => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null,
 );
 
-function setActiveWorld(worldId: string) {
+const membershipMap = computed(() => membershipStore.memberships);
+const activeWorldIds = computed(() => {
+  const ids = membershipStore.activeWorldIds.value;
+
+  if (ids.length > 0) {
+    return [...ids];
+  }
+
+  const fallbackId = activeWorldId.value;
+
+  return fallbackId ? [fallbackId] : [];
+});
+
+async function setActiveWorld(worldId: string) {
   if (!worldId) {
     return;
   }
 
-  const currentSettings = siteSettingsState.value;
+  const membership = membershipMap.value[worldId] ?? null;
 
-  if (!currentSettings) {
-    siteSettingsState.value = {
-      ...fallbackSettings.value,
-      activeWorldId: worldId,
-    };
+  if (membership?.status === "pending") {
     return;
   }
 
-  siteSettingsState.value = {
-    ...currentSettings,
-    activeWorldId: worldId,
-  };
+  try {
+    await membershipStore.activateWorld(worldId);
+  } catch (error) {
+    console.error("Failed to activate world", error);
+  }
 }
 
 const pageDescription = computed(() => t("pages.index.description"));
