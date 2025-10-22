@@ -138,3 +138,38 @@ export interface AlbumSummary {
   location: string;
   updated: string;
 }
+
+export interface NotificationPreferences {
+  channels: {
+    email: boolean;
+    push: boolean;
+    sms: boolean;
+    inApp: boolean;
+  };
+  email: {
+    comments: boolean;
+    mentions: boolean;
+    follows: boolean;
+    messages: boolean;
+    newsletters: boolean;
+  };
+  inApp: {
+    productUpdates: boolean;
+    eventReminders: boolean;
+    securityAlerts: boolean;
+    communityHighlights: boolean;
+  };
+  digest: {
+    enabled: boolean;
+    frequency: "daily" | "weekly" | "monthly";
+    time: string;
+  };
+  quietHours: {
+    enabled: boolean;
+    start: string;
+    end: string;
+  };
+  playSounds: boolean;
+  smartSummaries: boolean;
+  securityAlerts: boolean;
+}
