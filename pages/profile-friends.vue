@@ -200,113 +200,13 @@
       aria-labelledby="friend-suggestions-title"
       class="lg:hidden"
     >
-      <v-row dense>
-        <v-col cols="12">
-          <SidebarCard
-              class="text-card-foreground px-3 py-3"
-              glow
-          >
-            <h2
-              id="friend-suggestions-title"
-              class="text-h5 font-weight-semibold mb-4"
-            >
-              {{ t("pages.profileFriends.sections.suggestions") }}
-            </h2>
-            <v-list
-              lines="three"
-              density="comfortable"
-            >
-              <v-list-item
-                v-for="suggestion in suggestions"
-                :key="suggestion.id"
-                :to="friendProfilePath(suggestion)"
-                link
-              >
-                <template #prepend>
-                  <v-avatar size="48">
-                    <NuxtImg
-                      :src="suggestion.avatar"
-                      :alt="suggestion.name"
-                      width="48"
-                      height="48"
-                      fit="cover"
-                    />
-                  </v-avatar>
-                </template>
-                <v-list-item-title class="font-weight-semibold">
-                  {{ suggestion.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle>{{ suggestion.headline }}</v-list-item-subtitle>
-                <template #append>
-                  <div class="d-flex flex-column align-end gap-2">
-                    <v-chip
-                      size="small"
-                      variant="tonal"
-                    >
-                      {{ suggestion.mutualCount }} {{ t("pages.profileFriends.stats.mutual") }}
-                    </v-chip>
-                    <v-btn
-                      color="primary"
-                      variant="text"
-                      size="small"
-                      @click.stop="triggerAction('connect', suggestion)"
-                    >
-                      {{ t("pages.profileFriends.actions.message") }}
-                    </v-btn>
-                  </div>
-                </template>
-              </v-list-item>
-            </v-list>
-          </SidebarCard>
-        </v-col>
-        <v-col cols="12">
-          <SidebarCard
-            class="text-card-foreground pa-6 h-100 bg-primary/10"
-            glow
-          >
-            <div class="d-flex flex-column gap-3">
-              <h2 class="text-h6 font-weight-semibold mb-1">
-                {{ t("pages.profileFriends.sections.active") }}
-              </h2>
-              <div class="d-flex flex-column gap-2">
-                <div
-                  v-for="friend in activeNow"
-                  :key="friend.id"
-                  class="d-flex align-center justify-space-between"
-                >
-                  <NuxtLink
-                    :to="friendProfilePath(friend)"
-                    class="d-flex align-center gap-3 text-decoration-none text-card-foreground"
-                  >
-                    <v-avatar size="40">
-                      <NuxtImg
-                        :src="friend.avatar"
-                        :alt="friend.name"
-                        width="40"
-                        height="40"
-                        fit="cover"
-                      />
-                    </v-avatar>
-                    <div>
-                      <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
-                      <div class="text-caption text-medium-emphasis">
-                        {{ t("pages.profileFriends.meta.lastActive", { time: friend.lastActive }) }}
-                      </div>
-                    </div>
-                  </NuxtLink>
-                  <v-chip
-                    :color="statusColor(friend.status)"
-                    size="x-small"
-                    class="font-weight-medium"
-                  >
-                    {{ statusLabel(friend.status) }}
-                  </v-chip>
-                </div>
-              </div>
-            </div>
-          </SidebarCard>
-        </v-col>
-      </v-row>
+      <ProfileFriendsSidebar
+        :suggestions="suggestions"
+        :active-now="activeNow"
+        suggestions-heading-id="friend-suggestions-title"
+        active-heading-id="friend-active-title"
+        @connect="sidebarConnectHandler"
+      />
     </section>
 
     <v-snackbar

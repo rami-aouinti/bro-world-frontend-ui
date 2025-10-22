@@ -1,60 +1,13 @@
 <template>
   <div class="flex flex-col gap-4">
     <SidebarCard
-      class="text-card-foreground pa-6 bg-primary/10"
-      glow
-    >
-      <div class="d-flex flex-column gap-3">
-        <h2 class="text-h6 font-weight-semibold mb-1">
-          {{ t("pages.profileFriends.sections.active") }}
-        </h2>
-        <div
-          v-if="activeNow.length"
-          class="d-flex flex-column gap-2"
-        >
-          <div
-            v-for="friend in activeNow"
-            :key="friend.id"
-            class="d-flex align-center justify-space-between"
-          >
-            <div class="d-flex align-center gap-3">
-              <v-avatar size="40">
-                <NuxtImg
-                  :src="friend.avatar"
-                  :alt="friend.name"
-                  width="40"
-                  height="40"
-                  fit="cover"
-                />
-              </v-avatar>
-              <div>
-                <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
-                <div class="text-caption text-medium-emphasis">{{ friend.lastActive }}</div>
-              </div>
-            </div>
-            <v-chip
-              :color="statusColor(friend.status)"
-              size="x-small"
-              class="font-weight-medium"
-            >
-              {{ statusLabel(friend.status) }}
-            </v-chip>
-          </div>
-        </div>
-        <p
-          v-else
-          class="text-body-2 text-medium-emphasis"
-        >
-          {{ t("pages.profileFriends.empty") }}
-        </p>
-      </div>
-    </SidebarCard>
-
-    <SidebarCard
       class="text-card-foreground pa-4"
       glow
     >
-      <h2 class="text-h6 font-weight-semibold mb-3">
+      <h2
+        :id="suggestionsHeadingId"
+        class="text-h6 font-weight-semibold mb-3"
+      >
         {{ t("pages.profileFriends.sections.suggestions") }}
       </h2>
       <v-list
@@ -111,6 +64,59 @@
         {{ t("pages.profileFriends.empty") }}
       </p>
     </SidebarCard>
+
+    <SidebarCard
+      class="text-card-foreground pa-6 bg-primary/10"
+      glow
+    >
+      <div class="d-flex flex-column gap-3">
+        <h2
+          :id="activeHeadingId"
+          class="text-h6 font-weight-semibold mb-1"
+        >
+          {{ t("pages.profileFriends.sections.active") }}
+        </h2>
+        <div
+          v-if="activeNow.length"
+          class="d-flex flex-column gap-2"
+        >
+          <div
+            v-for="friend in activeNow"
+            :key="friend.id"
+            class="d-flex align-center justify-space-between"
+          >
+            <div class="d-flex align-center gap-3">
+              <v-avatar size="40">
+                <NuxtImg
+                  :src="friend.avatar"
+                  :alt="friend.name"
+                  width="40"
+                  height="40"
+                  fit="cover"
+                />
+              </v-avatar>
+              <div>
+                <div class="text-subtitle-2 font-weight-medium">{{ friend.name }}</div>
+                <div class="text-caption text-medium-emphasis">{{ friend.lastActive }}</div>
+              </div>
+            </div>
+            <v-chip
+              :color="statusColor(friend.status)"
+              size="x-small"
+              class="font-weight-medium"
+            >
+              {{ statusLabel(friend.status) }}
+            </v-chip>
+          </div>
+        </div>
+        <p
+          v-else
+          class="text-body-2 text-medium-emphasis"
+        >
+          {{ t("pages.profileFriends.empty") }}
+        </p>
+      </div>
+    </SidebarCard>
   </div>
 </template>
 
@@ -121,7 +127,12 @@ import type { FriendCard } from "~/types/pages/profile";
 const props = defineProps<{
   suggestions: FriendCard[];
   activeNow: FriendCard[];
-  onConnect?: (friend: FriendCard) => void;
+  suggestionsHeadingId?: string;
+  activeHeadingId?: string;
+}>();
+
+const emit = defineEmits<{
+  (e: "connect", friend: FriendCard): void;
 }>();
 
 const { t } = useI18n();
@@ -153,6 +164,6 @@ function statusLabel(status: FriendCard["status"]) {
 }
 
 function handleConnect(friend: FriendCard) {
-  props.onConnect?.(friend);
+  emit("connect", friend);
 }
 </script>
