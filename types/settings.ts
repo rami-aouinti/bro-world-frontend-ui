@@ -68,6 +68,11 @@ export interface SiteWorldSettings {
   enableIntegrations?: boolean;
   requireVerification?: boolean;
   allowGuests?: boolean;
+  createdBy?: {
+    name: string;
+    handle?: string | null;
+    avatarUrl?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 }

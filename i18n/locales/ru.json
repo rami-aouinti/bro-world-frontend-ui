@@ -194,7 +194,8 @@
         "adminBlog": "Блог",
         "help": "Помощь",
         "about": "О нас",
-        "contact": "Контакты"
+        "contact": "Контакты",
+        "home": "Главная"
       }
     },
     "widgets": {
@@ -2222,6 +2223,32 @@
             "answer": "Submit a request through the account tools or email  and we will follow up within 72 hours."
           }
         }
+      }
+    },
+    "index": {
+      "title": "Исследуйте миры BroWorld",
+      "description": "Откройте отобранные пространства, которые формируют опыт BroWorld, и переходите в те миры, что важны именно вам.",
+      "worldListTitle": "Доступные миры",
+      "badges": {
+        "active": "Активный мир"
+      },
+      "createdBy": "Создано {name}",
+      "localeLabel": "Язык: {locale}",
+      "visibility": {
+        "public": "Публичный мир",
+        "private": "Приватный мир"
+      },
+      "cardAria": "Мир {name}. {visibility}.",
+      "actions": {
+        "enter": "Войти в мир",
+        "enterAria": "Войти в мир {world}",
+        "setActive": "Сделать активным",
+        "active": "Активен",
+        "activateAria": "Сделать {world} активным миром"
+      },
+      "empty": {
+        "title": "Нет доступных миров",
+        "description": "Загляните позже, чтобы открыть новые пространства, или создайте свой собственный мир."
       }
     },
     "profile": {

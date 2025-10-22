@@ -337,6 +337,15 @@ const defaultLocalizedSettings: Record<string, SiteLocalizedSettings> = Object.f
 
 const BASE_MENU_BLUEPRINTS: MenuBlueprint[] = [
   {
+    id: "home",
+    label: "layout.sidebar.items.home",
+    icon: "mdi:home-variant-outline",
+    translate: true,
+    to: "/home",
+    isVisible: true,
+    order: -2,
+  },
+  {
     id: "create-world",
     label: "layout.sidebar.items.createWorld",
     icon: "mdi:earth-plus",
@@ -860,6 +869,32 @@ export function getDefaultMenuBlueprints(): SiteMenuItem[] {
 const defaultMenuBlueprints = getDefaultMenuBlueprints();
 const defaultMenus = composeMenusWithPlugins(defaultMenuBlueprints, DEFAULT_WORLD_PLUGIN_IDS);
 
+const homeWorld: SiteWorldSettings = {
+  id: "home",
+  name: "Community Feed",
+  slug: "home",
+  pluginIds: ["blog", "messenger", "education"],
+  locale: defaultLanguageCode,
+  description: "Stay in sync with every launch, announcement, and story across BroWorld.",
+  visibility: "public",
+  region: "global",
+  theme: "aurora",
+  launchDate: DEFAULT_CONTENT_UPDATED_AT,
+  tags: ["featured", "global"],
+  guidelines: "Celebrate each other, share wins, and keep the feed inspiring.",
+  enableMonetization: false,
+  enableIntegrations: true,
+  requireVerification: false,
+  allowGuests: true,
+  createdBy: {
+    name: "BroWorld Core Team",
+    handle: "@bro.world",
+    avatarUrl: null,
+  },
+  createdAt: DEFAULT_CONTENT_UPDATED_AT,
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
 const defaultWorld: SiteWorldSettings = {
   id: "bro-world",
   name: DEFAULT_SITE_NAME,
@@ -877,6 +912,65 @@ const defaultWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: false,
   allowGuests: true,
+  createdBy: {
+    name: "Aurora Studio",
+    handle: "@aurora",
+    avatarUrl: null,
+  },
+  createdAt: DEFAULT_CONTENT_UPDATED_AT,
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
+const innovationWorld: SiteWorldSettings = {
+  id: "innovation-lab",
+  name: "Innovation Lab",
+  slug: "innovation-lab",
+  pluginIds: ["game", "education", "crm"],
+  locale: "en",
+  description:
+    "Prototype gamified onboarding loops, product experiments, and cross-team rituals in a safe sandbox.",
+  visibility: "private",
+  region: "north-america",
+  theme: "midnight",
+  launchDate: DEFAULT_CONTENT_UPDATED_AT,
+  tags: ["beta", "experiments"],
+  guidelines: "Keep conversations confidential and ship new ideas weekly.",
+  enableMonetization: false,
+  enableIntegrations: true,
+  requireVerification: true,
+  allowGuests: false,
+  createdBy: {
+    name: "Skunkworks Crew",
+    handle: "@innovation",
+    avatarUrl: null,
+  },
+  createdAt: DEFAULT_CONTENT_UPDATED_AT,
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
+const marketplaceWorld: SiteWorldSettings = {
+  id: "creator-market",
+  name: "Creator Market",
+  slug: "creator-market",
+  pluginIds: ["ecommerce", "crm", "blog"],
+  locale: "en",
+  description:
+    "Connect with verified creators, launch product drops, and manage partnerships in one vibrant hub.",
+  visibility: "public",
+  region: "global",
+  theme: "sunrise",
+  launchDate: DEFAULT_CONTENT_UPDATED_AT,
+  tags: ["commerce", "community"],
+  guidelines: "Promote collaborations that uplift the community and credit every contributor.",
+  enableMonetization: true,
+  enableIntegrations: true,
+  requireVerification: true,
+  allowGuests: false,
+  createdBy: {
+    name: "Marketplace Guild",
+    handle: "@market",
+    avatarUrl: null,
+  },
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -922,12 +1016,27 @@ export const defaultSiteSettings: SiteSettings = {
   menus: cloneMenuTree(defaultMenus),
   worlds: [
     {
+      ...homeWorld,
+      pluginIds: [...homeWorld.pluginIds],
+      tags: [...(homeWorld.tags ?? [])],
+    },
+    {
       ...defaultWorld,
       pluginIds: [...defaultWorld.pluginIds],
       tags: [...(defaultWorld.tags ?? [])],
     },
+    {
+      ...innovationWorld,
+      pluginIds: [...innovationWorld.pluginIds],
+      tags: [...(innovationWorld.tags ?? [])],
+    },
+    {
+      ...marketplaceWorld,
+      pluginIds: [...marketplaceWorld.pluginIds],
+      tags: [...(marketplaceWorld.tags ?? [])],
+    },
   ],
-  activeWorldId: defaultWorld.id,
+  activeWorldId: homeWorld.id,
   defaultLanguage: defaultLanguageCode,
   languages: defaultLanguages,
   localized: defaultLocalizedSettings,
