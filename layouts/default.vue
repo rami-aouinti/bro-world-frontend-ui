@@ -1070,10 +1070,6 @@ watch(
 const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
 
 const resolvedPluginIds = computed(() => {
-  if (isHomeRoute.value) {
-    return allPluginIds;
-  }
-
   const pluginSet = new Set<string>();
   const activeWorlds = siteSettingsState.activeWorlds.value ?? [];
 
