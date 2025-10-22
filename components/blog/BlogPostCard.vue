@@ -38,17 +38,6 @@
         :summary="post.summary"
         :content="post.content"
       />
-      <span
-        v-if="shouldShowPostLinkCta"
-        class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors group-hover:text-primary group-hover:underline"
-      >
-        {{ viewPostLabel }}
-        <Icon
-          name="mdi:arrow-top-right"
-          class="h-4 w-4"
-          aria-hidden="true"
-        />
-      </span>
     </component>
     <BlogPostReactCard
       :counts="{ care: 0, haha: 0, love: 0, wow: 0, like: 4, sad: 2, angry: 1 }"
