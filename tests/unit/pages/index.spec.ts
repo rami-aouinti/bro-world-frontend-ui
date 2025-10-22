@@ -125,7 +125,7 @@ const defaultStubs = {
     localePathMock.mockClear();
   });
 
-  it("renders a card for each active world", () => {
+  it("renders a card for each world", () => {
     const wrapper = mount(IndexPage, {
       global: {
         stubs: defaultStubs,
@@ -133,7 +133,7 @@ const defaultStubs = {
     });
 
     const cards = wrapper.findAll('[data-test="world-explorer-card"]');
-    expect(cards).toHaveLength(activeWorldsRef.value.length);
+    expect(cards).toHaveLength(siteSettingsRef.value?.worlds?.length ?? 0);
   });
 
   it("falls back to all worlds when no active worlds are configured", () => {
