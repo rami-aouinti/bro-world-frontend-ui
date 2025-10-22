@@ -1105,34 +1105,23 @@ function cancelDeleteEvent() {
 
 const calendarSharedState = useProfileCalendarSharedState();
 
-function buildSharedStatePayload() {
-  const baseState = calendarSharedState.value;
-  const sharedState = {
-    ...baseState,
-    events: [...calendarEvents.value],
-    upcomingEvents: [...upcomingEvents.value],
-    selectedEvent: selectedEvent.value,
-  };
+function syncSharedState() {
+  const sharedState = calendarSharedState.value;
+
+  sharedState.events = [...calendarEvents.value];
+  sharedState.upcomingEvents = [...upcomingEvents.value];
+  sharedState.selectedEvent = selectedEvent.value;
 
   if (import.meta.server) {
-    return {
-      ...sharedState,
-      selectEvent: undefined,
-      openEventEditor: undefined,
-      requestDeleteEvent: undefined,
-    };
+    sharedState.selectEvent = undefined;
+    sharedState.openEventEditor = undefined;
+    sharedState.requestDeleteEvent = undefined;
+    return;
   }
 
-  return {
-    ...sharedState,
-    selectEvent,
-    openEventEditor,
-    requestDeleteEvent,
-  };
-}
-
-function syncSharedState() {
-  calendarSharedState.value = buildSharedStatePayload();
+  sharedState.selectEvent = selectEvent;
+  sharedState.openEventEditor = openEventEditor;
+  sharedState.requestDeleteEvent = requestDeleteEvent;
 }
 
 watch(
@@ -1144,15 +1133,14 @@ watch(
 );
 
 onBeforeUnmount(() => {
-  calendarSharedState.value = {
-    ...calendarSharedState.value,
-    events: [],
-    upcomingEvents: [],
-    selectedEvent: null,
-    selectEvent: undefined,
-    openEventEditor: undefined,
-    requestDeleteEvent: undefined,
-  };
+  const sharedState = calendarSharedState.value;
+
+  sharedState.events = [];
+  sharedState.upcomingEvents = [];
+  sharedState.selectedEvent = null;
+  sharedState.selectEvent = undefined;
+  sharedState.openEventEditor = undefined;
+  sharedState.requestDeleteEvent = undefined;
 });
 </script>
 
