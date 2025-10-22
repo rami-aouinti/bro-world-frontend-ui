@@ -983,6 +983,87 @@ const marketplaceWorld: SiteWorldSettings = {
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
 
+const designWorld: SiteWorldSettings = {
+  id: "design-sprint-hq",
+  name: "Design Sprint HQ",
+  slug: "design-sprint-hq",
+  pluginIds: ["education", "messenger", "blog"],
+  locale: "en",
+  description:
+    "Run async workshops, publish recaps, and align the entire product squad in one vibrant studio.",
+  visibility: "public",
+  region: "europe-west",
+  theme: "sunrise",
+  launchDate: DEFAULT_CONTENT_UPDATED_AT,
+  tags: ["design", "collaboration"],
+  guidelines: "Keep feedback actionable, celebrate learnings, and document every sprint.",
+  enableMonetization: false,
+  enableIntegrations: true,
+  requireVerification: false,
+  allowGuests: true,
+  createdBy: {
+    name: "Pixelcraft Collective",
+    handle: "@pixelcraft",
+    avatarUrl: null,
+  },
+  createdAt: DEFAULT_CONTENT_UPDATED_AT,
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
+const talentWorld: SiteWorldSettings = {
+  id: "talent-network",
+  name: "Talent Network",
+  slug: "talent-network",
+  pluginIds: ["job-board", "crm", "messenger"],
+  locale: "en",
+  description:
+    "Spot rising builders, manage outreach campaigns, and coordinate interviews with the hiring crew.",
+  visibility: "private",
+  region: "global",
+  theme: "aurora",
+  launchDate: DEFAULT_CONTENT_UPDATED_AT,
+  tags: ["hiring", "operations"],
+  guidelines: "Share referrals with context, respect candidate privacy, and keep pipelines tidy.",
+  enableMonetization: false,
+  enableIntegrations: true,
+  requireVerification: true,
+  allowGuests: false,
+  createdBy: {
+    name: "People Ops Guild",
+    handle: "@peopleops",
+    avatarUrl: null,
+  },
+  createdAt: DEFAULT_CONTENT_UPDATED_AT,
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
+const esportsWorld: SiteWorldSettings = {
+  id: "esports-lounge",
+  name: "Esports Lounge",
+  slug: "esports-lounge",
+  pluginIds: ["game", "messenger", "education"],
+  locale: "en",
+  description:
+    "Host scrim reviews, share tournament highlights, and coach every roster with data-rich playbooks.",
+  visibility: "public",
+  region: "asia-pacific",
+  theme: "midnight",
+  launchDate: DEFAULT_CONTENT_UPDATED_AT,
+  tags: ["gaming", "community"],
+  guidelines: "Keep callouts constructive, respect scrim NDAs, and hype every victory together.",
+  enableMonetization: true,
+  enableIntegrations: true,
+  requireVerification: true,
+  allowGuests: false,
+  createdBy: {
+    name: "Arena Ops Squad",
+    handle: "@arena",
+    avatarUrl: null,
+  },
+  createdAt: DEFAULT_CONTENT_UPDATED_AT,
+  updatedAt: DEFAULT_CONTENT_UPDATED_AT,
+};
+
 export const defaultSiteSettings: SiteSettings = {
   siteName: DEFAULT_SITE_NAME,
   tagline: DEFAULT_TAGLINE,
@@ -1043,6 +1124,21 @@ export const defaultSiteSettings: SiteSettings = {
       ...marketplaceWorld,
       pluginIds: [...marketplaceWorld.pluginIds],
       tags: [...(marketplaceWorld.tags ?? [])],
+    },
+    {
+      ...designWorld,
+      pluginIds: [...designWorld.pluginIds],
+      tags: [...(designWorld.tags ?? [])],
+    },
+    {
+      ...talentWorld,
+      pluginIds: [...talentWorld.pluginIds],
+      tags: [...(talentWorld.tags ?? [])],
+    },
+    {
+      ...esportsWorld,
+      pluginIds: [...esportsWorld.pluginIds],
+      tags: [...(esportsWorld.tags ?? [])],
     },
   ],
   activeWorldId: homeWorld.id,
