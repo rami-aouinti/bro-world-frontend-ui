@@ -228,7 +228,6 @@ import { useDevicePixelRatio } from "@vueuse/core";
 import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
-import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useAuthSession } from "~/stores/auth-session";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
@@ -262,9 +261,6 @@ definePageMeta({
   documentDriven: false,
 });
 const { t, locale, localeProperties } = useI18n();
-usePageLoadingOverlay({
-  loader: () => import("~/components/loading/overlays/ProfileOverviewLoadingOverlay.vue"),
-});
 
 const pageDescription = computed(() => t("seo.profile.description"));
 

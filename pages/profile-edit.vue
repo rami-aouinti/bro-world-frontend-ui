@@ -7,7 +7,6 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 
 const ProfileEditForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ProfileEditForm.vue"),
@@ -15,9 +14,6 @@ const ProfileEditForm = defineAsyncComponent({
 });
 
 const { t, locale, localeProperties } = useI18n();
-usePageLoadingOverlay({
-  loader: () => import("~/components/loading/overlays/ProfileEditLoadingOverlay.vue"),
-});
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
