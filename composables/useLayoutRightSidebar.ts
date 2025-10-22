@@ -77,7 +77,7 @@ export function useLayoutRightSidebar() {
       (value) => {
         rightSidebarContent.value = normalizeContent(value);
       },
-      { immediate: true, flush: "post" },
+      { immediate: true },
     );
 
     onBeforeUnmount(() => {
