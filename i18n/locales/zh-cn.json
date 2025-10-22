@@ -2235,6 +2235,13 @@
       "title": "探索 BroWorld 世界",
       "description": "发现支撑 BroWorld 体验的精选世界，进入与你最相关的空间。",
       "worldListTitle": "可用世界",
+      "search": {
+        "label": "搜索世界",
+        "placeholder": "按名称、创建者或标签搜索",
+        "ariaLabel": "在可用世界中搜索",
+        "noResults": "没有与“{query}”匹配的世界。",
+        "suggestions": "尝试不同的关键词或清除筛选条件以查看所有世界。"
+      },
       "badges": {
         "active": "当前世界"
       },

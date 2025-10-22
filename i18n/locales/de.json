@@ -2238,6 +2238,13 @@
       "title": "BroWorld-Welten entdecken",
       "description": "Entdecke kuratierte Welten, die das BroWorld-Erlebnis antreiben, und wechsle in die Spaces, die für dich zählen.",
       "worldListTitle": "Verfügbare Welten",
+      "search": {
+        "label": "Welten durchsuchen",
+        "placeholder": "Suche nach Name, Ersteller oder Tag",
+        "ariaLabel": "Durchsuche verfügbare Welten",
+        "noResults": "Keine Welten passen zu „{query}“.",
+        "suggestions": "Versuche es mit anderen Suchbegriffen oder setze die Filter zurück, um alle Welten zu sehen."
+      },
       "badges": {
         "active": "Aktive Welt"
       },
