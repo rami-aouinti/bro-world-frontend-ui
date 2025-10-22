@@ -4,14 +4,11 @@
     <div class="login-page__glow login-page__glow--bottom" />
 
     <v-container
-      class="py-8"
       fluid
     >
       <v-row justify="center">
         <v-col
           cols="12"
-          md="6"
-          lg="4"
         >
           <v-card
             :loading="isRedirecting"
@@ -28,9 +25,6 @@
             >
               <div class="py-4 text-center text-white">
                 <div class="text-h4 font-weight-bold">Bro World</div>
-                <p class="text-body-2 text-high-emphasis mb-0">
-                  Where your friends, games, and stories come together
-                </p>
               </div>
               <AuthSocial
                 :loading="isRedirecting"
@@ -38,44 +32,7 @@
               />
             </v-sheet>
 
-            <v-card-text class="pa-6 pt-10">
-              <div class="login-intro mb-8">
-                <div class="text-h5 font-weight-bold text-white mb-2">Welcome back</div>
-                <p class="text-body-2 mb-6 text-medium-emphasis">
-                  Sign in to pick up conversations, continue your quests, and explore fresh updates
-                  curated just for you.
-                </p>
-                <div class="login-highlights">
-                  <v-chip
-                    class="login-highlights__chip"
-                    color="primary"
-                    size="small"
-                    variant="flat"
-                    prepend-icon="mdi-forum-outline"
-                  >
-                    Vibrant communities
-                  </v-chip>
-                  <v-chip
-                    class="login-highlights__chip"
-                    color="primary"
-                    size="small"
-                    variant="flat"
-                    prepend-icon="mdi-gamepad-variant-outline"
-                  >
-                    Instant game sync
-                  </v-chip>
-                  <v-chip
-                    class="login-highlights__chip"
-                    color="primary"
-                    size="small"
-                    variant="flat"
-                    prepend-icon="mdi-shield-check-outline"
-                  >
-                    Secure access
-                  </v-chip>
-                </div>
-              </div>
-
+            <v-card-text class="pa-3 pt-4">
               <AuthLoginForm :disabled="isRedirecting" />
             </v-card-text>
 

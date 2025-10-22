@@ -1,21 +1,12 @@
 .login-page {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
-  padding: clamp(24px, 6vw, 80px) 16px;
-  background:
-    radial-gradient(circle at top left, rgba(88, 101, 242, 0.25), transparent 55%),
-    radial-gradient(circle at bottom right, rgba(45, 212, 191, 0.18), transparent 60%),
-    linear-gradient(160deg, #0f172a 0%, #020617 50%, #0b1120 100%);
 }
 
 .login-page__glow {
   position: absolute;
-  width: clamp(220px, 30vw, 360px);
-  height: clamp(220px, 30vw, 360px);
   filter: blur(120px);
   opacity: 0.7;
   border-radius: 999px;
@@ -24,31 +15,20 @@
 
 .login-page__glow--top {
   top: -120px;
-  right: clamp(-120px, -8vw, -40px);
-  background: rgba(96, 165, 250, 0.4);
 }
 
 .login-page__glow--bottom {
   bottom: -140px;
-  left: clamp(-160px, -12vw, -60px);
-  background: rgba(129, 140, 248, 0.4);
 }
 
 .auth-card {
-  max-width: 520px;
   margin-inline: auto;
   position: relative;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.96));
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  backdrop-filter: blur(16px);
 }
 
 .login-brand {
   position: relative;
   top: -44px;
-  background: linear-gradient(130deg, rgba(56, 189, 248, 0.65), rgba(59, 130, 246, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 30px 60px rgba(37, 99, 235, 0.35);
 }
 
 .login-intro {
@@ -71,15 +51,8 @@
 }
 
 .login-highlights__chip {
-  color: #0f172a !important;
   font-weight: 600;
   letter-spacing: 0.01em;
-  background: rgba(255, 255, 255, 0.85) !important;
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.25);
-}
-
-.login-highlights__chip :deep(.v-chip__prepend i) {
-  color: rgba(15, 23, 42, 0.9);
 }
 
 .login-overlay :deep(.v-overlay__scrim) {

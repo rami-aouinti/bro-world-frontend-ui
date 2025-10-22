@@ -4,7 +4,7 @@
       v-for="button in buttons"
       :key="button.provider"
       type="button"
-      class="auth-social__button"
+      class="auth-social__button py-4 my-2"
       :class="{ 'auth-social__button--compact': isCompact }"
       :style="{ background: button.gradient }"
       :aria-label="button.label"
@@ -132,6 +132,6 @@ function handleRedirect(provider: SocialProvider) {
 }
 
 .auth-social__button:not(:disabled):active {
-  transform: translateY(-1px);
+  transform: translateY(-10px);
 }
 </style>
