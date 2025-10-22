@@ -304,9 +304,14 @@ import {
 } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
-import { getDefaultSiteSettings } from "~/lib/settings/defaults";
-import type { SiteSettings, SiteThemeDefinition } from "~/types/settings";
+import {
+  composeMenusWithPlugins,
+  getDefaultMenuBlueprints,
+  getDefaultSiteSettings,
+} from "~/lib/settings/defaults";
+import type { SiteSettings, SiteThemeDefinition, SiteWorldSettings } from "~/types/settings";
 import { withSecureCookieOptions } from "~/lib/cookies";
+import { getAllPluginIds, getPluginQuickLaunchEntries } from "~/lib/navigation/plugins";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
@@ -917,9 +922,45 @@ if (import.meta.client) {
 const isRightDrawerReady = ref(!canShowRightWidgets.value);
 
 const siteSettingsState = useSiteSettingsState();
-const enabledPluginSet = computed(() => new Set(siteSettingsState.enabledPlugins.value));
-const isMessengerEnabled = computed(() => enabledPluginSet.value.has("messenger"));
-const isEcommerceEnabled = computed(() => enabledPluginSet.value.has("ecommerce"));
+
+const allPluginIds = getAllPluginIds();
+const quickLaunchRegistry = getPluginQuickLaunchEntries();
+
+function appendWorldPlugins(
+  world: SiteWorldSettings | null | undefined,
+  target: Set<string>,
+) {
+  if (!world) {
+    return;
+  }
+
+  const installed = (world as { installedPlugins?: unknown }).installedPlugins;
+  const pluginIds =
+    Array.isArray(installed) && installed.length
+      ? installed
+      : world.pluginIds ?? [];
+
+  for (const pluginId of pluginIds ?? []) {
+    if (typeof pluginId !== "string") {
+      continue;
+    }
+
+    const normalized = pluginId.trim();
+    if (normalized) {
+      target.add(normalized);
+    }
+  }
+}
+
+const isHomeRoute = computed(() => {
+  const routeName = currentRoute.value?.name;
+  if (routeName === "index") {
+    return true;
+  }
+
+  const path = currentRoute.value?.path ?? "";
+  return path === "/" || path === "";
+});
 
 watch(
   themeName,
@@ -946,6 +987,50 @@ watch(
 );
 
 const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
+
+const resolvedPluginIds = computed(() => {
+  if (isHomeRoute.value) {
+    return allPluginIds;
+  }
+
+  const pluginSet = new Set<string>();
+  const activeWorlds = siteSettingsState.activeWorlds.value ?? [];
+
+  if (activeWorlds.length) {
+    for (const world of activeWorlds) {
+      appendWorldPlugins(world, pluginSet);
+    }
+  }
+
+  if (!pluginSet.size) {
+    const worlds = siteSettings.value.worlds ?? [];
+    const activeId = siteSettings.value.activeWorldId;
+    const fallbackWorld =
+      (typeof activeId === "string" && worlds.find((world) => world.id === activeId)) ||
+      worlds[0] ||
+      null;
+    appendWorldPlugins(fallbackWorld, pluginSet);
+  }
+
+  if (!pluginSet.size) {
+    for (const pluginId of siteSettingsState.enabledPlugins.value ?? []) {
+      if (typeof pluginId !== "string") {
+        continue;
+      }
+
+      const normalized = pluginId.trim();
+      if (normalized) {
+        pluginSet.add(normalized);
+      }
+    }
+  }
+
+  return pluginSet.size ? Array.from(pluginSet) : [];
+});
+
+const resolvedPluginSet = computed(() => new Set(resolvedPluginIds.value));
+const isMessengerEnabled = computed(() => resolvedPluginSet.value.has("messenger"));
+const isEcommerceEnabled = computed(() => resolvedPluginSet.value.has("ecommerce"));
 
 const worldSummaryTitle = computed(() => t("layout.worldSummary.title", "Active world"));
 
@@ -1087,38 +1172,23 @@ watch(themePrimaryCookie, (value, oldValue) => {
   }
 });
 
-const baseAppIcons: Array<{
-  name: string;
-  label: string;
-  to?: string;
-  plugin?: string;
-}> = [
-  {
-    name: "mdi:shopping-outline",
-    label: "layout.appIcons.ecommerce",
-    to: "/ecommerce",
-    plugin: "ecommerce",
-  },
-  {
-    name: "mdi:school-outline",
-    label: "layout.appIcons.education",
-    to: "/education",
-    plugin: "education",
-  },
-  { name: "mdi:briefcase-outline", label: "layout.appIcons.briefcase" },
-  { name: "mdi:database", label: "layout.appIcons.database" },
-  {
-    name: "mdi:gamepad-variant-outline",
-    label: "layout.appIcons.game",
-    to: "/game",
-    plugin: "game",
-  },
-];
+const baseMenuSource = computed(() => {
+  const blueprintMenus = siteSettings.value.menuBlueprints;
+  if (blueprintMenus?.length) {
+    return blueprintMenus;
+  }
+
+  return getDefaultMenuBlueprints();
+});
+
+const composedSidebarMenus = computed(() =>
+  composeMenusWithPlugins(baseMenuSource.value, resolvedPluginIds.value),
+);
 
 const appIcons = computed(() =>
-  baseAppIcons
-    .filter((icon) => !icon.plugin || enabledPluginSet.value.has(icon.plugin))
-    .map(({ plugin, ...icon }) => icon),
+  quickLaunchRegistry
+    .filter((entry) => resolvedPluginSet.value.has(entry.pluginId))
+    .map(({ icon, label, to }) => ({ name: icon, label, to })),
 );
 
 const canAccessAdmin = computed(() => {
@@ -1151,7 +1221,9 @@ const sidebarItems = computed<LayoutSidebarItem[]>(() => {
     return buildProfileSidebarItems(siteSettings.value.profile);
   }
 
-  const items = buildSidebarItems(siteSettings.value, canAccessAdmin.value);
+  const items = buildSidebarItems(siteSettings.value, canAccessAdmin.value, {
+    menus: composedSidebarMenus.value,
+  });
   const adminItem = items.find((item) => item.key === "admin");
 
   if (isAdminRoute.value && canAccessAdmin.value) {

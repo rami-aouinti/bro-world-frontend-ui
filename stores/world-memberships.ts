@@ -2,6 +2,7 @@ import { computed } from "vue";
 import { useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
+import type { SiteSettings } from "~/types/settings";
 import type {
   WorldMembership,
   WorldMembershipRequestPayload,
@@ -192,8 +193,10 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
     "world-memberships-entering",
     () => ({}),
   );
+  const activeWorldIdsState = useState<string[]>("world-memberships-active", () => []);
 
   const memberships = computed(() => membershipState.value);
+  const activeWorldIds = computed(() => activeWorldIdsState.value);
 
   function getMembership(worldId: string): WorldMembership {
     const key = normalizeWorldId(worldId);
@@ -262,6 +265,44 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
     return normalized;
   }
 
+  function markActive(worldId: string | null | undefined) {
+    const key = normalizeWorldId(worldId);
+
+    if (!key) {
+      activeWorldIdsState.value = [];
+      return;
+    }
+
+    activeWorldIdsState.value = [key];
+  }
+
+  function syncFromSiteSettings(settings: SiteSettings | null | undefined) {
+    const worlds = settings?.worlds ?? [];
+
+    if (!worlds.length) {
+      activeWorldIdsState.value = [];
+      return;
+    }
+
+    const normalizedEntries = worlds
+      .map((world) => {
+        const id = normalizeWorldId(world.id);
+        return id ? ([id, world] as const) : null;
+      })
+      .filter((entry): entry is readonly [string, SiteSettings["worlds"][number]] => entry !== null);
+
+    const worldById = new Map(normalizedEntries);
+    const activeId = normalizeWorldId(settings?.activeWorldId);
+
+    if (activeId && worldById.has(activeId)) {
+      activeWorldIdsState.value = [activeId];
+      return;
+    }
+
+    const [firstEntry] = normalizedEntries;
+    activeWorldIdsState.value = firstEntry ? [firstEntry[0]] : [];
+  }
+
   function isActivating(worldId: string): boolean {
     const key = normalizeWorldId(worldId);
     return Boolean(key && activationPendingState.value[key]);
@@ -289,7 +330,9 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
         data: { worldId: key } satisfies WorldMembershipRequestPayload,
       });
 
-      return applyMembershipResponse(key, response);
+      const membership = applyMembershipResponse(key, response);
+      markActive(key);
+      return membership;
     } finally {
       activationPendingState.value = applyPendingFlag(activationPendingState.value, key, false);
     }
@@ -322,9 +365,12 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
 
   return {
     memberships,
+    activeWorldIds,
     getMembership,
     setMembership,
     applyMembershipResponse,
+    markActive,
+    syncFromSiteSettings,
     isActivating,
     isEntering,
     activateWorld,

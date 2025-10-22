@@ -71,9 +71,20 @@ export function useSiteSettingsState() {
     const plugins = new Set<string>();
 
     for (const world of activeWorlds) {
-      for (const pluginId of world.pluginIds ?? []) {
-        if (typeof pluginId === "string" && pluginId) {
-          plugins.add(pluginId);
+      const installed = (world as { installedPlugins?: unknown }).installedPlugins;
+      const pluginIds =
+        Array.isArray(installed) && installed.length
+          ? installed
+          : world.pluginIds ?? [];
+
+      for (const pluginId of pluginIds ?? []) {
+        if (typeof pluginId !== "string") {
+          continue;
+        }
+
+        const normalized = pluginId.trim();
+        if (normalized) {
+          plugins.add(normalized);
         }
       }
     }
