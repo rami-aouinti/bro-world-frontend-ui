@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { definePageMeta, useSeoMeta } from "#imports";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
@@ -160,11 +160,15 @@ const activeWorldId = computed(
   () => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null,
 );
 
+const membershipMap = computed(() => membershipStore.memberships);
+const activeWorldIds = computed(() => {
+  const ids = membershipStore.activeWorldIds.value;
+
   if (ids.length > 0) {
     return [...ids];
   }
 
-  const fallbackId = siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null;
+  const fallbackId = activeWorldId.value;
 
   return fallbackId ? [fallbackId] : [];
 });
