@@ -19,10 +19,10 @@
                 {{ t("pages.profileSecurity.sections.password.title") }}
               </h4>
               <v-btn
-                  color="primary"
-                  size="large"
-                  class="flex-shrink-0"
-                  @click="handleSubmit"
+                color="primary"
+                size="large"
+                class="flex-shrink-0"
+                @click="handleSubmit"
               >
                 {{ t("pages.profileSecurity.actions.save") }}
               </v-btn>

@@ -1,77 +1,77 @@
 <template>
   <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
+    class="text-card-foreground px-3 py-2"
+    glow
   >
-      <section aria-labelledby="contact-support">
-        <h2
-          id="contact-support"
-          class="text-h5 font-weight-semibold mb-2"
-        >
-          {{ supportTitle }}
-        </h2>
-        <p class="text-body-2 text-medium-emphasis">
-          {{ supportBody }}
-        </p>
+    <section aria-labelledby="contact-support">
+      <h2
+        id="contact-support"
+        class="text-h5 font-weight-semibold mb-2"
+      >
+        {{ supportTitle }}
+      </h2>
+      <p class="text-body-2 text-medium-emphasis">
+        {{ supportBody }}
+      </p>
 
-        <div class="d-flex flex-column gap-4 mt-6">
-          <v-card
-            v-for="channel in supportChannels"
-            :key="channel.title"
-            class="contact-channel"
-            elevation="0"
-            rounded="lg"
-          >
-            <div class="d-flex align-center mb-3">
-              <v-avatar
-                size="40"
-                class="mr-3 contact-channel__icon"
-              >
-                <v-icon
-                  :icon="channel.icon"
-                  size="24"
-                  aria-hidden="true"
-                />
-              </v-avatar>
-              <h3 class="text-subtitle-1 font-weight-medium mb-0">
-                {{ channel.title }}
-              </h3>
-            </div>
-            <p class="text-body-2 text-medium-emphasis mb-4">
-              {{ channel.description }}
-            </p>
-            <v-btn
-              v-if="channel.href || channel.to"
-              :href="channel.href"
-              :to="channel.to"
-              :target="channel.target"
-              :rel="channel.rel"
-              color="primary"
-              variant="text"
-              class="justify-center px-0 mx-auto"
-              :aria-label="channel.ctaLabel"
+      <div class="d-flex flex-column gap-4 mt-6">
+        <v-card
+          v-for="channel in supportChannels"
+          :key="channel.title"
+          class="contact-channel"
+          elevation="0"
+          rounded="lg"
+        >
+          <div class="d-flex align-center mb-3">
+            <v-avatar
+              size="40"
+              class="mr-3 contact-channel__icon"
             >
-              {{ channel.cta }}
-            </v-btn>
-          </v-card>
-        </div>
-      </section>
-    </SidebarCard>
+              <v-icon
+                :icon="channel.icon"
+                size="24"
+                aria-hidden="true"
+              />
+            </v-avatar>
+            <h3 class="text-subtitle-1 font-weight-medium mb-0">
+              {{ channel.title }}
+            </h3>
+          </div>
+          <p class="text-body-2 text-medium-emphasis mb-4">
+            {{ channel.description }}
+          </p>
+          <v-btn
+            v-if="channel.href || channel.to"
+            :href="channel.href"
+            :to="channel.to"
+            :target="channel.target"
+            :rel="channel.rel"
+            color="primary"
+            variant="text"
+            class="justify-center px-0 mx-auto"
+            :aria-label="channel.ctaLabel"
+          >
+            {{ channel.cta }}
+          </v-btn>
+        </v-card>
+      </div>
+    </section>
+  </SidebarCard>
 
   <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
+    class="text-card-foreground px-3 py-2"
+    glow
   >
-      <h2
-        id="availability-title"
-        class="text-h6 font-weight-semibold mb-2"
-      >
-        {{ availabilityTitle }}
-      </h2>
-      <p class="text-body-2 text-medium-emphasis mb-0">
-        {{ availabilityBody }}
-      </p>
-    </SidebarCard>
+    <h2
+      id="availability-title"
+      class="text-h6 font-weight-semibold mb-2"
+    >
+      {{ availabilityTitle }}
+    </h2>
+    <p class="text-body-2 text-medium-emphasis mb-0">
+      {{ availabilityBody }}
+    </p>
+  </SidebarCard>
 </template>
 
 <script setup lang="ts">

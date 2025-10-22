@@ -1,7 +1,5 @@
 <template>
-  <section
-    aria-labelledby="contact-form-heading"
-  >
+  <section aria-labelledby="contact-form-heading">
     <v-form
       ref="formRef"
       aria-describedby="contact-status"
@@ -10,26 +8,26 @@
     >
       <div>
         <v-text-field
-            id="contact-name"
-            v-model="form.name"
-            :label="t('pages.contact.form.name')"
-            :error="Boolean(errors.name)"
-            :error-messages="nameErrorMessages"
-            :aria-describedby="errors.name ? 'name-error' : undefined"
-            :aria-invalid="errors.name ? 'true' : 'false'"
-            data-test="name-field"
-            variant="outlined"
-            density="compact"
-            name="name"
-            autocomplete="name"
-            required
+          id="contact-name"
+          v-model="form.name"
+          :label="t('pages.contact.form.name')"
+          :error="Boolean(errors.name)"
+          :error-messages="nameErrorMessages"
+          :aria-describedby="errors.name ? 'name-error' : undefined"
+          :aria-invalid="errors.name ? 'true' : 'false'"
+          data-test="name-field"
+          variant="outlined"
+          density="compact"
+          name="name"
+          autocomplete="name"
+          required
         />
         <p
-            v-if="errors.name"
-            :id="'name-error'"
-            class="sr-only"
-            aria-live="assertive"
-            data-test="name-error"
+          v-if="errors.name"
+          :id="'name-error'"
+          class="sr-only"
+          aria-live="assertive"
+          data-test="name-error"
         >
           {{ validationMessage(errors.name) }}
         </p>
@@ -37,28 +35,28 @@
 
       <div>
         <v-text-field
-            id="contact-email"
-            v-model="form.email"
-            :label="t('pages.contact.form.email')"
-            :error="Boolean(errors.email)"
-            :error-messages="emailErrorMessages"
-            :aria-describedby="errors.email ? 'email-error' : undefined"
-            :aria-invalid="errors.email ? 'true' : 'false'"
-            data-test="email-field"
-            variant="outlined"
-            density="compact"
-            name="email"
-            type="email"
-            autocomplete="email"
-            inputmode="email"
-            required
+          id="contact-email"
+          v-model="form.email"
+          :label="t('pages.contact.form.email')"
+          :error="Boolean(errors.email)"
+          :error-messages="emailErrorMessages"
+          :aria-describedby="errors.email ? 'email-error' : undefined"
+          :aria-invalid="errors.email ? 'true' : 'false'"
+          data-test="email-field"
+          variant="outlined"
+          density="compact"
+          name="email"
+          type="email"
+          autocomplete="email"
+          inputmode="email"
+          required
         />
         <p
-            v-if="errors.email"
-            :id="'email-error'"
-            class="sr-only"
-            aria-live="assertive"
-            data-test="email-error"
+          v-if="errors.email"
+          :id="'email-error'"
+          class="sr-only"
+          aria-live="assertive"
+          data-test="email-error"
         >
           {{ validationMessage(errors.email) }}
         </p>
@@ -66,26 +64,26 @@
 
       <div>
         <v-text-field
-            id="contact-subject"
-            v-model="form.subject"
-            :label="t('pages.contact.form.subject')"
-            :error="Boolean(errors.subject)"
-            :error-messages="subjectErrorMessages"
-            :aria-describedby="errors.subject ? 'subject-error' : undefined"
-            :aria-invalid="errors.subject ? 'true' : 'false'"
-            data-test="subject-field"
-            name="subject"
-            variant="outlined"
-            density="compact"
-            autocomplete="on"
-            required
+          id="contact-subject"
+          v-model="form.subject"
+          :label="t('pages.contact.form.subject')"
+          :error="Boolean(errors.subject)"
+          :error-messages="subjectErrorMessages"
+          :aria-describedby="errors.subject ? 'subject-error' : undefined"
+          :aria-invalid="errors.subject ? 'true' : 'false'"
+          data-test="subject-field"
+          name="subject"
+          variant="outlined"
+          density="compact"
+          autocomplete="on"
+          required
         />
         <p
-            v-if="errors.subject"
-            :id="'subject-error'"
-            class="sr-only"
-            aria-live="assertive"
-            data-test="subject-error"
+          v-if="errors.subject"
+          :id="'subject-error'"
+          class="sr-only"
+          aria-live="assertive"
+          data-test="subject-error"
         >
           {{ validationMessage(errors.subject) }}
         </p>
@@ -93,57 +91,57 @@
 
       <div>
         <v-textarea
-            id="contact-message"
-            v-model="form.message"
-            :label="t('pages.contact.form.message')"
-            :error="Boolean(errors.message)"
-            :error-messages="messageErrorMessages"
-            :aria-describedby="errors.message ? 'message-error' : undefined"
-            :aria-invalid="errors.message ? 'true' : 'false'"
-            auto-grow
-            variant="outlined"
-            density="compact"
-            rows="2"
-            counter="2000"
-            data-test="message-field"
-            name="message"
-            required
+          id="contact-message"
+          v-model="form.message"
+          :label="t('pages.contact.form.message')"
+          :error="Boolean(errors.message)"
+          :error-messages="messageErrorMessages"
+          :aria-describedby="errors.message ? 'message-error' : undefined"
+          :aria-invalid="errors.message ? 'true' : 'false'"
+          auto-grow
+          variant="outlined"
+          density="compact"
+          rows="2"
+          counter="2000"
+          data-test="message-field"
+          name="message"
+          required
         />
         <p
-            v-if="errors.message"
-            :id="'message-error'"
-            class="sr-only"
-            aria-live="assertive"
-            data-test="message-error"
+          v-if="errors.message"
+          :id="'message-error'"
+          class="sr-only"
+          aria-live="assertive"
+          data-test="message-error"
         >
           {{ validationMessage(errors.message) }}
         </p>
       </div>
 
       <label
-          class="sr-only"
-          for="contact-check-field"
+        class="sr-only"
+        for="contact-check-field"
       >
         {{ t("pages.contact.form.name") }}
       </label>
       <input
-          id="contact-check-field"
-          v-model="form.honeypot"
-          name="website"
-          type="text"
-          class="sr-only"
-          tabindex="-1"
-          aria-hidden="true"
-          autocomplete="off"
+        id="contact-check-field"
+        v-model="form.honeypot"
+        name="website"
+        type="text"
+        class="sr-only"
+        tabindex="-1"
+        aria-hidden="true"
+        autocomplete="off"
       />
 
       <v-btn
-          type="submit"
-          color="primary"
-          :loading="isSubmitting"
-          :disabled="isSubmitting"
-          class="contact-form__submit"
-          data-test="submit-button"
+        type="submit"
+        color="primary"
+        :loading="isSubmitting"
+        :disabled="isSubmitting"
+        class="contact-form__submit"
+        data-test="submit-button"
       >
         {{ isSubmitting ? t("pages.contact.form.sending") : t("pages.contact.form.submit") }}
       </v-btn>
