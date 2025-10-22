@@ -221,7 +221,7 @@ export const WORLD_PLUGIN_REGISTRY: WorldPluginDefinition[] = [
     ],
   },
   {
-    id: "job-board",
+    id: "job",
     name: "Job board",
     description: "Recruitment funnels with job listings, applications, and hiring workflows.",
     icon: "mdi:briefcase-search-outline",

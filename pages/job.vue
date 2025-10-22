@@ -107,7 +107,7 @@ definePageMeta({
   alias: ["/world/:worldSlug/job"],
   description: "Job page",
   breadcrumb: "disabled",
-  requiresPlugin: "job-board",
+  requiresPlugin: "job",
   showRightWidgets: true,
 });
 
