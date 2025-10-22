@@ -2,8 +2,6 @@ main.error-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - var(--app-bar-height, 0px));
-  padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 4vw, 3rem);
 }
 
 .error-page__card {
@@ -66,7 +64,6 @@ main.error-page {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: 1rem 0;
 }
 
 .sr-only {
@@ -81,8 +78,3 @@ main.error-page {
   border: 0;
 }
 
-@media (max-width: 960px) {
-  .error-page__sidebar {
-    padding-top: 2rem;
-  }
-}

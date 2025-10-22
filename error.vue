@@ -27,7 +27,7 @@
       aria-labelledby="error-heading"
     >
       <SidebarCard
-        class="error-page__card"
+        class="error-page__card px-3 py-3"
         particles
         glow
       >
