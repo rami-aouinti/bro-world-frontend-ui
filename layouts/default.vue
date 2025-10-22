@@ -1308,6 +1308,8 @@ if (import.meta.client) {
   loadingIndicator = useLoadingIndicator({ throttle: 0 });
 }
 
+const excludedSidebarPluginIds = new Set(["messenger"]);
+
 const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   if (sidebarVariant.value === "profile") {
     return buildProfileSidebarItems(siteSettings.value.profile);
@@ -1354,12 +1356,9 @@ const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   }
 
   return Array.from(pluginIds)
-    .map((pluginId) => {
-      const normalized = pluginId.trim();
-      if (!normalized) {
-        return null;
-      }
-
+    .map((pluginId) => pluginId.trim())
+    .filter((pluginId) => pluginId && !excludedSidebarPluginIds.has(pluginId))
+    .map((normalized) => {
       return {
         key: `plugin-${normalized}`,
         label: formatPluginLabel(normalized),
