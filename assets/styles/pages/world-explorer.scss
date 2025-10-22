@@ -1,33 +1,37 @@
 main.world-explorer-page {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 1.25rem;
 }
 
 .world-explorer-page__header {
   display: grid;
-  gap: 1rem;
+  gap: .75rem;
 }
 
 .world-explorer-page__title {
   margin: 0;
-  font-size: clamp(2rem, 2.5vw + 1rem, 2.75rem);
-  font-weight: 700;
-  line-height: 1.15;
+  font-size: clamp(2rem, 2.5vw + 1rem, 2.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.01em;
   color: hsl(var(--foreground));
 }
 
 .world-explorer-page__description {
   margin: 0;
-  max-width: 52ch;
+  max-width: 62ch;
   color: hsl(var(--muted-foreground));
-  font-size: 1.05rem;
+  font-size: 1.02rem;
+  opacity: .95;
 }
 
+/* Grid responsive plus dense, hauteurs homogènes */
 .world-explorer-page__grid {
   display: grid;
-  gap: 1.5rem;
+  gap: .9rem;
   grid-template-columns: 1fr;
+  align-items: stretch;
 }
 
 @media (min-width: 768px) {
@@ -35,39 +39,28 @@ main.world-explorer-page {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-
 @media (min-width: 1200px) {
   .world-explorer-page__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.world-explorer-page__empty {
-  text-align: left;
-}
+/* Cartes = pleine hauteur */
+.world-explorer-page__card { height: 100%; }
 
+.world-explorer-page__empty { text-align: left; }
 .world-explorer-page__empty-title {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
+  margin-bottom: .25rem;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
-
 .world-explorer-page__empty-description {
   margin: 0;
   color: hsl(var(--muted-foreground));
 }
 
-.world-explorer-page__card {
-  height: 100%;
-}
-
+/* A11y util */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }

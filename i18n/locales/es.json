@@ -2241,8 +2241,8 @@
       "createdBy": "Creado por {name}",
       "localeLabel": "Idioma: {locale}",
       "visibility": {
-        "public": "World público",
-        "private": "World privado"
+        "public": "público",
+        "private": "privado"
       },
       "cardAria": "World {name}. {visibility}.",
       "actions": {

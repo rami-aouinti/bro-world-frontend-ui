@@ -2241,8 +2241,8 @@
       "createdBy": "تم الإنشاء بواسطة {name}",
       "localeLabel": "اللغة: {locale}",
       "visibility": {
-        "public": "عالم عام",
-        "private": "عالم خاص"
+        "public": "عام",
+        "private": "خاص"
       },
       "cardAria": "العالم {name}. {visibility}.",
       "actions": {
