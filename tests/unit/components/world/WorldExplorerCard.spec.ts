@@ -44,12 +44,17 @@ vi.mock("#imports", () => {
   };
 });
 
-vi.mock("vue-i18n", () => ({
-  useI18n: () => ({
-    t: (key: string, params?: Record<string, unknown>) =>
-      params ? `${key}:${JSON.stringify(params)}` : key,
-  }),
-}));
+vi.mock("vue-i18n", () => {
+  const { ref } = require("vue");
+
+  return {
+    useI18n: () => ({
+      t: (key: string, params?: Record<string, unknown>) =>
+        params ? `${key}:${JSON.stringify(params)}` : key,
+      locale: ref("en"),
+    }),
+  };
+});
 
 const SidebarCardStub = defineComponent({
   name: "SidebarCardStub",
