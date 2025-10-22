@@ -1,9 +1,6 @@
 import type { SiteMenuItem } from "~/types/settings";
-import {
-  MenuBlueprint,
-  convertBlueprintsToMenus,
-  mergeMenuBlueprints,
-} from "~/lib/navigation/menu-blueprints";
+import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
+import { convertBlueprintsToMenus, mergeMenuBlueprints } from "~/lib/navigation/menu-blueprints";
 
 export interface PluginQuickLaunchDefinition {
   icon: string;
