@@ -580,7 +580,7 @@ const talentWorld: SiteWorldSettings = {
   id: "talent-network",
   name: "Talent Network",
   slug: "talent-network",
-  pluginIds: ["job", "crm", "messenger"],
+  pluginIds: ["job", "crm"],
   locale: "en",
   description:
     "Spot rising builders, manage outreach campaigns, and coordinate interviews with the hiring crew.",
