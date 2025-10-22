@@ -750,6 +750,25 @@
     "termsOutro": "Contactez notre équipe d'assistance si vous avez des questions sur la gestion de vos données."
   },
   "pages": {
+    "error": {
+      "badge": "Erreur {code}",
+      "statusAnnouncement": "Code d’erreur {code}",
+      "sidebarLabel": "Widgets utiles",
+      "notFound": {
+        "title": "Nous n’avons pas trouvé cette page",
+        "subtitle": "Le lien est peut-être périmé ou la page a été déplacée.",
+        "description": "Retournez à l’accueil ou ouvrez le centre d’aide pour poursuivre votre exploration."
+      },
+      "generic": {
+        "title": "Un problème est survenu",
+        "subtitle": "Une erreur inattendue a empêché le chargement de cette page.",
+        "description": "Actualisez la page ou revenez à l’accueil pour continuer votre navigation."
+      },
+      "actions": {
+        "home": "Retour à l’accueil",
+        "help": "Consulter le centre d’aide"
+      }
+    },
     "notifications": {
       "description": "Consultez les dernières mises à jour de votre communauté.",
       "summary": {

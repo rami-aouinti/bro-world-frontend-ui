@@ -750,6 +750,25 @@
     "termsOutro": "Please contact our support team if you have any questions about how we handle your data."
   },
   "pages": {
+    "error": {
+      "badge": "错误 {code}",
+      "statusAnnouncement": "错误代码 {code}",
+      "sidebarLabel": "实用工具",
+      "notFound": {
+        "title": "未找到此页面",
+        "subtitle": "链接可能已失效或页面已被移动。",
+        "description": "返回首页或打开帮助中心继续探索。"
+      },
+      "generic": {
+        "title": "发生错误",
+        "subtitle": "意外错误阻止了页面加载。",
+        "description": "请刷新页面或返回首页继续浏览。"
+      },
+      "actions": {
+        "home": "返回首页",
+        "help": "访问帮助中心"
+      }
+    },
     "notifications": {
       "description": "查看社区中的最新更新。",
       "summary": {

@@ -750,6 +750,25 @@
     "termsOutro": "Kontaktieren Sie unser Support-Team, wenn Sie Fragen zum Umgang mit Ihren Daten haben."
   },
   "pages": {
+    "error": {
+      "badge": "Fehler {code}",
+      "statusAnnouncement": "Fehlercode {code}",
+      "sidebarLabel": "Nützliche Widgets",
+      "notFound": {
+        "title": "Diese Seite wurde nicht gefunden",
+        "subtitle": "Der Link ist möglicherweise veraltet oder die Seite wurde verschoben.",
+        "description": "Gehen Sie zurück zur Startseite oder öffnen Sie das Hilfe-Center, um weiter zu erkunden."
+      },
+      "generic": {
+        "title": "Etwas ist schiefgelaufen",
+        "subtitle": "Ein unerwarteter Fehler hat das Laden dieser Seite verhindert.",
+        "description": "Aktualisieren Sie die Seite oder kehren Sie zur Startseite zurück, um fortzufahren."
+      },
+      "actions": {
+        "home": "Zur Startseite",
+        "help": "Hilfe-Center besuchen"
+      }
+    },
     "notifications": {
       "description": "Sieh dir die neuesten Aktualisierungen aus deiner Community an.",
       "summary": {

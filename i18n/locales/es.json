@@ -750,6 +750,25 @@
     "termsOutro": "Contacta a nuestro equipo de soporte si tienes alguna pregunta sobre cómo tratamos tus datos."
   },
   "pages": {
+    "error": {
+      "badge": "Error {code}",
+      "statusAnnouncement": "Código de error {code}",
+      "sidebarLabel": "Widgets útiles",
+      "notFound": {
+        "title": "No encontramos esta página",
+        "subtitle": "El enlace puede estar desactualizado o la página se movió.",
+        "description": "Vuelve al inicio o abre el centro de ayuda para seguir explorando."
+      },
+      "generic": {
+        "title": "Algo salió mal",
+        "subtitle": "Un error inesperado impidió cargar esta página.",
+        "description": "Actualiza la página o regresa al inicio para continuar."
+      },
+      "actions": {
+        "home": "Volver al inicio",
+        "help": "Ir al centro de ayuda"
+      }
+    },
     "notifications": {
       "description": "Revisa las últimas actualizaciones de tu comunidad.",
       "summary": {
