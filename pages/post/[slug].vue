@@ -3,26 +3,6 @@
     class="post-detail-page"
     aria-labelledby="post-heading"
   >
-    <div class="mb-6 flex flex-wrap items-center gap-3">
-      <v-btn
-        v-if="feedLink"
-        :to="feedLink"
-        variant="text"
-        color="primary"
-        class="px-0"
-        prepend-icon="mdi:arrow-left"
-      >
-        {{ t("blog.posts.backToFeed") }}
-      </v-btn>
-    </div>
-
-    <h1
-      id="post-heading"
-      class="text-h5 text-md-h4 font-semibold text-foreground mb-4"
-    >
-      {{ post?.title ?? t("blog.posts.detailHeading") }}
-    </h1>
-
     <v-alert
       v-if="errorMessage"
       type="error"
