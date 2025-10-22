@@ -135,36 +135,25 @@
                     class="flex flex-col gap-6"
                   >
                     <div
-                      v-if="rightSidebarContent.wrapperClass"
-                      :class="rightSidebarContent.wrapperClass"
+                      v-if="rightSidebarWrapperClass"
+                      :class="rightSidebarWrapperClass"
                     >
-                      <template v-if="rightSidebarContent.component">
-                        <div
-                          v-if="rightSidebarContent.wrapperClass"
-                          :class="rightSidebarContent.wrapperClass"
-                        >
-                          <component
-                            :is="rightSidebarContent.component"
-                            v-bind="rightSidebarContent.props"
-                          />
-                        </div>
-                        <component
-                          :is="rightSidebarContent.component"
-                          v-else
-                          v-bind="rightSidebarContent.props"
-                        />
-                      </template>
+                      <component
+                        :is="rightSidebarComponent"
+                        v-if="hasRightSidebarComponent"
+                        v-bind="rightSidebarProps"
+                      />
                       <div
                         v-else
-                        :class="['right-sidebar-placeholder', rightSidebarContent.wrapperClass]"
+                        :class="['right-sidebar-placeholder', rightSidebarWrapperClass]"
                         :style="rightSidebarPlaceholderStyle"
                         aria-hidden="true"
                       />
                     </div>
                     <component
-                      :is="rightSidebarContent.component"
-                      v-else
-                      v-bind="rightSidebarContent.props"
+                      :is="rightSidebarComponent"
+                      v-else-if="hasRightSidebarComponent"
+                      v-bind="rightSidebarProps"
                     />
                   </div>
                   <div
@@ -594,6 +583,12 @@ const showNavigation = computed(() => {
   return currentRoute.value?.meta?.showNavbar !== false;
 });
 const { rightSidebarContent } = useLayoutRightSidebar();
+const rightSidebarComponent = computed(() => rightSidebarContent.value?.component ?? null);
+const rightSidebarProps = computed<Record<string, unknown>>(
+  () => rightSidebarContent.value?.props ?? {},
+);
+const rightSidebarWrapperClass = computed(() => rightSidebarContent.value?.wrapperClass ?? null);
+const hasRightSidebarComponent = computed(() => Boolean(rightSidebarComponent.value));
 const rightSidebarPlaceholderStyle = computed<CSSProperties>(() => {
   const rawHeight =
     rightSidebarContent.value?.intrinsicHeight ?? DEFAULT_RIGHT_SIDEBAR_INTRINSIC_HEIGHT;
