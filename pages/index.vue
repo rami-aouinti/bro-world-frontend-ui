@@ -7,12 +7,21 @@
       class="world-explorer-page__header"
       aria-labelledby="world-explorer-heading"
     >
-      <h1
-        id="world-explorer-heading"
-        class="world-explorer-page__title"
-      >
-        {{ t("pages.index.title") }}
-      </h1>
+      <div class="world-explorer-page__header-top">
+        <h1
+          id="world-explorer-heading"
+          class="world-explorer-page__title"
+        >
+          {{ t("pages.index.title") }}
+        </h1>
+        <NuxtLink
+          :to="createWorldLink"
+          class="world-explorer-page__cta"
+          data-test="create-world-cta"
+        >
+          {{ t("layout.sidebar.items.createWorld") }}
+        </NuxtLink>
+      </div>
       <p class="world-explorer-page__description">
         {{ pageDescription }}
       </p>
@@ -78,7 +87,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { definePageMeta, useSeoMeta } from "#imports";
+import { definePageMeta, useLocalePath, useSeoMeta } from "#imports";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import WorldExplorerCard from "~/components/world/WorldExplorerCard.vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
@@ -94,6 +103,15 @@ const membershipStore = useWorldMembershipsStore();
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
+const visibleWorlds = computed(() => {
+  const activeWorlds = siteSettingsState.activeWorlds?.value ?? [];
+
+  if (activeWorlds.length > 0) {
+    return activeWorlds;
+  }
+
+  return worlds.value;
+});
 const worldSearchQuery = useWorldSearchQuery();
 const searchQueryDisplay = computed(() =>
   typeof worldSearchQuery.value === "string"
@@ -110,10 +128,10 @@ const normalizedSearchQuery = computed(() => {
 });
 const filteredWorlds = computed(() => {
   if (!normalizedSearchQuery.value) {
-    return worlds.value;
+    return visibleWorlds.value;
   }
 
-  return worlds.value.filter((world) => {
+  return visibleWorlds.value.filter((world) => {
     const segments: string[] = [];
 
     if (typeof world.name === "string") {
@@ -155,9 +173,9 @@ const filteredWorlds = computed(() => {
     });
   });
 });
-const hasWorlds = computed(() => worlds.value.length > 0);
+const hasWorlds = computed(() => visibleWorlds.value.length > 0);
 const activeWorldId = computed(
-  () => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null,
+  () => siteSettings.value.activeWorldId ?? visibleWorlds.value[0]?.id ?? null,
 );
 
 const membershipMap = computed(() => membershipStore.memberships);
@@ -172,6 +190,9 @@ const activeWorldIds = computed(() => {
 
   return fallbackId ? [fallbackId] : [];
 });
+
+const localePath = useLocalePath();
+const createWorldLink = computed(() => localePath("/world-create"));
 
 async function setActiveWorld(worldId: string) {
   if (!worldId) {

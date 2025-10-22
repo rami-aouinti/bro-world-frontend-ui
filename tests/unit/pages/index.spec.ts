@@ -4,12 +4,22 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import IndexPage from "~/pages/index.vue";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
-import type { SiteSettings } from "~/types/settings";
+import type { SiteSettings, SiteWorldSettings } from "~/types/settings";
 
-vi.mock("#imports", () => ({
-  definePageMeta: vi.fn(),
-  useSeoMeta: vi.fn(),
-}));
+const localePathMock = vi.fn((route: unknown) => route);
+
+vi.mock("#imports", async () => {
+  const actual = await vi.importActual<typeof import("../../mocks/nuxt-imports")>(
+    "../../mocks/nuxt-imports",
+  );
+
+  return {
+    ...actual,
+    definePageMeta: vi.fn(),
+    useSeoMeta: vi.fn(),
+    useLocalePath: () => localePathMock,
+  };
+});
 
 vi.mock("vue-i18n", () => ({
   useI18n: () => ({
@@ -18,18 +28,11 @@ vi.mock("vue-i18n", () => ({
 }));
 
 const siteSettingsRef = ref<SiteSettings | null>(null);
+const activeWorldsRef = ref<SiteWorldSettings[]>([]);
+
 const siteSettingsStateMock = Object.assign(siteSettingsRef, {
   enabledPlugins: computed(() => [] as string[]),
-  activeWorlds: computed(() => {
-    const activeId = siteSettingsRef.value?.activeWorldId;
-    const worlds = siteSettingsRef.value?.worlds ?? [];
-
-    if (activeId) {
-      return worlds.filter((world) => world.id === activeId);
-    }
-
-    return worlds.length > 0 ? [worlds[0]!] : [];
-  }),
+  activeWorlds: computed(() => activeWorldsRef.value),
   memberships: computed(() => ({} as Record<string, unknown>)),
 });
 
@@ -99,24 +102,46 @@ describe("pages/index world explorer", () => {
     },
   });
 
-  const globalStubs = {
-    SidebarCard: { template: "<div><slot /></div>" },
-    WorldExplorerCard: WorldExplorerCardStub,
-  } as const;
+const nuxtLinkStub = { props: ["to"], template: '<a :data-to="to"><slot /></a>' } as const;
+
+const globalStubs = {
+  SidebarCard: { template: "<div><slot /></div>" },
+  WorldExplorerCard: WorldExplorerCardStub,
+} as const;
+
+const defaultStubs = {
+  ...globalStubs,
+  NuxtLink: nuxtLinkStub,
+} as const;
 
   beforeEach(() => {
     siteSettingsRef.value = getDefaultSiteSettings();
+    activeWorldsRef.value = siteSettingsRef.value?.worlds?.slice(0, 1) ?? [];
     activeWorldIdsRef.value = [];
     Object.keys(membershipMap).forEach((key) => {
       delete membershipMap[key];
     });
     activateWorldMock.mockClear();
+    localePathMock.mockClear();
   });
 
-  it("renders a card for each configured world", () => {
+  it("renders a card for each active world", () => {
     const wrapper = mount(IndexPage, {
       global: {
-        stubs: globalStubs,
+        stubs: defaultStubs,
+      },
+    });
+
+    const cards = wrapper.findAll('[data-test="world-explorer-card"]');
+    expect(cards).toHaveLength(activeWorldsRef.value.length);
+  });
+
+  it("falls back to all worlds when no active worlds are configured", () => {
+    activeWorldsRef.value = [];
+
+    const wrapper = mount(IndexPage, {
+      global: {
+        stubs: defaultStubs,
       },
     });
 
@@ -125,9 +150,11 @@ describe("pages/index world explorer", () => {
   });
 
   it("updates the memberships when a card emits an activate event", async () => {
+    activeWorldsRef.value = siteSettingsRef.value?.worlds ?? [];
+
     const wrapper = mount(IndexPage, {
       global: {
-        stubs: globalStubs,
+        stubs: defaultStubs,
       },
     });
 
@@ -149,13 +176,26 @@ describe("pages/index world explorer", () => {
       worlds: [],
       activeWorldId: null,
     } satisfies SiteSettings;
+    activeWorldsRef.value = [];
 
     const wrapper = mount(IndexPage, {
       global: {
-        stubs: globalStubs,
+        stubs: defaultStubs,
       },
     });
 
     expect(wrapper.find('[data-test="world-explorer-empty"]').exists()).toBe(true);
+  });
+
+  it("renders the create world cta with a localized link", () => {
+    const wrapper = mount(IndexPage, {
+      global: {
+        stubs: defaultStubs,
+      },
+    });
+
+    const cta = wrapper.get('[data-test="create-world-cta"]');
+    expect(localePathMock).toHaveBeenCalledWith("/world-create");
+    expect(cta.attributes("data-to")).toBe("/world-create");
   });
 });
