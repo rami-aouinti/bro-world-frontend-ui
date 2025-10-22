@@ -244,7 +244,9 @@ function formatEventTime(event: ProfileCalendarDisplayEvent): string {
   }
 
   const start = dateTimeFormatter.value.format(startDate);
-  const end = event.allDay ? dateFormatter.value.format(endDate) : timeFormatter.value.format(endDate);
+  const end = event.allDay
+    ? dateFormatter.value.format(endDate)
+    : timeFormatter.value.format(endDate);
   return `${start} → ${end}`;
 }
 

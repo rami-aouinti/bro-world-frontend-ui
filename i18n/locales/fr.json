@@ -97,6 +97,7 @@
       "title": "Notifications",
       "subtitle": "Dernières actualités de votre réseau",
       "markAll": "Tout marquer comme lu",
+      "viewAll": "Voir toutes les notifications",
       "empty": "Vous êtes à jour !",
       "badgeLabel": "{count} notifications non lues",
       "items": {
@@ -742,6 +743,14 @@
     "termsOutro": "Contactez notre équipe d'assistance si vous avez des questions sur la gestion de vos données."
   },
   "pages": {
+    "notifications": {
+      "description": "Consultez les dernières mises à jour de votre communauté.",
+      "summary": {
+        "empty": "Aucune notification pour le moment.",
+        "allRead": "{total} notifications · tout est lu",
+        "unread": "{total} notifications · {unread} non lues"
+      }
+    },
     "about": {
       "title": "À propos",
       "subtitle": "Qui nous sommes et ce que nous construisons",

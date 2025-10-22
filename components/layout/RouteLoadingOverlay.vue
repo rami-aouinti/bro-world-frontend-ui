@@ -61,11 +61,7 @@ const { t } = useI18n();
   width: min(420px, 100%);
   padding: clamp(2rem, 4vw, 2.75rem);
   border-radius: 1.75rem;
-  background: linear-gradient(
-    150deg,
-    hsl(var(--primary) / 0.16),
-    hsl(var(--primary) / 0.08)
-  );
+  background: linear-gradient(150deg, hsl(var(--primary) / 0.16), hsl(var(--primary) / 0.08));
   border: 1px solid hsl(var(--primary) / 0.25);
   box-shadow:
     0 25px 55px hsl(var(--primary) / 0.25),
@@ -96,11 +92,7 @@ const { t } = useI18n();
   position: absolute;
   inset: 12%;
   border-radius: 999px;
-  background: radial-gradient(
-    circle,
-    hsl(var(--primary) / 0.35),
-    hsl(var(--primary) / 0.12)
-  );
+  background: radial-gradient(circle, hsl(var(--primary) / 0.35), hsl(var(--primary) / 0.12));
   filter: blur(2px);
   animation: route-loader-pulse 2.2s ease-in-out infinite;
 }

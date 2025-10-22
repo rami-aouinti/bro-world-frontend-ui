@@ -36,6 +36,7 @@
       "title": "通知",
       "subtitle": "来自网络的最新更新",
       "markAll": "全部标记为已读",
+      "viewAll": "查看所有通知",
       "empty": "已全部查看！",
       "badgeLabel": "{count} 条未读通知",
       "items": {
@@ -663,6 +664,14 @@
     "errorTitle": "创建账户失败"
   },
   "pages": {
+    "notifications": {
+      "description": "查看社区中的最新更新。",
+      "summary": {
+        "empty": "暂无通知。",
+        "allRead": "{total} 条通知 · 全部已读",
+        "unread": "{total} 条通知 · {unread} 条未读"
+      }
+    },
     "about": {
       "title": "关于我们",
       "subtitle": "我们是谁，以及我们正在构建什么",
@@ -2648,6 +2657,25 @@
     "page": {
       "title": "管理中心",
       "subtitle": "只需几次点击即可掌控整个平台，监控关键指标并启用合适的功能。"
+    },
+    "statistics": {
+      "metaTitle": "统计",
+      "page": {
+        "title": "平台统计",
+        "subtitle": "随时掌握社区的使用趋势和关键健康指标。"
+      },
+      "cards": {
+        "users": {
+          "title": "注册用户",
+          "description": "当前平台上可用账户的总数。"
+        }
+      },
+      "actions": {
+        "refresh": "刷新数据"
+      },
+      "errors": {
+        "load": "无法加载统计数据。"
+      }
     },
     "settings": {
       "metaTitle": "Site settings",

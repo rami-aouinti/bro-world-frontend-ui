@@ -1,10 +1,8 @@
 <template>
-  <main
-    aria-labelledby="profile-password-title"
-  >
+  <main aria-labelledby="profile-password-title">
     <SidebarCard
-        class="text-card-foreground px-3 py-3"
-        glow
+      class="text-card-foreground px-3 py-3"
+      glow
     >
       <v-sheet
         class="mx-auto"

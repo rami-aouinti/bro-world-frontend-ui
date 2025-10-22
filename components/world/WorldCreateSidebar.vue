@@ -1,39 +1,39 @@
 <template>
   <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
+    class="text-card-foreground px-3 py-2"
+    glow
   >
     <header class="flex flex-col gap-2 mb-2">
-        <span class="text-caption text-uppercase font-weight-medium text-primary">
-          {{ workflow.title }}
-        </span>
+      <span class="text-caption text-uppercase font-weight-medium text-primary">
+        {{ workflow.title }}
+      </span>
       <p class="text-body-2 text-medium-emphasis mb-0">
         {{ workflow.subtitle }}
       </p>
     </header>
     <ol
-        class="world-sidebar__steps"
-        :aria-label="workflow.title"
+      class="world-sidebar__steps"
+      :aria-label="workflow.title"
     >
       <li
-          v-for="(step, index) in workflow.steps"
-          :key="step.title"
-          class="world-sidebar__step"
+        v-for="(step, index) in workflow.steps"
+        :key="step.title"
+        class="world-sidebar__step"
       >
         <div
-            class="world-sidebar__step-index"
-            :aria-label="step.orderLabel"
+          class="world-sidebar__step-index"
+          :aria-label="step.orderLabel"
         >
           {{ index + 1 }}
         </div>
         <div class="world-sidebar__step-content">
           <div class="d-flex align-center gap-2 mb-1">
             <v-icon
-                v-if="step.icon"
-                :icon="step.icon"
-                size="20"
-                color="primary"
-                aria-hidden="true"
+              v-if="step.icon"
+              :icon="step.icon"
+              size="20"
+              color="primary"
+              aria-hidden="true"
             />
             <span class="text-subtitle-2 font-weight-semibold">{{ step.title }}</span>
           </div>
@@ -46,8 +46,8 @@
   </SidebarCard>
 
   <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
+    class="text-card-foreground px-3 py-2"
+    glow
   >
     <header class="flex flex-col gap-2 mb-2">
       <span class="text-subtitle-2 font-weight-semibold">{{ plugins.title }}</span>
@@ -56,35 +56,35 @@
       </p>
     </header>
     <ul
-        v-if="hasSelectedPlugins"
-        class="world-sidebar__plugin-list"
+      v-if="hasSelectedPlugins"
+      class="world-sidebar__plugin-list"
     >
       <li
-          v-for="plugin in plugins.items"
-          :key="plugin.id"
-          class="world-sidebar__plugin-item"
+        v-for="plugin in plugins.items"
+        :key="plugin.id"
+        class="world-sidebar__plugin-item"
       >
         <v-icon
-            icon="mdi:puzzle-outline"
-            size="18"
-            color="primary"
-            class="mr-2"
-            aria-hidden="true"
+          icon="mdi:puzzle-outline"
+          size="18"
+          color="primary"
+          class="mr-2"
+          aria-hidden="true"
         />
         <span class="text-body-2">{{ plugin.name }}</span>
       </li>
     </ul>
     <p
-        v-else
-        class="text-body-2 text-medium-emphasis mb-0"
+      v-else
+      class="text-body-2 text-medium-emphasis mb-0"
     >
       {{ plugins.emptyHint }}
     </p>
   </SidebarCard>
 
   <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
+    class="text-card-foreground px-3 py-2"
+    glow
   >
     <header class="flex flex-col gap-2 mb-4">
       <span class="text-subtitle-2 font-weight-semibold">{{ cta.title }}</span>
@@ -93,12 +93,12 @@
       </p>
     </header>
     <v-btn
-        :to="cta.to"
-        color="primary"
-        variant="flat"
-        size="large"
-        block
-        :aria-label="cta.buttonAria"
+      :to="cta.to"
+      color="primary"
+      variant="flat"
+      size="large"
+      block
+      :aria-label="cta.buttonAria"
     >
       {{ cta.button }}
     </v-btn>

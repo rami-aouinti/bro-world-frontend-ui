@@ -24,7 +24,10 @@
             :key="item.label"
             class="education-sidebar__stat"
           >
-            <div class="education-sidebar__stat-icon" aria-hidden="true">
+            <div
+              class="education-sidebar__stat-icon"
+              aria-hidden="true"
+            >
               <v-icon
                 :icon="item.icon"
                 size="24"
@@ -169,7 +172,9 @@ defineProps<{
   border-radius: 1rem;
   text-decoration: none;
   background: color-mix(in srgb, hsl(var(--primary) / 0.12) 30%, transparent);
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .education-sidebar__category-link:hover,

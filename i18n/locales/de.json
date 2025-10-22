@@ -97,6 +97,7 @@
       "title": "Benachrichtigungen",
       "subtitle": "Aktuelle Updates aus deinem Netzwerk",
       "markAll": "Alle als gelesen markieren",
+      "viewAll": "Alle Benachrichtigungen anzeigen",
       "empty": "Du bist auf dem Laufenden!",
       "badgeLabel": "{count} ungelesene Benachrichtigungen",
       "items": {
@@ -744,6 +745,14 @@
     "termsOutro": "Kontaktieren Sie unser Support-Team, wenn Sie Fragen zum Umgang mit Ihren Daten haben."
   },
   "pages": {
+    "notifications": {
+      "description": "Sieh dir die neuesten Aktualisierungen aus deiner Community an.",
+      "summary": {
+        "empty": "Noch keine Benachrichtigungen.",
+        "allRead": "{total} Benachrichtigungen · alles gelesen",
+        "unread": "{total} Benachrichtigungen · {unread} ungelesen"
+      }
+    },
     "about": {
       "title": "Über uns",
       "subtitle": "Wer wir sind und was wir bauen",
@@ -3016,6 +3025,25 @@
     "page": {
       "title": "Administrationsbereich",
       "subtitle": "Steuern Sie die gesamte Plattform, verfolgen Sie Kennzahlen und aktivieren Sie die richtigen Hebel mit nur wenigen Klicks."
+    },
+    "statistics": {
+      "metaTitle": "Statistiken",
+      "page": {
+        "title": "Plattformstatistiken",
+        "subtitle": "Behalten Sie Nutzungstrends und wichtige Gesundheitsindikatoren Ihrer Community im Blick."
+      },
+      "cards": {
+        "users": {
+          "title": "Registrierte Benutzer",
+          "description": "Gesamtzahl der derzeit auf der Plattform verfügbaren Konten."
+        }
+      },
+      "actions": {
+        "refresh": "Daten aktualisieren"
+      },
+      "errors": {
+        "load": "Statistiken konnten nicht geladen werden."
+      }
     },
     "settings": {
       "metaTitle": "Site settings",

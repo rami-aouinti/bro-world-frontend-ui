@@ -1410,7 +1410,6 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   position: relative;
   z-index: 1;
   flex: 1 1 auto;
-  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
   display: flex;
   flex-direction: column;
   scrollbar-gutter: stable both-edges;
@@ -1432,7 +1431,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   z-index: 2;
   flex: 1 1 auto;
   width: 100%;
-  max-width: min(var(--layout-content-max-width, 1120px), 100%);
+  max-width: 600px;
   margin-inline: auto;
   box-sizing: border-box;
   padding: 10px;

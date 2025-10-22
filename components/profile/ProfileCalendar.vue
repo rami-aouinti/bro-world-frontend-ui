@@ -428,7 +428,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, reactive, ref, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  nextTick,
+  onBeforeUnmount,
+  reactive,
+  ref,
+  watch,
+} from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import type { ProfileEvent } from "~/types/pages/profile";
@@ -1097,52 +1105,42 @@ function cancelDeleteEvent() {
 
 const calendarSharedState = useProfileCalendarSharedState();
 
-function buildSharedStatePayload() {
-  const baseState = calendarSharedState.value;
-  const sharedState = {
-    ...baseState,
-    events: [...calendarEvents.value],
-    upcomingEvents: [...upcomingEvents.value],
-    selectedEvent: selectedEvent.value,
-  };
+function syncSharedState() {
+  const sharedState = calendarSharedState.value;
+
+  sharedState.events = [...calendarEvents.value];
+  sharedState.upcomingEvents = [...upcomingEvents.value];
+  sharedState.selectedEvent = selectedEvent.value;
 
   if (import.meta.server) {
-    return {
-      ...sharedState,
-      selectEvent: undefined,
-      openEventEditor: undefined,
-      requestDeleteEvent: undefined,
-    };
+    sharedState.selectEvent = undefined;
+    sharedState.openEventEditor = undefined;
+    sharedState.requestDeleteEvent = undefined;
+    return;
   }
 
-  return {
-    ...sharedState,
-    selectEvent,
-    openEventEditor,
-    requestDeleteEvent,
-  };
+  sharedState.selectEvent = selectEvent;
+  sharedState.openEventEditor = openEventEditor;
+  sharedState.requestDeleteEvent = requestDeleteEvent;
 }
 
-function syncSharedState() {
-  calendarSharedState.value = buildSharedStatePayload();
-}
-
-watch([calendarEvents, upcomingEvents, selectedEvent], () => {
-  syncSharedState();
-});
-
-syncSharedState();
+watch(
+  [calendarEvents, upcomingEvents, selectedEvent],
+  () => {
+    syncSharedState();
+  },
+  { immediate: true, flush: 'post' },
+);
 
 onBeforeUnmount(() => {
-  calendarSharedState.value = {
-    ...calendarSharedState.value,
-    events: [],
-    upcomingEvents: [],
-    selectedEvent: null,
-    selectEvent: undefined,
-    openEventEditor: undefined,
-    requestDeleteEvent: undefined,
-  };
+  const sharedState = calendarSharedState.value;
+
+  sharedState.events = [];
+  sharedState.upcomingEvents = [];
+  sharedState.selectedEvent = null;
+  sharedState.selectEvent = undefined;
+  sharedState.openEventEditor = undefined;
+  sharedState.requestDeleteEvent = undefined;
 });
 </script>
 

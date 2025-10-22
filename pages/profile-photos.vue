@@ -5,8 +5,8 @@
       aria-describedby="profile-photos-subtitle"
     >
       <SidebarCard
-          class="text-card-foreground px-3 py-3"
-          glow
+        class="text-card-foreground px-3 py-3"
+        glow
       >
         <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-6">
           <div class="flex-grow-1">
@@ -251,159 +251,14 @@
       <v-col
         cols="12"
         xl="4"
+        class="lg:hidden"
       >
-        <aside>
-          <SidebarCard
-            class="text-card-foreground pa-6 mb-6"
-            glow
-          >
-            <div class="d-flex flex-column gap-5">
-              <div>
-                <h2 class="text-h6 font-weight-semibold mb-2">
-                  {{ t("pages.profilePhotos.timeline.title") }}
-                </h2>
-                <p class="text-body-2 text-medium-emphasis mb-0">
-                  {{ t("pages.profilePhotos.timeline.description") }}
-                </p>
-              </div>
-
-              <div class="d-flex flex-column gap-4">
-                <div
-                  v-for="milestone in storyMilestones"
-                  :key="milestone.id"
-                  class="pa-4 rounded-xl d-flex flex-column gap-3"
-                  style="
-                    background: rgba(var(--v-theme-surface-container-high), 0.68);
-                    border: 1px solid rgba(var(--v-theme-primary), 0.14);
-                  "
-                >
-                  <div class="d-flex flex-column gap-3">
-                    <div class="d-flex align-start justify-space-between gap-4">
-                      <div class="d-flex align-start gap-3">
-                        <v-avatar
-                          size="44"
-                          :color="milestone.color"
-                          variant="tonal"
-                        >
-                          <v-icon
-                            :icon="milestone.icon"
-                            size="22"
-                          />
-                        </v-avatar>
-                        <div>
-                          <div class="text-subtitle-1 font-weight-semibold">
-                            {{ milestone.title }}
-                          </div>
-                          <div class="text-caption text-medium-emphasis">
-                            {{ milestone.date }}
-                          </div>
-                        </div>
-                      </div>
-                      <v-chip
-                        :color="milestone.color"
-                        size="small"
-                        variant="flat"
-                        class="text-caption font-weight-medium"
-                      >
-                        {{ milestone.status }}
-                      </v-chip>
-                    </div>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ milestone.description }}
-                    </p>
-                  </div>
-
-                  <v-progress-linear
-                    :model-value="milestone.progress"
-                    height="6"
-                    rounded
-                    :color="milestone.color"
-                    class="mt-1"
-                  />
-
-                  <div class="d-flex flex-wrap gap-2">
-                    <v-chip
-                      v-for="tag in milestone.tags"
-                      :key="tag"
-                      size="x-small"
-                      variant="tonal"
-                      class="text-caption"
-                      color="primary"
-                    >
-                      {{ tag }}
-                    </v-chip>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SidebarCard>
-
-          <SidebarCard
-            class="text-card-foreground pa-6 bg-primary/10"
-            glow
-          >
-            <div class="d-flex flex-column gap-4">
-              <div>
-                <h2 class="text-h6 font-weight-semibold mb-1">
-                  {{ t("pages.profilePhotos.sections.timeline") }}
-                </h2>
-                <p class="text-body-2 text-medium-emphasis mb-0">
-                  {{ t("pages.profilePhotos.sections.notesDescription") }}
-                </p>
-              </div>
-              <div class="d-flex flex-column gap-3">
-                <div
-                  v-for="note in creativeNotes"
-                  :key="note.id"
-                  class="d-flex flex-column gap-3 pa-4 rounded-xl"
-                  style="background: rgba(var(--v-theme-surface-container-high), 0.82)"
-                >
-                  <div class="d-flex flex-column gap-3">
-                    <div class="d-flex align-start justify-space-between gap-3">
-                      <div class="d-flex align-start gap-3">
-                        <v-avatar
-                          size="44"
-                          :color="note.color"
-                          variant="tonal"
-                        >
-                          <span class="text-body-2 font-weight-semibold">{{ note.initials }}</span>
-                        </v-avatar>
-                        <div>
-                          <div class="text-subtitle-2 font-weight-semibold">{{ note.title }}</div>
-                          <div class="text-caption text-medium-emphasis">{{ note.byline }}</div>
-                        </div>
-                      </div>
-                      <v-chip
-                        :color="note.color"
-                        size="x-small"
-                        variant="flat"
-                        class="text-caption font-weight-medium"
-                      >
-                        {{ note.category }}
-                      </v-chip>
-                    </div>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ note.preview }}
-                    </p>
-                  </div>
-                  <div
-                    class="d-flex align-center justify-space-between text-caption text-medium-emphasis"
-                  >
-                    <span>{{ note.updated }}</span>
-                    <v-btn
-                      variant="text"
-                      color="primary"
-                      size="small"
-                      append-icon="mdi:arrow-top-right"
-                    >
-                      {{ note.cta }}
-                    </v-btn>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SidebarCard>
-        </aside>
+        <ProfilePhotosSidebar
+          :story-milestones="storyMilestones"
+          :creative-notes="creativeNotes"
+          :timeline-heading-id="timelineHeadingId"
+          :notes-heading-id="notesHeadingId"
+        />
       </v-col>
     </v-row>
 
@@ -421,8 +276,14 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
-import type { AlbumSummary, PhotoItem } from "~/types/pages/profile";
+import ProfilePhotosSidebar from "~/components/profile/ProfilePhotosSidebar.vue";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import type {
+  AlbumSummary,
+  PhotoItem,
+  ProfileCreativeNote,
+  ProfileStoryMilestone,
+} from "~/types/pages/profile";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t, locale, localeProperties } = useI18n();
@@ -442,8 +303,9 @@ useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
-
-useProfileSidebarContent();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
+const timelineHeadingId = "profile-photos-timeline";
+const notesHeadingId = "profile-photos-notes";
 
 useHead(() => {
   const title = t("seo.profilePhotos.title");
@@ -639,31 +501,7 @@ const displayedPhotos = computed(() => {
   return photoLibrary.filter((photo) => photo.filter === activeFilter.value);
 });
 
-type StoryMilestone = {
-  id: string;
-  title: string;
-  date: string;
-  description: string;
-  status: string;
-  progress: number;
-  color: string;
-  icon: string;
-  tags: string[];
-};
-
-type CreativeNote = {
-  id: string;
-  initials: string;
-  title: string;
-  byline: string;
-  category: string;
-  preview: string;
-  updated: string;
-  color: string;
-  cta: string;
-};
-
-const storyMilestones = reactive<StoryMilestone[]>([
+const storyMilestones = reactive<ProfileStoryMilestone[]>([
   {
     id: "storyboards",
     title: "Residency storyboards",
@@ -702,7 +540,7 @@ const storyMilestones = reactive<StoryMilestone[]>([
   },
 ]);
 
-const creativeNotes = reactive<CreativeNote[]>([
+const creativeNotes = reactive<ProfileCreativeNote[]>([
   {
     id: "moodboard",
     initials: "AR",
@@ -738,6 +576,19 @@ const creativeNotes = reactive<CreativeNote[]>([
     cta: "Review notes",
   },
 ]);
+
+const photosSidebarContent = computed(() => ({
+  component: ProfilePhotosSidebar,
+  props: {
+    storyMilestones,
+    creativeNotes,
+    timelineHeadingId,
+    notesHeadingId,
+  },
+  wrapperClass: "flex flex-col gap-4",
+}));
+
+registerRightSidebarContent(photosSidebarContent);
 
 const showSnackbar = ref(false);
 const snackbarMessage = ref("");
