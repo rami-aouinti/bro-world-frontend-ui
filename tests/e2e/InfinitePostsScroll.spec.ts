@@ -22,6 +22,20 @@ vi.mock("~/composables/useAuthStore", () => ({
   }),
 }));
 
+vi.mock("~/composables/useNonBlockingTask", () => ({
+  useNonBlockingTask: () => ({
+    schedule: (task: () => void | Promise<void>) => {
+      const result = task();
+
+      if (result instanceof Promise) {
+        return result;
+      }
+
+      return result;
+    },
+  }),
+}));
+
 vi.mock("~/stores/auth-session", () => ({
   useAuthSession: () => ({
     isReady: computed(() => true),

@@ -183,15 +183,21 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = defineProps<{
-  post: BlogPost;
-  defaultAvatar: string;
-  reactionEmojis: Record<ReactionType, string>;
-  reactionLabels: Record<ReactionType, string>;
-  preferEagerMediaLoading?: boolean;
-  enablePostLink?: boolean;
-  showPostLinkCta?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    post: BlogPost;
+    defaultAvatar: string;
+    reactionEmojis: Record<ReactionType, string>;
+    reactionLabels: Record<ReactionType, string>;
+    preferEagerMediaLoading?: boolean;
+    enablePostLink?: boolean;
+    showPostLinkCta?: boolean;
+  }>(),
+  {
+    enablePostLink: true,
+    showPostLinkCta: true,
+  },
+);
 
 const { t } = useI18n();
 const localePath = useLocalePath();
@@ -224,19 +230,25 @@ const postId = computed(() => post.value.id?.trim() ?? "");
 const postLink = computed(() => {
   const slug = post.value.slug?.trim();
 
-  if (!slug) {
-    return null;
-  }
+  if (slug) {
+    try {
+      return localePath({ name: "post-slug", params: { slug } });
+    } catch (error) {
+      if (import.meta.dev) {
+        console.warn("[BlogPostCard] Failed to resolve localized post link", error);
+      }
 
-  try {
-    return localePath({ name: "post-slug", params: { slug } });
-  } catch (error) {
-    if (import.meta.dev) {
-      console.warn("[BlogPostCard] Failed to resolve localized post link", error);
+      return `/post/${encodeURIComponent(slug)}`;
     }
-
-    return `/post/${encodeURIComponent(slug)}`;
   }
+
+  const url = post.value.url;
+
+  if (typeof url === "string" && url.trim().length > 0) {
+    return url.trim();
+  }
+
+  return null;
 });
 const authorLink = computed(() => {
   if (!isHydrated.value) {
@@ -931,6 +943,18 @@ watch(isAuthenticated, (value) => {
   if (value) {
     prefetchComments();
   }
+});
+
+defineExpose({
+  hydrate() {
+    isHydrated.value = true;
+  },
+  isHydrated,
+  isPostLinkActive,
+  authorLink,
+  postLink,
+  enablePostLink,
+  postLinkProps,
 });
 
 function handleEditDialogClose() {
