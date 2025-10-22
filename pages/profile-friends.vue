@@ -226,15 +226,11 @@ import { useI18n } from "vue-i18n";
 import { callOnce } from "#app";
 import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
-import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 import { useProfileStore } from "~/stores/profile";
 import type { FriendCard, FriendEntry } from "~/types/pages/profile";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t, locale, localeProperties } = useI18n();
-usePageLoadingOverlay({
-  loader: () => import("~/components/loading/overlays/ProfileFriendsLoadingOverlay.vue"),
-});
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);

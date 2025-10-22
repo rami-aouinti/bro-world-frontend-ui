@@ -9,7 +9,6 @@ import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
-import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 
 const ProfileSecurityForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ProfileSecurityForm.vue"),
@@ -23,9 +22,6 @@ const ProfileSecurityTwoFactorSidebarCard = defineAsyncComponent({
 
 const { t } = useI18n();
 const pageDescription = computed(() => t("seo.profileSecurity.description"));
-usePageLoadingOverlay({
-  loader: () => import("~/components/loading/overlays/ProfileSecurityLoadingOverlay.vue"),
-});
 
 definePageMeta({
   middleware: "auth",

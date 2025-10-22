@@ -13,62 +13,32 @@
       aria-busy="true"
     >
       <span class="sr-only">{{ t("layout.routeLoadingOverlay.srLabel") }}</span>
-      <component
-        :is="resolvedComponent"
-        v-if="resolvedComponent"
-        :key="componentKey ?? undefined"
-        v-bind="componentProps"
-      />
-      <template v-else>
-        <slot>
-          <div
-            class="route-loader"
-            aria-hidden="true"
-          >
-            <div class="route-loader__orb">
-              <span class="route-loader__pulse" />
-              <span class="route-loader__spinner" />
-              <span class="route-loader__spark route-loader__spark--one" />
-              <span class="route-loader__spark route-loader__spark--two" />
-            </div>
-            <div class="route-loader__label">
-              <span class="route-loader__title">{{ t("layout.routeLoadingOverlay.title") }}</span>
-              <span class="route-loader__subtitle">{{ t("layout.routeLoadingOverlay.subtitle") }}</span>
-            </div>
-            <div class="route-loader__progress">
-              <span class="route-loader__bar" />
-            </div>
-          </div>
-        </slot>
-      </template>
+      <div
+        class="route-loader"
+        aria-hidden="true"
+      >
+        <div class="route-loader__orb">
+          <span class="route-loader__pulse" />
+          <span class="route-loader__spinner" />
+          <span class="route-loader__spark route-loader__spark--one" />
+          <span class="route-loader__spark route-loader__spark--two" />
+        </div>
+        <div class="route-loader__label">
+          <span class="route-loader__title">{{ t("layout.routeLoadingOverlay.title") }}</span>
+          <span class="route-loader__subtitle">{{ t("layout.routeLoadingOverlay.subtitle") }}</span>
+        </div>
+        <div class="route-loader__progress">
+          <span class="route-loader__bar" />
+        </div>
+      </div>
     </div>
   </Transition>
 </template>
 
 <script setup lang="ts">
-import type { Component } from "vue";
-import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
-const props = withDefaults(
-  defineProps<{
-    visible: boolean;
-    component?: Component | null;
-    componentProps?: Record<string, unknown> | null;
-    componentKey?: string | number | null;
-  }>(),
-  {
-    component: null,
-    componentProps: null,
-    componentKey: null,
-  },
-);
-
-const resolvedComponent = computed<Component | null>(() => props.component ?? null);
-
-const componentProps = computed(() => props.componentProps ?? undefined);
-
-const componentKey = computed(() => props.componentKey ?? undefined);
+defineProps<{ visible: boolean }>();
 
 const { t } = useI18n();
 </script>

@@ -7,18 +7,12 @@
   <NuxtLayout>
     <NuxtPage :key="pageKey" />
   </NuxtLayout>
-  <RouteLoadingOverlay
-    :visible="routeLoading"
-    :component="currentOverlayComponent"
-    :component-props="currentOverlayProps"
-    :component-key="currentOverlayKey"
-  />
+  <RouteLoadingOverlay :visible="routeLoading" />
   <AlertPanel />
 </template>
 
 <script setup lang="ts">
-import type { Component } from "vue";
-import { computed, ref, defineAsyncComponent, shallowRef, watch } from "vue";
+import { computed, ref, defineAsyncComponent } from "vue";
 import {
   hasInjectionContext,
   tryUseNuxtApp,
@@ -30,7 +24,6 @@ import {
   useState,
 } from "#imports";
 import { useSwitchLocalePath } from "#i18n";
-import type { PageLoadingOverlayMetaEntry } from "~/composables/usePageLoadingOverlay";
 
 const AppLoadingOverlay = defineAsyncComponent({
   loader: () => import("~/components/layout/AppLoadingOverlay.vue"),
@@ -103,40 +96,6 @@ const siteConfig = computed(() => {
   };
 });
 const route = useRoute();
-
-const routeOverlayEntry = computed<PageLoadingOverlayMetaEntry | undefined>(
-  () => route.meta.pageLoadingOverlay as PageLoadingOverlayMetaEntry | undefined,
-);
-
-const currentOverlayComponent = shallowRef<Component | null>(null);
-const currentOverlayProps = computed(() => routeOverlayEntry.value?.props ?? undefined);
-const currentOverlayKey = computed(() => routeOverlayEntry.value?.key ?? undefined);
-
-watch(
-  routeOverlayEntry,
-  (entry) => {
-    if (!entry) {
-      currentOverlayComponent.value = null;
-      return;
-    }
-
-    if (entry.loader) {
-      currentOverlayComponent.value = defineAsyncComponent({
-        loader: entry.loader,
-        suspensible: false,
-      });
-      return;
-    }
-
-    if (entry.component) {
-      currentOverlayComponent.value = entry.component;
-      return;
-    }
-
-    currentOverlayComponent.value = null;
-  },
-  { immediate: true },
-);
 
 if (import.meta.client && nuxtApp) {
   let finishTimer: ReturnType<typeof setTimeout> | null = null;
