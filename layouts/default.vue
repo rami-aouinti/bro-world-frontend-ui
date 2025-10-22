@@ -1431,7 +1431,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   z-index: 2;
   flex: 1 1 auto;
   width: 100%;
-  max-width: min(var(--layout-content-max-width, 1120px), 100%);
+  max-width: 600px;
   margin-inline: auto;
   box-sizing: border-box;
   padding: 10px;
