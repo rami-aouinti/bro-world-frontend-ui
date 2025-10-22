@@ -1695,6 +1695,27 @@
         "title": "Explore learning paths",
         "subtitle": "Browse curated categories, follow interactive lessons, and unlock a mock certificate when you pass the final quiz."
       },
+      "sidebar": {
+        "overviewTitle": "Keep learning momentum",
+        "overviewDescription": "Track your progress, revisit favourite categories, and stay motivated as you explore new skills.",
+        "stats": {
+          "categories": {
+            "label": "Categories",
+            "value": "{count} categories"
+          },
+          "courses": {
+            "label": "Courses",
+            "value": "{count} courses"
+          },
+          "certificates": {
+            "label": "Certificates earned",
+            "value": "{count} certificates"
+          }
+        },
+        "featuredTitle": "Featured categories",
+        "featuredDescription": "Jump back into these curated spaces to continue learning.",
+        "featuredEmpty": "New categories are coming soon."
+      },
       "category": {
         "courses": "{count} courses",
         "viewCourses": "View courses",
