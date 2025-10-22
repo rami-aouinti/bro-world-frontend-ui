@@ -118,6 +118,5 @@ watch(
   flex-direction: column;
   flex-wrap: nowrap !important;
   align-content: stretch;
-  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
 }
 </style>

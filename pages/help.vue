@@ -8,9 +8,9 @@
         class="mb-10"
         aria-labelledby="help-faq"
       >
-        <v-sheet
-          class="help-faq"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <div class="d-flex align-center justify-space-between flex-wrap gap-3 mb-4">
             <h2
@@ -78,13 +78,12 @@
               </v-expansion-panel-title>
             </v-expansion-panel>
           </v-expansion-panels>
-        </v-sheet>
+        </SidebarCard>
       </section>
       <section aria-labelledby="quick-actions">
-        <v-sheet
-          class="help-actions"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <div class="d-flex align-center justify-space-between flex-wrap gap-4 mb-6">
             <div>
@@ -148,7 +147,7 @@
               </v-card>
             </v-col>
           </v-row>
-        </v-sheet>
+        </SidebarCard>
       </section>
     </header>
   </main>
@@ -161,6 +160,7 @@ import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();
