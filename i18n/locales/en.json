@@ -2260,10 +2260,22 @@
         "enterAria": "Enter the {world} world",
         "setActive": "Set active",
         "active": "Active",
-        "activateAria": "Set {world} as the active world"
+        "activateAria": "Set {world} as the active world",
+        "requestAccess": "Request access",
+        "requestAccessAria": "Request access to {world}"
       },
       "participantsLabel": "{count} participants",
       "ratingLabel": "{rating} rating",
+      "membership": {
+        "pendingHelper": "Your access request is pending approval.",
+        "deniedHelper": "Your access request was denied. Contact the owner for next steps.",
+        "requestAccessHelper": "Request access to join this private world.",
+        "pendingToast": "Access request submitted for {world}.",
+        "deniedToast": "Your access request for {world} was denied.",
+        "approvedToast": "Access granted for {world}. You can enter now.",
+        "requestError": "We couldn't update your membership right now. Please try again.",
+        "enterError": "We couldn't enter this world. Please try again."
+      },
       "empty": {
         "title": "No worlds available",
         "description": "Check back soon to explore new spaces or create your own world."

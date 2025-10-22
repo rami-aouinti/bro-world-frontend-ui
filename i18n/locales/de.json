@@ -2260,10 +2260,22 @@
         "enterAria": "Die Welt {world} betreten",
         "setActive": "Als aktiv festlegen",
         "active": "Aktiv",
-        "activateAria": "{world} als aktive Welt festlegen"
+        "activateAria": "{world} als aktive Welt festlegen",
+        "requestAccess": "Zugang anfordern",
+        "requestAccessAria": "Zugang zur Welt {world} anfordern"
       },
       "participantsLabel": "{count} Teilnehmende",
       "ratingLabel": "Bewertung {rating}",
+      "membership": {
+        "pendingHelper": "Deine Zugangsanforderung wird geprüft.",
+        "deniedHelper": "Deine Zugangsanforderung wurde abgelehnt. Kontaktiere den Besitzer für weitere Schritte.",
+        "requestAccessHelper": "Fordere Zugang an, um dieser privaten Welt beizutreten.",
+        "pendingToast": "Zugangsanforderung für {world} gesendet.",
+        "deniedToast": "Deine Zugangsanforderung für {world} wurde abgelehnt.",
+        "approvedToast": "Zugang zu {world} gewährt. Du kannst jetzt eintreten.",
+        "requestError": "Dein Mitgliedschaftsstatus konnte nicht aktualisiert werden. Bitte versuche es erneut.",
+        "enterError": "Die Welt konnte nicht betreten werden. Bitte versuche es erneut."
+      },
       "empty": {
         "title": "Keine Welten verfügbar",
         "description": "Schau bald wieder vorbei, um neue Spaces zu entdecken, oder erstelle deine eigene Welt."
