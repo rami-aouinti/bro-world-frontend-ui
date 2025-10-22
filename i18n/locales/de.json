@@ -2349,6 +2349,27 @@
         "title": "Lernpfade entdecken",
         "subtitle": "Stöbere in kuratierten Kategorien, folge interaktiven Lektionen und schalte nach dem Bestehen des Abschlussquiz ein Demo-Zertifikat frei."
       },
+      "sidebar": {
+        "overviewTitle": "Behalte deinen Lernschwung",
+        "overviewDescription": "Verfolge deinen Fortschritt, besuche deine Lieblingskategorien erneut und bleib motiviert, während du neue Fähigkeiten entdeckst.",
+        "stats": {
+          "categories": {
+            "label": "Kategorien",
+            "value": "{count} Kategorien"
+          },
+          "courses": {
+            "label": "Kurse",
+            "value": "{count} Kurse"
+          },
+          "certificates": {
+            "label": "Erhaltene Zertifikate",
+            "value": "{count} Zertifikate"
+          }
+        },
+        "featuredTitle": "Empfohlene Kategorien",
+        "featuredDescription": "Springe zurück in diese kuratierten Bereiche, um weiterzulernen.",
+        "featuredEmpty": "Neue Kategorien folgen in Kürze."
+      },
       "category": {
         "courses": "{count} Kurse",
         "viewCourses": "Kurse anzeigen",
