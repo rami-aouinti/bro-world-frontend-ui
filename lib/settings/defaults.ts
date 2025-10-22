@@ -1269,7 +1269,7 @@ const defaultWorld: {
   description: null;
   launchDate: string;
   locale: string;
-  tags: any[];
+  tags: string[];
   createdAt: string;
   createdBy: { name: string; id: string; avatar?: string | null };
   allowGuests: boolean;
@@ -1461,7 +1461,7 @@ export const defaultSiteSettings: {
         description: null;
         launchDate: string;
         locale: string;
-        tags: any[];
+        tags: string[];
         createdAt: string;
         createdBy: { name: string; id: string; avatar?: string | null } | null;
         allowGuests: boolean;
@@ -1721,7 +1721,7 @@ export function getDefaultSiteSettings(): {
         description: null;
         launchDate: string;
         locale: string;
-        tags: any[];
+        tags: string[];
         createdAt: string;
         createdBy: { name: string; id: string; avatar?: string | null } | null;
         allowGuests: boolean;
