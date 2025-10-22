@@ -16,9 +16,9 @@
         </v-chip>
 
         <NuxtLink :to="targetRoute">
-          <h5 class="world-explorer-card__title">
+          <h6 class="world-explorer-card__title">
             {{ truncatedWorldName }}
-          </h5>
+          </h6>
         </NuxtLink>
       </div>
 
@@ -27,8 +27,14 @@
           class="world-explorer-card__badge"
           color="success"
           size="small"
-          variant="flat"
+          variant="outlined"
       >
+        <div
+            v-if="hasRating"
+            class="world-explorer-card__stat"
+        >
+          {{ ratingLabel }}
+        </div>
       </v-chip>
 
       <v-chip
@@ -36,20 +42,14 @@
           class="world-explorer-card__badge"
           color="error"
           size="small"
-          variant="flat"
+          variant="outlined"
       >
-      </v-chip>
-    </div>
-
-    <div class="world-explorer-card__meta">
-      <v-chip
-          v-if="creatorName"
-          class="world-explorer-card__locale"
-          size="small"
-          variant="tonal"
-          color="primary"
-      >
-        {{ t("pages.index.createdBy", { name: truncatedCreatorName }) }}
+        <div
+            v-if="hasRating"
+            class="world-explorer-card__stat"
+        >
+          {{ ratingLabel }}
+        </div>
       </v-chip>
     </div>
 
@@ -99,20 +99,6 @@
           {{ participantsLabel }}
         </span>
       </div>
-
-      <div
-          v-if="hasRating"
-          class="world-explorer-card__stat"
-      >
-        <Icon
-            name="lucide:star"
-            class="world-explorer-card__stat-icon"
-            aria-hidden="true"
-        />
-        <span class="world-explorer-card__stat-text">
-          {{ ratingLabel }}
-        </span>
-      </div>
     </div>
   </SidebarCard>
 </template>
@@ -152,7 +138,7 @@ const truncatedCreatorName = computed(() =>
 
 const truncatedWorldName = computed(() => {
   const name = props.world?.name ?? "";
-  return name.length > 7 ? name.slice(0, 7) + "…" : name;
+  return name.length > 6 ? name.slice(0, 6) + "…" : name;
 });
 
 const participantsCount = computed(() => {
@@ -197,7 +183,7 @@ const formattedRating = computed(() => {
 const ratingLabel = computed(() =>
     ratingValue.value === null
       ? ""
-      : t("pages.index.ratingLabel", { rating: formattedRating.value }),
+      : formattedRating.value
 );
 
 const hasParticipants = computed(() => participantsCount.value !== null);
@@ -282,8 +268,8 @@ function handleActivate() {
 }
 
 .world-explorer-card__stat { display: inline-flex; align-items: center; gap: .4rem; font-weight: 600; font-size: .85rem; }
-.world-explorer-card__stat-icon { width: 1rem; height: 1rem; opacity: .9; }
-.world-explorer-card__stat-text { display: inline-flex; align-items: center; gap: .25rem; }
+.world-explorer-card__stat-icon { width: 0.5rem; height: 1rem; opacity: .9; }
+.world-explorer-card__stat-text { display: inline-flex; align-items: center; gap: .15rem; }
 
 @media (prefers-reduced-motion: reduce) {
   .world-explorer-card { transition: none; }
