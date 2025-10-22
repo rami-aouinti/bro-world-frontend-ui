@@ -5,7 +5,7 @@
       v-bind="forwardedAttrs"
       :theme="buttonTheme"
       variant="outline"
-      class="text-muted-foreground hover:text-accent-foreground h-8 w-full self-center rounded-md pr-1.5 font-normal"
+      class="text-muted-foreground hover:text-accent-foreground h-8 w-full self-center rounded-full border border-input bg-background/60 pr-1.5 font-normal"
       :class="[inAside ? 'mb-4' : 'md:w-40 lg:w-60', rootClass]"
       @click="isOpen = true"
     >
