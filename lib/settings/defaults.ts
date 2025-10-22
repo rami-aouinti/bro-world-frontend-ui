@@ -12,12 +12,12 @@ import type {
 } from "~/types/settings";
 import { defaultLanguageCode, supportedLanguages } from "~/lib/i18n/languages";
 import {
-  MenuBlueprint,
   cloneMenuTree,
   convertBlueprintsToMenus,
   convertMenusToBlueprints,
   mergeMenuBlueprints,
 } from "~/lib/navigation/menu-blueprints";
+import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
 import { getPluginMenuBlueprints } from "~/lib/navigation/plugins";
 
 function makeTheme(theme: SiteThemeDefinition): SiteThemeDefinition {
