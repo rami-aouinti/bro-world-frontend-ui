@@ -128,7 +128,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{ (event: "activate", worldId: string): void }>();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const router = useRouter();
 const alertPanel = useAlertPanel();
 const membershipStore = useWorldMemberships();
@@ -161,14 +161,16 @@ const participantsCount = computed(() => {
   return typeof value === "number" ? Math.max(0, Math.round(value)) : null;
 });
 
+const participantsNumberFormatter = computed(
+  () => new Intl.NumberFormat(locale.value || undefined, { maximumFractionDigits: 0 }),
+);
+
 const formattedParticipantsCount = computed(() => {
   if (participantsCount.value === null) {
     return "";
   }
 
-  return new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(
-    participantsCount.value,
-  );
+  return participantsNumberFormatter.value.format(participantsCount.value);
 });
 
 const participantsLabel = computed(() =>
