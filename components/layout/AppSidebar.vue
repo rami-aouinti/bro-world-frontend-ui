@@ -21,6 +21,25 @@
         :handle-child-select="handleChildSelect"
       >
         <div class="sidebar-menu-card__content">
+          <div
+            v-if="currentUser"
+            class="sidebar-user"
+          >
+            <UserAvatar
+              :src="currentUserAvatar"
+              :name="currentUserName"
+              :alt="currentUserName"
+              :size="48"
+            />
+            <div class="sidebar-user__info">
+              <p class="sidebar-user__label">
+                {{ t("layout.sidebar.signedInAs") }}
+              </p>
+              <p class="sidebar-user__name">
+                {{ currentUserName }}
+              </p>
+            </div>
+          </div>
           <nav>
             <ul class="flex flex-col gap-3">
               <li
@@ -193,6 +212,32 @@ const siteSettings = useSiteSettingsState();
 
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const isRedirecting = ref(false);
+
+const currentUser = computed(() => auth.currentUser.value ?? null);
+
+const currentUserName = computed(() => {
+  const user = currentUser.value;
+
+  if (!user) {
+    return "";
+  }
+
+  const parts = [user.firstName, user.lastName].filter((value): value is string =>
+    Boolean(value?.trim()),
+  );
+
+  if (parts.length) {
+    return parts.join(" ");
+  }
+
+  if (user.username?.trim()) {
+    return user.username;
+  }
+
+  return user.email ?? "";
+});
+
+const currentUserAvatar = computed(() => currentUser.value?.photo ?? null);
 
 const canAccessAdmin = computed(() => {
   if (!auth.isAuthenticated.value) return false;
@@ -566,6 +611,22 @@ function resolveLocalizedPath(target?: string): string | undefined {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+}
+
+.sidebar-user {
+  @apply flex items-center gap-3 rounded-2xl bg-primary/10 px-3 py-2;
+}
+
+.sidebar-user__info {
+  @apply flex flex-col;
+}
+
+.sidebar-user__label {
+  @apply text-xs font-medium uppercase tracking-wide text-muted-foreground;
+}
+
+.sidebar-user__name {
+  @apply text-sm font-semibold text-foreground;
 }
 
 .sidebar-icon-placeholder {

@@ -150,6 +150,7 @@
     "sidebar": {
       "title": "Connect",
       "navigate": "Navigate to section",
+      "signedInAs": "Signed in as",
       "items": {
         "apps": "Apps",
         "calendar": "Calendar",

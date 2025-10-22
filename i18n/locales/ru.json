@@ -89,6 +89,7 @@
     "sidebar": {
       "title": "Подключение",
       "navigate": "Перейти к разделу",
+      "signedInAs": "Вы вошли как",
       "items": {
         "apps": "Приложения",
         "calendar": "Календарь",

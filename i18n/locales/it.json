@@ -89,6 +89,7 @@
     "sidebar": {
       "title": "Connetti",
       "navigate": "Vai alla sezione",
+      "signedInAs": "Connesso come",
       "items": {
         "apps": "Applicazioni",
         "calendar": "Calendario",

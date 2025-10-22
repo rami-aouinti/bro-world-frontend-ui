@@ -150,6 +150,7 @@
     "sidebar": {
       "title": "اتصال",
       "navigate": "الانتقال إلى القسم",
+      "signedInAs": "مسجل الدخول باسم",
       "items": {
         "apps": "التطبيقات",
         "calendar": "التقويم",
