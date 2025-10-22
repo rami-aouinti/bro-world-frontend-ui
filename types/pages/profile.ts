@@ -138,3 +138,27 @@ export interface AlbumSummary {
   location: string;
   updated: string;
 }
+
+export interface ProfileStoryMilestone {
+  id: string;
+  title: string;
+  date: string;
+  description: string;
+  status: string;
+  progress: number;
+  color: string;
+  icon: string;
+  tags: string[];
+}
+
+export interface ProfileCreativeNote {
+  id: string;
+  initials: string;
+  title: string;
+  byline: string;
+  category: string;
+  preview: string;
+  updated: string;
+  color: string;
+  cta: string;
+}
