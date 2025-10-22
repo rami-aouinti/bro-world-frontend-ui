@@ -2,15 +2,12 @@
   <header class="mb-6">
     <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4">
       <div>
-        <h1
+        <h4
           id="security-title"
           class="text-h4 font-weight-bold mb-2"
         >
           {{ t("pages.profileSecurity.title") }}
-        </h1>
-        <p class="text-body-1 text-medium-emphasis mb-0">
-          {{ t("pages.profileSecurity.subtitle") }}
-        </p>
+        </h4>
       </div>
       <v-btn
         color="primary"

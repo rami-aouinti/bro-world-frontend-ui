@@ -1,22 +1,9 @@
 <template>
-  <v-container class="py-12">
+  <main aria-labelledby="education-heading">
     <section class="mb-10 text-center">
-      <v-chip
-        color="primary"
-        variant="tonal"
-        class="mb-4"
-      >
-        {{ t("pages.education.catalog.badge") }}
-      </v-chip>
-      <h1 class="text-h3 text-md-h2 mb-4">
+      <h4 class="text-h4 mb-4">
         {{ t("pages.education.catalog.title") }}
-      </h1>
-      <p
-        class="text-body-1 text-medium-emphasis mx-auto"
-        style="max-width: 640px"
-      >
-        {{ t("pages.education.catalog.subtitle") }}
-      </p>
+      </h4>
     </section>
 
     <v-row dense>
@@ -30,7 +17,7 @@
         <CategoryCard :category="category" />
       </v-col>
     </v-row>
-  </v-container>
+  </main>
 </template>
 
 <script setup lang="ts">

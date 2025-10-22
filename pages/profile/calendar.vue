@@ -4,47 +4,8 @@
       class="mb-6"
       aria-describedby="profile-calendar-page-subtitle"
     >
-      <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        padding="none"
-        glow
-      >
-        <div class="d-flex flex-column gap-4 px-3 py-4">
-          <div>
-            <h1
-              id="profile-calendar-page-title"
-              class="text-h4 font-weight-bold mb-2"
-            >
-              {{ t("pages.profileCalendar.title") }}
-            </h1>
-            <p
-              id="profile-calendar-page-subtitle"
-              class="text-body-1 text-medium-emphasis mb-0"
-            >
-              {{ t("pages.profileCalendar.subtitle") }}
-            </p>
-          </div>
-          <div class="d-flex flex-wrap align-center gap-3">
-            <v-chip
-              color="primary"
-              variant="tonal"
-              size="small"
-            >
-              {{ t("pages.profile.calendar.views.month") }}
-            </v-chip>
-            <span class="text-body-2 text-medium-emphasis">
-              {{ t("pages.profile.calendar.subtitle") }}
-            </span>
-          </div>
-        </div>
-      </SidebarCard>
+      <ProfileCalendar compact />
     </header>
-
-    <v-row dense>
-      <v-col cols="12">
-        <ProfileCalendar compact />
-      </v-col>
-    </v-row>
   </main>
 </template>
 

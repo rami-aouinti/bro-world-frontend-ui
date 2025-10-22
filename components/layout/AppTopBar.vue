@@ -36,7 +36,7 @@
     >
       <v-autocomplete
         :items="items"
-        class="app-top-bar__search mx-auto w-full max-w-[360px] rounded-2xl bg-background/60 text-sm backdrop-blur md:max-w-[420px]"
+        class="app-top-bar__search mx-auto w-full max-w-[360px] rounded-xl bg-background/60 text-sm backdrop-blur md:max-w-[420px] p-4"
         density="compact"
         hide-details
         menu-icon=""
@@ -44,8 +44,6 @@
         variant="solo-filled"
         auto-select-first
         item-props
-        rounded
-        outlined
       >
         <template #prepend-inner>
           <v-icon

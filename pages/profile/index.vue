@@ -217,10 +217,6 @@
               </SidebarCard>
             </section>
           </v-col>
-
-          <v-col cols="12">
-            <ProfileCalendar />
-          </v-col>
         </v-row>
       </v-col>
     </v-row>
