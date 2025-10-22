@@ -230,10 +230,14 @@ import { computed, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 import { friendCards, findFriendById } from "~/lib/users/mock-friends";
 import type { FriendCard } from "~/types/pages/profile";
 
 const { t, locale, localeProperties } = useI18n();
+usePageLoadingOverlay({
+  loader: () => import("~/components/loading/overlays/ProfileFriendProfileLoadingOverlay.vue"),
+});
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const route = useRoute();

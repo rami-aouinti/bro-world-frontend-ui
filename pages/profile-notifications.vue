@@ -9,6 +9,7 @@ import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 
 const ProfileNotificationSettingsForm = defineAsyncComponent({
   loader: () => import("~/components/forms/ProfileNotificationSettingsForm.vue"),
@@ -22,6 +23,9 @@ const ProfileNotificationSidebarContent = defineAsyncComponent({
 
 const { t } = useI18n();
 const pageDescription = computed(() => t("seo.profileNotifications.description"));
+usePageLoadingOverlay({
+  loader: () => import("~/components/loading/overlays/ProfileNotificationsLoadingOverlay.vue"),
+});
 
 definePageMeta({
   middleware: "auth",

@@ -13,6 +13,7 @@
 import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 
 const SidebarCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarCard.vue"),
@@ -30,6 +31,9 @@ const ProfileCalendarSidebarSummary = defineAsyncComponent({
 });
 
 const { t, locale, localeProperties } = useI18n();
+usePageLoadingOverlay({
+  loader: () => import("~/components/loading/overlays/ProfileCalendarLoadingOverlay.vue"),
+});
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
