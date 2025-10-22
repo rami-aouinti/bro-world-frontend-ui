@@ -2271,6 +2271,8 @@
         "active": "当前",
         "activateAria": "将 {world} 设为当前世界"
       },
+      "participantsLabel": "{count} 位参与者",
+      "ratingLabel": "评分 {rating}",
       "empty": {
         "title": "暂无可用世界",
         "description": "稍后再来探索新的空间，或创建你自己的世界。"

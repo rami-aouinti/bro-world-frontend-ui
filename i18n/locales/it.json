@@ -2271,6 +2271,8 @@
         "active": "Attivo",
         "activateAria": "Imposta {world} come world attivo"
       },
+      "participantsLabel": "{count} partecipanti",
+      "ratingLabel": "Valutazione {rating}",
       "empty": {
         "title": "Nessun world disponibile",
         "description": "Torna presto per scoprire nuovi spazi oppure crea il tuo world."

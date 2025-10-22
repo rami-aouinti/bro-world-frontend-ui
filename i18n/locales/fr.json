@@ -2271,6 +2271,8 @@
         "active": "Actif",
         "activateAria": "Définir {world} comme world actif"
       },
+      "participantsLabel": "{count} participants",
+      "ratingLabel": "Note {rating}",
       "empty": {
         "title": "Aucun world disponible",
         "description": "Revenez bientôt pour découvrir de nouveaux espaces ou créez votre propre world."

@@ -37,14 +37,27 @@ const globalStubs = {
           const resolvedAttrs = { ...(attrs as Record<string, unknown>) };
           const disabledAttr = resolvedAttrs.disabled;
           delete resolvedAttrs.disabled;
+          const toAttr = resolvedAttrs.to;
+          if (typeof toAttr === "string") {
+            resolvedAttrs["data-to"] = toAttr;
+          } else if (toAttr && typeof toAttr === "object") {
+            resolvedAttrs["data-to"] = (toAttr as { path?: string }).path ?? "";
+          }
+          delete resolvedAttrs.to;
+          const isDisabled = disabledAttr !== undefined && disabledAttr !== false;
 
           return h(
             "button",
             {
               type: "button",
               ...resolvedAttrs,
-              disabled: disabledAttr !== undefined && disabledAttr !== false,
+              disabled: isDisabled,
               onClick: (event: Event) => {
+                if (isDisabled) {
+                  event.preventDefault();
+                  return;
+                }
+
                 emit("click", event);
               },
             },
@@ -55,6 +68,30 @@ const globalStubs = {
   }),
   VChip: { template: "<span><slot /></span>" },
   Icon: { template: "<span />" },
+  NuxtLink: defineComponent({
+    name: "NuxtLinkStub",
+    props: {
+      to: {
+        type: [String, Object],
+        default: undefined,
+      },
+    },
+    setup(props, { slots }) {
+      return () =>
+        h(
+          "a",
+          {
+            href:
+              typeof props.to === "string"
+                ? props.to
+                : props.to && typeof props.to === "object"
+                  ? (props.to as Record<string, string>).path ?? ""
+                  : undefined,
+          },
+          slots.default?.(),
+        );
+    },
+  }),
 } as const;
 
 function createWorld(overrides: Partial<SiteWorldSettings> = {}): SiteWorldSettings {
@@ -82,7 +119,7 @@ describe("components/world/WorldExplorerCard", () => {
     });
 
     const buttons = wrapper.findAll("button");
-    expect(buttons[0].attributes("to")).toBe("/home");
+    expect(buttons[0].attributes("data-to")).toBe("/home");
   });
 
   it("links the enter button to the world route for other slugs", () => {
@@ -96,7 +133,7 @@ describe("components/world/WorldExplorerCard", () => {
     });
 
     const buttons = wrapper.findAll("button");
-    expect(buttons[0].attributes("to")).toBe("/world/innovation-lab");
+    expect(buttons[0].attributes("data-to")).toBe("/world/innovation-lab");
   });
 
   it("emits an activate event when the set active button is pressed", async () => {
@@ -129,5 +166,19 @@ describe("components/world/WorldExplorerCard", () => {
 
     const buttons = wrapper.findAll("button");
     expect(buttons[1].text()).toBe("pages.index.actions.active");
+  });
+
+  it("renders participants and rating when provided", () => {
+    const wrapper = mount(WorldExplorerCard, {
+      props: {
+        world: createWorld({ participantsCount: 42, rating: 4.7 }),
+      },
+      global: {
+        stubs: globalStubs,
+      },
+    });
+
+    expect(wrapper.text()).toContain("pages.index.participantsLabel:{\"count\":\"42\"}");
+    expect(wrapper.text()).toContain("pages.index.ratingLabel:{\"rating\":\"4.7\"}");
   });
 });

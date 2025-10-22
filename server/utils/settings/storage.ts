@@ -875,6 +875,35 @@ function sanitizeWorldCandidate(
       ? source.updatedAt.trim()
       : (fallbackWorld?.updatedAt ?? now);
 
+  const participantsCount = (() => {
+    if (source.participantsCount === undefined) {
+      return fallbackWorld?.participantsCount ?? null;
+    }
+
+    const numericValue = Number(source.participantsCount);
+
+    if (Number.isFinite(numericValue) && numericValue >= 0) {
+      return Math.round(numericValue);
+    }
+
+    return fallbackWorld?.participantsCount ?? null;
+  })();
+
+  const rating = (() => {
+    if (source.rating === undefined) {
+      return fallbackWorld?.rating ?? null;
+    }
+
+    const numericValue = Number(source.rating);
+
+    if (Number.isFinite(numericValue)) {
+      const clamped = Math.min(Math.max(numericValue, 0), 5);
+      return Math.round(clamped * 10) / 10;
+    }
+
+    return fallbackWorld?.rating ?? null;
+  })();
+
   return {
     id,
     name,
@@ -928,6 +957,8 @@ function sanitizeWorldCandidate(
     createdBy,
     createdAt,
     updatedAt,
+    participantsCount,
+    rating,
   } satisfies SiteWorldSettings;
 }
 
