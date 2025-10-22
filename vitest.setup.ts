@@ -4,6 +4,7 @@ import { createVuetify } from "vuetify";
 import * as vuetifyComponents from "vuetify/components";
 import * as vuetifyDirectives from "vuetify/directives";
 import "vuetify/styles";
+import UserAvatar from "~/components/UserAvatar.vue";
 
 const vuetify = createVuetify({
   components: vuetifyComponents,
@@ -13,9 +14,57 @@ const vuetify = createVuetify({
 config.global.plugins = config.global.plugins ?? [];
 config.global.plugins.push(vuetify);
 
+const NuxtImgStub = defineComponent({
+  name: "NuxtImgStub",
+  inheritAttrs: false,
+  props: {
+    src: {
+      type: [String, Object],
+      default: undefined,
+    },
+    alt: {
+      type: String,
+      default: undefined,
+    },
+  },
+  setup(props, { attrs }) {
+    return () =>
+      h("img", {
+        ...attrs,
+        class: [attrs.class, "nuxt-img-stub"].filter(Boolean),
+        src:
+          typeof props.src === "string"
+            ? props.src
+            : (attrs.src as string | undefined),
+        alt: props.alt ?? (attrs.alt as string | undefined),
+      });
+  },
+});
+
+const IconStub = defineComponent({
+  name: "IconStub",
+  inheritAttrs: false,
+  setup(_, { attrs, slots }) {
+    return () =>
+      h(
+        "span",
+        {
+          ...attrs,
+          class: ["icon-stub", attrs.class].filter(Boolean),
+          role: (attrs.role as string | undefined) ?? "img",
+          "aria-hidden": attrs["aria-hidden"] ?? "true",
+        },
+        slots.default?.() ?? [],
+      );
+  },
+});
+
 config.global.stubs = {
+  ...(config.global.stubs ?? {}),
   transition: false,
   "transition-group": false,
+  NuxtImg: NuxtImgStub,
+  Icon: IconStub,
   VDialog: defineComponent({
     name: "VDialog",
     inheritAttrs: false,
@@ -71,6 +120,11 @@ config.global.stubs = {
       };
     },
   }),
+};
+
+config.global.components = {
+  ...(config.global.components ?? {}),
+  UserAvatar,
 };
 
 if (!("visualViewport" in window)) {
