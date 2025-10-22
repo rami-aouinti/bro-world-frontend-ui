@@ -1,10 +1,5 @@
 <template>
-  <v-container
-    fluid
-    class="messenger-page py-6"
-  >
-    <ChatWindow :conversation="activeConversation" />
-  </v-container>
+  <ChatWindow :conversation="activeConversation" />
 </template>
 
 <script setup lang="ts">

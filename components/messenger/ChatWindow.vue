@@ -370,12 +370,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.messenger-window {
-  --messenger-min-height: clamp(520px, 70vh, 840px);
-  display: flex;
-  flex: 1 1 auto;
-  width: 100%;
-}
+
 
 .messenger-window__placeholder,
 .messenger-window__skeleton,
@@ -383,7 +378,6 @@ onMounted(async () => {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  min-height: var(--messenger-min-height);
   width: 100%;
 }
 
@@ -397,10 +391,8 @@ onMounted(async () => {
 
 .messenger-window__messages {
   flex: 1 1 auto;
-  overflow-y: auto;
   overflow-x: hidden;
-  max-height: none;
-  min-height: 0;
+  max-height: 275px;
   scrollbar-gutter: stable both-edges;
 }
 
