@@ -200,7 +200,8 @@
         "adminBlog": "Blog",
         "help": "Help",
         "about": "About",
-        "contact": "Contact"
+        "contact": "Contact",
+        "home": "Home"
       }
     },
     "widgets": {
@@ -2212,6 +2213,32 @@
             "answer": "Submit a request through the account tools or email  and we will follow up within 72 hours."
           }
         }
+      }
+    },
+    "index": {
+      "title": "Explore BroWorld worlds",
+      "description": "Discover curated spaces powering the BroWorld experience and jump into the worlds that matter most to you.",
+      "worldListTitle": "Available worlds",
+      "badges": {
+        "active": "Active world"
+      },
+      "createdBy": "Created by {name}",
+      "localeLabel": "Locale: {locale}",
+      "visibility": {
+        "public": "Public world",
+        "private": "Private world"
+      },
+      "cardAria": "World {name}. {visibility}.",
+      "actions": {
+        "enter": "Enter world",
+        "enterAria": "Enter the {world} world",
+        "setActive": "Set active",
+        "active": "Active",
+        "activateAria": "Set {world} as the active world"
+      },
+      "empty": {
+        "title": "No worlds available",
+        "description": "Check back soon to explore new spaces or create your own world."
       }
     },
     "profile": {
