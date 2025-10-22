@@ -9,6 +9,22 @@ main.world-explorer-page {
   gap: 0.75rem;
 }
 
+.world-explorer-page__header-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .world-explorer-page__header-top {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
 .world-explorer-page__search {
   max-width: min(32rem, 100%);
 }
@@ -28,6 +44,33 @@ main.world-explorer-page {
   color: hsl(var(--muted-foreground));
   font-size: 1.02rem;
   opacity: 0.95;
+}
+
+.world-explorer-page__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.world-explorer-page__cta:hover,
+.world-explorer-page__cta:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px hsl(var(--primary) / 0.25);
+  background: hsl(var(--primary) / 0.92);
+}
+
+.world-explorer-page__cta:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 3px;
 }
 
 /* Grid responsive plus dense, hauteurs homogènes */
