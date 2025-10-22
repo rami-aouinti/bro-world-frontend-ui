@@ -141,6 +141,13 @@ export function buildProfileSidebarItems(
       translate: true,
     },
     {
+      key: "profile-notifications",
+      label: "layout.sidebar.items.profileNotifications",
+      icon: "mdi:bell-cog-outline",
+      to: "/profile-notifications",
+      translate: true,
+    },
+    {
       key: "profile-calendar",
       label: "layout.sidebar.items.profileCalendar",
       icon: "mdi:calendar-month-outline",

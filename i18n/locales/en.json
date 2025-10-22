@@ -173,6 +173,7 @@
         "profileOverview": "Overview",
         "profileSettings": "Account settings",
         "profileSecurity": "Password & security",
+        "profileNotifications": "Notifications",
         "profileCalendar": "Calendar",
         "profileFriends": "Friends",
         "profilePhotos": "Photos & media",
@@ -2496,6 +2497,104 @@
         "title": "Store these one-time recovery codes"
       }
     },
+    "profileNotifications": {
+      "title": "Notification preferences",
+      "subtitle": "Choose how and when we get in touch about new activity.",
+      "actions": {
+        "save": "Save preferences",
+        "reset": "Reset"
+      },
+      "channelLabels": {
+        "email": "Email",
+        "push": "Push notifications",
+        "sms": "SMS messages",
+        "inApp": "In-app alerts"
+      },
+      "sections": {
+        "channels": {
+          "title": "Delivery channels",
+          "description": "Pick the channels you’d like us to use when something important happens."
+        },
+        "email": {
+          "title": "Email updates",
+          "description": "Stay in the loop even when you’re away from BroWorld.",
+          "items": {
+            "comments": "Comments on my posts",
+            "mentions": "Mentions of my handle",
+            "follows": "New followers",
+            "messages": "Direct messages",
+            "newsletters": "Product newsletters and tips"
+          }
+        },
+        "inApp": {
+          "title": "In-app notifications",
+          "description": "Control the alerts you’ll see while working in BroWorld.",
+          "items": {
+            "productUpdates": "Product launches & roadmap updates",
+            "eventReminders": "Event reminders & calendar invitations",
+            "securityAlerts": "Security alerts and sign-in notices",
+            "communityHighlights": "Community highlights and trending topics"
+          },
+          "playSounds": "Play a subtle sound for high-priority alerts",
+          "smartSummaries": "Show smart summaries in the notification center"
+        },
+        "digest": {
+          "title": "Digest summary",
+          "description": "We’ll bundle quieter activity into a single email so you can scan it quickly.",
+          "enableLabel": "Send me a digest",
+          "frequencyLabel": "Digest frequency",
+          "timeLabel": "Preferred delivery time",
+          "options": {
+            "daily": "Daily",
+            "weekly": "Weekly",
+            "monthly": "Monthly"
+          },
+          "helper": "{frequency} digest scheduled for {time}.",
+          "helperDisabled": "Digests are off. Turn them on to receive a summary email."
+        },
+        "quietHours": {
+          "title": "Quiet hours",
+          "description": "Mute non-critical alerts during focus time or overnight.",
+          "enableLabel": "Enable quiet hours",
+          "start": "Start time",
+          "end": "End time"
+        },
+        "security": {
+          "title": "Critical alerts",
+          "description": "We’ll always notify you about password changes, exports, or security risks.",
+          "label": "Email me about critical security alerts"
+        }
+      },
+      "helpers": {
+        "emailDisabled": "Add an email to your profile to enable email notifications.",
+        "securityAlwaysOn": "Critical security alerts are always enabled for your account."
+      },
+      "snackbar": {
+        "saved": "Notification preferences updated.",
+        "reset": "Preferences restored to the last saved version."
+      },
+      "sidebar": {
+        "digestTitle": "Digest schedule",
+        "digestDay": "Monday",
+        "digestLine": "Your next digest arrives on {day} at {time}.",
+        "digestInfo": "Adjust the time or frequency whenever you need a quick recap.",
+        "tipsTitle": "Quick tips",
+        "tips": {
+          "mobile": {
+            "title": "Pair the mobile app",
+            "subtitle": "Install BroWorld on iOS or Android to unlock push alerts and widgets."
+          },
+          "channels": {
+            "title": "Balance your channels",
+            "subtitle": "Keep email for weekly recaps while using in-app alerts for daily collaboration."
+          },
+          "updates": {
+            "title": "Highlight key updates",
+            "subtitle": "Pin important projects so digest emails surface the activity you care about first."
+          }
+        }
+      }
+    },
     "contact": {
       "title": "Contact",
       "subtitle": "We usually reply within 1–2 business days.",
@@ -2754,6 +2853,10 @@
     "profileSecurity": {
       "title": "Password & security",
       "description": "Manage sign-in credentials, two-factor authentication, and trusted devices."
+    },
+    "profileNotifications": {
+      "title": "Notification preferences",
+      "description": "Decide which alerts reach you by email, push, or in-app messages."
     },
     "job": {
       "title": "Jobs",

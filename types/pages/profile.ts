@@ -139,26 +139,37 @@ export interface AlbumSummary {
   updated: string;
 }
 
-export interface ProfileStoryMilestone {
-  id: string;
-  title: string;
-  date: string;
-  description: string;
-  status: string;
-  progress: number;
-  color: string;
-  icon: string;
-  tags: string[];
-}
-
-export interface ProfileCreativeNote {
-  id: string;
-  initials: string;
-  title: string;
-  byline: string;
-  category: string;
-  preview: string;
-  updated: string;
-  color: string;
-  cta: string;
+export interface NotificationPreferences {
+  channels: {
+    email: boolean;
+    push: boolean;
+    sms: boolean;
+    inApp: boolean;
+  };
+  email: {
+    comments: boolean;
+    mentions: boolean;
+    follows: boolean;
+    messages: boolean;
+    newsletters: boolean;
+  };
+  inApp: {
+    productUpdates: boolean;
+    eventReminders: boolean;
+    securityAlerts: boolean;
+    communityHighlights: boolean;
+  };
+  digest: {
+    enabled: boolean;
+    frequency: "daily" | "weekly" | "monthly";
+    time: string;
+  };
+  quietHours: {
+    enabled: boolean;
+    start: string;
+    end: string;
+  };
+  playSounds: boolean;
+  smartSummaries: boolean;
+  securityAlerts: boolean;
 }
