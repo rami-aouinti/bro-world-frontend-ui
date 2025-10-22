@@ -93,6 +93,12 @@
       "signOut": "Esci",
       "changeLanguage": "Cambia lingua (attuale: {locale})"
     },
+    "worldSummary": {
+      "title": "Mondo attivo",
+      "createdBy": "Creato da {name}",
+      "createdByFallback": "Creatore sconosciuto",
+      "untitled": "Mondo senza titolo"
+    },
     "notificationsMenu": {
       "title": "Notifiche",
       "subtitle": "Ultimi aggiornamenti dalla tua rete",
