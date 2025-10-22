@@ -2758,6 +2758,25 @@
       "title": "Area di amministrazione",
       "subtitle": "Gestisci l’intera piattaforma, monitora le metriche chiave e attiva le leve giuste in pochi clic."
     },
+    "statistics": {
+      "metaTitle": "Statistiche",
+      "page": {
+        "title": "Statistiche della piattaforma",
+        "subtitle": "Tieni d'occhio le tendenze d'uso e gli indicatori chiave di salute della tua community."
+      },
+      "cards": {
+        "users": {
+          "title": "Utenti registrati",
+          "description": "Numero totale di account attualmente disponibili sulla piattaforma."
+        }
+      },
+      "actions": {
+        "refresh": "Aggiorna dati"
+      },
+      "errors": {
+        "load": "Impossibile caricare le statistiche."
+      }
+    },
     "settings": {
       "metaTitle": "Site settings",
       "page": {
