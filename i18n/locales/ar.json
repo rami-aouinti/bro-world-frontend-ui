@@ -93,6 +93,12 @@
       "signOut": "تسجيل الخروج",
       "changeLanguage": "تغيير اللغة (الحالية: {locale})"
     },
+    "worldSummary": {
+      "title": "العالم النشط",
+      "createdBy": "تم الإنشاء بواسطة {name}",
+      "createdByFallback": "منشئ غير معروف",
+      "untitled": "عالم بدون عنوان"
+    },
     "notificationsMenu": {
       "title": "الإشعارات",
       "subtitle": "آخر التحديثات من شبكتك",

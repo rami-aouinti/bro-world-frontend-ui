@@ -32,7 +32,10 @@ export function useSiteSettingsState() {
     return [...(activeWorld?.pluginIds ?? [])];
   });
 
-  return Object.assign(settings, { enabledPlugins }) as typeof settings & {
+  const activeWorld = computed(() => resolveActiveWorld(settings.value));
+
+  return Object.assign(settings, { enabledPlugins, activeWorld }) as typeof settings & {
     enabledPlugins: ComputedRef<string[]>;
+    activeWorld: ComputedRef<SiteWorldSettings | null>;
   };
 }

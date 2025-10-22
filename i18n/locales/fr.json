@@ -93,6 +93,12 @@
       "signOut": "Se déconnecter",
       "changeLanguage": "Changer de langue (actuel : {locale})"
     },
+    "worldSummary": {
+      "title": "Monde actif",
+      "createdBy": "Créé par {name}",
+      "createdByFallback": "Créateur inconnu",
+      "untitled": "Monde sans titre"
+    },
     "notificationsMenu": {
       "title": "Notifications",
       "subtitle": "Dernières actualités de votre réseau",

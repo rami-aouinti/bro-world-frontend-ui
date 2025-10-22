@@ -12,9 +12,11 @@ import type {
   SiteSettings,
   SiteThemeDefinition,
   SiteUiSettings,
+  SiteWorldCreator,
   SiteWorldSettings,
 } from "~/types/settings";
 import type { CreateWorldRequestPayload } from "~/types/world";
+import type { AuthUser } from "~/types/auth";
 import {
   DEFAULT_WORLD_PLUGIN_IDS,
   composeMenusWithPlugins,
@@ -678,7 +680,99 @@ function cloneWorld(world: SiteWorldSettings): SiteWorldSettings {
     ...world,
     pluginIds: [...world.pluginIds],
     tags: world.tags ? [...world.tags] : undefined,
+    createdBy:
+      world.createdBy === undefined
+        ? undefined
+        : world.createdBy
+          ? { ...world.createdBy }
+          : null,
   } satisfies SiteWorldSettings;
+}
+
+function sanitizeWorldCreator(
+  candidate: unknown,
+  fallback: SiteWorldCreator | null,
+): SiteWorldCreator | null {
+  const fallbackCreator = fallback ?? null;
+  const source =
+    candidate && typeof candidate === "object"
+      ? (candidate as Partial<SiteWorldCreator>)
+      : {};
+
+  const rawId = typeof source.id === "string" ? source.id.trim() : "";
+  const rawName = typeof source.name === "string" ? source.name.trim() : "";
+  const rawAvatar =
+    source.avatar === null
+      ? null
+      : typeof source.avatar === "string"
+        ? source.avatar.trim()
+        : undefined;
+
+  const fallbackId =
+    typeof fallbackCreator?.id === "string" ? fallbackCreator.id.trim() : "";
+  const fallbackName =
+    typeof fallbackCreator?.name === "string" ? fallbackCreator.name.trim() : "";
+  const fallbackAvatar = fallbackCreator?.avatar ?? null;
+
+  if (!rawId && !fallbackId && !rawName && !fallbackName) {
+    return null;
+  }
+
+  const resolvedName = rawName || fallbackName || "";
+  const resolvedId =
+    rawId ||
+    fallbackId ||
+    (resolvedName ? slugify(resolvedName) : "unknown-creator");
+
+  const resolvedAvatar =
+    rawAvatar !== undefined ? rawAvatar : fallbackAvatar ?? null;
+
+  return {
+    id: resolvedId,
+    name: resolvedName,
+    avatar: resolvedAvatar,
+  } satisfies SiteWorldCreator;
+}
+
+function composeWorldCreator(
+  user: AuthUser | null,
+  fallbackId: string | null,
+): SiteWorldCreator | null {
+  const idCandidates = [
+    typeof user?.id === "string" ? user.id.trim() : "",
+    typeof fallbackId === "string" ? fallbackId.trim() : "",
+  ];
+
+  const resolvedId = idCandidates.find((value) => value.length > 0) ?? "";
+
+  if (!resolvedId) {
+    return null;
+  }
+
+  const nameParts = [
+    typeof user?.firstName === "string" ? user.firstName.trim() : "",
+    typeof user?.lastName === "string" ? user.lastName.trim() : "",
+  ].filter((part) => part.length > 0);
+
+  const fullName = nameParts.join(" ").trim();
+  const nameCandidates = [
+    fullName,
+    typeof user?.username === "string" ? user.username.trim() : "",
+    typeof user?.email === "string" ? user.email.trim() : "",
+  ];
+
+  const resolvedName = nameCandidates.find((value) => value.length > 0) ?? "";
+
+  const resolvedAvatar =
+    typeof user?.photo === "string" && user.photo.trim()
+      ? user.photo.trim()
+      : null;
+
+  return {
+    id: resolvedId,
+    name: resolvedName,
+    avatar: resolvedAvatar,
+  } satisfies SiteWorldCreator;
 }
 
 function sanitizePluginIdCollection(
@@ -769,6 +863,8 @@ function sanitizeWorldCandidate(
       ? [...fallbackWorld.tags]
       : [];
 
+  const createdBy = sanitizeWorldCreator(source.createdBy, fallbackWorld?.createdBy ?? null);
+
   const createdAt =
     typeof source.createdAt === "string" && source.createdAt.trim()
       ? source.createdAt.trim()
@@ -829,6 +925,7 @@ function sanitizeWorldCandidate(
       source.allowGuests === undefined
         ? (fallbackWorld?.allowGuests ?? true)
         : Boolean(source.allowGuests),
+    createdBy,
     createdAt,
     updatedAt,
   } satisfies SiteWorldSettings;
@@ -1331,6 +1428,8 @@ export async function createWorld(
   const current = await getSiteSettings(event);
   const defaults = getDefaultSiteSettings();
 
+  const sessionCreator = composeWorldCreator(getSessionUser(event), userId);
+
   const blueprintSource = current.menuBlueprints?.length
     ? current.menuBlueprints
     : current.menus?.length
@@ -1359,6 +1458,7 @@ export async function createWorld(
     requireVerification: payload.requireVerification,
     allowGuests: payload.allowGuests,
     pluginIds: payload.pluginIds,
+    createdBy: sessionCreator ?? undefined,
   };
 
   const fallbackWorld =
@@ -1389,6 +1489,10 @@ export async function createWorld(
     sanitizedWorld.createdAt = fallbackWorld.createdAt;
   }
   sanitizedWorld.updatedAt = new Date().toISOString();
+
+  if ((sanitizedWorld.createdBy === null || sanitizedWorld.createdBy === undefined) && sessionCreator) {
+    sanitizedWorld.createdBy = { ...sessionCreator };
+  }
 
   const filteredWorlds = fallbackWorlds.filter(
     (world) => world.id !== sanitizedWorld.id && world.slug !== sanitizedWorld.slug,

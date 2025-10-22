@@ -93,6 +93,12 @@
       "signOut": "Выйти",
       "changeLanguage": "Изменить язык (текущий: {locale})"
     },
+    "worldSummary": {
+      "title": "Активный мир",
+      "createdBy": "Создан {name}",
+      "createdByFallback": "Неизвестный создатель",
+      "untitled": "Мир без названия"
+    },
     "notificationsMenu": {
       "title": "Уведомления",
       "subtitle": "Последние обновления вашей сети",

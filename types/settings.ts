@@ -56,6 +56,7 @@ export interface SiteWorldSettings {
   name: string;
   slug: string;
   pluginIds: string[];
+  createdBy?: SiteWorldCreator | null;
   locale?: string | null;
   description?: string | null;
   visibility?: string | null;
@@ -75,6 +76,12 @@ export interface SiteWorldSettings {
   } | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface SiteWorldCreator {
+  id: string;
+  name: string;
+  avatar?: string | null;
 }
 
 export interface SiteLocalizedSettings {

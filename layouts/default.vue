@@ -26,7 +26,42 @@
     <div
       id="menu-bar-world"
       class="menu-bar-world-slot"
-    />
+    >
+      <v-card
+        v-if="shouldShowWorldSummary"
+        class="menu-bar-world-card text-card-foreground px-4 py-3"
+        rounded="xl"
+        variant="text"
+      >
+        <div class="menu-bar-world-card__body">
+          <v-avatar
+            class="menu-bar-world-card__avatar"
+            color="primary"
+            size="44"
+            variant="tonal"
+          >
+            <template v-if="activeWorldCreatorAvatar">
+              <v-img
+                :src="activeWorldCreatorAvatar"
+                :alt="activeWorldCreatorAlt"
+                cover
+              />
+            </template>
+            <v-icon
+              v-else
+              icon="mdi:account-circle"
+              size="32"
+              aria-hidden="true"
+            />
+          </v-avatar>
+          <div class="menu-bar-world-card__content">
+            <span class="menu-bar-world-card__label">{{ worldSummaryTitle }}</span>
+            <span class="menu-bar-world-card__name">{{ activeWorldName }}</span>
+            <span class="menu-bar-world-card__creator">{{ activeWorldCreatorDisplay }}</span>
+          </div>
+        </div>
+      </v-card>
+    </div>
 
     <!-- LEFT DRAWER -->
     <v-navigation-drawer
@@ -640,7 +675,7 @@ const initialIsMobile = useState("layout-initial-is-mobile", () => {
   const snapshot = serverInitialLayoutState ?? computeInitialLayoutState(true);
   return snapshot.isMobile;
 });
-const { locale, availableLocales, setLocale } = useI18n();
+const { locale, availableLocales, setLocale, t } = useI18n();
 const auth = useAuthSession();
 const routeLoadingState = useState("route:loading", () => false);
 
@@ -956,6 +991,72 @@ watch(
 );
 
 const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSettings());
+
+const worldSummaryTitle = computed(() => t("layout.worldSummary.title", "Active world"));
+
+const activeWorldForDisplay = computed(() => {
+  const activeWorld = siteSettingsState.activeWorld.value;
+
+  if (activeWorld) {
+    return activeWorld;
+  }
+
+  const worlds = siteSettings.value.worlds ?? [];
+  return worlds[0] ?? null;
+});
+
+const shouldShowWorldSummary = computed(() => Boolean(activeWorldForDisplay.value));
+
+const activeWorldName = computed(() => {
+  const world = activeWorldForDisplay.value;
+  if (world?.name && world.name.trim()) {
+    return world.name.trim();
+  }
+  return t("layout.worldSummary.untitled", "Untitled world");
+});
+
+const activeWorldCreatorAvatar = computed(() => {
+  const avatar = activeWorldForDisplay.value?.createdBy?.avatar;
+
+  if (typeof avatar === "string" && avatar.trim().length > 0) {
+    return avatar.trim();
+  }
+
+  return null;
+});
+
+const activeWorldCreatorName = computed(() => {
+  const name = activeWorldForDisplay.value?.createdBy?.name;
+
+  if (typeof name === "string") {
+    const trimmed = name.trim();
+    if (trimmed.length > 0) {
+      return trimmed;
+    }
+  }
+
+  return "";
+});
+
+const activeWorldCreatorDisplay = computed(() => {
+  const creatorName = activeWorldCreatorName.value;
+
+  if (creatorName) {
+    return t("layout.worldSummary.createdBy", { name: creatorName });
+  }
+
+  return t("layout.worldSummary.createdByFallback", "Unknown creator");
+});
+
+const activeWorldCreatorAlt = computed(() => {
+  const creatorName = activeWorldCreatorName.value;
+
+  if (creatorName) {
+    return creatorName;
+  }
+
+  return t("layout.worldSummary.createdByFallback", "Unknown creator");
+});
 
 watch(
   () => siteSettings.value.ui,
@@ -1391,6 +1492,62 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 
 .app-drawer {
   border-color: transparent;
+}
+
+.menu-bar-world-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: min(100%, 960px);
+  margin-inline: auto;
+  padding-inline: clamp(12px, 6vw, 32px);
+  padding-block-start: clamp(12px, 4vw, 24px);
+  padding-block-end: 0;
+  box-sizing: border-box;
+}
+
+.menu-bar-world-card {
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+  background-color: rgba(var(--v-theme-surface), 0.78);
+  backdrop-filter: blur(18px);
+}
+
+.menu-bar-world-card__body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-bar-world-card__avatar {
+  box-shadow: 0 0 0 1px rgba(var(--v-theme-primary), 0.18);
+}
+
+.menu-bar-world-card__avatar :deep(img) {
+  object-fit: cover;
+}
+
+.menu-bar-world-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.menu-bar-world-card__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(var(--v-theme-on-surface), 0.64);
+}
+
+.menu-bar-world-card__name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.menu-bar-world-card__creator {
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.72);
 }
 
 .pane-scroll {

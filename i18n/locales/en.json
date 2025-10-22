@@ -93,6 +93,12 @@
       "signOut": "Sign out",
       "changeLanguage": "Change language (current: {locale})"
     },
+    "worldSummary": {
+      "title": "Active world",
+      "createdBy": "Created by {name}",
+      "createdByFallback": "Unknown creator",
+      "untitled": "Untitled world"
+    },
     "notificationsMenu": {
       "title": "Notifications",
       "subtitle": "Latest updates from your network",

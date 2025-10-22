@@ -7,6 +7,7 @@ import type {
   SiteContentBlock,
   SiteLanguageDefinition,
   SiteLocalizedSettings,
+  SiteWorldCreator,
   SiteWorldSettings,
 } from "~/types/settings";
 import { defaultLanguageCode, supportedLanguages } from "~/lib/i18n/languages";
@@ -869,6 +870,12 @@ export function getDefaultMenuBlueprints(): SiteMenuItem[] {
 const defaultMenuBlueprints = getDefaultMenuBlueprints();
 const defaultMenus = composeMenusWithPlugins(defaultMenuBlueprints, DEFAULT_WORLD_PLUGIN_IDS);
 
+const defaultWorldCreator: SiteWorldCreator = {
+  id: "bro-world-team",
+  name: "BroWorld Team",
+  avatar: null,
+  };
+
 const homeWorld: SiteWorldSettings = {
   id: "home",
   name: "Community Feed",
@@ -900,6 +907,7 @@ const defaultWorld: SiteWorldSettings = {
   name: DEFAULT_SITE_NAME,
   slug: "bro-world",
   pluginIds: Array.from(DEFAULT_WORLD_PLUGIN_IDS),
+  createdBy: { ...defaultWorldCreator },
   locale: defaultLanguageCode,
   description: null,
   visibility: "public",
@@ -1024,6 +1032,7 @@ export const defaultSiteSettings: SiteSettings = {
       ...defaultWorld,
       pluginIds: [...defaultWorld.pluginIds],
       tags: [...(defaultWorld.tags ?? [])],
+      createdBy: defaultWorld.createdBy ? { ...defaultWorld.createdBy } : null,
     },
     {
       ...innovationWorld,

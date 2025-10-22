@@ -93,6 +93,12 @@
       "signOut": "退出登录",
       "changeLanguage": "切换语言（当前：{locale}）"
     },
+    "worldSummary": {
+      "title": "活跃世界",
+      "createdBy": "创建者：{name}",
+      "createdByFallback": "未知创建者",
+      "untitled": "未命名的世界"
+    },
     "notificationsMenu": {
       "title": "通知",
       "subtitle": "来自网络的最新更新",

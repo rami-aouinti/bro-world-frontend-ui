@@ -93,6 +93,12 @@
       "signOut": "Abmelden",
       "changeLanguage": "Sprache ändern (aktuell: {locale})"
     },
+    "worldSummary": {
+      "title": "Aktive Welt",
+      "createdBy": "Erstellt von {name}",
+      "createdByFallback": "Unbekannter Ersteller",
+      "untitled": "Unbenannte Welt"
+    },
     "notificationsMenu": {
       "title": "Benachrichtigungen",
       "subtitle": "Aktuelle Updates aus deinem Netzwerk",
