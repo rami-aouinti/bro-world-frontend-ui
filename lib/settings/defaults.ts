@@ -13,8 +13,18 @@ import type {
 import { defaultLanguageCode, supportedLanguages } from "~/lib/i18n/languages";
 
 function makeMenu(
-  menu: Omit<SiteMenuItem, "order"> & { order?: number },
-  children: SiteMenuItem[] = [],
+    menu: {
+      requiresAdmin?: boolean;
+      children?: MenuBlueprint[];
+      icon?: string | null;
+      id: string;
+      label: string;
+      to?: string | null;
+      isVisible?: boolean;
+      translate?: boolean;
+      order: number
+    },
+    children: SiteMenuItem[] = [],
 ): SiteMenuItem {
   return {
     ...menu,
@@ -460,7 +470,279 @@ const BASE_MENU_BLUEPRINTS: MenuBlueprint[] = [
   },
 ];
 
-const PLUGIN_MENU_CONTRIBUTIONS: Record<string, MenuBlueprint[]> = {
+const PLUGIN_MENU_CONTRIBUTIONS: {
+  game: ({
+    icon: string;
+    id: string;
+    label: string;
+    to: string;
+    isVisible: boolean;
+    translate: boolean;
+    order: number
+  } | {
+    children: {
+      requiresAdmin: boolean;
+      children: ({
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      })[];
+      icon: string;
+      id: string;
+      label: string;
+      isVisible: boolean;
+      translate: boolean;
+      order: number
+    }[];
+    id: string
+  })[];
+  education: ({
+    icon: string;
+    id: string;
+    label: string;
+    to: string;
+    isVisible: boolean;
+    translate: boolean;
+    order: number
+  } | {
+    children: {
+      requiresAdmin: boolean;
+      children: ({
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      })[];
+      icon: string;
+      id: string;
+      label: string;
+      isVisible: boolean;
+      translate: boolean;
+      order: number
+    }[];
+    id: string
+  })[];
+  ecommerce: ({
+    children: ({ icon: string; id: string; label: string; to: string; translate: boolean; order: number } | {
+      icon: string;
+      id: string;
+      label: string;
+      to: string;
+      translate: boolean;
+      order: number
+    } | { icon: string; id: string; label: string; to: string; translate: boolean; order: number } | {
+      icon: string;
+      id: string;
+      label: string;
+      to: string;
+      translate: boolean;
+      order: number
+    })[];
+    icon: string;
+    id: string;
+    label: string;
+    to: string;
+    isVisible: boolean;
+    translate: boolean;
+    order: number
+  } | {
+    children: {
+      requiresAdmin: boolean;
+      children: ({
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      })[];
+      icon: string;
+      id: string;
+      label: string;
+      isVisible: boolean;
+      translate: boolean;
+      order: number
+    }[];
+    id: string
+  })[];
+  "job-board": ({
+    icon: string;
+    id: string;
+    label: string;
+    to: string;
+    isVisible: boolean;
+    translate: boolean;
+    order: number
+  } | {
+    children: {
+      requiresAdmin: boolean;
+      children: ({
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      })[];
+      icon: string;
+      id: string;
+      label: string;
+      isVisible: boolean;
+      translate: boolean;
+      order: number
+    }[];
+    id: string
+  })[];
+  blog: {
+    children: {
+      requiresAdmin: boolean;
+      children: ({
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      } | {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      })[];
+      icon: string;
+      id: string;
+      label: string;
+      isVisible: boolean;
+      translate: boolean;
+      order: number
+    }[];
+    id: string
+  }[];
+  crm: ({
+    icon: string;
+    id: string;
+    label: string;
+    to: string;
+    isVisible: boolean;
+    translate: boolean;
+    order: number
+  } | {
+    children: {
+      children: {
+        requiresAdmin: boolean;
+        icon: string;
+        id: string;
+        label: string;
+        to: string;
+        isVisible: boolean;
+        translate: boolean;
+        order: number
+      }[];
+      id: string
+    }[];
+    id: string
+  })[]
+} = {
   "job-board": [
     {
       id: "jobs",
@@ -876,7 +1158,27 @@ const defaultWorldCreator: SiteWorldCreator = {
   avatar: null,
   };
 
-const homeWorld: SiteWorldSettings = {
+const homeWorld: {
+  pluginIds: string[];
+  visibility: string;
+  enableMonetization: boolean;
+  description: string;
+  launchDate: string;
+  locale: string;
+  tags: string[];
+  createdAt: string;
+  createdBy: { avatarUrl: null; name: string; handle: string };
+  allowGuests: boolean;
+  name: string;
+  requireVerification: boolean;
+  guidelines: string;
+  theme: string;
+  id: string;
+  region: string;
+  enableIntegrations: boolean;
+  slug: string;
+  updatedAt: string
+} = {
   id: "home",
   name: "Community Feed",
   slug: "home",
@@ -902,7 +1204,27 @@ const homeWorld: SiteWorldSettings = {
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
 
-const defaultWorld: SiteWorldSettings = {
+const defaultWorld: {
+  pluginIds: (string)[];
+  visibility: string;
+  enableMonetization: boolean;
+  description: null;
+  launchDate: string;
+  locale: string;
+  tags: any[];
+  createdAt: string;
+  createdBy: { name: string; id: string; avatar?: string | null };
+  allowGuests: boolean;
+  name: string;
+  requireVerification: boolean;
+  guidelines: string;
+  theme: string;
+  id: string;
+  region: string;
+  enableIntegrations: boolean;
+  slug: string;
+  updatedAt: string
+} = {
   id: "bro-world",
   name: DEFAULT_SITE_NAME,
   slug: "bro-world",
@@ -920,11 +1242,6 @@ const defaultWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: false,
   allowGuests: true,
-  createdBy: {
-    name: "Aurora Studio",
-    handle: "@aurora",
-    avatarUrl: null,
-  },
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -947,11 +1264,6 @@ const innovationWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
-  createdBy: {
-    name: "Skunkworks Crew",
-    handle: "@innovation",
-    avatarUrl: null,
-  },
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -974,11 +1286,6 @@ const marketplaceWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
-  createdBy: {
-    name: "Marketplace Guild",
-    handle: "@market",
-    avatarUrl: null,
-  },
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1001,11 +1308,6 @@ const designWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: false,
   allowGuests: true,
-  createdBy: {
-    name: "Pixelcraft Collective",
-    handle: "@pixelcraft",
-    avatarUrl: null,
-  },
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1028,11 +1330,6 @@ const talentWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
-  createdBy: {
-    name: "People Ops Guild",
-    handle: "@peopleops",
-    avatarUrl: null,
-  },
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1055,16 +1352,167 @@ const esportsWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
-  createdBy: {
-    name: "Arena Ops Squad",
-    handle: "@arena",
-    avatarUrl: null,
-  },
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
 
-export const defaultSiteSettings: SiteSettings = {
+export const defaultSiteSettings: {
+  menuBlueprints: SiteMenuItem[];
+  worlds: ({
+    pluginIds: string[];
+    visibility: string;
+    enableMonetization: boolean;
+    description: string;
+    launchDate: string;
+    locale: string;
+    tags: string[];
+    createdAt: string;
+    createdBy: { avatarUrl: null; name: string; handle: string };
+    allowGuests: boolean;
+    name: string;
+    requireVerification: boolean;
+    guidelines: string;
+    theme: string;
+    id: string;
+    region: string;
+    enableIntegrations: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility: string;
+    enableMonetization: boolean;
+    description: null;
+    launchDate: string;
+    locale: string;
+    tags: any[];
+    createdAt: string;
+    createdBy: { name: string; id: string; avatar?: string | null } | null;
+    allowGuests: boolean;
+    name: string;
+    requireVerification: boolean;
+    guidelines: string;
+    theme: string;
+    id: string;
+    region: string;
+    enableIntegrations: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility?: string | null;
+    enableMonetization?: boolean;
+    description?: string | null;
+    launchDate?: string | null;
+    locale?: string | null;
+    tags: string[];
+    createdAt: string;
+    createdBy?: SiteWorldCreator | null;
+    allowGuests?: boolean;
+    name: string;
+    requireVerification?: boolean;
+    guidelines?: string | null;
+    theme?: string | null;
+    id: string;
+    region?: string | null;
+    enableIntegrations?: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility?: string | null;
+    enableMonetization?: boolean;
+    description?: string | null;
+    launchDate?: string | null;
+    locale?: string | null;
+    tags: string[];
+    createdAt: string;
+    createdBy?: SiteWorldCreator | null;
+    allowGuests?: boolean;
+    name: string;
+    requireVerification?: boolean;
+    guidelines?: string | null;
+    theme?: string | null;
+    id: string;
+    region?: string | null;
+    enableIntegrations?: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility?: string | null;
+    enableMonetization?: boolean;
+    description?: string | null;
+    launchDate?: string | null;
+    locale?: string | null;
+    tags: string[];
+    createdAt: string;
+    createdBy?: SiteWorldCreator | null;
+    allowGuests?: boolean;
+    name: string;
+    requireVerification?: boolean;
+    guidelines?: string | null;
+    theme?: string | null;
+    id: string;
+    region?: string | null;
+    enableIntegrations?: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility?: string | null;
+    enableMonetization?: boolean;
+    description?: string | null;
+    launchDate?: string | null;
+    locale?: string | null;
+    tags: string[];
+    createdAt: string;
+    createdBy?: SiteWorldCreator | null;
+    allowGuests?: boolean;
+    name: string;
+    requireVerification?: boolean;
+    guidelines?: string | null;
+    theme?: string | null;
+    id: string;
+    region?: string | null;
+    enableIntegrations?: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility?: string | null;
+    enableMonetization?: boolean;
+    description?: string | null;
+    launchDate?: string | null;
+    locale?: string | null;
+    tags: string[];
+    createdAt: string;
+    createdBy?: SiteWorldCreator | null;
+    allowGuests?: boolean;
+    name: string;
+    requireVerification?: boolean;
+    guidelines?: string | null;
+    theme?: string | null;
+    id: string;
+    region?: string | null;
+    enableIntegrations?: boolean;
+    slug: string;
+    updatedAt: string
+  })[];
+  languages: SiteLanguageDefinition[];
+  profile: SiteProfileSettings;
+  localized: Record<string, SiteLocalizedSettings>;
+  siteName: string;
+  themes: SiteThemeDefinition[];
+  pages: { help: SiteContentBlock; contact: SiteContentBlock; about: SiteContentBlock };
+  defaultLanguage: string;
+  ui: SiteUiSettings;
+  tagline: string;
+  menus: SiteMenuItem[];
+  activeWorldId: string;
+  activeThemeId: string;
+  updatedAt: string
+} = {
   siteName: DEFAULT_SITE_NAME,
   tagline: DEFAULT_TAGLINE,
   activeThemeId: "aurora",
@@ -1148,6 +1596,82 @@ export const defaultSiteSettings: SiteSettings = {
   updatedAt: new Date(0).toISOString(),
 };
 
-export function getDefaultSiteSettings(): SiteSettings {
+export function getDefaultSiteSettings(): {
+  menuBlueprints: SiteMenuItem[];
+  worlds: ({
+    pluginIds: string[];
+    visibility: string;
+    enableMonetization: boolean;
+    description: string;
+    launchDate: string;
+    locale: string;
+    tags: string[];
+    createdAt: string;
+    createdBy: { avatarUrl: null; name: string; handle: string };
+    allowGuests: boolean;
+    name: string;
+    requireVerification: boolean;
+    guidelines: string;
+    theme: string;
+    id: string;
+    region: string;
+    enableIntegrations: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility: string;
+    enableMonetization: boolean;
+    description: null;
+    launchDate: string;
+    locale: string;
+    tags: any[];
+    createdAt: string;
+    createdBy: { name: string; id: string; avatar?: string | null } | null;
+    allowGuests: boolean;
+    name: string;
+    requireVerification: boolean;
+    guidelines: string;
+    theme: string;
+    id: string;
+    region: string;
+    enableIntegrations: boolean;
+    slug: string;
+    updatedAt: string
+  } | {
+    pluginIds: string[];
+    visibility?: string | null;
+    enableMonetization?: boolean;
+    description?: string | null;
+    launchDate?: string | null;
+    locale?: string | null;
+    tags: string[];
+    createdAt: string;
+    createdBy?: SiteWorldCreator | null;
+    allowGuests?: boolean;
+    name: string;
+    requireVerification?: boolean;
+    guidelines?: string | null;
+    theme?: string | null;
+    id: string;
+    region?: string | null;
+    enableIntegrations?: boolean;
+    slug: string;
+    updatedAt: string
+  })[];
+  languages: SiteLanguageDefinition[];
+  profile: SiteProfileSettings;
+  localized: Record<string, SiteLocalizedSettings>;
+  siteName: string;
+  themes: SiteThemeDefinition[];
+  pages: { help: SiteContentBlock; contact: SiteContentBlock; about: SiteContentBlock };
+  defaultLanguage: string;
+  ui: SiteUiSettings;
+  tagline: string;
+  menus: SiteMenuItem[];
+  activeWorldId: string;
+  activeThemeId: string;
+  updatedAt: string
+} {
   return structuredClone(defaultSiteSettings);
 }
