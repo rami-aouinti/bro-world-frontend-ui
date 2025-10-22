@@ -11,7 +11,7 @@
     >
       <slot
         v-if="isAuthenticated"
-        :items="localizedItems"
+        :items="displayItems"
         :active-key="resolvedActiveKey"
         :resolve-label="resolveLabel"
         :is-item-active="isSlotItemActive"
@@ -43,7 +43,7 @@
           <nav>
             <ul class="flex flex-col gap-3">
               <li
-                v-for="item in localizedItems"
+                v-for="item in displayItems"
                 :key="item.key"
                 class="sidebar-group"
               >
@@ -157,14 +157,7 @@
 import { computed, defineAsyncComponent, ref, watch } from "vue";
 import { NuxtLink } from "#components";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
-import {
-  ADMIN_ROLE_KEYS,
-  buildProfileSidebarItems,
-  buildSidebarItems,
-} from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
-import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
-import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
@@ -202,13 +195,10 @@ const props = withDefaults(
 const emit = defineEmits<{ (e: "select", key: string): void }>();
 const isDark = computed(() => props.isDark);
 const sticky = computed(() => props.sticky);
-const shouldRenderParticles = ref(false);
-const { t, locale } = useI18n();
-const localePath = useResolvedLocalePath();
+const { t } = useI18n();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const auth = useAuthSession();
-const siteSettings = useSiteSettingsState();
 
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
 const isRedirecting = ref(false);
@@ -239,30 +229,16 @@ const currentUserName = computed(() => {
 
 const currentUserAvatar = computed(() => currentUser.value?.photo ?? null);
 
-const canAccessAdmin = computed(() => {
-  if (!auth.isAuthenticated.value) return false;
-  const roles = auth.currentUser.value?.roles ?? [];
-  return roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
-});
+const resolvedItems = computed<LayoutSidebarItem[]>(() => props.items ?? []);
 
-const variantItems = computed<LayoutSidebarItem[]>(() => {
-  if (props.variant === "profile") {
-    return buildProfileSidebarItems(siteSettings.value?.profile);
-  }
-
-  return buildSidebarItems(siteSettings.value, canAccessAdmin.value);
-});
-
-const resolvedItems = computed<LayoutSidebarItem[]>(() => props.items ?? variantItems.value);
-
-const localizedItems = computed<LayoutSidebarItem[]>(() =>
-  resolvedItems.value.map((item) => localizeItem(item)),
+const displayItems = computed<LayoutSidebarItem[]>(() =>
+  resolvedItems.value.map((item) => normalizeItem(item)),
 );
 
 const { schedule: scheduleNonBlockingTask } = useNonBlockingTask({ timeout: 400 });
 
 const derivedActiveKey = computed(() => {
-  const items = localizedItems.value;
+  const items = displayItems.value;
   const fullPath = currentRoute.value?.fullPath ?? "/";
   const match = findActiveSidebarKey(fullPath, items);
   if (match) return match;
@@ -331,7 +307,7 @@ function getDefaultExpandedGroups(items: LayoutSidebarItem[], activeKey: string)
 }
 
 function synchronizeExpandedGroups() {
-  const defaultGroups = getDefaultExpandedGroups(localizedItems.value, resolvedActiveKey.value);
+  const defaultGroups = getDefaultExpandedGroups(displayItems.value, resolvedActiveKey.value);
   const next = new Set(expandedGroupKeys.value);
   let updated = false;
 
@@ -343,7 +319,7 @@ function synchronizeExpandedGroups() {
   }
 
   const availableGroups = new Set(
-    localizedItems.value.filter((item) => item.children?.length).map((item) => item.key),
+    displayItems.value.filter((item) => item.children?.length).map((item) => item.key),
   );
 
   for (const groupKey of Array.from(next)) {
@@ -361,7 +337,7 @@ function synchronizeExpandedGroups() {
 synchronizeExpandedGroups();
 
 watch(
-  () => [resolvedActiveKey.value, localizedItems.value],
+  () => [resolvedActiveKey.value, displayItems.value],
   () => {
     scheduleNonBlockingTask(synchronizeExpandedGroups);
   },
@@ -457,40 +433,13 @@ function getRouteMatchScore(path: string, target: string) {
   return 0;
 }
 
-function localizeItem(item: LayoutSidebarItem): LayoutSidebarItem {
-  const localizedChildren = item.children?.map((child) => localizeItem(child));
+function normalizeItem(item: LayoutSidebarItem): LayoutSidebarItem {
+  const normalizedChildren = item.children?.map((child) => normalizeItem(child));
 
   return {
     ...item,
-    to: resolveLocalizedPath(item.to),
-    children: localizedChildren?.length ? localizedChildren : undefined,
+    children: normalizedChildren && normalizedChildren.length ? normalizedChildren : undefined,
   } satisfies LayoutSidebarItem;
-}
-
-function resolveLocalizedPath(target?: string): string | undefined {
-  if (!target) return undefined;
-
-  const hasScheme = /^[a-z][a-z0-9+\-.]*:/i.test(target);
-
-  if (hasScheme || target.startsWith("//") || target.startsWith("#")) {
-    return target;
-  }
-
-  const currentLocale = locale.value;
-
-  if (target === `/${currentLocale}` || target.startsWith(`/${currentLocale}/`)) {
-    return target;
-  }
-
-  try {
-    return localePath(target);
-  } catch (error) {
-    if (import.meta.dev) {
-      console.warn("[AppSidebar] Failed to resolve localized path for target", target, error);
-    }
-
-    return target;
-  }
 }
 </script>
 

@@ -40,20 +40,6 @@ vi.mock("~/stores/auth-session", () => ({
   }),
 }));
 
-vi.mock("~/lib/navigation/sidebar", () => ({
-  ADMIN_ROLE_KEYS: [],
-  buildProfileSidebarItems: () => [],
-  buildSidebarItems: () => [],
-}));
-
-vi.mock("~/composables/useSiteSettingsState", () => ({
-  useSiteSettingsState: () => ref(null),
-}));
-
-vi.mock("~/composables/useResolvedLocalePath", () => ({
-  useResolvedLocalePath: () => (path: string) => path,
-}));
-
 vi.mock("~/composables/useNonBlockingTask", () => ({
   useNonBlockingTask: () => ({
     schedule: (task: () => void) => task(),
@@ -116,10 +102,11 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-async function mountSidebar() {
+async function mountSidebar(props: Record<string, unknown> = {}) {
   const AppSidebar = (await import("~/components/layout/AppSidebar.vue")).default;
 
   return mount(AppSidebar, {
+    props,
     global: {
       stubs: {
         SidebarCard: SidebarCardStub,
@@ -151,5 +138,27 @@ describe("AppSidebar", () => {
 
     expect(wrapper.find("nav").exists()).toBe(true);
     expect(wrapper.find(".sidebar-login-card__content").exists()).toBe(false);
+  });
+
+  it("displays provided world and plugin items", async () => {
+    mockIsAuthenticated.value = true;
+    mockCurrentUser.value = { roles: [] } as unknown;
+
+    const items = [
+      { key: "world-bro", label: "Bro World", to: "/world/bro" },
+      { key: "plugin-game", label: "Game", to: "/world/bro/game" },
+    ];
+
+    const wrapper = await mountSidebar({ items });
+
+    await flushPromises();
+    await nextTick();
+
+    const labels = wrapper
+      .findAll(".sidebar-item .text-sm.font-medium")
+      .map((node) => node.text().trim());
+
+    expect(labels).toContain("Bro World");
+    expect(labels).toContain("Game");
   });
 });
