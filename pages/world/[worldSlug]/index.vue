@@ -40,7 +40,7 @@ function normalizeSlug(raw: unknown): string {
   return raw.trim().toLowerCase();
 }
 
-const slugParam = computed(() => normalizeSlug(route.params?.slug));
+const slugParam = computed(() => normalizeSlug(route.params?.worldSlug));
 
 function matchesWorld(world: SiteWorldSettings, slug: string): boolean {
   const worldSlug = world.slug?.trim().toLowerCase() ?? "";

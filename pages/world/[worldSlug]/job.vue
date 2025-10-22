@@ -6,6 +6,7 @@
 import JobPageContent from "~/components/job/JobPageContent.vue";
 
 definePageMeta({
+  alias: ["/job"],
   description: "Job page",
   breadcrumb: "disabled",
   requiresPlugin: "job-board",

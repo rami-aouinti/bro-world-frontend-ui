@@ -1,11 +1,12 @@
 <template>
-  <EcommerceCheckoutPage />
+  <EcommerceCartPage />
 </template>
 
 <script setup lang="ts">
-import EcommerceCheckoutPage from "~/components/ecommerce/EcommerceCheckoutPage.vue";
+import EcommerceCartPage from "~/components/ecommerce/EcommerceCartPage.vue";
 
 definePageMeta({
+  alias: ["/ecommerce/cart"],
   documentDriven: false,
   requiresPlugin: "ecommerce",
 });

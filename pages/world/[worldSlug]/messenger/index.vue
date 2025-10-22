@@ -1,11 +1,12 @@
 <template>
-  <MessengerConversationPage />
+  <MessengerIndexPage />
 </template>
 
 <script setup lang="ts">
-import MessengerConversationPage from "~/components/messenger/MessengerConversationPage.vue";
+import MessengerIndexPage from "~/components/messenger/MessengerIndexPage.vue";
 
 definePageMeta({
+  alias: ["/messenger"],
   documentDriven: false,
   showRightWidgets: true,
   requiresPlugin: "messenger",

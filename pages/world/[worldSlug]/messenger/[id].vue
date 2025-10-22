@@ -6,6 +6,7 @@
 import MessengerConversationPage from "~/components/messenger/MessengerConversationPage.vue";
 
 definePageMeta({
+  alias: ["/messenger/:id"],
   documentDriven: false,
   showRightWidgets: true,
   requiresPlugin: "messenger",

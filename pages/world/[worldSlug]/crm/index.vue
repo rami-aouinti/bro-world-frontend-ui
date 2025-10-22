@@ -6,6 +6,7 @@
 import CrmIndexPage from "~/components/crm/CrmIndexPage.vue";
 
 definePageMeta({
+  alias: ["/crm"],
   showRightWidgets: true,
   requiresPlugin: "crm",
 });

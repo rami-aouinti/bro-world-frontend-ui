@@ -1,11 +1,12 @@
 <template>
-  <EcommerceCheckoutPage />
+  <EcommerceIndexPage />
 </template>
 
 <script setup lang="ts">
-import EcommerceCheckoutPage from "~/components/ecommerce/EcommerceCheckoutPage.vue";
+import EcommerceIndexPage from "~/components/ecommerce/EcommerceIndexPage.vue";
 
 definePageMeta({
+  alias: ["/ecommerce"],
   documentDriven: false,
   requiresPlugin: "ecommerce",
 });
