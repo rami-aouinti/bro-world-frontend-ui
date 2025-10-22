@@ -18,7 +18,8 @@
           v-for="world in worlds"
           :key="world.id"
           :world="world"
-          :is-active="world.id === activeWorldId"
+          :membership="membershipMap[world.id] ?? null"
+          :is-active="activeWorldIds.includes(world.id)"
           class="world-explorer-page__card"
           data-test="world-explorer-card"
           @activate="setActiveWorld"
@@ -52,36 +53,44 @@ import WorldExplorerCard from "~/components/world/WorldExplorerCard.vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings } from "~/types/settings";
+import { useWorldMembershipsStore } from "~/stores/world-memberships";
 
 const { t } = useI18n();
 const siteSettingsState = useSiteSettingsState();
+const membershipStore = useWorldMembershipsStore();
 
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
-const activeWorldId = computed(
-  () => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null,
-);
+const membershipMap = computed(() => membershipStore.memberships);
+const activeWorldIds = computed(() => {
+  const ids = membershipStore.activeWorldIds.value;
 
-function setActiveWorld(worldId: string) {
+  if (ids.length > 0) {
+    return [...ids];
+  }
+
+  const fallbackId = siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null;
+
+  return fallbackId ? [fallbackId] : [];
+});
+
+async function setActiveWorld(worldId: string) {
   if (!worldId) {
     return;
   }
 
-  const currentSettings = siteSettingsState.value;
+  const membership = membershipMap.value[worldId] ?? null;
 
-  if (!currentSettings) {
-    siteSettingsState.value = {
-      ...fallbackSettings.value,
-      activeWorldId: worldId,
-    };
+  if (membership?.status === "pending") {
     return;
   }
 
-  siteSettingsState.value = {
-    ...currentSettings,
-    activeWorldId: worldId,
-  };
+  try {
+    await membershipStore.activateWorld(worldId);
+  } catch (error) {
+    console.error("Failed to activate world", error);
+  }
 }
 
 const pageDescription = computed(() => t("pages.index.description"));

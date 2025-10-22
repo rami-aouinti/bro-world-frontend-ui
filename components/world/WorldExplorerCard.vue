@@ -23,24 +23,8 @@
       </div>
 
       <v-chip
-        v-if="isActive"
         class="world-explorer-card__badge"
-        color="success"
-        size="small"
-        variant="outlined"
-      >
-        <div
-          v-if="hasRating"
-          class="world-explorer-card__stat"
-        >
-          {{ ratingLabel }}
-        </div>
-      </v-chip>
-
-      <v-chip
-        v-else
-        class="world-explorer-card__badge"
-        color="error"
+        :color="statusChipColor"
         size="small"
         variant="outlined"
       >
@@ -74,7 +58,8 @@
         density="comfortable"
         size="large"
         block
-        :disabled="isActive"
+        :disabled="isDisabled"
+        :loading="isPending"
         :aria-label="activateButtonAriaLabel"
         @click="handleActivate"
       >
@@ -109,10 +94,12 @@ import { useI18n } from "vue-i18n";
 import { Icon } from "#components";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import type { SiteWorldSettings } from "~/types/settings";
+import type { WorldMembership } from "~/stores/world-memberships";
 
 const props = defineProps<{
   world: SiteWorldSettings;
   isActive?: boolean;
+  membership?: WorldMembership | null;
 }>();
 
 const emit = defineEmits<{ (event: "activate", worldId: string): void }>();
@@ -182,21 +169,53 @@ const formattedRating = computed(() => {
   return ratingValue.value.toFixed(hasDecimal ? 1 : 0);
 });
 
-const ratingLabel = computed(() => (ratingValue.value === null ? "" : formattedRating.value));
+const ratingLabel = computed(() =>
+  ratingValue.value === null
+    ? ""
+    : t("pages.index.ratingLabel", { rating: formattedRating.value }),
+);
 
 const hasParticipants = computed(() => participantsCount.value !== null);
 const hasRating = computed(() => ratingValue.value !== null);
 const showFooter = computed(() => hasParticipants.value || hasRating.value);
 
-const activateButtonLabel = computed(() =>
-  props.isActive ? t("pages.index.actions.active") : t("pages.index.actions.setActive"),
-);
+const membershipStatus = computed(() => props.membership?.status ?? (props.isActive ? "active" : null));
+const isActive = computed(() => membershipStatus.value === "active" || props.isActive === true);
+const isPending = computed(() => membershipStatus.value === "pending");
+const isRevoked = computed(() => membershipStatus.value === "revoked");
+const isRejected = computed(() => membershipStatus.value === "rejected");
+const isDisabled = computed(() => isActive.value || isPending.value);
+const statusChipColor = computed(() => {
+  if (isActive.value) {
+    return "success";
+  }
 
-const activateButtonAriaLabel = computed(() =>
-  props.isActive
-    ? t("pages.index.actions.active")
-    : t("pages.index.actions.activateAria", { world: props.world.name }),
-);
+  if (isPending.value) {
+    return "warning";
+  }
+
+  if (isRevoked.value || isRejected.value) {
+    return "error";
+  }
+
+  return "primary";
+});
+
+const activateButtonLabel = computed(() => {
+  if (isActive.value) {
+    return t("pages.index.actions.active");
+  }
+
+  return t("pages.index.actions.setActive");
+});
+
+const activateButtonAriaLabel = computed(() => {
+  if (isActive.value) {
+    return t("pages.index.actions.active");
+  }
+
+  return t("pages.index.actions.activateAria", { world: props.world.name });
+});
 
 const ariaLabel = computed(() =>
   t("pages.index.cardAria", {
@@ -206,7 +225,7 @@ const ariaLabel = computed(() =>
 );
 
 function handleActivate() {
-  if (props.isActive) {
+  if (isDisabled.value || isRevoked.value || isRejected.value) {
     return;
   }
 

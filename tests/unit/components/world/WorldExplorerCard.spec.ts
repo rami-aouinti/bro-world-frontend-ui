@@ -147,8 +147,8 @@ describe("components/world/WorldExplorerCard", () => {
     });
 
     const buttons = wrapper.findAll("button");
-    expect(buttons).toHaveLength(1);
-    await buttons[0].trigger("click");
+    expect(buttons).toHaveLength(2);
+    await buttons[1].trigger("click");
 
     expect(wrapper.emitted("activate")).toEqual([[world.id]]);
   });
@@ -165,9 +165,11 @@ describe("components/world/WorldExplorerCard", () => {
     });
 
     const buttons = wrapper.findAll("button");
-    expect(buttons).toHaveLength(1);
+    expect(buttons).toHaveLength(2);
     expect(buttons[0].text()).toBe("pages.index.actions.enter");
     expect(buttons[0].attributes("to")).toBe("/world/test-world");
+    expect(buttons[1].text()).toBe("pages.index.actions.active");
+    expect(buttons[1].attributes("disabled")).toBeDefined();
   });
 
   it("renders participants and rating when provided", () => {

@@ -11,10 +11,12 @@ import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings, SiteWorldSettings } from "~/types/settings";
+import { useWorldMembershipsStore } from "~/stores/world-memberships";
 
 const route = useRoute();
 const { t } = useI18n();
 const siteSettingsState = useSiteSettingsState();
+const membershipStore = useWorldMembershipsStore();
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
@@ -66,25 +68,7 @@ function setActiveWorld(worldId: string) {
     return;
   }
 
-  const currentSettings = siteSettingsState.value;
-
-  if (!currentSettings) {
-    siteSettingsState.value = {
-      ...fallbackSettings.value,
-      activeWorldId: worldId,
-    };
-
-    return;
-  }
-
-  if (currentSettings.activeWorldId === worldId) {
-    return;
-  }
-
-  siteSettingsState.value = {
-    ...currentSettings,
-    activeWorldId: worldId,
-  };
+  membershipStore.markActive(worldId);
 }
 
 const pageTitle = computed(() => {

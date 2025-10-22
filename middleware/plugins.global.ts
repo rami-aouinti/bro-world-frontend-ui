@@ -1,6 +1,7 @@
 import { createError, useNuxtApp } from "#imports";
 import type { SiteSettings, SiteWorldSettings } from "~/types/settings";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { useWorldMembershipsStore } from "~/stores/world-memberships";
 
 function extractSlug(param: unknown): string | null {
   if (typeof param === "string") {
@@ -26,6 +27,7 @@ function extractSlug(param: unknown): string | null {
 function resolveWorldForRoute(
   settings: SiteSettings | null,
   slug: string | null,
+  activeWorldIds: string[],
 ): SiteWorldSettings | null {
   if (!settings) {
     return null;
@@ -53,8 +55,8 @@ function resolveWorldForRoute(
     return null;
   }
 
-  if (settings.activeWorldId) {
-    const activeWorld = worlds.find((world) => world.id === settings.activeWorldId);
+  for (const worldId of activeWorldIds) {
+    const activeWorld = worlds.find((world) => world.id === worldId);
 
     if (activeWorld) {
       return activeWorld;
@@ -77,8 +79,13 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   const siteSettingsState = useSiteSettingsState();
+  const membershipStore = useWorldMembershipsStore();
   const slug = extractSlug(to.params?.slug);
-  let targetWorld = resolveWorldForRoute(siteSettingsState.value, slug);
+  let targetWorld = resolveWorldForRoute(
+    siteSettingsState.value,
+    slug,
+    membershipStore.activeWorldIds.value,
+  );
   let enabledPlugins = targetWorld?.pluginIds ?? [];
 
   if (!siteSettingsState.value) {
@@ -89,7 +96,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
       const response = await fetchSiteSettings("/api/settings");
       const settings = "data" in response ? response.data : response;
       siteSettingsState.value = settings;
-      targetWorld = resolveWorldForRoute(siteSettingsState.value, slug);
+      membershipStore.syncFromSiteSettings(settings);
+      targetWorld = resolveWorldForRoute(
+        siteSettingsState.value,
+        slug,
+        membershipStore.activeWorldIds.value,
+      );
       enabledPlugins = targetWorld?.pluginIds ?? [];
     } catch (error) {
       console.error("Failed to load site settings", error);
