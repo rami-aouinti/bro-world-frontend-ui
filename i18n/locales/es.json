@@ -7,6 +7,67 @@
     "close": "Cerrar",
     "loading": "Cargando…"
   },
+  "help": {
+    "meta": {
+      "title": "Help centre",
+      "description": "Find quick answers, guides, and FAQs for {site}."
+    },
+    "hero": {
+      "badge": "Support",
+      "title": "How can we help?",
+      "subtitle": "Browse guides, troubleshooting steps, and tips to get the most out of the platform.",
+      "searchPlaceholder": "Search by topic or keyword…",
+      "searchAria": "Search the help centre",
+      "popular": "Popular"
+    },
+    "categories": {
+      "title": "Browse by category",
+      "subtitle": "We grouped our most helpful guides so you can jump right in.",
+      "count": "{count} articles"
+    },
+    "faq": {
+      "title": "Quick FAQ",
+      "subtitle": "Answers to the questions we hear every day.",
+      "items": [
+        {
+          "q": "How do I create an account?",
+          "a": "Use the sign up form with your work email, confirm it within 24 hours, and complete your profile."
+        },
+        {
+          "q": "Can I invite my teammates?",
+          "a": "Admins can invite teammates from Settings → Members and manage their permissions at any time."
+        },
+        {
+          "q": "Where can I download my invoices?",
+          "a": "Head to Billing → Invoices to download compliant PDF copies for your records."
+        }
+      ]
+    },
+    "search": {
+      "resultsLabel": "Help search results"
+    },
+    "article": {
+      "toc": "On this page",
+      "copyLink": "Copy section link",
+      "copied": "Section link copied",
+      "updated": "Updated {date}",
+      "related": "Related articles",
+      "feedback": {
+        "question": "Was this article helpful?",
+        "yes": "Yes",
+        "no": "No",
+        "thanks": "Thanks for your feedback!"
+      }
+    },
+    "empty": {
+      "title": "No results",
+      "subtitle": "Try another keyword or explore a category."
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "help": "Help centre"
+    }
+  },
   "layout": {
     "loadingOverlay": {
       "srLabel": "Cargando Bro World",
@@ -97,6 +158,17 @@
         "cv": "CV",
         "createWorld": "Create world",
         "jobs": "Empleos",
+        "game": "Juegos y Quiz",
+        "crm": "Espacio CRM",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "Resumen",
+        "ecommerceCatalog": "Catálogo de productos",
+        "ecommerceCart": "Carrito",
+        "ecommerceCheckout": "Pago",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "Academia",
+        "performance": "Rendimiento",
         "profile": "Perfil",
         "profileOverview": "Resumen",
         "profileSettings": "Configuración de la cuenta",
@@ -122,18 +194,7 @@
         "adminBlog": "Blog",
         "help": "Ayuda",
         "about": "Acerca de",
-        "contact": "Contacto",
-        "game": "Juegos y Quiz",
-        "crm": "Espacio CRM",
-        "ecommerce": "E-commerce",
-        "ecommerceOverview": "Resumen",
-        "ecommerceCatalog": "Catálogo de productos",
-        "ecommerceCart": "Carrito",
-        "ecommerceCheckout": "Pago",
-        "education": "Education",
-        "quiz": "Quiz",
-        "academy": "Academia",
-        "performance": "Rendimiento"
+        "contact": "Contacto"
       }
     },
     "widgets": {
@@ -246,6 +307,23 @@
     "description": "Company description",
     "website": "Website",
     "submit": "Save"
+  },
+  "messenger": {
+    "searchPlaceholder": "Buscar conversaciones",
+    "emptyList": "Todavía no hay conversaciones",
+    "unknownParticipant": "Desconocido",
+    "emptyTitle": "Selecciona una conversación",
+    "emptyDescription": "Elige una conversación de la lista para leer y enviar mensajes.",
+    "emptyCtaLabel": "Iniciar una conversación",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Escribe un mensaje...",
+    "sendLabel": "Enviar",
+    "sendingLabel": "Enviando…",
+    "sendErrorStatus": "No entregado",
+    "shortcutsHint": "Presiona Ctrl+Enter para enviar",
+    "noMessages": "Aún no hay mensajes",
+    "loadOlder": "Cargar mensajes anteriores",
+    "participantsLabel": "{count} participantes"
   },
   "banner": {
     "Content": "Para la documentación de Tailwind CSS v3, [**haz clic aquí**](https://v1.inspira-ui.com)."
@@ -609,6 +687,61 @@
       "GetStarted": "Comenzar"
     }
   },
+  "auth": {
+    "Account": "Cuenta",
+    "Login": "Iniciar sesión",
+    "Register": "Registrarse",
+    "usernameOrEmail": "Correo electrónico",
+    "password": "Contraseña",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "signIn": "Iniciar sesión",
+    "signUpPrompt": "¿No tienes una cuenta?",
+    "signUp": "Crea una",
+    "signOut": "Cerrar sesión",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "requiredError": "Introduce tu correo y contraseña.",
+    "invalidError": "No pudimos iniciar sesión con esos datos. Inténtalo de nuevo.",
+    "successTitle": "Bienvenido de nuevo",
+    "success": "Has iniciado sesión correctamente.",
+    "errorTitle": "Error al iniciar sesión",
+    "errorGeneric": "Algo salió mal al iniciar sesión.",
+    "logoutMessage": "Has cerrado sesión correctamente.",
+    "sessionExpired": "Tu sesión ha expirado. Inicia sesión nuevamente.",
+    "socialTitle": "Inicia sesión con tu proveedor favorito",
+    "socialSubtitle": "Te redirigiremos para finalizar la autenticación.",
+    "social": {
+      "google": "Continuar con Google",
+      "github": "Continuar con GitHub",
+      "microsoft": "Continuar con Microsoft"
+    }
+  },
+  "register": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "repeatPassword": "Confirmar contraseña",
+    "agree": "Acepto los",
+    "terms": "términos y condiciones",
+    "requirements": "Requisitos de la contraseña",
+    "requirement1": "Debe tener al menos 8 caracteres.",
+    "requirement2": "Debe incluir números o caracteres especiales para mayor seguridad.",
+    "signUp": "Crear cuenta",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "signIn": "Inicia sesión",
+    "termsTitle": "Términos y condiciones",
+    "errorTerms": "Debes aceptar los términos y condiciones.",
+    "errorMissing": "Completa todos los campos obligatorios.",
+    "errorMismatch": "Las contraseñas no coinciden.",
+    "errorGeneric": "Algo salió mal al crear tu cuenta.",
+    "errorTitle": "Error al crear la cuenta",
+    "successTitle": "Cuenta creada",
+    "success": "Tu cuenta se ha creado correctamente.",
+    "termsIntro": "Al crear una cuenta confirmas que entiendes y aceptas nuestras políticas.",
+    "termsPoint1": "Solo usamos tu información para crear y proteger tu cuenta.",
+    "termsPoint2": "Puedes actualizar tus preferencias de notificación en cualquier momento.",
+    "termsPoint3": "Al eliminar tu cuenta, tus datos se eliminarán de nuestros sistemas activos en un plazo de 30 días.",
+    "termsOutro": "Contacta a nuestro equipo de soporte si tienes alguna pregunta sobre cómo tratamos tus datos."
+  },
   "pages": {
     "notifications": {
       "description": "Revisa las últimas actualizaciones de tu comunidad.",
@@ -882,27 +1015,6 @@
         "title": "@:education.catalog.title",
         "subtitle": "@:education.catalog.subtitle"
       },
-      "sidebar": {
-        "overviewTitle": "Keep learning momentum",
-        "overviewDescription": "Track your progress, revisit favourite categories, and stay motivated as you explore new skills.",
-        "stats": {
-          "categories": {
-            "label": "Categories",
-            "value": "{count} categories"
-          },
-          "courses": {
-            "label": "Courses",
-            "value": "{count} courses"
-          },
-          "certificates": {
-            "label": "Certificates earned",
-            "value": "{count} certificates"
-          }
-        },
-        "featuredTitle": "Featured categories",
-        "featuredDescription": "Jump back into these curated spaces to continue learning.",
-        "featuredEmpty": "New categories are coming soon."
-      },
       "category": {
         "courses": "@:education.category.courses",
         "viewCourses": "@:education.category.viewCourses",
@@ -988,575 +1100,6 @@
         "beginner": "@:education.levels.beginner",
         "intermediate": "@:education.levels.intermediate",
         "advanced": "@:education.levels.advanced"
-      }
-    },
-    "profile": {
-      "title": "Perfil",
-      "subtitle": "Revisa y gestiona tu información personal.",
-      "sections": {
-        "contact": "Contacto",
-        "profile": "Perfil",
-        "social": "Redes",
-        "calendar": "Calendario"
-      },
-      "calendar": {
-        "subtitle": "Mantén bajo control tu agenda próxima.",
-        "viewLabel": "Cambiar vista del calendario",
-        "views": {
-          "month": "Mes",
-          "week": "Semana",
-          "day": "Día"
-        },
-        "errorTitle": "No se pudieron cargar los eventos",
-        "errorFallback": "No pudimos cargar tus eventos. Inténtalo de nuevo.",
-        "retry": "Reintentar",
-        "privateLabel": "Privado",
-        "allDay": "Todo el día",
-        "upcoming": "Próximos eventos",
-        "emptyTitle": "No hay eventos programados",
-        "emptyDescription": "Añade eventos a tu calendario para verlos aquí.",
-        "actions": {
-          "add": "Nuevo evento",
-          "edit": "Editar",
-          "delete": "Eliminar"
-        },
-        "form": {
-          "createTitle": "Crear evento",
-          "createDescription": "Planifica un nuevo momento directamente desde la vista de calendario.",
-          "editTitle": "Editar evento",
-          "editDescription": "Actualiza los detalles de esta entrada del calendario.",
-          "fields": {
-            "title": "Título",
-            "startDate": "Fecha de inicio",
-            "endDate": "Fecha de finalización",
-            "startTime": "Hora de inicio",
-            "endTime": "Hora de finalización",
-            "allDay": "Evento de todo el día",
-            "color": "Categoría",
-            "location": "Ubicación",
-            "description": "Descripción",
-            "isPrivate": "Marcar como privado"
-          },
-          "actions": {
-            "cancel": "Cancelar",
-            "create": "Crear evento",
-            "save": "Guardar cambios"
-          },
-          "validation": {
-            "title": "Ponle un título a tu evento.",
-            "startDate": "Selecciona cuándo empieza el evento.",
-            "startTime": "Elige una hora de inicio.",
-            "endTime": "La hora de finalización debe ser posterior a la hora de inicio.",
-            "range": "El final del evento debe ser posterior al inicio."
-          }
-        },
-        "delete": {
-          "title": "Eliminar evento",
-          "description": "¿Seguro que quieres eliminar \"{title}\"? Esta acción no se puede deshacer."
-        },
-        "colors": {
-          "meetings": "Reuniones",
-          "personal": "Personal",
-          "travel": "Viajes",
-          "focus": "Concentración"
-        }
-      },
-      "labels": {
-        "email": "Correo electrónico",
-        "phone": "Teléfono",
-        "address": "Dirección",
-        "title": "Cargo",
-        "gender": "Género",
-        "birthday": "Cumpleaños",
-        "description": "Descripción",
-        "roles": "Roles",
-        "friends": "Amigos",
-        "stories": "Historias",
-        "accountStatus": "Estado de la cuenta"
-      },
-      "statuses": {
-        "enabled": "Activo",
-        "disabled": "Desactivado"
-      },
-      "placeholders": {
-        "missing": "—",
-        "noStories": "Sin historias"
-      },
-      "avatarAlt": "Foto de perfil de {name}",
-      "avatarAltFallback": "Imagen de perfil predeterminada",
-      "stats": {
-        "title": "Estadísticas rápidas"
-      }
-    },
-    "profileCalendar": {
-      "title": "Calendario",
-      "subtitle": "Revisa tus reuniones, talleres y hitos en una vista dedicada."
-    },
-    "profileFriends": {
-      "title": "Conexiones",
-      "subtitle": "Reconecta con tus colaboradores, mentores y comunidades.",
-      "actions": {
-        "message": "Enviar mensaje",
-        "schedule": "Programar llamada",
-        "viewProfile": "Abrir perfil"
-      },
-      "highlights": {
-        "title": "Colaboradores destacados",
-        "subtitle": "Socios seleccionados con los que colaboras con más frecuencia este trimestre."
-      },
-      "sections": {
-        "active": "Activos ahora",
-        "suggestions": "Conexiones sugeridas"
-      },
-      "filters": {
-        "all": "Todas",
-        "design": "Diseño",
-        "engineering": "Ingeniería",
-        "marketing": "Marketing",
-        "product": "Producto"
-      },
-      "meta": {
-        "lastActive": "Última actividad · {time}"
-      },
-      "stats": {
-        "totalFriends": "Conexiones",
-        "mutual": "contactos en común",
-        "online": "en línea ahora"
-      },
-      "status": {
-        "online": "En línea",
-        "offline": "Desconectado",
-        "busy": "Ocupado",
-        "focus": "En foco"
-      },
-      "feedback": {
-        "connect": "Anotaremos que quieres conectar.",
-        "connectWith": "Avisaremos a {name} que te gustaría conectar.",
-        "message": "Redactando un saludo rápido…",
-        "messageWith": "Redactando un saludo rápido para {name}…",
-        "schedule": "Abriendo el flujo de programación…",
-        "scheduleWith": "Abriendo el flujo de programación para {name}…"
-      },
-      "empty": "Aún no hay perfiles que coincidan con este filtro."
-    },
-    "profilePhotos": {
-      "title": "Biblioteca de fotos",
-      "subtitle": "Organiza los momentos destacados de lanzamientos, viajes de investigación y el detrás de cámaras.",
-      "actions": {
-        "createAlbum": "Crear álbum",
-        "upload": "Subir fotos"
-      },
-      "filters": {
-        "recent": "Recientes",
-        "events": "Eventos",
-        "studio": "Estudio",
-        "travel": "Viajes"
-      },
-      "sections": {
-        "albums": "Explorador de álbumes",
-        "pinned": "Colecciones fijadas",
-        "timeline": "Notas creativas",
-        "notesDescription": "Actualizaciones de los colaboradores mientras preparan historias visuales."
-      },
-      "meta": {
-        "photoCount": "fotos",
-        "updated": "Actualizado {date}"
-      },
-      "stats": {
-        "albums": "álbumes curados",
-        "tags": "etiquetas de historia únicas"
-      },
-      "timeline": {
-        "title": "Hitos de la historia",
-        "description": "Instantáneas de lanzamientos clave, residencias y retiros que marcaron tu año."
-      },
-      "cta": {
-        "share": "Comparte estos conjuntos curados con tu equipo o expórtalos a tus presentaciones."
-      },
-      "feedback": {
-        "upload": "Abriendo tu selector de medios…",
-        "createAlbum": "Creemos un álbum nuevo.",
-        "shareCollection": "Las opciones de compartir están listas.",
-        "generic": "Acción iniciada."
-      },
-      "empty": "Ninguna foto coincide con este filtro por ahora."
-    },
-    "profileEdit": {
-      "title": "Editar perfil",
-      "subtitle": "Actualiza tus datos para que tus colaboradores siempre tengan el contexto correcto.",
-      "sections": {
-        "profile": {
-          "title": "Perfil",
-          "bio": "Biografía",
-          "skills": "Habilidades clave"
-        },
-        "contact": "Contacto",
-        "about": "Acerca de",
-        "social": "Enlaces sociales",
-        "siteSettings": "Ajustes del sitio"
-      },
-      "labels": {
-        "firstName": "Nombre",
-        "lastName": "Apellido",
-        "headline": "Titular",
-        "pronouns": "Pronombres",
-        "language": "Idioma preferido",
-        "timezone": "Zona horaria",
-        "email": "Correo electrónico",
-        "phone": "Teléfono",
-        "location": "Ubicación",
-        "website": "Sitio web",
-        "bio": "Biografía",
-        "skills": "Habilidades clave",
-        "interests": "Áreas de enfoque",
-        "linkedin": "LinkedIn",
-        "twitter": "Twitter / X",
-        "dribbble": "Dribbble",
-        "behance": "Behance"
-      },
-      "actions": {
-        "cancel": "Restablecer",
-        "save": "Guardar cambios"
-      },
-      "helpers": {
-        "bio": "Comparte tu misión, cómo colaboras o tus logros recientes (280 caracteres).",
-        "skills": "Escribe para añadir habilidades personalizadas o elige de las sugerencias.",
-        "summary": "Esta tarjeta rápida se actualiza automáticamente a medida que editas tu información.",
-        "siteSettings": "Actualiza el nombre o el eslogan del sitio sin salir de tu perfil."
-      },
-      "feedback": {
-        "successMessage": "Los detalles del perfil se guardaron correctamente.",
-        "errorMessage": "Revisa los campos resaltados."
-      },
-      "validation": {
-        "required": "Este campo es obligatorio.",
-        "bioLimit": "Tu biografía debe tener 280 caracteres o menos."
-      }
-    },
-    "profileSecurity": {
-      "title": "Contraseña y seguridad",
-      "subtitle": "Protege tu cuenta con credenciales sólidas y dispositivos verificados.",
-      "actions": {
-        "save": "Guardar ajustes de seguridad",
-        "generateCodes": "Generar códigos de recuperación"
-      },
-      "sections": {
-        "password": {
-          "title": "Actualizar contraseña",
-          "description": "Crea una frase secreta única con al menos 12 caracteres, números y símbolos."
-        },
-        "sessions": {
-          "title": "Sesiones activas",
-          "description": "Revisa dónde has iniciado sesión y revoca el acceso en dispositivos desconocidos."
-        },
-        "mfa": {
-          "title": "Autenticación en dos pasos",
-          "description": "Añade un paso extra de verificación para asegurar tu espacio de trabajo."
-        }
-      },
-      "labels": {
-        "currentPassword": "Contraseña actual",
-        "newPassword": "Nueva contraseña",
-        "confirmPassword": "Confirmar contraseña",
-        "mfaToggle": "Activar la autenticación en dos pasos"
-      },
-      "passwordHint": {
-        "title": "Consejos de contraseña",
-        "description": "Usa un gestor de contraseñas, evita reutilizarlas y renueva las credenciales sensibles con frecuencia."
-      },
-      "sessions": {
-        "device": "Dispositivo",
-        "location": "Ubicación",
-        "activity": "Última actividad",
-        "actions": "Acciones",
-        "revoke": "Revocar",
-        "activeNow": "Activo ahora",
-        "trusted": "De confianza",
-        "remembered": "Recordado",
-        "untrusted": "No reconocido"
-      },
-      "recoveryCodes": {
-        "title": "Guarda estos códigos de recuperación de un solo uso"
-      }
-    },
-    "profileNotifications": {
-      "title": "Preferencias de notificaciones",
-      "subtitle": "Elige cómo y cuándo te avisamos sobre la nueva actividad.",
-      "actions": {
-        "save": "Guardar preferencias",
-        "reset": "Restablecer"
-      },
-      "channelLabels": {
-        "email": "Correo electrónico",
-        "push": "Notificaciones push",
-        "sms": "SMS",
-        "inApp": "Alertas en la aplicación"
-      },
-      "sections": {
-        "channels": {
-          "title": "Canales de entrega",
-          "description": "Selecciona los canales que usaremos cuando ocurra algo importante."
-        },
-        "email": {
-          "title": "Actualizaciones por correo",
-          "description": "Mantente al día incluso cuando no estás en BroWorld.",
-          "items": {
-            "comments": "Comentarios en mis publicaciones",
-            "mentions": "Menciones a mi usuario",
-            "follows": "Nuevos seguidores",
-            "messages": "Mensajes directos",
-            "newsletters": "Boletines y consejos del producto"
-          }
-        },
-        "inApp": {
-          "title": "Notificaciones dentro de la app",
-          "description": "Controla las alertas que verás mientras trabajas en BroWorld.",
-          "items": {
-            "productUpdates": "Lanzamientos y novedades de la hoja de ruta",
-            "eventReminders": "Recordatorios de eventos e invitaciones de calendario",
-            "securityAlerts": "Alertas de seguridad y avisos de inicio de sesión",
-            "communityHighlights": "Lo más destacado y tendencias de la comunidad"
-          },
-          "playSounds": "Reproducir un sonido suave para las alertas prioritarias",
-          "smartSummaries": "Mostrar resúmenes inteligentes en el centro de notificaciones"
-        },
-        "digest": {
-          "title": "Resumen periódico",
-          "description": "Agruparemos la actividad más tranquila en un solo correo para revisarla rápidamente.",
-          "enableLabel": "Enviarme un resumen",
-          "frequencyLabel": "Frecuencia del resumen",
-          "timeLabel": "Hora de entrega preferida",
-          "options": {
-            "daily": "Diario",
-            "weekly": "Semanal",
-            "monthly": "Mensual"
-          },
-          "helper": "Resumen {frequency} programado para las {time}.",
-          "helperDisabled": "Los resúmenes están desactivados. Actívalos para recibir un correo con el resumen."
-        },
-        "quietHours": {
-          "title": "Horas de silencio",
-          "description": "Silencia las alertas no críticas durante tus momentos de concentración o por la noche.",
-          "enableLabel": "Activar horas de silencio",
-          "start": "Hora de inicio",
-          "end": "Hora de finalización"
-        },
-        "security": {
-          "title": "Alertas críticas",
-          "description": "Siempre te avisaremos sobre cambios de contraseña, exportaciones o riesgos de seguridad.",
-          "label": "Avisarme por correo sobre alertas de seguridad críticas"
-        }
-      },
-      "helpers": {
-        "emailDisabled": "Añade un correo a tu perfil para activar las notificaciones por e-mail.",
-        "securityAlwaysOn": "Las alertas de seguridad críticas siempre están activas para tu cuenta."
-      },
-      "snackbar": {
-        "saved": "Preferencias de notificaciones actualizadas.",
-        "reset": "Preferencias restauradas a la última versión guardada."
-      },
-      "sidebar": {
-        "digestTitle": "Programación del resumen",
-        "digestDay": "lunes",
-        "digestLine": "Tu próximo resumen llegará el {day} a las {time}.",
-        "digestInfo": "Ajusta la hora o la frecuencia cuando necesites un repaso rápido.",
-        "tipsTitle": "Consejos rápidos",
-        "tips": {
-          "mobile": {
-            "title": "Activa la app móvil",
-            "subtitle": "Instala BroWorld en iOS o Android para recibir notificaciones push y widgets."
-          },
-          "channels": {
-            "title": "Equilibra tus canales",
-            "subtitle": "Usa el correo para resúmenes semanales y las alertas in-app para la colaboración diaria."
-          },
-          "updates": {
-            "title": "Destaca lo importante",
-            "subtitle": "Fija los proyectos clave para que los resúmenes destaquen primero la actividad relevante."
-          }
-        }
-      }
-    },
-    "playground": {
-      "ui": {
-        "title": "UI Component Playground",
-        "description": "Review every base component with multiple variants, sizes, and accessibility states.",
-        "controls": {
-          "expandAll": "Expand all",
-          "collapseAll": "Collapse all"
-        },
-        "toggles": {
-          "locale": "Locale preview",
-          "direction": "Layout direction",
-          "theme": "Theme",
-          "density": "Control size"
-        },
-        "directions": {
-          "ltr": "LTR",
-          "rtl": "RTL"
-        },
-        "themes": {
-          "light": "Light",
-          "dark": "Dark"
-        },
-        "sizes": {
-          "sm": "Small",
-          "md": "Medium",
-          "lg": "Large"
-        },
-        "locales": {
-          "en": "English",
-          "ar": "Arabic"
-        },
-        "variants": {
-          "filled": "Filled",
-          "tonal": "Tonal",
-          "outline": "Outline",
-          "text": "Text",
-          "plain": "Plain"
-        },
-        "states": {
-          "default": "Default",
-          "disabled": "Disabled",
-          "loading": "Loading",
-          "leadingIcon": "Leading icon",
-          "trailingIcon": "Trailing icon",
-          "block": "Full width",
-          "focus": "Focused",
-          "error": "Error",
-          "success": "Success",
-          "checked": "Checked",
-          "indeterminate": "Indeterminate"
-        },
-        "inputTypes": {
-          "text": "Text",
-          "email": "Email",
-          "password": "Password",
-          "number": "Number",
-          "search": "Search",
-          "url": "URL"
-        },
-        "placeholders": {
-          "generic": "Enter a value",
-          "focus": "Auto-focused input",
-          "error": "Something went wrong",
-          "success": "Everything looks good",
-          "autogrow": "Describe your idea…",
-          "select": "Choose an option",
-          "selectMultiple": "Select integrations",
-          "fullName": "Ada Lovelace"
-        },
-        "examples": {
-          "buttonLabel": "Primary action",
-          "loading": "Loading…",
-          "primaryAction": "Continue",
-          "secondaryAction": "Learn more",
-          "fullWidth": "Take the full width",
-          "inputType": "{type} input",
-          "disabledValue": "Unavailable while disabled",
-          "textareaDefault": "Feedback textarea",
-          "textareaAutoGrow": "Auto growing notes",
-          "checkboxPrimary": "Email updates",
-          "checkboxIndeterminate": "Partially selected",
-          "checkboxDisabled": "Disabled checkbox",
-          "switchNotifications": "Enable notifications",
-          "switchDisabled": "Disabled switch",
-          "selectSingle": "Delivery channel",
-          "selectMultiple": "Team integrations",
-          "selectDisabledOptions": "Release channel",
-          "radioVertical": "Cadence options",
-          "radioHorizontal": "Payment methods",
-          "formFieldBasic": "Field with helper text",
-          "formFieldError": "Field with errors",
-          "formFieldCheckbox": "Field wrapping checkbox"
-        },
-        "feedback": {
-          "error": "Provide a valid response.",
-          "selectMethod": "Select a supported payment method.",
-          "invalidEmail": "Enter a valid email address."
-        },
-        "hints": {
-          "characterLimit": "Keep it under 240 characters.",
-          "checkbox": "You can mark more than one preference.",
-          "switch": "Switch represents an immediate action.",
-          "disabledOption": "Some options are unavailable right now.",
-          "radio": "Choose the plan that fits best.",
-          "required": "This field is required."
-        },
-        "notes": {
-          "autofocus": "Auto-focus is applied to show the focus style.",
-          "disabledChoice": "One option is disabled to demonstrate aria-disabled."
-        },
-        "sample": {
-          "textValue": "Hi from the playground!",
-          "multiline": "Let the team know how this feels.",
-          "longerText": "This textarea grows as you type so reviewers can stress-test the auto-grow behaviour."
-        },
-        "selectOptions": {
-          "email": "Email",
-          "sms": "SMS",
-          "push": "Push notification",
-          "alpha": "Alpha",
-          "beta": "Beta",
-          "release": "Release"
-        },
-        "radioOptions": {
-          "daily": "Daily summary",
-          "weekly": "Weekly digest",
-          "monthly": "Monthly report",
-          "card": "Credit card",
-          "paypal": "PayPal",
-          "bank": "Bank transfer"
-        },
-        "labels": {
-          "fullName": "Full name",
-          "email": "Email",
-          "preferences": "Preferences"
-        },
-        "groups": {
-          "buttons": {
-            "title": "Buttons",
-            "description": "Primary actions and secondary button styles."
-          },
-          "inputs": {
-            "title": "Inputs",
-            "description": "Text inputs and textareas with validation states."
-          },
-          "toggles": {
-            "title": "Toggles",
-            "description": "Checkboxes and switches for binary choices."
-          },
-          "selectors": {
-            "title": "Selectors",
-            "description": "Select menus and radio groups for choosing options."
-          },
-          "wrappers": {
-            "title": "Form wrappers",
-            "description": "FormField wrapper integrating labels, hints, and errors."
-          }
-        },
-        "sections": {
-          "buttonVariants": "Variants & sizes",
-          "buttonVariantsDescription": "Each button variant rendered across small, medium, and large sizes.",
-          "buttonStates": "States",
-          "buttonStatesDescription": "Loading, disabled, icon, and block button examples.",
-          "inputTypes": "Input types",
-          "inputTypesDescription": "BaseInput with different HTML input types and clearable behaviour.",
-          "inputStates": "States",
-          "inputStatesDescription": "Focused, success, error, and disabled input states.",
-          "textareaStates": "Textarea states",
-          "textareaStatesDescription": "Resizable textarea variations with hints and disabled view.",
-          "checkboxes": "Checkboxes",
-          "checkboxesDescription": "Checked, indeterminate, and disabled checkbox states.",
-          "switches": "Switches",
-          "switchesDescription": "Enabled and disabled switch controls.",
-          "selects": "Select menus",
-          "selectsDescription": "Single, multi-select, and disabled options examples.",
-          "radios": "Radio groups",
-          "radiosDescription": "Vertical and horizontal radio group layouts with keyboard support.",
-          "formFields": "FormField wrapper",
-          "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
-        }
       }
     },
     "createWorld": {
@@ -1847,7 +1390,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1861,7 +1408,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1875,7 +1426,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1889,7 +1444,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -2304,29 +1863,29 @@
         "authoring": {
           "title": "Author in minutes",
           "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
-          "points": [
-            "Convert brainstorm notes into question pools automatically.",
-            "Mix formats like multiple choice, polls, and lightning rounds.",
-            "Reuse timers, scoring weights, and bonus rules across series."
-          ]
+          "points": {
+            "0": "Role-based templates",
+            "1": "Inline feedback generator",
+            "2": "CSV & Markdown import"
+          }
         },
         "engagement": {
           "title": "Fuel real-time engagement",
           "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
-          "points": [
-            "Highlight hosts and co-creators with stage-ready layouts.",
-            "Trigger soundscapes and emotes when milestones are unlocked.",
-            "Support breakout teams, rematches, and collaborative lifelines."
-          ]
+          "points": {
+            "0": "Customisable badges",
+            "1": "Automated multi-channel nudges",
+            "2": "Synchronous live sessions"
+          }
         },
         "analytics": {
           "title": "Measure what matters",
           "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
-          "points": [
-            "Compare performance by role, location, or membership tier.",
-            "Spot drop-off moments with second-by-second completion curves.",
-            "Export highlights, clips, and insights for stakeholders."
-          ]
+          "points": {
+            "0": "Ready-to-use dashboards",
+            "1": "CSV/BigQuery export",
+            "2": "Progress deviation alerts"
+          }
         }
       },
       "process": {
@@ -2613,81 +2172,582 @@
           "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
         }
       }
+    },
+    "help": {
+      "title": "Help",
+      "subtitle": "Find answers and resources",
+      "faqTitle": "Frequently asked questions",
+      "searchPlaceholder": "Search the FAQ…",
+      "quickLinksTitle": "Quick actions",
+      "faqCountSingular": "result",
+      "faqCountPlural": "results",
+      "faqEmpty": "No FAQ entries match your search yet. Try a different keyword.",
+      "actions": {
+        "reportBug": "Report a bug",
+        "reportBugDescription": "Share reproducible steps so we can investigate quickly.",
+        "reportBugCta": "Create an issue",
+        "reportBugAria": "Create a new GitHub issue in a new tab",
+        "accountPrivacy": "Account & Privacy",
+        "accountPrivacyDescription": "Reset your credentials or request account changes from the dashboard.",
+        "accountPrivacyCta": "Manage account access",
+        "accountPrivacyAria": "Go to the account recovery page",
+        "contactSupport": "Contact support",
+        "contactSupportDescription": "Reach our maintainers directly when you need a human touch.",
+        "contactSupportCta": "Message the team",
+        "contactSupportAria": "Open the contact page"
+      },
+      "faq": {
+        "items": {
+          "gettingStarted": {
+            "question": "How do I start using BroWorld components?",
+            "answer": "Install the package, run the setup script, and explore the Starter templates to see best practices in action.",
+            "link": "Read the getting started guide"
+          },
+          "localization": {
+            "question": "Which languages are supported?",
+            "answer": "English, French, Arabic, German, and more translations are maintained by our community partners."
+          },
+          "components": {
+            "question": "Where can I find live component examples?",
+            "answer": "Browse the component directory to view interactive demos and copy-ready code snippets.",
+            "link": "Explore the component directory"
+          },
+          "contributing": {
+            "question": "How can I contribute?",
+            "answer": "Review the contribution guidelines, open an issue with your idea, and submit a pull request when you are ready.",
+            "link": "Read the contribution guide"
+          },
+          "privacy": {
+            "question": "How do you handle privacy requests?",
+            "answer": "Submit a request through the account tools or email  and we will follow up within 72 hours."
+          }
+        }
+      }
+    },
+    "profile": {
+      "title": "Perfil",
+      "subtitle": "Revisa y gestiona tu información personal.",
+      "sections": {
+        "contact": "Contacto",
+        "profile": "Perfil",
+        "social": "Redes",
+        "calendar": "Calendario"
+      },
+      "calendar": {
+        "subtitle": "Mantén bajo control tu agenda próxima.",
+        "viewLabel": "Cambiar vista del calendario",
+        "views": {
+          "month": "Mes",
+          "week": "Semana",
+          "day": "Día"
+        },
+        "errorTitle": "No se pudieron cargar los eventos",
+        "errorFallback": "No pudimos cargar tus eventos. Inténtalo de nuevo.",
+        "retry": "Reintentar",
+        "privateLabel": "Privado",
+        "allDay": "Todo el día",
+        "upcoming": "Próximos eventos",
+        "emptyTitle": "No hay eventos programados",
+        "emptyDescription": "Añade eventos a tu calendario para verlos aquí.",
+        "actions": {
+          "add": "Nuevo evento",
+          "edit": "Editar",
+          "delete": "Eliminar"
+        },
+        "form": {
+          "createTitle": "Crear evento",
+          "createDescription": "Planifica un nuevo momento directamente desde la vista de calendario.",
+          "editTitle": "Editar evento",
+          "editDescription": "Actualiza los detalles de esta entrada del calendario.",
+          "fields": {
+            "title": "Título",
+            "startDate": "Fecha de inicio",
+            "endDate": "Fecha de finalización",
+            "startTime": "Hora de inicio",
+            "endTime": "Hora de finalización",
+            "allDay": "Evento de todo el día",
+            "color": "Categoría",
+            "location": "Ubicación",
+            "description": "Descripción",
+            "isPrivate": "Marcar como privado"
+          },
+          "actions": {
+            "cancel": "Cancelar",
+            "create": "Crear evento",
+            "save": "Guardar cambios"
+          },
+          "validation": {
+            "title": "Ponle un título a tu evento.",
+            "startDate": "Selecciona cuándo empieza el evento.",
+            "startTime": "Elige una hora de inicio.",
+            "endTime": "La hora de finalización debe ser posterior a la hora de inicio.",
+            "range": "El final del evento debe ser posterior al inicio."
+          }
+        },
+        "delete": {
+          "title": "Eliminar evento",
+          "description": "¿Seguro que quieres eliminar \"{title}\"? Esta acción no se puede deshacer."
+        },
+        "colors": {
+          "meetings": "Reuniones",
+          "personal": "Personal",
+          "travel": "Viajes",
+          "focus": "Concentración"
+        }
+      },
+      "labels": {
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "address": "Dirección",
+        "title": "Cargo",
+        "gender": "Género",
+        "birthday": "Cumpleaños",
+        "description": "Descripción",
+        "roles": "Roles",
+        "friends": "Amigos",
+        "stories": "Historias",
+        "accountStatus": "Estado de la cuenta"
+      },
+      "statuses": {
+        "enabled": "Activo",
+        "disabled": "Desactivado"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "Sin historias"
+      },
+      "avatarAlt": "Foto de perfil de {name}",
+      "avatarAltFallback": "Imagen de perfil predeterminada",
+      "stats": {
+        "title": "Estadísticas rápidas"
+      }
+    },
+    "profileCalendar": {
+      "title": "Calendario",
+      "subtitle": "Revisa tus reuniones, talleres y hitos en una vista dedicada."
+    },
+    "profileFriends": {
+      "title": "Conexiones",
+      "subtitle": "Reconecta con tus colaboradores, mentores y comunidades.",
+      "actions": {
+        "message": "Enviar mensaje",
+        "schedule": "Programar llamada",
+        "viewProfile": "Abrir perfil"
+      },
+      "highlights": {
+        "title": "Colaboradores destacados",
+        "subtitle": "Socios seleccionados con los que colaboras con más frecuencia este trimestre."
+      },
+      "filters": {
+        "all": "Todas",
+        "design": "Diseño",
+        "product": "Producto",
+        "engineering": "Ingeniería",
+        "marketing": "Marketing"
+      },
+      "stats": {
+        "totalFriends": "Conexiones",
+        "mutual": "contactos en común",
+        "online": "en línea ahora"
+      },
+      "meta": {
+        "lastActive": "Última actividad · {time}"
+      },
+      "sections": {
+        "suggestions": "Conexiones sugeridas",
+        "active": "Activos ahora"
+      },
+      "status": {
+        "online": "En línea",
+        "focus": "En foco",
+        "busy": "Ocupado",
+        "offline": "Desconectado"
+      },
+      "feedback": {
+        "message": "Redactando un saludo rápido…",
+        "messageWith": "Redactando un saludo rápido para {name}…",
+        "schedule": "Abriendo el flujo de programación…",
+        "scheduleWith": "Abriendo el flujo de programación para {name}…",
+        "connect": "Anotaremos que quieres conectar.",
+        "connectWith": "Avisaremos a {name} que te gustaría conectar."
+      },
+      "empty": "Aún no hay perfiles que coincidan con este filtro."
+    },
+    "profilePhotos": {
+      "title": "Biblioteca de fotos",
+      "subtitle": "Organiza los momentos destacados de lanzamientos, viajes de investigación y el detrás de cámaras.",
+      "actions": {
+        "upload": "Subir fotos",
+        "createAlbum": "Crear álbum"
+      },
+      "sections": {
+        "pinned": "Colecciones fijadas",
+        "albums": "Explorador de álbumes",
+        "timeline": "Notas creativas",
+        "notesDescription": "Actualizaciones de los colaboradores mientras preparan historias visuales."
+      },
+      "meta": {
+        "updated": "Actualizado {date}",
+        "photoCount": "fotos"
+      },
+      "filters": {
+        "recent": "Recientes",
+        "events": "Eventos",
+        "studio": "Estudio",
+        "travel": "Viajes"
+      },
+      "cta": {
+        "share": "Comparte estos conjuntos curados con tu equipo o expórtalos a tus presentaciones."
+      },
+      "stats": {
+        "albums": "álbumes curados",
+        "tags": "etiquetas de historia únicas"
+      },
+      "timeline": {
+        "title": "Hitos de la historia",
+        "description": "Instantáneas de lanzamientos clave, residencias y retiros que marcaron tu año."
+      },
+      "feedback": {
+        "upload": "Abriendo tu selector de medios…",
+        "createAlbum": "Creemos un álbum nuevo.",
+        "shareCollection": "Las opciones de compartir están listas.",
+        "generic": "Acción iniciada."
+      },
+      "empty": "Ninguna foto coincide con este filtro por ahora."
+    },
+    "profileEdit": {
+      "title": "Editar perfil",
+      "subtitle": "Actualiza tus datos para que tus colaboradores siempre tengan el contexto correcto.",
+      "sections": {
+        "profile": {
+          "title": "Perfil",
+          "bio": "Biografía",
+          "skills": "Habilidades clave"
+        },
+        "contact": "Contacto",
+        "about": "Acerca de",
+        "social": "Enlaces sociales",
+        "siteSettings": "Ajustes del sitio"
+      },
+      "labels": {
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "headline": "Titular",
+        "pronouns": "Pronombres",
+        "language": "Idioma preferido",
+        "timezone": "Zona horaria",
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "location": "Ubicación",
+        "website": "Sitio web",
+        "bio": "Biografía",
+        "skills": "Habilidades clave",
+        "interests": "Áreas de enfoque",
+        "linkedin": "LinkedIn",
+        "twitter": "Twitter / X",
+        "dribbble": "Dribbble",
+        "behance": "Behance"
+      },
+      "actions": {
+        "cancel": "Restablecer",
+        "save": "Guardar cambios"
+      },
+      "helpers": {
+        "bio": "Comparte tu misión, cómo colaboras o tus logros recientes (280 caracteres).",
+        "skills": "Escribe para añadir habilidades personalizadas o elige de las sugerencias.",
+        "summary": "Esta tarjeta rápida se actualiza automáticamente a medida que editas tu información.",
+        "siteSettings": "Actualiza el nombre o el eslogan del sitio sin salir de tu perfil."
+      },
+      "feedback": {
+        "successMessage": "Los detalles del perfil se guardaron correctamente.",
+        "errorMessage": "Revisa los campos resaltados."
+      },
+      "validation": {
+        "required": "Este campo es obligatorio.",
+        "bioLimit": "Tu biografía debe tener 280 caracteres o menos."
+      }
+    },
+    "profileSecurity": {
+      "title": "Contraseña y seguridad",
+      "subtitle": "Protege tu cuenta con credenciales sólidas y dispositivos verificados.",
+      "actions": {
+        "save": "Guardar ajustes de seguridad",
+        "generateCodes": "Generar códigos de recuperación"
+      },
+      "sections": {
+        "password": {
+          "title": "Actualizar contraseña",
+          "description": "Crea una frase secreta única con al menos 12 caracteres, números y símbolos."
+        },
+        "sessions": {
+          "title": "Sesiones activas",
+          "description": "Revisa dónde has iniciado sesión y revoca el acceso en dispositivos desconocidos."
+        },
+        "mfa": {
+          "title": "Autenticación en dos pasos",
+          "description": "Añade un paso extra de verificación para asegurar tu espacio de trabajo."
+        }
+      },
+      "labels": {
+        "currentPassword": "Contraseña actual",
+        "newPassword": "Nueva contraseña",
+        "confirmPassword": "Confirmar contraseña",
+        "mfaToggle": "Activar la autenticación en dos pasos"
+      },
+      "passwordHint": {
+        "title": "Consejos de contraseña",
+        "description": "Usa un gestor de contraseñas, evita reutilizarlas y renueva las credenciales sensibles con frecuencia."
+      },
+      "sessions": {
+        "device": "Dispositivo",
+        "location": "Ubicación",
+        "activity": "Última actividad",
+        "actions": "Acciones",
+        "revoke": "Revocar",
+        "activeNow": "Activo ahora",
+        "trusted": "De confianza",
+        "remembered": "Recordado",
+        "untrusted": "No reconocido"
+      },
+      "recoveryCodes": {
+        "title": "Guarda estos códigos de recuperación de un solo uso"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "We usually reply within 1–2 business days.",
+      "form": {
+        "name": "Your name",
+        "email": "Email address",
+        "subject": "Subject",
+        "message": "Message",
+        "submit": "Send",
+        "sending": "Sending…",
+        "success": "Thanks! Your message has been sent.",
+        "error": "Sorry, something went wrong. Please try again."
+      },
+      "validation": {
+        "required": "This field is required",
+        "email": "Enter a valid email address",
+        "minMessage": "Message must be at least 10 characters"
+      },
+      "details": {
+        "title": "How to reach us",
+        "description": "Choose the channel that works best for your question.",
+        "email": "Email",
+        "emailDescription": "Message the core team for private or account-related topics.",
+        "emailCta": "Send us an email",
+        "emailCtaLabel": "Compose an email to the BroWorld team",
+        "community": "Community discussions",
+        "communityDescription": "Share ideas, ask questions, or report bugs alongside other builders.",
+        "communityCta": "Open discussions",
+        "communityCtaLabel": "Open the BroWorld community discussions in a new tab",
+        "docs": "Documentation",
+        "docsDescription": "Browse implementation guides and API references for quick answers.",
+        "docsCta": "Read the docs",
+        "docsCtaLabel": "Read the BroWorld documentation"
+      },
+      "availability": {
+        "title": "When we're online",
+        "body": "Our distributed team monitors requests Monday through Friday and rotates weekend coverage for urgent issues."
+      }
+    },
+    "playground": {
+      "ui": {
+        "title": "UI Component Playground",
+        "description": "Review every base component with multiple variants, sizes, and accessibility states.",
+        "controls": {
+          "expandAll": "Expand all",
+          "collapseAll": "Collapse all"
+        },
+        "toggles": {
+          "locale": "Locale preview",
+          "direction": "Layout direction",
+          "theme": "Theme",
+          "density": "Control size"
+        },
+        "directions": {
+          "ltr": "LTR",
+          "rtl": "RTL"
+        },
+        "themes": {
+          "light": "Light",
+          "dark": "Dark"
+        },
+        "sizes": {
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        },
+        "locales": {
+          "en": "English",
+          "ar": "Arabic"
+        },
+        "variants": {
+          "filled": "Filled",
+          "tonal": "Tonal",
+          "outline": "Outline",
+          "text": "Text",
+          "plain": "Plain"
+        },
+        "states": {
+          "default": "Default",
+          "disabled": "Disabled",
+          "loading": "Loading",
+          "leadingIcon": "Leading icon",
+          "trailingIcon": "Trailing icon",
+          "block": "Full width",
+          "focus": "Focused",
+          "error": "Error",
+          "success": "Success",
+          "checked": "Checked",
+          "indeterminate": "Indeterminate"
+        },
+        "inputTypes": {
+          "text": "Text",
+          "email": "Email",
+          "password": "Password",
+          "number": "Number",
+          "search": "Search",
+          "url": "URL"
+        },
+        "placeholders": {
+          "generic": "Enter a value",
+          "focus": "Auto-focused input",
+          "error": "Something went wrong",
+          "success": "Everything looks good",
+          "autogrow": "Describe your idea…",
+          "select": "Choose an option",
+          "selectMultiple": "Select integrations",
+          "fullName": "Ada Lovelace"
+        },
+        "examples": {
+          "buttonLabel": "Primary action",
+          "loading": "Loading…",
+          "primaryAction": "Continue",
+          "secondaryAction": "Learn more",
+          "fullWidth": "Take the full width",
+          "inputType": "{type} input",
+          "disabledValue": "Unavailable while disabled",
+          "textareaDefault": "Feedback textarea",
+          "textareaAutoGrow": "Auto growing notes",
+          "checkboxPrimary": "Email updates",
+          "checkboxIndeterminate": "Partially selected",
+          "checkboxDisabled": "Disabled checkbox",
+          "switchNotifications": "Enable notifications",
+          "switchDisabled": "Disabled switch",
+          "selectSingle": "Delivery channel",
+          "selectMultiple": "Team integrations",
+          "selectDisabledOptions": "Release channel",
+          "radioVertical": "Cadence options",
+          "radioHorizontal": "Payment methods",
+          "formFieldBasic": "Field with helper text",
+          "formFieldError": "Field with errors",
+          "formFieldCheckbox": "Field wrapping checkbox"
+        },
+        "feedback": {
+          "error": "Provide a valid response.",
+          "selectMethod": "Select a supported payment method.",
+          "invalidEmail": "Enter a valid email address."
+        },
+        "hints": {
+          "characterLimit": "Keep it under 240 characters.",
+          "checkbox": "You can mark more than one preference.",
+          "switch": "Switch represents an immediate action.",
+          "disabledOption": "Some options are unavailable right now.",
+          "radio": "Choose the plan that fits best.",
+          "required": "This field is required."
+        },
+        "notes": {
+          "autofocus": "Auto-focus is applied to show the focus style.",
+          "disabledChoice": "One option is disabled to demonstrate aria-disabled."
+        },
+        "sample": {
+          "textValue": "Hi from the playground!",
+          "multiline": "Let the team know how this feels.",
+          "longerText": "This textarea grows as you type so reviewers can stress-test the auto-grow behaviour."
+        },
+        "selectOptions": {
+          "email": "Email",
+          "sms": "SMS",
+          "push": "Push notification",
+          "alpha": "Alpha",
+          "beta": "Beta",
+          "release": "Release"
+        },
+        "radioOptions": {
+          "daily": "Daily summary",
+          "weekly": "Weekly digest",
+          "monthly": "Monthly report",
+          "card": "Credit card",
+          "paypal": "PayPal",
+          "bank": "Bank transfer"
+        },
+        "labels": {
+          "fullName": "Full name",
+          "email": "Email",
+          "preferences": "Preferences"
+        },
+        "groups": {
+          "buttons": {
+            "title": "Buttons",
+            "description": "Primary actions and secondary button styles."
+          },
+          "inputs": {
+            "title": "Inputs",
+            "description": "Text inputs and textareas with validation states."
+          },
+          "toggles": {
+            "title": "Toggles",
+            "description": "Checkboxes and switches for binary choices."
+          },
+          "selectors": {
+            "title": "Selectors",
+            "description": "Select menus and radio groups for choosing options."
+          },
+          "wrappers": {
+            "title": "Form wrappers",
+            "description": "FormField wrapper integrating labels, hints, and errors."
+          }
+        },
+        "sections": {
+          "buttonVariants": "Variants & sizes",
+          "buttonVariantsDescription": "Each button variant rendered across small, medium, and large sizes.",
+          "buttonStates": "States",
+          "buttonStatesDescription": "Loading, disabled, icon, and block button examples.",
+          "inputTypes": "Input types",
+          "inputTypesDescription": "BaseInput with different HTML input types and clearable behaviour.",
+          "inputStates": "States",
+          "inputStatesDescription": "Focused, success, error, and disabled input states.",
+          "textareaStates": "Textarea states",
+          "textareaStatesDescription": "Resizable textarea variations with hints and disabled view.",
+          "checkboxes": "Checkboxes",
+          "checkboxesDescription": "Checked, indeterminate, and disabled checkbox states.",
+          "switches": "Switches",
+          "switchesDescription": "Enabled and disabled switch controls.",
+          "selects": "Select menus",
+          "selectsDescription": "Single, multi-select, and disabled options examples.",
+          "radios": "Radio groups",
+          "radiosDescription": "Vertical and horizontal radio group layouts with keyboard support.",
+          "formFields": "FormField wrapper",
+          "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
+        }
+      }
     }
-  },
-  "messenger": {
-    "searchPlaceholder": "Buscar conversaciones",
-    "emptyList": "Todavía no hay conversaciones",
-    "unknownParticipant": "Desconocido",
-    "emptyTitle": "Selecciona una conversación",
-    "emptyDescription": "Elige una conversación de la lista para leer y enviar mensajes.",
-    "emptyCtaLabel": "Iniciar una conversación",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "Escribe un mensaje...",
-    "sendLabel": "Enviar",
-    "sendingLabel": "Enviando…",
-    "sendErrorStatus": "No entregado",
-    "shortcutsHint": "Presiona Ctrl+Enter para enviar",
-    "noMessages": "Aún no hay mensajes",
-    "loadOlder": "Cargar mensajes anteriores",
-    "participantsLabel": "{count} participantes"
-  },
-  "auth": {
-    "Account": "Cuenta",
-    "Login": "Iniciar sesión",
-    "Register": "Registrarse",
-    "usernameOrEmail": "Correo electrónico",
-    "password": "Contraseña",
-    "showPassword": "Mostrar contraseña",
-    "hidePassword": "Ocultar contraseña",
-    "signIn": "Iniciar sesión",
-    "signUpPrompt": "¿No tienes una cuenta?",
-    "signUp": "Crea una",
-    "signOut": "Cerrar sesión",
-    "forgotPassword": "¿Olvidaste tu contraseña?",
-    "requiredError": "Introduce tu correo y contraseña.",
-    "invalidError": "No pudimos iniciar sesión con esos datos. Inténtalo de nuevo.",
-    "successTitle": "Bienvenido de nuevo",
-    "success": "Has iniciado sesión correctamente.",
-    "errorTitle": "Error al iniciar sesión",
-    "errorGeneric": "Algo salió mal al iniciar sesión.",
-    "logoutMessage": "Has cerrado sesión correctamente.",
-    "sessionExpired": "Tu sesión ha expirado. Inicia sesión nuevamente.",
-    "socialTitle": "Inicia sesión con tu proveedor favorito",
-    "socialSubtitle": "Te redirigiremos para finalizar la autenticación.",
-    "social": {
-      "google": "Continuar con Google",
-      "github": "Continuar con GitHub",
-      "microsoft": "Continuar con Microsoft"
-    }
-  },
-  "register": {
-    "email": "Correo electrónico",
-    "password": "Contraseña",
-    "repeatPassword": "Confirmar contraseña",
-    "agree": "Acepto los",
-    "terms": "términos y condiciones",
-    "requirements": "Requisitos de la contraseña",
-    "requirement1": "Debe tener al menos 8 caracteres.",
-    "requirement2": "Debe incluir números o caracteres especiales para mayor seguridad.",
-    "signUp": "Crear cuenta",
-    "haveAccount": "¿Ya tienes una cuenta?",
-    "signIn": "Inicia sesión",
-    "termsTitle": "Términos y condiciones",
-    "errorTerms": "Debes aceptar los términos y condiciones.",
-    "errorMissing": "Completa todos los campos obligatorios.",
-    "errorMismatch": "Las contraseñas no coinciden.",
-    "errorGeneric": "Algo salió mal al crear tu cuenta.",
-    "errorTitle": "Error al crear la cuenta",
-    "successTitle": "Cuenta creada",
-    "success": "Tu cuenta se ha creado correctamente.",
-    "termsIntro": "Al crear una cuenta confirmas que entiendes y aceptas nuestras políticas.",
-    "termsPoint1": "Solo usamos tu información para crear y proteger tu cuenta.",
-    "termsPoint2": "Puedes actualizar tus preferencias de notificación en cualquier momento.",
-    "termsPoint3": "Al eliminar tu cuenta, tus datos se eliminarán de nuestros sistemas activos en un plazo de 30 días.",
-    "termsOutro": "Contacta a nuestro equipo de soporte si tienes alguna pregunta sobre cómo tratamos tus datos."
   },
   "seo": {
+    "about": {
+      "title": "About",
+      "description": "Learn about our mission and team."
+    },
+    "help": {
+      "title": "Help",
+      "description": "FAQ and support resources."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch with our team."
+    },
     "profile": {
       "title": "Perfil",
       "description": "Consulta los detalles de tu cuenta y actividad."
@@ -2712,17 +2772,13 @@
       "title": "Contraseña y seguridad",
       "description": "Administra credenciales de acceso, verificación en dos pasos y dispositivos de confianza."
     },
-    "profileNotifications": {
-      "title": "Preferencias de notificaciones",
-      "description": "Decide qué alertas recibes por correo, push o mensajes dentro de la app."
+    "job": {
+      "title": "Jobs",
+      "description": "Plan, track, and optimise hiring programmes."
     },
     "createWorld": {
       "title": "Create world",
       "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
-    },
-    "job": {
-      "title": "Jobs",
-      "description": "Plan, track, and optimise hiring programmes."
     },
     "game": {
       "title": "Gaming",
@@ -2856,6 +2912,9 @@
     }
   },
   "admin": {
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
     "metaTitle": "Administración",
     "page": {
       "title": "Centro de administración",
@@ -3062,6 +3121,39 @@
           "page": {
             "title": "User data",
             "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          },
+          "table": {
+            "search": "Search dataset",
+            "columns": {
+              "username": "Username",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "email": "Email",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status",
+              "actions": "Actions"
+            },
+            "empty": "No user records found."
+          },
+          "actions": {
+            "refresh": "Refresh"
+          },
+          "details": {
+            "title": "User details",
+            "close": "Close",
+            "empty": "Select a user to inspect their profile.",
+            "fields": {
+              "username": "Username",
+              "email": "Email",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status"
+            }
           }
         },
         "crons": {
@@ -3092,6 +3184,98 @@
           "page": {
             "title": "Scheduled publishing",
             "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
+      }
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }
@@ -3194,25 +3378,41 @@
           "content": {
             "title": "Gestión de contenido",
             "description": "Planifica, publica y archiva artículos, eventos y recursos formativos.",
-            "tags": ["Flujo editorial", "Validación", "Programación"],
+            "tags": [
+              "Flujo editorial",
+              "Validación",
+              "Programación"
+            ],
             "status": "12 contenidos requieren revisión editorial."
           },
           "community": {
             "title": "Comunidad y moderación",
             "description": "Configura las reglas de moderación, gestiona reportes y sanciones.",
-            "tags": ["Reportes", "Sanciones", "Mensajes privados"],
+            "tags": [
+              "Reportes",
+              "Sanciones",
+              "Mensajes privados"
+            ],
             "status": "Tiempo medio de respuesta: 1 h 42."
           },
           "commerce": {
             "title": "Monetización y ofertas",
             "description": "Administra suscripciones, códigos promocionales y alianzas comerciales.",
-            "tags": ["Suscripciones", "Facturación", "Cupones"],
+            "tags": [
+              "Suscripciones",
+              "Facturación",
+              "Cupones"
+            ],
             "status": "La tasa de conversión subió un 3,4% esta semana."
           },
           "governance": {
             "title": "Gobernanza y cumplimiento",
             "description": "Audita accesos, gestiona roles privilegiados y prepara informes de cumplimiento.",
-            "tags": ["Auditoría", "Roles", "Trazabilidad"],
+            "tags": [
+              "Auditoría",
+              "Roles",
+              "Trazabilidad"
+            ],
             "status": "Última auditoría completa realizada hace 5 días."
           }
         }
@@ -3370,101 +3570,6 @@
           "page": {
             "title": "Scheduled publishing",
             "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
-          }
-        }
-      }
-    },
-    "common": {
-      "comingSoon": "This module is coming soon."
-    },
-    "jobManagement": {
-      "metaTitle": "Job management",
-      "page": {
-        "title": "Job management",
-        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Job data",
-          "page": {
-            "title": "Job data",
-            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
-          }
-        },
-        "crons": {
-          "metaTitle": "Job crons",
-          "page": {
-            "title": "Scheduled routines",
-            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
-          }
-        }
-      }
-    },
-    "ecommerceManagement": {
-      "metaTitle": "E-commerce management",
-      "page": {
-        "title": "E-commerce management",
-        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "E-commerce data",
-          "page": {
-            "title": "Commerce data",
-            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
-          }
-        },
-        "crons": {
-          "metaTitle": "E-commerce crons",
-          "page": {
-            "title": "Automated jobs",
-            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
-          }
-        }
-      }
-    },
-    "educationManagement": {
-      "metaTitle": "Education management",
-      "page": {
-        "title": "Education management",
-        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Education data",
-          "page": {
-            "title": "Learning data",
-            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
-          }
-        },
-        "crons": {
-          "metaTitle": "Education crons",
-          "page": {
-            "title": "Learning automations",
-            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
-          }
-        }
-      }
-    },
-    "gameManagement": {
-      "metaTitle": "Game management",
-      "page": {
-        "title": "Game management",
-        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Game data",
-          "page": {
-            "title": "Gameplay data",
-            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
-          }
-        },
-        "crons": {
-          "metaTitle": "Game crons",
-          "page": {
-            "title": "Scheduled operations",
-            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }

@@ -168,6 +168,7 @@
         "education": "Éducation",
         "quiz": "Quiz",
         "academy": "Académie",
+        "performance": "Performance",
         "profile": "Profil",
         "profileOverview": "Vue d'ensemble",
         "profileSettings": "Paramètres du compte",
@@ -193,8 +194,7 @@
         "adminBlog": "Blog",
         "help": "Aide",
         "about": "À propos",
-        "contact": "Contact",
-        "performance": "Performance"
+        "contact": "Contact"
       }
     },
     "widgets": {
@@ -307,6 +307,23 @@
     "description": "Company description",
     "website": "Website",
     "submit": "Save"
+  },
+  "messenger": {
+    "searchPlaceholder": "Rechercher une conversation",
+    "emptyList": "Aucune conversation pour le moment",
+    "unknownParticipant": "Inconnu",
+    "emptyTitle": "Sélectionnez une conversation",
+    "emptyDescription": "Choisissez une conversation dans la liste pour lire et envoyer des messages.",
+    "emptyCtaLabel": "Commencer une conversation",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Écrire un message…",
+    "sendLabel": "Envoyer",
+    "sendingLabel": "Envoi…",
+    "sendErrorStatus": "Non remis",
+    "shortcutsHint": "Appuyez sur Ctrl+Entrée pour envoyer",
+    "noMessages": "Aucun message pour le moment",
+    "loadOlder": "Charger les messages précédents",
+    "participantsLabel": "{count} participants"
   },
   "banner": {
     "Content": "Pour la documentation Tailwind CSS v3, [**cliquez ici**](https://v1.inspira-ui.com)."
@@ -670,23 +687,6 @@
       "GetStarted": "Commencer"
     }
   },
-  "messenger": {
-    "searchPlaceholder": "Rechercher une conversation",
-    "emptyList": "Aucune conversation pour le moment",
-    "unknownParticipant": "Inconnu",
-    "emptyTitle": "Sélectionnez une conversation",
-    "emptyDescription": "Choisissez une conversation dans la liste pour lire et envoyer des messages.",
-    "emptyCtaLabel": "Commencer une conversation",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "Écrire un message…",
-    "sendLabel": "Envoyer",
-    "sendingLabel": "Envoi…",
-    "sendErrorStatus": "Non remis",
-    "shortcutsHint": "Appuyez sur Ctrl+Entrée pour envoyer",
-    "noMessages": "Aucun message pour le moment",
-    "loadOlder": "Charger les messages précédents",
-    "participantsLabel": "{count} participants"
-  },
   "auth": {
     "Account": "Compte",
     "Login": "Connexion",
@@ -1015,27 +1015,6 @@
         "title": "@:education.catalog.title",
         "subtitle": "@:education.catalog.subtitle"
       },
-      "sidebar": {
-        "overviewTitle": "Keep learning momentum",
-        "overviewDescription": "Track your progress, revisit favourite categories, and stay motivated as you explore new skills.",
-        "stats": {
-          "categories": {
-            "label": "Categories",
-            "value": "{count} categories"
-          },
-          "courses": {
-            "label": "Courses",
-            "value": "{count} courses"
-          },
-          "certificates": {
-            "label": "Certificates earned",
-            "value": "{count} certificates"
-          }
-        },
-        "featuredTitle": "Featured categories",
-        "featuredDescription": "Jump back into these curated spaces to continue learning.",
-        "featuredEmpty": "New categories are coming soon."
-      },
       "category": {
         "courses": "@:education.category.courses",
         "viewCourses": "@:education.category.viewCourses",
@@ -1121,6 +1100,1007 @@
         "beginner": "@:education.levels.beginner",
         "intermediate": "@:education.levels.intermediate",
         "advanced": "@:education.levels.advanced"
+      }
+    },
+    "createWorld": {
+      "title": "Créer un nouveau monde",
+      "subtitle": "Assemblez les fondations, la gouvernance et les expériences en direct dont votre communauté a besoin — dans un espace guidé.",
+      "form": {
+        "title": "Plan directeur du monde",
+        "subtitle": "Définissez l'identité, le plan de lancement et les contrôles d'accès avant d'inviter vos premiers résidents.",
+        "actions": {
+          "preview": "Prévisualiser",
+          "previewAria": "Prévisualiser la configuration du monde",
+          "publish": "Publier le monde",
+          "publishAria": "Publier la configuration du monde"
+        },
+        "basicInfo": {
+          "title": "Détails essentiels",
+          "subtitle": "Donnez à votre monde une identité claire pour que les membres sachent instantanément où ils arrivent."
+        },
+        "fields": {
+          "name": "Nom du monde",
+          "namePlaceholder": "Ex. Aurora Station",
+          "slug": "URL publique",
+          "slugPlaceholder": "aurora-station",
+          "description": "Description",
+          "descriptionPlaceholder": "Décrivez l’histoire, l’objectif et les expériences auxquelles les joueurs peuvent s’attendre.",
+          "visibility": "Visibilité",
+          "visibilityOptions": {
+            "public": "Public",
+            "private": "Privé"
+          },
+          "visibilityHint": "Choisissez si votre monde apparaît dans l’explorateur public ou seulement sur invitation.",
+          "theme": "Préréglage de thème",
+          "region": "Région principale",
+          "regionHint": "Nous aide à acheminer une infrastructure optimisée pour la latence de vos joueurs.",
+          "launchDate": "Date de lancement",
+          "launchDateHint": "Partagez votre date de mise en ligne pour coordonner les tests et les annonces.",
+          "tags": "Étiquettes",
+          "tagsPlaceholder": "Ajoutez des mots-clés descriptifs",
+          "tagsHint": "Utilisez jusqu’à cinq étiquettes pour aider les membres à trouver les bonnes activités.",
+          "guidelines": "Règles communautaires",
+          "guidelinesPlaceholder": "Décrivez le ton, les attentes et les procédures d’escalade pour toutes les personnes qui rejoignent."
+        },
+        "themeOptions": {
+          "aurora": "Aurore",
+          "midnight": "Minuit",
+          "sunrise": "Aube",
+          "custom": "Thème personnalisé"
+        },
+        "regionOptions": {
+          "global": "Global",
+          "americas": "Amériques",
+          "emea": "EMEA",
+          "apac": "APAC"
+        },
+        "tagSuggestions": {
+          "coOp": "Missions en coopération",
+          "roleplay": "Jeu de rôle",
+          "competitive": "Ligue compétitive",
+          "casual": "Rencontre détendue",
+          "modded": "Aventures modées"
+        },
+        "advanced": {
+          "title": "Contrôles avancés",
+          "subtitle": "Affinez la monétisation, les intégrations et les politiques d’accès.",
+          "monetization": "Activer les systèmes de monétisation",
+          "integrations": "Activer les intégrations partenaires",
+          "verification": "Exiger la vérification du compte",
+          "guests": "Autoriser les visiteurs invités",
+          "guestsHint": "Les invités peuvent parcourir sans créer de compte mais ne peuvent pas interagir."
+        }
+      },
+      "plugins": {
+        "title": "Composez votre pile de plugins",
+        "subtitle": "Combinez plugins sociaux, économiques et de sécurité pour façonner l’expérience que mérite votre communauté.",
+        "categories": {
+          "community": {
+            "title": "Présence communautaire",
+            "description": "Accueillez les membres, diffusez des annonces et animez des espaces sociaux.",
+            "plugins": {
+              "lobby": {
+                "name": "Hall interactif",
+                "tag": "Essentiel",
+                "description": "Guidez les nouveaux venus avec des zones personnalisées, des publications mises en avant et un onboarding intelligent.",
+                "points": [
+                  "Créez des salles d’accueil modulaires avec des widgets à glisser-déposer.",
+                  "Mettez en avant les événements tendance, les modérateurs et les créateurs à la une.",
+                  "Planifiez des messages d’accueil dynamiques qui s’adaptent aux fuseaux horaires."
+                ]
+              },
+              "events": {
+                "name": "Orchestration d’événements",
+                "tag": "En direct",
+                "description": "Planifiez tournois, avant-premières et quêtes collaboratives avec des rappels automatisés.",
+                "points": [
+                  "Coordonnez des tableaux multi-étapes et des RSVP dans un seul tableau de bord.",
+                  "Synchronisez automatiquement calendriers, billetterie et habillages de diffusion.",
+                  "Publiez des bilans post-événement avec statistiques, extraits et récompenses."
+                ]
+              },
+              "streams": {
+                "name": "Streams de créateurs",
+                "tag": "Engagement",
+                "description": "Intégrez des streams en direct, des watch parties et des coulisses sans quitter votre monde.",
+                "points": [
+                  "Prise en charge multi-plateforme avec qualité adaptative.",
+                  "Déverrouillez des salons de co-streaming pour les commentateurs de la communauté.",
+                  "Capturez les moments forts et publiez instantanément des résumés vidéo."
+                ]
+              }
+            }
+          },
+          "economy": {
+            "title": "Économie & progression",
+            "description": "Concevez des boucles de progression, des systèmes d’échange et des parcours de récompenses adaptés à votre monde.",
+            "plugins": {
+              "market": {
+                "name": "Hub de marché",
+                "tag": "Commerce",
+                "description": "Lancez un commerce sécurisé pour les cosmétiques, matériaux d’artisanat et offres limitées.",
+                "points": [
+                  "Référencez des objets avec rareté, saisonnalité et options de lots.",
+                  "Protégez les transactions avec escrow, fiscalité et outils anti-fraude.",
+                  "Publiez des campagnes commerciales avec des règles de tarification dynamiques."
+                ]
+              },
+              "crafting": {
+                "name": "Simulateur d’artisanat",
+                "tag": "Systèmes",
+                "description": "Définissez recettes, ressources et stations d’artisanat avec équilibrage en direct.",
+                "points": [
+                  "Définissez visuellement arbres d’ingrédients et prérequis de compétences.",
+                  "Simulez rendement, temps de recharge et échecs avant publication.",
+                  "Reliez les créations aux quêtes, vendeurs ou annonces du marché."
+                ]
+              },
+              "rewards": {
+                "name": "Moteur de récompenses",
+                "tag": "Fidélité",
+                "description": "Récompensez vos cohortes avec des quêtes, succès et passes de saison.",
+                "points": [
+                  "Segmentez les jalons par type de joueur, région ou plateforme.",
+                  "Automatisez la distribution des récompenses avec des contrôles anti-fraude.",
+                  "Suivez en temps réel les analyses de rédemption et le risque d’attrition."
+                ]
+              }
+            }
+          },
+          "governance": {
+            "title": "Gouvernance & sécurité",
+            "description": "Donnez aux équipes de confiance des workflows de modération, de sécurité et d’analyse.",
+            "plugins": {
+              "moderation": {
+                "name": "Console de modération",
+                "tag": "Confiance",
+                "description": "Résolvez signalements, escalades et appels avec des outils collaboratifs.",
+                "points": [
+                  "Acheminez automatiquement les cas selon la gravité et la langue.",
+                  "Affichez les chronologies de preuves avec chat, extraits et journaux d’audit.",
+                  "Assignez playbooks, sanctions et périodes de refroidissement dans leur contexte."
+                ]
+              },
+              "safety": {
+                "name": "Automatisation de sécurité",
+                "tag": "IA",
+                "description": "Détectez la toxicité, le spam et les comportements suspects avant qu’ils ne se propagent.",
+                "points": [
+                  "Déployez des classificateurs ML adaptés aux normes de votre communauté.",
+                  "Configurez des limites adaptatives et des filtres de contenu.",
+                  "Alertez tuteurs et responsables avec des notifications basées sur les rôles."
+                ]
+              },
+              "analytics": {
+                "name": "Analyses de gouvernance",
+                "tag": "Analyses",
+                "description": "Mesurez la santé, la rétention et l’impact des politiques sur chaque surface de votre monde.",
+                "points": [
+                  "Surveillez les indicateurs de sécurité avec des tableaux de bord en temps réel.",
+                  "Corrélez les actions de modération aux résultats d’engagement.",
+                  "Exportez des rapports conformes prêts pour les parties prenantes."
+                ]
+              }
+            }
+          }
+        }
+      },
+      "sidebar": {
+        "plugins": {
+          "selectedTitle": "Plugins sélectionnés",
+          "emptyTitle": "Aucun plugin sélectionné pour le moment",
+          "selectedDescription": "Les plugins suivants seront inclus dans votre demande de provisionnement :",
+          "emptyDescription": "Choisissez des plugins pour prévisualiser les fonctionnalités qui seront provisionnées.",
+          "emptyHint": "Activez les plugins dans la liste pour composer votre stack."
+        }
+      },
+      "workflow": {
+        "title": "Lancez en toute confiance",
+        "subtitle": "Suivez un rythme éprouvé, de la vision à l’expansion.",
+        "stepLabel": "Étape {number}",
+        "steps": {
+          "vision": {
+            "title": "Façonnez votre vision",
+            "description": "Alignez piliers, ton et indicateurs de succès avec les parties prenantes et les créateurs."
+          },
+          "launch": {
+            "title": "Lancez avec élan",
+            "description": "Coordonnez temps forts marketing, vagues d’accès anticipé et check-lists de mise en ligne."
+          },
+          "expand": {
+            "title": "Développez-vous durablement",
+            "description": "Itérez sur les retours, étendez-vous à de nouvelles régions et développez vos programmes d’ambassadeurs."
+          }
+        }
+      },
+      "cta": {
+        "title": "Besoin d’aide pour activer votre monde ?",
+        "description": "Notre équipe peut vous aider à concevoir la gouvernance, les plans de migration et les opérations live adaptés à votre audience.",
+        "button": "Discuter avec notre équipe",
+        "buttonAria": "Ouvrir la page de contact"
+      }
+    },
+    "job": {
+      "title": "Emplois",
+      "subtitle": "Centralisez chaque étape de votre entonnoir de recrutement pour passer du sourcing à la signature en toute clarté.",
+      "featuresTitle": "Construisez un pipeline de recrutement fiable",
+      "features": {
+        "matching": {
+          "title": "Identifiez plus rapidement les bons talents",
+          "description": "Agrégrez vos activités de sourcing et priorisez automatiquement les candidats.",
+          "points": [
+            "Synchronisez job boards, cooptations et mobilité interne dans une vue unique.",
+            "Évaluez les candidatures selon des critères configurables avec des garde-fous contre les biais.",
+            "Mettez en lumière les viviers à activer ou réactiver."
+          ]
+        },
+        "automation": {
+          "title": "Automatisez la coordination des équipes",
+          "description": "Offrez aux recruteurs, intervieweurs et managers un centre de commandement partagé.",
+          "points": [
+            "Déclenchez kits d'entretien et rappels dans le bon fuseau horaire.",
+            "Partagez des modèles de feedback structurés pour faire ressortir les signaux utiles.",
+            "Alertez les parties prenantes dès qu'un candidat progresse ou stagne."
+          ]
+        },
+        "insights": {
+          "title": "Mesurez l'impact de vos recrutements",
+          "description": "Comprenez conversion, vitesse et qualité sans exporter de feuilles de calcul.",
+          "points": [
+            "Suivez le délai de recrutement, les ratios de diversité et le taux d'acceptation des offres en temps réel.",
+            "Visualisez instantanément les goulets d'étranglement par région ou famille de postes.",
+            "Partagez des tableaux de bord en temps réel avec la direction et vos partenaires en toute sécurité."
+          ]
+        }
+      },
+      "workflowTitle": "Votre cadence de recrutement, visualisée",
+      "workflow": {
+        "steps": {
+          "publish": {
+            "title": "Publiez en toute confiance",
+            "description": "Déployez des pages métiers à votre image et des annonces diffusées via des modèles réutilisables."
+          },
+          "review": {
+            "title": "Analysez ensemble",
+            "description": "Collaborez sur les retours, calibrez vos grilles d'évaluation et responsabilisez chaque intervenant."
+          },
+          "hire": {
+            "title": "Recrutez et intégrez",
+            "description": "Obtenez les validations, générez les offres et transmettez le contexte à l'onboarding sans friction."
+          }
+        }
+      },
+      "stepLabel": "Étape {number}",
+      "cta": {
+        "title": "Concevez une expérience de recrutement que les candidats adorent",
+        "description": "Laissez notre équipe adapter BroWorld à votre stack recrutement, vos processus et vos exigences de conformité.",
+        "button": "Contactez-nous",
+        "buttonAria": "Ouvrir la page de contact"
+      },
+      "openings": {
+        "title": "Postes ouverts",
+        "subtitle": "Découvrez les rôles pour lesquels nous recrutons activement et projetez-vous dans les missions dès le premier jour.",
+        "updated": "Mise à jour chaque semaine",
+        "updatedLabel": "Fréquence de rafraîchissement des offres",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Design Produit",
+            "location": "Paris, France (Hybrid)",
+            "type": "CDI",
+            "salary": "58k€ - 72k€ · 0,05 % BSPCE",
+            "description": "Imaginez des expériences multi-plateformes pour les recruteurs et les candidats, web et mobile.",
+            "tags": [
+              "Design System",
+              "Figma",
+              "Recherche utilisateur"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste de Senior Product Designer",
+              "hint": "Portfolio requis"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Produit & IA",
+            "location": "Remote - EMEA",
+            "type": "CDI",
+            "salary": "70k€ - 90k€ · bonus",
+            "description": "Construisez des copilotes IA qui automatisent le sourcing, le screening et la planification.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste d'AI Recruiter Strategist",
+              "hint": "Expérience des workflows LLM"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "CDI",
+            "salary": "65k€ fixe · 50 % variable",
+            "description": "Pilotez la génération de pipeline et accompagnez les AEs sur des deals complexes.",
+            "tags": [
+              "B2B SaaS",
+              "Vente Enterprise",
+              "Forecast"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste d'Enterprise Sales Lead",
+              "hint": "Bilingue français/anglais"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "CDI",
+            "salary": "45k€ - 55k€",
+            "description": "Accompagnez les équipes Talent lors de l'onboarding, du lancement des workflows et du suivi d'adoption.",
+            "tags": [
+              "Implementation",
+              "Conduite du changement",
+              "Intégrations ATS"
+            ],
+            "apply": {
+              "label": "Postuler",
+              "aria": "Postuler au poste de Customer Success Partner",
+              "hint": "Expérience des déploiements HRIS/ATS"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Déposez votre candidature",
+        "subtitle": "Partagez quelques informations et notre équipe Talent reviendra vers vous avec la suite du process.",
+        "highlights": [
+          "Une démo personnalisée de BroWorld selon votre maturité recrutement.",
+          "Des échanges avec les personnes avec qui vous collaborerez.",
+          "Un retour sous deux jours ouvrés, même si nous ne pouvons pas avancer tout de suite."
+        ],
+        "form": {
+          "nameLabel": "Nom complet",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Email professionnel",
+          "emailPlaceholder": "elisa.dupont(at)entreprise.com",
+          "roleLabel": "Poste qui vous intéresse",
+          "rolePlaceholder": "ex : Product Designer",
+          "messageLabel": "Parlez-nous de votre parcours",
+          "messagePlaceholder": "Partagez vos projets récents, vos réussites ou ce qui vous motive chez BroWorld.",
+          "consentLabel": "J'accepte d'être contacté·e pour des opportunités actuelles et futures chez BroWorld.",
+          "submit": "Envoyer la candidature",
+          "success": "Merci ! Notre équipe Talent étudiera votre profil et vous recontactera très vite.",
+          "rules": {
+            "required": "Ce champ est obligatoire.",
+            "email": "Veuillez saisir un email valide.",
+            "consent": "Merci de confirmer que nous pouvons vous contacter."
+          }
+        }
+      }
+    },
+    "game": {
+      "title": "Arène de quiz",
+      "subtitle": "Prototyper des quiz en plusieurs étapes avec catégories, niveaux et classement en direct.",
+      "menu": {
+        "player": "Joueur prêt !",
+        "guest": "Invité",
+        "guestName": "Invité",
+        "categoryPlaceholder": "Choisissez une catégorie",
+        "levelPlaceholder": "Sélectionnez un niveau",
+        "timer": "Temps",
+        "score": "Score",
+        "progress": "Progression",
+        "pendingScore": "En attente",
+        "helper": "Choisissez une catégorie puis un niveau pour lancer le quiz. Connectez-vous pour synchroniser votre progression."
+      },
+      "leaderboard": {
+        "title": "Classement",
+        "loading": "Chargement…",
+        "empty": "Le classement s'actualise après les premières parties."
+      },
+      "categories": {
+        "title": "Choisissez une catégorie",
+        "subtitle": "Explorez des banques de questions scénarisées dans l'univers Bro World.",
+        "reload": "Recharger",
+        "empty": "Aucune catégorie disponible pour le moment.",
+        "levels": "{count} niveaux",
+        "questions": "{count} questions",
+        "players": "{count} joueurs"
+      },
+      "levels": {
+        "title": "Sélectionnez un niveau",
+        "subtitle": "Chaque niveau augmente la difficulté et accélère le chronomètre.",
+        "locked": "Sélectionnez d'abord une catégorie pour afficher ses niveaux.",
+        "empty": "Aucun niveau n'est disponible pour cette catégorie.",
+        "questions": "{count} questions",
+        "time": "{minutes} min"
+      },
+      "questions": {
+        "title": "Question {index} sur {total}",
+        "progress": "{answered}/{total} répondues",
+        "timer": "Temps écoulé",
+        "empty": "Choisissez un niveau pour lancer le quiz.",
+        "warning": "Répondez à toutes les questions avant de valider.",
+        "checking": "Vérification des réponses…",
+        "actions": {
+          "previous": "Précédente",
+          "next": "Suivante",
+          "submit": "Valider les réponses"
+        }
+      },
+      "results": {
+        "title": "Résultats",
+        "score": "Score",
+        "summary": "{correct}/{total} bonnes réponses",
+        "time": "Temps passé",
+        "breakdown": {
+          "correct": "Réussi",
+          "incorrect": "Échoué",
+          "yourAnswer": "Votre réponse",
+          "correctAnswer": "Bonne réponse",
+          "noAnswer": "Aucune réponse"
+        }
+      },
+      "auth": {
+        "title": "Connectez-vous pour sauvegarder votre progression",
+        "subtitle": "Connectez-vous ou créez un compte pour apparaître dans le classement."
+      },
+      "errors": {
+        "categories": "Impossible de charger les catégories du quiz.",
+        "levels": "Impossible de charger les niveaux pour cette catégorie.",
+        "questions": "Impossible de charger les questions du quiz.",
+        "validation": "Impossible de valider vos réponses. Veuillez réessayer."
+      }
+    },
+    "calendar": {
+      "title": "Calendrier",
+      "cardTitle": "Vue d'ensemble du calendrier",
+      "menuTitle": "Événements du jour",
+      "menuEmpty": "Aucun événement aujourd'hui",
+      "authNotice": "Connectez-vous pour voir et gérer vos événements.",
+      "rangeAllDay": "Toute la journée",
+      "fallbackTitle": "Événement sans titre",
+      "actions": {
+        "newEvent": "Nouvel événement"
+      },
+      "dialog": {
+        "createTitle": "Nouvel événement",
+        "editTitle": "Modifier l'événement",
+        "titleLabel": "Titre de l'événement",
+        "startLabel": "Date de début",
+        "endLabel": "Date de fin",
+        "startTimeLabel": "Heure de début",
+        "endTimeLabel": "Heure de fin",
+        "allDayLabel": "Événement sur la journée",
+        "privateLabel": "Événement privé",
+        "locationLabel": "Lieu",
+        "descriptionLabel": "Description",
+        "save": "Enregistrer",
+        "cancel": "Fermer",
+        "delete": "Supprimer",
+        "confirmDelete": "Supprimer l'événement",
+        "confirmDeleteMessage": "Cette action est irréversible. Confirmez-vous la suppression de cet événement ?"
+      },
+      "validation": {
+        "title": "Merci d'indiquer un titre.",
+        "startDate": "Sélectionnez une date de début.",
+        "startTime": "Sélectionnez une heure de début.",
+        "endTime": "L'heure de fin doit être postérieure à l'heure de début.",
+        "range": "La fin de l'événement doit être postérieure au début."
+      },
+      "errors": {
+        "save": "Impossible d'enregistrer vos modifications. Veuillez réessayer.",
+        "delete": "Impossible de supprimer cet événement. Veuillez réessayer.",
+        "load": "Impossible de charger vos événements. Veuillez réessayer."
+      }
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",
+      "featuresTitle": "Modern retail, one toolkit",
+      "features": {
+        "catalog": {
+          "title": "Unify your catalogue",
+          "description": "Manage product variants, rich storytelling, and merchandising in one workspace.",
+          "points": [
+            "Support digital, physical, and subscription products side by side.",
+            "Optimise imagery, copy, and translations with collaborative reviews.",
+            "Launch curated collections with scheduling and inventory safeguards."
+          ]
+        },
+        "checkout": {
+          "title": "Delight at checkout",
+          "description": "Reduce friction with fast, accessible, and trusted purchase flows.",
+          "points": [
+            "Offer local payments, wallets, and instalments without custom code.",
+            "Embed fraud checks, taxes, and duties that scale globally.",
+            "Give support teams live context to resolve orders instantly."
+          ]
+        },
+        "marketing": {
+          "title": "Personalise every campaign",
+          "description": "Coordinate lifecycle messaging, loyalty, and analytics together.",
+          "points": [
+            "Segment audiences with zero-party and behavioural data respectfully.",
+            "Trigger automations tied to launches, restocks, and VIP moments.",
+            "Attribute revenue accurately with multi-touch insights."
+          ]
+        }
+      },
+      "workflowTitle": "From concept to scale",
+      "workflow": {
+        "steps": {
+          "launch": {
+            "title": "Launch",
+            "description": "Prototype storefronts, test merchandising, and go live confidently."
+          },
+          "optimize": {
+            "title": "Optimise",
+            "description": "Iterate on conversion, retention, and operations with actionable insights."
+          },
+          "scale": {
+            "title": "Scale",
+            "description": "Expand to new regions, channels, and partnerships with built-in governance."
+          }
+        }
+      },
+      "stepLabel": "Phase {number}",
+      "cta": {
+        "title": "Transform your retail roadmap",
+        "description": "Explore how BroWorld adapts to your commerce stack, fulfilment partners, and customer promises.",
+        "button": "Connect with sales",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "education": {
+      "title": "Éducation",
+      "subtitle": "Offrez aux enseignants, aux apprenants et aux administrateurs des expériences collaboratives pilotées par les données.",
+      "featuresTitle": "Créez des parcours d'apprentissage mémorables",
+      "features": {
+        "curriculum": {
+          "title": "Concevez un programme inclusif",
+          "description": "Rédigez facilement des cours, des parcours de microlearning et des programmes de certification.",
+          "points": [
+            "Réutilisez des modèles qui équilibrent apprentissage synchronisé et asynchrone.",
+            "Intégrez par défaut multimédia, évaluations et normes d'accessibilité.",
+            "Localisez les contenus pour des cohortes réparties sur plusieurs campus ou régions."
+          ]
+        },
+        "collaboration": {
+          "title": "Encouragez la collaboration",
+          "description": "Reliez enseignants, mentors et pairs dans un campus numérique sécurisé.",
+          "points": [
+            "Coordonnez facilement mentorat, permanences et forums de cohorte.",
+            "Proposez des boucles de rétroaction en temps réel sur devoirs et projets.",
+            "Célébrez les progrès avec des badges, des mises en lumière et des parcours alumni."
+          ]
+        },
+        "analytics": {
+          "title": "Agissez grâce aux analyses",
+          "description": "Mettez en avant des insights qui soutiennent rétention, bien-être et objectifs d'accréditation.",
+          "points": [
+            "Surveillez les signaux d'engagement pour intervenir avant le décrochage.",
+            "Partagez des tableaux de bord programmes avec les directions et instances d'accréditation.",
+            "Protégez la vie privée grâce à des contrôles et une gouvernance transparents."
+          ]
+        }
+      },
+      "workflowTitle": "Accompagnez chaque cohorte",
+      "workflow": {
+        "steps": {
+          "design": {
+            "title": "Concevoir",
+            "description": "Cartographiez ensemble objectifs d'apprentissage, contenus et moments d'évaluation."
+          },
+          "deliver": {
+            "title": "Diffuser",
+            "description": "Animez des séances en direct ou à la demande, suivez la présence et ajustez en temps réel."
+          },
+          "reflect": {
+            "title": "Analyser",
+            "description": "Évaluez l'impact, recueillez les retours et améliorez la session suivante."
+          }
+        }
+      },
+      "stepLabel": "Jalon {number}",
+      "cta": {
+        "title": "Faites progresser votre écosystème d'apprentissage",
+        "description": "Associez-vous à nous pour moderniser programmes, services étudiants et expériences alumni.",
+        "button": "Planifier une consultation",
+        "buttonAria": "Ouvrir la page de contact"
+      },
+      "catalog": {
+        "badge": "Apprentissage",
+        "title": "Explorer les parcours d'apprentissage",
+        "subtitle": "Parcourez des catégories thématiques, suivez des leçons interactives et débloquez un certificat fictif en réussissant le quiz final."
+      },
+      "sidebar": {
+        "overviewTitle": "Préservez votre élan d'apprentissage",
+        "overviewDescription": "Suivez vos progrès, revisitez vos catégories favorites et restez motivé en explorant de nouvelles compétences.",
+        "stats": {
+          "categories": {
+            "label": "Catégories",
+            "value": "{count} catégories"
+          },
+          "courses": {
+            "label": "Cours",
+            "value": "{count} cours"
+          },
+          "certificates": {
+            "label": "Certificats obtenus",
+            "value": "{count} certificats"
+          }
+        },
+        "featuredTitle": "Catégories à la une",
+        "featuredDescription": "Replongez dans ces espaces sélectionnés pour continuer à apprendre.",
+        "featuredEmpty": "De nouvelles catégories arrivent bientôt."
+      },
+      "category": {
+        "courses": "{count} cours",
+        "viewCourses": "Voir les cours",
+        "viewCoursesAria": "Voir les cours pour {title}"
+      },
+      "course": {
+        "progress": "{value}% terminé",
+        "openAria": "Ouvrir le cours {title}",
+        "continue": "Continuer",
+        "startAria": "Démarrer ou continuer le cours {title}",
+        "durationMinutes": "{value} min",
+        "durationHours": "{value} h",
+        "durationMixed": "{hours} h {minutes} min",
+        "completedLessons": "{count}/{total} leçons terminées",
+        "lessonList": "Leçons du cours",
+        "lessonDuration": "{value} min",
+        "lessonProgressLabel": "Progression de la leçon",
+        "quizTitle": "Quiz final",
+        "quizDescription": "Répondez à dix questions pour valider vos connaissances et obtenir le certificat du cours.",
+        "startQuiz": "Passer le quiz",
+        "viewCertificate": "Voir le certificat",
+        "ctaStart": "Commencer le cours",
+        "ctaContinue": "Continuer le cours",
+        "ctaQuiz": "Aller au quiz"
+      },
+      "lesson": {
+        "position": "Leçon {index} sur {total}",
+        "duration": "{value} min",
+        "progressLabel": "Progression de la leçon",
+        "completed": "Leçon terminée",
+        "markDone": "Marquer la leçon comme terminée",
+        "exercises": "Exercices pratiques",
+        "previous": "Leçon précédente",
+        "next": "Leçon suivante",
+        "goToQuiz": "Aller au quiz final"
+      },
+      "exercise": {
+        "submit": "Vérifier la réponse",
+        "correct": "Bravo !",
+        "incorrect": "Réessayez lors de votre prochaine tentative.",
+        "true": "Vrai",
+        "false": "Faux"
+      },
+      "quiz": {
+        "title": "Quiz final — {course}",
+        "subtitle": "Répondez à toutes les questions. Obtenez au moins 70 % pour débloquer votre certificat.",
+        "progress": "Question {index} sur {total}",
+        "previous": "Précédent",
+        "next": "Suivant",
+        "submit": "Envoyer les réponses",
+        "passed": "Bien joué ! Vous avez obtenu {score} sur {total}.",
+        "failed": "Continuez — vous avez obtenu {score} sur {total}.",
+        "threshold": "Score de réussite : {value} %",
+        "certificateReady": "Réussi ! Générez votre certificat.",
+        "certificateDescription": "Ajoutez votre nom et téléchargez un PDF partageable délivré par cet environnement de démonstration.",
+        "nameLabel": "Votre nom",
+        "namePlaceholder": "Alex Johnson",
+        "generateCertificate": "Générer le certificat",
+        "certificateReadyButton": "Certificat généré",
+        "viewCertificate": "Ouvrir le certificat",
+        "retryTitle": "Besoin d'un autre essai ?",
+        "retryDescription": "Revoyez les leçons et retentez le quiz quand vous serez prêt.",
+        "retryButton": "Repasser le quiz",
+        "breadcrumb": "Quiz final"
+      },
+      "certificate": {
+        "breadcrumb": "Certificat",
+        "title": "Certificat d'achèvement",
+        "subtitle": "Ce document atteste de la réussite d'un cours de démonstration.",
+        "presentedTo": "Décerné à",
+        "completed": "Pour avoir terminé le cours {course}.",
+        "score": "Score final : {value} %",
+        "date": "Émis le {value}",
+        "signature": "Autorisé par",
+        "signatureName": "Nuxt Academy",
+        "organization": "BroWorld Éducation",
+        "organizationTagline": "Innover dans les expériences d'apprentissage",
+        "download": "Télécharger le PDF"
+      },
+      "breadcrumb": {
+        "home": "Éducation"
+      },
+      "levels": {
+        "beginner": "Débutant",
+        "intermediate": "Intermédiaire",
+        "advanced": "Avancé"
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "subtitle": "Prototype adaptive quizzes that energise your community with instant feedback and storytelling.",
+      "overview": {
+        "title": "Quiz performance snapshot",
+        "description": "Monitor participation, completion, and satisfaction to keep every cohort motivated.",
+        "trendLabel": "{change} compared to last week",
+        "cards": {
+          "participants": {
+            "title": "Active participants",
+            "value": "1,240 members",
+            "trend": "+18%",
+            "caption": "Joined at least one quiz session this week."
+          },
+          "completion": {
+            "title": "Average completion",
+            "value": "87%",
+            "trend": "+6%",
+            "caption": "Finished all rounds with a passing score."
+          },
+          "satisfaction": {
+            "title": "Session rating",
+            "value": "4.6 / 5",
+            "trend": "+0.4",
+            "caption": "Based on post-quiz feedback surveys."
+          }
+        }
+      },
+      "featuresTitle": "Design quizzes with momentum",
+      "features": {
+        "authoring": {
+          "title": "Author in minutes",
+          "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
+          "points": {
+            "0": "Role-based templates",
+            "1": "Inline feedback generator",
+            "2": "CSV & Markdown import"
+          }
+        },
+        "engagement": {
+          "title": "Fuel real-time engagement",
+          "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
+          "points": {
+            "0": "Customisable badges",
+            "1": "Automated multi-channel nudges",
+            "2": "Synchronous live sessions"
+          }
+        },
+        "analytics": {
+          "title": "Measure what matters",
+          "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
+          "points": {
+            "0": "Ready-to-use dashboards",
+            "1": "CSV/BigQuery export",
+            "2": "Progress deviation alerts"
+          }
+        }
+      },
+      "process": {
+        "title": "Ship the perfect challenge",
+        "stepLabel": "Step {number}",
+        "steps": {
+          "plan": {
+            "title": "Plan your storyline",
+            "description": "Align on themes, desired outcomes, and player journeys before drafting questions."
+          },
+          "launch": {
+            "title": "Launch the experience",
+            "description": "Stream the quiz with live moderation, automated scoring, and instant feedback loops."
+          },
+          "iterate": {
+            "title": "Iterate with insights",
+            "description": "Analyse results, remix question banks, and refresh the experience for the next cohort."
+          }
+        }
+      },
+      "questionBanks": {
+        "title": "Curated question banks",
+        "description": "Mix ready-to-run categories with your own questions to keep every round feeling fresh.",
+        "countLabel": "Questions available",
+        "focusLabel": "Primary focus",
+        "banks": {
+          "general": {
+            "title": "General knowledge vault",
+            "description": "A rotating mix of culture, science, and newsworthy trivia for broad audiences.",
+            "count": "180 curated questions",
+            "focus": "Culture, science, trending topics",
+            "difficulty": "Mixed"
+          },
+          "product": {
+            "title": "Product mastery set",
+            "description": "Train advocates and sales teams on features, roadmaps, and objection handling.",
+            "count": "120 scenario prompts",
+            "focus": "Launch strategy, value props, storytelling",
+            "difficulty": "Intermediate"
+          },
+          "community": {
+            "title": "Community culture pack",
+            "description": "Celebrate inside jokes, rituals, and lore from your most dedicated members.",
+            "count": "95 custom questions",
+            "focus": "Member spotlights, events, shared history",
+            "difficulty": "Casual"
+          }
+        }
+      },
+      "leaderboard": {
+        "title": "Community leaderboard",
+        "description": "Celebrate champions and spark friendly rivalries with transparent scoring.",
+        "updateLabel": "Auto-updated every hour",
+        "columns": {
+          "rank": "Rank",
+          "player": "Participant",
+          "score": "Score",
+          "completed": "Quizzes completed"
+        },
+        "rows": {
+          "0": {
+            "rank": "1",
+            "player": "Maya Chen",
+            "score": "982 pts",
+            "completed": "12 / 12"
+          },
+          "1": {
+            "rank": "2",
+            "player": "Luis Fernández",
+            "score": "941 pts",
+            "completed": "11 / 12"
+          },
+          "2": {
+            "rank": "3",
+            "player": "Sana Kapoor",
+            "score": "905 pts",
+            "completed": "10 / 12"
+          },
+          "3": {
+            "rank": "4",
+            "player": "Jonas Richter",
+            "score": "876 pts",
+            "completed": "10 / 12"
+          }
+        }
+      },
+      "cta": {
+        "title": "Launch your next quiz series",
+        "description": "Partner with us to craft immersive assessments for teams, classrooms, and fandoms.",
+        "button": "Talk with our team",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "performance": {
+      "badge": "Performance report",
+      "title": "Experience quality snapshot",
+      "subtitle": "A focused look at how the home feed performs on real devices.",
+      "updated": "Audit captured 08 April 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "Overall score"
+      },
+      "metrics": {
+        "title": "Core experience metrics",
+        "subtitle": "Based on mobile Lighthouse runs (emulated Moto G Power).",
+        "status": {
+          "good": "On track",
+          "average": "Watch list",
+          "poor": "Needs attention"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "The first meaningful pixels paint in under a second.",
+            "trend": "Consistent for the last 7 deployments.",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "Hero media loads after the skeleton but still within Core Web Vitals.",
+            "trend": "Optimise by preloading the featured image sprite.",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "Long tasks during hydration keep the thread busy.",
+            "trend": "Caused by eager loading of optional widgets.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "Visual completeness is acceptable but can be improved.",
+            "trend": "Greatly benefits from prioritised CSS delivery.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "Cards and story rail shift as late content arrives.",
+            "trend": "Anchor media with fixed aspect ratios to stabilise the feed.",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "High-impact opportunities",
+        "subtitle": "Prioritised fixes that address the red metrics first.",
+        "items": {
+          "layout": {
+            "title": "Stabilise media and widget slots",
+            "description": "Reserve space for hero banners, carousels, and dynamic ads.",
+            "impact": "High impact",
+            "action": "Adopt intrinsic aspect ratios and skeleton heights for feed items."
+          },
+          "script": {
+            "title": "Defer non-critical scripts",
+            "description": "Split analytics, reactions, and messaging panels out of the main chunk.",
+            "impact": "High impact",
+            "action": "Hydrate optional widgets on interaction using `defineAsyncComponent`."
+          },
+          "assets": {
+            "title": "Optimise hero imagery",
+            "description": "Compress the hero collage and serve AVIF sources by default.",
+            "impact": "Medium impact",
+            "action": "Preload the first feed image and stream others via lazy loading."
+          },
+          "monitoring": {
+            "title": "Expand Core Web Vitals coverage",
+            "description": "Break metrics down per route and device bucket.",
+            "impact": "Foundational",
+            "action": "Ship `web-vitals` beacons to the analytics lake for regression tracking."
+          }
+        }
+      },
+      "timeline": {
+        "title": "Improvement timeline",
+        "subtitle": "A realistic rollout to ship and verify the fixes.",
+        "items": {
+          "week1": {
+            "date": "Week 1",
+            "title": "Eliminate layout shift",
+            "description": "Audit all feed cards and stories for deterministic sizing.",
+            "actions": [
+              "Add aspect ratios to story thumbnails and post illustrations.",
+              "Lock advertisement containers behind placeholder skeletons."
+            ]
+          },
+          "week2": {
+            "date": "Week 2",
+            "title": "Break up long tasks",
+            "description": "Move optional logic into idle callbacks and async boundaries.",
+            "actions": [
+              "Code-split the messenger drawer and reaction tray.",
+              "Adopt `requestIdleCallback` before booting analytics SDKs."
+            ]
+          },
+          "week3": {
+            "date": "Week 3",
+            "title": "Verify gains with RUM",
+            "description": "Roll out Core Web Vitals reporting to production cohorts.",
+            "actions": [
+              "Send vitals to the monitoring lake with build metadata.",
+              "Alert on LCP/TBT regressions above 10% week-over-week."
+            ]
+          }
+        }
       }
     },
     "crm": {
@@ -1391,8 +2371,7 @@
         "connect": "Nous noterons que vous souhaitez vous connecter.",
         "connectWith": "Nous informerons {name} que vous souhaitez vous connecter."
       },
-      "empty": "Aucun profil ne correspond encore à ce filtre.",
-      "description": "Parcourez vos collaborateurs, les contacts suggérés et l’activité en temps réel."
+      "empty": "Aucun profil ne correspond encore à ce filtre."
     },
     "profilePhotos": {
       "title": "Bibliothèque de photos",
@@ -1434,8 +2413,7 @@
         "shareCollection": "Les options de partage sont prêtes.",
         "generic": "Action lancée."
       },
-      "empty": "Aucune photo ne correspond à ce filtre pour le moment.",
-      "description": "Organisez les moments forts des lancements, des sessions en studio et des voyages de recherche."
+      "empty": "Aucune photo ne correspond à ce filtre pour le moment."
     },
     "profileEdit": {
       "title": "Modifier le profil",
@@ -1487,8 +2465,7 @@
       "validation": {
         "required": "Ce champ est obligatoire.",
         "bioLimit": "Votre biographie doit contenir 280 caractères ou moins."
-      },
-      "description": "Mettez à jour vos coordonnées, compétences et liens sociaux."
+      }
     },
     "profileSecurity": {
       "title": "Mot de passe et sécurité",
@@ -1536,104 +2513,6 @@
         "title": "Conservez ces codes de secours à usage unique"
       }
     },
-    "profileNotifications": {
-      "title": "Préférences de notification",
-      "subtitle": "Choisissez comment et quand nous vous contactons au sujet des nouveautés.",
-      "actions": {
-        "save": "Enregistrer les préférences",
-        "reset": "Réinitialiser"
-      },
-      "channelLabels": {
-        "email": "E-mail",
-        "push": "Notifications push",
-        "sms": "SMS",
-        "inApp": "Alertes dans l'application"
-      },
-      "sections": {
-        "channels": {
-          "title": "Canaux de diffusion",
-          "description": "Sélectionnez les canaux que nous utiliserons lorsqu'un événement important se produit."
-        },
-        "email": {
-          "title": "Mises à jour par e-mail",
-          "description": "Restez informé même loin de BroWorld.",
-          "items": {
-            "comments": "Commentaires sur mes publications",
-            "mentions": "Mentions de mon identifiant",
-            "follows": "Nouveaux abonnés",
-            "messages": "Messages directs",
-            "newsletters": "Newsletters produit et conseils"
-          }
-        },
-        "inApp": {
-          "title": "Notifications dans l'application",
-          "description": "Contrôlez les alertes que vous voyez pendant votre travail dans BroWorld.",
-          "items": {
-            "productUpdates": "Lancements produit et feuille de route",
-            "eventReminders": "Rappels d'événements et invitations calendrier",
-            "securityAlerts": "Alertes de sécurité et notifications de connexion",
-            "communityHighlights": "Temps forts de la communauté et tendances"
-          },
-          "playSounds": "Lire un son discret pour les alertes prioritaires",
-          "smartSummaries": "Afficher des résumés intelligents dans le centre de notifications"
-        },
-        "digest": {
-          "title": "Résumé périodique",
-          "description": "Nous regroupons les activités plus calmes dans un e-mail facile à parcourir.",
-          "enableLabel": "M'envoyer un résumé",
-          "frequencyLabel": "Fréquence du résumé",
-          "timeLabel": "Heure de livraison préférée",
-          "options": {
-            "daily": "Quotidien",
-            "weekly": "Hebdomadaire",
-            "monthly": "Mensuel"
-          },
-          "helper": "Résumé {frequency} prévu à {time}.",
-          "helperDisabled": "Les résumés sont désactivés. Activez-les pour recevoir un e-mail récapitulatif."
-        },
-        "quietHours": {
-          "title": "Plages silencieuses",
-          "description": "Coupez les alertes non critiques pendant vos moments de concentration ou la nuit.",
-          "enableLabel": "Activer les plages silencieuses",
-          "start": "Heure de début",
-          "end": "Heure de fin"
-        },
-        "security": {
-          "title": "Alertes critiques",
-          "description": "Nous vous avertirons toujours des changements de mot de passe, exports ou risques de sécurité.",
-          "label": "M'alerter par e-mail des notifications de sécurité critiques"
-        }
-      },
-      "helpers": {
-        "emailDisabled": "Ajoutez un e-mail à votre profil pour activer les notifications par e-mail.",
-        "securityAlwaysOn": "Les alertes de sécurité critiques sont toujours activées pour votre compte."
-      },
-      "snackbar": {
-        "saved": "Préférences de notification mises à jour.",
-        "reset": "Préférences restaurées à la dernière version enregistrée."
-      },
-      "sidebar": {
-        "digestTitle": "Planification du résumé",
-        "digestDay": "lundi",
-        "digestLine": "Votre prochain résumé sera envoyé {day} à {time}.",
-        "digestInfo": "Ajustez la fréquence ou l'heure dès que vous avez besoin d'un récapitulatif rapide.",
-        "tipsTitle": "Conseils rapides",
-        "tips": {
-          "mobile": {
-            "title": "Activez l'app mobile",
-            "subtitle": "Installez BroWorld sur iOS ou Android pour recevoir des notifications push et des widgets."
-          },
-          "channels": {
-            "title": "Équilibrez vos canaux",
-            "subtitle": "Gardez l'e-mail pour les résumés hebdomadaires et utilisez les alertes in-app au quotidien."
-          },
-          "updates": {
-            "title": "Mettez en avant l'essentiel",
-            "subtitle": "Épinglez les projets clés afin que les résumés mettent en avant les activités prioritaires."
-          }
-        }
-      }
-    },
     "contact": {
       "title": "Contact",
       "subtitle": "Nous répondons généralement sous 1–2 jours ouvrés.",
@@ -1671,869 +2550,6 @@
       "availability": {
         "title": "Disponibilité",
         "body": "Notre équipe distribuée surveille les demandes du lundi au vendredi et assure une rotation le week-end pour les urgences."
-      }
-    },
-    "createWorld": {
-      "title": "Créer un nouveau monde",
-      "subtitle": "Assemblez les fondations, la gouvernance et les expériences en direct dont votre communauté a besoin — dans un espace guidé.",
-      "form": {
-        "title": "Plan directeur du monde",
-        "subtitle": "Définissez l'identité, le plan de lancement et les contrôles d'accès avant d'inviter vos premiers résidents.",
-        "actions": {
-          "preview": "Prévisualiser",
-          "previewAria": "Prévisualiser la configuration du monde",
-          "publish": "Publier le monde",
-          "publishAria": "Publier la configuration du monde"
-        },
-        "basicInfo": {
-          "title": "Détails essentiels",
-          "subtitle": "Donnez à votre monde une identité claire pour que les membres sachent instantanément où ils arrivent."
-        },
-        "fields": {
-          "name": "Nom du monde",
-          "namePlaceholder": "Ex. Aurora Station",
-          "slug": "URL publique",
-          "slugPlaceholder": "aurora-station",
-          "description": "Description",
-          "descriptionPlaceholder": "Décrivez l’histoire, l’objectif et les expériences auxquelles les joueurs peuvent s’attendre.",
-          "visibility": "Visibilité",
-          "visibilityOptions": {
-            "public": "Public",
-            "private": "Privé"
-          },
-          "visibilityHint": "Choisissez si votre monde apparaît dans l’explorateur public ou seulement sur invitation.",
-          "theme": "Préréglage de thème",
-          "region": "Région principale",
-          "regionHint": "Nous aide à acheminer une infrastructure optimisée pour la latence de vos joueurs.",
-          "launchDate": "Date de lancement",
-          "launchDateHint": "Partagez votre date de mise en ligne pour coordonner les tests et les annonces.",
-          "tags": "Étiquettes",
-          "tagsPlaceholder": "Ajoutez des mots-clés descriptifs",
-          "tagsHint": "Utilisez jusqu’à cinq étiquettes pour aider les membres à trouver les bonnes activités.",
-          "guidelines": "Règles communautaires",
-          "guidelinesPlaceholder": "Décrivez le ton, les attentes et les procédures d’escalade pour toutes les personnes qui rejoignent."
-        },
-        "themeOptions": {
-          "aurora": "Aurore",
-          "midnight": "Minuit",
-          "sunrise": "Aube",
-          "custom": "Thème personnalisé"
-        },
-        "regionOptions": {
-          "global": "Global",
-          "americas": "Amériques",
-          "emea": "EMEA",
-          "apac": "APAC"
-        },
-        "tagSuggestions": {
-          "coOp": "Missions en coopération",
-          "roleplay": "Jeu de rôle",
-          "competitive": "Ligue compétitive",
-          "casual": "Rencontre détendue",
-          "modded": "Aventures modées"
-        },
-        "advanced": {
-          "title": "Contrôles avancés",
-          "subtitle": "Affinez la monétisation, les intégrations et les politiques d’accès.",
-          "monetization": "Activer les systèmes de monétisation",
-          "integrations": "Activer les intégrations partenaires",
-          "verification": "Exiger la vérification du compte",
-          "guests": "Autoriser les visiteurs invités",
-          "guestsHint": "Les invités peuvent parcourir sans créer de compte mais ne peuvent pas interagir."
-        }
-      },
-      "plugins": {
-        "title": "Composez votre pile de plugins",
-        "subtitle": "Combinez plugins sociaux, économiques et de sécurité pour façonner l’expérience que mérite votre communauté.",
-        "categories": {
-          "community": {
-            "title": "Présence communautaire",
-            "description": "Accueillez les membres, diffusez des annonces et animez des espaces sociaux.",
-            "plugins": {
-              "lobby": {
-                "name": "Hall interactif",
-                "tag": "Essentiel",
-                "description": "Guidez les nouveaux venus avec des zones personnalisées, des publications mises en avant et un onboarding intelligent.",
-                "points": [
-                  "Créez des salles d’accueil modulaires avec des widgets à glisser-déposer.",
-                  "Mettez en avant les événements tendance, les modérateurs et les créateurs à la une.",
-                  "Planifiez des messages d’accueil dynamiques qui s’adaptent aux fuseaux horaires."
-                ]
-              },
-              "events": {
-                "name": "Orchestration d’événements",
-                "tag": "En direct",
-                "description": "Planifiez tournois, avant-premières et quêtes collaboratives avec des rappels automatisés.",
-                "points": [
-                  "Coordonnez des tableaux multi-étapes et des RSVP dans un seul tableau de bord.",
-                  "Synchronisez automatiquement calendriers, billetterie et habillages de diffusion.",
-                  "Publiez des bilans post-événement avec statistiques, extraits et récompenses."
-                ]
-              },
-              "streams": {
-                "name": "Streams de créateurs",
-                "tag": "Engagement",
-                "description": "Intégrez des streams en direct, des watch parties et des coulisses sans quitter votre monde.",
-                "points": [
-                  "Prise en charge multi-plateforme avec qualité adaptative.",
-                  "Déverrouillez des salons de co-streaming pour les commentateurs de la communauté.",
-                  "Capturez les moments forts et publiez instantanément des résumés vidéo."
-                ]
-              }
-            }
-          },
-          "economy": {
-            "title": "Économie & progression",
-            "description": "Concevez des boucles de progression, des systèmes d’échange et des parcours de récompenses adaptés à votre monde.",
-            "plugins": {
-              "market": {
-                "name": "Hub de marché",
-                "tag": "Commerce",
-                "description": "Lancez un commerce sécurisé pour les cosmétiques, matériaux d’artisanat et offres limitées.",
-                "points": [
-                  "Référencez des objets avec rareté, saisonnalité et options de lots.",
-                  "Protégez les transactions avec escrow, fiscalité et outils anti-fraude.",
-                  "Publiez des campagnes commerciales avec des règles de tarification dynamiques."
-                ]
-              },
-              "crafting": {
-                "name": "Simulateur d’artisanat",
-                "tag": "Systèmes",
-                "description": "Définissez recettes, ressources et stations d’artisanat avec équilibrage en direct.",
-                "points": [
-                  "Définissez visuellement arbres d’ingrédients et prérequis de compétences.",
-                  "Simulez rendement, temps de recharge et échecs avant publication.",
-                  "Reliez les créations aux quêtes, vendeurs ou annonces du marché."
-                ]
-              },
-              "rewards": {
-                "name": "Moteur de récompenses",
-                "tag": "Fidélité",
-                "description": "Récompensez vos cohortes avec des quêtes, succès et passes de saison.",
-                "points": [
-                  "Segmentez les jalons par type de joueur, région ou plateforme.",
-                  "Automatisez la distribution des récompenses avec des contrôles anti-fraude.",
-                  "Suivez en temps réel les analyses de rédemption et le risque d’attrition."
-                ]
-              }
-            }
-          },
-          "governance": {
-            "title": "Gouvernance & sécurité",
-            "description": "Donnez aux équipes de confiance des workflows de modération, de sécurité et d’analyse.",
-            "plugins": {
-              "moderation": {
-                "name": "Console de modération",
-                "tag": "Confiance",
-                "description": "Résolvez signalements, escalades et appels avec des outils collaboratifs.",
-                "points": [
-                  "Acheminez automatiquement les cas selon la gravité et la langue.",
-                  "Affichez les chronologies de preuves avec chat, extraits et journaux d’audit.",
-                  "Assignez playbooks, sanctions et périodes de refroidissement dans leur contexte."
-                ]
-              },
-              "safety": {
-                "name": "Automatisation de sécurité",
-                "tag": "IA",
-                "description": "Détectez la toxicité, le spam et les comportements suspects avant qu’ils ne se propagent.",
-                "points": [
-                  "Déployez des classificateurs ML adaptés aux normes de votre communauté.",
-                  "Configurez des limites adaptatives et des filtres de contenu.",
-                  "Alertez tuteurs et responsables avec des notifications basées sur les rôles."
-                ]
-              },
-              "analytics": {
-                "name": "Analyses de gouvernance",
-                "tag": "Analyses",
-                "description": "Mesurez la santé, la rétention et l’impact des politiques sur chaque surface de votre monde.",
-                "points": [
-                  "Surveillez les indicateurs de sécurité avec des tableaux de bord en temps réel.",
-                  "Corrélez les actions de modération aux résultats d’engagement.",
-                  "Exportez des rapports conformes prêts pour les parties prenantes."
-                ]
-              }
-            }
-          }
-        }
-      },
-      "sidebar": {
-        "plugins": {
-          "selectedTitle": "Plugins sélectionnés",
-          "emptyTitle": "Aucun plugin sélectionné pour le moment",
-          "selectedDescription": "Les plugins suivants seront inclus dans votre demande de provisionnement :",
-          "emptyDescription": "Choisissez des plugins pour prévisualiser les fonctionnalités qui seront provisionnées.",
-          "emptyHint": "Activez les plugins dans la liste pour composer votre stack."
-        }
-      },
-      "workflow": {
-        "title": "Lancez en toute confiance",
-        "subtitle": "Suivez un rythme éprouvé, de la vision à l’expansion.",
-        "stepLabel": "Étape {number}",
-        "steps": {
-          "vision": {
-            "title": "Façonnez votre vision",
-            "description": "Alignez piliers, ton et indicateurs de succès avec les parties prenantes et les créateurs."
-          },
-          "launch": {
-            "title": "Lancez avec élan",
-            "description": "Coordonnez temps forts marketing, vagues d’accès anticipé et check-lists de mise en ligne."
-          },
-          "expand": {
-            "title": "Développez-vous durablement",
-            "description": "Itérez sur les retours, étendez-vous à de nouvelles régions et développez vos programmes d’ambassadeurs."
-          }
-        }
-      },
-      "cta": {
-        "title": "Besoin d’aide pour activer votre monde ?",
-        "description": "Notre équipe peut vous aider à concevoir la gouvernance, les plans de migration et les opérations live adaptés à votre audience.",
-        "button": "Discuter avec notre équipe",
-        "buttonAria": "Ouvrir la page de contact"
-      },
-      "description": "Préparez un nouvel univers BroWorld avec des modèles pour la communauté, l’économie et la gouvernance."
-    },
-    "job": {
-      "title": "Emplois",
-      "subtitle": "Centralisez chaque étape de votre entonnoir de recrutement pour passer du sourcing à la signature en toute clarté.",
-      "featuresTitle": "Construisez un pipeline de recrutement fiable",
-      "features": {
-        "matching": {
-          "title": "Identifiez plus rapidement les bons talents",
-          "description": "Agrégrez vos activités de sourcing et priorisez automatiquement les candidats.",
-          "points": [
-            "Synchronisez job boards, cooptations et mobilité interne dans une vue unique.",
-            "Évaluez les candidatures selon des critères configurables avec des garde-fous contre les biais.",
-            "Mettez en lumière les viviers à activer ou réactiver."
-          ]
-        },
-        "automation": {
-          "title": "Automatisez la coordination des équipes",
-          "description": "Offrez aux recruteurs, intervieweurs et managers un centre de commandement partagé.",
-          "points": [
-            "Déclenchez kits d'entretien et rappels dans le bon fuseau horaire.",
-            "Partagez des modèles de feedback structurés pour faire ressortir les signaux utiles.",
-            "Alertez les parties prenantes dès qu'un candidat progresse ou stagne."
-          ]
-        },
-        "insights": {
-          "title": "Mesurez l'impact de vos recrutements",
-          "description": "Comprenez conversion, vitesse et qualité sans exporter de feuilles de calcul.",
-          "points": [
-            "Suivez le délai de recrutement, les ratios de diversité et le taux d'acceptation des offres en temps réel.",
-            "Visualisez instantanément les goulets d'étranglement par région ou famille de postes.",
-            "Partagez des tableaux de bord en temps réel avec la direction et vos partenaires en toute sécurité."
-          ]
-        }
-      },
-      "workflowTitle": "Votre cadence de recrutement, visualisée",
-      "workflow": {
-        "steps": {
-          "publish": {
-            "title": "Publiez en toute confiance",
-            "description": "Déployez des pages métiers à votre image et des annonces diffusées via des modèles réutilisables."
-          },
-          "review": {
-            "title": "Analysez ensemble",
-            "description": "Collaborez sur les retours, calibrez vos grilles d'évaluation et responsabilisez chaque intervenant."
-          },
-          "hire": {
-            "title": "Recrutez et intégrez",
-            "description": "Obtenez les validations, générez les offres et transmettez le contexte à l'onboarding sans friction."
-          }
-        }
-      },
-      "stepLabel": "Étape {number}",
-      "cta": {
-        "title": "Concevez une expérience de recrutement que les candidats adorent",
-        "description": "Laissez notre équipe adapter BroWorld à votre stack recrutement, vos processus et vos exigences de conformité.",
-        "button": "Contactez-nous",
-        "buttonAria": "Ouvrir la page de contact"
-      },
-      "openings": {
-        "title": "Postes ouverts",
-        "subtitle": "Découvrez les rôles pour lesquels nous recrutons activement et projetez-vous dans les missions dès le premier jour.",
-        "updated": "Mise à jour chaque semaine",
-        "updatedLabel": "Fréquence de rafraîchissement des offres",
-        "items": {
-          "productDesigner": {
-            "title": "Senior Product Designer",
-            "department": "Design Produit",
-            "location": "Paris, France (Hybrid)",
-            "type": "CDI",
-            "salary": "58k€ - 72k€ · 0,05 % BSPCE",
-            "description": "Imaginez des expériences multi-plateformes pour les recruteurs et les candidats, web et mobile.",
-            "tags": ["Design System", "Figma", "Recherche utilisateur"],
-            "apply": {
-              "label": "Postuler",
-              "aria": "Postuler au poste de Senior Product Designer",
-              "hint": "Portfolio requis"
-            }
-          },
-          "aiRecruiter": {
-            "title": "AI Recruiter Strategist",
-            "department": "Produit & IA",
-            "location": "Remote - EMEA",
-            "type": "CDI",
-            "salary": "70k€ - 90k€ · bonus",
-            "description": "Construisez des copilotes IA qui automatisent le sourcing, le screening et la planification.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
-            "apply": {
-              "label": "Postuler",
-              "aria": "Postuler au poste d'AI Recruiter Strategist",
-              "hint": "Expérience des workflows LLM"
-            }
-          },
-          "salesLead": {
-            "title": "Enterprise Sales Lead",
-            "department": "Revenue",
-            "location": "Lyon, France",
-            "type": "CDI",
-            "salary": "65k€ fixe · 50 % variable",
-            "description": "Pilotez la génération de pipeline et accompagnez les AEs sur des deals complexes.",
-            "tags": ["B2B SaaS", "Vente Enterprise", "Forecast"],
-            "apply": {
-              "label": "Postuler",
-              "aria": "Postuler au poste d'Enterprise Sales Lead",
-              "hint": "Bilingue français/anglais"
-            }
-          },
-          "customerSuccess": {
-            "title": "Customer Success Partner",
-            "department": "Customer Success",
-            "location": "Marseille, France",
-            "type": "CDI",
-            "salary": "45k€ - 55k€",
-            "description": "Accompagnez les équipes Talent lors de l'onboarding, du lancement des workflows et du suivi d'adoption.",
-            "tags": ["Implementation", "Conduite du changement", "Intégrations ATS"],
-            "apply": {
-              "label": "Postuler",
-              "aria": "Postuler au poste de Customer Success Partner",
-              "hint": "Expérience des déploiements HRIS/ATS"
-            }
-          }
-        }
-      },
-      "application": {
-        "title": "Déposez votre candidature",
-        "subtitle": "Partagez quelques informations et notre équipe Talent reviendra vers vous avec la suite du process.",
-        "highlights": [
-          "Une démo personnalisée de BroWorld selon votre maturité recrutement.",
-          "Des échanges avec les personnes avec qui vous collaborerez.",
-          "Un retour sous deux jours ouvrés, même si nous ne pouvons pas avancer tout de suite."
-        ],
-        "form": {
-          "nameLabel": "Nom complet",
-          "namePlaceholder": "Elisa Dupont",
-          "emailLabel": "Email professionnel",
-          "emailPlaceholder": "elisa.dupont(at)entreprise.com",
-          "roleLabel": "Poste qui vous intéresse",
-          "rolePlaceholder": "ex : Product Designer",
-          "messageLabel": "Parlez-nous de votre parcours",
-          "messagePlaceholder": "Partagez vos projets récents, vos réussites ou ce qui vous motive chez BroWorld.",
-          "consentLabel": "J'accepte d'être contacté·e pour des opportunités actuelles et futures chez BroWorld.",
-          "submit": "Envoyer la candidature",
-          "success": "Merci ! Notre équipe Talent étudiera votre profil et vous recontactera très vite.",
-          "rules": {
-            "required": "Ce champ est obligatoire.",
-            "email": "Veuillez saisir un email valide.",
-            "consent": "Merci de confirmer que nous pouvons vous contacter."
-          }
-        }
-      }
-    },
-    "game": {
-      "title": "Arène de quiz",
-      "subtitle": "Prototyper des quiz en plusieurs étapes avec catégories, niveaux et classement en direct.",
-      "menu": {
-        "player": "Joueur prêt !",
-        "guest": "Invité",
-        "guestName": "Invité",
-        "categoryPlaceholder": "Choisissez une catégorie",
-        "levelPlaceholder": "Sélectionnez un niveau",
-        "timer": "Temps",
-        "score": "Score",
-        "progress": "Progression",
-        "pendingScore": "En attente",
-        "helper": "Choisissez une catégorie puis un niveau pour lancer le quiz. Connectez-vous pour synchroniser votre progression."
-      },
-      "leaderboard": {
-        "title": "Classement",
-        "loading": "Chargement…",
-        "empty": "Le classement s'actualise après les premières parties."
-      },
-      "categories": {
-        "title": "Choisissez une catégorie",
-        "subtitle": "Explorez des banques de questions scénarisées dans l'univers Bro World.",
-        "reload": "Recharger",
-        "empty": "Aucune catégorie disponible pour le moment.",
-        "levels": "{count} niveaux",
-        "questions": "{count} questions",
-        "players": "{count} joueurs"
-      },
-      "levels": {
-        "title": "Sélectionnez un niveau",
-        "subtitle": "Chaque niveau augmente la difficulté et accélère le chronomètre.",
-        "locked": "Sélectionnez d'abord une catégorie pour afficher ses niveaux.",
-        "empty": "Aucun niveau n'est disponible pour cette catégorie.",
-        "questions": "{count} questions",
-        "time": "{minutes} min"
-      },
-      "questions": {
-        "title": "Question {index} sur {total}",
-        "progress": "{answered}/{total} répondues",
-        "timer": "Temps écoulé",
-        "empty": "Choisissez un niveau pour lancer le quiz.",
-        "warning": "Répondez à toutes les questions avant de valider.",
-        "checking": "Vérification des réponses…",
-        "actions": {
-          "previous": "Précédente",
-          "next": "Suivante",
-          "submit": "Valider les réponses"
-        }
-      },
-      "results": {
-        "title": "Résultats",
-        "score": "Score",
-        "summary": "{correct}/{total} bonnes réponses",
-        "time": "Temps passé",
-        "breakdown": {
-          "correct": "Réussi",
-          "incorrect": "Échoué",
-          "yourAnswer": "Votre réponse",
-          "correctAnswer": "Bonne réponse",
-          "noAnswer": "Aucune réponse"
-        }
-      },
-      "auth": {
-        "title": "Connectez-vous pour sauvegarder votre progression",
-        "subtitle": "Connectez-vous ou créez un compte pour apparaître dans le classement."
-      },
-      "errors": {
-        "categories": "Impossible de charger les catégories du quiz.",
-        "levels": "Impossible de charger les niveaux pour cette catégorie.",
-        "questions": "Impossible de charger les questions du quiz.",
-        "validation": "Impossible de valider vos réponses. Veuillez réessayer."
-      }
-    },
-    "calendar": {
-      "title": "Calendrier",
-      "cardTitle": "Vue d'ensemble du calendrier",
-      "menuTitle": "Événements du jour",
-      "menuEmpty": "Aucun événement aujourd'hui",
-      "authNotice": "Connectez-vous pour voir et gérer vos événements.",
-      "rangeAllDay": "Toute la journée",
-      "fallbackTitle": "Événement sans titre",
-      "actions": {
-        "newEvent": "Nouvel événement"
-      },
-      "dialog": {
-        "createTitle": "Nouvel événement",
-        "editTitle": "Modifier l'événement",
-        "titleLabel": "Titre de l'événement",
-        "startLabel": "Date de début",
-        "endLabel": "Date de fin",
-        "startTimeLabel": "Heure de début",
-        "endTimeLabel": "Heure de fin",
-        "allDayLabel": "Événement sur la journée",
-        "privateLabel": "Événement privé",
-        "locationLabel": "Lieu",
-        "descriptionLabel": "Description",
-        "save": "Enregistrer",
-        "cancel": "Fermer",
-        "delete": "Supprimer",
-        "confirmDelete": "Supprimer l'événement",
-        "confirmDeleteMessage": "Cette action est irréversible. Confirmez-vous la suppression de cet événement ?"
-      },
-      "validation": {
-        "title": "Merci d'indiquer un titre.",
-        "startDate": "Sélectionnez une date de début.",
-        "startTime": "Sélectionnez une heure de début.",
-        "endTime": "L'heure de fin doit être postérieure à l'heure de début.",
-        "range": "La fin de l'événement doit être postérieure au début."
-      },
-      "errors": {
-        "save": "Impossible d'enregistrer vos modifications. Veuillez réessayer.",
-        "delete": "Impossible de supprimer cet événement. Veuillez réessayer.",
-        "load": "Impossible de charger vos événements. Veuillez réessayer."
-      }
-    },
-    "ecommerce": {
-      "title": "E-commerce",
-      "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",
-      "featuresTitle": "Modern retail, one toolkit",
-      "features": {
-        "catalog": {
-          "title": "Unify your catalogue",
-          "description": "Manage product variants, rich storytelling, and merchandising in one workspace.",
-          "points": [
-            "Support digital, physical, and subscription products side by side.",
-            "Optimise imagery, copy, and translations with collaborative reviews.",
-            "Launch curated collections with scheduling and inventory safeguards."
-          ]
-        },
-        "checkout": {
-          "title": "Delight at checkout",
-          "description": "Reduce friction with fast, accessible, and trusted purchase flows.",
-          "points": [
-            "Offer local payments, wallets, and instalments without custom code.",
-            "Embed fraud checks, taxes, and duties that scale globally.",
-            "Give support teams live context to resolve orders instantly."
-          ]
-        },
-        "marketing": {
-          "title": "Personalise every campaign",
-          "description": "Coordinate lifecycle messaging, loyalty, and analytics together.",
-          "points": [
-            "Segment audiences with zero-party and behavioural data respectfully.",
-            "Trigger automations tied to launches, restocks, and VIP moments.",
-            "Attribute revenue accurately with multi-touch insights."
-          ]
-        }
-      },
-      "workflowTitle": "From concept to scale",
-      "workflow": {
-        "steps": {
-          "launch": {
-            "title": "Launch",
-            "description": "Prototype storefronts, test merchandising, and go live confidently."
-          },
-          "optimize": {
-            "title": "Optimise",
-            "description": "Iterate on conversion, retention, and operations with actionable insights."
-          },
-          "scale": {
-            "title": "Scale",
-            "description": "Expand to new regions, channels, and partnerships with built-in governance."
-          }
-        }
-      },
-      "stepLabel": "Phase {number}",
-      "cta": {
-        "title": "Transform your retail roadmap",
-        "description": "Explore how BroWorld adapts to your commerce stack, fulfilment partners, and customer promises.",
-        "button": "Connect with sales",
-        "buttonAria": "Open the contact page"
-      },
-      "description": "Lancez et faites évoluer des parcours de vente modernes."
-    },
-    "education": {
-      "title": "Éducation",
-      "subtitle": "Offrez aux enseignants, aux apprenants et aux administrateurs des expériences collaboratives pilotées par les données.",
-      "featuresTitle": "Créez des parcours d'apprentissage mémorables",
-      "features": {
-        "curriculum": {
-          "title": "Concevez un programme inclusif",
-          "description": "Rédigez facilement des cours, des parcours de microlearning et des programmes de certification.",
-          "points": [
-            "Réutilisez des modèles qui équilibrent apprentissage synchronisé et asynchrone.",
-            "Intégrez par défaut multimédia, évaluations et normes d'accessibilité.",
-            "Localisez les contenus pour des cohortes réparties sur plusieurs campus ou régions."
-          ]
-        },
-        "collaboration": {
-          "title": "Encouragez la collaboration",
-          "description": "Reliez enseignants, mentors et pairs dans un campus numérique sécurisé.",
-          "points": [
-            "Coordonnez facilement mentorat, permanences et forums de cohorte.",
-            "Proposez des boucles de rétroaction en temps réel sur devoirs et projets.",
-            "Célébrez les progrès avec des badges, des mises en lumière et des parcours alumni."
-          ]
-        },
-        "analytics": {
-          "title": "Agissez grâce aux analyses",
-          "description": "Mettez en avant des insights qui soutiennent rétention, bien-être et objectifs d'accréditation.",
-          "points": [
-            "Surveillez les signaux d'engagement pour intervenir avant le décrochage.",
-            "Partagez des tableaux de bord programmes avec les directions et instances d'accréditation.",
-            "Protégez la vie privée grâce à des contrôles et une gouvernance transparents."
-          ]
-        }
-      },
-      "workflowTitle": "Accompagnez chaque cohorte",
-      "workflow": {
-        "steps": {
-          "design": {
-            "title": "Concevoir",
-            "description": "Cartographiez ensemble objectifs d'apprentissage, contenus et moments d'évaluation."
-          },
-          "deliver": {
-            "title": "Diffuser",
-            "description": "Animez des séances en direct ou à la demande, suivez la présence et ajustez en temps réel."
-          },
-          "reflect": {
-            "title": "Analyser",
-            "description": "Évaluez l'impact, recueillez les retours et améliorez la session suivante."
-          }
-        }
-      },
-      "stepLabel": "Jalon {number}",
-      "cta": {
-        "title": "Faites progresser votre écosystème d'apprentissage",
-        "description": "Associez-vous à nous pour moderniser programmes, services étudiants et expériences alumni.",
-        "button": "Planifier une consultation",
-        "buttonAria": "Ouvrir la page de contact"
-      },
-      "catalog": {
-        "badge": "Apprentissage",
-        "title": "Explorer les parcours d'apprentissage",
-        "subtitle": "Parcourez des catégories thématiques, suivez des leçons interactives et débloquez un certificat fictif en réussissant le quiz final."
-      },
-      "sidebar": {
-        "overviewTitle": "Préservez votre élan d'apprentissage",
-        "overviewDescription": "Suivez vos progrès, revisitez vos catégories favorites et restez motivé en explorant de nouvelles compétences.",
-        "stats": {
-          "categories": {
-            "label": "Catégories",
-            "value": "{count} catégories"
-          },
-          "courses": {
-            "label": "Cours",
-            "value": "{count} cours"
-          },
-          "certificates": {
-            "label": "Certificats obtenus",
-            "value": "{count} certificats"
-          }
-        },
-        "featuredTitle": "Catégories à la une",
-        "featuredDescription": "Replongez dans ces espaces sélectionnés pour continuer à apprendre.",
-        "featuredEmpty": "De nouvelles catégories arrivent bientôt."
-      },
-      "category": {
-        "courses": "{count} cours",
-        "viewCourses": "Voir les cours",
-        "viewCoursesAria": "Voir les cours pour {title}"
-      },
-      "course": {
-        "progress": "{value}% terminé",
-        "openAria": "Ouvrir le cours {title}",
-        "continue": "Continuer",
-        "startAria": "Démarrer ou continuer le cours {title}",
-        "durationMinutes": "{value} min",
-        "durationHours": "{value} h",
-        "durationMixed": "{hours} h {minutes} min",
-        "completedLessons": "{count}/{total} leçons terminées",
-        "lessonList": "Leçons du cours",
-        "lessonDuration": "{value} min",
-        "lessonProgressLabel": "Progression de la leçon",
-        "quizTitle": "Quiz final",
-        "quizDescription": "Répondez à dix questions pour valider vos connaissances et obtenir le certificat du cours.",
-        "startQuiz": "Passer le quiz",
-        "viewCertificate": "Voir le certificat",
-        "ctaStart": "Commencer le cours",
-        "ctaContinue": "Continuer le cours",
-        "ctaQuiz": "Aller au quiz"
-      },
-      "lesson": {
-        "position": "Leçon {index} sur {total}",
-        "duration": "{value} min",
-        "progressLabel": "Progression de la leçon",
-        "completed": "Leçon terminée",
-        "markDone": "Marquer la leçon comme terminée",
-        "exercises": "Exercices pratiques",
-        "previous": "Leçon précédente",
-        "next": "Leçon suivante",
-        "goToQuiz": "Aller au quiz final"
-      },
-      "exercise": {
-        "submit": "Vérifier la réponse",
-        "correct": "Bravo !",
-        "incorrect": "Réessayez lors de votre prochaine tentative.",
-        "true": "Vrai",
-        "false": "Faux"
-      },
-      "quiz": {
-        "title": "Quiz final — {course}",
-        "subtitle": "Répondez à toutes les questions. Obtenez au moins 70 % pour débloquer votre certificat.",
-        "progress": "Question {index} sur {total}",
-        "previous": "Précédent",
-        "next": "Suivant",
-        "submit": "Envoyer les réponses",
-        "passed": "Bien joué ! Vous avez obtenu {score} sur {total}.",
-        "failed": "Continuez — vous avez obtenu {score} sur {total}.",
-        "threshold": "Score de réussite : {value} %",
-        "certificateReady": "Réussi ! Générez votre certificat.",
-        "certificateDescription": "Ajoutez votre nom et téléchargez un PDF partageable délivré par cet environnement de démonstration.",
-        "nameLabel": "Votre nom",
-        "namePlaceholder": "Alex Johnson",
-        "generateCertificate": "Générer le certificat",
-        "certificateReadyButton": "Certificat généré",
-        "viewCertificate": "Ouvrir le certificat",
-        "retryTitle": "Besoin d'un autre essai ?",
-        "retryDescription": "Revoyez les leçons et retentez le quiz quand vous serez prêt.",
-        "retryButton": "Repasser le quiz",
-        "breadcrumb": "Quiz final"
-      },
-      "certificate": {
-        "breadcrumb": "Certificat",
-        "title": "Certificat d'achèvement",
-        "subtitle": "Ce document atteste de la réussite d'un cours de démonstration.",
-        "presentedTo": "Décerné à",
-        "completed": "Pour avoir terminé le cours {course}.",
-        "score": "Score final : {value} %",
-        "date": "Émis le {value}",
-        "signature": "Autorisé par",
-        "signatureName": "Nuxt Academy",
-        "organization": "BroWorld Éducation",
-        "organizationTagline": "Innover dans les expériences d'apprentissage",
-        "download": "Télécharger le PDF"
-      },
-      "breadcrumb": {
-        "home": "Éducation"
-      },
-      "levels": {
-        "beginner": "Débutant",
-        "intermediate": "Intermédiaire",
-        "advanced": "Avancé"
-      }
-    },
-    "quiz": {
-      "title": "Quiz experiences",
-      "subtitle": "Prototype adaptive quizzes that energise your community with instant feedback and storytelling.",
-      "overview": {
-        "title": "Quiz performance snapshot",
-        "description": "Monitor participation, completion, and satisfaction to keep every cohort motivated.",
-        "trendLabel": "{change} compared to last week",
-        "cards": {
-          "participants": {
-            "title": "Active participants",
-            "value": "1,240 members",
-            "trend": "+18%",
-            "caption": "Joined at least one quiz session this week."
-          },
-          "completion": {
-            "title": "Average completion",
-            "value": "87%",
-            "trend": "+6%",
-            "caption": "Finished all rounds with a passing score."
-          },
-          "satisfaction": {
-            "title": "Session rating",
-            "value": "4.6 / 5",
-            "trend": "+0.4",
-            "caption": "Based on post-quiz feedback surveys."
-          }
-        }
-      },
-      "featuresTitle": "Design quizzes with momentum",
-      "features": {
-        "authoring": {
-          "title": "Author in minutes",
-          "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
-          "points": [
-            "Convert brainstorm notes into question pools automatically.",
-            "Mix formats like multiple choice, polls, and lightning rounds.",
-            "Reuse timers, scoring weights, and bonus rules across series."
-          ]
-        },
-        "engagement": {
-          "title": "Fuel real-time engagement",
-          "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
-          "points": [
-            "Highlight hosts and co-creators with stage-ready layouts.",
-            "Trigger soundscapes and emotes when milestones are unlocked.",
-            "Support breakout teams, rematches, and collaborative lifelines."
-          ]
-        },
-        "analytics": {
-          "title": "Measure what matters",
-          "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
-          "points": [
-            "Compare performance by role, location, or membership tier.",
-            "Spot drop-off moments with second-by-second completion curves.",
-            "Export highlights, clips, and insights for stakeholders."
-          ]
-        }
-      },
-      "process": {
-        "title": "Ship the perfect challenge",
-        "stepLabel": "Step {number}",
-        "steps": {
-          "plan": {
-            "title": "Plan your storyline",
-            "description": "Align on themes, desired outcomes, and player journeys before drafting questions."
-          },
-          "launch": {
-            "title": "Launch the experience",
-            "description": "Stream the quiz with live moderation, automated scoring, and instant feedback loops."
-          },
-          "iterate": {
-            "title": "Iterate with insights",
-            "description": "Analyse results, remix question banks, and refresh the experience for the next cohort."
-          }
-        }
-      },
-      "questionBanks": {
-        "title": "Curated question banks",
-        "description": "Mix ready-to-run categories with your own questions to keep every round feeling fresh.",
-        "countLabel": "Questions available",
-        "focusLabel": "Primary focus",
-        "banks": {
-          "general": {
-            "title": "General knowledge vault",
-            "description": "A rotating mix of culture, science, and newsworthy trivia for broad audiences.",
-            "count": "180 curated questions",
-            "focus": "Culture, science, trending topics",
-            "difficulty": "Mixed"
-          },
-          "product": {
-            "title": "Product mastery set",
-            "description": "Train advocates and sales teams on features, roadmaps, and objection handling.",
-            "count": "120 scenario prompts",
-            "focus": "Launch strategy, value props, storytelling",
-            "difficulty": "Intermediate"
-          },
-          "community": {
-            "title": "Community culture pack",
-            "description": "Celebrate inside jokes, rituals, and lore from your most dedicated members.",
-            "count": "95 custom questions",
-            "focus": "Member spotlights, events, shared history",
-            "difficulty": "Casual"
-          }
-        }
-      },
-      "leaderboard": {
-        "title": "Community leaderboard",
-        "description": "Celebrate champions and spark friendly rivalries with transparent scoring.",
-        "updateLabel": "Auto-updated every hour",
-        "columns": {
-          "rank": "Rank",
-          "player": "Participant",
-          "score": "Score",
-          "completed": "Quizzes completed"
-        },
-        "rows": {
-          "0": {
-            "rank": "1",
-            "player": "Maya Chen",
-            "score": "982 pts",
-            "completed": "12 / 12"
-          },
-          "1": {
-            "rank": "2",
-            "player": "Luis Fernández",
-            "score": "941 pts",
-            "completed": "11 / 12"
-          },
-          "2": {
-            "rank": "3",
-            "player": "Sana Kapoor",
-            "score": "905 pts",
-            "completed": "10 / 12"
-          },
-          "3": {
-            "rank": "4",
-            "player": "Jonas Richter",
-            "score": "876 pts",
-            "completed": "10 / 12"
-          }
-        }
-      },
-      "cta": {
-        "title": "Launch your next quiz series",
-        "description": "Partner with us to craft immersive assessments for teams, classrooms, and fandoms.",
-        "button": "Talk with our team",
-        "buttonAria": "Open the contact page"
       }
     },
     "playground": {
@@ -2756,17 +2772,13 @@
       "title": "Mot de passe et sécurité",
       "description": "Gérez vos identifiants de connexion, l'authentification à deux facteurs et les appareils de confiance."
     },
-    "profileNotifications": {
-      "title": "Préférences de notification",
-      "description": "Décidez quelles alertes vous reçoivez par e-mail, push ou messages internes."
+    "job": {
+      "title": "Emplois",
+      "description": "Planifiez, suivez et optimisez vos programmes de recrutement."
     },
     "createWorld": {
       "title": "Créer un monde",
       "description": "Préparez un nouvel univers BroWorld avec des modèles pour la communauté, l’économie et la gouvernance."
-    },
-    "job": {
-      "title": "Emplois",
-      "description": "Planifiez, suivez et optimisez vos programmes de recrutement."
     },
     "game": {
       "title": "Jeux vidéo",
@@ -2805,128 +2817,8 @@
       "description": "Découvrez les parcours d’apprentissage structurés, exercices et certifications de Bro World."
     },
     "performance": {
-      "badge": "Rapport de performance",
       "title": "Instantané de la qualité d'expérience",
-      "subtitle": "Un focus sur les performances du fil d'actualités sur des appareils réels.",
-      "updated": "Audit réalisé le 8 avril 2025",
-      "hero": {
-        "score": "74",
-        "maxScore": "100",
-        "scoreLabel": "Score global"
-      },
-      "metrics": {
-        "title": "Indicateurs clés d'expérience",
-        "subtitle": "Basé sur des analyses Lighthouse mobiles (Moto G Power émulé).",
-        "status": {
-          "good": "Sous contrôle",
-          "average": "À surveiller",
-          "poor": "Nécessite une action"
-        },
-        "items": {
-          "fcp": {
-            "label": "First Contentful Paint",
-            "value": "0.8",
-            "unit": "s",
-            "description": "Les premiers pixels significatifs s'affichent en moins d'une seconde.",
-            "trend": "Stable lors des 7 derniers déploiements.",
-            "status": "good"
-          },
-          "lcp": {
-            "label": "Largest Contentful Paint",
-            "value": "2.5",
-            "unit": "s",
-            "description": "Le média principal charge après le squelette mais reste dans les seuils Web Vitals.",
-            "trend": "Optimiser en préchargeant le sprite de l'image vedette.",
-            "status": "average"
-          },
-          "tbt": {
-            "label": "Total Blocking Time",
-            "value": "570",
-            "unit": "ms",
-            "description": "Des tâches longues pendant l'hydratation monopolisent le thread.",
-            "trend": "Causé par le chargement anticipé de widgets optionnels.",
-            "status": "poor"
-          },
-          "speedIndex": {
-            "label": "Speed Index",
-            "value": "2.4",
-            "unit": "s",
-            "description": "La complétude visuelle est correcte mais peut être améliorée.",
-            "trend": "Gagne fortement à prioriser la livraison du CSS.",
-            "status": "average"
-          },
-          "cls": {
-            "label": "Cumulative Layout Shift",
-            "value": "0.368",
-            "description": "Les cartes et le rail d'histoires bougent quand le contenu arrive tard.",
-            "trend": "Fixer les médias avec des ratios d'aspect pour stabiliser le fil.",
-            "status": "poor"
-          }
-        }
-      },
-      "opportunities": {
-        "title": "Opportunités à fort impact",
-        "subtitle": "Correctifs prioritaires pour adresser les indicateurs en rouge.",
-        "items": {
-          "layout": {
-            "title": "Stabiliser les emplacements média et widgets",
-            "description": "Réserver de l'espace pour les bannières, carrousels et publicités dynamiques.",
-            "impact": "Fort impact",
-            "action": "Adopter des ratios d'aspect et hauteurs de squelette pour les éléments du fil."
-          },
-          "script": {
-            "title": "Différer les scripts non critiques",
-            "description": "Scinder l'analytics, les réactions et la messagerie hors du bundle principal.",
-            "impact": "Fort impact",
-            "action": "Hydrater les widgets optionnels à l'interaction via `defineAsyncComponent`."
-          },
-          "assets": {
-            "title": "Optimiser les visuels vedettes",
-            "description": "Compresser le collage principal et servir des sources AVIF par défaut.",
-            "impact": "Impact moyen",
-            "action": "Précharger la première image du fil et diffuser les autres en chargement différé."
-          },
-          "monitoring": {
-            "title": "Étendre la couverture Core Web Vitals",
-            "description": "Segmenter les métriques par route et type d'appareil.",
-            "impact": "Fondamental",
-            "action": "Envoyer les mesures `web-vitals` vers le lac analytique pour suivre les régressions."
-          }
-        }
-      },
-      "timeline": {
-        "title": "Feuille de route d'amélioration",
-        "subtitle": "Un déploiement réaliste pour livrer et vérifier les correctifs.",
-        "items": {
-          "week1": {
-            "date": "Semaine 1",
-            "title": "Éliminer les décalages de mise en page",
-            "description": "Auditer toutes les cartes et stories pour un dimensionnement déterministe.",
-            "actions": [
-              "Ajouter des ratios d'aspect aux miniatures et illustrations.",
-              "Bloquer les conteneurs publicitaires derrière des placeholders."
-            ]
-          },
-          "week2": {
-            "date": "Semaine 2",
-            "title": "Fragmenter les longues tâches",
-            "description": "Déporter la logique optionnelle dans des callbacks idle et des frontières async.",
-            "actions": [
-              "Découper le tiroir messagerie et le panneau des réactions.",
-              "Utiliser `requestIdleCallback` avant d'initialiser les SDK analytics."
-            ]
-          },
-          "week3": {
-            "date": "Semaine 3",
-            "title": "Vérifier les gains via le RUM",
-            "description": "Déployer le suivi Core Web Vitals aux cohortes de production.",
-            "actions": [
-              "Envoyer les métriques au lac de monitoring avec les métadonnées de build.",
-              "Alerter sur les régressions LCP/TBT au-delà de 10 % semaine après semaine."
-            ]
-          }
-        }
-      }
+      "description": "Track the budgets and audits keeping BroWorld fast for every community."
     },
     "crm": {
       "title": "Espace CRM",
@@ -3486,25 +3378,41 @@
           "content": {
             "title": "Gestion du contenu",
             "description": "Planifiez, publiez et archivez les articles, événements et ressources pédagogiques.",
-            "tags": ["Workflow éditorial", "Validation", "Programmation"],
+            "tags": [
+              "Workflow éditorial",
+              "Validation",
+              "Programmation"
+            ],
             "status": "12 contenus nécessitent une revue éditoriale."
           },
           "community": {
             "title": "Communauté & modération",
             "description": "Paramétrez les règles de modération, gérez les signalements et les sanctions.",
-            "tags": ["Signalements", "Sanctions", "Messages privés"],
+            "tags": [
+              "Signalements",
+              "Sanctions",
+              "Messages privés"
+            ],
             "status": "Temps moyen de réponse : 1 h 42."
           },
           "commerce": {
             "title": "Monétisation & offres",
             "description": "Administrez les abonnements, codes promotionnels et partenariats commerciaux.",
-            "tags": ["Abonnements", "Facturation", "Coupons"],
+            "tags": [
+              "Abonnements",
+              "Facturation",
+              "Coupons"
+            ],
             "status": "Taux de conversion en hausse de 3,4 % cette semaine."
           },
           "governance": {
             "title": "Gouvernance & conformité",
             "description": "Auditez les accès, gérez les rôles sensibles et préparez les rapports de conformité.",
-            "tags": ["Audit", "Rôles", "Traçabilité"],
+            "tags": [
+              "Audit",
+              "Rôles",
+              "Traçabilité"
+            ],
             "status": "Dernier audit complet réalisé il y a 5 jours."
           }
         }
