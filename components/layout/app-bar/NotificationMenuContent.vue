@@ -91,6 +91,17 @@
           </p>
         </div>
       </v-list>
+      <template v-if="props.viewAllText && props.viewAllTo">
+        <v-divider class="my-2" />
+        <div class="px-4 pb-2">
+          <NuxtLink
+            :to="props.viewAllTo"
+            class="text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 rounded-md px-0"
+          >
+            {{ props.viewAllText }}
+          </NuxtLink>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -104,6 +115,8 @@ const props = defineProps<{
   subtitle?: string;
   emptyText: string;
   markAllText: string;
+  viewAllText?: string;
+  viewAllTo?: string;
 }>();
 
 const emit = defineEmits<{

@@ -75,6 +75,8 @@
           :notifications-empty="notificationsEmpty"
           :notifications-mark-all="notificationsMarkAll"
           :notifications-button-label="notificationsButtonLabel"
+          :notifications-view-all="notificationsViewAll"
+          :notifications-view-all-to="notificationsViewAllTo"
           :messenger-conversations="messengerPreviewConversations"
           :messenger-unread-count="messengerUnreadCount"
           :messenger-button-label="messengerButtonLabel"
@@ -135,8 +137,8 @@ import LocaleMenu from "./app-bar/LocaleMenu.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
-import type { AppNotification } from "~/types/layout";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
+import { useNotifications } from "~/composables/useNotifications";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
@@ -146,15 +148,6 @@ const VAutocomplete = defineAsyncComponent(() =>
 
 type AppIcon = { name: string; label: string; size?: number; to?: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
-type NotificationKey = "newFollower" | "newComment" | "systemUpdate";
-type NotificationDefinition = {
-  id: string;
-  key: NotificationKey;
-  icon: string;
-  color?: AppNotification["color"];
-  read: boolean;
-};
-
 type LocaleInput = string | { code?: string | null | undefined };
 
 const props = withDefaults(
@@ -252,60 +245,17 @@ const canAccessAdmin = computed(() => {
   return roles.some((role) => adminRoleSet.has(role));
 });
 
-const notificationDefinitions = useState<NotificationDefinition[]>(
-  "app-top-bar-notifications",
-  () => [
-    {
-      id: "new-follower",
-      key: "newFollower",
-      icon: "mdi:account-plus",
-      color: "primary",
-      read: false,
-    },
-    {
-      id: "new-comment",
-      key: "newComment",
-      icon: "mdi:message-reply-text",
-      color: "info",
-      read: false,
-    },
-    {
-      id: "system-update",
-      key: "systemUpdate",
-      icon: "mdi:calendar-clock",
-      color: "warning",
-      read: true,
-    },
-  ],
-);
+const notificationCenter = useNotifications();
 
-const notifications = computed<AppNotification[]>(() =>
-  notificationDefinitions.value.map((item) => ({
-    id: item.id,
-    icon: item.icon,
-    color: item.color,
-    read: item.read,
-    title: t(`layout.notificationsMenu.items.${item.key}.title`),
-    description: t(`layout.notificationsMenu.items.${item.key}.description`),
-    time: t(`layout.notificationsMenu.items.${item.key}.time`),
-  })),
-);
-
-const notificationCount = computed(
-  () => notificationDefinitions.value.filter((item) => !item.read).length,
-);
-
-const notificationsTitle = computed(() => t("layout.notificationsMenu.title"));
-const notificationsSubtitle = computed(() => t("layout.notificationsMenu.subtitle"));
-const notificationsEmpty = computed(() => t("layout.notificationsMenu.empty"));
-const notificationsMarkAll = computed(() => t("layout.notificationsMenu.markAll"));
-const notificationsButtonLabel = computed(() => {
-  const count = notificationCount.value;
-  if (count > 0) {
-    return t("layout.notificationsMenu.badgeLabel", { count });
-  }
-  return t("layout.actions.notifications");
-});
+const notifications = notificationCenter.notifications;
+const notificationCount = notificationCenter.unreadCount;
+const notificationsTitle = notificationCenter.title;
+const notificationsSubtitle = notificationCenter.subtitle;
+const notificationsEmpty = notificationCenter.emptyLabel;
+const notificationsMarkAll = notificationCenter.markAllLabel;
+const notificationsButtonLabel = notificationCenter.badgeLabel;
+const notificationsViewAll = notificationCenter.viewAllLabel;
+const notificationsViewAllTo = "/notifications";
 
 const messengerPreviewConversations = computed(() =>
   props.messengerEnabled ? (messenger.previewConversations.value ?? []) : [],
@@ -437,10 +387,7 @@ async function handleUserMenuSelect(item: UserMenuItem) {
 }
 
 function markAllNotifications() {
-  notificationDefinitions.value = notificationDefinitions.value.map((item) => ({
-    ...item,
-    read: true,
-  }));
+  notificationCenter.markAll();
 }
 </script>
 

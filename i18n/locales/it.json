@@ -36,6 +36,7 @@
       "title": "Notifiche",
       "subtitle": "Ultimi aggiornamenti dalla tua rete",
       "markAll": "Segna tutto come letto",
+      "viewAll": "Vedi tutte le notifiche",
       "empty": "Sei aggiornato!",
       "badgeLabel": "{count} notifiche non lette",
       "items": {
@@ -608,6 +609,14 @@
     }
   },
   "pages": {
+    "notifications": {
+      "description": "Controlla gli ultimi aggiornamenti dalla tua community.",
+      "summary": {
+        "empty": "Nessuna notifica al momento.",
+        "allRead": "{total} notifiche · tutto letto",
+        "unread": "{total} notifiche · {unread} non lette"
+      }
+    },
     "about": {
       "title": "Chi siamo",
       "subtitle": "Chi siamo e cosa stiamo costruendo",
