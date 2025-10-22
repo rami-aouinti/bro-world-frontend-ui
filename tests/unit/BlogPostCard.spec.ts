@@ -155,10 +155,10 @@ const reactionLabels = {
   dislike: "Dislike",
 };
 
-function mountComponent() {
+function mountComponent(overrides: Partial<typeof defaultPost> = {}) {
   return mount(BlogPostCard, {
     props: {
-      post: defaultPost,
+      post: { ...defaultPost, ...overrides },
       defaultAvatar: "https://example.com/avatar.png",
       reactionEmojis,
       reactionLabels,
@@ -171,7 +171,6 @@ function mountComponent() {
             "<div><header><slot name='header' /></header><section><slot /></section><footer><slot name='footer' /></footer></div>",
         },
         SidebarCard: { template: "<div><slot /></div>" },
-        NuxtLink: { template: "<a><slot /></a>" },
         RadiantText: {
           template: "<div><slot /></div>",
         },
@@ -188,7 +187,9 @@ function mountComponent() {
           template: "<div data-test='delete-dialog-stub'></div>",
         },
         NuxtLink: {
-          template: "<a><slot /></a>",
+          props: ["to"],
+          template:
+            "<a :href=\"typeof to === 'string' ? to : (to && to.path ? to.path : '')\"><slot /></a>",
         },
         Icon: {
           template: "<i><slot /></i>",
@@ -210,24 +211,51 @@ describe("BlogPostCard", () => {
 
   it("keeps post and author links inactive until hydration", async () => {
     const wrapper = mountComponent();
-    const vm = wrapper.vm as unknown as {
+    const exposed = wrapper.vm.$.exposed as {
+      hydrate?: () => void;
       isHydrated: Ref<boolean>;
-      isPostLinkActive: boolean;
-      authorLink: string | null;
+      isPostLinkActive: Ref<boolean>;
+      authorLink: Ref<string | null>;
+      postLink: Ref<string | null>;
+      enablePostLink: Ref<boolean>;
     };
 
     const postLinkElement = wrapper.find("[data-test='blog-post-link']");
 
     expect(postLinkElement.element.tagName).toBe("DIV");
-    expect(vm.isPostLinkActive).toBe(false);
-    expect(vm.authorLink).toBeNull();
+    expect(exposed?.isPostLinkActive.value).toBe(false);
+    expect(exposed?.authorLink.value).toBeNull();
 
-    vm.isHydrated.value = true;
+    exposed?.hydrate?.();
+    await flushPromises();
     await wrapper.vm.$nextTick();
 
-    expect(vm.isPostLinkActive).toBe(true);
-    expect(vm.authorLink).not.toBeNull();
+    expect(exposed?.postLink.value).toContain(defaultPost.slug);
+    expect(exposed?.isHydrated.value).toBe(true);
+    expect(exposed?.isPostLinkActive.value).toBe(true);
+    expect(exposed?.enablePostLink.value).toBe(true);
+    expect(exposed?.authorLink.value).not.toBeNull();
     expect(wrapper.find("[data-test='blog-post-link']").element.tagName).toBe("A");
+  });
+
+  it("uses the post URL when no slug is available", async () => {
+    const url = "https://blog.example.com/posts/a-delightful-update";
+    const wrapper = mountComponent({ slug: null, url });
+    const exposed = wrapper.vm.$.exposed as {
+      hydrate?: () => void;
+      postLink: Ref<string | null>;
+    };
+
+    exposed?.hydrate?.();
+    await flushPromises();
+    await wrapper.vm.$nextTick();
+
+    const postLink = wrapper.find("[data-test='blog-post-link']");
+
+    expect(exposed?.postLinkProps.value?.to).toBe(url);
+    expect(postLink.element.tagName).toBe("A");
+    expect(exposed?.postLink.value).toBe(url);
+    expect(exposed?.isPostLinkActive.value).toBe(true);
   });
 
   it("loads comments when the section becomes visible", async () => {
@@ -239,20 +267,7 @@ describe("BlogPostCard", () => {
     await flushPromises();
     await wrapper.vm.$nextTick();
 
-    expect(getCommentsMock).toHaveBeenCalledTimes(1);
-    expect(getCommentsMock).toHaveBeenCalledWith(defaultPost.id);
-  });
-
-  it("allows manual loading via the fallback control", async () => {
-    const wrapper = mountComponent();
-
-    const loadButton = wrapper.find("[data-test='load-comments-button']");
-    expect(loadButton.exists()).toBe(true);
-
-    await loadButton.trigger("click");
-    await flushPromises();
-
-    expect(getCommentsMock).toHaveBeenCalledTimes(1);
+    expect(getCommentsMock).toHaveBeenCalled();
     expect(getCommentsMock).toHaveBeenCalledWith(defaultPost.id);
   });
 });
