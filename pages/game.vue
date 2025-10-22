@@ -124,7 +124,10 @@
       </teleport>
     </client-only>
 
-    <v-container>
+    <SidebarCard
+        class="text-card-foreground px-3 py-2"
+        glow
+    >
       <header class="text-center mb-10">
         <h1
           id="game-heading"
@@ -737,7 +740,7 @@
           </section>
         </v-col>
       </v-row>
-    </v-container>
+    </SidebarCard>
   </main>
 </template>
 
@@ -749,6 +752,7 @@ import UserAvatar from "~/components/UserAvatar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useUserSession } from "~/composables/useUserSession";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const AuthLoginForm = defineAsyncComponent({
   loader: () => import("~/components/auth/LoginForm.vue"),
