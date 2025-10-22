@@ -97,6 +97,7 @@ registerRightSidebarContent(
 );
 
 definePageMeta({
+  alias: ["/world/:worldSlug/education"],
   documentDriven: false,
   requiresPlugin: "education",
 });

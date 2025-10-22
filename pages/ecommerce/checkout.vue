@@ -534,6 +534,7 @@ useSeoMeta(() => ({
 }));
 
 definePageMeta({
+  alias: ["/world/:worldSlug/ecommerce/checkout"],
   documentDriven: false,
   requiresPlugin: "ecommerce",
 });

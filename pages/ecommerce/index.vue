@@ -167,6 +167,7 @@ const { t, locale, localeProperties } = useI18n();
 const pageDescription = computed(() => t("seo.ecommerce.description"));
 
 definePageMeta({
+  alias: ["/world/:worldSlug/ecommerce"],
   documentDriven: false,
   requiresPlugin: "ecommerce",
 });

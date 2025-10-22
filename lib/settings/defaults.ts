@@ -18,7 +18,7 @@ import {
   mergeMenuBlueprints,
 } from "~/lib/navigation/menu-blueprints";
 import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
-import { getPluginMenuBlueprints } from "~/lib/navigation/plugins";
+import { getAllPluginIds, getPluginMenuBlueprints } from "~/lib/navigation/plugins";
 
 function makeTheme(theme: SiteThemeDefinition): SiteThemeDefinition {
   return { ...theme };
@@ -371,15 +371,7 @@ const BASE_MENU_BLUEPRINTS: MenuBlueprint[] = [
   },
 ];
 
-export const DEFAULT_WORLD_PLUGIN_IDS = [
-  "messenger",
-  "job-board",
-  "game",
-  "crm",
-  "ecommerce",
-  "education",
-  "blog",
-] as const;
+export const DEFAULT_WORLD_PLUGIN_IDS: readonly string[] = getAllPluginIds();
 
 export function buildMenusForPlugins(
   selectedPluginIds: Iterable<string>,

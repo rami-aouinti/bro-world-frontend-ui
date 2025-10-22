@@ -18,7 +18,17 @@ export interface PluginRegistryEntry {
 const pluginRegistry: readonly PluginRegistryEntry[] = [
   {
     id: "messenger",
-    menuItems: [],
+    menuItems: [
+      {
+        id: "messenger",
+        label: "layout.sidebar.items.messenger",
+        icon: "mdi:message-text-outline",
+        translate: true,
+        to: "/messenger",
+        isVisible: true,
+        order: 0,
+      },
+    ],
   },
   {
     id: "job-board",
