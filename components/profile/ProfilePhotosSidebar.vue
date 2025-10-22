@@ -139,7 +139,9 @@
                 {{ note.preview }}
               </p>
             </div>
-            <div class="d-flex align-center justify-space-between text-caption text-medium-emphasis">
+            <div
+              class="d-flex align-center justify-space-between text-caption text-medium-emphasis"
+            >
               <span>{{ note.updated }}</span>
               <v-btn
                 variant="text"
@@ -160,10 +162,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
-import type {
-  ProfileCreativeNote,
-  ProfileStoryMilestone,
-} from "~/types/pages/profile";
+import type { ProfileCreativeNote, ProfileStoryMilestone } from "~/types/pages/profile";
 
 withDefaults(
   defineProps<{

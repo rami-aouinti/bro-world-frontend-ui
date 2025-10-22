@@ -789,7 +789,10 @@ export const usePostsStore = defineStore("posts", () => {
       return useSiteSettingsState();
     } catch (error) {
       if (import.meta.dev) {
-        console.warn("[stores/posts] Site settings state unavailable; falling back to manual world tracking.", error);
+        console.warn(
+          "[stores/posts] Site settings state unavailable; falling back to manual world tracking.",
+          error,
+        );
       }
 
       return null;
@@ -1153,7 +1156,9 @@ export const usePostsStore = defineStore("posts", () => {
     worldId: string | null = null,
   ) {
     const { loadMore, background } = options;
-    const providedWorldId = normalizeWorldId((options.params as Record<string, unknown> | undefined)?.worldId);
+    const providedWorldId = normalizeWorldId(
+      (options.params as Record<string, unknown> | undefined)?.worldId,
+    );
     const requestedWorldId =
       normalizeWorldId(worldId) ??
       providedWorldId ??
@@ -1420,12 +1425,16 @@ export const usePostsStore = defineStore("posts", () => {
 
         if (!isRevalidating.value && !backgroundPromise.value) {
           isRevalidating.value = true;
-          backgroundPromise.value = fetchPostsFromServer(page, {
-            ...options,
-            params,
-            force: true,
-            background: true,
-          }, requestWorldId)
+          backgroundPromise.value = fetchPostsFromServer(
+            page,
+            {
+              ...options,
+              params,
+              force: true,
+              background: true,
+            },
+            requestWorldId,
+          )
             .catch((revalidationError) => {
               console.error("Posts revalidation failed", revalidationError);
             })
@@ -1448,7 +1457,11 @@ export const usePostsStore = defineStore("posts", () => {
       }
     }
 
-    return fetchPostsFromServer(page, { ...options, params, loadMore: page > 1 && !options.force }, requestWorldId);
+    return fetchPostsFromServer(
+      page,
+      { ...options, params, loadMore: page > 1 && !options.force },
+      requestWorldId,
+    );
   }
 
   async function fetchMorePosts(options: FetchOptions = {}) {

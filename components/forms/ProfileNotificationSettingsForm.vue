@@ -507,7 +507,10 @@ const snackbar = reactive({
   color: "primary" as "primary" | "success" | "warning" | "info",
 });
 
-function showSnackbar(message: string, color: "primary" | "success" | "warning" | "info" = "success") {
+function showSnackbar(
+  message: string,
+  color: "primary" | "success" | "warning" | "info" = "success",
+) {
   snackbar.visible = false;
   snackbar.message = message;
   snackbar.color = color;

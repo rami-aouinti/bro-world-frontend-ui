@@ -1,76 +1,69 @@
 <template>
-  <main
-    aria-labelledby="notifications-title"
-  >
+  <main aria-labelledby="notifications-title">
     <v-row>
-      <v-col
-          cols="12"
-      >
+      <v-col cols="12">
         <header
-            class="mb-6"
-            aria-describedby="notifications-description"
+          class="mb-6"
+          aria-describedby="notifications-description"
         >
           <h1
-              id="notifications-title"
-              class="text-h4 font-weight-semibold mb-2"
+            id="notifications-title"
+            class="text-h4 font-weight-semibold mb-2"
           >
             {{ notificationsTitle }}
           </h1>
           <p
-              v-if="notificationsSubtitle"
-              id="notifications-description"
-              class="text-body-1 text-medium-emphasis mb-4"
+            v-if="notificationsSubtitle"
+            id="notifications-description"
+            class="text-body-1 text-medium-emphasis mb-4"
           >
             {{ notificationsSubtitle }}
           </p>
           <p
-              v-else
-              id="notifications-description"
-              class="text-body-1 text-medium-emphasis mb-4"
+            v-else
+            id="notifications-description"
+            class="text-body-1 text-medium-emphasis mb-4"
           >
             {{ description }}
           </p>
           <div class="d-flex flex-wrap align-center gap-3">
             <v-btn
-                color="primary"
-                variant="flat"
-                :disabled="!hasUnread"
-                @click="handleMarkAll"
+              color="primary"
+              variant="flat"
+              :disabled="!hasUnread"
+              @click="handleMarkAll"
             >
               {{ notificationsMarkAll }}
             </v-btn>
             <span class="text-body-2 text-medium-emphasis">
-                {{ summary }}
-              </span>
+              {{ summary }}
+            </span>
           </div>
         </header>
 
         <v-card
-            class="notifications-card"
-            rounded="xl"
-            elevation="0"
+          class="notifications-card"
+          rounded="xl"
+          elevation="0"
         >
           <template v-if="notifications.length">
             <v-list
-                class="py-0"
-                lines="two"
+              class="py-0"
+              lines="two"
             >
               <v-list-item
-                  v-for="item in notifications"
-                  :key="item.id"
-                  :class="[
-                    'notifications-item',
-                    !item.read ? 'notifications-item--unread' : '',
-                  ]"
+                v-for="item in notifications"
+                :key="item.id"
+                :class="['notifications-item', !item.read ? 'notifications-item--unread' : '']"
               >
                 <template #prepend>
                   <div
-                      class="notifications-item__icon"
-                      :class="resolveColorClass(item.color)"
+                    class="notifications-item__icon"
+                    :class="resolveColorClass(item.color)"
                   >
                     <AppIcon
-                        :name="item.icon"
-                        :size="22"
+                      :name="item.icon"
+                      :size="22"
                     />
                   </div>
                 </template>
@@ -83,21 +76,21 @@
                   </p>
                 </div>
                 <template #append>
-                    <span class="text-caption text-medium-emphasis">
-                      {{ item.time }}
-                    </span>
+                  <span class="text-caption text-medium-emphasis">
+                    {{ item.time }}
+                  </span>
                 </template>
               </v-list-item>
             </v-list>
           </template>
           <div
-              v-else
-              class="notifications-empty"
+            v-else
+            class="notifications-empty"
           >
             <div class="notifications-empty__icon">
               <AppIcon
-                  name="mdi:bell-outline"
-                  :size="32"
+                name="mdi:bell-outline"
+                :size="32"
               />
             </div>
             <p class="text-body-1 font-weight-medium mb-1">
@@ -183,16 +176,9 @@ function resolveColorClass(color?: (typeof notifications.value)[number]["color"]
 <style scoped>
 .notifications-page {
   min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
-  background: radial-gradient(
-      circle at top left,
-      rgba(var(--v-theme-primary), 0.08),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(var(--v-theme-primary), 0.06),
-      transparent 40%
-    );
+  background:
+    radial-gradient(circle at top left, rgba(var(--v-theme-primary), 0.08), transparent 45%),
+    radial-gradient(circle at bottom right, rgba(var(--v-theme-primary), 0.06), transparent 40%);
 }
 
 .notifications-card {

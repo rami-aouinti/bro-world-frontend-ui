@@ -32,10 +32,7 @@ const NuxtImgStub = defineComponent({
       h("img", {
         ...attrs,
         class: [attrs.class, "nuxt-img-stub"].filter(Boolean),
-        src:
-          typeof props.src === "string"
-            ? props.src
-            : (attrs.src as string | undefined),
+        src: typeof props.src === "string" ? props.src : (attrs.src as string | undefined),
         alt: props.alt ?? (attrs.alt as string | undefined),
       });
   },

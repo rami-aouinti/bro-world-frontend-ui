@@ -111,7 +111,10 @@
             </div>
           </li>
         </ol>
-        <p v-else class="text-caption text-medium-emphasis mb-0">
+        <p
+          v-else
+          class="text-caption text-medium-emphasis mb-0"
+        >
           {{ leaderboardEmptyLabel }}
         </p>
       </template>

@@ -23,7 +23,10 @@ function extractSlug(param: unknown): string | null {
   return null;
 }
 
-function resolveWorldForRoute(settings: SiteSettings | null, slug: string | null): SiteWorldSettings | null {
+function resolveWorldForRoute(
+  settings: SiteSettings | null,
+  slug: string | null,
+): SiteWorldSettings | null {
   if (!settings) {
     return null;
   }

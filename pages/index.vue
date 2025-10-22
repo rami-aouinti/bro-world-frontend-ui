@@ -59,7 +59,9 @@ const siteSettingsState = useSiteSettingsState();
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
-const activeWorldId = computed(() => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null);
+const activeWorldId = computed(
+  () => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null,
+);
 
 function setActiveWorld(worldId: string) {
   if (!worldId) {

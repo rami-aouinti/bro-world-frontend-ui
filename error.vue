@@ -38,7 +38,10 @@
           {{ badgeLabel }}
         </p>
 
-        <p class="error-page__status" aria-hidden="true">
+        <p
+          class="error-page__status"
+          aria-hidden="true"
+        >
           {{ statusCode }}
         </p>
         <p class="sr-only">
@@ -116,7 +119,9 @@ const title = computed(() => {
 
   return statusMessage.value || t("pages.error.generic.title");
 });
-const subtitle = computed(() => (is404.value ? t("pages.error.notFound.subtitle") : t("pages.error.generic.subtitle")));
+const subtitle = computed(() =>
+  is404.value ? t("pages.error.notFound.subtitle") : t("pages.error.generic.subtitle"),
+);
 const description = computed(() => {
   if (is404.value) {
     return t("pages.error.notFound.description");
@@ -124,7 +129,9 @@ const description = computed(() => {
 
   return props.error?.message || t("pages.error.generic.description");
 });
-const statusAnnounce = computed(() => t("pages.error.statusAnnouncement", { code: statusCode.value }));
+const statusAnnounce = computed(() =>
+  t("pages.error.statusAnnouncement", { code: statusCode.value }),
+);
 const homeLabel = computed(() => t("pages.error.actions.home"));
 const helpLabel = computed(() => t("pages.error.actions.help"));
 const sidebarLabel = computed(() => t("pages.error.sidebarLabel"));

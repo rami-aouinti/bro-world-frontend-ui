@@ -533,6 +533,7 @@ export const blogSampleResponsesByWorldId: Record<string, BlogApiResponse> = {
 };
 
 export function resolveBlogSampleResponse(worldId?: string | null): BlogApiResponse {
-  const normalized = typeof worldId === "string" && worldId in blogSampleResponsesByWorldId ? worldId : "home";
+  const normalized =
+    typeof worldId === "string" && worldId in blogSampleResponsesByWorldId ? worldId : "home";
   return cloneResponse(blogSampleResponsesByWorldId[normalized]);
 }

@@ -45,7 +45,10 @@ describe("pages/index world explorer", () => {
         h(
           "div",
           {
-            class: ["world-explorer-card-stub", { "world-explorer-card-stub--active": props.isActive }],
+            class: [
+              "world-explorer-card-stub",
+              { "world-explorer-card-stub--active": props.isActive },
+            ],
             "data-test": "world-explorer-card",
           },
           [
@@ -95,7 +98,9 @@ describe("pages/index world explorer", () => {
 
     await cards[1].find(".activate-button").trigger("click");
 
-    expect(siteSettingsRef.value?.activeWorldId).toBe(siteSettingsRef.value?.worlds?.[1]?.id ?? null);
+    expect(siteSettingsRef.value?.activeWorldId).toBe(
+      siteSettingsRef.value?.worlds?.[1]?.id ?? null,
+    );
   });
 
   it("shows the empty state when no worlds are configured", () => {

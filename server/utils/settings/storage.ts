@@ -681,11 +681,7 @@ function cloneWorld(world: SiteWorldSettings): SiteWorldSettings {
     pluginIds: [...world.pluginIds],
     tags: world.tags ? [...world.tags] : undefined,
     createdBy:
-      world.createdBy === undefined
-        ? undefined
-        : world.createdBy
-          ? { ...world.createdBy }
-          : null,
+      world.createdBy === undefined ? undefined : world.createdBy ? { ...world.createdBy } : null,
   } satisfies SiteWorldSettings;
 }
 
@@ -695,9 +691,7 @@ function sanitizeWorldCreator(
 ): SiteWorldCreator | null {
   const fallbackCreator = fallback ?? null;
   const source =
-    candidate && typeof candidate === "object"
-      ? (candidate as Partial<SiteWorldCreator>)
-      : {};
+    candidate && typeof candidate === "object" ? (candidate as Partial<SiteWorldCreator>) : {};
 
   const rawId = typeof source.id === "string" ? source.id.trim() : "";
   const rawName = typeof source.name === "string" ? source.name.trim() : "";
@@ -708,10 +702,8 @@ function sanitizeWorldCreator(
         ? source.avatar.trim()
         : undefined;
 
-  const fallbackId =
-    typeof fallbackCreator?.id === "string" ? fallbackCreator.id.trim() : "";
-  const fallbackName =
-    typeof fallbackCreator?.name === "string" ? fallbackCreator.name.trim() : "";
+  const fallbackId = typeof fallbackCreator?.id === "string" ? fallbackCreator.id.trim() : "";
+  const fallbackName = typeof fallbackCreator?.name === "string" ? fallbackCreator.name.trim() : "";
   const fallbackAvatar = fallbackCreator?.avatar ?? null;
 
   if (!rawId && !fallbackId && !rawName && !fallbackName) {
@@ -720,12 +712,9 @@ function sanitizeWorldCreator(
 
   const resolvedName = rawName || fallbackName || "";
   const resolvedId =
-    rawId ||
-    fallbackId ||
-    (resolvedName ? slugify(resolvedName) : "unknown-creator");
+    rawId || fallbackId || (resolvedName ? slugify(resolvedName) : "unknown-creator");
 
-  const resolvedAvatar =
-    rawAvatar !== undefined ? rawAvatar : fallbackAvatar ?? null;
+  const resolvedAvatar = rawAvatar !== undefined ? rawAvatar : (fallbackAvatar ?? null);
 
   return {
     id: resolvedId,
@@ -764,9 +753,7 @@ function composeWorldCreator(
   const resolvedName = nameCandidates.find((value) => value.length > 0) ?? "";
 
   const resolvedAvatar =
-    typeof user?.photo === "string" && user.photo.trim()
-      ? user.photo.trim()
-      : null;
+    typeof user?.photo === "string" && user.photo.trim() ? user.photo.trim() : null;
 
   return {
     id: resolvedId,
@@ -1521,7 +1508,10 @@ export async function createWorld(
   }
   sanitizedWorld.updatedAt = new Date().toISOString();
 
-  if ((sanitizedWorld.createdBy === null || sanitizedWorld.createdBy === undefined) && sessionCreator) {
+  if (
+    (sanitizedWorld.createdBy === null || sanitizedWorld.createdBy === undefined) &&
+    sessionCreator
+  ) {
     sanitizedWorld.createdBy = { ...sessionCreator };
   }
 

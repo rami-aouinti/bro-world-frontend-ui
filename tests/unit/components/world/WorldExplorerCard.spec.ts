@@ -180,7 +180,7 @@ describe("components/world/WorldExplorerCard", () => {
       },
     });
 
-    expect(wrapper.text()).toContain("pages.index.participantsLabel:{\"count\":\"42\"}");
-    expect(wrapper.text()).toContain("pages.index.ratingLabel:{\"rating\":\"4.7\"}");
+    expect(wrapper.text()).toContain('pages.index.participantsLabel:{"count":"42"}');
+    expect(wrapper.text()).toContain('pages.index.ratingLabel:{"rating":"4.7"}');
   });
 });

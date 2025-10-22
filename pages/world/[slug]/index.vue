@@ -30,7 +30,9 @@ function normalizeSlug(raw: unknown): string {
       return "";
     }
 
-    return String(raw ?? "").trim().toLowerCase();
+    return String(raw ?? "")
+      .trim()
+      .toLowerCase();
   }
 
   return raw.trim().toLowerCase();
@@ -42,7 +44,7 @@ function matchesWorld(world: SiteWorldSettings, slug: string): boolean {
   const worldSlug = world.slug?.trim().toLowerCase() ?? "";
   const worldId = world.id?.trim().toLowerCase() ?? "";
 
-  return Boolean(slug) ? worldSlug === slug || worldId === slug : false;
+  return slug ? worldSlug === slug || worldId === slug : false;
 }
 
 const world = computed<SiteWorldSettings | null>(() => {
@@ -95,7 +97,9 @@ const pageTitle = computed(() => {
   return t("blog.hero.title");
 });
 
-const pageDescription = computed(() => world.value?.description?.trim() || t("blog.hero.description"));
+const pageDescription = computed(
+  () => world.value?.description?.trim() || t("blog.hero.description"),
+);
 
 if (typeof definePageMeta === "function") {
   definePageMeta({

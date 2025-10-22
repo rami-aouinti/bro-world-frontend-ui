@@ -803,7 +803,11 @@ describe("posts store", () => {
       expect.stringContaining("/v1/posts"),
       expect.objectContaining({
         method: "GET",
-        query: expect.objectContaining({ page: 1, pageSize: 1, worldId: expectedWorldId ?? expect.any(String) }),
+        query: expect.objectContaining({
+          page: 1,
+          pageSize: 1,
+          worldId: expectedWorldId ?? expect.any(String),
+        }),
       }),
     );
     expect(fetchSpy).toHaveBeenNthCalledWith(
@@ -811,7 +815,11 @@ describe("posts store", () => {
       expect.stringContaining("public/post"),
       expect.objectContaining({
         method: "GET",
-        query: expect.objectContaining({ page: 1, pageSize: 1, worldId: expectedWorldId ?? expect.any(String) }),
+        query: expect.objectContaining({
+          page: 1,
+          pageSize: 1,
+          worldId: expectedWorldId ?? expect.any(String),
+        }),
       }),
     );
   });
@@ -842,7 +850,9 @@ describe("posts store", () => {
     });
 
     const firstWorldId = siteSettingsState.value?.activeWorldId ?? "home";
-    const alternateWorld = siteSettingsState.value?.worlds?.find((world) => world.id !== firstWorldId);
+    const alternateWorld = siteSettingsState.value?.worlds?.find(
+      (world) => world.id !== firstWorldId,
+    );
 
     expect(alternateWorld).toBeDefined();
 

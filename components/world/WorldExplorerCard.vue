@@ -1,16 +1,16 @@
 <template>
   <SidebarCard
-      class="world-explorer-card text-card-foreground px-3 py-2"
-      glow
-      :aria-label="ariaLabel"
+    class="world-explorer-card text-card-foreground px-3 py-2"
+    glow
+    :aria-label="ariaLabel"
   >
     <div class="world-explorer-card__header">
       <div class="world-explorer-card__heading">
         <v-chip
-            class="world-explorer-card__visibility"
-            size="small"
-            variant="outlined"
-            color="primary"
+          class="world-explorer-card__visibility"
+          size="small"
+          variant="outlined"
+          color="primary"
         >
           {{ visibilityLabel }}
         </v-chip>
@@ -23,30 +23,30 @@
       </div>
 
       <v-chip
-          v-if="isActive"
-          class="world-explorer-card__badge"
-          color="success"
-          size="small"
-          variant="outlined"
+        v-if="isActive"
+        class="world-explorer-card__badge"
+        color="success"
+        size="small"
+        variant="outlined"
       >
         <div
-            v-if="hasRating"
-            class="world-explorer-card__stat"
+          v-if="hasRating"
+          class="world-explorer-card__stat"
         >
           {{ ratingLabel }}
         </div>
       </v-chip>
 
       <v-chip
-          v-else
-          class="world-explorer-card__badge"
-          color="error"
-          size="small"
-          variant="outlined"
+        v-else
+        class="world-explorer-card__badge"
+        color="error"
+        size="small"
+        variant="outlined"
       >
         <div
-            v-if="hasRating"
-            class="world-explorer-card__stat"
+          v-if="hasRating"
+          class="world-explorer-card__stat"
         >
           {{ ratingLabel }}
         </div>
@@ -55,45 +55,45 @@
 
     <div class="world-explorer-card__actions">
       <v-btn
-          class="world-explorer-card__action"
-          variant="outlined"
-          color="primary"
-          density="comfortable"
-          size="large"
-          block
-          :to="targetRoute"
-          :aria-label="t('pages.index.actions.enterAria', { world: world.name })"
+        class="world-explorer-card__action"
+        variant="outlined"
+        color="primary"
+        density="comfortable"
+        size="large"
+        block
+        :to="targetRoute"
+        :aria-label="t('pages.index.actions.enterAria', { world: world.name })"
       >
         {{ t("pages.index.actions.enter") }}
       </v-btn>
 
       <v-btn
-          class="world-explorer-card__action"
-          variant="outlined"
-          color="primary"
-          density="comfortable"
-          size="large"
-          block
-          :disabled="isActive"
-          :aria-label="activateButtonAriaLabel"
-          @click="handleActivate"
+        class="world-explorer-card__action"
+        variant="outlined"
+        color="primary"
+        density="comfortable"
+        size="large"
+        block
+        :disabled="isActive"
+        :aria-label="activateButtonAriaLabel"
+        @click="handleActivate"
       >
         {{ activateButtonLabel }}
       </v-btn>
     </div>
 
     <div
-        v-if="showFooter"
-        class="world-explorer-card__footer"
+      v-if="showFooter"
+      class="world-explorer-card__footer"
     >
       <div
-          v-if="hasParticipants"
-          class="world-explorer-card__stat"
+        v-if="hasParticipants"
+        class="world-explorer-card__stat"
       >
         <Icon
-            name="lucide:users"
-            class="world-explorer-card__stat-icon"
-            aria-hidden="true"
+          name="lucide:users"
+          class="world-explorer-card__stat-icon"
+          aria-hidden="true"
         />
         <span class="world-explorer-card__stat-text">
           {{ participantsLabel }}
@@ -127,13 +127,13 @@ const targetRoute = computed(() => {
 const visibilityLabel = computed(() => {
   const visibility = (props.world.visibility ?? "private").toLowerCase();
   return visibility === "public"
-      ? t("pages.index.visibility.public")
-      : t("pages.index.visibility.private");
+    ? t("pages.index.visibility.public")
+    : t("pages.index.visibility.private");
 });
 
 const creatorName = computed(() => props.world.createdBy?.name ?? "");
 const truncatedCreatorName = computed(() =>
-    creatorName.value.length > 7 ? creatorName.value.slice(0, 7) + "…" : creatorName.value
+  creatorName.value.length > 7 ? creatorName.value.slice(0, 7) + "…" : creatorName.value,
 );
 
 const truncatedWorldName = computed(() => {
@@ -151,13 +151,15 @@ const formattedParticipantsCount = computed(() => {
     return "";
   }
 
-  return new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(participantsCount.value);
+  return new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(
+    participantsCount.value,
+  );
 });
 
 const participantsLabel = computed(() =>
-    participantsCount.value === null
-      ? ""
-      : t("pages.index.participantsLabel", { count: formattedParticipantsCount.value }),
+  participantsCount.value === null
+    ? ""
+    : t("pages.index.participantsLabel", { count: formattedParticipantsCount.value }),
 );
 
 const ratingValue = computed(() => {
@@ -180,33 +182,27 @@ const formattedRating = computed(() => {
   return ratingValue.value.toFixed(hasDecimal ? 1 : 0);
 });
 
-const ratingLabel = computed(() =>
-    ratingValue.value === null
-      ? ""
-      : formattedRating.value
-);
+const ratingLabel = computed(() => (ratingValue.value === null ? "" : formattedRating.value));
 
 const hasParticipants = computed(() => participantsCount.value !== null);
 const hasRating = computed(() => ratingValue.value !== null);
 const showFooter = computed(() => hasParticipants.value || hasRating.value);
 
 const activateButtonLabel = computed(() =>
-    props.isActive
-      ? t("pages.index.actions.active")
-      : t("pages.index.actions.setActive"),
+  props.isActive ? t("pages.index.actions.active") : t("pages.index.actions.setActive"),
 );
 
 const activateButtonAriaLabel = computed(() =>
-    props.isActive
-      ? t("pages.index.actions.active")
-      : t("pages.index.actions.activateAria", { world: props.world.name }),
+  props.isActive
+    ? t("pages.index.actions.active")
+    : t("pages.index.actions.activateAria", { world: props.world.name }),
 );
 
 const ariaLabel = computed(() =>
-    t("pages.index.cardAria", {
-      name: props.world.name,
-      visibility: visibilityLabel.value,
-    }),
+  t("pages.index.cardAria", {
+    name: props.world.name,
+    visibility: visibilityLabel.value,
+  }),
 );
 
 function handleActivate() {
@@ -227,12 +223,18 @@ function handleActivate() {
   height: 100%;
   border-radius: 1rem;
   padding: 1.25rem;
-  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
   isolation: isolate;
 }
 .world-explorer-card::after {
   content: "";
-  position: absolute; inset: 0; pointer-events: none; opacity: .7;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.7;
 }
 .world-explorer-card:hover {
   transform: translateY(-4px);
@@ -240,24 +242,53 @@ function handleActivate() {
 .world-explorer-card:focus-within {
   outline: 0;
   box-shadow:
-      0 0 0 2px color-mix(in oklab, hsl(var(--primary)) 25%, transparent),
-      0 12px 32px -10px rgba(0,0,0,.5);
+    0 0 0 2px color-mix(in oklab, hsl(var(--primary)) 25%, transparent),
+    0 12px 32px -10px rgba(0, 0, 0, 0.5);
 }
 
-.world-explorer-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-.world-explorer-card__heading { display: grid; gap: .5rem; }
-.world-explorer-card__visibility { align-self: flex-start; letter-spacing: .3px; }
+.world-explorer-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.world-explorer-card__heading {
+  display: grid;
+  gap: 0.5rem;
+}
+.world-explorer-card__visibility {
+  align-self: flex-start;
+  letter-spacing: 0.3px;
+}
 
 .world-explorer-card__title {
-  line-height: 1.2; font-weight: 700;
-  font-size: clamp(1.15rem, 0.6rem + 1.2vw, 1.35rem); margin: 0;
+  line-height: 1.2;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 0.6rem + 1.2vw, 1.35rem);
+  margin: 0;
 }
-.world-explorer-card__badge { font-weight: 700; border-radius: 999px; }
+.world-explorer-card__badge {
+  font-weight: 700;
+  border-radius: 999px;
+}
 
-.world-explorer-card__meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
+.world-explorer-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
 
-.world-explorer-card__actions { display: grid; gap: .6rem; margin-top: .25rem; }
-.world-explorer-card__action { text-transform: none; font-weight: 600; border-radius: .9rem; }
+.world-explorer-card__actions {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+.world-explorer-card__action {
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 0.9rem;
+}
 
 .world-explorer-card__footer {
   display: flex;
@@ -267,12 +298,30 @@ function handleActivate() {
   color: color-mix(in oklab, hsl(var(--muted-foreground)), hsl(var(--foreground)) 35%);
 }
 
-.world-explorer-card__stat { display: inline-flex; align-items: center; gap: .4rem; font-weight: 600; font-size: .85rem; }
-.world-explorer-card__stat-icon { width: 0.5rem; height: 1rem; opacity: .9; }
-.world-explorer-card__stat-text { display: inline-flex; align-items: center; gap: .15rem; }
+.world-explorer-card__stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.world-explorer-card__stat-icon {
+  width: 0.5rem;
+  height: 1rem;
+  opacity: 0.9;
+}
+.world-explorer-card__stat-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .world-explorer-card { transition: none; }
-  .world-explorer-card:hover { transform: none; }
+  .world-explorer-card {
+    transition: none;
+  }
+  .world-explorer-card:hover {
+    transform: none;
+  }
 }
 </style>

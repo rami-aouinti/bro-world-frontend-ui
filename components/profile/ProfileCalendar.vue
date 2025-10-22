@@ -1129,7 +1129,7 @@ watch(
   () => {
     syncSharedState();
   },
-  { immediate: true, flush: 'post' },
+  { immediate: true, flush: "post" },
 );
 
 onBeforeUnmount(() => {

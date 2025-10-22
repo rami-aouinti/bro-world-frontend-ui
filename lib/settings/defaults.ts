@@ -13,18 +13,18 @@ import type {
 import { defaultLanguageCode, supportedLanguages } from "~/lib/i18n/languages";
 
 function makeMenu(
-    menu: {
-      requiresAdmin?: boolean;
-      children?: MenuBlueprint[];
-      icon?: string | null;
-      id: string;
-      label: string;
-      to?: string | null;
-      isVisible?: boolean;
-      translate?: boolean;
-      order: number
-    },
-    children: SiteMenuItem[] = [],
+  menu: {
+    requiresAdmin?: boolean;
+    children?: MenuBlueprint[];
+    icon?: string | null;
+    id: string;
+    label: string;
+    to?: string | null;
+    isVisible?: boolean;
+    translate?: boolean;
+    order: number;
+  },
+  children: SiteMenuItem[] = [],
 ): SiteMenuItem {
   return {
     ...menu,
@@ -471,277 +471,331 @@ const BASE_MENU_BLUEPRINTS: MenuBlueprint[] = [
 ];
 
 const PLUGIN_MENU_CONTRIBUTIONS: {
-  game: ({
-    icon: string;
-    id: string;
-    label: string;
-    to: string;
-    isVisible: boolean;
-    translate: boolean;
-    order: number
-  } | {
-    children: {
-      requiresAdmin: boolean;
-      children: ({
-        requiresAdmin: boolean;
+  game: (
+    | {
         icon: string;
         id: string;
         label: string;
         to: string;
         isVisible: boolean;
         translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
+        order: number;
+      }
+    | {
+        children: {
+          requiresAdmin: boolean;
+          children: (
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+          )[];
+          icon: string;
+          id: string;
+          label: string;
+          isVisible: boolean;
+          translate: boolean;
+          order: number;
+        }[];
+        id: string;
+      }
+  )[];
+  education: (
+    | {
         icon: string;
         id: string;
         label: string;
         to: string;
         isVisible: boolean;
         translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
+        order: number;
+      }
+    | {
+        children: {
+          requiresAdmin: boolean;
+          children: (
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+          )[];
+          icon: string;
+          id: string;
+          label: string;
+          isVisible: boolean;
+          translate: boolean;
+          order: number;
+        }[];
+        id: string;
+      }
+  )[];
+  ecommerce: (
+    | {
+        children: (
+          | {
+              icon: string;
+              id: string;
+              label: string;
+              to: string;
+              translate: boolean;
+              order: number;
+            }
+          | {
+              icon: string;
+              id: string;
+              label: string;
+              to: string;
+              translate: boolean;
+              order: number;
+            }
+          | {
+              icon: string;
+              id: string;
+              label: string;
+              to: string;
+              translate: boolean;
+              order: number;
+            }
+          | {
+              icon: string;
+              id: string;
+              label: string;
+              to: string;
+              translate: boolean;
+              order: number;
+            }
+        )[];
         icon: string;
         id: string;
         label: string;
         to: string;
         isVisible: boolean;
         translate: boolean;
-        order: number
-      })[];
-      icon: string;
-      id: string;
-      label: string;
-      isVisible: boolean;
-      translate: boolean;
-      order: number
-    }[];
-    id: string
-  })[];
-  education: ({
-    icon: string;
-    id: string;
-    label: string;
-    to: string;
-    isVisible: boolean;
-    translate: boolean;
-    order: number
-  } | {
-    children: {
-      requiresAdmin: boolean;
-      children: ({
-        requiresAdmin: boolean;
+        order: number;
+      }
+    | {
+        children: {
+          requiresAdmin: boolean;
+          children: (
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+          )[];
+          icon: string;
+          id: string;
+          label: string;
+          isVisible: boolean;
+          translate: boolean;
+          order: number;
+        }[];
+        id: string;
+      }
+  )[];
+  "job-board": (
+    | {
         icon: string;
         id: string;
         label: string;
         to: string;
         isVisible: boolean;
         translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
+        order: number;
+      }
+    | {
+        children: {
+          requiresAdmin: boolean;
+          children: (
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+            | {
+                requiresAdmin: boolean;
+                icon: string;
+                id: string;
+                label: string;
+                to: string;
+                isVisible: boolean;
+                translate: boolean;
+                order: number;
+              }
+          )[];
+          icon: string;
+          id: string;
+          label: string;
+          isVisible: boolean;
+          translate: boolean;
+          order: number;
+        }[];
         id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      })[];
-      icon: string;
-      id: string;
-      label: string;
-      isVisible: boolean;
-      translate: boolean;
-      order: number
-    }[];
-    id: string
-  })[];
-  ecommerce: ({
-    children: ({ icon: string; id: string; label: string; to: string; translate: boolean; order: number } | {
-      icon: string;
-      id: string;
-      label: string;
-      to: string;
-      translate: boolean;
-      order: number
-    } | { icon: string; id: string; label: string; to: string; translate: boolean; order: number } | {
-      icon: string;
-      id: string;
-      label: string;
-      to: string;
-      translate: boolean;
-      order: number
-    })[];
-    icon: string;
-    id: string;
-    label: string;
-    to: string;
-    isVisible: boolean;
-    translate: boolean;
-    order: number
-  } | {
-    children: {
-      requiresAdmin: boolean;
-      children: ({
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      })[];
-      icon: string;
-      id: string;
-      label: string;
-      isVisible: boolean;
-      translate: boolean;
-      order: number
-    }[];
-    id: string
-  })[];
-  "job-board": ({
-    icon: string;
-    id: string;
-    label: string;
-    to: string;
-    isVisible: boolean;
-    translate: boolean;
-    order: number
-  } | {
-    children: {
-      requiresAdmin: boolean;
-      children: ({
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      })[];
-      icon: string;
-      id: string;
-      label: string;
-      isVisible: boolean;
-      translate: boolean;
-      order: number
-    }[];
-    id: string
-  })[];
+      }
+  )[];
   blog: {
     children: {
       requiresAdmin: boolean;
-      children: ({
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      } | {
-        requiresAdmin: boolean;
-        icon: string;
-        id: string;
-        label: string;
-        to: string;
-        isVisible: boolean;
-        translate: boolean;
-        order: number
-      })[];
+      children: (
+        | {
+            requiresAdmin: boolean;
+            icon: string;
+            id: string;
+            label: string;
+            to: string;
+            isVisible: boolean;
+            translate: boolean;
+            order: number;
+          }
+        | {
+            requiresAdmin: boolean;
+            icon: string;
+            id: string;
+            label: string;
+            to: string;
+            isVisible: boolean;
+            translate: boolean;
+            order: number;
+          }
+        | {
+            requiresAdmin: boolean;
+            icon: string;
+            id: string;
+            label: string;
+            to: string;
+            isVisible: boolean;
+            translate: boolean;
+            order: number;
+          }
+      )[];
       icon: string;
       id: string;
       label: string;
       isVisible: boolean;
       translate: boolean;
-      order: number
+      order: number;
     }[];
-    id: string
-  }[];
-  crm: ({
-    icon: string;
     id: string;
-    label: string;
-    to: string;
-    isVisible: boolean;
-    translate: boolean;
-    order: number
-  } | {
-    children: {
-      children: {
-        requiresAdmin: boolean;
+  }[];
+  crm: (
+    | {
         icon: string;
         id: string;
         label: string;
         to: string;
         isVisible: boolean;
         translate: boolean;
-        order: number
-      }[];
-      id: string
-    }[];
-    id: string
-  })[]
+        order: number;
+      }
+    | {
+        children: {
+          children: {
+            requiresAdmin: boolean;
+            icon: string;
+            id: string;
+            label: string;
+            to: string;
+            isVisible: boolean;
+            translate: boolean;
+            order: number;
+          }[];
+          id: string;
+        }[];
+        id: string;
+      }
+  )[];
 } = {
   "job-board": [
     {
@@ -1156,7 +1210,7 @@ const defaultWorldCreator: SiteWorldCreator = {
   id: "bro-world-team",
   name: "BroWorld Team",
   avatar: null,
-  };
+};
 
 const homeWorld: {
   pluginIds: string[];
@@ -1209,7 +1263,7 @@ const homeWorld: {
 };
 
 const defaultWorld: {
-  pluginIds: (string)[];
+  pluginIds: string[];
   visibility: string;
   enableMonetization: boolean;
   description: null;
@@ -1376,161 +1430,169 @@ const esportsWorld: SiteWorldSettings = {
 
 export const defaultSiteSettings: {
   menuBlueprints: SiteMenuItem[];
-  worlds: ({
-    pluginIds: string[];
-    visibility: string;
-    enableMonetization: boolean;
-    description: string;
-    launchDate: string;
-    locale: string;
-    tags: string[];
-    createdAt: string;
-    createdBy: { avatarUrl: null; name: string; handle: string };
-    allowGuests: boolean;
-    name: string;
-    requireVerification: boolean;
-    guidelines: string;
-    theme: string;
-    id: string;
-    region: string;
-    enableIntegrations: boolean;
-    slug: string;
-    updatedAt: string;
-    participantsCount: number;
-    rating: number;
-  } | {
-    pluginIds: string[];
-    visibility: string;
-    enableMonetization: boolean;
-    description: null;
-    launchDate: string;
-    locale: string;
-    tags: any[];
-    createdAt: string;
-    createdBy: { name: string; id: string; avatar?: string | null } | null;
-    allowGuests: boolean;
-    name: string;
-    requireVerification: boolean;
-    guidelines: string;
-    theme: string;
-    id: string;
-    region: string;
-    enableIntegrations: boolean;
-    slug: string;
-    updatedAt: string;
-    participantsCount: number;
-    rating: number;
-  } | {
-    pluginIds: string[];
-    visibility?: string | null;
-    enableMonetization?: boolean;
-    description?: string | null;
-    launchDate?: string | null;
-    locale?: string | null;
-    tags: string[];
-    createdAt: string;
-    createdBy?: SiteWorldCreator | null;
-    allowGuests?: boolean;
-    name: string;
-    requireVerification?: boolean;
-    guidelines?: string | null;
-    theme?: string | null;
-    id: string;
-    region?: string | null;
-    enableIntegrations?: boolean;
-    slug: string;
-    updatedAt: string;
-    participantsCount?: number;
-    rating?: number;
-  } | {
-    pluginIds: string[];
-    visibility?: string | null;
-    enableMonetization?: boolean;
-    description?: string | null;
-    launchDate?: string | null;
-    locale?: string | null;
-    tags: string[];
-    createdAt: string;
-    createdBy?: SiteWorldCreator | null;
-    allowGuests?: boolean;
-    name: string;
-    requireVerification?: boolean;
-    guidelines?: string | null;
-    theme?: string | null;
-    id: string;
-    region?: string | null;
-    enableIntegrations?: boolean;
-    slug: string;
-    updatedAt: string;
-    participantsCount?: number;
-    rating?: number;
-  } | {
-    pluginIds: string[];
-    visibility?: string | null;
-    enableMonetization?: boolean;
-    description?: string | null;
-    launchDate?: string | null;
-    locale?: string | null;
-    tags: string[];
-    createdAt: string;
-    createdBy?: SiteWorldCreator | null;
-    allowGuests?: boolean;
-    name: string;
-    requireVerification?: boolean;
-    guidelines?: string | null;
-    theme?: string | null;
-    id: string;
-    region?: string | null;
-    enableIntegrations?: boolean;
-    slug: string;
-    updatedAt: string;
-    participantsCount?: number;
-    rating?: number;
-  } | {
-    pluginIds: string[];
-    visibility?: string | null;
-    enableMonetization?: boolean;
-    description?: string | null;
-    launchDate?: string | null;
-    locale?: string | null;
-    tags: string[];
-    createdAt: string;
-    createdBy?: SiteWorldCreator | null;
-    allowGuests?: boolean;
-    name: string;
-    requireVerification?: boolean;
-    guidelines?: string | null;
-    theme?: string | null;
-    id: string;
-    region?: string | null;
-    enableIntegrations?: boolean;
-    slug: string;
-    updatedAt: string;
-    participantsCount?: number;
-    rating?: number;
-  } | {
-    pluginIds: string[];
-    visibility?: string | null;
-    enableMonetization?: boolean;
-    description?: string | null;
-    launchDate?: string | null;
-    locale?: string | null;
-    tags: string[];
-    createdAt: string;
-    createdBy?: SiteWorldCreator | null;
-    allowGuests?: boolean;
-    name: string;
-    requireVerification?: boolean;
-    guidelines?: string | null;
-    theme?: string | null;
-    id: string;
-    region?: string | null;
-    enableIntegrations?: boolean;
-    slug: string;
-    updatedAt: string;
-    participantsCount?: number;
-    rating?: number;
-  })[];
+  worlds: (
+    | {
+        pluginIds: string[];
+        visibility: string;
+        enableMonetization: boolean;
+        description: string;
+        launchDate: string;
+        locale: string;
+        tags: string[];
+        createdAt: string;
+        createdBy: { avatarUrl: null; name: string; handle: string };
+        allowGuests: boolean;
+        name: string;
+        requireVerification: boolean;
+        guidelines: string;
+        theme: string;
+        id: string;
+        region: string;
+        enableIntegrations: boolean;
+        slug: string;
+        updatedAt: string;
+        participantsCount: number;
+        rating: number;
+      }
+    | {
+        pluginIds: string[];
+        visibility: string;
+        enableMonetization: boolean;
+        description: null;
+        launchDate: string;
+        locale: string;
+        tags: any[];
+        createdAt: string;
+        createdBy: { name: string; id: string; avatar?: string | null } | null;
+        allowGuests: boolean;
+        name: string;
+        requireVerification: boolean;
+        guidelines: string;
+        theme: string;
+        id: string;
+        region: string;
+        enableIntegrations: boolean;
+        slug: string;
+        updatedAt: string;
+        participantsCount: number;
+        rating: number;
+      }
+    | {
+        pluginIds: string[];
+        visibility?: string | null;
+        enableMonetization?: boolean;
+        description?: string | null;
+        launchDate?: string | null;
+        locale?: string | null;
+        tags: string[];
+        createdAt: string;
+        createdBy?: SiteWorldCreator | null;
+        allowGuests?: boolean;
+        name: string;
+        requireVerification?: boolean;
+        guidelines?: string | null;
+        theme?: string | null;
+        id: string;
+        region?: string | null;
+        enableIntegrations?: boolean;
+        slug: string;
+        updatedAt: string;
+        participantsCount?: number;
+        rating?: number;
+      }
+    | {
+        pluginIds: string[];
+        visibility?: string | null;
+        enableMonetization?: boolean;
+        description?: string | null;
+        launchDate?: string | null;
+        locale?: string | null;
+        tags: string[];
+        createdAt: string;
+        createdBy?: SiteWorldCreator | null;
+        allowGuests?: boolean;
+        name: string;
+        requireVerification?: boolean;
+        guidelines?: string | null;
+        theme?: string | null;
+        id: string;
+        region?: string | null;
+        enableIntegrations?: boolean;
+        slug: string;
+        updatedAt: string;
+        participantsCount?: number;
+        rating?: number;
+      }
+    | {
+        pluginIds: string[];
+        visibility?: string | null;
+        enableMonetization?: boolean;
+        description?: string | null;
+        launchDate?: string | null;
+        locale?: string | null;
+        tags: string[];
+        createdAt: string;
+        createdBy?: SiteWorldCreator | null;
+        allowGuests?: boolean;
+        name: string;
+        requireVerification?: boolean;
+        guidelines?: string | null;
+        theme?: string | null;
+        id: string;
+        region?: string | null;
+        enableIntegrations?: boolean;
+        slug: string;
+        updatedAt: string;
+        participantsCount?: number;
+        rating?: number;
+      }
+    | {
+        pluginIds: string[];
+        visibility?: string | null;
+        enableMonetization?: boolean;
+        description?: string | null;
+        launchDate?: string | null;
+        locale?: string | null;
+        tags: string[];
+        createdAt: string;
+        createdBy?: SiteWorldCreator | null;
+        allowGuests?: boolean;
+        name: string;
+        requireVerification?: boolean;
+        guidelines?: string | null;
+        theme?: string | null;
+        id: string;
+        region?: string | null;
+        enableIntegrations?: boolean;
+        slug: string;
+        updatedAt: string;
+        participantsCount?: number;
+        rating?: number;
+      }
+    | {
+        pluginIds: string[];
+        visibility?: string | null;
+        enableMonetization?: boolean;
+        description?: string | null;
+        launchDate?: string | null;
+        locale?: string | null;
+        tags: string[];
+        createdAt: string;
+        createdBy?: SiteWorldCreator | null;
+        allowGuests?: boolean;
+        name: string;
+        requireVerification?: boolean;
+        guidelines?: string | null;
+        theme?: string | null;
+        id: string;
+        region?: string | null;
+        enableIntegrations?: boolean;
+        slug: string;
+        updatedAt: string;
+        participantsCount?: number;
+        rating?: number;
+      }
+  )[];
   languages: SiteLanguageDefinition[];
   profile: SiteProfileSettings;
   localized: Record<string, SiteLocalizedSettings>;
@@ -1543,7 +1605,7 @@ export const defaultSiteSettings: {
   menus: SiteMenuItem[];
   activeWorldId: string;
   activeThemeId: string;
-  updatedAt: string
+  updatedAt: string;
 } = {
   siteName: DEFAULT_SITE_NAME,
   tagline: DEFAULT_TAGLINE,
@@ -1630,67 +1692,71 @@ export const defaultSiteSettings: {
 
 export function getDefaultSiteSettings(): {
   menuBlueprints: SiteMenuItem[];
-  worlds: ({
-    pluginIds: string[];
-    visibility: string;
-    enableMonetization: boolean;
-    description: string;
-    launchDate: string;
-    locale: string;
-    tags: string[];
-    createdAt: string;
-    createdBy: { avatarUrl: null; name: string; handle: string };
-    allowGuests: boolean;
-    name: string;
-    requireVerification: boolean;
-    guidelines: string;
-    theme: string;
-    id: string;
-    region: string;
-    enableIntegrations: boolean;
-    slug: string;
-    updatedAt: string
-  } | {
-    pluginIds: string[];
-    visibility: string;
-    enableMonetization: boolean;
-    description: null;
-    launchDate: string;
-    locale: string;
-    tags: any[];
-    createdAt: string;
-    createdBy: { name: string; id: string; avatar?: string | null } | null;
-    allowGuests: boolean;
-    name: string;
-    requireVerification: boolean;
-    guidelines: string;
-    theme: string;
-    id: string;
-    region: string;
-    enableIntegrations: boolean;
-    slug: string;
-    updatedAt: string
-  } | {
-    pluginIds: string[];
-    visibility?: string | null;
-    enableMonetization?: boolean;
-    description?: string | null;
-    launchDate?: string | null;
-    locale?: string | null;
-    tags: string[];
-    createdAt: string;
-    createdBy?: SiteWorldCreator | null;
-    allowGuests?: boolean;
-    name: string;
-    requireVerification?: boolean;
-    guidelines?: string | null;
-    theme?: string | null;
-    id: string;
-    region?: string | null;
-    enableIntegrations?: boolean;
-    slug: string;
-    updatedAt: string
-  })[];
+  worlds: (
+    | {
+        pluginIds: string[];
+        visibility: string;
+        enableMonetization: boolean;
+        description: string;
+        launchDate: string;
+        locale: string;
+        tags: string[];
+        createdAt: string;
+        createdBy: { avatarUrl: null; name: string; handle: string };
+        allowGuests: boolean;
+        name: string;
+        requireVerification: boolean;
+        guidelines: string;
+        theme: string;
+        id: string;
+        region: string;
+        enableIntegrations: boolean;
+        slug: string;
+        updatedAt: string;
+      }
+    | {
+        pluginIds: string[];
+        visibility: string;
+        enableMonetization: boolean;
+        description: null;
+        launchDate: string;
+        locale: string;
+        tags: any[];
+        createdAt: string;
+        createdBy: { name: string; id: string; avatar?: string | null } | null;
+        allowGuests: boolean;
+        name: string;
+        requireVerification: boolean;
+        guidelines: string;
+        theme: string;
+        id: string;
+        region: string;
+        enableIntegrations: boolean;
+        slug: string;
+        updatedAt: string;
+      }
+    | {
+        pluginIds: string[];
+        visibility?: string | null;
+        enableMonetization?: boolean;
+        description?: string | null;
+        launchDate?: string | null;
+        locale?: string | null;
+        tags: string[];
+        createdAt: string;
+        createdBy?: SiteWorldCreator | null;
+        allowGuests?: boolean;
+        name: string;
+        requireVerification?: boolean;
+        guidelines?: string | null;
+        theme?: string | null;
+        id: string;
+        region?: string | null;
+        enableIntegrations?: boolean;
+        slug: string;
+        updatedAt: string;
+      }
+  )[];
   languages: SiteLanguageDefinition[];
   profile: SiteProfileSettings;
   localized: Record<string, SiteLocalizedSettings>;
@@ -1703,7 +1769,7 @@ export function getDefaultSiteSettings(): {
   menus: SiteMenuItem[];
   activeWorldId: string;
   activeThemeId: string;
-  updatedAt: string
+  updatedAt: string;
 } {
   return structuredClone(defaultSiteSettings);
 }
