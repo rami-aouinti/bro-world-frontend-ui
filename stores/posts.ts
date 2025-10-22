@@ -1,8 +1,9 @@
-import { computed, reactive, shallowRef } from "vue";
+import { computed, reactive, shallowRef, watch } from "vue";
 import { defineStore } from "~/lib/pinia-shim";
 import { useRuntimeConfig, useState } from "#imports";
 import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/mock/blog";
 import { useAuthStore } from "~/composables/useAuthStore";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 
 function sanitizeErrorMessage(message: string): string {
@@ -783,6 +784,22 @@ export const usePostsStore = defineStore("posts", () => {
   const listTtlMs = Math.max(Number(redisRuntimeConfig?.listTtl ?? 60), 1) * 1000;
   const itemTtlMs = Math.max(Number(redisRuntimeConfig?.itemTtl ?? 300), 1) * 1000;
 
+  const siteSettingsState = (() => {
+    try {
+      return useSiteSettingsState();
+    } catch (error) {
+      if (import.meta.dev) {
+        console.warn("[stores/posts] Site settings state unavailable; falling back to manual world tracking.", error);
+      }
+
+      return null;
+    }
+  })();
+
+  const activeWorldId = computed(() => siteSettingsState?.activeWorld.value?.id ?? null);
+
+  const currentWorldId = useState<string | null>("posts-active-world-id", () => null);
+
   const items = useState<Record<string, PostsStorePost>>("posts-items", () => ({}));
   const listIds = useState<string[]>("posts-list-ids", () => []);
   const itemTimestamps = useState<Record<string, number>>("posts-item-timestamps", () => ({}));
@@ -810,6 +827,10 @@ export const usePostsStore = defineStore("posts", () => {
   const pageMap = useState<Record<number, string[]>>("posts-page-map", () => ({}));
   const pageTimestamps = useState<Record<number, number>>("posts-page-timestamps", () => ({}));
   const backgroundPromise = shallowRef<Promise<void> | null>(null);
+
+  if (currentWorldId.value === null && activeWorldId.value) {
+    currentWorldId.value = activeWorldId.value;
+  }
 
   const posts = computed(() =>
     listIds.value
@@ -1058,6 +1079,55 @@ export const usePostsStore = defineStore("posts", () => {
 
   const activeFetches = new Map<string, ActiveFetchState>();
 
+  function resetStoreState() {
+    items.value = {};
+    listIds.value = [];
+    itemTimestamps.value = {};
+    commentsCache.value = {};
+    commentTimestamps.value = {};
+    cachedAt.value = null;
+    lastFetched.value = null;
+    pending.value = false;
+    error.value = null;
+    loadingMore.value = false;
+    creating.value = false;
+    createError.value = null;
+    updating.value = {};
+    deleting.value = {};
+    isRevalidating.value = false;
+    currentPage.value = 0;
+    pageSize.value = 0;
+    totalCount.value = 0;
+    pageMap.value = {};
+    pageTimestamps.value = {};
+    backgroundPromise.value = null;
+    activeFetches.clear();
+  }
+
+  watch(
+    activeWorldId,
+    (newWorldId, oldWorldId) => {
+      if (typeof oldWorldId === "undefined") {
+        if (typeof newWorldId === "string" && newWorldId) {
+          currentWorldId.value = newWorldId;
+        }
+
+        return;
+      }
+
+      const normalizedNew = typeof newWorldId === "string" && newWorldId ? newWorldId : null;
+      const normalizedOld = typeof oldWorldId === "string" && oldWorldId ? oldWorldId : null;
+
+      if (normalizedNew === normalizedOld) {
+        return;
+      }
+
+      resetStoreState();
+      currentWorldId.value = normalizedNew;
+    },
+    { immediate: true },
+  );
+
   function createFetchKey(options: FetchOptions & { background?: boolean } = {}) {
     const payload = {
       params: options.params ?? {},
@@ -1067,12 +1137,43 @@ export const usePostsStore = defineStore("posts", () => {
     return stableStringify(payload);
   }
 
+  function normalizeWorldId(value: unknown): string | null {
+    if (typeof value !== "string") {
+      return null;
+    }
+
+    const trimmed = value.trim();
+
+    return trimmed ? trimmed : null;
+  }
+
   async function fetchPostsFromServer(
     page: number,
     options: FetchOptions & { background?: boolean; loadMore?: boolean } = {},
+    worldId: string | null = null,
   ) {
     const { loadMore, background } = options;
-    const params = { ...(options.params ?? {}), page };
+    const providedWorldId = normalizeWorldId((options.params as Record<string, unknown> | undefined)?.worldId);
+    const requestedWorldId =
+      normalizeWorldId(worldId) ??
+      providedWorldId ??
+      normalizeWorldId(activeWorldId.value) ??
+      currentWorldId.value;
+    const params = { ...(options.params ?? {}), page } as Record<string, unknown>;
+
+    if (requestedWorldId) {
+      params.worldId = requestedWorldId;
+    } else if ("worldId" in params && params.worldId == null) {
+      delete params.worldId;
+    }
+
+    const targetWorldId = normalizeWorldId(params.worldId) ?? null;
+
+    if (currentWorldId.value !== targetWorldId) {
+      resetStoreState();
+      currentWorldId.value = targetWorldId;
+    }
+
     const fetchKey = createFetchKey({ params, force: options.force, background });
     const existingRequest = activeFetches.get(fetchKey);
 
@@ -1241,6 +1342,10 @@ export const usePostsStore = defineStore("posts", () => {
           }
         }
 
+        if (targetWorldId !== (currentWorldId.value ?? null)) {
+          return posts.value;
+        }
+
         setPostsFromResponse(winner.normalized);
         return winner.normalized.data;
       } catch (error_) {
@@ -1292,7 +1397,17 @@ export const usePostsStore = defineStore("posts", () => {
     }
 
     const page = requestedPage;
-    const params = { ...(options.params ?? {}), page };
+    const params = { ...(options.params ?? {}), page } as Record<string, unknown>;
+    const providedWorldId = normalizeWorldId(params.worldId);
+    const activeWorld = normalizeWorldId(activeWorldId.value) ?? currentWorldId.value;
+
+    if (providedWorldId) {
+      params.worldId = providedWorldId;
+    } else if (activeWorld) {
+      params.worldId = activeWorld;
+    }
+
+    const requestWorldId = normalizeWorldId(params.worldId) ?? null;
     const now = Date.now();
 
     if (!options.force) {
@@ -1310,7 +1425,7 @@ export const usePostsStore = defineStore("posts", () => {
             params,
             force: true,
             background: true,
-          })
+          }, requestWorldId)
             .catch((revalidationError) => {
               console.error("Posts revalidation failed", revalidationError);
             })
@@ -1333,7 +1448,7 @@ export const usePostsStore = defineStore("posts", () => {
       }
     }
 
-    return fetchPostsFromServer(page, { ...options, params, loadMore: page > 1 && !options.force });
+    return fetchPostsFromServer(page, { ...options, params, loadMore: page > 1 && !options.force }, requestWorldId);
   }
 
   async function fetchMorePosts(options: FetchOptions = {}) {
@@ -1436,13 +1551,21 @@ export const usePostsStore = defineStore("posts", () => {
     const fetcher = resolveApiFetcher();
 
     try {
+      const worldIdForCreate =
+        normalizeWorldId(activeWorldId.value) ?? normalizeWorldId(currentWorldId.value) ?? null;
+      const requestBody: Record<string, unknown> = {
+        title: sanitizeTextInput(payload.title),
+        summary: sanitizeTextInput(payload.summary),
+        content: trimmedContent,
+      };
+
+      if (worldIdForCreate) {
+        requestBody.worldId = worldIdForCreate;
+      }
+
       const response = await fetcher<PostResponse>("/v1/posts", {
         method: "POST",
-        body: {
-          title: sanitizeTextInput(payload.title),
-          summary: sanitizeTextInput(payload.summary),
-          content: trimmedContent,
-        },
+        body: requestBody,
       });
 
       if (!response?.data || typeof response.data.id !== "string") {

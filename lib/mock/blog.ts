@@ -63,6 +63,14 @@ export interface BlogApiResponse {
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 
+function cloneResponse<T>(payload: T): T {
+  try {
+    return structuredClone(payload);
+  } catch {
+    return JSON.parse(JSON.stringify(payload)) as T;
+  }
+}
+
 export const blogSampleResponse: BlogApiResponse = {
   data: [
     {
@@ -500,3 +508,31 @@ export const blogSampleResponse: BlogApiResponse = {
   limit: 10,
   count: 300,
 };
+
+const broWorldSampleResponse = (() => {
+  const clone = cloneResponse(blogSampleResponse);
+
+  clone.data = clone.data.map((post, index) => {
+    const clonedPost = cloneResponse(post);
+    const suffix = index % 2 === 0 ? "BroWorld" : "Bro World";
+
+    return {
+      ...clonedPost,
+      title: `${clonedPost.title} — ${suffix}`,
+      summary: `${clonedPost.summary} (${suffix} feed)`,
+      slug: `${clonedPost.slug}-${suffix.replace(/\s+/g, "-").toLowerCase()}`,
+    };
+  });
+
+  return clone;
+})();
+
+export const blogSampleResponsesByWorldId: Record<string, BlogApiResponse> = {
+  home: blogSampleResponse,
+  "bro-world": broWorldSampleResponse,
+};
+
+export function resolveBlogSampleResponse(worldId?: string | null): BlogApiResponse {
+  const normalized = typeof worldId === "string" && worldId in blogSampleResponsesByWorldId ? worldId : "home";
+  return cloneResponse(blogSampleResponsesByWorldId[normalized]);
+}
