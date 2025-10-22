@@ -31,7 +31,7 @@ const pluginRegistry: readonly PluginRegistryEntry[] = [
     ],
   },
   {
-    id: "job-board",
+    id: "job",
     menuItems: [
       {
         id: "jobs",
