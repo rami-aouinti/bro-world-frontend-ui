@@ -5,8 +5,8 @@
       aria-describedby="profile-friends-subtitle"
     >
       <SidebarCard
-          class="text-card-foreground px-3 py-3"
-          glow
+        class="text-card-foreground px-3 py-3"
+        glow
       >
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
           <div class="flex-grow-1">

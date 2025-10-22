@@ -1,10 +1,9 @@
 <template>
   <main aria-labelledby="education-heading">
     <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        glow
+      class="text-card-foreground px-3 py-2"
+      glow
     >
-
       <section class="mb-10 text-center">
         <h4 class="text-h4 mb-4">
           {{ t("pages.education.catalog.title") }}
@@ -13,11 +12,11 @@
 
       <v-row dense>
         <v-col
-            v-for="category in categories"
-            :key="category.id"
-            cols="12"
-            md="6"
-            lg="4"
+          v-for="category in categories"
+          :key="category.id"
+          cols="12"
+          md="6"
+          lg="4"
         >
           <CategoryCard :category="category" />
         </v-col>

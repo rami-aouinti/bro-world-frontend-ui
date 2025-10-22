@@ -14,9 +14,7 @@
             elevation="0"
             rounded="xl"
           >
-            <article
-              aria-describedby="contact-intro"
-            >
+            <article aria-describedby="contact-intro">
               <div class="contact-badge">
                 <v-icon
                   icon="mdi:message-processing-outline"
