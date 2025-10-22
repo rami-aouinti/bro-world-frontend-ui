@@ -36,7 +36,7 @@
     >
       <v-autocomplete
         v-model:search="worldSearchInput"
-        class="app-top-bar__search mx-auto w-full max-w-[360px] bg-background/60 p-4 text-sm backdrop-blur md:max-w-[420px]"
+        class="app-top-bar__search mx-auto w-full max-w-[360px] bg-transparent p-4 text-sm backdrop-blur md:max-w-[420px] rounded-xl"
         density="compact"
         hide-details
         menu-icon=""
