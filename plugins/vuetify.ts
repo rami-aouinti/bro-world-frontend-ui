@@ -64,19 +64,32 @@ import { Ripple } from "vuetify/directives";
 import { createVuetify } from "vuetify";
 import { ar, de, en, es, fr, it, ru } from "vuetify/locale";
 import { VSvgIcon, makeIconProps, type IconValue } from "vuetify/lib/composables/icons";
+import { aliases as vuetifyMdiAliases } from "vuetify/lib/iconsets/mdi-svg";
 import { normalizeHexColor } from "~/lib/theme/colors";
 import { coreProjectMdiIcons, ensureProjectMdiIcons } from "~/lib/vuetify/projectMdiIcons";
 import { withSecureCookieOptions } from "~/lib/cookies";
 import { ensureVuetifyLoading } from "~/lib/vuetify/loading";
 
-function withSvgPrefix(path: string): string {
+function withSvgPrefix(path: IconValue): IconValue {
+  if (typeof path !== "string") {
+    return path;
+  }
+
   return path.startsWith("svg:") ? path : `svg:${path}`;
 }
 
-function createMdiAliasVariants(iconMap: Record<string, string>) {
+function createMdiAliasVariants(iconMap: Record<string, IconValue>) {
   const extendedAliases = { ...iconMap };
 
   for (const [name, value] of Object.entries(iconMap)) {
+    if (!name.startsWith("$") && !name.startsWith("mdi:") && !name.startsWith("mdi-")) {
+      const prefixed = `$${name}`;
+
+      if (!(prefixed in extendedAliases)) {
+        extendedAliases[prefixed] = value;
+      }
+    }
+
     if (name.startsWith("mdi-")) {
       const colonName = `mdi:${name.slice(4)}`;
 
@@ -97,9 +110,16 @@ function createMdiAliasVariants(iconMap: Record<string, string>) {
   return extendedAliases;
 }
 
-const projectMdiAliasEntries = Object.fromEntries(
-  Object.entries(coreProjectMdiIcons).map(([name, value]) => [name, withSvgPrefix(value)]),
-);
+const projectMdiAliasEntries: Record<string, IconValue> = Object.fromEntries([
+  ...Object.entries(vuetifyMdiAliases).map(([name, value]) => [
+    name,
+    withSvgPrefix(value),
+  ]),
+  ...Object.entries(coreProjectMdiIcons).map(([name, value]) => [
+    name,
+    withSvgPrefix(value),
+  ]),
+]);
 
 let minimalAliases = createMdiAliasVariants(projectMdiAliasEntries);
 
