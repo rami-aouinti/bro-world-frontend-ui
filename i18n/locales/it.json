@@ -750,6 +750,25 @@
     "termsOutro": "Contatta il nostro team di supporto se hai domande su come gestiamo i tuoi dati."
   },
   "pages": {
+    "error": {
+      "badge": "Errore {code}",
+      "statusAnnouncement": "Codice errore {code}",
+      "sidebarLabel": "Widget utili",
+      "notFound": {
+        "title": "Non riusciamo a trovare questa pagina",
+        "subtitle": "Il collegamento potrebbe essere obsoleto oppure la pagina è stata spostata.",
+        "description": "Torna alla home o apri il centro assistenza per continuare l’esplorazione."
+      },
+      "generic": {
+        "title": "Si è verificato un problema",
+        "subtitle": "Un errore imprevisto ha impedito il caricamento della pagina.",
+        "description": "Aggiorna la pagina o torna alla home per proseguire."
+      },
+      "actions": {
+        "home": "Torna alla home",
+        "help": "Vai al centro assistenza"
+      }
+    },
     "notifications": {
       "description": "Controlla gli ultimi aggiornamenti dalla tua community.",
       "summary": {
