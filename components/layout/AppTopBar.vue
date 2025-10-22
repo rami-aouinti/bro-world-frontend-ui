@@ -44,6 +44,8 @@
         variant="solo-filled"
         auto-select-first
         item-props
+        rounded
+        outlined
       >
         <template #prepend-inner>
           <v-icon
