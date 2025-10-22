@@ -194,7 +194,8 @@
         "adminBlog": "المدونة",
         "help": "المساعدة",
         "about": "حول",
-        "contact": "اتصال"
+        "contact": "اتصال",
+        "home": "الرئيسية"
       }
     },
     "widgets": {
@@ -2222,6 +2223,32 @@
             "answer": "قدّم طلبًا عبر أدوات الحساب أو أرسل بريدًا إلى  وسنرد خلال 72 ساعة."
           }
         }
+      }
+    },
+    "index": {
+      "title": "استكشاف عوالم BroWorld",
+      "description": "اكتشف العوالم المختارة التي تدعم تجربة BroWorld وانضم إلى المساحات التي تهمك.",
+      "worldListTitle": "العوالم المتاحة",
+      "badges": {
+        "active": "العالم النشط"
+      },
+      "createdBy": "تم الإنشاء بواسطة {name}",
+      "localeLabel": "اللغة: {locale}",
+      "visibility": {
+        "public": "عالم عام",
+        "private": "عالم خاص"
+      },
+      "cardAria": "العالم {name}. {visibility}.",
+      "actions": {
+        "enter": "دخول العالم",
+        "enterAria": "دخول عالم {world}",
+        "setActive": "تعيين كنشط",
+        "active": "نشط",
+        "activateAria": "تعيين {world} كالعالم النشط"
+      },
+      "empty": {
+        "title": "لا توجد عوالم متاحة",
+        "description": "عد لاحقًا لاستكشاف مساحات جديدة أو أنشئ عالمك الخاص."
       }
     },
     "profile": {

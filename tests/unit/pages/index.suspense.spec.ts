@@ -2,7 +2,7 @@ import { flushPromises, mount } from "@vue/test-utils";
 import { Suspense, defineComponent, h, nextTick, ref, type Component } from "vue";
 import { describe, expect, beforeEach, afterEach, it, vi } from "vitest";
 
-import IndexPage from "~/pages/index.vue";
+import HomePage from "~/pages/home.vue";
 
 interface Deferred<T> {
   promise: Promise<T>;
@@ -173,14 +173,14 @@ const SuspenseHarness = defineComponent({
         Suspense,
         {},
         {
-          default: () => h(IndexPage),
+          default: () => h(HomePage),
           fallback: () => h("div", { "data-test": "outer-suspense-fallback" }),
         },
       );
   },
 });
 
-describe("pages/index Suspense fallbacks", () => {
+describe("pages/home Suspense fallbacks", () => {
   beforeEach(() => {
     storiesStripDeferredRef.current = createDeferred<{ __esModule: true; default: Component }>();
     storyViewerDeferredRef.current = createDeferred<{ __esModule: true; default: Component }>();
@@ -227,7 +227,7 @@ describe("pages/index Suspense fallbacks", () => {
     await flushPromises();
     await nextTick();
 
-    const page = wrapper.getComponent(IndexPage);
+    const page = wrapper.getComponent(HomePage);
 
     posts.value = [
       {

@@ -3,7 +3,7 @@ import { flushPromises, mount } from "@vue/test-utils";
 import { computed, nextTick, ref } from "vue";
 import { createI18n } from "vue-i18n";
 import type { BlogPost } from "~/lib/mock/blog";
-import type IndexPageComponent from "~/pages/index.vue";
+import type HomePageComponent from "~/pages/home.vue";
 import en from "~/i18n/locales/en.json";
 
 vi.mock("#imports", async () => {
@@ -63,7 +63,7 @@ let resolveLoadMore: (() => void) | null = null;
     t: (key: string) => key,
   });
 
-let IndexPage: typeof IndexPageComponent;
+let HomePage: typeof HomePageComponent;
 
 interface MockIntersectionObserverInstance {
   trigger: (isIntersecting?: boolean) => void;
@@ -231,14 +231,14 @@ describe("Home page infinite post loading", () => {
       });
     });
 
-    IndexPage = (await import("~/pages/index.vue")).default;
+    HomePage = (await import("~/pages/home.vue")).default;
   });
 
   it("loads more posts on scroll without shifting existing cards", async () => {
     const wrapper = mount(
       {
-        components: { IndexPage },
-        template: "<Suspense><IndexPage /></Suspense>",
+        components: { HomePage },
+        template: "<Suspense><HomePage /></Suspense>",
       },
       {
         global: {
@@ -256,7 +256,7 @@ describe("Home page infinite post loading", () => {
     await flushPromises();
     await nextTick();
 
-    const pageWrapper = wrapper.getComponent(IndexPage);
+    const pageWrapper = wrapper.getComponent(HomePage);
 
     const initialCards = pageWrapper.findAll('[data-test="blog-post-card"]');
     expect(initialCards).toHaveLength(initialPosts.length);

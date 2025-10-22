@@ -194,7 +194,8 @@
         "adminBlog": "博客",
         "help": "帮助",
         "about": "关于",
-        "contact": "联系"
+        "contact": "联系",
+        "home": "首页"
       }
     },
     "widgets": {
@@ -2222,6 +2223,32 @@
             "answer": "Submit a request through the account tools or email  and we will follow up within 72 hours."
           }
         }
+      }
+    },
+    "index": {
+      "title": "探索 BroWorld 世界",
+      "description": "发现支撑 BroWorld 体验的精选世界，进入与你最相关的空间。",
+      "worldListTitle": "可用世界",
+      "badges": {
+        "active": "当前世界"
+      },
+      "createdBy": "创建者：{name}",
+      "localeLabel": "语言：{locale}",
+      "visibility": {
+        "public": "公开世界",
+        "private": "私有世界"
+      },
+      "cardAria": "世界 {name}。{visibility}。",
+      "actions": {
+        "enter": "进入世界",
+        "enterAria": "进入 {world} 世界",
+        "setActive": "设为当前",
+        "active": "当前",
+        "activateAria": "将 {world} 设为当前世界"
+      },
+      "empty": {
+        "title": "暂无可用世界",
+        "description": "稍后再来探索新的空间，或创建你自己的世界。"
       }
     },
     "profile": {
