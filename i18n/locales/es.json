@@ -99,6 +99,7 @@
         "profileOverview": "Resumen",
         "profileSettings": "Configuración de la cuenta",
         "profileSecurity": "Contraseña y seguridad",
+        "profileCalendar": "Calendario",
         "profileFriends": "Amigos",
         "profilePhotos": "Fotos y multimedia",
         "admin": "Administración",
@@ -1054,6 +1055,10 @@
       "stats": {
         "title": "Estadísticas rápidas"
       }
+    },
+    "profileCalendar": {
+      "title": "Calendario",
+      "subtitle": "Revisa tus reuniones, talleres y hitos en una vista dedicada."
     },
     "profileFriends": {
       "title": "Conexiones",
@@ -2534,6 +2539,10 @@
     "profilePhotos": {
       "title": "Biblioteca de fotos",
       "description": "Organiza los momentos destacados de lanzamientos, sesiones de estudio y archivos de investigación."
+    },
+    "profileCalendar": {
+      "title": "Calendario",
+      "description": "Planifica las próximas sesiones y gestiona eventos desde tu calendario del perfil."
     },
     "profileEdit": {
       "title": "Editar perfil",

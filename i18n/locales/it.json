@@ -99,6 +99,7 @@
         "profileOverview": "Panoramica",
         "profileSettings": "Impostazioni account",
         "profileSecurity": "Password e sicurezza",
+        "profileCalendar": "Calendario",
         "profileFriends": "Amici",
         "profilePhotos": "Foto e media",
         "admin": "Amministrazione",
@@ -1054,6 +1055,10 @@
       "stats": {
         "title": "Statistiche rapide"
       }
+    },
+    "profileCalendar": {
+      "title": "Calendario",
+      "subtitle": "Rivedi riunioni, workshop e traguardi in una vista dedicata."
     },
     "profileFriends": {
       "title": "Connessioni",
@@ -2534,6 +2539,10 @@
     "profilePhotos": {
       "title": "Libreria foto",
       "description": "Organizza gli highlight di lanci, sessioni in studio e archivi di ricerca."
+    },
+    "profileCalendar": {
+      "title": "Calendario",
+      "description": "Pianifica le prossime sessioni e gestisci gli eventi dal calendario del profilo."
     },
     "profileEdit": {
       "title": "Modifica profilo",

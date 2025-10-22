@@ -160,6 +160,7 @@
         "profileOverview": "نظرة عامة",
         "profileSettings": "إعدادات الحساب",
         "profileSecurity": "كلمة المرور والأمان",
+        "profileCalendar": "التقويم",
         "profileFriends": "الأصدقاء",
         "profilePhotos": "الصور والوسائط",
         "admin": "لوحة الإدارة",
@@ -1310,6 +1311,10 @@
       "stats": {
         "title": "إحصائيات سريعة"
       }
+    },
+    "profileCalendar": {
+      "title": "التقويم",
+      "subtitle": "راجع اجتماعاتك وورش العمل ومحطاتك في عرض مخصص."
     },
     "profileFriends": {
       "title": "العلاقات",
@@ -2657,6 +2662,10 @@
     "profilePhotos": {
       "title": "مكتبة الصور",
       "description": "نظّم أبرز لحظات الإطلاق وجلسات الاستوديو وأرشيفات البحث."
+    },
+    "profileCalendar": {
+      "title": "التقويم",
+      "description": "خطّط للجلسات القادمة وأدِر الأحداث من تقويم ملفك الشخصي."
     },
     "profileEdit": {
       "title": "تعديل الملف الشخصي",

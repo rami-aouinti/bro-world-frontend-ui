@@ -141,6 +141,13 @@ export function buildProfileSidebarItems(
       translate: true,
     },
     {
+      key: "profile-calendar",
+      label: "layout.sidebar.items.profileCalendar",
+      icon: "mdi:calendar-month-outline",
+      to: "/profile/calendar",
+      translate: true,
+    },
+    {
       key: "profile-friends",
       label: "layout.sidebar.items.profileFriends",
       icon: "mdi:account-group-outline",
