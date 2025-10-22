@@ -1,164 +1,335 @@
-import { computed, reactive } from "vue";
+import { computed } from "vue";
+import { useState } from "#imports";
 import { defineStore } from "~/lib/pinia-shim";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
-import type { SiteSettings } from "~/types/settings";
+import type {
+  WorldMembership,
+  WorldMembershipRequestPayload,
+  WorldMembershipResponse,
+  WorldMembershipRole,
+  WorldMembershipStatus,
+} from "~/types/world-membership";
 
-export type WorldMembershipStatus = "active" | "pending" | "rejected" | "revoked";
+type MembershipDictionary = Record<string, WorldMembership>;
+type MembershipFlagDictionary = Record<string, boolean>;
 
-export interface WorldMembership {
-  worldId: string;
-  status: WorldMembershipStatus;
-  createdAt: string;
-  updatedAt: string;
+interface MembershipApiPayload {
+  worldId?: string | null;
+  status?: string | null;
+  role?: string | null;
+  updatedAt?: string | null;
 }
 
-function nowISOString(): string {
-  return new Date().toISOString();
-}
-
-function normalizeTimestamp(value: unknown, fallback: string): string {
-  if (typeof value === "string") {
-    const trimmed = value.trim();
-
-    if (trimmed) {
-      const parsed = Date.parse(trimmed);
-
-      if (!Number.isNaN(parsed)) {
-        return new Date(parsed).toISOString();
-      }
-    }
+function normalizeWorldId(worldId: string | null | undefined): string | null {
+  if (typeof worldId !== "string") {
+    return null;
   }
 
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return new Date(value).toISOString();
+  const trimmed = worldId.trim();
+
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+function createDefaultMembership(worldId: string): WorldMembership {
+  return {
+    worldId,
+    status: "none",
+    role: "viewer",
+    isOwner: false,
+    updatedAt: null,
+  } satisfies WorldMembership;
+}
+
+function toRecord(value: unknown): Record<string, unknown> | null {
+  if (typeof value === "object" && value !== null) {
+    return value as Record<string, unknown>;
+  }
+
+  return null;
+}
+
+function normalizeStatus(status: unknown, fallback: WorldMembershipStatus = "none"): WorldMembershipStatus {
+  if (typeof status === "string") {
+    const normalized = status.trim().toLowerCase();
+
+    switch (normalized) {
+      case "active":
+      case "approved":
+      case "accepted":
+      case "member":
+      case "joined":
+        return "active";
+      case "pending":
+      case "requested":
+      case "waiting":
+        return "pending";
+      case "denied":
+      case "rejected":
+      case "revoked":
+        return "denied";
+      case "none":
+      case "invited":
+      case "unknown":
+      case "":
+        return "none";
+      default:
+        return fallback;
+    }
   }
 
   return fallback;
 }
 
-function isMembershipStatus(value: unknown): value is WorldMembershipStatus {
-  return value === "active" || value === "pending" || value === "rejected" || value === "revoked";
+function normalizeRole(role: unknown, fallback: WorldMembershipRole = "viewer"): WorldMembershipRole {
+  if (typeof role === "string") {
+    const normalized = role.trim().toLowerCase();
+
+    switch (normalized) {
+      case "owner":
+      case "creator":
+        return "owner";
+      case "admin":
+      case "administrator":
+        return "admin";
+      case "moderator":
+      case "mod":
+        return "moderator";
+      case "member":
+      case "participant":
+        return "member";
+      case "guest":
+        return "guest";
+      case "viewer":
+      case "observer":
+        return "viewer";
+      default:
+        return fallback;
+    }
+  }
+
+  return fallback;
 }
 
-export const useWorldMembershipsStore = defineStore("world-memberships", () => {
-  const memberships = reactive<Record<string, WorldMembership>>({});
+function resolveApiPayload(response: unknown): MembershipApiPayload | null {
+  const payload = toRecord(response);
 
-  function upsertMembership(
-    worldId: string,
-    payload: Partial<Omit<WorldMembership, "worldId">> & { status?: WorldMembershipStatus },
-  ): WorldMembership {
-    if (!worldId) {
-      throw new Error("World identifier is required to update membership.");
-    }
-
-    const existing = memberships[worldId] ?? null;
-    const now = nowISOString();
-    const createdAt = normalizeTimestamp(payload.createdAt, existing?.createdAt ?? now);
-    const updatedAt = normalizeTimestamp(payload.updatedAt, now);
-    const status = payload.status ?? existing?.status ?? "pending";
-
-    const membership: WorldMembership = {
-      worldId,
-      status,
-      createdAt,
-      updatedAt,
-    };
-
-    memberships[worldId] = membership;
-
-    return membership;
+  if (!payload) {
+    return null;
   }
 
-  function markStatus(worldId: string, status: WorldMembershipStatus): WorldMembership {
-    return upsertMembership(worldId, { status, updatedAt: nowISOString() });
+  if (payload.membership) {
+    const membership = toRecord(payload.membership);
+
+    if (membership) {
+      return {
+        worldId: membership.worldId as string | null | undefined,
+        status: membership.status as string | null | undefined,
+        role: membership.role as string | null | undefined,
+        updatedAt: membership.updatedAt as string | null | undefined,
+      } satisfies MembershipApiPayload;
+    }
   }
 
-  function removeMembership(worldId: string) {
-    if (worldId in memberships) {
-      delete memberships[worldId];
+  if (payload.data) {
+    const nested = resolveApiPayload(payload.data);
+
+    if (nested) {
+      return nested;
     }
+  }
+
+  return {
+    worldId: payload.worldId as string | null | undefined,
+    status: payload.status as string | null | undefined,
+    role: payload.role as string | null | undefined,
+    updatedAt: payload.updatedAt as string | null | undefined,
+  } satisfies MembershipApiPayload;
+}
+
+function normalizeMembership(
+  payload: MembershipApiPayload | null,
+  fallbackWorldId: string,
+  current: WorldMembership | null,
+): WorldMembership {
+  if (!payload) {
+    return current ?? createDefaultMembership(fallbackWorldId);
+  }
+
+  const worldId = normalizeWorldId(payload.worldId) ?? fallbackWorldId;
+  const previous = current ?? createDefaultMembership(worldId);
+  const resolvedRole = normalizeRole(payload.role, previous.role);
+  const resolvedStatus = normalizeStatus(payload.status, previous.status);
+
+  return {
+    ...previous,
+    worldId,
+    role: resolvedRole,
+    status: resolvedStatus,
+    isOwner: previous.isOwner || resolvedRole === "owner",
+    updatedAt: typeof payload.updatedAt === "string" ? payload.updatedAt : previous.updatedAt,
+  } satisfies WorldMembership;
+}
+
+function applyPendingFlag(dictionary: MembershipFlagDictionary, key: string, value: boolean) {
+  const next = { ...dictionary };
+
+  if (value) {
+    next[key] = true;
+  } else {
+    delete next[key];
+  }
+
+  return next;
+}
+
+export const useWorldMemberships = defineStore("worldMemberships", () => {
+  const membershipState = useState<MembershipDictionary>("world-memberships", () => ({}));
+  const activationPendingState = useState<MembershipFlagDictionary>(
+    "world-memberships-activating",
+    () => ({}),
+  );
+  const enteringPendingState = useState<MembershipFlagDictionary>(
+    "world-memberships-entering",
+    () => ({}),
+  );
+
+  const memberships = computed(() => membershipState.value);
+
+  function getMembership(worldId: string): WorldMembership {
+    const key = normalizeWorldId(worldId);
+
+    if (!key) {
+      return createDefaultMembership("");
+    }
+
+    return membershipState.value[key] ?? createDefaultMembership(key);
+  }
+
+  function setMembership(worldId: string, update: Partial<WorldMembership>): WorldMembership {
+    const key = normalizeWorldId(worldId);
+
+    if (!key) {
+      throw new Error("A valid world identifier is required to update membership data.");
+    }
+
+    const current = membershipState.value[key] ?? createDefaultMembership(key);
+    const normalized = normalizeMembership(
+      {
+        worldId: key,
+        status: update.status ?? current.status,
+        role: update.role ?? current.role,
+        updatedAt: update.updatedAt ?? current.updatedAt,
+      },
+      key,
+      {
+        ...current,
+        isOwner: typeof update.isOwner === "boolean" ? update.isOwner : current.isOwner,
+      },
+    );
+
+    membershipState.value = {
+      ...membershipState.value,
+      [key]: {
+        ...normalized,
+        status: update.status ? normalizeStatus(update.status, normalized.status) : normalized.status,
+        role: update.role ? normalizeRole(update.role, normalized.role) : normalized.role,
+        isOwner:
+          typeof update.isOwner === "boolean"
+            ? update.isOwner
+            : normalized.isOwner || normalized.role === "owner",
+      },
+    } satisfies MembershipDictionary;
+
+    return membershipState.value[key];
+  }
+
+  function applyMembershipResponse(worldId: string, response: unknown): WorldMembership {
+    const key = normalizeWorldId(worldId);
+
+    if (!key) {
+      throw new Error("A world identifier is required.");
+    }
+
+    const payload = resolveApiPayload(response);
+    const current = membershipState.value[key] ?? createDefaultMembership(key);
+    const normalized = normalizeMembership(payload, key, current);
+
+    membershipState.value = {
+      ...membershipState.value,
+      [key]: normalized,
+    } satisfies MembershipDictionary;
+
+    return normalized;
+  }
+
+  function isActivating(worldId: string): boolean {
+    const key = normalizeWorldId(worldId);
+    return Boolean(key && activationPendingState.value[key]);
+  }
+
+  function isEntering(worldId: string): boolean {
+    const key = normalizeWorldId(worldId);
+    return Boolean(key && enteringPendingState.value[key]);
   }
 
   async function activateWorld(worldId: string) {
-    if (!worldId) {
-      return;
+    const key = normalizeWorldId(worldId);
+
+    if (!key) {
+      throw new Error("A world identifier is required to activate a membership.");
     }
 
-    const previous = memberships[worldId] ?? null;
-    const pending = markStatus(worldId, "pending");
+    activationPendingState.value = applyPendingFlag(activationPendingState.value, key, true);
+
+    const api = resolveApiFetcher();
 
     try {
-      const api = resolveApiFetcher();
-      const response = await api<
-        | (WorldMembership & { data?: WorldMembership })
-        | { data?: WorldMembership }
-        | WorldMembership
-        | null
-      >(`/worlds/${encodeURIComponent(worldId)}/activate`, {
+      const response = await api<WorldMembershipResponse>(`/worlds/${encodeURIComponent(key)}/activate`, {
         method: "POST",
+        data: { worldId: key } satisfies WorldMembershipRequestPayload,
       });
 
-      const payload =
-        response && typeof response === "object" && "data" in response && response.data
-          ? response.data
-          : response;
-      const status = isMembershipStatus((payload as WorldMembership | null)?.status)
-        ? (payload as WorldMembership).status
-        : "active";
-      const createdAt = normalizeTimestamp((payload as WorldMembership | null)?.createdAt, pending.createdAt);
-      const updatedAt = normalizeTimestamp((payload as WorldMembership | null)?.updatedAt, nowISOString());
+      return applyMembershipResponse(key, response);
+    } finally {
+      activationPendingState.value = applyPendingFlag(activationPendingState.value, key, false);
+    }
+  }
 
-      upsertMembership(worldId, { status, createdAt, updatedAt });
-    } catch (error) {
-      if (previous) {
-        memberships[worldId] = { ...previous, updatedAt: nowISOString() };
-      } else {
-        upsertMembership(worldId, { status: "rejected" });
+  async function enterWorld(worldId: string) {
+    const key = normalizeWorldId(worldId);
+
+    if (!key) {
+      throw new Error("A world identifier is required to enter a world.");
+    }
+
+    enteringPendingState.value = applyPendingFlag(enteringPendingState.value, key, true);
+
+    const api = resolveApiFetcher();
+
+    try {
+      const response = await api<WorldMembershipResponse>(`/worlds/${encodeURIComponent(key)}/enter`, {
+        method: "POST",
+        data: { worldId: key } satisfies WorldMembershipRequestPayload,
+      });
+
+      if (response) {
+        applyMembershipResponse(key, response);
       }
-
-      throw error;
+    } finally {
+      enteringPendingState.value = applyPendingFlag(enteringPendingState.value, key, false);
     }
   }
-
-  function markActive(worldId: string) {
-    markStatus(worldId, "active");
-  }
-
-  function markRevoked(worldId: string) {
-    markStatus(worldId, "revoked");
-  }
-
-  function syncFromSiteSettings(settings: SiteSettings | null | undefined) {
-    const worlds = settings?.worlds ?? [];
-    const allowedWorldIds = new Set(worlds.map((world) => world.id).filter((id): id is string => Boolean(id)));
-
-    for (const worldId of Object.keys(memberships)) {
-      if (!allowedWorldIds.has(worldId)) {
-        removeMembership(worldId);
-      }
-    }
-
-    const activeWorldId = settings?.activeWorldId;
-
-    if (typeof activeWorldId === "string" && activeWorldId && allowedWorldIds.has(activeWorldId)) {
-      markActive(activeWorldId);
-    }
-  }
-
-  const activeMemberships = computed(() =>
-    Object.values(memberships).filter((membership) => membership.status === "active"),
-  );
-  const activeWorldIds = computed(() => activeMemberships.value.map((membership) => membership.worldId));
 
   return {
     memberships,
-    activeMemberships,
-    activeWorldIds,
+    getMembership,
+    setMembership,
+    applyMembershipResponse,
+    isActivating,
+    isEntering,
     activateWorld,
-    markActive,
-    markRevoked,
-    syncFromSiteSettings,
-    upsertMembership,
-    removeMembership,
+    enterWorld,
   };
 });
+
+export type { WorldMembership, WorldMembershipStatus, WorldMembershipRole };

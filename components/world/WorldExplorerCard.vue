@@ -38,33 +38,55 @@
     </div>
 
     <div class="world-explorer-card__actions">
-      <v-btn
-        class="world-explorer-card__action"
-        variant="outlined"
-        color="primary"
-        density="comfortable"
-        size="large"
-        block
-        :to="targetRoute"
-        :aria-label="t('pages.index.actions.enterAria', { world: world.name })"
-      >
-        {{ t("pages.index.actions.enter") }}
-      </v-btn>
+      <div class="world-explorer-card__action-wrapper">
+        <v-btn
+          data-test="world-enter-button"
+          class="world-explorer-card__action"
+          variant="outlined"
+          color="primary"
+          density="comfortable"
+          size="large"
+          block
+          :disabled="isEnterDisabled"
+          :loading="isEntering"
+          :aria-label="t('pages.index.actions.enterAria', { world: world.name })"
+          @click="handleEnter"
+        >
+          {{ t("pages.index.actions.enter") }}
+        </v-btn>
+        <p
+          v-if="enterHelperText"
+          class="world-explorer-card__helper"
+          data-test="world-enter-helper"
+        >
+          {{ enterHelperText }}
+        </p>
+      </div>
 
-      <v-btn
-        class="world-explorer-card__action"
-        variant="outlined"
-        color="primary"
-        density="comfortable"
-        size="large"
-        block
-        :disabled="isDisabled"
-        :loading="isPending"
-        :aria-label="activateButtonAriaLabel"
-        @click="handleActivate"
-      >
-        {{ activateButtonLabel }}
-      </v-btn>
+      <div class="world-explorer-card__action-wrapper">
+        <v-btn
+          data-test="world-action-button"
+          class="world-explorer-card__action"
+          variant="outlined"
+          color="primary"
+          density="comfortable"
+          size="large"
+          block
+          :disabled="isPrimaryActionDisabled"
+          :loading="isActivating"
+          :aria-label="activateButtonAriaLabel"
+          @click="handlePrimaryAction"
+        >
+          {{ activateButtonLabel }}
+        </v-btn>
+        <p
+          v-if="primaryHelperText"
+          class="world-explorer-card__helper"
+          data-test="world-action-helper"
+        >
+          {{ primaryHelperText }}
+        </p>
+      </div>
     </div>
 
     <div
@@ -89,12 +111,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 import { Icon } from "#components";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
+import { useAlertPanel } from "~/stores/useAlertPanel";
+import { useWorldMemberships } from "~/stores/world-memberships";
 import type { SiteWorldSettings } from "~/types/settings";
-import type { WorldMembership } from "~/stores/world-memberships";
+import type { WorldMembership } from "~/types/world-membership";
 
 const props = defineProps<{
   world: SiteWorldSettings;
@@ -104,6 +129,9 @@ const props = defineProps<{
 
 const emit = defineEmits<{ (event: "activate", worldId: string): void }>();
 const { t } = useI18n();
+const router = useRouter();
+const alertPanel = useAlertPanel();
+const membershipStore = useWorldMemberships();
 
 /** Utiliser un OBJET route => plus fiable avec v-btn/RouterLink */
 const targetRoute = computed(() => {
@@ -179,42 +207,99 @@ const hasParticipants = computed(() => participantsCount.value !== null);
 const hasRating = computed(() => ratingValue.value !== null);
 const showFooter = computed(() => hasParticipants.value || hasRating.value);
 
-const membershipStatus = computed(() => props.membership?.status ?? (props.isActive ? "active" : null));
-const isActive = computed(() => membershipStatus.value === "active" || props.isActive === true);
-const isPending = computed(() => membershipStatus.value === "pending");
-const isRevoked = computed(() => membershipStatus.value === "revoked");
-const isRejected = computed(() => membershipStatus.value === "rejected");
-const isDisabled = computed(() => isActive.value || isPending.value);
-const statusChipColor = computed(() => {
-  if (isActive.value) {
-    return "success";
+const membership = computed<WorldMembership>(() => membershipStore.getMembership(props.world.id));
+const membershipStatus = computed(() => membership.value.status);
+const membershipRole = computed(() => membership.value.role);
+const isOwner = computed(() => membership.value.isOwner || membershipRole.value === "owner");
+const isPrivateWorld = computed(
+  () => (props.world.visibility ?? "private").toLowerCase() === "private",
+);
+const isMembershipActive = computed(
+  () => membershipStatus.value === "active" || isOwner.value,
+);
+const isActivating = computed(() => membershipStore.isActivating(props.world.id));
+const isEntering = computed(() => membershipStore.isEntering(props.world.id));
+const isEnterDisabled = computed(() => !isMembershipActive.value || isEntering.value);
+const requiresAccessRequest = computed(
+  () => isPrivateWorld.value && !isMembershipActive.value && !isOwner.value,
+);
+const canRequestAccess = computed(
+  () =>
+    requiresAccessRequest.value &&
+    membershipStatus.value !== "pending" &&
+    membershipStatus.value !== "denied",
+);
+
+const enterHelperText = computed(() => {
+  if (isMembershipActive.value) {
+    return "";
   }
 
-  if (isPending.value) {
-    return "warning";
+  if (membershipStatus.value === "pending") {
+    return t("pages.index.membership.pendingHelper");
   }
 
-  if (isRevoked.value || isRejected.value) {
-    return "error";
+  if (membershipStatus.value === "denied") {
+    return t("pages.index.membership.deniedHelper");
   }
 
-  return "primary";
+  if (requiresAccessRequest.value) {
+    return t("pages.index.membership.requestAccessHelper");
+  }
+
+  return "";
+});
+
+const primaryHelperText = computed(() => {
+  if (!requiresAccessRequest.value) {
+    return "";
+  }
+
+  if (membershipStatus.value === "pending") {
+    return t("pages.index.membership.pendingHelper");
+  }
+
+  if (membershipStatus.value === "denied") {
+    return t("pages.index.membership.deniedHelper");
+  }
+
+  return "";
 });
 
 const activateButtonLabel = computed(() => {
-  if (isActive.value) {
+  if (props.isActive) {
     return t("pages.index.actions.active");
+  }
+
+  if (requiresAccessRequest.value) {
+    return t("pages.index.actions.requestAccess");
   }
 
   return t("pages.index.actions.setActive");
 });
 
 const activateButtonAriaLabel = computed(() => {
-  if (isActive.value) {
+  if (props.isActive) {
     return t("pages.index.actions.active");
   }
 
+  if (requiresAccessRequest.value) {
+    return t("pages.index.actions.requestAccessAria", { world: props.world.name });
+  }
+
   return t("pages.index.actions.activateAria", { world: props.world.name });
+});
+
+const isPrimaryActionDisabled = computed(() => {
+  if (props.isActive) {
+    return true;
+  }
+
+  if (requiresAccessRequest.value) {
+    return !canRequestAccess.value || isActivating.value;
+  }
+
+  return isActivating.value;
 });
 
 const ariaLabel = computed(() =>
@@ -224,13 +309,106 @@ const ariaLabel = computed(() =>
   }),
 );
 
-function handleActivate() {
-  if (isDisabled.value || isRevoked.value || isRejected.value) {
+function showInfo(message: string) {
+  alertPanel.push({
+    type: "info",
+    message,
+  });
+}
+
+function showSuccess(message: string) {
+  alertPanel.push({
+    type: "success",
+    message,
+  });
+}
+
+function showError(message: string) {
+  alertPanel.push({
+    type: "error",
+    message,
+  });
+}
+
+async function handleActivate() {
+  if (props.isActive) {
     return;
   }
 
-  emit("activate", props.world.id);
+  try {
+    const membership = await membershipStore.activateWorld(props.world.id);
+
+    if (membership.status === "active" || membership.isOwner) {
+      emit("activate", props.world.id);
+    }
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : String(error ?? t("pages.index.membership.requestError"));
+    showError(message || t("pages.index.membership.requestError"));
+  }
 }
+
+async function handleRequestAccess() {
+  try {
+    await membershipStore.activateWorld(props.world.id);
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : String(error ?? t("pages.index.membership.requestError"));
+    showError(message || t("pages.index.membership.requestError"));
+  }
+}
+
+async function handlePrimaryAction() {
+  if (requiresAccessRequest.value) {
+    if (!canRequestAccess.value) {
+      return;
+    }
+
+    await handleRequestAccess();
+    return;
+  }
+
+  await handleActivate();
+}
+
+async function handleEnter() {
+  if (isEnterDisabled.value) {
+    if (membershipStatus.value === "pending") {
+      showInfo(t("pages.index.membership.pendingHelper"));
+    } else if (membershipStatus.value === "denied") {
+      showError(t("pages.index.membership.deniedHelper"));
+    }
+
+    return;
+  }
+
+  try {
+    await membershipStore.enterWorld(props.world.id);
+    await router.push(targetRoute.value);
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : String(error ?? t("pages.index.membership.enterError"));
+    showError(message || t("pages.index.membership.enterError"));
+  }
+}
+
+watch(
+  () => membershipStatus.value,
+  (next, previous) => {
+    if (typeof previous === "undefined" || next === previous) {
+      return;
+    }
+
+    if (next === "pending") {
+      showInfo(t("pages.index.membership.pendingToast", { world: props.world.name }));
+    } else if (next === "denied") {
+      showError(t("pages.index.membership.deniedToast", { world: props.world.name }));
+    } else if (next === "active" && previous !== "active") {
+      showSuccess(t("pages.index.membership.approvedToast", { world: props.world.name }));
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>
@@ -303,10 +481,20 @@ function handleActivate() {
   gap: 0.6rem;
   margin-top: 0.25rem;
 }
+.world-explorer-card__action-wrapper {
+  display: grid;
+  gap: 0.35rem;
+}
 .world-explorer-card__action {
   text-transform: none;
   font-weight: 600;
   border-radius: 0.9rem;
+}
+.world-explorer-card__helper {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: color-mix(in oklab, hsl(var(--muted-foreground)), hsl(var(--foreground)) 25%);
 }
 
 .world-explorer-card__footer {

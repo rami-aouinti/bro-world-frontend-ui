@@ -2260,10 +2260,22 @@
         "enterAria": "دخول عالم {world}",
         "setActive": "تعيين كنشط",
         "active": "نشط",
-        "activateAria": "تعيين {world} كالعالم النشط"
+        "activateAria": "تعيين {world} كالعالم النشط",
+        "requestAccess": "Request access",
+        "requestAccessAria": "Request access to {world}"
       },
       "participantsLabel": "{count} مشارك",
       "ratingLabel": "تقييم {rating}",
+      "membership": {
+        "pendingHelper": "Access request pending approval.",
+        "deniedHelper": "Your access request was denied. Contact the owner for next steps.",
+        "requestAccessHelper": "Request access to join this private world.",
+        "pendingToast": "Access request submitted for {world}.",
+        "deniedToast": "Your access request for {world} was denied.",
+        "approvedToast": "Access granted for {world}. You can enter now.",
+        "requestError": "We couldn't update your membership right now. Please try again.",
+        "enterError": "We couldn't enter this world. Please try again."
+      },
       "empty": {
         "title": "لا توجد عوالم متاحة",
         "description": "عد لاحقًا لاستكشاف مساحات جديدة أو أنشئ عالمك الخاص."

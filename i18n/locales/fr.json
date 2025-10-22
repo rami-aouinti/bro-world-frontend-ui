@@ -2260,10 +2260,22 @@
         "enterAria": "Entrer dans le world {world}",
         "setActive": "Définir actif",
         "active": "Actif",
-        "activateAria": "Définir {world} comme world actif"
+        "activateAria": "Définir {world} comme world actif",
+        "requestAccess": "Demander l'accès",
+        "requestAccessAria": "Demander l'accès au world {world}"
       },
       "participantsLabel": "{count} participants",
       "ratingLabel": "Note {rating}",
+      "membership": {
+        "pendingHelper": "Votre demande d'accès est en attente de validation.",
+        "deniedHelper": "Votre demande d'accès a été refusée. Contactez le propriétaire pour continuer.",
+        "requestAccessHelper": "Demandez l'accès pour rejoindre ce world privé.",
+        "pendingToast": "Demande d'accès envoyée pour {world}.",
+        "deniedToast": "Votre demande d'accès à {world} a été refusée.",
+        "approvedToast": "Accès accordé à {world}. Vous pouvez entrer maintenant.",
+        "requestError": "Impossible de mettre à jour votre adhésion pour le moment. Veuillez réessayer.",
+        "enterError": "Impossible d'entrer dans ce world pour le moment. Veuillez réessayer."
+      },
       "empty": {
         "title": "Aucun world disponible",
         "description": "Revenez bientôt pour découvrir de nouveaux espaces ou créez votre propre world."
