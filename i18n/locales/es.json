@@ -2054,6 +2054,27 @@
         "title": "Explorar rutas de aprendizaje",
         "subtitle": "Explora categorías seleccionadas, sigue lecciones interactivas y desbloquea un certificado de demostración al aprobar el quiz final."
       },
+      "sidebar": {
+        "overviewTitle": "Mantén el impulso de aprendizaje",
+        "overviewDescription": "Sigue tu progreso, vuelve a tus categorías favoritas y mantente motivado mientras exploras nuevas habilidades.",
+        "stats": {
+          "categories": {
+            "label": "Categorías",
+            "value": "{count} categorías"
+          },
+          "courses": {
+            "label": "Cursos",
+            "value": "{count} cursos"
+          },
+          "certificates": {
+            "label": "Certificados obtenidos",
+            "value": "{count} certificados"
+          }
+        },
+        "featuredTitle": "Categorías destacadas",
+        "featuredDescription": "Vuelve a estos espacios seleccionados para seguir aprendiendo.",
+        "featuredEmpty": "Nuevas categorías llegarán pronto."
+      },
       "category": {
         "courses": "{count} cursos",
         "viewCourses": "Ver cursos",

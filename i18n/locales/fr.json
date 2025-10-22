@@ -2170,6 +2170,27 @@
         "title": "Explorer les parcours d'apprentissage",
         "subtitle": "Parcourez des catégories thématiques, suivez des leçons interactives et débloquez un certificat fictif en réussissant le quiz final."
       },
+      "sidebar": {
+        "overviewTitle": "Préservez votre élan d'apprentissage",
+        "overviewDescription": "Suivez vos progrès, revisitez vos catégories favorites et restez motivé en explorant de nouvelles compétences.",
+        "stats": {
+          "categories": {
+            "label": "Catégories",
+            "value": "{count} catégories"
+          },
+          "courses": {
+            "label": "Cours",
+            "value": "{count} cours"
+          },
+          "certificates": {
+            "label": "Certificats obtenus",
+            "value": "{count} certificats"
+          }
+        },
+        "featuredTitle": "Catégories à la une",
+        "featuredDescription": "Replongez dans ces espaces sélectionnés pour continuer à apprendre.",
+        "featuredEmpty": "De nouvelles catégories arrivent bientôt."
+      },
       "category": {
         "courses": "{count} cours",
         "viewCourses": "Voir les cours",

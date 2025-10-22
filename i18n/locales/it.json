@@ -2054,6 +2054,27 @@
         "title": "Esplora i percorsi di apprendimento",
         "subtitle": "Scopri categorie curate, segui lezioni interattive e sblocca un certificato dimostrativo superando il quiz finale."
       },
+      "sidebar": {
+        "overviewTitle": "Mantieni lo slancio dell'apprendimento",
+        "overviewDescription": "Monitora i tuoi progressi, rivedi le categorie preferite e resta motivato mentre esplori nuove competenze.",
+        "stats": {
+          "categories": {
+            "label": "Categorie",
+            "value": "{count} categorie"
+          },
+          "courses": {
+            "label": "Corsi",
+            "value": "{count} corsi"
+          },
+          "certificates": {
+            "label": "Certificati ottenuti",
+            "value": "{count} certificati"
+          }
+        },
+        "featuredTitle": "Categorie in evidenza",
+        "featuredDescription": "Torna in questi spazi curati per continuare a imparare.",
+        "featuredEmpty": "Nuove categorie in arrivo."
+      },
       "category": {
         "courses": "{count} corsi",
         "viewCourses": "Vedi i corsi",

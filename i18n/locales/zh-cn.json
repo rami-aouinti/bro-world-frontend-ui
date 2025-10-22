@@ -1884,6 +1884,27 @@
         "title": "探索学习路径",
         "subtitle": "浏览精选类别，跟随互动课程，并在通过最终测验后解锁模拟证书。"
       },
+      "sidebar": {
+        "overviewTitle": "保持学习动力",
+        "overviewDescription": "追踪学习进度，重温喜爱的类别，在探索新技能时保持动力。",
+        "stats": {
+          "categories": {
+            "label": "分类",
+            "value": "{count} 个分类"
+          },
+          "courses": {
+            "label": "课程",
+            "value": "{count} 门课程"
+          },
+          "certificates": {
+            "label": "获得的证书",
+            "value": "{count} 份证书"
+          }
+        },
+        "featuredTitle": "精选类别",
+        "featuredDescription": "回到这些精选空间，继续学习。",
+        "featuredEmpty": "新类别即将上线。"
+      },
       "category": {
         "courses": "{count} 门课程",
         "viewCourses": "查看课程",
