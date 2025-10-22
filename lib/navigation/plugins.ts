@@ -25,7 +25,7 @@ const pluginRegistry: readonly PluginRegistryEntry[] = [
         icon: "mdi:message-text-outline",
         translate: true,
         to: "/messenger",
-        isVisible: true,
+        isVisible: false,
         order: 0,
       },
     ],
