@@ -1410,7 +1410,6 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   position: relative;
   z-index: 1;
   flex: 1 1 auto;
-  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-bar-height));
   display: flex;
   flex-direction: column;
   scrollbar-gutter: stable both-edges;
