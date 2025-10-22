@@ -96,11 +96,12 @@ registerRightSidebarContent(
   })),
 );
 
-definePageMeta({
-  alias: ["/world/:worldSlug/education"],
-  documentDriven: false,
-  requiresPlugin: "education",
-});
+if (typeof definePageMeta === "function") {
+  definePageMeta({
+    documentDriven: false,
+    requiresPlugin: "education",
+  });
+}
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));
