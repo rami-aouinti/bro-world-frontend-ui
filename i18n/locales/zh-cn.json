@@ -89,6 +89,7 @@
     "sidebar": {
       "title": "连接",
       "navigate": "跳转到分区",
+      "signedInAs": "登录身份：",
       "items": {
         "apps": "应用",
         "calendar": "日历",

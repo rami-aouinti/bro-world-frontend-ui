@@ -150,6 +150,7 @@
     "sidebar": {
       "title": "Verbinden",
       "navigate": "Zum Bereich wechseln",
+      "signedInAs": "Angemeldet als",
       "items": {
         "apps": "Apps",
         "calendar": "Kalender",
