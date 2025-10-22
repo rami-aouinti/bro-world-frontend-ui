@@ -3,18 +3,6 @@
     class="world-explorer-page"
     aria-labelledby="world-explorer-heading"
   >
-    <header class="world-explorer-page__header">
-      <h1
-        id="world-explorer-heading"
-        class="world-explorer-page__title"
-      >
-        {{ t("pages.index.title") }}
-      </h1>
-      <p class="world-explorer-page__description">
-        {{ t("pages.index.description") }}
-      </p>
-    </header>
-
     <section
       v-if="worlds.length"
       aria-labelledby="world-explorer-list-title"
