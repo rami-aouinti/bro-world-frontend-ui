@@ -537,8 +537,3 @@ async function purgeTrashItem(item: TrashItem) {
 }
 </script>
 
-<style scoped>
-.media-content {
-  min-height: 400px;
-}
-</style>

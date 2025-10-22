@@ -2238,6 +2238,13 @@
       "title": "Explorer les worlds BroWorld",
       "description": "Découvrez les univers sélectionnés qui animent l’expérience BroWorld et rejoignez ceux qui comptent pour vous.",
       "worldListTitle": "Worlds disponibles",
+      "search": {
+        "label": "Rechercher des mondes",
+        "placeholder": "Rechercher par nom, créateur ou tag",
+        "ariaLabel": "Rechercher dans les mondes disponibles",
+        "noResults": "Aucun monde ne correspond à « {query} ».",
+        "suggestions": "Essayez d'autres mots-clés ou réinitialisez vos filtres pour voir tous les mondes."
+      },
       "badges": {
         "active": "World actif"
       },

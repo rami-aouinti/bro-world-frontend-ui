@@ -8,10 +8,9 @@
         class="mb-12"
         aria-describedby="about-subtitle"
       >
-        <v-sheet
-          class="about-hero"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <div class="about-hero__badge">
             <v-icon
@@ -56,17 +55,16 @@
               {{ action.label }}
             </v-btn>
           </div>
-        </v-sheet>
+        </SidebarCard>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="values-title"
       >
-        <v-sheet
-          class="about-section"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <v-row
             class="align-stretch"
@@ -120,17 +118,16 @@
               </v-row>
             </v-col>
           </v-row>
-        </v-sheet>
+        </SidebarCard>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="metrics-title"
       >
-        <v-sheet
-          class="about-section"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <div class="about-section__heading mb-6">
             <h2
@@ -168,17 +165,16 @@
               </v-card>
             </v-col>
           </v-row>
-        </v-sheet>
+        </SidebarCard>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="team-title"
       >
-        <v-sheet
-          class="about-section"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <h2
             id="team-title"
@@ -197,10 +193,9 @@
               sm="12"
               lg="6"
             >
-              <v-card
-                class="about-team-card"
-                elevation="0"
-                rounded="lg"
+              <SidebarCard
+                  class="text-card-foreground px-3 py-2"
+                  glow
               >
                 <div class="d-flex align-center mb-4">
                   <v-avatar
@@ -221,20 +216,19 @@
                 <p class="text-body-2 text-medium-emphasis mb-0">
                   {{ member.bio }}
                 </p>
-              </v-card>
+              </SidebarCard>
             </v-col>
           </v-row>
-        </v-sheet>
+        </SidebarCard>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="tech-title"
       >
-        <v-sheet
-          class="about-section"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <h2
             id="tech-title"
@@ -256,17 +250,16 @@
               {{ tech.label }} — {{ tech.description }}
             </v-chip>
           </div>
-        </v-sheet>
+        </SidebarCard>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="timeline-title"
       >
-        <v-sheet
-          class="about-section"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <h2
             id="timeline-title"
@@ -302,17 +295,16 @@
               </v-card>
             </v-timeline-item>
           </v-timeline>
-        </v-sheet>
+        </SidebarCard>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="links-title"
       >
-        <v-sheet
-          class="about-section"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <h2
             id="links-title"
@@ -340,17 +332,16 @@
               {{ link.label }}
             </v-btn>
           </div>
-        </v-sheet>
+        </SidebarCard>
       </section>
 
       <section
         class="mb-12"
         aria-labelledby="cta-title"
       >
-        <v-sheet
-          class="about-section about-section--cta"
-          elevation="0"
-          rounded="xl"
+        <SidebarCard
+            class="text-card-foreground px-3 py-2"
+            glow
         >
           <v-row
             class="align-center"
@@ -405,10 +396,9 @@
               cols="12"
               md="5"
             >
-              <v-sheet
-                class="about-media"
-                elevation="0"
-                rounded="lg"
+              <SidebarCard
+                  class="text-card-foreground px-3 py-2"
+                  glow
               >
                 <v-responsive
                   aspect-ratio="4/3"
@@ -425,10 +415,10 @@
                     </p>
                   </div>
                 </v-responsive>
-              </v-sheet>
+              </SidebarCard>
             </v-col>
           </v-row>
-        </v-sheet>
+        </SidebarCard>
       </section>
     </header>
   </main>
@@ -443,6 +433,7 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import MissionSidebarCards from "~/components/about/MissionSidebarCards.vue";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 

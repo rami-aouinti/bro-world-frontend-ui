@@ -3,8 +3,36 @@
     class="world-explorer-page"
     aria-labelledby="world-explorer-heading"
   >
+    <header
+      class="world-explorer-page__header"
+      aria-labelledby="world-explorer-heading"
+    >
+      <h1
+        id="world-explorer-heading"
+        class="world-explorer-page__title"
+      >
+        {{ t("pages.index.title") }}
+      </h1>
+      <p class="world-explorer-page__description">
+        {{ pageDescription }}
+      </p>
+      <v-text-field
+        v-model="searchQuery"
+        class="world-explorer-page__search"
+        :label="t('pages.index.search.label')"
+        :placeholder="t('pages.index.search.placeholder')"
+        :aria-label="t('pages.index.search.ariaLabel')"
+        type="search"
+        density="comfortable"
+        variant="outlined"
+        prepend-inner-icon="mdi-magnify"
+        clearable
+        hide-details="auto"
+      />
+    </header>
+
     <section
-      v-if="worlds.length"
+      v-if="filteredWorlds.length"
       aria-labelledby="world-explorer-list-title"
     >
       <h2
@@ -15,7 +43,7 @@
       </h2>
       <div class="world-explorer-page__grid">
         <WorldExplorerCard
-          v-for="world in worlds"
+          v-for="world in filteredWorlds"
           :key="world.id"
           :world="world"
           :membership="membershipMap[world.id] ?? null"
@@ -26,6 +54,22 @@
         />
       </div>
     </section>
+    <SidebarCard
+      v-else-if="hasWorlds"
+      class="world-explorer-page__empty"
+      glow
+        data-test="world-explorer-empty"
+    >
+      <div>
+        <h2 class="world-explorer-page__empty-title">
+          {{ t("pages.index.search.noResults", { query: searchQueryLabel }) }}
+        </h2>
+        <p class="world-explorer-page__empty-description">
+          {{ t("pages.index.search.suggestions") }}
+        </p>
+      </div>
+    </SidebarCard>
+
     <SidebarCard
       v-else
       class="world-explorer-page__empty"
@@ -45,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { definePageMeta, useSeoMeta } from "#imports";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
