@@ -1177,7 +1177,9 @@ const homeWorld: {
   region: string;
   enableIntegrations: boolean;
   slug: string;
-  updatedAt: string
+  updatedAt: string;
+  participantsCount: number;
+  rating: number;
 } = {
   id: "home",
   name: "Community Feed",
@@ -1195,6 +1197,8 @@ const homeWorld: {
   enableIntegrations: true,
   requireVerification: false,
   allowGuests: true,
+  participantsCount: 18450,
+  rating: 4.9,
   createdBy: {
     name: "BroWorld Core Team",
     handle: "@bro.world",
@@ -1223,7 +1227,9 @@ const defaultWorld: {
   region: string;
   enableIntegrations: boolean;
   slug: string;
-  updatedAt: string
+  updatedAt: string;
+  participantsCount: number;
+  rating: number;
 } = {
   id: "bro-world",
   name: DEFAULT_SITE_NAME,
@@ -1242,6 +1248,8 @@ const defaultWorld: {
   enableIntegrations: true,
   requireVerification: false,
   allowGuests: true,
+  participantsCount: 9620,
+  rating: 4.8,
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1264,6 +1272,8 @@ const innovationWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
+  participantsCount: 2840,
+  rating: 4.6,
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1286,6 +1296,8 @@ const marketplaceWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
+  participantsCount: 5130,
+  rating: 4.7,
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1308,6 +1320,8 @@ const designWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: false,
   allowGuests: true,
+  participantsCount: 3710,
+  rating: 4.5,
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1330,6 +1344,8 @@ const talentWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
+  participantsCount: 1980,
+  rating: 4.4,
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1352,6 +1368,8 @@ const esportsWorld: SiteWorldSettings = {
   enableIntegrations: true,
   requireVerification: true,
   allowGuests: false,
+  participantsCount: 7420,
+  rating: 4.8,
   createdAt: DEFAULT_CONTENT_UPDATED_AT,
   updatedAt: DEFAULT_CONTENT_UPDATED_AT,
 };
@@ -1377,7 +1395,9 @@ export const defaultSiteSettings: {
     region: string;
     enableIntegrations: boolean;
     slug: string;
-    updatedAt: string
+    updatedAt: string;
+    participantsCount: number;
+    rating: number;
   } | {
     pluginIds: string[];
     visibility: string;
@@ -1397,7 +1417,9 @@ export const defaultSiteSettings: {
     region: string;
     enableIntegrations: boolean;
     slug: string;
-    updatedAt: string
+    updatedAt: string;
+    participantsCount: number;
+    rating: number;
   } | {
     pluginIds: string[];
     visibility?: string | null;
@@ -1417,7 +1439,9 @@ export const defaultSiteSettings: {
     region?: string | null;
     enableIntegrations?: boolean;
     slug: string;
-    updatedAt: string
+    updatedAt: string;
+    participantsCount?: number;
+    rating?: number;
   } | {
     pluginIds: string[];
     visibility?: string | null;
@@ -1437,7 +1461,9 @@ export const defaultSiteSettings: {
     region?: string | null;
     enableIntegrations?: boolean;
     slug: string;
-    updatedAt: string
+    updatedAt: string;
+    participantsCount?: number;
+    rating?: number;
   } | {
     pluginIds: string[];
     visibility?: string | null;
@@ -1457,7 +1483,9 @@ export const defaultSiteSettings: {
     region?: string | null;
     enableIntegrations?: boolean;
     slug: string;
-    updatedAt: string
+    updatedAt: string;
+    participantsCount?: number;
+    rating?: number;
   } | {
     pluginIds: string[];
     visibility?: string | null;
@@ -1477,7 +1505,9 @@ export const defaultSiteSettings: {
     region?: string | null;
     enableIntegrations?: boolean;
     slug: string;
-    updatedAt: string
+    updatedAt: string;
+    participantsCount?: number;
+    rating?: number;
   } | {
     pluginIds: string[];
     visibility?: string | null;
@@ -1497,7 +1527,9 @@ export const defaultSiteSettings: {
     region?: string | null;
     enableIntegrations?: boolean;
     slug: string;
-    updatedAt: string
+    updatedAt: string;
+    participantsCount?: number;
+    rating?: number;
   })[];
   languages: SiteLanguageDefinition[];
   profile: SiteProfileSettings;

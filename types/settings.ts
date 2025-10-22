@@ -69,6 +69,8 @@ export interface SiteWorldSettings {
   enableIntegrations?: boolean;
   requireVerification?: boolean;
   allowGuests?: boolean;
+  participantsCount?: number | null;
+  rating?: number | null;
   createdBy?: {
     name: string;
     handle?: string | null;
