@@ -297,31 +297,14 @@ import {
 } from "~/composables/useLayoutRightSidebar";
 import { useCookieColorMode } from "~/composables/useCookieColorMode";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
-import {
-  ADMIN_ROLE_KEYS,
-  buildSidebarItems,
-  buildProfileSidebarItems,
-} from "~/lib/navigation/sidebar";
+import { buildProfileSidebarItems } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
-import {
-  composeMenusWithPlugins,
-  getDefaultMenuBlueprints,
-  getDefaultSiteSettings,
-} from "~/lib/settings/defaults";
-import type {
-  SiteMenuItem,
-  SiteSettings,
-  SiteThemeDefinition,
-  SiteWorldSettings,
-} from "~/types/settings";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import type { SiteSettings, SiteThemeDefinition, SiteWorldSettings } from "~/types/settings";
 import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
 import { withSecureCookieOptions } from "~/lib/cookies";
-import {
-  getAllPluginIds,
-  getPluginMenuBlueprints,
-  getPluginQuickLaunchEntries,
-} from "~/lib/navigation/plugins";
+import { getAllPluginIds, getPluginMenuBlueprints, getPluginQuickLaunchEntries } from "~/lib/navigation/plugins";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
@@ -977,37 +960,6 @@ function shouldScopeMenuToWorld(path: string, pluginPaths: Set<string>): boolean
   return pluginPaths.has(path);
 }
 
-function scopeMenusToWorld(
-  menus: readonly SiteMenuItem[],
-  basePath: string,
-  pluginPaths: Set<string>,
-): SiteMenuItem[] {
-  return menus.map((menu) => {
-    const scopedChildren = menu.children?.length
-      ? scopeMenusToWorld(menu.children, basePath, pluginPaths)
-      : menu.children;
-
-    const destination = typeof menu.to === "string" ? menu.to.trim() : "";
-    const shouldScope = destination && shouldScopeMenuToWorld(destination, pluginPaths);
-
-    const next: SiteMenuItem = {
-      ...menu,
-    };
-
-    if (shouldScope) {
-      next.to = scopePathToWorld(basePath, destination);
-    }
-
-    if (Array.isArray(scopedChildren)) {
-      next.children = scopedChildren;
-    } else if (Array.isArray(menu.children) && menu.children.length === 0) {
-      next.children = [];
-    }
-
-    return next;
-  });
-}
-
 const pluginMenuPaths = computed(() => {
   const paths = new Set<string>();
   collectPluginMenuPaths(getPluginMenuBlueprints(allPluginIds), paths);
@@ -1326,30 +1278,6 @@ watch(themePrimaryCookie, (value, oldValue) => {
   }
 });
 
-const baseMenuSource = computed(() => {
-  const blueprintMenus = siteSettings.value.menuBlueprints;
-  if (blueprintMenus?.length) {
-    return blueprintMenus;
-  }
-
-  return getDefaultMenuBlueprints();
-});
-
-const composedSidebarMenus = computed(() => {
-  const menus = composeMenusWithPlugins(baseMenuSource.value, resolvedPluginIds.value);
-
-  if (!shouldUseWorldScopedNavigation.value) {
-    return menus;
-  }
-
-  const basePath = worldNavigationBasePath.value;
-  if (!basePath) {
-    return menus;
-  }
-
-  return scopeMenusToWorld(menus, basePath, pluginMenuPaths.value);
-});
-
 const appIcons = computed(() => {
   const shouldScope = shouldUseWorldScopedNavigation.value;
   const basePath = worldNavigationBasePath.value;
@@ -1369,12 +1297,6 @@ const appIcons = computed(() => {
     });
 });
 
-const canAccessAdmin = computed(() => {
-  if (!auth.isAuthenticated.value) return false;
-  const roles = auth.currentUser.value?.roles ?? [];
-  return roles.some((role) => ADMIN_ROLE_KEYS.includes(role));
-});
-
 const sidebarVariant = computed<"default" | "profile">(() =>
   currentRoute.value?.meta?.sidebarVariant === "profile" ? "profile" : "default",
 );
@@ -1386,34 +1308,121 @@ if (import.meta.client) {
   loadingIndicator = useLoadingIndicator({ throttle: 0 });
 }
 
-const isAdminRoute = computed(() => {
-  const path = currentRoute.value?.path ?? "";
-  if (!path) return false;
-
-  const segments = path.split("/").filter(Boolean);
-  return segments.includes("admin");
-});
-
 const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   if (sidebarVariant.value === "profile") {
     return buildProfileSidebarItems(siteSettings.value.profile);
   }
 
-  const items = buildSidebarItems(siteSettings.value, canAccessAdmin.value, {
-    menus: composedSidebarMenus.value,
-  });
-  const adminItem = items.find((item) => item.key === "admin");
+  if (!shouldUseWorldScopedNavigation.value) {
+    const activeWorlds = siteSettingsState.activeWorlds.value ?? [];
 
-  if (isAdminRoute.value && canAccessAdmin.value) {
-    return adminItem?.children ?? [];
+    return activeWorlds
+      .map((world) => {
+        const slug = resolveWorldNavigationSlug(world);
+        if (!slug) {
+          return null;
+        }
+
+        return {
+          key: `world-${slug}`,
+          label: resolveWorldLabel(world),
+          to: `/world/${encodeURIComponent(slug)}`,
+          translate: false,
+        } satisfies LayoutSidebarItem;
+      })
+      .filter((item): item is LayoutSidebarItem => Boolean(item));
   }
 
-  if (adminItem) {
-    return items.filter((item) => item.key !== "admin");
+  const slug = routeWorldSlug.value;
+  if (!slug) {
+    return [];
   }
 
-  return items;
+  const activeWorld = findActiveWorldBySlug(slug);
+  const pluginIds = new Set<string>();
+  if (activeWorld) {
+    appendWorldPlugins(activeWorld, pluginIds);
+  }
+
+  if (!pluginIds.size) {
+    for (const pluginId of resolvedPluginIds.value) {
+      const normalized = pluginId.trim();
+      if (normalized) {
+        pluginIds.add(normalized);
+      }
+    }
+  }
+
+  return Array.from(pluginIds)
+    .map((pluginId) => {
+      const normalized = pluginId.trim();
+      if (!normalized) {
+        return null;
+      }
+
+      return {
+        key: `plugin-${normalized}`,
+        label: formatPluginLabel(normalized),
+        to: `/world/${encodeURIComponent(slug)}/${encodeURIComponent(normalized)}`,
+        translate: false,
+      } satisfies LayoutSidebarItem;
+    })
+    .filter((item): item is LayoutSidebarItem => Boolean(item));
 });
+
+function resolveWorldNavigationSlug(world: SiteWorldSettings | null | undefined): string | null {
+  if (!world) {
+    return null;
+  }
+
+  const slug = typeof world.slug === "string" ? world.slug.trim() : "";
+  if (slug) {
+    return slug;
+  }
+
+  const id = typeof world.id === "string" ? world.id.trim() : "";
+  return id || null;
+}
+
+function resolveWorldLabel(world: SiteWorldSettings): string {
+  const name = typeof world.name === "string" ? world.name.trim() : "";
+  if (name) {
+    return name;
+  }
+
+  const slug = resolveWorldNavigationSlug(world);
+  return slug ?? "";
+}
+
+function findActiveWorldBySlug(slug: string): SiteWorldSettings | null {
+  const normalized = slug.trim().toLowerCase();
+  if (!normalized) {
+    return null;
+  }
+
+  const activeWorlds = siteSettingsState.activeWorlds.value ?? [];
+  for (const world of activeWorlds) {
+    const worldSlug = world.slug?.trim().toLowerCase() ?? "";
+    if (worldSlug && worldSlug === normalized) {
+      return world;
+    }
+
+    const worldId = world.id?.trim().toLowerCase() ?? "";
+    if (worldId && worldId === normalized) {
+      return world;
+    }
+  }
+
+  return null;
+}
+
+function formatPluginLabel(pluginId: string): string {
+  return pluginId
+    .split(/[-_]+/g)
+    .filter(Boolean)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ") || pluginId;
+}
 
 const activeSidebar = ref("");
 

@@ -29,6 +29,29 @@ vi.mock("~/lib/api/fetcher", () => ({
   resolveApiFetcher: () => fetcherMock,
 }));
 
+vi.mock("~/composables/useResolvedLocalePath", () => ({
+  useResolvedLocalePath: () => (target?: string | { path?: string; params?: Record<string, unknown> }) => {
+    if (!target) {
+      return "/";
+    }
+
+    if (typeof target === "string") {
+      return target;
+    }
+
+    if (typeof target.path === "string" && target.path) {
+      return target.path;
+    }
+
+    const slug = target.params?.slug;
+    if (typeof slug === "string" && slug.trim()) {
+      return `/world/${slug}`;
+    }
+
+    return "/";
+  },
+}));
+
 vi.mock("#imports", () => ({
   useState: (key: string, init: () => unknown) => {
     if (!stateRegistry.has(key)) {
@@ -175,7 +198,7 @@ describe("components/world/WorldExplorerCard", () => {
     const { wrapper } = mountCard({ world });
 
     const links = wrapper.findAll("a[data-to]");
-    expect(links[0].attributes("data-to")).toBe(JSON.stringify({ path: "/world/home" }));
+    expect(links[0].attributes("data-to")).toBe("/world/home");
   });
 
   it("links the world title to the world route for other slugs", () => {
@@ -183,7 +206,7 @@ describe("components/world/WorldExplorerCard", () => {
     const { wrapper } = mountCard({ world });
 
     const links = wrapper.findAll("a[data-to]");
-    expect(links[0].attributes("data-to")).toBe(JSON.stringify({ path: "/world/innovation-lab" }));
+    expect(links[0].attributes("data-to")).toBe("/world/innovation-lab");
   });
 
   it("disables the enter button while membership approval is pending", () => {
@@ -266,7 +289,7 @@ describe("components/world/WorldExplorerCard", () => {
       "/worlds/test-world/enter",
       expect.objectContaining({ method: "POST" }),
     );
-    expect(routerPushMock).toHaveBeenCalledWith({ path: "/world/test-world" });
+    expect(routerPushMock).toHaveBeenCalledWith("/world/test-world");
   });
 
   it("renders participants and rating when provided", () => {
