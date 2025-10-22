@@ -434,7 +434,7 @@ const homeWorld: {
   id: "home",
   name: "Community Feed",
   slug: "home",
-  pluginIds: ["blog", "messenger", "education"],
+  pluginIds: ["blog", "education"],
   locale: defaultLanguageCode,
   description: "Stay in sync with every launch, announcement, and story across BroWorld.",
   visibility: "public",
@@ -556,7 +556,7 @@ const designWorld: SiteWorldSettings = {
   id: "design-sprint-hq",
   name: "Design Sprint HQ",
   slug: "design-sprint-hq",
-  pluginIds: ["education", "messenger", "blog"],
+  pluginIds: ["education", "blog"],
   locale: "en",
   description:
     "Run async workshops, publish recaps, and align the entire product squad in one vibrant studio.",
@@ -580,7 +580,7 @@ const talentWorld: SiteWorldSettings = {
   id: "talent-network",
   name: "Talent Network",
   slug: "talent-network",
-  pluginIds: ["job-board", "crm", "messenger"],
+  pluginIds: ["job", "crm", "messenger"],
   locale: "en",
   description:
     "Spot rising builders, manage outreach campaigns, and coordinate interviews with the hiring crew.",
@@ -604,7 +604,7 @@ const esportsWorld: SiteWorldSettings = {
   id: "esports-lounge",
   name: "Esports Lounge",
   slug: "esports-lounge",
-  pluginIds: ["game", "messenger", "education"],
+  pluginIds: [],
   locale: "en",
   description:
     "Host scrim reviews, share tournament highlights, and coach every roster with data-rich playbooks.",
