@@ -9,8 +9,8 @@
         aria-labelledby="help-faq"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <div class="d-flex align-center justify-space-between flex-wrap gap-3 mb-4">
             <h2
@@ -82,8 +82,8 @@
       </section>
       <section aria-labelledby="quick-actions">
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <div class="d-flex align-center justify-space-between flex-wrap gap-4 mb-6">
             <div>

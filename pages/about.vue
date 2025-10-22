@@ -9,8 +9,8 @@
         aria-describedby="about-subtitle"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <div class="about-hero__badge">
             <v-icon
@@ -63,8 +63,8 @@
         aria-labelledby="values-title"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <v-row
             class="align-stretch"
@@ -126,8 +126,8 @@
         aria-labelledby="metrics-title"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <div class="about-section__heading mb-6">
             <h2
@@ -173,8 +173,8 @@
         aria-labelledby="team-title"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <h2
             id="team-title"
@@ -194,8 +194,8 @@
               lg="6"
             >
               <SidebarCard
-                  class="text-card-foreground px-3 py-2"
-                  glow
+                class="text-card-foreground px-3 py-2"
+                glow
               >
                 <div class="d-flex align-center mb-4">
                   <v-avatar
@@ -227,8 +227,8 @@
         aria-labelledby="tech-title"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <h2
             id="tech-title"
@@ -258,8 +258,8 @@
         aria-labelledby="timeline-title"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <h2
             id="timeline-title"
@@ -303,8 +303,8 @@
         aria-labelledby="links-title"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <h2
             id="links-title"
@@ -340,8 +340,8 @@
         aria-labelledby="cta-title"
       >
         <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
+          class="text-card-foreground px-3 py-2"
+          glow
         >
           <v-row
             class="align-center"
@@ -397,8 +397,8 @@
               md="5"
             >
               <SidebarCard
-                  class="text-card-foreground px-3 py-2"
-                  glow
+                class="text-card-foreground px-3 py-2"
+                glow
               >
                 <v-responsive
                   aspect-ratio="4/3"

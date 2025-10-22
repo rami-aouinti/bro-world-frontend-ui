@@ -409,9 +409,7 @@ const pluginRegistry: readonly PluginRegistryEntry[] = [
   },
 ] as const;
 
-export const pluginRegistryMap = new Map(
-  pluginRegistry.map((entry) => [entry.id, entry] as const),
-);
+export const pluginRegistryMap = new Map(pluginRegistry.map((entry) => [entry.id, entry] as const));
 
 export function getPluginRegistry(): readonly PluginRegistryEntry[] {
   return pluginRegistry;

@@ -1,7 +1,7 @@
 <template>
   <SidebarCard
-      class="text-card-foreground px-3 py-2"
-      glow
+    class="text-card-foreground px-3 py-2"
+    glow
   >
     <div
       v-if="loading"
@@ -17,8 +17,8 @@
     </div>
     <template v-else>
       <h2
-          id="contact-support"
-          class="text-h5 font-weight-semibold mb-2"
+        id="contact-support"
+        class="text-h5 font-weight-semibold mb-2"
       >
         Conversations
       </h2>

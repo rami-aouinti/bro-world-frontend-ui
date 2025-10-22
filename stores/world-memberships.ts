@@ -49,7 +49,10 @@ function toRecord(value: unknown): Record<string, unknown> | null {
   return null;
 }
 
-function normalizeStatus(status: unknown, fallback: WorldMembershipStatus = "none"): WorldMembershipStatus {
+function normalizeStatus(
+  status: unknown,
+  fallback: WorldMembershipStatus = "none",
+): WorldMembershipStatus {
   if (typeof status === "string") {
     const normalized = status.trim().toLowerCase();
 
@@ -81,7 +84,10 @@ function normalizeStatus(status: unknown, fallback: WorldMembershipStatus = "non
   return fallback;
 }
 
-function normalizeRole(role: unknown, fallback: WorldMembershipRole = "viewer"): WorldMembershipRole {
+function normalizeRole(
+  role: unknown,
+  fallback: WorldMembershipRole = "viewer",
+): WorldMembershipRole {
   if (typeof role === "string") {
     const normalized = role.trim().toLowerCase();
 
@@ -234,7 +240,9 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
       ...membershipState.value,
       [key]: {
         ...normalized,
-        status: update.status ? normalizeStatus(update.status, normalized.status) : normalized.status,
+        status: update.status
+          ? normalizeStatus(update.status, normalized.status)
+          : normalized.status,
         role: update.role ? normalizeRole(update.role, normalized.role) : normalized.role,
         isOwner:
           typeof update.isOwner === "boolean"
@@ -289,7 +297,9 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
         const id = normalizeWorldId(world.id);
         return id ? ([id, world] as const) : null;
       })
-      .filter((entry): entry is readonly [string, SiteSettings["worlds"][number]] => entry !== null);
+      .filter(
+        (entry): entry is readonly [string, SiteSettings["worlds"][number]] => entry !== null,
+      );
 
     const worldById = new Map(normalizedEntries);
     const activeId = normalizeWorldId(settings?.activeWorldId);
@@ -325,10 +335,13 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
     const api = resolveApiFetcher();
 
     try {
-      const response = await api<WorldMembershipResponse>(`/worlds/${encodeURIComponent(key)}/activate`, {
-        method: "POST",
-        data: { worldId: key } satisfies WorldMembershipRequestPayload,
-      });
+      const response = await api<WorldMembershipResponse>(
+        `/worlds/${encodeURIComponent(key)}/activate`,
+        {
+          method: "POST",
+          data: { worldId: key } satisfies WorldMembershipRequestPayload,
+        },
+      );
 
       const membership = applyMembershipResponse(key, response);
       markActive(key);
@@ -350,10 +363,13 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
     const api = resolveApiFetcher();
 
     try {
-      const response = await api<WorldMembershipResponse>(`/worlds/${encodeURIComponent(key)}/enter`, {
-        method: "POST",
-        data: { worldId: key } satisfies WorldMembershipRequestPayload,
-      });
+      const response = await api<WorldMembershipResponse>(
+        `/worlds/${encodeURIComponent(key)}/enter`,
+        {
+          method: "POST",
+          data: { worldId: key } satisfies WorldMembershipRequestPayload,
+        },
+      );
 
       if (response) {
         applyMembershipResponse(key, response);

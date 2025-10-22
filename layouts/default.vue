@@ -309,10 +309,19 @@ import {
   getDefaultMenuBlueprints,
   getDefaultSiteSettings,
 } from "~/lib/settings/defaults";
-import type { SiteMenuItem, SiteSettings, SiteThemeDefinition, SiteWorldSettings } from "~/types/settings";
+import type {
+  SiteMenuItem,
+  SiteSettings,
+  SiteThemeDefinition,
+  SiteWorldSettings,
+} from "~/types/settings";
 import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
 import { withSecureCookieOptions } from "~/lib/cookies";
-import { getAllPluginIds, getPluginMenuBlueprints, getPluginQuickLaunchEntries } from "~/lib/navigation/plugins";
+import {
+  getAllPluginIds,
+  getPluginMenuBlueprints,
+  getPluginQuickLaunchEntries,
+} from "~/lib/navigation/plugins";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
@@ -1007,19 +1016,14 @@ const pluginMenuPaths = computed(() => {
 
 const quickLaunchRegistry = getPluginQuickLaunchEntries();
 
-function appendWorldPlugins(
-  world: SiteWorldSettings | null | undefined,
-  target: Set<string>,
-) {
+function appendWorldPlugins(world: SiteWorldSettings | null | undefined, target: Set<string>) {
   if (!world) {
     return;
   }
 
   const installed = (world as { installedPlugins?: unknown }).installedPlugins;
   const pluginIds =
-    Array.isArray(installed) && installed.length
-      ? installed
-      : world.pluginIds ?? [];
+    Array.isArray(installed) && installed.length ? installed : (world.pluginIds ?? []);
 
   for (const pluginId of pluginIds ?? []) {
     if (typeof pluginId !== "string") {

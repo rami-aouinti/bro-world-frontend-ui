@@ -15,7 +15,7 @@
 
     <div :class="navGroupClasses">
       <button
-          v-if="!props.isMobile"
+        v-if="!props.isMobile"
         type="button"
         :class="props.iconTriggerClasses"
         :aria-label="props.goBackLabel"
@@ -27,7 +27,7 @@
         />
       </button>
       <button
-          v-if="!props.isMobile"
+        v-if="!props.isMobile"
         type="button"
         :class="[
           props.iconTriggerClasses,
@@ -45,7 +45,7 @@
         />
       </button>
       <button
-          v-if="!props.isMobile"
+        v-if="!props.isMobile"
         type="button"
         :class="props.iconTriggerClasses"
         :aria-label="props.navigationLabel"

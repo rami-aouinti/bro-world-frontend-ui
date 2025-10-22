@@ -73,9 +73,7 @@ export function useSiteSettingsState() {
     for (const world of activeWorlds) {
       const installed = (world as { installedPlugins?: unknown }).installedPlugins;
       const pluginIds =
-        Array.isArray(installed) && installed.length
-          ? installed
-          : world.pluginIds ?? [];
+        Array.isArray(installed) && installed.length ? installed : (world.pluginIds ?? []);
 
       for (const pluginId of pluginIds ?? []) {
         if (typeof pluginId !== "string") {

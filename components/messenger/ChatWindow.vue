@@ -370,8 +370,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-
-
 .messenger-window__placeholder,
 .messenger-window__skeleton,
 .messenger-window__card {

@@ -56,7 +56,9 @@ main.world-explorer-page {
   color: hsl(var(--primary-foreground));
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.2s ease,
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
     background-color 0.2s ease;
   white-space: nowrap;
 }

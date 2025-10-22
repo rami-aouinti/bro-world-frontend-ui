@@ -843,7 +843,9 @@ export const usePostsStore = defineStore("posts", () => {
     const siteActiveWorlds = siteSettingsState?.activeWorlds?.value ?? [];
 
     if (siteActiveWorlds.length > 0) {
-      const firstWorldWithId = siteActiveWorlds.find((world) => typeof world?.id === "string" && world.id);
+      const firstWorldWithId = siteActiveWorlds.find(
+        (world) => typeof world?.id === "string" && world.id,
+      );
 
       if (firstWorldWithId?.id) {
         return firstWorldWithId.id;

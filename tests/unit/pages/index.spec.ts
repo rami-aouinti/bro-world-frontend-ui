@@ -33,7 +33,7 @@ const activeWorldsRef = ref<SiteWorldSettings[]>([]);
 const siteSettingsStateMock = Object.assign(siteSettingsRef, {
   enabledPlugins: computed(() => [] as string[]),
   activeWorlds: computed(() => activeWorldsRef.value),
-  memberships: computed(() => ({} as Record<string, unknown>)),
+  memberships: computed(() => ({}) as Record<string, unknown>),
 });
 
 vi.mock("~/composables/useSiteSettingsState", () => ({
@@ -102,17 +102,17 @@ describe("pages/index world explorer", () => {
     },
   });
 
-const nuxtLinkStub = { props: ["to"], template: '<a :data-to="to"><slot /></a>' } as const;
+  const nuxtLinkStub = { props: ["to"], template: '<a :data-to="to"><slot /></a>' } as const;
 
-const globalStubs = {
-  SidebarCard: { template: "<div><slot /></div>" },
-  WorldExplorerCard: WorldExplorerCardStub,
-} as const;
+  const globalStubs = {
+    SidebarCard: { template: "<div><slot /></div>" },
+    WorldExplorerCard: WorldExplorerCardStub,
+  } as const;
 
-const defaultStubs = {
-  ...globalStubs,
-  NuxtLink: nuxtLinkStub,
-} as const;
+  const defaultStubs = {
+    ...globalStubs,
+    NuxtLink: nuxtLinkStub,
+  } as const;
 
   beforeEach(() => {
     siteSettingsRef.value = getDefaultSiteSettings();

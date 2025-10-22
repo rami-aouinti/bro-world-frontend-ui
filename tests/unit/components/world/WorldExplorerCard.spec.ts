@@ -128,12 +128,14 @@ function createWorld(overrides: Partial<SiteWorldSettings> = {}): SiteWorldSetti
   } satisfies SiteWorldSettings;
 }
 
-function mountCard(options: {
-  world?: SiteWorldSettings;
-  isActive?: boolean;
-  membershipStatus?: WorldMembershipStatus;
-  isOwner?: boolean;
-} = {}) {
+function mountCard(
+  options: {
+    world?: SiteWorldSettings;
+    isActive?: boolean;
+    membershipStatus?: WorldMembershipStatus;
+    isOwner?: boolean;
+  } = {},
+) {
   const pinia = createPinia();
   const world = options.world ?? createWorld();
   const store = useWorldMemberships(pinia);
@@ -185,7 +187,10 @@ describe("components/world/WorldExplorerCard", () => {
   });
 
   it("disables the enter button while membership approval is pending", () => {
-    const { wrapper } = mountCard({ membershipStatus: "pending", world: createWorld({ visibility: "private" }) });
+    const { wrapper } = mountCard({
+      membershipStatus: "pending",
+      world: createWorld({ visibility: "private" }),
+    });
 
     const enterButton = wrapper.get('[data-test="world-enter-button"]');
     expect(enterButton.attributes("disabled")).toBeDefined();
@@ -214,7 +219,10 @@ describe("components/world/WorldExplorerCard", () => {
   });
 
   it("enables entry immediately after the membership becomes active", async () => {
-    const { wrapper, world, store } = mountCard({ membershipStatus: "pending", world: createWorld({ visibility: "private" }) });
+    const { wrapper, world, store } = mountCard({
+      membershipStatus: "pending",
+      world: createWorld({ visibility: "private" }),
+    });
 
     expect(wrapper.get('[data-test="world-enter-button"]').attributes("disabled")).toBeDefined();
 

@@ -1,12 +1,6 @@
 export type WorldMembershipStatus = "none" | "pending" | "active" | "denied";
 
-export type WorldMembershipRole =
-  | "owner"
-  | "admin"
-  | "moderator"
-  | "member"
-  | "guest"
-  | "viewer";
+export type WorldMembershipRole = "owner" | "admin" | "moderator" | "member" | "guest" | "viewer";
 
 export interface WorldMembership {
   worldId: string;

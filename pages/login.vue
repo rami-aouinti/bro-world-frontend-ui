@@ -3,13 +3,9 @@
     <div class="login-page__glow login-page__glow--top" />
     <div class="login-page__glow login-page__glow--bottom" />
 
-    <v-container
-      fluid
-    >
+    <v-container fluid>
       <v-row justify="center">
-        <v-col
-          cols="12"
-        >
+        <v-col cols="12">
           <v-card
             :loading="isRedirecting"
             class="auth-card border-radius-xl overflow-visible"

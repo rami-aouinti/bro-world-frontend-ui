@@ -8,20 +8,20 @@
       aria-labelledby="world-explorer-heading"
     >
       <SidebarCard
-          class="world-explorer-card text-card-foreground px-3 py-2"
-          glow
+        class="world-explorer-card text-card-foreground px-3 py-2"
+        glow
       >
         <div class="world-explorer-page__header-top">
           <h1
-              id="world-explorer-heading"
-              class="world-explorer-page__title"
+            id="world-explorer-heading"
+            class="world-explorer-page__title"
           >
             {{ t("pages.index.title") }}
           </h1>
           <NuxtLink
-              :to="createWorldLink"
-              class="world-explorer-page__cta"
-              data-test="create-world-cta"
+            :to="createWorldLink"
+            class="world-explorer-page__cta"
+            data-test="create-world-cta"
           >
             {{ t("layout.sidebar.items.createWorld") }}
           </NuxtLink>

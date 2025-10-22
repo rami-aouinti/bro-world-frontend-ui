@@ -5,32 +5,31 @@
       aria-describedby="contact-subtitle"
     >
       <SidebarCard
-          class="text-card-foreground px-3 py-2"
-          glow
+        class="text-card-foreground px-3 py-2"
+        glow
       >
         <v-row
-            class="align-stretch contact-layout"
-            dense
+          class="align-stretch contact-layout"
+          dense
         >
           <v-col cols="12">
-
-              <article aria-describedby="contact-intro">
-                <div class="contact-badge">
-                  <v-icon
-                      icon="mdi:message-processing-outline"
-                      size="22"
-                      class="mr-2"
-                      aria-hidden="true"
-                  />
-                  <span class="text-caption font-weight-medium text-uppercase tracking-wide">
+            <article aria-describedby="contact-intro">
+              <div class="contact-badge">
+                <v-icon
+                  icon="mdi:message-processing-outline"
+                  size="22"
+                  class="mr-2"
+                  aria-hidden="true"
+                />
+                <span class="text-caption font-weight-medium text-uppercase tracking-wide">
                   {{ t("pages.contact.details.title") }}
                 </span>
-                </div>
-              </article>
-
-              <div class="contact-form-wrapper">
-                <ContactForm :show-heading="false" />
               </div>
+            </article>
+
+            <div class="contact-form-wrapper">
+              <ContactForm :show-heading="false" />
+            </div>
           </v-col>
         </v-row>
       </SidebarCard>

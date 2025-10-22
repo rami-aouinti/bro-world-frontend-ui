@@ -536,4 +536,3 @@ async function purgeTrashItem(item: TrashItem) {
   }
 }
 </script>
-

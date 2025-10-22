@@ -202,9 +202,7 @@ const formattedRating = computed(() => {
 });
 
 const ratingLabel = computed(() =>
-  ratingValue.value === null
-    ? ""
-    : t("pages.index.ratingLabel", { rating: formattedRating.value }),
+  ratingValue.value === null ? "" : t("pages.index.ratingLabel", { rating: formattedRating.value }),
 );
 
 const hasParticipants = computed(() => participantsCount.value !== null);
@@ -218,9 +216,7 @@ const isOwner = computed(() => membership.value.isOwner || membershipRole.value 
 const isPrivateWorld = computed(
   () => (props.world.visibility ?? "private").toLowerCase() === "private",
 );
-const isMembershipActive = computed(
-  () => membershipStatus.value === "active" || isOwner.value,
-);
+const isMembershipActive = computed(() => membershipStatus.value === "active" || isOwner.value);
 const isActivating = computed(() => membershipStore.isActivating(props.world.id));
 const isEntering = computed(() => membershipStore.isEntering(props.world.id));
 const isEnterDisabled = computed(() => !isMembershipActive.value || isEntering.value);
@@ -374,7 +370,9 @@ async function handleActivate() {
     }
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : String(error ?? t("pages.index.membership.requestError"));
+      error instanceof Error
+        ? error.message
+        : String(error ?? t("pages.index.membership.requestError"));
     showError(message || t("pages.index.membership.requestError"));
   }
 }
@@ -384,7 +382,9 @@ async function handleRequestAccess() {
     await membershipStore.activateWorld(props.world.id);
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : String(error ?? t("pages.index.membership.requestError"));
+      error instanceof Error
+        ? error.message
+        : String(error ?? t("pages.index.membership.requestError"));
     showError(message || t("pages.index.membership.requestError"));
   }
 }
@@ -418,7 +418,9 @@ async function handleEnter() {
     await router.push(targetRoute.value);
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : String(error ?? t("pages.index.membership.enterError"));
+      error instanceof Error
+        ? error.message
+        : String(error ?? t("pages.index.membership.enterError"));
     showError(message || t("pages.index.membership.enterError"));
   }
 }
