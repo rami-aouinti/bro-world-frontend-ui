@@ -1,10 +1,8 @@
 <template>
-  <div class="flex flex-col gap-6">
-    <v-sheet
-      class="contact-panel contact-panel--secondary"
-      elevation="0"
-      rounded="xl"
-    >
+  <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+  >
       <section aria-labelledby="contact-support">
         <h2
           id="contact-support"
@@ -58,14 +56,12 @@
           </v-card>
         </div>
       </section>
-    </v-sheet>
+    </SidebarCard>
 
-    <v-sheet
-      class="contact-availability"
-      elevation="0"
-      rounded="xl"
-      aria-labelledby="availability-title"
-    >
+  <SidebarCard
+      class="text-card-foreground px-3 py-2"
+      glow
+  >
       <h2
         id="availability-title"
         class="text-h6 font-weight-semibold mb-2"
@@ -75,11 +71,12 @@
       <p class="text-body-2 text-medium-emphasis mb-0">
         {{ availabilityBody }}
       </p>
-    </v-sheet>
-  </div>
+    </SidebarCard>
 </template>
 
 <script setup lang="ts">
+import SidebarCard from "~/components/layout/SidebarCard.vue";
+
 interface SupportChannel {
   icon: string;
   title: string;

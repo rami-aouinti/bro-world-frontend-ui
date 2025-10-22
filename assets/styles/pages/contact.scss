@@ -51,7 +51,6 @@ main.contact-page {
 .contact-badge {
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
   border-radius: 999px;
   background: rgba(var(--v-theme-primary), 0.12);
   color: rgba(var(--v-theme-primary), 0.9);
@@ -104,6 +103,6 @@ main.contact-page {
   .contact-panel,
   .contact-form-wrapper,
   .contact-availability {
-    padding: 24px;
+    padding: 6px;
   }
 }

@@ -15,7 +15,6 @@
             rounded="xl"
           >
             <article
-              class="mb-8"
               aria-describedby="contact-intro"
             >
               <div class="contact-badge">
@@ -29,18 +28,6 @@
                   {{ t("pages.contact.details.title") }}
                 </span>
               </div>
-              <h4
-                id="contact-heading"
-                class="text-h4 font-weight-bold mb-3"
-              >
-                {{ contactTitle }}
-              </h4>
-              <p
-                id="contact-intro"
-                class="text-body-1 text-medium-emphasis"
-              >
-                {{ contactSubtitle }}
-              </p>
             </article>
 
             <div class="contact-form-wrapper">

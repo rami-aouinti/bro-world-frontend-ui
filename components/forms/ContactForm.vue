@@ -1,32 +1,15 @@
 <template>
   <section
-    class="contact-form"
     aria-labelledby="contact-form-heading"
   >
-    <header
-      v-if="showHeading"
-      class="contact-form__header mb-6"
-    >
-      <h2
-        id="contact-form-heading"
-        class="text-h5 font-weight-bold"
-      >
-        {{ t("pages.contact.title") }}
-      </h2>
-      <p class="text-body-2 text-medium-emphasis">
-        {{ t("pages.contact.subtitle") }}
-      </p>
-    </header>
-
     <v-form
       ref="formRef"
       aria-describedby="contact-status"
       role="form"
       @submit.prevent="handleSubmit"
     >
-      <div class="contact-form__grid">
-        <div>
-          <v-text-field
+      <div>
+        <v-text-field
             id="contact-name"
             v-model="form.name"
             :label="t('pages.contact.form.name')"
@@ -35,23 +18,25 @@
             :aria-describedby="errors.name ? 'name-error' : undefined"
             :aria-invalid="errors.name ? 'true' : 'false'"
             data-test="name-field"
+            variant="outlined"
+            density="compact"
             name="name"
             autocomplete="name"
             required
-          />
-          <p
+        />
+        <p
             v-if="errors.name"
             :id="'name-error'"
             class="sr-only"
             aria-live="assertive"
             data-test="name-error"
-          >
-            {{ validationMessage(errors.name) }}
-          </p>
-        </div>
+        >
+          {{ validationMessage(errors.name) }}
+        </p>
+      </div>
 
-        <div>
-          <v-text-field
+      <div>
+        <v-text-field
             id="contact-email"
             v-model="form.email"
             :label="t('pages.contact.form.email')"
@@ -60,25 +45,27 @@
             :aria-describedby="errors.email ? 'email-error' : undefined"
             :aria-invalid="errors.email ? 'true' : 'false'"
             data-test="email-field"
+            variant="outlined"
+            density="compact"
             name="email"
             type="email"
             autocomplete="email"
             inputmode="email"
             required
-          />
-          <p
+        />
+        <p
             v-if="errors.email"
             :id="'email-error'"
             class="sr-only"
             aria-live="assertive"
             data-test="email-error"
-          >
-            {{ validationMessage(errors.email) }}
-          </p>
-        </div>
+        >
+          {{ validationMessage(errors.email) }}
+        </p>
+      </div>
 
-        <div>
-          <v-text-field
+      <div>
+        <v-text-field
             id="contact-subject"
             v-model="form.subject"
             :label="t('pages.contact.form.subject')"
@@ -88,22 +75,24 @@
             :aria-invalid="errors.subject ? 'true' : 'false'"
             data-test="subject-field"
             name="subject"
+            variant="outlined"
+            density="compact"
             autocomplete="on"
             required
-          />
-          <p
+        />
+        <p
             v-if="errors.subject"
             :id="'subject-error'"
             class="sr-only"
             aria-live="assertive"
             data-test="subject-error"
-          >
-            {{ validationMessage(errors.subject) }}
-          </p>
-        </div>
+        >
+          {{ validationMessage(errors.subject) }}
+        </p>
+      </div>
 
-        <div>
-          <v-textarea
+      <div>
+        <v-textarea
             id="contact-message"
             v-model="form.message"
             :label="t('pages.contact.form.message')"
@@ -112,30 +101,32 @@
             :aria-describedby="errors.message ? 'message-error' : undefined"
             :aria-invalid="errors.message ? 'true' : 'false'"
             auto-grow
-            rows="4"
+            variant="outlined"
+            density="compact"
+            rows="2"
             counter="2000"
             data-test="message-field"
             name="message"
             required
-          />
-          <p
+        />
+        <p
             v-if="errors.message"
             :id="'message-error'"
             class="sr-only"
             aria-live="assertive"
             data-test="message-error"
-          >
-            {{ validationMessage(errors.message) }}
-          </p>
-        </div>
+        >
+          {{ validationMessage(errors.message) }}
+        </p>
+      </div>
 
-        <label
+      <label
           class="sr-only"
           for="contact-check-field"
-        >
-          {{ t("pages.contact.form.name") }}
-        </label>
-        <input
+      >
+        {{ t("pages.contact.form.name") }}
+      </label>
+      <input
           id="contact-check-field"
           v-model="form.honeypot"
           name="website"
@@ -144,19 +135,18 @@
           tabindex="-1"
           aria-hidden="true"
           autocomplete="off"
-        />
+      />
 
-        <v-btn
+      <v-btn
           type="submit"
           color="primary"
           :loading="isSubmitting"
           :disabled="isSubmitting"
           class="contact-form__submit"
           data-test="submit-button"
-        >
-          {{ isSubmitting ? t("pages.contact.form.sending") : t("pages.contact.form.submit") }}
-        </v-btn>
-      </div>
+      >
+        {{ isSubmitting ? t("pages.contact.form.sending") : t("pages.contact.form.submit") }}
+      </v-btn>
     </v-form>
 
     <p
