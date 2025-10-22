@@ -23,46 +23,6 @@
       @update:locale="handleLocaleChange"
     />
 
-    <div
-      id="menu-bar-world"
-      class="menu-bar-world-slot"
-    >
-      <v-card
-        v-if="shouldShowWorldSummary"
-        class="menu-bar-world-card text-card-foreground px-4 py-3"
-        rounded="xl"
-        variant="text"
-      >
-        <div class="menu-bar-world-card__body">
-          <v-avatar
-            class="menu-bar-world-card__avatar"
-            color="primary"
-            size="44"
-            variant="tonal"
-          >
-            <template v-if="activeWorldCreatorAvatar">
-              <v-img
-                :src="activeWorldCreatorAvatar"
-                :alt="activeWorldCreatorAlt"
-                cover
-              />
-            </template>
-            <v-icon
-              v-else
-              icon="mdi:account-circle"
-              size="32"
-              aria-hidden="true"
-            />
-          </v-avatar>
-          <div class="menu-bar-world-card__content">
-            <span class="menu-bar-world-card__label">{{ worldSummaryTitle }}</span>
-            <span class="menu-bar-world-card__name">{{ activeWorldName }}</span>
-            <span class="menu-bar-world-card__creator">{{ activeWorldCreatorDisplay }}</span>
-          </div>
-        </div>
-      </v-card>
-    </div>
-
     <!-- LEFT DRAWER -->
     <v-navigation-drawer
       v-if="showNavigation"

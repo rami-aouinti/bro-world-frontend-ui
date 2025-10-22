@@ -1,6 +1,6 @@
 <template>
   <SidebarCard
-    class="world-explorer-card"
+    class="text-card-foreground px-3 py-2"
     glow
     :aria-label="ariaLabel"
   >
