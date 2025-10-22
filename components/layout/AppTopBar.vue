@@ -35,16 +35,22 @@
       class="flex flex-1 justify-center px-4"
     >
       <v-autocomplete
-        :items="items"
-        class="app-top-bar__search mx-auto w-full max-w-[360px]bg-background/60 text-sm backdrop-blur md:max-w-[420px] p-4"
+        v-model:search="worldSearchInput"
+        class="app-top-bar__search mx-auto w-full max-w-[360px] bg-background/60 p-4 text-sm backdrop-blur md:max-w-[420px]"
         density="compact"
         hide-details
         menu-icon=""
-        placeholder="Search Anything in BroWorld"
+        :placeholder="t('pages.index.search.placeholder')"
         variant="outlined"
         auto-select-first
         item-props
         rounded="xl"
+        clearable
+        :items="worldSearchItems"
+        item-title="title"
+        item-value="value"
+        @update:model-value="handleWorldSearchSelect"
+        @click:clear="clearWorldSearch"
       >
         <template #prepend-inner>
           <v-icon
@@ -136,10 +142,14 @@ import RightControls from "./app-bar/RightControls.vue";
 import UserMenu from "./app-bar/UserMenu.vue";
 import LocaleMenu from "./app-bar/LocaleMenu.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
+import { useWorldSearchQuery } from "~/composables/useWorldSearch";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
 import { useNotifications } from "~/composables/useNotifications";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import type { SiteSettings } from "~/types/settings";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
@@ -150,6 +160,12 @@ const VAutocomplete = defineAsyncComponent(() =>
 type AppIcon = { name: string; label: string; size?: number; to?: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
 type LocaleInput = string | { code?: string | null | undefined };
+
+type WorldSearchItem = {
+  title: string;
+  value: string;
+  subtitle?: string;
+};
 
 const props = withDefaults(
   defineProps<{
@@ -177,6 +193,51 @@ const config = useConfig();
 const { localePath } = useI18nDocs();
 const auth = useAuthSession();
 const messenger = useMessengerStore();
+const siteSettingsState = useSiteSettingsState();
+const worldSearchQuery = useWorldSearchQuery();
+
+const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
+const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
+const worlds = computed(() => siteSettings.value.worlds ?? []);
+const worldSearchItems = computed<WorldSearchItem[]>(() =>
+  worlds.value
+    .map((world) => {
+      const nameSegment =
+        typeof world.name === "string" && world.name.trim()
+          ? world.name.trim()
+          : typeof world.slug === "string" && world.slug.trim()
+            ? world.slug.trim()
+            : null;
+
+      if (!nameSegment) {
+        return null;
+      }
+
+      const subtitle =
+        typeof world.description === "string" && world.description.trim()
+          ? world.description.trim()
+          : undefined;
+
+      return {
+        title: nameSegment,
+        value: nameSegment,
+        subtitle,
+      } satisfies WorldSearchItem;
+    })
+    .filter((item): item is WorldSearchItem => item !== null),
+);
+
+const worldSearchInput = computed({
+  get: () => worldSearchQuery.value,
+  set: (value: string | null) => {
+    if (typeof value === "string") {
+      worldSearchQuery.value = value;
+      return;
+    }
+
+    worldSearchQuery.value = "";
+  },
+});
 
 const iconTriggerClasses =
   "flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-foreground transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2";
@@ -191,28 +252,15 @@ const localeMetadata = {
   ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
 
-const items = [
-  {
-    prependIcon: "mdi-clock-outline",
-    title: "recipe with chicken",
-  },
-  {
-    prependIcon: "mdi-clock-outline",
-    title: "best hiking trails near me",
-  },
-  {
-    prependIcon: "mdi-clock-outline",
-    title: "how to learn a new language",
-  },
-  {
-    prependIcon: "mdi-clock-outline",
-    title: "DIY home organization ideas",
-  },
-  {
-    prependIcon: "mdi-clock-outline",
-    title: "latest fashion trends",
-  },
-];
+function handleWorldSearchSelect(value: string | null) {
+  if (typeof value === "string") {
+    worldSearchQuery.value = value;
+  }
+}
+
+function clearWorldSearch() {
+  worldSearchQuery.value = "";
+}
 
 const navigationLabel = computed(() => t("layout.actions.openNavigation"));
 const goBackLabel = computed(() => t("layout.actions.goBack"));

@@ -16,19 +16,6 @@
       <p class="world-explorer-page__description">
         {{ pageDescription }}
       </p>
-      <v-text-field
-        v-model="searchQuery"
-        class="world-explorer-page__search"
-        :label="t('pages.index.search.label')"
-        :placeholder="t('pages.index.search.placeholder')"
-        :aria-label="t('pages.index.search.ariaLabel')"
-        type="search"
-        density="comfortable"
-        variant="outlined"
-        prepend-inner-icon="mdi-magnify"
-        clearable
-        hide-details="auto"
-      />
     </header>
 
     <section
@@ -58,7 +45,7 @@
       v-else-if="hasWorlds"
       class="world-explorer-page__empty"
       glow
-        data-test="world-explorer-empty"
+      data-test="world-explorer-empty"
     >
       <div>
         <h2 class="world-explorer-page__empty-title">
@@ -95,6 +82,7 @@ import { definePageMeta, useSeoMeta } from "#imports";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import WorldExplorerCard from "~/components/world/WorldExplorerCard.vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { useWorldSearchQuery } from "~/composables/useWorldSearch";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings } from "~/types/settings";
 import { useWorldMembershipsStore } from "~/stores/world-memberships";
@@ -106,9 +94,71 @@ const membershipStore = useWorldMembershipsStore();
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
-const membershipMap = computed(() => membershipStore.memberships);
-const activeWorldIds = computed(() => {
-  const ids = membershipStore.activeWorldIds.value;
+const worldSearchQuery = useWorldSearchQuery();
+const searchQueryDisplay = computed(() =>
+  typeof worldSearchQuery.value === "string"
+    ? worldSearchQuery.value
+    : String(worldSearchQuery.value ?? ""),
+);
+const searchQueryLabel = computed(() => {
+  const trimmed = searchQueryDisplay.value.trim();
+  return trimmed || searchQueryDisplay.value;
+});
+const normalizedSearchQuery = computed(() => {
+  const query = searchQueryDisplay.value.trim().toLowerCase();
+  return query;
+});
+const filteredWorlds = computed(() => {
+  if (!normalizedSearchQuery.value) {
+    return worlds.value;
+  }
+
+  return worlds.value.filter((world) => {
+    const segments: string[] = [];
+
+    if (typeof world.name === "string") {
+      segments.push(world.name);
+    }
+
+    if (typeof world.slug === "string") {
+      segments.push(world.slug);
+    }
+
+    if (typeof world.description === "string") {
+      segments.push(world.description);
+    }
+
+    if (typeof world.locale === "string") {
+      segments.push(world.locale);
+    }
+
+    if (typeof world.visibility === "string") {
+      segments.push(world.visibility);
+    }
+
+    if (world.tags?.length) {
+      segments.push(world.tags.join(" "));
+    }
+
+    if (typeof world.createdBy?.name === "string") {
+      segments.push(world.createdBy.name);
+    }
+
+    return segments.some((segment) => {
+      const candidate = segment.trim().toLowerCase();
+
+      if (!candidate) {
+        return false;
+      }
+
+      return candidate.includes(normalizedSearchQuery.value);
+    });
+  });
+});
+const hasWorlds = computed(() => worlds.value.length > 0);
+const activeWorldId = computed(
+  () => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null,
+);
 
   if (ids.length > 0) {
     return [...ids];
