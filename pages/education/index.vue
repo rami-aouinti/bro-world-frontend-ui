@@ -1,22 +1,28 @@
 <template>
   <main aria-labelledby="education-heading">
-    <section class="mb-10 text-center">
-      <h4 class="text-h4 mb-4">
-        {{ t("pages.education.catalog.title") }}
-      </h4>
-    </section>
+    <SidebarCard
+        class="text-card-foreground px-3 py-2"
+        glow
+    >
 
-    <v-row dense>
-      <v-col
-        v-for="category in categories"
-        :key="category.id"
-        cols="12"
-        md="6"
-        lg="4"
-      >
-        <CategoryCard :category="category" />
-      </v-col>
-    </v-row>
+      <section class="mb-10 text-center">
+        <h4 class="text-h4 mb-4">
+          {{ t("pages.education.catalog.title") }}
+        </h4>
+      </section>
+
+      <v-row dense>
+        <v-col
+            v-for="category in categories"
+            :key="category.id"
+            cols="12"
+            md="6"
+            lg="4"
+        >
+          <CategoryCard :category="category" />
+        </v-col>
+      </v-row>
+    </SidebarCard>
   </main>
 </template>
 
@@ -27,6 +33,7 @@ import EducationSidebar from "~/components/education/EducationSidebar.vue";
 import CategoryCard from "~/components/education/CategoryCard.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useEducationStore } from "~/stores/education";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t } = useI18n();
 const store = useEducationStore();
