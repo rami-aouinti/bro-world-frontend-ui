@@ -24,15 +24,13 @@
                   />
                   <div>
                     <p class="text-body-2 text-medium-emphasis mb-1">
-                      {{
-                        isAuthenticated ? t("pages.game.menu.player") : t("pages.game.menu.guest")
-                      }}
+                      {{ playerStatusLabel }}
                     </p>
                     <h2 class="text-subtitle-1 font-weight-bold mb-0">
-                      {{ selectedCategory?.title ?? t("pages.game.menu.categoryPlaceholder") }}
+                      {{ selectedCategoryTitle }}
                     </h2>
                     <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ selectedLevel?.title ?? t("pages.game.menu.levelPlaceholder") }}
+                      {{ selectedLevelTitle }}
                     </p>
                   </div>
                 </div>
@@ -676,7 +674,7 @@
                     </div>
                   </div>
                   <p class="text-body-2 text-medium-emphasis mb-0">
-                    {{ t("pages.game.menu.helper") }}
+                    {{ sidebarHelperText }}
                   </p>
                 </div>
                 <div v-else>
@@ -748,6 +746,7 @@ import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref, watch 
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import UserAvatar from "~/components/UserAvatar.vue";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useUserSession } from "~/composables/useUserSession";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
@@ -758,6 +757,11 @@ const AuthLoginForm = defineAsyncComponent({
 
 const AuthSocial = defineAsyncComponent({
   loader: () => import("~/components/auth/Social.vue"),
+  suspensible: false,
+});
+
+const GameSidebarPanel = defineAsyncComponent({
+  loader: () => import("~/components/game/GameSidebarPanel.vue"),
   suspensible: false,
 });
 
@@ -861,8 +865,12 @@ useHead(() => {
 });
 
 const session = useUserSession();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
 const currentUser = computed(() => session.currentUser.value ?? null);
 const isAuthenticated = computed(() => session.isAuthenticated.value);
+const playerStatusLabel = computed(() =>
+  isAuthenticated.value ? t("pages.game.menu.player") : t("pages.game.menu.guest"),
+);
 
 const currentUserName = computed(() => {
   const user = currentUser.value;
@@ -917,9 +925,15 @@ let timerHandle: ReturnType<typeof setInterval> | null = null;
 const selectedCategory = computed(
   () => categories.value.find((category) => category.id === selectedCategoryId.value) ?? null,
 );
+const selectedCategoryTitle = computed(
+  () => selectedCategory.value?.title ?? t("pages.game.menu.categoryPlaceholder"),
+);
 
 const selectedLevel = computed(
   () => levels.value.find((level) => level.id === selectedLevelId.value) ?? null,
+);
+const selectedLevelTitle = computed(
+  () => selectedLevel.value?.title ?? t("pages.game.menu.levelPlaceholder"),
 );
 
 const totalQuestions = computed(() => questions.value.length);
@@ -1008,6 +1022,7 @@ const scoreLabel = computed(() => {
 
   return t("pages.game.menu.pendingScore");
 });
+const sidebarHelperText = computed(() => t("pages.game.menu.helper"));
 
 const formattedTimer = computed(() => formatDuration(elapsedSeconds.value));
 const showAnswerWarning = computed(() => hasAttemptedSubmit.value && !allAnswered.value);
@@ -1021,6 +1036,29 @@ const leaderboardEntries = computed(() =>
     player: entry.player,
     scoreText: formatLeaderboardScore(entry.score),
     rankLabel: typeof entry.rank === "number" ? `#${entry.rank}` : entry.rank,
+  })),
+);
+
+registerRightSidebarContent(
+  computed(() => ({
+    component: GameSidebarPanel,
+    wrapperClass: "flex flex-col gap-6",
+    intrinsicHeight: 720,
+    props: {
+      playerName: currentUserName.value,
+      playerLabel: playerStatusLabel.value,
+      playerAvatar: currentUserAvatar.value,
+      categoryTitle: selectedCategoryTitle.value,
+      levelTitle: selectedLevelTitle.value,
+      timerValue: formattedTimer.value,
+      scoreValue: scoreLabel.value,
+      answeredCount: answeredCount.value,
+      totalQuestions: totalQuestions.value,
+      progressValue: progressValue.value,
+      helperText: sidebarHelperText.value,
+      leaderboardEntries: leaderboardEntries.value,
+      leaderboardLoading: leaderboardLoading.value,
+    },
   })),
 );
 
