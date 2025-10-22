@@ -158,6 +158,17 @@
         "cv": "Lebenslauf",
         "createWorld": "Create world",
         "jobs": "Jobs",
+        "game": "Spiele & Quiz",
+        "crm": "CRM-Arbeitsbereich",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "Übersicht",
+        "ecommerceCatalog": "Produktkatalog",
+        "ecommerceCart": "Warenkorb",
+        "ecommerceCheckout": "Kasse",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "Akademie",
+        "performance": "Leistung",
         "profile": "Profil",
         "profileOverview": "Übersicht",
         "profileSettings": "Kontoeinstellungen",
@@ -182,18 +193,7 @@
         "adminBlog": "Blog",
         "help": "Hilfe",
         "about": "Über uns",
-        "contact": "Kontakt",
-        "game": "Spiele & Quiz",
-        "crm": "CRM-Arbeitsbereich",
-        "ecommerce": "E-commerce",
-        "ecommerceOverview": "Übersicht",
-        "ecommerceCatalog": "Produktkatalog",
-        "ecommerceCart": "Warenkorb",
-        "ecommerceCheckout": "Kasse",
-        "education": "Education",
-        "quiz": "Quiz",
-        "academy": "Akademie",
-        "performance": "Leistung"
+        "contact": "Kontakt"
       }
     },
     "widgets": {
@@ -246,7 +246,6 @@
     "cancel": "Cancel"
   },
   "job": {
-    "job": "Job",
     "create": "Create job",
     "createdSuccess": "Job created successfully.",
     "createError": "Unable to create the job. Please try again.",
@@ -280,7 +279,6 @@
     "languages": "Languages"
   },
   "applicant": {
-    "applicant": "Applicant",
     "create": "Create applicant",
     "createdSuccess": "Applicant saved successfully.",
     "createError": "Unable to create the applicant.",
@@ -308,6 +306,23 @@
     "description": "Company description",
     "website": "Website",
     "submit": "Save"
+  },
+  "messenger": {
+    "searchPlaceholder": "Konversationen durchsuchen",
+    "emptyList": "Noch keine Konversationen",
+    "unknownParticipant": "Unbekannt",
+    "emptyTitle": "Wähle eine Konversation",
+    "emptyDescription": "Wähle eine Konversation aus der Liste, um Nachrichten zu lesen und zu senden.",
+    "emptyCtaLabel": "Konversation starten",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "Nachricht schreiben...",
+    "sendLabel": "Senden",
+    "sendingLabel": "Senden…",
+    "sendErrorStatus": "Nicht zugestellt",
+    "shortcutsHint": "Drücke Strg+Enter zum Senden",
+    "noMessages": "Noch keine Nachrichten",
+    "loadOlder": "Ältere Nachrichten laden",
+    "participantsLabel": "{count} Teilnehmende"
   },
   "banner": {
     "Content": "Für die Tailwind CSS v3-Dokumentation [**hier klicken**](https://v1.inspira-ui.com)."
@@ -671,23 +686,6 @@
       "GetStarted": "Jetzt starten"
     }
   },
-  "messenger": {
-    "searchPlaceholder": "Konversationen durchsuchen",
-    "emptyList": "Noch keine Konversationen",
-    "unknownParticipant": "Unbekannt",
-    "emptyTitle": "Wähle eine Konversation",
-    "emptyDescription": "Wähle eine Konversation aus der Liste, um Nachrichten zu lesen und zu senden.",
-    "emptyCtaLabel": "Konversation starten",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "Nachricht schreiben...",
-    "sendLabel": "Senden",
-    "sendingLabel": "Senden…",
-    "sendErrorStatus": "Nicht zugestellt",
-    "shortcutsHint": "Drücke Strg+Enter zum Senden",
-    "noMessages": "Noch keine Nachrichten",
-    "loadOlder": "Ältere Nachrichten laden",
-    "participantsLabel": "{count} Teilnehmende"
-  },
   "auth": {
     "Account": "Konto",
     "Login": "Anmelden",
@@ -1016,27 +1014,6 @@
         "title": "@:education.catalog.title",
         "subtitle": "@:education.catalog.subtitle"
       },
-      "sidebar": {
-        "overviewTitle": "Keep learning momentum",
-        "overviewDescription": "Track your progress, revisit favourite categories, and stay motivated as you explore new skills.",
-        "stats": {
-          "categories": {
-            "label": "Categories",
-            "value": "{count} categories"
-          },
-          "courses": {
-            "label": "Courses",
-            "value": "{count} courses"
-          },
-          "certificates": {
-            "label": "Certificates earned",
-            "value": "{count} certificates"
-          }
-        },
-        "featuredTitle": "Featured categories",
-        "featuredDescription": "Jump back into these curated spaces to continue learning.",
-        "featuredEmpty": "New categories are coming soon."
-      },
       "category": {
         "courses": "@:education.category.courses",
         "viewCourses": "@:education.category.viewCourses",
@@ -1122,637 +1099,6 @@
         "beginner": "@:education.levels.beginner",
         "intermediate": "@:education.levels.intermediate",
         "advanced": "@:education.levels.advanced"
-      }
-    },
-    "crm": {
-      "title": "@:seo.crm.title",
-      "subtitle": "@:seo.crm.subtitle",
-      "actions": {
-        "newProject": "@:seo.crm.actions.newProject",
-        "viewPipeline": "@:seo.crm.actions.viewPipeline"
-      },
-      "metrics": {
-        "title": "@:seo.crm.metrics.title",
-        "subtitle": "@:seo.crm.metrics.subtitle",
-        "total": "@:seo.crm.metrics.total",
-        "totalCaption": "@:seo.crm.metrics.totalCaption",
-        "inProgress": "@:seo.crm.metrics.inProgress",
-        "inProgressCaption": "@:seo.crm.metrics.inProgressCaption",
-        "atRisk": "@:seo.crm.metrics.atRisk",
-        "atRiskCaption": "@:seo.crm.metrics.atRiskCaption",
-        "pipelineValue": "@:seo.crm.metrics.pipelineValue",
-        "pipelineValueCaption": "@:seo.crm.metrics.pipelineValueCaption"
-      },
-      "table": {
-        "title": "@:seo.crm.table.title",
-        "subtitle": "@:seo.crm.table.subtitle",
-        "empty": "@:seo.crm.table.empty",
-        "headers": {
-          "name": "@:seo.crm.table.headers.name",
-          "client": "@:seo.crm.table.headers.client",
-          "owner": "@:seo.crm.table.headers.owner",
-          "status": "@:seo.crm.table.headers.status",
-          "stage": "@:seo.crm.table.headers.stage",
-          "budget": "@:seo.crm.table.headers.budget",
-          "probability": "@:seo.crm.table.headers.probability",
-          "dueDate": "@:seo.crm.table.headers.dueDate"
-        }
-      },
-      "upcoming": {
-        "title": "@:seo.crm.upcoming.title",
-        "subtitle": "@:seo.crm.upcoming.subtitle",
-        "empty": "@:seo.crm.upcoming.empty"
-      },
-      "stages": {
-        "title": "@:seo.crm.stages.title",
-        "subtitle": "@:seo.crm.stages.subtitle",
-        "caption": "@:seo.crm.stages.caption"
-      },
-      "sidebar": {
-        "ariaLabel": "@:seo.crm.sidebar.ariaLabel",
-        "projects": {
-          "title": "@:seo.crm.sidebar.projects.title",
-          "subtitle": "@:seo.crm.sidebar.projects.subtitle",
-          "actions": {
-            "new": "@:seo.crm.sidebar.projects.actions.new",
-            "create": "@:seo.crm.sidebar.projects.actions.create"
-          },
-          "empty": {
-            "description": "@:seo.crm.sidebar.projects.empty.description"
-          }
-        },
-        "tasks": {
-          "title": "@:seo.crm.sidebar.tasks.title",
-          "subtitle": "@:seo.crm.sidebar.tasks.subtitle",
-          "actions": {
-            "new": "@:seo.crm.sidebar.tasks.actions.new"
-          },
-          "empty": {
-            "description": "@:seo.crm.sidebar.tasks.empty.description"
-          },
-          "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
-        }
-      }
-    },
-    "help": {
-      "title": "Hilfe",
-      "subtitle": "Antworten und Ressourcen finden",
-      "faqTitle": "Häufig gestellte Fragen",
-      "searchPlaceholder": "In der FAQ suchen…",
-      "quickLinksTitle": "Schnelle Aktionen",
-      "faqCountSingular": "Treffer",
-      "faqCountPlural": "Treffer",
-      "faqEmpty": "Keine passenden Einträge gefunden. Versuch es mit einem anderen Suchbegriff.",
-      "actions": {
-        "reportBug": "Bug melden",
-        "reportBugDescription": "Teile reproduzierbare Schritte, damit wir schnell nachforschen können.",
-        "reportBugCta": "Issue erstellen",
-        "reportBugAria": "Ein neues GitHub-Issue in einem neuen Tab öffnen",
-        "accountPrivacy": "Konto & Datenschutz",
-        "accountPrivacyDescription": "Setze Zugangsdaten zurück oder fordere Änderungen direkt über das Dashboard an.",
-        "accountPrivacyCta": "Kontozugriff verwalten",
-        "accountPrivacyAria": "Zur Seite zur Kontowiederherstellung wechseln",
-        "contactSupport": "Support kontaktieren",
-        "contactSupportDescription": "Wende dich direkt an unsere Maintainer, wenn du persönliche Unterstützung brauchst.",
-        "contactSupportCta": "Team kontaktieren",
-        "contactSupportAria": "Die Kontaktseite öffnen"
-      },
-      "faq": {
-        "items": {
-          "gettingStarted": {
-            "question": "Wie starte ich mit den BroWorld-Komponenten?",
-            "answer": "Installiere das Paket, führe das Setup-Skript aus und sieh dir die Starter-Templates an, um Best Practices kennenzulernen.",
-            "link": "Zum Getting-Started-Leitfaden"
-          },
-          "localization": {
-            "question": "Welche Sprachen werden unterstützt?",
-            "answer": "Englisch, Französisch, Arabisch, Deutsch und weitere Übersetzungen aus der Community."
-          },
-          "components": {
-            "question": "Wo finde ich Live-Beispiele der Komponenten?",
-            "answer": "Im Komponentenverzeichnis findest du interaktive Demos und kopierfertige Code-Beispiele.",
-            "link": "Komponentenverzeichnis erkunden"
-          },
-          "contributing": {
-            "question": "Wie kann ich beitragen?",
-            "answer": "Lies die Contribution-Guidelines, eröffne ein Issue mit deiner Idee und reiche anschließend einen Pull Request ein.",
-            "link": "Contribution-Guide lesen"
-          },
-          "privacy": {
-            "question": "Wie geht ihr mit Datenschutz-Anfragen um?",
-            "answer": "Stelle eine Anfrage über die Konto-Tools oder sende eine E-Mail an  – wir melden uns innerhalb von 72 Stunden."
-          }
-        }
-      }
-    },
-    "profile": {
-      "title": "Profil",
-      "subtitle": "Überprüfe und verwalte deine persönlichen Informationen.",
-      "sections": {
-        "contact": "Kontakt",
-        "profile": "Profil",
-        "social": "Soziales",
-        "calendar": "Kalender"
-      },
-      "calendar": {
-        "subtitle": "Behalte deinen bevorstehenden Zeitplan im Blick.",
-        "viewLabel": "Kalenderansicht wechseln",
-        "views": {
-          "month": "Monat",
-          "week": "Woche",
-          "day": "Tag"
-        },
-        "errorTitle": "Termine konnten nicht geladen werden",
-        "errorFallback": "Wir konnten deine Termine nicht laden. Bitte versuche es erneut.",
-        "retry": "Erneut versuchen",
-        "privateLabel": "Privat",
-        "allDay": "Ganztägig",
-        "upcoming": "Bevorstehende Termine",
-        "emptyTitle": "Keine Termine geplant",
-        "emptyDescription": "Füge Termine zu deinem Kalender hinzu, um sie hier zu sehen.",
-        "actions": {
-          "add": "Neuer Termin",
-          "edit": "Bearbeiten",
-          "delete": "Löschen"
-        },
-        "form": {
-          "createTitle": "Termin erstellen",
-          "createDescription": "Plane einen neuen Termin direkt aus deiner Kalenderansicht.",
-          "editTitle": "Termin bearbeiten",
-          "editDescription": "Aktualisiere die Details dieses Kalendereintrags.",
-          "fields": {
-            "title": "Titel",
-            "startDate": "Startdatum",
-            "endDate": "Enddatum",
-            "startTime": "Startzeit",
-            "endTime": "Endzeit",
-            "allDay": "Ganztägiger Termin",
-            "color": "Kategorie",
-            "location": "Ort",
-            "description": "Beschreibung",
-            "isPrivate": "Als privat markieren"
-          },
-          "actions": {
-            "cancel": "Abbrechen",
-            "create": "Termin erstellen",
-            "save": "Änderungen speichern"
-          },
-          "validation": {
-            "title": "Gib deinem Termin einen Titel.",
-            "startDate": "Wähle, wann der Termin beginnt.",
-            "startTime": "Wähle eine Startzeit.",
-            "endTime": "Die Endzeit muss nach der Startzeit liegen.",
-            "range": "Das Ende des Termins muss nach dem Beginn liegen."
-          }
-        },
-        "delete": {
-          "title": "Termin löschen",
-          "description": "Möchtest du „{title}“ wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
-        },
-        "colors": {
-          "meetings": "Meetings",
-          "personal": "Privat",
-          "travel": "Reisen",
-          "focus": "Fokus"
-        }
-      },
-      "labels": {
-        "email": "E-Mail",
-        "phone": "Telefon",
-        "address": "Adresse",
-        "title": "Titel",
-        "gender": "Geschlecht",
-        "birthday": "Geburtstag",
-        "description": "Beschreibung",
-        "roles": "Rollen",
-        "friends": "Freunde",
-        "stories": "Stories",
-        "accountStatus": "Kontostatus"
-      },
-      "statuses": {
-        "enabled": "Aktiv",
-        "disabled": "Deaktiviert"
-      },
-      "placeholders": {
-        "missing": "—",
-        "noStories": "Keine Stories"
-      },
-      "avatarAlt": "Profilbild von {name}",
-      "avatarAltFallback": "Platzhalter-Profilbild",
-      "stats": {
-        "title": "Schnellstatistiken"
-      }
-    },
-    "profileCalendar": {
-      "title": "Kalender",
-      "subtitle": "Behalte Meetings, Workshops und Meilensteine in einer fokussierten Ansicht im Blick."
-    },
-    "profileFriends": {
-      "title": "Verbindungen",
-      "subtitle": "Nimm wieder Kontakt mit deinen Kollaborateur:innen, Mentor:innen und Communities auf.",
-      "actions": {
-        "message": "Nachricht senden",
-        "schedule": "Anruf planen",
-        "viewProfile": "Profil öffnen"
-      },
-      "highlights": {
-        "title": "Empfohlene Kollaborateur:innen",
-        "subtitle": "Handverlesene Partner:innen, mit denen du dieses Quartal am häufigsten zusammenarbeitest."
-      },
-      "sections": {
-        "active": "Jetzt aktiv",
-        "suggestions": "Vorgeschlagene Kontakte"
-      },
-      "filters": {
-        "all": "Alle",
-        "design": "Design",
-        "engineering": "Engineering",
-        "marketing": "Marketing",
-        "product": "Produkt"
-      },
-      "meta": {
-        "lastActive": "Zuletzt aktiv · {time}"
-      },
-      "stats": {
-        "totalFriends": "Verbindungen",
-        "mutual": "gemeinsame Kontakte",
-        "online": "jetzt online"
-      },
-      "status": {
-        "online": "Online",
-        "offline": "Offline",
-        "busy": "Beschäftigt",
-        "focus": "Fokus"
-      },
-      "feedback": {
-        "connect": "Wir merken uns, dass du dich verbinden möchtest.",
-        "connectWith": "Wir geben {name} Bescheid, dass du dich verbinden möchtest.",
-        "message": "Verfasse eine kurze Nachricht…",
-        "messageWith": "Verfasse eine kurze Nachricht an {name}…",
-        "schedule": "Wir öffnen deinen Terminplanungsablauf…",
-        "scheduleWith": "Wir öffnen deinen Terminplanungsablauf für {name}…"
-      },
-      "empty": "Für diesen Filter wurden noch keine Profile gefunden."
-    },
-    "profilePhotos": {
-      "title": "Fotobibliothek",
-      "subtitle": "Kuratiere Highlights von Launches, Recherche-Reisen und Momenten hinter den Kulissen.",
-      "actions": {
-        "createAlbum": "Album erstellen",
-        "upload": "Fotos hochladen"
-      },
-      "filters": {
-        "recent": "Neueste",
-        "events": "Events",
-        "studio": "Studio",
-        "travel": "Reisen"
-      },
-      "sections": {
-        "albums": "Album-Explorer",
-        "pinned": "Angeheftete Sammlungen",
-        "timeline": "Kreativnotizen",
-        "notesDescription": "Updates von Kollaborateur:innen, während sie visuelle Stories vorbereiten."
-      },
-      "meta": {
-        "photoCount": "Fotos",
-        "updated": "Aktualisiert am {date}"
-      },
-      "stats": {
-        "albums": "kuratierte Alben",
-        "tags": "einzigartige Story-Tags"
-      },
-      "timeline": {
-        "title": "Meilensteine der Story",
-        "description": "Momentaufnahmen wichtiger Launches, Residencies und Retreats, die dein Jahr geprägt haben."
-      },
-      "cta": {
-        "share": "Teile kuratierte Sets mit deinem Team oder exportiere sie in Präsentationen."
-      },
-      "feedback": {
-        "upload": "Wir öffnen deinen Medienauswahl-Dialog…",
-        "createAlbum": "Lass uns ein neues Album anlegen.",
-        "shareCollection": "Freigabeoptionen sind bereit.",
-        "generic": "Aktion gestartet."
-      },
-      "empty": "Für diesen Filter wurden noch keine Fotos gefunden."
-    },
-    "profileEdit": {
-      "title": "Profil bearbeiten",
-      "subtitle": "Aktualisiere deine Angaben, damit Kollaborateur:innen immer den aktuellen Kontext haben.",
-      "sections": {
-        "profile": {
-          "title": "Profil",
-          "bio": "Biografie",
-          "skills": "Schlüsselkompetenzen"
-        },
-        "contact": "Kontakt",
-        "about": "Über mich",
-        "social": "Soziale Links",
-        "siteSettings": "Seiteneinstellungen"
-      },
-      "labels": {
-        "firstName": "Vorname",
-        "lastName": "Nachname",
-        "headline": "Überschrift",
-        "pronouns": "Pronomen",
-        "language": "Bevorzugte Sprache",
-        "timezone": "Zeitzone",
-        "email": "E-Mail",
-        "phone": "Telefon",
-        "location": "Standort",
-        "website": "Website",
-        "bio": "Biografie",
-        "skills": "Schlüsselkompetenzen",
-        "interests": "Fokusthemen",
-        "linkedin": "LinkedIn",
-        "twitter": "Twitter / X",
-        "dribbble": "Dribbble",
-        "behance": "Behance"
-      },
-      "actions": {
-        "cancel": "Zurücksetzen",
-        "save": "Änderungen speichern"
-      },
-      "helpers": {
-        "bio": "Teile deine Mission, deine Zusammenarbeit oder jüngste Erfolge (280 Zeichen).",
-        "skills": "Gib eigene Kompetenzen ein oder wähle aus den Vorschlägen.",
-        "summary": "Diese Schnellübersicht aktualisiert sich automatisch, während du deine Angaben bearbeitest.",
-        "siteSettings": "Aktualisiere den Seitennamen oder Slogan, ohne dein Profil zu verlassen."
-      },
-      "feedback": {
-        "successMessage": "Profildaten wurden erfolgreich gespeichert.",
-        "errorMessage": "Bitte überprüfe die hervorgehobenen Felder."
-      },
-      "validation": {
-        "required": "Dieses Feld ist erforderlich.",
-        "bioLimit": "Deine Biografie darf höchstens 280 Zeichen enthalten."
-      }
-    },
-    "profileSecurity": {
-      "title": "Passwort & Sicherheit",
-      "subtitle": "Schütze dein Konto mit starken Anmeldedaten und verifizierten Geräten.",
-      "actions": {
-        "save": "Sicherheitseinstellungen speichern",
-        "generateCodes": "Wiederherstellungscodes erstellen"
-      },
-      "sections": {
-        "password": {
-          "title": "Passwort aktualisieren",
-          "description": "Erstelle eine einzigartige Passphrase mit mindestens 12 Zeichen, Zahlen und Symbolen."
-        },
-        "sessions": {
-          "title": "Aktive Sitzungen",
-          "description": "Überprüfe, wo du angemeldet bist, und entziehe unbekannten Geräten den Zugriff."
-        },
-        "mfa": {
-          "title": "Zwei-Faktor-Authentifizierung",
-          "description": "Füge einen zusätzlichen Prüfschritt hinzu, um deinen Arbeitsbereich zu schützen."
-        }
-      },
-      "labels": {
-        "currentPassword": "Aktuelles Passwort",
-        "newPassword": "Neues Passwort",
-        "confirmPassword": "Passwort bestätigen",
-        "mfaToggle": "Zwei-Faktor-Authentifizierung aktivieren"
-      },
-      "passwordHint": {
-        "title": "Passworttipps",
-        "description": "Verwende einen Passwortmanager, vermeide doppelte Passwörter und aktualisiere sensible Logins regelmäßig."
-      },
-      "sessions": {
-        "device": "Gerät",
-        "location": "Standort",
-        "activity": "Letzte Aktivität",
-        "actions": "Aktionen",
-        "revoke": "Zugriff entziehen",
-        "activeNow": "Jetzt aktiv",
-        "trusted": "Vertrauenswürdig",
-        "remembered": "Gemerkt",
-        "untrusted": "Unbekannt"
-      },
-      "recoveryCodes": {
-        "title": "Bewahre diese einmaligen Wiederherstellungscodes auf"
-      }
-    },
-    "contact": {
-      "title": "Kontakt",
-      "subtitle": "Wir antworten in der Regel innerhalb von 1–2 Werktagen.",
-      "form": {
-        "name": "Dein Name",
-        "email": "E-Mail-Adresse",
-        "subject": "Betreff",
-        "message": "Nachricht",
-        "submit": "Senden",
-        "sending": "Senden…",
-        "success": "Danke! Deine Nachricht wurde verschickt.",
-        "error": "Entschuldigung, etwas ist schiefgelaufen. Bitte versuche es noch einmal."
-      },
-      "validation": {
-        "required": "Dieses Feld ist erforderlich",
-        "email": "Gib eine gültige E-Mail-Adresse ein",
-        "minMessage": "Die Nachricht muss mindestens 10 Zeichen enthalten"
-      },
-      "details": {
-        "title": "So erreichst du uns",
-        "description": "Wähle den Kanal, der am besten zu deiner Frage passt.",
-        "email": "E-Mail",
-        "emailDescription": "Schreibe dem Kernteam bei privaten oder konto­bezogenen Themen.",
-        "emailCta": "E-Mail senden",
-        "emailCtaLabel": "Eine E-Mail an das BroWorld-Team verfassen",
-        "community": "Community-Diskussionen",
-        "communityDescription": "Teile Ideen, stelle Fragen oder melde Bugs gemeinsam mit anderen Buildern.",
-        "communityCta": "Diskussionen öffnen",
-        "communityCtaLabel": "Die BroWorld-Diskussionen in einem neuen Tab öffnen",
-        "docs": "Dokumentation",
-        "docsDescription": "Stöbere in Leitfäden und API-Referenzen für schnelle Antworten.",
-        "docsCta": "Dokumentation lesen",
-        "docsCtaLabel": "Die BroWorld-Dokumentation lesen"
-      },
-      "availability": {
-        "title": "Verfügbarkeit",
-        "body": "Unser verteiltes Team beobachtet Anfragen von Montag bis Freitag und rotiert Wochenendbereitschaften für dringende Fälle."
-      }
-    },
-    "playground": {
-      "ui": {
-        "title": "UI Component Playground",
-        "description": "Review every base component with multiple variants, sizes, and accessibility states.",
-        "controls": {
-          "expandAll": "Expand all",
-          "collapseAll": "Collapse all"
-        },
-        "toggles": {
-          "locale": "Locale preview",
-          "direction": "Layout direction",
-          "theme": "Theme",
-          "density": "Control size"
-        },
-        "directions": {
-          "ltr": "LTR",
-          "rtl": "RTL"
-        },
-        "themes": {
-          "light": "Light",
-          "dark": "Dark"
-        },
-        "sizes": {
-          "sm": "Small",
-          "md": "Medium",
-          "lg": "Large"
-        },
-        "locales": {
-          "en": "English",
-          "ar": "Arabic"
-        },
-        "variants": {
-          "filled": "Filled",
-          "tonal": "Tonal",
-          "outline": "Outline",
-          "text": "Text",
-          "plain": "Plain"
-        },
-        "states": {
-          "default": "Default",
-          "disabled": "Disabled",
-          "loading": "Loading",
-          "leadingIcon": "Leading icon",
-          "trailingIcon": "Trailing icon",
-          "block": "Full width",
-          "focus": "Focused",
-          "error": "Error",
-          "success": "Success",
-          "checked": "Checked",
-          "indeterminate": "Indeterminate"
-        },
-        "inputTypes": {
-          "text": "Text",
-          "email": "Email",
-          "password": "Password",
-          "number": "Number",
-          "search": "Search",
-          "url": "URL"
-        },
-        "placeholders": {
-          "generic": "Enter a value",
-          "focus": "Auto-focused input",
-          "error": "Something went wrong",
-          "success": "Everything looks good",
-          "autogrow": "Describe your idea…",
-          "select": "Choose an option",
-          "selectMultiple": "Select integrations",
-          "fullName": "Ada Lovelace"
-        },
-        "examples": {
-          "buttonLabel": "Primary action",
-          "loading": "Loading…",
-          "primaryAction": "Continue",
-          "secondaryAction": "Learn more",
-          "fullWidth": "Take the full width",
-          "inputType": "{type} input",
-          "disabledValue": "Unavailable while disabled",
-          "textareaDefault": "Feedback textarea",
-          "textareaAutoGrow": "Auto growing notes",
-          "checkboxPrimary": "Email updates",
-          "checkboxIndeterminate": "Partially selected",
-          "checkboxDisabled": "Disabled checkbox",
-          "switchNotifications": "Enable notifications",
-          "switchDisabled": "Disabled switch",
-          "selectSingle": "Delivery channel",
-          "selectMultiple": "Team integrations",
-          "selectDisabledOptions": "Release channel",
-          "radioVertical": "Cadence options",
-          "radioHorizontal": "Payment methods",
-          "formFieldBasic": "Field with helper text",
-          "formFieldError": "Field with errors",
-          "formFieldCheckbox": "Field wrapping checkbox"
-        },
-        "feedback": {
-          "error": "Provide a valid response.",
-          "selectMethod": "Select a supported payment method.",
-          "invalidEmail": "Enter a valid email address."
-        },
-        "hints": {
-          "characterLimit": "Keep it under 240 characters.",
-          "checkbox": "You can mark more than one preference.",
-          "switch": "Switch represents an immediate action.",
-          "disabledOption": "Some options are unavailable right now.",
-          "radio": "Choose the plan that fits best.",
-          "required": "This field is required."
-        },
-        "notes": {
-          "autofocus": "Auto-focus is applied to show the focus style.",
-          "disabledChoice": "One option is disabled to demonstrate aria-disabled."
-        },
-        "sample": {
-          "textValue": "Hi from the playground!",
-          "multiline": "Let the team know how this feels.",
-          "longerText": "This textarea grows as you type so reviewers can stress-test the auto-grow behaviour."
-        },
-        "selectOptions": {
-          "email": "Email",
-          "sms": "SMS",
-          "push": "Push notification",
-          "alpha": "Alpha",
-          "beta": "Beta",
-          "release": "Release"
-        },
-        "radioOptions": {
-          "daily": "Daily summary",
-          "weekly": "Weekly digest",
-          "monthly": "Monthly report",
-          "card": "Credit card",
-          "paypal": "PayPal",
-          "bank": "Bank transfer"
-        },
-        "labels": {
-          "fullName": "Full name",
-          "email": "Email",
-          "preferences": "Preferences"
-        },
-        "groups": {
-          "buttons": {
-            "title": "Buttons",
-            "description": "Primary actions and secondary button styles."
-          },
-          "inputs": {
-            "title": "Inputs",
-            "description": "Text inputs and textareas with validation states."
-          },
-          "toggles": {
-            "title": "Toggles",
-            "description": "Checkboxes and switches for binary choices."
-          },
-          "selectors": {
-            "title": "Selectors",
-            "description": "Select menus and radio groups for choosing options."
-          },
-          "wrappers": {
-            "title": "Form wrappers",
-            "description": "FormField wrapper integrating labels, hints, and errors."
-          }
-        },
-        "sections": {
-          "buttonVariants": "Variants & sizes",
-          "buttonVariantsDescription": "Each button variant rendered across small, medium, and large sizes.",
-          "buttonStates": "States",
-          "buttonStatesDescription": "Loading, disabled, icon, and block button examples.",
-          "inputTypes": "Input types",
-          "inputTypesDescription": "BaseInput with different HTML input types and clearable behaviour.",
-          "inputStates": "States",
-          "inputStatesDescription": "Focused, success, error, and disabled input states.",
-          "textareaStates": "Textarea states",
-          "textareaStatesDescription": "Resizable textarea variations with hints and disabled view.",
-          "checkboxes": "Checkboxes",
-          "checkboxesDescription": "Checked, indeterminate, and disabled checkbox states.",
-          "switches": "Switches",
-          "switchesDescription": "Enabled and disabled switch controls.",
-          "selects": "Select menus",
-          "selectsDescription": "Single, multi-select, and disabled options examples.",
-          "radios": "Radio groups",
-          "radiosDescription": "Vertical and horizontal radio group layouts with keyboard support.",
-          "formFields": "FormField wrapper",
-          "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
-        }
       }
     },
     "createWorld": {
@@ -2043,7 +1389,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -2057,7 +1407,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -2071,7 +1425,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -2085,7 +1443,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -2500,29 +1862,29 @@
         "authoring": {
           "title": "Author in minutes",
           "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
-          "points": [
-            "Convert brainstorm notes into question pools automatically.",
-            "Mix formats like multiple choice, polls, and lightning rounds.",
-            "Reuse timers, scoring weights, and bonus rules across series."
-          ]
+          "points": {
+            "0": "Role-based templates",
+            "1": "Inline feedback generator",
+            "2": "CSV & Markdown import"
+          }
         },
         "engagement": {
           "title": "Fuel real-time engagement",
           "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
-          "points": [
-            "Highlight hosts and co-creators with stage-ready layouts.",
-            "Trigger soundscapes and emotes when milestones are unlocked.",
-            "Support breakout teams, rematches, and collaborative lifelines."
-          ]
+          "points": {
+            "0": "Customisable badges",
+            "1": "Automated multi-channel nudges",
+            "2": "Synchronous live sessions"
+          }
         },
         "analytics": {
           "title": "Measure what matters",
           "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
-          "points": [
-            "Compare performance by role, location, or membership tier.",
-            "Spot drop-off moments with second-by-second completion curves.",
-            "Export highlights, clips, and insights for stakeholders."
-          ]
+          "points": {
+            "0": "Ready-to-use dashboards",
+            "1": "CSV/BigQuery export",
+            "2": "Progress deviation alerts"
+          }
         }
       },
       "process": {
@@ -2739,6 +2101,637 @@
           }
         }
       }
+    },
+    "crm": {
+      "title": "@:seo.crm.title",
+      "subtitle": "@:seo.crm.subtitle",
+      "actions": {
+        "newProject": "@:seo.crm.actions.newProject",
+        "viewPipeline": "@:seo.crm.actions.viewPipeline"
+      },
+      "metrics": {
+        "title": "@:seo.crm.metrics.title",
+        "subtitle": "@:seo.crm.metrics.subtitle",
+        "total": "@:seo.crm.metrics.total",
+        "totalCaption": "@:seo.crm.metrics.totalCaption",
+        "inProgress": "@:seo.crm.metrics.inProgress",
+        "inProgressCaption": "@:seo.crm.metrics.inProgressCaption",
+        "atRisk": "@:seo.crm.metrics.atRisk",
+        "atRiskCaption": "@:seo.crm.metrics.atRiskCaption",
+        "pipelineValue": "@:seo.crm.metrics.pipelineValue",
+        "pipelineValueCaption": "@:seo.crm.metrics.pipelineValueCaption"
+      },
+      "table": {
+        "title": "@:seo.crm.table.title",
+        "subtitle": "@:seo.crm.table.subtitle",
+        "empty": "@:seo.crm.table.empty",
+        "headers": {
+          "name": "@:seo.crm.table.headers.name",
+          "client": "@:seo.crm.table.headers.client",
+          "owner": "@:seo.crm.table.headers.owner",
+          "status": "@:seo.crm.table.headers.status",
+          "stage": "@:seo.crm.table.headers.stage",
+          "budget": "@:seo.crm.table.headers.budget",
+          "probability": "@:seo.crm.table.headers.probability",
+          "dueDate": "@:seo.crm.table.headers.dueDate"
+        }
+      },
+      "upcoming": {
+        "title": "@:seo.crm.upcoming.title",
+        "subtitle": "@:seo.crm.upcoming.subtitle",
+        "empty": "@:seo.crm.upcoming.empty"
+      },
+      "stages": {
+        "title": "@:seo.crm.stages.title",
+        "subtitle": "@:seo.crm.stages.subtitle",
+        "caption": "@:seo.crm.stages.caption"
+      },
+      "sidebar": {
+        "ariaLabel": "@:seo.crm.sidebar.ariaLabel",
+        "projects": {
+          "title": "@:seo.crm.sidebar.projects.title",
+          "subtitle": "@:seo.crm.sidebar.projects.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.projects.actions.new",
+            "create": "@:seo.crm.sidebar.projects.actions.create"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.projects.empty.description"
+          }
+        },
+        "tasks": {
+          "title": "@:seo.crm.sidebar.tasks.title",
+          "subtitle": "@:seo.crm.sidebar.tasks.subtitle",
+          "actions": {
+            "new": "@:seo.crm.sidebar.tasks.actions.new"
+          },
+          "empty": {
+            "description": "@:seo.crm.sidebar.tasks.empty.description"
+          },
+          "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
+        }
+      }
+    },
+    "help": {
+      "title": "Hilfe",
+      "subtitle": "Antworten und Ressourcen finden",
+      "faqTitle": "Häufig gestellte Fragen",
+      "searchPlaceholder": "In der FAQ suchen…",
+      "quickLinksTitle": "Schnelle Aktionen",
+      "faqCountSingular": "Treffer",
+      "faqCountPlural": "Treffer",
+      "faqEmpty": "Keine passenden Einträge gefunden. Versuch es mit einem anderen Suchbegriff.",
+      "actions": {
+        "reportBug": "Bug melden",
+        "reportBugDescription": "Teile reproduzierbare Schritte, damit wir schnell nachforschen können.",
+        "reportBugCta": "Issue erstellen",
+        "reportBugAria": "Ein neues GitHub-Issue in einem neuen Tab öffnen",
+        "accountPrivacy": "Konto & Datenschutz",
+        "accountPrivacyDescription": "Setze Zugangsdaten zurück oder fordere Änderungen direkt über das Dashboard an.",
+        "accountPrivacyCta": "Kontozugriff verwalten",
+        "accountPrivacyAria": "Zur Seite zur Kontowiederherstellung wechseln",
+        "contactSupport": "Support kontaktieren",
+        "contactSupportDescription": "Wende dich direkt an unsere Maintainer, wenn du persönliche Unterstützung brauchst.",
+        "contactSupportCta": "Team kontaktieren",
+        "contactSupportAria": "Die Kontaktseite öffnen"
+      },
+      "faq": {
+        "items": {
+          "gettingStarted": {
+            "question": "Wie starte ich mit den BroWorld-Komponenten?",
+            "answer": "Installiere das Paket, führe das Setup-Skript aus und sieh dir die Starter-Templates an, um Best Practices kennenzulernen.",
+            "link": "Zum Getting-Started-Leitfaden"
+          },
+          "localization": {
+            "question": "Welche Sprachen werden unterstützt?",
+            "answer": "Englisch, Französisch, Arabisch, Deutsch und weitere Übersetzungen aus der Community."
+          },
+          "components": {
+            "question": "Wo finde ich Live-Beispiele der Komponenten?",
+            "answer": "Im Komponentenverzeichnis findest du interaktive Demos und kopierfertige Code-Beispiele.",
+            "link": "Komponentenverzeichnis erkunden"
+          },
+          "contributing": {
+            "question": "Wie kann ich beitragen?",
+            "answer": "Lies die Contribution-Guidelines, eröffne ein Issue mit deiner Idee und reiche anschließend einen Pull Request ein.",
+            "link": "Contribution-Guide lesen"
+          },
+          "privacy": {
+            "question": "Wie geht ihr mit Datenschutz-Anfragen um?",
+            "answer": "Stelle eine Anfrage über die Konto-Tools oder sende eine E-Mail an  – wir melden uns innerhalb von 72 Stunden."
+          }
+        }
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Überprüfe und verwalte deine persönlichen Informationen.",
+      "sections": {
+        "contact": "Kontakt",
+        "profile": "Profil",
+        "social": "Soziales",
+        "calendar": "Kalender"
+      },
+      "calendar": {
+        "subtitle": "Behalte deinen bevorstehenden Zeitplan im Blick.",
+        "viewLabel": "Kalenderansicht wechseln",
+        "views": {
+          "month": "Monat",
+          "week": "Woche",
+          "day": "Tag"
+        },
+        "errorTitle": "Termine konnten nicht geladen werden",
+        "errorFallback": "Wir konnten deine Termine nicht laden. Bitte versuche es erneut.",
+        "retry": "Erneut versuchen",
+        "privateLabel": "Privat",
+        "allDay": "Ganztägig",
+        "upcoming": "Bevorstehende Termine",
+        "emptyTitle": "Keine Termine geplant",
+        "emptyDescription": "Füge Termine zu deinem Kalender hinzu, um sie hier zu sehen.",
+        "actions": {
+          "add": "Neuer Termin",
+          "edit": "Bearbeiten",
+          "delete": "Löschen"
+        },
+        "form": {
+          "createTitle": "Termin erstellen",
+          "createDescription": "Plane einen neuen Termin direkt aus deiner Kalenderansicht.",
+          "editTitle": "Termin bearbeiten",
+          "editDescription": "Aktualisiere die Details dieses Kalendereintrags.",
+          "fields": {
+            "title": "Titel",
+            "startDate": "Startdatum",
+            "endDate": "Enddatum",
+            "startTime": "Startzeit",
+            "endTime": "Endzeit",
+            "allDay": "Ganztägiger Termin",
+            "color": "Kategorie",
+            "location": "Ort",
+            "description": "Beschreibung",
+            "isPrivate": "Als privat markieren"
+          },
+          "actions": {
+            "cancel": "Abbrechen",
+            "create": "Termin erstellen",
+            "save": "Änderungen speichern"
+          },
+          "validation": {
+            "title": "Gib deinem Termin einen Titel.",
+            "startDate": "Wähle, wann der Termin beginnt.",
+            "startTime": "Wähle eine Startzeit.",
+            "endTime": "Die Endzeit muss nach der Startzeit liegen.",
+            "range": "Das Ende des Termins muss nach dem Beginn liegen."
+          }
+        },
+        "delete": {
+          "title": "Termin löschen",
+          "description": "Möchtest du „{title}“ wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+        },
+        "colors": {
+          "meetings": "Meetings",
+          "personal": "Privat",
+          "travel": "Reisen",
+          "focus": "Fokus"
+        }
+      },
+      "labels": {
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "address": "Adresse",
+        "title": "Titel",
+        "gender": "Geschlecht",
+        "birthday": "Geburtstag",
+        "description": "Beschreibung",
+        "roles": "Rollen",
+        "friends": "Freunde",
+        "stories": "Stories",
+        "accountStatus": "Kontostatus"
+      },
+      "statuses": {
+        "enabled": "Aktiv",
+        "disabled": "Deaktiviert"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "Keine Stories"
+      },
+      "avatarAlt": "Profilbild von {name}",
+      "avatarAltFallback": "Platzhalter-Profilbild",
+      "stats": {
+        "title": "Schnellstatistiken"
+      }
+    },
+    "profileCalendar": {
+      "title": "Kalender",
+      "subtitle": "Behalte Meetings, Workshops und Meilensteine in einer fokussierten Ansicht im Blick."
+    },
+    "profileFriends": {
+      "title": "Verbindungen",
+      "subtitle": "Nimm wieder Kontakt mit deinen Kollaborateur:innen, Mentor:innen und Communities auf.",
+      "actions": {
+        "message": "Nachricht senden",
+        "schedule": "Anruf planen",
+        "viewProfile": "Profil öffnen"
+      },
+      "highlights": {
+        "title": "Empfohlene Kollaborateur:innen",
+        "subtitle": "Handverlesene Partner:innen, mit denen du dieses Quartal am häufigsten zusammenarbeitest."
+      },
+      "filters": {
+        "all": "Alle",
+        "design": "Design",
+        "product": "Produkt",
+        "engineering": "Engineering",
+        "marketing": "Marketing"
+      },
+      "stats": {
+        "totalFriends": "Verbindungen",
+        "mutual": "gemeinsame Kontakte",
+        "online": "jetzt online"
+      },
+      "meta": {
+        "lastActive": "Zuletzt aktiv · {time}"
+      },
+      "sections": {
+        "suggestions": "Vorgeschlagene Kontakte",
+        "active": "Jetzt aktiv"
+      },
+      "status": {
+        "online": "Online",
+        "focus": "Fokus",
+        "busy": "Beschäftigt",
+        "offline": "Offline"
+      },
+      "feedback": {
+        "message": "Verfasse eine kurze Nachricht…",
+        "messageWith": "Verfasse eine kurze Nachricht an {name}…",
+        "schedule": "Wir öffnen deinen Terminplanungsablauf…",
+        "scheduleWith": "Wir öffnen deinen Terminplanungsablauf für {name}…",
+        "connect": "Wir merken uns, dass du dich verbinden möchtest.",
+        "connectWith": "Wir geben {name} Bescheid, dass du dich verbinden möchtest."
+      },
+      "empty": "Für diesen Filter wurden noch keine Profile gefunden."
+    },
+    "profilePhotos": {
+      "title": "Fotobibliothek",
+      "subtitle": "Kuratiere Highlights von Launches, Recherche-Reisen und Momenten hinter den Kulissen.",
+      "actions": {
+        "upload": "Fotos hochladen",
+        "createAlbum": "Album erstellen"
+      },
+      "sections": {
+        "pinned": "Angeheftete Sammlungen",
+        "albums": "Album-Explorer",
+        "timeline": "Kreativnotizen",
+        "notesDescription": "Updates von Kollaborateur:innen, während sie visuelle Stories vorbereiten."
+      },
+      "meta": {
+        "updated": "Aktualisiert am {date}",
+        "photoCount": "Fotos"
+      },
+      "filters": {
+        "recent": "Neueste",
+        "events": "Events",
+        "studio": "Studio",
+        "travel": "Reisen"
+      },
+      "cta": {
+        "share": "Teile kuratierte Sets mit deinem Team oder exportiere sie in Präsentationen."
+      },
+      "stats": {
+        "albums": "kuratierte Alben",
+        "tags": "einzigartige Story-Tags"
+      },
+      "timeline": {
+        "title": "Meilensteine der Story",
+        "description": "Momentaufnahmen wichtiger Launches, Residencies und Retreats, die dein Jahr geprägt haben."
+      },
+      "feedback": {
+        "upload": "Wir öffnen deinen Medienauswahl-Dialog…",
+        "createAlbum": "Lass uns ein neues Album anlegen.",
+        "shareCollection": "Freigabeoptionen sind bereit.",
+        "generic": "Aktion gestartet."
+      },
+      "empty": "Für diesen Filter wurden noch keine Fotos gefunden."
+    },
+    "profileEdit": {
+      "title": "Profil bearbeiten",
+      "subtitle": "Aktualisiere deine Angaben, damit Kollaborateur:innen immer den aktuellen Kontext haben.",
+      "sections": {
+        "profile": {
+          "title": "Profil",
+          "bio": "Biografie",
+          "skills": "Schlüsselkompetenzen"
+        },
+        "contact": "Kontakt",
+        "about": "Über mich",
+        "social": "Soziale Links",
+        "siteSettings": "Seiteneinstellungen"
+      },
+      "labels": {
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "headline": "Überschrift",
+        "pronouns": "Pronomen",
+        "language": "Bevorzugte Sprache",
+        "timezone": "Zeitzone",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "location": "Standort",
+        "website": "Website",
+        "bio": "Biografie",
+        "skills": "Schlüsselkompetenzen",
+        "interests": "Fokusthemen",
+        "linkedin": "LinkedIn",
+        "twitter": "Twitter / X",
+        "dribbble": "Dribbble",
+        "behance": "Behance"
+      },
+      "actions": {
+        "cancel": "Zurücksetzen",
+        "save": "Änderungen speichern"
+      },
+      "helpers": {
+        "bio": "Teile deine Mission, deine Zusammenarbeit oder jüngste Erfolge (280 Zeichen).",
+        "skills": "Gib eigene Kompetenzen ein oder wähle aus den Vorschlägen.",
+        "summary": "Diese Schnellübersicht aktualisiert sich automatisch, während du deine Angaben bearbeitest.",
+        "siteSettings": "Aktualisiere den Seitennamen oder Slogan, ohne dein Profil zu verlassen."
+      },
+      "feedback": {
+        "successMessage": "Profildaten wurden erfolgreich gespeichert.",
+        "errorMessage": "Bitte überprüfe die hervorgehobenen Felder."
+      },
+      "validation": {
+        "required": "Dieses Feld ist erforderlich.",
+        "bioLimit": "Deine Biografie darf höchstens 280 Zeichen enthalten."
+      }
+    },
+    "profileSecurity": {
+      "title": "Passwort & Sicherheit",
+      "subtitle": "Schütze dein Konto mit starken Anmeldedaten und verifizierten Geräten.",
+      "actions": {
+        "save": "Sicherheitseinstellungen speichern",
+        "generateCodes": "Wiederherstellungscodes erstellen"
+      },
+      "sections": {
+        "password": {
+          "title": "Passwort aktualisieren",
+          "description": "Erstelle eine einzigartige Passphrase mit mindestens 12 Zeichen, Zahlen und Symbolen."
+        },
+        "sessions": {
+          "title": "Aktive Sitzungen",
+          "description": "Überprüfe, wo du angemeldet bist, und entziehe unbekannten Geräten den Zugriff."
+        },
+        "mfa": {
+          "title": "Zwei-Faktor-Authentifizierung",
+          "description": "Füge einen zusätzlichen Prüfschritt hinzu, um deinen Arbeitsbereich zu schützen."
+        }
+      },
+      "labels": {
+        "currentPassword": "Aktuelles Passwort",
+        "newPassword": "Neues Passwort",
+        "confirmPassword": "Passwort bestätigen",
+        "mfaToggle": "Zwei-Faktor-Authentifizierung aktivieren"
+      },
+      "passwordHint": {
+        "title": "Passworttipps",
+        "description": "Verwende einen Passwortmanager, vermeide doppelte Passwörter und aktualisiere sensible Logins regelmäßig."
+      },
+      "sessions": {
+        "device": "Gerät",
+        "location": "Standort",
+        "activity": "Letzte Aktivität",
+        "actions": "Aktionen",
+        "revoke": "Zugriff entziehen",
+        "activeNow": "Jetzt aktiv",
+        "trusted": "Vertrauenswürdig",
+        "remembered": "Gemerkt",
+        "untrusted": "Unbekannt"
+      },
+      "recoveryCodes": {
+        "title": "Bewahre diese einmaligen Wiederherstellungscodes auf"
+      }
+    },
+    "contact": {
+      "title": "Kontakt",
+      "subtitle": "Wir antworten in der Regel innerhalb von 1–2 Werktagen.",
+      "form": {
+        "name": "Dein Name",
+        "email": "E-Mail-Adresse",
+        "subject": "Betreff",
+        "message": "Nachricht",
+        "submit": "Senden",
+        "sending": "Senden…",
+        "success": "Danke! Deine Nachricht wurde verschickt.",
+        "error": "Entschuldigung, etwas ist schiefgelaufen. Bitte versuche es noch einmal."
+      },
+      "validation": {
+        "required": "Dieses Feld ist erforderlich",
+        "email": "Gib eine gültige E-Mail-Adresse ein",
+        "minMessage": "Die Nachricht muss mindestens 10 Zeichen enthalten"
+      },
+      "details": {
+        "title": "So erreichst du uns",
+        "description": "Wähle den Kanal, der am besten zu deiner Frage passt.",
+        "email": "E-Mail",
+        "emailDescription": "Schreibe dem Kernteam bei privaten oder konto­bezogenen Themen.",
+        "emailCta": "E-Mail senden",
+        "emailCtaLabel": "Eine E-Mail an das BroWorld-Team verfassen",
+        "community": "Community-Diskussionen",
+        "communityDescription": "Teile Ideen, stelle Fragen oder melde Bugs gemeinsam mit anderen Buildern.",
+        "communityCta": "Diskussionen öffnen",
+        "communityCtaLabel": "Die BroWorld-Diskussionen in einem neuen Tab öffnen",
+        "docs": "Dokumentation",
+        "docsDescription": "Stöbere in Leitfäden und API-Referenzen für schnelle Antworten.",
+        "docsCta": "Dokumentation lesen",
+        "docsCtaLabel": "Die BroWorld-Dokumentation lesen"
+      },
+      "availability": {
+        "title": "Verfügbarkeit",
+        "body": "Unser verteiltes Team beobachtet Anfragen von Montag bis Freitag und rotiert Wochenendbereitschaften für dringende Fälle."
+      }
+    },
+    "playground": {
+      "ui": {
+        "title": "UI Component Playground",
+        "description": "Review every base component with multiple variants, sizes, and accessibility states.",
+        "controls": {
+          "expandAll": "Expand all",
+          "collapseAll": "Collapse all"
+        },
+        "toggles": {
+          "locale": "Locale preview",
+          "direction": "Layout direction",
+          "theme": "Theme",
+          "density": "Control size"
+        },
+        "directions": {
+          "ltr": "LTR",
+          "rtl": "RTL"
+        },
+        "themes": {
+          "light": "Light",
+          "dark": "Dark"
+        },
+        "sizes": {
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        },
+        "locales": {
+          "en": "English",
+          "ar": "Arabic"
+        },
+        "variants": {
+          "filled": "Filled",
+          "tonal": "Tonal",
+          "outline": "Outline",
+          "text": "Text",
+          "plain": "Plain"
+        },
+        "states": {
+          "default": "Default",
+          "disabled": "Disabled",
+          "loading": "Loading",
+          "leadingIcon": "Leading icon",
+          "trailingIcon": "Trailing icon",
+          "block": "Full width",
+          "focus": "Focused",
+          "error": "Error",
+          "success": "Success",
+          "checked": "Checked",
+          "indeterminate": "Indeterminate"
+        },
+        "inputTypes": {
+          "text": "Text",
+          "email": "Email",
+          "password": "Password",
+          "number": "Number",
+          "search": "Search",
+          "url": "URL"
+        },
+        "placeholders": {
+          "generic": "Enter a value",
+          "focus": "Auto-focused input",
+          "error": "Something went wrong",
+          "success": "Everything looks good",
+          "autogrow": "Describe your idea…",
+          "select": "Choose an option",
+          "selectMultiple": "Select integrations",
+          "fullName": "Ada Lovelace"
+        },
+        "examples": {
+          "buttonLabel": "Primary action",
+          "loading": "Loading…",
+          "primaryAction": "Continue",
+          "secondaryAction": "Learn more",
+          "fullWidth": "Take the full width",
+          "inputType": "{type} input",
+          "disabledValue": "Unavailable while disabled",
+          "textareaDefault": "Feedback textarea",
+          "textareaAutoGrow": "Auto growing notes",
+          "checkboxPrimary": "Email updates",
+          "checkboxIndeterminate": "Partially selected",
+          "checkboxDisabled": "Disabled checkbox",
+          "switchNotifications": "Enable notifications",
+          "switchDisabled": "Disabled switch",
+          "selectSingle": "Delivery channel",
+          "selectMultiple": "Team integrations",
+          "selectDisabledOptions": "Release channel",
+          "radioVertical": "Cadence options",
+          "radioHorizontal": "Payment methods",
+          "formFieldBasic": "Field with helper text",
+          "formFieldError": "Field with errors",
+          "formFieldCheckbox": "Field wrapping checkbox"
+        },
+        "feedback": {
+          "error": "Provide a valid response.",
+          "selectMethod": "Select a supported payment method.",
+          "invalidEmail": "Enter a valid email address."
+        },
+        "hints": {
+          "characterLimit": "Keep it under 240 characters.",
+          "checkbox": "You can mark more than one preference.",
+          "switch": "Switch represents an immediate action.",
+          "disabledOption": "Some options are unavailable right now.",
+          "radio": "Choose the plan that fits best.",
+          "required": "This field is required."
+        },
+        "notes": {
+          "autofocus": "Auto-focus is applied to show the focus style.",
+          "disabledChoice": "One option is disabled to demonstrate aria-disabled."
+        },
+        "sample": {
+          "textValue": "Hi from the playground!",
+          "multiline": "Let the team know how this feels.",
+          "longerText": "This textarea grows as you type so reviewers can stress-test the auto-grow behaviour."
+        },
+        "selectOptions": {
+          "email": "Email",
+          "sms": "SMS",
+          "push": "Push notification",
+          "alpha": "Alpha",
+          "beta": "Beta",
+          "release": "Release"
+        },
+        "radioOptions": {
+          "daily": "Daily summary",
+          "weekly": "Weekly digest",
+          "monthly": "Monthly report",
+          "card": "Credit card",
+          "paypal": "PayPal",
+          "bank": "Bank transfer"
+        },
+        "labels": {
+          "fullName": "Full name",
+          "email": "Email",
+          "preferences": "Preferences"
+        },
+        "groups": {
+          "buttons": {
+            "title": "Buttons",
+            "description": "Primary actions and secondary button styles."
+          },
+          "inputs": {
+            "title": "Inputs",
+            "description": "Text inputs and textareas with validation states."
+          },
+          "toggles": {
+            "title": "Toggles",
+            "description": "Checkboxes and switches for binary choices."
+          },
+          "selectors": {
+            "title": "Selectors",
+            "description": "Select menus and radio groups for choosing options."
+          },
+          "wrappers": {
+            "title": "Form wrappers",
+            "description": "FormField wrapper integrating labels, hints, and errors."
+          }
+        },
+        "sections": {
+          "buttonVariants": "Variants & sizes",
+          "buttonVariantsDescription": "Each button variant rendered across small, medium, and large sizes.",
+          "buttonStates": "States",
+          "buttonStatesDescription": "Loading, disabled, icon, and block button examples.",
+          "inputTypes": "Input types",
+          "inputTypesDescription": "BaseInput with different HTML input types and clearable behaviour.",
+          "inputStates": "States",
+          "inputStatesDescription": "Focused, success, error, and disabled input states.",
+          "textareaStates": "Textarea states",
+          "textareaStatesDescription": "Resizable textarea variations with hints and disabled view.",
+          "checkboxes": "Checkboxes",
+          "checkboxesDescription": "Checked, indeterminate, and disabled checkbox states.",
+          "switches": "Switches",
+          "switchesDescription": "Enabled and disabled switch controls.",
+          "selects": "Select menus",
+          "selectsDescription": "Single, multi-select, and disabled options examples.",
+          "radios": "Radio groups",
+          "radiosDescription": "Vertical and horizontal radio group layouts with keyboard support.",
+          "formFields": "FormField wrapper",
+          "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
+        }
+      }
     }
   },
   "seo": {
@@ -2778,13 +2771,13 @@
       "title": "Passwort & Sicherheit",
       "description": "Verwalte Anmeldedaten, Zwei-Faktor-Authentifizierung und vertrauenswürdige Geräte."
     },
-    "createWorld": {
-      "title": "Create world",
-      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
-    },
     "job": {
       "title": "Jobs",
       "description": "Plan, track, and optimise hiring programmes."
+    },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
     },
     "game": {
       "title": "Gaming",
@@ -2918,6 +2911,9 @@
     }
   },
   "admin": {
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
     "metaTitle": "Administration",
     "page": {
       "title": "Administrationsbereich",
@@ -3124,6 +3120,39 @@
           "page": {
             "title": "User data",
             "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          },
+          "table": {
+            "search": "Search dataset",
+            "columns": {
+              "username": "Username",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "email": "Email",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status",
+              "actions": "Actions"
+            },
+            "empty": "No user records found."
+          },
+          "actions": {
+            "refresh": "Refresh"
+          },
+          "details": {
+            "title": "User details",
+            "close": "Close",
+            "empty": "Select a user to inspect their profile.",
+            "fields": {
+              "username": "Username",
+              "email": "Email",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status"
+            }
           }
         },
         "crons": {
@@ -3154,6 +3183,98 @@
           "page": {
             "title": "Scheduled publishing",
             "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
+      }
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }
@@ -3256,25 +3377,41 @@
           "content": {
             "title": "Content-Management",
             "description": "Planen, veröffentlichen und archivieren Sie Artikel, Events und Lernressourcen.",
-            "tags": ["Redaktions-Workflow", "Freigabe", "Terminplanung"],
+            "tags": [
+              "Redaktions-Workflow",
+              "Freigabe",
+              "Terminplanung"
+            ],
             "status": "12 Inhalte erfordern eine redaktionelle Prüfung."
           },
           "community": {
             "title": "Community & Moderation",
             "description": "Konfigurieren Sie Moderationsregeln, verwalten Sie Meldungen und Sanktionen.",
-            "tags": ["Meldungen", "Sanktionen", "Private Nachrichten"],
+            "tags": [
+              "Meldungen",
+              "Sanktionen",
+              "Private Nachrichten"
+            ],
             "status": "Durchschnittliche Reaktionszeit: 1 h 42."
           },
           "commerce": {
             "title": "Monetarisierung & Angebote",
             "description": "Verwalten Sie Abonnements, Promo-Codes und Geschäftspartnerschaften.",
-            "tags": ["Abonnements", "Abrechnung", "Gutscheine"],
+            "tags": [
+              "Abonnements",
+              "Abrechnung",
+              "Gutscheine"
+            ],
             "status": "Konversionsrate diese Woche um 3,4 % gestiegen."
           },
           "governance": {
             "title": "Governance & Compliance",
             "description": "Prüfen Sie Zugriffe, verwalten Sie privilegierte Rollen und erstellen Sie Compliance-Berichte.",
-            "tags": ["Audit", "Rollen", "Nachverfolgbarkeit"],
+            "tags": [
+              "Audit",
+              "Rollen",
+              "Nachverfolgbarkeit"
+            ],
             "status": "Letztes vollständiges Audit vor 5 Tagen abgeschlossen."
           }
         }
@@ -3432,101 +3569,6 @@
           "page": {
             "title": "Scheduled publishing",
             "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
-          }
-        }
-      }
-    },
-    "common": {
-      "comingSoon": "This module is coming soon."
-    },
-    "jobManagement": {
-      "metaTitle": "Job management",
-      "page": {
-        "title": "Job management",
-        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Job data",
-          "page": {
-            "title": "Job data",
-            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
-          }
-        },
-        "crons": {
-          "metaTitle": "Job crons",
-          "page": {
-            "title": "Scheduled routines",
-            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
-          }
-        }
-      }
-    },
-    "ecommerceManagement": {
-      "metaTitle": "E-commerce management",
-      "page": {
-        "title": "E-commerce management",
-        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "E-commerce data",
-          "page": {
-            "title": "Commerce data",
-            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
-          }
-        },
-        "crons": {
-          "metaTitle": "E-commerce crons",
-          "page": {
-            "title": "Automated jobs",
-            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
-          }
-        }
-      }
-    },
-    "educationManagement": {
-      "metaTitle": "Education management",
-      "page": {
-        "title": "Education management",
-        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Education data",
-          "page": {
-            "title": "Learning data",
-            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
-          }
-        },
-        "crons": {
-          "metaTitle": "Education crons",
-          "page": {
-            "title": "Learning automations",
-            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
-          }
-        }
-      }
-    },
-    "gameManagement": {
-      "metaTitle": "Game management",
-      "page": {
-        "title": "Game management",
-        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Game data",
-          "page": {
-            "title": "Gameplay data",
-            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
-          }
-        },
-        "crons": {
-          "metaTitle": "Game crons",
-          "page": {
-            "title": "Scheduled operations",
-            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }

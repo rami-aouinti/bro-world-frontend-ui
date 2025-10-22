@@ -158,6 +158,17 @@
         "cv": "السيرة الذاتية",
         "createWorld": "Create world",
         "jobs": "الوظائف",
+        "game": "الألعاب والاختبارات",
+        "crm": "مساحة CRM",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "نظرة عامة",
+        "ecommerceCatalog": "كتالوج المنتجات",
+        "ecommerceCart": "عربة التسوق",
+        "ecommerceCheckout": "الدفع",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "الأكاديمية",
+        "performance": "الأداء",
         "profile": "الملف الشخصي",
         "profileOverview": "نظرة عامة",
         "profileSettings": "إعدادات الحساب",
@@ -182,18 +193,7 @@
         "adminBlog": "المدونة",
         "help": "المساعدة",
         "about": "حول",
-        "contact": "اتصال",
-        "game": "الألعاب والاختبارات",
-        "crm": "مساحة CRM",
-        "ecommerce": "E-commerce",
-        "ecommerceOverview": "نظرة عامة",
-        "ecommerceCatalog": "كتالوج المنتجات",
-        "ecommerceCart": "عربة التسوق",
-        "ecommerceCheckout": "الدفع",
-        "education": "Education",
-        "quiz": "Quiz",
-        "academy": "الأكاديمية",
-        "performance": "الأداء"
+        "contact": "اتصال"
       }
     },
     "widgets": {
@@ -307,6 +307,23 @@
     "website": "Website",
     "submit": "Save"
   },
+  "messenger": {
+    "searchPlaceholder": "ابحث في المحادثات",
+    "emptyList": "لا توجد محادثات بعد",
+    "unknownParticipant": "غير معروف",
+    "emptyTitle": "اختر محادثة",
+    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
+    "emptyCtaLabel": "ابدأ محادثة",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "اكتب رسالة...",
+    "sendLabel": "إرسال",
+    "sendingLabel": "جارٍ الإرسال...",
+    "sendErrorStatus": "لم يتم التسليم",
+    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
+    "noMessages": "لا توجد رسائل بعد",
+    "loadOlder": "تحميل الرسائل السابقة",
+    "participantsLabel": "{count} مشارك"
+  },
   "banner": {
     "Content": "للاطلاع على توثيق Tailwind CSS v3، [**اضغط هنا**](https://v1.inspira-ui.com)."
   },
@@ -384,8 +401,6 @@
       "commentRequired": "Sign in to join the discussion."
     },
     "reactions": {
-      "like": "إعجاب",
-      "love": "محبة",
       "post": {
         "publishedOn": "نُشر في {date}",
         "reactions": "{count} تفاعلات",
@@ -670,23 +685,6 @@
       "GetStartedAndStartBuildingAwesomeUI": "ابدأ واصنع واجهات مدهشة",
       "GetStarted": "ابدأ الآن"
     }
-  },
-  "messenger": {
-    "searchPlaceholder": "ابحث في المحادثات",
-    "emptyList": "لا توجد محادثات بعد",
-    "unknownParticipant": "غير معروف",
-    "emptyTitle": "اختر محادثة",
-    "emptyDescription": "اختر محادثة من القائمة لقراءة الرسائل وإرسالها.",
-    "emptyCtaLabel": "ابدأ محادثة",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "اكتب رسالة...",
-    "sendLabel": "إرسال",
-    "sendingLabel": "جارٍ الإرسال...",
-    "sendErrorStatus": "لم يتم التسليم",
-    "shortcutsHint": "اضغط Ctrl+Enter للإرسال",
-    "noMessages": "لا توجد رسائل بعد",
-    "loadOlder": "تحميل الرسائل السابقة",
-    "participantsLabel": "{count} مشارك"
   },
   "auth": {
     "Account": "الحساب",
@@ -1016,27 +1014,6 @@
         "title": "@:education.catalog.title",
         "subtitle": "@:education.catalog.subtitle"
       },
-      "sidebar": {
-        "overviewTitle": "Keep learning momentum",
-        "overviewDescription": "Track your progress, revisit favourite categories, and stay motivated as you explore new skills.",
-        "stats": {
-          "categories": {
-            "label": "Categories",
-            "value": "{count} categories"
-          },
-          "courses": {
-            "label": "Courses",
-            "value": "{count} courses"
-          },
-          "certificates": {
-            "label": "Certificates earned",
-            "value": "{count} certificates"
-          }
-        },
-        "featuredTitle": "Featured categories",
-        "featuredDescription": "Jump back into these curated spaces to continue learning.",
-        "featuredEmpty": "New categories are coming soon."
-      },
       "category": {
         "courses": "@:education.category.courses",
         "viewCourses": "@:education.category.viewCourses",
@@ -1122,6 +1099,1007 @@
         "beginner": "@:education.levels.beginner",
         "intermediate": "@:education.levels.intermediate",
         "advanced": "@:education.levels.advanced"
+      }
+    },
+    "createWorld": {
+      "title": "Create a new world",
+      "subtitle": "Assemble the foundation, governance, and live experiences your community needs—all in one guided workspace.",
+      "form": {
+        "title": "World blueprint",
+        "subtitle": "Define the identity, launch plan, and access controls before inviting your first residents.",
+        "actions": {
+          "preview": "Preview",
+          "previewAria": "Preview the world configuration",
+          "publish": "Publish world",
+          "publishAria": "Publish the world configuration"
+        },
+        "basicInfo": {
+          "title": "Core details",
+          "subtitle": "Give your world a clear identity so members instantly understand where they are."
+        },
+        "fields": {
+          "name": "World name",
+          "namePlaceholder": "E.g. Aurora Station",
+          "slug": "Public URL",
+          "slugPlaceholder": "aurora-station",
+          "description": "Description",
+          "descriptionPlaceholder": "Describe the story, purpose, and experiences players can expect.",
+          "visibility": "Visibility",
+          "visibilityOptions": {
+            "public": "Public",
+            "private": "Private"
+          },
+          "visibilityHint": "Choose whether your world is listed in the public explorer or invitation only.",
+          "theme": "Theme preset",
+          "region": "Primary region",
+          "regionHint": "Helps us route latency-optimised infrastructure for your players.",
+          "launchDate": "Launch date",
+          "launchDateHint": "Share your planned go-live to coordinate testing windows and announcements.",
+          "tags": "Tags",
+          "tagsPlaceholder": "Add descriptive keywords",
+          "tagsHint": "Use up to five tags to help members find the right activities.",
+          "guidelines": "Community guidelines",
+          "guidelinesPlaceholder": "Outline tone, expectations, and escalation policies for everyone who joins."
+        },
+        "themeOptions": {
+          "aurora": "Aurora",
+          "midnight": "Midnight",
+          "sunrise": "Sunrise",
+          "custom": "Custom theme"
+        },
+        "regionOptions": {
+          "global": "Global",
+          "americas": "Americas",
+          "emea": "EMEA",
+          "apac": "APAC"
+        },
+        "tagSuggestions": {
+          "coOp": "Co-op missions",
+          "roleplay": "Roleplay",
+          "competitive": "Competitive league",
+          "casual": "Casual hangout",
+          "modded": "Modded adventures"
+        },
+        "advanced": {
+          "title": "Advanced controls",
+          "subtitle": "Fine-tune monetisation, integrations, and access policies.",
+          "monetization": "Enable monetisation systems",
+          "integrations": "Activate partner integrations",
+          "verification": "Require account verification",
+          "guests": "Allow guest spectators",
+          "guestsHint": "Guests can browse without creating an account but cannot interact."
+        }
+      },
+      "plugins": {
+        "title": "Curate your plugin stack",
+        "subtitle": "Mix social, economic, and safety plugins to craft the experience your community deserves.",
+        "categories": {
+          "community": {
+            "title": "Community presence",
+            "description": "Welcome members, broadcast announcements, and host social spaces.",
+            "plugins": {
+              "lobby": {
+                "name": "Interactive lobby",
+                "tag": "Core",
+                "description": "Guide newcomers with custom zones, featured posts, and smart onboarding.",
+                "points": [
+                  "Build modular landing rooms with drag-and-drop widgets.",
+                  "Highlight trending events, moderators, and creator spotlights.",
+                  "Schedule dynamic greetings that adapt to time zones."
+                ]
+              },
+              "events": {
+                "name": "Event orchestration",
+                "tag": "Live",
+                "description": "Plan tournaments, premieres, and collaborative quests with automated reminders.",
+                "points": [
+                  "Coordinate multi-stage brackets and RSVPs in one dashboard.",
+                  "Sync calendars, ticketing, and broadcast overlays automatically.",
+                  "Unlock post-event recaps with stats, clips, and rewards."
+                ]
+              },
+              "streams": {
+                "name": "Creator streams",
+                "tag": "Engage",
+                "description": "Embed live streams, watch parties, and backstage chats without leaving your world.",
+                "points": [
+                  "Support multi-platform streaming with adaptive quality.",
+                  "Unlock co-streaming rooms for community commentators.",
+                  "Capture highlights and publish recap reels instantly."
+                ]
+              }
+            }
+          },
+          "economy": {
+            "title": "Economy & progression",
+            "description": "Design progression loops, trading systems, and reward paths tailored to your world.",
+            "plugins": {
+              "market": {
+                "name": "Marketplace hub",
+                "tag": "Commerce",
+                "description": "Launch safe trading for cosmetics, crafting materials, and time-limited drops.",
+                "points": [
+                  "List items with rarity, seasonality, and bundle options.",
+                  "Protect transactions with escrow, tax, and fraud tooling.",
+                  "Publish merchandising campaigns with dynamic pricing rules."
+                ]
+              },
+              "crafting": {
+                "name": "Crafting simulator",
+                "tag": "Systems",
+                "description": "Author recipes, resource nodes, and crafting stations with live balancing.",
+                "points": [
+                  "Define ingredient trees and skill requirements visually.",
+                  "Simulate yield, cooldowns, and fail states before release.",
+                  "Link crafting outputs to quests, vendors, or marketplace listings."
+                ]
+              },
+              "rewards": {
+                "name": "Rewards engine",
+                "tag": "Loyalty",
+                "description": "Reward cohorts with quests, achievements, and season passes.",
+                "points": [
+                  "Segment milestones by player type, region, or platform.",
+                  "Automate reward delivery with fraud-safe claims.",
+                  "Track redemption analytics and churn risk in real time."
+                ]
+              }
+            }
+          },
+          "governance": {
+            "title": "Governance & safety",
+            "description": "Empower trusted teams with moderation, safety, and insight workflows.",
+            "plugins": {
+              "moderation": {
+                "name": "Moderation console",
+                "tag": "Trust",
+                "description": "Resolve reports, escalations, and appeals with collaborative tooling.",
+                "points": [
+                  "Route cases automatically by severity and language.",
+                  "Surface evidence timelines with chat, clips, and audit logs.",
+                  "Assign playbooks, sanctions, and cooldown windows in context."
+                ]
+              },
+              "safety": {
+                "name": "Safety automation",
+                "tag": "AI",
+                "description": "Detect toxicity, spam, and suspicious behaviour before it spreads.",
+                "points": [
+                  "Deploy ML classifiers tuned for your community norms.",
+                  "Set up adaptive rate limits and content filters.",
+                  "Notify guardians and caretakers with role-based alerts."
+                ]
+              },
+              "analytics": {
+                "name": "Governance analytics",
+                "tag": "Insights",
+                "description": "Measure health, retention, and policy impact across every world surface.",
+                "points": [
+                  "Monitor safety KPIs with real-time dashboards.",
+                  "Correlate moderation actions with engagement outcomes.",
+                  "Export compliance-ready reports for stakeholders."
+                ]
+              }
+            }
+          }
+        }
+      },
+      "sidebar": {
+        "plugins": {
+          "selectedTitle": "Selected plugins",
+          "emptyTitle": "No plugins selected yet",
+          "selectedDescription": "The following plugins will be included in your provisioning request:",
+          "emptyDescription": "Choose plugins to preview the capabilities that will be provisioned.",
+          "emptyHint": "Toggle plugins in the list to build your stack."
+        }
+      },
+      "workflow": {
+        "title": "Launch with confidence",
+        "subtitle": "Follow a proven cadence from vision to expansion.",
+        "stepLabel": "Step {number}",
+        "steps": {
+          "vision": {
+            "title": "Shape your vision",
+            "description": "Align on pillars, tone, and success metrics with stakeholders and creators."
+          },
+          "launch": {
+            "title": "Launch with momentum",
+            "description": "Coordinate marketing beats, early access waves, and go-live checklists."
+          },
+          "expand": {
+            "title": "Expand sustainably",
+            "description": "Iterate on feedback, scale to new regions, and grow ambassador programmes."
+          }
+        }
+      },
+      "cta": {
+        "title": "Need a hand activating your world?",
+        "description": "Our team can help you architect governance models, migration plans, and live operations tailored to your audience.",
+        "button": "Talk with our team",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "job": {
+      "title": "Jobs",
+      "subtitle": "Centralise every step of your recruiting funnel to move from sourcing to signing with clarity.",
+      "featuresTitle": "Build a confident hiring pipeline",
+      "features": {
+        "matching": {
+          "title": "Spot the right talent faster",
+          "description": "Aggregate sourcing activity and prioritise applicants automatically.",
+          "points": [
+            "Sync job boards, referrals, and internal mobility into one view.",
+            "Score applications with configurable criteria and bias safeguards.",
+            "Highlight talent pools ready for nurture or re-engagement."
+          ]
+        },
+        "automation": {
+          "title": "Automate team coordination",
+          "description": "Give recruiters, interviewers, and hiring managers a shared command centre.",
+          "points": [
+            "Trigger interview kits and reminders in the right timezone.",
+            "Share structured feedback templates that surface signal over noise.",
+            "Notify stakeholders the moment a candidate advances or stalls."
+          ]
+        },
+        "insights": {
+          "title": "Measure hiring impact",
+          "description": "Understand conversion, velocity, and quality without exporting spreadsheets.",
+          "points": [
+            "Track time-to-fill, diversity ratios, and offer acceptance in real time.",
+            "Visualise bottlenecks across regions or job families instantly.",
+            "Share live dashboards with leadership and partners securely."
+          ]
+        }
+      },
+      "workflowTitle": "Your hiring rhythm, visualised",
+      "workflow": {
+        "steps": {
+          "publish": {
+            "title": "Publish with confidence",
+            "description": "Launch branded job pages and syndicated listings with reusable templates."
+          },
+          "review": {
+            "title": "Review together",
+            "description": "Collaborate on feedback, calibrate scorecards, and keep the loop accountable."
+          },
+          "hire": {
+            "title": "Hire and onboard",
+            "description": "Secure approvals, generate offers, and pass context to onboarding seamlessly."
+          }
+        }
+      },
+      "stepLabel": "Step {number}",
+      "cta": {
+        "title": "Design a hiring experience candidates love",
+        "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
+        "button": "Talk to us",
+        "buttonAria": "Open the contact page"
+      },
+      "openings": {
+        "title": "Current openings",
+        "subtitle": "Explore the roles we're actively hiring for and get a feel for the work you'll lead from day one.",
+        "updated": "Updated weekly",
+        "updatedLabel": "Job listings refresh cadence",
+        "items": {
+          "productDesigner": {
+            "title": "Senior Product Designer",
+            "department": "Product Design",
+            "location": "Paris, France (Hybrid)",
+            "type": "Full-time",
+            "salary": "€58k - €72k · 0.05% equity",
+            "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Senior Product Designer role",
+              "hint": "Portfolio link required"
+            }
+          },
+          "aiRecruiter": {
+            "title": "AI Recruiter Strategist",
+            "department": "Product & AI",
+            "location": "Remote - EMEA",
+            "type": "Full-time",
+            "salary": "€70k - €90k · bonus eligible",
+            "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the AI Recruiter Strategist role",
+              "hint": "Experience with LLM workflows"
+            }
+          },
+          "salesLead": {
+            "title": "Enterprise Sales Lead",
+            "department": "Revenue",
+            "location": "Lyon, France",
+            "type": "Full-time",
+            "salary": "€65k base · 50% variable",
+            "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Enterprise Sales Lead role",
+              "hint": "French & English proficiency"
+            }
+          },
+          "customerSuccess": {
+            "title": "Customer Success Partner",
+            "department": "Customer Success",
+            "location": "Marseille, France",
+            "type": "Full-time",
+            "salary": "€45k - €55k",
+            "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
+            "apply": {
+              "label": "Apply now",
+              "aria": "Apply to the Customer Success Partner role",
+              "hint": "Experience supporting HRIS/ATS rollouts"
+            }
+          }
+        }
+      },
+      "application": {
+        "title": "Submit your application",
+        "subtitle": "Share a few details and our talent team will reach out with next steps.",
+        "highlights": [
+          "A tailored walkthrough of BroWorld based on your hiring maturity.",
+          "Introductions to the team members you'll collaborate with.",
+          "A response within two business days—even if we are not moving forward yet."
+        ],
+        "form": {
+          "nameLabel": "Full name",
+          "namePlaceholder": "Elisa Dupont",
+          "emailLabel": "Work email",
+          "emailPlaceholder": "elisa.dupont(at)company.com",
+          "roleLabel": "Role you're interested in",
+          "rolePlaceholder": "e.g. Product Designer",
+          "messageLabel": "Tell us about your experience",
+          "messagePlaceholder": "Share recent projects, achievements, or what excites you about BroWorld.",
+          "consentLabel": "I agree to be contacted about current and future opportunities at BroWorld.",
+          "submit": "Send application",
+          "success": "Thank you! Our talent team will review your profile and be in touch shortly.",
+          "rules": {
+            "required": "This field is required.",
+            "email": "Enter a valid email address.",
+            "consent": "Please confirm we can contact you."
+          }
+        }
+      }
+    },
+    "game": {
+      "title": "ساحة الاختبارات",
+      "subtitle": "صمّم اختبارات متعددة المراحل مع فئات ومستويات وتصنيف مباشر.",
+      "menu": {
+        "player": "اللاعب جاهز!",
+        "guest": "ضيف",
+        "guestName": "ضيف",
+        "categoryPlaceholder": "اختر فئة",
+        "levelPlaceholder": "اختر مستوى",
+        "timer": "الوقت",
+        "score": "النتيجة",
+        "progress": "التقدم",
+        "pendingScore": "قيد الانتظار",
+        "helper": "اختر فئة ومستوى لبدء الاختبار. سجّل الدخول لحفظ التقدم."
+      },
+      "leaderboard": {
+        "title": "لوحة الصدارة",
+        "loading": "جارٍ التحميل…",
+        "empty": "يتم تحديث لوحة الصدارة بعد المحاولات الأولى."
+      },
+      "categories": {
+        "title": "اختر فئة",
+        "subtitle": "استكشف بنوك أسئلة قصصية من عالم Bro World.",
+        "reload": "إعادة التحميل",
+        "empty": "لا توجد فئات متاحة حالياً.",
+        "levels": "{count} مستويات",
+        "questions": "{count} أسئلة",
+        "players": "{count} لاعبين"
+      },
+      "levels": {
+        "title": "اختر مستوى",
+        "subtitle": "كل مستوى يزيد التحدي ويُسرّع المؤقت.",
+        "locked": "اختر فئة أولاً لعرض مستوياتها.",
+        "empty": "لا تتوفر مستويات لهذه الفئة.",
+        "questions": "{count} أسئلة",
+        "time": "{minutes} دقيقة"
+      },
+      "questions": {
+        "title": "السؤال {index} من {total}",
+        "progress": "{answered}/{total} تمت الإجابة",
+        "timer": "الوقت المنقضي",
+        "empty": "اختر مستوى لبدء الاختبار.",
+        "warning": "أجب على جميع الأسئلة قبل الإرسال.",
+        "checking": "جارٍ التحقق من الإجابات…",
+        "actions": {
+          "previous": "السابق",
+          "next": "التالي",
+          "submit": "إرسال الإجابات"
+        }
+      },
+      "results": {
+        "title": "النتائج",
+        "score": "النتيجة",
+        "summary": "{correct}/{total} إجابات صحيحة",
+        "time": "الوقت المستغرق",
+        "breakdown": {
+          "correct": "صحيح",
+          "incorrect": "خاطئ",
+          "yourAnswer": "إجابتك",
+          "correctAnswer": "الإجابة الصحيحة",
+          "noAnswer": "لا توجد إجابة"
+        }
+      },
+      "auth": {
+        "title": "سجّل الدخول لحفظ تقدمك",
+        "subtitle": "سجّل الدخول أو أنشئ حساباً للظهور في لوحة الصدارة."
+      },
+      "errors": {
+        "categories": "تعذر تحميل فئات الاختبار.",
+        "levels": "تعذر تحميل المستويات لهذه الفئة.",
+        "questions": "تعذر تحميل أسئلة الاختبار.",
+        "validation": "تعذر التحقق من إجاباتك. حاول مرة أخرى."
+      }
+    },
+    "calendar": {
+      "title": "Calendar",
+      "cardTitle": "Calendar overview",
+      "menuTitle": "Today's events",
+      "menuEmpty": "No events today",
+      "authNotice": "Sign in to see and manage your events.",
+      "rangeAllDay": "All day",
+      "fallbackTitle": "Untitled event",
+      "actions": {
+        "newEvent": "New event"
+      },
+      "dialog": {
+        "createTitle": "New event",
+        "editTitle": "Edit event",
+        "titleLabel": "Event title",
+        "startLabel": "Start date",
+        "endLabel": "End date",
+        "startTimeLabel": "Start time",
+        "endTimeLabel": "End time",
+        "allDayLabel": "All-day event",
+        "privateLabel": "Private event",
+        "locationLabel": "Location",
+        "descriptionLabel": "Description",
+        "save": "Save",
+        "cancel": "Close",
+        "delete": "Delete",
+        "confirmDelete": "Delete event",
+        "confirmDeleteMessage": "This action cannot be undone. Are you sure you want to delete this event?"
+      },
+      "validation": {
+        "title": "Please provide a title.",
+        "startDate": "Select a start date.",
+        "startTime": "Select a start time.",
+        "endTime": "End time must be after the start time.",
+        "range": "The end of the event must be after the start."
+      },
+      "errors": {
+        "save": "We could not save your changes. Please try again.",
+        "delete": "We could not delete this event. Please try again.",
+        "load": "We could not load your events. Please try again."
+      }
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",
+      "featuresTitle": "Modern retail, one toolkit",
+      "features": {
+        "catalog": {
+          "title": "Unify your catalogue",
+          "description": "Manage product variants, rich storytelling, and merchandising in one workspace.",
+          "points": [
+            "Support digital, physical, and subscription products side by side.",
+            "Optimise imagery, copy, and translations with collaborative reviews.",
+            "Launch curated collections with scheduling and inventory safeguards."
+          ]
+        },
+        "checkout": {
+          "title": "Delight at checkout",
+          "description": "Reduce friction with fast, accessible, and trusted purchase flows.",
+          "points": [
+            "Offer local payments, wallets, and instalments without custom code.",
+            "Embed fraud checks, taxes, and duties that scale globally.",
+            "Give support teams live context to resolve orders instantly."
+          ]
+        },
+        "marketing": {
+          "title": "Personalise every campaign",
+          "description": "Coordinate lifecycle messaging, loyalty, and analytics together.",
+          "points": [
+            "Segment audiences with zero-party and behavioural data respectfully.",
+            "Trigger automations tied to launches, restocks, and VIP moments.",
+            "Attribute revenue accurately with multi-touch insights."
+          ]
+        }
+      },
+      "workflowTitle": "From concept to scale",
+      "workflow": {
+        "steps": {
+          "launch": {
+            "title": "Launch",
+            "description": "Prototype storefronts, test merchandising, and go live confidently."
+          },
+          "optimize": {
+            "title": "Optimise",
+            "description": "Iterate on conversion, retention, and operations with actionable insights."
+          },
+          "scale": {
+            "title": "Scale",
+            "description": "Expand to new regions, channels, and partnerships with built-in governance."
+          }
+        }
+      },
+      "stepLabel": "Phase {number}",
+      "cta": {
+        "title": "Transform your retail roadmap",
+        "description": "Explore how BroWorld adapts to your commerce stack, fulfilment partners, and customer promises.",
+        "button": "Connect with sales",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "education": {
+      "title": "التعليم",
+      "subtitle": "مكّن المدرسين والمتعلمين والمسؤولين من تجارب تعاونية تعتمد على البيانات.",
+      "featuresTitle": "اصنع رحلات تعلم تبقى في الأذهان",
+      "features": {
+        "curriculum": {
+          "title": "صمم مناهج شاملة",
+          "description": "أنشئ الدورات ومسارات التعلم المصغر وبرامج الاعتماد بسهولة.",
+          "points": [
+            "أعد استخدام القوالب التي توازن بين التعلم المتزامن وغير المتزامن.",
+            "أدرج الوسائط المتعددة والتقييمات ومعايير الوصول بشكل افتراضي.",
+            "قم بترجمة المحتوى لدفعات عبر الحرم الجامعي أو المناطق."
+          ]
+        },
+        "collaboration": {
+          "title": "عزز التعاون",
+          "description": "صل المدرسين والموجهين والأقران داخل حرم رقمي آمن.",
+          "points": [
+            "نسّق الإرشاد، وساعات الاستشارة، ومنتديات الدفعات بسهولة.",
+            "قدّم حلقات تغذية راجعة فورية للواجبات والمشاريع.",
+            "احتفل بالتقدم باستخدام الشارات والأضواء المسلطة ومسارات الخريجين."
+          ]
+        },
+        "analytics": {
+          "title": "اتخذ قرارات مبنية على التحليلات",
+          "description": "أبرز رؤى تدعم الاستبقاء والرفاهية وأهداف الاعتماد.",
+          "points": [
+            "راقب إشارات التفاعل للتدخل قبل فقدان المتعلمين لاهتمامهم.",
+            "شارك لوحات متابعة البرامج مع الإدارة وجهات الاعتماد.",
+            "احمِ الخصوصية من خلال ضوابط وحوكمة شفافة."
+          ]
+        }
+      },
+      "workflowTitle": "أرشد كل دفعة",
+      "workflow": {
+        "steps": {
+          "design": {
+            "title": "التصميم",
+            "description": "خطّط لنتائج التعلم والمحتوى ولحظات التقييم بصورة تعاونية."
+          },
+          "deliver": {
+            "title": "التنفيذ",
+            "description": "قدّم جلسات مباشرة وعند الطلب، وتابع الحضور، وتكيف في الوقت الفعلي."
+          },
+          "reflect": {
+            "title": "التقييم",
+            "description": "راجع الأثر، واجمع الملاحظات، وطوّر الدفعة التالية."
+          }
+        }
+      },
+      "stepLabel": "المحطة {number}",
+      "cta": {
+        "title": "طوّر منظومتك التعليمية",
+        "description": "تعاون معنا لتحديث البرامج وخدمات الطلاب وتجارب الخريجين.",
+        "button": "احجز استشارة",
+        "buttonAria": "فتح صفحة الاتصال"
+      },
+      "catalog": {
+        "badge": "التعلم",
+        "title": "استكشف مسارات التعلم",
+        "subtitle": "تصفّح الفئات المنسقة، واتبع الدروس التفاعلية، واحصل على شهادة تجريبية عند اجتياز الاختبار النهائي."
+      },
+      "sidebar": {
+        "overviewTitle": "حافظ على زخم التعلم",
+        "overviewDescription": "تابع تقدمك، وعد إلى الفئات المفضلة لديك، وابق متحمسًا أثناء استكشاف مهارات جديدة.",
+        "stats": {
+          "categories": {
+            "label": "الفئات",
+            "value": "{count} فئات"
+          },
+          "courses": {
+            "label": "الدورات",
+            "value": "{count} دورات"
+          },
+          "certificates": {
+            "label": "الشهادات المحققة",
+            "value": "{count} شهادات"
+          }
+        },
+        "featuredTitle": "فئات مميزة",
+        "featuredDescription": "عد إلى هذه المساحات المنسقة لمتابعة التعلم.",
+        "featuredEmpty": "ستتوفر فئات جديدة قريبًا."
+      },
+      "category": {
+        "courses": "{count} دورات",
+        "viewCourses": "عرض الدورات",
+        "viewCoursesAria": "عرض الدورات الخاصة بـ {title}"
+      },
+      "course": {
+        "progress": "{value}% مكتمل",
+        "openAria": "فتح الدورة {title}",
+        "continue": "متابعة",
+        "startAria": "بدء أو متابعة دورة {title}",
+        "durationMinutes": "{value} دقيقة",
+        "durationHours": "{value} ساعة",
+        "durationMixed": "{hours} ساعة {minutes} دقيقة",
+        "completedLessons": "{count}/{total} دروس مكتملة",
+        "lessonList": "دروس الدورة",
+        "lessonDuration": "{value} دقيقة",
+        "lessonProgressLabel": "تقدم الدرس",
+        "quizTitle": "الاختبار النهائي",
+        "quizDescription": "أجب عن عشرة أسئلة لتأكيد معرفتك والحصول على شهادة الدورة.",
+        "startQuiz": "بدء الاختبار",
+        "viewCertificate": "عرض الشهادة",
+        "ctaStart": "بدء الدورة",
+        "ctaContinue": "متابعة الدورة",
+        "ctaQuiz": "الانتقال إلى الاختبار"
+      },
+      "lesson": {
+        "position": "الدرس {index} من {total}",
+        "duration": "{value} دقيقة",
+        "progressLabel": "تقدم الدرس",
+        "completed": "تم إكمال الدرس",
+        "markDone": "وضع علامة مكتمل للدرس",
+        "exercises": "تمارين تطبيقية",
+        "previous": "الدرس السابق",
+        "next": "الدرس التالي",
+        "goToQuiz": "الانتقال إلى الاختبار النهائي"
+      },
+      "exercise": {
+        "submit": "تحقق من الإجابة",
+        "correct": "عمل رائع!",
+        "incorrect": "حاول مرة أخرى في المحاولة القادمة.",
+        "true": "صحيح",
+        "false": "خطأ"
+      },
+      "quiz": {
+        "title": "الاختبار النهائي — {course}",
+        "subtitle": "أجب عن كل سؤال. احصل على 70% على الأقل لفتح شهادتك.",
+        "progress": "السؤال {index} من {total}",
+        "previous": "السابق",
+        "next": "التالي",
+        "submit": "إرسال الإجابات",
+        "passed": "أحسنت! حصلت على {score} من {total}.",
+        "failed": "واصل المحاولة — حصلت على {score} من {total}.",
+        "threshold": "درجة النجاح: {value}%",
+        "certificateReady": "نجحت! أنشئ شهادتك.",
+        "certificateDescription": "أضف اسمك ونزّل ملف PDF قابل للمشاركة صادرًا عن بيئة العرض هذه.",
+        "nameLabel": "اسمك",
+        "namePlaceholder": "Alex Johnson",
+        "generateCertificate": "إنشاء الشهادة",
+        "certificateReadyButton": "تم إنشاء الشهادة",
+        "viewCertificate": "فتح الشهادة",
+        "retryTitle": "هل تحتاج إلى محاولة أخرى؟",
+        "retryDescription": "راجع الدروس وأعد الاختبار عندما تكون جاهزًا.",
+        "retryButton": "إعادة الاختبار",
+        "breadcrumb": "الاختبار النهائي"
+      },
+      "certificate": {
+        "breadcrumb": "الشهادة",
+        "title": "شهادة إتمام",
+        "subtitle": "يحتفل هذا المستند بإتمام دورة تجريبية بنجاح.",
+        "presentedTo": "مُقدمة إلى",
+        "completed": "لإكمال دورة {course}.",
+        "score": "النتيجة النهائية: {value}%",
+        "date": "صادرة في {value}",
+        "signature": "معتمد من",
+        "signatureName": "Nuxt Academy",
+        "organization": "BroWorld Education",
+        "organizationTagline": "نبتكر تجارب التعلم",
+        "download": "تنزيل PDF"
+      },
+      "breadcrumb": {
+        "home": "التعليم"
+      },
+      "levels": {
+        "beginner": "مبتدئ",
+        "intermediate": "متوسط",
+        "advanced": "متقدم"
+      }
+    },
+    "quiz": {
+      "title": "Quiz experiences",
+      "subtitle": "Prototype adaptive quizzes that energise your community with instant feedback and storytelling.",
+      "overview": {
+        "title": "Quiz performance snapshot",
+        "description": "Monitor participation, completion, and satisfaction to keep every cohort motivated.",
+        "trendLabel": "{change} compared to last week",
+        "cards": {
+          "participants": {
+            "title": "Active participants",
+            "value": "1,240 members",
+            "trend": "+18%",
+            "caption": "Joined at least one quiz session this week."
+          },
+          "completion": {
+            "title": "Average completion",
+            "value": "87%",
+            "trend": "+6%",
+            "caption": "Finished all rounds with a passing score."
+          },
+          "satisfaction": {
+            "title": "Session rating",
+            "value": "4.6 / 5",
+            "trend": "+0.4",
+            "caption": "Based on post-quiz feedback surveys."
+          }
+        }
+      },
+      "featuresTitle": "Design quizzes with momentum",
+      "features": {
+        "authoring": {
+          "title": "Author in minutes",
+          "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
+          "points": {
+            "0": "Role-based templates",
+            "1": "Inline feedback generator",
+            "2": "CSV & Markdown import"
+          }
+        },
+        "engagement": {
+          "title": "Fuel real-time engagement",
+          "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
+          "points": {
+            "0": "Customisable badges",
+            "1": "Automated multi-channel nudges",
+            "2": "Synchronous live sessions"
+          }
+        },
+        "analytics": {
+          "title": "Measure what matters",
+          "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
+          "points": {
+            "0": "Ready-to-use dashboards",
+            "1": "CSV/BigQuery export",
+            "2": "Progress deviation alerts"
+          }
+        }
+      },
+      "process": {
+        "title": "Ship the perfect challenge",
+        "stepLabel": "Step {number}",
+        "steps": {
+          "plan": {
+            "title": "Plan your storyline",
+            "description": "Align on themes, desired outcomes, and player journeys before drafting questions."
+          },
+          "launch": {
+            "title": "Launch the experience",
+            "description": "Stream the quiz with live moderation, automated scoring, and instant feedback loops."
+          },
+          "iterate": {
+            "title": "Iterate with insights",
+            "description": "Analyse results, remix question banks, and refresh the experience for the next cohort."
+          }
+        }
+      },
+      "questionBanks": {
+        "title": "Curated question banks",
+        "description": "Mix ready-to-run categories with your own questions to keep every round feeling fresh.",
+        "countLabel": "Questions available",
+        "focusLabel": "Primary focus",
+        "banks": {
+          "general": {
+            "title": "General knowledge vault",
+            "description": "A rotating mix of culture, science, and newsworthy trivia for broad audiences.",
+            "count": "180 curated questions",
+            "focus": "Culture, science, trending topics",
+            "difficulty": "Mixed"
+          },
+          "product": {
+            "title": "Product mastery set",
+            "description": "Train advocates and sales teams on features, roadmaps, and objection handling.",
+            "count": "120 scenario prompts",
+            "focus": "Launch strategy, value props, storytelling",
+            "difficulty": "Intermediate"
+          },
+          "community": {
+            "title": "Community culture pack",
+            "description": "Celebrate inside jokes, rituals, and lore from your most dedicated members.",
+            "count": "95 custom questions",
+            "focus": "Member spotlights, events, shared history",
+            "difficulty": "Casual"
+          }
+        }
+      },
+      "leaderboard": {
+        "title": "Community leaderboard",
+        "description": "Celebrate champions and spark friendly rivalries with transparent scoring.",
+        "updateLabel": "Auto-updated every hour",
+        "columns": {
+          "rank": "Rank",
+          "player": "Participant",
+          "score": "Score",
+          "completed": "Quizzes completed"
+        },
+        "rows": {
+          "0": {
+            "rank": "1",
+            "player": "Maya Chen",
+            "score": "982 pts",
+            "completed": "12 / 12"
+          },
+          "1": {
+            "rank": "2",
+            "player": "Luis Fernández",
+            "score": "941 pts",
+            "completed": "11 / 12"
+          },
+          "2": {
+            "rank": "3",
+            "player": "Sana Kapoor",
+            "score": "905 pts",
+            "completed": "10 / 12"
+          },
+          "3": {
+            "rank": "4",
+            "player": "Jonas Richter",
+            "score": "876 pts",
+            "completed": "10 / 12"
+          }
+        }
+      },
+      "cta": {
+        "title": "Launch your next quiz series",
+        "description": "Partner with us to craft immersive assessments for teams, classrooms, and fandoms.",
+        "button": "Talk with our team",
+        "buttonAria": "Open the contact page"
+      }
+    },
+    "performance": {
+      "badge": "تقرير الأداء",
+      "title": "لقطة لجودة التجربة",
+      "subtitle": "نظرة مركّزة على أداء الخلاصة الرئيسية على أجهزة حقيقية.",
+      "updated": "أُجري التدقيق في 8 أبريل 2025",
+      "hero": {
+        "score": "74",
+        "maxScore": "100",
+        "scoreLabel": "النتيجة الإجمالية"
+      },
+      "metrics": {
+        "title": "مؤشرات التجربة الأساسية",
+        "subtitle": "استنادًا إلى تشغيل Lighthouse للهاتف المحمول (Moto G Power محاكى).",
+        "status": {
+          "good": "على المسار",
+          "average": "قيد المراقبة",
+          "poor": "بحاجة إلى معالجة"
+        },
+        "items": {
+          "fcp": {
+            "label": "First Contentful Paint",
+            "value": "0.8",
+            "unit": "s",
+            "description": "تظهر أولى البكسلات المهمة في أقل من ثانية.",
+            "trend": "مستقرة خلال آخر 7 إصدارات.",
+            "status": "good"
+          },
+          "lcp": {
+            "label": "Largest Contentful Paint",
+            "value": "2.5",
+            "unit": "s",
+            "description": "يُحمَّل الوسيط الرئيسي بعد الهيكل العظمي لكنه يبقى ضمن حدود Web Vitals.",
+            "trend": "حسّن عبر تحميل مسبق لعنصر الصورة المميزة.",
+            "status": "average"
+          },
+          "tbt": {
+            "label": "Total Blocking Time",
+            "value": "570",
+            "unit": "ms",
+            "description": "المهام الطويلة أثناء الإماهة تشغل الخيط.",
+            "trend": "ناتج عن التحميل المبكر للأدوات الاختيارية.",
+            "status": "poor"
+          },
+          "speedIndex": {
+            "label": "Speed Index",
+            "value": "2.4",
+            "unit": "s",
+            "description": "اكتمال المشهد مقبول لكنه قابل للتحسين.",
+            "trend": "يتحسّن كثيرًا مع إعطاء أولوية لتسليم CSS.",
+            "status": "average"
+          },
+          "cls": {
+            "label": "Cumulative Layout Shift",
+            "value": "0.368",
+            "description": "تتحرك البطاقات ومسار القصص عند وصول محتوى متأخر.",
+            "trend": "ثبّت الوسائط بنسب أبعاد ثابتة لاستقرار الخلاصة.",
+            "status": "poor"
+          }
+        }
+      },
+      "opportunities": {
+        "title": "فرص عالية التأثير",
+        "subtitle": "إصلاحات ذات أولوية لمعالجة المؤشرات الحمراء أولًا.",
+        "items": {
+          "layout": {
+            "title": "تثبيت أماكن الوسائط والأدوات",
+            "description": "احجز مساحة لللافتات والشرائح والإعلانات الديناميكية.",
+            "impact": "تأثير عالٍ",
+            "action": "اعتمد نسب أبعاد ذاتية وارتفاعات هيكلية لعناصر الخلاصة."
+          },
+          "script": {
+            "title": "تأجيل السكربتات غير الحرجة",
+            "description": "قسّم التحليلات وردود الفعل ولوحة الرسائل عن الحزمة الأساسية.",
+            "impact": "تأثير عالٍ",
+            "action": "قم بتهيئة الأدوات الاختيارية عند التفاعل باستخدام ‎`defineAsyncComponent`‎."
+          },
+          "assets": {
+            "title": "تحسين صور البطل",
+            "description": "اضغط الكولاج الرئيسي وقدم مصادر AVIF بشكل افتراضي.",
+            "impact": "تأثير متوسط",
+            "action": "قم بتحميل أول صورة في الخلاصة مسبقًا وحمّل البقية بشكل متدرج."
+          },
+          "monitoring": {
+            "title": "توسيع تغطية Core Web Vitals",
+            "description": "قسّم المقاييس حسب المسار وفئة الجهاز.",
+            "impact": "أساسي",
+            "action": "أرسل إشارات ‎`web-vitals`‎ إلى بحيرة التحليلات لتتبع التراجعات."
+          }
+        }
+      },
+      "timeline": {
+        "title": "جدول التحسين",
+        "subtitle": "نشر واقعي لتسليم الإصلاحات والتحقق منها.",
+        "items": {
+          "week1": {
+            "date": "الأسبوع 1",
+            "title": "القضاء على تغيّر التخطيط",
+            "description": "راجع كل بطاقات الخلاصة والقصص لضمان أبعاد محددة مسبقًا.",
+            "actions": [
+              "أضف نسب أبعاد إلى صور القصص ومصغرات المنشورات.",
+              "ثبّت حاويات الإعلانات خلف عناصر نائب هيكلية."
+            ]
+          },
+          "week2": {
+            "date": "الأسبوع 2",
+            "title": "تفكيك المهام الطويلة",
+            "description": "انقل المنطق الاختياري إلى ردود استدعاء أثناء الخمول وحدود غير متزامنة.",
+            "actions": [
+              "قسّم درج المراسلة وصينية التفاعلات.",
+              "استخدم ‎`requestIdleCallback`‎ قبل تشغيل حزم التحليلات."
+            ]
+          },
+          "week3": {
+            "date": "الأسبوع 3",
+            "title": "التحقق من المكاسب عبر RUM",
+            "description": "أطلق تقارير Core Web Vitals على مجموعات الإنتاج.",
+            "actions": [
+              "أرسل المقاييس إلى بحيرة المراقبة مع بيانات البناء الوصفية.",
+              "أطلق تنبيهات عند تراجع LCP/TBT بأكثر من ‎10%‎ أسبوعيًا."
+            ]
+          }
+        }
       }
     },
     "crm": {
@@ -1359,38 +2337,38 @@
         "title": "متعاونون مميزون",
         "subtitle": "شركاء مختارون تتعاون معهم بكثرة هذا الربع."
       },
-      "sections": {
-        "active": "نشط الآن",
-        "suggestions": "علاقات مقترحة"
-      },
       "filters": {
         "all": "الكل",
         "design": "تصميم",
+        "product": "منتج",
         "engineering": "هندسة",
-        "marketing": "تسويق",
-        "product": "منتج"
-      },
-      "meta": {
-        "lastActive": "آخر نشاط · {time}"
+        "marketing": "تسويق"
       },
       "stats": {
         "totalFriends": "العلاقات",
         "mutual": "علاقات مشتركة",
         "online": "متصل الآن"
       },
+      "meta": {
+        "lastActive": "آخر نشاط · {time}"
+      },
+      "sections": {
+        "suggestions": "علاقات مقترحة",
+        "active": "نشط الآن"
+      },
       "status": {
         "online": "متصل",
-        "offline": "غير متصل",
+        "focus": "تركيز",
         "busy": "مشغول",
-        "focus": "تركيز"
+        "offline": "غير متصل"
       },
       "feedback": {
-        "connect": "سنلاحظ رغبتك في التواصل.",
-        "connectWith": "سنبلغ {name} بأنك تود التواصل.",
         "message": "جاري كتابة تحية سريعة…",
         "messageWith": "جاري كتابة تحية سريعة لـ {name}…",
         "schedule": "نقوم بفتح تدفق الجدولة…",
-        "scheduleWith": "نقوم بفتح تدفق الجدولة لـ {name}…"
+        "scheduleWith": "نقوم بفتح تدفق الجدولة لـ {name}…",
+        "connect": "سنلاحظ رغبتك في التواصل.",
+        "connectWith": "سنبلغ {name} بأنك تود التواصل."
       },
       "empty": "لا توجد ملفات مطابقة لهذا الفلتر بعد."
     },
@@ -1398,8 +2376,18 @@
       "title": "مكتبة الصور",
       "subtitle": "نسّق أبرز اللقطات من الإطلاقات، ورحلات البحث، وما وراء الكواليس.",
       "actions": {
-        "createAlbum": "إنشاء ألبوم",
-        "upload": "رفع صور"
+        "upload": "رفع صور",
+        "createAlbum": "إنشاء ألبوم"
+      },
+      "sections": {
+        "pinned": "مجموعات مثبتة",
+        "albums": "مستكشف الألبومات",
+        "timeline": "ملاحظات إبداعية",
+        "notesDescription": "تحديثات من المتعاونين أثناء إعداد القصص البصرية."
+      },
+      "meta": {
+        "updated": "تم التحديث {date}",
+        "photoCount": "صور"
       },
       "filters": {
         "recent": "الأحدث",
@@ -1407,15 +2395,8 @@
         "studio": "الاستوديو",
         "travel": "الرحلات"
       },
-      "sections": {
-        "albums": "مستكشف الألبومات",
-        "pinned": "مجموعات مثبتة",
-        "timeline": "ملاحظات إبداعية",
-        "notesDescription": "تحديثات من المتعاونين أثناء إعداد القصص البصرية."
-      },
-      "meta": {
-        "photoCount": "صور",
-        "updated": "تم التحديث {date}"
+      "cta": {
+        "share": "شارك هذه المجموعات المنسقة مع فريقك أو صدّرها إلى عروضك التقديمية."
       },
       "stats": {
         "albums": "ألبومات منسقة",
@@ -1424,9 +2405,6 @@
       "timeline": {
         "title": "محطات القصة",
         "description": "لمحات عن الإطلاقات والإقامات والملتقيات التي شكّلت عامك."
-      },
-      "cta": {
-        "share": "شارك هذه المجموعات المنسقة مع فريقك أو صدّرها إلى عروضك التقديمية."
       },
       "feedback": {
         "upload": "جارٍ فتح منتقي الوسائط…",
@@ -1754,949 +2732,6 @@
           "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
         }
       }
-    },
-    "createWorld": {
-      "title": "Create a new world",
-      "subtitle": "Assemble the foundation, governance, and live experiences your community needs—all in one guided workspace.",
-      "form": {
-        "title": "World blueprint",
-        "subtitle": "Define the identity, launch plan, and access controls before inviting your first residents.",
-        "actions": {
-          "preview": "Preview",
-          "previewAria": "Preview the world configuration",
-          "publish": "Publish world",
-          "publishAria": "Publish the world configuration"
-        },
-        "basicInfo": {
-          "title": "Core details",
-          "subtitle": "Give your world a clear identity so members instantly understand where they are."
-        },
-        "fields": {
-          "name": "World name",
-          "namePlaceholder": "E.g. Aurora Station",
-          "slug": "Public URL",
-          "slugPlaceholder": "aurora-station",
-          "description": "Description",
-          "descriptionPlaceholder": "Describe the story, purpose, and experiences players can expect.",
-          "visibility": "Visibility",
-          "visibilityOptions": {
-            "public": "Public",
-            "private": "Private"
-          },
-          "visibilityHint": "Choose whether your world is listed in the public explorer or invitation only.",
-          "theme": "Theme preset",
-          "region": "Primary region",
-          "regionHint": "Helps us route latency-optimised infrastructure for your players.",
-          "launchDate": "Launch date",
-          "launchDateHint": "Share your planned go-live to coordinate testing windows and announcements.",
-          "tags": "Tags",
-          "tagsPlaceholder": "Add descriptive keywords",
-          "tagsHint": "Use up to five tags to help members find the right activities.",
-          "guidelines": "Community guidelines",
-          "guidelinesPlaceholder": "Outline tone, expectations, and escalation policies for everyone who joins."
-        },
-        "themeOptions": {
-          "aurora": "Aurora",
-          "midnight": "Midnight",
-          "sunrise": "Sunrise",
-          "custom": "Custom theme"
-        },
-        "regionOptions": {
-          "global": "Global",
-          "americas": "Americas",
-          "emea": "EMEA",
-          "apac": "APAC"
-        },
-        "tagSuggestions": {
-          "coOp": "Co-op missions",
-          "roleplay": "Roleplay",
-          "competitive": "Competitive league",
-          "casual": "Casual hangout",
-          "modded": "Modded adventures"
-        },
-        "advanced": {
-          "title": "Advanced controls",
-          "subtitle": "Fine-tune monetisation, integrations, and access policies.",
-          "monetization": "Enable monetisation systems",
-          "integrations": "Activate partner integrations",
-          "verification": "Require account verification",
-          "guests": "Allow guest spectators",
-          "guestsHint": "Guests can browse without creating an account but cannot interact."
-        }
-      },
-      "plugins": {
-        "title": "Curate your plugin stack",
-        "subtitle": "Mix social, economic, and safety plugins to craft the experience your community deserves.",
-        "categories": {
-          "community": {
-            "title": "Community presence",
-            "description": "Welcome members, broadcast announcements, and host social spaces.",
-            "plugins": {
-              "lobby": {
-                "name": "Interactive lobby",
-                "tag": "Core",
-                "description": "Guide newcomers with custom zones, featured posts, and smart onboarding.",
-                "points": [
-                  "Build modular landing rooms with drag-and-drop widgets.",
-                  "Highlight trending events, moderators, and creator spotlights.",
-                  "Schedule dynamic greetings that adapt to time zones."
-                ]
-              },
-              "events": {
-                "name": "Event orchestration",
-                "tag": "Live",
-                "description": "Plan tournaments, premieres, and collaborative quests with automated reminders.",
-                "points": [
-                  "Coordinate multi-stage brackets and RSVPs in one dashboard.",
-                  "Sync calendars, ticketing, and broadcast overlays automatically.",
-                  "Unlock post-event recaps with stats, clips, and rewards."
-                ]
-              },
-              "streams": {
-                "name": "Creator streams",
-                "tag": "Engage",
-                "description": "Embed live streams, watch parties, and backstage chats without leaving your world.",
-                "points": [
-                  "Support multi-platform streaming with adaptive quality.",
-                  "Unlock co-streaming rooms for community commentators.",
-                  "Capture highlights and publish recap reels instantly."
-                ]
-              }
-            }
-          },
-          "economy": {
-            "title": "Economy & progression",
-            "description": "Design progression loops, trading systems, and reward paths tailored to your world.",
-            "plugins": {
-              "market": {
-                "name": "Marketplace hub",
-                "tag": "Commerce",
-                "description": "Launch safe trading for cosmetics, crafting materials, and time-limited drops.",
-                "points": [
-                  "List items with rarity, seasonality, and bundle options.",
-                  "Protect transactions with escrow, tax, and fraud tooling.",
-                  "Publish merchandising campaigns with dynamic pricing rules."
-                ]
-              },
-              "crafting": {
-                "name": "Crafting simulator",
-                "tag": "Systems",
-                "description": "Author recipes, resource nodes, and crafting stations with live balancing.",
-                "points": [
-                  "Define ingredient trees and skill requirements visually.",
-                  "Simulate yield, cooldowns, and fail states before release.",
-                  "Link crafting outputs to quests, vendors, or marketplace listings."
-                ]
-              },
-              "rewards": {
-                "name": "Rewards engine",
-                "tag": "Loyalty",
-                "description": "Reward cohorts with quests, achievements, and season passes.",
-                "points": [
-                  "Segment milestones by player type, region, or platform.",
-                  "Automate reward delivery with fraud-safe claims.",
-                  "Track redemption analytics and churn risk in real time."
-                ]
-              }
-            }
-          },
-          "governance": {
-            "title": "Governance & safety",
-            "description": "Empower trusted teams with moderation, safety, and insight workflows.",
-            "plugins": {
-              "moderation": {
-                "name": "Moderation console",
-                "tag": "Trust",
-                "description": "Resolve reports, escalations, and appeals with collaborative tooling.",
-                "points": [
-                  "Route cases automatically by severity and language.",
-                  "Surface evidence timelines with chat, clips, and audit logs.",
-                  "Assign playbooks, sanctions, and cooldown windows in context."
-                ]
-              },
-              "safety": {
-                "name": "Safety automation",
-                "tag": "AI",
-                "description": "Detect toxicity, spam, and suspicious behaviour before it spreads.",
-                "points": [
-                  "Deploy ML classifiers tuned for your community norms.",
-                  "Set up adaptive rate limits and content filters.",
-                  "Notify guardians and caretakers with role-based alerts."
-                ]
-              },
-              "analytics": {
-                "name": "Governance analytics",
-                "tag": "Insights",
-                "description": "Measure health, retention, and policy impact across every world surface.",
-                "points": [
-                  "Monitor safety KPIs with real-time dashboards.",
-                  "Correlate moderation actions with engagement outcomes.",
-                  "Export compliance-ready reports for stakeholders."
-                ]
-              }
-            }
-          }
-        }
-      },
-      "sidebar": {
-        "plugins": {
-          "selectedTitle": "Selected plugins",
-          "emptyTitle": "No plugins selected yet",
-          "selectedDescription": "The following plugins will be included in your provisioning request:",
-          "emptyDescription": "Choose plugins to preview the capabilities that will be provisioned.",
-          "emptyHint": "Toggle plugins in the list to build your stack."
-        }
-      },
-      "workflow": {
-        "title": "Launch with confidence",
-        "subtitle": "Follow a proven cadence from vision to expansion.",
-        "stepLabel": "Step {number}",
-        "steps": {
-          "vision": {
-            "title": "Shape your vision",
-            "description": "Align on pillars, tone, and success metrics with stakeholders and creators."
-          },
-          "launch": {
-            "title": "Launch with momentum",
-            "description": "Coordinate marketing beats, early access waves, and go-live checklists."
-          },
-          "expand": {
-            "title": "Expand sustainably",
-            "description": "Iterate on feedback, scale to new regions, and grow ambassador programmes."
-          }
-        }
-      },
-      "cta": {
-        "title": "Need a hand activating your world?",
-        "description": "Our team can help you architect governance models, migration plans, and live operations tailored to your audience.",
-        "button": "Talk with our team",
-        "buttonAria": "Open the contact page"
-      }
-    },
-    "job": {
-      "title": "Jobs",
-      "subtitle": "Centralise every step of your recruiting funnel to move from sourcing to signing with clarity.",
-      "featuresTitle": "Build a confident hiring pipeline",
-      "features": {
-        "matching": {
-          "title": "Spot the right talent faster",
-          "description": "Aggregate sourcing activity and prioritise applicants automatically.",
-          "points": [
-            "Sync job boards, referrals, and internal mobility into one view.",
-            "Score applications with configurable criteria and bias safeguards.",
-            "Highlight talent pools ready for nurture or re-engagement."
-          ]
-        },
-        "automation": {
-          "title": "Automate team coordination",
-          "description": "Give recruiters, interviewers, and hiring managers a shared command centre.",
-          "points": [
-            "Trigger interview kits and reminders in the right timezone.",
-            "Share structured feedback templates that surface signal over noise.",
-            "Notify stakeholders the moment a candidate advances or stalls."
-          ]
-        },
-        "insights": {
-          "title": "Measure hiring impact",
-          "description": "Understand conversion, velocity, and quality without exporting spreadsheets.",
-          "points": [
-            "Track time-to-fill, diversity ratios, and offer acceptance in real time.",
-            "Visualise bottlenecks across regions or job families instantly.",
-            "Share live dashboards with leadership and partners securely."
-          ]
-        }
-      },
-      "workflowTitle": "Your hiring rhythm, visualised",
-      "workflow": {
-        "steps": {
-          "publish": {
-            "title": "Publish with confidence",
-            "description": "Launch branded job pages and syndicated listings with reusable templates."
-          },
-          "review": {
-            "title": "Review together",
-            "description": "Collaborate on feedback, calibrate scorecards, and keep the loop accountable."
-          },
-          "hire": {
-            "title": "Hire and onboard",
-            "description": "Secure approvals, generate offers, and pass context to onboarding seamlessly."
-          }
-        }
-      },
-      "stepLabel": "Step {number}",
-      "cta": {
-        "title": "Design a hiring experience candidates love",
-        "description": "Let our team help you tailor BroWorld to your recruitment stack, processes, and compliance needs.",
-        "button": "Talk to us",
-        "buttonAria": "Open the contact page"
-      },
-      "openings": {
-        "title": "Current openings",
-        "subtitle": "Explore the roles we're actively hiring for and get a feel for the work you'll lead from day one.",
-        "updated": "Updated weekly",
-        "updatedLabel": "Job listings refresh cadence",
-        "items": {
-          "productDesigner": {
-            "title": "Senior Product Designer",
-            "department": "Product Design",
-            "location": "Paris, France (Hybrid)",
-            "type": "Full-time",
-            "salary": "€58k - €72k · 0.05% equity",
-            "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
-            "apply": {
-              "label": "Apply now",
-              "aria": "Apply to the Senior Product Designer role",
-              "hint": "Portfolio link required"
-            }
-          },
-          "aiRecruiter": {
-            "title": "AI Recruiter Strategist",
-            "department": "Product & AI",
-            "location": "Remote - EMEA",
-            "type": "Full-time",
-            "salary": "€70k - €90k · bonus eligible",
-            "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
-            "apply": {
-              "label": "Apply now",
-              "aria": "Apply to the AI Recruiter Strategist role",
-              "hint": "Experience with LLM workflows"
-            }
-          },
-          "salesLead": {
-            "title": "Enterprise Sales Lead",
-            "department": "Revenue",
-            "location": "Lyon, France",
-            "type": "Full-time",
-            "salary": "€65k base · 50% variable",
-            "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
-            "apply": {
-              "label": "Apply now",
-              "aria": "Apply to the Enterprise Sales Lead role",
-              "hint": "French & English proficiency"
-            }
-          },
-          "customerSuccess": {
-            "title": "Customer Success Partner",
-            "department": "Customer Success",
-            "location": "Marseille, France",
-            "type": "Full-time",
-            "salary": "€45k - €55k",
-            "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
-            "apply": {
-              "label": "Apply now",
-              "aria": "Apply to the Customer Success Partner role",
-              "hint": "Experience supporting HRIS/ATS rollouts"
-            }
-          }
-        }
-      },
-      "application": {
-        "title": "Submit your application",
-        "subtitle": "Share a few details and our talent team will reach out with next steps.",
-        "highlights": [
-          "A tailored walkthrough of BroWorld based on your hiring maturity.",
-          "Introductions to the team members you'll collaborate with.",
-          "A response within two business days—even if we are not moving forward yet."
-        ],
-        "form": {
-          "nameLabel": "Full name",
-          "namePlaceholder": "Elisa Dupont",
-          "emailLabel": "Work email",
-          "emailPlaceholder": "elisa.dupont(at)company.com",
-          "roleLabel": "Role you're interested in",
-          "rolePlaceholder": "e.g. Product Designer",
-          "messageLabel": "Tell us about your experience",
-          "messagePlaceholder": "Share recent projects, achievements, or what excites you about BroWorld.",
-          "consentLabel": "I agree to be contacted about current and future opportunities at BroWorld.",
-          "submit": "Send application",
-          "success": "Thank you! Our talent team will review your profile and be in touch shortly.",
-          "rules": {
-            "required": "This field is required.",
-            "email": "Enter a valid email address.",
-            "consent": "Please confirm we can contact you."
-          }
-        }
-      }
-    },
-    "game": {
-      "title": "ساحة الاختبارات",
-      "subtitle": "صمّم اختبارات متعددة المراحل مع فئات ومستويات وتصنيف مباشر.",
-      "menu": {
-        "player": "اللاعب جاهز!",
-        "guest": "ضيف",
-        "guestName": "ضيف",
-        "categoryPlaceholder": "اختر فئة",
-        "levelPlaceholder": "اختر مستوى",
-        "timer": "الوقت",
-        "score": "النتيجة",
-        "progress": "التقدم",
-        "pendingScore": "قيد الانتظار",
-        "helper": "اختر فئة ومستوى لبدء الاختبار. سجّل الدخول لحفظ التقدم."
-      },
-      "leaderboard": {
-        "title": "لوحة الصدارة",
-        "loading": "جارٍ التحميل…",
-        "empty": "يتم تحديث لوحة الصدارة بعد المحاولات الأولى."
-      },
-      "categories": {
-        "title": "اختر فئة",
-        "subtitle": "استكشف بنوك أسئلة قصصية من عالم Bro World.",
-        "reload": "إعادة التحميل",
-        "empty": "لا توجد فئات متاحة حالياً.",
-        "levels": "{count} مستويات",
-        "questions": "{count} أسئلة",
-        "players": "{count} لاعبين"
-      },
-      "levels": {
-        "title": "اختر مستوى",
-        "subtitle": "كل مستوى يزيد التحدي ويُسرّع المؤقت.",
-        "locked": "اختر فئة أولاً لعرض مستوياتها.",
-        "empty": "لا تتوفر مستويات لهذه الفئة.",
-        "questions": "{count} أسئلة",
-        "time": "{minutes} دقيقة"
-      },
-      "questions": {
-        "title": "السؤال {index} من {total}",
-        "progress": "{answered}/{total} تمت الإجابة",
-        "timer": "الوقت المنقضي",
-        "empty": "اختر مستوى لبدء الاختبار.",
-        "warning": "أجب على جميع الأسئلة قبل الإرسال.",
-        "checking": "جارٍ التحقق من الإجابات…",
-        "actions": {
-          "previous": "السابق",
-          "next": "التالي",
-          "submit": "إرسال الإجابات"
-        }
-      },
-      "results": {
-        "title": "النتائج",
-        "score": "النتيجة",
-        "summary": "{correct}/{total} إجابات صحيحة",
-        "time": "الوقت المستغرق",
-        "breakdown": {
-          "correct": "صحيح",
-          "incorrect": "خاطئ",
-          "yourAnswer": "إجابتك",
-          "correctAnswer": "الإجابة الصحيحة",
-          "noAnswer": "لا توجد إجابة"
-        }
-      },
-      "auth": {
-        "title": "سجّل الدخول لحفظ تقدمك",
-        "subtitle": "سجّل الدخول أو أنشئ حساباً للظهور في لوحة الصدارة."
-      },
-      "errors": {
-        "categories": "تعذر تحميل فئات الاختبار.",
-        "levels": "تعذر تحميل المستويات لهذه الفئة.",
-        "questions": "تعذر تحميل أسئلة الاختبار.",
-        "validation": "تعذر التحقق من إجاباتك. حاول مرة أخرى."
-      }
-    },
-    "ecommerce": {
-      "title": "E-commerce",
-      "subtitle": "Craft immersive storefronts, orchestrate fulfilment, and personalise campaigns across every channel.",
-      "featuresTitle": "Modern retail, one toolkit",
-      "features": {
-        "catalog": {
-          "title": "Unify your catalogue",
-          "description": "Manage product variants, rich storytelling, and merchandising in one workspace.",
-          "points": [
-            "Support digital, physical, and subscription products side by side.",
-            "Optimise imagery, copy, and translations with collaborative reviews.",
-            "Launch curated collections with scheduling and inventory safeguards."
-          ]
-        },
-        "checkout": {
-          "title": "Delight at checkout",
-          "description": "Reduce friction with fast, accessible, and trusted purchase flows.",
-          "points": [
-            "Offer local payments, wallets, and instalments without custom code.",
-            "Embed fraud checks, taxes, and duties that scale globally.",
-            "Give support teams live context to resolve orders instantly."
-          ]
-        },
-        "marketing": {
-          "title": "Personalise every campaign",
-          "description": "Coordinate lifecycle messaging, loyalty, and analytics together.",
-          "points": [
-            "Segment audiences with zero-party and behavioural data respectfully.",
-            "Trigger automations tied to launches, restocks, and VIP moments.",
-            "Attribute revenue accurately with multi-touch insights."
-          ]
-        }
-      },
-      "workflowTitle": "From concept to scale",
-      "workflow": {
-        "steps": {
-          "launch": {
-            "title": "Launch",
-            "description": "Prototype storefronts, test merchandising, and go live confidently."
-          },
-          "optimize": {
-            "title": "Optimise",
-            "description": "Iterate on conversion, retention, and operations with actionable insights."
-          },
-          "scale": {
-            "title": "Scale",
-            "description": "Expand to new regions, channels, and partnerships with built-in governance."
-          }
-        }
-      },
-      "stepLabel": "Phase {number}",
-      "cta": {
-        "title": "Transform your retail roadmap",
-        "description": "Explore how BroWorld adapts to your commerce stack, fulfilment partners, and customer promises.",
-        "button": "Connect with sales",
-        "buttonAria": "Open the contact page"
-      }
-    },
-    "education": {
-      "title": "التعليم",
-      "subtitle": "مكّن المدرسين والمتعلمين والمسؤولين من تجارب تعاونية تعتمد على البيانات.",
-      "featuresTitle": "اصنع رحلات تعلم تبقى في الأذهان",
-      "features": {
-        "curriculum": {
-          "title": "صمم مناهج شاملة",
-          "description": "أنشئ الدورات ومسارات التعلم المصغر وبرامج الاعتماد بسهولة.",
-          "points": [
-            "أعد استخدام القوالب التي توازن بين التعلم المتزامن وغير المتزامن.",
-            "أدرج الوسائط المتعددة والتقييمات ومعايير الوصول بشكل افتراضي.",
-            "قم بترجمة المحتوى لدفعات عبر الحرم الجامعي أو المناطق."
-          ]
-        },
-        "collaboration": {
-          "title": "عزز التعاون",
-          "description": "صل المدرسين والموجهين والأقران داخل حرم رقمي آمن.",
-          "points": [
-            "نسّق الإرشاد، وساعات الاستشارة، ومنتديات الدفعات بسهولة.",
-            "قدّم حلقات تغذية راجعة فورية للواجبات والمشاريع.",
-            "احتفل بالتقدم باستخدام الشارات والأضواء المسلطة ومسارات الخريجين."
-          ]
-        },
-        "analytics": {
-          "title": "اتخذ قرارات مبنية على التحليلات",
-          "description": "أبرز رؤى تدعم الاستبقاء والرفاهية وأهداف الاعتماد.",
-          "points": [
-            "راقب إشارات التفاعل للتدخل قبل فقدان المتعلمين لاهتمامهم.",
-            "شارك لوحات متابعة البرامج مع الإدارة وجهات الاعتماد.",
-            "احمِ الخصوصية من خلال ضوابط وحوكمة شفافة."
-          ]
-        }
-      },
-      "workflowTitle": "أرشد كل دفعة",
-      "workflow": {
-        "steps": {
-          "design": {
-            "title": "التصميم",
-            "description": "خطّط لنتائج التعلم والمحتوى ولحظات التقييم بصورة تعاونية."
-          },
-          "deliver": {
-            "title": "التنفيذ",
-            "description": "قدّم جلسات مباشرة وعند الطلب، وتابع الحضور، وتكيف في الوقت الفعلي."
-          },
-          "reflect": {
-            "title": "التقييم",
-            "description": "راجع الأثر، واجمع الملاحظات، وطوّر الدفعة التالية."
-          }
-        }
-      },
-      "stepLabel": "المحطة {number}",
-      "cta": {
-        "title": "طوّر منظومتك التعليمية",
-        "description": "تعاون معنا لتحديث البرامج وخدمات الطلاب وتجارب الخريجين.",
-        "button": "احجز استشارة",
-        "buttonAria": "فتح صفحة الاتصال"
-      },
-      "catalog": {
-        "badge": "التعلم",
-        "title": "استكشف مسارات التعلم",
-        "subtitle": "تصفّح الفئات المنسقة، واتبع الدروس التفاعلية، واحصل على شهادة تجريبية عند اجتياز الاختبار النهائي."
-      },
-      "sidebar": {
-        "overviewTitle": "حافظ على زخم التعلم",
-        "overviewDescription": "تابع تقدمك، وعد إلى الفئات المفضلة لديك، وابق متحمسًا أثناء استكشاف مهارات جديدة.",
-        "stats": {
-          "categories": {
-            "label": "الفئات",
-            "value": "{count} فئات"
-          },
-          "courses": {
-            "label": "الدورات",
-            "value": "{count} دورات"
-          },
-          "certificates": {
-            "label": "الشهادات المحققة",
-            "value": "{count} شهادات"
-          }
-        },
-        "featuredTitle": "فئات مميزة",
-        "featuredDescription": "عد إلى هذه المساحات المنسقة لمتابعة التعلم.",
-        "featuredEmpty": "ستتوفر فئات جديدة قريبًا."
-      },
-      "category": {
-        "courses": "{count} دورات",
-        "viewCourses": "عرض الدورات",
-        "viewCoursesAria": "عرض الدورات الخاصة بـ {title}"
-      },
-      "course": {
-        "progress": "{value}% مكتمل",
-        "openAria": "فتح الدورة {title}",
-        "continue": "متابعة",
-        "startAria": "بدء أو متابعة دورة {title}",
-        "durationMinutes": "{value} دقيقة",
-        "durationHours": "{value} ساعة",
-        "durationMixed": "{hours} ساعة {minutes} دقيقة",
-        "completedLessons": "{count}/{total} دروس مكتملة",
-        "lessonList": "دروس الدورة",
-        "lessonDuration": "{value} دقيقة",
-        "lessonProgressLabel": "تقدم الدرس",
-        "quizTitle": "الاختبار النهائي",
-        "quizDescription": "أجب عن عشرة أسئلة لتأكيد معرفتك والحصول على شهادة الدورة.",
-        "startQuiz": "بدء الاختبار",
-        "viewCertificate": "عرض الشهادة",
-        "ctaStart": "بدء الدورة",
-        "ctaContinue": "متابعة الدورة",
-        "ctaQuiz": "الانتقال إلى الاختبار"
-      },
-      "lesson": {
-        "position": "الدرس {index} من {total}",
-        "duration": "{value} دقيقة",
-        "progressLabel": "تقدم الدرس",
-        "completed": "تم إكمال الدرس",
-        "markDone": "وضع علامة مكتمل للدرس",
-        "exercises": "تمارين تطبيقية",
-        "previous": "الدرس السابق",
-        "next": "الدرس التالي",
-        "goToQuiz": "الانتقال إلى الاختبار النهائي"
-      },
-      "exercise": {
-        "submit": "تحقق من الإجابة",
-        "correct": "عمل رائع!",
-        "incorrect": "حاول مرة أخرى في المحاولة القادمة.",
-        "true": "صحيح",
-        "false": "خطأ"
-      },
-      "quiz": {
-        "title": "الاختبار النهائي — {course}",
-        "subtitle": "أجب عن كل سؤال. احصل على 70% على الأقل لفتح شهادتك.",
-        "progress": "السؤال {index} من {total}",
-        "previous": "السابق",
-        "next": "التالي",
-        "submit": "إرسال الإجابات",
-        "passed": "أحسنت! حصلت على {score} من {total}.",
-        "failed": "واصل المحاولة — حصلت على {score} من {total}.",
-        "threshold": "درجة النجاح: {value}%",
-        "certificateReady": "نجحت! أنشئ شهادتك.",
-        "certificateDescription": "أضف اسمك ونزّل ملف PDF قابل للمشاركة صادرًا عن بيئة العرض هذه.",
-        "nameLabel": "اسمك",
-        "namePlaceholder": "Alex Johnson",
-        "generateCertificate": "إنشاء الشهادة",
-        "certificateReadyButton": "تم إنشاء الشهادة",
-        "viewCertificate": "فتح الشهادة",
-        "retryTitle": "هل تحتاج إلى محاولة أخرى؟",
-        "retryDescription": "راجع الدروس وأعد الاختبار عندما تكون جاهزًا.",
-        "retryButton": "إعادة الاختبار",
-        "breadcrumb": "الاختبار النهائي"
-      },
-      "certificate": {
-        "breadcrumb": "الشهادة",
-        "title": "شهادة إتمام",
-        "subtitle": "يحتفل هذا المستند بإتمام دورة تجريبية بنجاح.",
-        "presentedTo": "مُقدمة إلى",
-        "completed": "لإكمال دورة {course}.",
-        "score": "النتيجة النهائية: {value}%",
-        "date": "صادرة في {value}",
-        "signature": "معتمد من",
-        "signatureName": "Nuxt Academy",
-        "organization": "BroWorld Education",
-        "organizationTagline": "نبتكر تجارب التعلم",
-        "download": "تنزيل PDF"
-      },
-      "breadcrumb": {
-        "home": "التعليم"
-      },
-      "levels": {
-        "beginner": "مبتدئ",
-        "intermediate": "متوسط",
-        "advanced": "متقدم"
-      }
-    },
-    "quiz": {
-      "title": "Quiz experiences",
-      "subtitle": "Prototype adaptive quizzes that energise your community with instant feedback and storytelling.",
-      "overview": {
-        "title": "Quiz performance snapshot",
-        "description": "Monitor participation, completion, and satisfaction to keep every cohort motivated.",
-        "trendLabel": "{change} compared to last week",
-        "cards": {
-          "participants": {
-            "title": "Active participants",
-            "value": "1,240 members",
-            "trend": "+18%",
-            "caption": "Joined at least one quiz session this week."
-          },
-          "completion": {
-            "title": "Average completion",
-            "value": "87%",
-            "trend": "+6%",
-            "caption": "Finished all rounds with a passing score."
-          },
-          "satisfaction": {
-            "title": "Session rating",
-            "value": "4.6 / 5",
-            "trend": "+0.4",
-            "caption": "Based on post-quiz feedback surveys."
-          }
-        }
-      },
-      "featuresTitle": "Design quizzes with momentum",
-      "features": {
-        "authoring": {
-          "title": "Author in minutes",
-          "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
-          "points": [
-            "Convert brainstorm notes into question pools automatically.",
-            "Mix formats like multiple choice, polls, and lightning rounds.",
-            "Reuse timers, scoring weights, and bonus rules across series."
-          ]
-        },
-        "engagement": {
-          "title": "Fuel real-time engagement",
-          "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
-          "points": [
-            "Highlight hosts and co-creators with stage-ready layouts.",
-            "Trigger soundscapes and emotes when milestones are unlocked.",
-            "Support breakout teams, rematches, and collaborative lifelines."
-          ]
-        },
-        "analytics": {
-          "title": "Measure what matters",
-          "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
-          "points": [
-            "Compare performance by role, location, or membership tier.",
-            "Spot drop-off moments with second-by-second completion curves.",
-            "Export highlights, clips, and insights for stakeholders."
-          ]
-        }
-      },
-      "process": {
-        "title": "Ship the perfect challenge",
-        "stepLabel": "Step {number}",
-        "steps": {
-          "plan": {
-            "title": "Plan your storyline",
-            "description": "Align on themes, desired outcomes, and player journeys before drafting questions."
-          },
-          "launch": {
-            "title": "Launch the experience",
-            "description": "Stream the quiz with live moderation, automated scoring, and instant feedback loops."
-          },
-          "iterate": {
-            "title": "Iterate with insights",
-            "description": "Analyse results, remix question banks, and refresh the experience for the next cohort."
-          }
-        }
-      },
-      "questionBanks": {
-        "title": "Curated question banks",
-        "description": "Mix ready-to-run categories with your own questions to keep every round feeling fresh.",
-        "countLabel": "Questions available",
-        "focusLabel": "Primary focus",
-        "banks": {
-          "general": {
-            "title": "General knowledge vault",
-            "description": "A rotating mix of culture, science, and newsworthy trivia for broad audiences.",
-            "count": "180 curated questions",
-            "focus": "Culture, science, trending topics",
-            "difficulty": "Mixed"
-          },
-          "product": {
-            "title": "Product mastery set",
-            "description": "Train advocates and sales teams on features, roadmaps, and objection handling.",
-            "count": "120 scenario prompts",
-            "focus": "Launch strategy, value props, storytelling",
-            "difficulty": "Intermediate"
-          },
-          "community": {
-            "title": "Community culture pack",
-            "description": "Celebrate inside jokes, rituals, and lore from your most dedicated members.",
-            "count": "95 custom questions",
-            "focus": "Member spotlights, events, shared history",
-            "difficulty": "Casual"
-          }
-        }
-      },
-      "leaderboard": {
-        "title": "Community leaderboard",
-        "description": "Celebrate champions and spark friendly rivalries with transparent scoring.",
-        "updateLabel": "Auto-updated every hour",
-        "columns": {
-          "rank": "Rank",
-          "player": "Participant",
-          "score": "Score",
-          "completed": "Quizzes completed"
-        },
-        "rows": {
-          "0": {
-            "rank": "1",
-            "player": "Maya Chen",
-            "score": "982 pts",
-            "completed": "12 / 12"
-          },
-          "1": {
-            "rank": "2",
-            "player": "Luis Fernández",
-            "score": "941 pts",
-            "completed": "11 / 12"
-          },
-          "2": {
-            "rank": "3",
-            "player": "Sana Kapoor",
-            "score": "905 pts",
-            "completed": "10 / 12"
-          },
-          "3": {
-            "rank": "4",
-            "player": "Jonas Richter",
-            "score": "876 pts",
-            "completed": "10 / 12"
-          }
-        }
-      },
-      "cta": {
-        "title": "Launch your next quiz series",
-        "description": "Partner with us to craft immersive assessments for teams, classrooms, and fandoms.",
-        "button": "Talk with our team",
-        "buttonAria": "Open the contact page"
-      }
-    },
-    "performance": {
-      "badge": "تقرير الأداء",
-      "title": "لقطة لجودة التجربة",
-      "subtitle": "نظرة مركّزة على أداء الخلاصة الرئيسية على أجهزة حقيقية.",
-      "updated": "أُجري التدقيق في 8 أبريل 2025",
-      "hero": {
-        "score": "74",
-        "maxScore": "100",
-        "scoreLabel": "النتيجة الإجمالية"
-      },
-      "metrics": {
-        "title": "مؤشرات التجربة الأساسية",
-        "subtitle": "استنادًا إلى تشغيل Lighthouse للهاتف المحمول (Moto G Power محاكى).",
-        "status": {
-          "good": "على المسار",
-          "average": "قيد المراقبة",
-          "poor": "بحاجة إلى معالجة"
-        },
-        "items": {
-          "fcp": {
-            "label": "First Contentful Paint",
-            "value": "0.8",
-            "unit": "s",
-            "description": "تظهر أولى البكسلات المهمة في أقل من ثانية.",
-            "trend": "مستقرة خلال آخر 7 إصدارات.",
-            "status": "good"
-          },
-          "lcp": {
-            "label": "Largest Contentful Paint",
-            "value": "2.5",
-            "unit": "s",
-            "description": "يُحمَّل الوسيط الرئيسي بعد الهيكل العظمي لكنه يبقى ضمن حدود Web Vitals.",
-            "trend": "حسّن عبر تحميل مسبق لعنصر الصورة المميزة.",
-            "status": "average"
-          },
-          "tbt": {
-            "label": "Total Blocking Time",
-            "value": "570",
-            "unit": "ms",
-            "description": "المهام الطويلة أثناء الإماهة تشغل الخيط.",
-            "trend": "ناتج عن التحميل المبكر للأدوات الاختيارية.",
-            "status": "poor"
-          },
-          "speedIndex": {
-            "label": "Speed Index",
-            "value": "2.4",
-            "unit": "s",
-            "description": "اكتمال المشهد مقبول لكنه قابل للتحسين.",
-            "trend": "يتحسّن كثيرًا مع إعطاء أولوية لتسليم CSS.",
-            "status": "average"
-          },
-          "cls": {
-            "label": "Cumulative Layout Shift",
-            "value": "0.368",
-            "description": "تتحرك البطاقات ومسار القصص عند وصول محتوى متأخر.",
-            "trend": "ثبّت الوسائط بنسب أبعاد ثابتة لاستقرار الخلاصة.",
-            "status": "poor"
-          }
-        }
-      },
-      "opportunities": {
-        "title": "فرص عالية التأثير",
-        "subtitle": "إصلاحات ذات أولوية لمعالجة المؤشرات الحمراء أولًا.",
-        "items": {
-          "layout": {
-            "title": "تثبيت أماكن الوسائط والأدوات",
-            "description": "احجز مساحة لللافتات والشرائح والإعلانات الديناميكية.",
-            "impact": "تأثير عالٍ",
-            "action": "اعتمد نسب أبعاد ذاتية وارتفاعات هيكلية لعناصر الخلاصة."
-          },
-          "script": {
-            "title": "تأجيل السكربتات غير الحرجة",
-            "description": "قسّم التحليلات وردود الفعل ولوحة الرسائل عن الحزمة الأساسية.",
-            "impact": "تأثير عالٍ",
-            "action": "قم بتهيئة الأدوات الاختيارية عند التفاعل باستخدام ‎`defineAsyncComponent`‎."
-          },
-          "assets": {
-            "title": "تحسين صور البطل",
-            "description": "اضغط الكولاج الرئيسي وقدم مصادر AVIF بشكل افتراضي.",
-            "impact": "تأثير متوسط",
-            "action": "قم بتحميل أول صورة في الخلاصة مسبقًا وحمّل البقية بشكل متدرج."
-          },
-          "monitoring": {
-            "title": "توسيع تغطية Core Web Vitals",
-            "description": "قسّم المقاييس حسب المسار وفئة الجهاز.",
-            "impact": "أساسي",
-            "action": "أرسل إشارات ‎`web-vitals`‎ إلى بحيرة التحليلات لتتبع التراجعات."
-          }
-        }
-      },
-      "timeline": {
-        "title": "جدول التحسين",
-        "subtitle": "نشر واقعي لتسليم الإصلاحات والتحقق منها.",
-        "items": {
-          "week1": {
-            "date": "الأسبوع 1",
-            "title": "القضاء على تغيّر التخطيط",
-            "description": "راجع كل بطاقات الخلاصة والقصص لضمان أبعاد محددة مسبقًا.",
-            "actions": [
-              "أضف نسب أبعاد إلى صور القصص ومصغرات المنشورات.",
-              "ثبّت حاويات الإعلانات خلف عناصر نائب هيكلية."
-            ]
-          },
-          "week2": {
-            "date": "الأسبوع 2",
-            "title": "تفكيك المهام الطويلة",
-            "description": "انقل المنطق الاختياري إلى ردود استدعاء أثناء الخمول وحدود غير متزامنة.",
-            "actions": [
-              "قسّم درج المراسلة وصينية التفاعلات.",
-              "استخدم ‎`requestIdleCallback`‎ قبل تشغيل حزم التحليلات."
-            ]
-          },
-          "week3": {
-            "date": "الأسبوع 3",
-            "title": "التحقق من المكاسب عبر RUM",
-            "description": "أطلق تقارير Core Web Vitals على مجموعات الإنتاج.",
-            "actions": [
-              "أرسل المقاييس إلى بحيرة المراقبة مع بيانات البناء الوصفية.",
-              "أطلق تنبيهات عند تراجع LCP/TBT بأكثر من ‎10%‎ أسبوعيًا."
-            ]
-          }
-        }
-      }
     }
   },
   "seo": {
@@ -2736,59 +2771,17 @@
       "title": "كلمة المرور والأمان",
       "description": "أدِر بيانات تسجيل الدخول والمصادقة الثنائية والأجهزة الموثوقة."
     },
-    "createWorld": {
-      "title": "Create world",
-      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
-    },
     "job": {
       "title": "Jobs",
       "description": "Plan, track, and optimise hiring programmes."
     },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
+    },
     "game": {
       "title": "Gaming",
       "description": "Deliver live game experiences, communities, and monetisation."
-    },
-    "calendar": {
-      "title": "التقويم",
-      "cardTitle": "نظرة عامة على التقويم",
-      "menuTitle": "أحداث اليوم",
-      "menuEmpty": "لا توجد أحداث اليوم",
-      "authNotice": "سجّل الدخول للاطلاع على أحداثك وإدارتها.",
-      "rangeAllDay": "طوال اليوم",
-      "fallbackTitle": "حدث بدون عنوان",
-      "actions": {
-        "newEvent": "حدث جديد"
-      },
-      "dialog": {
-        "createTitle": "حدث جديد",
-        "editTitle": "تعديل الحدث",
-        "titleLabel": "عنوان الحدث",
-        "startLabel": "تاريخ البدء",
-        "endLabel": "تاريخ الانتهاء",
-        "startTimeLabel": "وقت البدء",
-        "endTimeLabel": "وقت الانتهاء",
-        "allDayLabel": "حدث طوال اليوم",
-        "privateLabel": "حدث خاص",
-        "locationLabel": "الموقع",
-        "descriptionLabel": "الوصف",
-        "save": "حفظ",
-        "cancel": "إغلاق",
-        "delete": "حذف",
-        "confirmDelete": "حذف الحدث",
-        "confirmDeleteMessage": "هذا الإجراء لا يمكن التراجع عنه. هل تريد حذف الحدث؟"
-      },
-      "validation": {
-        "title": "يرجى إضافة عنوان.",
-        "startDate": "اختر تاريخ البدء.",
-        "startTime": "اختر وقت البدء.",
-        "endTime": "يجب أن يكون وقت الانتهاء بعد وقت البدء.",
-        "range": "يجب أن يكون انتهاء الحدث بعد بدايته."
-      },
-      "errors": {
-        "save": "تعذّر حفظ التغييرات. حاول مرة أخرى.",
-        "delete": "تعذّر حذف الحدث. حاول مرة أخرى.",
-        "load": "تعذّر تحميل الأحداث. حاول مرة أخرى."
-      }
     },
     "ecommerce": {
       "title": "E-commerce",
@@ -2918,6 +2911,9 @@
     }
   },
   "admin": {
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
     "metaTitle": "الإدارة",
     "page": {
       "title": "لوحة الإدارة",
@@ -3124,6 +3120,39 @@
           "page": {
             "title": "User data",
             "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          },
+          "table": {
+            "search": "Search dataset",
+            "columns": {
+              "username": "Username",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "email": "Email",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status",
+              "actions": "Actions"
+            },
+            "empty": "No user records found."
+          },
+          "actions": {
+            "refresh": "Refresh"
+          },
+          "details": {
+            "title": "User details",
+            "close": "Close",
+            "empty": "Select a user to inspect their profile.",
+            "fields": {
+              "username": "Username",
+              "email": "Email",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status"
+            }
           }
         },
         "crons": {
@@ -3154,6 +3183,98 @@
           "page": {
             "title": "Scheduled publishing",
             "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
+      }
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }
@@ -3256,25 +3377,41 @@
           "content": {
             "title": "إدارة المحتوى",
             "description": "خطط للمقالات والفعاليات والموارد التعليمية وانشرها أو أرشفها.",
-            "tags": ["سير عمل تحريري", "مراجعة", "جدولة"],
+            "tags": [
+              "سير عمل تحريري",
+              "مراجعة",
+              "جدولة"
+            ],
             "status": "هناك 12 عنصراً بحاجة إلى مراجعة تحريرية."
           },
           "community": {
             "title": "المجتمع والإشراف",
             "description": "اضبط قواعد الإشراف وتابع البلاغات والعقوبات.",
-            "tags": ["بلاغات", "عقوبات", "رسائل خاصة"],
+            "tags": [
+              "بلاغات",
+              "عقوبات",
+              "رسائل خاصة"
+            ],
             "status": "متوسط وقت الاستجابة: ساعة و42 دقيقة."
           },
           "commerce": {
             "title": "الربحية والعروض",
             "description": "أدر الاشتراكات والرموز الترويجية والشراكات التجارية.",
-            "tags": ["اشتراكات", "فوترة", "قسائم"],
+            "tags": [
+              "اشتراكات",
+              "فوترة",
+              "قسائم"
+            ],
             "status": "ارتفع معدل التحويل بنسبة 3.4٪ هذا الأسبوع."
           },
           "governance": {
             "title": "الحوكمة والامتثال",
             "description": "دقق صلاحيات الوصول، أدر الأدوار الحساسة وجهّز تقارير الامتثال.",
-            "tags": ["تدقيق", "أدوار", "تتبع"],
+            "tags": [
+              "تدقيق",
+              "أدوار",
+              "تتبع"
+            ],
             "status": "آخر تدقيق شامل تم قبل 5 أيام."
           }
         }
@@ -3432,101 +3569,6 @@
           "page": {
             "title": "Scheduled publishing",
             "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
-          }
-        }
-      }
-    },
-    "common": {
-      "comingSoon": "This module is coming soon."
-    },
-    "jobManagement": {
-      "metaTitle": "Job management",
-      "page": {
-        "title": "Job management",
-        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Job data",
-          "page": {
-            "title": "Job data",
-            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
-          }
-        },
-        "crons": {
-          "metaTitle": "Job crons",
-          "page": {
-            "title": "Scheduled routines",
-            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
-          }
-        }
-      }
-    },
-    "ecommerceManagement": {
-      "metaTitle": "E-commerce management",
-      "page": {
-        "title": "E-commerce management",
-        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "E-commerce data",
-          "page": {
-            "title": "Commerce data",
-            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
-          }
-        },
-        "crons": {
-          "metaTitle": "E-commerce crons",
-          "page": {
-            "title": "Automated jobs",
-            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
-          }
-        }
-      }
-    },
-    "educationManagement": {
-      "metaTitle": "Education management",
-      "page": {
-        "title": "Education management",
-        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Education data",
-          "page": {
-            "title": "Learning data",
-            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
-          }
-        },
-        "crons": {
-          "metaTitle": "Education crons",
-          "page": {
-            "title": "Learning automations",
-            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
-          }
-        }
-      }
-    },
-    "gameManagement": {
-      "metaTitle": "Game management",
-      "page": {
-        "title": "Game management",
-        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Game data",
-          "page": {
-            "title": "Gameplay data",
-            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
-          }
-        },
-        "crons": {
-          "metaTitle": "Game crons",
-          "page": {
-            "title": "Scheduled operations",
-            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }

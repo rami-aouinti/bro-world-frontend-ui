@@ -7,6 +7,67 @@
     "close": "关闭",
     "loading": "加载中…"
   },
+  "help": {
+    "meta": {
+      "title": "Help centre",
+      "description": "Find quick answers, guides, and FAQs for {site}."
+    },
+    "hero": {
+      "badge": "Support",
+      "title": "How can we help?",
+      "subtitle": "Browse guides, troubleshooting steps, and tips to get the most out of the platform.",
+      "searchPlaceholder": "Search by topic or keyword…",
+      "searchAria": "Search the help centre",
+      "popular": "Popular"
+    },
+    "categories": {
+      "title": "Browse by category",
+      "subtitle": "We grouped our most helpful guides so you can jump right in.",
+      "count": "{count} articles"
+    },
+    "faq": {
+      "title": "Quick FAQ",
+      "subtitle": "Answers to the questions we hear every day.",
+      "items": [
+        {
+          "q": "How do I create an account?",
+          "a": "Use the sign up form with your work email, confirm it within 24 hours, and complete your profile."
+        },
+        {
+          "q": "Can I invite my teammates?",
+          "a": "Admins can invite teammates from Settings → Members and manage their permissions at any time."
+        },
+        {
+          "q": "Where can I download my invoices?",
+          "a": "Head to Billing → Invoices to download compliant PDF copies for your records."
+        }
+      ]
+    },
+    "search": {
+      "resultsLabel": "Help search results"
+    },
+    "article": {
+      "toc": "On this page",
+      "copyLink": "Copy section link",
+      "copied": "Section link copied",
+      "updated": "Updated {date}",
+      "related": "Related articles",
+      "feedback": {
+        "question": "Was this article helpful?",
+        "yes": "Yes",
+        "no": "No",
+        "thanks": "Thanks for your feedback!"
+      }
+    },
+    "empty": {
+      "title": "No results",
+      "subtitle": "Try another keyword or explore a category."
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "help": "Help centre"
+    }
+  },
   "layout": {
     "loadingOverlay": {
       "srLabel": "正在加载 Bro World",
@@ -97,6 +158,17 @@
         "cv": "简历",
         "createWorld": "Create world",
         "jobs": "职位",
+        "game": "游戏和测验",
+        "crm": "CRM 工作区",
+        "ecommerce": "E-commerce",
+        "ecommerceOverview": "概览",
+        "ecommerceCatalog": "产品目录",
+        "ecommerceCart": "购物车",
+        "ecommerceCheckout": "结账",
+        "education": "Education",
+        "quiz": "Quiz",
+        "academy": "学院",
+        "performance": "性能",
         "profile": "个人资料",
         "profileOverview": "总览",
         "profileSettings": "账户设置",
@@ -121,18 +193,7 @@
         "adminBlog": "博客",
         "help": "帮助",
         "about": "关于",
-        "contact": "联系",
-        "game": "游戏和测验",
-        "crm": "CRM 工作区",
-        "ecommerce": "E-commerce",
-        "ecommerceOverview": "概览",
-        "ecommerceCatalog": "产品目录",
-        "ecommerceCart": "购物车",
-        "ecommerceCheckout": "结账",
-        "education": "Education",
-        "quiz": "Quiz",
-        "academy": "学院",
-        "performance": "性能"
+        "contact": "联系"
       }
     },
     "widgets": {
@@ -185,7 +246,6 @@
     "cancel": "Cancel"
   },
   "job": {
-    "job": "Job",
     "create": "Create job",
     "createdSuccess": "Job created successfully.",
     "createError": "Unable to create the job. Please try again.",
@@ -219,7 +279,6 @@
     "languages": "Languages"
   },
   "applicant": {
-    "applicant": "Applicant",
     "create": "Create applicant",
     "createdSuccess": "Applicant saved successfully.",
     "createError": "Unable to create the applicant.",
@@ -247,6 +306,23 @@
     "description": "Company description",
     "website": "Website",
     "submit": "Save"
+  },
+  "messenger": {
+    "searchPlaceholder": "搜索会话",
+    "emptyList": "暂无会话",
+    "unknownParticipant": "未知",
+    "emptyTitle": "选择一个会话",
+    "emptyDescription": "从列表中选择一个会话以阅读并发送消息。",
+    "emptyCtaLabel": "开始会话",
+    "emptyCtaLink": "/messenger",
+    "composerPlaceholder": "输入消息...",
+    "sendLabel": "发送",
+    "sendingLabel": "正在发送…",
+    "sendErrorStatus": "未送达",
+    "shortcutsHint": "按 Ctrl+Enter 发送",
+    "noMessages": "暂无消息",
+    "loadOlder": "加载更早的消息",
+    "participantsLabel": "{count} 位参与者"
   },
   "banner": {
     "Content": "Tailwind CSS v3 文档, [**点击这里**](https://v1.inspira-ui.com)."
@@ -325,9 +401,6 @@
       "commentRequired": "Sign in to join the discussion."
     },
     "reactions": {
-      "like": "点赞",
-      "love": "喜爱",
-      "wow": "惊讶",
       "post": {
         "publishedOn": "发布于 {date}",
         "reactions": "{count} 条互动",
@@ -613,23 +686,6 @@
       "GetStarted": "开始"
     }
   },
-  "messenger": {
-    "searchPlaceholder": "搜索会话",
-    "emptyList": "暂无会话",
-    "unknownParticipant": "未知",
-    "emptyTitle": "选择一个会话",
-    "emptyDescription": "从列表中选择一个会话以阅读并发送消息。",
-    "emptyCtaLabel": "开始会话",
-    "emptyCtaLink": "/messenger",
-    "composerPlaceholder": "输入消息...",
-    "sendLabel": "发送",
-    "sendingLabel": "正在发送…",
-    "sendErrorStatus": "未送达",
-    "shortcutsHint": "按 Ctrl+Enter 发送",
-    "noMessages": "暂无消息",
-    "loadOlder": "加载更早的消息",
-    "participantsLabel": "{count} 位参与者"
-  },
   "auth": {
     "Account": "账户",
     "Login": "登录",
@@ -660,7 +716,30 @@
     }
   },
   "register": {
-    "errorTitle": "创建账户失败"
+    "email": "Email address",
+    "password": "Password",
+    "repeatPassword": "Confirm password",
+    "agree": "I agree to the",
+    "terms": "terms and conditions",
+    "requirements": "Password requirements",
+    "requirement1": "Must contain at least 8 characters.",
+    "requirement2": "Should include numbers or special characters for extra security.",
+    "signUp": "Create account",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "termsTitle": "Terms & Conditions",
+    "errorTerms": "You must agree to the terms and conditions.",
+    "errorMissing": "Please complete all required fields.",
+    "errorMismatch": "Passwords do not match.",
+    "errorGeneric": "Something went wrong while creating your account.",
+    "errorTitle": "创建账户失败",
+    "successTitle": "Account created",
+    "success": "Your account has been created successfully.",
+    "termsIntro": "By creating an account you confirm that you understand and accept our policies.",
+    "termsPoint1": "We only use your information to create and secure your account.",
+    "termsPoint2": "You can update your notification preferences at any time.",
+    "termsPoint3": "Deleting your account will remove your data from our active systems within 30 days.",
+    "termsOutro": "Please contact our support team if you have any questions about how we handle your data."
   },
   "pages": {
     "notifications": {
@@ -935,27 +1014,6 @@
         "title": "@:education.catalog.title",
         "subtitle": "@:education.catalog.subtitle"
       },
-      "sidebar": {
-        "overviewTitle": "Keep learning momentum",
-        "overviewDescription": "Track your progress, revisit favourite categories, and stay motivated as you explore new skills.",
-        "stats": {
-          "categories": {
-            "label": "Categories",
-            "value": "{count} categories"
-          },
-          "courses": {
-            "label": "Courses",
-            "value": "{count} courses"
-          },
-          "certificates": {
-            "label": "Certificates earned",
-            "value": "{count} certificates"
-          }
-        },
-        "featuredTitle": "Featured categories",
-        "featuredDescription": "Jump back into these curated spaces to continue learning.",
-        "featuredEmpty": "New categories are coming soon."
-      },
       "category": {
         "courses": "@:education.category.courses",
         "viewCourses": "@:education.category.viewCourses",
@@ -1041,295 +1099,6 @@
         "beginner": "@:education.levels.beginner",
         "intermediate": "@:education.levels.intermediate",
         "advanced": "@:education.levels.advanced"
-      }
-    },
-    "profile": {
-      "title": "个人资料",
-      "subtitle": "查看并管理你的个人信息。",
-      "sections": {
-        "contact": "联系方式",
-        "profile": "个人资料",
-        "social": "社交",
-        "calendar": "日历"
-      },
-      "calendar": {
-        "subtitle": "随时掌握即将到来的安排。",
-        "viewLabel": "切换日历视图",
-        "views": {
-          "month": "月",
-          "week": "周",
-          "day": "日"
-        },
-        "errorTitle": "无法加载事件",
-        "errorFallback": "我们未能加载你的事件，请重试。",
-        "retry": "重试",
-        "privateLabel": "私密",
-        "allDay": "全天",
-        "upcoming": "即将举行的事件",
-        "emptyTitle": "暂无计划事件",
-        "emptyDescription": "向日历中添加事件即可在此查看。",
-        "actions": {
-          "add": "新建事件",
-          "edit": "编辑",
-          "delete": "删除"
-        },
-        "form": {
-          "createTitle": "创建事件",
-          "createDescription": "直接在日历视图中规划新的安排。",
-          "editTitle": "编辑事件",
-          "editDescription": "更新此日历条目的详细信息。",
-          "fields": {
-            "title": "标题",
-            "startDate": "开始日期",
-            "endDate": "结束日期",
-            "startTime": "开始时间",
-            "endTime": "结束时间",
-            "allDay": "全天事件",
-            "color": "类别",
-            "location": "地点",
-            "description": "描述",
-            "isPrivate": "标记为私密"
-          },
-          "actions": {
-            "cancel": "取消",
-            "create": "创建事件",
-            "save": "保存更改"
-          },
-          "validation": {
-            "title": "为你的事件添加标题。",
-            "startDate": "请选择事件的开始日期。",
-            "startTime": "请选择开始时间。",
-            "endTime": "结束时间必须晚于开始时间。",
-            "range": "事件的结束时间必须晚于开始时间。"
-          }
-        },
-        "delete": {
-          "title": "删除事件",
-          "description": "确定要删除“{title}”吗？该操作无法撤销。"
-        },
-        "colors": {
-          "meetings": "会议",
-          "personal": "个人",
-          "travel": "出行",
-          "focus": "专注"
-        }
-      },
-      "labels": {
-        "email": "邮箱",
-        "phone": "电话",
-        "address": "地址",
-        "title": "头衔",
-        "gender": "性别",
-        "birthday": "生日",
-        "description": "简介",
-        "roles": "角色",
-        "friends": "好友",
-        "stories": "故事",
-        "accountStatus": "账户状态"
-      },
-      "statuses": {
-        "enabled": "已启用",
-        "disabled": "已停用"
-      },
-      "placeholders": {
-        "missing": "—",
-        "noStories": "暂无故事"
-      },
-      "avatarAlt": "{name} 的个人头像",
-      "avatarAltFallback": "默认个人头像",
-      "stats": {
-        "title": "快速统计"
-      }
-    },
-    "profileCalendar": {
-      "title": "日历",
-      "subtitle": "在专属视图中查看会议、工作坊和关键节点。"
-    },
-    "profileFriends": {
-      "title": "人脉",
-      "subtitle": "与合作者、导师和社区重新建立联系。",
-      "actions": {
-        "message": "发送消息",
-        "schedule": "安排通话",
-        "viewProfile": "打开个人资料"
-      },
-      "highlights": {
-        "title": "精选合作者",
-        "subtitle": "本季度与你合作最频繁的核心伙伴。"
-      },
-      "sections": {
-        "active": "当前在线",
-        "suggestions": "推荐人脉"
-      },
-      "filters": {
-        "all": "全部",
-        "design": "设计",
-        "engineering": "工程",
-        "marketing": "市场",
-        "product": "产品"
-      },
-      "meta": {
-        "lastActive": "上次在线 · {time}"
-      },
-      "stats": {
-        "totalFriends": "人脉",
-        "mutual": "共同联系人",
-        "online": "当前在线"
-      },
-      "status": {
-        "online": "在线",
-        "offline": "离线",
-        "busy": "忙碌",
-        "focus": "专注"
-      },
-      "feedback": {
-        "connect": "我们会记录你想建立联系。",
-        "connectWith": "我们会告知 {name} 你希望建立联系。",
-        "message": "正在撰写简短问候…",
-        "messageWith": "正在为 {name} 撰写简短问候…",
-        "schedule": "正在打开日程安排流程…",
-        "scheduleWith": "正在为 {name} 打开日程安排流程…"
-      },
-      "empty": "暂无符合该筛选条件的个人资料。"
-    },
-    "profilePhotos": {
-      "title": "照片库",
-      "subtitle": "整理发布会亮点、调研之旅和幕后瞬间。",
-      "actions": {
-        "createAlbum": "创建相册",
-        "upload": "上传照片"
-      },
-      "filters": {
-        "recent": "最新",
-        "events": "活动",
-        "studio": "影棚",
-        "travel": "旅行"
-      },
-      "sections": {
-        "albums": "相册导航",
-        "pinned": "置顶合集",
-        "timeline": "创意笔记",
-        "notesDescription": "协作者在准备视觉故事时的最新动态。"
-      },
-      "meta": {
-        "photoCount": "张照片",
-        "updated": "{date} 更新"
-      },
-      "stats": {
-        "albums": "精选相册",
-        "tags": "独特故事标签"
-      },
-      "timeline": {
-        "title": "故事里程碑",
-        "description": "记录塑造你这一年的重点发布、驻留和团建时刻。"
-      },
-      "cta": {
-        "share": "将这些精选合集分享给团队或导出到演示文稿。"
-      },
-      "feedback": {
-        "upload": "正在打开媒体选择器…",
-        "createAlbum": "一起创建一个新相册。",
-        "shareCollection": "分享选项已准备就绪。",
-        "generic": "操作已启动。"
-      },
-      "empty": "暂无符合该筛选条件的照片。"
-    },
-    "profileEdit": {
-      "title": "编辑个人资料",
-      "subtitle": "及时更新信息，让协作者随时掌握最新背景。",
-      "sections": {
-        "profile": {
-          "title": "个人资料",
-          "bio": "简介",
-          "skills": "核心技能"
-        },
-        "contact": "联系方式",
-        "about": "关于",
-        "social": "社交链接",
-        "siteSettings": "站点设置"
-      },
-      "labels": {
-        "firstName": "名",
-        "lastName": "姓",
-        "headline": "职业头衔",
-        "pronouns": "代称",
-        "language": "首选语言",
-        "timezone": "时区",
-        "email": "邮箱",
-        "phone": "电话",
-        "location": "所在地",
-        "website": "网站",
-        "bio": "简介",
-        "skills": "核心技能",
-        "interests": "关注领域",
-        "linkedin": "LinkedIn",
-        "twitter": "Twitter / X",
-        "dribbble": "Dribbble",
-        "behance": "Behance"
-      },
-      "actions": {
-        "cancel": "重置",
-        "save": "保存更改"
-      },
-      "helpers": {
-        "bio": "分享你的使命、协作方式或最新成果（限 280 个字符）。",
-        "skills": "输入自定义技能或从建议中选择。",
-        "summary": "在你编辑信息时，这张速览卡会自动更新。",
-        "siteSettings": "无需离开个人资料即可更新站点名称或标语。"
-      },
-      "feedback": {
-        "successMessage": "个人资料信息已成功保存。",
-        "errorMessage": "请检查高亮显示的字段。"
-      },
-      "validation": {
-        "required": "此字段为必填项。",
-        "bioLimit": "简介长度需在 280 个字符以内。"
-      }
-    },
-    "profileSecurity": {
-      "title": "密码与安全",
-      "subtitle": "使用强密码与已验证设备保护你的账户。",
-      "actions": {
-        "save": "保存安全设置",
-        "generateCodes": "生成备用验证码"
-      },
-      "sections": {
-        "password": {
-          "title": "更新密码",
-          "description": "创建至少 12 个字符，包含数字和符号的专属密码短语。"
-        },
-        "sessions": {
-          "title": "活跃会话",
-          "description": "查看你的登录位置，并撤销陌生设备的访问权限。"
-        },
-        "mfa": {
-          "title": "双重验证",
-          "description": "增加一步验证流程，守护你的工作空间。"
-        }
-      },
-      "labels": {
-        "currentPassword": "当前密码",
-        "newPassword": "新密码",
-        "confirmPassword": "确认密码",
-        "mfaToggle": "启用双重验证"
-      },
-      "passwordHint": {
-        "title": "密码提示",
-        "description": "使用密码管理器，避免重复使用密码，并定期更新重要凭据。"
-      },
-      "sessions": {
-        "device": "设备",
-        "location": "位置",
-        "activity": "最近活动",
-        "actions": "操作",
-        "revoke": "撤销",
-        "activeNow": "当前活跃",
-        "trusted": "受信任",
-        "remembered": "已记住",
-        "untrusted": "未识别"
-      },
-      "recoveryCodes": {
-        "title": "请妥善保存这些一次性备用验证码"
       }
     },
     "createWorld": {
@@ -1620,7 +1389,11 @@
             "type": "Full-time",
             "salary": "€58k - €72k · 0.05% equity",
             "description": "Shape multi-platform experiences for recruiters and candidates across web and mobile.",
-            "tags": ["Design Systems", "Figma", "User Research"],
+            "tags": [
+              "Design Systems",
+              "Figma",
+              "User Research"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Senior Product Designer role",
@@ -1634,7 +1407,11 @@
             "type": "Full-time",
             "salary": "€70k - €90k · bonus eligible",
             "description": "Build AI copilots that automate sourcing, screening, and scheduling flows.",
-            "tags": ["Python", "LangChain", "Hiring Ops"],
+            "tags": [
+              "Python",
+              "LangChain",
+              "Hiring Ops"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the AI Recruiter Strategist role",
@@ -1648,7 +1425,11 @@
             "type": "Full-time",
             "salary": "€65k base · 50% variable",
             "description": "Lead pipeline generation and coach AEs through complex enterprise deals.",
-            "tags": ["B2B SaaS", "Enterprise Sales", "Forecasting"],
+            "tags": [
+              "B2B SaaS",
+              "Enterprise Sales",
+              "Forecasting"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Enterprise Sales Lead role",
@@ -1662,7 +1443,11 @@
             "type": "Full-time",
             "salary": "€45k - €55k",
             "description": "Guide talent teams as they onboard, launch workflows, and measure adoption.",
-            "tags": ["Implementation", "Change Management", "ATS Integrations"],
+            "tags": [
+              "Implementation",
+              "Change Management",
+              "ATS Integrations"
+            ],
             "apply": {
               "label": "Apply now",
               "aria": "Apply to the Customer Success Partner role",
@@ -1771,6 +1556,48 @@
         "levels": "无法加载该类别的关卡。",
         "questions": "无法加载测验题目。",
         "validation": "无法验证你的答案，请重试。"
+      }
+    },
+    "calendar": {
+      "title": "Calendar",
+      "cardTitle": "Calendar overview",
+      "menuTitle": "Today's events",
+      "menuEmpty": "No events today",
+      "authNotice": "Sign in to see and manage your events.",
+      "rangeAllDay": "All day",
+      "fallbackTitle": "Untitled event",
+      "actions": {
+        "newEvent": "New event"
+      },
+      "dialog": {
+        "createTitle": "New event",
+        "editTitle": "Edit event",
+        "titleLabel": "Event title",
+        "startLabel": "Start date",
+        "endLabel": "End date",
+        "startTimeLabel": "Start time",
+        "endTimeLabel": "End time",
+        "allDayLabel": "All-day event",
+        "privateLabel": "Private event",
+        "locationLabel": "Location",
+        "descriptionLabel": "Description",
+        "save": "Save",
+        "cancel": "Close",
+        "delete": "Delete",
+        "confirmDelete": "Delete event",
+        "confirmDeleteMessage": "This action cannot be undone. Are you sure you want to delete this event?"
+      },
+      "validation": {
+        "title": "Please provide a title.",
+        "startDate": "Select a start date.",
+        "startTime": "Select a start time.",
+        "endTime": "End time must be after the start time.",
+        "range": "The end of the event must be after the start."
+      },
+      "errors": {
+        "save": "We could not save your changes. Please try again.",
+        "delete": "We could not delete this event. Please try again.",
+        "load": "We could not load your events. Please try again."
       }
     },
     "ecommerce": {
@@ -2035,29 +1862,29 @@
         "authoring": {
           "title": "Author in minutes",
           "description": "Draft polished quizzes with assisted prompts, templates, and reusable scoring rules.",
-          "points": [
-            "Convert brainstorm notes into question pools automatically.",
-            "Mix formats like multiple choice, polls, and lightning rounds.",
-            "Reuse timers, scoring weights, and bonus rules across series."
-          ]
+          "points": {
+            "0": "Role-based templates",
+            "1": "Inline feedback generator",
+            "2": "CSV & Markdown import"
+          }
         },
         "engagement": {
           "title": "Fuel real-time engagement",
           "description": "Turn every round into a show with live reactions, audio intros, and streak multipliers.",
-          "points": [
-            "Highlight hosts and co-creators with stage-ready layouts.",
-            "Trigger soundscapes and emotes when milestones are unlocked.",
-            "Support breakout teams, rematches, and collaborative lifelines."
-          ]
+          "points": {
+            "0": "Customisable badges",
+            "1": "Automated multi-channel nudges",
+            "2": "Synchronous live sessions"
+          }
         },
         "analytics": {
           "title": "Measure what matters",
           "description": "Track sentiment, pacing, and knowledge gaps for every cohort in one dashboard.",
-          "points": [
-            "Compare performance by role, location, or membership tier.",
-            "Spot drop-off moments with second-by-second completion curves.",
-            "Export highlights, clips, and insights for stakeholders."
-          ]
+          "points": {
+            "0": "Ready-to-use dashboards",
+            "1": "CSV/BigQuery export",
+            "2": "Progress deviation alerts"
+          }
         }
       },
       "process": {
@@ -2249,7 +2076,10 @@
             "date": "第 1 周",
             "title": "消除布局位移",
             "description": "审计所有信息流卡片和故事，确保尺寸可预期。",
-            "actions": ["为故事缩略图和帖子插图添加宽高比。", "在骨架占位符后固定广告容器。"]
+            "actions": [
+              "为故事缩略图和帖子插图添加宽高比。",
+              "在骨架占位符后固定广告容器。"
+            ]
           },
           "week2": {
             "date": "第 2 周",
@@ -2341,9 +2171,582 @@
           "projectFallback": "@:seo.crm.sidebar.tasks.projectFallback"
         }
       }
+    },
+    "help": {
+      "title": "Help",
+      "subtitle": "Find answers and resources",
+      "faqTitle": "Frequently asked questions",
+      "searchPlaceholder": "Search the FAQ…",
+      "quickLinksTitle": "Quick actions",
+      "faqCountSingular": "result",
+      "faqCountPlural": "results",
+      "faqEmpty": "No FAQ entries match your search yet. Try a different keyword.",
+      "actions": {
+        "reportBug": "Report a bug",
+        "reportBugDescription": "Share reproducible steps so we can investigate quickly.",
+        "reportBugCta": "Create an issue",
+        "reportBugAria": "Create a new GitHub issue in a new tab",
+        "accountPrivacy": "Account & Privacy",
+        "accountPrivacyDescription": "Reset your credentials or request account changes from the dashboard.",
+        "accountPrivacyCta": "Manage account access",
+        "accountPrivacyAria": "Go to the account recovery page",
+        "contactSupport": "Contact support",
+        "contactSupportDescription": "Reach our maintainers directly when you need a human touch.",
+        "contactSupportCta": "Message the team",
+        "contactSupportAria": "Open the contact page"
+      },
+      "faq": {
+        "items": {
+          "gettingStarted": {
+            "question": "How do I start using BroWorld components?",
+            "answer": "Install the package, run the setup script, and explore the Starter templates to see best practices in action.",
+            "link": "Read the getting started guide"
+          },
+          "localization": {
+            "question": "Which languages are supported?",
+            "answer": "English, French, Arabic, German, and more translations are maintained by our community partners."
+          },
+          "components": {
+            "question": "Where can I find live component examples?",
+            "answer": "Browse the component directory to view interactive demos and copy-ready code snippets.",
+            "link": "Explore the component directory"
+          },
+          "contributing": {
+            "question": "How can I contribute?",
+            "answer": "Review the contribution guidelines, open an issue with your idea, and submit a pull request when you are ready.",
+            "link": "Read the contribution guide"
+          },
+          "privacy": {
+            "question": "How do you handle privacy requests?",
+            "answer": "Submit a request through the account tools or email  and we will follow up within 72 hours."
+          }
+        }
+      }
+    },
+    "profile": {
+      "title": "个人资料",
+      "subtitle": "查看并管理你的个人信息。",
+      "sections": {
+        "contact": "联系方式",
+        "profile": "个人资料",
+        "social": "社交",
+        "calendar": "日历"
+      },
+      "calendar": {
+        "subtitle": "随时掌握即将到来的安排。",
+        "viewLabel": "切换日历视图",
+        "views": {
+          "month": "月",
+          "week": "周",
+          "day": "日"
+        },
+        "errorTitle": "无法加载事件",
+        "errorFallback": "我们未能加载你的事件，请重试。",
+        "retry": "重试",
+        "privateLabel": "私密",
+        "allDay": "全天",
+        "upcoming": "即将举行的事件",
+        "emptyTitle": "暂无计划事件",
+        "emptyDescription": "向日历中添加事件即可在此查看。",
+        "actions": {
+          "add": "新建事件",
+          "edit": "编辑",
+          "delete": "删除"
+        },
+        "form": {
+          "createTitle": "创建事件",
+          "createDescription": "直接在日历视图中规划新的安排。",
+          "editTitle": "编辑事件",
+          "editDescription": "更新此日历条目的详细信息。",
+          "fields": {
+            "title": "标题",
+            "startDate": "开始日期",
+            "endDate": "结束日期",
+            "startTime": "开始时间",
+            "endTime": "结束时间",
+            "allDay": "全天事件",
+            "color": "类别",
+            "location": "地点",
+            "description": "描述",
+            "isPrivate": "标记为私密"
+          },
+          "actions": {
+            "cancel": "取消",
+            "create": "创建事件",
+            "save": "保存更改"
+          },
+          "validation": {
+            "title": "为你的事件添加标题。",
+            "startDate": "请选择事件的开始日期。",
+            "startTime": "请选择开始时间。",
+            "endTime": "结束时间必须晚于开始时间。",
+            "range": "事件的结束时间必须晚于开始时间。"
+          }
+        },
+        "delete": {
+          "title": "删除事件",
+          "description": "确定要删除“{title}”吗？该操作无法撤销。"
+        },
+        "colors": {
+          "meetings": "会议",
+          "personal": "个人",
+          "travel": "出行",
+          "focus": "专注"
+        }
+      },
+      "labels": {
+        "email": "邮箱",
+        "phone": "电话",
+        "address": "地址",
+        "title": "头衔",
+        "gender": "性别",
+        "birthday": "生日",
+        "description": "简介",
+        "roles": "角色",
+        "friends": "好友",
+        "stories": "故事",
+        "accountStatus": "账户状态"
+      },
+      "statuses": {
+        "enabled": "已启用",
+        "disabled": "已停用"
+      },
+      "placeholders": {
+        "missing": "—",
+        "noStories": "暂无故事"
+      },
+      "avatarAlt": "{name} 的个人头像",
+      "avatarAltFallback": "默认个人头像",
+      "stats": {
+        "title": "快速统计"
+      }
+    },
+    "profileCalendar": {
+      "title": "日历",
+      "subtitle": "在专属视图中查看会议、工作坊和关键节点。"
+    },
+    "profileFriends": {
+      "title": "人脉",
+      "subtitle": "与合作者、导师和社区重新建立联系。",
+      "actions": {
+        "message": "发送消息",
+        "schedule": "安排通话",
+        "viewProfile": "打开个人资料"
+      },
+      "highlights": {
+        "title": "精选合作者",
+        "subtitle": "本季度与你合作最频繁的核心伙伴。"
+      },
+      "filters": {
+        "all": "全部",
+        "design": "设计",
+        "product": "产品",
+        "engineering": "工程",
+        "marketing": "市场"
+      },
+      "stats": {
+        "totalFriends": "人脉",
+        "mutual": "共同联系人",
+        "online": "当前在线"
+      },
+      "meta": {
+        "lastActive": "上次在线 · {time}"
+      },
+      "sections": {
+        "suggestions": "推荐人脉",
+        "active": "当前在线"
+      },
+      "status": {
+        "online": "在线",
+        "focus": "专注",
+        "busy": "忙碌",
+        "offline": "离线"
+      },
+      "feedback": {
+        "message": "正在撰写简短问候…",
+        "messageWith": "正在为 {name} 撰写简短问候…",
+        "schedule": "正在打开日程安排流程…",
+        "scheduleWith": "正在为 {name} 打开日程安排流程…",
+        "connect": "我们会记录你想建立联系。",
+        "connectWith": "我们会告知 {name} 你希望建立联系。"
+      },
+      "empty": "暂无符合该筛选条件的个人资料。"
+    },
+    "profilePhotos": {
+      "title": "照片库",
+      "subtitle": "整理发布会亮点、调研之旅和幕后瞬间。",
+      "actions": {
+        "upload": "上传照片",
+        "createAlbum": "创建相册"
+      },
+      "sections": {
+        "pinned": "置顶合集",
+        "albums": "相册导航",
+        "timeline": "创意笔记",
+        "notesDescription": "协作者在准备视觉故事时的最新动态。"
+      },
+      "meta": {
+        "updated": "{date} 更新",
+        "photoCount": "张照片"
+      },
+      "filters": {
+        "recent": "最新",
+        "events": "活动",
+        "studio": "影棚",
+        "travel": "旅行"
+      },
+      "cta": {
+        "share": "将这些精选合集分享给团队或导出到演示文稿。"
+      },
+      "stats": {
+        "albums": "精选相册",
+        "tags": "独特故事标签"
+      },
+      "timeline": {
+        "title": "故事里程碑",
+        "description": "记录塑造你这一年的重点发布、驻留和团建时刻。"
+      },
+      "feedback": {
+        "upload": "正在打开媒体选择器…",
+        "createAlbum": "一起创建一个新相册。",
+        "shareCollection": "分享选项已准备就绪。",
+        "generic": "操作已启动。"
+      },
+      "empty": "暂无符合该筛选条件的照片。"
+    },
+    "profileEdit": {
+      "title": "编辑个人资料",
+      "subtitle": "及时更新信息，让协作者随时掌握最新背景。",
+      "sections": {
+        "profile": {
+          "title": "个人资料",
+          "bio": "简介",
+          "skills": "核心技能"
+        },
+        "contact": "联系方式",
+        "about": "关于",
+        "social": "社交链接",
+        "siteSettings": "站点设置"
+      },
+      "labels": {
+        "firstName": "名",
+        "lastName": "姓",
+        "headline": "职业头衔",
+        "pronouns": "代称",
+        "language": "首选语言",
+        "timezone": "时区",
+        "email": "邮箱",
+        "phone": "电话",
+        "location": "所在地",
+        "website": "网站",
+        "bio": "简介",
+        "skills": "核心技能",
+        "interests": "关注领域",
+        "linkedin": "LinkedIn",
+        "twitter": "Twitter / X",
+        "dribbble": "Dribbble",
+        "behance": "Behance"
+      },
+      "actions": {
+        "cancel": "重置",
+        "save": "保存更改"
+      },
+      "helpers": {
+        "bio": "分享你的使命、协作方式或最新成果（限 280 个字符）。",
+        "skills": "输入自定义技能或从建议中选择。",
+        "summary": "在你编辑信息时，这张速览卡会自动更新。",
+        "siteSettings": "无需离开个人资料即可更新站点名称或标语。"
+      },
+      "feedback": {
+        "successMessage": "个人资料信息已成功保存。",
+        "errorMessage": "请检查高亮显示的字段。"
+      },
+      "validation": {
+        "required": "此字段为必填项。",
+        "bioLimit": "简介长度需在 280 个字符以内。"
+      }
+    },
+    "profileSecurity": {
+      "title": "密码与安全",
+      "subtitle": "使用强密码与已验证设备保护你的账户。",
+      "actions": {
+        "save": "保存安全设置",
+        "generateCodes": "生成备用验证码"
+      },
+      "sections": {
+        "password": {
+          "title": "更新密码",
+          "description": "创建至少 12 个字符，包含数字和符号的专属密码短语。"
+        },
+        "sessions": {
+          "title": "活跃会话",
+          "description": "查看你的登录位置，并撤销陌生设备的访问权限。"
+        },
+        "mfa": {
+          "title": "双重验证",
+          "description": "增加一步验证流程，守护你的工作空间。"
+        }
+      },
+      "labels": {
+        "currentPassword": "当前密码",
+        "newPassword": "新密码",
+        "confirmPassword": "确认密码",
+        "mfaToggle": "启用双重验证"
+      },
+      "passwordHint": {
+        "title": "密码提示",
+        "description": "使用密码管理器，避免重复使用密码，并定期更新重要凭据。"
+      },
+      "sessions": {
+        "device": "设备",
+        "location": "位置",
+        "activity": "最近活动",
+        "actions": "操作",
+        "revoke": "撤销",
+        "activeNow": "当前活跃",
+        "trusted": "受信任",
+        "remembered": "已记住",
+        "untrusted": "未识别"
+      },
+      "recoveryCodes": {
+        "title": "请妥善保存这些一次性备用验证码"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "We usually reply within 1–2 business days.",
+      "form": {
+        "name": "Your name",
+        "email": "Email address",
+        "subject": "Subject",
+        "message": "Message",
+        "submit": "Send",
+        "sending": "Sending…",
+        "success": "Thanks! Your message has been sent.",
+        "error": "Sorry, something went wrong. Please try again."
+      },
+      "validation": {
+        "required": "This field is required",
+        "email": "Enter a valid email address",
+        "minMessage": "Message must be at least 10 characters"
+      },
+      "details": {
+        "title": "How to reach us",
+        "description": "Choose the channel that works best for your question.",
+        "email": "Email",
+        "emailDescription": "Message the core team for private or account-related topics.",
+        "emailCta": "Send us an email",
+        "emailCtaLabel": "Compose an email to the BroWorld team",
+        "community": "Community discussions",
+        "communityDescription": "Share ideas, ask questions, or report bugs alongside other builders.",
+        "communityCta": "Open discussions",
+        "communityCtaLabel": "Open the BroWorld community discussions in a new tab",
+        "docs": "Documentation",
+        "docsDescription": "Browse implementation guides and API references for quick answers.",
+        "docsCta": "Read the docs",
+        "docsCtaLabel": "Read the BroWorld documentation"
+      },
+      "availability": {
+        "title": "When we're online",
+        "body": "Our distributed team monitors requests Monday through Friday and rotates weekend coverage for urgent issues."
+      }
+    },
+    "playground": {
+      "ui": {
+        "title": "UI Component Playground",
+        "description": "Review every base component with multiple variants, sizes, and accessibility states.",
+        "controls": {
+          "expandAll": "Expand all",
+          "collapseAll": "Collapse all"
+        },
+        "toggles": {
+          "locale": "Locale preview",
+          "direction": "Layout direction",
+          "theme": "Theme",
+          "density": "Control size"
+        },
+        "directions": {
+          "ltr": "LTR",
+          "rtl": "RTL"
+        },
+        "themes": {
+          "light": "Light",
+          "dark": "Dark"
+        },
+        "sizes": {
+          "sm": "Small",
+          "md": "Medium",
+          "lg": "Large"
+        },
+        "locales": {
+          "en": "English",
+          "ar": "Arabic"
+        },
+        "variants": {
+          "filled": "Filled",
+          "tonal": "Tonal",
+          "outline": "Outline",
+          "text": "Text",
+          "plain": "Plain"
+        },
+        "states": {
+          "default": "Default",
+          "disabled": "Disabled",
+          "loading": "Loading",
+          "leadingIcon": "Leading icon",
+          "trailingIcon": "Trailing icon",
+          "block": "Full width",
+          "focus": "Focused",
+          "error": "Error",
+          "success": "Success",
+          "checked": "Checked",
+          "indeterminate": "Indeterminate"
+        },
+        "inputTypes": {
+          "text": "Text",
+          "email": "Email",
+          "password": "Password",
+          "number": "Number",
+          "search": "Search",
+          "url": "URL"
+        },
+        "placeholders": {
+          "generic": "Enter a value",
+          "focus": "Auto-focused input",
+          "error": "Something went wrong",
+          "success": "Everything looks good",
+          "autogrow": "Describe your idea…",
+          "select": "Choose an option",
+          "selectMultiple": "Select integrations",
+          "fullName": "Ada Lovelace"
+        },
+        "examples": {
+          "buttonLabel": "Primary action",
+          "loading": "Loading…",
+          "primaryAction": "Continue",
+          "secondaryAction": "Learn more",
+          "fullWidth": "Take the full width",
+          "inputType": "{type} input",
+          "disabledValue": "Unavailable while disabled",
+          "textareaDefault": "Feedback textarea",
+          "textareaAutoGrow": "Auto growing notes",
+          "checkboxPrimary": "Email updates",
+          "checkboxIndeterminate": "Partially selected",
+          "checkboxDisabled": "Disabled checkbox",
+          "switchNotifications": "Enable notifications",
+          "switchDisabled": "Disabled switch",
+          "selectSingle": "Delivery channel",
+          "selectMultiple": "Team integrations",
+          "selectDisabledOptions": "Release channel",
+          "radioVertical": "Cadence options",
+          "radioHorizontal": "Payment methods",
+          "formFieldBasic": "Field with helper text",
+          "formFieldError": "Field with errors",
+          "formFieldCheckbox": "Field wrapping checkbox"
+        },
+        "feedback": {
+          "error": "Provide a valid response.",
+          "selectMethod": "Select a supported payment method.",
+          "invalidEmail": "Enter a valid email address."
+        },
+        "hints": {
+          "characterLimit": "Keep it under 240 characters.",
+          "checkbox": "You can mark more than one preference.",
+          "switch": "Switch represents an immediate action.",
+          "disabledOption": "Some options are unavailable right now.",
+          "radio": "Choose the plan that fits best.",
+          "required": "This field is required."
+        },
+        "notes": {
+          "autofocus": "Auto-focus is applied to show the focus style.",
+          "disabledChoice": "One option is disabled to demonstrate aria-disabled."
+        },
+        "sample": {
+          "textValue": "Hi from the playground!",
+          "multiline": "Let the team know how this feels.",
+          "longerText": "This textarea grows as you type so reviewers can stress-test the auto-grow behaviour."
+        },
+        "selectOptions": {
+          "email": "Email",
+          "sms": "SMS",
+          "push": "Push notification",
+          "alpha": "Alpha",
+          "beta": "Beta",
+          "release": "Release"
+        },
+        "radioOptions": {
+          "daily": "Daily summary",
+          "weekly": "Weekly digest",
+          "monthly": "Monthly report",
+          "card": "Credit card",
+          "paypal": "PayPal",
+          "bank": "Bank transfer"
+        },
+        "labels": {
+          "fullName": "Full name",
+          "email": "Email",
+          "preferences": "Preferences"
+        },
+        "groups": {
+          "buttons": {
+            "title": "Buttons",
+            "description": "Primary actions and secondary button styles."
+          },
+          "inputs": {
+            "title": "Inputs",
+            "description": "Text inputs and textareas with validation states."
+          },
+          "toggles": {
+            "title": "Toggles",
+            "description": "Checkboxes and switches for binary choices."
+          },
+          "selectors": {
+            "title": "Selectors",
+            "description": "Select menus and radio groups for choosing options."
+          },
+          "wrappers": {
+            "title": "Form wrappers",
+            "description": "FormField wrapper integrating labels, hints, and errors."
+          }
+        },
+        "sections": {
+          "buttonVariants": "Variants & sizes",
+          "buttonVariantsDescription": "Each button variant rendered across small, medium, and large sizes.",
+          "buttonStates": "States",
+          "buttonStatesDescription": "Loading, disabled, icon, and block button examples.",
+          "inputTypes": "Input types",
+          "inputTypesDescription": "BaseInput with different HTML input types and clearable behaviour.",
+          "inputStates": "States",
+          "inputStatesDescription": "Focused, success, error, and disabled input states.",
+          "textareaStates": "Textarea states",
+          "textareaStatesDescription": "Resizable textarea variations with hints and disabled view.",
+          "checkboxes": "Checkboxes",
+          "checkboxesDescription": "Checked, indeterminate, and disabled checkbox states.",
+          "switches": "Switches",
+          "switchesDescription": "Enabled and disabled switch controls.",
+          "selects": "Select menus",
+          "selectsDescription": "Single, multi-select, and disabled options examples.",
+          "radios": "Radio groups",
+          "radiosDescription": "Vertical and horizontal radio group layouts with keyboard support.",
+          "formFields": "FormField wrapper",
+          "formFieldsDescription": "Composable wrapper showing labels, hints, errors, and nested controls."
+        }
+      }
     }
   },
   "seo": {
+    "about": {
+      "title": "About",
+      "description": "Learn about our mission and team."
+    },
+    "help": {
+      "title": "Help",
+      "description": "FAQ and support resources."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch with our team."
+    },
     "profile": {
       "title": "个人资料",
       "description": "查看您的个人信息和账号活动。"
@@ -2368,59 +2771,17 @@
       "title": "密码与安全",
       "description": "管理登录凭据、双重验证以及受信任的设备。"
     },
-    "createWorld": {
-      "title": "Create world",
-      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
-    },
     "job": {
       "title": "Jobs",
       "description": "Plan, track, and optimise hiring programmes."
     },
+    "createWorld": {
+      "title": "Create world",
+      "description": "Plan a new BroWorld universe with templates for community, economy, and governance."
+    },
     "game": {
       "title": "Gaming",
       "description": "Deliver live game experiences, communities, and monetisation."
-    },
-    "calendar": {
-      "title": "日程",
-      "cardTitle": "日程概览",
-      "menuTitle": "今日事件",
-      "menuEmpty": "今天暂无事件",
-      "authNotice": "登录后即可查看并管理你的事件。",
-      "rangeAllDay": "全天",
-      "fallbackTitle": "未命名事件",
-      "actions": {
-        "newEvent": "新建事件"
-      },
-      "dialog": {
-        "createTitle": "新建事件",
-        "editTitle": "编辑事件",
-        "titleLabel": "事件标题",
-        "startLabel": "开始日期",
-        "endLabel": "结束日期",
-        "startTimeLabel": "开始时间",
-        "endTimeLabel": "结束时间",
-        "allDayLabel": "全天事件",
-        "privateLabel": "私密事件",
-        "locationLabel": "地点",
-        "descriptionLabel": "描述",
-        "save": "保存",
-        "cancel": "关闭",
-        "delete": "删除",
-        "confirmDelete": "删除事件",
-        "confirmDeleteMessage": "该操作无法撤销，确定要删除此事件吗？"
-      },
-      "validation": {
-        "title": "请填写标题。",
-        "startDate": "请选择开始日期。",
-        "startTime": "请选择开始时间。",
-        "endTime": "结束时间必须晚于开始时间。",
-        "range": "事件的结束时间必须晚于开始时间。"
-      },
-      "errors": {
-        "save": "暂时无法保存更改，请稍后再试。",
-        "delete": "暂时无法删除事件，请稍后再试。",
-        "load": "暂时无法加载事件，请稍后再试。"
-      }
     },
     "ecommerce": {
       "title": "E-commerce",
@@ -2550,6 +2911,9 @@
     }
   },
   "admin": {
+    "common": {
+      "comingSoon": "This module is coming soon."
+    },
     "metaTitle": "管理",
     "page": {
       "title": "管理中心",
@@ -2756,6 +3120,39 @@
           "page": {
             "title": "User data",
             "subtitle": "Review datasets powering identity, permissions, and engagement analytics."
+          },
+          "table": {
+            "search": "Search dataset",
+            "columns": {
+              "username": "Username",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "email": "Email",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status",
+              "actions": "Actions"
+            },
+            "empty": "No user records found."
+          },
+          "actions": {
+            "refresh": "Refresh"
+          },
+          "details": {
+            "title": "User details",
+            "close": "Close",
+            "empty": "Select a user to inspect their profile.",
+            "fields": {
+              "username": "Username",
+              "email": "Email",
+              "firstName": "First name",
+              "lastName": "Last name",
+              "language": "Language",
+              "locale": "Locale",
+              "timezone": "Timezone",
+              "enabled": "Status"
+            }
           }
         },
         "crons": {
@@ -2786,6 +3183,98 @@
           "page": {
             "title": "Scheduled publishing",
             "subtitle": "Audit cron jobs responsible for imports, social pushes, and automated publishing windows."
+          }
+        }
+      }
+    },
+    "jobManagement": {
+      "metaTitle": "Job management",
+      "page": {
+        "title": "Job management",
+        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Job data",
+          "page": {
+            "title": "Job data",
+            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
+          }
+        },
+        "crons": {
+          "metaTitle": "Job crons",
+          "page": {
+            "title": "Scheduled routines",
+            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
+          }
+        }
+      }
+    },
+    "ecommerceManagement": {
+      "metaTitle": "E-commerce management",
+      "page": {
+        "title": "E-commerce management",
+        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "E-commerce data",
+          "page": {
+            "title": "Commerce data",
+            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
+          }
+        },
+        "crons": {
+          "metaTitle": "E-commerce crons",
+          "page": {
+            "title": "Automated jobs",
+            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
+          }
+        }
+      }
+    },
+    "educationManagement": {
+      "metaTitle": "Education management",
+      "page": {
+        "title": "Education management",
+        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Education data",
+          "page": {
+            "title": "Learning data",
+            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
+          }
+        },
+        "crons": {
+          "metaTitle": "Education crons",
+          "page": {
+            "title": "Learning automations",
+            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
+          }
+        }
+      }
+    },
+    "gameManagement": {
+      "metaTitle": "Game management",
+      "page": {
+        "title": "Game management",
+        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
+      },
+      "sections": {
+        "data": {
+          "metaTitle": "Game data",
+          "page": {
+            "title": "Gameplay data",
+            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
+          }
+        },
+        "crons": {
+          "metaTitle": "Game crons",
+          "page": {
+            "title": "Scheduled operations",
+            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }
@@ -2888,25 +3377,41 @@
           "content": {
             "title": "内容管理",
             "description": "规划、发布与归档文章、活动以及学习资源。",
-            "tags": ["内容流程", "审核", "排期"],
+            "tags": [
+              "内容流程",
+              "审核",
+              "排期"
+            ],
             "status": "有12条内容等待编辑审核。"
           },
           "community": {
             "title": "社区与审核",
             "description": "配置审核规则，管理举报与处罚。",
-            "tags": ["举报", "处罚", "私信"],
+            "tags": [
+              "举报",
+              "处罚",
+              "私信"
+            ],
             "status": "平均响应时间：1小时42分。"
           },
           "commerce": {
             "title": "变现与优惠",
             "description": "管理订阅、优惠码和商业合作。",
-            "tags": ["订阅", "计费", "优惠券"],
+            "tags": [
+              "订阅",
+              "计费",
+              "优惠券"
+            ],
             "status": "本周转化率提升3.4%。"
           },
           "governance": {
             "title": "治理与合规",
             "description": "审计访问权限，管理敏感角色并准备合规报告。",
-            "tags": ["审计", "角色", "可追溯性"],
+            "tags": [
+              "审计",
+              "角色",
+              "可追溯性"
+            ],
             "status": "最近一次完整审计在5天前完成。"
           }
         }
@@ -3064,101 +3569,6 @@
           "page": {
             "title": "计划发布",
             "subtitle": "审查负责导入、社交分发和自动发布时间窗口的定时任务。"
-          }
-        }
-      }
-    },
-    "common": {
-      "comingSoon": "This module is coming soon."
-    },
-    "jobManagement": {
-      "metaTitle": "Job management",
-      "page": {
-        "title": "Job management",
-        "subtitle": "Configure hiring workflows and maintain every job listing from one hub."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Job data",
-          "page": {
-            "title": "Job data",
-            "subtitle": "Explore applicant pipelines, sourcing channels, and automated scoring datasets."
-          }
-        },
-        "crons": {
-          "metaTitle": "Job crons",
-          "page": {
-            "title": "Scheduled routines",
-            "subtitle": "Keep an eye on exports, reminders, and follow-up sequences running on a schedule."
-          }
-        }
-      }
-    },
-    "ecommerceManagement": {
-      "metaTitle": "E-commerce management",
-      "page": {
-        "title": "E-commerce management",
-        "subtitle": "Control catalogue updates, storefront configuration, and transactional operations."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "E-commerce data",
-          "page": {
-            "title": "Commerce data",
-            "subtitle": "Analyse inventory feeds, order exports, and financial reconciliation reports."
-          }
-        },
-        "crons": {
-          "metaTitle": "E-commerce crons",
-          "page": {
-            "title": "Automated jobs",
-            "subtitle": "Track synchronisation jobs for inventory, fulfilment, and payment notifications."
-          }
-        }
-      }
-    },
-    "educationManagement": {
-      "metaTitle": "Education management",
-      "page": {
-        "title": "Education management",
-        "subtitle": "Manage courses, cohorts, and learning experiences offered to your community."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Education data",
-          "page": {
-            "title": "Learning data",
-            "subtitle": "Review enrolments, assessments, and progress datasets for academic insight."
-          }
-        },
-        "crons": {
-          "metaTitle": "Education crons",
-          "page": {
-            "title": "Learning automations",
-            "subtitle": "Supervise scheduled reminders, curriculum releases, and evaluation pipelines."
-          }
-        }
-      }
-    },
-    "gameManagement": {
-      "metaTitle": "Game management",
-      "page": {
-        "title": "Game management",
-        "subtitle": "Oversee game catalogues, live events, and engagement loops in one place."
-      },
-      "sections": {
-        "data": {
-          "metaTitle": "Game data",
-          "page": {
-            "title": "Gameplay data",
-            "subtitle": "Dive into leaderboards, match telemetry, and monetisation analytics."
-          }
-        },
-        "crons": {
-          "metaTitle": "Game crons",
-          "page": {
-            "title": "Scheduled operations",
-            "subtitle": "Validate cron jobs that rotate events, refresh rewards, and broadcast updates."
           }
         }
       }
