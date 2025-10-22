@@ -1355,14 +1355,22 @@ const sidebarItems = computed<LayoutSidebarItem[]>(() => {
     }
   }
 
+  const encodedSlug = encodeURIComponent(slug);
+  const worldBasePath = `/world/${encodedSlug}`;
+
   return Array.from(pluginIds)
     .map((pluginId) => pluginId.trim())
     .filter((pluginId) => pluginId && !excludedSidebarPluginIds.has(pluginId))
     .map((normalized) => {
+      const destination =
+        normalized === "blog"
+          ? worldBasePath
+          : `${worldBasePath}/${encodeURIComponent(normalized)}`;
+
       return {
         key: `plugin-${normalized}`,
         label: formatPluginLabel(normalized),
-        to: `/world/${encodeURIComponent(slug)}/${encodeURIComponent(normalized)}`,
+        to: destination,
         translate: false,
       } satisfies LayoutSidebarItem;
     })
