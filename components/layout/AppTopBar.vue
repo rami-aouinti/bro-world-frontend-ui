@@ -17,7 +17,6 @@
     ></span>
     <AppBrand class="ml-2 mr-3 px-3 sm:mr-4 sm:px-4 md:mr-6 md:px-6" />
     <AppNavButtons
-      v-if="!props.isMobile"
       class="ml-2"
       :is-mobile="props.isMobile"
       :icon-trigger-classes="iconTriggerClasses"
