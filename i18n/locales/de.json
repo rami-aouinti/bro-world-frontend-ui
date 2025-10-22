@@ -2271,6 +2271,8 @@
         "active": "Aktiv",
         "activateAria": "{world} als aktive Welt festlegen"
       },
+      "participantsLabel": "{count} Teilnehmende",
+      "ratingLabel": "Bewertung {rating}",
       "empty": {
         "title": "Keine Welten verfügbar",
         "description": "Schau bald wieder vorbei, um neue Spaces zu entdecken, oder erstelle deine eigene Welt."

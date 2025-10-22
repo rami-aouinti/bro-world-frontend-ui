@@ -54,9 +54,7 @@
     </div>
 
     <div class="world-explorer-card__actions">
-      <!-- SI actif : on entre (navigation SPA fiable via :to objet) -->
       <v-btn
-          v-if="isActive"
           class="world-explorer-card__action"
           variant="outlined"
           color="primary"
@@ -69,20 +67,52 @@
         {{ t("pages.index.actions.enter") }}
       </v-btn>
 
-      <!-- SINON : on active (pas de navigation ici) -->
       <v-btn
-          v-else
           class="world-explorer-card__action"
           variant="outlined"
           color="primary"
           density="comfortable"
           size="large"
           block
-          :aria-label="t('pages.index.actions.activateAria', { world: world.name })"
+          :disabled="isActive"
+          :aria-label="activateButtonAriaLabel"
           @click="handleActivate"
       >
-        {{ t("pages.index.actions.setActive") }}
+        {{ activateButtonLabel }}
       </v-btn>
+    </div>
+
+    <div
+        v-if="showFooter"
+        class="world-explorer-card__footer"
+    >
+      <div
+          v-if="hasParticipants"
+          class="world-explorer-card__stat"
+      >
+        <Icon
+            name="lucide:users"
+            class="world-explorer-card__stat-icon"
+            aria-hidden="true"
+        />
+        <span class="world-explorer-card__stat-text">
+          {{ participantsLabel }}
+        </span>
+      </div>
+
+      <div
+          v-if="hasRating"
+          class="world-explorer-card__stat"
+      >
+        <Icon
+            name="lucide:star"
+            class="world-explorer-card__stat-icon"
+            aria-hidden="true"
+        />
+        <span class="world-explorer-card__stat-text">
+          {{ ratingLabel }}
+        </span>
+      </div>
     </div>
   </SidebarCard>
 </template>
@@ -125,6 +155,67 @@ const truncatedWorldName = computed(() => {
   return name.length > 7 ? name.slice(0, 7) + "…" : name;
 });
 
+const participantsCount = computed(() => {
+  const value = props.world.participantsCount;
+  return typeof value === "number" ? Math.max(0, Math.round(value)) : null;
+});
+
+const formattedParticipantsCount = computed(() => {
+  if (participantsCount.value === null) {
+    return "";
+  }
+
+  return new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(participantsCount.value);
+});
+
+const participantsLabel = computed(() =>
+    participantsCount.value === null
+      ? ""
+      : t("pages.index.participantsLabel", { count: formattedParticipantsCount.value }),
+);
+
+const ratingValue = computed(() => {
+  const value = props.world.rating;
+
+  if (typeof value !== "number") {
+    return null;
+  }
+
+  const clamped = Math.min(Math.max(value, 0), 5);
+  return Math.round(clamped * 10) / 10;
+});
+
+const formattedRating = computed(() => {
+  if (ratingValue.value === null) {
+    return "";
+  }
+
+  const hasDecimal = Math.abs(ratingValue.value % 1) > Number.EPSILON;
+  return ratingValue.value.toFixed(hasDecimal ? 1 : 0);
+});
+
+const ratingLabel = computed(() =>
+    ratingValue.value === null
+      ? ""
+      : t("pages.index.ratingLabel", { rating: formattedRating.value }),
+);
+
+const hasParticipants = computed(() => participantsCount.value !== null);
+const hasRating = computed(() => ratingValue.value !== null);
+const showFooter = computed(() => hasParticipants.value || hasRating.value);
+
+const activateButtonLabel = computed(() =>
+    props.isActive
+      ? t("pages.index.actions.active")
+      : t("pages.index.actions.setActive"),
+);
+
+const activateButtonAriaLabel = computed(() =>
+    props.isActive
+      ? t("pages.index.actions.active")
+      : t("pages.index.actions.activateAria", { world: props.world.name }),
+);
+
 const ariaLabel = computed(() =>
     t("pages.index.cardAria", {
       name: props.world.name,
@@ -133,6 +224,10 @@ const ariaLabel = computed(() =>
 );
 
 function handleActivate() {
+  if (props.isActive) {
+    return;
+  }
+
   emit("activate", props.world.id);
 }
 </script>
@@ -146,31 +241,15 @@ function handleActivate() {
   height: 100%;
   border-radius: 1rem;
   padding: 1.25rem;
-  background:
-      radial-gradient(120% 100% at 10% 0%, color-mix(in oklab, hsl(var(--primary)) 12%, transparent) 0%, transparent 60%),
-      linear-gradient(180deg, color-mix(in oklab, hsl(var(--card)) 96%, transparent) 0%, color-mix(in oklab, hsl(var(--card)) 85%, transparent) 100%);
-  border: 1px solid color-mix(in oklab, hsl(var(--primary)) 22%, hsl(var(--border)));
-  box-shadow:
-      0 1px 0 0 color-mix(in oklab, hsl(var(--primary)) 20%, transparent) inset,
-      0 12px 30px -12px rgba(0,0,0,.45);
-  backdrop-filter: blur(6px);
   transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
   isolation: isolate;
 }
 .world-explorer-card::after {
   content: "";
   position: absolute; inset: 0; pointer-events: none; opacity: .7;
-  background-image:
-      radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.12) 50%, transparent 52%),
-      radial-gradient(1.5px 1.5px at 75% 65%, rgba(255,255,255,.1) 50%, transparent 52%),
-      radial-gradient(1.2px 1.2px at 40% 80%, rgba(255,255,255,.08) 50%, transparent 52%);
 }
 .world-explorer-card:hover {
   transform: translateY(-4px);
-  box-shadow:
-      0 1px 0 0 color-mix(in oklab, hsl(var(--primary)) 25%, transparent) inset,
-      0 16px 44px -14px rgba(0,0,0,.55);
-  border-color: color-mix(in oklab, hsl(var(--primary)) 36%, hsl(var(--border)));
 }
 .world-explorer-card:focus-within {
   outline: 0;
@@ -193,6 +272,18 @@ function handleActivate() {
 
 .world-explorer-card__actions { display: grid; gap: .6rem; margin-top: .25rem; }
 .world-explorer-card__action { text-transform: none; font-weight: 600; border-radius: .9rem; }
+
+.world-explorer-card__footer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  color: color-mix(in oklab, hsl(var(--muted-foreground)), hsl(var(--foreground)) 35%);
+}
+
+.world-explorer-card__stat { display: inline-flex; align-items: center; gap: .4rem; font-weight: 600; font-size: .85rem; }
+.world-explorer-card__stat-icon { width: 1rem; height: 1rem; opacity: .9; }
+.world-explorer-card__stat-text { display: inline-flex; align-items: center; gap: .25rem; }
 
 @media (prefers-reduced-motion: reduce) {
   .world-explorer-card { transition: none; }

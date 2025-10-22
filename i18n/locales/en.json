@@ -2255,6 +2255,8 @@
         "active": "Active",
         "activateAria": "Set {world} as the active world"
       },
+      "participantsLabel": "{count} participants",
+      "ratingLabel": "{rating} rating",
       "empty": {
         "title": "No worlds available",
         "description": "Check back soon to explore new spaces or create your own world."

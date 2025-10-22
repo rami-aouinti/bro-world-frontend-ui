@@ -2271,6 +2271,8 @@
         "active": "نشط",
         "activateAria": "تعيين {world} كالعالم النشط"
       },
+      "participantsLabel": "{count} مشارك",
+      "ratingLabel": "تقييم {rating}",
       "empty": {
         "title": "لا توجد عوالم متاحة",
         "description": "عد لاحقًا لاستكشاف مساحات جديدة أو أنشئ عالمك الخاص."

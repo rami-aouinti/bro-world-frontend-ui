@@ -169,4 +169,18 @@ describe("components/world/WorldExplorerCard", () => {
     expect(buttons[0].text()).toBe("pages.index.actions.enter");
     expect(buttons[0].attributes("to")).toBe("/world/test-world");
   });
+
+  it("renders participants and rating when provided", () => {
+    const wrapper = mount(WorldExplorerCard, {
+      props: {
+        world: createWorld({ participantsCount: 42, rating: 4.7 }),
+      },
+      global: {
+        stubs: globalStubs,
+      },
+    });
+
+    expect(wrapper.text()).toContain("pages.index.participantsLabel:{\"count\":\"42\"}");
+    expect(wrapper.text()).toContain("pages.index.ratingLabel:{\"rating\":\"4.7\"}");
+  });
 });
