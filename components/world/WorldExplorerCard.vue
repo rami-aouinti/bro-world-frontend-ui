@@ -118,6 +118,7 @@ import { Icon } from "#components";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import { useAlertPanel } from "~/stores/useAlertPanel";
 import { useWorldMemberships } from "~/stores/world-memberships";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import type { SiteWorldSettings } from "~/types/settings";
 import type { WorldMembership } from "~/types/world-membership";
 
@@ -133,10 +134,11 @@ const router = useRouter();
 const alertPanel = useAlertPanel();
 const membershipStore = useWorldMemberships();
 
-/** Utiliser un OBJET route => plus fiable avec v-btn/RouterLink */
+const localePath = useResolvedLocalePath();
+
 const targetRoute = computed(() => {
   const slug = props.world.slug?.trim() || props.world.id;
-  return { path: `/world/${slug}` };
+  return localePath({ name: "world-slug", params: { slug } });
 });
 
 const visibilityLabel = computed(() => {
