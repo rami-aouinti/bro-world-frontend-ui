@@ -2555,6 +2555,25 @@
       "title": "管理中心",
       "subtitle": "只需几次点击即可掌控整个平台，监控关键指标并启用合适的功能。"
     },
+    "statistics": {
+      "metaTitle": "统计",
+      "page": {
+        "title": "平台统计",
+        "subtitle": "随时掌握社区的使用趋势和关键健康指标。"
+      },
+      "cards": {
+        "users": {
+          "title": "注册用户",
+          "description": "当前平台上可用账户的总数。"
+        }
+      },
+      "actions": {
+        "refresh": "刷新数据"
+      },
+      "errors": {
+        "load": "无法加载统计数据。"
+      }
+    },
     "settings": {
       "metaTitle": "Site settings",
       "page": {

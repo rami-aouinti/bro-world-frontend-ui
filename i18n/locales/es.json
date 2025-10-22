@@ -2758,6 +2758,25 @@
       "title": "Centro de administración",
       "subtitle": "Gestiona toda la plataforma, sigue los indicadores clave y activa las palancas correctas en cuestión de clics."
     },
+    "statistics": {
+      "metaTitle": "Estadísticas",
+      "page": {
+        "title": "Estadísticas de la plataforma",
+        "subtitle": "Supervisa las tendencias de uso y los indicadores clave de salud de tu comunidad."
+      },
+      "cards": {
+        "users": {
+          "title": "Usuarios registrados",
+          "description": "Número total de cuentas actualmente disponibles en la plataforma."
+        }
+      },
+      "actions": {
+        "refresh": "Actualizar datos"
+      },
+      "errors": {
+        "load": "No se pudieron cargar las estadísticas."
+      }
+    },
     "settings": {
       "metaTitle": "Site settings",
       "page": {

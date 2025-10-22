@@ -2923,6 +2923,25 @@
       "title": "Administrationsbereich",
       "subtitle": "Steuern Sie die gesamte Plattform, verfolgen Sie Kennzahlen und aktivieren Sie die richtigen Hebel mit nur wenigen Klicks."
     },
+    "statistics": {
+      "metaTitle": "Statistiken",
+      "page": {
+        "title": "Plattformstatistiken",
+        "subtitle": "Behalten Sie Nutzungstrends und wichtige Gesundheitsindikatoren Ihrer Community im Blick."
+      },
+      "cards": {
+        "users": {
+          "title": "Registrierte Benutzer",
+          "description": "Gesamtzahl der derzeit auf der Plattform verfügbaren Konten."
+        }
+      },
+      "actions": {
+        "refresh": "Daten aktualisieren"
+      },
+      "errors": {
+        "load": "Statistiken konnten nicht geladen werden."
+      }
+    },
     "settings": {
       "metaTitle": "Site settings",
       "page": {

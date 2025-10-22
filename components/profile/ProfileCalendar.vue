@@ -1135,11 +1135,13 @@ function syncSharedState() {
   calendarSharedState.value = buildSharedStatePayload();
 }
 
-watch([calendarEvents, upcomingEvents, selectedEvent], () => {
-  syncSharedState();
-});
-
-syncSharedState();
+watch(
+  [calendarEvents, upcomingEvents, selectedEvent],
+  () => {
+    syncSharedState();
+  },
+  { immediate: true, flush: 'post' },
+);
 
 onBeforeUnmount(() => {
   calendarSharedState.value = {
