@@ -12,6 +12,10 @@ export interface LayoutSidebarItem {
 
 export const ADMIN_ROLE_KEYS = ["ROLE_ROOT", "ROLE_ADMIN"] as const;
 
+export interface BuildSidebarItemsOptions {
+  menus?: SiteMenuItem[] | null | undefined;
+}
+
 function isMenuVisible(menu: SiteMenuItem, canAccessAdmin: boolean): boolean {
   if (menu.requiresAdmin && !canAccessAdmin) {
     return false;
@@ -98,8 +102,14 @@ function sortMenus(menus: SiteMenuItem[]): SiteMenuItem[] {
 export function buildSidebarItems(
   settings: SiteSettings | null | undefined,
   canAccessAdmin: boolean,
+  options: BuildSidebarItemsOptions = {},
 ): LayoutSidebarItem[] {
-  const source = settings?.menus?.length ? settings.menus : getDefaultSiteSettings().menus;
+  const candidateMenus = options.menus;
+  const source = candidateMenus?.length
+    ? candidateMenus
+    : settings?.menus?.length
+      ? settings.menus
+      : getDefaultSiteSettings().menus;
   const usedKeys = new Set<string>();
 
   return sortMenus(source)
