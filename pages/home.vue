@@ -157,6 +157,7 @@ import StoriesStripSkeleton from "~/components/stories/StoriesStripSkeleton.vue"
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNavbarSearchQuery, filterPostsByQuery, normalizeSearchQuery } from "~/composables/useNavbarSearch";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
+import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 import { blogPostCardLoader, prefetchBlogPostCard } from "~/lib/prefetch/blog-post-card";
 import type { ReactionType } from "~/lib/mock/blog";
 import { useAuthSession } from "~/stores/auth-session";
@@ -452,6 +453,9 @@ const reactionEmojis: Record<ReactionType, string> = {
 };
 
 const { t } = useI18n();
+usePageLoadingOverlay({
+  loader: () => import("~/components/loading/overlays/HomeFeedLoadingOverlay.vue"),
+});
 
 const pageDescription = computed(() => t("blog.hero.description"));
 

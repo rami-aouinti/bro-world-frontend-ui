@@ -278,6 +278,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import ProfilePhotosSidebar from "~/components/profile/ProfilePhotosSidebar.vue";
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 import type {
   AlbumSummary,
   PhotoItem,
@@ -287,6 +288,9 @@ import type {
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t, locale, localeProperties } = useI18n();
+usePageLoadingOverlay({
+  loader: () => import("~/components/loading/overlays/ProfilePhotosLoadingOverlay.vue"),
+});
 const runtimeConfig = useRuntimeConfig();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);

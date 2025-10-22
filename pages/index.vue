@@ -96,12 +96,16 @@ import { definePageMeta, useLocalePath, useSeoMeta } from "#imports";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
 import WorldExplorerCard from "~/components/world/WorldExplorerCard.vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { usePageLoadingOverlay } from "~/composables/usePageLoadingOverlay";
 import { useWorldSearchQuery } from "~/composables/useWorldSearch";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings } from "~/types/settings";
 import { useWorldMembershipsStore } from "~/stores/world-memberships";
 
 const { t } = useI18n();
+usePageLoadingOverlay({
+  loader: () => import("~/components/loading/overlays/WorldExplorerLoadingOverlay.vue"),
+});
 const siteSettingsState = useSiteSettingsState();
 const membershipStore = useWorldMembershipsStore();
 
