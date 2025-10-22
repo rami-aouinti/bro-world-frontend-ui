@@ -103,9 +103,10 @@ const emit = defineEmits<{ (event: "activate", worldId: string): void }>();
 const { t } = useI18n();
 
 /** Utiliser un OBJET route => plus fiable avec v-btn/RouterLink */
-const targetRoute = computed(() => ({
-  path: props.world.slug === "home" ? "/home" : `/world/${props.world.slug}`,
-}));
+const targetRoute = computed(() => {
+  const slug = props.world.slug?.trim() || props.world.id;
+  return { path: `/world/${slug}` };
+});
 
 const visibilityLabel = computed(() => {
   const visibility = (props.world.visibility ?? "private").toLowerCase();

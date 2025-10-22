@@ -13,7 +13,7 @@ import {
   type BlogApiResponse,
   type BlogCommentWithReplies,
   type BlogPost,
-  blogSampleResponse,
+  resolveBlogSampleResponse,
 } from "~/lib/mock/blog";
 import { clearAuthSession, getSessionToken, withAuthHeaders } from "../auth/session";
 
@@ -158,6 +158,10 @@ function buildListQuery(params: NormalizedPostsListQuery) {
     limit: params.pageSize,
   };
 
+  if (params.worldId) {
+    query.worldId = params.worldId;
+  }
+
   if (params.sort) {
     query.sort = params.sort;
   }
@@ -224,7 +228,11 @@ export async function fetchPostsListFromSource(
     return { payload: fallbackResponse, visibility: "public" };
   } catch (error) {
     console.error("Falling back to mock posts list", error);
-    return { payload: blogSampleResponse, visibility: "public" };
+    const fallbackWorldId = params.worldId ?? null;
+    return {
+      payload: resolveBlogSampleResponse(fallbackWorldId),
+      visibility: "public",
+    };
   }
 }
 

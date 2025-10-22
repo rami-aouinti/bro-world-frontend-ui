@@ -1,8 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createSSRApp, h } from "vue";
+import { computed, createSSRApp, h, ref } from "vue";
 
 import { createPinia } from "~/lib/pinia-shim";
 import type { BlogCommentWithReplies, BlogPost } from "~/lib/mock/blog";
+import type { SiteSettings } from "~/types/settings";
 import {
   __getNuxtStateRef,
   __requestFetchSpy,
@@ -40,6 +41,8 @@ interface PostsListResponse {
 }
 
 function makePost(id: string, overrides: Partial<BlogPost> = {}): BlogPost {
+  const numericId = Number.parseInt(id.replace(/[^0-9]/g, ""), 10) || 1;
+
   return {
     id,
     title: `Title ${id}`,
@@ -49,7 +52,7 @@ function makePost(id: string, overrides: Partial<BlogPost> = {}): BlogPost {
     slug: `slug-${id}`,
     medias: [],
     isReacted: null,
-    publishedAt: new Date(2024, 0, Number(id.replace("post-", "")) + 1).toISOString(),
+    publishedAt: new Date(2024, 0, numericId + 1).toISOString(),
     sharedFrom: null,
     reactions_count: 1,
     totalComments: 0,
@@ -739,5 +742,178 @@ describe("posts store", () => {
 
     expect(cacheRef!.value[postId]).toBeUndefined();
     expect(timestampRef!.value[postId]).toBeUndefined();
+  });
+
+  it("includes the active world identifier when fetching posts", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+    const { getDefaultSiteSettings } = await import("~/lib/settings/defaults");
+    const { useSiteSettingsState } = await import("~/composables/useSiteSettingsState");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    let expectedWorldId: string | null = null;
+    app.runWithContext(() => {
+      const defaults = getDefaultSiteSettings();
+      const siteSettingsState = useSiteSettingsState();
+      siteSettingsState.value = {
+        ...defaults,
+        activeWorldId: defaults.worlds?.[0]?.id ?? "home",
+      };
+
+      expectedWorldId = siteSettingsState.value?.activeWorldId ?? null;
+      store = usePostsStore();
+    });
+
+    const posts = [makePost("post-1")];
+    const cachedAtIso = new Date().toISOString();
+
+    fetchSpy.mockResolvedValueOnce({
+      data: {
+        data: posts,
+        meta: {
+          current_page: 1,
+          per_page: 1,
+          total: 1,
+          cached_at: cachedAtIso,
+          from_cache: false,
+        },
+      },
+    });
+
+    fetchSpy.mockResolvedValueOnce({
+      data: posts,
+      page: 1,
+      limit: 1,
+      count: 1,
+      cachedAt: Date.parse(cachedAtIso),
+      revalidatedAt: null,
+      fromCache: false,
+    });
+
+    await store.fetchPosts({ params: { pageSize: 1 } });
+
+    expect(fetchSpy).toHaveBeenNthCalledWith(
+      1,
+      expect.stringContaining("/v1/posts"),
+      expect.objectContaining({
+        method: "GET",
+        query: expect.objectContaining({ page: 1, pageSize: 1, worldId: expectedWorldId ?? expect.any(String) }),
+      }),
+    );
+    expect(fetchSpy).toHaveBeenNthCalledWith(
+      2,
+      expect.stringContaining("public/post"),
+      expect.objectContaining({
+        method: "GET",
+        query: expect.objectContaining({ page: 1, pageSize: 1, worldId: expectedWorldId ?? expect.any(String) }),
+      }),
+    );
+  });
+
+  it("resets cached posts when the active world changes", async () => {
+    const { usePostsStore } = await import("~/stores/posts");
+    const { getDefaultSiteSettings } = await import("~/lib/settings/defaults");
+    const { useSiteSettingsState } = await import("~/composables/useSiteSettingsState");
+
+    const app = createSSRApp({
+      render: () => h("div"),
+    });
+
+    const pinia = createPinia();
+    app.use(pinia);
+
+    let store!: ReturnType<typeof usePostsStore>;
+    let siteSettingsState!: ReturnType<typeof useSiteSettingsState>;
+    app.runWithContext(() => {
+      const defaults = getDefaultSiteSettings();
+      siteSettingsState = useSiteSettingsState();
+      siteSettingsState.value = {
+        ...defaults,
+        activeWorldId: defaults.worlds?.[0]?.id ?? null,
+      };
+
+      store = usePostsStore();
+    });
+
+    const firstWorldId = siteSettingsState.value?.activeWorldId ?? "home";
+    const alternateWorld = siteSettingsState.value?.worlds?.find((world) => world.id !== firstWorldId);
+
+    expect(alternateWorld).toBeDefined();
+
+    const firstPosts = [makePost("post-home-1")];
+    const timestamp = new Date().toISOString();
+
+    fetchSpy.mockResolvedValueOnce({
+      data: {
+        data: firstPosts,
+        meta: {
+          current_page: 1,
+          per_page: 1,
+          total: 1,
+          cached_at: timestamp,
+          from_cache: false,
+        },
+      },
+    });
+    fetchSpy.mockResolvedValueOnce({
+      data: firstPosts,
+      page: 1,
+      limit: 1,
+      count: 1,
+      cachedAt: Date.parse(timestamp),
+      revalidatedAt: null,
+      fromCache: false,
+    });
+
+    await store.fetchPosts({ params: { pageSize: 1 } });
+    expect(store.posts.value.map((post) => post.id)).toEqual(["post-home-1"]);
+
+    fetchSpy.mockReset();
+
+    siteSettingsState.value = {
+      ...siteSettingsState.value!,
+      activeWorldId: alternateWorld!.id,
+    };
+
+    const secondPosts = [makePost("post-alt-1")];
+
+    fetchSpy.mockResolvedValueOnce({
+      data: {
+        data: secondPosts,
+        meta: {
+          current_page: 1,
+          per_page: 1,
+          total: 1,
+          cached_at: timestamp,
+          from_cache: false,
+        },
+      },
+    });
+    fetchSpy.mockResolvedValueOnce({
+      data: secondPosts,
+      page: 1,
+      limit: 1,
+      count: 1,
+      cachedAt: Date.parse(timestamp),
+      revalidatedAt: null,
+      fromCache: false,
+    });
+
+    await store.fetchPosts({ force: true, params: { pageSize: 1 } });
+
+    expect(fetchSpy).toHaveBeenNthCalledWith(
+      1,
+      expect.any(String),
+      expect.objectContaining({
+        query: expect.objectContaining({ worldId: alternateWorld!.id }),
+      }),
+    );
+    expect(store.posts.value.map((post) => post.id)).toEqual(["post-alt-1"]);
   });
 });

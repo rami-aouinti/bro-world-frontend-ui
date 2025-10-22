@@ -208,6 +208,7 @@ export function normalizeListQuery(
   }
 
   const authorId = unwrap(input.authorId)?.trim();
+  const worldId = unwrap(input.worldId)?.trim() || null;
 
   if (authorId) {
     filter.authorId = authorId;
@@ -218,6 +219,7 @@ export function normalizeListQuery(
     pageSize,
     sort,
     filter,
+    worldId,
   };
 }
 
@@ -255,6 +257,7 @@ export function getPostsListCacheKey(
     params.pageSize,
     sortHash,
     filterHash,
+    params.worldId ?? "global",
     visibility,
   );
 }
