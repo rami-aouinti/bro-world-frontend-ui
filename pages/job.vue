@@ -1,7 +1,7 @@
 <template>
   <JobPageContent />
 </template>
-
+ 
 <script setup lang="ts">
 import JobPageContent from "~/components/job/JobPageContent.vue";
 
