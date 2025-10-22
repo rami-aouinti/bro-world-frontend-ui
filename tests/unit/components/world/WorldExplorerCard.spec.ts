@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import { defineComponent, h, nextTick } from "vue";
+import { defineComponent, h, nextTick, ref } from "vue";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import WorldExplorerCard from "~/components/world/WorldExplorerCard.vue";
@@ -29,20 +29,16 @@ vi.mock("~/lib/api/fetcher", () => ({
   resolveApiFetcher: () => fetcherMock,
 }));
 
-vi.mock("#imports", () => {
-  const { ref } = require("vue");
+vi.mock("#imports", () => ({
+  useState: (key: string, init: () => unknown) => {
+    if (!stateRegistry.has(key)) {
+      const value = typeof init === "function" ? (init as () => unknown)() : init;
+      stateRegistry.set(key, ref(value));
+    }
 
-  return {
-    useState: (key: string, init: () => unknown) => {
-      if (!stateRegistry.has(key)) {
-        const value = typeof init === "function" ? (init as () => unknown)() : init;
-        stateRegistry.set(key, ref(value));
-      }
-
-      return stateRegistry.get(key);
-    },
-  };
-});
+    return stateRegistry.get(key);
+  },
+}));
 
 vi.mock("vue-i18n", () => ({
   useI18n: () => ({

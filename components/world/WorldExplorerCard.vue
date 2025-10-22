@@ -220,6 +220,33 @@ const isMembershipActive = computed(
 const isActivating = computed(() => membershipStore.isActivating(props.world.id));
 const isEntering = computed(() => membershipStore.isEntering(props.world.id));
 const isEnterDisabled = computed(() => !isMembershipActive.value || isEntering.value);
+const statusChipColor = computed(() => {
+  if (membershipStatus.value === "pending") {
+    return "warning";
+  }
+
+  if (membershipStatus.value === "denied") {
+    return "error";
+  }
+
+  if (isMembershipActive.value) {
+    return "success";
+  }
+
+  if (!hasRating.value || ratingValue.value === null) {
+    return "primary";
+  }
+
+  if (ratingValue.value >= 4) {
+    return "success";
+  }
+
+  if (ratingValue.value >= 2.5) {
+    return "warning";
+  }
+
+  return "error";
+});
 const requiresAccessRequest = computed(
   () => isPrivateWorld.value && !isMembershipActive.value && !isOwner.value,
 );
