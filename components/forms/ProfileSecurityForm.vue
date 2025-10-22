@@ -1,25 +1,4 @@
 <template>
-  <header class="mb-6">
-    <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between gap-4">
-      <div>
-        <h4
-          id="security-title"
-          class="text-h4 font-weight-bold mb-2"
-        >
-          {{ t("pages.profileSecurity.title") }}
-        </h4>
-      </div>
-      <v-btn
-        color="primary"
-        size="large"
-        class="flex-shrink-0"
-        @click="handleSubmit"
-      >
-        {{ t("pages.profileSecurity.actions.save") }}
-      </v-btn>
-    </div>
-  </header>
-
   <v-row
     align="stretch"
     dense
@@ -30,18 +9,23 @@
         padding="none"
         glow
       >
-        <div class="d-flex flex-column gap-6">
+        <div class="d-flex flex-column center gap-3">
           <section aria-labelledby="password-section-title">
-            <div class="mb-4">
-              <h2
+            <div class="d-inline-flex mb-4">
+              <h4
                 id="password-section-title"
                 class="text-h5 font-weight-semibold mb-1"
               >
                 {{ t("pages.profileSecurity.sections.password.title") }}
-              </h2>
-              <p class="text-body-2 text-medium-emphasis mb-0">
-                {{ t("pages.profileSecurity.sections.password.description") }}
-              </p>
+              </h4>
+              <v-btn
+                  color="primary"
+                  size="large"
+                  class="flex-shrink-0"
+                  @click="handleSubmit"
+              >
+                {{ t("pages.profileSecurity.actions.save") }}
+              </v-btn>
             </div>
 
             <v-form @submit.prevent="handleSubmit">
@@ -109,8 +93,6 @@
               </v-row>
             </v-form>
           </section>
-
-          <v-divider />
 
           <section aria-labelledby="sessions-section-title">
             <div class="mb-4">

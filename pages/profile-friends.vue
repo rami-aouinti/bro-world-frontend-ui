@@ -5,23 +5,17 @@
       aria-describedby="profile-friends-subtitle"
     >
       <SidebarCard
-        class="text-card-foreground pa-6"
-        glow
+          class="text-card-foreground px-3 py-3"
+          glow
       >
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
           <div class="flex-grow-1">
-            <h1
+            <h4
               id="profile-friends-title"
               class="text-h4 font-weight-bold mb-2"
             >
               {{ t("pages.profileFriends.title") }}
-            </h1>
-            <p
-              id="profile-friends-subtitle"
-              class="text-body-1 text-medium-emphasis mb-4"
-            >
-              {{ t("pages.profileFriends.subtitle") }}
-            </p>
+            </h4>
             <div class="d-flex flex-wrap gap-4">
               <div
                 v-for="stat in heroStats"
@@ -209,8 +203,8 @@
       <v-row dense>
         <v-col cols="12">
           <SidebarCard
-            class="text-card-foreground pa-6 h-100"
-            glow
+              class="text-card-foreground px-3 py-3"
+              glow
           >
             <h2
               id="friend-suggestions-title"
@@ -334,6 +328,7 @@ import ProfileFriendsSidebar from "~/components/profile/ProfileFriendsSidebar.vu
 import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useProfileStore } from "~/stores/profile";
 import type { FriendCard, FriendEntry } from "~/types/pages/profile";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();

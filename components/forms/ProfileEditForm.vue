@@ -10,18 +10,12 @@
     >
       <div class="d-flex flex-column flex-md-row align-md-center justify-space-between gap-6">
         <div>
-          <h1
+          <h4
             id="profile-edit-title"
             class="text-h4 font-weight-bold mb-2"
           >
             {{ t("pages.profileEdit.title") }}
-          </h1>
-          <p
-            id="profile-edit-subtitle"
-            class="text-body-1 text-medium-emphasis mb-0"
-          >
-            {{ t("pages.profileEdit.subtitle") }}
-          </p>
+          </h4>
         </div>
         <div class="d-flex gap-3">
           <v-btn
@@ -47,7 +41,7 @@
     v-if="formErrors.length"
     type="error"
     variant="tonal"
-    class="mb-6"
+    class="mb-3"
     border="start"
     border-color="error"
   >

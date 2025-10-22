@@ -5,8 +5,8 @@
       aria-describedby="profile-photos-subtitle"
     >
       <SidebarCard
-        class="text-card-foreground pa-6"
-        glow
+          class="text-card-foreground px-3 py-3"
+          glow
       >
         <div class="d-flex flex-column flex-lg-row align-lg-center justify-space-between gap-6">
           <div class="flex-grow-1">
@@ -423,6 +423,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useProfileSidebarContent } from "~/composables/useProfileSidebarContent";
 import type { AlbumSummary, PhotoItem } from "~/types/pages/profile";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const { t, locale, localeProperties } = useI18n();
 const runtimeConfig = useRuntimeConfig();

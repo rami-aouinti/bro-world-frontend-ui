@@ -1,12 +1,10 @@
 <template>
   <main
-    class="py-8"
     aria-labelledby="profile-password-title"
   >
-    <v-card
-      class="auth-card border-radius-xl overflow-visible"
-      rounded="xl"
-      elevation="24"
+    <SidebarCard
+        class="text-card-foreground px-3 py-3"
+        glow
     >
       <v-sheet
         class="mx-auto"
@@ -24,13 +22,14 @@
       <div class="pa-6 auth-card__form">
         <AuthResetPasswordForm />
       </div>
-    </v-card>
+    </SidebarCard>
   </main>
 </template>
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const AuthResetPasswordForm = defineAsyncComponent({
   loader: () => import("~/components/auth/ResetPasswordForm.vue"),
