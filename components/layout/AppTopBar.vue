@@ -34,22 +34,22 @@
       class="flex flex-1 justify-center px-4"
     >
       <v-autocomplete
-        v-model:search="worldSearchInput"
+        v-model:search="navbarSearchInput"
         class="app-top-bar__search mx-auto w-full max-w-[360px] bg-transparent p-4 text-sm backdrop-blur md:max-w-[420px] rounded-xl"
         density="compact"
         hide-details
         menu-icon=""
-        :placeholder="t('pages.index.search.placeholder')"
+        :placeholder="navbarSearchPlaceholder"
         variant="outlined"
         auto-select-first
         item-props
         rounded="xl"
         clearable
-        :items="worldSearchItems"
+        :items="navbarSearchItems"
         item-title="title"
         item-value="value"
-        @update:model-value="handleWorldSearchSelect"
-        @click:clear="clearWorldSearch"
+        @update:model-value="handleNavbarSearchSelect"
+        @click:clear="clearNavbarSearch"
       >
         <template #prepend-inner>
           <v-icon
@@ -141,7 +141,7 @@ import RightControls from "./app-bar/RightControls.vue";
 import UserMenu from "./app-bar/UserMenu.vue";
 import LocaleMenu from "./app-bar/LocaleMenu.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
-import { useWorldSearchQuery } from "~/composables/useWorldSearch";
+import { useNavbarSearchQuery } from "~/composables/useNavbarSearch";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
@@ -149,6 +149,12 @@ import { useNotifications } from "~/composables/useNotifications";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings } from "~/types/settings";
+import { usePostsStore } from "~/composables/usePostsStore";
+import {
+  createPostSearchSnippet,
+  filterPostsByQuery,
+  normalizeSearchQuery,
+} from "~/composables/useNavbarSearch";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
@@ -160,10 +166,11 @@ type AppIcon = { name: string; label: string; size?: number; to?: string };
 type UserMenuItem = { title: string; icon: string; to?: string; action?: "logout" };
 type LocaleInput = string | { code?: string | null | undefined };
 
-type WorldSearchItem = {
+type NavbarSearchItem = {
   title: string;
   value: string;
   subtitle?: string;
+  disabled?: boolean;
 };
 
 const props = withDefaults(
@@ -193,12 +200,16 @@ const { localePath } = useI18nDocs();
 const auth = useAuthSession();
 const messenger = useMessengerStore();
 const siteSettingsState = useSiteSettingsState();
-const worldSearchQuery = useWorldSearchQuery();
+const navbarSearch = useNavbarSearchQuery();
+const navbarSearchQuery = navbarSearch.query;
+const navbarSearchContext = navbarSearch.context;
 
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
-const worldSearchItems = computed<WorldSearchItem[]>(() =>
+const postsStore = usePostsStore();
+
+const worldSearchItems = computed<NavbarSearchItem[]>(() =>
   worlds.value
     .map((world) => {
       const nameSegment =
@@ -221,21 +232,80 @@ const worldSearchItems = computed<WorldSearchItem[]>(() =>
         title: nameSegment,
         value: nameSegment,
         subtitle,
-      } satisfies WorldSearchItem;
+      } satisfies NavbarSearchItem;
     })
-    .filter((item): item is WorldSearchItem => item !== null),
+    .filter((item): item is NavbarSearchItem => item !== null),
 );
 
-const worldSearchInput = computed({
-  get: () => worldSearchQuery.value,
+function resolvePostTitle(post: { title?: string | null }) {
+  const rawTitle = typeof post.title === "string" ? post.title.trim() : "";
+
+  if (rawTitle) {
+    return rawTitle;
+  }
+
+  return t("admin.blog.table.untitled");
+}
+
+const normalizedNavbarSearchQuery = computed(() => normalizeSearchQuery(navbarSearchQuery.value));
+
+const postSearchItems = computed<NavbarSearchItem[]>(() => {
+  if (navbarSearchContext.value !== "posts") {
+    return [];
+  }
+
+  const posts = postsStore.posts.value ?? [];
+  const matches = filterPostsByQuery(posts, navbarSearchQuery.value);
+
+  if (matches.length === 0) {
+    return [
+      {
+        title: t("admin.blog.table.emptySearch"),
+        value: normalizedNavbarSearchQuery.value,
+        subtitle: t("admin.blog.table.searchPlaceholder"),
+        disabled: true,
+      },
+    ];
+  }
+
+  return matches.slice(0, 6).map((post) => {
+    const title = resolvePostTitle(post);
+    const subtitle = createPostSearchSnippet(post);
+
+    return {
+      title,
+      value: title,
+      subtitle: subtitle || undefined,
+    } satisfies NavbarSearchItem;
+  });
+});
+
+const navbarSearchItems = computed<NavbarSearchItem[]>(() => {
+  if (navbarSearchContext.value === "posts") {
+    return postSearchItems.value;
+  }
+
+  return worldSearchItems.value;
+});
+
+const navbarSearchInput = computed({
+  get: () => navbarSearchQuery.value,
   set: (value: string | null) => {
     if (typeof value === "string") {
-      worldSearchQuery.value = value;
+      navbarSearchQuery.value = value;
       return;
     }
 
-    worldSearchQuery.value = "";
+    navbarSearch.clear();
   },
+});
+
+const navbarSearchPlaceholder = computed(() => {
+  if (navbarSearchContext.value === "posts") {
+    return t("admin.blog.table.searchPlaceholder");
+  }
+
+  return t("pages.index.search.placeholder");
 });
 
 const iconTriggerClasses =
@@ -251,14 +321,14 @@ const localeMetadata = {
   ar: { label: "العربية", flag: "tn" },
 } as const satisfies Record<string, { label: string; flag: string }>;
 
-function handleWorldSearchSelect(value: string | null) {
+function handleNavbarSearchSelect(value: string | null) {
   if (typeof value === "string") {
-    worldSearchQuery.value = value;
+    navbarSearchQuery.value = value;
   }
 }
 
-function clearWorldSearch() {
-  worldSearchQuery.value = "";
+function clearNavbarSearch() {
+  navbarSearch.clear();
 }
 
 const navigationLabel = computed(() => t("layout.actions.openNavigation"));

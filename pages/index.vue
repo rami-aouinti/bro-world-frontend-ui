@@ -225,6 +225,7 @@ if (typeof definePageMeta === "function") {
     showContactSidebarCard: true,
     documentDriven: false,
     rightSidebarPreset: "dashboard",
+    navbarSearchContext: "worlds",
   });
 }
 
