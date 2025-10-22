@@ -160,6 +160,7 @@
         "profileOverview": "Übersicht",
         "profileSettings": "Kontoeinstellungen",
         "profileSecurity": "Passwort & Sicherheit",
+        "profileCalendar": "Kalender",
         "profileFriends": "Freunde",
         "profilePhotos": "Fotos & Medien",
         "admin": "Verwaltung",
@@ -1310,6 +1311,10 @@
       "stats": {
         "title": "Schnellstatistiken"
       }
+    },
+    "profileCalendar": {
+      "title": "Kalender",
+      "subtitle": "Behalte Meetings, Workshops und Meilensteine in einer fokussierten Ansicht im Blick."
     },
     "profileFriends": {
       "title": "Verbindungen",
@@ -2699,6 +2704,10 @@
     "profilePhotos": {
       "title": "Fotobibliothek",
       "description": "Organisiere Launch-Highlights, Studioaufnahmen und Forschungsarchive."
+    },
+    "profileCalendar": {
+      "title": "Kalender",
+      "description": "Plane bevorstehende Sessions und verwalte Ereignisse in deinem Profilkalender."
     },
     "profileEdit": {
       "title": "Profil bearbeiten",

@@ -170,6 +170,7 @@
         "profileOverview": "Vue d'ensemble",
         "profileSettings": "Paramètres du compte",
         "profileSecurity": "Mot de passe et sécurité",
+        "profileCalendar": "Calendrier",
         "profileFriends": "Amis",
         "profilePhotos": "Photos et médias",
         "admin": "Administration",
@@ -1308,6 +1309,10 @@
       "stats": {
         "title": "Statistiques rapides"
       }
+    },
+    "profileCalendar": {
+      "title": "Calendrier",
+      "subtitle": "Consultez vos réunions, ateliers et jalons dans une vue dédiée."
     },
     "profileFriends": {
       "title": "Connexions",
@@ -2578,6 +2583,10 @@
     "profilePhotos": {
       "title": "Bibliothèque de photos",
       "description": "Organisez les moments forts des lancements, des sessions en studio et des voyages de recherche."
+    },
+    "profileCalendar": {
+      "title": "Calendrier",
+      "description": "Planifiez les prochaines sessions et gérez vos événements depuis votre calendrier de profil."
     },
     "profileEdit": {
       "title": "Modifier le profil",

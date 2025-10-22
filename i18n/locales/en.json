@@ -171,6 +171,7 @@
         "profileOverview": "Overview",
         "profileSettings": "Account settings",
         "profileSecurity": "Password & security",
+        "profileCalendar": "Calendar",
         "profileFriends": "Friends",
         "profilePhotos": "Photos & media",
         "admin": "Administration",
@@ -2264,6 +2265,10 @@
         "title": "Quick stats"
       }
     },
+    "profileCalendar": {
+      "title": "Calendar",
+      "subtitle": "Review your meetings, workshops, and milestones in a dedicated view."
+    },
     "profileFriends": {
       "title": "Connections",
       "subtitle": "Reconnect with your collaborators, mentors, and communities.",
@@ -2697,6 +2702,10 @@
     "profilePhotos": {
       "title": "Photo library",
       "description": "Organise launch highlights, studio shoots, and research archives."
+    },
+    "profileCalendar": {
+      "title": "Calendar",
+      "description": "Plan upcoming sessions and manage events from your profile calendar."
     },
     "profileEdit": {
       "title": "Edit profile",

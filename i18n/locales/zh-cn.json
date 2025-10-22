@@ -99,6 +99,7 @@
         "profileOverview": "总览",
         "profileSettings": "账户设置",
         "profileSecurity": "密码与安全",
+        "profileCalendar": "日历",
         "profileFriends": "好友",
         "profilePhotos": "照片与媒体",
         "admin": "管理后台",
@@ -1108,6 +1109,10 @@
       "stats": {
         "title": "快速统计"
       }
+    },
+    "profileCalendar": {
+      "title": "日历",
+      "subtitle": "在专属视图中查看会议、工作坊和关键节点。"
     },
     "profileFriends": {
       "title": "人脉",
@@ -2289,6 +2294,10 @@
     "profilePhotos": {
       "title": "照片库",
       "description": "整理发布亮点、影棚拍摄和调研档案。"
+    },
+    "profileCalendar": {
+      "title": "日历",
+      "description": "在个人资料日历中规划即将到来的安排并管理事件。"
     },
     "profileEdit": {
       "title": "编辑个人资料",

@@ -100,9 +100,15 @@
                 </template>
               </v-calendar>
 
-              <v-divider class="my-4" />
+              <v-divider
+                v-if="!compact"
+                class="my-4"
+              />
 
-              <div class="d-flex flex-column flex-lg-row gap-4">
+              <div
+                v-if="!compact"
+                class="d-flex flex-column flex-lg-row gap-4"
+              >
                 <v-card
                   v-if="selectedEvent"
                   variant="tonal"
@@ -422,10 +428,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, nextTick, reactive, ref, watch } from "vue";
+import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
 import type { ProfileEvent } from "~/types/pages/profile";
+import { useProfileCalendarSharedState } from "~/composables/useProfileCalendarSharedState";
+import type { ProfileCalendarDisplayEvent } from "~/types/components/profile-calendar";
+
+const props = withDefaults(defineProps<{ compact?: boolean }>(), {
+  compact: false,
+});
+
+const compact = computed(() => props.compact);
 
 const vuetifyComponentsPromise = import("vuetify/components");
 
@@ -433,10 +447,7 @@ const VBtnToggle = defineAsyncComponent(() =>
   vuetifyComponentsPromise.then((mod) => mod.VBtnToggle),
 );
 
-interface CalendarDisplayEvent extends ProfileEvent {
-  color: string;
-  sourceColor: string;
-}
+type CalendarDisplayEvent = ProfileCalendarDisplayEvent;
 
 const { t, locale } = useI18n();
 
@@ -1083,6 +1094,41 @@ function cancelDeleteEvent() {
   pendingDeleteEvent.value = null;
   isDeleteDialogOpen.value = false;
 }
+
+const calendarSharedState = useProfileCalendarSharedState();
+
+function syncSharedState() {
+  const state = calendarSharedState.value;
+  state.events = calendarEvents.value;
+  state.upcomingEvents = upcomingEvents.value;
+  state.selectedEvent = selectedEvent.value;
+  if (import.meta.server) {
+    state.selectEvent = undefined;
+    state.openEventEditor = undefined;
+    state.requestDeleteEvent = undefined;
+    return;
+  }
+
+  state.selectEvent = selectEvent;
+  state.openEventEditor = openEventEditor;
+  state.requestDeleteEvent = requestDeleteEvent;
+}
+
+watch([calendarEvents, upcomingEvents, selectedEvent], () => {
+  syncSharedState();
+});
+
+syncSharedState();
+
+onBeforeUnmount(() => {
+  const state = calendarSharedState.value;
+  state.events = [];
+  state.upcomingEvents = [];
+  state.selectedEvent = null;
+  state.selectEvent = undefined;
+  state.openEventEditor = undefined;
+  state.requestDeleteEvent = undefined;
+});
 </script>
 
 <style scoped>
