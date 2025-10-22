@@ -955,10 +955,10 @@ const siteSettings = computed(() => siteSettingsState.value ?? getDefaultSiteSet
 const worldSummaryTitle = computed(() => t("layout.worldSummary.title", "Active world"));
 
 const activeWorldForDisplay = computed(() => {
-  const activeWorld = siteSettingsState.activeWorld.value;
+  const [primaryActive] = siteSettingsState.activeWorlds.value;
 
-  if (activeWorld) {
-    return activeWorld;
+  if (primaryActive) {
+    return primaryActive;
   }
 
   const worlds = siteSettings.value.worlds ?? [];

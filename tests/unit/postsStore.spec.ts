@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { computed, createSSRApp, h, ref } from "vue";
+import { computed, createSSRApp, h, reactive, ref } from "vue";
 
 import { createPinia } from "~/lib/pinia-shim";
 import type { BlogCommentWithReplies, BlogPost } from "~/lib/mock/blog";
@@ -13,6 +13,35 @@ import {
 } from "#imports";
 
 const fetchSpy = __requestFetchSpy;
+
+const membershipActiveWorldIdsRef = ref<string[]>([]);
+const membershipMap = reactive<Record<string, { worldId: string; status: string }>>({});
+const markActiveMock = vi.fn((worldId: string) => {
+  if (!worldId) {
+    return;
+  }
+
+  membershipMap[worldId] = { worldId, status: "active" };
+  membershipActiveWorldIdsRef.value = [worldId];
+});
+const syncFromSettingsMock = vi.fn((settings: SiteSettings | null | undefined) => {
+  if (settings?.activeWorldId) {
+    markActiveMock(settings.activeWorldId);
+  }
+});
+
+vi.mock("~/stores/world-memberships", () => ({
+  useWorldMembershipsStore: () => ({
+    memberships: membershipMap,
+    activeWorldIds: computed(() => membershipActiveWorldIdsRef.value),
+    activateWorld: vi.fn(),
+    markActive: markActiveMock,
+    markRevoked: vi.fn(),
+    syncFromSiteSettings: syncFromSettingsMock,
+    upsertMembership: vi.fn(),
+    removeMembership: vi.fn(),
+  }),
+}));
 
 vi.mock("~/lib/api/fetcher", () => ({
   resolveApiFetcher: () => fetchSpy,
@@ -119,6 +148,12 @@ describe("posts store", () => {
         },
       },
     }));
+    membershipActiveWorldIdsRef.value = [];
+    Object.keys(membershipMap).forEach((key) => {
+      delete membershipMap[key];
+    });
+    markActiveMock.mockClear();
+    syncFromSettingsMock.mockClear();
     vi.stubGlobal("structuredClone", <T>(value: T) => JSON.parse(JSON.stringify(value)) as T);
   });
 

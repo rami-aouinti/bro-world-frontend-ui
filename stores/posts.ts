@@ -5,6 +5,7 @@ import type { BlogCommentWithReplies, BlogPost, ReactionAction } from "~/lib/moc
 import { useAuthStore } from "~/composables/useAuthStore";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { resolveApiFetcher } from "~/lib/api/fetcher";
+import { useWorldMembershipsStore } from "~/stores/world-memberships";
 
 function sanitizeErrorMessage(message: string): string {
   const trimmed = message.trim();
@@ -799,7 +800,58 @@ export const usePostsStore = defineStore("posts", () => {
     }
   })();
 
-  const activeWorldId = computed(() => siteSettingsState?.activeWorld.value?.id ?? null);
+  const worldMemberships = (() => {
+    try {
+      return useWorldMembershipsStore();
+    } catch (error) {
+      if (import.meta.dev) {
+        console.warn("[stores/posts] World memberships store unavailable.", error);
+      }
+
+      return null;
+    }
+  })();
+
+  const activeWorldId = computed(() => {
+    const orderedIds: string[] = [];
+    const fallback = siteSettingsState?.value?.activeWorldId;
+
+    if (typeof fallback === "string") {
+      const trimmed = fallback.trim();
+
+      if (trimmed) {
+        orderedIds.push(trimmed);
+      }
+    }
+
+    const membershipIds = worldMemberships?.activeWorldIds.value ?? [];
+
+    for (const id of membershipIds) {
+      if (typeof id === "string") {
+        const trimmed = id.trim();
+
+        if (trimmed && !orderedIds.includes(trimmed)) {
+          orderedIds.push(trimmed);
+        }
+      }
+    }
+
+    if (orderedIds.length > 0) {
+      return orderedIds[0] ?? null;
+    }
+
+    const siteActiveWorlds = siteSettingsState?.activeWorlds?.value ?? [];
+
+    if (siteActiveWorlds.length > 0) {
+      const firstWorldWithId = siteActiveWorlds.find((world) => typeof world?.id === "string" && world.id);
+
+      if (firstWorldWithId?.id) {
+        return firstWorldWithId.id;
+      }
+    }
+
+    return null;
+  });
 
   const currentWorldId = useState<string | null>("posts-active-world-id", () => null);
 

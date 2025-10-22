@@ -46,7 +46,8 @@
           v-for="world in filteredWorlds"
           :key="world.id"
           :world="world"
-          :is-active="world.id === activeWorldId"
+          :membership="membershipMap[world.id] ?? null"
+          :is-active="activeWorldIds.includes(world.id)"
           class="world-explorer-page__card"
           data-test="world-explorer-card"
           @activate="setActiveWorld"
@@ -96,98 +97,44 @@ import WorldExplorerCard from "~/components/world/WorldExplorerCard.vue";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings } from "~/types/settings";
+import { useWorldMembershipsStore } from "~/stores/world-memberships";
 
 const { t } = useI18n();
 const siteSettingsState = useSiteSettingsState();
+const membershipStore = useWorldMembershipsStore();
 
 const fallbackSettings = computed<SiteSettings>(() => getDefaultSiteSettings());
 const siteSettings = computed(() => siteSettingsState.value ?? fallbackSettings.value);
 const worlds = computed(() => siteSettings.value.worlds ?? []);
-const searchQuery = ref("");
-const searchQueryDisplay = computed(() =>
-  typeof searchQuery.value === "string"
-    ? searchQuery.value
-    : String(searchQuery.value ?? ""),
-);
-const searchQueryLabel = computed(() => {
-  const trimmed = searchQueryDisplay.value.trim();
-  return trimmed || searchQueryDisplay.value;
-});
-const normalizedSearchQuery = computed(() => {
-  const query = searchQueryDisplay.value.trim().toLowerCase();
-  return query;
-});
-const filteredWorlds = computed(() => {
-  if (!normalizedSearchQuery.value) {
-    return worlds.value;
+const membershipMap = computed(() => membershipStore.memberships);
+const activeWorldIds = computed(() => {
+  const ids = membershipStore.activeWorldIds.value;
+
+  if (ids.length > 0) {
+    return [...ids];
   }
 
-  return worlds.value.filter((world) => {
-    const segments: string[] = [];
+  const fallbackId = siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null;
 
-    if (typeof world.name === "string") {
-      segments.push(world.name);
-    }
-
-    if (typeof world.slug === "string") {
-      segments.push(world.slug);
-    }
-
-    if (typeof world.description === "string") {
-      segments.push(world.description);
-    }
-
-    if (typeof world.locale === "string") {
-      segments.push(world.locale);
-    }
-
-    if (typeof world.visibility === "string") {
-      segments.push(world.visibility);
-    }
-
-    if (world.tags?.length) {
-      segments.push(world.tags.join(" "));
-    }
-
-    if (typeof world.createdBy?.name === "string") {
-      segments.push(world.createdBy.name);
-    }
-
-    return segments.some((segment) => {
-      const candidate = segment.trim().toLowerCase();
-
-      if (!candidate) {
-        return false;
-      }
-
-      return candidate.includes(normalizedSearchQuery.value);
-    });
-  });
+  return fallbackId ? [fallbackId] : [];
 });
-const hasWorlds = computed(() => worlds.value.length > 0);
-const activeWorldId = computed(
-  () => siteSettings.value.activeWorldId ?? worlds.value[0]?.id ?? null,
-);
 
-function setActiveWorld(worldId: string) {
+async function setActiveWorld(worldId: string) {
   if (!worldId) {
     return;
   }
 
-  const currentSettings = siteSettingsState.value;
+  const membership = membershipMap.value[worldId] ?? null;
 
-  if (!currentSettings) {
-    siteSettingsState.value = {
-      ...fallbackSettings.value,
-      activeWorldId: worldId,
-    };
+  if (membership?.status === "pending") {
     return;
   }
 
-  siteSettingsState.value = {
-    ...currentSettings,
-    activeWorldId: worldId,
-  };
+  try {
+    await membershipStore.activateWorld(worldId);
+  } catch (error) {
+    console.error("Failed to activate world", error);
+  }
 }
 
 const pageDescription = computed(() => t("pages.index.description"));

@@ -1,42 +1,101 @@
-import { computed, type ComputedRef } from "vue";
+import { computed, type ComputedRef, watch } from "vue";
 import { useState } from "#imports";
 import type { SiteSettings, SiteWorldSettings } from "~/types/settings";
+import { useWorldMembershipsStore } from "~/stores/world-memberships";
+import type { WorldMembership } from "~/stores/world-memberships";
 
-function resolveActiveWorld(settings: SiteSettings | null): SiteWorldSettings | null {
+function resolveActiveWorlds(
+  settings: SiteSettings | null,
+  activeWorldIds: string[],
+): SiteWorldSettings[] {
   if (!settings) {
-    return null;
+    return [];
   }
 
   const worlds = settings.worlds ?? [];
 
   if (!worlds.length) {
-    return null;
+    return [];
   }
 
-  if (settings.activeWorldId) {
-    const activeWorld = worlds.find((world) => world.id === settings.activeWorldId);
+  if (activeWorldIds.length > 0) {
+    const worldById = new Map(worlds.map((world) => [world.id, world] as const));
+    const resolved: SiteWorldSettings[] = [];
 
-    if (activeWorld) {
-      return activeWorld;
+    for (const worldId of activeWorldIds) {
+      const world = worldById.get(worldId);
+
+      if (world) {
+        resolved.push(world);
+      }
+    }
+
+    if (resolved.length > 0) {
+      return resolved;
     }
   }
 
-  return worlds[0] ?? null;
+  if (settings.activeWorldId) {
+    const fallbackWorld = worlds.find((world) => world.id === settings.activeWorldId);
+
+    if (fallbackWorld) {
+      return [fallbackWorld];
+    }
+  }
+
+  return worlds.length > 0 ? [worlds[0]!] : [];
 }
 
 export function useSiteSettingsState() {
   const settings = useState<SiteSettings | null>("site-settings", () => null);
+  const memberships = useWorldMembershipsStore();
+  const hasRegisteredSync = useState<boolean>(
+    "site-settings-membership-sync-registered",
+    () => false,
+  );
+
+  if (!hasRegisteredSync.value) {
+    hasRegisteredSync.value = true;
+
+    watch(
+      () => settings.value,
+      (value) => {
+        memberships.syncFromSiteSettings(value);
+      },
+      { immediate: true, deep: true },
+    );
+  }
 
   const enabledPlugins = computed(() => {
-    const activeWorld = resolveActiveWorld(settings.value);
+    const activeWorlds = resolveActiveWorlds(settings.value, memberships.activeWorldIds.value);
+    const plugins = new Set<string>();
 
-    return [...(activeWorld?.pluginIds ?? [])];
+    for (const world of activeWorlds) {
+      for (const pluginId of world.pluginIds ?? []) {
+        if (typeof pluginId === "string" && pluginId) {
+          plugins.add(pluginId);
+        }
+      }
+    }
+
+    return [...plugins];
   });
 
-  const activeWorld = computed(() => resolveActiveWorld(settings.value));
+  const activeWorlds = computed(() =>
+    resolveActiveWorlds(settings.value, memberships.activeWorldIds.value),
+  );
+  const activeWorld = computed(() => activeWorlds.value[0] ?? null);
+  const membershipMap = computed(() => memberships.memberships);
 
-  return Object.assign(settings, { enabledPlugins, activeWorld }) as typeof settings & {
+  return Object.assign(settings, {
+    enabledPlugins,
+    activeWorld,
+    activeWorlds,
+    memberships: membershipMap,
+  }) as typeof settings & {
     enabledPlugins: ComputedRef<string[]>;
     activeWorld: ComputedRef<SiteWorldSettings | null>;
+    activeWorlds: ComputedRef<SiteWorldSettings[]>;
+    memberships: ComputedRef<Record<string, WorldMembership>>;
   };
 }

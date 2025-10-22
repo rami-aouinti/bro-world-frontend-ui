@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import { computed, defineComponent, h, ref } from "vue";
+import { computed, defineComponent, h, reactive, ref } from "vue";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import IndexPage from "~/pages/index.vue";
@@ -20,10 +20,39 @@ vi.mock("vue-i18n", () => ({
 const siteSettingsRef = ref<SiteSettings | null>(null);
 const siteSettingsStateMock = Object.assign(siteSettingsRef, {
   enabledPlugins: computed(() => [] as string[]),
+  activeWorlds: computed(() => {
+    const activeId = siteSettingsRef.value?.activeWorldId;
+    const worlds = siteSettingsRef.value?.worlds ?? [];
+
+    if (activeId) {
+      return worlds.filter((world) => world.id === activeId);
+    }
+
+    return worlds.length > 0 ? [worlds[0]!] : [];
+  }),
+  memberships: computed(() => ({} as Record<string, unknown>)),
 });
 
 vi.mock("~/composables/useSiteSettingsState", () => ({
   useSiteSettingsState: () => siteSettingsStateMock,
+}));
+
+const membershipMap = reactive<Record<string, { worldId: string; status: string }>>({});
+const activeWorldIdsRef = ref<string[]>([]);
+const activateWorldMock = vi.fn(async (worldId: string) => {
+  membershipMap[worldId] = {
+    worldId,
+    status: "active",
+  };
+  activeWorldIdsRef.value = [worldId];
+});
+
+vi.mock("~/stores/world-memberships", () => ({
+  useWorldMembershipsStore: () => ({
+    memberships: membershipMap,
+    activeWorldIds: computed(() => activeWorldIdsRef.value),
+    activateWorld: activateWorldMock,
+  }),
 }));
 
 describe("pages/index world explorer", () => {
@@ -37,6 +66,10 @@ describe("pages/index world explorer", () => {
       isActive: {
         type: Boolean,
         default: false,
+      },
+      membership: {
+        type: Object,
+        default: null,
       },
     },
     emits: ["activate"],
@@ -73,6 +106,11 @@ describe("pages/index world explorer", () => {
 
   beforeEach(() => {
     siteSettingsRef.value = getDefaultSiteSettings();
+    activeWorldIdsRef.value = [];
+    Object.keys(membershipMap).forEach((key) => {
+      delete membershipMap[key];
+    });
+    activateWorldMock.mockClear();
   });
 
   it("renders a card for each configured world", () => {
@@ -86,7 +124,7 @@ describe("pages/index world explorer", () => {
     expect(cards).toHaveLength(siteSettingsRef.value?.worlds?.length ?? 0);
   });
 
-  it("updates the active world when a card emits an activate event", async () => {
+  it("updates the memberships when a card emits an activate event", async () => {
     const wrapper = mount(IndexPage, {
       global: {
         stubs: globalStubs,
@@ -98,9 +136,10 @@ describe("pages/index world explorer", () => {
 
     await cards[1].find(".activate-button").trigger("click");
 
-    expect(siteSettingsRef.value?.activeWorldId).toBe(
-      siteSettingsRef.value?.worlds?.[1]?.id ?? null,
-    );
+    const expectedWorldId = siteSettingsRef.value?.worlds?.[1]?.id ?? null;
+
+    expect(activateWorldMock).toHaveBeenCalledWith(expectedWorldId);
+    expect(activeWorldIdsRef.value).toEqual(expectedWorldId ? [expectedWorldId] : []);
   });
 
   it("shows the empty state when no worlds are configured", () => {
