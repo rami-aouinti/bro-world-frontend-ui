@@ -51,6 +51,12 @@ export default withNuxt(
     languageOptions: { parserOptions: { parser: tseslint.parser } },
   },
   {
+    files: ["tests/**/*", "vitest.setup.ts"],
+    rules: {
+      "vue/one-component-per-file": "off",
+    },
+  },
+  {
     rules: {
       "no-console": ["error", { allow: ["warn", "error"] }],
       "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
