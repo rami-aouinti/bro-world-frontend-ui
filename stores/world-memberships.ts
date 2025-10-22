@@ -332,4 +332,6 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
   };
 });
 
+export { useWorldMemberships as useWorldMembershipsStore };
+
 export type { WorldMembership, WorldMembershipStatus, WorldMembershipRole };
