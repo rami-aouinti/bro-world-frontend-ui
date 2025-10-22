@@ -36,14 +36,15 @@
     >
       <v-autocomplete
         :items="items"
-        class="app-top-bar__search mx-auto w-full max-w-[360px] rounded-xl bg-background/60 text-sm backdrop-blur md:max-w-[420px] p-4"
+        class="app-top-bar__search mx-auto w-full max-w-[360px]bg-background/60 text-sm backdrop-blur md:max-w-[420px] p-4"
         density="compact"
         hide-details
         menu-icon=""
         placeholder="Search Anything in BroWorld"
-        variant="solo-filled"
+        variant="outlined"
         auto-select-first
         item-props
+        rounded="xl"
       >
         <template #prepend-inner>
           <v-icon
@@ -411,10 +412,7 @@ function markAllNotifications() {
 }
 
 .app-top-bar :deep(.app-top-bar__search .v-field) {
-  background-color: rgba(var(--v-theme-background), 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: inherit;
-  box-shadow: none;
+  background-color: transparent;
 }
 
 .app-top-bar :deep(.v-btn),
@@ -440,10 +438,6 @@ function markAllNotifications() {
   flex: 1;
   justify-content: center;
   position: relative;
-}
-
-:deep(.app-top-bar__icons--with-search) {
-  flex: 1;
 }
 
 @media (min-width: 960px) {
