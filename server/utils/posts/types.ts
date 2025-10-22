@@ -5,6 +5,7 @@ export interface NormalizedPostsListQuery {
   pageSize: number;
   sort: string;
   filter: Record<string, unknown>;
+  worldId?: string | null;
 }
 
 export interface PostsListEnvelope extends BlogApiResponse {

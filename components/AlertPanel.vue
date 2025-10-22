@@ -19,6 +19,7 @@
         <v-alert
           :ref="(el) => setAlertRef(alert.id, el as HTMLElement | null)"
           :type="alert.type"
+          :color="alertColor(alert.type)"
           :title="alert.title"
           :role="alertRole(alert.type)"
           :aria-live="ariaLive(alert.type)"
@@ -152,6 +153,10 @@ function alertRole(type: AlertType) {
 
 function ariaLive(type: AlertType) {
   return type === "error" || type === "warning" ? "assertive" : "polite";
+}
+
+function alertColor(type: AlertType) {
+  return type === "success" ? "primary" : undefined;
 }
 
 function close(id: string) {

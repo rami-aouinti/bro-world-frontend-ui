@@ -31,39 +31,44 @@ const globalStubs = {
   VBtn: defineComponent({
     name: "VBtnStub",
     inheritAttrs: false,
-    setup(_, { attrs, slots, emit }) {
-      return () =>
-        {
-          const resolvedAttrs = { ...(attrs as Record<string, unknown>) };
-          const disabledAttr = resolvedAttrs.disabled;
-          delete resolvedAttrs.disabled;
-          const toAttr = resolvedAttrs.to;
-          if (typeof toAttr === "string") {
-            resolvedAttrs["data-to"] = toAttr;
-          } else if (toAttr && typeof toAttr === "object") {
-            resolvedAttrs["data-to"] = (toAttr as { path?: string }).path ?? "";
+    props: {
+      to: { type: [String, Object], default: undefined },
+    },
+    emits: ["click"],
+    setup(props, { attrs, slots, emit }) {
+      return () => {
+        const resolvedAttrs = { ...(attrs as Record<string, unknown>) };
+        const disabledAttr = resolvedAttrs.disabled;
+
+        if (typeof props.to !== "undefined") {
+          const normalizedTo =
+            typeof props.to === "string"
+              ? props.to
+              : typeof props.to === "object" && props.to && "path" in props.to
+                ? String((props.to as { path?: string }).path ?? "")
+                : "";
+
+          if (normalizedTo) {
+            resolvedAttrs.to = normalizedTo;
+            resolvedAttrs.href = normalizedTo;
           }
-          delete resolvedAttrs.to;
-          const isDisabled = disabledAttr !== undefined && disabledAttr !== false;
+        }
 
-          return h(
-            "button",
-            {
-              type: "button",
-              ...resolvedAttrs,
-              disabled: isDisabled,
-              onClick: (event: Event) => {
-                if (isDisabled) {
-                  event.preventDefault();
-                  return;
-                }
+        delete resolvedAttrs.disabled;
 
-                emit("click", event);
-              },
+        return h(
+          "button",
+          {
+            type: "button",
+            ...resolvedAttrs,
+            disabled: disabledAttr !== undefined && disabledAttr !== false,
+            onClick: (event: Event) => {
+              emit("click", event);
             },
-            slots.default?.(),
-          );
-        };
+          },
+          slots.default?.(),
+        );
+      };
     },
   }),
   VChip: { template: "<span><slot /></span>" },
@@ -71,22 +76,16 @@ const globalStubs = {
   NuxtLink: defineComponent({
     name: "NuxtLinkStub",
     props: {
-      to: {
-        type: [String, Object],
-        default: undefined,
-      },
+      to: { type: [String, Object], default: "" },
     },
-    setup(props, { slots }) {
+    setup(props, { slots, attrs }) {
       return () =>
         h(
           "a",
           {
-            href:
-              typeof props.to === "string"
-                ? props.to
-                : props.to && typeof props.to === "object"
-                  ? (props.to as Record<string, string>).path ?? ""
-                  : undefined,
+            ...attrs,
+            href: typeof props.to === "string" ? props.to : "",
+            "data-to": typeof props.to === "string" ? props.to : JSON.stringify(props.to),
           },
           slots.default?.(),
         );
@@ -108,7 +107,7 @@ function createWorld(overrides: Partial<SiteWorldSettings> = {}): SiteWorldSetti
 }
 
 describe("components/world/WorldExplorerCard", () => {
-  it("links the enter button to /home when the slug is home", () => {
+  it("links the world title to the world route when the slug is home", () => {
     const wrapper = mount(WorldExplorerCard, {
       props: {
         world: createWorld({ id: "home", name: "Home", slug: "home" }),
@@ -118,11 +117,11 @@ describe("components/world/WorldExplorerCard", () => {
       },
     });
 
-    const buttons = wrapper.findAll("button");
-    expect(buttons[0].attributes("data-to")).toBe("/home");
+    const links = wrapper.findAll("a[data-to]");
+    expect(links[0].attributes("data-to")).toBe(JSON.stringify({ path: "/world/home" }));
   });
 
-  it("links the enter button to the world route for other slugs", () => {
+  it("links the world title to the world route for other slugs", () => {
     const wrapper = mount(WorldExplorerCard, {
       props: {
         world: createWorld({ slug: "innovation-lab" }),
@@ -132,8 +131,8 @@ describe("components/world/WorldExplorerCard", () => {
       },
     });
 
-    const buttons = wrapper.findAll("button");
-    expect(buttons[0].attributes("data-to")).toBe("/world/innovation-lab");
+    const links = wrapper.findAll("a[data-to]");
+    expect(links[0].attributes("data-to")).toBe(JSON.stringify({ path: "/world/innovation-lab" }));
   });
 
   it("emits an activate event when the set active button is pressed", async () => {
@@ -148,7 +147,8 @@ describe("components/world/WorldExplorerCard", () => {
     });
 
     const buttons = wrapper.findAll("button");
-    await buttons[1].trigger("click");
+    expect(buttons).toHaveLength(1);
+    await buttons[0].trigger("click");
 
     expect(wrapper.emitted("activate")).toEqual([[world.id]]);
   });
@@ -165,7 +165,9 @@ describe("components/world/WorldExplorerCard", () => {
     });
 
     const buttons = wrapper.findAll("button");
-    expect(buttons[1].text()).toBe("pages.index.actions.active");
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].text()).toBe("pages.index.actions.enter");
+    expect(buttons[0].attributes("to")).toBe("/world/test-world");
   });
 
   it("renders participants and rating when provided", () => {
