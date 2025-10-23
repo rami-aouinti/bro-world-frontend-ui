@@ -912,6 +912,39 @@
         "secondaryCtaAria": "Ouvrir la page contact pour planifier une conversation"
       }
     },
+    "world": {
+      "sidebar": {
+        "overview": {
+          "title": "Vue d’ensemble du monde",
+          "creator": "Créateur",
+          "creatorFallback": "Créateur inconnu",
+          "untitled": "Monde sans titre",
+          "visibility": "Visibilité",
+          "visibilityPublic": "Monde public",
+          "visibilityPrivate": "Monde privé",
+          "visibilityUnknown": "Monde non répertorié",
+          "theme": "Thème",
+          "tags": "Étiquettes clés",
+          "tagsEmpty": "Aucune étiquette pour le moment."
+        },
+        "members": {
+          "title": "Statistiques de la communauté",
+          "participantsLabel": "Membres",
+          "ratingLabel": "Note de la communauté",
+          "launchLabel": "Lancement",
+          "guests": "Accès invités",
+          "guestsOpen": "Les invités peuvent explorer",
+          "guestsClosed": "Invitation requise"
+        },
+        "quiz": {
+          "title": "Classement du quiz",
+          "updated": "Mis à jour {date}",
+          "empty": "Le classement n’est pas disponible pour le moment.",
+          "score": "{points} pts",
+          "streak": "Série de {count} jours"
+        }
+      }
+    },
     "academy": {
       "title": "Académie Bro World",
       "subtitle": "Développez les compétences pour bâtir des communautés immersives grâce à des parcours ciblés.",

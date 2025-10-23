@@ -912,6 +912,39 @@
         "secondaryCtaAria": "打开联系页面预约沟通"
       }
     },
+    "world": {
+      "sidebar": {
+        "overview": {
+          "title": "世界概览",
+          "creator": "创建者",
+          "creatorFallback": "未知创建者",
+          "untitled": "未命名世界",
+          "visibility": "可见性",
+          "visibilityPublic": "公开世界",
+          "visibilityPrivate": "私密世界",
+          "visibilityUnknown": "未列出世界",
+          "theme": "主题",
+          "tags": "重点标签",
+          "tagsEmpty": "尚未添加标签。"
+        },
+        "members": {
+          "title": "社区统计",
+          "participantsLabel": "成员",
+          "ratingLabel": "社区评分",
+          "launchLabel": "上线时间",
+          "guests": "访客权限",
+          "guestsOpen": "访客可探索",
+          "guestsClosed": "需要邀请"
+        },
+        "quiz": {
+          "title": "测验排行榜",
+          "updated": "更新于 {date}",
+          "empty": "排行榜暂不可用。",
+          "score": "{points} 分",
+          "streak": "连续 {count} 天"
+        }
+      }
+    },
     "academy": {
       "title": "Bro World Academy",
       "subtitle": "Master the skills to build immersive communities through focused learning tracks.",

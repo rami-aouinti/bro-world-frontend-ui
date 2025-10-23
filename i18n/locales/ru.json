@@ -912,6 +912,39 @@
         "secondaryCtaAria": "Открыть страницу контактов, чтобы договориться о разговоре"
       }
     },
+    "world": {
+      "sidebar": {
+        "overview": {
+          "title": "Обзор мира",
+          "creator": "Создатель",
+          "creatorFallback": "Создатель неизвестен",
+          "untitled": "Мир без названия",
+          "visibility": "Видимость",
+          "visibilityPublic": "Публичный мир",
+          "visibilityPrivate": "Приватный мир",
+          "visibilityUnknown": "Скрытый мир",
+          "theme": "Тема",
+          "tags": "Ключевые теги",
+          "tagsEmpty": "Теги пока не добавлены."
+        },
+        "members": {
+          "title": "Статистика сообщества",
+          "participantsLabel": "Участники",
+          "ratingLabel": "Оценка сообщества",
+          "launchLabel": "Запуск",
+          "guests": "Доступ для гостей",
+          "guestsOpen": "Гости могут исследовать",
+          "guestsClosed": "Требуется приглашение"
+        },
+        "quiz": {
+          "title": "Таблица лидеров викторины",
+          "updated": "Обновлено {date}",
+          "empty": "Таблица лидеров сейчас недоступна.",
+          "score": "{points} баллов",
+          "streak": "Серия {count} дней"
+        }
+      }
+    },
     "academy": {
       "title": "Bro World Academy",
       "subtitle": "Master the skills to build immersive communities through focused learning tracks.",
