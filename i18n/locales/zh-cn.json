@@ -2603,6 +2603,107 @@
         "title": "请妥善保存这些一次性备用验证码"
       }
     },
+    "profileNotifications": {
+      "title": "通知偏好",
+      "subtitle": "选择我们在有新动态时与您联系的方式和时间。",
+      "actions": {
+        "save": "保存偏好设置",
+        "reset": "重置"
+      },
+      "channelLabels": {
+        "email": "电子邮件",
+        "push": "推送通知",
+        "sms": "短信",
+        "inApp": "站内提醒"
+      },
+      "sections": {
+        "channels": {
+          "title": "发送渠道",
+          "description": "选择在有重要事件时希望我们使用的通知渠道。"
+        },
+        "email": {
+          "title": "邮件更新",
+          "description": "即使离开 BroWorld 也能及时掌握动态。",
+          "items": {
+            "comments": "我的帖子收到评论",
+            "mentions": "提及我的账号",
+            "follows": "新增关注者",
+            "messages": "私信",
+            "newsletters": "产品通讯与技巧"
+          }
+        },
+        "inApp": {
+          "title": "站内通知",
+          "description": "管理在 BroWorld 工作时看到的提醒。",
+          "items": {
+            "productUpdates": "产品发布与路线图更新",
+            "eventReminders": "活动提醒与日程邀请",
+            "securityAlerts": "安全警报与登录通知",
+            "communityHighlights": "社区精选与热门话题"
+          },
+          "playSounds": "为高优先级提醒播放轻提示音",
+          "smartSummaries": "在通知中心显示智能摘要"
+        },
+        "digest": {
+          "title": "汇总摘要",
+          "description": "我们会把较少的活动合并成一封邮件，方便您快速浏览。",
+          "enableLabel": "发送汇总邮件给我",
+          "frequencyLabel": "汇总频率",
+          "timeLabel": "首选发送时间",
+          "options": {
+            "daily": "每日",
+            "weekly": "每周",
+            "monthly": "每月"
+          },
+          "helper": "{frequency} 汇总已安排在 {time}。",
+          "helperDisabled": "汇总功能已关闭。开启后即可收到摘要邮件。"
+        },
+        "quietHours": {
+          "title": "勿扰时段",
+          "description": "在专注或夜间静音非关键提醒。",
+          "enableLabel": "开启勿扰时段",
+          "start": "开始时间",
+          "end": "结束时间"
+        },
+        "security": {
+          "title": "关键警报",
+          "description": "密码更改、导出或安全风险我们都会第一时间通知您。",
+          "label": "向我发送关键安全警报邮件"
+        }
+      },
+      "helpers": {
+        "emailDisabled": "为个人资料添加邮箱以启用邮件通知。",
+        "securityAlwaysOn": "关键安全警报始终为您的账户启用。"
+      },
+      "snackbar": {
+        "saved": "通知偏好已更新。",
+        "reset": "偏好已恢复为上次保存的设置。"
+      },
+      "sidebar": {
+        "digestTitle": "汇总计划",
+        "digestDay": "周一",
+        "digestLine": "您的下一封汇总邮件将于 {day} {time} 送达。",
+        "digestInfo": "需要快速回顾时，可随时调整时间或频率。",
+        "tipsTitle": "小贴士",
+        "tips": {
+          "mobile": {
+            "title": "连接移动应用",
+            "subtitle": "在 iOS 或 Android 安装 BroWorld，解锁推送提醒和组件。"
+          },
+          "channels": {
+            "title": "平衡通知渠道",
+            "subtitle": "用邮件保留每周回顾，日常协作依靠站内提醒。"
+          },
+          "updates": {
+            "title": "持续关注",
+            "subtitle": "关注 @BroWorldHQ，获取产品发布、路线图分享和 AMA。"
+          }
+        },
+        "supportTitle": "需要帮助？",
+        "supportSubtitle": "联系支持或查阅帮助指南，了解更多通知技巧。",
+        "supportCta": "打开帮助中心"
+      }
+    },
     "contact": {
       "title": "Contact",
       "subtitle": "We usually reply within 1–2 business days.",
@@ -2861,6 +2962,10 @@
     "profileSecurity": {
       "title": "密码与安全",
       "description": "管理登录凭据、双重验证以及受信任的设备。"
+    },
+    "profileNotifications": {
+      "title": "通知偏好",
+      "description": "决定哪些提醒通过邮件、推送或站内消息送达。"
     },
     "job": {
       "title": "Jobs",
