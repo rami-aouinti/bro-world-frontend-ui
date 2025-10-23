@@ -130,9 +130,11 @@ export function useWorldBlogPage() {
     setActiveWorld(initialWorldId);
 
     if (import.meta.server) {
-      void loadPostsForWorld(initialWorldId, { force: true }).catch((error) => {
+      try {
+        await loadPostsForWorld(initialWorldId, { force: true });
+      } catch (error) {
         console.error("Failed to preload world posts", error);
-      });
+      }
     }
   }
 
