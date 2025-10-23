@@ -283,7 +283,17 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
       return;
     }
 
-    activeWorldIdsState.value = [key];
+    const currentIds = Array.isArray(activeWorldIdsState.value)
+      ? activeWorldIdsState.value
+      : [];
+
+    const filtered = currentIds
+      .map((id) => normalizeWorldId(id))
+      .filter((id): id is string => Boolean(id) && id !== key);
+
+    const next = [key, ...filtered];
+
+    activeWorldIdsState.value = next.slice(0, MAX_DEFAULT_ACTIVE_WORLDS);
   }
 
   function syncFromSiteSettings(settings: SiteSettings | null | undefined) {
