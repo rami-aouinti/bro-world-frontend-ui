@@ -72,12 +72,14 @@ export function useLayoutRightSidebar() {
       return;
     }
 
+    rightSidebarContent.value = normalizeContent(toValue(content));
+
     const stopWatch = watch(
       () => toValue(content),
       (value) => {
         rightSidebarContent.value = normalizeContent(value);
       },
-      { immediate: true },
+      { flush: "post" },
     );
 
     onBeforeUnmount(() => {
