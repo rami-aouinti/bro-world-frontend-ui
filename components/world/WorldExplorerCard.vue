@@ -17,9 +17,9 @@
         </v-chip>
 
         <NuxtLink :to="targetHref">
-          <h6 class="world-explorer-card__title">
+          <h3 class="world-explorer-card__title">
             {{ truncatedWorldName }}
-          </h6>
+          </h3>
         </NuxtLink>
       </div>
 
