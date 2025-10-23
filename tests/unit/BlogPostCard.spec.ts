@@ -7,6 +7,11 @@ import BlogPostCard from "~/components/blog/BlogPostCard.vue";
 import en from "~/i18n/locales/en.json";
 
 const visibilityRef = ref(false);
+const routeMock: { name: string; path: string; params: Record<string, unknown> } = {
+  name: "world-worldSlug",
+  path: "/world/home",
+  params: { worldSlug: "home" },
+};
 const getCommentsMock = vi.fn<(postId: string) => Promise<unknown[]>>();
 const notifyMock = vi.fn();
 
@@ -39,6 +44,14 @@ vi.mock("~/composables/useNonBlockingTask", () => ({
   }),
 }));
 
+vi.mock("~/composables/useSiteSettingsState", () => ({
+  useSiteSettingsState: () => ref({
+    activeWorldId: "world-home",
+    worlds: [
+      { id: "world-home", slug: "home" },
+    ],
+  }),
+}));
 const authState = {
   currentUser: ref(null),
   isAuthenticated: ref(true),
@@ -78,8 +91,8 @@ vi.mock("#imports", async () => {
       ) {
         const params = route.params as Record<string, string>;
 
-        if ("slug" in params) {
-          return `/post/${params.slug}`;
+        if ("worldSlug" in params && "postSlug" in params) {
+          return `/world/${params.worldSlug}/post/${params.postSlug}`;
         }
 
         if ("id" in params) {
@@ -89,6 +102,7 @@ vi.mock("#imports", async () => {
 
       return "/";
     },
+    useRoute: () => routeMock,
   };
 });
 
@@ -202,6 +216,9 @@ function mountComponent(overrides: Partial<typeof defaultPost> = {}) {
 
 describe("BlogPostCard", () => {
   beforeEach(() => {
+    routeMock.name = "world-worldSlug";
+    routeMock.path = "/world/home";
+    routeMock.params = { worldSlug: "home" };
     visibilityRef.value = false;
     getCommentsMock.mockReset();
     getCommentsMock.mockResolvedValue([]);
