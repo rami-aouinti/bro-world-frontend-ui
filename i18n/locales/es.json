@@ -915,26 +915,26 @@
     "world": {
       "sidebar": {
         "overview": {
-          "title": "Resumen del world",
+          "title": "Resumen del mundo",
           "creator": "Creador",
           "creatorFallback": "Creador desconocido",
           "untitled": "Mundo sin título",
           "visibility": "Visibilidad",
-          "visibilityPublic": "World público",
-          "visibilityPrivate": "World privado",
-          "visibilityUnknown": "World no listado",
+          "visibilityPublic": "Mundo público",
+          "visibilityPrivate": "Mundo privado",
+          "visibilityUnknown": "Mundo no listado",
           "theme": "Tema",
-          "tags": "Etiquetas clave",
+          "tags": "Etiquetas destacadas",
           "tagsEmpty": "Todavía no hay etiquetas."
         },
         "members": {
           "title": "Estadísticas de la comunidad",
           "participantsLabel": "Miembros",
           "ratingLabel": "Valoración de la comunidad",
-          "launchLabel": "Lanzado",
-          "guests": "Acceso para invitados",
+          "launchLabel": "Lanzamiento",
+          "guests": "Acceso de invitados",
           "guestsOpen": "Los invitados pueden explorar",
-          "guestsClosed": "Se necesita invitación"
+          "guestsClosed": "Se requiere invitación"
         },
         "quiz": {
           "title": "Clasificación del quiz",

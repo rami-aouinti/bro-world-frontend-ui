@@ -912,6 +912,39 @@
         "secondaryCtaAria": "فتح صفحة الاتصال لتحديد مكالمة"
       }
     },
+    "world": {
+      "sidebar": {
+        "overview": {
+          "title": "نظرة عامة على العالم",
+          "creator": "المنشئ",
+          "creatorFallback": "منشئ غير معروف",
+          "untitled": "عالم بلا عنوان",
+          "visibility": "إمكانية الرؤية",
+          "visibilityPublic": "عالم عام",
+          "visibilityPrivate": "عالم خاص",
+          "visibilityUnknown": "عالم غير مدرج",
+          "theme": "السمة",
+          "tags": "الوسوم المميزة",
+          "tagsEmpty": "لا توجد وسوم حتى الآن."
+        },
+        "members": {
+          "title": "إحصاءات المجتمع",
+          "participantsLabel": "الأعضاء",
+          "ratingLabel": "تقييم المجتمع",
+          "launchLabel": "تاريخ الإطلاق",
+          "guests": "وصول الضيوف",
+          "guestsOpen": "يمكن للضيوف الاستكشاف",
+          "guestsClosed": "الدعوة مطلوبة"
+        },
+        "quiz": {
+          "title": "لوحة صدارة الاختبار",
+          "updated": "تم التحديث {date}",
+          "empty": "لوحة الصدارة غير متاحة الآن.",
+          "score": "{points} نقطة",
+          "streak": "سلسلة من {count} يومًا"
+        }
+      }
+    },
     "academy": {
       "title": "Bro World Academy",
       "subtitle": "Master the skills to build immersive communities through focused learning tracks.",

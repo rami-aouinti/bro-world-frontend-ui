@@ -915,14 +915,14 @@
     "world": {
       "sidebar": {
         "overview": {
-          "title": "Panoramica del world",
+          "title": "Panoramica del mondo",
           "creator": "Creatore",
           "creatorFallback": "Creatore sconosciuto",
           "untitled": "Mondo senza titolo",
           "visibility": "Visibilità",
-          "visibilityPublic": "World pubblico",
-          "visibilityPrivate": "World privato",
-          "visibilityUnknown": "World non elencato",
+          "visibilityPublic": "Mondo pubblico",
+          "visibilityPrivate": "Mondo privato",
+          "visibilityUnknown": "Mondo non in elenco",
           "theme": "Tema",
           "tags": "Tag principali",
           "tagsEmpty": "Nessun tag disponibile."
@@ -931,16 +931,16 @@
           "title": "Statistiche della community",
           "participantsLabel": "Membri",
           "ratingLabel": "Valutazione della community",
-          "launchLabel": "Lanciato",
+          "launchLabel": "Lancio",
           "guests": "Accesso ospiti",
           "guestsOpen": "Gli ospiti possono esplorare",
-          "guestsClosed": "Serve un invito"
+          "guestsClosed": "Invito richiesto"
         },
         "quiz": {
-          "title": "Classifica quiz",
-          "updated": "Aggiornata {date}",
-          "empty": "La classifica non è disponibile in questo momento.",
-          "score": "{points} pt",
+          "title": "Classifica del quiz",
+          "updated": "Aggiornato {date}",
+          "empty": "La classifica non è disponibile al momento.",
+          "score": "{points} punti",
           "streak": "Serie di {count} giorni"
         }
       }
