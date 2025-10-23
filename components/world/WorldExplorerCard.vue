@@ -16,9 +16,7 @@
           {{ visibilityLabel }}
         </v-chip>
 
-        <NuxtLink
-          :to="targetHref"
-        >
+        <NuxtLink :to="targetHref">
           <h6 class="world-explorer-card__title">
             {{ truncatedWorldName }}
           </h6>

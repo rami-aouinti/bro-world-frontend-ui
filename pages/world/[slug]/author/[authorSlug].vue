@@ -3,7 +3,6 @@
     class="blog-author-page"
     aria-labelledby="blog-author-heading"
   >
-
     <v-alert
       v-if="errorMessage"
       type="error"

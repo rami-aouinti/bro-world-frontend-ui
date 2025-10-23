@@ -41,7 +41,9 @@
           v-if="authorEmail"
           class="flex items-center gap-3"
         >
-          <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary"
+          >
             <v-icon
               icon="mdi:email-outline"
               size="20"
@@ -61,7 +63,9 @@
           v-if="authorUsername"
           class="flex items-center gap-3"
         >
-          <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary"
+          >
             <v-icon
               icon="mdi:account-outline"
               size="20"
@@ -72,9 +76,7 @@
             <dt class="text-xs font-semibold uppercase tracking-[0.25em] text-primary/70">
               {{ usernameLabel }}
             </dt>
-            <dd class="text-sm text-muted-foreground break-all">
-              @{{ authorUsername }}
-            </dd>
+            <dd class="text-sm text-muted-foreground break-all">@{{ authorUsername }}</dd>
           </div>
         </div>
       </dl>
@@ -133,7 +135,9 @@ const authorName = computed(() => {
     return nameParts.join(" ");
   }
 
-  return props.author.username?.trim() || props.author.email?.trim() || t("blog.posts.detailHeading");
+  return (
+    props.author.username?.trim() || props.author.email?.trim() || t("blog.posts.detailHeading")
+  );
 });
 
 const authorUsername = computed(() => props.author.username?.trim() || "");
