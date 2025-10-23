@@ -210,15 +210,13 @@ async function setActiveWorld(worldId: string) {
 
 const pageDescription = computed(() => t("pages.index.description"));
 
-if (typeof definePageMeta === "function") {
-  definePageMeta({
-    showRightWidgets: true,
-    showContactSidebarCard: true,
-    documentDriven: false,
-    rightSidebarPreset: "dashboard",
-    navbarSearchContext: "worlds",
-  });
-}
+definePageMeta({
+  showRightWidgets: true,
+  showContactSidebarCard: true,
+  documentDriven: false,
+  rightSidebarPreset: "dashboard",
+  navbarSearchContext: "worlds",
+});
 
 if (typeof useSeoMeta === "function") {
   useSeoMeta(() => ({
