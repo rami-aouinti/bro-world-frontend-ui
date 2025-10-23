@@ -304,6 +304,7 @@ import { buildProfileSidebarItems } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
+import { stripLocaleFromPath } from "~/lib/i18n/locale-path";
 import type { SiteSettings, SiteThemeDefinition, SiteWorldSettings } from "~/types/settings";
 import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
 import { withSecureCookieOptions } from "~/lib/cookies";
@@ -1089,7 +1090,7 @@ const activeWorldForDisplay = computed(() => {
 });
 
 const shouldUseWorldScopedNavigation = computed(() => {
-  const path = currentRoute.value?.path ?? "";
+  const path = stripLocaleFromPath(currentRoute.value?.path ?? "");
   return /^\/world(?:\/|$)/.test(path);
 });
 
@@ -1115,10 +1116,13 @@ function normalizeWorldSlugParam(value: unknown): string | null {
 
 const routeWorldSlug = computed(() => {
   const params = currentRoute.value?.params ?? {};
-  const fromParams = normalizeWorldSlugParam((params as Record<string, unknown>).slug);
-  const path = currentRoute.value?.path ?? "";
+  const slugParams = [
+    normalizeWorldSlugParam((params as Record<string, unknown>).slug),
+    normalizeWorldSlugParam((params as Record<string, unknown>).worldSlug),
+  ];
+  const path = stripLocaleFromPath(currentRoute.value?.path ?? "");
   const match = path.match(/^\/world\/([^/]+)/);
-  const candidates = [fromParams, match ? match[1] : null];
+  const candidates = [...slugParams, match ? match[1] : null];
   const worlds = siteSettings.value.worlds ?? [];
 
   for (const candidate of candidates) {
