@@ -146,11 +146,13 @@ import { computed, defineAsyncComponent, nextTick, reactive, ref, shallowRef, wa
 import { useElementVisibility } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { onNuxtReady, useNuxtApp } from "#app";
-import { useLocalePath } from "#imports";
+import { useLocalePath, useRoute } from "#imports";
 import { NuxtLink } from "#components";
 import { useAuthStore } from "~/composables/useAuthStore";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
+import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
+import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useRelativeTime } from "~/composables/useRelativeTime";
 import type {
   BlogCommentWithReplies,
@@ -210,6 +212,94 @@ if (import.meta.client) {
   });
 }
 const { reactToPost, addComment, reactToComment, getComments } = usePostsStore();
+const route = useRoute();
+const siteSettingsState = useSiteSettingsState();
+const defaultSiteSettings = getDefaultSiteSettings();
+const siteSettings = computed(() => siteSettingsState.value ?? defaultSiteSettings);
+
+function normalizeRouteParam(value: unknown): string {
+  if (typeof value === "string") {
+    return value.trim();
+  }
+
+  if (Array.isArray(value)) {
+    const candidate = value.find((entry) => typeof entry === "string");
+
+    if (typeof candidate === "string") {
+      return candidate.trim();
+    }
+  }
+
+  if (value == null) {
+    return "";
+  }
+
+  return String(value).trim();
+}
+
+const routeName = computed(() => {
+  const name = route.name;
+  return typeof name === "string" ? name : "";
+});
+
+const routeWorldSlug = computed(() => {
+  const params = route.params as Record<string, unknown> | undefined;
+
+  if (!params) {
+    return "";
+  }
+
+  if ("worldSlug" in params) {
+    return normalizeRouteParam(params.worldSlug);
+  }
+
+  if ("slug" in params) {
+    const slug = normalizeRouteParam(params.slug);
+
+    if (!slug) {
+      return "";
+    }
+
+    if (typeof route.path === "string" && route.path.startsWith("/world/")) {
+      return slug;
+    }
+
+    if (routeName.value.startsWith("world-")) {
+      return slug;
+    }
+  }
+
+  return "";
+});
+
+const fallbackWorldSlug = computed(() => {
+  const settings = siteSettings.value;
+  const worlds = Array.isArray(settings?.worlds) ? settings.worlds : [];
+  const activeId = typeof settings?.activeWorldId === "string" ? settings.activeWorldId.trim() : "";
+
+  if (activeId) {
+    const matched = worlds.find((world) => {
+      const worldId = typeof world?.id === "string" ? world.id.trim() : "";
+      return worldId && worldId === activeId;
+    });
+
+    if (matched && typeof matched?.slug === "string" && matched.slug.trim()) {
+      return matched.slug.trim();
+    }
+  }
+
+  const firstWithSlug = worlds.find(
+    (world) => typeof world?.slug === "string" && world.slug.trim().length > 0,
+  );
+
+  if (firstWithSlug && typeof firstWithSlug.slug === "string") {
+    return firstWithSlug.slug.trim();
+  }
+
+  return "";
+});
+
+const resolvedWorldSlug = computed(() => routeWorldSlug.value || fallbackWorldSlug.value);
 const {
   currentUser,
   isAuthenticated: isAuthenticatedComputed,
@@ -222,17 +312,27 @@ const post = computed(() => props.post);
 const postId = computed(() => post.value.id?.trim() ?? "");
 const postLink = computed(() => {
   const slug = post.value.slug?.trim();
+  const worldSlug = resolvedWorldSlug.value;
 
-  if (slug) {
+  if (slug && worldSlug) {
     try {
-      return localePath({ name: "post-slug", params: { slug } });
+      return localePath({
+        name: "world-worldSlug-post-postSlug",
+        params: { worldSlug, postSlug: slug },
+      });
     } catch (error) {
       if (import.meta.dev) {
         console.warn("[BlogPostCard] Failed to resolve localized post link", error);
       }
 
-      return `/post/${encodeURIComponent(slug)}`;
+      return `/world/${encodeURIComponent(worldSlug)}/post/${encodeURIComponent(slug)}`;
     }
+  }
+
+  if (slug && import.meta.dev && !worldSlug) {
+    console.warn(
+      "[BlogPostCard] Unable to resolve world slug for post link; falling back to original URL.",
+    );
   }
 
   const url = post.value.url;

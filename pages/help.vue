@@ -5,7 +5,7 @@
       aria-describedby="help-subtitle"
     >
       <section
-        class="mb-10"
+        class="mb-12"
         aria-labelledby="help-faq"
       >
         <SidebarCard
