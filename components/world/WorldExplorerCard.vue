@@ -16,7 +16,10 @@
           {{ visibilityLabel }}
         </v-chip>
 
-        <NuxtLink :to="targetRoute">
+        <NuxtLink
+          :to="targetHref"
+          :href="targetHref"
+        >
           <h6 class="world-explorer-card__title">
             {{ truncatedWorldName }}
           </h6>
@@ -140,6 +143,16 @@ const localePath = useResolvedLocalePath();
 const targetRoute = computed(() => {
   const slug = props.world.slug?.trim() || props.world.id;
   return localePath({ name: "world-slug", params: { slug } });
+});
+
+const targetHref = computed(() => {
+  const candidate = String(targetRoute.value || "").trim();
+
+  if (candidate) {
+    return candidate;
+  }
+
+  return localePath("/");
 });
 
 const visibilityLabel = computed(() => {
@@ -395,7 +408,7 @@ async function handleCardClick(event: MouseEvent) {
   }
 
   try {
-    await router.push(targetRoute.value);
+    await router.push(targetHref.value);
   } catch (error) {
     // Swallow navigation duplication errors.
   }
@@ -459,7 +472,7 @@ async function handleEnter() {
 
   try {
     await membershipStore.enterWorld(props.world.id);
-    await router.push(targetRoute.value);
+    await router.push(targetHref.value);
   } catch (error) {
     const message =
       error instanceof Error
