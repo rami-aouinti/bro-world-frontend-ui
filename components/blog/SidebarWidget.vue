@@ -18,7 +18,15 @@
           </p>
         </div>
         <NuxtLink
-          v-if="widget.action"
+          v-if="widget.action && !widget.action.external"
+          :to="widget.action.href"
+          class="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/80"
+        >
+          <span>{{ widget.action.label }}</span>
+          <span aria-hidden="true">→</span>
+        </NuxtLink>
+        <a
+          v-else-if="widget.action"
           :href="widget.action.href"
           class="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/80"
           :target="widget.action.external ? '_blank' : undefined"
@@ -26,7 +34,7 @@
         >
           <span>{{ widget.action.label }}</span>
           <span aria-hidden="true">→</span>
-        </NuxtLink>
+        </a>
       </div>
     </div>
   </div>
