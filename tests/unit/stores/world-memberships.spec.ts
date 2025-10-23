@@ -12,9 +12,7 @@ describe("useWorldMemberships.syncFromSiteSettings", () => {
 
     store.syncFromSiteSettings(settings);
 
-    const expectedIds = (settings.worlds ?? [])
-      .slice(0, 3)
-      .map((world) => world.id);
+    const expectedIds = (settings.worlds ?? []).slice(0, 3).map((world) => world.id);
 
     expect(store.activeWorldIds.value).toEqual(expectedIds);
     for (const worldId of expectedIds) {

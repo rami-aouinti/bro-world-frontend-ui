@@ -141,7 +141,12 @@ import RightControls from "./app-bar/RightControls.vue";
 import UserMenu from "./app-bar/UserMenu.vue";
 import LocaleMenu from "./app-bar/LocaleMenu.vue";
 import { useI18nDocs } from "~/composables/useI18nDocs";
-import { useNavbarSearchQuery } from "~/composables/useNavbarSearch";
+import {
+  useNavbarSearchQuery,
+  createPostSearchSnippet,
+  filterPostsByQuery,
+  normalizeSearchQuery,
+} from "~/composables/useNavbarSearch";
 import { useAuthSession } from "~/stores/auth-session";
 import { useMessengerStore } from "~/stores/messenger";
 import { ADMIN_ROLE_KEYS } from "~/lib/navigation/sidebar";
@@ -150,11 +155,6 @@ import { useSiteSettingsState } from "~/composables/useSiteSettingsState";
 import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings } from "~/types/settings";
 import { usePostsStore } from "~/composables/usePostsStore";
-import {
-  createPostSearchSnippet,
-  filterPostsByQuery,
-  normalizeSearchQuery,
-} from "~/composables/useNavbarSearch";
 
 const vuetifyComponentsPromise = import("vuetify/components");
 

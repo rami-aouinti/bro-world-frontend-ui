@@ -307,7 +307,11 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import type { SiteSettings, SiteThemeDefinition, SiteWorldSettings } from "~/types/settings";
 import type { MenuBlueprint } from "~/lib/navigation/menu-blueprints";
 import { withSecureCookieOptions } from "~/lib/cookies";
-import { getAllPluginIds, getPluginMenuBlueprints, getPluginQuickLaunchEntries } from "~/lib/navigation/plugins";
+import {
+  getAllPluginIds,
+  getPluginMenuBlueprints,
+  getPluginQuickLaunchEntries,
+} from "~/lib/navigation/plugins";
 import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/colors";
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
@@ -1444,11 +1448,13 @@ function findActiveWorldBySlug(slug: string): SiteWorldSettings | null {
 }
 
 function formatPluginLabel(pluginId: string): string {
-  return pluginId
-    .split(/[-_]+/g)
-    .filter(Boolean)
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ") || pluginId;
+  return (
+    pluginId
+      .split(/[-_]+/g)
+      .filter(Boolean)
+      .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+      .join(" ") || pluginId
+  );
 }
 
 const activeSidebar = ref("");

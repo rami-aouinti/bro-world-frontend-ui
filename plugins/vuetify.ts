@@ -111,14 +111,8 @@ function createMdiAliasVariants(iconMap: Record<string, IconValue>) {
 }
 
 const projectMdiAliasEntries: Record<string, IconValue> = Object.fromEntries([
-  ...Object.entries(vuetifyMdiAliases).map(([name, value]) => [
-    name,
-    withSvgPrefix(value),
-  ]),
-  ...Object.entries(coreProjectMdiIcons).map(([name, value]) => [
-    name,
-    withSvgPrefix(value),
-  ]),
+  ...Object.entries(vuetifyMdiAliases).map(([name, value]) => [name, withSvgPrefix(value)]),
+  ...Object.entries(coreProjectMdiIcons).map(([name, value]) => [name, withSvgPrefix(value)]),
 ]);
 
 let minimalAliases = createMdiAliasVariants(projectMdiAliasEntries);

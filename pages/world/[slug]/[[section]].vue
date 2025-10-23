@@ -47,7 +47,9 @@ function toLeaderboardArray(source: unknown): QuizLeaderboardEntryPayload[] {
     return [];
   }
 
-  return source.filter((entry): entry is QuizLeaderboardEntryPayload => typeof entry === "object" && entry !== null);
+  return source.filter(
+    (entry): entry is QuizLeaderboardEntryPayload => typeof entry === "object" && entry !== null,
+  );
 }
 
 const leaderboardEntries = computed<QuizLeaderboardEntryPayload[]>(() => {

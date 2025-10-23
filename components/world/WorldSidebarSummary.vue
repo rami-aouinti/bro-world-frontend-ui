@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col gap-6">
     <SidebarCard
-      class="bg-card/80 backdrop-blur"
-      :particles="false"
-      padding="md"
+      class="text-card-foreground px-3 py-2 mb-4"
+      padding="none"
+      glow
     >
       <header class="mb-4">
         <p class="text-xs font-semibold uppercase tracking-wide text-primary">
@@ -76,9 +76,9 @@
     </SidebarCard>
 
     <SidebarCard
-      class="bg-card/80 backdrop-blur"
-      :particles="false"
-      padding="md"
+      class="text-card-foreground px-3 py-2 mb-4"
+      padding="none"
+      glow
     >
       <header class="mb-4">
         <p class="text-xs font-semibold uppercase tracking-wide text-primary">
@@ -89,19 +89,25 @@
       <ul class="space-y-3 text-sm">
         <li v-if="participantsLabel">
           <div class="flex items-center justify-between">
-            <span class="text-muted-foreground">{{ t("pages.world.sidebar.members.participantsLabel") }}</span>
+            <span class="text-muted-foreground">{{
+              t("pages.world.sidebar.members.participantsLabel")
+            }}</span>
             <span class="font-semibold text-card-foreground">{{ participantsLabel }}</span>
           </div>
         </li>
         <li v-if="ratingLabel">
           <div class="flex items-center justify-between">
-            <span class="text-muted-foreground">{{ t("pages.world.sidebar.members.ratingLabel") }}</span>
+            <span class="text-muted-foreground">{{
+              t("pages.world.sidebar.members.ratingLabel")
+            }}</span>
             <span class="font-semibold text-card-foreground">{{ ratingLabel }}</span>
           </div>
         </li>
         <li v-if="launchLabel">
           <div class="flex items-center justify-between">
-            <span class="text-muted-foreground">{{ t("pages.world.sidebar.members.launchLabel") }}</span>
+            <span class="text-muted-foreground">{{
+              t("pages.world.sidebar.members.launchLabel")
+            }}</span>
             <span class="font-semibold text-card-foreground">{{ launchLabel }}</span>
           </div>
         </li>
@@ -115,9 +121,9 @@
     </SidebarCard>
 
     <SidebarCard
-      class="bg-card/80 backdrop-blur"
-      :particles="false"
-      padding="md"
+      class="text-card-foreground px-3 py-2 mb-4"
+      padding="none"
+      glow
     >
       <header class="mb-4">
         <p class="text-xs font-semibold uppercase tracking-wide text-primary">
@@ -141,7 +147,9 @@
           class="flex items-center justify-between gap-4 rounded-2xl border border-border/60 bg-background/60 px-3 py-2"
         >
           <div class="flex items-center gap-3">
-            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+            <span
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary"
+            >
               {{ entry.rank }}
             </span>
             <div>
@@ -300,7 +308,9 @@ function formatLeaderboardEntry(entry: RawLeaderboardEntry): NormalizedLeaderboa
 
   const scoreLabel = (() => {
     if (typeof entry.score === "number") {
-      return t("pages.world.sidebar.quiz.score", { points: numberFormatter.value.format(entry.score) });
+      return t("pages.world.sidebar.quiz.score", {
+        points: numberFormatter.value.format(entry.score),
+      });
     }
 
     if (typeof entry.score === "string" && entry.score.trim()) {
@@ -312,7 +322,9 @@ function formatLeaderboardEntry(entry: RawLeaderboardEntry): NormalizedLeaderboa
 
   const metaLabel = (() => {
     if (typeof entry.streak === "number" && Number.isFinite(entry.streak)) {
-      return t("pages.world.sidebar.quiz.streak", { count: numberFormatter.value.format(entry.streak) });
+      return t("pages.world.sidebar.quiz.streak", {
+        count: numberFormatter.value.format(entry.streak),
+      });
     }
 
     if (typeof entry.completed === "string" && entry.completed.trim()) {

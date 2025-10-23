@@ -10,8 +10,8 @@
       >
         <div class="px-4 pt-4 pb-3">
           <SidebarCard
-              class="text-card-foreground px-3 py-2"
-              glow
+            class="text-card-foreground px-3 py-2"
+            glow
           >
             <v-card-text class="d-flex flex-column gap-4">
               <div class="d-flex flex-column flex-md-row justify-space-between gap-4">
@@ -125,8 +125,8 @@
     </client-only>
 
     <SidebarCard
-        class="text-card-foreground px-3 py-2"
-        glow
+      class="text-card-foreground px-3 py-2"
+      glow
     >
       <header class="text-center mb-10">
         <h1

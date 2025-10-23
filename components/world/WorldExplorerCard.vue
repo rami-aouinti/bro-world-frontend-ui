@@ -367,9 +367,7 @@ function isInteractiveTarget(target: EventTarget | null): boolean {
     return false;
   }
 
-  return Boolean(
-    target.closest("a,button,input,select,textarea,[role='button'],[role='link']"),
-  );
+  return Boolean(target.closest("a,button,input,select,textarea,[role='button'],[role='link']"));
 }
 
 function isPrimaryNavigationEvent(event: MouseEvent): boolean {

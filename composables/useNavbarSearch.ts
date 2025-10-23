@@ -96,7 +96,9 @@ export function useNavbarSearchQuery(options: UseNavbarSearchQueryOptions = {}) 
   };
 }
 
-function collectPostSegments(post: Partial<{ title?: string | null; summary?: string | null; body?: string | null }>): string[] {
+function collectPostSegments(
+  post: Partial<{ title?: string | null; summary?: string | null; body?: string | null }>,
+): string[] {
   const segments: string[] = [];
 
   const add = (value: string | null | undefined) => {
@@ -134,7 +136,10 @@ export function createPostSearchSnippet(
   const segments = collectPostSegments(post);
 
   for (const segment of segments) {
-    const sanitized = segment.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const sanitized = segment
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
 
     if (!sanitized) {
       continue;
@@ -150,10 +155,9 @@ export function createPostSearchSnippet(
   return "";
 }
 
-export function filterPostsByQuery<T extends { title?: string | null; summary?: string | null; body?: string | null }>(
-  posts: ReadonlyArray<T>,
-  query: string | null | undefined,
-): T[] {
+export function filterPostsByQuery<
+  T extends { title?: string | null; summary?: string | null; body?: string | null },
+>(posts: ReadonlyArray<T>, query: string | null | undefined): T[] {
   const normalizedQuery = normalizeSearchQuery(query);
 
   if (!normalizedQuery) {

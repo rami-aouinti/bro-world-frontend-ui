@@ -30,26 +30,27 @@ vi.mock("~/lib/api/fetcher", () => ({
 }));
 
 vi.mock("~/composables/useResolvedLocalePath", () => ({
-  useResolvedLocalePath: () => (target?: string | { path?: string; params?: Record<string, unknown> }) => {
-    if (!target) {
+  useResolvedLocalePath:
+    () => (target?: string | { path?: string; params?: Record<string, unknown> }) => {
+      if (!target) {
+        return "/";
+      }
+
+      if (typeof target === "string") {
+        return target;
+      }
+
+      if (typeof target.path === "string" && target.path) {
+        return target.path;
+      }
+
+      const slug = target.params?.slug;
+      if (typeof slug === "string" && slug.trim()) {
+        return `/world/${slug}`;
+      }
+
       return "/";
-    }
-
-    if (typeof target === "string") {
-      return target;
-    }
-
-    if (typeof target.path === "string" && target.path) {
-      return target.path;
-    }
-
-    const slug = target.params?.slug;
-    if (typeof slug === "string" && slug.trim()) {
-      return `/world/${slug}`;
-    }
-
-    return "/";
-  },
+    },
 }));
 
 vi.mock("#imports", () => ({

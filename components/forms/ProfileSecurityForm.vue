@@ -14,8 +14,8 @@
             <div class="d-flex flex-column flex-md-row align-md-center justify-space-between mb-4">
               <div>
                 <h4
-                    id="password-section-title"
-                    class="text-h5 font-weight-semibold mb-1"
+                  id="password-section-title"
+                  class="text-h5 font-weight-semibold mb-1"
                 >
                   {{ t("pages.profileSecurity.sections.password.title") }}
                 </h4>
@@ -23,9 +23,9 @@
 
               <div class="d-flex gap-3">
                 <v-btn
-                    color="primary"
-                    class="flex-shrink-0"
-                    @click="handleSubmit"
+                  color="primary"
+                  class="flex-shrink-0"
+                  @click="handleSubmit"
                 >
                   {{ t("pages.profileSecurity.actions.save") }}
                 </v-btn>

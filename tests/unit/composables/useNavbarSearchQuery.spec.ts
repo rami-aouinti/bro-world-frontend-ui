@@ -1,10 +1,7 @@
 import { computed, ref } from "vue";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import {
-  filterPostsByQuery,
-  useNavbarSearchQuery,
-} from "~/composables/useNavbarSearch";
+import { filterPostsByQuery, useNavbarSearchQuery } from "~/composables/useNavbarSearch";
 import type { BlogPost } from "~/lib/mock/blog";
 import { __resetNuxtStateMocks } from "#imports";
 
