@@ -3,17 +3,6 @@
     class="blog-author-page"
     aria-labelledby="blog-author-heading"
   >
-    <div class="mb-6 flex flex-wrap items-center gap-3">
-      <v-btn
-        :to="feedLink"
-        variant="text"
-        color="primary"
-        class="px-0"
-        prepend-icon="mdi:arrow-left"
-      >
-        {{ t("blog.posts.backToFeed") }}
-      </v-btn>
-    </div>
 
     <v-alert
       v-if="errorMessage"
