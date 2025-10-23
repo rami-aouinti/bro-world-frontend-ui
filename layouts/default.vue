@@ -319,16 +319,8 @@ import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants"
 import VercelAnalyticsPlaceholder from "@/components/layout/analytics/VercelAnalyticsPlaceholder";
 import SpeedInsightsPlaceholder from "@/components/layout/analytics/SpeedInsightsPlaceholder";
 import { createInitialLayoutState } from "~/lib/layout/initial-layout";
-
-const AppSidebar = defineAsyncComponent({
-  loader: () => import("@/components/layout/AppSidebar.vue"),
-  suspensible: false,
-});
-
-const AppSidebarRight = defineAsyncComponent({
-  loader: () => import("~/components/layout/AppSidebarRight.vue"),
-  suspensible: false,
-});
+import AppSidebar from "@/components/layout/AppSidebar.vue";
+import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
 
 const SidebarContactCard = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarContactCard.vue"),
