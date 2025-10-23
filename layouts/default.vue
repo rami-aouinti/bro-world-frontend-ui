@@ -203,7 +203,10 @@
       </Suspense>
     </v-navigation-drawer>
 
-    <v-main class="app-surface">
+    <v-main
+      class="app-surface"
+      :style="mainSurfaceStyle"
+    >
       <div
         ref="mainParticlesContainerRef"
         class="main-scroll py-4"
@@ -805,6 +808,9 @@ const mainInlineStyle = computed(() => ({
   "--layout-inset-left": layoutInsets.value.left,
   "--layout-inset-right": layoutInsets.value.right,
   "--layout-content-max-width": contentMaxWidth.value,
+}));
+const mainSurfaceStyle = computed(() => ({
+  minHeight: "auto",
 }));
 const isMobile = computed(() => {
   if (!isHydrated.value) {
@@ -1819,7 +1825,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
 }
 
 .app-container-wrapper--loading {
-  min-height: 100%;
+  min-height: auto;
 }
 
 .app-container--content {
