@@ -18,7 +18,6 @@
 
         <NuxtLink
           :to="targetHref"
-          :href="targetHref"
         >
           <h6 class="world-explorer-card__title">
             {{ truncatedWorldName }}
