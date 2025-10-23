@@ -8,7 +8,7 @@ import JobPage from "~/pages/job.vue";
 definePageMeta({
   description: "Job page",
   breadcrumb: "disabled",
-  requiresPlugin: "job-board",
+  requiresPlugin: "job",
   showRightWidgets: true,
 });
 </script>
