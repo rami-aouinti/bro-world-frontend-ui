@@ -1,7 +1,7 @@
 <template>
   <main aria-labelledby="profile-title">
     <header
-      class="mb-6"
+      class="mb-2"
       aria-describedby="profile-subtitle"
     >
       <SidebarCard
@@ -9,7 +9,7 @@
         padding="none"
         glow
       >
-        <div class="d-flex flex-column flex-sm-row align-sm-center gap-4">
+        <div class="d-flex flex-column flex-sm-row align-sm-center gap-2">
           <v-avatar
             size="96"
             class="flex-shrink-0"
