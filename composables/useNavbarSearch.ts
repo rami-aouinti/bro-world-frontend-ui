@@ -101,7 +101,7 @@ function collectPostSegments(
 ): string[] {
   const segments: string[] = [];
 
-  const add = (value: string | null | undefined) => {
+  function add(value: string | null | undefined) {
     if (typeof value !== "string") {
       return;
     }
@@ -111,7 +111,7 @@ function collectPostSegments(
     if (trimmed) {
       segments.push(trimmed);
     }
-  };
+  }
 
   add(post.title ?? null);
   add(post.summary ?? null);
