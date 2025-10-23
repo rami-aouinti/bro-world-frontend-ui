@@ -11,7 +11,7 @@
       >
         <div class="d-flex flex-column center gap-3">
           <section aria-labelledby="password-section-title">
-            <div class="d-inline-flex mb-4">
+            <div class="d-flex flex-column flex-md-row align-md-center justify-space-between mb-4">
               <div>
                 <h4
                     id="password-section-title"
@@ -24,7 +24,6 @@
               <div class="d-flex gap-3">
                 <v-btn
                     color="primary"
-                    size="large"
                     class="flex-shrink-0"
                     @click="handleSubmit"
                 >
