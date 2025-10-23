@@ -1812,6 +1812,7 @@ function updateActiveSidebar(path: string, items: LayoutSidebarItem[]) {
   display: flex;
   flex-direction: column;
   scrollbar-gutter: stable both-edges;
+  min-height: auto;
 }
 
 .main-scroll__viewport {
