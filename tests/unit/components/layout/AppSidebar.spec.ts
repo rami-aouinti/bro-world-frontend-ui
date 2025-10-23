@@ -50,6 +50,10 @@ vi.mock("~/lib/auth/social", () => ({
   resolveSocialRedirect: () => "/auth/social",
 }));
 
+vi.mock("~/composables/useResolvedLocalePath", () => ({
+  useResolvedLocalePath: () => (target: unknown) => target,
+}));
+
 vi.mock("#imports", () => ({
   useState: <T>(key: string, init?: () => T) => {
     if (!sidebarCache.has(key)) {
