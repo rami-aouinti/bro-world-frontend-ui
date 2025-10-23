@@ -174,6 +174,8 @@ defineOptions({
   inheritAttrs: false,
 });
 
+const DEFAULT_WORLD_SLUG = "bro-world";
+
 const props = withDefaults(
   defineProps<{
     post: BlogPost;
@@ -183,10 +185,12 @@ const props = withDefaults(
     preferEagerMediaLoading?: boolean;
     enablePostLink?: boolean;
     showPostLinkCta?: boolean;
+    worldSlug?: string;
   }>(),
   {
     enablePostLink: true,
     showPostLinkCta: true,
+    worldSlug: DEFAULT_WORLD_SLUG,
   },
 );
 
@@ -339,6 +343,8 @@ const postLink = computed(() => {
 
   return null;
 });
+const authorWorldSlug = computed(() => props.worldSlug?.trim() || DEFAULT_WORLD_SLUG);
+
 const authorLink = computed(() => {
   if (!isHydrated.value) {
     return null;
@@ -350,14 +356,20 @@ const authorLink = computed(() => {
     return null;
   }
 
+  const slug = authorWorldSlug.value || DEFAULT_WORLD_SLUG;
+
   try {
-    return localePath({ name: "blog-author-id", params: { id } });
+    return localePath({
+      name: "world-slug-author-authorSlug",
+      params: { slug, authorSlug: id },
+    });
   } catch (error) {
     if (import.meta.dev) {
       console.warn("[BlogPostCard] Failed to resolve localized author link", error);
     }
 
-    return `/blog/author/${encodeURIComponent(id)}`;
+    const encodedSlug = encodeURIComponent(slug || DEFAULT_WORLD_SLUG);
+    return `/world/${encodedSlug}/author/${encodeURIComponent(id)}`;
   }
 });
 const enablePostLink = computed(() => props.enablePostLink !== false);

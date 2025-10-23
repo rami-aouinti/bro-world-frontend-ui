@@ -86,6 +86,7 @@
               :reaction-emojis="reactionEmojis"
               :reaction-labels="reactionLabels"
               :prefer-eager-media-loading="true"
+              :world-slug="worldSlug"
             />
           </div>
         </template>
@@ -111,10 +112,14 @@ import { useI18n } from "vue-i18n";
 import { createError, useHead, useSeoMeta } from "#imports";
 
 import { usePostsStore } from "~/composables/usePostsStore";
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
+import { useWorldBlogPage } from "~/composables/useWorldBlogPage";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
+import SidebarCard from "~/components/layout/SidebarCard.vue";
+import AuthorSidebarInfo from "~/components/blog/AuthorSidebarInfo.vue";
 import type { BlogPost, BlogUser, ReactionType } from "~/lib/mock/blog";
 import { optimizeAvatarUrl } from "~/lib/images/avatar";
 import { blogPostCardLoader, prefetchBlogPostCard } from "~/lib/prefetch/blog-post-card";
-import SidebarCard from "~/components/layout/SidebarCard.vue";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const BlogPostCard = defineAsyncComponent({ loader: blogPostCardLoader });
@@ -125,12 +130,59 @@ const PostCardSkeleton = defineAsyncComponent(
 await prefetchBlogPostCard();
 
 const route = useRoute();
-const localePath = useLocalePath();
-const { t } = useI18n();
+const resolveLocalePath = useResolvedLocalePath();
+const { t, n } = useI18n();
 const postsStore = usePostsStore();
+const { world } = useWorldBlogPage();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
 
-const authorId = computed(() => String(route.params.id ?? ""));
-const feedLink = computed(() => localePath({ name: "index" }));
+function normalizeRouteParam(value: unknown): string {
+  if (typeof value === "string") {
+    return value.trim();
+  }
+
+  if (Array.isArray(value)) {
+    const first = value.find((entry) => typeof entry === "string");
+    return typeof first === "string" ? first.trim() : "";
+  }
+
+  if (value == null) {
+    return "";
+  }
+
+  return String(value ?? "").trim();
+}
+
+const worldSlug = computed(() => {
+  const paramValue = normalizeRouteParam(route.params?.slug);
+
+  if (paramValue) {
+    return paramValue;
+  }
+
+  const fallback = world.value?.slug?.trim() || world.value?.id?.trim();
+  return fallback || "bro-world";
+});
+
+const worldId = computed(() => world.value?.id?.trim() || null);
+const authorId = computed(() => normalizeRouteParam(route.params?.authorSlug));
+const feedLink = computed(() => {
+  const slug = worldSlug.value;
+
+  if (!slug) {
+    return resolveLocalePath("/");
+  }
+
+  try {
+    return resolveLocalePath({ name: "world-slug-section", params: { slug } });
+  } catch (error) {
+    if (import.meta.dev) {
+      console.warn("[world-author] Failed to resolve feed link", error);
+    }
+
+    return `/world/${encodeURIComponent(slug)}`;
+  }
+});
 
 const reactionEmojis: Record<ReactionType, string> = {
   like: "👍",
@@ -157,6 +209,16 @@ interface AuthorPayload {
   posts: BlogPost[];
 }
 
+const worldFetchParams = computed<Record<string, string>>(() => {
+  const id = worldId.value;
+
+  if (!id) {
+    return {};
+  }
+
+  return { worldId: id };
+});
+
 function findAuthorPosts(targetId: string) {
   return postsStore.posts.value.filter((entry) => entry.user?.id === targetId);
 }
@@ -177,7 +239,7 @@ async function resolveAuthor(targetId: string): Promise<AuthorPayload> {
   let lastError: unknown = null;
 
   try {
-    await postsStore.fetchPosts({ force: true });
+    await postsStore.fetchPosts({ force: true, params: worldFetchParams.value });
   } catch (error) {
     lastError = error;
   }
@@ -194,7 +256,7 @@ async function resolveAuthor(targetId: string): Promise<AuthorPayload> {
     const before = postsStore.posts.value.length;
 
     try {
-      await postsStore.fetchMorePosts({ force: true });
+      await postsStore.fetchMorePosts({ force: true, params: worldFetchParams.value });
     } catch (error) {
       lastError = error;
       break;
@@ -223,9 +285,9 @@ async function resolveAuthor(targetId: string): Promise<AuthorPayload> {
 }
 
 const { data, pending, error } = await useAsyncData(
-  () => `blog-author-${authorId.value}`,
+  () => `world-author-${worldSlug.value}-${authorId.value}`,
   async () => resolveAuthor(authorId.value),
-  { watch: [authorId] },
+  { watch: [authorId, worldSlug] },
 );
 
 const author = computed(() => data.value?.user ?? null);
@@ -252,6 +314,9 @@ const authorSubtitle = computed(() => t("blog.authors.subtitle"));
 const authorAvatar = computed(
   () => optimizeAvatarUrl(author.value?.photo ?? null, 80) ?? defaultAvatar,
 );
+const authorUsername = computed(() => author.value?.username?.trim() || null);
+const authorEmail = computed(() => author.value?.email?.trim() || null);
+const authorPostCount = computed(() => authorPosts.value.length);
 
 const errorMessage = computed(() => {
   if (!error.value) {
@@ -272,6 +337,31 @@ const pageDescription = computed(() =>
     : t("blog.authors.defaultDescription"),
 );
 
+registerRightSidebarContent(
+  computed(() => {
+    if (!author.value) {
+      return null;
+    }
+
+    return {
+      component: AuthorSidebarInfo,
+      props: {
+        name: authorName.value,
+        subtitle: authorSubtitle.value,
+        avatar: authorAvatar.value,
+        username: authorUsername.value,
+        email: authorEmail.value,
+        postCount: authorPostCount.value,
+        postCountLabel: t("blog.authors.postsHeading"),
+        usernameLabel: t("admin.users.form.username"),
+        emailLabel: t("admin.users.form.email"),
+        formattedPostCount: n(authorPostCount.value),
+      },
+      wrapperClass: "flex flex-col gap-6",
+    };
+  }),
+);
+
 useHead(() => ({
   title: pageTitle.value,
 }));
@@ -281,8 +371,12 @@ useSeoMeta(() => ({
 }));
 
 definePageMeta({
-  title: "blog-author",
+  title: "world-author",
   documentDriven: false,
+  showRightWidgets: true,
+  showContactSidebarCard: false,
+  requiresPlugin: "blog",
+  navbarSearchContext: "posts",
 });
 </script>
 

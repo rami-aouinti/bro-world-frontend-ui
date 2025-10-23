@@ -91,12 +91,14 @@ vi.mock("#imports", async () => {
       ) {
         const params = route.params as Record<string, string>;
 
+        if ("authorSlug" in params && "slug" in params) {
+          return `/world/${params.slug}/author/${params.authorSlug}`;
         if ("worldSlug" in params && "postSlug" in params) {
           return `/world/${params.worldSlug}/post/${params.postSlug}`;
         }
 
-        if ("id" in params) {
-          return `/blog/author/${params.id}`;
+        if ("slug" in params) {
+          return `/post/${params.slug}`;
         }
       }
 
