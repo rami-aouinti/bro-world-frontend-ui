@@ -3,126 +3,124 @@
     class="py-8"
     aria-labelledby="game-heading"
   >
-    <client-only>
-      <teleport
-        v-if="canTeleport"
-        to="#menu-bar-world"
-      >
-        <div class="px-4 pt-4 pb-3">
-          <SidebarCard
-            class="text-card-foreground px-3 py-2"
-            glow
-          >
-            <v-card-text class="d-flex flex-column gap-4">
-              <div class="d-flex flex-column flex-md-row justify-space-between gap-4">
-                <div class="d-flex align-center gap-4">
-                  <UserAvatar
-                    :src="currentUserAvatar"
-                    :name="currentUserName"
-                    :alt="currentUserName"
-                    :size="64"
-                  />
-                  <div>
-                    <p class="text-body-2 text-medium-emphasis mb-1">
-                      {{ playerStatusLabel }}
-                    </p>
-                    <h2 class="text-subtitle-1 font-weight-bold mb-0">
-                      {{ selectedCategoryTitle }}
-                    </h2>
-                    <p class="text-body-2 text-medium-emphasis mb-0">
-                      {{ selectedLevelTitle }}
-                    </p>
-                  </div>
-                </div>
-                <div class="d-flex flex-wrap gap-4">
-                  <div class="game-menu-stat">
-                    <p class="game-menu-stat__label">
-                      {{ t("pages.game.menu.timer") }}
-                    </p>
-                    <p class="game-menu-stat__value">
-                      {{ formattedTimer }}
-                    </p>
-                  </div>
-                  <div class="game-menu-stat">
-                    <p class="game-menu-stat__label">
-                      {{ t("pages.game.menu.score") }}
-                    </p>
-                    <p class="game-menu-stat__value">
-                      {{ scoreLabel }}
-                    </p>
-                  </div>
-                  <div class="game-menu-stat">
-                    <p class="game-menu-stat__label">
-                      {{ t("pages.game.menu.progress") }}
-                    </p>
-                    <p class="game-menu-stat__value">{{ answeredCount }} / {{ totalQuestions }}</p>
-                  </div>
+    <AppSidebarRight
+      :items="[]"
+      active-key=""
+    >
+      <div class="px-4 pt-4 pb-3">
+        <SidebarCard
+          class="text-card-foreground px-3 py-2"
+          glow
+        >
+          <v-card-text class="d-flex flex-column gap-4">
+            <div class="d-flex flex-column flex-md-row justify-space-between gap-4">
+              <div class="d-flex align-center gap-4">
+                <UserAvatar
+                  :src="currentUserAvatar"
+                  :name="currentUserName"
+                  :alt="currentUserName"
+                  :size="64"
+                />
+                <div>
+                  <p class="text-body-2 text-medium-emphasis mb-1">
+                    {{ playerStatusLabel }}
+                  </p>
+                  <h2 class="text-subtitle-1 font-weight-bold mb-0">
+                    {{ selectedCategoryTitle }}
+                  </h2>
+                  <p class="text-body-2 text-medium-emphasis mb-0">
+                    {{ selectedLevelTitle }}
+                  </p>
                 </div>
               </div>
-
-              <v-progress-linear
-                :model-value="progressValue"
-                color="primary"
-                height="6"
-                rounded
-              />
-
-              <div>
-                <div class="d-flex align-center justify-space-between mb-2">
-                  <h3 class="text-subtitle-2 font-weight-semibold mb-0">
-                    {{ t("pages.game.leaderboard.title") }}
-                  </h3>
-                  <span
-                    v-if="leaderboardLoading"
-                    class="text-caption text-medium-emphasis"
-                  >
-                    {{ t("pages.game.leaderboard.loading") }}
-                  </span>
+              <div class="d-flex flex-wrap gap-4">
+                <div class="game-menu-stat">
+                  <p class="game-menu-stat__label">
+                    {{ t("pages.game.menu.timer") }}
+                  </p>
+                  <p class="game-menu-stat__value">
+                    {{ formattedTimer }}
+                  </p>
                 </div>
-                <div v-if="leaderboardLoading">
-                  <v-skeleton-loader
-                    v-for="index in 3"
-                    :key="`leaderboard-skeleton-${index}`"
-                    type="list-item"
-                    class="mb-2 border-radius-lg"
-                  />
+                <div class="game-menu-stat">
+                  <p class="game-menu-stat__label">
+                    {{ t("pages.game.menu.score") }}
+                  </p>
+                  <p class="game-menu-stat__value">
+                    {{ scoreLabel }}
+                  </p>
                 </div>
-                <v-alert
-                  v-else-if="!leaderboardEntries.length"
-                  type="info"
-                  variant="tonal"
-                  class="mb-0"
-                  density="compact"
-                >
-                  {{ t("pages.game.leaderboard.empty") }}
-                </v-alert>
-                <v-list
-                  v-else
-                  class="bg-transparent px-0"
-                  density="compact"
-                >
-                  <v-list-item
-                    v-for="entry in leaderboardEntries"
-                    :key="entry.id"
-                    class="px-0"
-                  >
-                    <template #prepend>
-                      <span class="game-menu-rank">{{ entry.rankLabel }}</span>
-                    </template>
-                    <v-list-item-title class="text-body-2 font-weight-medium">
-                      {{ entry.player }}
-                    </v-list-item-title>
-                    <v-list-item-subtitle class="text-caption text-medium-emphasis">
-                      {{ entry.scoreText }}
-                    </v-list-item-subtitle>
-                  </v-list-item>
-                </v-list>
+                <div class="game-menu-stat">
+                  <p class="game-menu-stat__label">
+                    {{ t("pages.game.menu.progress") }}
+                  </p>
+                  <p class="game-menu-stat__value">{{ answeredCount }} / {{ totalQuestions }}</p>
+                </div>
               </div>
-            </v-card-text>
-          </SidebarCard>
-        </div>
-      </teleport>
-    </client-only>
+            </div>
+
+            <v-progress-linear
+              :model-value="progressValue"
+              color="primary"
+              height="6"
+              rounded
+            />
+
+            <div>
+              <div class="d-flex align-center justify-space-between mb-2">
+                <h3 class="text-subtitle-2 font-weight-semibold mb-0">
+                  {{ t("pages.game.leaderboard.title") }}
+                </h3>
+                <span
+                  v-if="leaderboardLoading"
+                  class="text-caption text-medium-emphasis"
+                >
+                  {{ t("pages.game.leaderboard.loading") }}
+                </span>
+              </div>
+              <div v-if="leaderboardLoading">
+                <v-skeleton-loader
+                  v-for="index in 3"
+                  :key="`leaderboard-skeleton-${index}`"
+                  type="list-item"
+                  class="mb-2 border-radius-lg"
+                />
+              </div>
+              <v-alert
+                v-else-if="!leaderboardEntries.length"
+                type="info"
+                variant="tonal"
+                class="mb-0"
+                density="compact"
+              >
+                {{ t("pages.game.leaderboard.empty") }}
+              </v-alert>
+              <v-list
+                v-else
+                class="bg-transparent px-0"
+                density="compact"
+              >
+                <v-list-item
+                  v-for="entry in leaderboardEntries"
+                  :key="entry.id"
+                  class="px-0"
+                >
+                  <template #prepend>
+                    <span class="game-menu-rank">{{ entry.rankLabel }}</span>
+                  </template>
+                  <v-list-item-title class="text-body-2 font-weight-medium">
+                    {{ entry.player }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle class="text-caption text-medium-emphasis">
+                    {{ entry.scoreText }}
+                  </v-list-item-subtitle>
+                </v-list-item>
+              </v-list>
+            </div>
+          </v-card-text>
+        </SidebarCard>
+      </div>
+    </AppSidebarRight>
 
     <SidebarCard
       class="text-card-foreground px-3 py-2"
@@ -745,7 +743,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, defineAsyncComponent, onBeforeUnmount, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import UserAvatar from "~/components/UserAvatar.vue";
@@ -753,6 +751,7 @@ import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { useUserSession } from "~/composables/useUserSession";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 import SidebarCard from "~/components/layout/SidebarCard.vue";
+import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
 
 const AuthLoginForm = defineAsyncComponent({
   loader: () => import("~/components/auth/LoginForm.vue"),
@@ -921,7 +920,6 @@ const validationState = ref<"idle" | "pending" | "success" | "error">("idle");
 const validationError = ref<string | null>(null);
 const validationResult = ref<QuizValidationResult | null>(null);
 const elapsedSeconds = ref(0);
-const canTeleport = ref(false);
 const isRedirecting = ref(false);
 
 let timerHandle: ReturnType<typeof setInterval> | null = null;
@@ -1803,10 +1801,6 @@ watch(
     hasAttemptedSubmit.value = false;
   },
 );
-
-onMounted(() => {
-  canTeleport.value = Boolean(document.getElementById("menu-bar-world"));
-});
 
 onBeforeUnmount(() => {
   stopTimer();
