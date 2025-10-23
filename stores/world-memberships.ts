@@ -14,6 +14,8 @@ import type {
 type MembershipDictionary = Record<string, WorldMembership>;
 type MembershipFlagDictionary = Record<string, boolean>;
 
+const MAX_DEFAULT_ACTIVE_WORLDS = 5;
+
 interface MembershipApiPayload {
   worldId?: string | null;
   status?: string | null;
@@ -317,7 +319,7 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
     }
 
     for (const [id] of normalizedEntries) {
-      if (resolvedActiveIds.length >= 3) {
+      if (resolvedActiveIds.length >= MAX_DEFAULT_ACTIVE_WORLDS) {
         break;
       }
 

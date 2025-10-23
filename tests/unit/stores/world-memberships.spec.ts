@@ -5,23 +5,23 @@ import { getDefaultSiteSettings } from "~/lib/settings/defaults";
 import { useWorldMemberships } from "~/stores/world-memberships";
 
 describe("useWorldMemberships.syncFromSiteSettings", () => {
-  it("marks the first three worlds as active by default", () => {
+  it("marks the first five worlds as active by default", () => {
     const pinia = createPinia();
     const store = useWorldMemberships(pinia);
     const settings = getDefaultSiteSettings();
 
     store.syncFromSiteSettings(settings);
 
-    const expectedIds = (settings.worlds ?? []).slice(0, 3).map((world) => world.id);
+    const expectedIds = (settings.worlds ?? []).slice(0, 5).map((world) => world.id);
 
     expect(store.activeWorldIds.value).toEqual(expectedIds);
     for (const worldId of expectedIds) {
       expect(store.getMembership(worldId).status).toBe("active");
     }
 
-    const fourthWorldId = settings.worlds?.[3]?.id;
-    if (fourthWorldId) {
-      expect(store.getMembership(fourthWorldId).status).toBe("none");
+    const nextWorldId = settings.worlds?.[5]?.id;
+    if (nextWorldId) {
+      expect(store.getMembership(nextWorldId).status).toBe("none");
     }
   });
 
