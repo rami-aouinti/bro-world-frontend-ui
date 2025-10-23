@@ -51,11 +51,13 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
-import { createError } from "#imports";
+import { createError, useRoute, useSeoMeta } from "#imports";
 
+import { useLayoutRightSidebar } from "~/composables/useLayoutRightSidebar";
 import { usePostsStore } from "~/composables/usePostsStore";
 import { blogPostCardLoader, prefetchBlogPostCard } from "~/lib/prefetch/blog-post-card";
 import type { BlogPost, ReactionType } from "~/lib/mock/blog";
+import PostAuthorSidebarCard from "~/components/blog/PostAuthorSidebarCard.vue";
 
 const defaultAvatar = "/images/avatars/avatar-default.svg";
 const BlogPostCard = defineAsyncComponent({ loader: blogPostCardLoader });
@@ -66,12 +68,28 @@ const PostCardSkeleton = defineAsyncComponent(
 await prefetchBlogPostCard();
 
 const route = useRoute();
-const localePath = useLocalePath();
 const { t } = useI18n();
 const postsStore = usePostsStore();
+const { registerRightSidebarContent } = useLayoutRightSidebar();
 
-const slug = computed(() => String(route.params.slug ?? ""));
-const feedLink = computed(() => localePath({ name: "index" }));
+function normalizeParam(value: unknown) {
+  if (typeof value === "string") {
+    return value.trim();
+  }
+
+  if (Array.isArray(value)) {
+    const candidate = value.find((entry) => typeof entry === "string");
+
+    if (typeof candidate === "string") {
+      return candidate.trim();
+    }
+  }
+
+  return "";
+}
+
+const worldSlug = computed(() => normalizeParam(route.params.worldSlug));
+const postSlug = computed(() => normalizeParam(route.params.postSlug));
 
 const reactionEmojis: Record<ReactionType, string> = {
   like: "👍",
@@ -184,9 +202,9 @@ const {
   pending,
   error,
 } = await useAsyncData(
-  () => `post-${slug.value}`,
-  async () => resolvePost(slug.value),
-  { watch: [slug] },
+  () => `world-post-${worldSlug.value}-${postSlug.value}`,
+  async () => resolvePost(postSlug.value),
+  { watch: [postSlug] },
 );
 
 const errorMessage = computed(() => {
@@ -225,9 +243,29 @@ useSeoMeta(() => ({
 
 definePageMeta({
   documentDriven: false,
-  showRightWidgets: false,
+  showRightWidgets: true,
   showContactSidebarCard: false,
+  requiresPlugin: "blog",
 });
+
+registerRightSidebarContent(
+  computed(() => {
+    const author = post.value?.user ?? null;
+
+    if (!author) {
+      return null;
+    }
+
+    return {
+      component: PostAuthorSidebarCard,
+      props: {
+        author,
+        worldSlug: worldSlug.value,
+      },
+      intrinsicHeight: 420,
+    };
+  }),
+);
 </script>
 
 <style scoped>
