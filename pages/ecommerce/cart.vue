@@ -258,12 +258,10 @@ useSeoMeta(() => ({
   description: pageDescription.value,
 }));
 
-if (typeof definePageMeta === "function") {
-  definePageMeta({
-    documentDriven: false,
-    requiresPlugin: "ecommerce",
-  });
-}
+definePageMeta({
+  documentDriven: false,
+  requiresPlugin: "ecommerce",
+});
 
 const baseUrl = computed(() => runtimeConfig.public.baseUrl ?? "https://bro-world-space.com");
 

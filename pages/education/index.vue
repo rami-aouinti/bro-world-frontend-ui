@@ -96,12 +96,10 @@ registerRightSidebarContent(
   })),
 );
 
-if (typeof definePageMeta === "function") {
-  definePageMeta({
-    documentDriven: false,
-    requiresPlugin: "education",
-  });
-}
+definePageMeta({
+  documentDriven: false,
+  requiresPlugin: "education",
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

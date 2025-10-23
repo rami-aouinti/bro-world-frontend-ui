@@ -836,13 +836,11 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
 const pageDescription = computed(() => t("seo.game.description"));
 
-if (typeof definePageMeta === "function") {
-  definePageMeta({
-    documentDriven: false,
-    alias: ["/quiz"],
-    requiresPlugin: "game",
-  });
-}
+definePageMeta({
+  documentDriven: false,
+  alias: ["/quiz"],
+  requiresPlugin: "game",
+});
 
 useSeoMeta(() => ({
   description: pageDescription.value,
