@@ -47,7 +47,17 @@ const activateWorldMock = vi.fn(async (worldId: string) => {
     worldId,
     status: "active",
   };
-  activeWorldIdsRef.value = [worldId];
+
+  const normalized = worldId?.trim() ?? "";
+
+  if (!normalized) {
+    activeWorldIdsRef.value = [];
+    return;
+  }
+
+  const existing = activeWorldIdsRef.value.filter((id) => id !== normalized);
+
+  activeWorldIdsRef.value = [normalized, ...existing].slice(0, 5);
 });
 
 vi.mock("~/stores/world-memberships", () => ({
@@ -168,7 +178,13 @@ describe("pages/index world explorer", () => {
     const expectedWorldId = siteSettingsRef.value?.worlds?.[1]?.id ?? null;
 
     expect(activateWorldMock).toHaveBeenCalledWith(expectedWorldId);
-    expect(activeWorldIdsRef.value).toEqual(expectedWorldId ? [expectedWorldId] : []);
+
+    if (expectedWorldId) {
+      expect(activeWorldIdsRef.value[0]).toBe(expectedWorldId);
+      expect(activeWorldIdsRef.value).toContain(expectedWorldId);
+    } else {
+      expect(activeWorldIdsRef.value).toEqual([]);
+    }
   });
 
   it("shows the empty state when no worlds are configured", () => {
