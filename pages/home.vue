@@ -459,13 +459,15 @@ const { t } = useI18n();
 
 const pageDescription = computed(() => t("blog.hero.description"));
 
-definePageMeta({
-  showRightWidgets: true,
-  showContactSidebarCard: true,
-  documentDriven: false,
-  rightSidebarPreset: "dashboard",
-  navbarSearchContext: "posts",
-});
+if (typeof definePageMeta === "function") {
+  definePageMeta({
+    showRightWidgets: true,
+    showContactSidebarCard: true,
+    documentDriven: false,
+    rightSidebarPreset: "dashboard",
+    navbarSearchContext: "posts",
+  });
+}
 
 if (useSeoMetaFn) {
   useSeoMetaFn(() => ({
