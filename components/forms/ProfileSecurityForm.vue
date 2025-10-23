@@ -12,20 +12,25 @@
         <div class="d-flex flex-column center gap-3">
           <section aria-labelledby="password-section-title">
             <div class="d-inline-flex mb-4">
-              <h4
-                id="password-section-title"
-                class="text-h5 font-weight-semibold mb-1"
-              >
-                {{ t("pages.profileSecurity.sections.password.title") }}
-              </h4>
-              <v-btn
-                color="primary"
-                size="large"
-                class="flex-shrink-0"
-                @click="handleSubmit"
-              >
-                {{ t("pages.profileSecurity.actions.save") }}
-              </v-btn>
+              <div>
+                <h4
+                    id="password-section-title"
+                    class="text-h5 font-weight-semibold mb-1"
+                >
+                  {{ t("pages.profileSecurity.sections.password.title") }}
+                </h4>
+              </div>
+
+              <div class="d-flex gap-3">
+                <v-btn
+                    color="primary"
+                    size="large"
+                    class="flex-shrink-0"
+                    @click="handleSubmit"
+                >
+                  {{ t("pages.profileSecurity.actions.save") }}
+                </v-btn>
+              </div>
             </div>
 
             <v-form @submit.prevent="handleSubmit">
