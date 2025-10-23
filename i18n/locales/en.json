@@ -918,6 +918,7 @@
           "title": "World overview",
           "creator": "Creator",
           "creatorFallback": "Unknown creator",
+          "untitled": "Untitled world",
           "visibility": "Visibility",
           "visibilityPublic": "Public world",
           "visibilityPrivate": "Private world",

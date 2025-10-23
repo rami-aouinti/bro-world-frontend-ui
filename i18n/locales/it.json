@@ -918,6 +918,7 @@
           "title": "Panoramica del world",
           "creator": "Creatore",
           "creatorFallback": "Creatore sconosciuto",
+          "untitled": "Mondo senza titolo",
           "visibility": "Visibilità",
           "visibilityPublic": "World pubblico",
           "visibilityPrivate": "World privato",
