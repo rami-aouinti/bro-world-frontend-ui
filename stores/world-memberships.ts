@@ -283,9 +283,7 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
       return;
     }
 
-    const currentIds = Array.isArray(activeWorldIdsState.value)
-      ? activeWorldIdsState.value
-      : [];
+    const currentIds = Array.isArray(activeWorldIdsState.value) ? activeWorldIdsState.value : [];
 
     const filtered = currentIds
       .map((id) => normalizeWorldId(id))
