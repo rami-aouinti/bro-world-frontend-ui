@@ -3,6 +3,7 @@
     class="world-explorer-card text-card-foreground px-3 py-2"
     glow
     :aria-label="ariaLabel"
+    @click="handleCardClick"
   >
     <div class="world-explorer-card__header">
       <div class="world-explorer-card__heading">
@@ -355,6 +356,51 @@ function showError(message: string) {
     type: "error",
     message,
   });
+}
+
+function isInteractiveTarget(target: EventTarget | null): boolean {
+  if (typeof Element === "undefined") {
+    return false;
+  }
+
+  if (!(target instanceof Element)) {
+    return false;
+  }
+
+  return Boolean(
+    target.closest("a,button,input,select,textarea,[role='button'],[role='link']"),
+  );
+}
+
+function isPrimaryNavigationEvent(event: MouseEvent): boolean {
+  return (
+    event.button === 0 &&
+    !event.defaultPrevented &&
+    !event.metaKey &&
+    !event.ctrlKey &&
+    !event.altKey &&
+    !event.shiftKey
+  );
+}
+
+async function handleCardClick(event: MouseEvent) {
+  if (!props.isActive) {
+    return;
+  }
+
+  if (!isPrimaryNavigationEvent(event)) {
+    return;
+  }
+
+  if (isInteractiveTarget(event.target)) {
+    return;
+  }
+
+  try {
+    await router.push(targetRoute.value);
+  } catch (error) {
+    // Swallow navigation duplication errors.
+  }
 }
 
 async function handleActivate() {
