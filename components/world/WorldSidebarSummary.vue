@@ -204,7 +204,9 @@ const props = defineProps<{
 
 const { t, locale } = useI18n();
 
-const worldName = computed(() => props.world?.name?.trim() || t("app.worldSummary.untitled"));
+const worldName = computed(
+  () => props.world?.name?.trim() || t("pages.world.sidebar.overview.untitled"),
+);
 const worldDescription = computed(() => props.world?.description?.trim() || "");
 
 const creatorLabel = computed(() => {

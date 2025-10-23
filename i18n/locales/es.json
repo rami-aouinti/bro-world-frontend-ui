@@ -918,6 +918,7 @@
           "title": "Resumen del world",
           "creator": "Creador",
           "creatorFallback": "Creador desconocido",
+          "untitled": "Mundo sin título",
           "visibility": "Visibilidad",
           "visibilityPublic": "World público",
           "visibilityPrivate": "World privado",
