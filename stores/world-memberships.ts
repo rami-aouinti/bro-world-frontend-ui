@@ -301,16 +301,36 @@ export const useWorldMemberships = defineStore("worldMemberships", () => {
         (entry): entry is readonly [string, SiteSettings["worlds"][number]] => entry !== null,
       );
 
-    const worldById = new Map(normalizedEntries);
-    const activeId = normalizeWorldId(settings?.activeWorldId);
-
-    if (activeId && worldById.has(activeId)) {
-      activeWorldIdsState.value = [activeId];
+    if (!normalizedEntries.length) {
+      activeWorldIdsState.value = [];
       return;
     }
 
-    const [firstEntry] = normalizedEntries;
-    activeWorldIdsState.value = firstEntry ? [firstEntry[0]] : [];
+    const activeId = normalizeWorldId(settings?.activeWorldId);
+    const resolvedActiveIds: string[] = [];
+
+    if (activeId) {
+      const exists = normalizedEntries.some(([id]) => id === activeId);
+      if (exists) {
+        resolvedActiveIds.push(activeId);
+      }
+    }
+
+    for (const [id] of normalizedEntries) {
+      if (resolvedActiveIds.length >= 3) {
+        break;
+      }
+
+      if (!resolvedActiveIds.includes(id)) {
+        resolvedActiveIds.push(id);
+      }
+    }
+
+    activeWorldIdsState.value = resolvedActiveIds;
+
+    for (const worldId of resolvedActiveIds) {
+      setMembership(worldId, { status: "active" });
+    }
   }
 
   function isActivating(worldId: string): boolean {

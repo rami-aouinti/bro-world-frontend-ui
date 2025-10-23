@@ -288,6 +288,22 @@ describe("components/world/WorldExplorerCard", () => {
     expect(routerPushMock).toHaveBeenCalledWith("/world/test-world");
   });
 
+  it("navigates to the world when an active card is clicked", async () => {
+    const { wrapper } = mountCard({ membershipStatus: "active", isActive: true });
+
+    await wrapper.trigger("click");
+
+    expect(routerPushMock).toHaveBeenCalledWith("/world/test-world");
+  });
+
+  it("does not navigate when clicking interactive elements within the card", async () => {
+    const { wrapper } = mountCard({ membershipStatus: "active", isActive: true });
+
+    await wrapper.get('[data-test="world-action-button"]').trigger("click");
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+  });
+
   it("renders participants and rating when provided", () => {
     const { wrapper } = mountCard({
       world: createWorld({ participantsCount: 42, rating: 4.7 }),

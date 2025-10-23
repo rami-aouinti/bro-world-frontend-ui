@@ -116,8 +116,8 @@ describe("pages/index world explorer", () => {
 
   beforeEach(() => {
     siteSettingsRef.value = getDefaultSiteSettings();
-    activeWorldsRef.value = siteSettingsRef.value?.worlds?.slice(0, 1) ?? [];
-    activeWorldIdsRef.value = [];
+    activeWorldsRef.value = siteSettingsRef.value?.worlds?.slice(0, 3) ?? [];
+    activeWorldIdsRef.value = activeWorldsRef.value.map((world) => world.id);
     Object.keys(membershipMap).forEach((key) => {
       delete membershipMap[key];
     });
@@ -138,6 +138,7 @@ describe("pages/index world explorer", () => {
 
   it("falls back to all worlds when no active worlds are configured", () => {
     activeWorldsRef.value = [];
+    activeWorldIdsRef.value = [];
 
     const wrapper = mount(IndexPage, {
       global: {
@@ -151,6 +152,7 @@ describe("pages/index world explorer", () => {
 
   it("updates the memberships when a card emits an activate event", async () => {
     activeWorldsRef.value = siteSettingsRef.value?.worlds ?? [];
+    activeWorldIdsRef.value = activeWorldsRef.value.map((world) => world.id);
 
     const wrapper = mount(IndexPage, {
       global: {

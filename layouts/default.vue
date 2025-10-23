@@ -1358,9 +1358,23 @@ const sidebarItems = computed<LayoutSidebarItem[]>(() => {
   const encodedSlug = encodeURIComponent(slug);
   const worldBasePath = `/world/${encodedSlug}`;
 
-  return Array.from(pluginIds)
+  const pluginList = Array.from(pluginIds)
     .map((pluginId) => pluginId.trim())
-    .filter((pluginId) => pluginId && !excludedSidebarPluginIds.has(pluginId))
+    .filter((pluginId) => pluginId && !excludedSidebarPluginIds.has(pluginId));
+
+  const orderedPluginIds: string[] = [];
+
+  if (pluginList.includes("blog")) {
+    orderedPluginIds.push("blog");
+  }
+
+  for (const pluginId of pluginList) {
+    if (pluginId !== "blog") {
+      orderedPluginIds.push(pluginId);
+    }
+  }
+
+  return orderedPluginIds
     .map((normalized) => {
       const destination =
         normalized === "blog"
