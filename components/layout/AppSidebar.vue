@@ -159,6 +159,7 @@ import { NuxtLink } from "#components";
 import type { LayoutSidebarItem } from "~/lib/navigation/sidebar";
 import { useAuthSession } from "~/stores/auth-session";
 import { useNonBlockingTask } from "~/composables/useNonBlockingTask";
+import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 import { resolveSocialRedirect, type SocialProvider } from "~/lib/auth/social";
 
 const AuthLoginForm = defineAsyncComponent({
@@ -198,6 +199,7 @@ const sticky = computed(() => props.sticky);
 const { t } = useI18n();
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value);
+const localePath = useResolvedLocalePath();
 const auth = useAuthSession();
 
 const isAuthenticated = computed(() => auth.isAuthenticated.value);
@@ -438,6 +440,7 @@ function normalizeItem(item: LayoutSidebarItem): LayoutSidebarItem {
 
   return {
     ...item,
+    to: item.to ? localePath(item.to) : undefined,
     children: normalizedChildren && normalizedChildren.length ? normalizedChildren : undefined,
   } satisfies LayoutSidebarItem;
 }
