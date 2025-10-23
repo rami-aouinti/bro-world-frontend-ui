@@ -43,4 +43,34 @@ describe("useWorldMemberships.syncFromSiteSettings", () => {
     const [firstActive] = store.activeWorldIds.value;
     expect(firstActive).toBe(fourthWorld?.id);
   });
+
+  it("allows multiple worlds to remain active", () => {
+    const pinia = createPinia();
+    const store = useWorldMemberships(pinia);
+
+    store.markActive(null);
+    store.markActive("world-a");
+    store.markActive("world-b");
+
+    expect(store.activeWorldIds.value).toEqual(["world-b", "world-a"]);
+  });
+
+  it("limits the number of active worlds to five entries", () => {
+    const pinia = createPinia();
+    const store = useWorldMemberships(pinia);
+
+    store.markActive(null);
+    for (let index = 0; index < 7; index += 1) {
+      store.markActive(`world-${index}`);
+    }
+
+    expect(store.activeWorldIds.value).toHaveLength(5);
+    expect(store.activeWorldIds.value).toEqual([
+      "world-6",
+      "world-5",
+      "world-4",
+      "world-3",
+      "world-2",
+    ]);
+  });
 });
