@@ -22,13 +22,11 @@ const router = useRouter();
 const { t } = useI18n();
 const { registerRightSidebarContent } = useLayoutRightSidebar();
 
-if (typeof definePageMeta === "function") {
-  definePageMeta({
-    documentDriven: false,
-    showRightWidgets: true,
-    requiresPlugin: "messenger",
-  });
-}
+definePageMeta({
+  documentDriven: false,
+  showRightWidgets: true,
+  requiresPlugin: "messenger",
+});
 
 const pageDescription = computed(() => t("seo.messenger.description"));
 

@@ -166,12 +166,10 @@ import { useResolvedLocalePath } from "~/composables/useResolvedLocalePath";
 const { t, locale, localeProperties } = useI18n();
 const pageDescription = computed(() => t("seo.ecommerce.description"));
 
-if (typeof definePageMeta === "function") {
-  definePageMeta({
-    documentDriven: false,
-    requiresPlugin: "ecommerce",
-  });
-}
+definePageMeta({
+  documentDriven: false,
+  requiresPlugin: "ecommerce",
+});
 useSeoMeta(() => ({
   description: pageDescription.value,
 }));

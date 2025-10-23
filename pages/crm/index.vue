@@ -82,12 +82,10 @@ import {
   type CrmBoardUser,
 } from "~/stores/crm-board";
 
-if (typeof definePageMeta === "function") {
-  definePageMeta({
-    showRightWidgets: true,
-    requiresPlugin: "crm",
-  });
-}
+definePageMeta({
+  showRightWidgets: true,
+  requiresPlugin: "crm",
+});
 
 const board = useCrmBoardStore();
 const { locale, t } = useI18n();
