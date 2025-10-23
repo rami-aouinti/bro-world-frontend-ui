@@ -912,6 +912,38 @@
         "secondaryCtaAria": "Apri la pagina contatti per prenotare una conversazione"
       }
     },
+    "world": {
+      "sidebar": {
+        "overview": {
+          "title": "Panoramica del world",
+          "creator": "Creatore",
+          "creatorFallback": "Creatore sconosciuto",
+          "visibility": "Visibilità",
+          "visibilityPublic": "World pubblico",
+          "visibilityPrivate": "World privato",
+          "visibilityUnknown": "World non elencato",
+          "theme": "Tema",
+          "tags": "Tag principali",
+          "tagsEmpty": "Nessun tag disponibile."
+        },
+        "members": {
+          "title": "Statistiche della community",
+          "participantsLabel": "Membri",
+          "ratingLabel": "Valutazione della community",
+          "launchLabel": "Lanciato",
+          "guests": "Accesso ospiti",
+          "guestsOpen": "Gli ospiti possono esplorare",
+          "guestsClosed": "Serve un invito"
+        },
+        "quiz": {
+          "title": "Classifica quiz",
+          "updated": "Aggiornata {date}",
+          "empty": "La classifica non è disponibile in questo momento.",
+          "score": "{points} pt",
+          "streak": "Serie di {count} giorni"
+        }
+      }
+    },
     "academy": {
       "title": "Bro World Academy",
       "subtitle": "Master the skills to build immersive communities through focused learning tracks.",
