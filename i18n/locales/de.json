@@ -2606,6 +2606,107 @@
         "title": "Bewahre diese einmaligen Wiederherstellungscodes auf"
       }
     },
+    "profileNotifications": {
+      "title": "Benachrichtigungseinstellungen",
+      "subtitle": "Wähle, wie und wann wir dich über neue Aktivitäten informieren.",
+      "actions": {
+        "save": "Einstellungen speichern",
+        "reset": "Zurücksetzen"
+      },
+      "channelLabels": {
+        "email": "E-Mail",
+        "push": "Push-Benachrichtigungen",
+        "sms": "SMS-Nachrichten",
+        "inApp": "In-App-Hinweise"
+      },
+      "sections": {
+        "channels": {
+          "title": "Übermittlungskanäle",
+          "description": "Wähle die Kanäle, die wir bei wichtigen Ereignissen verwenden sollen."
+        },
+        "email": {
+          "title": "E-Mail-Updates",
+          "description": "Bleib auf dem Laufenden, auch wenn du nicht in BroWorld bist.",
+          "items": {
+            "comments": "Kommentare zu meinen Beiträgen",
+            "mentions": "Erwähnungen meines Handles",
+            "follows": "Neue Follower",
+            "messages": "Direktnachrichten",
+            "newsletters": "Produktnewsletter und Tipps"
+          }
+        },
+        "inApp": {
+          "title": "In-App-Benachrichtigungen",
+          "description": "Steuere, welche Hinweise du während der Arbeit in BroWorld siehst.",
+          "items": {
+            "productUpdates": "Produktstarts & Roadmap-Updates",
+            "eventReminders": "Termin-Erinnerungen & Kalendereinladungen",
+            "securityAlerts": "Sicherheitswarnungen und Anmeldehinweise",
+            "communityHighlights": "Community-Highlights und Trendthemen"
+          },
+          "playSounds": "Feinen Ton für wichtige Hinweise abspielen",
+          "smartSummaries": "Intelligente Zusammenfassungen im Benachrichtigungscenter anzeigen"
+        },
+        "digest": {
+          "title": "Zusammenfassung",
+          "description": "Wir bündeln ruhigere Aktivitäten in einer einzigen E-Mail für einen schnellen Überblick.",
+          "enableLabel": "Mir eine Zusammenfassung senden",
+          "frequencyLabel": "Häufigkeit der Zusammenfassung",
+          "timeLabel": "Bevorzugte Versandzeit",
+          "options": {
+            "daily": "Täglich",
+            "weekly": "Wöchentlich",
+            "monthly": "Monatlich"
+          },
+          "helper": "{frequency}-Zusammenfassung geplant für {time}.",
+          "helperDisabled": "Zusammenfassungen sind deaktiviert. Aktiviere sie, um eine Übersicht per E-Mail zu erhalten."
+        },
+        "quietHours": {
+          "title": "Ruhezeiten",
+          "description": "Stummschalte nicht kritische Hinweise während Fokusphasen oder über Nacht.",
+          "enableLabel": "Ruhezeiten aktivieren",
+          "start": "Startzeit",
+          "end": "Endzeit"
+        },
+        "security": {
+          "title": "Kritische Hinweise",
+          "description": "Über Passwortänderungen, Exporte oder Sicherheitsrisiken informieren wir dich immer.",
+          "label": "Schicke mir E-Mails zu kritischen Sicherheitswarnungen"
+        }
+      },
+      "helpers": {
+        "emailDisabled": "Füge deinem Profil eine E-Mail-Adresse hinzu, um E-Mail-Benachrichtigungen zu aktivieren.",
+        "securityAlwaysOn": "Kritische Sicherheitswarnungen sind für dein Konto immer aktiviert."
+      },
+      "snackbar": {
+        "saved": "Benachrichtigungseinstellungen aktualisiert.",
+        "reset": "Einstellungen auf den zuletzt gespeicherten Stand zurückgesetzt."
+      },
+      "sidebar": {
+        "digestTitle": "Zeitplan der Zusammenfassung",
+        "digestDay": "Montag",
+        "digestLine": "Deine nächste Zusammenfassung kommt am {day} um {time}.",
+        "digestInfo": "Passe Zeitpunkt oder Häufigkeit an, wann immer du eine kurze Übersicht brauchst.",
+        "tipsTitle": "Schnelle Tipps",
+        "tips": {
+          "mobile": {
+            "title": "Mobile App koppeln",
+            "subtitle": "Installiere BroWorld auf iOS oder Android, um Push-Hinweise und Widgets freizuschalten."
+          },
+          "channels": {
+            "title": "Kanäle ausbalancieren",
+            "subtitle": "Nutze E-Mail für wöchentliche Rückblicke und In-App-Hinweise für die tägliche Zusammenarbeit."
+          },
+          "updates": {
+            "title": "Bleib informiert",
+            "subtitle": "Folge @BroWorldHQ für Produktneuheiten, Roadmap-Sessions und AMAs."
+          }
+        },
+        "supportTitle": "Brauchst du Hilfe?",
+        "supportSubtitle": "Sprich mit dem Support oder sieh dir Hilfeguides für weitere Notification-Tipps an.",
+        "supportCta": "Hilfecenter öffnen"
+      }
+    },
     "contact": {
       "title": "Kontakt",
       "subtitle": "Wir antworten in der Regel innerhalb von 1–2 Werktagen.",
@@ -2864,6 +2965,10 @@
     "profileSecurity": {
       "title": "Passwort & Sicherheit",
       "description": "Verwalte Anmeldedaten, Zwei-Faktor-Authentifizierung und vertrauenswürdige Geräte."
+    },
+    "profileNotifications": {
+      "title": "Benachrichtigungseinstellungen",
+      "description": "Entscheide, welche Hinweise dich per E-Mail, Push oder In-App erreichen."
     },
     "job": {
       "title": "Jobs",
