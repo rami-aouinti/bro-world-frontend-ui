@@ -266,14 +266,8 @@
       </div>
     </v-main>
     <ClientOnly>
-      <component
-        :is="LazyAnalytics"
-        v-if="shouldRenderAnalytics"
-      />
-      <component
-        :is="LazySpeedInsights"
-        v-if="shouldRenderSpeedInsights"
-      />
+      <VercelAnalytics />
+      <VercelSpeedInsights />
     </ClientOnly>
   </v-app>
 </template>
@@ -317,8 +311,8 @@ import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/co
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants";
-import VercelAnalyticsPlaceholder from "@/components/layout/analytics/VercelAnalyticsPlaceholder";
-import SpeedInsightsPlaceholder from "@/components/layout/analytics/SpeedInsightsPlaceholder";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/nuxt";
+import { SpeedInsights as VercelSpeedInsights } from "@vercel/speed-insights/nuxt";
 import { createInitialLayoutState } from "~/lib/layout/initial-layout";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
@@ -362,33 +356,6 @@ const SidebarContactCardSkeleton = defineAsyncComponent({
   loader: () => import("~/components/layout/SidebarContactCardSkeleton.vue"),
   suspensible: false,
 });
-
-const LazyAnalytics = defineAsyncComponent({
-  loader: async () => {
-    if (import.meta.server) {
-      return VercelAnalyticsPlaceholder;
-    }
-
-    const module = await import("@vercel/analytics/vue");
-    return module.Analytics;
-  },
-  suspensible: false,
-});
-
-const LazySpeedInsights = defineAsyncComponent({
-  loader: async () => {
-    if (import.meta.server) {
-      return SpeedInsightsPlaceholder;
-    }
-
-    const module = await import("@vercel/speed-insights/nuxt");
-    return module.SpeedInsights;
-  },
-  suspensible: false,
-});
-
-const shouldRenderAnalytics = ref(false);
-const shouldRenderSpeedInsights = ref(false);
 
 type ParticlesBgInstance = { start: () => void; stop: () => void };
 
@@ -459,20 +426,6 @@ if (import.meta.client) {
 
   onMounted(() => {
     scheduleParticlesRender();
-
-    scheduleIdleRender?.(
-      () => {
-        shouldRenderAnalytics.value = true;
-      },
-      { timeout: 4500 },
-    );
-
-    scheduleIdleRender?.(
-      () => {
-        shouldRenderSpeedInsights.value = true;
-      },
-      { timeout: 6500 },
-    );
   });
 
   watch(
