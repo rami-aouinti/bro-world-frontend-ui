@@ -265,10 +265,6 @@
         </div>
       </div>
     </v-main>
-    <ClientOnly>
-      <VercelAnalytics />
-      <VercelSpeedInsights />
-    </ClientOnly>
   </v-app>
 </template>
 
@@ -311,8 +307,6 @@ import { applyPrimaryColorCssVariables, normalizeHexColor } from "~/lib/theme/co
 import type { RightSidebarPreset } from "~/types/right-sidebar";
 import AppTopBar from "@/components/layout/AppTopBar.vue";
 import { APP_TOP_BAR_HEIGHT_VALUE } from "~/components/layout/app-bar/constants";
-import { Analytics as VercelAnalytics } from "@vercel/analytics/nuxt";
-import { SpeedInsights as VercelSpeedInsights } from "@vercel/speed-insights/nuxt";
 import { createInitialLayoutState } from "~/lib/layout/initial-layout";
 import AppSidebar from "@/components/layout/AppSidebar.vue";
 import AppSidebarRight from "~/components/layout/AppSidebarRight.vue";
