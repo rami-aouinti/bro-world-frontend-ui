@@ -9,10 +9,16 @@
   </NuxtLayout>
   <RouteLoadingOverlay :visible="routeLoading" />
   <AlertPanel />
+  <ClientOnly>
+    <VercelAnalytics />
+    <VercelSpeedInsights />
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, defineAsyncComponent } from "vue";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/nuxt";
+import { SpeedInsights as VercelSpeedInsights } from "@vercel/speed-insights/nuxt";
 import {
   hasInjectionContext,
   tryUseNuxtApp,
